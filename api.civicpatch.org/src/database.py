@@ -949,24 +949,6 @@ async def get_jurisdiction_updates() -> List[dict]:
             }
     return jurisdictions
 
-async def get_people_updates() -> dict:
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT jurisdiction_ocdid, MAX(updated_at) as updated_at FROM people
-            GROUP BY jurisdiction_ocdid
-            ORDER BY jurisdiction_ocdid;
-            """
-        )
-        rows = await cur.fetchall()
-        people = {}
-        for row in rows:
-            people[row[0]] = {
-                "jurisdiction_ocdids": row[0],
-                "updated_at": to_iso(row[1]),
-            }
-    return people
-
 async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
