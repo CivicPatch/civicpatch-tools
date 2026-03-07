@@ -183,10 +183,3 @@ def is_newer(date1, date2):
     if dt2.tzinfo is None:
         dt2 = dt2.replace(tzinfo=timezone.utc)
     return dt1 > dt2
-
-async def main():
-    # TBD: implement main sync logic when no jurisdiction_ocdids are provided
-    pass
-
-if __name__ == "__main__":
-    asyncio.run(main())

@@ -48,7 +48,7 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 
-RUN poetry install
+RUN poetry install --no-root
 
 # Copy the shared folder from parent directory
 COPY --chown=civicpatch_user:civicpatch_user shared/src/shared /app/src/shared
@@ -65,7 +65,7 @@ FROM image-base AS post-install
 RUN poetry run patchright install --with-deps chrome
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
-RUN poetry run post-install
+RUN poetry run python /app/src/setup.py
 
 USER civicpatch_user
 
