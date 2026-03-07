@@ -3,13 +3,10 @@ services:
     environment:
       - PIPELINE_RUN_COST_LIMIT
 
-      - BRAVE_SEARCH_TOKEN
       - GOOGLE_SEARCH_TOKEN
       - GOOGLE_SEARCH_ENGINE_ID
-      - SERP_API_SEARCH_TOKEN
 
       - GOOGLE_GEMINI_TOKEN
-      - OPENAI_TOKEN
       - TOGETHER_AI_TOKEN
 
       - SERVICE_API_KEY
