@@ -5,6 +5,8 @@ RUN apt-get update && apt-get install -y \
     xvfb \
     x11-utils \
     dbus-x11 \
+    # env substitution
+    gettext-base \ 
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
