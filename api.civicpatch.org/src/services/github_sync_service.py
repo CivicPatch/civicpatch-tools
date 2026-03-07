@@ -50,51 +50,54 @@ if not CIVICPATCH_API_DB_URL:
 async def get_jurisdiction_metadata(state: str):
     jurisdictions_file_path = os.path.join("data_source", state, "jurisdictions.yml")
     jurisdictions_metadata_file_path = os.path.join("data_source", state, "jurisdictions_metadata.yml")
+    logger.debug(f"Fetching jurisdictions_metadata from: {jurisdictions_metadata_file_path}")
     jurisdictions_metadata_response = await github_service.get_github_file_contents(jurisdictions_metadata_file_path)
+    logger.debug(f"Fetching jurisdiction_entries from: {jurisdictions_file_path}")
     jurisdiction_entries_response = await github_service.get_github_file_contents(jurisdictions_file_path)
 
     if not jurisdictions_metadata_response or not jurisdiction_entries_response:
+        logger.warning(f"Missing data for state {state}: "
+                       f"metadata_response={bool(jurisdictions_metadata_response)}, "
+                       f"entries_response={bool(jurisdiction_entries_response)}")
         return None
 
     jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_response)
     jurisdiction_entries = yaml.safe_load(jurisdiction_entries_response)
+    logger.debug(f"Loaded jurisdictions_metadata keys: {list(jurisdictions_metadata.keys())}")
+    logger.debug(f"Loaded jurisdiction_entries keys: {list(jurisdiction_entries.keys())}")
     metadata = jurisdictions_metadata.get("jurisdictions_by_id", {})
 
     for jurisdiction_ocdid, jurisdiction_metadata in metadata.items():
-        # Need to find matching jurisdiction_entry under "jurisdictions" array field
         jurisdictions = jurisdiction_entries.get("jurisdictions", [])
         jurisdiction_entry = next((entry for entry in jurisdictions if entry.get("id") == jurisdiction_ocdid), None)
         if jurisdiction_entry:
             jurisdiction_metadata["jurisdiction"] = jurisdiction_entry
 
-    ## save output for debugging
-    #output_dir = "debug_output"
-    #os.makedirs(output_dir, exist_ok=True)
-    #output_file_path = os.path.join(output_dir, f"{state}_jurisdiction_metadata.json")
-    #with open(output_file_path, "w") as output_file:
-    #    json.dump(metadata, output_file, indent=2)
-
+    logger.debug(f"Returning metadata for state {state}: {list(metadata.keys())}")
     return metadata
 
 async def get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids: List[str]) -> dict:
     jurisdiction_metadata_by_state = {}
+    logger.debug(f"Getting jurisdiction metadata for OCDIDs: {jurisdiction_ocdids}")
     for jurisdiction_ocdid in jurisdiction_ocdids:
         parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
         state = parsed_ocdid.state
         if state not in jurisdiction_metadata_by_state:
             jurisdiction_metadata_by_state[state] = await get_jurisdiction_metadata(state)
+    logger.debug(f"jurisdiction_metadata_by_state keys: {list(jurisdiction_metadata_by_state.keys())}")
     return jurisdiction_metadata_by_state
 
-
 async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids: List[str]):
+    logger.info(f"Syncing jurisdictions by OCDIDs: {jurisdiction_ocdids}")
     jurisdiction_metadata_by_state = await get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids)
     await sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata_by_state, jurisdiction_ocdids)
 
 async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, jurisdiction_ocdids: List[str]):
     jurisdictions: List[tuple] = []
+    logger.debug(f"Syncing jurisdictions with metadata for OCDIDs: {jurisdiction_ocdids}")
     for jurisdiction_ocdid in jurisdiction_ocdids:
         jurisdiction_data = jurisdiction_metadata.get(jurisdiction_ocdid)
-
+        logger.debug(f"Jurisdiction data for {jurisdiction_ocdid}: {jurisdiction_data}")
         parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
         state = parsed_ocdid.state
         updated_at = jurisdiction_data.get("updated_at") if jurisdiction_data else None
@@ -102,45 +105,53 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
         serialized_data = json.dumps(nested_jurisdiction_data) if nested_jurisdiction_data else None
         jurisdictions.append((jurisdiction_ocdid, state, "can-delete", serialized_data, updated_at, "can-delete"))
 
+    logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
     await database.bulk_update_jurisdictions(jurisdictions)
 
 async def sync_people_by_ocdids(jurisdiction_ocdids):
-    logging.info(f"Syncing people data for OCDIDs: {jurisdiction_ocdids}")
+    logger.info(f"Syncing people data for OCDIDs: {jurisdiction_ocdids}")
     people_list: List[tuple] = []
     for jurisdiction_ocdid in jurisdiction_ocdids:
         folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
         people_file_path = os.path.join("data", f"{folder_path}.yml")
+        logger.debug(f"Fetching people file: {people_file_path}")
         remote_data = await github_service.get_github_file_contents(people_file_path)
         remote_data_list = yaml.safe_load(remote_data) if remote_data else None
 
         if remote_data_list:
+            logger.debug(f"Loaded {len(remote_data_list)} people for {jurisdiction_ocdid}")
             for person in remote_data_list:
                 person_id = person.get("id")
                 updated_at = person.get("updated_at")
                 serialized_data = json.dumps(person)
                 people_list.append((person_id, jurisdiction_ocdid, people_file_path, serialized_data, updated_at, "dummy_git_commit_hash"))
+        else:
+            logger.debug(f"No people data found for {jurisdiction_ocdid}")
 
+    logger.debug(f"Prepared {len(people_list)} people for bulk update.")
     await database.bulk_update_people(people_list)
 
 async def bulk_sync():
+    logger.info("Starting bulk sync")
     states = await database.get_states()
+    logger.debug(f"States from DB: {states}")
     all_jurisdiction_metadata = {}
 
     for state in states:
+        logger.debug(f"Fetching remote metadata for state: {state}")
         remote_metadata_file = await get_jurisdiction_metadata(state)
-
+        logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
         all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
 
     local_jurisdictions = await database.get_jurisdiction_updates()
+    logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
 
     jurisdictions_to_update_metadata = []
     jurisdictions_to_update_data = []
 
     for jurisdiction_ocdid in all_jurisdiction_metadata:
         remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
-
         jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
-
         local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
         if is_newer(remote_updated_at, local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None):
             jurisdictions_to_update_data.append(jurisdiction_ocdid)
@@ -148,14 +159,13 @@ async def bulk_sync():
     remote_ocdids = set(all_jurisdiction_metadata.keys())
     local_ocdids = set(local_jurisdictions.keys())
 
-    # Jurisdictions to delete
-    # TODO: this should be a soft delete
     ocdids_to_delete = local_ocdids - remote_ocdids
     if ocdids_to_delete:
         logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
         await database.delete_jurisdictions_by_ocdids(list(ocdids_to_delete))
 
     logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
+    logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")
     await sync_jurisdictions_by_ocdids_with_metadata(all_jurisdiction_metadata, jurisdictions_to_update_metadata)
 
     logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
@@ -163,6 +173,7 @@ async def bulk_sync():
 
 async def sync(request: OdSyncRequestSchema):
     jurisdiction_ocdids = request.jurisdiction_ocdids
+    logger.info(f"Sync request for OCDIDs: {jurisdiction_ocdids}")
     if jurisdiction_ocdids:
         await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
         await sync_people_by_ocdids(jurisdiction_ocdids)
