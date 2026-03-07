@@ -7,40 +7,19 @@ class CachedToken(TypedDict):
     expires_at: float
 
 
-# In-memory store (swap out for Redis later)
+# Simple cache: just get/set/invalidate
 _store: dict[str, CachedToken] = {}
 
 EXPIRY_BUFFER_SECONDS = 300
 
-
-def _is_valid(cached: Optional[CachedToken]) -> bool:
-    return cached is not None and time.time() < cached["expires_at"] - EXPIRY_BUFFER_SECONDS
-
-
-async def get_cached_token(
-    key: str,
-    fetch_token: Callable[[], Awaitable[tuple[str, float]]],
-) -> str:
-    """
-    Get a cached token by key, or fetch a new one if missing/expired.
-
-    Args:
-        key: Cache key (e.g. "github:installation:12345")
-        fetch_token: Async callable that returns (token, expires_at_unix_timestamp)
-
-    Returns:
-        A valid token string
-    """
+def get_cached(key: str):
     cached = _store.get(key)
-
-    if _is_valid(cached):
+    if cached and time.time() < cached["expires_at"] - 300:
         return cached["token"]
+    return None
 
-    token, expires_at = await fetch_token()
-    _store[key] = CachedToken(token=token, expires_at=expires_at)
-
-    return token
-
+def set_cached(key: str, value: str, expires_at: float):
+    _store[key] = {"token": value, "expires_at": expires_at}
 
 def invalidate_token(key: str) -> None:
     """Force a token to be refreshed on next request."""

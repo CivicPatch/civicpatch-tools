@@ -18,8 +18,6 @@ class PeopleBatchResolveRequest(BaseModel):
     jurisdiction_ocdid: str
     people: list[BatchPersonRequest]
 
-
-
 def get_router() -> APIRouter:
     router = APIRouter()
 

@@ -3,13 +3,13 @@ import { html } from 'lit';
 import { useAuth } from '../hooks/useAuth.js';
 const API_URL = __API_URL__;
 
-// Only keep layout and spacing styles, remove color/background overrides for nav-link, btn-login, btn-logout
+// Only keep layout and spacing styles, remove sticky positioning from civ-navbar
 const NAVBAR_CSS = html`
   <style>
     civ-navbar {
       display: block;
-      position: sticky;
-      top: 0;
+      /* Removed: position: sticky; */
+      /* Removed: top: 0; */
       z-index: 100;
     }
     nav {
@@ -144,13 +144,6 @@ function Navbar() {
         CivicPatch
       </a>
       <div class="nav-links">
-        ${user ? html`
-          <a href="/progress" class="nav-link">Progress</a>
-          <!-- Conditionally show admin links based on permissions -->
-          <!--<a href="/jurisdictions" class="nav-link">Jurisdictions</a>-->
-          <!--<a href="/jobs" class="nav-link">Jobs</a>-->
-        ` : null
-        }
         ${loading
           ? html`
               <span class="loading" style="display:inline-flex;align-items:center;">

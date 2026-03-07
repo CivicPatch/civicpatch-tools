@@ -1,5 +1,8 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
+const API_URL = __API_URL__;
+import "../../components/progress-dashboard/summary-stats.js";
+import "../../components/progress-dashboard/locality-gaps.js";
 
 function SearchJurisdictions() {
   const [selectedState, setSelectedState] = useState(null);
@@ -7,6 +10,7 @@ function SearchJurisdictions() {
     useState(null);
   const [people, setPeople] = useState([]);
   const [geojson, setGeojson] = useState([]);
+  const [dashboardData, setDashboardData] = useState(null);
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) return;
@@ -23,6 +27,13 @@ function SearchJurisdictions() {
         setPeople(data.data);
       });
   }, [selectedJurisdictionOcdid]);
+
+  useEffect(() => {
+    // Fetch dashboard data once on mount
+    fetch(`${API_URL}/api/v1/data/dashboard`)
+      .then(res => res.json())
+      .then(data => setDashboardData(data.data));
+  }, []);
 
   const handleSelectJurisdictionChange = (event) => {
     const { state, jurisdiction_ocdid } = event.detail;
@@ -57,11 +68,24 @@ function SearchJurisdictions() {
             .geojson=${geojson}
           ></civ-map>
         </div>
-        <civ-select-jurisdiction
-          @select-jurisdiction-change=${handleSelectJurisdictionChange}
-        ></civ-select-jurisdiction>
+        <div>
+          <civ-select-jurisdiction
+            @select-jurisdiction-change=${handleSelectJurisdictionChange}
+          ></civ-select-jurisdiction>
+            ${dashboardData && selectedState ? html`
+                <section style="padding: 2rem 0;">
+                <h3>Progress by State</h3>
+                <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
+                </section>
+            ` : ""}
+        </div>
       </div>
       <civ-people-list .local=${people}></civ-people-list>
+      ${dashboardData && selectedState ? html`
+        <section style="margin-top:2rem;">
+          <locality-gaps .stats=${dashboardData} .state=${selectedState}></locality-gaps>
+        </section>
+      ` : ""}
     </div>
 
   `;
