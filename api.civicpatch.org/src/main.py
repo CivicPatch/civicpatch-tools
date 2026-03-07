@@ -150,6 +150,7 @@ if is_production:
         "https://civicpatch.org",
         "https://api.civicpatch.org",
         "https://app.civicpatch.org",
+        "https://test.civicpatch.org",
         "https://components.civicpatch.org",
     ]
 else:
