@@ -1,7 +1,5 @@
 import { useState, useEffect } from "haunted";
 
-const API_URL = __API_URL__;
-
 export function useJurisdiction(jurisdiction_ocdid) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

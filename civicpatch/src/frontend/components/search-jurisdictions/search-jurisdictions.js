@@ -1,6 +1,7 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-const API_URL = __API_URL__;
+import { config } from '../../assets/config.js';
+const API_URL = config.apiUrl;
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 

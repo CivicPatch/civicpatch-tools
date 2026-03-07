@@ -1,7 +1,5 @@
 import { html, component, useState, useEffect } from 'haunted';
 
-const API_URL = __API_URL__;
-
 function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeople }) {
   function renderCheckmark(value) {
     return value

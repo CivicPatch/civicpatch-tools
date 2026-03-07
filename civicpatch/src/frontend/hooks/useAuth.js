@@ -1,5 +1,4 @@
 import { useState, useEffect } from "haunted";
-const API_URL = __API_URL__;
 
 const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE: false,
