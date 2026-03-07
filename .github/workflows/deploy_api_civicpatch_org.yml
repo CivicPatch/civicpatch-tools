@@ -38,7 +38,7 @@ jobs:
         run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Build and push (api.civicpatch.org)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./
           file: ./api.civicpatch.org/Dockerfile

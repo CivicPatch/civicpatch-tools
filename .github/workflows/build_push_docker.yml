@@ -60,7 +60,7 @@ jobs:
       # Or get rid of it altogether
       - name: Build and push (slim)
         if: ${{ github.ref_name == 'main' }}
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./civicpatch/Dockerfile
@@ -93,7 +93,7 @@ jobs:
       # Use this image when self hosting, else there are issues
       # with permissions in running this image in GitHub Actions
       - name: Build and push (production)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./civicpatch/Dockerfile
@@ -124,7 +124,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push (github actions)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./civicpatch/Dockerfile.github-actions
