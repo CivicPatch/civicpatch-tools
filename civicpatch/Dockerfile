@@ -144,6 +144,8 @@ WORKDIR /app
 
 COPY --from=production-build /app/build/. /app/src/frontend/build
 
+USER root
+
 RUN chown -R root:root /app && \
     chmod -R 755 /app && \
     chown -R civicpatch_user:civicpatch_user /app/src/frontend/assets
