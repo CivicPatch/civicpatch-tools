@@ -62,14 +62,4 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             }
         )
 
-    #@router.get("/jobs", include_in_schema=False)
-    #async def jobs_page(
-    #    request: Request, 
-    #):
-    #    return templates.TemplateResponse(
-    #        "pages/jobs.html",
-    #        {
-    #            "request": request,
-    #        }
-    #    )
     return router
