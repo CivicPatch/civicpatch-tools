@@ -8,7 +8,8 @@ from jobs.people_collector.schemas import (
     PeopleCollectorContext, WorkflowStatus, 
 
 )
-from utils import url_utils, log_utils
+from utils import log_utils
+from shared.utils import url_utils
 from domain.models import Official
 
 # Todo: Should return updated configs

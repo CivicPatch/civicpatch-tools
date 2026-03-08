@@ -31,11 +31,12 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     for person in filtered_people:
         person = maybe_add_fallback_url(person)
 
-    resolved_people_response = await services.civicpatch_api.batch_resolve_people(
+    resolved_people = await services.civicpatch_api.batch_resolve_people(
         context.data.jurisdiction_ocdid,
         filtered_people,
     )
-    resolved_people = resolved_people_response.get("data", [])
+    logger.debug(f"Batch resolved people data from API: {resolved_people}")
+    logger.debug(f"Filtered people before assigning IDs: {[person.model_dump() for person in filtered_people]}")
     for person, resolved_person in zip(filtered_people, resolved_people):
         person.id = resolved_person.get("id")
 

@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 import traceback
 from typing import List, Optional
 
@@ -13,9 +14,12 @@ from interfaces.schemas import (
 from jobs.people_collector.main import start_threaded as start_people_collector
 from jobs.people_collector.main import stop as stop_people_collector
 from jobs.people_collector.schemas import WorkflowStatus
+from jobs.engine import WorkflowError
 from shared.utils import id_utils
 from jobs.registry import get_workflow
 import services.civicpatch_api
+
+logger = logging.getLogger(__name__)
 
 
 def get_router() -> APIRouter:
@@ -38,6 +42,12 @@ def get_router() -> APIRouter:
             "data": data
         }
 
+    async def _run_pipeline(request_id, jurisdiction_ocdid, config):
+        try:
+            await start_people_collector(request_id, jurisdiction_ocdid, config)
+        except Exception:
+            pass  # Already logged in people_collector.main
+
     @router.post("/pipelines")
     async def post_pipelines(
         request: PeopleCollectorJobRequest,
@@ -49,15 +59,15 @@ def get_router() -> APIRouter:
         request_id = id_utils.make_request_id()
         warnings, errors = validate_people_request(request)
 
+        if errors:
+            raise HTTPException(status_code=400, detail={"errors": errors, "warnings": warnings})
+
         background_tasks.add_task(
-            start_people_collector,
+            _run_pipeline,
             request_id, 
             request.jurisdiction_ocdid, 
             request.config
         )
-
-        if errors:
-            raise HTTPException(status_code=400, detail={"errors": errors, "warnings": warnings})
 
         return {
             "data": {

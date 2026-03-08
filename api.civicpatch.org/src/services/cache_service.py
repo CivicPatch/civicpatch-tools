@@ -1,23 +1,14 @@
-import os
 import time
 import json
-import redis
-from typing import Optional, TypedDict
+from typing import Optional
 
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-
-class CachedToken(TypedDict, total=False):
-    token: str
-    expires_at: float
+from stores import redis_store
 
 EXPIRY_BUFFER_SECONDS = 300
-DEFAULT_CACHE_SECONDS = 3600  # 1 hour
+DEFAULT_CACHE_SECONDS = 3600
 
-# Connect to Redis (adjust host/port/db as needed)
-redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
-
-def get_cached(key: str):
-    raw = redis_client.get(key)
+def get_cached(key: str) -> Optional[str]:
+    raw = redis_store.get(key)
     if not raw:
         return None
     cached = json.loads(raw)
@@ -26,12 +17,12 @@ def get_cached(key: str):
         return None
     return cached["token"]
 
-def set_cached(key: str, value: str, expires_at: Optional[float] = None):
+def set_cached(key: str, value: str, expires_at: Optional[float] = None) -> None:
     if expires_at is None:
         expires_at = time.time() + DEFAULT_CACHE_SECONDS
-    entry: CachedToken = {"token": value, "expires_at": expires_at}
+    entry = {"token": value, "expires_at": expires_at}
     ttl = int(expires_at - time.time())
-    redis_client.set(key, json.dumps(entry), ex=ttl)
+    redis_store.set(key, json.dumps(entry), ttl)
 
-def invalidate_token(key: str) -> None:
-    redis_client.delete(key)
+def invalidate(key: str) -> None:
+    redis_store.delete(key)

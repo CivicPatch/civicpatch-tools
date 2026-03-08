@@ -105,16 +105,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       const data = await fetchPullRequestData(pullRequest, jurisdiction_ocdid);
       if (data?.data) {
         assignPeople(data.data);
-        try {
-          const response = await batchResolvePeople(data.data, jurisdiction_ocdid);
-          const formatted_people = response?.data?.map(d => d.person) || [];
-          setResolvedPeople(formatted_people.reduce((acc, person) => {
-            acc[person.id] = person;
-            return acc;
-          }, {}));
-        } catch (err) {
-          console.error("Batch resolve failed", err);
-        }
+        //try {
+        //  const response = await batchResolvePeople(data.data, jurisdiction_ocdid);
+        //  const formatted_people = response?.data?.map(d => d.person) || [];
+        //  setResolvedPeople(formatted_people.reduce((acc, person) => {
+        //    acc[person.id] = person;
+        //    return acc;
+        //  }, {}));
+        //} catch (err) {
+        //  console.error("Batch resolve failed", err);
+        //}
       }
       setReviewData(data?.review || null);
     } catch (err) {
@@ -162,7 +162,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       const isNew = !person.id || !canonicalIds.has(person.id);
       return {
         ...person,
-        id: person.id || genKey(),
+        id: person.id,
         _isNew: isNew,
       };
     });
@@ -268,7 +268,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleReset(tempKey) {
     if (!tempKey) {
       if (selectedPullRequest) {
-        getSelectedPullRequestData(selectedPullRequest);
+        handleSelectedPullRequestData(selectedPullRequest);
       } else {
         assignPeople(people);
       }
@@ -370,7 +370,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .then(() => {
         setNotice(
          selectedPullRequest
-            ? `Changes submitted: ${selectedPullRequest?.url}`
+            ? `Changes submitted: <a href="${selectedPullRequest?.url}">${selectedPullRequest?.url}</a>`
             : "Changes submitted."
         );
       })
@@ -583,6 +583,11 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           editable: true,
           type: "multiple",
           customCss: customCssForPerson,
+        },
+        {
+          field: "id",
+          label: "ID",
+          editable: false,
         }
       ]}
       .data=${currentPeople}
@@ -653,7 +658,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     .dirty=${dirty}
     .isLoading=${isLoading}
     .notice=${notice}
-    .error=${error}
   ></civ-people-action-buttons>
 
   ${isLoading ? html`

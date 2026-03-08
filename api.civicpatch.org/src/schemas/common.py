@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict
 from dataclasses import dataclass, field
 from enum import Enum
+import shared.utils.id_utils as id_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
@@ -40,7 +41,7 @@ class PullRequest(BaseModel):
     def model_post_init(self, __context):
         try:
             if not self.jurisdiction_ocdid and self.branch_name:
-                self.jurisdiction_ocdid = shared.utils.id_utils.git_branch_to_jurisdiction_ocdid(self.branch_name)
+                self.jurisdiction_ocdid = id_utils.git_branch_to_jurisdiction_ocdid(self.branch_name)
         except Exception as e:
             print(f"git branch does not match jurisdiction id format: {self.branch_name}. Error: {e}")
             self.jurisdiction_ocdid = ""

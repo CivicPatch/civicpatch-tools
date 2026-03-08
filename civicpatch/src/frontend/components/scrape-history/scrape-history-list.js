@@ -1,6 +1,7 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import "./scrape-history-modal.js";
+import "../status-badge.js";
 
 function ScrapeHistoryList({ history, jobStatus }) {
   const historyData = JSON.parse(history);
@@ -41,12 +42,16 @@ function ScrapeHistoryList({ history, jobStatus }) {
     return `${minutes}m ${seconds}s`;
   };
 
-  const statusClass = (status) => {
+  const statusBadgeProps = (status) => {
     const s = (status || "").toLowerCase().replace(/\s+/g, "-");
     switch (s) {
-      case "done": return "done";
-      case "failed": return "failed";
-      default: return "default";
+      case "done":
+        return { bg: "var(--pico-ins-color)" };
+      case "failed":
+      case "error":
+        return { bg: "var(--pico-del-color)", color: "var(--pico-del-inverse)" };
+      default:
+        return { bg: "var(--pico-warn-color)" };
     }
   };
 
@@ -66,11 +71,6 @@ function ScrapeHistoryList({ history, jobStatus }) {
       .scrape-history-table tr:last-child td { border-bottom: none; }
       .date-btn { all: unset; cursor: pointer; text-decoration: underline; color: var(--pico-primary); }
       .date-btn:hover { opacity: 0.8; }
-      .status-cell { text-align: right; white-space: nowrap; }
-      .badge { font-weight: 600; font-size: 0.8rem; padding: 0.2rem 0.6rem; border-radius: 999px; display: inline-block; }
-      .badge.done, .badge.completed { background: var(--pico-ins-color); }
-      .badge.failed { background: var(--pico-del-color); }
-      .badge.default { background: var(--pico-warn-color); }
       .duration-cell { font-size: 0.8rem; color: var(--pico-muted-color); text-align: right; white-space: nowrap; }
       progress { width: 100%; height: 0.4rem; margin-top: 0.25rem; }
       .table-scroll { max-height: 300px; overflow-y: auto; }
@@ -95,7 +95,11 @@ function ScrapeHistoryList({ history, jobStatus }) {
                 ${job.created_at && job.updated_at ? getDurationString(job.created_at, job.updated_at) : ""}
               </td>
               <td class="status-cell">
-                <span class="badge ${statusClass(job.status)}">${job.status}</span>
+                <civ-status-badge
+                  label="${job.status}"
+                  bg="${statusBadgeProps(job.status).bg}"
+                  color="${statusBadgeProps(job.status).color || ''}"
+                ></civ-status-badge>
               </td>
             </tr>
           `)}

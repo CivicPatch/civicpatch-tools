@@ -26,6 +26,7 @@ class LinkStatus(Enum):
     PREPROCESSED = "preprocessed"
     PREPROCESSED_NO_CONTENT = "preprocessed_no_content"
     PROCESSED_IRRELEVANT = "processed_irrelevant"
+    PROCESSED_HEURISTICS_FAIL  = "processed_heuristics_fail"
     DONE = "done"
     ERROR = "error"
 

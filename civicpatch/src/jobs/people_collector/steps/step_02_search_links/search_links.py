@@ -11,11 +11,8 @@ from jobs.people_collector.schemas import (
 from shared.utils.config_utils import search_keywords, crawl_keywords
 from utils import log_utils
 from utils.array_utils import interleave_arrays
-from utils.request_utils import with_retry
 
 from services.google_search import search as google_search
-from services.serp_search import search as serp_search
-from services.brave_search import search as brave_search 
 from utils import cost_utils
 
 from jobs.people_collector.steps.step_02_search_links.crawl import crawl

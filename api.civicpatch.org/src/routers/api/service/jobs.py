@@ -258,7 +258,7 @@ def get_router(api_key_header):
     async def post_job_pull_request_data_endpoint(
         branch_name: str,
         request: PostJobPullRequestDataRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         print("branch_name", branch_name)
         user_name = user.email

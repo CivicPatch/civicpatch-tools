@@ -1,10 +1,12 @@
 import argparse
 import asyncio
 import os
+import sys
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
+from jobs.engine import WorkflowError
 from jobs.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 
@@ -16,16 +18,19 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
     warnings, errors = validate_people_request(request)
     if errors:
         print("Errors:", errors)
-        return
+        sys.exit(1)
     if warnings:
         for warning in warnings:
             print(f"Warning: {warning}")
 
-    await start_people_collector(
-        request_id=request_id,
-        jurisdiction_ocdid=request.jurisdiction_ocdid,
-        config=request.config,
-    )
+    try:
+        await start_people_collector(
+            request_id=request_id,
+            jurisdiction_ocdid=request.jurisdiction_ocdid,
+            config=request.config,
+        )
+    except WorkflowError:
+        sys.exit(1)  # Already logged in people_collector.main
 
 def main():
     parser = argparse.ArgumentParser(

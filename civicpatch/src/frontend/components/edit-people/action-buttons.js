@@ -50,21 +50,6 @@ function PeopleActionButtons({
       >
         Submit
       </button>
-      ${isLoading ? html`
-        <div style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;">
-          Submitting changes...
-        </div>
-      ` : ""}
-      ${notice ? html`
-        <div style="margin-bottom:1rem; padding:0.75em; background:#e0ffe0; border-radius:6px; color:#155724;">
-          ${notice}
-        </div>
-      ` : ""}
-      ${error ? html`
-        <div style="margin-bottom:1rem; padding:0.75em; background:#ffe0e0; border-radius:6px; color:#721c24;">
-          ${error}
-        </div>
-      ` : ""}
     </div>
   `;
 }

@@ -82,7 +82,7 @@ async def update_people_job_result(logger, request_id: str, people: List[Officia
             logger.error(f"Failed to update job result with api.civicpatch.org: {response.status_code} {response.text}")
         return response
 
-async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]):
+async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]) -> List[dict]:
     people_dicts = [official.model_dump() for official in people]
     formatted_people_dicts = [
         {
@@ -102,7 +102,8 @@ async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]):
             json=data,
         )
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        return data.get("data", [])
     
 async def submit_job_artifacts(request_id: str, jurisdiction_ocdid: str, zip_file_path: str):
     data = {
