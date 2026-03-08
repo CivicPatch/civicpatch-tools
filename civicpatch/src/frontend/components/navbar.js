@@ -9,8 +9,6 @@ const NAVBAR_CSS = html`
   <style>
     civ-navbar {
       display: block;
-      /* Removed: position: sticky; */
-      /* Removed: top: 0; */
       z-index: 100;
     }
     nav {
@@ -43,14 +41,18 @@ const NAVBAR_CSS = html`
       align-items: center;
       gap: 0.75rem;
     }
-    .user-info {
-      display: flex;
+    .user-info-label {
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       color: var(--pico-muted-color);
       font-size: 0.875rem;
+      cursor: default;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      position: relative;
     }
-    .user-info i {
+    .user-info-label i.fa-circle {
       font-size: 0.5rem;
       color: var(--pico-primary-background);
     }
@@ -94,7 +96,6 @@ const NAVBAR_CSS = html`
       border-radius: 0.4em;
       margin: 0 0.2em;
       vertical-align: middle;
-      /* No animation */
     }
     @keyframes loading-breadstick {
       0%, 80%, 100% {
@@ -107,9 +108,42 @@ const NAVBAR_CSS = html`
   </style>
 `;
 
-function renderUserInfo(user) {
+function renderTeamsDropdownContent(teams) {
+  if (!teams || teams.length === 0) {
+    return html`
+      <div class="teams-dropdown-header">Teams</div>
+      <div class="teams-dropdown-empty">No teams assigned</div>
+    `;
+  }
   return html`
-    <span class="user-info">
+    <div class="teams-dropdown-header">Teams</div>
+    ${teams.map(
+      (team) => html`
+        <li>
+          <i class="fas fa-users"></i>
+          ${team.name || team}
+        </li>
+      `
+    )}
+  `;
+}
+
+function getTeamsTooltip(teams) {
+  if (!teams || teams.length === 0) {
+    return 'No teams assigned';
+  }
+  return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
+}
+
+function renderUserInfo(user) {
+  const teams = user.teams || [];
+  const tooltip = getTeamsTooltip(teams);
+  return html`
+    <span
+      class="user-info-label"
+      data-tooltip="${tooltip}"
+      data-placement="bottom"
+    >
       <i class="fas fa-circle"></i>
       ${user.email || 'User'}
     </span>
@@ -134,9 +168,13 @@ function renderLogin() {
   `;
 }
 
-function Navbar() {
-  const { user, loading, permissions } = useAuth();
-
+function Navbar({ user }) {
+  let userData = null;
+  try {
+    userData = user ? JSON.parse(user) : null;
+  } catch (e) {
+    userData = null;
+  }
   return html`
     ${NAVBAR_CSS}
     <nav>
@@ -145,21 +183,10 @@ function Navbar() {
         CivicPatch
       </a>
       <div class="nav-links">
-        ${loading
-          ? html`
-              <span class="loading" style="display:inline-flex;align-items:center;">
-                <span class="loading-skeleton"></span>
-                <span class="loading-skeleton"></span>
-                <span class="loading-skeleton"></span>
-              </span>
-            `
-          : user
-            ? renderUserInfo(user)
-            : renderLogin()
-        }
+      ${userData && userData.authenticated ? renderUserInfo(userData) : renderLogin()}
       </div>
     </nav>
   `;
 }
 
-customElements.define('civ-navbar', component(Navbar, { useShadowDOM: false }));
+customElements.define('civ-navbar', component(Navbar, { useShadowDOM: false, observedAttributes: ['user'] }));
