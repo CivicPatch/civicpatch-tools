@@ -46,7 +46,7 @@ COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 
 RUN poetry install --no-root
 
-COPY shared /app/src/shared
+COPY shared/src/shared /app/src/shared
 
 COPY ${PROJECT_NAME} .
 
