@@ -43,6 +43,17 @@ def get_router(api_key_header):
     router = APIRouter()
 
     @router.get(
+        "/people/pull_requests",
+        include_in_schema=False
+    )
+    async def get_people_pull_requests_endpoint(
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+    ):
+        open_pull_requests = await github_service.get_open_pull_requests()
+        print("open_pull_requests", open_pull_requests)
+        return {"data": open_pull_requests}
+
+    @router.get(
         "/people/{request_id}",
         summary="Get job and job results, if available",
         description="Retrieve the status of a specific job by its request ID.",
