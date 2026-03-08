@@ -85,6 +85,7 @@
 
     --pico-ins-color: rgb(var(--catppuccin-green));
     --pico-del-color: rgb(var(--catppuccin-red));
+    --pico-del-inverse: rgb(var(--catppuccin-mantle));
     --pico-warn-color: rgb(var(--catppuccin-yellow));
 }
 
@@ -140,12 +141,12 @@
     --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
 
     --pico-ins-color: rgba(var(--catppuccin-green), 0.5);
-    --pico-del-color: rgba(var(--catppuccin-red), 0.5);
+    --pico-del-color: rgb(var(--catppuccin-red));
+    --pico-del-inverse: rgb(var(--catppuccin-crust));
     --pico-info-background: rgb(var(--catppuccin-blue));
     --pico-del-background: rgb(var(--catppuccin-red));
     --pico-ins-background: rgb(var(--catppuccin-green));
     --pico-info-color: rgb(var(--catppuccin-blue));
-    --pico-del-color: rgb(var(--catppuccin-red));
     --pico-ins-color: rgb(var(--catppuccin-green));
     --pico-warn-color: rgb(var(--catppuccin-yellow));
     --pico-muted-color: rgb(var(--catppuccin-subtext0));

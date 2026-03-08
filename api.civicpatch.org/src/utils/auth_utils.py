@@ -9,6 +9,9 @@ from typing import cast
 import database
 from schemas.common import Identity, RouteCategory, ROUTE_PERMISSIONS
 
+import logging
+logger = logging.getLogger(__name__)
+
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
 API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
@@ -47,7 +50,7 @@ async def get_user(
     # 3. Handle service API key
     if token_source == "service_api_key":
         return Identity(
-            type="service_key",
+            type="service_api_key",
             provider="system",
             provider_user_id="service_api_key",
             email=None,
@@ -84,7 +87,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
 
 # Update Identity creation to use teams (list)
 async def get_user_by_cookie(request, token: str) -> Identity:
-    try: #TODO
+    try:
         decode_kwargs = {"key": cast(str, JWT_SECRET_KEY), "algorithms": ["HS256"]}
         if JWT_AUDIENCE:
             decode_kwargs["audience"] = JWT_AUDIENCE
@@ -92,40 +95,47 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             decode_kwargs["issuer"] = JWT_ISSUER
         claims = jwt.decode(token, **decode_kwargs)
         payload = claims.get("pld", claims)
-    except JWTError:
+    except JWTError as e:
+        logger.debug(f"JWT decode failed: {e}")
         raise HTTPException(status_code=401, detail="Invalid authentication credentials")
 
     # CSRF protection for cookie-authenticated unsafe requests
     if request.method.upper() in UNSAFE_METHODS:
-        # Prefer header (AJAX), fall back to form field for plain HTML forms
         csrf_token = request.headers.get("x-csrf-token")
+        logger.debug(f"CSRF check: method={request.method}, has_csrf_header={csrf_token is not None}")
         if not csrf_token:
             form = await request.form()
             csrf_token = form.get("csrf_token")
+            logger.debug(f"CSRF check: fell back to form field, has_csrf_form={csrf_token is not None}")
 
         csrf_cookie = request.cookies.get("csrf_token")
-        # Require double-submit: submitted token must equal cookie
+        logger.debug(f"CSRF check: has_csrf_cookie={csrf_cookie is not None}, tokens_match={csrf_token == csrf_cookie if csrf_token and csrf_cookie else False}")
         if not csrf_token or not csrf_cookie or csrf_token != csrf_cookie:
+            logger.debug(f"CSRF double-submit failed: csrf_token={bool(csrf_token)}, csrf_cookie={bool(csrf_cookie)}")
             raise HTTPException(status_code=403, detail="CSRF check failed for cookie-authenticated request")
 
-        # Verify signed csrf cookie integrity and freshness
         try:
             decoded_csrf = jwt.decode(
                 csrf_cookie, key=cast(str, JWT_SECRET_KEY), algorithms=["HS256"]
             )
-        except JWTError:
+            logger.debug(f"CSRF JWT decoded successfully: sub={decoded_csrf.get('sub')}, iat={decoded_csrf.get('iat')}")
+        except JWTError as e:
+            logger.debug(f"CSRF JWT decode failed: {e}")
             raise HTTPException(status_code=403, detail="Invalid CSRF token")
 
-        # check token subject matches authenticated subject (claims['sub'])
         csrf_sub = decoded_csrf.get("sub")
         auth_sub = claims.get("sub")
         if not csrf_sub or not auth_sub or str(csrf_sub) != str(auth_sub):
+            logger.debug(f"CSRF subject mismatch: csrf_sub={csrf_sub}, auth_sub={auth_sub}")
             raise HTTPException(status_code=403, detail="CSRF token subject mismatch")
 
-        # optional freshness: require issued within last 24 hours
         iat = decoded_csrf.get("iat")
-        if not iat or (int(time.time()) - int(iat) > 24 * 3600):
+        now = int(time.time())
+        if not iat or (now - int(iat) > 24 * 3600):
+            logger.debug(f"CSRF token expired: iat={iat}, now={now}, age={now - int(iat) if iat else 'N/A'}s")
             raise HTTPException(status_code=403, detail="Expired CSRF token")
+
+        logger.debug("CSRF validation passed")
 
     openid_obj = OpenID(**payload)
     teams = payload.get("teams")  # <-- expect a list from token payload
@@ -163,29 +173,27 @@ def require_route_access(category: RouteCategory):
     ):
         permission = ROUTE_PERMISSIONS.get(category)
         if not permission:
+            logger.debug(f"Unknown route category: {category}")
             raise HTTPException(status_code=403, detail="Unknown route category.")
+
+        logger.debug(f"Route access check: category={category}, identity.type={identity.type}, identity.email={identity.email}, teams={identity.teams}")
 
         # Public
         if permission.public:
             return identity
 
         # Service key — not tied to a person, skip all team checks
-        if permission.allow_service_key and identity.type == "service_key":
+        if permission.allow_service_key and identity.type == "service_api_key":
+            logger.debug(f"Service key access granted for category={category}")
             return identity
 
-        # Session-only routes — reject non-session auth
-        if permission.allow_session and identity.type != "service_key":
-            if identity.type != "session" and not permission.allow_user_key:
-                raise HTTPException(status_code=403, detail="This route requires a user session.")
+        # This must be a user only route, let's start checking for their teams
+        user_teams = identity.teams
 
-            # User API key or session — resolve teams from DB if needed
-            user_teams = identity.teams
+        if permission.required_teams and not any(t in permission.required_teams for t in user_teams):
+            logger.debug(f"Access denied: insufficient teams. required={permission.required_teams}, user_teams={user_teams}, category={category}, email={identity.email}")
+            raise HTTPException(status_code=403, detail="Insufficient team permissions.")
 
-            if permission.required_teams and not any(t in permission.required_teams for t in user_teams):
-                raise HTTPException(status_code=403, detail="Insufficient team permissions.")
-
-            return identity
-
-        raise HTTPException(status_code=403, detail="Access denied.")
-
+        logger.debug(f"Access granted for category={category}, identity.type={identity.type}, email={identity.email}")
+        return identity
     return _dependency

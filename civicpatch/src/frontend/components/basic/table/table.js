@@ -381,7 +381,7 @@ function BasicTable(props) {
           ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(props.columns.length, dropIndex) : null}
           ${dropIndex < props.data.length ? html`
             <tr
-              draggable="true"
+              draggable="${editingCell.row !== null && editingCell.col !== null ? "false" : "true"}"
               class=${dropIndex === draggedIndex ? "dragging" : ""}
               @dragstart=${e => handleDragStart(dropIndex, e)}
               @dragend=${handleDragEnd}

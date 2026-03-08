@@ -1,5 +1,8 @@
 import asyncio
-from jobs.engine import run_workflow
+import traceback
+import logging
+
+from jobs.engine import run_workflow, WorkflowError
 from jobs.people_collector.schemas import (
   WorkflowConfig,
   WorkflowStatus,
@@ -13,6 +16,9 @@ from shared.utils import data_path_utils
 from utils import log_utils
 from jobs.registry import RUNNING_WORKFLOWS, WorkflowEntry, stop_workflow
 
+logger = logging.getLogger(__name__)
+
+
 def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowConfig) -> PeopleCollectorContext:
     context = PeopleCollectorContext(
         request_id=request_id,
@@ -22,23 +28,35 @@ def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowCon
           config=config,
         ),
     )
-    logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
+    workflow_logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     RUNNING_WORKFLOWS[jurisdiction_ocdid] = WorkflowEntry(
         current_state=context.current_state,
         stop_flag=False
     )
-    return context, logger
+    return context, workflow_logger
+
 
 async def start(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig) -> PeopleCollectorContext:
-    """For cli"""
-    context, logger = initialize_workflow(request_id, jurisdiction_ocdid, config)
+    """Entry point for people collector. Logs errors and re-raises."""
+    context, workflow_logger = initialize_workflow(request_id, jurisdiction_ocdid, config)
 
-    return await run_workflow(
-        context,
-        logger,
-        TRANSITION_MAP,
-        persist_context
-    )
+    try:
+        return await run_workflow(
+            context,
+            workflow_logger,
+            TRANSITION_MAP,
+            persist_context
+        )
+    except WorkflowError as e:
+        logger.error(f"Pipeline failed for {e.jurisdiction_ocdid}: {e}")
+        raise
+    except Exception as e:
+        logger.error(
+            f"Unexpected error in pipeline for {jurisdiction_ocdid}: {e}\n"
+            f"{traceback.format_exc()}"
+        )
+        raise
+
 
 async def start_threaded(request_id, jurisdiction_ocdid, config):
     """For API: Run the start coroutine in a separate thread."""
@@ -47,12 +65,10 @@ async def start_threaded(request_id, jurisdiction_ocdid, config):
 
     await asyncio.to_thread(run_start)
 
-#def resume_people_collector(context: PeopleCollectorContext, stop_flag=None, persist_fn=None):
-#    """Resume existing workflow"""
-#    return run_workflow(context, step_runner, stop_flag=stop_flag, persist_fn=persist_fn)
 
 def stop(context: PeopleCollectorContext) -> PeopleCollectorContext:
     stop_workflow(context.data.jurisdiction_ocdid)
+
 
 def persist_context(context: PeopleCollectorContext):
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
@@ -60,3 +76,4 @@ def persist_context(context: PeopleCollectorContext):
     serialized_data = context.model_dump_json(indent=4, ensure_ascii=False)
     with open(context_file_path, "w") as f:
         f.write(serialized_data)
+

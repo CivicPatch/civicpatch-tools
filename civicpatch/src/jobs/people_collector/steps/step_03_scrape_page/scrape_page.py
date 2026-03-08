@@ -1,12 +1,11 @@
 import os
 from typing import List
-from shared.utils import data_path_utils
+from shared.utils import data_path_utils, url_utils
 import jobs.people_collector.steps.step_03_scrape_page.scrape_utils as scrape_utils
 from jobs.people_collector.schemas import (
     PeopleCollectorContext, Link, LinkStatus, WorkflowStatus 
 )
-import utils.url_utils as url_utils
-from utils import log_utils, url_utils
+from utils import log_utils 
 
 async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> List[Link]:
     """

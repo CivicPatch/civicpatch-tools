@@ -19,7 +19,7 @@ def resolve_people_ids(
     for p in people_to_resolve:
         matches = resolve_person_id(p.get("name"), p.get("email"), people, canonical_map)
         if not matches:
-            results.append({"id": p.get("id", uuid.uuid4()), "person": None, "ambiguous": False})
+            results.append({"id": p.get("id") or str(uuid.uuid4()), "person": None, "ambiguous": False})
         elif len(matches) == 1:
             results.append({"id": matches[0].id, "person": matches[0], "ambiguous": False})
         else:

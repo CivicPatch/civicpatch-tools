@@ -133,7 +133,6 @@ def get_router(api_key_header):
     ):
         file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
         context_file_path = data_path_utils.get_data_source_context_file_path(jurisdiction_ocdid)
-        print("context file path", context_file_path)
         # Chop off leading "/app/" from file_path
         if file_path.startswith("/app/"):
             file_path = file_path[len("/app/"):]

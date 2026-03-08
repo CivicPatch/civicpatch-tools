@@ -19,11 +19,11 @@ from shared.utils import (
     config_utils, 
     data_path_utils, 
     phone_utils,
-    email_utils
+    email_utils,
+    url_utils
 )
 from utils import (
     merge_utils, 
-    url_utils, 
     people_utils,
     log_utils
 )
@@ -79,12 +79,17 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     if not is_relevant:
         return updated_links, current_step.copy(update={"links": updated_links})
 
-    updated_raw_records, updated_records = await run_llm_loop(
+    updated_raw_records, updated_records, heuristics_passed = await run_llm_loop(
         context, page_to_process, content, setup_data, current_step, identities, logger
     )
 
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
-    updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
+
+    if heuristics_passed:
+        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
+    else:
+        updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL)
+
     logger.info(f"links updated: {updated_links}")
 
     return updated_links, ProcessPageContentStep(
@@ -183,11 +188,12 @@ async def run_llm_loop(
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
-) -> Tuple[RecordsByLLM, RecordsByLLM]:
+) -> Tuple[RecordsByLLM, RecordsByLLM, bool]:
     updated_raw_records = current_step.raw_records_by_llm
     updated_records = current_step.records_by_llm
     llm_index = 0
     retry_count = 0
+    heuristics_passed = False
 
     while llm_index < len(LLMS):
         llm = LLMS[llm_index]
@@ -206,12 +212,13 @@ async def run_llm_loop(
             updated_records, updated_raw_records,
         )
 
-        if check_page_heuristics(logger, content, records_found):
+        if check_page_heuristics(logger, page_to_process.url, content, records_found):
             logger.info(f"Heuristics passed for LLM: {llm['name']}")
             for prev_llm in LLMS[:llm_index]:
                 if not prev_llm.get("with_batch_api", False):
                     updated_raw_records = wipe_records_by_source_url(updated_raw_records, prev_llm["name"], page_to_process.url)
                     updated_records = wipe_records_by_source_url(updated_records, prev_llm["name"], page_to_process.url)
+            heuristics_passed = True
             break
 
         if retry_count < 1:
@@ -224,8 +231,10 @@ async def run_llm_loop(
         updated_records = wipe_records_by_source_url(updated_records, llm["name"], page_to_process.url)
         llm_index += 1
         retry_count = 0
+    else:
+        logger.warning(f"All LLMs failed heuristics for page: {page_to_process.url}")
 
-    return updated_raw_records, updated_records
+    return updated_raw_records, updated_records, heuristics_passed
 
 
 async def process_with_llm(
@@ -394,7 +403,7 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     return has_contact and has_role
 
 
-def check_page_heuristics(logger, input_text: str, records_found: List[LLMPerson]) -> bool:
+def check_page_heuristics(logger, source_url: str, input_text: str, records_found: List[LLMPerson]) -> bool:
     """
     Per-page heuristics check for a single LLM's results.
     Returns True if every non-empty field (email, phone, url, role) in each LLMPerson
@@ -412,6 +421,9 @@ def check_page_heuristics(logger, input_text: str, records_found: List[LLMPerson
             logger.warning(f"Phone not found in input text: {person.phone}")
             return False
         if person.url and person.url not in input_text:
+            # Sometimes the current url IS the person's url
+            if not url_utils.same_url(person.url, source_url):
+                pass
             logger.warning(f"URL not found in input text: {person.url}")
             return False
         if person.roles:

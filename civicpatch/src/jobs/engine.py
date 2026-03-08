@@ -17,6 +17,15 @@ from jobs.registry import (
     unregister_workflow,
 )
 
+
+class WorkflowError(Exception):
+    """Raised when a workflow terminates in ERROR state."""
+    def __init__(self, jurisdiction_ocdid: str, context: WorkflowContext):
+        self.jurisdiction_ocdid = jurisdiction_ocdid
+        self.context = context
+        super().__init__(f"Workflow failed for {jurisdiction_ocdid}")
+
+
 async def run_workflow(
     context,
     logger: log_utils.WorkflowLogger,
@@ -49,8 +58,10 @@ async def run_workflow(
 
     register_workflow(jurisdiction_ocdid, ctx.current_state)
 
-    while ctx.current_state not in [WorkflowStatus.DONE]: # Note: all workflow state should include DONE
-        log_system_usage()  # Log system usage at the start of each iteration
+    terminal_states = {WorkflowStatus.DONE, WorkflowStatus.ERROR}
+
+    while ctx.current_state not in terminal_states:
+        log_system_usage()
 
         await civicpatch_api.update_job_status(
             ctx.request_id,
@@ -76,13 +87,18 @@ async def run_workflow(
         if persist_fn:
             persist_fn(ctx)
 
-    log_system_usage()  # Log system usage before the final update
+    log_system_usage()
+
+    final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
     await civicpatch_api.update_job_status(
         ctx.request_id,
         ctx.data.jurisdiction_ocdid,
         status=ctx.current_state.value,
-        progress=100
+        progress=final_progress
     )
     unregister_workflow(jurisdiction_ocdid)
+
+    if ctx.current_state == WorkflowStatus.ERROR:
+        raise WorkflowError(jurisdiction_ocdid, ctx)
 
     return ctx
