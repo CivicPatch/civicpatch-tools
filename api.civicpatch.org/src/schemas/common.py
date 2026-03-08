@@ -29,7 +29,7 @@ ROUTE_PERMISSIONS = {
     RouteCategory.USER:          RoutePermission(allow_session=True),
     RouteCategory.AUTHENTICATED: RoutePermission(allow_session=True, allow_user_key=True, allow_service_key=True),
     RouteCategory.TEAM_MEMBER:   RoutePermission(allow_session=True, allow_user_key=True, required_teams=["default"]),
-    RouteCategory.ADMIN:         RoutePermission(allow_session=False, allow_user_key=True, required_teams=["admins"]),
+    RouteCategory.ADMIN:         RoutePermission(allow_session=False, allow_user_key=False, allow_service_key=True, required_teams=["admins"]),
     RouteCategory.SERVICE:       RoutePermission(allow_service_key=True),
 }
 

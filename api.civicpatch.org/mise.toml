@@ -73,7 +73,7 @@ finally:
 run = """
     curl -X POST "http://localhost:8001/api/admin/od_sync" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $CRUDDER_SHARED_TOKEN" \
+      -H "Authorization: $SERVICE_API_KEY" \
       -d '{}'
 """
       #\
@@ -83,7 +83,7 @@ run = """
 run = """
     curl -X POST "https://api.civicpatch.org/api/admin/od_sync" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN" \
+      -H "Authorization: $PROD_SERVICE_API_KEY" \
       -d '{}'
 """
 # -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
