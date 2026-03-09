@@ -40,7 +40,11 @@ def get_designations():
 
 def get_role_names() -> List[str]:
     roles_config = get_role_configs()
-    return [role_config['role'] for role_config in roles_config]
+    names = []
+    for role_config in roles_config:
+        names.append(role_config['role'])
+        names.extend(role_config.get('aliases', []))
+    return names
 
 def get_designation_names() -> List[str]:
     designations_config = get_designations()

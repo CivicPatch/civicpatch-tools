@@ -1,7 +1,7 @@
 [tools]
 pre-commit = 'latest'
-atlas = 'latest'
-dive = "0.13.1"
+poetry = 'latest'
+python = '3.12'
 
 [env]
 _.file = [
@@ -9,3 +9,6 @@ _.file = [
     "api.civicpatch.org/.env"
 ]
 
+[tasks.pytest-shared]
+run = "poetry run pytest"
+dir = "shared"

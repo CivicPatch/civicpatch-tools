@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional, Dict, TypeAlias, Generic, TypeVar
+from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
 from domain.workflow_context import WorkflowContext

@@ -20,7 +20,8 @@ from shared.utils import (
     data_path_utils, 
     phone_utils,
     email_utils,
-    url_utils
+    url_utils,
+    name_utils,
 )
 from utils import (
     merge_utils, 
@@ -411,7 +412,7 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
     """
     input_text_lower = input_text.lower()
     for person in records_found:
-        if person.name and person.name.lower() not in input_text_lower:
+        if person.name and not _name_in_text(person.name, input_text_lower):
             logger.warning(f"Name not found in input text: {person.name}")
             return False 
         if person.email and person.email.lower() not in input_text_lower:
@@ -421,17 +422,33 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
             logger.warning(f"Phone not found in input text: {person.phone}")
             return False
         if person.url and person.url not in input_text:
-            # Sometimes the current url IS the person's url
             if not url_utils.same_url(person.url, source_url):
-                pass
-            logger.warning(f"URL not found in input text: {person.url}")
-            return False
+                logger.warning(f"URL not found in input text: {person.url}")
+                return False
         if person.roles:
             for role in person.roles:
                 if role and role.lower() not in input_text_lower:
                     logger.warning(f"Role not found in input text: {role}")
                     return False
     return True
+
+
+def _name_in_text(name: str, text_lower: str) -> bool:
+    """
+    Check if a name appears in text, allowing for minor formatting differences
+    (e.g., "Martin Cantu Jr." vs "Martin Cantu, Jr.").
+    """
+    # Exact match first
+    if name.lower() in text_lower:
+        return True
+    
+    # Check if all name parts (first, middle, last) appear in the text
+    parsed = name_utils.parse_name(name)
+    parts = [p.lower() for p in [parsed.first, parsed.middle, parsed.last] if p]
+    if parts and all(part in text_lower for part in parts):
+        return True
+
+    return False
 
 
 def update_links(domain, context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:

@@ -31,7 +31,7 @@ from database import (
     user_is_approved,
 )
 from utils.auth_utils import require_route_access, get_optional_user
-from services.memory_pub_sub_service import memory_pubsub
+from services import pubsub_service
 import services.github_sync_service
 from fastapi.responses import StreamingResponse
 from services import github_service
@@ -203,30 +203,30 @@ async def home(
     )
 
 app.include_router(
-    api_admin_router.get_router(api_key_header, pool),
+    api_admin_router.get_router(),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_route_access(RouteCategory.ADMIN))],
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admin"]))],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[] # public route for now
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))] # public route for now
 )
 
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[] # Most routes are public
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))]
 )
 
 app.include_router(
     api_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
     tags=["jobs"], 
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))]
 )
 
 app.include_router(
@@ -242,27 +242,28 @@ app.include_router(
     api_keys_router.get_router(), 
     prefix="/api/internal/api_keys", 
     tags=["api_keys"],
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))],
 )
 
 app.include_router(
     api_data_router.get_router(), 
     prefix="/api/v1/data", 
     tags=["data"],
-    dependencies=[]
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))],
 )
 
 app.include_router(
     api_user_router.get_router(), 
     prefix="/api/internal/user", 
     tags=["user"],
-    dependencies=[Depends(require_route_access(RouteCategory.USER))]
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
 )
 
 app.include_router(
     auth_router(is_production),
     prefix="/api/v1/auth",
     tags=["auth"],
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 @app.get("/api/v1/me", tags=["auth"])
@@ -284,25 +285,15 @@ async def get_me(user: Identity = Depends(get_optional_user)):
 @app.get("/api/v1/sse/jobs/status", include_in_schema=False)
 async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Request):
     key = f"{job_type}:{jurisdiction_ocdid}"
-    queue = memory_pubsub.subscribe(key)
 
     async def event_generator():
         try:
-            while True:
-                try:
-                # Wait for data with a timeout, send heartbeat if nothing comes
-                    data = await asyncio.wait_for(queue.get(), timeout=15.0)
-                    yield f"data: {data}\n\n"
-                except asyncio.TimeoutError:
-                    # On timeout, unsubscribe and exit if client disconnected
-                    if await request.is_disconnected():
-                        print("Client disconnected, stopping SSE")
-                        break
-
+            async for message in pubsub_service.subscribe(key):
+                if await request.is_disconnected():
+                    break
+                yield f"data: {message}\n\n"
         except asyncio.CancelledError:
             pass
-        finally:
-            memory_pubsub.unsubscribe(key, queue)
 
     return StreamingResponse(
         event_generator(),

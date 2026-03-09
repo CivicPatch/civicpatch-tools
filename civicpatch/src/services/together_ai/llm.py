@@ -177,6 +177,8 @@ def run_prompt(
             top_p=1.0
         )
 
+        print("RAW RESPONSE", response)
+
         # Log token usage
         usage = completion.usage
         

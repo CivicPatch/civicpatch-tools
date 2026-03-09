@@ -68,4 +68,4 @@ USER civicpatch_user
 
 EXPOSE 80
 
-CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--workers", "1"]
+CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--workers", "2"]

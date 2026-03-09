@@ -26,6 +26,9 @@ dependencies = [
     "fastapi-profiler (>=1.4.1,<2.0.0)",
 ]
 
+[tool.poetry.dependencies]
+shared = {path = "../shared", develop = true}
+
 [tool.poetry]
 packages = [
     {include = "src"}
@@ -34,3 +37,8 @@ packages = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest-mock (>=3.15.1,<4.0.0)"
+]

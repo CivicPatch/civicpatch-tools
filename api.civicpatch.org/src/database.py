@@ -6,6 +6,7 @@ import secrets
 import math
 from typing import List, cast, Optional, Any
 import shared.utils.id_utils
+from utils import hash_utils
 from schemas.requests import ServerDetail
 
 from psycopg_pool import AsyncConnectionPool
@@ -17,10 +18,6 @@ CIVICPATCH_API_DB_URL = os.getenv("CIVICPATCH_API_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
 
 pool = AsyncConnectionPool(CIVICPATCH_API_DB_URL, open=False)
-
-
-def hash_string(string: str, hash_key: str) -> str:
-    return hmac.new(hash_key.encode(), string.encode(), hashlib.sha512).hexdigest()
 
 
 def to_iso(dt):
@@ -63,7 +60,7 @@ async def create_update_user(provider, provider_user_id, email, teams: List[str]
 async def create_api_key(provider, provider_user_id):
     api_key = secrets.token_urlsafe(32)
     # Hash the API key before storing
-    api_key_hash = hash_string(api_key, cast(str, DATABASE_HASH_KEY))
+    api_key_hash = hash_utils.hash_string(api_key, cast(str, DATABASE_HASH_KEY))
     api_key_suffix = api_key[-4:]
 
     async with pool.connection() as conn:
@@ -168,7 +165,7 @@ async def get_user_by_api_key_id(api_key_id):
     
     
 async def get_user_by_api_key(api_key):
-    candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
+    candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -235,7 +232,7 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
         return row[0] if row else False
     
 async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]:
-    candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
+    candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """

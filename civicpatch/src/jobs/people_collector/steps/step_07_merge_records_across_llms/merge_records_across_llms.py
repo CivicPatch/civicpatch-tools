@@ -1,9 +1,10 @@
-from typing import List, Dict, Any, cast
-from utils import people_utils, merge_utils
+from typing import List, Dict, Tuple
+from utils import people_utils
+from shared.utils import name_utils
 from domain.models import Person
 from jobs.people_collector.schemas import (
-    PeopleCollectorContext, 
-    MergeRecordsAcrossLLMsStep, 
+    PeopleCollectorContext,
+    MergeRecordsAcrossLLMsStep,
 )
 from collections import Counter
 from datetime import datetime, timezone
@@ -12,237 +13,154 @@ import jobs.people_collector.steps.step_07_merge_records_across_llms.record_comp
 
 MINIMUM_AGREEMENT_SCORE = 80
 FIELD_WEIGHTS = {
-    "roles": 1.0,           
-    "designations": 0.8,       
-    "emails": 0.5,         
-    "urls": 0.2,        
-    "phones": 0.2,    
-    "start_date": 0.5,      
-    "end_date": 0.5,        
+    "roles": 1.0,
+    "designations": 0.8,
+    "emails": 0.5,
+    "urls": 0.2,
+    "phones": 0.2,
+    "start_date": 0.5,
+    "end_date": 0.5,
 }
 FIELDS_TO_CHECK = list(FIELD_WEIGHTS.keys())
 
 # TODO: move disagreements logic to open-data, should not live here
 
+# --- Types ---
+
+PersonWithSource = Tuple[Person, str]
+GroupByLLM = Dict[str, List[Person]]
+
+
+# --- Main entry point ---
+
 def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAcrossLLMsStep:
-    """
-    Merge records across all LLMs to produce a unified list of Person objects.
-    """
+    """Merge records across all LLMs to produce a unified list of Person objects."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-
-    # Get people_by_llm from the previous step
     people_by_llm: Dict[str, List[Person]] = context.data.merge_records_within_llm_step.people_by_llm
+    identity_names = _resolve_identity_names(context)
 
-    # Group records across LLMs based on weak ties and names
-    research_identities = {official.name: [official.name] for official in context.data.research_municipality_step.elected_officials}
-    identity_names = context.data.config.identities or research_identities
-    groups_by_llm = group_records_across_llms(identity_names, people_by_llm)
+    groups = group_records_across_llms(identity_names, people_by_llm)
+    merged_people, all_disagreements = _merge_groups(groups, jurisdiction_ocdid, people_by_llm)
 
-    ## Filter out groups that only have one LLM source
-    #groups_by_llm = [group for group in groups_by_llm if len(group) > 1]
-    
-    # Merge each group and collect disagreements
-    merged_people = []
-    all_disagreements = {}  # Dict[person_name, List[FieldComparison]]
-
-    for grouped_identities_by_llm in groups_by_llm:
-        # Merge the group
-        merged_person = merge_group_across_llms(
-            [person for llm_people 
-             in grouped_identities_by_llm.values() 
-             for person in llm_people
-             ],
-            jurisdiction_ocdid
-        )
-
-        # Skip person if no roles after merge
-        if len(merged_person.roles) == 0:
-            continue
-
-        merged_people.append(merged_person)
-        
-        # Collect field-by-field disagreements for this person
-        field_comparisons = record_comparison.collect_field_comparisons(
-            merged_person,
-            grouped_identities_by_llm,  # Pass the grouped data directly
-            FIELDS_TO_CHECK,
-            FIELD_WEIGHTS
-        )
-        
-        # Store disagreements if any exist
-        if field_comparisons:
-            all_disagreements[merged_person.name] = field_comparisons
-        
-    # Calculate overall agreement score (include missing people in the calculation)
     overall_agreement_score = record_comparison.calculate_overall_agreement_score(
-        FIELD_WEIGHTS,
-        FIELDS_TO_CHECK,
-        all_disagreements, 
-        len(people_by_llm), 
+        FIELD_WEIGHTS, FIELDS_TO_CHECK, all_disagreements, len(people_by_llm),
     )
-
-    # Sort people by role priority, designations, and name
-    sorted_people = people_utils.sort_people(merged_people)
-
-    validation_errors = []
-    if overall_agreement_score < MINIMUM_AGREEMENT_SCORE:
-        validation_errors.append(
-            f"Overall agreement score {overall_agreement_score:.2f}% is below the minimum threshold of {MINIMUM_AGREEMENT_SCORE}%."
-        )
 
     return MergeRecordsAcrossLLMsStep(
-        people=sorted_people,
+        people=people_utils.sort_people(merged_people),
         agreement_score=overall_agreement_score,
         disagreements=all_disagreements,
-        validation_errors=validation_errors,
+        validation_errors=_validate(overall_agreement_score),
     )
 
-def group_records_across_llms(identity_names: Dict[str, List[str]], people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
+
+# --- Helpers for main ---
+
+def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[str]]:
+    research_identities = {
+        official.name: [official.name]
+        for official in context.data.research_municipality_step.elected_officials
+    }
+    return context.data.config.identities or research_identities
+
+
+def _merge_groups(
+    groups: List[GroupByLLM],
+    jurisdiction_ocdid: str,
+    people_by_llm: Dict[str, List[Person]],
+) -> Tuple[List[Person], Dict]:
+    merged_people = []
+    all_disagreements = {}
+
+    for group_by_llm in groups:
+        flat_group = [p for people in group_by_llm.values() for p in people]
+        merged = merge_group_across_llms(flat_group, jurisdiction_ocdid)
+
+        if not merged.roles:
+            continue
+
+        merged_people.append(merged)
+
+        comparisons = record_comparison.collect_field_comparisons(
+            merged, group_by_llm, FIELDS_TO_CHECK, FIELD_WEIGHTS
+        )
+        if comparisons:
+            all_disagreements[merged.name] = comparisons
+
+    return merged_people, all_disagreements
+
+
+def _validate(score: float) -> List[str]:
+    if score < MINIMUM_AGREEMENT_SCORE:
+        return [f"Overall agreement score {score:.2f}% is below the minimum threshold of {MINIMUM_AGREEMENT_SCORE}%."]
+    return []
+
+
+# --- Grouping ---
+
+def group_records_across_llms(
+    identity_names: Dict[str, List[str]],
+    people_by_llm: Dict[str, List[Person]],
+) -> List[GroupByLLM]:
     """
-    Group records across LLMs based on exact name match and weak ties.
-    Returns a list of groups, where each group is a dict mapping LLM -> List[Person] for that identity.
-    Ex:
-    [
-        {
-            "LLM1": [PersonA_from_LLM1, PersonB_from_LLM1],
-            "LLM2": [PersonA_from_LLM2]
-        },
-        {
-            "LLM3": [PersonC_from_LLM3]
-        }
-    ]
+    Group records across LLMs by canonical name, using identity config and fuzzy matching.
+    Returns a list of groups, each mapping LLM -> List[Person].
     """
-    # Create a list of (person, llm_source) tuples
-    all_people_with_source = [
-        (person, llm) 
-        for llm, people in people_by_llm.items() 
+    all_people: List[PersonWithSource] = [
+        (person, llm)
+        for llm, people in people_by_llm.items()
         for person in people
     ]
-    
-    if not all_people_with_source:
+
+    if not all_people:
         return []
-    
-    visited = set()
-    groups = []
-    
-    for i, (person, llm) in enumerate(all_people_with_source):
-        if i in visited:
-            continue
-        
-        # Start a new group with the current person
-        group = {llm: [person]}
-        visited.add(i)
-        
-        # Use a queue to handle transitive grouping
-        # (if A matches B and B matches C, then A, B, C should all be in one group)
-        to_check = [(person, llm)]
-        checked = set()
-        
-        while to_check:
-            current_person, current_llm = to_check.pop(0)
-            if id(current_person) in checked:
-                continue
-            checked.add(id(current_person))
-            
-            # Compare with all other people
-            for j, (other_person, other_llm) in enumerate(all_people_with_source):
-                if j in visited:
-                    continue
-                
-                # Check for exact name match OR weak tie
-                is_exact_match = (
-                    current_person.name and other_person.name and 
-                    current_person.name == other_person.name
-                )
-                is_alias_match = (
-                    current_person.name in identity_names and 
-                    other_person.name in identity_names[current_person.name]
-                )
-                is_weak_tie = merge_utils.is_weakly_tied(identity_names, current_person, other_person)
-                
-                if is_exact_match or is_alias_match or is_weak_tie:
-                    if other_llm not in group:
-                        group[other_llm] = []
-                    group[other_llm].append(other_person)
-                    visited.add(j)
-                    to_check.append((other_person, other_llm))
-                    
-                    # Update other_names for weak ties
-                    if is_weak_tie:
-                        if not current_person.other_names:
-                            current_person.other_names = []
-                        if other_person.name not in current_person.other_names:
-                            current_person.other_names.append(other_person.name)
-        
-        groups.append(group)
-    
-    return groups
+
+    canonical_map = name_utils.build_canonical_map(
+        [p for p, _ in all_people],
+        identity_names,
+    )
+
+    groups: Dict[str, GroupByLLM] = {}
+    for person, llm in all_people:
+        canonical = canonical_map[person.name]
+        groups.setdefault(canonical, {}).setdefault(llm, []).append(person)
+
+    return list(groups.values())
+
+
+# --- Merging ---
 
 def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Person:
-    """
-    Merge a group of weakly tied Person objects into a single Person object.
-    """
+    """Merge a group of weakly-tied Person objects into a single Person."""
+    canonical_map = name_utils.build_canonical_map(group, {})
+    canonical_name = Counter(canonical_map.values()).most_common(1)[0][0]
+    other_names = name_utils.collect_other_names(group, canonical_name)
 
-    # For single-value fields, take the most common non-empty value across all sources
-    image_counter = Counter(person.image for person in group if person.image)
-    source_urls = set(
-        ds
-        for person in group
-        if person.source_urls  # Check if sources exist
-        for ds in person.source_urls  # Flatten the list of data sources
-    )
+    image = Counter(p.image for p in group if p.image).most_common(1)
+    source_urls = {url for p in group if p.source_urls for url in p.source_urls}
 
-    # Determine canonical name
-    name_counter = Counter(person.name for person in group)
-    canonical_name = name_counter.most_common(1)[0][0]
-
-    # Combine person.name and other_names into a single list, ensuring no duplicates
-    all_names = set(person.name for person in group if person.name)  # Add all person names
-    for person in group:
-        if person.other_names:
-            all_names.update(person.other_names)  # Add other_names
-    all_names.discard(canonical_name)  # Remove the canonical name from other_names
-    other_names = list(all_names)
-
-    person = Person(
+    return Person(
         name=canonical_name,
         other_names=other_names,
-
-        roles=person.roles,
-        designations=person.designations,
-
-        emails=field_mergers.merge_field_to_list([person.emails for person in group if person.emails]),
-        phones=field_mergers.merge_field_to_list([person.phones for person in group if person.phones]),
-        urls=merge_urls([person.urls for person in group if person.urls]),
-
-        start_date=field_mergers.merge_field("start_date", [person.start_date for person in group if person.start_date]),
-        end_date=field_mergers.merge_field("end_date", [person.end_date for person in group if person.end_date]),
-
-        image=image_counter.most_common(1)[0][0] if image_counter else "",
+        roles=field_mergers.merge_field_to_list([p.roles for p in group if p.roles]),
+        designations=field_mergers.merge_field_to_list([p.designations for p in group if p.designations]),
+        emails=field_mergers.merge_field_to_list([p.emails for p in group if p.emails]),
+        phones=field_mergers.merge_field_to_list([p.phones for p in group if p.phones]),
+        urls=merge_urls([p.urls for p in group if p.urls]),
+        start_date=field_mergers.merge_field("start_date", [p.start_date for p in group if p.start_date]),
+        end_date=field_mergers.merge_field("end_date", [p.end_date for p in group if p.end_date]),
+        image=image[0][0] if image else "",
         cdn_image="",
-
         jurisdiction_ocdid=jurisdiction_ocdid,
         source_urls=source_urls,
-        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
+        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds'),
     )
 
-    return person
 
 def merge_urls(url_groups: List[List[str]]) -> List[str]:
-    """
-    Priority 1: Merge list of URLs, preferring those that appear in multiple sources.
-    Priority 2: If no duplicates, return at least one URL.
-    """
+    """Prefer URLs appearing in multiple sources; fall back to the most common single URL."""
     url_counter = Counter(url for urls in url_groups for url in urls)
     if not url_counter:
         return []
-    
-    # Get URLs that appear in more than one source
-    merged_urls = [url for url, count in url_counter.items() if count > 1]
-    
-    # If no URLs appear in multiple sources, return at least one URL
-    if not merged_urls:
-        most_common_url, _ = url_counter.most_common(1)[0]
-        merged_urls.append(most_common_url)
-    
-    return merged_urls
+    multi_source = [url for url, count in url_counter.items() if count > 1]
+    return multi_source or [url_counter.most_common(1)[0][0]]

@@ -133,7 +133,7 @@ def test_multiple_links():
     assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
 
 def test_check_page_heuristics_returns_true_with_empty_records():
-    assert check_page_heuristics(dummy_logger(), "Some markdown content", []) is True
+    assert check_page_heuristics(dummy_logger(), "dummy-link", "Some markdown content", []) is True
 
 def test_check_page_heuristics_returns_true_with_nonempty_records():
     records = [
@@ -149,7 +149,7 @@ def test_check_page_heuristics_returns_true_with_nonempty_records():
         )
     ]
     input_text = "Laura Palmer the mayor is available at laura@palmer.com or 555-9999. See http://palmer.com/laura for more details."
-    assert check_page_heuristics(dummy_logger(), input_text, records) is True
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
 
 def test_check_page_heuristics_returns_false_if_input_text_empty():
     records = [
@@ -165,7 +165,7 @@ def test_check_page_heuristics_returns_false_if_input_text_empty():
         )
     ]
     input_text = ""
-    assert check_page_heuristics(dummy_logger(), input_text, records) is False
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
 def test_check_page_heuristics_returns_false_if_role_not_in_text():
     records = [
@@ -182,7 +182,7 @@ def test_check_page_heuristics_returns_false_if_role_not_in_text():
     ]
     input_text = "Contact Sam NoRoleInText at sam@nole.com or 555-1234. See http://nole.com/sam. Ward 1."
     # "mayor" is not in input_text
-    assert check_page_heuristics(dummy_logger(), input_text, records) is False
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
 def test_check_page_heuristics_returns_false_if_phone_not_in_text():
     records = [
@@ -199,7 +199,7 @@ def test_check_page_heuristics_returns_false_if_phone_not_in_text():
     ]
     input_text = "Council member Pat NoPhoneInText can be reached at pat@nophone.com. See http://nophone.com/pat. Ward 2."
     # "555-0000" is not in input_text
-    assert check_page_heuristics(dummy_logger(), input_text, records) is False
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
 def test_check_page_heuristics_returns_false_if_email_not_in_text():
     records = [
@@ -216,7 +216,7 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
     ]
     input_text = "Mayor Alex NoEmailInText is available at 555-5678 or http://noemail.com/alex. Ward 3."
     # "alex@noemail.com" is not in input_text
-    assert check_page_heuristics(dummy_logger(), input_text, records) is False
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
 def test_check_page_heuristics_returns_false_if_url_not_in_text():
     records = [
@@ -233,4 +233,4 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
     ]
     input_text = "Council member Jamie NoUrlInText can be reached at jamie@nourl.com or 555-8765. Ward 4."
     # "http://nourl.com/jamie" is not in input_text
-    assert check_page_heuristics(dummy_logger(), input_text, records) is False
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
