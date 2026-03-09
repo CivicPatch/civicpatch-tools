@@ -60,16 +60,40 @@ function SearchJurisdictions() {
   };
 
   return html`
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .map-col {
+        order: 1;
+      }
+      .select-col {
+        order: 2;
+      }
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .map-col {
+          order: 2;
+        }
+        .select-col {
+          order: 1;
+        }
+      }
+    </style>
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div class="grid">
-        <div>
+        <div class="map-col">
           <civ-map
             @on-map-change=${handleMapChange}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
             .geojson=${geojson}
           ></civ-map>
         </div>
-        <div>
+        <div class="select-col">
           <civ-select-jurisdiction
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
@@ -88,7 +112,6 @@ function SearchJurisdictions() {
         </section>
       ` : ""}
     </div>
-
   `;
 }
 
