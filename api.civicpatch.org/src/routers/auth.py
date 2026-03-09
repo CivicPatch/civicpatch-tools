@@ -9,7 +9,7 @@ from services import github_service, session_service
 from utils.auth_utils import get_optional_user
 from schemas.common import Identity
 import database
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
 GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
@@ -33,43 +33,31 @@ else:
 
 def is_safe_redirect(url: str) -> bool:
     """Check if the redirect URL is safe (relative URL or allowed host)."""
-    if not url:
+    if not url or "\x00" in url:
         return False
 
-    # Normalize URL to handle browser quirks:
-    # - Replace backslashes, which some browsers treat like slashes.
-    # - Strip surrounding whitespace.
-    normalized_url = url.replace("\\", "/").strip()
-    if not normalized_url:
+    # Normalize: browsers treat backslashes as slashes; decode percent-encoding
+    # before parsing so that %2F%2Fevil.com doesn't slip through.
+    normalized = unquote(url.replace("\\", "/").strip())
+    if not normalized:
         return False
 
-    parsed = urlparse(normalized_url)
+    parsed = urlparse(normalized)
 
-    # Allow only *relative* URLs with no scheme and no network location.
-    # This prevents malformed absolute URLs like "https:/example.com"
-    # from being treated as relative.
+    # Relative URL: no scheme, no netloc.
+    # Must start with "/" to block values like "javascript:..." that
+    # urlparse may leave in `path`, and to ensure browser interpretation
+    # as an absolute path on the current host.
     if not parsed.scheme and not parsed.netloc:
-        # Optionally, ensure the path starts with "/" to avoid confusing
-        # relative values like "///example.com".
-        if not parsed.path:
-            return False
-        if parsed.path.startswith("/"):
-            return True
-        # Paths that do not start with "/" can be considered unsafe here.
-        return False
+        return bool(parsed.path) and parsed.path.startswith("/")
 
-    # For absolute URLs, only allow specific hosts over HTTP(S).
+    # Absolute URL: restrict to HTTP(S) on explicitly allowed hosts.
     if parsed.scheme not in ("http", "https"):
         return False
 
     hostname = parsed.hostname or ""
-    if not hostname:
-        return False
-
-    if hostname in ALLOWED_HOSTS:
-        return True
-
-    return False
+    # Use parsed.netloc-aware port check to avoid example.com:evil matching.
+    return hostname in ALLOWED_HOSTS
 
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 github_sso = GithubSSO(
