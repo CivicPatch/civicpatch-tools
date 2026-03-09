@@ -1,6 +1,6 @@
 [tools]
-pre-commit = 'latest'
 poetry = 'latest'
+pre-commit = "latest"
 python = '3.12'
 
 [env]
