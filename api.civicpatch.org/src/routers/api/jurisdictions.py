@@ -134,24 +134,29 @@ def get_router() -> APIRouter:
                     )
                 )
 
-        if empty_updated:
-            jurisdictions = empty_updated[:num_jurisdictions]
-        else:
-            # Otherwise, pick the oldest eligible jurisdictions by updated_at
+        # If not enough, fill with oldest eligible
+        jurisdictions = empty_updated
+        if len(jurisdictions) < num_jurisdictions:
+            # Find other eligible, excluding already added
+            already_added_ids = {j.id for j in jurisdictions}
             eligible = []
             for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
-                if is_eligible(jurisdiction_ocdid):
+                if is_eligible(jurisdiction_ocdid) and jurisdiction_ocdid not in already_added_ids:
                     entry = next(e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid)
                     eligible.append((jurisdiction_metadata.get("updated_at") or "", entry))
             eligible.sort(key=lambda tup: tup[0])  # Oldest first
-            jurisdictions = [
-                Jurisdiction(
-                    id=entry["id"],
-                    name=entry["name"],
-                    url=entry["url"],
+            for _, entry in eligible:
+                if len(jurisdictions) >= num_jurisdictions:
+                    break
+                jurisdictions.append(
+                    Jurisdiction(
+                        id=entry["id"],
+                        name=entry["name"],
+                        url=entry["url"],
+                    )
                 )
-                for _, entry in eligible[:num_jurisdictions]
-            ]
+        else:
+            jurisdictions = jurisdictions[:num_jurisdictions]
 
         return {"jurisdictions": jurisdictions}
 
