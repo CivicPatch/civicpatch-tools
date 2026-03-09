@@ -7,7 +7,8 @@ from jose import jwt, JWTError
 import time
 from typing import cast
 import database
-from schemas.common import Identity, RouteCategory, ROUTE_PERMISSIONS
+from schemas.common import Identity, RouteCategory
+from services import session_service
 
 import logging
 logger = logging.getLogger(__name__)
@@ -96,8 +97,16 @@ async def get_user_by_cookie(request, token: str) -> Identity:
         claims = jwt.decode(token, **decode_kwargs)
         payload = claims.get("pld", claims)
     except JWTError as e:
-        logger.debug(f"JWT decode failed: {e}")
+        logger.info(f"JWT decode failed: {e}")
         raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+
+    # Check if session was invalidated (e.g., logout)
+    provider = payload.get("provider")
+    provider_user_id = str(claims.get("sub", ""))
+    if provider and provider_user_id:
+        stored = session_service.get_session(provider, provider_user_id)
+        if stored is None:
+            raise HTTPException(status_code=401, detail="Session expired or invalidated")
 
     # CSRF protection for cookie-authenticated unsafe requests
     if request.method.upper() in UNSAFE_METHODS:
@@ -167,33 +176,39 @@ async def get_optional_user(
     except HTTPException:
         return None
 
-def require_route_access(category: RouteCategory):
+def require_route_access(category: RouteCategory, teams_required: Optional[List[str]] = None):
     async def _dependency(
         identity: Identity = Depends(get_user),
     ):
-        permission = ROUTE_PERMISSIONS.get(category)
-        if not permission:
-            logger.debug(f"Unknown route category: {category}")
-            raise HTTPException(status_code=403, detail="Unknown route category.")
-
         logger.debug(f"Route access check: category={category}, identity.type={identity.type}, identity.email={identity.email}, teams={identity.teams}")
 
         # Public
-        if permission.public:
+        if category == RouteCategory.PUBLIC:
+            return identity
+        
+        if category == RouteCategory.AUTHENTICATED and identity != None:
+            logger.debug(f"Authenticated access granted for category={category}, email={identity.email}")
             return identity
 
         # Service key — not tied to a person, skip all team checks
-        if permission.allow_service_key and identity.type == "service_api_key":
+        if category == RouteCategory.SERVICE and identity.type == "service_api_key":
             logger.debug(f"Service key access granted for category={category}")
             return identity
 
         # This must be a user only route, let's start checking for their teams
         user_teams = identity.teams
 
-        if permission.required_teams and not any(t in permission.required_teams for t in user_teams):
-            logger.debug(f"Access denied: insufficient teams. required={permission.required_teams}, user_teams={user_teams}, category={category}, email={identity.email}")
-            raise HTTPException(status_code=403, detail="Insufficient team permissions.")
-
-        logger.debug(f"Access granted for category={category}, identity.type={identity.type}, email={identity.email}")
-        return identity
+        if category == RouteCategory.TEAM_REQUIRED:
+            if not teams_required and len(user_teams) == 0:
+                logger.debug(f"Team required access denied for category={category}, user email={identity.email}, no teams found, but at least one team is required")
+                raise HTTPException(status_code=403, detail="User does not have required team membership")
+            if user_teams and any(team in user_teams for team in teams_required):
+                logger.debug(f"Team required access granted for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
+                return identity
+            else:
+                logger.debug(f"Team required access denied for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
+                raise HTTPException(status_code=403, detail="User does not have required team membership")
+        
+        logger.debug(f"Unknown route: Access denied for category={category}, user email={identity.email}, teams={user_teams}")
+        raise HTTPException(status_code=403, detail="User does not have access to this resource")
     return _dependency

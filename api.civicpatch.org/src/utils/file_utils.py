@@ -20,16 +20,14 @@ async def validate_file_patterns(directory: str, patterns: list) -> bool:
             return False
     return True
 
-async def save_upload_to_temp(upload_file):
+async def save_upload_to_temp(file: UploadFile):
     temp_dir = tempfile.mkdtemp()
-    file_path = os.path.join(temp_dir, upload_file.filename)
-    with open(file_path, "wb") as buffer:
-        while True:
-            chunk = await upload_file.read(1024 * 1024)
-            if not chunk:
-                break
-            buffer.write(chunk)
-    await upload_file.close()  # Explicitly close after reading
+    file_path = os.path.join(temp_dir, file.filename)
+    
+    async with aiofiles.open(file_path, "wb") as f:
+        while chunk := await file.read(1024 * 1024):  # 1MB chunks
+            await f.write(chunk)
+    
     return file_path, temp_dir
 
 

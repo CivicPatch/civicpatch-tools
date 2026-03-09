@@ -1,15 +1,15 @@
 import os
 import datetime
 import time
-from typing import cast
-from fastapi import APIRouter, HTTPException, Request
+from typing import cast, Optional
+from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import RedirectResponse
 from fastapi_sso import GithubSSO
-from services import github_service
+from services import github_service, session_service
+from utils.auth_utils import get_optional_user
+from schemas.common import Identity
 import database
-import secrets
 from urllib.parse import urlparse
-from jose import jwt
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
 GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
@@ -103,37 +103,17 @@ def get_router(is_production: bool) -> APIRouter:
             return await sso.get_login_redirect(state=redirect_url)
 
     @router.get("/logout", include_in_schema=False)
-    async def logout(redirect: str = "/"):
-        # TODO - connect this to redis (once we have it)
-        # This would allow us to dynamically invalidate their sessions
-        # based on team updates on GitHub
-        """Forget the user's session."""
-        
-        # Validate the redirect URL
+    async def logout(
+        redirect: str = "/",
+        user: Optional[Identity] = Depends(get_optional_user),
+    ):
         redirect_url = redirect if is_safe_redirect(redirect) else "/"
-        
         response = RedirectResponse(url=redirect_url)
-        if is_production:
-            cookie_params = {
-                "domain": COOKIE_INSTANCE_URL,
-                "secure": True,
-            }
-        else: # likely localhost
-            cookie_params = {
-                "secure": False,
-            }
-        response.delete_cookie(
-            key="token",
-            samesite="lax",
-            path="/",
-            **cookie_params
+        session_service.clear_session_cookies(
+            response,
+            provider=user.provider if user else None,
+            provider_user_id=user.provider_user_id if user else None,
         )
-        response.delete_cookie(
-            key="csrf_token",
-            samesite="lax",
-            path="/",
-            **cookie_params
-        ) 
         return response
 
     @router.get("/{provider}/callback", include_in_schema=False)
@@ -144,69 +124,18 @@ def get_router(is_production: bool) -> APIRouter:
             case _:
                 raise HTTPException(status_code=400, detail="Unsupported provider")
 
-        """Process login and redirect the user to the protected endpoint."""
         async with sso:
             openid = await sso.verify_and_process(request)
             if not openid:
                 raise HTTPException(status_code=401, detail="Authentication failed")
-        
-        # Validate the redirect URL
+            access_token = sso.access_token
+
         redirect_url = state if is_safe_redirect(state) else "/"
-        
-        # Create a JWT with the user's OpenID
-        expiration = datetime.datetime.now(
-            tz=datetime.timezone.utc
-        ) + datetime.timedelta(days=1)
-
-        teams = await github_service.get_teams(sso.access_token)
-
+        teams = await github_service.get_teams(access_token)
         await database.create_update_user(openid.provider, openid.id, openid.email, teams)
-        # user = await database.get_user(openid.provider, openid.id)
-        token = jwt.encode(
-            {
-                "pld": openid.model_dump(), 
-                "exp": expiration,
-                "sub": openid.id,
-                "teams": teams
-                #"roles": user.get("roles") if user else None
-            },
-            key=cast(str, JWT_SECRET_KEY),
-            algorithm="HS256",
-        )
+
         response = RedirectResponse(url=redirect_url, status_code=302)
-
-        if is_production:
-            cookie_params = {
-                "domain": COOKIE_INSTANCE_URL,
-                "secure": True,
-            }
-        else: # likely localhost
-            cookie_params = {
-                "secure": False,
-            }
-        response.set_cookie(
-            key="token",
-            value=token,
-            expires=expiration,
-            httponly=True,
-            samesite="lax",
-            path="/",
-            **cookie_params
-        )
-        # Create a signed CSRF token (stateless) and set it as a readable cookie
-        csrf_payload = {"sub": openid.id, "iat": int(time.time()), "nonce": secrets.token_urlsafe(8)}
-        csrf_signed = jwt.encode(csrf_payload, key=cast(str, JWT_SECRET_KEY), algorithm="HS256")
-
-        response.set_cookie(
-            key="csrf_token",
-            value=csrf_signed,
-            expires=expiration,
-            httponly=False, # Allow JS to read the CSRF token
-            samesite="lax",
-            path="/",
-            **cookie_params
-
-        )
+        session_service.create_session_cookies(response, openid, teams)
         return response
 
     return router

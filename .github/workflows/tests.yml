@@ -11,12 +11,35 @@ permissions:
   contents: read
   
 jobs:
-  run-tests:
+  run-civicpatcl-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
-      - name: Run unit tests
+      - name: Run civicpatch unit tests
         working-directory: ./civicpatch
         run: |
           docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -m unit tests/unit
+
+  run-shared-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup mise
+        uses: jdx/mise-action@v3.2.0
+        with:
+          version: "2025.9.6"
+          cache: false
+          install: true
+          log_level: debug
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies with Poetry
+        working-directory: ./shared
+        run: |
+          poetry install
+
+      - name: Run shared unit tests
+        run: |
+          mise pytest-shared

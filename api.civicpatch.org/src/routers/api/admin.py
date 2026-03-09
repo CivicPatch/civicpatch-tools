@@ -1,10 +1,9 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Security
+from fastapi import APIRouter, BackgroundTasks
 
-from pydantic import BaseModel
 import services.github_sync_service
 from schemas.requests import OdSyncRequestSchema
 
-def get_router(api_key_header, pool) -> APIRouter:
+def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.post("/od_sync", include_in_schema=False)

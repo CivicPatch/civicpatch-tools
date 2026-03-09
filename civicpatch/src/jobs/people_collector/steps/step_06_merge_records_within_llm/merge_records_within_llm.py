@@ -1,12 +1,13 @@
-from typing import Dict, List, cast
+from typing import Dict, List, Optional, cast
+from collections import defaultdict, Counter
 from jobs.people_collector.schemas import (
     LLMPerson, Person, 
     RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep,
 )
-from utils import merge_utils, role_utils
-from shared.utils import config_utils
+from utils import role_utils
+from shared.utils import config_utils, name_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
-from collections import Counter
+
 
 def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWithinLLMStep:
     """
@@ -14,26 +15,53 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
     """
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     records_by_llm: RecordsByLLM = context.data.process_page_content_step.records_by_llm
-    records_by_llm = { k: {name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v] for name, v in people.items()} for k, people in records_by_llm.items() } if isinstance(records_by_llm, dict) else records_by_llm
+    records_by_llm = {
+        k: {
+            name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v]
+            for name, v in people.items()
+        }
+        for k, people in records_by_llm.items()
+    } if isinstance(records_by_llm, dict) else records_by_llm
 
-    # Flatten the records so that we can later group by last name 
-    # and merge weakly tied records
+    # Build identities from research step
+    research_identities = {
+        official.name: [] # TBD -- we can pull other_names from the database after scraping
+        for official in context.data.research_municipality_step.elected_officials
+    }
+    identities = context.data.config.identities or research_identities
+
+    # Flatten records per LLM
     flattened_records_by_llm = {
-        llm: [person for people in people_by_name.values() for person in people] 
-                for llm, people_by_name in records_by_llm.items()
+        llm: [person for people in people_by_name.values() for person in people]
+        for llm, people_by_name in records_by_llm.items()
     }
 
     people_by_llm: Dict[str, List[Person]] = {}
 
     for llm, records in flattened_records_by_llm.items():
-        merged_people: List[Person] = []
-        groups_by_last_name = group_by_last_name(records)
+        # Use name_utils to map every record's name to a canonical name
+        canonical_map = name_utils.build_canonical_map(
+            [{"name": r.name} for r in records],
+            identities
+        )
 
-        for llm_records_list in groups_by_last_name.values():
-            research_identities = {official.name: [official.name] for official in context.data.research_municipality_step.elected_officials}
-            identity_names = context.data.config.identities or research_identities
-            consolidated_people = merge_records(identity_names, llm_records_list, jurisdiction_ocdid)
-            merged_people.extend(consolidated_people)
+        # Group records by canonical name
+        groups: Dict[str, List[LLMPerson]] = defaultdict(list)
+        for record in records:
+            canonical = canonical_map.get(record.name, record.name)
+            groups[canonical].append(record)
+
+        # Merge each group into a Person
+        merged_people: List[Person] = []
+        for canonical_name, group in groups.items():
+            merged_person = merge_llm_people_to_person(canonical_name, group, jurisdiction_ocdid)
+
+            all_names = set(person.name for person in group if person.name)
+            all_names.discard(canonical_name)
+            merged_person.other_names = list(all_names)
+            merged_person.source_urls = get_source_urls(group, merged_person)
+
+            merged_people.append(merged_person)
 
         # Filter out records by the roles we want to keep
         roles_to_keep = config_utils.get_role_names()
@@ -41,20 +69,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
 
         people_by_llm[llm] = merged_people
 
-    # Format to dict
     return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm)
 
-def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPerson]]:
-    """
-    Group LLMPerson records by their surnames.
-    """
-    last_name_groups: Dict[str, List[LLMPerson]] = {}
-    for person in llm_people_list:
-        last_name = merge_utils.last_name(person.name)
-        if last_name not in last_name_groups:
-            last_name_groups[last_name] = []
-        last_name_groups[last_name].append(person)
-    return last_name_groups
 
 def get_source_urls(person_records: list, person: Person) -> list:
     """
@@ -132,78 +148,3 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     source_urls = get_source_urls(llm_people_list, person)
     person.source_urls = source_urls
     return person
-
-def merge_records(identity_names: Dict[str, List[str]], llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> List[Person]:
-    """
-    Consolidate records within a single group of LLMPerson objects.
-    Merge records that are weakly tied into unified Person objects.
-    """
-    consolidated_groups = []  # To store groups of weakly tied records
-    visited = set()  # To track processed records
-
-    for i, record in enumerate(llm_people_list):
-        if i in visited:
-            continue  # Skip already processed records
-
-        # Start a new group with the current record
-        group = [record]
-        visited.add(i)
-
-        # Compare the current record with all other records
-        for j, other_record in enumerate(llm_people_list):
-            if j in visited:
-                continue
-
-            # Check for exact name match or weak tie
-            is_exact_match = merge_utils.same_name(record.name, other_record.name)
-            is_alias_match = (
-                record.name in identity_names and 
-                other_record.name in identity_names[record.name]
-            )
-            is_weak_tie = any(
-                merge_utils.is_weakly_tied(identity_names, group_record, other_record) 
-                for group_record in group
-            )
-
-            if is_exact_match or is_alias_match or is_weak_tie:
-                group.append(other_record)
-                visited.add(j)
-
-        # Determine canonical name
-        canonical_name = determine_canonical_name(identity_names, group)
-
-        # Merge all records in the group into a single Person object
-        merged_person = merge_llm_people_to_person(canonical_name, group, jurisdiction_ocdid)
-
-        # Update other_names for weak ties
-        all_names = set(person.name for person in group if person.name)  # Add all person names
-        all_names.discard(canonical_name)  # Remove the canonical name from other_names
-        merged_person.other_names = list(all_names)
-
-        consolidated_groups.append(merged_person)
-
-    return consolidated_groups
-
-def determine_canonical_name(identity_names: Dict[str, List[str]], group: List[LLMPerson]) -> str:
-    """
-    Determine the canonical name for a group of LLMPerson objects.
-
-    Priority:
-    1. If a name exists in the identity_names mapping, use the canonical name from the mapping.
-    2. If no name exists in the identity_names mapping, use the most frequently used name in the group.
-    """
-    # Count the occurrences of each name in the group
-    name_counter = Counter(person.name for person in group if person.name)
-
-    # Check if any name in the group matches a canonical name in identity_names
-    for person in group:
-        if person.name in identity_names:
-            return person.name  # Return the canonical name from the mapping
-
-    # Handle case where no names are found in the group
-    if not name_counter:
-        raise ValueError("Cannot determine canonical name for an empty group or group with no valid names.")
-
-    # Default to the most common name if no canonical name is found
-    most_common_name, _ = name_counter.most_common(1)[0]
-    return most_common_name

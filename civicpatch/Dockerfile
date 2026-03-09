@@ -156,4 +156,4 @@ EXPOSE 8000
 # # Keep the container running
 # CMD ["tail", "-f", "/dev/null"]
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
-CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0", "--workers", "1"]
+CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0", "--workers", "2"]

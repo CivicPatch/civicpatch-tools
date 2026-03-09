@@ -83,6 +83,9 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
     - The official's role exactly as written in the source. Do not rename or normalize.
     - Common roles you may encounter: Mayor, Council Member, Alderman, Commissioner,
       Select Board Member. Always use the source's exact wording.
+    - Do not include designations (ex: ward, place, position numbers) as part of the role name.
+    - Correct: role="City Commissioner", designation="Place 4"
+    - Incorrect: role="City Commissioner Place 4", designation=[]
 
     designations:
       Known types: {designations_str}

@@ -9,7 +9,7 @@ from database import (
     update_job_pull_request_url
 )    
 from utils.auth_utils import get_user, require_route_access
-from services.memory_pub_sub_service import memory_pubsub
+from services import pubsub_service
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from schemas.common import RouteCategory
@@ -83,20 +83,20 @@ def get_router(api_key_header):
                 status_code=403
             )
 
-        background_tasks.add_task(
-            update_job_status, 
-            request_id=request_id, 
-            status=request.status, 
-            progress=request.progress
-        )
+        async def _update_and_publish():
+            await update_job_status(
+                request_id=request_id,
+                status=request.status,
+                progress=request.progress
+            )
+            key = f"people:{request.jurisdiction_ocdid}"
+            await pubsub_service.publish(key, json.dumps({
+                "request_id": request_id,
+                "status": request.status,
+                "progress": request.progress
+            }))
 
-        # Publish to SSE subscribers
-        key = f"people:{request.jurisdiction_ocdid}"
-        await memory_pubsub.publish(key, json.dumps({
-            "request_id": request_id,
-            "status": request.status,
-            "progress": request.progress
-        }))
+        background_tasks.add_task(_update_and_publish)
 
         return UpdateJobStatusResponse(
             request_id=request_id,
@@ -224,7 +224,7 @@ def get_router(api_key_header):
 
     @router.post(
         "/people/{request_id}/result",
-        include_in_schema=False, # Internally called by every civicpatch server
+        include_in_schema=False,
     )
     async def post_job_result_endpoint(
         request_id: str,
@@ -239,17 +239,22 @@ def get_router(api_key_header):
                 status_code=403
             )
 
+        import asyncio
+        tasks = []
         if request.data:
-            serialized_result = request.data
-            result_update = await update_job_result(request_id, serialized_result)
-            if not result_update:
-                errors.append("Failed to update job result, job may not exist")
+            tasks.append(("result", update_job_result(request_id, request.data)))
         if request.pull_request_url:
-            pull_request_update = await update_job_pull_request_url(request_id, pull_request_url=request.pull_request_url)
-            if not pull_request_update:
-                errors.append("Failed to update pull request URL, job may not exist")
-        response = {"request_id": request_id, "errors": errors}
-        return response
+            tasks.append(("pull_request", update_job_pull_request_url(request_id, pull_request_url=request.pull_request_url)))
+
+        if tasks:
+            results = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=True)
+            for (label, _), result in zip(tasks, results):
+                if isinstance(result, Exception):
+                    errors.append(f"Failed to update {label}: {result}")
+                elif not result:
+                    errors.append(f"Failed to update {label}, job may not exist")
+
+        return {"request_id": request_id, "errors": errors}
 
     @router.post(
         "/people/pull_request/{branch_name}/data",
