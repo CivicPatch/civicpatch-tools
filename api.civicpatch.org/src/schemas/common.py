@@ -12,6 +12,12 @@ class RouteCategory(str, Enum):
     TEAM_REQUIRED = "team_required"
     SERVICE       = "service"
 
+class Role(str, Enum):
+    DEFAULT = "default"     
+    CONTRIBUTORS = "contributors" 
+    MAINTAINERS = "maintainers"
+    ADMINS = "admins"
+
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""

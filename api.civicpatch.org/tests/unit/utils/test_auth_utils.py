@@ -1,9 +1,7 @@
 import pytest
-from unittest import mock
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException
 from utils.auth_utils import require_route_access
 from schemas.common import Identity, RouteCategory
-import types
 
 @pytest.mark.asyncio
 async def test_dependency_returns_identity_for_public():
@@ -106,7 +104,16 @@ async def test_dependency_team_required_user_teams_not_matching():
     assert "required team" in exc.value.detail
 
 @pytest.mark.asyncio
-async def test_dependency_unknown_category():
+async def test_dependency_unknown_category_no_identity():
+    unknown_category = "UNKNOWN"
+    dep = require_route_access(unknown_category, teams_required=None)
+    with pytest.raises(HTTPException) as exc:
+        await dep(None)
+    assert exc.value.status_code == 403
+    assert "access to this resource" in exc.value.detail
+
+@pytest.mark.asyncio
+async def test_dependency_service_category_non_service_identity():
     identity = Identity(
         type="cookie",
         provider="test",
@@ -114,10 +121,7 @@ async def test_dependency_unknown_category():
         email="test@example.com",
         teams=["team1"]
     )
-    class FakeCategory:
-        pass
-    dep = require_route_access(FakeCategory(), teams_required=["team1"])
-
+    dep = require_route_access(RouteCategory.SERVICE, teams_required=["team1"])
     with pytest.raises(HTTPException) as exc:
         await dep(identity)
     assert exc.value.status_code == 403

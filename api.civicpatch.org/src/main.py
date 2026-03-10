@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory, Role
 import asyncio
 
 import routers.api.admin as api_admin_router
@@ -206,7 +206,7 @@ app.include_router(
     api_admin_router.get_router(),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admin"]))],
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS]))],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
