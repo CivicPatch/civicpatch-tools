@@ -58,8 +58,7 @@ FROM image-base AS post-install
 
 RUN patchright install --with-deps chrome
 
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
-RUN python -m ensurepip && python /app/src/setup.py
+RUN uv run python -m spacy download en_core_web_md
 
 USER civicpatch_user
 
@@ -93,8 +92,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Reinstall with dev dependencies included
-RUN uv sync --package civicpatch --frozen --no-install-project
+# Install dev packages without blowing away spacy (we want to keep the previous spacy model)
+# https://github.com/astral-sh/uv/issues/12481
+RUN uv sync --inexact
 
 WORKDIR /app
 EXPOSE 8000

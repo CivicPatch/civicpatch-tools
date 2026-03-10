@@ -13,6 +13,9 @@ from jobs.people_collector.steps.step_04_preprocess_page_content.filter_content 
 from jobs.people_collector.steps.step_04_preprocess_page_content.clean_html import clean_html
 from utils import log_utils
 from typing import List
+import sys
+
+sys.setrecursionlimit(10000)  # Default is 1000, Wix DOMs need more
 
 DEFAULT_PREPROCESS_PAGE_CONTENT_STEP = PreprocessPageContentStep(
     elapsed_times=[],
@@ -37,7 +40,6 @@ def preprocess_page_content(
     with open(output_html_file_path, "r", encoding="utf-8") as f:
         output_html = f.read()
 
-    output_md = md(output_html, keep_inline_images_in=['td', 'th'])
 
     research_elected_officials = getattr(
         context.data.research_municipality_step, "elected_officials", {}
@@ -50,7 +52,11 @@ def preprocess_page_content(
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html)
-    preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    try:
+        preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+    except RecursionError:
+        logger.warning("RecursionError converting preprocessed HTML to markdown - DOM too deeply nested, skipping")
+        preprocessed_md = ""
 
     preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.html")
     #original_output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "original.md")

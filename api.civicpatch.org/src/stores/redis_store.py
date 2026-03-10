@@ -89,3 +89,11 @@ def unsubscribe(channel: str) -> None:
         pubsub.close()
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to unsubscribe from channel '{channel}': {str(e)}")
+    
+def get_message(ignore_subscribe_messages: bool = True, timeout: Optional[float] = None):
+    """Get a message from the Redis pub/sub channel."""
+    try:
+        message = redis_client.pubsub().get_message(ignore_subscribe_messages=ignore_subscribe_messages, timeout=timeout)
+        return message
+    except redis.RedisError as e:
+        raise RuntimeError(f"Failed to get message: {str(e)}")

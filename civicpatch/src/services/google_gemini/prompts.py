@@ -45,8 +45,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
              "roles": ["Mayor", "Council Member", "Commissioner", etc.],
              "designations": ["Ward 1", "District 2", etc.] or [],
            }}
-         ],
-         "notes": "Brief notes about the search and results"
+         ]
        }}
        ```
 
