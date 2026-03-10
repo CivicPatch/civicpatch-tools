@@ -10,32 +10,35 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONUNBUFFERED=1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_VIRTUALENVS_IN_PROJECT=false \
-    VIRTUAL_ENV="/venv" \
-    PYTHONPATH=/app/src \
-    PROJECT_NAME="api.civicpatch.org"
-
-# Add Poetry and virtual env to PATH
-ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
-
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Prepare virtual env
-RUN python -m venv $VIRTUAL_ENV
+    PYTHONPATH="/app/src" \
+    PROJECT_NAME="api.civicpatch.org" \
+    # uv: install packages into /venv
+    UV_PROJECT_ENVIRONMENT="/venv" \
+    UV_CACHE_DIR="/tmp/.cache/uv" \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PYTHON="/usr/local/bin/python3" \
+    PATH="/venv/bin:/root/.local/bin:$PATH" \
+    UV_VENV_SEED=1
 
 WORKDIR /app
-COPY $PROJECT_NAME/pyproject.toml $PROJECT_NAME/poetry.lock ./
-RUN poetry install --no-root
 
-COPY $PROJECT_NAME /app
+RUN pip install uv
+
+# Copy workspace manifests first for layer caching
+COPY pyproject.toml uv.lock ./
+COPY shared/pyproject.toml ./shared/pyproject.toml
+COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
+
+# Install prod deps only (dev stage will reinstall with --dev)
+RUN uv sync --package api.civicpatch.org --no-dev --frozen --no-install-project
+
+# Copy source
 COPY shared/src/shared /app/src/shared
-RUN mkdir -p /app/git_data
+COPY $PROJECT_NAME /app
 
-RUN useradd -m -s /bin/bash civicpatch_user
-RUN chown -R civicpatch_user:civicpatch_user /app
+RUN useradd -m -s /bin/bash civicpatch_user && \
+    chown -R civicpatch_user:civicpatch_user /app && \
+    chown -R civicpatch_user:civicpatch_user /venv
 
 ENV PATH="/home/civicpatch_user/.local/bin:$PATH"
 
@@ -46,14 +49,12 @@ FROM image-base AS development
 
 ENV APP_ENVIRONMENT=development
 
+# Reinstall with dev dependencies included
+RUN uv sync --package api.civicpatch.org --frozen --no-install-project
+
 WORKDIR /app
-
-RUN chown -R civicpatch_user:civicpatch_user /venv
-
-USER root
-
+USER civicpatch_user
 EXPOSE 8001
-
 # CMD ["tail", "-f", "/dev/null"]
 CMD ["fastapi", "dev", "src/main.py", "--port", "8001", "--host", "0.0.0.0"]
 
@@ -63,9 +64,6 @@ FROM image-base AS production
 ENV APP_ENVIRONMENT=production
 
 WORKDIR /app
-
 USER civicpatch_user
-
 EXPOSE 80
-
 CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--workers", "2"]

@@ -1,0 +1,9 @@
+domain
+frontend
+interfaces
+jobs
+scripts
+services
+setup
+shared
+utils

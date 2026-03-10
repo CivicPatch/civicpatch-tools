@@ -1,0 +1,16 @@
+[project]
+name = "civicpatch-tools"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv.workspace]
+members = ["civicpatch", "api.civicpatch.org", "shared"]
+
+[dependency-groups]
+dev = [
+    "hatchling>=1.29.0",
+]
+

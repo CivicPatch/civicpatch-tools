@@ -1,21 +1,18 @@
 name: 0. Run Tests on Pull Request
-
 on:
   pull_request:
     branches:
       - main
     paths:
       - "civicpatch/**"
-
 permissions:
   contents: read
   
 jobs:
-  run-civicpatcl-tests:
+  run-civicpatch-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
       - name: Run civicpatch unit tests
         working-directory: ./civicpatch
         run: |
@@ -25,21 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup mise
-        uses: jdx/mise-action@v3.2.0
-        with:
-          version: "2026.3.6"
-          cache: false
-          install: true
-          log_level: debug
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install dependencies with Poetry
-        working-directory: ./shared
-        run: |
-          poetry install
-
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Run shared unit tests
         run: |
-          mise pytest-shared
+          uv sync --all-packages
+          uv run pytest shared/tests
