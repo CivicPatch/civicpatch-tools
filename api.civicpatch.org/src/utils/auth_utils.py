@@ -7,7 +7,7 @@ from jose import jwt, JWTError
 import time
 from typing import cast
 import database
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory, Role
 from services import session_service
 
 import logging
@@ -28,7 +28,6 @@ async def get_user(
     cookie: Optional[str] = Security(API_COOKIE),
 ) -> Identity:
     service_api_key = os.getenv("SERVICE_API_KEY")
-    auth_header = request.headers.get("authorization")
 
     token = None
     token_source = None
@@ -54,8 +53,8 @@ async def get_user(
             type="service_api_key",
             provider="system",
             provider_user_id="service_api_key",
-            email=None,
-            teams=[]
+            email="service@civicpatch.org",
+            teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS]
         )
 
     if not JWT_SECRET_KEY:
@@ -180,36 +179,41 @@ def require_route_access(category: RouteCategory, teams_required: Optional[List[
     async def _dependency(
         identity: Identity = Depends(get_optional_user),
     ):
-        logger.debug(f"Route access check: category={category}, identity.type={identity.type if identity else None}, identity.email={identity.email if identity else None}, teams={identity.teams if identity else None}")
+        # Service API key always allowed for SERVICE routes, and optionally for others
+        if identity and identity.type == "service_api_key":
+            logger.debug(f"Service key access granted for category={category}")
+            return identity
+
+        # Explicitly deny non-service identities for SERVICE category
+        if category == RouteCategory.SERVICE:
+            logger.debug(f"Non-service identity denied for SERVICE category: {getattr(identity, 'email', None)}")
+            raise HTTPException(status_code=403, detail="User does not have access to this resource")
 
         # Public
         if category == RouteCategory.PUBLIC:
             return identity
-        
-        if category == RouteCategory.AUTHENTICATED and identity != None:
+
+        # Authenticated
+        if category == RouteCategory.AUTHENTICATED and identity is not None:
             logger.debug(f"Authenticated access granted for category={category}, email={identity.email}")
             return identity
 
-        # Service key — not tied to a person, skip all team checks
-        if category == RouteCategory.SERVICE and identity.type == "service_api_key":
-            logger.debug(f"Service key access granted for category={category}")
+        # Team required
+        user_teams = identity.teams if identity else []
+        if category == RouteCategory.TEAM_REQUIRED and len(user_teams) == 0:
+            logger.debug(f"Team required access denied for category={category}, user email={getattr(identity, 'email', None)}, no teams found, but at least one team is required")
+            raise HTTPException(status_code=403, detail="User does not have required team membership")
+
+        if user_teams and teams_required and not any(team in user_teams for team in teams_required):
+            logger.debug(f"Team required access denied for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
+            raise HTTPException(status_code=403, detail="User does not have required team membership")
+
+        if user_teams and teams_required and any(team in user_teams for team in teams_required):
+            logger.debug(f"Team required access granted for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
             return identity
 
-        # This must be a user only route, let's start checking for their teams
-        user_teams = identity.teams
-
-        if category == RouteCategory.TEAM_REQUIRED:
-            if not teams_required and len(user_teams) == 0:
-                logger.debug(f"Team required access denied for category={category}, user email={identity.email}, no teams found, but at least one team is required")
-                raise HTTPException(status_code=403, detail="User does not have required team membership")
-            if user_teams and any(team in user_teams for team in teams_required):
-                logger.debug(f"Team required access granted for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
-                return identity
-            else:
-                logger.debug(f"Team required access denied for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}")
-                raise HTTPException(status_code=403, detail="User does not have required team membership")
-        
-        logger.debug(f"Unknown route: Access denied for category={category}, user email={identity.email}, teams={user_teams}")
+        # Unknown category fallback
+        logger.debug(f"Unknown route: Access denied for category={category}, user email={getattr(identity, 'email', None)}, teams={getattr(identity, 'teams', None)}")
         raise HTTPException(status_code=403, detail="User does not have access to this resource")
     return _dependency
 
@@ -218,7 +222,7 @@ def expect_user(identity, expected_provider, expected_provider_user_id):
         return False, "No identity provided"
 
     if identity.type == "service_api_key":
-        True, "Identity is a service API key, skipping provider checks"
+        return True, "Identity is a service API key, skipping provider checks"
     
     if identity.provider != expected_provider:
         return False, f"Expected provider {expected_provider}, got {identity.provider}"
@@ -228,4 +232,3 @@ def expect_user(identity, expected_provider, expected_provider_user_id):
     
     return True, "Identity matches expected provider and provider_user_id"
 
-    
