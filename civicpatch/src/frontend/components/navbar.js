@@ -108,26 +108,6 @@ const NAVBAR_CSS = html`
   </style>
 `;
 
-function renderTeamsDropdownContent(teams) {
-  if (!teams || teams.length === 0) {
-    return html`
-      <div class="teams-dropdown-header">Teams</div>
-      <div class="teams-dropdown-empty">No teams assigned</div>
-    `;
-  }
-  return html`
-    <div class="teams-dropdown-header">Teams</div>
-    ${teams.map(
-      (team) => html`
-        <li>
-          <i class="fas fa-users"></i>
-          ${team.name || team}
-        </li>
-      `
-    )}
-  `;
-}
-
 function getTeamsTooltip(teams) {
   if (!teams || teams.length === 0) {
     return 'No teams assigned';
@@ -135,7 +115,7 @@ function getTeamsTooltip(teams) {
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
-function renderUserInfo(user) {
+function renderAuthed(user) {
   const teams = user.teams || [];
   const tooltip = getTeamsTooltip(teams);
   return html`
@@ -147,6 +127,9 @@ function renderUserInfo(user) {
       <i class="fas fa-circle"></i>
       ${user.email || 'User'}
     </span>
+    <a href="/jobs">
+      Jobs
+    </a>
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
       class="button secondary"
@@ -183,7 +166,7 @@ function Navbar({ user }) {
         CivicPatch
       </a>
       <div class="nav-links">
-      ${userData && userData.authenticated ? renderUserInfo(userData) : renderLogin()}
+      ${userData && userData.authenticated ? renderAuthed(userData) : renderLogin()}
       </div>
     </nav>
   `;
