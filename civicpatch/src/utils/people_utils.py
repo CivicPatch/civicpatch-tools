@@ -533,7 +533,7 @@ def person_to_official(designation_configs, person: Person) -> Official:
         end_date=person.end_date or None,
 
         office=Office(
-            name=office_name,
+            name=office_name.title(),
             division_ocdid=division_ocdid
         ),
 
