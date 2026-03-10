@@ -20,9 +20,9 @@ import services.github_service as github_service
 import json
 from job_service.people_collector import people_collector
 from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
+import asyncio
 import utils.file_utils
-import tempfile
-import os
+import time
 
 import logging
 logger = logging.getLogger(__name__)
@@ -37,9 +37,9 @@ class CreatePeopleRegisterJobRequest(BaseModel):
     server_source: Optional[str] = None
 
 class UpdateJobStatusRequest(BaseModel):
-    jurisdiction_ocdid: str
     status: str
     progress: Optional[int]
+    jurisdiction_ocdid: str
 
 class UpdateJobStatusResponse(BaseModel):
     request_id: str
@@ -74,14 +74,14 @@ def get_router(api_key_header):
         request_id: str,
         request: UpdateJobStatusRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
+        user: Identity = Depends(require_route_access(RouteCategory.SERVICE, ["default"]))
     ):
-        can_call_request_id_response = await can_call_request_id(user, request_id)
-        if not can_call_request_id_response:
-            return JSONResponse(
-                content=ErrorResponse(error="Not authorized to update status for this request ID: " + request_id).model_dump(),
-                status_code=403
-            )
+        #can_call_request_id_response = await can_call_request_id(user, request_id)
+        #if not can_call_request_id_response:
+        #    return JSONResponse(
+        #        content=ErrorResponse(error="Not authorized to update status for this request ID: " + request_id).model_dump(),
+        #        status_code=403
+        #    )
 
         async def _update_and_publish():
             await update_job_status(
@@ -121,14 +121,14 @@ def get_router(api_key_header):
     )
     async def create_people_job_endpoint(
         request: CreatePeopleJobRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
+        user: Identity = Depends(require_route_access(RouteCategory.SERVICE, ["default"]))
     ):
-        api_request_allowed, reason = await can_make_api_request(user.provider, user.provider_user_id)
-        if not api_request_allowed:
-            return JSONResponse(
-                content=ErrorResponse(error=reason).model_dump(),
-                status_code=429
-            )
+        #api_request_allowed, reason = await can_make_api_request(user.provider, user.provider_user_id)
+        #if not api_request_allowed:
+        #    return JSONResponse(
+        #        content=ErrorResponse(error=reason).model_dump(),
+        #        status_code=429
+        #    )
 
         try:
             request_id = shared.utils.id_utils.make_request_id() 
@@ -183,12 +183,10 @@ def get_router(api_key_header):
         request_id: str,
         file: UploadFile,
         background_tasks: BackgroundTasks,
-        authorization: str = Security(api_key_header),
         jurisdiction_ocdid: str = Form(...),
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
+        _user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
     ):
-        if not authorization:
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
+        start_time = time.time()
 
         # Check file type
         if not file.filename.lower().endswith(".zip"):
@@ -200,8 +198,11 @@ def get_router(api_key_header):
 
         logger.info(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
 
-        # Save the file to disk immediately
+        log_step = lambda msg: logger.info(f"[{request_id}] {msg}: {time.time() - start_time:.3f}s elapsed")
+
+        log_step("Start file save")
         file_path, temp_dir = await utils.file_utils.save_upload_to_temp(file)
+        log_step("File saved to disk")
 
         request_obj = HandleSubmitJobArtifactsRequest(
             file_path=file_path,  # Pass the path, not the UploadFile
@@ -215,12 +216,16 @@ def get_router(api_key_header):
             temp_dir=temp_dir
         )
 
+        log_step("Before background task add")
         background_tasks.add_task(
             people_collector.handle_submit_job_artifacts,
             request=request_obj,
         )
+        log_step("Background task added")
 
+        logger.info(f"[{request_id}] Total endpoint time: {time.time() - start_time:.3f}s")
         return {"request_id": request_id, "status": "processing"}
+
 
     @router.post(
         "/people/{request_id}/result",
@@ -232,14 +237,13 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
     ):
         errors = []
-        can_call_request_id_response = await can_call_request_id(user, request_id)
-        if not can_call_request_id_response:
-            return JSONResponse(
-                content=ErrorResponse(error="Not authorized to post result for this request ID: " + request_id).model_dump(),
-                status_code=403
-            )
+        #can_call_request_id_response = await can_call_request_id(user, request_id)
+        #if not can_call_request_id_response:
+        #    return JSONResponse(
+        #        content=ErrorResponse(error="Not authorized to post result for this request ID: " + request_id).model_dump(),
+        #        status_code=403
+        #    )
 
-        import asyncio
         tasks = []
         if request.data:
             tasks.append(("result", update_job_result(request_id, request.data)))

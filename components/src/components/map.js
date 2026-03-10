@@ -263,10 +263,6 @@ function CivMap({ latlng, canmove = true, geojson = null }) {
     let urlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     newMapInstance.addLayer(new TileLayer(urlTemplate));
 
-    if (!currentLatlng) {
-      newMapInstance.locate();
-    }
-
     if (canMove) {
       const ctrls = createAndAttachControls(newMapInstance);
       _gc = ctrls.gc;

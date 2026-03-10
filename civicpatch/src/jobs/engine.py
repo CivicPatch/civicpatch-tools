@@ -64,6 +64,7 @@ async def run_workflow(
         log_system_usage()
 
         await civicpatch_api.update_job_status(
+            logger,
             ctx.request_id,
             ctx.data.jurisdiction_ocdid,
             status=ctx.current_state.value,
@@ -71,7 +72,7 @@ async def run_workflow(
         )
         if workflow_stop_requested(jurisdiction_ocdid):
             ctx = ctx.copy(update={
-                "current_state": ctx.current_state,
+                "current_state": ctx.current_state.value,
                 "updated_at": time.time()
             })
             break
@@ -91,6 +92,7 @@ async def run_workflow(
 
     final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
     await civicpatch_api.update_job_status(
+        logger,
         ctx.request_id,
         ctx.data.jurisdiction_ocdid,
         status=ctx.current_state.value,

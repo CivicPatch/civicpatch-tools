@@ -212,3 +212,20 @@ def require_route_access(category: RouteCategory, teams_required: Optional[List[
         logger.debug(f"Unknown route: Access denied for category={category}, user email={identity.email}, teams={user_teams}")
         raise HTTPException(status_code=403, detail="User does not have access to this resource")
     return _dependency
+
+def expect_user(identity, expected_provider, expected_provider_user_id):
+    if not identity:
+        return False, "No identity provided"
+
+    if identity.type == "service_api_key":
+        True, "Identity is a service API key, skipping provider checks"
+    
+    if identity.provider != expected_provider:
+        return False, f"Expected provider {expected_provider}, got {identity.provider}"
+    
+    if identity.provider_user_id != expected_provider_user_id:
+        return False, f"Expected provider_user_id {expected_provider_user_id}, got {identity.provider_user_id}"
+    
+    return True, "Identity matches expected provider and provider_user_id"
+
+    
