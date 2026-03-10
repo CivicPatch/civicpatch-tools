@@ -43,17 +43,17 @@ class ProcessingSetup:
 
 LLMS = [
     {
+        "name": "google_gemini",
+        "service": google_gemini_llm,
+        "prompt": google_gemini_prompt,
+        "with_batch_api": False,
+    },
+    {
         "name": "together_ai",
         "service": together_ai_llm,
         "prompt": together_ai_prompt,
         "with_batch_api": False,
     },
-    {
-        "name": "google_gemini",
-        "service": google_gemini_llm,
-        "prompt": google_gemini_prompt,
-        "with_batch_api": False,
-    }
 ]
 
 IGNORE_WEBSITES = [

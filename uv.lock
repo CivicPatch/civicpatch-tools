@@ -490,7 +490,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.116.1,<0.117.0" },
     { name = "google-api-python-client", specifier = ">=2.184.0,<3.0.0" },
     { name = "google-genai", specifier = ">=1.29.0,<2.0.0" },
-    { name = "instructor", specifier = ">=1.10.0,<2.0.0" },
+    { name = "instructor", specifier = ">=1.10.0" },
     { name = "jsonref", specifier = ">=1.1.0,<2.0.0" },
     { name = "loguru", specifier = ">=0.7.3,<0.8.0" },
     { name = "markdownify", specifier = ">=1.1.0,<2.0.0" },
