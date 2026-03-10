@@ -18,6 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.12
+        
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync --all-packages
+
       - name: Ensure writable data directories for Docker
         run: |
           mkdir -p data_source data
@@ -27,6 +38,10 @@ jobs:
         working-directory: ./civicpatch
         run: |
           docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm unit tests/unit
+      
+      - name: Run shared tests
+        run: |
+          uv run pytest shared/tests
 
   get-date:
     runs-on: ubuntu-latest
