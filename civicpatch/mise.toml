@@ -1,17 +1,11 @@
-[tools]
-poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
-python = "3.12.11" # must be after poetry so the poetry bin is first in PATH
-node = "24.11.0"
-
 [env]
 _.file = ".env"
-POETRY_VIRTUALENVS_IN_PROJECT = true
 PYTHONPATH = "./src"
 
 #[tasks.unit]
-#run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
+#run = "docker compose run --rm civicpatch uv run pytest -s tests/unit"
 #[tasks.integration]
-#run = "docker compose run --rm civicpatch poetry run pytest -s tests/integration"
+#run = "docker compose run --rm civicpatch uv run pytest -s tests/integration"
 ###################################################
 ## 🚀✨ DEVELOPMENT TASKS ✨🚀
 ###################################################
@@ -25,7 +19,7 @@ run = "docker compose -f docker-compose.development.yml exec civicpatch bash"
 run = "docker compose -f docker-compose.development.yml exec civicpatch-frontend sh"
 
 [tasks.devinttest]
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
 # docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m integration tests/integration
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a pytest -vvm integration tests/integration/services/google_gemini
@@ -77,7 +71,7 @@ curl -X POST http://localhost:8000/api/pipelines \
     }
   }'
 """
-#poetry run python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:tx/place:palouse/government
+#uv run python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:tx/place:palouse/government
 #curl -X POST http://localhost:8000/api/pipelines \
 #  -H "Content-Type: application/json" \
 #  -d '{
@@ -103,15 +97,15 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 """
 
 [tasks.scratch]
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
-run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_people_utils.py"
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_entity_extraction.py"
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_scrape_utils.py"
-# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
+run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run python src/scripts/test_pipeline_step.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/utils/test_people_utils.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_entity_extraction.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/utils/test_scrape_utils.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run python src/scripts/test.py"
 #run = """
-#docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+#docker compose -f docker-compose.development.yml run --rm civicpatch uv run \
 #  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-ocdid") }}
 #"""
 #mise scratch --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:nc/place:greensboro/government"
@@ -125,38 +119,38 @@ run = "docker compose -f docker-compose.development.yml run --rm civicpatch poet
 # they might not be up-to-date or complete).
 [tasks.generate-data-comment]
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/generate_data_comment.py {{ option(name="jurisdiction-ocdid") }}
 """
 
 [tasks.test-generate-review-comment]
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:wa/place:seattle
 """
 
 [tasks.generate-review-comment]
 # Ex: /app/data/wa/place__spokane.yml
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/generate_review_comment.py {{ option(name="jurisdiction-ocdid") }}
 """
 
 [tasks.upload-images-to-cdn]
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/upload_images_to_cdn.py {{ option(name="jurisdiction-ocdid") }}
 """
 
 [tasks.send-costs-to-google-sheets]
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-ocdid") }}
 """
 
 [tasks.pipeline-run]
 run = """
-docker compose -f docker-compose.yml run --rm civicpatch poetry run \
+docker compose -f docker-compose.yml run --rm civicpatch uv run \
   python src/interfaces/cli/main.py \
     --jurisdiction-ocdid "{{ option(name="jurisdiction-ocdid") }}" \
     --name "{{ option(name="name") }}" \
@@ -165,7 +159,7 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
 
 [tasks.test-pipeline-run-cicd]
 run = """
-docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
+docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd uv run \
   python src/interfaces/cli/main.py \
     run_pipeline \
     --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
@@ -176,7 +170,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 
 [tasks.pipeline-run-cicd]
 run = """
-docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
+docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd uv run \
   python src/interfaces/cli/main.py \
     run_pipeline \
     --jurisdiction-ocdid "{{ option(name="jurisdiction-ocdid") }}" \
@@ -187,7 +181,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 
 [tasks.get-juds]
 run = """
-docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
+docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd uv run \
   python src/interfaces/cli/main.py \
     get_juds \
     --num-jurisdictions "{{ option(name="num-jurisdictions") }}" \
@@ -196,7 +190,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 
 [tasks.cli-test]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+docker compose -f docker-compose.development.yml run --rm civicpatch uv run \
   python src/interfaces/cli/main.py \
     run_pipeline \
     --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
@@ -206,7 +200,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch poetry run 
 
 [tasks.jurisdiction-ocdid-state]
 run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
 python -c "
 import sys
 from utils.id_utils import parse_jurisdiction_ocdid, state_name

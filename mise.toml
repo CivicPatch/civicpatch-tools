@@ -1,7 +1,7 @@
 [tools]
-poetry = 'latest'
 pre-commit = "latest"
-python = '3.12'
+python = "3.12"
+uv = "latest"
 
 [env]
 _.file = [
@@ -10,5 +10,5 @@ _.file = [
 ]
 
 [tasks.pytest-shared]
-run = "poetry run pytest"
+run = "uv run pytest"
 dir = "shared"

@@ -3,7 +3,7 @@ import os
 from contextlib import asynccontextmanager
 import arel
 import httpx
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 

@@ -9,36 +9,29 @@ RUN apt-get update && apt-get install -y \
     x11-utils \
     dbus-x11 \
     # env substitution
-    gettext-base \ 
+    gettext-base \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH="/app/src" \
     PLAYWRIGHT_BROWSERS_PATH="/ms-playwright" \
-    # Override for playwright to play nicely
-    # with python 3.12-trixie
-    # https://github.com/microsoft/playwright/issues/34255#issuecomment-2579839102
-    # https://github.com/microsoft/playwright/blob/ef40dcbd59fcff11dde5eb6146e58ce3cccff1a4/packages/playwright-core/src/server/registry/index.ts#L231
     PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="debian12-x64" \
-    # Poetry setup with pip
-    POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_HOME="/opt/poetry" \
-    PATH="/opt/poetry/bin:$PATH" \
-    POETRY_VIRTUALENVS_IN_PROJECT=false \
-    # DEBUG="pw:browser" \
     XDG_CACHE_HOME="/tmp/.cache" \
     XDG_CONFIG_HOME="/tmp/.config" \
-    PROJECT_NAME="civicpatch"
+    PROJECT_NAME="civicpatch" \
+    # uv: install packages into /venv
+    UV_PROJECT_ENVIRONMENT="/venv" \
+    UV_CACHE_DIR="/tmp/.cache/uv" \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PYTHON="/usr/local/bin/python3" \
+    PATH="/venv/bin:/root/.local/bin:$PATH"
 
 WORKDIR /app
 
 # Needed especially for post-install step
 # cache files are 8GB
-RUN pip config set global.no-cache-dir true
-
-RUN python3 -m venv $POETRY_HOME && \
-    $POETRY_HOME/bin/pip install "poetry==2.1.3"
+RUN pip install uv --no-cache-dir
 
 RUN useradd -m -s /bin/bash civicpatch_user
 
@@ -46,53 +39,50 @@ RUN useradd -m -s /bin/bash civicpatch_user
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
     chown -R root:root /tmp/.X11-unix
 
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
+# Copy workspace manifests first for layer caching
+COPY pyproject.toml uv.lock ./
+COPY shared/pyproject.toml ./shared/pyproject.toml
+COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 
-RUN poetry install --no-root
+# Install deps for this workspace member (no source yet)
+RUN uv sync --package civicpatch --no-dev --frozen --no-install-project
 
-# Copy the shared folder from parent directory
+# Copy source
 COPY --chown=civicpatch_user:civicpatch_user shared/src/shared /app/src/shared
-
-# Copy the rest of the application
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app
 
 # ==========================================
 # Stage: post-install
 # ==========================================
-
 FROM image-base AS post-install
 
-RUN poetry run patchright install --with-deps chrome
+RUN patchright install --with-deps chrome
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
-RUN poetry run python /app/src/setup.py
+RUN python -m ensurepip && python /app/src/setup.py
 
 USER civicpatch_user
-
-#https://github.com/microsoft/playwright-python/issues/2572
 
 # ==========================================
 # Companion Stage: development-fe
 # ==========================================
-
 FROM node:24-slim AS development-fe
 
 ENV NODE_ENV="development" \
     BUILD_ENV="development" \
     PROJECT_NAME="civicpatch"
+
 WORKDIR /app
 
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/frontend/package* /app
+COPY ${PROJECT_NAME}/src/frontend/package*.json /app/
 RUN npm install
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/frontend/  /app
+COPY ${PROJECT_NAME}/src/frontend/ /app/
 
 CMD ["npm", "run", "start"]
 
 # ==========================================
 # Final Stage: development
 # ==========================================
-
-# DEVELOPMENT IMAGE
 FROM post-install AS development
 
 ENV CIVICPATCH_ENV="development"
@@ -103,39 +93,35 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# Reinstall with dev dependencies included
+RUN uv sync --package civicpatch --frozen --no-install-project
 
-USER root
+WORKDIR /app
 EXPOSE 8000
 
-ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
+ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
 CMD ["fastapi", "dev", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
-# Tmp change
-# CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
 # Stage: production-fe
 # ==========================================
-
 FROM node:24-slim AS production-build
 
 ENV NODE_ENV="development" \
     BUILD_ENV="production" \
     PROJECT_NAME="civicpatch"
+
 WORKDIR /app
 
-RUN ls -la
-COPY ${PROJECT_NAME}/src/frontend/package*.json /app
+COPY ${PROJECT_NAME}/src/frontend/package*.json /app/
 RUN npm install
-COPY ${PROJECT_NAME}/src/frontend/ /app
+COPY ${PROJECT_NAME}/src/frontend/ /app/
 
 RUN ["npm", "run", "build"]
 
 # ==========================================
 # Final Stage: production
 # ==========================================
-
-# PRODUCTION IMAGE
 FROM post-install AS production
 
 ENV CIVICPATCH_ENV="production"
@@ -153,7 +139,6 @@ RUN chown -R root:root /app && \
 USER civicpatch_user
 
 EXPOSE 8000
-# # Keep the container running
-# CMD ["tail", "-f", "/dev/null"]
-ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
+
+ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
 CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0", "--workers", "2"]

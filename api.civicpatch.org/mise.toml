@@ -1,12 +1,7 @@
-[tools]
-poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
-python = "3.12" # must be after poetry so the poetry bin is first in PATH
-
 [env]
 # _.file = ".deployment.env"
 _.file = ".env"
 PYTHONPATH = "./src"
-POETRY_VIRTUALENVS_IN_PROJECT = "true"
 
 [tasks.unit]
 run = """
@@ -25,19 +20,19 @@ run = "docker compose exec api.civicpatch.org bash"
 run = "python scripts/deploy.py"
 
 [tasks.generate-url]
-run = "docker compose run --rm api.civicpatch.org poetry run python src/scripts/one-off-generate-file-url.py request_fa6157f0-c3bf-4432-b3b3-f7c8c8b2905e_wa_5336045.zip"
+run = "docker compose run --rm api.civicpatch.org uv run python src/scripts/one-off-generate-file-url.py request_fa6157f0-c3bf-4432-b3b3-f7c8c8b2905e_wa_5336045.zip"
 
 [tasks.trigger-github]
-run = "docker compose run --rm api.civiccpatch.org poetry run pytest -vv -s tests/test_github_service.py"
+run = "docker compose run --rm api.civiccpatch.org uv run pytest -vv -s tests/test_github_service.py"
 
 [tasks.process-zip]
-run = "docker compose run --rm api.civicpatch.org poetry run pytest -vv -s tests/test_cloudflare.py"
+run = "docker compose run --rm api.civicpatch.org uv run pytest -vv -s tests/test_cloudflare.py"
 
 # New task to test R2 credentials
 [tasks.test-r2]
 description = "Test Cloudflare R2 credentials by uploading a small test file"
 run = """
-docker compose run --rm api.civicpatch.org poetry run python -c '
+docker compose run --rm api.civicpatch.org uv run python -c '
 import boto3, os
 from botocore.client import Config
 from io import BytesIO
