@@ -1,6 +1,5 @@
 README.md
 pyproject.toml
-src/setup.py
 src/civicpatch.egg-info/PKG-INFO
 src/civicpatch.egg-info/SOURCES.txt
 src/civicpatch.egg-info/dependency_links.txt
@@ -54,6 +53,17 @@ src/services/openai/llm.py
 src/services/openai/prompts.py
 src/services/together_ai/llm.py
 src/services/together_ai/prompts.py
+src/shared/schemas.py
+src/shared/utils/config_utils.py
+src/shared/utils/data_path_utils.py
+src/shared/utils/email_utils.py
+src/shared/utils/id_utils.py
+src/shared/utils/match_utils.py
+src/shared/utils/name_utils.py
+src/shared/utils/person_id_utils.py
+src/shared/utils/phone_utils.py
+src/shared/utils/review_utils.py
+src/shared/utils/url_utils.py
 src/utils/array_utils.py
 src/utils/cost_utils.py
 src/utils/log_utils.py

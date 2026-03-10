@@ -249,7 +249,7 @@ app.include_router(
     api_data_router.get_router(), 
     prefix="/api/v1/data", 
     tags=["data"],
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))],
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 app.include_router(

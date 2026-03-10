@@ -53,54 +53,58 @@ async def scrape(logger, website_url, options=None):
                 no_viewport=True
             )
             
-            page = await browser.new_page()
-            page.set_default_timeout(timeout)
-            
-            # Navigate with fallback strategy
-            response = None
-            for wait_until in ["networkidle", "load", "domcontentloaded"]:
-                try:
-                    response = await page.goto(website_url, wait_until=wait_until, timeout=15000)
-                    break
-                except Exception as e:
-                    logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
-            
-            if response is None:
-                raise Exception("Failed to load page with all wait strategies")
-            
-            # Check if, after redirect, we have already scraped this URL
-            if options.get('scraped_urls') and page.url in options.get('scraped_urls'):
-                logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
-                await browser.close()
-                raise ValueError("Already scraped this URL after redirect")
-            
-            # Check if the page is HTML using document.contentType
             try:
-                content_type = await page.evaluate("document.contentType")
-                if content_type.lower() != "text/html":
+                page = await browser.new_page()
+                page.set_default_timeout(timeout)
+                
+                # Navigate with fallback strategy
+                response = None
+                for wait_until in ["networkidle", "load", "domcontentloaded"]:
+                    try:
+                        response = await page.goto(website_url, wait_until=wait_until, timeout=15000)
+                        break
+                    except Exception as e:
+                        logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
+                
+                if response is None:
+                    raise Exception("Failed to load page with all wait strategies")
+                
+                # Check if, after redirect, we have already scraped this URL
+                if options.get('scraped_urls') and page.url in options.get('scraped_urls'):
+                    logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
+                    raise ValueError("Already scraped this URL after redirect")
+                
+                # Check if the page is HTML using document.contentType
+                try:
+                    content_type = await page.evaluate("document.contentType")
+                    if content_type.lower() != "text/html":
+                        raise ValueError(f"Content type is not text/html: {content_type}")
+                except ValueError:
+                    raise
+                except:
+                    pass  # Continue if we can't check content type
+                
+                # === AUTO-DETECT AND WAIT FOR WIX CONTENT ===
+                await auto_detect_and_wait(page, logger, response)
+                
+                # Existing processing
+                await flatten_shadow_root(page)
+                await html_relative_to_absolute_urls(page)
+                
+                if options.get('image_directory'):
+                    await convert_background_divs_to_imgs(page)
+                    await download_images(browser, logger, page, options.get('image_directory'))
+                
+                content = await page.content()
+                return content
+
+            finally:
+                try:
                     await browser.close()
-                    raise ValueError(f"Content type is not text/html: {content_type}")
-            except:
-                pass  # Continue if we can't check content type
-            
-            # === AUTO-DETECT AND WAIT FOR WIX CONTENT ===
-            await auto_detect_and_wait(page, logger, response)
-            
-            # Existing processing
-            await flatten_shadow_root(page)
-            await html_relative_to_absolute_urls(page)
-            
-            if options.get('image_directory'):
-                await convert_background_divs_to_imgs(page)
-                await download_images(browser, logger, page, options.get('image_directory'))
-            
-            content = await page.content()
-            await browser.close()
-            return content
-            
+                except Exception:
+                    pass  # Already closed
+
     except Exception as e:
-        if browser:
-            await browser.close()
         raise
 
 
@@ -210,20 +214,23 @@ async def wait_for_basic_content(page, logger):
 
 async def convert_background_divs_to_imgs(page):
     """Convert divs with background images to img tags in the page"""
-    await page.evaluate("""
-        () => {
-            const divs = document.querySelectorAll('div[style*="url("]');
-            divs.forEach(div => {
-                const style = div.getAttribute('style');
-                const match = style.match(/url\\(['"]?([^'"()]+)['"]?\\)/);
-                if (match) {
-                    const img = document.createElement('img');
-                    img.src = match[1];
-                    div.replaceWith(img);
-                }
-            });
-        }
-    """)
+    try:
+        await page.evaluate("""
+            () => {
+                const divs = document.querySelectorAll('div[style*="url("]');
+                divs.forEach(div => {
+                    const style = div.getAttribute('style');
+                    const match = style.match(/url\\(['"]?([^'"()]+)['"]?\\)/);
+                    if (match) {
+                        const img = document.createElement('img');
+                        img.src = match[1];
+                        div.replaceWith(img);
+                    }
+                });
+            }
+        """)
+    except Exception:
+        pass  # DOM too large/complex, skip
 
 async def flatten_shadow_root(page: Page):
     """
@@ -240,7 +247,10 @@ async def flatten_shadow_root(page: Page):
         document.querySelectorAll('*').forEach(flatten);
     })();
     """
-    await page.evaluate(js_script)
+    try:
+        await page.evaluate(js_script)
+    except Exception:
+        pass  # DOM too large/complex, skip
 
 async def html_relative_to_absolute_urls(page: Page):
     """
@@ -250,36 +260,38 @@ async def html_relative_to_absolute_urls(page: Page):
     Args:
         page (Page): The Playwright page object.
     """
-    base_element = await page.query_selector("base")
-    base_href = await base_element.get_attribute("href") if base_element else None
-    if base_href:
-        from urllib.parse import urljoin
-        base_url = urljoin(page.url, base_href)
-    else:
-        base_url = page.url
+    try:
+        base_element = await page.query_selector("base")
+        base_href = await base_element.get_attribute("href") if base_element else None
+        if base_href:
+            from urllib.parse import urljoin
+            base_url = urljoin(page.url, base_href)
+        else:
+            base_url = page.url
 
-    # Improved: convert all non-absolute URLs, not just those starting with /
-    await page.evaluate("""
-        (baseUrl) => {
-            function isAbsolute(url) {
-                return /^(?:[a-z]+:)?\\/\\//i.test(url);
-            }
-            const elements = document.querySelectorAll('a[href], img[src]');
-            elements.forEach((el) => {
-                if (el.tagName === 'A') {
-                    const href = el.getAttribute('href');
-                    if (href && !isAbsolute(href)) {
-                        el.setAttribute('href', new URL(href, baseUrl).href);
-                    }
-                } else if (el.tagName === 'IMG') {
-                    const src = el.getAttribute('src');
-                    if (src && !isAbsolute(src)) {
-                        el.setAttribute('src', new URL(src, baseUrl).href);
-                    }
+        await page.evaluate("""
+            (baseUrl) => {
+                function isAbsolute(url) {
+                    return /^(?:[a-z]+:)?\\/\\//i.test(url);
                 }
-            });
-        }
-    """, base_url)
+                const elements = document.querySelectorAll('a[href], img[src]');
+                elements.forEach((el) => {
+                    if (el.tagName === 'A') {
+                        const href = el.getAttribute('href');
+                        if (href && !isAbsolute(href)) {
+                            el.setAttribute('href', new URL(href, baseUrl).href);
+                        }
+                    } else if (el.tagName === 'IMG') {
+                        const src = el.getAttribute('src');
+                        if (src && !isAbsolute(src)) {
+                            el.setAttribute('src', new URL(src, baseUrl).href);
+                        }
+                    }
+                });
+            }
+        """, base_url)
+    except Exception:
+        pass  # DOM too large/complex, skip
 
 def is_valid_image(src: str | None) -> bool:
     """
@@ -311,7 +323,13 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
     os.makedirs(image_dir, exist_ok=True)
     image_map = {}
 
-    for img in await page.query_selector_all("img"):
+    try:
+        imgs = await page.query_selector_all("img")
+    except Exception as e:
+        logger.warning(f"Could not query images (DOM too large/complex): {e}")
+        imgs = []
+
+    for img in imgs:
         async def process_image(img):
             src = None
             try:
@@ -396,11 +414,14 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
         json.dump(image_map, f, indent=2)
 
 async def remove_image_from_dom(page: Page, img, logger):
-    await page.evaluate("""(img) => {
-            if (img && img.parentNode) {
-                img.parentNode.removeChild(img);
-            }
-        }""", img)
+    try:
+        await page.evaluate("""(img) => {
+                if (img && img.parentNode) {
+                    img.parentNode.removeChild(img);
+                }
+            }""", img)
+    except Exception:
+        pass  # DOM too large/complex, skip
 
 async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, file_name: str):
     """
@@ -442,4 +463,3 @@ async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, 
         logger.warning(f"Error loading image {img_url}: {e}")
 
     return None
-

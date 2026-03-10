@@ -55,7 +55,7 @@ FROM image-base AS post-install
 
 RUN patchright install --with-deps chrome
 
-RUN python -m ensurepip && python /app/src/setup.py
+RUN uv run python -m spacy download en_core_web_md
 
 #https://github.com/microsoft/playwright-python/issues/2572
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]

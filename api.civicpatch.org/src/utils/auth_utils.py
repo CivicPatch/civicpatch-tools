@@ -178,9 +178,9 @@ async def get_optional_user(
 
 def require_route_access(category: RouteCategory, teams_required: Optional[List[str]] = None):
     async def _dependency(
-        identity: Identity = Depends(get_user),
+        identity: Identity = Depends(get_optional_user),
     ):
-        logger.debug(f"Route access check: category={category}, identity.type={identity.type}, identity.email={identity.email}, teams={identity.teams}")
+        logger.debug(f"Route access check: category={category}, identity.type={identity.type if identity else None}, identity.email={identity.email if identity else None}, teams={identity.teams if identity else None}")
 
         # Public
         if category == RouteCategory.PUBLIC:

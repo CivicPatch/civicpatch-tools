@@ -112,7 +112,6 @@ class ResearchedPerson(BaseModel):
 
 class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]
-    notes: Optional[str] = None
 
 class ResearchMunicipalityStep(BaseModel):
     people: List[ResearchedPerson]
