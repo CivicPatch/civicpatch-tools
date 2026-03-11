@@ -11,8 +11,8 @@ def relevant_page_prompt(page_url: str):
     Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of the municipality.
 
     Also consider the page URL: {page_url}
-    It can be a strong indicator of relevance if it contains keywords like "officials", "government", "mayor", "council", "board", 
-    or similar terms that suggest it is related to the municipality's governing body.
+    The URL may help you select relevant_urls, but do NOT use it to determine is_relevant.
+    is_relevant must be based solely on the page content.
 
     **Relevant content includes:**
     - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages) 
@@ -23,24 +23,36 @@ def relevant_page_prompt(page_url: str):
     - Pages that only mention auxiliary committees, department heads, supervisors, or other non-elected officials.
       For example: Planning and Zoning Committee, Parks and Recreation Board, etc.
 
-    **Step-by-step instructions:**
-    1. Scan the entire page content and identify ALL URLs/links present that could lead to pages 
-        about the municipality's main governing officials (e.g., mayor, council, board). Collect these into a list.
-    2. Determine whether the CURRENT page itself is relevant.
-    3. Return the JSON output below.
+    **Steps for selecting relevant_urls:**
+    1. Extract ALL links found anywhere on the page into a complete list.
+    2. For each link, ask: "If I followed this link, would I likely land on a page that lists or describes 
+       the primary governing body (mayor, council members, commissioners, etc.) or provides a directory 
+       of municipal departments and staff?"
+       Keep the link if the answer is yes.
+    3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to 
+       a navigational index or overview page, or to a single specific article, event, or news item?"
+       - Keep: section indexes like /Government, /Council, /Directory, /Directory/Departments, /Mayor
+       - Discard: individual news stories, press releases, or event pages about a specific item —
+         even if they mention an official's name in the title or URL
+    4. Return the filtered list as relevant_urls.
 
     **Output Format:**
     Return a JSON object with the following fields:
     {{
-        "relevant_urls": ["https://example.com/council", "https://example.com/mayor"],  # ALL links found on this page that may lead to main officials — even if the current page is not relevant
+        "relevant_urls": ["https://example.com/council", "https://example.com/directory/departments"],
         "is_relevant": true/false,
     }}
 
     **Critical rules:**
-    - `relevant_urls` must be populated with ANY link on the page that could lead to information about the primary governing body, 
-        regardless of whether the current page itself is relevant.
+    - `is_relevant` must be true ONLY if the page content itself contains names, roles, contact info, 
+      or biographical details of currently serving primary governing officials.
+      A page that merely links to such information is NOT relevant — set is_relevant to false.
+    - `relevant_urls` must include ANY navigation or directory link on the page that could lead to 
+      the primary governing body — including department directories, staff listings, and government 
+      section pages — even if the current page itself is not relevant.
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
-    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not just the current page URL.
+    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
+    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
     """
     return prompt
 
@@ -132,7 +144,4 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
 
     Return a JSON object with exactly these two fields:
     - people: array of official objects as described above
-    - relevant_urls: array of URLs found in the content that may lead to more
-      information about officials (biography pages, ward profiles, council subpages, etc.)
-
     """

@@ -43,17 +43,17 @@ class ProcessingSetup:
 
 LLMS = [
     {
-        "name": "google_gemini",
-        "service": google_gemini_llm,
-        "prompt": google_gemini_prompt,
-        "with_batch_api": False,
-    },
-    {
         "name": "together_ai",
         "service": together_ai_llm,
         "prompt": together_ai_prompt,
         "with_batch_api": False,
     },
+    {
+        "name": "google_gemini",
+        "service": google_gemini_llm,
+        "prompt": google_gemini_prompt,
+        "with_batch_api": False,
+    }
 ]
 
 IGNORE_WEBSITES = [
@@ -386,23 +386,22 @@ def calculate_progress(progress: ProgressState, records_by_llm: RecordsByLLM, se
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
-    def has_sufficient_contact(person):
-        if person.phone and person.email:
-            return True
-        if person.url and (person.phone or person.email):
-            return True
-        if person.image and (person.url or person.phone or person.email):
-            return True
-        return False
+    contact_details = set()
+    for p in people:
+        for c in [p.image, p.url, p.phone, p.email]:
+            if c:
+                contact_details.add(c)
+    has_contact = len(contact_details) >= 3
 
-    has_contact = any(has_sufficient_contact(p) for p in people)
-    has_role = any(
-        any(r and r.strip().lower() in roles for r in p.roles)
+    all_roles = {
+        r.strip().lower()
         for p in people
-    )
+        for r in (p.roles or [])
+        if r and r.strip()
+    }
+    has_role = bool(all_roles & set(roles))
 
     return has_contact and has_role
-
 
 def check_page_heuristics(logger, source_url: str, input_text: str, records_found: List[LLMPerson]) -> bool:
     """

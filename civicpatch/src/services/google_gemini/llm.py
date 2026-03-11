@@ -3,7 +3,7 @@ import time
 import instructor
 import requests
 import json
-# from google import Gemini
+from google import genai
 from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
@@ -103,8 +103,6 @@ def make_request_with_search(logger, model, api_key, prompt):
 
     raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
     response_json = raw_response.json()
-
-    print("RAW RESPONSE", response_json)
 
     response = parse_raw_response(response_json)
     logger.debug(f"Gemini raw response: {response}")
