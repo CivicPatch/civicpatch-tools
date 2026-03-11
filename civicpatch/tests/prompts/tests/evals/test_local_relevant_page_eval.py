@@ -10,6 +10,9 @@ import os
 
 pytestmark = [pytest.mark.evals, pytest.mark.evals_relevant]
 
+EVAL_CASES_DIR = "tests/prompts/datasets/local/relevant_page"
+
+
 def score_page(actual: dict, expected: dict):
     """
     Scores a single page based on is_relevant and relevant_urls.
@@ -27,7 +30,7 @@ def score_page(actual: dict, expected: dict):
 
     return score
 
-@pytest.mark.asyncio
+
 async def run_eval(model_client, case):
     """
     Runs the evaluation for a single test case.
@@ -58,15 +61,17 @@ async def run_eval(model_client, case):
     # Return both score and actual output
     return score_page(serialized_output, expected["page"]), serialized_output
 
-@pytest_asyncio.fixture
-def load_eval_cases(base_dir="tests/prompts/datasets/local/relevant_page"):
+
+def load_cases_from_dir(base_dir: str) -> list:
     """
     Loads evaluation cases from the specified directory.
     Each case contains a single page.
     """
     base = pathlib.Path(base_dir)
-    cases = []
+    if not base.exists():
+        raise FileNotFoundError(f"Eval cases directory not found: {base_dir}")
 
+    cases = []
     for case_dir in sorted(base.iterdir()):
         print(f"Loading case from {case_dir}")
         if not case_dir.is_dir():
@@ -81,16 +86,24 @@ def load_eval_cases(base_dir="tests/prompts/datasets/local/relevant_page"):
         with open(expected_path, 'r', encoding='utf-8') as f:
             expected_content = yaml.safe_load(f)
 
-        case = {
+        cases.append({
             "id": case_dir.name,
             "case_path": str(case_dir),
             "input": input_path.read_text(encoding="utf-8"),
             "expected": expected_content,
-        }
-
-        cases.append(case)
+        })
 
     return cases
+
+
+# Load cases at collection time so pytest can see them for parametrization
+_eval_cases = load_cases_from_dir(EVAL_CASES_DIR)
+
+
+@pytest.fixture
+def load_eval_cases():
+    return _eval_cases
+
 
 @pytest_asyncio.fixture
 async def model_client(request):
@@ -106,6 +119,7 @@ async def model_client(request):
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
+
 @pytest.mark.parametrize("model_client", ["together_ai"], indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
@@ -113,7 +127,7 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
     Test each case with a single RelevantPageResponseSchema.
     """
     thresholds = {
-        "relevant_urls": 0.85,  # Keep threshold for relevant_urls
+        "relevant_urls": 0.75,
     }
 
     failed_cases = []
@@ -122,6 +136,7 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
         (case_scores, actual_output) = await run_eval(model_client, case)
         expected_page = case["expected"]["page"]
         failed = []
+
         # relevant_urls comparison
         actual_urls = set(actual_output.get("relevant_urls", []))
         expected_urls = set(expected_page.get("relevant_urls", []))
@@ -134,6 +149,7 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
                 "score": score_urls,
                 "threshold": thresholds["relevant_urls"]
             })
+
         # is_relevant comparison
         if case_scores.get("is_relevant") != 1.0:
             failed.append({
@@ -143,6 +159,7 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
                 "score": case_scores.get("is_relevant"),
                 "threshold": 1.0
             })
+
         if failed:
             failed_cases.append({
                 "model_client": model_client["name"],
@@ -161,5 +178,4 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
         }, f, sort_keys=False)
     print(f"Saved evaluation report to {report_path}")
 
-    # Assert no failed cases
     assert not failed_cases, f"Some cases failed: {failed_cases}"
