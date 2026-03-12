@@ -23,51 +23,22 @@ function SummaryStats({ stats, state = 'TX' }) {
   return html`
     <style>
       .progress-bar-container {
-        width: 100%;
-        max-width: 900px;
         margin: 0 auto 2rem auto;
-        /* Remove custom background and border-radius for Pico default */
-        height: 2.5rem;
         display: flex;
-        align-items: center;
-        position: relative;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-        background: none;
-        border-radius: 0;
+        flex-direction: column;
+        gap: 0.25rem;
       }
-      .progress-bar-fill {
-        /* Remove custom background and border-radius for Pico default */
-        height: 100%;
-        transition: width 0.5s cubic-bezier(.4,2,.6,1);
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        color: #fff;
-        font-size: 1.5rem;
-        font-weight: 700;
-        padding-right: 2rem;
-        box-sizing: border-box;
-        min-width: 3.5rem;
-        background: none;
-        border-radius: 0;
+      .progress-bar-container progress {
+        width: 100%;
       }
-      .progress-bar-label {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--pico-primary-inverse, #fff);
-        letter-spacing: 0.03em;
-        pointer-events: none;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.10);
+      .progress-bar-container small {
+        text-align: center;
+        color: var(--pico-muted-color);
       }
       .summary-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 2rem;
-        max-width: 900px;
         margin: 0 auto;
       }
       .stat-card {
@@ -98,8 +69,8 @@ function SummaryStats({ stats, state = 'TX' }) {
     </style>
     <section>
       <div class="progress-bar-container" title="Total Coverage: ${actualCoverage} of ${known} known localities">
-        <progress value="${actualCoverage}" max="${scrapeable}" style="width:100%;height:2.5rem;"></progress>
-        <span class="progress-bar-label">${percentLabel(actualCoverage, scrapeable)} covered</span>
+        <progress value="${actualCoverage}" max="${scrapeable}"></progress>
+        <small>${percentLabel(actualCoverage, scrapeable)} covered</small>
       </div>
       <div class="summary-grid">
         <div class="stat-card">

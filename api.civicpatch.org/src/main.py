@@ -20,21 +20,21 @@ import routers.api.data as api_data_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.jobs as api_jobs_router
-import routers.api.service.jobs as api_service_jobs_router
+import routers.api.pull_requests as api_pull_requests_router
 import routers.api.user as api_user_router
 from routers.auth import get_router as auth_router
-from database import (
+from database.database import (
     get_api_keys_for_user,
     get_api_usage_for_user,
     get_user_details,
-    pool,
+    get_pool,
+    close_pool,
     user_is_approved,
 )
 from utils.auth_utils import require_route_access, get_optional_user
 from services import pubsub_service
 import services.github_sync_service
 from fastapi.responses import StreamingResponse
-from services import github_service
 
 import logging
 
@@ -129,13 +129,13 @@ is_production = APP_ENVIRONMENT.lower() == "production"
 
 
 @asynccontextmanager
-async def lifespan(instance: FastAPI):
-    await pool.open()
+async def lifespan(app):
+    await get_pool()   # open on startup
     await startup_tasks()
 
     yield
 
-    await pool.close()
+    await close_pool() # close on shutdown
 
 
 app = FastAPI(
@@ -230,10 +230,10 @@ app.include_router(
 )
 
 app.include_router(
-    api_service_jobs_router.get_router(api_key_header),
-    prefix="/api/v1/jobs",
-    tags=["jobs"], 
-    dependencies=[Depends(require_route_access(RouteCategory.SERVICE))]
+    api_pull_requests_router.get_router(api_key_header),
+    prefix="/api/v1/pull_requests",
+    tags=["pull_requests"],
+    # Dependencies set within router
 )
 
 # Allow you to create your api keys

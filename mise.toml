@@ -12,3 +12,7 @@ _.file = [
 [tasks.pytest-shared]
 run = "uv run pytest"
 dir = "shared"
+
+[tasks.setup]
+run = "uv sync --all-packages"
+description = "Install all workspace dependencies"

@@ -1,175 +1,191 @@
 :root,
 :host {
     font-size: 14px;
-    --pico-font-family: "Noto Sans", sans-serif; 
-    --pico-form-element-spacing-vertical: 0.5rem; /* Smaller vertical padding */
-    --pico-form-element-spacing-horizontal: 0.5rem; /* Smaller horizontal padding */
+    --pico-font-family: "Noto Sans", sans-serif;
+    --pico-form-element-spacing-vertical: 0.5rem;
+    --pico-form-element-spacing-horizontal: 0.5rem;
     --pico-border-radius: 0.4rem;
     --pico-border-width: 0.03rem;
     --pico-outline-width: 0.2rem;
-    --pico-info-background: rgba(var(--catppuccin-blue), 0.10);   /* For "Current" highlight */
-    --pico-del-background: rgba(var(--catppuccin-red), 0.10);     /* For "Proposed" highlight */
-    --pico-ins-background: rgba(var(--catppuccin-green), 0.10);   /* For insertions, if needed */
-    --pico-info-color: rgb(var(--catppuccin-blue));
-    --pico-del-color: rgb(var(--catppuccin-red));
-    --pico-ins-color: rgb(var(--catppuccin-green));
-    --pico-warn-color: rgb(var(--catppuccin-yellow));
-    --pico-muted-color: rgb(var(--catppuccin-subtext0));
-    --pico-muted-background: rgb(var(--catppuccin-crust));
-    --pico-primary-hover: rgb(var(--catppuccin-sapphire));
-    --pico-success-color: rgb(var(--catppuccin-green));
-    --pico-error-color: rgb(var(--catppuccin-red));
-    --pico-warning-color: rgb(var(--catppuccin-yellow));
-    --pico-link-color: rgb(var(--catppuccin-blue));
-    --pico-link-hover-color: rgb(var(--catppuccin-mauve));
-    --pico-primary-border: none;
 }
-/**
-*:focus {
-  outline: 2px solid rgb(var(--catppuccin-sapphire));
-  outline-offset: 2px;
-  border: 2px solid transparent;
-  border-radius: var(--pico-border-radius);
-}
-*/
+
+/* ── Light theme ─────────────────────────────────────────────────────────── */
+
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-    --catppuccin-base: 239, 241, 245;
-    --catppuccin-mantle: 230, 233, 239;
-    --catppuccin-crust: 220, 224, 232;
-    --catppuccin-text: 76, 79, 105;
+    --catppuccin-base:     239, 241, 245;
+    --catppuccin-mantle:   230, 233, 239;
+    --catppuccin-crust:    220, 224, 232;
+    --catppuccin-text:      76,  79, 105;
     --catppuccin-subtext0: 108, 118, 139;
-    --catppuccin-subtext1: 92, 102, 124;
+    --catppuccin-subtext1:  92, 102, 124;
     --catppuccin-overlay1: 140, 143, 161;
     --catppuccin-surface0: 204, 208, 218;
     --catppuccin-surface1: 188, 192, 204;
-    --catppuccin-surface2: 204, 208, 218; /* Corrected */
-    --catppuccin-blue: 30, 102, 245;
-    --catppuccin-red: 191, 97, 106;
-    --catppuccin-green: 163, 190, 140;
-    --catppuccin-yellow: 235, 203, 139;
-    --catppuccin-pink: 234, 118, 203; /* Corrected */
-    --catppuccin-mauve: 136, 57, 239;
-    --catppuccin-sky: 94, 205, 244;
-    --catppuccin-teal: 23, 146, 153; /* Corrected */
-    --catppuccin-sapphire: 32, 159, 181;
+    --catppuccin-surface2: 204, 208, 218;
+    --catppuccin-blue:      30, 102, 245;
+    --catppuccin-red:      191,  97, 106;
+    --catppuccin-green:    163, 190, 140;
+    --catppuccin-yellow:   235, 203, 139;
+    --catppuccin-pink:     234, 118, 203;
+    --catppuccin-mauve:    136,  57, 239;
+    --catppuccin-sky:       94, 205, 244;
+    --catppuccin-teal:      23, 146, 153;
+    --catppuccin-sapphire:  32, 159, 181;
     --catppuccin-lavender: 136, 192, 208;
 
-    --pico-color: rgb(var(--catppuccin-text));
-    --pico-h2-color: rgb(var(--catppuccin-text));
-    --pico-h3-color: rgb(var(--catppuccin-text));
-    --pico-background-color: rgb(var(--catppuccin-mantle));
+    /* Core */
+    --pico-color:                rgb(var(--catppuccin-text));
+    --pico-background-color:     rgb(var(--catppuccin-mantle));
+    --pico-h2-color:             rgb(var(--catppuccin-text));
+    --pico-h3-color:             rgb(var(--catppuccin-text));
     --pico-text-selection-color: rgba(var(--catppuccin-sapphire), 0.3);
-    --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
-    --pico-form-element-border-color: rgb(var(--catppuccin-base));
-    --pico-primary-focus: rgb(var(--catppuccin-mantle));
-    --pico-primary: rgb(var(--catppuccin-text));
-    --pico-primary-background: rgba(var(--catppuccin-sapphire));
-    --pico-primary-inverse: rgb(var(--catppuccin-base));
-    --pico-primary-hover-background: rgb(var(--catppuccin-surface0));
-    --pico-secondary-background: rgb(var(--catppuccin-overlay1));
-    --pico-secondary-inverse: rgb(var(--catppuccin-base));
+
+    /* Primary — sapphire as the accent */
+    --pico-primary:                  rgb(var(--catppuccin-sapphire));
+    --pico-primary-background:       rgba(var(--catppuccin-sapphire), 0.12);
+    --pico-primary-border:           rgba(var(--catppuccin-sapphire), 0.35);
+    --pico-primary-underline:        rgb(var(--catppuccin-sapphire));
+    --pico-primary-hover:            rgb(var(--catppuccin-blue));
+    --pico-primary-hover-background: rgba(var(--catppuccin-sapphire), 0.2);
+    --pico-primary-focus:            rgba(var(--catppuccin-sapphire), 0.4);
+    --pico-primary-inverse:          rgb(var(--catppuccin-base));
+
+    /* Secondary */
+    --pico-secondary-background:       rgb(var(--catppuccin-overlay1));
+    --pico-secondary-inverse:          rgb(var(--catppuccin-base));
     --pico-secondary-hover-background: rgb(var(--catppuccin-sapphire));
+
+    /* Muted */
+    --pico-muted-color:        rgb(var(--catppuccin-subtext0));
+    --pico-muted-background:   rgb(var(--catppuccin-crust));
+    --pico-muted-border-color: rgba(var(--catppuccin-subtext0), 0.25);
+
+    /* Form elements */
+    --pico-form-element-color:                  rgb(var(--catppuccin-text));
+    --pico-form-element-background-color:       rgb(var(--catppuccin-surface0));
+    --pico-form-element-border-color:           rgb(var(--catppuccin-surface1));
     --pico-form-element-active-background-color: rgb(var(--catppuccin-surface1));
-    --pico-form-element-background-color: rgb(var(--catppuccin-surface0));
-    --pico-form-element-active-border-color: rgb(var(--catppuccin-mantle));
-    --pico-form-element-color: var(--catppuccin-base);
-    --pico-muted-border-color: rgba(var(--catppuccin-subtext0), 0.1);
-    --pico-contrast-background: rgb(var(--catppuccin-red));
-    --pico-contrast-inverse: rgb(var(--catppuccin-base));
+    --pico-form-element-active-border-color:    rgb(var(--catppuccin-sapphire));
+    --pico-form-element-focus-color:            rgb(var(--catppuccin-mauve));
+
+    /* Links */
+    --pico-link-color:       rgb(var(--catppuccin-blue));
+    --pico-link-hover-color: rgb(var(--catppuccin-mauve));
+
+    /* Semantic */
+    --pico-ins-color:        rgb(var(--catppuccin-green));
+    --pico-ins-background:   rgba(var(--catppuccin-green), 0.1);
+    --pico-del-color:        rgb(var(--catppuccin-red));
+    --pico-del-background:   rgba(var(--catppuccin-red), 0.1);
+    --pico-del-inverse:      rgb(var(--catppuccin-mantle));
+    --pico-info-color:       rgb(var(--catppuccin-blue));
+    --pico-info-background:  rgba(var(--catppuccin-blue), 0.1);
+    --pico-warn-color:       rgb(var(--catppuccin-yellow));
+    --pico-success-color:    rgb(var(--catppuccin-green));
+    --pico-error-color:      rgb(var(--catppuccin-red));
+    --pico-warning-color:    rgb(var(--catppuccin-yellow));
+
+    /* Contrast */
+    --pico-contrast-background:       rgb(var(--catppuccin-red));
+    --pico-contrast-inverse:          rgb(var(--catppuccin-base));
     --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);
-    --pico-primary-underline: rgb(var(--catppuccin-sapphire));
 
-    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust)); 
-    --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
-
-    --pico-ins-color: rgb(var(--catppuccin-green));
-    --pico-del-color: rgb(var(--catppuccin-red));
-    --pico-del-inverse: rgb(var(--catppuccin-mantle));
-    --pico-warn-color: rgb(var(--catppuccin-yellow));
+    /* Cards */
+    --pico-card-background-color:            rgb(var(--catppuccin-mantle));
+    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust));
 }
 
+/* ── Dark theme ──────────────────────────────────────────────────────────── */
+
+[data-theme="dark"],
 @media only screen and (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --catppuccin-base: 30, 30, 46; /* Base */
-    --catppuccin-mantle: 24, 24, 37; /* Mantle */
-    --catppuccin-crust: 17, 17, 27; /* Crust */
-    --catppuccin-text: 205, 214, 244; /* Text */
-    --catppuccin-subtext0: 166, 173, 200; /* Subtext 0 */
-    --catppuccin-subtext1: 186, 194, 222; /* Subtext 1 */
+    --catppuccin-base:      30,  30,  46;
+    --catppuccin-mantle:    24,  24,  37;
+    --catppuccin-crust:     17,  17,  27;
+    --catppuccin-text:     205, 214, 244;
+    --catppuccin-subtext0: 166, 173, 200;
+    --catppuccin-subtext1: 186, 194, 222;
     --catppuccin-overlay1: 127, 132, 156;
-    --catppuccin-surface0: 49, 50, 68; /* Surface 0 */
-    --catppuccin-surface1: 69, 71, 90; /* Surface 1 */
-    --catppuccin-surface2: 88, 91, 112; /* Surface 2 */
-    --catppuccin-blue: 137, 180, 250; /* Blue */
-    --catppuccin-red: 243, 139, 168; /* Red */
-    --catppuccin-green: 166, 227, 161; /* Green */
-    --catppuccin-yellow: 249, 226, 175; /* Yellow */
-    --catppuccin-pink: 245, 194, 231; /* Pink */
-    --catppuccin-mauve: 203, 166, 247; /* Mauve */
-    --catppuccin-sky: 137, 220, 235; /* Sky */
-    --catppuccin-teal: 148, 226, 213; /* Teal */
-    --catppuccin-sapphire: 116, 199, 236; /* Sapphire */
-    --catppuccin-lavender: 180, 190, 254; /* Lavender */
+    --catppuccin-surface0:  49,  50,  68;
+    --catppuccin-surface1:  69,  71,  90;
+    --catppuccin-surface2:  88,  91, 112;
+    --catppuccin-blue:     137, 180, 250;
+    --catppuccin-red:      243, 139, 168;
+    --catppuccin-green:    166, 227, 161;
+    --catppuccin-yellow:   249, 226, 175;
+    --catppuccin-pink:     245, 194, 231;
+    --catppuccin-mauve:    203, 166, 247;
+    --catppuccin-sky:      137, 220, 235;
+    --catppuccin-teal:     148, 226, 213;
+    --catppuccin-sapphire: 116, 199, 236;
+    --catppuccin-lavender: 180, 190, 254;
 
-    --pico-color: rgb(var(--catppuccin-text));
-    --pico-h2-color: rgb(var(--catppuccin-text));
-    --pico-h3-color: rgb(var(--catppuccin-text));
-    --pico-background-color: rgb(var(--catppuccin-mantle));
+    /* Core */
+    --pico-color:                rgb(var(--catppuccin-text));
+    --pico-background-color:     rgb(var(--catppuccin-mantle));
+    --pico-h2-color:             rgb(var(--catppuccin-text));
+    --pico-h3-color:             rgb(var(--catppuccin-text));
     --pico-text-selection-color: rgba(var(--catppuccin-sapphire), 0.3);
-    --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
-    --pico-form-element-border-color: rgb(var(--catppuccin-surface2));
-    --pico-primary-focus: rgb(var(--catppuccin-mantle));
-    --pico-primary: rgb(var(--catppuccin-text));
-    --pico-primary-background: rgb(var(--catppuccin-overlay1));
-    --pico-primary-inverse: rgb(var(--catppuccin-base));
-    --pico-primary-hover-background: rgb(var(--catppuccin-surface0));
-    --pico-secondary-background: rgb(var(--catppuccin-overlay1));
-    --pico-secondary-inverse: rgb(var(--catppuccin-base));
+
+    /* Primary — sapphire as the accent */
+    --pico-primary:                  rgb(var(--catppuccin-sapphire));
+    --pico-primary-background:       rgba(var(--catppuccin-sapphire), 0.12);
+    --pico-primary-border:           rgba(var(--catppuccin-sapphire), 0.3);
+    --pico-primary-underline:        rgb(var(--catppuccin-sapphire));
+    --pico-primary-hover:            rgb(var(--catppuccin-sky));
+    --pico-primary-hover-background: rgba(var(--catppuccin-sapphire), 0.2);
+    --pico-primary-focus:            rgba(var(--catppuccin-sapphire), 0.35);
+    --pico-primary-inverse:          rgb(var(--catppuccin-base));
+
+    /* Secondary */
+    --pico-secondary-background:       rgb(var(--catppuccin-overlay1));
+    --pico-secondary-inverse:          rgb(var(--catppuccin-base));
     --pico-secondary-hover-background: rgb(var(--catppuccin-sapphire));
+
+    /* Muted */
+    --pico-muted-color:        rgb(var(--catppuccin-subtext0));
+    --pico-muted-background:   rgb(var(--catppuccin-crust));
+    --pico-muted-border-color: rgba(var(--catppuccin-subtext0), 0.3);
+
+    /* Form elements */
+    --pico-form-element-color:                   rgb(var(--catppuccin-text));
+    --pico-form-element-background-color:        rgb(var(--catppuccin-surface0));
+    --pico-form-element-border-color:            rgb(var(--catppuccin-surface2));
     --pico-form-element-active-background-color: rgb(var(--catppuccin-surface1));
-    --pico-form-element-background-color: rgb(var(--catppuccin-surface0));
-    --pico-form-element-active-border-color: rgb(var(--catppuccin-mantle));
-    --pico-form-element-color: var(--catppuccin-base);
-    --pico-muted-border-color: rgb(var(--catppuccin-subtext0));
-    --pico-contrast-background: rgb(var(--catppuccin-red));
-    --pico-contrast-inverse: rgb(var(--catppuccin-base));
-    --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);
-    --pico-primary-underline: rgb(var(--catppuccin-sapphire));
+    --pico-form-element-active-border-color:     rgb(var(--catppuccin-sapphire));
+    --pico-form-element-focus-color:             rgb(var(--catppuccin-mauve));
 
-    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust)); 
-    --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
-
-    --pico-ins-color: rgba(var(--catppuccin-green), 0.5);
-    --pico-del-color: rgb(var(--catppuccin-red));
-    --pico-del-inverse: rgb(var(--catppuccin-crust));
-    --pico-info-background: rgb(var(--catppuccin-blue));
-    --pico-del-background: rgb(var(--catppuccin-red));
-    --pico-ins-background: rgb(var(--catppuccin-green));
-    --pico-info-color: rgb(var(--catppuccin-blue));
-    --pico-ins-color: rgb(var(--catppuccin-green));
-    --pico-warn-color: rgb(var(--catppuccin-yellow));
-    --pico-muted-color: rgb(var(--catppuccin-subtext0));
-    --pico-primary-hover: rgb(var(--catppuccin-sapphire));
-    --pico-success-color: rgb(var(--catppuccin-green));
-    --pico-error-color: rgb(var(--catppuccin-red));
-    --pico-warning-color: rgb(var(--catppuccin-yellow));
-    --pico-link-color: rgb(var(--catppuccin-blue));
+    /* Links */
+    --pico-link-color:       rgb(var(--catppuccin-blue));
     --pico-link-hover-color: rgb(var(--catppuccin-mauve));
+
+    /* Semantic */
+    --pico-ins-color:       rgb(var(--catppuccin-green));
+    --pico-ins-background:  rgba(var(--catppuccin-green), 0.1);
+    --pico-del-color:       rgb(var(--catppuccin-red));
+    --pico-del-background:  rgba(var(--catppuccin-red), 0.1);
+    --pico-del-inverse:     rgb(var(--catppuccin-crust));
+    --pico-info-color:      rgb(var(--catppuccin-blue));
+    --pico-info-background: rgba(var(--catppuccin-blue), 0.1);
+    --pico-warn-color:      rgb(var(--catppuccin-yellow));
+    --pico-success-color:   rgb(var(--catppuccin-green));
+    --pico-error-color:     rgb(var(--catppuccin-red));
+    --pico-warning-color:   rgb(var(--catppuccin-yellow));
+
+    /* Contrast */
+    --pico-contrast-background:       rgb(var(--catppuccin-red));
+    --pico-contrast-inverse:          rgb(var(--catppuccin-base));
+    --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);
+
+    /* Cards */
+    --pico-card-background-color:            rgb(var(--catppuccin-mantle));
+    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust));
   }
 }
 
-/**
-button.primary {
-  background-color: rgb(var(--catppuccin-mauve));
-  background-image: linear-gradient(120deg,var(--catppuccin-pink),var(--catppuccin-mauve));
-  color: rgb(var(--catppuccin-base));
-  font-weight: 500; 
-}
-button.primary:hover {
-  background-color: rgba(var(--catppuccin-mauve), 0.5);
-}
-*/
+/* ── Component overrides ─────────────────────────────────────────────────── */
 
 input:not([type=submit],
     [type=button],
@@ -183,10 +199,13 @@ input:not([type=submit],
 
 [type="checkbox"]:checked {
   --pico-background-color: rgb(var(--catppuccin-sapphire));
-  --pico-border-color: rgb(var(--catppuccin-sapphire));
+  --pico-border-color:     rgb(var(--catppuccin-sapphire));
 }
 
+table tr.deleted td  { background-color: var(--pico-del-background); }
+table tr.inserted td { background-color: var(--pico-ins-background); }
 
+/* ── Layout ──────────────────────────────────────────────────────────────── */
 
 main.container-fluid {
     display: flex;
@@ -194,39 +213,13 @@ main.container-fluid {
     gap: 1rem;
 }
 
-@media (min-width: 576px) {
-  :root,
-  :host {
-    --pico-font-size: 106.25%;
-  }
-}
-@media (min-width: 768px) {
-  :root,
-  :host {
-    --pico-font-size: 112.5%;
-    padding: 0.5rem 1rem;
-  }
-}
-@media (min-width: 1024px) {
-  :root,
-  :host {
-    --pico-font-size: 118.75%;
-    padding: 1rem 2rem;
-  }
-}
-@media (min-width: 1280px) {
-  :root,
-  :host {
-    --pico-font-size: 125%;
-    padding: 2rem 4rem;
-  }
-}
-@media (min-width: 1536px) {
-  :root,
-  :host {
-    padding: 2.5rem 15rem;
-  }
-}
+@media (min-width: 576px)  { :root, :host { --pico-font-size: 106.25%; } }
+@media (min-width: 768px)  { :root, :host { --pico-font-size: 112.5%;  padding: 0.5rem 1rem;  } }
+@media (min-width: 1024px) { :root, :host { --pico-font-size: 118.75%; padding: 1rem 2rem;    } }
+@media (min-width: 1280px) { :root, :host { --pico-font-size: 125%;    padding: 2rem 4rem;    } }
+@media (min-width: 1536px) { :root, :host { padding: 2.5rem 15rem; } }
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
 
 .visually-hidden {
   position: absolute !important;
@@ -236,7 +229,6 @@ main.container-fluid {
   white-space: nowrap;
 }
 
-/* in your global CSS */
 .details-dl {
   display: grid;
   grid-template-columns: max-content 1fr;

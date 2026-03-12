@@ -4,7 +4,6 @@ Daily sync script to update PostgreSQL database with changed files from Git repo
 Compatible with existing psycopg_pool AsyncConnectionPool setup
 """
 
-import asyncio
 import json
 import os
 from pathlib import Path
@@ -13,7 +12,7 @@ import services.cache_service as cache_service
 
 import yaml
 import yaml
-import database
+import database.database as database
 from typing import List
 import shared
 import dateutil.parser

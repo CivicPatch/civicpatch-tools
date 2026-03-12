@@ -25,28 +25,6 @@
             {% block content %}{% endblock %}
         </main>
 
-        {% if is_production %}
-        <!-- Production: bundled files (Rollup) -->
-        <script type="importmap">
-            {
-                "imports": {
-                    "@components": "https://components.civicpatch.org/bundle.js"
-                }
-            }
-        </script>
-        {% else %}
-        <!-- Hot reload script -->
-        {{ hot_reload.script(url_for('hot-reload')) | safe }}
-        <!-- Development: rollup handles module resolution -->
-        <script type="importmap">
-            {
-                "imports": {
-                    "@components": "../cdn/bundle.js"
-                }
-            }
-        </script>
-        {% endif %}
-
         <script
             type="module"
             src="{{ url_for('frontend', path='/assets/env.js') }}"

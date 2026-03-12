@@ -49,7 +49,7 @@ async def register_people_job(logger, request_id: str, arguments: dict):
     }
     async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER) as client:
         response = await client.post(
-            f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/register",
+            f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/register",
             json=data,
         )
         if response.status_code != 200:
@@ -68,7 +68,7 @@ async def update_job_status(logger, request_id: str, jurisdiction_ocdid: str, st
 
         async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER, timeout=15) as client:
             response = await client.patch(
-                f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/status",
+                f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/{request_id}/status",
                 json=data,
             )
             logger.debug(f"Response: {response.status_code}, {response.text}")
@@ -83,11 +83,35 @@ async def update_people_job_result(logger, request_id: str, people: List[Officia
     }
     async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER) as client:
         response = await client.post(
-            f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/result",
+            f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/{request_id}/result",
             json=data,
         )
         if response.status_code != 200:
             logger.error(f"Failed to update job result with api.civicpatch.org: {response.status_code} {response.text}")
+        return response
+    
+async def submit_job_artifacts(request_id: str, jurisdiction_ocdid: str, zip_file_path: str):
+    data = {
+        "request_id": request_id,
+        "jurisdiction_ocdid": jurisdiction_ocdid,
+    }
+    file_name = os.path.basename(zip_file_path)
+
+    # Use a context manager to ensure the file is closed after the request
+    with open(zip_file_path, "rb") as file_handle:
+        files = {
+            "file": (
+                file_name,
+                file_handle,
+                "application/zip",
+            )
+        }
+        async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER) as client:
+            response = await client.post(
+                f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/{request_id}/submit",
+                data=data,
+                files=files
+            )
         return response
 
 async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]) -> List[dict]:
@@ -113,26 +137,3 @@ async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]) 
         data = response.json()
         return data.get("data", [])
     
-async def submit_job_artifacts(request_id: str, jurisdiction_ocdid: str, zip_file_path: str):
-    data = {
-        "request_id": request_id,
-        "jurisdiction_ocdid": jurisdiction_ocdid,
-    }
-    file_name = os.path.basename(zip_file_path)
-
-    # Use a context manager to ensure the file is closed after the request
-    with open(zip_file_path, "rb") as file_handle:
-        files = {
-            "file": (
-                file_name,
-                file_handle,
-                "application/zip",
-            )
-        }
-        async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER) as client:
-            response = await client.post(
-                f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/submit",
-                data=data,
-                files=files
-            )
-        return response

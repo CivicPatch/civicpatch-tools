@@ -71,7 +71,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   async function fetchPullRequestData(pullRequest, jurisdiction_ocdid) {
     if (!pullRequest) return null;
     const url = [
-      `${API_URL}/api/v1/jobs/people/pull_request/`,
+      `${API_URL}/api/v1/jobs/pull_request/`,
       encodeURIComponent(pullRequest.branch_name),
       `/data`,
       `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`
@@ -335,7 +335,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setIsLoading(true);
 
     const url = [
-      `${API_URL}/api/v1/jobs/people/pull_request/`,
+      `${API_URL}/api/v1/pull_requests/`,
       encodeURIComponent(branchName),
       `/data`,
     ]

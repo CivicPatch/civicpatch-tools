@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Dict
+from typing import Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import shared.utils.id_utils as id_utils
@@ -21,12 +21,15 @@ class Role(str, Enum):
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
+    request_id: str = ""
     url: str
 
     def model_post_init(self, __context):
         try:
             if not self.jurisdiction_ocdid and self.branch_name:
-                self.jurisdiction_ocdid = id_utils.git_branch_to_jurisdiction_ocdid(self.branch_name)
+                parts = id_utils.git_branch_to_parts(self.branch_name)
+                self.jurisdiction_ocdid = parts.get("jurisdiction_ocdid", "")
+                self.request_id = parts.get("request_id", "")
         except Exception as e:
             print(f"git branch does not match jurisdiction id format: {self.branch_name}. Error: {e}")
             self.jurisdiction_ocdid = ""

@@ -6,7 +6,7 @@ from fastapi_sso.sso.base import OpenID
 from jose import jwt, JWTError
 import time
 from typing import cast
-import database
+import database.database as database
 from schemas.common import Identity, RouteCategory, Role
 from services import session_service
 

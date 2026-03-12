@@ -196,7 +196,7 @@ def slug_to_jurisdiction_ocdid(slug: str) -> str:
     return "/".join(parts)
 
 
-def git_branch_to_jurisdiction_ocdid(branch: str) -> str:
+def git_branch_to_parts(branch: str) -> dict:
     """
     Converts a git branch name back to a jurisdiction ID.
 
@@ -208,13 +208,15 @@ def git_branch_to_jurisdiction_ocdid(branch: str) -> str:
         "2025-09-25-1a2b__state_ca__county_marin__special_district__marin_city_community_services_district__governing_board"
         -> "ocd-jurisdiction/country:us/state:ca/county:marin/special_district:marin_city_community_services_district/governing_board"
     """
-    # Remove request_id prefix to get the slug
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
+    
+    return {
+        "request_id": parts[0],
+        "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1])
+    }
 
-    slug = parts[1]  # e.g., "state_wa__place_seattle__government"
-    return slug_to_jurisdiction_ocdid(slug).lower()
 
 
 def state_name(jurisdiction_ocdid: str) -> str:
