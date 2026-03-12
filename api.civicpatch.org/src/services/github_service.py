@@ -1,28 +1,36 @@
-import os
-from typing import List, Optional, Dict, Any
-import yaml
 import base64
-import httpx
-import jwt
+import http
+import logging
+import os
+import re
 import time
 from datetime import datetime, timezone
-import logging
+from this import d
+from typing import Any, Dict, List, Optional
+from webbrowser import get
+
+import httpx
+import jwt
+import shared.utils.id_utils
+import yaml
 
 from schemas.common import PullRequest
 from services import cache_service
-import shared.utils.id_utils
 
-timeout = httpx.Timeout(60.0)  
+timeout = httpx.Timeout(60.0)
 
 GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
 GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
 GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
-OPEN_DATA_REPO_URL = os.getenv("OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/open-data")
+OPEN_DATA_REPO_URL = os.getenv(
+    "OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/open-data"
+)
 
 CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
 
 logger = logging.getLogger(__name__)
+
 
 def _generate_jwt() -> str:
     logger.debug("Generating JWT for GitHub App authentication.")
@@ -32,6 +40,7 @@ def _generate_jwt() -> str:
         GITHUB_APP_PRIVATE_KEY,
         algorithm="RS256",
     )
+
 
 async def _fetch_github_token() -> tuple[str, float]:
     logger.debug("Fetching new GitHub installation access token.")
@@ -52,6 +61,7 @@ async def _fetch_github_token() -> tuple[str, float]:
     logger.info(f"Fetched new GitHub token, expires at {expires_at}")
     return token, expires_at
 
+
 async def get_github_token():
     logger.debug(f"Retrieving GitHub token from cache with key: {CACHE_KEY}")
     token = cache_service.get_cached(CACHE_KEY)
@@ -63,6 +73,7 @@ async def get_github_token():
     cache_service.set_cached(CACHE_KEY, token, expires_at)
     return token
 
+
 async def get_default_headers() -> Dict[str, str]:
     logger.debug("Building default headers for GitHub API requests.")
     github_token = await get_github_token()
@@ -71,19 +82,22 @@ async def get_default_headers() -> Dict[str, str]:
         "X-GitHub-Api-Version": "2022-11-28",
     }
 
+
 async def trigger_people_job_workflow(
     request_id: str,
     jurisdiction_ocdid: str,
     name: str | None = None,
     url: str | None = None,
 ):
-    logger.info(f"Triggering people job workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}")
+    logger.info(
+        f"Triggering people job workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}"
+    )
     data = {
         "ref": "main",
         "inputs": {
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
-        }
+        },
     }
 
     if name:
@@ -105,7 +119,9 @@ async def trigger_people_job_workflow(
         )
 
     if response.status_code != 204:
-        logger.error(f"Failed to trigger workflow: {response.status_code} - {response.text}")
+        logger.error(
+            f"Failed to trigger workflow: {response.status_code} - {response.text}"
+        )
         raise Exception(
             f"Failed to trigger workflow: {response.status_code} - {response.text}"
         )
@@ -113,14 +129,17 @@ async def trigger_people_job_workflow(
     logger.info("Successfully triggered people job workflow.")
     return True
 
+
 async def trigger_github_data_intake_workflow(
     user_email: str,
     server_url: str,
     request_id: str,
     jurisdiction_ocdid: str,
-    zip_file_url: str
+    zip_file_url: str,
 ):
-    logger.info(f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}, server_url={server_url}")
+    logger.info(
+        f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}, server_url={server_url}"
+    )
     data = {
         "ref": "main",
         "inputs": {
@@ -128,7 +147,7 @@ async def trigger_github_data_intake_workflow(
             "user_email": user_email,
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
-            "zip_file_url": zip_file_url
+            "zip_file_url": zip_file_url,
         },
     }
 
@@ -147,13 +166,16 @@ async def trigger_github_data_intake_workflow(
         )
 
     if response.status_code != 204:
-        logger.error(f"Failed to trigger data intake workflow: {response.status_code} - {response.text}")
+        logger.error(
+            f"Failed to trigger data intake workflow: {response.status_code} - {response.text}"
+        )
         raise Exception(
             f"Failed to trigger workflow: {response.status_code} - {response.text}"
         )
 
     logger.info("Successfully triggered data intake workflow.")
     return True
+
 
 async def cached_github_get(
     url: str,
@@ -193,33 +215,31 @@ async def cached_github_get(
         logger.error(f"Error fetching {url}: {response.status_code} {response.text}")
         return None
 
+
 async def get_github_file_contents(
-        github_file_path: str,
-        ref: Optional[str] = None,
-    ) -> str | None:
+    github_file_path: str,
+    ref: Optional[str] = None,
+) -> str | None:
     cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
     url = f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
     if ref:
         url += f"?ref={ref}"
     return await cached_github_get(
-        url,
-        cache_key,
-        accept="application/vnd.github.raw",
-        return_json=False
+        url, cache_key, accept="application/vnd.github.raw", return_json=False
     )
 
+
 # TODO: should rely on internal jobs, and not github service
-async def get_open_pull_requests(jurisdiction_ocddid = None, page: int = 1, per_page: int = 100) -> List[PullRequest]:
+async def get_open_pull_requests(
+    jurisdiction_ocddid=None, page: int = 1, per_page: int = 100
+) -> List[PullRequest]:
     params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
     url = f"{OPEN_DATA_REPO_URL}/pulls?{params}"
     cache_key = f"github:open_pull_requests:{page}:{per_page}"
     if jurisdiction_ocddid:
         cache_key = f"github:open_pull_requests:{jurisdiction_ocddid}:{page}:{per_page}"
     pull_requests = await cached_github_get(
-        url,
-        cache_key,
-        accept="application/vnd.github+json",
-        return_json=True
+        url, cache_key, accept="application/vnd.github+json", return_json=True
     )
     if not pull_requests:
         return []
@@ -227,17 +247,19 @@ async def get_open_pull_requests(jurisdiction_ocddid = None, page: int = 1, per_
         PullRequest(
             branch_name=pr["head"]["ref"],
             url=pr["html_url"],
-        ) for pr in pull_requests
+        )
+        for pr in pull_requests
     ]
-    
+
     if jurisdiction_ocddid:
         valid_pull_requests = [
-            pr for pr 
-            in valid_pull_requests 
+            pr
+            for pr in valid_pull_requests
             if pr.jurisdiction_ocdid == jurisdiction_ocddid
         ]
 
     return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
+
 
 async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
     pull_requests = await get_open_pull_requests()
@@ -245,13 +267,16 @@ async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullReques
     logger.info(f"Found {len(matching_prs)} pull requests matching suffix '{suffix}'.")
     return matching_prs
 
+
 async def update_pull_request_file(
     branch_name: str,
     file_path: str,
     new_data: List[Dict[str, Any]],
-    commit_message: str = "Automated update via API"
+    commit_message: str = "Automated update via API",
 ) -> bool:
-    logger.info(f"Updating file '{file_path}' on branch '{branch_name}' via pull request.")
+    logger.info(
+        f"Updating file '{file_path}' on branch '{branch_name}' via pull request."
+    )
     default_headers = await get_default_headers()
     headers = {
         **default_headers,
@@ -260,17 +285,21 @@ async def update_pull_request_file(
     async with httpx.AsyncClient(timeout=timeout) as client:
         contents_response = await client.get(contents_url, headers=headers)
         if contents_response.status_code != 200:
-            logger.error(f"Failed to fetch file for update: {contents_response.status_code} {contents_response.text}")
+            logger.error(
+                f"Failed to fetch file for update: {contents_response.status_code} {contents_response.text}"
+            )
             return False
         sha = contents_response.json()["sha"]
         serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
-        encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode("utf-8")
+        encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode(
+            "utf-8"
+        )
 
         data = {
             "message": commit_message,
             "content": encoded_content,
             "sha": sha,
-            "branch": branch_name
+            "branch": branch_name,
         }
 
         headers = {
@@ -280,32 +309,44 @@ async def update_pull_request_file(
 
         update_response = await client.put(contents_url, json=data, headers=headers)
         if update_response.status_code in [200, 201]:
-            logger.info(f"Successfully updated file '{file_path}' on branch '{branch_name}'.")
+            logger.info(
+                f"Successfully updated file '{file_path}' on branch '{branch_name}'."
+            )
             return True
         else:
-            logger.error(f"Error updating file: {update_response.status_code} {update_response.text}")
+            logger.error(
+                f"Error updating file: {update_response.status_code} {update_response.text}"
+            )
             return False
+
 
 async def get_teams(user_oauth_token: str):
     logger.debug("Fetching user teams from GitHub.")
     headers = {
         "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {user_oauth_token}"
+        "Authorization": f"Bearer {user_oauth_token}",
     }
     teams_url = "https://api.github.com/user/teams"
     async with httpx.AsyncClient() as client:
         response = await client.get(teams_url, headers=headers)
     if response.status_code == 200:
         teams = response.json()
-        our_teams = [team for team in teams if team["organization"]["login"] == "CivicPatch"]
+        our_teams = [
+            team for team in teams if team["organization"]["login"] == "CivicPatch"
+        ]
         team_names = [team["name"] for team in our_teams]
-        logger.info(f"User is a member of {len(team_names)} CivicPatch teams: {team_names}")
+        logger.info(
+            f"User is a member of {len(team_names)} CivicPatch teams: {team_names}"
+        )
         return team_names
     else:
         logger.error(f"Error fetching teams: {response.status_code} {response.text}")
         return []
 
-async def get_pull_request_file_yaml(request_id: str, jurisdiction_ocdid: str, file_path: str) -> list | dict | None:
+
+async def get_pull_request_file_yaml(
+    request_id: str, jurisdiction_ocdid: str, file_path: str
+) -> list | dict | None:
     """Fetch and parse a YAML file from a specific branch."""
     branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, request_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
@@ -314,6 +355,36 @@ async def get_pull_request_file_yaml(request_id: str, jurisdiction_ocdid: str, f
     try:
         return yaml.safe_load(content)
     except Exception as e:
-        logger.error(f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}")
+        logger.error(
+            f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}"
+        )
         return None
 
+
+def get_pull_request_number_from_url(pull_request_url: str) -> int | None:
+    match = re.search(r"/pull/(\d+)$", pull_request_url)
+    return int(match.group(1)) if match else None
+
+
+async def merge_pull_request(pull_request_url: str) -> bool:
+    pull_request_number = get_pull_request_number_from_url(pull_request_url)
+    if pull_request_number is None:
+        return False
+
+    data = {
+        "commit_title": "Approved in app",
+        "commit_message": "Approved in app",
+        "merge_method": "squash",
+    }
+
+    async with httpx.AsyncClient() as client:
+        default_headers = await get_default_headers()
+        response = await client.put(
+            f"{OPEN_DATA_REPO_URL}/pulls/{pull_request_number}/merge",
+            headers=default_headers,
+            json=data,
+        )
+
+        if response.status_code != 200:
+            return False
+        return True
