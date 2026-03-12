@@ -43,6 +43,20 @@ class ErrorResponse(BaseModel):
 def get_router(api_key_header):
     router = APIRouter()
 
+    # -- Pull Requests: List Open Pull Requests ───────────
+    @router.get(
+        "",
+        summary="List open pull requests",
+    )
+    async def list_pull_requests_endpoint(
+        jurisdiction_ocdid: str,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"]))
+    ):
+        pull_requests = await github_service.get_open_pull_requests(jurisdiction_ocdid)
+        return {
+            "data": pull_requests
+        }
+
     # ── Pull Requests: List & Data ───────────
     @router.get(
         "/data",
@@ -54,7 +68,7 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"]))
     ):
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-        people_data = await database.people.get_people_by_jurisdiction_ocdids([jurisdiction_ocdid])
+        # people_data = await database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid)
 
         file_content = await github_service.get_pull_request_file_yaml(
             jurisdiction_ocdid=jurisdiction_ocdid,
@@ -70,10 +84,7 @@ def get_router(api_key_header):
         return {
             "request_id": request_id,
             "file_path": file_path,
-            "data": {
-                "existing": people_data ,
-                "pull_request": file_content,
-            }
+            "data": file_content,
         }
 
     # ── Pull Requests: Update Data ───────────
@@ -126,7 +137,7 @@ def get_router(api_key_header):
         jurisdiction_ocdids = list({pr.jurisdiction_ocdid for pr in paged_pull_requests})
         request_ids = list({pr.request_id for pr in paged_pull_requests})
         # 2. Fetch all people data in one call
-        data = await database.people.get_pull_request_data_by_request_ids(jurisdiction_ocdids, request_ids)
+        data = await database.people.get_people_data_by_request_ids(jurisdiction_ocdids, request_ids)
         async def fetch_one(pr):
             request_id = pr.request_id
             return {
@@ -144,20 +155,4 @@ def get_router(api_key_header):
             "per_page": per_page,
         }
 
-    # ── Jobs: Cancel ─────────────────────────
-
-    # TBD: implement
-    @router.delete(
-        "/{request_id}",
-        summary="Cancel a job",
-        description="Stop a specific job by its request ID.",
-        response_model=DeleteJobResponse
-    )
-    async def stop_job_endpoint(
-        request_id: str,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
-    ):
-        # TBD
-        return {"request_id": request_id, "status": "stopped"}
-    
     return router

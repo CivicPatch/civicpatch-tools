@@ -321,13 +321,20 @@ const handleFeatureClick = (e) => {
 
   return html`
     <style>
-      ${leafletStyles} ${locateStyles} ${geocoderStyles} .map-container {
-        height: ${height};
+      ${leafletStyles} ${locateStyles} ${geocoderStyles}
+      :host {
+        display: block;
+        border-radius: var(--pico-border-radius);
+        overflow: hidden;
+        border: 1px solid var(--pico-muted-border-color);
       }
 
+      .map-container {
+        height: ${height};
+      }
       .map-container .map {
         height: 100%;
-      }
+      } 
     </style>
     <div class="map-container">
       <div class="map" ${ref(setupMap)}></div>
@@ -335,4 +342,4 @@ const handleFeatureClick = (e) => {
   `;
 }
 
-customElements.define("civ-map", component(CivMap, {useShadowDOM: false, observedAttributes: ["canmove"] }));
+customElements.define("civ-map", component(CivMap, {useShadowDOM: true, observedAttributes: ["canmove"] }));

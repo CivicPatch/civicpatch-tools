@@ -208,10 +208,13 @@ async def get_github_file_contents(
         return_json=False
     )
 
-async def get_open_pull_requests(page: int = 1, per_page: int = 100) -> List[PullRequest]:
+# TODO: should rely on internal jobs, and not github service
+async def get_open_pull_requests(jurisdiction_ocddid = None, page: int = 1, per_page: int = 100) -> List[PullRequest]:
     params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
     url = f"{OPEN_DATA_REPO_URL}/pulls?{params}"
     cache_key = f"github:open_pull_requests:{page}:{per_page}"
+    if jurisdiction_ocddid:
+        cache_key = f"github:open_pull_requests:{jurisdiction_ocddid}:{page}:{per_page}"
     pull_requests = await cached_github_get(
         url,
         cache_key,
@@ -226,6 +229,14 @@ async def get_open_pull_requests(page: int = 1, per_page: int = 100) -> List[Pul
             url=pr["html_url"],
         ) for pr in pull_requests
     ]
+    
+    if jurisdiction_ocddid:
+        valid_pull_requests = [
+            pr for pr 
+            in valid_pull_requests 
+            if pr.jurisdiction_ocdid == jurisdiction_ocddid
+        ]
+
     return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
 
 async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:

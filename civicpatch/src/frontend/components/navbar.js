@@ -1,16 +1,15 @@
 import { component } from 'haunted';
 import { html } from 'lit';
-import { useAuth } from '../hooks/useAuth.js';
 import { config } from '../assets/config.js';
 const API_URL = config.apiUrl;
 
-// Only keep layout and spacing styles, remove sticky positioning from civ-navbar
 const NAVBAR_CSS = html`
   <style>
     civ-navbar {
       display: block;
       z-index: 100;
     }
+
     nav {
       display: flex;
       align-items: center;
@@ -20,98 +19,177 @@ const NAVBAR_CSS = html`
       border-bottom: 1px solid var(--pico-muted-border-color);
       user-select: none;
     }
+
+    /* Brand */
     .nav-brand {
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       text-decoration: none;
       color: var(--pico-color);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      letter-spacing: -0.01em;
+      transition: opacity 0.15s ease;
     }
     .nav-brand:hover {
-      color: var(--pico-primary);
+      opacity: 0.7;
+      color: var(--pico-color);
+      text-decoration: none;
     }
-    .nav-brand i {
-      font-size: 1.1rem;
-      color: var(--pico-primary);
+    .nav-brand-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      background: var(--pico-primary);
+      border-radius: 0.375rem;
+      color: var(--pico-primary-inverse);
+      font-size: 0.8rem;
+      flex-shrink: 0;
     }
+
+    /* Right side */
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1.25rem;
     }
-    .user-info-label {
+
+    /* User email — plain inline, no pill */
+    .user-info {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: var(--pico-muted-color);
-      font-size: 0.875rem;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--pico-color);
       cursor: default;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.375rem;
-      position: relative;
+      max-width: 220px;
     }
-    .user-info-label i.fa-circle {
-      font-size: 0.5rem;
-      color: var(--pico-primary-background);
+    .user-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--pico-primary);
+      flex-shrink: 0;
     }
-    .loading {
-      color: var(--pico-muted-color);
-      font-size: 0.875rem;
+    .user-email {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .button, .button.secondary {
+
+    /* Jobs — scoped colored link, no underline */
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--pico-primary);
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+    .nav-link:hover {
+      opacity: 0.75;
+      color: var(--pico-primary);
+      text-decoration: none;
+    }
+
+    /* Logout — outline button, no fill */
+    .btn-outline {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-weight: 500;
-      font-size: 0.95rem;
-      padding: 0.5rem 1.1rem;
-      border-radius: 0.375rem;
-      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--pico-color);
+      background: transparent;
+      border: 1.5px solid var(--pico-muted-border-color);
+      border-radius: var(--pico-border-radius);
+      padding: 0.4rem 1.1rem;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-      background: var(--pico-primary);
+      transition: border-color 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-outline:hover {
+      border-color: var(--pico-color);
+      background: transparent;
+      color: var(--pico-color);
+      text-decoration: none;
+    }
+    .btn-outline:active {
+      background: var(--pico-muted-background);
+    }
+
+    /* Login — filled primary button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: var(--pico-primary-inverse);
+      background: var(--pico-primary);
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
     }
-    .button.secondary {
-      background: var(--pico-secondary-background);
-      color: var(--pico-secondary-inverse);
-    }
-    .button:hover, .button.secondary:hover {
-      background: var(--pico-primary-hover-background);
+    .btn-primary:hover {
+      opacity: 0.85;
       color: var(--pico-primary-inverse);
       text-decoration: none;
     }
-    .button.secondary:hover {
-      background: var(--pico-secondary-hover-background);
-      color: var(--pico-secondary-inverse);
+    .btn-primary:active {
+      opacity: 0.95;
     }
+
+    /* Loading skeleton */
     .loading-skeleton {
       display: inline-block;
       width: 7em;
-      height: 0.8em;
-      background-color: var(--pico-muted-background);
+      height: 0.75em;
+      background: linear-gradient(
+        90deg,
+        var(--pico-muted-background) 25%,
+        color-mix(in srgb, var(--pico-muted-background) 60%, transparent) 50%,
+        var(--pico-muted-background) 75%
+      );
+      background-size: 200% 100%;
       border-radius: 0.4em;
-      margin: 0 0.2em;
       vertical-align: middle;
+      animation: skeleton-shimmer 1.4s infinite ease-in-out;
     }
-    @keyframes loading-breadstick {
-      0%, 80%, 100% {
-        transform: scale(0);
-      }
-      40% {
-        transform: scale(1);
-      }
+    @keyframes skeleton-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Rounded focus outlines */
+    .nav-brand:focus-visible,
+    .nav-link:focus-visible,
+    .btn-primary:focus-visible {
+      outline: var(--pico-outline-width) solid var(--pico-primary-focus);
+      outline-offset: 0.2rem;
+      border-radius: var(--pico-border-radius);
+    }
+    .btn-outline:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+    }
+
+    @media (max-width: 640px) {
+      .user-info { display: none; }
     }
   </style>
 `;
 
 function getTeamsTooltip(teams) {
-  if (!teams || teams.length === 0) {
-    return 'No teams assigned';
-  }
+  if (!teams || teams.length === 0) return 'No teams assigned';
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
@@ -120,19 +198,17 @@ function renderAuthed(user) {
   const tooltip = getTeamsTooltip(teams);
   return html`
     <span
-      class="user-info-label"
+      class="user-info"
       data-tooltip="${tooltip}"
       data-placement="bottom"
     >
-      <i class="fas fa-circle"></i>
-      ${user.email || 'User'}
+      <span class="user-dot"></span>
+      <span class="user-email">${user.email || 'User'}</span>
     </span>
-    <a href="/jobs">
-      Jobs
-    </a>
+    <a href="/jobs" class="nav-link">Jobs</a>
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
-      class="button secondary"
+      class="btn-outline"
     >
       Logout
     </a>
@@ -143,10 +219,10 @@ function renderLogin() {
   return html`
     <a
       href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"
-      class="button"
+      class="btn-primary"
     >
       <i class="fab fa-github"></i>
-      Login
+      Login with GitHub
     </a>
   `;
 }
@@ -162,14 +238,19 @@ function Navbar({ user }) {
     ${NAVBAR_CSS}
     <nav>
       <a href="/" class="nav-brand">
-        <i class="fas fa-landmark"></i>
+        <span class="nav-brand-icon">
+          <i class="fas fa-landmark"></i>
+        </span>
         CivicPatch
       </a>
       <div class="nav-links">
-      ${userData && userData.authenticated ? renderAuthed(userData) : renderLogin()}
+        ${userData && userData.authenticated ? renderAuthed(userData) : renderLogin()}
       </div>
     </nav>
   `;
 }
 
-customElements.define('civ-navbar', component(Navbar, { useShadowDOM: false, observedAttributes: ['user'] }));
+customElements.define(
+  'civ-navbar',
+  component(Navbar, { useShadowDOM: false, observedAttributes: ['user'] })
+);
