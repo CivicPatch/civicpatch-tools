@@ -202,6 +202,48 @@ input:not([type=submit],
   --pico-border-color:     rgb(var(--catppuccin-sapphire));
 }
 
+[type="submit"],
+[type="button"],
+[type="reset"],
+button {
+  --pico-background-color: var(--pico-primary);
+  --pico-border-color: var(--pico-primary);
+  --pico-color: var(--pico-primary-inverse);
+}
+
+button:hover,
+[type="submit"]:hover,
+[type="button"]:hover {
+  --pico-background-color: var(--pico-primary-hover-background);
+  --pico-border-color: var(--pico-primary-hover-background);
+}
+
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--pico-color);
+  background: transparent;
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+a.btn:hover {
+  border-color: var(--pico-color);
+  background: transparent;
+  color: var(--pico-color);
+  text-decoration: none;
+}
+a.btn:active {
+  background: var(--pico-muted-background);
+}
+
 /* ── Tables ── */
 
 table {
@@ -272,6 +314,19 @@ main.container-fluid {
 
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 
+a.btn:focus-visible {
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+}
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+  border-radius: var(--pico-border-radius);
+}
+:focus-visible {
+  outline-offset: 0.2rem;
+  border-radius: var(--pico-border-radius);
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px; width: 1px;
@@ -285,13 +340,4 @@ main.container-fluid {
   grid-template-columns: max-content 1fr;
   gap: 0.25rem 1rem;
   margin: 0;
-}
-.details-dl dt {
-  font-weight: 600;
-  color: var(--pico-muted-color);
-  white-space: nowrap;
-}
-.details-dl dd {
-  margin: 0;
-  word-break: break-word;
 }

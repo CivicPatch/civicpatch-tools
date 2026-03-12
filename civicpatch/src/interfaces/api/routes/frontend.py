@@ -79,6 +79,18 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, 
         user: dict = Depends(get_current_user)
     ):
+        not_logged_in = not user
+        not_authenticated = not user.get('authenticated')
+        not_maintainer = 'maintainers' not in user.get('teams', [])
+
+        if not_logged_in or not_authenticated or not_maintainer:
+            return templates.TemplateResponse(
+                "pages/unauthorized.html",
+                {
+                    "request": request,
+                    "user": user
+                }
+            )
         return templates.TemplateResponse(
             "pages/jobs.html",
             {

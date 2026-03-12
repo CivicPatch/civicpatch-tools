@@ -62,7 +62,7 @@ function PullRequestTabs(props) {
     if (!jurisdiction_ocdid) return;
     setLoading(true);
     fetch(
-      `${API_URL}/api/v1/pull_requests/open?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`,
+      `${API_URL}/api/v1/pull_requests?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`,
       {
         credentials: "include"
       }
