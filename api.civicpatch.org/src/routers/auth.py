@@ -1,15 +1,17 @@
-import os
 import datetime
+import os
 import time
-from typing import cast, Optional
-from fastapi import APIRouter, HTTPException, Request, Depends
+from typing import Optional, cast
+from urllib.parse import unquote, urlparse
+
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from fastapi_sso import GithubSSO
+
+import database.database as database
+from schemas.common import Identity
 from services import github_service, session_service
 from utils.auth_utils import get_optional_user
-from schemas.common import Identity
-import database.database as database
-from urllib.parse import urlparse, unquote
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
 GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
@@ -21,11 +23,7 @@ APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
 is_production = APP_ENVIRONMENT.lower() == "production"
 
 if is_production:
-    ALLOWED_HOSTS = [
-        "civicpatch.org",
-        "test.civicpatch.org",
-        "test-api.civicpatch.org"
-    ]
+    ALLOWED_HOSTS = ["civicpatch.org", "test.civicpatch.org", "test-api.civicpatch.org"]
     COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
 else:
     ALLOWED_HOSTS = ["localhost"]
@@ -59,17 +57,23 @@ def is_safe_redirect(url: str) -> bool:
     # Use parsed.netloc-aware port check to avoid example.com:evil matching.
     return hostname in ALLOWED_HOSTS
 
+
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 github_sso = GithubSSO(
     client_id=GITHUB_APP_CLIENT_ID,
     client_secret=GITHUB_APP_CLIENT_SECRET,
     redirect_uri=GITHUB_CALLBACK_URL,
-    scope=["read:user", "user:email", "read:org"]  # Requesting access to read user info and org membership
+    scope=[
+        "read:user",
+        "user:email",
+        "read:org",
+    ],  # Requesting access to read user info and org membership
 )
+
 
 def get_router(is_production: bool) -> APIRouter:
     router = APIRouter()
- 
+
     @router.get("/{provider}/login", include_in_schema=False)
     async def login(provider: str, request: Request, redirect: str = "/"):
         match provider:
@@ -119,8 +123,13 @@ def get_router(is_production: bool) -> APIRouter:
             access_token = sso.access_token
 
         redirect_url = state if is_safe_redirect(state) else "/"
-        teams = await github_service.get_teams(access_token)
-        await database.create_update_user(openid.provider, openid.id, openid.email, teams)
+        if access_token:
+            teams = await github_service.get_teams(access_token)
+        else:
+            teams = []
+        await database.create_update_user(
+            openid.provider, openid.id, openid.email, teams
+        )
 
         response = RedirectResponse(url=redirect_url, status_code=302)
         session_service.create_session_cookies(response, openid, teams)
