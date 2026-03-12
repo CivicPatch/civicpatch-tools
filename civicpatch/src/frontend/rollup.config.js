@@ -16,10 +16,7 @@ const config = {
   input: "./assets/main.js",
   watch: {
     include: [
-      "./css/**",
-      "./components/**",
-      "./hooks/**",
-      "./pages/**"
+      "./**"
     ],
     exclude: ["./build/**", "node_modules/**"],
     clearScreen: false

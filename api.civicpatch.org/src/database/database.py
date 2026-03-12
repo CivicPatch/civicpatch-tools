@@ -14,10 +14,31 @@ from psycopg_pool import AsyncConnectionPool
 from schemas.common import PeopleJobHistory
 from shared.schemas import Person
 
-CIVICPATCH_API_DB_URL = os.getenv("CIVICPATCH_API_DB_URL")
+import logging
+logger = logging.getLogger(__name__)
+
+_pool: AsyncConnectionPool | None = None
+
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
 
-pool = AsyncConnectionPool(CIVICPATCH_API_DB_URL, open=False)
+async def get_pool() -> AsyncConnectionPool:
+    global _pool
+    if _pool is None:
+        db_url = os.getenv("CIVICPATCH_API_DB_URL")
+        if not db_url:
+            raise RuntimeError("CIVICPATCH_API_DB_URL is not set")
+        _pool = AsyncConnectionPool(db_url, open=False)
+        await _pool.open()
+        logger.info("Database pool opened")
+    return _pool
+
+
+async def close_pool():
+    global _pool
+    if _pool is not None:
+        await _pool.close()
+        _pool = None
+        logger.info("Database pool closed")
 
 
 def to_iso(dt):
@@ -26,6 +47,7 @@ def to_iso(dt):
     return None
 
 async def create_update_user(provider, provider_user_id, email, teams: List[str]):
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # Upsert user
         await cur.execute(
@@ -58,8 +80,10 @@ async def create_update_user(provider, provider_user_id, email, teams: List[str]
 
 
 async def create_api_key(provider, provider_user_id):
-    api_key = secrets.token_urlsafe(32)
+    pool = await get_pool()
+
     # Hash the API key before storing
+    api_key = secrets.token_urlsafe(32)
     api_key_hash = hash_utils.hash_string(api_key, cast(str, DATABASE_HASH_KEY))
     api_key_suffix = api_key[-4:]
 
@@ -75,6 +99,7 @@ async def create_api_key(provider, provider_user_id):
 
 
 async def revoke_api_key(api_key_id):
+    pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
@@ -85,6 +110,7 @@ async def revoke_api_key(api_key_id):
         )
 
 async def delete_api_key(api_key_id):
+    pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             "DELETE FROM api_keys WHERE id = %s",
@@ -92,6 +118,7 @@ async def delete_api_key(api_key_id):
         )
 
 async def get_api_keys_for_user(provider, provider_user_id):
+    pool = await get_pool()
     data = []
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -115,6 +142,7 @@ async def get_api_keys_for_user(provider, provider_user_id):
     return data
 
 async def get_user(provider, provider_user_id):
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -141,6 +169,7 @@ async def get_user(provider, provider_user_id):
             "teams": row[3], 
         }
 async def get_user_by_api_key_id(api_key_id):
+    pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             """
@@ -165,6 +194,7 @@ async def get_user_by_api_key_id(api_key_id):
     
     
 async def get_user_by_api_key(api_key):
+    pool = await get_pool()
     candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -198,6 +228,7 @@ async def get_user_by_api_key(api_key):
         }
 
 async def get_user_details(provider, provider_user_id):
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -216,6 +247,7 @@ async def get_user_details(provider, provider_user_id):
 
 
 async def user_is_approved(user_provider, provider_user_id) -> bool:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -232,6 +264,7 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
         return row[0] if row else False
     
 async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]:
+    pool = await get_pool()
     candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -253,6 +286,7 @@ async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]
 
 
 async def update_user_detail(server_url, user_provider, user_provider_id):
+    pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
@@ -266,6 +300,7 @@ async def update_user_detail(server_url, user_provider, user_provider_id):
 
 
 async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -280,6 +315,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
 
 
 async def get_states() -> List[str]:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -303,6 +339,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
       - when with_geom=True: {"data": <json>, "center": {"lat":..,"lng":..} | None, "geojson": <geojson> | None} or None
     """
     try:
+        pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             if with_geom:
                 await cur.execute(
@@ -348,6 +385,7 @@ async def get_jurisdiction_geom(jurisdiction_ocdid: str):
     """
     print("trying to find geom for", jurisdiction_ocdid)
     try:
+        pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 """
@@ -373,6 +411,7 @@ async def get_people_by_geo(lat: float, long: float):
     JSON per row, which we then parse into Person objects.
     """
     try:
+        pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             # Use ST_Intersects as the single spatial predicate
             await cur.execute(
@@ -408,6 +447,7 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
     Return multiple GeoJSON geometries from geo for polygons near the given point.
     At low zoom (zoomed out), geometries are simplified and exaggerated (buffered).
     """
+    pool = await get_pool()
     if zoom is None:
         buffer_m = 1000.0
         simplify_tolerance = 0.01
@@ -524,6 +564,7 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
     where_condition = " AND ".join(where_clauses)
 
     try:
+        pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 f"""
@@ -561,6 +602,7 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
 # Jobs
 
 async def list_jobs():
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -590,6 +632,7 @@ async def register_job(
         job_type: str,
         arguments_json: dict,
         server_source: Optional[str] = None):
+    pool = await get_pool()
     async with pool.connection() as conn:
         serialized_arguments = json.dumps(arguments_json)
         await conn.execute(
@@ -624,6 +667,7 @@ async def register_job(
         )
 
 async def get_job(request_id: str):
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -647,6 +691,7 @@ async def get_job(request_id: str):
         return None
     
 async def get_job_status(request_id: str):
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -661,6 +706,7 @@ async def get_job_status(request_id: str):
         return None
 
 async def update_job_status(request_id: str, status: str = None, progress: Optional[int] = None):
+    pool = await get_pool()
     set_clauses = []
     params = []
 
@@ -692,6 +738,7 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
         )
 
 async def update_job_result(request_id: str, result_json: Any):
+    pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             """
@@ -710,6 +757,7 @@ async def update_job_result(request_id: str, result_json: Any):
         return True
 
 async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
+    pool = await get_pool()
     async with pool.connection() as conn:
         # Update jobs table
         result = await conn.execute(
@@ -742,6 +790,7 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str = N
         return True
 
 async def check_user_owns_request_id(provider: str, provider_user_id: str, request_id: str) -> bool:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -759,6 +808,7 @@ async def check_user_owns_request_id(provider: str, provider_user_id: str, reque
 
 # API usage
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
+    pool = await get_pool()
     # Queries api_usage_limits to get daily_limit
     # Joins with jobs table to count jobs created in the last 24 hours 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -791,6 +841,7 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
             }
         
 async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_limit: int = 100):
+    pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
@@ -802,6 +853,7 @@ async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_l
             (provider, provider_user_id, daily_limit),
         )
 async def get_jurisdiction_states():
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -821,6 +873,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
     and job_type = 'people'
     Ordered by created_at DESC.
     """
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -856,6 +909,7 @@ async def update_jurisdiction(jurisdiction_ocdid, state, file_path, data: dict):
     """
     Update jurisdiction record(s) in the database for a single jurisdiction_ocdid.
     """
+    pool = await get_pool()
     async with pool.connection() as conn:
         dummy_git_commit = "dummy_git_commit_hash"
         updated_at = data.get("updated_at", None)
@@ -890,6 +944,7 @@ async def bulk_update_people(people_records: list):
             jurisdictions[jurisdiction_ocdid] = []
         jurisdictions[jurisdiction_ocdid].append(person_id)
 
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # Upsert all incoming people with status "current"
         insert_query = """
@@ -926,10 +981,12 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
             updated_at = EXCLUDED.updated_at,
             git_commit = EXCLUDED.git_commit
     """
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(query, jurisdiction_records)
 
 async def get_jurisdiction_updates() -> List[dict]:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -947,6 +1004,7 @@ async def get_jurisdiction_updates() -> List[dict]:
     return jurisdictions
 
 async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -960,6 +1018,7 @@ async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
     return people
 
 async def delete_jurisdictions_by_ocdids(ocdids: List[str]):
+    pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)",

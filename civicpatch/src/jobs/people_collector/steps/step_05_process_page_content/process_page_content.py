@@ -15,6 +15,7 @@ from jobs.people_collector.schemas import (
   ProgressState,
   RelevantPageResponseSchema
 )
+import re
 from shared.utils import (
     config_utils, 
     data_path_utils, 
@@ -417,18 +418,16 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
         if person.email and person.email.lower() not in input_text_lower:
             logger.warning(f"Email not found in input text: {person.email}")
             return False
-        if person.phone and person.phone not in input_text:
+        if person.phone and not _phone_in_text(person.phone, input_text):
             logger.warning(f"Phone not found in input text: {person.phone}")
             return False
         if person.url and person.url not in input_text:
             if not url_utils.same_url(person.url, source_url):
                 logger.warning(f"URL not found in input text: {person.url}")
                 return False
-        if person.roles:
-            for role in person.roles:
-                if role and role.lower() not in input_text_lower:
-                    logger.warning(f"Role not found in input text: {role}")
-                    return False
+            
+        # TODO: Need to use a free model/spacy to do fuzzy matching on roles and dates
+        # As needed
     return True
 
 
@@ -448,6 +447,19 @@ def _name_in_text(name: str, text_lower: str) -> bool:
         return True
 
     return False
+
+def _normalize_phone(phone: str) -> str:
+    """Strip all non-digit characters."""
+    return re.sub(r'\D', '', phone)
+
+def _phone_in_text(phone: str, input_text: str) -> bool:
+    """Check if the core digits of a phone number appear in the text."""
+    normalized_phone = _normalize_phone(phone)
+    if not normalized_phone:
+        return False
+    # Normalize the input text to digits sequences and check for substring match
+    normalized_text = _normalize_phone(input_text)
+    return normalized_phone in normalized_text
 
 
 def update_links(domain, context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:

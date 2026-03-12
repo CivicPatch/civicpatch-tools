@@ -5,7 +5,7 @@ from typing import Optional
 import uuid
 from schemas.common import Identity, RouteCategory
 
-import database
+import database.database as database
 from shared.utils.person_id_utils import resolve_people_ids
 import shared.utils.name_utils
 

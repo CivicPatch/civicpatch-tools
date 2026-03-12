@@ -61,7 +61,7 @@ function SearchJurisdictions() {
 
   return html`
     <style>
-      .grid {
+      .page-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
@@ -73,7 +73,7 @@ function SearchJurisdictions() {
         order: 2;
       }
       @media (max-width: 900px) {
-        .grid {
+        .page-grid {
           grid-template-columns: 1fr;
         }
         .map-col {
@@ -85,7 +85,7 @@ function SearchJurisdictions() {
       }
     </style>
     <div style="display: flex; flex-direction: column; gap: 2rem;">
-      <div class="grid">
+      <div class="page-grid">
         <div class="map-col">
           <civ-map
             @on-map-change=${handleMapChange}

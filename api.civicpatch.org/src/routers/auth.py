@@ -8,7 +8,7 @@ from fastapi_sso import GithubSSO
 from services import github_service, session_service
 from utils.auth_utils import get_optional_user
 from schemas.common import Identity
-import database
+import database.database as database
 from urllib.parse import urlparse, unquote
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")

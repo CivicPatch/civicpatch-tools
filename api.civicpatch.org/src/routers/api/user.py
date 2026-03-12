@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Form, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi_sso.sso.base import OpenID
 
-import database
+import database.database as database
 from utils.auth_utils import get_user
 
 

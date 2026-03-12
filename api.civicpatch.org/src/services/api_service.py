@@ -1,6 +1,6 @@
 from typing import Tuple
 
-import database
+import database.database as database
 from schemas.common import Identity
 
 async def can_make_api_request(provider: str, provider_user_id: str, request_id: str) -> Tuple[bool, str]:

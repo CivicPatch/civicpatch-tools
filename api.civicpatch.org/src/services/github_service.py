@@ -10,6 +10,7 @@ import logging
 
 from schemas.common import PullRequest
 from services import cache_service
+import shared.utils.id_utils
 
 timeout = httpx.Timeout(60.0)  
 
@@ -17,7 +18,7 @@ GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
 GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
 GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
-OPEN_DATA_REPO_URL = os.getenv("OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/test-open-data")
+OPEN_DATA_REPO_URL = os.getenv("OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/open-data")
 
 CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
 
@@ -154,23 +155,24 @@ async def trigger_github_data_intake_workflow(
     logger.info("Successfully triggered data intake workflow.")
     return True
 
-async def get_github_file_contents(
-        github_file_path: str,
-        ref: Optional[str] = None,
-    ) -> str | None:
-    cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
-    logger.debug(f"Fetching GitHub file contents for {github_file_path} (ref={ref}) with cache_key={cache_key}")
+async def cached_github_get(
+    url: str,
+    cache_key: str,
+    accept: str = "application/vnd.github+json",
+    return_json: bool = True,
+) -> Any:
+    """
+    Wrapper for GET requests to GitHub API with ETag-based caching.
+    If return_json is True, returns parsed JSON, else returns response.text.
+    """
     cached = cache_service.get_cached(cache_key)
     cached_etag = cached.get("etag") if cached else None
     cached_content = cached.get("content") if cached else None
 
     default_headers = await get_default_headers()
-    url = f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
-    if ref:
-        url += f"?ref={ref}"
     headers = {
         **default_headers,
-        "Accept": "application/vnd.github.raw",
+        "Accept": accept,
     }
     if cached_etag:
         headers["If-None-Match"] = cached_etag
@@ -179,48 +181,54 @@ async def get_github_file_contents(
         response = await client.get(url, headers=headers)
 
     if response.status_code == 304 and cached_content is not None:
-        logger.debug(f"File {github_file_path} not modified since last fetch, using cached content.")
+        logger.debug(f"Cache hit for {url} (etag: {cached_etag})")
         return cached_content
     elif response.status_code == 200:
-        file_content = response.text
         etag = response.headers.get("etag")
-        logger.info(f"Fetched new version of {github_file_path} (etag: {etag}) from GitHub.")
-        cache_service.set_cached(cache_key, {"content": file_content, "etag": etag})
-        return file_content
+        content = response.json() if return_json else response.text
+        logger.debug(f"Fetched new data for {url} (etag: {etag})")
+        cache_service.set_cached(cache_key, {"content": content, "etag": etag})
+        return content
     else:
-        logger.error(f"Error fetching file contents: {github_file_path} {response.status_code} {response.text}")
+        logger.error(f"Error fetching {url}: {response.status_code} {response.text}")
         return None
 
-async def get_open_pull_requests() -> List[PullRequest]:
-    logger.debug("Fetching open pull requests from GitHub.")
-    params = "state=open&per_page=100&sort=created&direction=desc"
+async def get_github_file_contents(
+        github_file_path: str,
+        ref: Optional[str] = None,
+    ) -> str | None:
+    cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
+    url = f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
+    if ref:
+        url += f"?ref={ref}"
+    return await cached_github_get(
+        url,
+        cache_key,
+        accept="application/vnd.github.raw",
+        return_json=False
+    )
+
+async def get_open_pull_requests(page: int = 1, per_page: int = 100) -> List[PullRequest]:
+    params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
     url = f"{OPEN_DATA_REPO_URL}/pulls?{params}"
-
-    default_headers = await get_default_headers()
-    headers = {
-        **default_headers,
-        "Accept": "application/vnd.github+json",
-    }
-
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.get(url, headers=headers)
-
-    if response.status_code == 200:
-        pull_requests = response.json()
-        logger.info(f"Fetched {len(pull_requests)} open pull requests.")
-        valid_pull_requests = [
-            PullRequest(
-                branch_name=pr["head"]["ref"],
-                url=pr["html_url"],
-            ) for pr in pull_requests
-        ]
-        return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
-    else:
-        logger.error(f"Error fetching pull requests: {response.status_code} {response.text}")
+    cache_key = f"github:open_pull_requests:{page}:{per_page}"
+    pull_requests = await cached_github_get(
+        url,
+        cache_key,
+        accept="application/vnd.github+json",
+        return_json=True
+    )
+    if not pull_requests:
         return []
-    
+    valid_pull_requests = [
+        PullRequest(
+            branch_name=pr["head"]["ref"],
+            url=pr["html_url"],
+        ) for pr in pull_requests
+    ]
+    return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
+
 async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
-    logger.debug(f"Filtering open pull requests by branch suffix: {suffix}")
     pull_requests = await get_open_pull_requests()
     matching_prs = [pr for pr in pull_requests if pr.branch_name.endswith(suffix)]
     logger.info(f"Found {len(matching_prs)} pull requests matching suffix '{suffix}'.")
@@ -285,3 +293,16 @@ async def get_teams(user_oauth_token: str):
     else:
         logger.error(f"Error fetching teams: {response.status_code} {response.text}")
         return []
+
+async def get_pull_request_file_yaml(request_id: str, jurisdiction_ocdid: str, file_path: str) -> list | dict | None:
+    """Fetch and parse a YAML file from a specific branch."""
+    branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, request_id)
+    content = await get_github_file_contents(file_path, ref=branch_name)
+    if content is None:
+        return None
+    try:
+        return yaml.safe_load(content)
+    except Exception as e:
+        logger.error(f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}")
+        return None
+

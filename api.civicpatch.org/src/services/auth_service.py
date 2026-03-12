@@ -1,5 +1,5 @@
 import os
-from database import get_server_detail_by_active_api_key
+from database.database import get_server_detail_by_active_api_key
 from typing import Any, Tuple
 from schemas.requests import ServerDetail
 

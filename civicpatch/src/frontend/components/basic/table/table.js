@@ -363,7 +363,6 @@ function BasicTable(props) {
     <style>${styles}</style>
     <table 
       role="grid" 
-      style="height: 100%" 
       tabindex="0"
       @keydown=${handleTableKeyDown}
       @blur=${handleTableBlur}
@@ -381,7 +380,7 @@ function BasicTable(props) {
           ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(props.columns.length, dropIndex) : null}
           ${dropIndex < props.data.length ? html`
             <tr
-              draggable="${editingCell.row !== null && editingCell.col !== null ? "false" : "true"}"
+              draggable="${props.canReorder && (editingCell.row !== null && editingCell.col !== null) ? "false" : "true"}"
               class=${dropIndex === draggedIndex ? "dragging" : ""}
               @dragstart=${e => handleDragStart(dropIndex, e)}
               @dragend=${handleDragEnd}
