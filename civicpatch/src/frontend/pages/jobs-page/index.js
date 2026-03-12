@@ -71,7 +71,7 @@ function JobsPage() {
     <main>
       <section>
         <h2>Pull Requests</h2>
-        <div style="display: flex; gap: 1rem; flex-direction: column;">
+        <div style="display: flex; gap: 2rem; flex-direction: column;">
           ${prList}
         </div>
         <div style="margin-top:2rem; display:flex; gap:1rem; align-items:center;">

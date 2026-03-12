@@ -37,7 +37,7 @@ function JurisdictionDetail({ data, onSave }) {
   };
 
   return html`
-    <div class="container">
+    <div class="container" style="font-family: var(--pico-font-family-monospace)">
       <header class="d-flex align-items-center justify-content-between">
         <h3>Jurisdiction Details</h3>
         <button 

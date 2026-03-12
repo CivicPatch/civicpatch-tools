@@ -7,8 +7,9 @@ import "./cell"
 
 const styles = css`
   civ-table table {
-    border: 2px solid transparent;
-    border-radius: var(--pico-border-radius);
+    table-layout: auto;
+    width: auto;
+    min-width: 100%;
   }
   civ-table table:focus {
     outline: none;
@@ -16,21 +17,13 @@ const styles = css`
   }
 
   civ-table tr:last-child {
-    border: none;
   }
   civ-table td {
-      padding: 0;
-      border: none;
-      height: 100%;
   }
   civ-table td:focus-within {
     background-color: rgb(var(--catppuccin-base));
   }
   civ-table-cell {
-    display: block;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
   }
   civ-table tr {
     border: 1px solid rgb(var(--catppuccin-crust));
@@ -307,6 +300,7 @@ function BasicTable(props) {
           .focused=${cellIsFocused}
           .editing=${cellIsEditing}
           .customCell=${col.renderCell}
+          .renderValue=${col.renderValue}
           .data=${row}
         ></civ-table-cell>
       </td>

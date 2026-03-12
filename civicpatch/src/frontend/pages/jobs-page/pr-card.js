@@ -23,12 +23,12 @@ const BASE_STYLES = `
   }
 
   .pr-card__jurisdiction {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--pico-primary);
+    color: var(--pico-primary-inverse);
     background: var(--pico-primary-background);
     border: 1px solid var(--pico-primary-border);
     padding: 0.15em 0.55em;
@@ -48,7 +48,7 @@ const BASE_STYLES = `
   }
 
   .pr-card__link {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.75rem;
     color: var(--pico-primary);
     text-decoration: none;
@@ -59,7 +59,7 @@ const BASE_STYLES = `
   }
 
   .pr-card__state {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -76,7 +76,7 @@ const BASE_STYLES = `
 
   .pr-card__meta {
     padding: 0.3rem 1rem 0.5rem;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.7rem;
     color: var(--pico-muted-color);
     border-bottom: 1px solid var(--pico-muted-border-color);
@@ -97,14 +97,14 @@ const BASE_STYLES = `
   }
 
   .diff-panel__summary {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.7rem;
     color: var(--pico-muted-color);
     letter-spacing: 0.03em;
   }
 
   .diff-panel__toggle {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.68rem;
     background: transparent;
     border: 1px solid var(--pico-muted-border-color);
@@ -121,7 +121,7 @@ const BASE_STYLES = `
   }
 
   .diff-panel__empty {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--pico-font-family-monospace);
     font-size: 0.75rem;
     color: var(--pico-muted-color);
     padding: 1rem 0;
@@ -134,7 +134,6 @@ const BASE_STYLES = `
   .diff-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'IBM Plex Mono', monospace;
     font-size: 0.73rem;
     table-layout: fixed;
   }
@@ -231,6 +230,9 @@ const PrHeader = ({ pr }) => html`
     <span class="pr-card__state pr-card__state--${stateColor(pr?.github_state)}">
       ${pr?.github_state || 'unknown'}
     </span>
+    <a class="pr-card__link" href="/jurisdictions?jurisdiction_ocdid=${pr?.jurisdiction_ocdid}" target="_blank" rel="noopener">
+      Detail
+    </a>
   </div>
 `;
 

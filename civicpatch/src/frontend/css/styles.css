@@ -43,13 +43,13 @@
 
     /* Primary — sapphire as the accent */
     --pico-primary:                  rgb(var(--catppuccin-sapphire));
-    --pico-primary-background:       rgba(var(--catppuccin-sapphire), 0.12);
+    --pico-primary-background:       rgb(var(--catppuccin-sapphire));
     --pico-primary-border:           rgba(var(--catppuccin-sapphire), 0.35);
     --pico-primary-underline:        rgb(var(--catppuccin-sapphire));
     --pico-primary-hover:            rgb(var(--catppuccin-blue));
-    --pico-primary-hover-background: rgba(var(--catppuccin-sapphire), 0.2);
+    --pico-primary-hover-background: rgb(var(--catppuccin-blue));
     --pico-primary-focus:            rgba(var(--catppuccin-sapphire), 0.4);
-    --pico-primary-inverse:          rgb(var(--catppuccin-base));
+    --pico-primary-inverse:          rgb(var(--catppuccin-base));  
 
     /* Secondary */
     --pico-secondary-background:       rgb(var(--catppuccin-overlay1));
@@ -131,13 +131,13 @@
 
     /* Primary — sapphire as the accent */
     --pico-primary:                  rgb(var(--catppuccin-sapphire));
-    --pico-primary-background:       rgba(var(--catppuccin-sapphire), 0.12);
+    --pico-primary-background:       rgb(var(--catppuccin-sapphire));
     --pico-primary-border:           rgba(var(--catppuccin-sapphire), 0.3);
     --pico-primary-underline:        rgb(var(--catppuccin-sapphire));
     --pico-primary-hover:            rgb(var(--catppuccin-sky));
-    --pico-primary-hover-background: rgba(var(--catppuccin-sapphire), 0.2);
+    --pico-primary-hover-background: rgb(var(--catppuccin-sky));
     --pico-primary-focus:            rgba(var(--catppuccin-sapphire), 0.35);
-    --pico-primary-inverse:          rgb(var(--catppuccin-base));
+    --pico-primary-inverse:          rgb(var(--catppuccin-base)); 
 
     /* Secondary */
     --pico-secondary-background:       rgb(var(--catppuccin-overlay1));
@@ -202,8 +202,59 @@ input:not([type=submit],
   --pico-border-color:     rgb(var(--catppuccin-sapphire));
 }
 
-table tr.deleted td  { background-color: var(--pico-del-background); }
-table tr.inserted td { background-color: var(--pico-ins-background); }
+/* ── Tables ── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  table-layout: fixed;
+  font-family: var(--pico-font-family-monospace);
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pico-muted-color);
+  padding: 0.3rem 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+tbody td {
+  padding: 0.28rem 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--pico-muted-color);
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody td:first-child {
+  color: var(--pico-color);
+  padding-left: 0.85rem;
+}
+
+tbody tr:hover td {
+  background: var(--pico-muted-background);
+}
+
+/* Diff row semantics — used by pr-card and any other diff tables */
+tr.row--added   td { background: var(--pico-ins-background); }
+tr.row--removed td { background: var(--pico-del-background); }
+tr.row--unchanged  { opacity: 0.5; }
+td.cell--changed   { background: var(--pico-info-background); }
+
+ins { text-decoration: none; color: var(--pico-color); }
+del { text-decoration: line-through; color: var(--pico-color); text-decoration-color: var(--pico-del-color); }
 
 /* ── Layout ──────────────────────────────────────────────────────────────── */
 
