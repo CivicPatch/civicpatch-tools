@@ -68,6 +68,7 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
             .latlng=${jurisdictionData?.geo_center
               ? { lat: jurisdictionData.geo_center.lat, lng: jurisdictionData.geo_center.lng }
               : null}
+            .height=${"20rem"}
           ></civ-map>
           <civ-config-detail .people=${people}></civ-config-detail>
         </div>

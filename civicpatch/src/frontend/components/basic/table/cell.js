@@ -16,19 +16,6 @@ const KEYCODES = {
 
 const styles = css`
   civ-table-cell {
-    display: block;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-
-    div {
-        width: 100%;
-        height: 100%;
-        min-height: 1em;
-        display: flex;
-        align-items: stretch;
-    }
-
     span {
         flex: 1;
         width: 100%;
@@ -37,7 +24,6 @@ const styles = css`
         min-height: 1em;
         box-sizing: border-box;
         border: 2px solid transparent;
-        padding: 0.4rem;
         white-space: normal;
         word-break: break-word;
         overflow-wrap: break-word;
@@ -116,6 +102,15 @@ const styles = css`
         overflow-wrap: break-word;
     }
 
+    span:not(.tag-input) {
+        display: inline-block;
+        ...
+      }
+    span.tag-input {
+      display: inline;
+      min-width: 4em;
+    }
+
     .tag-input:empty::before {
         content: attr(data-placeholder);
         color: #aaa;
@@ -134,6 +129,7 @@ function TableCell({
   focused,
   editing,
   customCell,
+  renderValue,
   data,
   value
 }) {
@@ -173,9 +169,9 @@ function TableCell({
 
   const handleSingleCellKeyDown = (e) => {
     if (e.key === KEYCODES.ENTER) {
-      e.preventDefault(); // already here, good
-      e.stopPropagation(); // move this OUTSIDE the if(editing) check
-      
+      e.preventDefault();
+      e.stopPropagation();
+
       if (editing) {
         let textValue = contentEditableRef.current?.innerText ?? '';
         textValue = textValue.trim();
@@ -198,24 +194,28 @@ function TableCell({
 
   function renderSingleCell() {
     return html`
-            <span class="cell-content" style="${!editing ? 'display: block;' : 'display: none;'}">
-            ${value}
-            </span>
-            <span
-                class="cell-content"
-                style="${editing ? 'display: block;' : 'display: none;'}"
-                contenteditable="${editing ? 'true' : 'false'}"
-                @keydown=${handleSingleCellKeyDown}
-                @blur=${handleCellBlur}
-                ${ref(el => {
-                  contentEditableRef.current = el;
-                  if (el && !el.dataset.initialized) {
-                    el.innerText = value ?? '';
-                    el.dataset.initialized = 'true';
-                  }
-              })}
-            ></span>
-            `;
+      <span class="cell-content" style="${!editing ? 'display: block;' : 'display: none;'}">
+        ${renderValue ? renderValue(value) : value}
+      </span>
+      <span
+        class="cell-content"
+        style="${editing ? 'display: block;' : 'display: none;'}"
+        contenteditable="${editing ? 'true' : 'false'}"
+        @keydown=${handleSingleCellKeyDown}
+        @blur=${handleCellBlur}
+        ${ref(el => {
+          contentEditableRef.current = el;
+          if (el) {
+            el.innerText = value ?? '';
+            el.addEventListener('beforeinput', (e) => {
+              if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') {
+                e.preventDefault();
+              }
+            });
+          }
+        })}
+      ></span>
+    `;
   }
 
   function handleAddItem(e, newItem) {
@@ -276,10 +276,12 @@ function TableCell({
           return html`<a href="tel:${item}" class="tag-link" tabindex="-1">${item}</a>`;
         case 'email':
           return html`<a href="mailto:${item}" class="tag-link" tabindex="-1">${item}</a>`;
-        default: // Regular link
+        default:
           return html`<a href="${item}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">${item}</a>`;
       }
     };
+
+    const displayItem = (item, index) => renderValue ? renderValue(item, index) : displayWithFormat(item);
 
     return html`
       <div class="tag-list ${editing ? 'editing' : ''}">
@@ -289,18 +291,27 @@ function TableCell({
               <span class="tag-label">${item}</span>
               <span class="tag-remove">×</span>
             </button>`
-          : displayWithFormat(item)
+          : displayItem(item, i)
         )}
-          <span
-            class="tag-input"
-            contenteditable="${editing ? 'true' : 'false'}"
-            data-placeholder=${editing ? 'Add item...' : ''}
-            @blur=${handleCellBlur}
-            @keydown=${handleListInputKeyDown}
-            ${ref(el => {
-              contentEditableRef.current = el;
-            })}
-          ></span>
+        <span
+          class="tag-input"
+          contenteditable="${editing ? 'true' : 'false'}"
+          data-placeholder=${editing ? 'Add item...' : ''}
+          @blur=${handleCellBlur}
+          @keydown=${handleListInputKeyDown}
+          ${ref(el => {
+            contentEditableRef.current = el;
+            if (el) {
+              el.innerText = '';
+              el.addEventListener('beforeinput', (e) => {
+                if (e.inputType === 'insertParagraph' || e.inputType === 'insertLineBreak') {
+                  e.preventDefault();
+                }
+              });
+            }
+          })}
+        ></span>
+       
       </div>
     `;
   }

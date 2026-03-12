@@ -1,6 +1,7 @@
 import { html, component, useEffect, useState, useRef } from 'haunted';
 import { ref } from 'lit-html/directives/ref.js';
 import { keyed } from 'lit/directives/keyed.js';
+import { divisionOcdidToFriendly } from '../../pages/jobs-page/ocdid-utils.js';
 
 import './person-card.js';
 import '../basic/table/table.js';
@@ -427,9 +428,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function customCssForPerson(person, field) {
     if (person._deleted) {
-      return "opacity: 0.5; text-decoration: line-through; background-color: var(--pico-del-color);";
+      return "opacity: 0.5; text-decoration: line-through; background-color: var(--pico-del-background);";
     } else if (person._changes?.includes(field)) {
-      return "background-color: var(--pico-ins-color);";
+      return "background-color: var(--pico-ins-background);";
     }
     return "";
   }
@@ -464,29 +465,29 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         title="Edit profile"
       >
         ${value
-          ? html`<img src="${value}" alt="Profile image" style="
-              width: min(100%, 100cqh, 4rem);
-              height: min(100%, 100cqh, 4rem);
-              border-radius: 50%;
-              object-fit: cover;
-              object-position: center;
-              display: block;
-              flex-shrink: 0;
-            " />`
-          : html`<div style="
-              width: min(100%, 100cqh, 4rem);
-              height: min(100%, 100cqh, 4rem);
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-shrink: 0;
-              font-size: 1.1rem;
-              font-weight: bold;
-              background: #f0f0f0;
-              color: #888;
-            ">${initials}</div>`
-        }
+  ? html`<img src="${value}" alt="Profile image" style="
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      flex-shrink: 0;
+    " />`
+  : html`<div style="
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--pico-muted-background);
+      color: var(--pico-muted-color);
+    ">${initials}</div>`
+}
       </button>
     `;
   }
@@ -506,12 +507,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           type: "drag-row",
           editable: false,
           renderCell: (person) => html`
-              <div style="display:flex;align-items:center;justify-content:center; height:100%;">
-                <span class="drag-handle" style="display: flex; align-items: center; justify-content: center; cursor: grab; font-size: 1.2rem; height: 100%;" title="Drag to reorder">
-                  <i class="fas fa-grip-vertical" style="display: flex; align-items: center; justify-content: center; height: 100%;"></i>
-                </span>
-              </div>
-          `
+            <span class="drag-handle" title="Drag to reorder">
+              <i class="fas fa-grip-vertical"></i>
+            </span>
+          `, 
         },
         {
           field: "cdn_image",
@@ -548,6 +547,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           editable: true,
           type: "multiple",
           customCss: customCssForPerson,
+          renderValue: (url, index) => html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">[${index}]</a>`,
         },
         {
           field: "start_date",
@@ -576,6 +576,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           editable: true,
           type: "single",
           customCss: customCssForPerson,
+          renderValue: (division_ocdid) => divisionOcdidToFriendly(division_ocdid) || "",
         },
         {
           field: "source_urls",
@@ -583,12 +584,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           editable: true,
           type: "multiple",
           customCss: customCssForPerson,
+          renderValue: (url, index) => html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">[${index}]</a>`,
         },
-        {
-          field: "id",
-          label: "ID",
-          editable: false,
-        }
+        //{
+        //  field: "id",
+        //  label: "ID",
+        //  editable: false,
+        //}
       ]}
       .data=${currentPeople}
       @data-change=${handleTableDataChange}
