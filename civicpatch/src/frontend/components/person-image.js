@@ -7,7 +7,10 @@ function PersonImage({ person, onClick }) {
   let initials = "?";
   if (person?.name) {
     const parts = person.name.trim().split(/\s+/);
-    initials = parts.slice(0, 2).map(p => p[0].toUpperCase()).join("");
+    initials = parts
+      .slice(0, 2)
+      .map((p) => p[0].toUpperCase())
+      .join("");
   }
 
   const value = person?.cdn_image || person?.image;
@@ -18,24 +21,36 @@ function PersonImage({ person, onClick }) {
       type="button"
       style="all: unset; cursor: pointer; display: flex; align-items: center; justify-content: center;"
       @click=${() => onClick(person)}
+      ?disabled=${!onClick}
       title="Edit profile"
     >
       ${showInitials
-        ? html`<div style="
+        ? html`<div
+            style="
             width: 2rem; height: 2rem; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 0.7rem; font-weight: 600;
             background: var(--pico-muted-background);
             color: var(--pico-muted-color);
-          ">${initials}</div>`
-        : html`<img src="${value}" alt="Profile image" style="
+          "
+          >
+            ${initials}
+          </div>`
+        : html`<img
+            src="${value}"
+            alt="Profile image"
+            style="
             width: 2rem; height: 2rem; border-radius: 50%;
             object-fit: cover; object-position: center;
             display: block; flex-shrink: 0;
-          " @error=${() => setImgError(true)} />`
-      }
+          "
+            @error=${() => setImgError(true)}
+          />`}
     </button>
   `;
 }
 
-customElements.define('person-image', component(PersonImage, { useShadowDOM: false }));
+customElements.define(
+  "person-image",
+  component(PersonImage, { useShadowDOM: false }),
+);
