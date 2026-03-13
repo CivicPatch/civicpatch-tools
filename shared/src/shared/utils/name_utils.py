@@ -1,21 +1,20 @@
-from typing import Dict, List, Protocol
-from nameparser import HumanName
 import unicodedata
+from typing import Dict, List, Protocol
+
+from nameparser import HumanName
+
 from shared.schemas import Person
 
 
 class HasName(Protocol):
     """Protocol for objects with a name field."""
+
     name: str
 
 
 def person_list_to_identities(people: List[Person]) -> Dict[str, List[str]]:
     """Convert a list of people dicts to an identities mapping."""
-    return {
-        person.name: person.other_names
-        for person in people
-        if person.name
-    }
+    return {person.name: person.other_names for person in people if person.name}
 
 
 def collect_other_names(group: List[HasName], canonical_name: str) -> List[str]:
@@ -42,8 +41,30 @@ def exact_match(name1: str, name2: str) -> bool:
     return name1.lower().strip() == name2.lower().strip()
 
 
+def _normalize_suffix(suffix: str) -> str:
+    """Normalize suffix for comparison (e.g. 'Jr.' -> 'jr', 'Jr' -> 'jr')."""
+    return suffix.lower().strip().rstrip(".")
+
+
+def fuzzy_match(name1: str, name2: str) -> bool:
+    p1 = parse_name(name1)
+    p2 = parse_name(name2)
+
+    if p1.first.lower() != p2.first.lower() or p1.last.lower() != p2.last.lower():
+        return False
+    if p1.middle and p2.middle and p1.middle.lower() != p2.middle.lower():
+        return False
+    if (
+        p1.suffix
+        and p2.suffix
+        and _normalize_suffix(p1.suffix) != _normalize_suffix(p2.suffix)
+    ):
+        return False
+
+    return True
+
+
 def _fuzzy_match_score(name1: str, name2: str) -> int:
-    """Score how well two names match (higher = better)."""
     p1 = parse_name(name1)
     p2 = parse_name(name2)
     score = 0
@@ -53,28 +74,13 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
         score += 1
     if p1.middle and p2.middle and p1.middle.lower() == p2.middle.lower():
         score += 1
-    if p1.suffix and p2.suffix and p1.suffix.lower() == p2.suffix.lower():
+    if (
+        p1.suffix
+        and p2.suffix
+        and _normalize_suffix(p1.suffix) == _normalize_suffix(p2.suffix)
+    ):
         score += 1
     return score
-
-
-def fuzzy_match(name1: str, name2: str) -> bool:
-    """
-    Looser name comparison using parsed name components.
-    Matches if first + last name match, and if both have a middle or suffix, they must match.
-    If only one has a middle or suffix, ignore that field.
-    """
-    p1 = parse_name(name1)
-    p2 = parse_name(name2)
-
-    if p1.first.lower() != p2.first.lower() or p1.last.lower() != p2.last.lower():
-        return False
-    if p1.middle and p2.middle and p1.middle.lower() != p2.middle.lower():
-        return False
-    if p1.suffix and p2.suffix and p1.suffix.lower() != p2.suffix.lower():
-        return False
-
-    return True
 
 
 def normalize_name(name: str) -> str:
@@ -88,7 +94,7 @@ def normalize_name(name: str) -> str:
     return base.lower().strip()
 
 
-def _best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | None:
+def best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | None:
     best_canonical = None
     best_score = 0
     for canonical, aliases in identities.items():
@@ -104,8 +110,7 @@ def _best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | N
 
 
 def build_canonical_map(
-    all_people: List[dict],
-    identities: Dict[str, List[str]]
+    all_people: List[dict], identities: Dict[str, List[str]]
 ) -> Dict[str, str]:
     """
     Map every name to its canonical form, using identities and fuzzy matching across all sources.
@@ -125,7 +130,9 @@ def build_canonical_map(
         if identities:
             # 1. Exact match against identities
             for canonical, aliases in identities.items():
-                if exact_match(name, canonical) or any(exact_match(name, alias) for alias in aliases):
+                if exact_match(name, canonical) or any(
+                    exact_match(name, alias) for alias in aliases
+                ):
                     name_to_canonical[name] = canonical
                     found = True
                     break
@@ -133,7 +140,7 @@ def build_canonical_map(
                 continue
 
             # 2. Best fuzzy match against identities (scored)
-            best_canonical = _best_identity_match(name, identities)
+            best_canonical = best_identity_match(name, identities)
             if best_canonical:
                 name_to_canonical[name] = best_canonical
                 continue
