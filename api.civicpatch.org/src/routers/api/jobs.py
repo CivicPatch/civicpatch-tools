@@ -56,7 +56,6 @@ class UpdateJobStatusResponse(BaseModel):
 
 
 class PostJobResultRequest(BaseModel):
-    request_id: str
     pull_request_url: Optional[str] = None
     data: Optional[Any] = None
 
@@ -205,9 +204,9 @@ def get_router(api_key_header):
         errors = []
 
         tasks = []
-        if request.data:
+        if request.data:  # Called from within civicpatch project
             tasks.append(("result", update_job_result(request_id, request.data)))
-        if request.pull_request_url:
+        if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (
                     "pull_request",
@@ -244,8 +243,6 @@ def get_router(api_key_header):
     ):
         start_time = time.time()
 
-        if not file:
-            raise HTTPException(status_code=400, detail="No file uploaded")
         if not file.filename:
             raise HTTPException(status_code=400, detail="No file name available")
 
@@ -310,7 +307,7 @@ def get_router(api_key_header):
             )
 
     @router.get(
-        "/people/{request_id}/status",
+        "/{request_id}/status",
         summary="Get job status and progress",
         description="Retrieve the progress of a specific job by its request ID.",
         response_model=GetJobStatusResponse,

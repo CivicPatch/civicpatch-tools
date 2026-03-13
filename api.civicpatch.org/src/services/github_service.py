@@ -20,7 +20,7 @@ from services import cache_service
 timeout = httpx.Timeout(60.0)
 
 GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
-GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
+GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64", "")
 GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
 GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
 OPEN_DATA_REPO_URL = os.getenv(
@@ -64,13 +64,14 @@ async def _fetch_github_token() -> tuple[str, float]:
 
 async def get_github_token():
     logger.debug(f"Retrieving GitHub token from cache with key: {CACHE_KEY}")
-    token = cache_service.get_cached(CACHE_KEY)
-    if token:
+    cached_token = await cache_service.get_cached(CACHE_KEY)
+    if cached_token and "token" in cached_token:
+        token = cached_token["token"]
         logger.debug("GitHub token found in cache.")
         return token
     logger.info("GitHub token not found in cache, fetching new token.")
     token, expires_at = await _fetch_github_token()
-    cache_service.set_cached(CACHE_KEY, token, expires_at)
+    await cache_service.set_cached(CACHE_KEY, {"token": token}, expires_at)
     return token
 
 
@@ -187,7 +188,7 @@ async def cached_github_get(
     Wrapper for GET requests to GitHub API with ETag-based caching.
     If return_json is True, returns parsed JSON, else returns response.text.
     """
-    cached = cache_service.get_cached(cache_key)
+    cached = await cache_service.get_cached(cache_key)
     cached_etag = cached.get("etag") if cached else None
     cached_content = cached.get("content") if cached else None
 
@@ -209,7 +210,7 @@ async def cached_github_get(
         etag = response.headers.get("etag")
         content = response.json() if return_json else response.text
         logger.debug(f"Fetched new data for {url} (etag: {etag})")
-        cache_service.set_cached(cache_key, {"content": content, "etag": etag})
+        await cache_service.set_cached(cache_key, {"content": content, "etag": etag})
         return content
     else:
         logger.error(f"Error fetching {url}: {response.status_code} {response.text}")
@@ -361,16 +362,7 @@ async def get_pull_request_file_yaml(
         return None
 
 
-def get_pull_request_number_from_url(pull_request_url: str) -> int | None:
-    match = re.search(r"/pull/(\d+)$", pull_request_url)
-    return int(match.group(1)) if match else None
-
-
-async def merge_pull_request(pull_request_url: str) -> bool:
-    pull_request_number = get_pull_request_number_from_url(pull_request_url)
-    if pull_request_number is None:
-        return False
-
+async def merge_pull_request(pull_request_number: str) -> bool:
     data = {
         "commit_title": "Approved in app",
         "commit_message": "Approved in app",

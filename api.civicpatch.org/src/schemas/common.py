@@ -1,28 +1,33 @@
-from pydantic import BaseModel
-from typing import Optional
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Optional
+
 import shared.utils.id_utils as id_utils
+from pydantic import BaseModel
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
+
 class RouteCategory(str, Enum):
-    PUBLIC        = "public"
+    PUBLIC = "public"
     AUTHENTICATED = "authenticated"
     TEAM_REQUIRED = "team_required"
-    SERVICE       = "service"
+    SERVICE = "service"
+
 
 class Role(str, Enum):
-    DEFAULT = "default"     
-    CONTRIBUTORS = "contributors" 
+    DEFAULT = "default"
+    CONTRIBUTORS = "contributors"
     MAINTAINERS = "maintainers"
     ADMINS = "admins"
+
 
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
     request_id: str = ""
     url: str
+    pull_request_number: str = ""
 
     def model_post_init(self, __context):
         try:
@@ -30,14 +35,20 @@ class PullRequest(BaseModel):
                 parts = id_utils.git_branch_to_parts(self.branch_name)
                 self.jurisdiction_ocdid = parts.get("jurisdiction_ocdid", "")
                 self.request_id = parts.get("request_id", "")
+            if self.url:
+                self.pull_request_number = self.url.split("/")[-1]
         except Exception as e:
-            print(f"git branch does not match jurisdiction id format: {self.branch_name}. Error: {e}")
+            print(
+                f"git branch does not match jurisdiction id format: {self.branch_name}. Error: {e}"
+            )
             self.jurisdiction_ocdid = ""
+
 
 class Jurisdiction(BaseModel):
     id: str
     name: str
     url: str | None
+
 
 class Identity(BaseModel):
     type: str  # "session", "service_key", "user_key"
@@ -45,6 +56,7 @@ class Identity(BaseModel):
     provider_user_id: str
     email: str | None
     teams: list[str] | None
+
 
 class PeopleJobHistory(BaseModel):
     request_id: str

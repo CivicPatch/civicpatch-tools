@@ -79,7 +79,6 @@ def get_router(api_key_header):
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
             jurisdiction_ocdid
         )
-        # people_data = await database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid)
 
         file_content = await github_service.get_pull_request_file_yaml(
             jurisdiction_ocdid=jurisdiction_ocdid,
@@ -127,7 +126,6 @@ def get_router(api_key_header):
         return {"branch_name": branch_name, "status": "success"}
 
     # ── Pull Requests: Batch Data ────────────
-
     @router.get(
         "/with-data",
         summary="Batch get pull request details and data",
@@ -174,15 +172,15 @@ def get_router(api_key_header):
         }
 
     # -- Pull Requests: Merge Pull Request ---
-    @router.post("/merge", include_in_schema=False)
+    @router.post("/{pull_request_number}/merge", include_in_schema=False)
     async def merge_pull_request_endpoint(
-        pull_request_url: str,
+        pull_request_number: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
         _github_response = await github_service.merge_pull_request(
-            pull_request_url=pull_request_url
+            pull_request_number=pull_request_number,
         )
         if not _github_response:
             return JSONResponse(

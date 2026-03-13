@@ -101,7 +101,7 @@ def get_router(is_production: bool) -> APIRouter:
     ):
         redirect_url = redirect if is_safe_redirect(redirect) else "/"
         response = RedirectResponse(url=redirect_url)
-        session_service.clear_session_cookies(
+        await session_service.clear_session_cookies(
             response,
             provider=user.provider if user else None,
             provider_user_id=user.provider_user_id if user else None,
