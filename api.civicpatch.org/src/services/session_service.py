@@ -1,12 +1,13 @@
-import os
-import time
-import json
-import secrets
 import datetime
+import json
+import os
+import secrets
+import time
 from typing import List, Optional, cast
 
-from jose import jwt
 from fastapi.responses import Response
+from jose import jwt
+
 from stores import redis_store
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
@@ -20,11 +21,14 @@ SESSION_EXPIRY_DAYS = 1
 
 # --- Redis session store ---
 
+
 def _key(provider: str, provider_user_id: str) -> str:
     return f"{SESSION_PREFIX}{provider}:{provider_user_id}"
 
 
-def create_session(provider: str, provider_user_id: str, token: str, expires_at: float) -> None:
+def create_session(
+    provider: str, provider_user_id: str, token: str, expires_at: float
+) -> None:
     ttl = int(expires_at - time.time())
     if ttl <= 0:
         return
@@ -32,8 +36,8 @@ def create_session(provider: str, provider_user_id: str, token: str, expires_at:
     redis_store.set(_key(provider, provider_user_id), json.dumps(entry), ttl)
 
 
-def get_session(provider: str, provider_user_id: str) -> Optional[str]:
-    raw = redis_store.get(_key(provider, provider_user_id))
+async def get_session(provider: str, provider_user_id: str) -> Optional[str]:
+    raw = await redis_store.get(_key(provider, provider_user_id))
     if not raw:
         return None
     data = json.loads(raw)
@@ -42,23 +46,24 @@ def get_session(provider: str, provider_user_id: str) -> Optional[str]:
     return data["token"]
 
 
-def invalidate_session(provider: str, provider_user_id: str) -> None:
-    redis_store.delete(_key(provider, provider_user_id))
+async def invalidate_session(provider: str, provider_user_id: str) -> None:
+    await redis_store.delete(_key(provider, provider_user_id))
 
 
 # --- Cookie helpers ---
 
+
 def _get_cookie_params() -> dict:
-    if (IS_PRODUCTION):
+    if IS_PRODUCTION:
         return {"domain": COOKIE_INSTANCE_URL, "secure": True}
     return {"secure": False}
 
 
 def create_session_cookies(response: Response, openid, teams: List[str]) -> Response:
     """Create JWT + CSRF cookies and store session in Redis."""
-    expiration = datetime.datetime.now(
-        tz=datetime.timezone.utc
-    ) + datetime.timedelta(days=SESSION_EXPIRY_DAYS)
+    expiration = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(
+        days=SESSION_EXPIRY_DAYS
+    )
     expires_at = expiration.timestamp()
 
     token = jwt.encode(
@@ -110,10 +115,14 @@ def create_session_cookies(response: Response, openid, teams: List[str]) -> Resp
     return response
 
 
-def clear_session_cookies(response: Response, provider: Optional[str] = None, provider_user_id: Optional[str] = None) -> Response:
+async def clear_session_cookies(
+    response: Response,
+    provider: Optional[str] = None,
+    provider_user_id: Optional[str] = None,
+) -> Response:
     """Remove cookies and invalidate Redis session."""
     if provider and provider_user_id:
-        invalidate_session(provider, provider_user_id)
+        await invalidate_session(provider, provider_user_id)
 
     cookie_params = _get_cookie_params()
 

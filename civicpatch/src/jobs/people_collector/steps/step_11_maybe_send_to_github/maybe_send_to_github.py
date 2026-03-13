@@ -1,29 +1,35 @@
 import os
 import zipfile
 
-from jobs.people_collector.schemas import (
-    MaybeSendToGitHubStep, PeopleCollectorContext, WorkflowStatus
-)
-from utils import cost_utils, log_utils
 from shared.utils import id_utils
 from shared.utils.data_path_utils import (
-    get_data_source_path_for_jurisdiction_ocdid,
     get_data_file_path,
+    get_data_source_path_for_jurisdiction_ocdid,
 )
-from utils.request_utils import with_retry
+
 import services.civicpatch_api
+from jobs.people_collector.schemas import (
+    MaybeSendToGitHubStep,
+    PeopleCollectorContext,
+    WorkflowStatus,
+)
+from utils import cost_utils, log_utils
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 
-async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
+async def maybe_send_to_github(
+    context: PeopleCollectorContext,
+) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 11: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
-    API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
+    API_CIVICPATCH_ORG_URL = os.getenv(
+        "API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org"
+    )
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
@@ -63,11 +69,11 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
 
 def zip_files(request_id, jurisdiction_ocdid):
     data_municipality_file = get_data_file_path(jurisdiction_ocdid)
-    data_source_municipality_path = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
-
-    git_branch_name = id_utils.make_git_branch(
-        jurisdiction_ocdid, request_id
+    data_source_municipality_path = get_data_source_path_for_jurisdiction_ocdid(
+        jurisdiction_ocdid
     )
+
+    git_branch_name = id_utils.make_git_branch(jurisdiction_ocdid, request_id)
     zip_file_name = f"{git_branch_name}.zip"
     zip_file_path = os.path.join("crudder_data", zip_file_name)
 

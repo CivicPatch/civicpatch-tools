@@ -1,27 +1,30 @@
 import os
-import redis
 from typing import Optional
 
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+import redis.asyncio as redis
+
+REDIS_HOST = os.getenv("REDIS_HOST", "api_civicpatch_org_redis")
 
 redis_client = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
 
-# Cache Services 
+PUB_SUB_TIMEOUT = 1.0
 
-def get(key: str) -> Optional[str]:
+
+async def get(key: str) -> Optional[str]:
     """Get a value from Redis by key."""
     if not key:
         raise ValueError("Key cannot be empty")
-    
+
     try:
-        return redis_client.get(key)
+        return await redis_client.get(key)
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to get key '{key}': {str(e)}")
 
-def set(key: str, value: str, ttl: Optional[int] = None) -> None:
+
+async def set(key: str, value: str, ttl: Optional[int] = None) -> None:
     """
     Set a key-value pair in Redis.
-    
+
     Args:
         key: Redis key
         value: Value to store
@@ -29,71 +32,85 @@ def set(key: str, value: str, ttl: Optional[int] = None) -> None:
     """
     if not key:
         raise ValueError("Key cannot be empty")
-    
+
     try:
         if ttl is not None:
             if ttl <= 0:
                 raise ValueError("TTL must be a positive integer")
-            redis_client.set(key, value, ex=ttl)
+            await redis_client.set(key, value, ex=ttl)
         else:
-            redis_client.set(key, value)
+            await redis_client.set(key, value)
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to set key '{key}': {str(e)}")
 
-def delete(key: str) -> None:
+
+async def delete(key: str) -> None:
     """Delete a key from Redis."""
     if not key:
         raise ValueError("Key cannot be empty")
-    
+
     try:
-        redis_client.delete(key)
+        await redis_client.delete(key)
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to delete key '{key}': {str(e)}")
 
+
 # Pub/Sub Services
-def publish(channel: str, message: str) -> None:
+def pubsub():
+    return redis_client.pubsub()
+
+
+async def publish(channel: str, message: str) -> None:
     """Publish a message to a Redis pub/sub channel."""
     if not channel:
         raise ValueError("Channel cannot be empty")
-    
+
     try:
-        redis_client.publish(channel, message)
+        await redis_client.publish(channel, message)
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to publish to channel '{channel}': {str(e)}")
 
-def subscribe(channel: str):
+
+async def subscribe(channel: str):
     """Subscribe to a Redis pub/sub channel and yield messages."""
     if not channel:
         raise ValueError("Channel cannot be empty")
-    
+
     pubsub = redis_client.pubsub()
-    pubsub.subscribe(channel)
+    await pubsub.subscribe(channel)
     try:
-        for message in pubsub.listen():
+        async for message in pubsub.listen():
             if message["type"] == "message":
                 yield message["data"]
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to subscribe to channel '{channel}': {str(e)}")
     finally:
-        pubsub.unsubscribe(channel)
-        pubsub.close()
+        await pubsub.unsubscribe(channel)
+        await pubsub.close()
 
-def unsubscribe(channel: str) -> None:
+
+async def unsubscribe(channel: str) -> None:
     """Unsubscribe from a Redis pub/sub channel."""
     if not channel:
         raise ValueError("Channel cannot be empty")
-    
+
     try:
         pubsub = redis_client.pubsub()
-        pubsub.unsubscribe(channel)
-        pubsub.close()
+        await pubsub.unsubscribe(channel)
+        await pubsub.close()
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to unsubscribe from channel '{channel}': {str(e)}")
-    
-def get_message(ignore_subscribe_messages: bool = True, timeout: Optional[float] = None):
+
+
+async def get_message(
+    ignore_subscribe_messages: bool = True, timeout: Optional[float] = None
+):
     """Get a message from the Redis pub/sub channel."""
     try:
-        message = redis_client.pubsub().get_message(ignore_subscribe_messages=ignore_subscribe_messages, timeout=timeout)
+        message = await redis_client.pubsub().get_message(
+            ignore_subscribe_messages=ignore_subscribe_messages,
+            timeout=timeout or PUB_SUB_TIMEOUT,
+        )
         return message
     except redis.RedisError as e:
         raise RuntimeError(f"Failed to get message: {str(e)}")
