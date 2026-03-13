@@ -1,42 +1,40 @@
+import asyncio
+import logging
 import os
 from contextlib import asynccontextmanager
 
 from fastapi import (
+    Depends,
     FastAPI,
     Request,
-    Depends,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from schemas.common import Identity, RouteCategory, Role
-import asyncio
 
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
 import routers.api.data as api_data_router
+import routers.api.jobs as api_jobs_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
-import routers.api.jobs as api_jobs_router
 import routers.api.pull_requests as api_pull_requests_router
 import routers.api.user as api_user_router
-from routers.auth import get_router as auth_router
+import services.github_sync_service
 from database.database import (
+    close_pool,
     get_api_keys_for_user,
     get_api_usage_for_user,
-    get_user_details,
     get_pool,
-    close_pool,
+    get_user_details,
     user_is_approved,
 )
-from utils.auth_utils import require_route_access, get_optional_user
+from routers.auth import get_router as auth_router
+from schemas.common import Identity, Role, RouteCategory
 from services import pubsub_service
-import services.github_sync_service
-from fastapi.responses import StreamingResponse
-
-import logging
+from utils.auth_utils import get_optional_user, require_route_access
 
 # Set up logger at the top of your file
 logger = logging.getLogger(__name__)
@@ -47,12 +45,14 @@ from starlette.datastructures import URL
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
 
+
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
 def url_for(request: FastAPIRequest, name: str) -> URL:
     url = request.url_for(name)
     if request.scope.get("scheme") == "https":
         url = url.replace(scheme="https")
     return url
+
 
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
@@ -83,13 +83,11 @@ STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 if not all(
     [
         MAINTAINER_EMAIL,
-
         GITHUB_APP_ID,
         GITHUB_APP_CLIENT_ID,
         GITHUB_APP_CLIENT_SECRET,
         GITHUB_APP_PRIVATE_KEY_BASE64,
         GITHUB_APP_INSTALLATION_ID,
-
         CIVICPATCH_API_DB_URL,
         APP_ENVIRONMENT,
         DATABASE_HASH_KEY,
@@ -103,13 +101,11 @@ if not all(
         var
         for var, val in {
             "MAINTAINER_EMAIL": MAINTAINER_EMAIL,
-
             "GITHUB_APP_ID": GITHUB_APP_ID,
             "GITHUB_APP_CLIENT_ID": GITHUB_APP_CLIENT_ID,
             "GITHUB_APP_CLIENT_SECRET": GITHUB_APP_CLIENT_SECRET,
             "GITHUB_APP_PRIVATE_KEY_BASE64": GITHUB_APP_PRIVATE_KEY_BASE64,
             "GITHUB_APP_INSTALLATION_ID": GITHUB_APP_INSTALLATION_ID,
-
             "CIVICPATCH_API_DB_URL": CIVICPATCH_API_DB_URL,
             "APP_ENVIRONMENT": APP_ENVIRONMENT,
             "DATABASE_HASH_KEY": DATABASE_HASH_KEY,
@@ -130,12 +126,12 @@ is_production = APP_ENVIRONMENT.lower() == "production"
 
 @asynccontextmanager
 async def lifespan(app):
-    await get_pool()   # open on startup
+    await get_pool()  # open on startup
     await startup_tasks()
 
     yield
 
-    await close_pool() # close on shutdown
+    await close_pool()  # close on shutdown
 
 
 app = FastAPI(
@@ -168,14 +164,12 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_headers=["*"]    
+    allow_headers=["*"],
 )
 
+
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
-async def home(
-    request: Request,
-    user: Identity = Depends(get_optional_user)
-):
+async def home(request: Request, user: Identity = Depends(get_optional_user)):
     try:
         provider_user_id = user.provider_user_id
         api_keys = await get_api_keys_for_user(user.provider, provider_user_id)
@@ -202,31 +196,38 @@ async def home(
         },
     )
 
+
 app.include_router(
     api_admin_router.get_router(),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS]))],
+    dependencies=[
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS]))
+    ],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))] # public route for now
+    dependencies=[
+        Depends(require_route_access(RouteCategory.PUBLIC))
+    ],  # public route for now
 )
 
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))]
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 app.include_router(
     api_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
-    tags=["jobs"], 
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))]
+    tags=["jobs"],
+    dependencies=[
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))
+    ],
 )
 
 app.include_router(
@@ -239,24 +240,26 @@ app.include_router(
 # Allow you to create your api keys
 # Mostly for civicpatch users who need to contribute data
 app.include_router(
-    api_keys_router.get_router(), 
-    prefix="/api/internal/api_keys", 
+    api_keys_router.get_router(),
+    prefix="/api/internal/api_keys",
     tags=["api_keys"],
-    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))],
+    dependencies=[
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))
+    ],
 )
 
 app.include_router(
-    api_data_router.get_router(), 
-    prefix="/api/v1/data", 
+    api_data_router.get_router(),
+    prefix="/api/v1/data",
     tags=["data"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 app.include_router(
-    api_user_router.get_router(), 
-    prefix="/api/internal/user", 
+    api_user_router.get_router(),
+    prefix="/api/internal/user",
     tags=["user"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))],
 )
 
 app.include_router(
@@ -265,6 +268,7 @@ app.include_router(
     tags=["auth"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
+
 
 @app.get("/api/v1/me", tags=["auth"])
 async def get_me(user: Identity = Depends(get_optional_user)):
@@ -304,6 +308,7 @@ async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Reques
             "X-Accel-Buffering": "no",
         },
     )
+
 
 async def startup_tasks():
     print("Running startup tasks...")

@@ -132,7 +132,7 @@ def get_router(is_production: bool) -> APIRouter:
         )
 
         response = RedirectResponse(url=redirect_url, status_code=302)
-        session_service.create_session_cookies(response, openid, teams)
+        await session_service.create_session_cookies(response, openid, teams)
         return response
 
     return router
