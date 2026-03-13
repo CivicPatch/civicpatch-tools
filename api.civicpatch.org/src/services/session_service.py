@@ -26,14 +26,14 @@ def _key(provider: str, provider_user_id: str) -> str:
     return f"{SESSION_PREFIX}{provider}:{provider_user_id}"
 
 
-def create_session(
+async def create_session(
     provider: str, provider_user_id: str, token: str, expires_at: float
 ) -> None:
     ttl = int(expires_at - time.time())
     if ttl <= 0:
         return
     entry = {"token": token, "expires_at": expires_at}
-    redis_store.set(_key(provider, provider_user_id), json.dumps(entry), ttl)
+    await redis_store.set(_key(provider, provider_user_id), json.dumps(entry), ttl)
 
 
 async def get_session(provider: str, provider_user_id: str) -> Optional[str]:
@@ -59,7 +59,9 @@ def _get_cookie_params() -> dict:
     return {"secure": False}
 
 
-def create_session_cookies(response: Response, openid, teams: List[str]) -> Response:
+async def create_session_cookies(
+    response: Response, openid, teams: List[str]
+) -> Response:
     """Create JWT + CSRF cookies and store session in Redis."""
     expiration = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(
         days=SESSION_EXPIRY_DAYS
@@ -78,7 +80,7 @@ def create_session_cookies(response: Response, openid, teams: List[str]) -> Resp
     )
 
     # Store in Redis for server-side invalidation
-    create_session(openid.provider, str(openid.id), token, expires_at)
+    await create_session(openid.provider, str(openid.id), token, expires_at)
 
     cookie_params = _get_cookie_params()
 
