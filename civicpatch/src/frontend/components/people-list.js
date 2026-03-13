@@ -1,6 +1,6 @@
 import { component } from "haunted";
 import { html } from "lit-html";
-import { PersonImage } from "./person-image";
+import "./person-image.js";
 
 function PeopleList({ local = [] }) {
   const people = local;

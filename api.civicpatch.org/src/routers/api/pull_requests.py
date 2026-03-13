@@ -3,13 +3,16 @@ import logging
 from typing import Any, Dict, List
 
 import shared.utils.id_utils
+import yaml
 from fastapi import (
     APIRouter,
+    BackgroundTasks,
     Depends,
 )
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+import database.database
 import database.people
 import services.github_service as github_service
 from schemas.common import Identity, RouteCategory
@@ -98,9 +101,10 @@ def get_router(api_key_header):
 
     # ── Pull Requests: Update Data ───────────
 
-    @router.post("/data", include_in_schema=False)
+    @router.put("/data", include_in_schema=False)
     async def post_job_pull_request_data_endpoint(
         request: PostJobPullRequestDataRequest,
+        background_tasks: BackgroundTasks,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         user_name = user.email
@@ -112,9 +116,14 @@ def get_router(api_key_header):
         )
         _github_response = await github_service.update_pull_request_file(
             branch_name=branch_name,
-            file_path=file_path,
+            file_path=f"data/{file_path}.yml",
             new_data=request.data,
             commit_message=f"Data update by {user_name}",
+        )
+
+        # Update the results_json in the background, too
+        background_tasks.add_task(
+            database.database.update_job_result, request.request_id, request.data
         )
         if not _github_response:
             return JSONResponse(

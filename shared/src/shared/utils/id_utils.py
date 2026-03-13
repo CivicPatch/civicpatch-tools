@@ -1,6 +1,6 @@
-import uuid
 import re
-from datetime import datetime
+import uuid
+
 from shared.schemas import JurisdictionId
 from shared.utils import config_utils
 
@@ -8,9 +8,8 @@ KNOWN_PLACE_KEYS = ["place", "special_district"]
 
 
 def make_request_id():
-    date_str = datetime.utcnow().strftime("%Y-%m-%d")
-    short_id = str(uuid.uuid4())[:4]
-    return f"{date_str}-{short_id}"
+    return str(uuid.uuid4())
+
 
 def _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid: str) -> str:
     data_config = config_utils.get_data_config()
@@ -20,8 +19,9 @@ def _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid: str) -> str:
     for output_type, pattern in data_output_types.items():
         if re.search(pattern, jurisdiction_ocdid):
             return output_type
-    
+
     return "local"
+
 
 def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
     """
@@ -60,8 +60,10 @@ def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
             raise ValueError("Invalid jurisdiction type format: contains ':'")
 
         if "country" not in result or "state" not in result:
-            raise ValueError("Missing required jurisdiction components: country or state")
-        
+            raise ValueError(
+                "Missing required jurisdiction components: country or state"
+            )
+
         output_type = _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid)
 
         return JurisdictionId(
@@ -71,10 +73,12 @@ def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
             place_label=result["place_label"],
             place=result["place"],
             jurisdiction_type=jurisdiction_type,
-            output_type=output_type
+            output_type=output_type,
         )
     except Exception as e:
-        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_ocdid}, error: {e}") from e
+        raise ValueError(
+            f"Invalid jurisdiction ID format: {jurisdiction_ocdid}, error: {e}"
+        ) from e
 
 
 def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
@@ -102,6 +106,7 @@ def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
 
     return folder
 
+
 def jurisdiction_ocdid_to_slug(jurisdiction_ocdid: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly slug.
@@ -115,6 +120,7 @@ def jurisdiction_ocdid_to_slug(jurisdiction_ocdid: str) -> str:
         slug += f"county_{jurisdiction_ocdid_parts.county}__"
     slug += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
     return slug.lower()
+
 
 def make_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
     """
@@ -211,12 +217,11 @@ def git_branch_to_parts(branch: str) -> dict:
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
-    
+
     return {
         "request_id": parts[0],
-        "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1])
+        "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1]),
     }
-
 
 
 def state_name(jurisdiction_ocdid: str) -> str:
