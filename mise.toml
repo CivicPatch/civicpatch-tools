@@ -5,8 +5,8 @@ uv = "latest"
 
 [env]
 _.file = [
-    "civicpatch/.env",
-    "api.civicpatch.org/.env"
+    "../civicpatch.env",
+    "../api.civicpatch.org.env"
 ]
 
 [tasks.pytest-shared]

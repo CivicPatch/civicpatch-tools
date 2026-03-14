@@ -1,5 +1,5 @@
 [env]
-_.file = ".env"
+_.file = "../../civicpatch.env"
 PYTHONPATH = "./src"
 
 #[tasks.unit]
@@ -217,4 +217,3 @@ else:
 print(attr)
 "
 """
-

@@ -1,7 +1,33 @@
 services:
   api_civicpatch_org:
     container_name: api_civicpatch_org
-    env_file: .env
+    environment:
+      INSTANCE_URL: "http://localhost:8001"
+      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      MAINTAINER_EMAIL: "michelle@civicpatch.org"
+
+      REDIS_HOST: api_civicpatch_org_redis
+      JWT_SECRET_KEY: jwt-secret-key-here
+      DATABASE_HASH_KEY: database-hash-key
+      SERVICE_API_KEY: "service-api-key"
+
+      CIVICPATCH_API_DB_PASSWORD: "development_password"
+      CIVICPATCH_API_DB_URL: "postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"
+
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID}
+      GITHUB_APP_CLIENT_SECRET: ${GITHUB_APP_CLIENT_SECRET}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
+
+      GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}
+      GOOGLE_SHEETS_PRIVATE_KEY: ${GOOGLE_SHEETS_PRIVATE_KEY}
+      GOOGLE_SHEETS_CLIENT_EMAIL: ${GOOGLE_SHEETS_CLIENT_EMAIL}
+      GOOGLE_SHEETS_TOKEN_URI: ${GOOGLE_SHEETS_TOKEN_URI}
+
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
+      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
+      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
     build:
       context: ..
       dockerfile: api.civicpatch.org/Dockerfile
@@ -34,7 +60,7 @@ services:
   api_civicpatch_org_redis:
     image: redis:alpine
     expose:
-      - '6379'
+      - "6379"
     #ports:
     #  - '6379:6379'
     networks:
@@ -46,7 +72,7 @@ services:
       dockerfile: api.civicpatch.org/Dockerfile
       target: development
     ports:
-      - "8002:8001"  # Use a different port for the test service
+      - "8002:8001" # Use a different port for the test service
     volumes:
       - ./:/app
       - ../shared/src/shared:/app/src/shared:ro
@@ -67,7 +93,7 @@ services:
       STORAGE_ENDPOINT: http://localhost:9000
       STORAGE_ACCESS_KEY: test_storage_access_key
       STORAGE_SECRET_ACCESS_KEY: test_storage_secret_key
-    command: ["pytest", "--disable-warnings", "--maxfail=1", "--tb=short"]  # Run tests automatically
+    command: ["pytest", "--disable-warnings", "--maxfail=1", "--tb=short"] # Run tests automatically
 
   api_civicpatch_org_test_db:
     image: postgis/postgis:17-3.5
@@ -78,7 +104,7 @@ services:
     volumes:
       - test_pgdata:/var/lib/postgresql/data
     ports:
-      - "127.0.0.1:6001:5432"  # Use a different port for the test database
+      - "127.0.0.1:6001:5432" # Use a different port for the test database
     networks:
       - civicpatch_test_net
 
