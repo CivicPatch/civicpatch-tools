@@ -1,6 +1,6 @@
 [env]
 # _.file = ".deployment.env"
-_.file = ".env"
+_.file = "../../api.civicpatch.org.env"
 PYTHONPATH = "./src"
 
 [tasks.unit]
@@ -10,7 +10,7 @@ docker compose -f docker-compose.yml run --rm api_civicpatch_org_test pytest -vv
 
 [tasks.dev]
 run = """
-docker compose run --rm api_civicpatch_org 
+docker compose run --rm api_civicpatch_org
 """
 
 [tasks.containsh]
@@ -125,21 +125,21 @@ run = """
     curl -X POST "http://localhost:8001/api/v1/jobs/people/2026-01-15-ce61/result" \
       -H "Content-Type: application/json" \
       -H "Authorization: $CRUDDER_SHARED_TOKEN" \
-      -d '{"pull_request_url": "https://www.brandon.gov/"}' 
+      -d '{"pull_request_url": "https://www.brandon.gov/"}'
 """
 
 [tasks.get_job_status]
 run = """
     curl -X GET "http://localhost:8001/api/v1/jobs/people/2026-01-13-9fd0/status" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $CRUDDER_SHARED_TOKEN" 
+      -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
 [tasks.get_job]
 run = """
     curl -X GET "http://localhost:8001/api/v1/jobs/people/2026-01-15-ce61" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $CRUDDER_SHARED_TOKEN" 
+      -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
 [tasks.get_people]
