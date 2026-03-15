@@ -19,6 +19,11 @@ src/
   interfaces/
     api/            ← FastAPI app + routes
     cli/            ← CLI entrypoint
+  frontend/
+    css/styles.css  ← all styles
+    pages/          ← page-level web components
+    components/     ← shared web components
+    api.js          ← API calls
 tests/
   unit/
   integration/
@@ -52,3 +57,16 @@ Vanilla JS web components served by FastAPI.
 - **Framework:** Haunted (React-like hooks) + `lit-html`
 - **Bundler:** Rollup — `npm run build` (or `npm start` to watch)
 - **Entry:** `src/frontend/` — components in `components/`, Jinja2 templates in `templates/`
+
+### Styles
+
+- All styles go in `src/frontend/css/styles.css` — no inline styles, no per-component CSS files
+- Use Pico CSS variables (`--pico-*`) for colors, spacing, and typography — never hardcode hex values except where Pico has no equivalent
+- BEM-style class names scoped to the component: `.pr-card__header`, `.pr-card__merge-button`
+- Shared button variants share a base rule via grouped selector, then override per variant
+
+### Events
+
+- Child components communicate upward via `CustomEvent` with `bubbles: true`
+- Event names are camelCase: `onMerge`, `onClose`
+- The page-level component owns all async state and API calls; children only dispatch events

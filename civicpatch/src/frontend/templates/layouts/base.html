@@ -34,5 +34,8 @@
             type="module"
             src="{{ url_for('frontend', path='/build/bundle.js') }}"
         ></script>
-    </body>
+
+        {% if hot_reload is defined %}
+            {{ hot_reload.script(url_for('hot-reload')) | safe }}
+        {% endif %}
 </html>

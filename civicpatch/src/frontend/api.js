@@ -55,3 +55,15 @@ export const mergePullRequest = (pullRequestNumber) =>
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   });
+
+export const closePullRequest = (pullRequestNumber) =>
+  fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
+    credentials: "include",
+    method: "DELETE",
+    headers: {
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+  }).then((res) => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  });

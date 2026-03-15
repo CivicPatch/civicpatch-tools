@@ -371,6 +371,20 @@ async def get_pull_request_file_yaml(
         return None
 
 
+async def close_pull_request(pull_request_number: str) -> bool:
+    _, _, _, open_data_repo_url = _get_github_config()
+    async with httpx.AsyncClient() as client:
+        default_headers = await get_default_headers()
+        response = await client.patch(
+            f"{open_data_repo_url}/pulls/{pull_request_number}",
+            headers=default_headers,
+            json={"state": "closed"},
+        )
+        if response.status_code != 200:
+            logger.error(f"Failed to close PR {pull_request_number}: {response.status_code} {response.text}")
+        return response.status_code == 200
+
+
 async def merge_pull_request(pull_request_number: str) -> bool:
     data = {
         "commit_title": "Approved in app",

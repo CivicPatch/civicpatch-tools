@@ -10,6 +10,10 @@ services:
       GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
 
       # Defaults OK
+      CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-"development_password"}
+      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-"postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"}
+
+      COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8001"
       OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
       MAINTAINER_EMAIL: "michelle@civicpatch.org"
@@ -19,9 +23,6 @@ services:
       DATABASE_HASH_KEY: database-hash-key
       SERVICE_API_KEY: "service-api-key"
 
-      CIVICPATCH_API_DB_PASSWORD: "development_password"
-      CIVICPATCH_API_DB_URL: "postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"
-      COOKIE_INSTANCE_URL: ".civicpatch.org"
 
       # Optional; only for scraping
       GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}
@@ -63,10 +64,10 @@ services:
 
   api_civicpatch_org_redis:
     image: redis:alpine
-    expose:
-      - "6379"
-    #ports:
-    #  - '6379:6379'
+    #expose:
+    #  - "6379"
+    ports:
+      - '6379:6379'
     networks:
       - civicpatch_net
 

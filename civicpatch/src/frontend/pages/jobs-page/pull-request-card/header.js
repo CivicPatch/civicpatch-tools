@@ -1,7 +1,7 @@
 import { component } from "haunted";
 import { html } from "lit-html";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
-import { PULL_REQUEST_STATUS } from "../index.js";
+import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
 
 export function stateColor(state) {
   switch (state) {
@@ -20,43 +20,53 @@ const PullRequestCardHeader = ({ pr, state }) => {
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
-        detail: {
-          pullRequestNumber: pr.pull_request_number,
-        },
+        detail: { pullRequestNumber: pr.pull_request_number },
         bubbles: true,
       }),
     );
   };
+
+  const handleClose = (el) => {
+    el.currentTarget.dispatchEvent(
+      new CustomEvent("onClose", {
+        detail: { pullRequestNumber: pr.pull_request_number },
+        bubbles: true,
+      }),
+    );
+  };
+
+  const isTerminal =
+    state?.status === PULL_REQUEST_STATUS.MERGED ||
+    state?.status === PULL_REQUEST_STATUS.CLOSED ||
+    state?.status === PULL_REQUEST_STATUS.ERROR;
+
+  const isLoading = state?.status === PULL_REQUEST_STATUS.LOADING_MERGE || state?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+
   const renderMergeButton = () => {
     let buttonName = "Merge";
-    let disabled = false;
-    switch (state?.status) {
-      case PULL_REQUEST_STATUS.LOADING:
-        buttonName = "Merging...";
-        disabled = true;
-        break;
-      case PULL_REQUEST_STATUS.MERGED:
-        buttonName = "Merged";
-        disabled = true;
-        break;
-      case PULL_REQUEST_STATUS.ERROR:
-        buttonName = "Error";
-        disabled = true;
-        break;
-      default:
-        break;
-    }
+    if (state?.status === PULL_REQUEST_STATUS.LOADING_MERGE) buttonName = "Merging...";
+    else if (state?.status === PULL_REQUEST_STATUS.MERGED) buttonName = "Merged";
+    else if (state?.status === PULL_REQUEST_STATUS.ERROR) buttonName = "Error";
 
-    return html`<div class="header-item-right">
-      <button
-        class="pr-card__merge-button"
-        @click=${handleMerge}
-        ?disabled=${disabled}
-      >
-        ${buttonName}
-      </button>
-    </div>`;
+    return html`<button
+      class="btn-sm"
+      @click=${handleMerge}
+      ?disabled=${isTerminal || isLoading}
+    >${buttonName}</button>`;
   };
+
+  const renderCloseButton = () => {
+    let buttonName = "Close";
+    if (state?.status === PULL_REQUEST_STATUS.LOADING_CLOSE) buttonName = "Closing...";
+    else if (state?.status === PULL_REQUEST_STATUS.CLOSED) buttonName = "Closed";
+    else if (state?.status === PULL_REQUEST_STATUS.ERROR) buttonName = "Error";
+
+    return html`<button
+      class="destructive btn-sm"
+      @click=${handleClose}
+      ?disabled=${isTerminal || isLoading}
+    >${buttonName}</button>`;
+  }
 
   return html` <div class="pr-card__header">
     <div class="header-item-left">
@@ -83,7 +93,9 @@ const PullRequestCardHeader = ({ pr, state }) => {
         Detail
       </a>
     </div>
-    ${renderMergeButton()}
+    <div class="header-item-right">
+      ${renderCloseButton()} ${renderMergeButton()}
+    </div>
   </div>`;
 };
 
