@@ -1,10 +1,11 @@
-import os
 import requests
+from civicpatch_environment import get_env_vars
 
 async def search(logger, search_query, site_search=None):
     GOOGLE_SEARCH_ENDPOINT = "https://www.googleapis.com/customsearch/v1"
-    api_key = os.getenv("GOOGLE_SEARCH_TOKEN")
-    search_engine_id = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
+    env = get_env_vars()
+    api_key = env.get("GOOGLE_SEARCH_TOKEN")
+    search_engine_id = env.get("GOOGLE_SEARCH_ENGINE_ID")
 
     if not api_key or not search_engine_id:
         raise ValueError("Google Search API key or search engine ID not set in environment variables.")

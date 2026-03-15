@@ -1,4 +1,3 @@
-import os
 import time
 import instructor
 import openai
@@ -7,6 +6,7 @@ from typing import List, Dict, Any
 from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
+from civicpatch_environment import get_env_vars
 
 MAX_RETRIES = 5
 BASE_URL = "https://api.together.xyz/v1"
@@ -148,7 +148,7 @@ def run_prompt(
     logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running Together AI prompt: {prompt}")
     logger.debug(f"Prompt: \n{prompt}")
-    api_key = os.getenv("TOGETHER_AI_TOKEN")
+    api_key = get_env_vars().get("TOGETHER_AI_TOKEN")
     if not api_key:
         raise ValueError("TOGETHER_AI_TOKEN is not set")
 

@@ -11,7 +11,7 @@ class TestGetRoleAliasMap(unittest.TestCase):
             {"role": ["Council Member"], "aliases": ["CM", "Board Member"]}
         ]
 
-        result = get_role_alias_map("mayor_council")
+        result = get_role_alias_map()
         expected = {
             "mayor": "Mayor",
             "head of city": "Mayor",
@@ -26,7 +26,7 @@ class TestGetRoleAliasMap(unittest.TestCase):
     def test_empty_configuration(self, mock_get_role_configs):
         mock_get_role_configs.return_value = []
 
-        result = get_role_alias_map("mayor_council")
+        result = get_role_alias_map()
         self.assertEqual(result, {})
 
     @patch('shared.utils.config_utils.get_role_configs')
@@ -35,7 +35,7 @@ class TestGetRoleAliasMap(unittest.TestCase):
             {"role": ["Mayor"], "aliases": ["Head of City"]}
         ]
 
-        result = get_role_alias_map("mayor_council")
+        result = get_role_alias_map()
         self.assertEqual(result["mayor"], "Mayor")
         self.assertEqual(result["head of city"], "Mayor")
         self.assertEqual(result["HEAD OF CITY".lower()], "Mayor")
@@ -46,7 +46,7 @@ class TestGetRoleAliasMap(unittest.TestCase):
             {"role": ["Mayor"], "aliases": ["Head of City", "City Leader", "Chief"]}
         ]
 
-        result = get_role_alias_map("mayor_council")
+        result = get_role_alias_map()
         self.assertEqual(result["head of city"], "Mayor")
         self.assertEqual(result["city leader"], "Mayor")
         self.assertEqual(result["chief"], "Mayor")

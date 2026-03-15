@@ -1,6 +1,5 @@
 import argparse
 import asyncio
-import os
 import sys
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
@@ -9,9 +8,7 @@ from interfaces.schemas import (
 from jobs.engine import WorkflowError
 from jobs.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
-
-API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL")
-SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
+from civicpatch_environment import get_env_vars
 
 
 async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):

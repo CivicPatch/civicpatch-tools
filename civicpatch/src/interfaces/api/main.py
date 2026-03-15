@@ -11,6 +11,8 @@ from fastapi import Request as FastAPIRequest
 from starlette.datastructures import URL
 FORWARDED_RESPONSE_HEADERS = {"content-type", "cache-control", "etag", "last-modified", "location"}
 
+import civicpatch_environment as environment
+
 
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
 def url_for(request: FastAPIRequest, name: str) -> URL:
@@ -21,8 +23,6 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 
 from interfaces.api.routes.backend import get_router as get_backend_router
 from interfaces.api.routes.frontend import get_router as get_frontend_router
-
-API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://api_civicpatch_org:8001")
 
 @asynccontextmanager
 async def lifespan(app):
@@ -35,8 +35,7 @@ app = FastAPI(
 )
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
-civicpatch_env = os.getenv("CIVICPATCH_ENV", "development")
-is_production = civicpatch_env == "production"
+is_production = os.getenv("CIVICPATCH_ENV") == "production"
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["is_production"] = is_production
@@ -56,6 +55,9 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
     methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
 )
 async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
+    env = environment.get_env_vars()
+    API_CIVICPATCH_ORG_URL = env["API_CIVICPATCH_ORG_URL"]
+
     method = request.method
     url = f"{API_CIVICPATCH_ORG_URL}/api/v1/{path}"
     headers = dict(request.headers)
