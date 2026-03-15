@@ -1,17 +1,29 @@
 # civicpatch-tools
 
-Set of projects that support the collection of elected municipal officials across
-the United States.
+A collection of tools and projects supporting the collection, processing, and publication of data on elected municipal officials across the United States.
 
-To see the entire set of data, check the [open-data](https://github.com/CivicPatch/open-data/) repo.
+To view the full dataset, see the [open-data](https://github.com/CivicPatch/open-data/) repository.
+
+## Table of Contents
+
+- [Description](#description)
+- [Projects](#projects)
+- [Summary](#summary)
+- [Development](#development)
+- [Testing](#testing)
+- [License](#license)
+- [Contact](#contact)
+
+## Description
+
+This repository contains supporting infrastructure for the CivicPatch initiative, which aims to make information about municipal officials more accessible and transparent. It includes scrapers, APIs, and automation for data collection and publication.
 
 ## Projects
 
-- [civicpatch](./civicpatch/README.md)
-  The main project. Scrapes websites for contact information on elected officials.
-  Scrape jobs are run on either GitHub Actions or by volunteers running scrapes on their own servers.
-- [api.civicpatch.org](./api.civicpatch.org/README.md)
-  Helper project that sits civicpatch volunteer servers & GitHub Actions.
+- [civicpatch](./civicpatch/README.md)  
+  The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
+- [api.civicpatch.org](./api.civicpatch.org/README.md)  
+  Helper project that coordinates between volunteer servers, GitHub Actions, and the open-data repository.
 
 ## Summary
 
@@ -19,11 +31,9 @@ To see the entire set of data, check the [open-data](https://github.com/CivicPat
 graph TD
     %% Trigger Sources
     A1[CivicPatch Org<br/>GitHub Actions Scheduled<br/>Top most populous municipalities in a specific state] 
-    B1[Volunteer Servers<br/>On-demand]
     
     %% civicpatch servers with internal pipeline
     A1 --> CP1[civicpatch server]
-    B1 --> CP2[civicpatch server]
     
     subgraph "run pipeline job"
         SCRAPE[Web Scraping] --> S[Municipal Websites<br/>Contact Info]
@@ -44,36 +54,54 @@ graph TD
     
     %% Data consumers
     DATA --> DC[Data Consumers<br/>OpenStates, ??, ??]
-    
-    %% Styling
-    classDef orgType fill:#e8f5e8
-    classDef volunteerType fill:#fff3e0
-    classDef serverType fill:#e1f5fe
-    classDef dataStore fill:#f3e5f5
-    classDef service fill:#e8f5e8
-    classDef source fill:#fff3e0
-    classDef pipeline fill:#f0f8ff
-    
-    class A1 orgType
-    class B1 volunteerType
-    class CP1,CP2 serverType
-    class OD,DATA dataStore
-    class C service
-    class S source
-    class SCRAPE,PROCESS,ZIP pipeline
 ```
 
 ## Development
 
 ### Requirements
 
-- Docker
-  - You will need this to run anything here. Tested on OSX, should work on Linux, might work
-  on Windows but you may need to do extra tweaking with user permissions.
-- [mise](https://mise.jdx.dev/getting-started.html)
-  - Under each project there will be mise.toml files that should make development easier (test scripts, starting projects, etc).
+- Docker (required for running services; tested on OSX)
+- [mise](https://mise.jdx.dev/getting-started.html) (for managing environments and scripts)
+  - `brew install openssl readline` (for postgres tool)
 
-### Steps
-1. Run `mise install` to set up your environment.
-2. Run `pre-commit install` to set up gitleaks.
-3. Go into individual projects (civicpatch, mainly) to set up relevant .env files
+### Setup
+
+1. Run the folllowing:
+```sh
+mise install
+mise setup
+```
+2. Set up environment variables for civicpatch as needed.
+  Note: you can skip this step if you don't want to run scrapes.
+  2.a. Reference the [docker-compose.yml](./civicpatch/docker-compose.yml) file for the variables
+  2.b. Create a new [../civicpatch.env](../civicpatch.env) file with variables as needed.
+        (Alternatively, if not using mise, ensure the appropriate environment variables are set in your environment)
+3. Set up environment variables for api.civicpatch.org as needed.
+  3.a. Reference the [docker-compose.yml](./api.civicpatch.org//docker-compose.yml) file for the variables. Contact maintainer for github app keys at unified.
+  3.b. Create a new [../api.civicpatch.org.env](../api.civicpatch.org.env) file with variables as needed.
+        (Alternatively, if not using mise, ensure the appropriate environment variables are set in your environment)
+4. Run `docker compose up`
+
+## Testing
+
+- Each project contains its own test suite.
+
+### civicpatch
+
+```sh
+mise test-cp
+```
+
+### api.civicpatch.org
+
+```sh
+mise test-api
+```
+
+## License
+
+[MIT License](LICENSE.txt)
+
+## Contact
+
+For questions or contributions, open an issue or contact the maintainers via GitHub.

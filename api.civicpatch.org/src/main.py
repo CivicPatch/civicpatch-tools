@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
+from environment import get_env_vars
 
 from fastapi import (
     Depends,
@@ -56,26 +57,28 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
-INSTANCE_URL = os.getenv("INSTANCE_URL", "http://localhost:8001")
+env = get_env_vars()
 
-GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
-GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
-GITHUB_APP_CLIENT_SECRET = os.getenv("GITHUB_APP_CLIENT_SECRET")
-GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
-GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
+INSTANCE_URL = env("INSTANCE_URL", "http://localhost:8001")
+
+GITHUB_APP_ID = env("GITHUB_APP_ID")
+GITHUB_APP_CLIENT_ID = env("GITHUB_APP_CLIENT_ID")
+GITHUB_APP_CLIENT_SECRET = env("GITHUB_APP_CLIENT_SECRET")
+GITHUB_APP_PRIVATE_KEY_BASE64 = env("GITHUB_APP_PRIVATE_KEY_BASE64")
+GITHUB_APP_INSTALLATION_ID = env("GITHUB_APP_INSTALLATION_ID")
 
 GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
-CIVICPATCH_API_DB_URL = os.getenv("CIVICPATCH_API_DB_URL")
+CIVICPATCH_API_DB_URL = env("CIVICPATCH_API_DB_URL")
 
-MAINTAINER_EMAIL = os.getenv("MAINTAINER_EMAIL")
-APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
-DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
+MAINTAINER_EMAIL = env("MAINTAINER_EMAIL")
+APP_ENVIRONMENT = env("APP_ENVIRONMENT")
+DATABASE_HASH_KEY = env("DATABASE_HASH_KEY")
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+JWT_SECRET_KEY = env("JWT_SECRET_KEY")
 
-STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
-STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
-STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
+STORAGE_ENDPOINT = env("STORAGE_ENDPOINT")
+STORAGE_ACCESS_KEY_ID = env("STORAGE_ACCESS_KEY_ID")
+STORAGE_SECRET_ACCESS_KEY = env("STORAGE_SECRET_ACCESS_KEY")
 
 # db_connection = sqlite3.connect("data/database.db")
 # db_cursor = db_connection.cursor()

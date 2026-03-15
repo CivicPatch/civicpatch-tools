@@ -2,8 +2,16 @@ services:
   api_civicpatch_org:
     container_name: api_civicpatch_org
     environment:
+      # Required
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID}
+      GITHUB_APP_CLIENT_SECRET: ${GITHUB_APP_CLIENT_SECRET}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
+
+      # Defaults OK
       INSTANCE_URL: "http://localhost:8001"
-      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
       MAINTAINER_EMAIL: "michelle@civicpatch.org"
 
       REDIS_HOST: api_civicpatch_org_redis
@@ -14,12 +22,7 @@ services:
       CIVICPATCH_API_DB_PASSWORD: "development_password"
       CIVICPATCH_API_DB_URL: "postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"
 
-      GITHUB_APP_ID: ${GITHUB_APP_ID}
-      GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID}
-      GITHUB_APP_CLIENT_SECRET: ${GITHUB_APP_CLIENT_SECRET}
-      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
-      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
-
+      # Optional; only for scraping
       GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}
       GOOGLE_SHEETS_PRIVATE_KEY: ${GOOGLE_SHEETS_PRIVATE_KEY}
       GOOGLE_SHEETS_CLIENT_EMAIL: ${GOOGLE_SHEETS_CLIENT_EMAIL}
