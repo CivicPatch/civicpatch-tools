@@ -1,12 +1,9 @@
 import os
 import psycopg
 from psycopg.rows import dict_row
+from environment import get_env_settings
 
 # CONFIG
-DATABASE_URL = os.getenv(
-    "CIVICPATCH_API_DB_URL",
-    "postgresql://civicpatch:development_password@crudder_db:5432/development_db",
-)
 MIGRATIONS_DIR = "database_operations/migrations"
 
 
@@ -81,12 +78,15 @@ def migrate_up(conn):
     print("✅ All migrations applied.")
 
 
+
 def main():
     import sys
 
     cmd = sys.argv[1] if len(sys.argv) > 1 else "up"
+    env = get_env_settings()
+    database_url = env["CIVICPATCH_API_DB_URL"]
 
-    with psycopg.connect(DATABASE_URL) as conn:
+    with psycopg.connect(database_url) as conn:
         if cmd == "up":
             migrate_up(conn)
         elif cmd == "down":

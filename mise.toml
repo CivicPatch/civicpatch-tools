@@ -2,6 +2,8 @@
 pre-commit = "latest"
 python = "3.12"
 uv = "latest"
+postgres = "17.3"
+redis = "latest"
 
 [env]
 _.file = [
@@ -9,10 +11,18 @@ _.file = [
     "../api.civicpatch.org.env"
 ]
 
+[tasks.setup]
+run = "mise install && pre-commit install && uv sync --all-packages"
+description = "Install all workspace dependencies"
+
 [tasks.pytest-shared]
 run = "uv run pytest"
 dir = "shared"
 
-[tasks.setup]
-run = "uv sync --all-packages"
-description = "Install all workspace dependencies"
+[tasks.test-cp]
+run = "uv run pytest tests/unit"
+dir = "civicpatch"
+
+[tasks.test-api]
+run = "uv run pytest"
+dir = "api.civicpatch.org"

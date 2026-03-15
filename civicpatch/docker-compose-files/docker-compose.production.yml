@@ -1,0 +1,29 @@
+services:
+  civicpatch:
+    environment:
+      API_URL: "http://localhost:8001"
+      API_CIVICPATCH_ORG_URL: ${API_CIVICPATCH_ORG_URL:-http://api_civicpatch_org:8001}
+      SERVICE_API_KEY: ${SERVICE_API_KEY:-service-api-key}
+
+      LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+      PIPELINE_RUN_COST_LIMIT: ${PIPELINE_RUN_COST_LIMIT:-0.20}
+
+      # Optional, only needed if you are scraping
+      GOOGLE_SEARCH_TOKEN: ${GOOGLE_SEARCH_TOKEN}
+      GOOGLE_SEARCH_ENGINE_ID: ${GOOGLE_SEARCH_ENGINE_ID}
+
+      GOOGLE_GEMINI_TOKEN: ${GOOGLE_GEMINI_TOKEN}
+      TOGETHER_AI_TOKEN: ${TOGETHER_AI_TOKEN}
+
+    init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
+    build:
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: production
+    # image: ghcr.io/civicpatch/civicpatch:latest
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./data_source:/app/data_source

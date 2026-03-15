@@ -7,7 +7,10 @@ from fastapi.templating import Jinja2Templates
 import database.database as database
 from utils.auth_utils import get_user
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+from environment import get_env_vars
+env = get_env_vars()
+
+JWT_SECRET_KEY = env["JWT_SECRET_KEY"]
 
 
 def get_router(templates: Jinja2Templates):

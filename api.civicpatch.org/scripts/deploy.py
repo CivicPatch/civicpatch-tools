@@ -3,12 +3,14 @@ import subprocess
 import sys
 import os
 import json
+from environment import get_env_vars
 
 SERVICE = "crudder"  # The main service to push
 
 # Make call to gitea api for workflow dispatch
 GITEA_API_URL = 'https://code.wizards.cafe/api/v1'
-GITEA_TOKEN = os.getenv('REMOTELAB_WORKFLOW_TOKEN')
+env = get_env_vars()
+GITEA_TOKEN = env.get('REMOTELAB_WORKFLOW_TOKEN')
 REPO_OWNER = 'witch'
 REPO_NAME = 'spellbook'
 WORKFLOW_FILE = f'deploy-{SERVICE}.yml'

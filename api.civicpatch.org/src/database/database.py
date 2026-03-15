@@ -5,6 +5,7 @@ import os
 import secrets
 import math
 from typing import List, cast, Optional, Any
+from environment import get_env_vars
 import shared.utils.id_utils
 from utils import hash_utils
 from schemas.requests import ServerDetail
@@ -19,12 +20,13 @@ logger = logging.getLogger(__name__)
 
 _pool: AsyncConnectionPool | None = None
 
-DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
+env = get_env_vars()
+DATABASE_HASH_KEY = env("DATABASE_HASH_KEY")
 
 async def get_pool() -> AsyncConnectionPool:
     global _pool
     if _pool is None:
-        db_url = os.getenv("CIVICPATCH_API_DB_URL")
+        db_url = env["CIVICPATCH_API_DB_URL"]
         if not db_url:
             raise RuntimeError("CIVICPATCH_API_DB_URL is not set")
         _pool = AsyncConnectionPool(db_url, open=False)

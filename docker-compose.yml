@@ -1,7 +1,7 @@
 services:
   civicpatch:
     extends:
-      file: civicpatch/docker-compose.development.yml
+      file: civicpatch/docker-compose.yml
       service: civicpatch
     networks:
       - civicpatch_net
@@ -19,7 +19,7 @@ services:
       - civicpatch_net
   civicpatch-frontend:
     extends:
-      file: civicpatch/docker-compose.development.yml
+      file: civicpatch/docker-compose.yml
       service: civicpatch-frontend
     networks:
       - civicpatch_net
@@ -33,6 +33,3 @@ services:
 networks:
   civicpatch_net:
     driver: bridge
-
-volumes:
-  crudder_pgdata:
