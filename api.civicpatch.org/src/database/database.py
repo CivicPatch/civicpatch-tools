@@ -20,10 +20,9 @@ logger = logging.getLogger(__name__)
 
 _pool: AsyncConnectionPool | None = None
 
-env = get_env_vars()
-DATABASE_HASH_KEY = env("DATABASE_HASH_KEY")
-
 async def get_pool() -> AsyncConnectionPool:
+    env = get_env_vars()
+    
     global _pool
     if _pool is None:
         db_url = env["CIVICPATCH_API_DB_URL"]
@@ -83,10 +82,11 @@ async def create_update_user(provider, provider_user_id, email, teams: List[str]
 
 async def create_api_key(provider, provider_user_id):
     pool = await get_pool()
+    env = get_env_vars()
 
     # Hash the API key before storing
     api_key = secrets.token_urlsafe(32)
-    api_key_hash = hash_utils.hash_string(api_key, cast(str, DATABASE_HASH_KEY))
+    api_key_hash = hash_utils.hash_string(api_key, cast(str, env["DATABASE_HASH_KEY"]))
     api_key_suffix = api_key[-4:]
 
     async with pool.connection() as conn:

@@ -14,12 +14,10 @@ from services import session_service
 
 logger = logging.getLogger(__name__)
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+import environment
+
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
 API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
-
-JWT_AUDIENCE = os.getenv("JWT_AUDIENCE")
-JWT_ISSUER = os.getenv("JWT_ISSUER")
 
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 
@@ -29,7 +27,8 @@ async def get_user(
     authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
 ) -> Identity:
-    service_api_key = os.getenv("SERVICE_API_KEY")
+    env = environment.get_env_vars()
+    service_api_key = env.get("SERVICE_API_KEY")
 
     token = None
     token_source = None
@@ -57,11 +56,6 @@ async def get_user(
             provider_user_id="service_api_key",
             email="service@civicpatch.org",
             teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS],
-        )
-
-    if not JWT_SECRET_KEY:
-        raise HTTPException(
-            status_code=500, detail="Server not configured to verify tokens"
         )
 
     try:
@@ -95,6 +89,11 @@ async def get_user_by_api_key(api_key: str) -> Identity:
 
 # Update Identity creation to use teams (list)
 async def get_user_by_cookie(request, token: str) -> Identity:
+    env = environment.get_env_vars()
+    JWT_SECRET_KEY = env["JWT_SECRET_KEY"]
+    JWT_AUDIENCE = env.get("JWT_AUDIENCE")
+    JWT_ISSUER = env.get("JWT_ISSUER")
+
     try:
         decode_kwargs = {"key": cast(str, JWT_SECRET_KEY), "algorithms": ["HS256"]}
         if JWT_AUDIENCE:

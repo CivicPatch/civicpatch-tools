@@ -21,6 +21,7 @@ REQUIRED_ENV_VARS = [
     "SERVICE_API_KEY",
     "CIVICPATCH_API_DB_PASSWORD",
     "CIVICPATCH_API_DB_URL",
+    "COOKIE_INSTANCE_URL",  # Only required in production, but we can just set it to .civicpatch.org in dev too for simplicity
 ]
 
 OPTIONAL_ENV_VARS = [

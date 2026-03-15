@@ -4,6 +4,7 @@ import time
 from typing import Optional, cast
 from urllib.parse import unquote, urlparse
 
+import environment
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from fastapi_sso import GithubSSO
@@ -13,23 +14,8 @@ from schemas.common import Identity
 from services import github_service, session_service
 from utils.auth_utils import get_optional_user
 
-INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
-GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
-GITHUB_APP_CLIENT_SECRET = os.getenv("GITHUB_APP_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
-APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
-is_production = APP_ENVIRONMENT.lower() == "production"
-
-if is_production:
-    ALLOWED_HOSTS = ["civicpatch.org", "test.civicpatch.org", "test-api.civicpatch.org"]
-    COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
-else:
-    ALLOWED_HOSTS = ["localhost"]
-
-
-def is_safe_redirect(url: str) -> bool:
+def is_safe_redirect(url: str, allowed_hosts: list) -> bool:
     """Check if the redirect URL is safe (relative URL or allowed host)."""
     if not url or "\x00" in url:
         return False
@@ -55,23 +41,31 @@ def is_safe_redirect(url: str) -> bool:
 
     hostname = parsed.hostname or ""
     # Use parsed.netloc-aware port check to avoid example.com:evil matching.
-    return hostname in ALLOWED_HOSTS
+    return hostname in allowed_hosts
 
 
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
-github_sso = GithubSSO(
-    client_id=GITHUB_APP_CLIENT_ID,
-    client_secret=GITHUB_APP_CLIENT_SECRET,
-    redirect_uri=GITHUB_CALLBACK_URL,
-    scope=[
-        "read:user",
-        "user:email",
-        "read:org",
-    ],  # Requesting access to read user info and org membership
-)
-
-
 def get_router(is_production: bool) -> APIRouter:
+    env = environment.get_env_vars()
+    instance_url = env.get("INSTANCE_URL", "http://127.0.0.1:8000")
+    github_callback_url = f"{instance_url}/api/v1/auth/github/callback"
+
+    if is_production:
+        allowed_hosts = ["civicpatch.org", "test.civicpatch.org", "test-api.civicpatch.org"]
+    else:
+        allowed_hosts = ["localhost"]
+
+    github_sso = GithubSSO(
+        client_id=env["GITHUB_APP_CLIENT_ID"],
+        client_secret=env["GITHUB_APP_CLIENT_SECRET"],
+        redirect_uri=github_callback_url,
+        scope=[
+            "read:user",
+            "user:email",
+            "read:org",
+        ],
+    )
+
     router = APIRouter()
 
     @router.get("/{provider}/login", include_in_schema=False)
@@ -84,7 +78,7 @@ def get_router(is_production: bool) -> APIRouter:
                     status_code=400, detail=f"Unsupported provider: {provider}"
                 )
 
-        if is_safe_redirect(redirect):
+        if is_safe_redirect(redirect, allowed_hosts):
             redirect_url = redirect
         else:
             redirect_url = "/"
@@ -99,7 +93,7 @@ def get_router(is_production: bool) -> APIRouter:
         redirect: str = "/",
         user: Optional[Identity] = Depends(get_optional_user),
     ):
-        redirect_url = redirect if is_safe_redirect(redirect) else "/"
+        redirect_url = redirect if is_safe_redirect(redirect, allowed_hosts) else "/"
         response = RedirectResponse(url=redirect_url)
         await session_service.clear_session_cookies(
             response,
@@ -122,7 +116,7 @@ def get_router(is_production: bool) -> APIRouter:
                 raise HTTPException(status_code=401, detail="Authentication failed")
             access_token = sso.access_token
 
-        redirect_url = state if is_safe_redirect(state) else "/"
+        redirect_url = state if is_safe_redirect(state, allowed_hosts) else "/"
         if access_token:
             teams = await github_service.get_teams(access_token)
         else:
