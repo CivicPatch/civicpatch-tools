@@ -134,21 +134,9 @@ const DataPanel = ({ data }) => {
     </div>`;
   }
 
-  const added = diffRows.filter((r) => r.type === "added").length;
-  const removed = diffRows.filter((r) => r.type === "removed").length;
-  const changed = diffRows.filter((r) => r.type === "changed").length;
-  const summaryParts = [
-    added && `+${added}`,
-    removed && `−${removed}`,
-    changed && `~${changed}`,
-  ]
-    .filter(Boolean)
-    .join("  ");
-
   return html`
     <div class="diff-panel">
       <div class="diff-panel__toolbar">
-        <span class="diff-panel__summary">${summaryParts}</span>
         ${unchangedRows.length > 0
           ? html` <button
               class="diff-panel__toggle"

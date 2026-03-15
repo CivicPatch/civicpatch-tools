@@ -3,11 +3,18 @@ import { component, useState, useEffect } from "haunted";
 import { fetchPullRequestsWithData, mergePullRequest, closePullRequest } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
+import "../../components/search-jurisdictions/select-state.js";
+
+const DEFAULT_STATE = "TX";
 
 function getPageFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const page = parseInt(params.get("page"), 10);
   return isNaN(page) || page < 1 ? 1 : page;
+}
+
+function getStateFromUrl() {
+  return new URLSearchParams(window.location.search).get("state") || DEFAULT_STATE;
 }
 
 function setPageInUrl(page) {
@@ -20,8 +27,10 @@ function JobsPage() {
   const [pullRequests, setPullRequests] = useState([]);
   const [pullRequestState, setPullRequestState] = useState({});
   const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(getPageFromUrl());
+  const [stateCode, setStateCode] = useState(getStateFromUrl());
   const [total, setTotal] = useState(0);
   const perPage = 10;
 
@@ -35,14 +44,14 @@ function JobsPage() {
     setLoading(true);
     setError(null);
 
-    fetchPullRequestsWithData(page, perPage)
+    fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase())
       .then((result) => {
         setPullRequests(result.data || []);
         setTotal(result.total || 0);
       })
       .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [page]);
+      .finally(() => { setLoading(false); setPageLoading(false); });
+  }, [page, stateCode]);
 
   const handleMerge = async (event) => {
     const pullRequestNumber = event.detail.pullRequestNumber;
@@ -93,68 +102,84 @@ function JobsPage() {
     }
   };
 
+  const handleStateChange = (e) => {
+    const newState = e.detail.state;
+    const params = new URLSearchParams(window.location.search);
+    params.set("state", newState);
+    params.set("page", 1);
+    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+    setStateCode(newState);
+    setPage(1);
+  };
+
   const goToPage = (newPage) => {
+    setPageLoading(true);
     setPageInUrl(newPage);
     setPage(newPage);
   };
 
   const totalPages = Math.ceil(total / perPage);
 
-  if (loading) return html`<div>Loading...</div>`;
-  if (error) return html`<div>Error: ${error}</div>`;
-
-  const prList =
-    pullRequests.length === 0
-      ? html`<p>No pull requests found.</p>`
-      : pullRequests.map((pr) => {
-          const pullRequestNumber = pr.details.pull_request_number;
-          return html`
-            <pr-card
-              @onMerge=${handleMerge}
-              @onClose=${handleClose}
-              .pr=${pr.details}
-              .state=${pullRequestState[pullRequestNumber]}
-              .data=${{
-                existing: pr.existing,
-                pull_request: pr.pull_request,
-              }}
-            ></pr-card>
-          `;
-        });
+  const prList = loading
+    ? html`<div>Loading...</div>`
+    : error
+      ? html`<div>Error: ${error}</div>`
+      : pullRequests.length === 0
+        ? html`<p>No pull requests found.</p>`
+        : pullRequests.map((pr) => {
+            const pullRequestNumber = pr.details.pull_request_number;
+            return html`
+              <pr-card
+                @onMerge=${handleMerge}
+                @onClose=${handleClose}
+                .pr=${pr.details}
+                .state=${pullRequestState[pullRequestNumber]}
+                .data=${{
+                  existing: pr.existing,
+                  pull_request: pr.pull_request,
+                }}
+              ></pr-card>
+            `;
+          });
 
   return html`
     <main>
       <section>
-        <h2>Pull Requests</h2>
+        <div class="jobs-page__filters">
+          <civ-select-state
+            .selected=${stateCode}
+            @state-change=${handleStateChange}
+          ></civ-select-state>
+        </div>
         <div style="display: flex; gap: 2rem; flex-direction: column;">
           ${prList}
         </div>
         <div
           style="margin-top:2rem; display:flex; gap:1rem; align-items:center;"
         >
-          ${page > 1
+          ${!pageLoading && page > 1
             ? html`<a
+                class="btn"
                 href="?page=${page - 1}"
                 @click=${(e) => {
                   e.preventDefault();
-                  if (page > 1) goToPage(page - 1);
+                  goToPage(page - 1);
                 }}
-                ?disabled=${page <= 1}
-                >Previous</a
+                >← Previous</a
               >`
             : null}
 
-          <span>Page ${page} of ${totalPages}</span>
+          ${!pageLoading ? html`<span class="jobs-page__page-counter">Page ${page} of ${totalPages}</span>` : null}
 
-          ${page < totalPages
-            ? html` <a
+          ${!pageLoading && page < totalPages
+            ? html`<a
+                class="btn"
                 href="?page=${page + 1}"
                 @click=${(e) => {
                   e.preventDefault();
-                  if (page < totalPages) goToPage(page + 1);
+                  goToPage(page + 1);
                 }}
-                ?disabled=${page >= totalPages}
-                >Next</a
+                >Next →</a
               >`
             : null}
         </div>

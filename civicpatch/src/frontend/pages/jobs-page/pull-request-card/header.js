@@ -16,7 +16,18 @@ export function stateColor(state) {
   }
 }
 
-const PullRequestCardHeader = ({ pr, state }) => {
+const renderStats = ({ added, removed, changed }) => {
+  if (!added && !removed && !changed) return "";
+  return html`
+    <span class="pr-card__stats">
+      ${added ? html`<span class="pr-card__stat pr-card__stat--added">+${added}</span>` : ""}
+      ${removed ? html`<span class="pr-card__stat pr-card__stat--removed">−${removed}</span>` : ""}
+      ${changed ? html`<span class="pr-card__stat pr-card__stat--changed">~${changed}</span>` : ""}
+    </span>
+  `;
+};
+
+const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
@@ -92,6 +103,9 @@ const PullRequestCardHeader = ({ pr, state }) => {
       >
         Detail
       </a>
+    </div>
+    <div class="header-item-center">
+      ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">
       ${renderCloseButton()} ${renderMergeButton()}

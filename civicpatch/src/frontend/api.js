@@ -33,16 +33,16 @@ export const updatePullRequestData = async (
   return response.json();
 };
 
-export const fetchPullRequestsWithData = (page, perPage) =>
-  fetch(
-    `${API_URL}/api/v1/pull_requests/with-data?page=${page}&per_page=${perPage}`,
-    {
-      credentials: "include",
-    },
-  ).then((res) => {
+export const fetchPullRequestsWithData = (page, perPage, stateCode) => {
+  const params = new URLSearchParams({ page, per_page: perPage });
+  if (stateCode) params.set("state_code", stateCode);
+  return fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
+    credentials: "include",
+  }).then((res) => {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   });
+};
 
 export const mergePullRequest = (pullRequestNumber) =>
   fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge`, {

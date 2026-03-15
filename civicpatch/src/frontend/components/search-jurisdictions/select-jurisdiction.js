@@ -1,10 +1,10 @@
 import { component, useEffect, useState, useRef } from "haunted";
 import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
+import "./select-state.js";
 
 function CivSelectJurisdiction() {
-  const { user, loading: authLoading, permissions } = useAuth();
-  const [states, setStates] = useState([]);
+  const { permissions } = useAuth();
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
   const [selectedState, setSelectedState] = useState("");
@@ -21,13 +21,6 @@ function CivSelectJurisdiction() {
     // Call the handler with the current selections
     handleInputChange(selectedState, selectedJurisdiction);
   }, [selectedState, selectedJurisdiction]);
-
-  useEffect(() => {
-    // Fetch states from backend proxy (no auth header needed)
-    fetch("/api/api_proxy/jurisdictions/states")
-      .then((res) => res.json())
-      .then((data) => setStates(data.data || []));
-  }, []);
 
   useEffect(() => {
     setJurisdictions([]);
@@ -91,18 +84,10 @@ function CivSelectJurisdiction() {
       style="grid-template-columns: 2fr; gap: 1rem;"
       onsubmit="return false;"
     >
-      <label for="state-select" class="visually-hidden">State:</label>
-      <select
-        id="state-select"
-        .value=${selectedState}
-        @change=${(e) => setSelectedState(e.target.value)}
-        required
-      >
-        <option value="">Select a state</option>
-        ${states.map(
-          (state) => html`<option value=${state}>${state}</option>`
-        )}
-      </select>
+      <civ-select-state
+        .selected=${selectedState}
+        @state-change=${(e) => setSelectedState(e.detail.state)}
+      ></civ-select-state>
       <civ-autocomplete-select
         id="jurisdiction-autocomplete"
         .disabled=${!selectedState}
