@@ -1,38 +1,54 @@
-# civicpatch AI Context
+# civicpatch — Project Context
 
-A pipeline tool for scraping and processing municipal government officials data, then submitting results to api.civicpatch.org.
+See root `AI_CONTEXT.md` for shared coding standards.
+
+## What this is
+
+A pipeline that scrapes and processes municipal government officials data, then submits results to `api.civicpatch.org`.
 
 ## Project layout
 
 ```
-src/          ← package root (installed as editable, no src. prefix needed)
+src/
+  jobs/people_collector/
+    steps/          ← pipeline steps step_00 through step_11
+    main.py         ← orchestrator
+  services/         ← external integrations (LLMs, civicpatch API, search)
+  domain/           ← core models
+  utils/
+  interfaces/
+    api/            ← FastAPI app + routes
+    cli/            ← CLI entrypoint
 tests/
   unit/
   integration/
-  prompts/    ← contracts + evals
-  factories/  ← test data builders
+  prompts/          ← LLM contracts + evals
+  factories/        ← test data builders
 ```
 
-Pipeline steps live in `src/jobs/people_collector/steps/`, numbered `step_00` through `step_11`.
+## Pipeline conventions
+
+- Each step is a directory (`step_NN_name/`) containing one primary function that takes a `PeopleCollectorContext` and returns a step result schema
+- Steps are pure where possible — side effects (LLM calls, HTTP) are isolated to service functions
+- `WorkflowLogger` is passed through the call stack; never instantiate a new one mid-pipeline
+- `shared` is importable directly: `from shared.utils import ...`
+
+## Environment
+
+- Env vars accessed via `civicpatch_environment.get_env_vars()` — never read `os.environ` directly in business logic
+- Docker compose sets all required vars with defaults for development
 
 ## Testing
 
 - Framework: pytest
-- Imports use the package root directly: `from services.civicpatch_api import ...` (no `src.` prefix)
 - Markers: `unit`, `integration`, `evals`, `evals_relevant`, `contracts`
-- `tests/factories/` contains builders for common test objects
+- `tests/factories/` contains builders — use them, don't build raw objects in tests
+- Run unit tests: `docker compose run --rm civicpatch_test pytest -m unit tests/unit`
 
 ## Frontend
 
-Vanilla JS web components served by FastAPI (Jinja2 templates + static files).
+Vanilla JS web components served by FastAPI.
 
-- **Framework:** [Haunted](https://github.com/matthewp/haunted) (React-like hooks for web components) + `lit-html` for rendering
+- **Framework:** Haunted (React-like hooks) + `lit-html`
 - **Bundler:** Rollup — `npm run build` (or `npm start` to watch)
-- **Entry:** `src/frontend/` — components in `components/`, pages in `templates/pages/`, Jinja2 templates in `templates/`
-- Hot reload is enabled in non-production via `arel`
-
-## Key conventions
-
-- Pipeline steps live in numbered directories (`step_00` → `step_11`) and are orchestrated by `jobs/people_collector/main.py`
-- `WorkflowLogger` writes to per-jurisdiction log files; pass it through the call stack rather than creating new instances
-- `shared` is a sibling workspace package (uv workspace), importable as `from shared.utils import ...`
+- **Entry:** `src/frontend/` — components in `components/`, Jinja2 templates in `templates/`

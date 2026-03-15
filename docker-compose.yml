@@ -33,3 +33,6 @@ services:
 networks:
   civicpatch_net:
     driver: bridge
+  
+volumes:
+  api_civicpatch_org_db_data:

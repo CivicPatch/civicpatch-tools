@@ -48,8 +48,8 @@ COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 RUN uv sync --package civicpatch --no-dev --frozen --no-install-project
 
 # Copy source
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src /app/src
 COPY --chown=civicpatch_user:civicpatch_user shared/src/shared /app/src/shared
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app
 
 # ==========================================
 # Stage: post-install
@@ -58,7 +58,7 @@ FROM image-base AS post-install
 
 RUN patchright install --with-deps chrome
 
-RUN uv run python -m spacy download en_core_web_md
+RUN python -m spacy download en_core_web_md
 
 USER civicpatch_user
 

@@ -33,8 +33,8 @@ COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 RUN uv sync --package api.civicpatch.org --no-dev --frozen --no-install-project
 
 # Copy source
-COPY shared/src/shared /app/src/shared
 COPY $PROJECT_NAME /app
+COPY shared/src/shared /app/src/shared
 
 RUN useradd -m -s /bin/bash civicpatch_user && \
     chown -R civicpatch_user:civicpatch_user /app && \
