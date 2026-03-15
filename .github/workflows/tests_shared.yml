@@ -5,6 +5,11 @@ on:
       - main
     paths:
       - "shared/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "shared/**"
 permissions:
   contents: read
 

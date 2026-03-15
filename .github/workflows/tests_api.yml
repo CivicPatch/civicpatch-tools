@@ -5,6 +5,11 @@ on:
       - main
     paths:
       - "api.civicpatch.org/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "api.civicpatch.org/**"
 permissions:
   contents: read
 

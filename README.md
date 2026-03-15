@@ -70,22 +70,26 @@ Still trying to figure this out! Email me at michelle@civicpatch.org.
 
 ### Setup
 
-1. Run the folllowing:
-```sh
-mise install
-mise setup
-```
-2. Set up environment variables for civicpatch as needed.
-  Note: you can skip this step if you don't want to run scrapes.
-  2.a. Reference the [docker-compose.yml](./civicpatch/docker-compose.yml) file for the variables
-  2.b. Create a new [../civicpatch.env](../civicpatch.env) file with variables as needed.
-        (Alternatively, if not using mise, ensure the appropriate environment variables are set in your environment)
-3. Set up environment variables for api.civicpatch.org as needed.
-  3.a. Reference the [docker-compose.yml](./api.civicpatch.org//docker-compose.yml) file for the variables. Contact maintainer for github app keys at unified.
-  3.b. Create a new [../api.civicpatch.org.env](../api.civicpatch.org.env) file with variables as needed.
-        (Alternatively, if not using mise, ensure the appropriate environment variables are set in your environment)
+1. Run the following:
+
+   ```sh
+   mise install
+   mise setup
+   ```
+
+2. Set up environment variables for **civicpatch** (optional — skip if you don't need to run scrapes):
+
+   - Reference [civicpatch/docker-compose.yml](./civicpatch/docker-compose.yml) for available variables
+   - Create `../civicpatch.env` with the variables you need
+
+3. Set up environment variables for **api.civicpatch.org** (contact the maintainer for GitHub App keys):
+
+   - Reference [api.civicpatch.org/docker-compose.yml](./api.civicpatch.org/docker-compose.yml) for available variables
+   - Create `../api.civicpatch.org.env` with the variables you need
+
 4. Run `docker compose up`
-  Projects should be available at `localhost:8000` and `localhost:8001`
+
+   Services will be available at `localhost:8000` (civicpatch) and `localhost:8001` (api).
 
 ## Testing
 
