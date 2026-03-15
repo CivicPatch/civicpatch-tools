@@ -98,13 +98,13 @@ Still trying to figure this out! Email me at michelle@civicpatch.org.
 ### civicpatch
 
 ```sh
-mise test-cp
+mise tcp
 ```
 
 ### api.civicpatch.org
 
 ```sh
-mise test-api
+mise tapi
 ```
 
 ## License

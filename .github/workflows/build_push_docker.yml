@@ -29,16 +29,10 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-packages
 
-      - name: Ensure writable data directories for Docker
+      - name: Run civicpatch tests
         run: |
-          mkdir -p data_source data
-          chmod -R 777 data_source data
+          uv run pytest civicpatch/tests/unit
 
-      - name: Run unit tests
-        working-directory: ./civicpatch
-        run: |
-          docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm unit tests/unit
-      
       - name: Run shared tests
         run: |
           uv run pytest shared/tests
