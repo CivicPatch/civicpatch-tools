@@ -1,15 +1,14 @@
 from decimal import Decimal
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class Person(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
     name: str
     jurisdiction_ocdid: str
-
-    class Config:
-        extra = "allow"
 
 
 class JobConfig(BaseModel):
