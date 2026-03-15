@@ -274,6 +274,43 @@ a.btn:active {
     background: var(--pico-muted-background);
 }
 
+/* ── Tabs ── */
+
+.pr-tabs {
+    margin-bottom: 1.5rem;
+}
+
+.pr-tabs__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.pr-tabs__link {
+    display: block;
+    padding: 0.45rem 0.9rem;
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.75rem;
+    text-decoration: none;
+    color: var(--pico-muted-color);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.pr-tabs__link:hover {
+    color: var(--pico-color);
+    text-decoration: none;
+}
+
+.pr-tabs__link.active {
+    color: var(--pico-primary);
+    border-bottom-color: var(--pico-primary);
+}
+
 /* ── Tables ── */
 
 table {
