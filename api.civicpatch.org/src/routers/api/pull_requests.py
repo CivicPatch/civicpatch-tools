@@ -142,11 +142,12 @@ def get_router(api_key_header):
     async def get_pull_requests_with_data(
         page: int = 1,
         per_page: int = 10,
+        state_code: str | None = None,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
-        pull_requests = await github_service.get_open_pull_requests()
+        pull_requests = await github_service.get_open_pull_requests(state_code=state_code)
         total = len(pull_requests)
         total_pages = (total + per_page - 1) // per_page
         start = (page - 1) * per_page
