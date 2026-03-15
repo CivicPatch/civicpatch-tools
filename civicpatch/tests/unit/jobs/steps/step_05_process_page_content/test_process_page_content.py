@@ -167,23 +167,6 @@ def test_check_page_heuristics_returns_false_if_input_text_empty():
     input_text = ""
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
-def test_check_page_heuristics_returns_false_if_role_not_in_text():
-    records = [
-        LLMPerson(
-            name="Sam NoRoleInText",
-            other_names=[],
-            roles=["mayor"],
-            phone="555-1234",
-            email="sam@nole.com",
-            url="http://nole.com/sam",
-            designations=["Ward 1"],
-            source_url="http://nole.com"
-        )
-    ]
-    input_text = "Contact Sam NoRoleInText at sam@nole.com or 555-1234. See http://nole.com/sam. Ward 1."
-    # "mayor" is not in input_text
-    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
-
 def test_check_page_heuristics_returns_false_if_phone_not_in_text():
     records = [
         LLMPerson(

@@ -1,5 +1,6 @@
 import os
 import zipfile
+from civicpatch_environment import get_env_vars
 
 from shared.utils import id_utils
 from shared.utils.data_path_utils import (
@@ -26,10 +27,9 @@ async def maybe_send_to_github(
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
-    SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
-    API_CIVICPATCH_ORG_URL = os.getenv(
-        "API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org"
-    )
+    env = get_env_vars()
+    SERVICE_API_KEY = env["SERVICE_API_KEY"]
+    API_CIVICPATCH_ORG_URL = env["API_CIVICPATCH_ORG_URL"]
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 

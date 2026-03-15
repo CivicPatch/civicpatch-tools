@@ -1,4 +1,3 @@
-import os
 import time
 import instructor
 import requests
@@ -7,6 +6,7 @@ from google import genai
 from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
+from civicpatch_environment import get_env_vars
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_TIMEOUT = 180  # seconds
@@ -36,7 +36,7 @@ async def run_prompt(
     logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
-    api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
+    api_key = get_env_vars().get("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")
 

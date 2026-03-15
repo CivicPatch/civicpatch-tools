@@ -2,10 +2,10 @@ import os
 from shared.utils import data_path_utils
 import threading
 from datetime import datetime
+from civicpatch_environment import get_env_vars
 
 _WORKFLOW_LOGGER_LOCK = threading.Lock()
 _WORKFLOW_LOG_FILES = {}
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 class WorkflowLogger:
     def __init__(self, jurisdiction_ocdid: str):
@@ -16,20 +16,20 @@ class WorkflowLogger:
     def _write(self, level: str, message: str):
         timestamp = datetime.now().isoformat()
         line = f"[{timestamp}] [{level.upper()}] {message}\n"
-        
+
         self.file.write(line)
         self.file.flush()
-        
+
         # Optionally log out to console
         if os.getenv("LOG_TO_CONSOLE", "true").lower() == "true":
             print(line, end="")
 
     def debug(self, message: str):
-        if LOG_LEVEL == "DEBUG":
+        if get_env_vars().get("LOG_LEVEL", "INFO").upper() == "DEBUG":
             self._write("DEBUG", message)
 
     def warning(self, message: str):
-        if LOG_LEVEL == "DEBUG":
+        if get_env_vars().get("LOG_LEVEL", "INFO").upper() == "DEBUG":
             self._write("WARNING", message)
     
     def info(self, message: str):

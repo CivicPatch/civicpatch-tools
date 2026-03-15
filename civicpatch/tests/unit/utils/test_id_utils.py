@@ -4,7 +4,6 @@ from shared.utils.id_utils import (  # Replace `your_module` with the actual mod
     jurisdiction_ocdid_to_folder,
     make_git_branch,
     slug_to_jurisdiction_ocdid,
-    git_branch_to_jurisdiction_ocdid,
 )
 
 pytestmark = pytest.mark.unit
@@ -103,26 +102,3 @@ def test_slug_to_jurisdiction_ocdid_invalid():
     slug = "invalid_slug_format"
     with pytest.raises(ValueError, match="Slug must start with 'state'."):
         slug_to_jurisdiction_ocdid(slug)
-
-
-# Tests for git_branch_to_jurisdiction_ocdid
-def test_git_branch_to_jurisdiction_ocdid():
-    branch = "2025-09-25-1a2b__state_wa__place_seattle__government"
-    expected = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-    assert git_branch_to_jurisdiction_ocdid(branch) == expected
-
-
-def test_git_branch_to_jurisdiction_ocdid_with_county():
-    branch = "2025-09-25-1a2b__state_il__county_dupage__place_naperville__government"
-    expected = (
-        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
-    )
-    assert git_branch_to_jurisdiction_ocdid(branch) == expected
-
-
-def test_git_branch_to_jurisdiction_ocdid_invalid():
-    branch = "invalid_branch_format"
-    with pytest.raises(
-        ValueError, match="Branch name format invalid: invalid_branch_format"
-    ):
-        git_branch_to_jurisdiction_ocdid(branch)

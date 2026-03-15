@@ -1,4 +1,3 @@
-import os
 from fastapi import (
     APIRouter,
     Form,
@@ -14,8 +13,7 @@ from shared.utils import id_utils
 import services.civicpatch_api as civicpatch_api
 import json
 import httpx
-
-API_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://localhost:8001")
+from civicpatch_environment import get_env_vars
 
 async def get_current_user(request: Request):
     data = await civicpatch_api.get_me(request)
@@ -40,7 +38,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request,
         user: dict = Depends(get_current_user)
     ):
-        missing = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
+        env = get_env_vars()
+        missing = [var for var in REQUIRED_ENV_VARS if not env.get(var)]
         return templates.TemplateResponse(
             "pages/index.html", {"request": request, "missing_env": missing, "user": user}
         )
