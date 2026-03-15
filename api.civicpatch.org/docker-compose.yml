@@ -55,7 +55,7 @@ services:
       POSTGRES_PASSWORD: development_password
       POSTGRES_DB: development_db
     volumes:
-      - crudder_pgdata:/var/lib/postgresql/data
+      - api_civicpatch_org_db_data:/var/lib/postgresql/data
     ports:
       - "127.0.0.1:6000:5432"
     networks:
@@ -99,22 +99,22 @@ services:
       STORAGE_SECRET_ACCESS_KEY: test_storage_secret_key
     command: ["pytest", "--disable-warnings", "--maxfail=1", "--tb=short"] # Run tests automatically
 
-  api_civicpatch_org_test_db:
-    image: postgis/postgis:17-3.5
-    environment:
-      POSTGRES_USER: civicpatch_test
-      POSTGRES_PASSWORD: test_password
-      POSTGRES_DB: test_db
-    volumes:
-      - test_pgdata:/var/lib/postgresql/data
-    ports:
-      - "127.0.0.1:6001:5432" # Use a different port for the test database
-    networks:
-      - civicpatch_test_net
+  #api_civicpatch_org_test_db:
+  #  image: postgis/postgis:17-3.5
+  #  environment:
+  #    POSTGRES_USER: civicpatch_test
+  #    POSTGRES_PASSWORD: test_password
+  #    POSTGRES_DB: test_db
+  #  volumes:
+  #    - test_pgdata:/var/lib/postgresql/data
+  #  ports:
+  #    - "127.0.0.1:6001:5432" # Use a different port for the test database
+  #  networks:
+  #    - civicpatch_test_net
 
 volumes:
-  crudder_pgdata:
-  test_pgdata:
+  api_civicpatch_org_db_data:
+  #test_pgdata:
 
 networks:
   civicpatch_net:

@@ -23,7 +23,7 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 - [civicpatch](./civicpatch/README.md)  
   The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
 - [api.civicpatch.org](./api.civicpatch.org/README.md)  
-  Helper project that coordinates between volunteer servers, GitHub Actions, and the open-data repository.
+  Coordinates data submissions between civicpatch servers and the open-data repo.
 
 ## Summary
 
@@ -56,6 +56,10 @@ graph TD
     DATA --> DC[Data Consumers<br/>OpenStates, ??, ??]
 ```
 
+## Contributing
+
+Still trying to figure this out! Email me at michelle@civicpatch.org.
+
 ## Development
 
 ### Requirements
@@ -81,6 +85,7 @@ mise setup
   3.b. Create a new [../api.civicpatch.org.env](../api.civicpatch.org.env) file with variables as needed.
         (Alternatively, if not using mise, ensure the appropriate environment variables are set in your environment)
 4. Run `docker compose up`
+  Projects should be available at `localhost:8000` and `localhost:8001`
 
 ## Testing
 

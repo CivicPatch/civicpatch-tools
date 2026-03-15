@@ -12,15 +12,13 @@ import services.github_service as github_service
 import logging
 import yaml
 
-from environment import get_env_vars
+import environment
 
 COST_BY_REQUEST_SHEET_NAME = "Cost By Request"
 LLMS_SHEET_NAME = "Cost LLMs"
 SEARCH_ENGINES_SHEET_NAME = "Cost Search Engines"
 STORAGE_SHEET_NAME = "Cost Storage"
 
-env = get_env_vars()
-STORAGE_ENDPOINT = env("STORAGE_ENDPOINT")
 INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 
 logger = logging.getLogger(__name__)
@@ -111,6 +109,9 @@ async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: Li
     Returns:
         list: The updated list of person dictionaries with image URLs.
     """
+    env = environment.get_env_vars()
+    STORAGE_ENDPOINT = env["STORAGE_ENDPOINT"]
+
     image_map_file = file_utils.find_file(debug_file_dir, "data_source/*/local/*/images/image_map.json")
     with open(image_map_file, "r") as f:
         image_map = json.load(f)

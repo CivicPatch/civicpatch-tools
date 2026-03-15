@@ -1,7 +1,7 @@
 import os
 import psycopg
 from psycopg.rows import dict_row
-from environment import get_env_settings
+import environment
 
 # CONFIG
 MIGRATIONS_DIR = "database_operations/migrations"
@@ -83,7 +83,7 @@ def main():
     import sys
 
     cmd = sys.argv[1] if len(sys.argv) > 1 else "up"
-    env = get_env_settings()
+    env = environment.get_env_vars()
     database_url = env["CIVICPATCH_API_DB_URL"]
 
     with psycopg.connect(database_url) as conn:
