@@ -57,74 +57,9 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
-env = get_env_vars()
-
-INSTANCE_URL = env("INSTANCE_URL", "http://localhost:8001")
-
-GITHUB_APP_ID = env("GITHUB_APP_ID")
-GITHUB_APP_CLIENT_ID = env("GITHUB_APP_CLIENT_ID")
-GITHUB_APP_CLIENT_SECRET = env("GITHUB_APP_CLIENT_SECRET")
-GITHUB_APP_PRIVATE_KEY_BASE64 = env("GITHUB_APP_PRIVATE_KEY_BASE64")
-GITHUB_APP_INSTALLATION_ID = env("GITHUB_APP_INSTALLATION_ID")
-
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
-CIVICPATCH_API_DB_URL = env("CIVICPATCH_API_DB_URL")
-
-MAINTAINER_EMAIL = env("MAINTAINER_EMAIL")
-APP_ENVIRONMENT = env("APP_ENVIRONMENT")
-DATABASE_HASH_KEY = env("DATABASE_HASH_KEY")
-
-JWT_SECRET_KEY = env("JWT_SECRET_KEY")
-
-STORAGE_ENDPOINT = env("STORAGE_ENDPOINT")
-STORAGE_ACCESS_KEY_ID = env("STORAGE_ACCESS_KEY_ID")
-STORAGE_SECRET_ACCESS_KEY = env("STORAGE_SECRET_ACCESS_KEY")
-
-# db_connection = sqlite3.connect("data/database.db")
-# db_cursor = db_connection.cursor()
-
-if not all(
-    [
-        MAINTAINER_EMAIL,
-        GITHUB_APP_ID,
-        GITHUB_APP_CLIENT_ID,
-        GITHUB_APP_CLIENT_SECRET,
-        GITHUB_APP_PRIVATE_KEY_BASE64,
-        GITHUB_APP_INSTALLATION_ID,
-        CIVICPATCH_API_DB_URL,
-        APP_ENVIRONMENT,
-        DATABASE_HASH_KEY,
-        JWT_SECRET_KEY,
-        STORAGE_ENDPOINT,
-        STORAGE_ACCESS_KEY_ID,
-        STORAGE_SECRET_ACCESS_KEY,
-    ]
-):
-    missing_vars = [
-        var
-        for var, val in {
-            "MAINTAINER_EMAIL": MAINTAINER_EMAIL,
-            "GITHUB_APP_ID": GITHUB_APP_ID,
-            "GITHUB_APP_CLIENT_ID": GITHUB_APP_CLIENT_ID,
-            "GITHUB_APP_CLIENT_SECRET": GITHUB_APP_CLIENT_SECRET,
-            "GITHUB_APP_PRIVATE_KEY_BASE64": GITHUB_APP_PRIVATE_KEY_BASE64,
-            "GITHUB_APP_INSTALLATION_ID": GITHUB_APP_INSTALLATION_ID,
-            "CIVICPATCH_API_DB_URL": CIVICPATCH_API_DB_URL,
-            "APP_ENVIRONMENT": APP_ENVIRONMENT,
-            "DATABASE_HASH_KEY": DATABASE_HASH_KEY,
-            "JWT_SECRET_KEY": JWT_SECRET_KEY,
-            "STORAGE_ENDPOINT": STORAGE_ENDPOINT,
-            "STORAGE_ACCESS_KEY_ID": STORAGE_ACCESS_KEY_ID,
-            "STORAGE_SECRET_ACCESS_KEY": STORAGE_SECRET_ACCESS_KEY,
-        }.items()
-        if not val
-    ]
-    print(f"Missing environment variables: {', '.join(missing_vars)}")
-    raise ValueError("One or more required environment variables are not set.")
+is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
-
-is_production = APP_ENVIRONMENT.lower() == "production"
 
 
 @asynccontextmanager
@@ -173,6 +108,7 @@ app.add_middleware(
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def home(request: Request, user: Identity = Depends(get_optional_user)):
+    env = get_env_vars()
     try:
         provider_user_id = user.provider_user_id
         api_keys = await get_api_keys_for_user(user.provider, provider_user_id)
@@ -194,7 +130,7 @@ async def home(request: Request, user: Identity = Depends(get_optional_user)):
             "api_keys": api_keys,
             "api_usage": api_usage,
             "approved_user": approved_user,
-            "maintainer_email": MAINTAINER_EMAIL,
+            "maintainer_email": env.get("MAINTAINER_EMAIL"),
             "user_details": user_details,
         },
     )

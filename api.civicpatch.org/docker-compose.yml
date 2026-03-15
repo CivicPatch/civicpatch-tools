@@ -21,6 +21,7 @@ services:
 
       CIVICPATCH_API_DB_PASSWORD: "development_password"
       CIVICPATCH_API_DB_URL: "postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"
+      COOKIE_INSTANCE_URL: ".civicpatch.org"
 
       # Optional; only for scraping
       GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}

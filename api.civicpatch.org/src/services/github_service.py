@@ -14,39 +14,42 @@ import jwt
 import shared.utils.id_utils
 import yaml
 
+import environment
+
 from schemas.common import PullRequest
 from services import cache_service
 
 timeout = httpx.Timeout(60.0)
 
-GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
-GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64", "")
-GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
-GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
-OPEN_DATA_REPO_URL = os.getenv(
-    "OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/open-data"
-)
 
-CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
+def _get_github_config():
+    env = environment.get_env_vars()
+    app_id = env["GITHUB_APP_ID"]
+    private_key = base64.b64decode(env["GITHUB_APP_PRIVATE_KEY_BASE64"]).decode()
+    installation_id = env["GITHUB_APP_INSTALLATION_ID"]
+    open_data_repo_url = env["OPEN_DATA_REPO_URL"]
+    return app_id, private_key, installation_id, open_data_repo_url
 
 logger = logging.getLogger(__name__)
 
 
 def _generate_jwt() -> str:
     logger.debug("Generating JWT for GitHub App authentication.")
+    app_id, private_key, _, _ = _get_github_config()
     now = int(time.time())
     return jwt.encode(
-        {"iat": now - 60, "exp": now + 600, "iss": GITHUB_APP_ID},
-        GITHUB_APP_PRIVATE_KEY,
+        {"iat": now - 60, "exp": now + 600, "iss": app_id},
+        private_key,
         algorithm="RS256",
     )
 
 
 async def _fetch_github_token() -> tuple[str, float]:
     logger.debug("Fetching new GitHub installation access token.")
+    _, _, installation_id, _ = _get_github_config()
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            f"https://api.github.com/app/installations/{GITHUB_APP_INSTALLATION_ID}/access_tokens",
+            f"https://api.github.com/app/installations/{installation_id}/access_tokens",
             headers={
                 "Authorization": f"Bearer {_generate_jwt()}",
                 "Accept": "application/vnd.github+json",
@@ -63,15 +66,17 @@ async def _fetch_github_token() -> tuple[str, float]:
 
 
 async def get_github_token():
-    logger.debug(f"Retrieving GitHub token from cache with key: {CACHE_KEY}")
-    cached_token = await cache_service.get_cached(CACHE_KEY)
+    _, _, installation_id, _ = _get_github_config()
+    cache_key = f"github:installation:{installation_id}"
+    logger.debug(f"Retrieving GitHub token from cache with key: {cache_key}")
+    cached_token = await cache_service.get_cached(cache_key)
     if cached_token and "token" in cached_token:
         token = cached_token["token"]
         logger.debug("GitHub token found in cache.")
         return token
     logger.info("GitHub token not found in cache, fetching new token.")
     token, expires_at = await _fetch_github_token()
-    await cache_service.set_cached(CACHE_KEY, {"token": token}, expires_at)
+    await cache_service.set_cached(cache_key, {"token": token}, expires_at)
     return token
 
 
@@ -159,9 +164,10 @@ async def trigger_github_data_intake_workflow(
         "Accept": "application/vnd.github+json",
     }
 
+    _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.post(
-            f"{OPEN_DATA_REPO_URL}/actions/workflows/data_intake.yml/dispatches",
+            f"{open_data_repo_url}/actions/workflows/data_intake.yml/dispatches",
             headers=headers,
             json=data,
         )
@@ -221,8 +227,9 @@ async def get_github_file_contents(
     github_file_path: str,
     ref: Optional[str] = None,
 ) -> str | None:
+    _, _, _, open_data_repo_url = _get_github_config()
     cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
-    url = f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
+    url = f"{open_data_repo_url}/contents/{github_file_path}"
     if ref:
         url += f"?ref={ref}"
     return await cached_github_get(
@@ -234,8 +241,9 @@ async def get_github_file_contents(
 async def get_open_pull_requests(
     jurisdiction_ocddid=None, page: int = 1, per_page: int = 100
 ) -> List[PullRequest]:
+    _, _, _, open_data_repo_url = _get_github_config()
     params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
-    url = f"{OPEN_DATA_REPO_URL}/pulls?{params}"
+    url = f"{open_data_repo_url}/pulls?{params}"
     cache_key = f"github:open_pull_requests:{page}:{per_page}"
     if jurisdiction_ocddid:
         cache_key = f"github:open_pull_requests:{jurisdiction_ocddid}:{page}:{per_page}"
@@ -278,11 +286,12 @@ async def update_pull_request_file(
     logger.info(
         f"Updating file '{file_path}' on branch '{branch_name}' via pull request."
     )
+    _, _, _, open_data_repo_url = _get_github_config()
     default_headers = await get_default_headers()
     headers = {
         **default_headers,
     }
-    contents_url = f"{OPEN_DATA_REPO_URL}/contents/{file_path}?ref={branch_name}"
+    contents_url = f"{open_data_repo_url}/contents/{file_path}?ref={branch_name}"
     async with httpx.AsyncClient(timeout=timeout) as client:
         contents_response = await client.get(contents_url, headers=headers)
         if contents_response.status_code != 200:
@@ -369,10 +378,11 @@ async def merge_pull_request(pull_request_number: str) -> bool:
         "merge_method": "squash",
     }
 
+    _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
         response = await client.put(
-            f"{OPEN_DATA_REPO_URL}/pulls/{pull_request_number}/merge",
+            f"{open_data_repo_url}/pulls/{pull_request_number}/merge",
             headers=default_headers,
             json=data,
         )

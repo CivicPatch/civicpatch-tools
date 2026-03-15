@@ -13,25 +13,26 @@ import json
 import utils.file_utils as file_utils
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
+import environment
 
 EXPIRATION_ONE_DAY_IN_SECONDS = 86400
 
-STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
-STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
-STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
-
-# TODO: Move to redis 
+# TODO: Move to redis
 _url_cache: dict[str, tuple[str, datetime]] = {}
 CACHE_TTL_SECONDS = 3600 * 12  # 12 hours (regenerate before expiry)
 
 def get_client():
-    if not all([STORAGE_ENDPOINT, STORAGE_ACCESS_KEY_ID, STORAGE_SECRET_ACCESS_KEY]):
+    env = environment.get_env_vars()
+    storage_endpoint = env["STORAGE_ENDPOINT"]
+    storage_access_key_id = env["STORAGE_ACCESS_KEY_ID"]
+    storage_secret_access_key = env["STORAGE_SECRET_ACCESS_KEY"]
+    if not all([storage_endpoint, storage_access_key_id, storage_secret_access_key]):
         missing_vars = [
             var
             for var, val in {
-                "STORAGE_ENDPOINT": STORAGE_ENDPOINT,
-                "STORAGE_ACCESS_KEY_ID": STORAGE_ACCESS_KEY_ID,
-                "STORAGE_SECRET_ACCESS_KEY": STORAGE_SECRET_ACCESS_KEY,
+                "STORAGE_ENDPOINT": storage_endpoint,
+                "STORAGE_ACCESS_KEY_ID": storage_access_key_id,
+                "STORAGE_SECRET_ACCESS_KEY": storage_secret_access_key,
             }.items()
             if not val
         ]
@@ -40,9 +41,9 @@ def get_client():
 
     return boto3.client(
         's3',
-        endpoint_url=STORAGE_ENDPOINT,
-        aws_access_key_id=STORAGE_ACCESS_KEY_ID,
-        aws_secret_access_key=STORAGE_SECRET_ACCESS_KEY,
+        endpoint_url=storage_endpoint,
+        aws_access_key_id=storage_access_key_id,
+        aws_secret_access_key=storage_secret_access_key,
         region_name="auto",
         config=Config(
             signature_version="s3v4", 
@@ -110,6 +111,8 @@ async def upload_file_to_storage(
         str: The URL of the uploaded file or the presigned URL if requested.
     """
     storage_client = get_client()
+    env = environment.get_env_vars()
+    STORAGE_ENDPOINT = env.get("STORAGE_ENDPOINT")
     
     try:
         # Open the file in binary read mode

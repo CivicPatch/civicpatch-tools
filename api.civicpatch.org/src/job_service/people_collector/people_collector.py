@@ -12,12 +12,15 @@ import services.github_service as github_service
 import logging
 import yaml
 
+from environment import get_env_vars
+
 COST_BY_REQUEST_SHEET_NAME = "Cost By Request"
 LLMS_SHEET_NAME = "Cost LLMs"
 SEARCH_ENGINES_SHEET_NAME = "Cost Search Engines"
 STORAGE_SHEET_NAME = "Cost Storage"
 
-STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
+env = get_env_vars()
+STORAGE_ENDPOINT = env("STORAGE_ENDPOINT")
 INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 
 logger = logging.getLogger(__name__)

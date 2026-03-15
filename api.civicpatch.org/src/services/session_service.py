@@ -9,11 +9,7 @@ from fastapi.responses import Response
 from jose import jwt
 
 from stores import redis_store
-
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
-APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT", "development")
-IS_PRODUCTION = APP_ENVIRONMENT.lower() == "production"
+import environment
 
 SESSION_PREFIX = "session:"
 SESSION_EXPIRY_DAYS = 1
@@ -54,8 +50,11 @@ async def invalidate_session(provider: str, provider_user_id: str) -> None:
 
 
 def _get_cookie_params() -> dict:
-    if IS_PRODUCTION:
-        return {"domain": COOKIE_INSTANCE_URL, "secure": True}
+    env = environment.get_env_vars()
+    app_environment = env.get("APP_ENVIRONMENT", "development")
+    is_production = app_environment.lower() == "production"
+    if is_production:
+        return {"domain": env.get("COOKIE_INSTANCE_URL", ".civicpatch.org"), "secure": True}
     return {"secure": False}
 
 
@@ -63,6 +62,8 @@ async def create_session_cookies(
     response: Response, openid, teams: List[str]
 ) -> Response:
     """Create JWT + CSRF cookies and store session in Redis."""
+    env = environment.get_env_vars()
+    jwt_secret_key = env["JWT_SECRET_KEY"]
     expiration = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(
         days=SESSION_EXPIRY_DAYS
     )
@@ -75,7 +76,7 @@ async def create_session_cookies(
             "sub": openid.id,
             "teams": teams,
         },
-        key=cast(str, JWT_SECRET_KEY),
+        key=cast(str, jwt_secret_key),
         algorithm="HS256",
     )
 
@@ -101,7 +102,7 @@ async def create_session_cookies(
         "nonce": secrets.token_urlsafe(8),
     }
     csrf_signed = jwt.encode(
-        csrf_payload, key=cast(str, JWT_SECRET_KEY), algorithm="HS256"
+        csrf_payload, key=cast(str, jwt_secret_key), algorithm="HS256"
     )
 
     response.set_cookie(

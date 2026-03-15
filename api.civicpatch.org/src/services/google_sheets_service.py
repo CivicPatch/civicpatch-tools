@@ -1,19 +1,15 @@
 import os
 from google.oauth2 import service_account
 import googleapiclient.discovery
-
-GOOGLE_SHEETS_SPREADSHEET_ID = os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID", "")
-GOOGLE_SHEETS_PRIVATE_KEY = os.getenv("GOOGLE_SHEETS_PRIVATE_KEY", "")
-GOOGLE_SHEETS_CLIENT_EMAIL = os.getenv("GOOGLE_SHEETS_CLIENT_EMAIL", "")
-GOOGLE_SHEETS_TOKEN_URI = os.getenv("GOOGLE_SHEETS_TOKEN_URI", "")
+import environment
 
 # https://developers.google.com/workspace/sheets/api/guides/values#append_values
 # https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets.values#resource-valuerange
 def update_spreadsheet(sheet_name, values):
-    if GOOGLE_SHEETS_SPREADSHEET_ID is None or GOOGLE_SHEETS_SPREADSHEET_ID == "":
+    env = environment.get_env_vars()
+    spreadsheet_id = env["GOOGLE_SHEETS_SPREADSHEET_ID"]
+    if spreadsheet_id is None or spreadsheet_id == "":
         raise ValueError("GOOGLE_SHEETS_SPREADSHEET_ID environment variable is not set.")
-
-    spreadsheet_id = GOOGLE_SHEETS_SPREADSHEET_ID
     service = get_service()
 
     result = service.spreadsheets().values().append(
@@ -26,21 +22,22 @@ def update_spreadsheet(sheet_name, values):
     num_rows_updated = result.get('updates').get('updatedRows')
     print(f"{sheet_name}: Number of rows updated: {num_rows_updated}")
 
-def get_credentials(): 
-    if os.getenv("GOOGLE_SHEETS_PRIVATE_KEY") is None or os.getenv("GOOGLE_SHEETS_PRIVATE_KEY") == "":
+def get_credentials():
+    env = environment.get_env_vars()
+    if env["GOOGLE_SHEETS_PRIVATE_KEY"] is None or env["GOOGLE_SHEETS_PRIVATE_KEY"] == "":
         raise ValueError("GOOGLE_SHEETS_PRIVATE_KEY environment variable is not set.")
 
-    if os.getenv("GOOGLE_SHEETS_CLIENT_EMAIL") is None or os.getenv("GOOGLE_SHEETS_CLIENT_EMAIL") == "":
+    if env["GOOGLE_SHEETS_CLIENT_EMAIL"] is None or env["GOOGLE_SHEETS_CLIENT_EMAIL"] == "":
         raise ValueError("GOOGLE_SHEETS_CLIENT_EMAIL environment variable is not set.")
-    
-    if os.getenv("GOOGLE_SHEETS_TOKEN_URI") is None or os.getenv("GOOGLE_SHEETS_TOKEN_URI") == "":
+
+    if env["GOOGLE_SHEETS_TOKEN_URI"] is None or env["GOOGLE_SHEETS_TOKEN_URI"] == "":
         raise ValueError("GOOGLE_SHEETS_TOKEN_URI environment variable is not set.")
 
     scopes =  ["https://www.googleapis.com/auth/spreadsheets"]
     account_info = {
-        "private_key": os.getenv("GOOGLE_SHEETS_PRIVATE_KEY"),
-        "client_email": os.getenv("GOOGLE_SHEETS_CLIENT_EMAIL"),
-        "token_uri": os.getenv("GOOGLE_SHEETS_TOKEN_URI"),
+        "private_key": env["GOOGLE_SHEETS_PRIVATE_KEY"],
+        "client_email": env["GOOGLE_SHEETS_CLIENT_EMAIL"],
+        "token_uri": env["GOOGLE_SHEETS_TOKEN_URI"],
     }
 
     credentials = service_account.Credentials.from_service_account_info(account_info, scopes=scopes)

@@ -22,30 +22,17 @@ import logging
 logger = logging.getLogger(__name__)
 import shared.utils.config_utils as config_utils
 
+import environment
+
 # Configuration
-CONFIG = {
-    "REPO_URL": "https://github.com/CivicPatch/open-data.git",
-    "REPO_PATH": Path("/app/git_data"),
-    "DATA_FILES_PATTERNS": [
-        "data/*/local/*.yml",
-        "data/*/counties/*.yml",
-    ],
-    "JURISDICTION_FILES_PATTERN": "data_source/**/jurisdictions_metadata.yml",
-    "MAP_FILES_PATTERN": "data/**/.maps/*.geojson",
-    "CIVICPATCH_API_DB_URL": os.getenv("CIVICPATCH_API_DB_URL"),
-}
-
-# Use config values throughout the file
-REPO_URL = CONFIG["REPO_URL"]
-REPO_PATH = CONFIG["REPO_PATH"]
-DATA_FILES_PATTERNS = CONFIG["DATA_FILES_PATTERNS"]
-JURISDICTION_FILES_PATTERN = CONFIG["JURISDICTION_FILES_PATTERN"]
-MAP_FILES_PATTERN = CONFIG["MAP_FILES_PATTERN"]
-CIVICPATCH_API_DB_URL = CONFIG["CIVICPATCH_API_DB_URL"]
-
-# Check for required environment variable before attempting to create pool
-if not CIVICPATCH_API_DB_URL:
-    raise ValueError("CIVICPATCH_API_DB_URL environment variable is not set.")
+REPO_URL = "https://github.com/CivicPatch/open-data.git"
+REPO_PATH = Path("/app/git_data")
+DATA_FILES_PATTERNS = [
+    "data/*/local/*.yml",
+    "data/*/counties/*.yml",
+]
+JURISDICTION_FILES_PATTERN = "data_source/**/jurisdictions_metadata.yml"
+MAP_FILES_PATTERN = "data/**/.maps/*.geojson"
 
 async def get_jurisdiction_metadata(state: str):
     jurisdictions_file_path = os.path.join("data_source", state, "jurisdictions.yml")
