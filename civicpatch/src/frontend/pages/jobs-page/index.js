@@ -1,8 +1,7 @@
 import { html } from "lit-html";
-import { keyed } from "lit-html/directives/keyed.js";
 import { component, useState, useEffect } from "haunted";
-import { useCsrf } from "../../hooks/use-csrf.js";
-import { fetchPullRequestsWithData, mergePullRequest } from "../../api.js";
+import { fetchPullRequestsWithData, mergePullRequest, closePullRequest } from "../../api.js";
+import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
 
 function getPageFromUrl() {
@@ -16,12 +15,6 @@ function setPageInUrl(page) {
   params.set("page", page);
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
-
-export const PULL_REQUEST_STATUS = {
-  LOADING: "loading",
-  MERGED: "merged",
-  ERROR: "error",
-};
 
 function JobsPage() {
   const [pullRequests, setPullRequests] = useState([]);
@@ -57,7 +50,7 @@ function JobsPage() {
       setPullRequestState({
         ...pullRequestState,
         [pullRequestNumber]: {
-          status: PULL_REQUEST_STATUS.LOADING,
+          status: PULL_REQUEST_STATUS.LOADING_MERGE,
         },
       });
       const response = await mergePullRequest(pullRequestNumber);
@@ -80,6 +73,26 @@ function JobsPage() {
     }
   };
 
+  const handleClose = async (event) => {
+    const pullRequestNumber = event.detail.pullRequestNumber;
+    try {
+      setPullRequestState({
+        ...pullRequestState,
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE },
+      });
+      await closePullRequest(pullRequestNumber);
+      setPullRequestState({
+        ...pullRequestState,
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED },
+      });
+    } catch (error) {
+      setPullRequestState({
+        ...pullRequestState,
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error },
+      });
+    }
+  };
+
   const goToPage = (newPage) => {
     setPageInUrl(newPage);
     setPage(newPage);
@@ -98,6 +111,7 @@ function JobsPage() {
           return html`
             <pr-card
               @onMerge=${handleMerge}
+              @onClose=${handleClose}
               .pr=${pr.details}
               .state=${pullRequestState[pullRequestNumber]}
               .data=${{

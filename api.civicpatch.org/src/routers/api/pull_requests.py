@@ -180,6 +180,26 @@ def get_router(api_key_header):
             "per_page": per_page,
         }
 
+    # -- Pull Requests: Close Pull Request ---
+    @router.delete("/{pull_request_number}", include_in_schema=False)
+    async def close_pull_request_endpoint(
+        pull_request_number: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+        ),
+    ):
+        success = await github_service.close_pull_request(
+            pull_request_number=pull_request_number,
+        )
+        if not success:
+            return JSONResponse(
+                content=ErrorResponse(
+                    error="Failed to close pull request on GitHub"
+                ).model_dump(),
+                status_code=500,
+            )
+        return {"status": "success"}
+
     # -- Pull Requests: Merge Pull Request ---
     @router.post("/{pull_request_number}/merge", include_in_schema=False)
     async def merge_pull_request_endpoint(

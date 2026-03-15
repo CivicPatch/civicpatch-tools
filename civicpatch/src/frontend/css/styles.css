@@ -219,11 +219,31 @@ button {
     --pico-color: var(--pico-primary-inverse);
 }
 
-button:hover,
+button:not(.destructive):hover,
 [type="submit"]:hover,
 [type="button"]:hover {
     --pico-background-color: var(--pico-primary-hover-background);
     --pico-border-color: var(--pico-primary-hover-background);
+}
+
+button.destructive {
+    --pico-background-color: rgb(var(--catppuccin-red));
+    --pico-border-color: rgb(var(--catppuccin-red));
+    --pico-color: rgb(var(--catppuccin-base));
+}
+
+button.destructive:hover {
+    --pico-background-color: rgba(var(--catppuccin-red), 0.8);
+    --pico-border-color: rgba(var(--catppuccin-red), 0.8);
+}
+
+.btn-sm {
+    width: auto;
+    margin: 0;
+    padding: 0.2em 0.75em;
+    font-size: 0.75rem;
+    font-family: var(--pico-font-family-monospace);
+    white-space: nowrap;
 }
 
 a.btn {
@@ -422,15 +442,10 @@ pr-card {
 
     .header-item-right {
         flex: 0 0 auto;
+        display: flex;
+        gap: 0.4rem;
+        align-items: center;
     }
-}
-.pr-card__merge-button {
-    width: auto;
-    margin: 0;
-    padding: 0.2em 0.75em;
-    font-size: 0.75rem;
-    font-family: var(--pico-font-family-monospace);
-    white-space: nowrap;
 }
 
 .pr-card__jurisdiction {

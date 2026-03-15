@@ -1,6 +1,6 @@
 import { html } from "lit-html";
-import { component, useState } from "haunted";
-import { PULL_REQUEST_STATUS } from "../index.js";
+import { component } from "haunted";
+import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
 import "./header.js";
 import "./data-panel.js";
 
@@ -20,6 +20,9 @@ function PrCard({ pr, data, state }) {
   const renderCardContent = () => {
     if (state?.status === PULL_REQUEST_STATUS.MERGED) {
       return html`<div class="pr-card__content">Merged</div>`;
+    }
+    if (state?.status === PULL_REQUEST_STATUS.CLOSED) {
+      return html`<div class="pr-card__content">Closed</div>`;
     }
     if (state?.status === PULL_REQUEST_STATUS.ERROR) {
       return html`<div class="pr-card__content">Error: ${state?.error}</div>`;
