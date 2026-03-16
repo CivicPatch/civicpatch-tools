@@ -11,6 +11,12 @@ function PullRequestTabs({ pullRequests = [], selectedPullRequest, loading, onTa
 
   if (loading) return html`<p>Loading pull requests...</p>`;
 
+  function requestIdToFriendly(requestId) {
+    if (!requestId) return "";
+    const parts = requestId.split("-");
+    return parts.length > 1 ? parts[0] : requestId;
+  }
+
   return html`
     <div class="pr-tabs">
       <div class="pr-tabs__list">
@@ -20,7 +26,7 @@ function PullRequestTabs({ pullRequests = [], selectedPullRequest, loading, onTa
               href="#"
               class="pr-tabs__link ${selectedPullRequest?.branch_name === pr.branch_name ? 'active' : ''}"
               @click=${(e) => { e.preventDefault(); onTabClick?.(pr); }}
-            >${truncateBranchName(pr.branch_name)}</a>
+            >${truncateBranchName(requestIdToFriendly(pr.request_id))}</a>
           `
         )}
         <a
