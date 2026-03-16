@@ -9,45 +9,20 @@ function PeopleActionButtons({
   onSubmit,
   selectedPeople,
   dirty,
-  isLoading,
-  notice,
-  error,
 }) {
   return html`
-    <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
-      <button @click=${onAdd} style="margin-right: 1rem;" class="secondary">
-        Add
-      </button>
-      <button 
-        @click=${onMerge} 
-        style="margin-right: 1rem;" 
-        ?disabled=${selectedPeople.length < 2}
-        class="secondary"
-      >
+    <div class="action-buttons">
+      <button @click=${onAdd} class="secondary btn-sm">Add</button>
+      <button @click=${onMerge} ?disabled=${selectedPeople.length < 2} class="secondary btn-sm">
         Merge (${selectedPeople.length})
       </button>
-      <button 
-        @click=${onBulkDelete} 
-        style="margin-right: 1rem;"
-        ?disabled=${selectedPeople.length === 0}
-        class="secondary"
-      >
+      <button @click=${onBulkDelete} ?disabled=${selectedPeople.length === 0} class="secondary btn-sm">
         Delete (${selectedPeople.length})
       </button>
-      <button
-        @click=${onReset}
-        style="margin-left:auto; margin-right: 1rem;"
-        ?disabled=${dirty === false}
-        class="secondary"
-      >
-        Reset Form
+      <button @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">
+        Reset
       </button>
-      <button
-        @click=${onSubmit}
-        style="margin-right: 0;"
-        ?disabled=${dirty === false}
-        class="primary"
-      >
+      <button @click=${onSubmit} ?disabled=${dirty === false} class="btn-sm">
         Submit
       </button>
     </div>

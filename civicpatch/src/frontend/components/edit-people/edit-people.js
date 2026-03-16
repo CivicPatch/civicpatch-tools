@@ -14,6 +14,7 @@ import "./profile-modal.js";
 import { config } from "../../assets/config.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { updatePullRequestData } from "../../api.js";
+import "../diff-panel.js";
 
 const API_URL = config.apiUrl;
 
@@ -165,7 +166,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function openProfileModal(person) {
-    setProfileModal({ open: true, person });
+    setProfileModal({ open: true, person, existingPerson: people.find((p) => p.id === person.id) });
   }
 
   function renderTableView() {
@@ -232,6 +233,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         `
       : ""}
 
+    ${selectedPullRequest
+      ? html`<civ-diff-panel
+          .data=${{ existing: people, pull_request: currentPeople }}
+        ></civ-diff-panel>`
+      : ""}
+
     <civ-people-action-buttons
       .onAdd=${handleAdd}
       .onMerge=${handleMerge}
@@ -274,6 +281,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     <profile-modal
       .open=${profileModal.open}
       .person=${profileModal.person}
+      .existingPerson=${profileModal.existingPerson}
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null })}
     ></profile-modal>

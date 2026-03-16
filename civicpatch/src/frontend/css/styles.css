@@ -224,6 +224,15 @@ button:not(.destructive):hover,
 [type="button"]:hover {
     --pico-background-color: var(--pico-primary-hover-background);
     --pico-border-color: var(--pico-primary-hover-background);
+    --pico-color: var(--pico-primary-inverse);
+}
+
+button:not(.destructive):active,
+[type="submit"]:active,
+[type="button"]:active {
+    --pico-background-color: var(--pico-primary-hover-background);
+    --pico-border-color: var(--pico-primary-hover-background);
+    --pico-color: var(--pico-primary-inverse);
 }
 
 button.destructive {
@@ -232,9 +241,11 @@ button.destructive {
     --pico-color: rgb(var(--catppuccin-base));
 }
 
-button.destructive:hover {
+button.destructive:hover,
+button.destructive:active {
     --pico-background-color: rgba(var(--catppuccin-red), 0.8);
     --pico-border-color: rgba(var(--catppuccin-red), 0.8);
+    --pico-color: rgb(var(--catppuccin-base));
 }
 
 .btn-sm {
@@ -272,6 +283,19 @@ a.btn:hover {
 }
 a.btn:active {
     background: var(--pico-muted-background);
+}
+
+/* ── Action buttons toolbar ── */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.action-buttons__reset {
+    margin-left: auto;
 }
 
 /* ── Tabs ── */
@@ -656,6 +680,79 @@ pr-card {
     border-color: var(--pico-color);
     color: var(--pico-color);
 }
+
+/* ── civ-diff-panel (edit-people page) ── */
+
+.diff-panel__entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.diff-person {
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
+    border: 1px solid var(--pico-muted-border-color);
+}
+
+.diff-person__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.diff-person--added .diff-person__header    { background: var(--pico-ins-background); }
+.diff-person--removed .diff-person__header  { background: var(--pico-del-background); }
+.diff-person--changed .diff-person__header  { background: var(--pico-info-background); }
+.diff-person--unchanged .diff-person__header { background: transparent; color: var(--pico-muted-color); }
+
+.diff-person__badge {
+    font-weight: 700;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.diff-person__badge--added   { color: var(--pico-ins-color); }
+.diff-person__badge--removed { color: var(--pico-del-color); }
+.diff-person__badge--changed { color: var(--pico-info-color); }
+
+.diff-person__fields {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.73rem;
+}
+
+.diff-person__fields tr + tr {
+    border-top: 1px solid var(--pico-muted-border-color);
+}
+
+.diff-field__label {
+    padding: 0.3rem 0.6rem;
+    color: var(--pico-muted-color);
+    white-space: nowrap;
+    width: 6rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.diff-field__before,
+.diff-field__after {
+    padding: 0.3rem 0.5rem;
+    width: 50%;
+}
+
+.diff-person__fields td:last-child:not(.diff-field__label) {
+    padding: 0.3rem 0.6rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
 
 .diff-panel__empty {
     font-family: var(--pico-font-family-monospace);
