@@ -50,14 +50,14 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         jurisdiction_ocdid: str,
         user: dict = Depends(get_current_user)
     ):
-        history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid, request)
+        jurisdiction = await civicpatch_api.get_jurisdiction(jurisdiction_ocdid, request)
 
         return templates.TemplateResponse(
             "pages/jurisdiction.html",
             {
                 "request": request,
                 "jurisdiction_ocdid": jurisdiction_ocdid,
-                "history": json.dumps(history),
+                "jurisdiction_data": json.dumps(jurisdiction),
                 "user": user
             }
         )

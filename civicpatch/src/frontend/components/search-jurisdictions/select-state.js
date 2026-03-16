@@ -22,16 +22,15 @@ function CivSelectState({ selected }) {
 
   return html`
     <select @change=${handleChange}>
-      <option value="">Select a state</option>
+      <option value="" ?selected=${!selected}>Select a state</option>
       ${states.map(
         (state) =>
-          html`<option value=${state} ?selected=${state === selected}>
-            ${state}
-          </option>`,
+          html`<option value=${state} ?selected=${state === selected}>${state}</option>`,
       )}
     </select>
   `;
 }
+
 
 customElements.define(
   "civ-select-state",

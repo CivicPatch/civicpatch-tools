@@ -301,6 +301,17 @@ async def update_user_detail(server_url, user_provider, user_provider_id):
         )
 
 
+async def filter_existing_person_ids(ids: list[str]) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id FROM people WHERE id = ANY(%s)",
+            (ids,),
+        )
+        rows = await cur.fetchall()
+    return [row[0] for row in rows]
+
+
 async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

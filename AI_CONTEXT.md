@@ -2,17 +2,20 @@
 
 ## Philosophy
 
-- **Small functions.** A function should do one thing. If you need to describe it with "and", split it.
-- **Small files.** Files group closely related functions. If a file is growing, split it by concern.
 - **Functional style.** Prefer pure functions — given the same inputs, return the same outputs. Avoid mutating arguments.
 - **Minimize side effects.** Side effects (I/O, DB, network, env reads) belong at the edges. Pure logic lives in the middle.
 - **Readability first.** Code is read far more than it is written. Optimize for the reader, not the writer.
 
 ## Functions
 
+- Target under 30 lines; treat 50 as a hard ceiling — if it's growing, split by concern
 - One level of abstraction per function
 - Avoid boolean flag arguments — split into two functions instead
 - Return early rather than nesting deeply
+
+## Files
+
+- Target under 300 lines; treat 400 as a hard ceiling — if it's growing, split by concern
 
 ## Side Effects
 

@@ -4,6 +4,7 @@ Daily sync script to update PostgreSQL database with changed files from Git repo
 Compatible with existing psycopg_pool AsyncConnectionPool setup
 """
 
+import asyncio
 import json
 import os
 from pathlib import Path
@@ -129,6 +130,7 @@ async def bulk_sync():
         remote_metadata_file = await get_jurisdiction_metadata(state)
         logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
         all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
+        await asyncio.sleep(0)
 
     local_jurisdictions = await database.get_jurisdiction_updates()
     logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
@@ -142,6 +144,7 @@ async def bulk_sync():
         local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
         if is_newer(remote_updated_at, local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None):
             jurisdictions_to_update_data.append(jurisdiction_ocdid)
+        await asyncio.sleep(0)
 
     remote_ocdids = set(all_jurisdiction_metadata.keys())
     local_ocdids = set(local_jurisdictions.keys())

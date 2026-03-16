@@ -23,9 +23,28 @@ def can_scrape_locally() -> bool:
 # User calls
 async def get_me(request: Request) -> dict:
     env = get_env_vars()
+    last_exc = None
+    for _ in range(3):
+        try:
+            async with httpx.AsyncClient(timeout=10) as client:
+                response = await client.get(
+                    f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/me", cookies=_get_cookies(request)
+                )
+                response.raise_for_status()
+                return response.json()
+        except httpx.ReadTimeout as e:
+            last_exc = e
+    raise last_exc
+
+
+async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
+    env = get_env_vars()
+    params = {"jurisdiction_ocdid": jurisdiction_ocdid, "with_geom": "true"}
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/me", cookies=_get_cookies(request)
+            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jurisdictions",
+            params=params,
+            cookies=_get_cookies(request),
         )
         response.raise_for_status()
         return response.json()

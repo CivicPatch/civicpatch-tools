@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from utils.auth_utils import require_route_access
 from pydantic import BaseModel
 from typing import Optional
@@ -17,6 +17,8 @@ class BatchPersonRequest(BaseModel):
 class PeopleBatchResolveRequest(BaseModel):
     jurisdiction_ocdid: str
     people: list[BatchPersonRequest]
+    with_data: bool = False
+
 
 def get_router() -> APIRouter:
     router = APIRouter()
@@ -29,6 +31,31 @@ def get_router() -> APIRouter:
         return {
             "data": people
         }
+
+    @router.get("/search")
+    async def search_people_endpoint(
+        jurisdiction_ocdid: str,
+        name: str,
+    ):
+        people = await database.get_people_for_jurisdiction(jurisdiction_ocdid)
+        matches = [
+            p for p in people
+            if shared.utils.name_utils.fuzzy_match(name, p.name)
+            or shared.utils.name_utils.exact_match(name, p.name)
+            or any(
+                shared.utils.name_utils.fuzzy_match(name, alias)
+                for alias in (p.other_names or [])
+            )
+        ]
+        return {"data": matches}
+
+    @router.get("/search/by-ids")
+    async def check_person_ids_endpoint(
+        ids: list[str] = Query(),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+    ):
+        existing_ids = await database.filter_existing_person_ids(ids)
+        return {"data": {"existing_ids": existing_ids}}
 
     @router.get("/geo")
     async def list_people_by_geo_endpoint(
@@ -50,6 +77,12 @@ def get_router() -> APIRouter:
 
         people_to_resolve = [p.model_dump() for p in request.people]
         results = resolve_people_ids(people_to_resolve, people, identities)
+
+        if request.with_data:
+            people_by_id = {p.id: p for p in people}
+            for result in results:
+                if result["person"] is None and result["id"]:
+                    result["person"] = people_by_id.get(result["id"])
 
         return {
             "data": results

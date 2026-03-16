@@ -33,37 +33,98 @@ export const updatePullRequestData = async (
   return response.json();
 };
 
-export const fetchPullRequestsWithData = (page, perPage, stateCode) => {
+export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
   const params = new URLSearchParams({ page, per_page: perPage });
   if (stateCode) params.set("state_code", stateCode);
-  return fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
     credentials: "include",
-  }).then((res) => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
   });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 };
 
-export const mergePullRequest = (pullRequestNumber) =>
-  fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge`, {
+export const mergePullRequest = async (pullRequestNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge`, {
     credentials: "include",
     method: "POST",
     headers: {
       "X-CSRF-Token": getCsrfCookie(),
     },
-  }).then((res) => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
   });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
 
-export const closePullRequest = (pullRequestNumber) =>
-  fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
+export const searchPeople = async (jurisdictionOcdid, name) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, name });
+  const res = await fetch(`${API_URL}/api/v1/people/search?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const batchResolvePeople = async (jurisdictionOcdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/people/batch-resolve`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({
+      jurisdiction_ocdid: jurisdictionOcdid,
+      people: people.map(p => ({ id: p.id, name: p.name, email: p.emails?.[0] ?? null })),
+      with_data: true,
+    }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const checkPersonIds = async (ids) => {
+  const params = new URLSearchParams(ids.map(id => ["ids", id]));
+  const res = await fetch(`${API_URL}/api/v1/people/search/by-ids?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
+  const params = new URLSearchParams({
+    jurisdiction_ocdid: jurisdictionOcdid,
+    request_id: requestId,
+  });
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/data?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const generatePersonId = async () => {
+  const res = await fetch(`${API_URL}/api/v1/people/generate-id`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data.data.person_id;
+};
+
+export const closePullRequest = async (pullRequestNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
     credentials: "include",
     method: "DELETE",
     headers: {
       "X-CSRF-Token": getCsrfCookie(),
     },
-  }).then((res) => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
   });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};

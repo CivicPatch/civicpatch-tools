@@ -2,7 +2,6 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { useSSE } from "../../hooks/useSse.js";
 import { useAuth } from "../../hooks/useAuth.js";
-import { useJurisdiction } from "../../hooks/useJurisdiction.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import "../edit-people/edit-people.js";
@@ -13,9 +12,8 @@ import "./jurisdiction-sidebar.js";
 import { config } from '../../assets/config.js';
 const API_URL = config.apiUrl;
 
-function JurisdictionPage({ jurisdiction_ocdid, history }) {
+function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
-  const { data: jurisdictionData, isLoading: jurisdictionLoading } = useJurisdiction(jurisdiction_ocdid);
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
 
@@ -27,15 +25,15 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
     return html`<p>You must be logged in to view this page.</p>`;
   }
 
+  const jurisdictionData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
   const identities = buildIdentitiesMap(people);
-  const isLoading = jurisdictionLoading || peopleLoading;
 
   const sseUrl = jurisdiction_ocdid
     ? `${API_URL}/api/v1/sse/jobs/status?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}&job_type=people`
     : null;
 
-  const { data: jobStatus, isConnected, error: sseError } = useSSE(sseUrl, { 
-    autoConnect: !!sseUrl 
+  const { data: jobStatus, isConnected, error: sseError } = useSSE(sseUrl, {
+    autoConnect: !!sseUrl
   });
 
   const handleScrapeStartClick = async (details) => {
@@ -48,7 +46,7 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
         source_urls: details.data.sourceUrls,
       }
     };
-    
+
     await fetch(`/api/pipelines`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -78,12 +76,12 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
             .name=${jurisdictionData?.data?.name}
             .scrapeStatus=${scrapeStatus}
           ></civ-jurisdiction-header>
-          
+
           <hr />
-          
+
           <civ-jurisdiction-sidebar
             .jurisdictionData=${jurisdictionData}
-            .history=${history}
+            .jurisdiction_ocdid=${jurisdiction_ocdid}
             .jobStatus=${jobStatus}
             .isConnected=${isConnected}
             .sseError=${sseError}
@@ -107,8 +105,8 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
         </div>
       </div>
 
-      ${!isLoading ? html`
-        <civ-editable-people-list 
+      ${!peopleLoading ? html`
+        <civ-editable-people-list
           jurisdiction_ocdid=${jurisdiction_ocdid}
           .people=${people}
         ></civ-editable-people-list>
@@ -121,6 +119,6 @@ customElements.define(
   "civ-jurisdiction-page",
   component(JurisdictionPage, {
     useShadowDOM: false,
-    observedAttributes: ["jurisdiction_ocdid", "history"],
+    observedAttributes: ["jurisdiction_ocdid", "jurisdiction_data"],
   }),
 );
