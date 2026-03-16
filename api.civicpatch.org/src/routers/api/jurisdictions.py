@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 import database.database as database
 
-import services.github_service as github_service
+import services.github.github_api_service as github_service
 # import services.auth_service as AuthService
 from schemas.common import Jurisdiction
 

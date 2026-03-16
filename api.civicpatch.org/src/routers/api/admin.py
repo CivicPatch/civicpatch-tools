@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-import services.github_sync_service
+import services.github.data_sync_service
 from schemas.requests import OdSyncRequestSchema
 
 def get_router() -> APIRouter:
@@ -11,7 +11,7 @@ def get_router() -> APIRouter:
         request: OdSyncRequestSchema,
         background_tasks: BackgroundTasks,
     ):
-        background_tasks.add_task(services.github_sync_service.sync, request)
+        background_tasks.add_task(services.github.data_sync_service.sync, request)
 
         return {"status": "running"}
     

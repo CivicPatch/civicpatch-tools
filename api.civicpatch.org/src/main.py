@@ -24,7 +24,8 @@ import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.pull_requests as api_pull_requests_router
 import routers.api.user as api_user_router
-import services.github_sync_service
+import services.github.pull_request_sync_service
+import services.github.data_sync_service
 from database.database import (
     close_pool,
     get_api_keys_for_user,
@@ -66,8 +67,8 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
-    asyncio.create_task(services.github_sync_service.bulk_sync())
-    sync_task = asyncio.create_task(_run_every(3600, services.github_sync_service.sync_open_pr_state))
+    asyncio.create_task(services.github.data_sync_service.bulk_sync())
+    sync_task = asyncio.create_task(_run_every(3600, services.github.pull_request_sync_service.sync_open_pr_state))
 
     yield
 

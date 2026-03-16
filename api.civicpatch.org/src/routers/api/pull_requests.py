@@ -15,7 +15,7 @@ from pydantic import BaseModel
 
 import database.database
 import database.people
-import services.github_service as github_service
+import services.github.github_api_service as github_service
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, RouteCategory
 from utils.auth_utils import require_route_access

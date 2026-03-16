@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 import job_service.people_collector.people_data_utils as people_data_utils
-import services.github_service as github_service
+import services.github.github_api_service as github_service
 import utils.file_utils
 from database.database import (
     get_job,

@@ -7,6 +7,7 @@ from routers.webhooks.github import _parse_pr_status, _verify_signature
 
 VALID_BRANCH = "2025-09-25-1a2b__state_wa__place_seattle__government"
 REQUEST_ID = "2025-09-25-1a2b"
+JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 MERGED_AT = "2025-09-26T12:00:00Z"
 
 
@@ -25,22 +26,22 @@ def _make_payload(action, merged=False, merged_at=None, branch=VALID_BRANCH):
 
 def test_parse_opened():
     result = _parse_pr_status(_make_payload("opened"))
-    assert result == (REQUEST_ID, "open", None)
+    assert result == (REQUEST_ID, JURISDICTION_OCDID, "open", None, None)
 
 
 def test_parse_reopened():
     result = _parse_pr_status(_make_payload("reopened"))
-    assert result == (REQUEST_ID, "open", None)
+    assert result == (REQUEST_ID, JURISDICTION_OCDID, "open", None, None)
 
 
 def test_parse_closed_not_merged():
     result = _parse_pr_status(_make_payload("closed", merged=False))
-    assert result == (REQUEST_ID, "closed", None)
+    assert result == (REQUEST_ID, JURISDICTION_OCDID, "closed", None, None)
 
 
 def test_parse_closed_merged():
     result = _parse_pr_status(_make_payload("closed", merged=True, merged_at=MERGED_AT))
-    assert result == (REQUEST_ID, "merged", MERGED_AT)
+    assert result == (REQUEST_ID, JURISDICTION_OCDID, "merged", MERGED_AT, None)
 
 
 def test_parse_ignored_action_returns_none():

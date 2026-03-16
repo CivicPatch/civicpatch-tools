@@ -1,5 +1,8 @@
+import re
 from typing import List, Protocol, Dict, Set
 from . import name_utils
+
+MIN_EXPECTED_PEOPLE = 3
 
 class PersonLike(Protocol):
     """Protocol for objects with name and other_names fields."""
@@ -27,6 +30,8 @@ def generate_review(
 
     all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals)
     issues = _generate_issues(research_canonicals, people_canonicals)
+    issues.extend(_check_people_count(people))
+    issues.extend(_check_division_sequence(people))
     rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
 
     return {
@@ -79,3 +84,27 @@ def _build_row(
         "in_research": name in research_canonicals,
         "in_data": name in people_canonicals,
     }
+
+def has_data_issues(people: List[dict]) -> bool:
+    return bool(_check_people_count(people) or _check_division_sequence(people))
+
+def _check_people_count(people: List[dict]) -> List[str]:
+    if len(people) < MIN_EXPECTED_PEOPLE:
+        return [f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"]
+    return []
+
+def _check_division_sequence(people: List[dict]) -> List[str]:
+    numbers = []
+    for p in people:
+        ocdid = (p.get("office") or {}).get("division_ocdid") or ""
+        match = re.search(r":(\d+)$", ocdid)
+        if match:
+            numbers.append(int(match.group(1)))
+
+    if not numbers:
+        return []
+
+    expected = list(range(min(numbers), max(numbers) + 1))
+    if sorted(numbers) != expected:
+        return [f"Division number sequence is irregular: {sorted(numbers)} (expected {expected})"]
+    return []
