@@ -16,3 +16,4 @@ data/**/*.png
 node_modules
 src/shared/**
 env.js
+bundle.js
