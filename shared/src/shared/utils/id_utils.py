@@ -202,6 +202,12 @@ def slug_to_jurisdiction_ocdid(slug: str) -> str:
     return "/".join(parts)
 
 
+_REQUEST_ID_RE = re.compile(
+    r"^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"  # UUID v4
+    r"|\d{4}-\d{2}-\d{2}-[0-9a-f]+)$"  # legacy YYYY-MM-DD-XXXX
+)
+
+
 def git_branch_to_parts(branch: str) -> dict:
     """
     Converts a git branch name back to a jurisdiction ID.
@@ -217,6 +223,8 @@ def git_branch_to_parts(branch: str) -> dict:
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
+    if not _REQUEST_ID_RE.match(parts[0]):
+        raise ValueError(f"Branch does not begin with a recognised request ID: {branch}")
 
     return {
         "request_id": parts[0],

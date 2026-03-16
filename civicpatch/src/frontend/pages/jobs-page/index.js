@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchPullRequestsWithData, mergePullRequest, closePullRequest } from "../../api.js";
+import { pullRequestUrlToNumber } from "./pr-utils.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
 import "../../components/search-jurisdictions/select-state.js";
@@ -32,9 +33,15 @@ function JobsPage() {
   const [page, setPage] = useState(getPageFromUrl());
   const [stateCode, setStateCode] = useState(getStateFromUrl());
   const [total, setTotal] = useState(0);
-  const perPage = 10;
+  const perPage = 20;
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.get("state")) {
+      params.set("state", stateCode);
+      if (!params.get("page")) params.set("page", page);
+      window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
+    }
     const onPopState = () => setPage(getPageFromUrl());
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -127,7 +134,7 @@ function JobsPage() {
       : pullRequests.length === 0
         ? html`<p>No pull requests found.</p>`
         : pullRequests.map((pr) => {
-            const pullRequestNumber = pr.details.pull_request_number;
+            const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
             return html`
               <pr-card
                 @onMerge=${handleMerge}

@@ -1034,17 +1034,21 @@ async def update_job_pull_request_status(
     request_id: str,
     pull_request_status: str,
     pull_request_merged_at=None,
-):
+    pull_request_url: Optional[str] = None,
+) -> bool:
     pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
             """
             UPDATE jobs
-            SET pull_request_status = %s, pull_request_merged_at = %s
+            SET pull_request_status = %s,
+                pull_request_merged_at = %s,
+                pull_request_url = COALESCE(%s, pull_request_url)
             WHERE request_id = %s
             """,
-            (pull_request_status, pull_request_merged_at, request_id),
+            (pull_request_status, pull_request_merged_at, pull_request_url, request_id),
         )
+        return cur.rowcount > 0
 
 
 async def list_jobs_with_open_prs(
@@ -1068,16 +1072,20 @@ async def list_jobs_with_open_prs(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(f"SELECT COUNT(*) FROM jobs WHERE {where}", params)
+        await cur.execute(f"SELECT COUNT(*) FROM jobs j WHERE {where}", params)
         total = (await cur.fetchone())[0]
 
         await cur.execute(
             f"""
-            SELECT request_id, pull_request_url, pull_request_status,
-                   arguments_json, created_at, updated_at
-            FROM jobs
+            SELECT j.request_id, j.pull_request_url, j.pull_request_status,
+                   j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
+                   jur.data->>'name' AS jurisdiction_name,
+                   j.created_at, j.updated_at
+            FROM jobs j
+            LEFT JOIN jurisdictions jur
+                   ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
             WHERE {where}
-            ORDER BY created_at DESC
+            ORDER BY j.created_at DESC
             LIMIT %s OFFSET %s
             """,
             params + [per_page, offset],
@@ -1089,9 +1097,10 @@ async def list_jobs_with_open_prs(
             "request_id": r[0],
             "pull_request_url": r[1],
             "pull_request_status": r[2],
-            "arguments_json": r[3],
-            "created_at": to_iso(r[4]),
-            "updated_at": to_iso(r[5]),
+            "jurisdiction_ocdid": r[3],
+            "jurisdiction_name": r[4],
+            "created_at": to_iso(r[5]),
+            "updated_at": to_iso(r[6]),
         }
         for r in rows
     ]

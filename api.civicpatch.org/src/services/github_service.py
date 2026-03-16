@@ -237,44 +237,26 @@ async def get_github_file_contents(
     )
 
 
-# TODO: should rely on internal jobs, and not github service
 async def get_open_pull_requests(
     jurisdiction_ocddid=None, state_code: str | None = None, page: int = 1, per_page: int = 100
 ) -> List[PullRequest]:
     _, _, _, open_data_repo_url = _get_github_config()
     params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
     url = f"{open_data_repo_url}/pulls?{params}"
-    cache_key = f"github:open_pull_requests:{page}:{per_page}"
-    if jurisdiction_ocddid:
-        cache_key = f"github:open_pull_requests:{jurisdiction_ocddid}:{page}:{per_page}"
-    elif state_code:
-        cache_key = f"github:open_pull_requests:state:{state_code}:{page}:{per_page}"
-    pull_requests = await cached_github_get(
-        url, cache_key, accept="application/vnd.github+json", return_json=True
-    )
-    if not pull_requests:
+    headers = await get_default_headers()
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(url, headers=headers)
+    if response.status_code != 200:
         return []
+    pull_requests = response.json()
     valid_pull_requests = [
-        PullRequest(
-            branch_name=pr["head"]["ref"],
-            url=pr["html_url"],
-        )
+        PullRequest(branch_name=pr["head"]["ref"], url=pr["html_url"])
         for pr in pull_requests
     ]
-
     if jurisdiction_ocddid:
-        valid_pull_requests = [
-            pr
-            for pr in valid_pull_requests
-            if pr.jurisdiction_ocdid == jurisdiction_ocddid
-        ]
+        valid_pull_requests = [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid == jurisdiction_ocddid]
     elif state_code:
-        valid_pull_requests = [
-            pr
-            for pr in valid_pull_requests
-            if f"state:{state_code}" in pr.jurisdiction_ocdid
-        ]
-
+        valid_pull_requests = [pr for pr in valid_pull_requests if f"state:{state_code}" in pr.jurisdiction_ocdid]
     return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
 
 

@@ -10,8 +10,8 @@ services:
       GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
 
       # Defaults OK
-      CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-"development_password"}
-      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-"postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db"}
+      CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
+      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db}
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8001"
