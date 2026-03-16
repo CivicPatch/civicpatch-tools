@@ -227,6 +227,9 @@ async def sync_open_pr_state():
                 request_id=request_id,
                 job_type="people",
                 arguments_json={"jurisdiction_ocdid": pr_info["jurisdiction_ocdid"]},
+                jurisdiction_ocdid=pr_info["jurisdiction_ocdid"],
+                status="completed",
+                progress=100,
             )
             await database.update_job_pull_request_status(
                 request_id, "open", None, pull_request_url=pr_info["url"]
