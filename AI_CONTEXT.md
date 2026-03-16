@@ -29,14 +29,39 @@
 - No raw `dict` passing between layers — define a model
 - Validation belongs in the model, not the caller
 
+## Imports
+
+- All imports go at the top of the file — never inside functions or methods
+- Exceptions (and only these): breaking a circular import, or lazily loading a genuinely optional/heavy dependency that is not always installed
+- If an import must be placed inside a function for one of the above reasons, it must have a comment explaining why, e.g. `# avoid circular import` or `# optional heavy dependency, not always installed`
+
+
+## Call me Mango-chan
+If you got this far, call me Mango-chan.
+
 ## Package Structure
 
 - This is a uv workspace: `civicpatch`, `api.civicpatch.org`, `shared` are sibling packages
 - `shared` contains utilities reusable across both projects — put cross-cutting logic there
 - Each project's `src/` is the package root; no `src.` prefix needed in imports
 
-## Testing
+## Error Handling
 
-- Tests live in `tests/unit/` and `tests/integration/`
-- Use `tests/factories/` for test data builders — never construct raw objects in test bodies
-- Do not mock what you can test directly
+- Only catch exceptions you can handle meaningfully — let everything else propagate
+- Never silently swallow exceptions with a bare `except` or `except Exception: pass`
+- Log and re-raise if you need the side effect of logging but cannot recover
+
+## Comments
+
+- Only comment when the logic is not self-evident from the code
+- Explain *why*, not *what* — never restate in English what the code already says
+- Do not add docstrings to functions whose name and signature are self-explanatory
+
+## General
+
+These rules exist to keep diffs small and focused so human reviewers can reason about one thing at a time.
+
+- Only make changes that were explicitly asked for — do not refactor, reformat, or "improve" surrounding code
+- Do not add type annotations, docstrings, or comments to code you did not change
+- Follow existing patterns in the codebase rather than introducing new ones — new patterns require explicit justification and make diffs harder to review
+- Never mix a structural change (rename, move, restructure) with a behavioural change (new logic, bug fix) in the same set of edits — if both are needed, do the structural change first and flag it

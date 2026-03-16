@@ -64,7 +64,9 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
-        pull_requests = await github_service.get_open_pull_requests(jurisdiction_ocdid)
+        pull_requests, _ = await database.database.list_jobs_with_open_prs(
+            jurisdiction_ocdid=jurisdiction_ocdid
+        )
         return {"data": pull_requests}
 
     # ── Pull Requests: List & Data ───────────
@@ -147,32 +149,27 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
-        pull_requests = await github_service.get_open_pull_requests(state_code=state_code)
-        total = len(pull_requests)
-        total_pages = (total + per_page - 1) // per_page
-        start = (page - 1) * per_page
-        end = start + per_page
-        paged_pull_requests = pull_requests[start:end]
-
-        # 1. Collect all unique jurisdiction_ocdids
-        jurisdiction_ocdids = list(
-            {pr.jurisdiction_ocdid for pr in paged_pull_requests}
+        paged_pull_requests, total = await database.database.list_jobs_with_open_prs(
+            state_code=state_code, page=page, per_page=per_page
         )
-        request_ids = list({pr.request_id for pr in paged_pull_requests})
-        # 2. Fetch all people data in one call
+        total_pages = (total + per_page - 1) // per_page
+
+        jurisdiction_ocdids = list(
+            {pr["arguments_json"]["jurisdiction_ocdid"] for pr in paged_pull_requests if pr.get("arguments_json")}
+        )
+        request_ids = list({pr["request_id"] for pr in paged_pull_requests})
         data = await database.people.get_people_data_by_request_ids(
             jurisdiction_ocdids, request_ids
         )
 
-        async def fetch_one(pr):
-            request_id = pr.request_id
-            return {
+        results = [
+            {
                 "details": pr,
-                "existing": data.get(request_id, {}).get("existing", []),
-                "pull_request": data.get(request_id, {}).get("pull_request", []),
+                "existing": data.get(pr["request_id"], {}).get("existing", []),
+                "pull_request": data.get(pr["request_id"], {}).get("pull_request", []),
             }
-
-        results = await asyncio.gather(*(fetch_one(pr) for pr in paged_pull_requests))
+            for pr in paged_pull_requests
+        ]
         return {
             "data": results,
             "total": total,

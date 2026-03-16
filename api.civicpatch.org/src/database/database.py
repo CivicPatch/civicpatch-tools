@@ -1030,6 +1030,95 @@ async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
         people = [Person(**row[0]) for row in rows]
     return people
 
+async def update_job_pull_request_status(
+    request_id: str,
+    pull_request_status: str,
+    pull_request_merged_at=None,
+):
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE jobs
+            SET pull_request_status = %s, pull_request_merged_at = %s
+            WHERE request_id = %s
+            """,
+            (pull_request_status, pull_request_merged_at, request_id),
+        )
+
+
+async def list_jobs_with_open_prs(
+    state_code: Optional[str] = None,
+    jurisdiction_ocdid: Optional[str] = None,
+    page: int = 1,
+    per_page: int = 20,
+) -> tuple[List[dict], int]:
+    conditions = ["pull_request_status = 'open'"]
+    params: list = []
+
+    if jurisdiction_ocdid:
+        conditions.append("arguments_json->>'jurisdiction_ocdid' = %s")
+        params.append(jurisdiction_ocdid)
+    elif state_code:
+        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        params.append(f"%state:{state_code}%")
+
+    where = " AND ".join(conditions)
+    offset = (page - 1) * per_page
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(f"SELECT COUNT(*) FROM jobs WHERE {where}", params)
+        total = (await cur.fetchone())[0]
+
+        await cur.execute(
+            f"""
+            SELECT request_id, pull_request_url, pull_request_status,
+                   arguments_json, created_at, updated_at
+            FROM jobs
+            WHERE {where}
+            ORDER BY created_at DESC
+            LIMIT %s OFFSET %s
+            """,
+            params + [per_page, offset],
+        )
+        rows = await cur.fetchall()
+
+    results = [
+        {
+            "request_id": r[0],
+            "pull_request_url": r[1],
+            "pull_request_status": r[2],
+            "arguments_json": r[3],
+            "created_at": to_iso(r[4]),
+            "updated_at": to_iso(r[5]),
+        }
+        for r in rows
+    ]
+    return results, total
+
+
+async def get_open_pr_request_ids() -> List[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT request_id FROM jobs WHERE pull_request_status = 'open'"
+        )
+        rows = await cur.fetchall()
+    return [r[0] for r in rows]
+
+
+async def bulk_close_stale_prs(request_ids: List[str]):
+    if not request_ids:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE jobs SET pull_request_status = 'closed' WHERE request_id = ANY(%s)",
+            (request_ids,),
+        )
+
+
 async def delete_jurisdictions_by_ocdids(ocdids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:
