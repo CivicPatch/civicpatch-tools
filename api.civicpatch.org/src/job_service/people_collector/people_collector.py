@@ -8,7 +8,7 @@ from schemas.responses import SubmitJobArtifactsResponse
 import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
-import services.github_service as github_service
+import services.github.github_api_service as github_service
 import logging
 import yaml
 

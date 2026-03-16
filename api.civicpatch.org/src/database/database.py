@@ -755,20 +755,22 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
             params,
         )
 
-async def update_job_result(request_id: str, result_json: Any):
+async def update_job_result(request_id: str, result_json: Any, has_issues: bool = False):
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             """
             UPDATE jobs
             SET result_json = %s,
+                has_issues = %s,
                 updated_at = CURRENT_TIMESTAMP
             WHERE request_id = %s;
             """,
             (
-                json.dumps(result_json), 
-                request_id
-             ),
+                json.dumps(result_json),
+                has_issues,
+                request_id,
+            ),
         )
         if result.rowcount == 0:
             return False

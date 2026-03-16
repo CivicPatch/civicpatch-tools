@@ -6,9 +6,9 @@ from typing import Any
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
-from database.database import register_job, update_job_pull_request_status
+from database.database import update_job_pull_request_status
 from environment import get_env_vars
-from services.github_sync_service import backfill_job_result
+from services.github.pull_request_sync_service import register_and_sync_pr_job
 
 logger = logging.getLogger(__name__)
 
@@ -54,15 +54,7 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
     updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
     if not updated and status == "open":
         logger.info("Webhook: no job found for %s, creating", request_id)
-        await register_job(
-            requested_by_provider="github_webhook",
-            requested_by_provider_user_id="github_webhook",
-            request_id=request_id,
-            job_type="people",
-            arguments_json={"jurisdiction_ocdid": jurisdiction_ocdid},
-        )
-        await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
-        await backfill_job_result(request_id, jurisdiction_ocdid)
+        await register_and_sync_pr_job(request_id, jurisdiction_ocdid, pr_url, provider="github_webhook")
 
 
 def get_router() -> APIRouter:
