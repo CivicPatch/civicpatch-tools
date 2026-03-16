@@ -31,6 +31,21 @@ Vanilla JS web components served by FastAPI.
 - Event names are kebab-case on the wire (`state-change`, `selected-pull-request`), camelCase as handler props (`onMerge`, `onClose`)
 - The page-level component owns all async state and API calls; children only dispatch events
 
+## Local API testing
+
+The API (`api.civicpatch.org`) runs at `http://localhost:8001` in development (set in `assets/env.js`).
+
+Authenticate with `SERVICE_API_KEY` passed as the raw `Authorization` header value (no `Bearer` prefix):
+
+```sh
+curl -s -H "Authorization: $SERVICE_API_KEY" \
+  "http://localhost:8001/api/v1/pull_requests?jurisdiction_ocdid=ocd-division/country:us/state:tx/place:austin"
+```
+
+Use it to inspect request/response shapes when debugging frontend API calls.
+
+The civicpatch FastAPI server at `localhost:8000` proxies `/api/api_proxy/{path}` → `localhost:8001/api/v1/{path}`. Frontend `api.js` calls go directly to `localhost:8001` (via `API_URL` in `env.js`).
+
 ## Component conventions
 
 - Custom elements are registered with `useShadowDOM: false`

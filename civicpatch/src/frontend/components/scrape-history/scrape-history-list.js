@@ -5,8 +5,7 @@ import "./scrape-history-modal.js";
 import "../status-badge.js";
 
 function ScrapeHistoryList({ history, jobStatus }) {
-  const historyData = JSON.parse(history);
-  let parsedHistory = historyData["data"];
+  let parsedHistory = history?.["data"] ?? [];
 
   if (jobStatus && jobStatus.request_id) {
     parsedHistory = parsedHistory.map(job =>

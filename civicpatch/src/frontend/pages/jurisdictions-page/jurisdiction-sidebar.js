@@ -1,5 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
+import { fetchJurisdictionHistory } from "../../api.js";
 import "../scrape-history/scrape-history-list.js";
 import "./jurisdiction-detail.js";
 
@@ -16,12 +17,15 @@ function JurisdictionSidebar({
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
-    fetch(`/api/api_proxy/jurisdictions/history?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`, {
-      credentials: "include",
-    })
-      .then(r => r.json())
-      .then(setHistory)
-      .catch(() => setHistory(null));
+    async function loadHistory() {
+      try {
+        const data = await fetchJurisdictionHistory(jurisdiction_ocdid);
+        setHistory(data);
+      } catch {
+        setHistory(null);
+      }
+    }
+    loadHistory();
   }, [jurisdiction_ocdid]);
 
   if (!jurisdictionData) {

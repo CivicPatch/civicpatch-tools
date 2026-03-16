@@ -11,7 +11,7 @@ import "./pull-request-tabs.js";
 import "./review-table.js";
 import "./profile-modal.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData, fetchPullRequestData, generatePersonId, batchResolvePeople } from "../../api.js";
+import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople } from "../../api.js";
 import "../diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -32,6 +32,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     handleTableDataReorder,
   } = usePeopleState({ people });
 
+  const [pullRequests, setPullRequests] = useState([]);
+  const [pullRequestsLoading, setPullRequestsLoading] = useState(false);
   const [reviewData, setReviewData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedPullRequest, setSelectedPullRequest] = useState(undefined);
@@ -50,6 +52,24 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  async function handleFetchPullRequests() {
+    setPullRequestsLoading(true);
+    try {
+      const data = await fetchPullRequests(jurisdiction_ocdid);
+      const prs = data.data || [];
+      setPullRequests(prs);
+      setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
+    } catch {
+      setSelectedPullRequest(null);
+    } finally {
+      setPullRequestsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    handleFetchPullRequests();
   }, []);
 
   const {
@@ -220,9 +240,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   return html`
     <civ-pull-request-tabs
-      .jurisdiction_ocdid=${jurisdiction_ocdid}
-      @selected-pull-request=${(e) =>
-        setSelectedPullRequest(e.detail.pullRequest)}
+      .pullRequests=${pullRequests}
+      .selectedPullRequest=${selectedPullRequest}
+      .loading=${pullRequestsLoading}
+      .onTabClick=${(pr) => setSelectedPullRequest(pr)}
     ></civ-pull-request-tabs>
 
     ${selectedPullRequest
@@ -275,7 +296,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           ${error}
         </div>`
       : ""}
-    ${selectedPullRequest === undefined || isLoading
+    ${isLoading
       ? html`<div
           style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"
         >

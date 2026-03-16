@@ -1,56 +1,8 @@
-import { html, component, useEffect, useState } from 'haunted';
-import { config } from '../../assets/config.js';
-const API_URL = config.apiUrl;
+import { html, component } from 'haunted';
 
-function PullRequestTabs(props) {
-  const { jurisdiction_ocdid } = props;
-
-  const [selectedPullRequest, setSelectedPullRequest] = useState(null);
-  const [pullRequests, setPullRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const element = this;
-
-  function dispatchSelectedPullRequest(pullRequest) {
-    const event = new CustomEvent('selected-pull-request', {
-      detail: { pullRequest },
-      bubbles: true,
-      composed: true
-    });
-    // Dispatch from the component's root element
-    element?.dispatchEvent(event);
-  }
-
-  useEffect(() => {
-    if (!jurisdiction_ocdid) return;
-    setLoading(true);
-    fetch(
-      `${API_URL}/api/v1/pull_requests?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`,
-      {
-        credentials: "include"
-      }
-    )
-      .then(r => r.json())
-      .then(data => {
-        const pullRequests = data.data || [];
-        const pullRequest = pullRequests.length > 0 ? pullRequests[0] : null;
-
-        // First one should always be selected
-        setSelectedPullRequest(pullRequest);
-        setPullRequests(pullRequests);
-        dispatchSelectedPullRequest(pullRequest);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [jurisdiction_ocdid]);
-
-  function handleTabClick(branchName) {
-    const pullRequest = pullRequests.find(pr => pr.branch_name === branchName);
-    setSelectedPullRequest(pullRequest);
-    dispatchSelectedPullRequest(pullRequest);
-  }
-
+function PullRequestTabs({ pullRequests = [], selectedPullRequest, loading, onTabClick }) {
   function truncateBranchName(branchName, maxLength = 24) {
+    if (!branchName) return "";
     if (branchName.length > maxLength) {
       return branchName.substring(0, maxLength);
     }
@@ -67,14 +19,14 @@ function PullRequestTabs(props) {
             <a
               href="#"
               class="pr-tabs__link ${selectedPullRequest?.branch_name === pr.branch_name ? 'active' : ''}"
-              @click=${(e) => { e.preventDefault(); handleTabClick(pr.branch_name); }}
+              @click=${(e) => { e.preventDefault(); onTabClick?.(pr); }}
             >${truncateBranchName(pr.branch_name)}</a>
           `
         )}
         <a
           href="#"
           class="pr-tabs__link ${!selectedPullRequest ? 'active' : ''}"
-          @click=${(e) => { e.preventDefault(); handleTabClick(null); }}
+          @click=${(e) => { e.preventDefault(); onTabClick?.(null); }}
         >Existing Data</a>
       </div>
     </div>
@@ -83,5 +35,5 @@ function PullRequestTabs(props) {
 
 customElements.define(
   'civ-pull-request-tabs',
-  component(PullRequestTabs, { useShadowDOM: false, observedAttributes: ['jurisdiction_ocdid'] })
+  component(PullRequestTabs, { useShadowDOM: false })
 );
