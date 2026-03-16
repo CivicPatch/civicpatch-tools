@@ -33,6 +33,15 @@ export const updatePullRequestData = async (
   return response.json();
 };
 
+export const fetchPullRequests = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`${API_URL}/api/v1/pull_requests?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
   const params = new URLSearchParams({ page, per_page: perPage });
   if (stateCode) params.set("state_code", stateCode);
@@ -97,6 +106,15 @@ export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
     request_id: requestId,
   });
   const res = await fetch(`${API_URL}/api/v1/pull_requests/data?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchJurisdictionHistory = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`/api/api_proxy/jurisdictions/history?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

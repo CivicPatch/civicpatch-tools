@@ -4,10 +4,12 @@ import { useSSE } from "../../hooks/useSse.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
-import "../edit-people/edit-people.js";
+import "../../components/edit-people/edit-people.js";
 import "./config-detail.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
+import "./scrape-modal/scrape-modal.js";
+import "./scrape-modal/name-config-form.js";
 
 import { config } from '../../assets/config.js';
 const API_URL = config.apiUrl;
