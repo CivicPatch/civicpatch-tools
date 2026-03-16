@@ -4,12 +4,39 @@ from database.database import get_pool
 
 logger = logging.getLogger(__name__)
 
+_PEOPLE_TABLE_EXPRS = {
+    "id":          ("'id'",          "data#>>'{id}'"),
+    "name":        ("'name'",        "data#>>'{name}'"),
+    "office":      ("'office'",      "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')"),
+    "source_urls": ("'source_urls'", "data#>'{source_urls}'"),
+}
+
+_RESULT_JSON_EXPRS = {
+    "id":          ("'id'",          "elem->>'id'"),
+    "name":        ("'name'",        "elem->>'name'"),
+    "office":      ("'office'",      "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')"),
+    "source_urls": ("'source_urls'", "elem->'source_urls'"),
+}
+
+VIEWS: dict[str, frozenset[str]] = {
+    "diff": frozenset({"id", "name", "office", "source_urls"}),
+    "full": frozenset({"id", "name", "office", "source_urls"}),  # extend when full view is defined
+}
+DEFAULT_VIEW = "diff"
+
+
+def _build_jsonb_obj(exprs: dict, fields: frozenset[str]) -> str:
+    parts = []
+    for field in sorted(fields):
+        if field in exprs:
+            key, val = exprs[field]
+            parts += [key, val]
+    return f"jsonb_build_object({', '.join(parts)})"
+
+
 async def get_people_by_jurisdiction_ocdid(
     jurisdiction_ocdid: str,
 ) -> list[dict[str, Any]]:
-    """
-    Returns all current people for a given jurisdiction_ocdid.
-    """
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
@@ -28,23 +55,21 @@ async def get_people_by_jurisdiction_ocdid(
 
 
 async def get_people_data_by_request_ids(
-    jurisdiction_ocdids: list[str], request_ids: list[str]
+    jurisdiction_ocdids: list[str],
+    request_ids: list[str],
+    view: str = DEFAULT_VIEW,
 ) -> dict[str, dict[str, Any]]:
-    pool = await get_pool()
+    fields = VIEWS.get(view, VIEWS[DEFAULT_VIEW])
 
+    people_projection = _build_jsonb_obj(_PEOPLE_TABLE_EXPRS, fields)
+    result_projection = _build_jsonb_obj(_RESULT_JSON_EXPRS, fields)
+
+    pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
-
-            # People
             await cur.execute(
-                """
-                SELECT
-                    jurisdiction_ocdid,
-                    data#>>'{id}'                   AS id,
-                    data#>>'{name}'                 AS name,
-                    data#>>'{office,name}'          AS office_name,
-                    data#>>'{office,division_ocdid}' AS office_division_ocdid,
-                    data#>>'{source_urls}'          AS source_urls
+                f"""
+                SELECT jurisdiction_ocdid, {people_projection} AS person
                 FROM people
                 WHERE jurisdiction_ocdid = ANY(%s)
                   AND status = 'current'
@@ -53,13 +78,15 @@ async def get_people_data_by_request_ids(
             )
             people_rows = await cur.fetchall()
 
-            # Jobs
             await cur.execute(
-                """
+                f"""
                 SELECT
                     request_id,
-                    result_json,
-                    arguments_json#>>'{jurisdiction_ocdid}' AS jurisdiction_ocdid
+                    (
+                        SELECT jsonb_agg({result_projection})
+                        FROM jsonb_array_elements(result_json) AS elem
+                    ) AS people_data,
+                    arguments_json#>>'{{jurisdiction_ocdid}}' AS jurisdiction_ocdid
                 FROM jobs
                 WHERE request_id = ANY(%s)
                 """,
@@ -67,38 +94,15 @@ async def get_people_data_by_request_ids(
             )
             jobs_rows = await cur.fetchall()
 
-    # Build jurisdiction -> people map
     people_map: dict[str, list] = {}
-    for row in people_rows:
-        jurisdiction, id_, name, office_name, office_div, source_urls = row
-        people_map.setdefault(jurisdiction, []).append({
-            "jurisdiction_ocdid": jurisdiction,
-            "id": id_,
-            "name": name,
-            "office": {
-                "name": office_name,
-                "division_ocdid": office_div,
-            },
-            "source_urls": source_urls if isinstance(source_urls, list) else (
-                __import__('json').loads(source_urls) if source_urls else []
-            ),
-        })
+    for jurisdiction, person in people_rows:
+        people_map.setdefault(jurisdiction, []).append(person)
 
-    # Assemble results
     results: dict[str, dict[str, Any]] = {}
-    for request_id, result_json, jurisdiction_ocdid in jobs_rows:
-        pr_list = []
-        if result_json:
-            try:
-                parsed = result_json if isinstance(result_json, list) else __import__('json').loads(result_json)
-                if isinstance(parsed, list):
-                    pr_list = parsed
-            except Exception:
-                logger.warning("Failed to parse result_json for request_id=%s", request_id)
-
+    for request_id, people_data, jurisdiction_ocdid in jobs_rows:
         results[request_id] = {
             "existing": people_map.get(jurisdiction_ocdid, []),
-            "pull_request": pr_list,
+            "pull_request": people_data or [],
         }
 
     return results

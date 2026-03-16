@@ -8,6 +8,7 @@ from fastapi import (
     APIRouter,
     BackgroundTasks,
     Depends,
+    Query,
 )
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -15,6 +16,7 @@ from pydantic import BaseModel
 import database.database
 import database.people
 import services.github_service as github_service
+from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, RouteCategory
 from utils.auth_utils import require_route_access
 
@@ -145,6 +147,7 @@ def get_router(api_key_header):
         page: int = 1,
         per_page: int = 10,
         state_code: str | None = None,
+        view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
@@ -155,11 +158,11 @@ def get_router(api_key_header):
         total_pages = (total + per_page - 1) // per_page
 
         jurisdiction_ocdids = list(
-            {pr["arguments_json"]["jurisdiction_ocdid"] for pr in paged_pull_requests if pr.get("arguments_json")}
+            {pr["jurisdiction_ocdid"] for pr in paged_pull_requests if pr.get("jurisdiction_ocdid")}
         )
         request_ids = list({pr["request_id"] for pr in paged_pull_requests})
         data = await database.people.get_people_data_by_request_ids(
-            jurisdiction_ocdids, request_ids
+            jurisdiction_ocdids, request_ids, view=view
         )
 
         results = [

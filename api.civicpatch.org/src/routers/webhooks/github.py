@@ -6,8 +6,9 @@ from typing import Any
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
-from database.database import update_job_pull_request_status
+from database.database import register_job, update_job_pull_request_status
 from environment import get_env_vars
+from services.github_sync_service import backfill_job_result
 
 logger = logging.getLogger(__name__)
 
@@ -17,10 +18,12 @@ def _verify_signature(body: bytes, secret: str, signature: str) -> bool:
     return hmac.compare_digest(expected, signature)
 
 
-def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str | None] | None:
+def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None, str | None] | None:
+    """Returns (request_id, jurisdiction_ocdid, status, merged_at, pr_url) or None to ignore."""
     action = payload.get("action")
     pr = payload.get("pull_request", {})
     branch_name = pr.get("head", {}).get("ref", "")
+    pr_url = pr.get("html_url")
 
     try:
         parts = id_utils.git_branch_to_parts(branch_name)
@@ -29,13 +32,14 @@ def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str | None] | N
         return None
 
     request_id = parts["request_id"]
+    jurisdiction_ocdid = parts["jurisdiction_ocdid"]
 
     if action in ("opened", "reopened"):
-        return request_id, "open", None
+        return request_id, jurisdiction_ocdid, "open", None, pr_url
     if action == "closed" and pr.get("merged"):
-        return request_id, "merged", pr.get("merged_at")
+        return request_id, jurisdiction_ocdid, "merged", pr.get("merged_at"), pr_url
     if action == "closed":
-        return request_id, "closed", None
+        return request_id, jurisdiction_ocdid, "closed", None, pr_url
 
     # assigned, labeled, synchronized, converted_to_draft, etc. — intentionally ignored
     logger.debug("Ignoring pull_request action: %s", action)
@@ -46,8 +50,19 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
     result = _parse_pr_status(payload)
     if result is None:
         return
-    request_id, status, merged_at = result
-    await update_job_pull_request_status(request_id, status, merged_at)
+    request_id, jurisdiction_ocdid, status, merged_at, pr_url = result
+    updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
+    if not updated and status == "open":
+        logger.info("Webhook: no job found for %s, creating", request_id)
+        await register_job(
+            requested_by_provider="github_webhook",
+            requested_by_provider_user_id="github_webhook",
+            request_id=request_id,
+            job_type="people",
+            arguments_json={"jurisdiction_ocdid": jurisdiction_ocdid},
+        )
+        await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
+        await backfill_job_result(request_id, jurisdiction_ocdid)
 
 
 def get_router() -> APIRouter:

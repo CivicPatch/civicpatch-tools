@@ -2,6 +2,7 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
+import { pullRequestUrlToNumber } from "../pr-utils.js";
 
 export function stateColor(state) {
   switch (state) {
@@ -28,10 +29,12 @@ const renderStats = ({ added, removed, changed }) => {
 };
 
 const PullRequestCardHeader = ({ pr, state, stats }) => {
+  const pullRequestNumber = pullRequestUrlToNumber(pr?.pull_request_url);
+
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
-        detail: { pullRequestNumber: pr.pull_request_number },
+        detail: { pullRequestNumber },
         bubbles: true,
       }),
     );
@@ -40,7 +43,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleClose = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onClose", {
-        detail: { pullRequestNumber: pr.pull_request_number },
+        detail: { pullRequestNumber },
         bubbles: true,
       }),
     );
@@ -82,18 +85,15 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   return html` <div class="pr-card__header">
     <div class="header-item-left">
       <span class="pr-card__jurisdiction">
-        ${jurisdictionOcdidToFriendly(pr?.jurisdiction_ocdid)}
+        ${pr?.jurisdiction_name || jurisdictionOcdidToFriendly(pr?.jurisdiction_ocdid)}
       </span>
-      ${pr?.github_title
-        ? html`<span class="pr-card__title">${pr.github_title}</span>`
-        : ""}
-      <a class="pr-card__link" href=${pr?.url} target="_blank" rel="noopener">
-        #${pr?.pull_request_number || "—"}
+      <a class="pr-card__link" href=${pr?.pull_request_url} target="_blank" rel="noopener">
+        #${pullRequestNumber || "—"}
       </a>
       <span
-        class="pr-card__state pr-card__state--${stateColor(pr?.github_state)}"
+        class="pr-card__state pr-card__state--${stateColor(pr?.pull_request_status)}"
       >
-        ${pr?.github_state || "unknown"}
+        ${pr?.pull_request_status || "unknown"}
       </span>
       <a
         class="pr-card__link"
