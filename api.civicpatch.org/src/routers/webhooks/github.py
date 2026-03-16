@@ -17,7 +17,7 @@ def _verify_signature(body: bytes, secret: str, signature: str) -> bool:
     return hmac.compare_digest(expected, signature)
 
 
-async def _handle_pull_request_event(payload: dict[str, Any]):
+def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str | None] | None:
     action = payload.get("action")
     pr = payload.get("pull_request", {})
     branch_name = pr.get("head", {}).get("ref", "")
@@ -25,22 +25,29 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
     try:
         parts = id_utils.git_branch_to_parts(branch_name)
     except ValueError:
-        logger.warning(f"Unrecognised branch name in webhook: {branch_name!r}")
-        return
+        logger.warning("Unrecognised branch name in webhook: %r", branch_name)
+        return None
 
     request_id = parts["request_id"]
 
     if action in ("opened", "reopened"):
-        await update_job_pull_request_status(request_id, "open", None)
-    elif action == "closed":
-        if pr.get("merged"):
-            await update_job_pull_request_status(
-                request_id, "merged", pr.get("merged_at")
-            )
-        else:
-            await update_job_pull_request_status(request_id, "closed", None)
-    else:
-        logger.debug(f"Ignoring pull_request action: {action}")
+        return request_id, "open", None
+    if action == "closed" and pr.get("merged"):
+        return request_id, "merged", pr.get("merged_at")
+    if action == "closed":
+        return request_id, "closed", None
+
+    # assigned, labeled, synchronized, converted_to_draft, etc. — intentionally ignored
+    logger.debug("Ignoring pull_request action: %s", action)
+    return None
+
+
+async def _handle_pull_request_event(payload: dict[str, Any]):
+    result = _parse_pr_status(payload)
+    if result is None:
+        return
+    request_id, status, merged_at = result
+    await update_job_pull_request_status(request_id, status, merged_at)
 
 
 def get_router() -> APIRouter:
