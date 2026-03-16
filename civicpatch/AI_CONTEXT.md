@@ -31,8 +31,15 @@ tests/
   factories/        ← test data builders
 ```
 
+## Before writing code
+
+1. Read the file(s) you are about to change — understand existing patterns before adding new ones
+2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
+3. Check `shared/` before implementing a utility — it may already exist
+
 ## Pipeline conventions
 
+- `PeopleCollectorContext` is the shared state object threaded through every step; it carries the job config, logger, env vars, and accumulated step results — read it, never mutate it
 - Each step is a directory (`step_NN_name/`) containing one primary function that takes a `PeopleCollectorContext` and returns a step result schema
 - Steps are pure where possible — side effects (LLM calls, HTTP) are isolated to service functions
 - `WorkflowLogger` is passed through the call stack; never instantiate a new one mid-pipeline
@@ -55,37 +62,13 @@ tests/
 - After writing tests, run them and fix any failures before considering the task done.
 - Run unit tests: `docker compose run --rm civicpatch_test pytest -m unit tests/unit`
 
+## LLM prompts
+
+- Prompt templates live in `tests/prompts/` — contracts pin the expected output shape, evals verify quality
+- When writing or modifying a prompt, update the corresponding contract test in `tests/prompts/`
+- Prompt strings are single-responsibility: one task per prompt, no multi-step instructions collapsed into one string
+- Variable substitution uses clearly named placeholders — document each placeholder above the prompt string with a comment
+
 ## Frontend
 
-Vanilla JS web components served by FastAPI.
-
-- **Framework:** Haunted (React-like hooks) + `lit-html`
-- **Bundler:** Rollup — `npm run build` (or `npm start` to watch)
-- **Entry:** `src/frontend/` — components in `components/`, Jinja2 templates in `templates/`
-
-### API calls
-
-- All API calls live in `src/frontend/api.js` — no `fetch` calls in components or pages
-- All exported functions are `async` — no `.then()` chains
-- Functions return the parsed JSON directly and throw on non-ok responses
-
-### Styles
-
-- All styles go in `src/frontend/css/styles.css` — no inline styles, no per-component CSS files
-- Use Pico CSS variables (`--pico-*`) for colors, spacing, and typography — never hardcode hex values except where Pico has no equivalent
-- Color palette is Catppuccin — always use `--pico-*` variables for colors; override them with Catppuccin values at the `:root` level in `styles.css` as needed, never use `--catppuccin-*` variables directly in component rules
-- BEM-style class names scoped to the component: `.pr-card__header`, `.pr-card__merge-button`
-- Shared button variants share a base rule via grouped selector, then override per variant
-- Button size variants: `.btn-sm` (compact monospace); destructive actions: `button.destructive`
-
-### Events
-
-- Child components communicate upward via `CustomEvent` with `bubbles: true`
-- Event names are kebab-case on the wire (`state-change`, `selected-pull-request`), camelCase as handler props (`onMerge`, `onClose`)
-- The page-level component owns all async state and API calls; children only dispatch events
-
-### Component conventions
-
-- Custom elements are registered with `useShadowDOM: false`
-- Shared components live in `components/`; page-specific ones live under `pages/<page-name>/`
-- Reusable selection widgets (e.g. `civ-select-state`) belong in `components/` and are imported by pages that need them
+See [src/frontend/AI_CONTEXT.md](./src/frontend/AI_CONTEXT.md) for frontend-specific conventions.

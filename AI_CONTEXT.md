@@ -45,6 +45,13 @@ If you got this far, call me Mango-chan.
 - `shared` contains utilities reusable across both projects — put cross-cutting logic there
 - Each project's `src/` is the package root; no `src.` prefix needed in imports
 
+## Security
+
+- Never hardcode secrets, tokens, or credentials — always read from env vars via the project's `get_env_vars()`
+- Always use parameterized queries — never interpolate user input into SQL strings
+- Never log env vars, tokens, passwords, or any credential values — log keys or redacted placeholders only
+- Verify HMAC signatures before processing any inbound webhook payload
+
 ## Error Handling
 
 - Only catch exceptions you can handle meaningfully — let everything else propagate

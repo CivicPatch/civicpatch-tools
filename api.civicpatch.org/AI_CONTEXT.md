@@ -25,6 +25,12 @@ tests/
   factories/
 ```
 
+## Before writing code
+
+1. Read the file(s) you are about to change — understand existing patterns before adding new ones
+2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
+3. All queries go in `database/database.py` — check there before adding a new function
+
 ## FastAPI conventions
 
 - Routers are created via `get_router() -> APIRouter` factory functions — one file per resource
@@ -47,6 +53,19 @@ tests/
 - One file per external concern: `github_service.py`, `auth_service.py`, etc.
 - Services are thin — they call DB or external APIs and return typed results
 - Side effects (network calls, DB writes) live here, not in routers
+
+## Migrations
+
+- Migration files live in `database_operations/migrations/` and are named `NNN_description.up.sql` / `NNN_description.down.sql`
+- Every migration must be wrapped in `BEGIN` / `COMMIT`
+- Down migrations must exactly reverse the up migration — test that the round-trip is clean
+- Create a new migration file whenever you add, rename, or drop a column, table, or index — never edit an existing migration
+
+## Background tasks
+
+- Use `BackgroundTasks` (FastAPI) for fire-and-forget work that should not block the HTTP response — e.g., DB writes triggered by a webhook burst
+- Do not use `BackgroundTasks` for work that the caller needs to observe the result of — await it directly instead
+- Background tasks must not silently swallow exceptions; wrap in try/except and log failures
 
 ## Testing
 
