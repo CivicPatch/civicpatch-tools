@@ -8,15 +8,11 @@ import "../basic/table/table.js";
 import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
 import "./action-buttons.js";
 import "./pull-request-tabs.js";
-import { useCsrf } from "../../hooks/use-csrf.js";
 import "./review-table.js";
 import "./profile-modal.js";
-import { config } from "../../assets/config.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData } from "../../api.js";
+import { updatePullRequestData, fetchPullRequestData, generatePersonId, batchResolvePeople } from "../../api.js";
 import "../diff-panel.js";
-
-const API_URL = config.apiUrl;
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const {
@@ -38,7 +34,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   const [reviewData, setReviewData] = useState(null);
   const [error, setError] = useState(null);
-  const [selectedPullRequest, setSelectedPullRequest] = useState(null);
+  const [selectedPullRequest, setSelectedPullRequest] = useState(undefined);
   const [notice, setNotice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(
@@ -48,8 +44,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     open: false,
     person: null,
   });
-  const csrfToken = useCsrf();
-
+  const [resolvedMatches, setResolvedMatches] = useState({});
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 700px)");
     const handler = (e) => setIsMobile(e.matches);
@@ -65,51 +60,39 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   } = useRovingFocusList(currentPeople.length);
 
   useEffect(() => {
+    if (selectedPullRequest === undefined) return;
     if (!selectedPullRequest) {
       assignPeople(people);
       setReviewData(null);
+      setResolvedMatches({});
     } else {
       handleSelectedPullRequestData(selectedPullRequest);
     }
   }, [selectedPullRequest]);
 
-  async function fetchPullRequestData(pullRequest) {
-    if (!pullRequest) return null;
-    const url =
-      `${API_URL}/api/v1/pull_requests/data` +
-      `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}` +
-      `&request_id=${encodeURIComponent(pullRequest.request_id)}`;
-    setIsLoading(true);
-    const response = await fetch(url, { credentials: "include" });
-    setIsLoading(false);
-    if (!response.ok) throw new Error("Failed to fetch pull request data");
-    return response.json();
-  }
-
   async function handleSelectedPullRequestData(pullRequest) {
     if (!pullRequest) return;
     try {
-      const data = await fetchPullRequestData(pullRequest);
-      if (data?.data) assignPeople(data.data);
+      setIsLoading(true);
+      const data = await fetchPullRequestData(jurisdiction_ocdid, pullRequest.request_id);
+      const scrapedPeople = data?.data ?? [];
       setReviewData(data?.review || null);
+
+      const resolved = await batchResolvePeople(jurisdiction_ocdid, scrapedPeople);
+      const matchMap = {};
+      const updatedPeople = scrapedPeople.map((p, i) => {
+        const r = resolved.data[i];
+        matchMap[p.id] = r;
+        return { ...p, _isNew: !r?.person };
+      });
+      if (updatedPeople.length) assignPeople(updatedPeople);
+      setResolvedMatches(matchMap);
     } catch (err) {
       setError("Failed to load pull request data.");
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }
-
-  async function generatePersonId() {
-    const res = await fetch(`${API_URL}/api/v1/people/generate-id`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": csrfToken,
-      },
-      credentials: "include",
-    });
-    if (!res.ok) throw new Error("Failed to generate person id");
-    const data = await res.json();
-    return data.data.person_id;
   }
 
   async function handleAdd() {
@@ -166,7 +149,31 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function openProfileModal(person) {
-    setProfileModal({ open: true, person, existingPerson: people.find((p) => p.id === person.id) });
+    const resolved = resolvedMatches[person.id];
+    let existingPerson = people.find(p => p.id === person.id) ?? resolved?.person ?? null;
+    let nameMatches = [];
+
+    if (resolved && resolved.id !== person.id) {
+      if (resolved.ambiguous) {
+        nameMatches = resolved.person;
+      } else {
+        existingPerson = resolved.person;
+        nameMatches = [resolved.person];
+      }
+    }
+
+    setProfileModal({ open: true, person, existingPerson, nameMatches });
+  }
+
+  function handleLinkPerson(e) {
+    const { personId } = e.detail;
+    updatePerson(profileModal.person.id, { id: personId });
+    setProfileModal(prev => ({
+      ...prev,
+      person: { ...prev.person, id: personId },
+      existingPerson: people.find(p => p.id === personId),
+      nameMatches: [],
+    }));
   }
 
   function renderTableView() {
@@ -268,7 +275,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           ${error}
         </div>`
       : ""}
-    ${isLoading
+    ${selectedPullRequest === undefined || isLoading
       ? html`<div
           style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"
         >
@@ -282,6 +289,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .open=${profileModal.open}
       .person=${profileModal.person}
       .existingPerson=${profileModal.existingPerson}
+      .nameMatches=${profileModal.nameMatches ?? []}
+      @link-person=${handleLinkPerson}
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null })}
     ></profile-modal>

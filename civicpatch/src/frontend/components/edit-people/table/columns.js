@@ -12,6 +12,11 @@ const customCss = (person, field) => {
 export const getColumns = (openProfileModal) => {
     return [
         {
+          field: "_isNew",
+          editable: false,
+          label: "New",
+        },
+        {
           field: "_selected",
           editable: true,
           type: "checkbox",
