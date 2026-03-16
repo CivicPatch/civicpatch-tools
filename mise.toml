@@ -15,6 +15,11 @@ _.file = [
 run = "mise install && pre-commit install && uv sync --all-packages"
 description = "Install all workspace dependencies"
 
+
+###################################################
+## 🚀✨ Tests                                ✨🚀 ##
+###################################################
+
 [tasks.pytest-shared]
 run = "uv run pytest"
 dir = "shared"
@@ -26,3 +31,19 @@ dir = "civicpatch"
 [tasks.tapi]
 run = "uv run pytest"
 dir = "api.civicpatch.org"
+
+###################################################
+## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
+###################################################
+
+[tasks.migrate_up]
+run = """
+docker compose run --rm api_civicpatch_org \
+    python database_operations/migrate.py up
+"""
+
+[tasks.migrate_down]
+run = """
+docker compose run --rm api_civicpatch_org \
+    python database_operations/migrate.py down
+"""

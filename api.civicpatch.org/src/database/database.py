@@ -641,41 +641,46 @@ async def list_jobs():
 async def register_job(
         requested_by_provider: str,
         requested_by_provider_user_id: str,
-        request_id: str, 
+        request_id: str,
         job_type: str,
         arguments_json: dict,
-        server_source: Optional[str] = None):
+        server_source: Optional[str] = None,
+        jurisdiction_ocdid: Optional[str] = None,
+        status: str = "pending",
+        progress: int = 0,
+):
     pool = await get_pool()
     async with pool.connection() as conn:
         serialized_arguments = json.dumps(arguments_json)
         await conn.execute(
             """
             INSERT INTO jobs (
-                request_id, 
-                requested_by_provider, 
-                requested_by_provider_user_id, 
-                job_type, 
-                status, 
-                progress, 
-                arguments_json, 
+                request_id,
+                requested_by_provider,
+                requested_by_provider_user_id,
+                job_type,
+                status,
+                progress,
+                arguments_json,
                 server_source,
-
+                jurisdiction_ocdid,
                 created_at, updated_at
             )
             VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s, %s, %s, %s,
                 CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
             );
             """,
             (
-                request_id, 
-                requested_by_provider, 
-                requested_by_provider_user_id, 
-                job_type, 
-                "pending", 
-                0, 
-                serialized_arguments, 
-                server_source
+                request_id,
+                requested_by_provider,
+                requested_by_provider_user_id,
+                job_type,
+                status,
+                progress,
+                serialized_arguments,
+                server_source,
+                jurisdiction_ocdid,
             ),
         )
 

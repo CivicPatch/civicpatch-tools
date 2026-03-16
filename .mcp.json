@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "dbhub": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@bytebase/dbhub",
+        "--transport",
+        "stdio",
+        "--readonly",
+        "--dsn",
+        "postgres://civicpatch:development_password@localhost:6000/development_db"
+      ],
+      "env": {}
+    }
+  }
+}
