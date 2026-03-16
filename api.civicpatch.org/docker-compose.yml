@@ -23,6 +23,8 @@ services:
       DATABASE_HASH_KEY: database-hash-key
       SERVICE_API_KEY: "service-api-key"
 
+      # Optional; only needed for syncing github webhooks
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET}
 
       # Optional; only for scraping
       GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}

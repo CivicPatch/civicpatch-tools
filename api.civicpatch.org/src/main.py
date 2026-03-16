@@ -16,7 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import routers.api.admin as api_admin_router
-import webhooks.github as github_webhook_router
+import routers.webhooks.github as github_webhook_router
 import routers.api.api_keys as api_keys_router
 import routers.api.data as api_data_router
 import routers.api.jobs as api_jobs_router
@@ -65,12 +65,14 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 @asynccontextmanager
 async def lifespan(app):
-    await get_pool()  # open on startup
-    await startup_tasks()
+    await get_pool()
+    asyncio.create_task(services.github_sync_service.bulk_sync())
+    sync_task = asyncio.create_task(_run_every(3600, services.github_sync_service.sync_open_pr_state))
 
     yield
 
-    await close_pool()  # close on shutdown
+    sync_task.cancel()
+    await close_pool()
 
 
 app = FastAPI(
@@ -256,14 +258,10 @@ async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Reques
     )
 
 
-async def _hourly_pr_sync():
+async def _run_every(interval: int, coro_fn):
     while True:
-        await asyncio.sleep(3600)
-        await services.github_sync_service.sync_open_pr_state()
-
-
-async def startup_tasks():
-    print("Running startup tasks...")
-    asyncio.create_task(services.github_sync_service.bulk_sync())
-    asyncio.create_task(services.github_sync_service.sync_open_pr_state())
-    asyncio.create_task(_hourly_pr_sync())
+        try:
+            await coro_fn()
+        except Exception:
+            logger.exception("Periodic task %s failed", coro_fn.__name__)
+        await asyncio.sleep(interval)
