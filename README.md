@@ -20,10 +20,12 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 
 ## Projects
 
-- [civicpatch](./civicpatch/README.md)  
+- [civicpatch](./civicpatch/README.md)
   The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
-- [api.civicpatch.org](./api.civicpatch.org/README.md)  
-  Coordinates data submissions between civicpatch servers and the open-data repo.
+- [api.civicpatch.org](./api.civicpatch.org/README.md)
+  Coordinates data submissions between civicpatch servers and the open-data repo. Receives GitHub webhook events to keep pull request state in sync.
+- [shared](./shared/)
+  Python utilities shared across both projects — import as `from shared.utils import ...`. Put cross-cutting logic here rather than duplicating it.
 
 ## Summary
 
@@ -90,6 +92,12 @@ Still trying to figure this out! Email me at michelle@civicpatch.org.
 4. Run `docker compose up`
 
    Services will be available at `localhost:8000` (civicpatch) and `localhost:8001` (api).
+
+   Migrations run automatically on startup. If you need to run them manually:
+
+   ```sh
+   cd api.civicpatch.org && mise migrate_up
+   ```
 
 ## Testing
 
