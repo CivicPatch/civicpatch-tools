@@ -1,7 +1,7 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchJurisdictionHistory } from "../../api.js";
-import "../scrape-history/scrape-history-list.js";
+import "../../components/scrape-history/scrape-history-list.js";
 import "./jurisdiction-detail.js";
 
 function JurisdictionSidebar({

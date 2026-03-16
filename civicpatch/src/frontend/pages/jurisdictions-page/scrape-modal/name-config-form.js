@@ -1,6 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import "../../basic/chip.js"
+import "../../../components/basic/chip.js";
 
 function NameConfigForm({ onChange, identities = {} }) {
   const [configs, setConfigs] = useState({ ...identities });
