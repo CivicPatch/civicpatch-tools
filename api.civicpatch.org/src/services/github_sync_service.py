@@ -8,20 +8,22 @@ import asyncio
 import json
 import os
 from pathlib import Path
-import services.github_service as github_service
-import services.cache_service as cache_service
-
-import yaml
-import yaml
-import database.database as database
 from typing import List
-import shared
+
 import dateutil.parser
+import httpx
+import yaml
+
+import database.database as database
+import services.cache_service as cache_service
+import services.github_service as github_service
+import shared
+import shared.utils.config_utils as config_utils
+import shared.utils.id_utils
 from datetime import timezone
 from schemas.requests import OdSyncRequestSchema
 import logging
 logger = logging.getLogger(__name__)
-import shared.utils.config_utils as config_utils
 
 import environment
 
@@ -160,6 +162,62 @@ async def bulk_sync():
 
     logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
     await sync_people_by_ocdids(jurisdictions_to_update_data)
+
+async def sync_open_pr_state():
+    """
+    Backfill and reconcile pull_request_status on the jobs table.
+
+    1. Fetch all open PRs from GitHub (paginated).
+    2. Mark each corresponding job as pull_request_status='open'.
+    3. Any job currently marked 'open' that has no matching open PR on GitHub
+       is stale — bulk-close it in one query.
+    """
+    import httpx
+
+    logger.info("sync_open_pr_state: starting")
+    _, _, _, open_data_repo_url = github_service._get_github_config()
+
+    github_request_ids: set[str] = set()
+    page = 1
+    per_page = 100
+
+    while True:
+        url = f"{open_data_repo_url}/pulls?state=open&per_page={per_page}&page={page}"
+        headers = await github_service.get_default_headers()
+        async with httpx.AsyncClient(timeout=httpx.Timeout(60.0)) as client:
+            response = await client.get(url, headers=headers)
+
+        if response.status_code != 200:
+            logger.error(f"sync_open_pr_state: GitHub API error on page {page}: {response.status_code}")
+            break
+
+        prs = response.json()
+        for pr in prs:
+            branch_name = pr.get("head", {}).get("ref", "")
+            try:
+                parts = shared.utils.id_utils.git_branch_to_parts(branch_name)
+                github_request_ids.add(parts["request_id"])
+            except (ValueError, KeyError):
+                pass
+
+        if len(prs) < per_page:
+            break
+        page += 1
+        await asyncio.sleep(0)
+
+    logger.info(f"sync_open_pr_state: found {len(github_request_ids)} open PRs on GitHub")
+
+    for request_id in github_request_ids:
+        await database.update_job_pull_request_status(request_id, "open", None)
+
+    db_open_ids = await database.get_open_pr_request_ids()
+    stale_ids = [rid for rid in db_open_ids if rid not in github_request_ids]
+    if stale_ids:
+        logger.info(f"sync_open_pr_state: closing {len(stale_ids)} stale PR(s)")
+        await database.bulk_close_stale_prs(stale_ids)
+
+    logger.info("sync_open_pr_state: done")
+
 
 async def sync(request: OdSyncRequestSchema):
     jurisdiction_ocdids = request.jurisdiction_ocdids

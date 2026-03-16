@@ -48,6 +48,11 @@ tests/
 - Framework: pytest
 - Markers: `unit`, `integration`, `evals`, `evals_relevant`, `contracts`
 - `tests/factories/` contains builders — use them, don't build raw objects in tests
+- Do not mock what you can test directly
+- **Write unit tests for any new function with meaningful logic** — pure functions, pipeline step logic, data transformations, validation. Trivial pass-through wrappers do not need tests.
+- Tests are part of the feature — do not ship a new function without corresponding tests unless explicitly told to skip them.
+- Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` or `tests/integration/` directory to understand available builders and patterns.
+- After writing tests, run them and fix any failures before considering the task done.
 - Run unit tests: `docker compose run --rm civicpatch_test pytest -m unit tests/unit`
 
 ## Frontend

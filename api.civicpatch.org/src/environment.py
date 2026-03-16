@@ -25,6 +25,8 @@ REQUIRED_ENV_VARS = [
 ]
 
 OPTIONAL_ENV_VARS = [
+    # Optional - needed for GitHub webhook verification
+    "GITHUB_WEBHOOK_SECRET",
     # Optional - needed for scraping
     "GOOGLE_SHEETS_SPREADSHEET_ID",
     "GOOGLE_SHEETS_PRIVATE_KEY",

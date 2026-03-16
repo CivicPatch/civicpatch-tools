@@ -16,6 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import routers.api.admin as api_admin_router
+import webhooks.github as github_webhook_router
 import routers.api.api_keys as api_keys_router
 import routers.api.data as api_data_router
 import routers.api.jobs as api_jobs_router
@@ -208,6 +209,12 @@ app.include_router(
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
+app.include_router(
+    github_webhook_router.get_router(),
+    prefix="/webhooks/github",
+    tags=["webhooks"],
+)
+
 
 @app.get("/api/v1/me", tags=["auth"])
 async def get_me(user: Identity = Depends(get_optional_user)):
@@ -249,6 +256,14 @@ async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Reques
     )
 
 
+async def _hourly_pr_sync():
+    while True:
+        await asyncio.sleep(3600)
+        await services.github_sync_service.sync_open_pr_state()
+
+
 async def startup_tasks():
     print("Running startup tasks...")
     asyncio.create_task(services.github_sync_service.bulk_sync())
+    asyncio.create_task(services.github_sync_service.sync_open_pr_state())
+    asyncio.create_task(_hourly_pr_sync())

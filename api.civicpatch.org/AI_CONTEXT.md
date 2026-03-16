@@ -51,6 +51,11 @@ tests/
 ## Testing
 
 - Framework: pytest
-- `tests/factories/` for test data builders
-- Mock external services (GitHub, Redis) at the service boundary, not deeper
+- `tests/factories/` for test data builders — never construct raw objects in test bodies
+- Do not mock what you can test directly; mock external services (GitHub, Redis) at the service boundary, not deeper
+- **Write unit tests for any new function with meaningful logic** — pure functions, data transformations, validation, business logic. Trivial pass-through wrappers do not need tests.
+- **Write integration tests for new endpoints** — route handlers are thin wrappers; test them against a real DB, not mocks.
+- Tests are part of the feature — do not ship a new function or endpoint without corresponding tests unless explicitly told to skip them.
+- Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` or `tests/integration/` directory to understand available builders and patterns.
+- After writing tests, run them and fix any failures before considering the task done.
 - Run tests: `uv run pytest api.civicpatch.org/tests`

@@ -10,9 +10,6 @@ crudder_data/*
 # Allow .png and .jpg files under tests/
 !tests/**/*.png
 
-# Explicitly ignore images under data/
-data/**/*.png
-
 node_modules
 src/shared/**
 env.js
