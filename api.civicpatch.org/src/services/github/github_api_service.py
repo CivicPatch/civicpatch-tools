@@ -1,5 +1,6 @@
 import base64
 import http
+import json
 import logging
 import os
 import re
@@ -364,6 +365,25 @@ async def get_teams(user_oauth_token: str):
         return []
 
 
+async def get_pull_request_workflow_context(
+    request_id: str, jurisdiction_ocdid: str
+) -> dict | None:
+    """Fetch and parse workflow_context.json from a specific PR branch."""
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    file_path = f"data_source/{folder}/workflow_context.json"
+    branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, request_id)
+    content = await get_github_file_contents(file_path, ref=branch_name)
+    if content is None:
+        return None
+    try:
+        return json.loads(content)
+    except Exception as e:
+        logger.error(
+            f"Failed to parse workflow_context.json on branch {branch_name}: {e}"
+        )
+        return None
+
+
 async def get_pull_request_file_yaml(
     request_id: str, jurisdiction_ocdid: str, file_path: str
 ) -> list | dict | None:
@@ -379,6 +399,21 @@ async def get_pull_request_file_yaml(
             f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}"
         )
         return None
+
+
+async def get_pull_request_review_state(pr_number: int) -> str | None:
+    """Returns the effective review state ('approved' or 'changes_requested') or None."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    url = f"{open_data_repo_url}/pulls/{pr_number}/reviews"
+    cache_key = f"github:pr_reviews:{pr_number}"
+    reviews = await cached_github_get(url, cache_key)
+    if not reviews:
+        return None
+    for review in reversed(reviews):
+        state = review.get("state", "").lower()
+        if state in ("approved", "changes_requested"):
+            return state
+    return None
 
 
 async def get_pull_request(pull_request_number: str) -> dict | None:

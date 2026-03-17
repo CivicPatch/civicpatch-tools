@@ -1,5 +1,5 @@
 import pytest
-from shared.utils.review_utils import (
+from jobs.people_collector.steps.step_10_review_output.utils import (
     _check_division_sequence,
     _check_people_count,
     _collect_all_canonicals,

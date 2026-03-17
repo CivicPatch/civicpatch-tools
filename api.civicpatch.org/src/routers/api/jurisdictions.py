@@ -78,7 +78,9 @@ def get_router() -> APIRouter:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
 
         open_prs, _ = await database.list_jobs_with_open_prs(jurisdiction_ocdid=jurisdiction_ocdid)
-        open_pr_with_issues = next((pr for pr in open_prs if pr["has_issues"]), None)
+        open_pr_with_issues = next(
+            (pr for pr in open_prs if pr["pull_request_review_state"] != "approved"), None
+        )
 
         response = {
             "data": jurisdiction_data["data"],

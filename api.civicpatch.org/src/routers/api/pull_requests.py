@@ -2,8 +2,8 @@ import asyncio
 import logging
 from typing import Any, Dict, List
 
+from job_service.people_collector.people_data_utils import extract_issues
 import shared.utils.id_utils
-from shared.utils.review_utils import get_data_issues
 import yaml
 from fastapi import (
     APIRouter,
@@ -191,7 +191,7 @@ def get_router(api_key_header):
         ),
     ):
         result_json = await database.database.get_job_result_json(request_id)
-        issues = get_data_issues(result_json or [])
+        issues = extract_issues(result_json or [])
         return {"issues": issues}
 
     # -- Pull Requests: Close Pull Request ---

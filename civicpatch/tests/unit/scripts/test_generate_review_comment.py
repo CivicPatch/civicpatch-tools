@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 from typing import List
 from domain.models import Official
 
-from scripts.generate_review_comment import (generate_review_comment, get_identity_mismatches)
+from scripts.generate_review_comment import generate_review_comment
+from shared.utils.review_utils import get_identity_issues
 from domain.models import Person
 from jobs.people_collector.schemas import (
     WorkflowStatus,
@@ -184,7 +185,7 @@ def test_direct_name_match():
 
     officials = [make_official("michelle drass")]
     people = [make_official("michelle drass")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == []
 
 def test_alias_match():
@@ -194,7 +195,7 @@ def test_alias_match():
     )
     people = [make_official("michelle d rass")]
     officials = [make_official("michelle drass")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == []
 
 def test_missing_official():
@@ -204,7 +205,7 @@ def test_missing_official():
     )
     people = [make_official("john smith")]
     officials = [make_official("michelle drass")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == [
         "Extra official: john smith",
         "Missing official: michelle drass"
@@ -224,7 +225,7 @@ def test_multiple_officials_some_missing():
     )
     people = [make_official("michelle d rass"), make_official("john smith")]
     officials = [make_official("michelle drass"), make_official("jane smith")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == [
         "Extra official: john smith",
         "Missing official: jane smith"
@@ -238,7 +239,7 @@ def test_extra_official_in_people():
     people = [make_official("michelle drass"), make_official("john smith")]
 
     officials = [make_official("michelle drass")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == ["Extra official: john smith"]
 
 def test_extra_official_in_research():
@@ -249,7 +250,7 @@ def test_extra_official_in_research():
     
     people = [make_official("michelle d rass")]
     officials = [make_official("michelle drass"), make_official("jane smith")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == ["Missing official: jane smith"]
 
 def test_both_extra_and_missing_officials():
@@ -260,7 +261,7 @@ def test_both_extra_and_missing_officials():
     
     people = [make_official("michelle d rass"), make_official("john smith")]
     officials = [make_official("michelle drass"), make_official("jane smith")]
-    errors = get_identity_mismatches(officials, config, people)
+    errors = get_identity_issues(research_people=officials, people=people, identities=config.identities or {})
     assert errors == [
         "Extra official: john smith",
         "Missing official: jane smith"
@@ -273,5 +274,5 @@ def test_no_officials():
     )
     
     people = []
-    errors = get_identity_mismatches([], config, people)
+    errors = get_identity_issues(research_people=[], people=people, identities=config.identities or {})
     assert errors == []

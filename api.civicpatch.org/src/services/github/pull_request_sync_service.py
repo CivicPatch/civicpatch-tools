@@ -3,8 +3,8 @@ import logging
 import database.database as database
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
+from job_service.people_collector.people_data_utils import extract_review_data
 from utils.github_utils import pull_request_url_to_number
-from shared.utils.review_utils import has_data_issues
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,15 @@ async def backfill_job_result(request_id: str, jurisdiction_ocdid: str):
     if data is None:
         logger.warning("backfill_job_result: no file found for %s", request_id)
         return
-    await database.update_job_result(request_id, data, has_issues=has_data_issues(data or []))
+
+    review_json = []
+    workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
+    if workflow_context:
+        review = extract_review_data(workflow_context, data if isinstance(data, list) else [])
+        review_json = review["people_by_source"]
+
+    await database.update_job_result(request_id, data)
+    await database.update_job_review_json(request_id, review_json)
     logger.info("backfill_job_result: result_json set for %s", request_id)
 
 
@@ -56,6 +64,7 @@ async def sync_open_pr_state():
             github_prs[parts["request_id"]] = {
                 "url": pr.get("html_url"),
                 "jurisdiction_ocdid": parts["jurisdiction_ocdid"],
+                "pr_number": pr.get("number"),
             }
         except (ValueError, KeyError):
             pass
@@ -67,6 +76,9 @@ async def sync_open_pr_state():
         updated = await database.update_job_pull_request_status(
             request_id, "open", None, pull_request_url=pr_info["url"]
         )
+        if pr_info.get("pr_number"):
+            review_state = await github_service.get_pull_request_review_state(pr_info["pr_number"])
+            await database.update_job_pull_request_review_state(request_id, review_state)
         if not updated:
             logger.info(f"sync_open_pr_state: no job found for {request_id}, creating")
             await register_and_sync_pr_job(

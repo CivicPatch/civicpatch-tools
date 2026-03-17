@@ -1,8 +1,0 @@
-BEGIN;
-
-ALTER TABLE jobs DROP COLUMN has_issues;
-ALTER TABLE jobs ADD COLUMN issues JSONB NOT NULL DEFAULT '[]';
-
-DROP INDEX IF EXISTS idx_jobs_has_issues;
-
-COMMIT;
