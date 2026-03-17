@@ -128,7 +128,7 @@ def get_router(api_key_header):
 
         # Update the results_json in the background, too
         background_tasks.add_task(
-            database.database.update_job_result, request.request_id, request.data
+            database.database.update_job_data, request.request_id, request.data
         )
         if not _github_response:
             return JSONResponse(
@@ -190,8 +190,8 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
-        result_json = await database.database.get_job_result_json(request_id)
-        issues = extract_issues(result_json or [])
+        data_json = await database.database.get_job_data_json(request_id)
+        issues = extract_issues(data_json or [])
         return {"issues": issues}
 
     # -- Pull Requests: Close Pull Request ---

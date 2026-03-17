@@ -67,12 +67,15 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
-    asyncio.create_task(services.github.data_sync_service.bulk_sync())
-    sync_task = asyncio.create_task(_run_every(3600, services.github.pull_request_sync_service.sync_open_pr_state))
+    sync_task = None
+    if is_production:
+        asyncio.create_task(services.github.data_sync_service.bulk_sync())
+        sync_task = asyncio.create_task(_run_every(3600, services.github.pull_request_sync_service.sync_open_pr_state))
 
     yield
 
-    sync_task.cancel()
+    if sync_task:
+        sync_task.cancel()
     await close_pool()
 
 

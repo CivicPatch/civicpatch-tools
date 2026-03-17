@@ -17,11 +17,11 @@ import utils.file_utils
 from database.database import (
     get_job,
     get_job_result,
-    get_job_result_json,
+    get_job_data_json,
     get_job_status,
     register_job,
     update_job_pull_request_url,
-    update_job_result,
+    update_job_data,
     update_job_status,
 )
 from job_service.people_collector import people_collector
@@ -207,7 +207,7 @@ def get_router(api_key_header):
 
         tasks = []
         if request.data:  # Called from within civicpatch project
-            tasks.append(("result", update_job_result(request_id, request.data)))
+            tasks.append(("result", update_job_data(request_id, request.data)))
         if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (
@@ -297,7 +297,7 @@ def get_router(api_key_header):
                 status=job["status"],
                 progress=job["progress"],
                 arguments=job["arguments_json"],
-                result=job["result_json"],
+                result=job["data_json"],
                 pull_request_url=job["pull_request_url"],
                 created_at=job["created_at"],
                 updated_at=job["updated_at"],

@@ -689,7 +689,7 @@ async def get_job(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress, arguments_json, result_json, created_at, updated_at, pull_request_url FROM jobs
+            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url FROM jobs
             WHERE request_id = %s;
             """,
             (request_id,),
@@ -701,7 +701,7 @@ async def get_job(request_id: str):
                 "status": row[0],
                 "progress": row[1],
                 "arguments_json": row[2],
-                "result_json": row[3],
+                "data_json": row[3],
                 "created_at": to_iso(row[4]),
                 "updated_at": to_iso(row[5]),
                 "pull_request_url": row[6],
@@ -755,18 +755,18 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
             params,
         )
 
-async def update_job_result(request_id: str, result_json: Any):
+async def update_job_data(request_id: str, data_json: Any):
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             """
             UPDATE jobs
-            SET result_json = %s,
+            SET data_json = %s,
                 updated_at = CURRENT_TIMESTAMP
             WHERE request_id = %s;
             """,
             (
-                json.dumps(result_json),
+                json.dumps(data_json),
                 request_id,
             ),
         )
@@ -1113,11 +1113,11 @@ async def list_jobs_with_open_prs(
     return results, total
 
 
-async def get_job_result_json(request_id: str):
+async def get_job_data_json(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT result_json FROM jobs WHERE request_id = %s LIMIT 1",
+            "SELECT data_json FROM jobs WHERE request_id = %s LIMIT 1",
             (request_id,),
         )
         row = await cur.fetchone()
@@ -1128,7 +1128,7 @@ async def get_job_result(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT result_json, review_json FROM jobs WHERE request_id = %s LIMIT 1",
+            "SELECT data_json, review_json FROM jobs WHERE request_id = %s LIMIT 1",
             (request_id,),
         )
         row = await cur.fetchone()
