@@ -25,6 +25,7 @@ from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records
 )
 from jobs.people_collector.steps.step_08_format_output.format_output import format_output
 from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
+from jobs.people_collector.steps.step_10_review_output.review_output import review_output
 from jobs.people_collector.steps.step_10_save_output.save_output import save_output
 from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
@@ -266,17 +267,29 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
     _result = cleanup(context)
 
     progress = calculate_progress_percentage(context.data, 9)
-    
-    next_state = WorkflowStatus.SAVE_OUTPUT
+
     next_context = context.copy(update={
         "progress": progress
     })
-    return next_context, next_state
+    return next_context, WorkflowStatus.REVIEW_OUTPUT
+
+async def review_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    result = review_output(context)
+
+    progress = calculate_progress_percentage(context.data, 10)
+    next_context = context.copy(update={
+        "progress": progress,
+        "data": context.data.copy(update={
+            "review_output_step": result,
+        })
+    })
+
+    return next_context, WorkflowStatus.SAVE_OUTPUT
 
 async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     _result = await save_output(context)
 
-    progress = calculate_progress_percentage(context.data, 10)
+    progress = calculate_progress_percentage(context.data, 11)
     next_context = context.copy(update={
         "progress": progress
     })
@@ -291,7 +304,7 @@ async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, 
 
     _ = await maybe_send_to_github(context)
 
-    progress = calculate_progress_percentage(context.data, 11)
+    progress = calculate_progress_percentage(context.data, 12)
     next_context = context.copy(update={
         "progress": progress
     })
@@ -312,7 +325,7 @@ async def error_transition(_: JobConfig, logger: WorkflowLogger, context: People
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
-    total_steps = 12
+    total_steps = 13
     if context_data.process_page_content_step is None:
         data_progress = 0
     else:
@@ -335,6 +348,7 @@ TRANSITION_MAP = {
   WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
   WorkflowStatus.FORMAT_OUTPUT: format_output_transition,
   WorkflowStatus.CLEANUP: cleanup_transition,
+  WorkflowStatus.REVIEW_OUTPUT: review_output_transition,
   WorkflowStatus.SAVE_OUTPUT: save_output_transition,
   WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,
   WorkflowStatus.FINALIZE: finalize_transition, 

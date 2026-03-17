@@ -16,6 +16,8 @@ import services.github.github_api_service as github_service
 import utils.file_utils
 from database.database import (
     get_job,
+    get_job_result,
+    get_job_result_json,
     get_job_status,
     register_job,
     update_job_pull_request_url,
@@ -351,39 +353,13 @@ def get_router(api_key_header):
         jurisdiction_ocdid: str,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
-        context_file_path = data_path_utils.get_data_source_context_file_path(
-            jurisdiction_ocdid
-        )
-        # Chop off leading "/app/" from file_path
-        if file_path.startswith("/app/"):
-            file_path = file_path[len("/app/") :]
+        request_id = branch_name.split("-")[-1]
+        result = await get_job_result(request_id)
 
-        data_github_response = await github_service.get_github_file_contents(
-            github_file_path=file_path, ref=branch_name
-        )
-
-        context_github_response = await github_service.get_github_file_contents(
-            github_file_path=context_file_path, ref=branch_name
-        )
-        if context_github_response:
-            context = json.loads(context_github_response)
-            review = None
-            try:
-                people = (
-                    data_github_response and yaml.safe_load(data_github_response) or []
-                )
-                review = people_data_utils.extract_review_data(context, people)
-            except Exception as e:
-                print("Error extracting review data, skipping:", e)
-
-        if data_github_response is None:
-            return {"branch_name": branch_name, "data": None}
-
-        response = (
-            yaml.safe_load(data_github_response) if data_github_response else None
-        )
-
-        return {"branch_name": branch_name, "data": response, "review": review or None}
+        return {
+            "branch_name": branch_name,
+            "data": result["data"] if result else None,
+            "review_json": result["review_json"] if result else [],
+        }
 
     return router

@@ -85,8 +85,9 @@ class WorkflowStatus(Enum):
     MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
     MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
     FORMAT_OUTPUT = "FORMAT_OUTPUT"
-    SAVE_OUTPUT = "SAVE_OUTPUT"
     CLEANUP = "CLEANUP"
+    REVIEW_OUTPUT = "REVIEW_OUTPUT"
+    SAVE_OUTPUT = "SAVE_OUTPUT"
     MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     RETRY = "RETRY"
     FINALIZE = "FINALIZE"
@@ -154,6 +155,9 @@ class FormatOutputStep(BaseModel):
     officials: List[Official]
     config: WorkflowConfig
 
+class ReviewOutputStep(BaseModel):
+    issues: List[str]
+
 class MaybeSendToGitHubStep(BaseModel):
     status: str
     response_status_code: Optional[int] = None
@@ -174,6 +178,7 @@ class PeopleCollectorData(BaseModel):
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     format_output_step: Optional[FormatOutputStep] = None
+    review_output_step: Optional[ReviewOutputStep] = None
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
     error_step: Optional[str] = None
 

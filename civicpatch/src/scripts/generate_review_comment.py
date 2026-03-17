@@ -2,19 +2,10 @@ import json
 import sys
 from typing import List
 from collections import defaultdict
-from jobs.people_collector.schemas import (
-    PeopleCollectorContext,
-    WorkflowConfig,
-    ResearchMunicipalityStep,
-)
+from jobs.people_collector.schemas import PeopleCollectorContext
 from domain.models import Official
 from shared.utils import data_path_utils, config_utils
-from pydantic import BaseModel
-import utils.merge_utils as merge_utils
-
-class ReviewDecision(BaseModel):
-    comment: str
-    approved: bool
+from shared.utils.review_utils import ReviewDecision, generate_review, generate_review_table_markdown, get_identity_issues
 
 def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Official]) -> ReviewDecision:
     merge_step = pipeline_context.data.merge_records_across_llms_step
@@ -31,16 +22,10 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     researched_people = pipeline_context.data.research_municipality_step.elected_officials
     filtered_researched_people = [p for p in researched_people if p.name != "Vacant Vacant"]
 
-    identity_errors = get_identity_mismatches(
-        filtered_researched_people,
-        pipeline_context.data.format_output_step.config    ,
-        people,
-    )
-    identity_table = identities_mismatch_table(
-        filtered_researched_people,
-        pipeline_context.data.format_output_step.config,
-        people,
-    )
+    identities = pipeline_context.data.format_output_step.config.identities
+    identity_errors = get_identity_issues(filtered_researched_people, people, identities)
+    review = generate_review(filtered_researched_people, people, identities)
+    identity_table = generate_review_table_markdown(review["people_by_source"])
     # ----------------------------------------------
 
     markdown = []
@@ -152,76 +137,6 @@ def extract_unique_designations_from_office_name(office_name: str, designations_
             matches.append(part)
 
     return matches
-
-def canonicalize_names(officials, identities):
-    """Return a set of canonical names for a list of officials, using identities mapping and same_name comparison."""
-
-    canonicals = set()
-    for o in officials:
-        name = o.name
-        found = False
-        if identities:
-            for canonical, aliases in identities.items():
-                if merge_utils.same_name(name, canonical):
-                    canonicals.add(canonical)
-                    found = True
-                    break
-                for alias in aliases:
-                    if merge_utils.same_name(name, alias):
-                        canonicals.add(canonical)
-                        found = True
-                        break
-                if found:
-                    break
-        if not found:
-            canonicals.add(name)
-    return canonicals
-
-def get_identity_mismatches(
-    researched_people: List[Official],
-    config: WorkflowConfig, 
-    people: list, 
-) -> list:
-    """Return a list of errors for canonical name mismatches."""
-    identities = config.identities or {}
-    research_canonicals = canonicalize_names(researched_people, identities)
-    people_canonicals = canonicalize_names(people, identities)
-
-    errors = []
-    extra_in_people = sorted(people_canonicals - research_canonicals)
-    extra_in_research = sorted(research_canonicals - people_canonicals)
-
-    for name in extra_in_people:
-        errors.append(f"Extra official: {name}")
-    for name in extra_in_research:
-        errors.append(f"Missing official: {name}")
-
-    return errors
-
-def identities_mismatch_table(
-    researched_people: List[Official],
-    config: WorkflowConfig, 
-    people: list, 
-) -> str:
-    """
-    Returns a markdown table comparing officials in research vs. final list,
-    combining aliases under their canonical name using config.identities.
-    """
-    identities = config.identities or {}
-    research_canonicals = canonicalize_names(researched_people, identities)
-    people_canonicals = canonicalize_names(people, identities)
-    all_canonicals = sorted(research_canonicals | people_canonicals)
-
-    table = [
-        "| Canonical Name | In Research | In Data |",
-        "|---------------|:-----------:|:-------:|"
-    ]
-    for name in all_canonicals:
-        in_research = "✅" if name in research_canonicals else "❌"
-        in_final = "✅" if name in people_canonicals else "❌"
-        table.append(f"| {name} | {in_research} | {in_final} |")
-
-    return "\n".join(table)
 
 def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
     with open(filepath, "r") as file:

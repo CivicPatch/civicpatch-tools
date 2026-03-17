@@ -755,20 +755,18 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
             params,
         )
 
-async def update_job_result(request_id: str, result_json: Any, has_issues: bool = False):
+async def update_job_result(request_id: str, result_json: Any):
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             """
             UPDATE jobs
             SET result_json = %s,
-                has_issues = %s,
                 updated_at = CURRENT_TIMESTAMP
             WHERE request_id = %s;
             """,
             (
                 json.dumps(result_json),
-                has_issues,
                 request_id,
             ),
         )
@@ -1087,12 +1085,12 @@ async def list_jobs_with_open_prs(
             SELECT j.request_id, j.pull_request_url, j.pull_request_status,
                    j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   j.created_at, j.updated_at, j.has_issues
+                   j.created_at, j.updated_at, j.pull_request_review_state
             FROM jobs j
             LEFT JOIN jurisdictions jur
                    ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
             WHERE {where}
-            ORDER BY j.has_issues DESC, j.created_at DESC
+            ORDER BY (j.pull_request_review_state = 'changes_requested') DESC, j.created_at DESC
             LIMIT %s OFFSET %s
             """,
             params + [per_page, offset],
@@ -1108,7 +1106,7 @@ async def list_jobs_with_open_prs(
             "jurisdiction_name": r[4],
             "created_at": to_iso(r[5]),
             "updated_at": to_iso(r[6]),
-            "has_issues": r[7],
+            "pull_request_review_state": r[7],
         }
         for r in rows
     ]
@@ -1124,6 +1122,47 @@ async def get_job_result_json(request_id: str):
         )
         row = await cur.fetchone()
     return row[0] if row else None
+
+
+async def get_job_result(request_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT result_json, review_json FROM jobs WHERE request_id = %s LIMIT 1",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+    if row is None:
+        return None
+    return {"data": row[0], "review_json": row[1]}
+
+
+async def update_job_pull_request_review_state(request_id: str, review_state: str | None):
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE jobs
+            SET pull_request_review_state = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (review_state, request_id),
+        )
+
+
+async def update_job_review_json(request_id: str, review_json: list):
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE jobs
+            SET review_json = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (json.dumps(review_json), request_id),
+        )
 
 
 async def get_open_pr_request_ids() -> List[str]:

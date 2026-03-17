@@ -1,4 +1,4 @@
-import { component, useState } from "haunted";
+import { component } from "haunted";
 import { html } from "lit-html";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
@@ -29,24 +29,19 @@ const renderStats = ({ added, removed, changed }) => {
   `;
 };
 
+const REVIEW_STATE = {
+  "changes_requested": {
+    label: "Issues",
+    variant: "danger",
+  },
+  "approved": {
+    label: "Approved",
+    variant: "success",
+  },
+}
+
 const PullRequestCardHeader = ({ pr, state, stats }) => {
   const pullRequestNumber = pullRequestUrlToNumber(pr?.pull_request_url);
-  const [issuesText, setIssuesText] = useState(null);
-  const [issuesLoading, setIssuesLoading] = useState(false);
-
-  const handleIssuesOpen = async () => {
-    if (issuesText !== null || issuesLoading) return;
-    setIssuesLoading(true);
-    try {
-      const res = await fetch(`/api/api_proxy/pull_requests/${pr.request_id}/issues`, { credentials: "include" });
-      const data = await res.json();
-      setIssuesText(data.issues?.join(" · ") || "No specific issues found.");
-    } catch {
-      setIssuesText("Failed to load issues.");
-    } finally {
-      setIssuesLoading(false);
-    }
-  };
 
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
@@ -122,12 +117,9 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
       </a>
     </div>
     <div class="header-item-center">
-      ${pr?.has_issues ? html`<civ-badge
-        .label=${"Issues"}
-        .variant=${"danger"}
-        .popoverText=${issuesLoading ? "Loading…" : (issuesText ?? "")}
-        .popoverId=${"issues-" + pullRequestNumber}
-        @click=${handleIssuesOpen}
+      ${pr?.pull_request_review_state ? html`<civ-badge
+        .label=${REVIEW_STATE[pr.pull_request_review_state]?.label ?? pr.pull_request_review_state}
+        .variant=${REVIEW_STATE[pr.pull_request_review_state]?.variant ?? "primary"}
       ></civ-badge>` : ""}
       ${renderStats(stats ?? {})}
     </div>

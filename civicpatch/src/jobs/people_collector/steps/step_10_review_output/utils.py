@@ -1,48 +1,32 @@
 import re
 from typing import List, Protocol, Dict, Set
 
-from pydantic import BaseModel
-
-from . import name_utils
+import shared.utils.name_utils as name_utils
 
 
 MIN_EXPECTED_PEOPLE = 3
-
 
 class PersonLike(Protocol):
     """Protocol for objects with name and other_names fields."""
     name: str
     other_names: List[str] | None
 
-
-class ReviewDecision(BaseModel):
-    comment: str
-    approved: bool
-
-def get_identity_issues(
-    research_people,
-    people,
-    identities: Dict[str, List[str]] | None = None,
-) -> List[str]:
-    identities = identities or {}
-    canonical_map = name_utils.build_canonical_map(
-        list(research_people) + list(people), identities
-    )
-    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
-    people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
-    return _generate_issues(research_canonicals, people_canonicals)
-
-
 def generate_review(
-    research_people,
-    people,
+    research_people: List[dict],
+    people: List[dict],
     identities: Dict[str, List[str]] | None = None,
 ):
     identities = identities or {}
 
-    all_people = list(research_people) + list(people)
+    # 1. Gather all people
+    all_people = []
+    all_people.extend(research_people)
+    all_people.extend(people)
+
+    # 2. Build canonical map
     canonical_map = name_utils.build_canonical_map(all_people, identities)
 
+    # 3. Build canonical sets for each source
     research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
     people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
 
@@ -61,6 +45,7 @@ def _collect_all_canonicals(
     research_canonicals: Set[str],
     people_canonicals: Set[str],
 ) -> List[str]:
+    """Collect and sort all canonical names from all sources."""
     all_names = research_canonicals | people_canonicals
     return sorted(all_names)
 
@@ -68,6 +53,7 @@ def _generate_issues(
     research_canonicals: Set[str],
     people_canonicals: Set[str],
 ) -> List[str]:
+    """Generate issue strings for mismatches between research and final."""
     issues = []
 
     for name in sorted(people_canonicals - research_canonicals):
@@ -83,6 +69,7 @@ def _generate_rows(
     research_canonicals: Set[str],
     people_canonicals: Set[str],
 ) -> List[Dict]:
+    """Generate table rows for each canonical name."""
     return [
         _build_row(name, research_canonicals, people_canonicals)
         for name in all_canonicals
@@ -93,6 +80,7 @@ def _build_row(
     research_canonicals: Set[str],
     people_canonicals: Set[str],
 ) -> Dict:
+    """Build a single row dict for a canonical name."""
     return {
         "name": name,
         "in_research": name in research_canonicals,
@@ -110,26 +98,10 @@ def _check_people_count(people: List[dict]) -> List[str]:
         return [f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"]
     return []
 
-def generate_review_table_markdown(rows: List[Dict]) -> str:
-    lines = [
-        "| Canonical Name | In Research | In Data |",
-        "|---------------|:-----------:|:-------:|",
-    ]
-    for row in rows:
-        in_research = "✅" if row["in_research"] else "❌"
-        in_data = "✅" if row["in_data"] else "❌"
-        lines.append(f"| {row['name']} | {in_research} | {in_data} |")
-    return "\n".join(lines)
-
-
-def _check_division_sequence(people) -> List[str]:
+def _check_division_sequence(people: List[dict]) -> List[str]:
     numbers = []
     for p in people:
-        if isinstance(p, dict):
-            ocdid = (p.get("office") or {}).get("division_ocdid") or ""
-        else:
-            office = getattr(p, "office", None)
-            ocdid = (office.division_ocdid or "") if office else ""
+        ocdid = (p.get("office") or {}).get("division_ocdid") or ""
         match = re.search(r":(\d+)$", ocdid)
         if match:
             numbers.append(int(match.group(1)))
