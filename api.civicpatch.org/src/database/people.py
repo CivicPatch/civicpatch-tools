@@ -84,7 +84,7 @@ async def get_people_data_by_request_ids(
                     request_id,
                     (
                         SELECT jsonb_agg({result_projection})
-                        FROM jsonb_array_elements(result_json) AS elem
+                        FROM jsonb_array_elements(data_json) AS elem
                     ) AS people_data,
                     arguments_json#>>'{{jurisdiction_ocdid}}' AS jurisdiction_ocdid
                 FROM jobs
