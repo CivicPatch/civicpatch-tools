@@ -237,6 +237,26 @@ async def get_github_file_contents(
     )
 
 
+async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
+    _, _, _, open_data_repo_url = _get_github_config()
+    results = []
+    page = 1
+    while True:
+        url = f"{open_data_repo_url}/pulls?state=open&per_page={per_page}&page={page}"
+        headers = await get_default_headers()
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            response = await client.get(url, headers=headers)
+        if response.status_code != 200:
+            logger.error(f"get_all_open_prs_raw: GitHub API error on page {page}: {response.status_code}")
+            break
+        prs = response.json()
+        results.extend(prs)
+        if len(prs) < per_page:
+            break
+        page += 1
+    return results
+
+
 async def get_open_pull_requests(
     jurisdiction_ocddid=None, state_code: str | None = None, page: int = 1, per_page: int = 100
 ) -> List[PullRequest]:
@@ -359,6 +379,19 @@ async def get_pull_request_file_yaml(
             f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}"
         )
         return None
+
+
+async def get_pull_request(pull_request_number: str) -> dict | None:
+    _, _, _, open_data_repo_url = _get_github_config()
+    async with httpx.AsyncClient() as client:
+        default_headers = await get_default_headers()
+        response = await client.get(
+            f"{open_data_repo_url}/pulls/{pull_request_number}",
+            headers=default_headers,
+        )
+        if response.status_code != 200:
+            return None
+        return response.json()
 
 
 async def close_pull_request(pull_request_number: str) -> bool:

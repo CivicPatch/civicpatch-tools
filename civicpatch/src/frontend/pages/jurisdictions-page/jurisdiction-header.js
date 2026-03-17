@@ -1,7 +1,8 @@
 import { component } from "haunted";
 import { html } from "lit-html";
+import "../../components/badge.js";
 
-function JurisdictionHeader({ name, scrapeStatus }) {
+function JurisdictionHeader({ name, scrapeStatus, details }) {
   const isScraped = scrapeStatus === "Scraped";
 
   return html`
@@ -55,7 +56,15 @@ function JurisdictionHeader({ name, scrapeStatus }) {
 
     <header>
       <div class="jh-wrap">
-        <h2 class="jh-name">${name}</h2>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <h2 class="jh-name">${name}</h2>
+          ${details?.has_issues ? html`<civ-badge
+            .label=${"Issues"}
+            .variant=${"danger"}
+            .fetchUrl=${`/api/api_proxy/pull_requests/${details.open_pr_request_id}/issues`}
+            .popoverId=${"issues-jur-" + name}
+          ></civ-badge>` : ""}
+        </div>
         <span class="jh-status">
           <span class="jh-status-dot"></span>
           ${scrapeStatus}

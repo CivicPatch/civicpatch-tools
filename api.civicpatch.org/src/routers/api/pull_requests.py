@@ -3,6 +3,7 @@ import logging
 from typing import Any, Dict, List
 
 import shared.utils.id_utils
+from shared.utils.review_utils import get_data_issues
 import yaml
 from fastapi import (
     APIRouter,
@@ -180,6 +181,18 @@ def get_router(api_key_header):
             "page": page,
             "per_page": per_page,
         }
+
+    # -- Pull Requests: Issues for a job ---
+    @router.get("/{request_id}/issues")
+    async def get_pull_request_issues_endpoint(
+        request_id: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+        ),
+    ):
+        result_json = await database.database.get_job_result_json(request_id)
+        issues = get_data_issues(result_json or [])
+        return {"issues": issues}
 
     # -- Pull Requests: Close Pull Request ---
     @router.delete("/{pull_request_number}", include_in_schema=False)

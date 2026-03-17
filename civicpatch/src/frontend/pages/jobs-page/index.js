@@ -6,7 +6,7 @@ import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
 import "../../components/search-jurisdictions/select-state.js";
 
-const DEFAULT_STATE = "TX";
+const DEFAULT_STATE = "tx";
 
 function getPageFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -15,7 +15,7 @@ function getPageFromUrl() {
 }
 
 function getStateFromUrl() {
-  return new URLSearchParams(window.location.search).get("state") || DEFAULT_STATE;
+  return (new URLSearchParams(window.location.search).get("state") || DEFAULT_STATE).toLowerCase();
 }
 
 function setPageInUrl(page) {

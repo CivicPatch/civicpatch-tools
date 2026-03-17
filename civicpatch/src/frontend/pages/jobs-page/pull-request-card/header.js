@@ -1,8 +1,9 @@
-import { component } from "haunted";
+import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
 import { pullRequestUrlToNumber } from "../pr-utils.js";
+import "../../../components/badge.js"
 
 export function stateColor(state) {
   switch (state) {
@@ -30,6 +31,22 @@ const renderStats = ({ added, removed, changed }) => {
 
 const PullRequestCardHeader = ({ pr, state, stats }) => {
   const pullRequestNumber = pullRequestUrlToNumber(pr?.pull_request_url);
+  const [issuesText, setIssuesText] = useState(null);
+  const [issuesLoading, setIssuesLoading] = useState(false);
+
+  const handleIssuesOpen = async () => {
+    if (issuesText !== null || issuesLoading) return;
+    setIssuesLoading(true);
+    try {
+      const res = await fetch(`/api/api_proxy/pull_requests/${pr.request_id}/issues`, { credentials: "include" });
+      const data = await res.json();
+      setIssuesText(data.issues?.join(" · ") || "No specific issues found.");
+    } catch {
+      setIssuesText("Failed to load issues.");
+    } finally {
+      setIssuesLoading(false);
+    }
+  };
 
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
@@ -84,9 +101,9 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
 
   return html` <div class="pr-card__header">
     <div class="header-item-left">
-      <span class="pr-card__jurisdiction">
-        ${pr?.jurisdiction_name || jurisdictionOcdidToFriendly(pr?.jurisdiction_ocdid)}
-      </span>
+      <civ-badge
+        .label=${pr?.jurisdiction_name || jurisdictionOcdidToFriendly(pr?.jurisdiction_ocdid)}
+      ></civ-badge>
       <a class="pr-card__link" href=${pr?.pull_request_url} target="_blank" rel="noopener">
         #${pullRequestNumber || "—"}
       </a>
@@ -105,6 +122,13 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
       </a>
     </div>
     <div class="header-item-center">
+      ${pr?.has_issues ? html`<civ-badge
+        .label=${"Issues"}
+        .variant=${"danger"}
+        .popoverText=${issuesLoading ? "Loading…" : (issuesText ?? "")}
+        .popoverId=${"issues-" + pullRequestNumber}
+        @click=${handleIssuesOpen}
+      ></civ-badge>` : ""}
       ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">
@@ -112,6 +136,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
     </div>
   </div>`;
 };
+
 
 customElements.define(
   "pull-request-card-header",

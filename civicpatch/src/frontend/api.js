@@ -135,6 +135,14 @@ export const generatePersonId = async () => {
   return data.data.person_id;
 };
 
+export const fetchJobIssues = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const closePullRequest = async (pullRequestNumber) => {
   const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
     credentials: "include",
