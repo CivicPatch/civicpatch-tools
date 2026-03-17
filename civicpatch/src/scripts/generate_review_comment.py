@@ -8,16 +8,10 @@ from shared.utils import data_path_utils, config_utils
 from shared.utils.review_utils import ReviewDecision, generate_review, generate_review_table_markdown, get_identity_issues
 
 def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Official]) -> ReviewDecision:
-    merge_step = pipeline_context.data.merge_records_across_llms_step
-
-    agreement_score = merge_step.agreement_score
-    disagreements_by_person = merge_step.disagreements
-    validation_errors = merge_step.validation_errors
-
     all_sources = {source for person in people for source in person.source_urls}
 
     issues = generate_validation_errors(pipeline_context, people)
-    has_validation_errors = len(validation_errors) > 0 or len(issues) > 0
+    has_validation_errors = len(issues) > 0
 
     researched_people = pipeline_context.data.research_municipality_step.elected_officials
     filtered_researched_people = [p for p in researched_people if p.name != "Vacant Vacant"]
@@ -44,9 +38,6 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
         markdown.append("# Approved ✅")
         markdown.append("Approved by Bot.")
 
-    markdown.append(f"\n## Agreement Score: {agreement_score:.2f}")
-    markdown.append("\n---\n")
-
     # Data Sources section
     markdown.append("### Data Sources\n")
     for source in sorted(all_sources):
@@ -56,27 +47,6 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     markdown.append("### Identity Comparison\n")
     markdown.append(identity_table)
     markdown.append("\n---\n")
-
-    # Disagreements section
-    if disagreements_by_person:
-        markdown.append("### Disagreements")
-        for person_name, person_disagreements in disagreements_by_person.items():
-            markdown.append(f"### {person_name}\n")
-            markdown.append("| Field | Disagreement Score | gemini | openai | final_value |")
-            markdown.append("| ----- | ------------------ | ------ | ------ | ----------- |")
-            for disagreement in person_disagreements:
-                field = disagreement.field
-                score = disagreement.disagreement_score
-                llm_values = disagreement.llm_values
-                final_value = disagreement.merged_value or "_No consensus_"
-                unique_values = set(llm_values.values())
-                gemini_value = llm_values.get("google_gemini", "(missing)")
-                openai_value = llm_values.get("openai", "(missing)")
-                if len(unique_values) > 1:
-                    gemini_value = f"**{gemini_value}**" if gemini_value != final_value else gemini_value
-                    openai_value = f"**{openai_value}**" if openai_value != final_value else openai_value
-                markdown.append(f"| {field} | {score:.2f} | {gemini_value} | {openai_value} | {final_value} |")
-            markdown.append("\n---\n")
 
     return ReviewDecision(
         comment="\n".join(markdown),

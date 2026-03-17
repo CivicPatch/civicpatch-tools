@@ -50,9 +50,6 @@ async def test_format_output(httpx_mock):
     # Create dummy data for the merge_records_across_llms_step
     merge_records_across_llms_step = MergeRecordsAcrossLLMsStep(
         people=people,
-        agreement_score=85.0,  # Add the required field
-        disagreements={},
-        validation_errors=[]
     )
     research_municipality_step_data = ResearchMunicipalityStep(
         people=[],
