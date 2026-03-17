@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple
+from typing import List, Dict
 from utils import people_utils
 from shared.utils import name_utils
 from domain.models import Person
@@ -9,25 +9,10 @@ from jobs.people_collector.schemas import (
 from collections import Counter
 from datetime import datetime, timezone
 import jobs.people_collector.steps.step_07_merge_records_across_llms.field_mergers as field_mergers
-import jobs.people_collector.steps.step_07_merge_records_across_llms.record_comparison as record_comparison
-
-MINIMUM_AGREEMENT_SCORE = 80
-FIELD_WEIGHTS = {
-    "roles": 1.0,
-    "designations": 0.8,
-    "emails": 0.5,
-    "urls": 0.2,
-    "phones": 0.2,
-    "start_date": 0.5,
-    "end_date": 0.5,
-}
-FIELDS_TO_CHECK = list(FIELD_WEIGHTS.keys())
-
-# TODO: move disagreements logic to open-data, should not live here
 
 # --- Types ---
 
-PersonWithSource = Tuple[Person, str]
+PersonWithSource = tuple[Person, str]
 GroupByLLM = Dict[str, List[Person]]
 
 
@@ -40,17 +25,10 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     identity_names = _resolve_identity_names(context)
 
     groups = group_records_across_llms(identity_names, people_by_llm)
-    merged_people, all_disagreements = _merge_groups(groups, jurisdiction_ocdid, people_by_llm)
-
-    overall_agreement_score = record_comparison.calculate_overall_agreement_score(
-        FIELD_WEIGHTS, FIELDS_TO_CHECK, all_disagreements, len(people_by_llm),
-    )
+    merged_people = _merge_groups(groups, jurisdiction_ocdid)
 
     return MergeRecordsAcrossLLMsStep(
         people=people_utils.sort_people(merged_people),
-        agreement_score=overall_agreement_score,
-        disagreements=all_disagreements,
-        validation_errors=_validate(overall_agreement_score),
     )
 
 
@@ -67,10 +45,8 @@ def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[s
 def _merge_groups(
     groups: List[GroupByLLM],
     jurisdiction_ocdid: str,
-    people_by_llm: Dict[str, List[Person]],
-) -> Tuple[List[Person], Dict]:
+) -> List[Person]:
     merged_people = []
-    all_disagreements = {}
 
     for group_by_llm in groups:
         flat_group = [p for people in group_by_llm.values() for p in people]
@@ -81,19 +57,7 @@ def _merge_groups(
 
         merged_people.append(merged)
 
-        comparisons = record_comparison.collect_field_comparisons(
-            merged, group_by_llm, FIELDS_TO_CHECK, FIELD_WEIGHTS
-        )
-        if comparisons:
-            all_disagreements[merged.name] = comparisons
-
-    return merged_people, all_disagreements
-
-
-def _validate(score: float) -> List[str]:
-    if score < MINIMUM_AGREEMENT_SCORE:
-        return [f"Overall agreement score {score:.2f}% is below the minimum threshold of {MINIMUM_AGREEMENT_SCORE}%."]
-    return []
+    return merged_people
 
 
 # --- Grouping ---

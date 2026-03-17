@@ -94,18 +94,6 @@ class WorkflowStatus(Enum):
     ERROR = "ERROR"
     DONE = "DONE"
 
-class FieldComparison(BaseModel):
-    field: str
-    merged_value: str
-    llm_values: Dict[str, str]
-    disagreement_score: float
-
-
-class PersonDisagreements(BaseModel):
-    person_name: str
-    disagreements: List[FieldComparison]
-
-
 class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
@@ -147,9 +135,6 @@ class MergeRecordsWithinLLMStep(BaseModel):
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
-    agreement_score: float
-    disagreements: Dict[str, List[FieldComparison]] = {}
-    validation_errors: List[str] = []
 
 class FormatOutputStep(BaseModel):
     officials: List[Official]
