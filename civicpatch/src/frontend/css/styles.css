@@ -448,6 +448,7 @@ pr-card {
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 0.5rem;
     }
 
     .header-item-right {
@@ -480,18 +481,44 @@ pr-card {
 }
 
 
-.pr-card__jurisdiction {
+civ-badge {
+    display: inline-flex;
+    align-items: center;
+}
+
+.civ-badge {
     font-family: var(--pico-font-family-monospace);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--pico-primary-inverse);
-    background: var(--pico-primary-background);
-    border: 1px solid var(--pico-primary-border);
     padding: 0.15em 0.55em;
     border-radius: calc(var(--pico-border-radius) * 0.5);
     white-space: nowrap;
+    line-height: 1;
+    background: none;
+}
+.civ-badge--primary {
+    color: var(--pico-primary-inverse);
+    background: var(--pico-primary-background);
+    border: 1px solid var(--pico-primary-border);
+}
+.civ-badge--danger {
+    color: var(--pico-del-color);
+    border: 1px solid var(--pico-del-color);
+    cursor: pointer;
+}
+.civ-badge--danger:hover {
+    background: color-mix(in srgb, var(--pico-del-color) 12%, transparent);
+}
+.civ-badge__popover {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--pico-del-color);
+    background: var(--pico-card-background-color);
+    color: var(--pico-color);
+    max-width: 260px;
 }
 
 .pr-card__stats {
@@ -569,6 +596,7 @@ pr-card {
     color: var(--pico-primary);
     border-color: var(--pico-primary);
 }
+
 
 .pr-card__meta {
     padding: 0.3rem 1rem 0.5rem;

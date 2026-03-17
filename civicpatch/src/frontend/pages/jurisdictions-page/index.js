@@ -19,7 +19,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
 
-  // Guard: show loading or block if not authenticated
+  // Guards after all hooks (hooks must not be called conditionally)
   if (authLoading) {
     return html`<p>Checking authentication...</p>`;
   }
@@ -77,6 +77,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
           <civ-jurisdiction-header
             .name=${jurisdictionData?.data?.name}
             .scrapeStatus=${scrapeStatus}
+            .details=${jurisdictionData}
           ></civ-jurisdiction-header>
 
           <hr />

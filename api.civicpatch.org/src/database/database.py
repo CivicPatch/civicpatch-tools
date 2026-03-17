@@ -1087,12 +1087,12 @@ async def list_jobs_with_open_prs(
             SELECT j.request_id, j.pull_request_url, j.pull_request_status,
                    j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   j.created_at, j.updated_at
+                   j.created_at, j.updated_at, j.has_issues
             FROM jobs j
             LEFT JOIN jurisdictions jur
                    ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
             WHERE {where}
-            ORDER BY j.created_at DESC
+            ORDER BY j.has_issues DESC, j.created_at DESC
             LIMIT %s OFFSET %s
             """,
             params + [per_page, offset],
@@ -1108,20 +1108,32 @@ async def list_jobs_with_open_prs(
             "jurisdiction_name": r[4],
             "created_at": to_iso(r[5]),
             "updated_at": to_iso(r[6]),
+            "has_issues": r[7],
         }
         for r in rows
     ]
     return results, total
 
 
+async def get_job_result_json(request_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT result_json FROM jobs WHERE request_id = %s LIMIT 1",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+    return row[0] if row else None
+
+
 async def get_open_pr_request_ids() -> List[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT request_id FROM jobs WHERE pull_request_status = 'open'"
+            "SELECT request_id, pull_request_url FROM jobs WHERE pull_request_status = 'open'"
         )
         rows = await cur.fetchall()
-    return [r[0] for r in rows]
+    return {r[0]: r[1] for r in rows}
 
 
 async def bulk_close_stale_prs(request_ids: List[str]):

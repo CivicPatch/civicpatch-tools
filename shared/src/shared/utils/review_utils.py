@@ -88,6 +88,9 @@ def _build_row(
 def has_data_issues(people: List[dict]) -> bool:
     return bool(_check_people_count(people) or _check_division_sequence(people))
 
+def get_data_issues(people: List[dict]) -> List[str]:
+    return _check_people_count(people) + _check_division_sequence(people)
+
 def _check_people_count(people: List[dict]) -> List[str]:
     if len(people) < MIN_EXPECTED_PEOPLE:
         return [f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"]

@@ -1,7 +1,9 @@
 import hashlib
 import hmac
+import json
 import logging
 from typing import Any
+from urllib.parse import parse_qs
 
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
@@ -74,10 +76,17 @@ def get_router() -> APIRouter:
 
         body = await request.body()
         if not _verify_signature(body, secret, x_hub_signature_256):
+            logger.warning("GitHub webhook signature verification failed")
             raise HTTPException(status_code=401, detail="Invalid signature")
 
+        logger.info("GitHub webhook received: event=%s", x_github_event)
+
         if x_github_event == "pull_request":
-            payload: dict[str, Any] = await request.json()
+            content_type = request.headers.get("content-type", "")
+            if "application/x-www-form-urlencoded" in content_type:
+                payload: dict[str, Any] = json.loads(parse_qs(body.decode())["payload"][0])
+            else:
+                payload = json.loads(body)
             background_tasks.add_task(_handle_pull_request_event, payload)
 
         return {"ok": True}
