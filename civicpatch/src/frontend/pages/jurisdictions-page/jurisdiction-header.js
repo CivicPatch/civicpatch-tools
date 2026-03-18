@@ -1,6 +1,6 @@
 import { component } from "haunted";
 import { html } from "lit-html";
-import "../../components/badge.js";
+import "../../components/badge/badge.js";
 
 function JurisdictionHeader({ name, scrapeStatus, details }) {
   const isScraped = scrapeStatus === "Scraped";

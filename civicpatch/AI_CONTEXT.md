@@ -20,7 +20,8 @@ src/
     api/            ← FastAPI app + routes
     cli/            ← CLI entrypoint
   frontend/
-    css/styles.css  ← all styles
+    css/styles.css          ← global styles (tokens, base, layout, buttons, utilities)
+    css/components/         ← per-component stylesheets, @imported by styles.css
     pages/          ← page-level web components
     components/     ← shared web components
     api.js          ← API calls
