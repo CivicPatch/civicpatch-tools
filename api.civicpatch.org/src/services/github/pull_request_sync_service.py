@@ -16,21 +16,27 @@ async def sync_open_pr_state():
     logger.info("sync_open_pr_state: done")
 
 
-async def backfill_job_result(request_id: str, jurisdiction_ocdid: str):
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    data = await github_service.get_pull_request_file_yaml(
-        request_id, jurisdiction_ocdid, f"data/{folder}.yml"
-    )
-    if data is None:
-        logger.warning("backfill_job_result: no file found for %s", request_id)
+async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
+    result = await database.get_job_result(request_id)
+    if result is None:
         return
 
-    workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
-    review_json = _derive_review_step(workflow_context)
+    if result["data"] is None:
+        folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+        data = await github_service.get_pull_request_file_yaml(
+            request_id, jurisdiction_ocdid, f"data/{folder}.yml"
+        )
+        if data is None:
+            logger.warning("maybe_backfill_job_result: no data file found for %s", request_id)
+        else:
+            await database.update_job_data(request_id, data)
+            logger.info("maybe_backfill_job_result: data_json set for %s", request_id)
 
-    await database.update_job_data(request_id, data)
-    await database.update_job_review_json(request_id, review_json)
-    logger.info("backfill_job_result: data_json set for %s", request_id)
+    if result["review_json"] is None:
+        workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
+        review_json = _derive_review_step(workflow_context)
+        await database.update_job_review_json(request_id, review_json)
+        logger.info("maybe_backfill_job_result: review_json set for %s", request_id)
 
 
 def _derive_review_step(workflow_context) -> dict:
@@ -59,7 +65,7 @@ async def register_and_sync_pr_job(
         progress=progress,
     )
     await database.update_job_pull_request_status(request_id, "open", None, pull_request_url=pr_url)
-    await backfill_job_result(request_id, jurisdiction_ocdid)
+    await maybe_backfill_job_result(request_id, jurisdiction_ocdid)
 
 
 async def _fetch_open_github_prs() -> dict[str, dict]:
@@ -94,6 +100,8 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
                 status="completed",
                 progress=100,
             )
+        else:
+            await maybe_backfill_job_result(request_id, pr_info["jurisdiction_ocdid"])
         if pr_info.get("pr_number"):
             review_state = await github_service.get_pull_request_review_state(pr_info["pr_number"])
             await database.update_job_pull_request_review_state(request_id, review_state)

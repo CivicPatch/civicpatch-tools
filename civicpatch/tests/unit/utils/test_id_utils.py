@@ -3,6 +3,7 @@ from shared.utils.id_utils import (  # Replace `your_module` with the actual mod
     parse_jurisdiction_ocdid,
     jurisdiction_ocdid_to_folder,
     make_git_branch,
+    git_branch_to_parts,
     slug_to_jurisdiction_ocdid,
 )
 
@@ -89,6 +90,22 @@ def test_make_git_branch():
     request_id = "2025-09-25-1a2b"
     expected = "2025-09-25-1a2b__state_wa__place_seattle__government"
     assert make_git_branch(jurisdiction_ocdid, request_id) == expected
+
+
+def test_make_git_branch_encodes_tilde():
+    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    request_id = "2025-09-25-1a2b"
+    branch = make_git_branch(jurisdiction_ocdid, request_id)
+    assert "~" not in branch
+    assert "--" in branch
+
+
+def test_git_branch_roundtrips_tilde():
+    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    request_id = "2025-09-25-1a2b"
+    branch = make_git_branch(jurisdiction_ocdid, request_id)
+    parts = git_branch_to_parts(branch)
+    assert parts["jurisdiction_ocdid"] == jurisdiction_ocdid
 
 
 # Tests for slug_to_jurisdiction_ocdid
