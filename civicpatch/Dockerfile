@@ -49,7 +49,7 @@ COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 RUN uv sync --package civicpatch --no-dev --frozen --no-install-project
 
 # Copy source
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src /app/src
+COPY ${PROJECT_NAME}/src ./src
 
 # ==========================================
 # Stage: post-install
