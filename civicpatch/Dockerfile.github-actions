@@ -22,6 +22,7 @@ ENV PYTHONUNBUFFERED=1 \
     XDG_CACHE_HOME="/tmp/.cache" \
     XDG_CONFIG_HOME="/tmp/.config" \
     PROJECT_NAME="civicpatch" \
+    APP_ROOT="/app" \
     # uv: install packages into /venv
     UV_PROJECT_ENVIRONMENT="/venv" \
     UV_CACHE_DIR="/tmp/.cache/uv" \

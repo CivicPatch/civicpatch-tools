@@ -5,7 +5,8 @@ import yaml
 
 from shared.utils import id_utils
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+_computed_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ROOT_DIR = os.getenv("APP_ROOT", _computed_root)
 
 def get_data_path():
     """
