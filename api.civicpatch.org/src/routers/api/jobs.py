@@ -359,7 +359,7 @@ def get_router(api_key_header):
         return {
             "branch_name": branch_name,
             "data": result["data"] if result else None,
-            "review_json": result["review_json"] if result else [],
+            "review_json": result["review_json"] if result else {},
         }
 
     return router

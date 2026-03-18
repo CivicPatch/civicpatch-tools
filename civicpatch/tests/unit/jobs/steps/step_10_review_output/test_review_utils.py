@@ -1,5 +1,5 @@
 import pytest
-from jobs.people_collector.steps.step_10_review_output.utils import (
+from shared.utils.review_utils import (
     _check_division_sequence,
     _check_people_count,
     _collect_all_canonicals,
@@ -50,10 +50,7 @@ def test_division_sequence_gap():
         _person("ocd-division/country:us/state:tx/place:austin/council_district:4"),
     ]
     issues = _check_division_sequence(people)
-    assert len(issues) == 1
-    assert "irregular" in issues[0]
-    assert "[1, 2, 4]" in issues[0]
-    assert "[1, 2, 3, 4]" in issues[0]
+    assert issues == ["Missing official with council district 3"]
 
 def test_division_sequence_duplicate():
     people = [
@@ -62,8 +59,7 @@ def test_division_sequence_duplicate():
         _person("ocd-division/country:us/state:tx/place:austin/council_district:2"),
     ]
     issues = _check_division_sequence(people)
-    assert len(issues) == 1
-    assert "irregular" in issues[0]
+    assert issues == ["Council District 2 has 1 official(s) (expected 2)"]
 
 def test_division_sequence_no_numeric_ocdids():
     people = [
@@ -125,18 +121,16 @@ def test_get_data_issues_returns_sequence_issue():
         _person("ocd-division/country:us/state:tx/place:austin/council_district:5"),
     ]
     issues = get_data_issues(people)
-    assert any("irregular" in i for i in issues)
+    assert any("Missing official" in i for i in issues)
 
 def test_get_data_issues_combines_both():
-    # 1 person with a gap would be: count issue + no sequence issue (only 1 number)
-    # Use 2 people with a gap to trigger both
     people = [
         _person("ocd-division/country:us/state:tx/place:austin/council_district:1"),
         _person("ocd-division/country:us/state:tx/place:austin/council_district:3"),
     ]
     issues = get_data_issues(people)
     assert any("Only 2" in i for i in issues)
-    assert any("irregular" in i for i in issues)
+    assert any("Missing official" in i for i in issues)
 
 
 # ── _collect_all_canonicals ───────────────────────────────────────────────────

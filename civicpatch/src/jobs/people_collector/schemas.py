@@ -142,6 +142,7 @@ class FormatOutputStep(BaseModel):
 
 class ReviewOutputStep(BaseModel):
     issues: List[str]
+    people_by_source: List[dict]
 
 class MaybeSendToGitHubStep(BaseModel):
     status: str

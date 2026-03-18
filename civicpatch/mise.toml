@@ -123,19 +123,6 @@ docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
   python src/scripts/generate_data_comment.py {{ option(name="jurisdiction-ocdid") }}
 """
 
-[tasks.test-generate-review-comment]
-run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
-  python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:wa/place:seattle
-"""
-
-[tasks.generate-review-comment]
-# Ex: /app/data/wa/place__spokane.yml
-run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
-  python src/scripts/generate_review_comment.py {{ option(name="jurisdiction-ocdid") }}
-"""
-
 [tasks.upload-images-to-cdn]
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \

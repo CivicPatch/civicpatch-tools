@@ -4,7 +4,7 @@ from jobs.people_collector.schemas import (
     ReviewOutputStep,
     WorkflowStatus,
 )
-from jobs.people_collector.steps.step_10_review_output.utils import generate_review
+from shared.utils.review_utils import generate_review
 
 
 def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
@@ -22,4 +22,4 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
     result = generate_review(research_people, officials, identities)
 
     logger.info(f"review_output: {len(result['issues'])} issue(s) found.")
-    return ReviewOutputStep(issues=result["issues"])
+    return ReviewOutputStep(issues=result["issues"], people_by_source=result["people_by_source"])
