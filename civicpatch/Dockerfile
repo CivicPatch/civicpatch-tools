@@ -42,14 +42,14 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
 # Copy workspace manifests first for layer caching
 COPY pyproject.toml uv.lock ./
 COPY shared/pyproject.toml ./shared/pyproject.toml
+COPY shared/src/shared ./shared/src/shared
 COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 
-# Install deps for this workspace member (no source yet)
+# Install deps for this workspace member
 RUN uv sync --package civicpatch --no-dev --frozen --no-install-project
 
 # Copy source
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src /app/src
-COPY --chown=civicpatch_user:civicpatch_user shared/src/shared /app/src/shared
 
 # ==========================================
 # Stage: post-install
