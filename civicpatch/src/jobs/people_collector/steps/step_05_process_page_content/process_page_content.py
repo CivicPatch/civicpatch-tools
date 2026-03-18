@@ -387,12 +387,12 @@ def calculate_progress(progress: ProgressState, records_by_llm: RecordsByLLM, se
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
-    contact_details = set()
+    contact_types = set()
     for p in people:
-        for c in [p.image, p.url, p.phone, p.email]:
-            if c:
-                contact_details.add(c)
-    has_contact = len(contact_details) >= 3
+        for field, value in [("image", p.image), ("url", p.url), ("phone", p.phone), ("email", p.email)]:
+            if value:
+                contact_types.add(field)
+    has_contact = any(p.phone or p.email for p in people) and len(contact_types) >= 3
 
     all_roles = {
         r.strip().lower()
