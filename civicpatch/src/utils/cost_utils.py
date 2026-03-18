@@ -9,16 +9,6 @@ from pydantic import BaseModel
 _COSTS_BY_JURISDICTION = {}
 
 llm_model_prices = {
-    'openai': {
-        'openai/gpt-4.1-mini': {
-            'input_cost_per_1m': Decimal('0.40'),
-            'output_cost_per_1m': Decimal('1.60')
-        },
-        'openai/gpt-5-mini': {
-            'input_cost_per_1m': Decimal('0.25'),
-            'output_cost_per_1m': Decimal('2.00')
-        }
-    },
     'google_gemini': {
         'gemini-2.5-flash': {
             'input_cost_per_1m': Decimal('0.30'),
@@ -37,9 +27,9 @@ llm_model_prices = {
         }
     },
     'together_ai': {
-        'mistralai/Mixtral-8x7B-Instruct-v0.1': {
-            'input_cost_per_1m': Decimal('0.60'),
-            'output_cost_per_1m': Decimal('0.60')
+        'meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8': {
+            'input_cost_per_1m': Decimal('0.27'),
+            'output_cost_per_1m': Decimal('0.85')
         }
     }
 }
