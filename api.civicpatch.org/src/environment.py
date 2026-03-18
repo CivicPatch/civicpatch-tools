@@ -25,6 +25,7 @@ REQUIRED_ENV_VARS = [
 ]
 
 OPTIONAL_ENV_VARS = [
+    "APP_ENVIRONMENT",
     # Optional - needed for GitHub webhook verification
     "GITHUB_WEBHOOK_SECRET",
     # Optional - needed for scraping
