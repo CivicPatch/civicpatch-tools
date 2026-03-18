@@ -135,8 +135,8 @@ export const generatePersonId = async () => {
   return data.data.person_id;
 };
 
-export const fetchJobIssues = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+export const fetchReview = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/review`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

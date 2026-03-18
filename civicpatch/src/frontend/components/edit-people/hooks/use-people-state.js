@@ -71,7 +71,10 @@ export function usePeopleState({ people }) {
   function handleMerge() {
     // When merging a set of people, always keep the person who is not new as the base
     const peopleToMerge = currentPeople.filter(p => selectedPeople.includes(p.id));
-    const baseIndex = currentPeople.findIndex(p => selectedPeople.includes(p.id) && !p._isNew) ?? currentPeople.findIndex(p => selectedPeople.includes(p.id));
+    const preferredIndex = currentPeople.findIndex(p => selectedPeople.includes(p.id) && !p._isNew);
+    const baseIndex = preferredIndex !== -1
+      ? preferredIndex
+      : currentPeople.findLastIndex(p => selectedPeople.includes(p.id));
     if (baseIndex === -1) return;
     const merged = { ...currentPeople[baseIndex] };
 

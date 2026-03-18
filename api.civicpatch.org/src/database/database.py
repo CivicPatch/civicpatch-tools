@@ -1151,7 +1151,7 @@ async def update_job_pull_request_review_state(request_id: str, review_state: st
         )
 
 
-async def update_job_review_json(request_id: str, review_json: list):
+async def update_job_review_json(request_id: str, review_json: dict):
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
