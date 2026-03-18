@@ -6,6 +6,22 @@ from shared.utils import config_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
+SAFE_CHARACTERS_MAP = {
+    "~": "--",
+}
+
+
+def _encode_for_slug(value: str) -> str:
+    for char, safe in SAFE_CHARACTERS_MAP.items():
+        value = value.replace(char, safe)
+    return value
+
+
+def _decode_from_slug(value: str) -> str:
+    for char, safe in SAFE_CHARACTERS_MAP.items():
+        value = value.replace(safe, char)
+    return value
+
 
 def make_request_id():
     return str(uuid.uuid4())
@@ -115,10 +131,12 @@ def jurisdiction_ocdid_to_slug(jurisdiction_ocdid: str) -> str:
       -> "state_wa__place_seattle__government"
     """
     jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    county = _encode_for_slug(jurisdiction_ocdid_parts.county or "")
+    place = _encode_for_slug(jurisdiction_ocdid_parts.place)
     slug = f"state_{jurisdiction_ocdid_parts.state}__"
     if jurisdiction_ocdid_parts.county:
-        slug += f"county_{jurisdiction_ocdid_parts.county}__"
-    slug += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
+        slug += f"county_{county}__"
+    slug += f"{jurisdiction_ocdid_parts.place_label}_{place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
     return slug.lower()
 
 
@@ -157,7 +175,7 @@ def _parse_slug_to_parts(slug: str) -> list[str]:
 
     # County is optional
     if idx < len(tokens) and tokens[idx].startswith("county_"):
-        county_value = tokens[idx].split("_", 1)[1]
+        county_value = _decode_from_slug(tokens[idx].split("_", 1)[1])
         result.append(f"county:{county_value}")
         idx += 1
 
@@ -171,7 +189,7 @@ def _parse_slug_to_parts(slug: str) -> list[str]:
 
         for key in KNOWN_PLACE_KEYS:
             if token.startswith(f"{key}_"):
-                value = token[len(key) + 1 :]
+                value = _decode_from_slug(token[len(key) + 1 :])
                 result.append(f"{key}:{value}")
                 idx += 1
                 place_found = True

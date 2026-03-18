@@ -123,12 +123,6 @@ run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv r
 # The bulk of these tasks are actually run under the open-data
 # repo. These commands are just left here for testing (and so
 # they might not be up-to-date or complete).
-[tasks.generate-data-comment]
-run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
-  python src/scripts/generate_data_comment.py {{ option(name="jurisdiction-ocdid") }}
-"""
-
 [tasks.upload-images-to-cdn]
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
