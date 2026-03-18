@@ -28,6 +28,8 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
         )
     except WorkflowError:
         sys.exit(1)  # Already logged in people_collector.main
+    except Exception:
+        sys.exit(1)  # Already logged in people_collector.main
 
 def main():
     parser = argparse.ArgumentParser(

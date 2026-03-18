@@ -7,7 +7,7 @@ from utils import log_utils
 import time
 from datetime import datetime, timezone
 import services.civicpatch_api as civicpatch_api
-import psutil  # Add this import
+import psutil
 
 from jobs.people_collector.schemas import WorkflowStatus
 from jobs.registry import (
@@ -26,79 +26,58 @@ class WorkflowError(Exception):
         super().__init__(f"Workflow failed for {jurisdiction_ocdid}")
 
 
+def log_system_usage():
+    process = psutil.Process()
+    memory_info = process.memory_info()
+    cpu_percent = psutil.cpu_percent(interval=None)
+    print(f"Memory Usage: {memory_info.rss / (1024 * 1024):.2f} MB")
+    print(f"CPU Usage: {cpu_percent}%")
+
+
 async def run_workflow(
     context,
     logger: log_utils.WorkflowLogger,
     transition_map: Dict[str, Callable[[WorkflowContext], str]],
     persist_fn: Optional[Callable] = None,
 ) -> WorkflowContext:
-    """
-    Run a workflow from its current state until DONE or stop_flag triggers.
-    context: WorkflowContext[TData, TState]
-    step_runner: function that takes context -> new context
-    stop_flag: optional function returning True to interrupt
-    persist_fn: optional function to persist context between steps
-    """
-    def log_system_usage():
-        process = psutil.Process()
-        memory_info = process.memory_info()
-        cpu_percent = psutil.cpu_percent(interval=None)
-        print(f"Memory Usage: {memory_info.rss / (1024 * 1024):.2f} MB")
-        print(f"CPU Usage: {cpu_percent}%")
-
     ctx = context
     job_config = get_job_config(logger)
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
-    
-    created_at = time.time()
-    ctx = ctx.copy(update={
-        "created_at": created_at,
-        "updated_at": created_at
-    })
 
+    created_at = time.time()
+    ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
     register_workflow(jurisdiction_ocdid, ctx.current_state)
 
     terminal_states = {WorkflowStatus.DONE, WorkflowStatus.ERROR}
 
-    while ctx.current_state not in terminal_states:
+    try:
+        while ctx.current_state not in terminal_states:
+            log_system_usage()
+            await civicpatch_api.update_job_status(
+                logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+                status=ctx.current_state.value, progress=ctx.progress
+            )
+            if workflow_stop_requested(jurisdiction_ocdid):
+                break
+
+            transition_fn = transition_map[ctx.current_state]
+            ctx, next_state = await transition_fn(job_config, logger, ctx)
+            ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
+            update_workflow_state(jurisdiction_ocdid, ctx.current_state)
+
+            if persist_fn:
+                persist_fn(ctx)
+    except Exception:
+        ctx = ctx.copy(update={"current_state": WorkflowStatus.ERROR, "updated_at": time.time()})
+        raise
+    finally:
         log_system_usage()
-
+        final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
         await civicpatch_api.update_job_status(
-            logger,
-            ctx.request_id,
-            ctx.data.jurisdiction_ocdid,
-            status=ctx.current_state.value,
-            progress=ctx.progress
+            logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+            status=ctx.current_state.value, progress=final_progress
         )
-        if workflow_stop_requested(jurisdiction_ocdid):
-            ctx = ctx.copy(update={
-                "current_state": ctx.current_state.value,
-                "updated_at": time.time()
-            })
-            break
-
-        transition_fn = transition_map[ctx.current_state]
-        ctx, next_state = await transition_fn(job_config, logger, ctx)
-        ctx = ctx.copy(update={
-            "current_state": next_state,
-            "updated_at": time.time()
-        })
-        update_workflow_state(jurisdiction_ocdid, ctx.current_state)
-
-        if persist_fn:
-            persist_fn(ctx)
-
-    log_system_usage()
-
-    final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
-    await civicpatch_api.update_job_status(
-        logger,
-        ctx.request_id,
-        ctx.data.jurisdiction_ocdid,
-        status=ctx.current_state.value,
-        progress=final_progress
-    )
-    unregister_workflow(jurisdiction_ocdid)
+        unregister_workflow(jurisdiction_ocdid)
 
     if ctx.current_state == WorkflowStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)
