@@ -1,9 +1,12 @@
-import { component } from "haunted";
+import { component, useState } from "haunted";
 import { html } from "lit-html";
+import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
 import { pullRequestUrlToNumber } from "../pr-utils.js";
-import "../../../components/badge.js"
+import { fetchReview, fetchPullRequestData } from "../../../api.js";
+import "../../../components/badge.js";
+import "../../../components/review-panel.js";
 
 export function stateColor(state) {
   switch (state) {
@@ -41,7 +44,29 @@ const REVIEW_STATE = {
 }
 
 const PullRequestCardHeader = ({ pr, state, stats }) => {
+  const [reviewData, setReviewData] = useState(null);
+  const [fullData, setFullData] = useState(null);
+  const [reviewLoading, setReviewLoading] = useState(false);
   const pullRequestNumber = pullRequestUrlToNumber(pr?.pull_request_url);
+  const popoverRef = createRef();
+
+  async function handleIssuesClick() {
+    const el = popoverRef.value;
+    if (!reviewData && !reviewLoading) {
+      setReviewLoading(true);
+      try {
+        const [review, prData] = await Promise.all([
+          fetchReview(pr.request_id),
+          fetchPullRequestData(pr.jurisdiction_ocdid, pr.request_id),
+        ]);
+        setReviewData(review?.data ?? null);
+        setFullData({ existing: prData?.existing ?? [], pull_request: prData?.data ?? [] });
+      } finally {
+        setReviewLoading(false);
+      }
+    }
+    el?.showPopover();
+  }
 
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
@@ -117,10 +142,21 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
       </a>
     </div>
     <div class="header-item-center">
-      ${pr?.pull_request_review_state ? html`<civ-badge
-        .label=${REVIEW_STATE[pr.pull_request_review_state]?.label ?? pr.pull_request_review_state}
-        .variant=${REVIEW_STATE[pr.pull_request_review_state]?.variant ?? "primary"}
-      ></civ-badge>` : ""}
+      ${pr?.pull_request_review_state ? html`
+        <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>
+          <civ-badge
+            .label=${reviewLoading ? "Loading..." : (REVIEW_STATE[pr.pull_request_review_state]?.label ?? pr.pull_request_review_state)}
+            .variant=${REVIEW_STATE[pr.pull_request_review_state]?.variant ?? "primary"}
+          ></civ-badge>
+        </button>
+        <div popover ${ref(popoverRef)} class="review-popover">
+          <civ-review-panel
+            .reviewData=${reviewData}
+            .existing=${fullData?.existing ?? []}
+            .pullRequest=${fullData?.pull_request ?? []}
+          ></civ-review-panel>
+        </div>
+      ` : ""}
       ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">

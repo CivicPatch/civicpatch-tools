@@ -10,10 +10,15 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
   function renderIssues() {
     if (!reviewData?.issues?.length) return '';
     return html`
-      <div class="review-issues" style="margin-bottom: 1rem;">
-        <h4>Issues</h4>
-        <ul>
-          ${reviewData.issues.map(issue => html`<li>${issue}</li>`)}
+      <div class="review-issues">
+        <h4 class="review-issues__heading">Issues</h4>
+        <ul class="review-issues__list">
+          ${reviewData.issues.map(issue => html`
+            <li class="review-issues__item">
+              <i class="fa-solid fa-triangle-exclamation review-issues__icon"></i>
+              ${issue}
+            </li>
+          `)}
         </ul>
       </div>
     `;
@@ -57,14 +62,6 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
   }
 
   return html`
-    <style>
-      .row-extra {
-        background-color: var(--pico-ins-color, #d4edda);
-      }
-      .row-missing {
-        background-color: var(--pico-del-color, #f8d7da);
-      }
-    </style>
     <div class="review-table-container">
       <h3>Results</h3>
       ${renderIssues()}

@@ -8,10 +8,10 @@ import "../basic/table/table.js";
 import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
 import "./action-buttons.js";
 import "./pull-request-tabs.js";
-import "./review-table.js";
 import "./profile-modal.js";
+import "../review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople } from "../../api.js";
+import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview } from "../../api.js";
 import "../diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -94,9 +94,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     if (!pullRequest) return;
     try {
       setIsLoading(true);
-      const data = await fetchPullRequestData(jurisdiction_ocdid, pullRequest.request_id);
+      const [data, review] = await Promise.all([
+        fetchPullRequestData(jurisdiction_ocdid, pullRequest.request_id),
+        fetchReview(pullRequest.request_id),
+      ]);
       const scrapedPeople = data?.data ?? [];
-      setReviewData(data?.review || null);
+      setReviewData(review?.data || null);
 
       const resolved = await batchResolvePeople(jurisdiction_ocdid, scrapedPeople);
       const matchMap = {};
@@ -252,19 +255,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
             >View Pull Request</a
           >
           <hr />
-          <civ-review-table
-            .jurisdiction_ocdid=${jurisdiction_ocdid}
-            .branch_name=${selectedPullRequest.branch_name}
+          <civ-review-panel
             .reviewData=${reviewData}
-            .currentPeople=${currentPeople}
-          ></civ-review-table>
+            .existing=${people}
+            .pullRequest=${currentPeople}
+          ></civ-review-panel>
         `
-      : ""}
-
-    ${selectedPullRequest
-      ? html`<civ-diff-panel
-          .data=${{ existing: people, pull_request: currentPeople }}
-        ></civ-diff-panel>`
       : ""}
 
     <civ-people-action-buttons

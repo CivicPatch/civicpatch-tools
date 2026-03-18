@@ -96,7 +96,6 @@ export const getColumns = (openProfileModal) => {
           editable: true,
           type: "single",
           customCss: customCss,
-          renderValue: (division_ocdid) => divisionOcdidToFriendly(division_ocdid) || "",
         },
         {
           field: "source_urls",

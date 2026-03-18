@@ -157,13 +157,13 @@ input:not(
 [type="submit"],
 [type="button"],
 [type="reset"],
-button {
+button:not(.btn-ghost) {
     --pico-background-color: var(--pico-primary);
     --pico-border-color: var(--pico-primary);
     --pico-color: var(--pico-primary-inverse);
 }
 
-button:not(.destructive):not(.diff-panel__toggle):hover,
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):hover,
 [type="submit"]:hover,
 [type="button"]:hover {
     --pico-background-color: var(--pico-primary-hover-background);
@@ -171,12 +171,28 @@ button:not(.destructive):not(.diff-panel__toggle):hover,
     --pico-color: var(--pico-primary-inverse);
 }
 
-button:not(.destructive):not(.diff-panel__toggle):active,
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):active,
 [type="submit"]:active,
 [type="button"]:active {
     --pico-background-color: var(--pico-primary-hover-background);
     --pico-border-color: var(--pico-primary-hover-background);
     --pico-color: var(--pico-primary-inverse);
+}
+
+button.btn-ghost {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    cursor: pointer;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    height: auto;
+    width: auto;
+    line-height: inherit;
+    font-size: inherit;
 }
 
 button.destructive {
@@ -321,7 +337,7 @@ tbody td:first-child {
 }
 
 tbody tr:hover td {
-    background: var(--pico-muted-background);
+    background: color-mix(in srgb, var(--pico-primary) 8%, transparent);
 }
 
 /* Diff row semantics — used by pr-card and any other diff tables */
@@ -659,9 +675,21 @@ civ-badge {
 /* ── civ-diff-panel (edit-people page) ── */
 
 .diff-panel__entries {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .diff-panel__entries {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .diff-panel__entries {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .diff-person {
@@ -825,4 +853,71 @@ del {
 }
 .source-link:hover {
     opacity: 1;
+}
+
+/* ── Review issues list ──────────────────────────────────────────────────── */
+.review-issues {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--pico-del-color);
+    background: var(--pico-del-background);
+    border-radius: var(--pico-border-radius);
+}
+
+.review-issues__heading {
+    margin: 0 0 0.5rem;
+    color: var(--pico-del-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.review-issues__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.review-issues__item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    font-size: 0.875rem;
+    color: var(--pico-color);
+}
+
+.review-issues__icon {
+    color: var(--pico-del-color);
+    flex-shrink: 0;
+    font-size: 0.75rem;
+}
+
+/* ── Review popover ──────────────────────────────────────────────────────── */
+.review-popover {
+    position: fixed;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: min(90vw, 860px);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1.25rem;
+    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--pico-muted-border-color);
+    background: var(--pico-background-color);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.review-popover::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.row-extra td {
+    background-color: var(--pico-ins-background);
+}
+
+.row-missing td {
+    background-color: var(--pico-del-background);
 }

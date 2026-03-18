@@ -2,7 +2,6 @@ import asyncio
 import logging
 from typing import Any, Dict, List
 
-from job_service.people_collector.people_data_utils import extract_issues
 import shared.utils.id_utils
 import yaml
 from fastapi import (
@@ -183,16 +182,15 @@ def get_router(api_key_header):
         }
 
     # -- Pull Requests: Issues for a job ---
-    @router.get("/{request_id}/issues")
-    async def get_pull_request_issues_endpoint(
+    @router.get("/{request_id}/review")
+    async def get_pull_request_review_endpoint(
         request_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
-        data_json = await database.database.get_job_data_json(request_id)
-        issues = extract_issues(data_json or [])
-        return {"issues": issues}
+        result = await database.database.get_job_result(request_id)
+        return {"data": (result or {}).get("review_json") or {}}
 
     # -- Pull Requests: Close Pull Request ---
     @router.delete("/{pull_request_number}", include_in_schema=False)
