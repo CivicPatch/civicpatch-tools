@@ -28,6 +28,8 @@ services:
       GOOGLE_GEMINI_TOKEN: ${GOOGLE_GEMINI_TOKEN}
       TOGETHER_AI_TOKEN: ${TOGETHER_AI_TOKEN}
 
+      APP_ROOT: /app
+
       # PYTHONASYNCIODEBUG: ${PYTHONASYNCIODEBUG}
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:
