@@ -13,7 +13,6 @@ services:
 
   civicpatch:
     environment:
-      WATCHFILES_FORCE_POLLING: "true"
       # Defaults OK
       API_URL: ${API_URL-http://localhost:8001}
       API_CIVICPATCH_ORG_URL: ${API_CIVICPATCH_ORG_URL:-http://api_civicpatch_org:8001}

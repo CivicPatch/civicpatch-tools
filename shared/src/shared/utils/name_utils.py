@@ -101,11 +101,9 @@ def best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | No
         for candidate in [canonical] + aliases:
             if fuzzy_match(name, candidate):
                 score = _fuzzy_match_score(name, candidate)
-                print(f"  {name!r} vs {candidate!r} → score={score}")
                 if score > best_score:
                     best_score = score
                     best_canonical = canonical
-    print(f"  best for {name!r}: {best_canonical!r} (score={best_score})")
     return best_canonical
 
 

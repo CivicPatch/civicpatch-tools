@@ -103,12 +103,12 @@ async def get_user_by_cookie(request, token: str) -> Identity:
         claims = jwt.decode(token, **decode_kwargs)
         payload = claims.get("pld", claims)
     except JWTError as e:
-        print(f"JWT decode failed: {e}")
+        logger.debug(f"JWT decode failed: {e}")
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials"
         )
 
-    print("checking for session...")
+    logger.debug("checking for session...")
     # Check if session was invalidated (e.g., logout)
     provider = payload.get("provider")
     provider_user_id = str(claims.get("sub", ""))
@@ -118,26 +118,26 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             raise HTTPException(
                 status_code=401, detail="Session expired or invalidated"
             )
-    print(f"session check passed")
+    logger.debug(f"session check passed")
     # CSRF protection for cookie-authenticated unsafe requests
     if request.method.upper() in UNSAFE_METHODS:
         csrf_token = request.headers.get("x-csrf-token")
-        print(
+        logger.debug(
             f"CSRF check: method={request.method}, has_csrf_header={csrf_token is not None}"
         )
         if not csrf_token:
             form = await request.form()
             csrf_token = form.get("csrf_token")
-            print(
+            logger.debug(
                 f"CSRF check: fell back to form field, has_csrf_form={csrf_token is not None}"
             )
 
         csrf_cookie = request.cookies.get("csrf_token")
-        print(
+        logger.debug(
             f"CSRF check: has_csrf_cookie={csrf_cookie is not None}, tokens_match={csrf_token == csrf_cookie if csrf_token and csrf_cookie else False}"
         )
         if not csrf_token or not csrf_cookie or csrf_token != csrf_cookie:
-            print(
+            logger.debug(
                 f"CSRF double-submit failed: csrf_token={bool(csrf_token)}, csrf_cookie={bool(csrf_cookie)}"
             )
             raise HTTPException(
@@ -149,28 +149,28 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             decoded_csrf = jwt.decode(
                 csrf_cookie, key=cast(str, JWT_SECRET_KEY), algorithms=["HS256"]
             )
-            print(
+            logger.debug(
                 f"CSRF JWT decoded successfully: sub={decoded_csrf.get('sub')}, iat={decoded_csrf.get('iat')}"
             )
         except JWTError as e:
-            print(f"CSRF JWT decode failed: {e}")
+            logger.debug(f"CSRF JWT decode failed: {e}")
             raise HTTPException(status_code=403, detail="Invalid CSRF token")
 
         csrf_sub = decoded_csrf.get("sub")
         auth_sub = claims.get("sub")
         if not csrf_sub or not auth_sub or str(csrf_sub) != str(auth_sub):
-            print(f"CSRF subject mismatch: csrf_sub={csrf_sub}, auth_sub={auth_sub}")
+            logger.debug(f"CSRF subject mismatch: csrf_sub={csrf_sub}, auth_sub={auth_sub}")
             raise HTTPException(status_code=403, detail="CSRF token subject mismatch")
 
         iat = decoded_csrf.get("iat")
         now = int(time.time())
         if not iat or (now - int(iat) > 24 * 3600):
-            print(
+            logger.debug(
                 f"CSRF token expired: iat={iat}, now={now}, age={now - int(iat) if iat else 'N/A'}s"
             )
             raise HTTPException(status_code=403, detail="Expired CSRF token")
 
-        print("CSRF validation passed")
+        logger.debug("CSRF validation passed")
 
     openid_obj = OpenID(**payload)
     teams = payload.get("teams")  # <-- expect a list from token payload
@@ -214,12 +214,12 @@ def require_route_access(
     ):
         # Service API key always allowed for SERVICE routes, and optionally for others
         if identity and identity.type == "service_api_key":
-            print(f"Service key access granted for category={category}")
+            logger.debug(f"Service key access granted for category={category}")
             return identity
 
         # Explicitly deny non-service identities for SERVICE category
         if category == RouteCategory.SERVICE:
-            print(
+            logger.debug(
                 f"Non-service identity denied for SERVICE category: {getattr(identity, 'email', None)}"
             )
             raise HTTPException(
@@ -232,7 +232,7 @@ def require_route_access(
 
         # Authenticated
         if category == RouteCategory.AUTHENTICATED and identity is not None:
-            print(
+            logger.debug(
                 f"Authenticated access granted for category={category}, email={identity.email}"
             )
             return identity
@@ -240,10 +240,10 @@ def require_route_access(
         # Team required
         user_teams = identity.teams if identity else []
         user_teams = [] if not user_teams else user_teams
-        print(f"user_teams={user_teams}")
+        logger.debug(f"user_teams={user_teams}")
 
         if category == RouteCategory.TEAM_REQUIRED and len(user_teams) == 0:
-            print(
+            logger.debug(
                 f"Team required access denied for category={category}, user email={getattr(identity, 'email', None)}, no teams found, but at least one team is required"
             )
             raise HTTPException(
@@ -256,7 +256,7 @@ def require_route_access(
             and teams_required
             and not any(team in user_teams for team in teams_required)
         ):
-            print(
+            logger.debug(
                 f"Team required access denied for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}"
             )
             raise HTTPException(
@@ -268,13 +268,13 @@ def require_route_access(
             and teams_required
             and any(team in user_teams for team in teams_required)
         ):
-            print(
+            logger.debug(
                 f"Team required access granted for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}"
             )
             return identity
 
         # Unknown category fallback
-        print(
+        logger.debug(
             f"Unknown route: Access denied for category={category}, user email={getattr(identity, 'email', None)}, teams={getattr(identity, 'teams', None)}"
         )
         raise HTTPException(
