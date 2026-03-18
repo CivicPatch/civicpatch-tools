@@ -3,7 +3,6 @@ import logging
 import database.database as database
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
-from job_service.people_collector.people_data_utils import extract_review_data
 from utils.github_utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
@@ -26,15 +25,19 @@ async def backfill_job_result(request_id: str, jurisdiction_ocdid: str):
         logger.warning("backfill_job_result: no file found for %s", request_id)
         return
 
-    review_json = []
     workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
-    if workflow_context:
-        review = extract_review_data(workflow_context, data if isinstance(data, list) else [])
-        review_json = review["people_by_source"]
+    review_json = _derive_review_step(workflow_context)
 
     await database.update_job_data(request_id, data)
     await database.update_job_review_json(request_id, review_json)
     logger.info("backfill_job_result: data_json set for %s", request_id)
+
+
+def _derive_review_step(workflow_context) -> dict:
+    if not workflow_context:
+        return {}
+    return workflow_context.get("data", {}) \
+        .get("review_output_step", {})
 
 
 async def register_and_sync_pr_job(
