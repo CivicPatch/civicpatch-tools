@@ -96,6 +96,12 @@ run = """
 curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 """
 
+[tasks.get_jurisdictions_prod]
+run = """
+curl -s -X GET "https://api.civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=1&state=tx" \
+  -H "Authorization: $PROD_SERVICE_API_KEY" > debug.txt
+"""
+
 [tasks.scratch]
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
 run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv run python src/scripts/test_pipeline_step.py"

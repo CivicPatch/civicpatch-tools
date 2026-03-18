@@ -46,10 +46,10 @@ COPY shared/pyproject.toml ./shared/pyproject.toml
 COPY shared/src/shared ./shared/src/shared
 COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 
-# Install deps for this workspace member
+# Install deps for this workspace member (shared installs into venv as a package)
 RUN uv sync --package civicpatch --no-dev --frozen --no-install-project
 
-COPY ${PROJECT_NAME} .
+COPY ${PROJECT_NAME}/src ./src
 
 FROM image-base AS post-install
 
