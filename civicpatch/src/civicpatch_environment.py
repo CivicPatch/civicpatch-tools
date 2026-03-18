@@ -5,12 +5,12 @@ References variables and defaults from docker-compose.yml
 import os
 
 REQUIRED_ENV_VARS = [
-    "API_URL",
     "API_CIVICPATCH_ORG_URL",
     "SERVICE_API_KEY"
 ]
 
 OPTIONAL_ENV_VARS = [
+    "API_URL",
     "PIPELINE_RUN_COST_LIMIT",
     "LOG_LEVEL",
 
