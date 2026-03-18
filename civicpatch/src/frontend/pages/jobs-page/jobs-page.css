@@ -1,0 +1,22 @@
+/* ── Jobs page ── */
+
+.jobs-page__filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.jobs-page__page-counter {
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.75rem;
+    color: var(--pico-muted-color);
+}
+
+.jobs-page__filters select {
+    width: auto;
+    margin: 0;
+    padding: 0.2em 0.75em;
+    font-size: 0.8rem;
+}

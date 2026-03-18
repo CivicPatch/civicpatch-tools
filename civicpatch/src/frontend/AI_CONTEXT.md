@@ -18,7 +18,9 @@ Vanilla JS web components served by FastAPI.
 
 ## Styles
 
-- All styles go in `src/frontend/css/styles.css` — no inline styles, no per-component CSS files
+- Global styles (tokens, theme, base element overrides, buttons, layout, utilities) live in `css/styles.css`
+- Component styles live co-located with their JS: `components/<name>/<name>.css` or `pages/<page>/<name>.css`; `@import`ed at the bottom of `styles.css`
+- No inline styles; no styles defined outside of `css/` or the component's own folder
 - Use Pico CSS variables (`--pico-*`) for colors, spacing, and typography — never hardcode hex values except where Pico has no equivalent
 - Color palette is Catppuccin — always use `--pico-*` variables for colors; override them with Catppuccin values at the `:root` level in `styles.css` as needed, never use `--catppuccin-*` variables directly in component rules
 - BEM-style class names scoped to the component: `.pr-card__header`, `.pr-card__merge-button`

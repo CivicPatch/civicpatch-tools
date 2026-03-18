@@ -9,10 +9,10 @@ import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
 import "./action-buttons.js";
 import "./pull-request-tabs.js";
 import "./profile-modal.js";
-import "../review-panel.js";
+import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview } from "../../api.js";
-import "../diff-panel.js";
+import "../diff-panel/diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const {
@@ -263,7 +263,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         `
       : ""}
 
-    <civ-people-action-buttons
+    <civ-people-action-buttonsfetchJobReview 
       .onAdd=${handleAdd}
       .onMerge=${handleMerge}
       .onBulkDelete=${handleBulkDelete}
