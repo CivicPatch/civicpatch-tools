@@ -1,49 +1,68 @@
 import datetime
 import json
-import os
 import secrets
 import time
-from typing import List, Optional, cast
+from typing import List, Optional
 
 from fastapi.responses import Response
-from jose import jwt
 
 from stores import redis_store
 import environment
 
-SESSION_PREFIX = "session:"
 SESSION_EXPIRY_DAYS = 1
+
+_TOKEN_PREFIX = "session:tok:"
+_USER_PREFIX = "session:usr:"
+
+
+def _token_key(token: str) -> str:
+    return f"{_TOKEN_PREFIX}{token}"
+
+
+def _user_key(provider: str, provider_user_id: str) -> str:
+    return f"{_USER_PREFIX}{provider}:{provider_user_id}"
 
 
 # --- Redis session store ---
 
 
-def _key(provider: str, provider_user_id: str) -> str:
-    return f"{SESSION_PREFIX}{provider}:{provider_user_id}"
-
-
 async def create_session(
-    provider: str, provider_user_id: str, token: str, expires_at: float
+    token: str,
+    provider: str,
+    provider_user_id: str,
+    email: Optional[str],
+    teams: List[str],
+    expires_at: float,
 ) -> None:
     ttl = int(expires_at - time.time())
     if ttl <= 0:
         return
-    entry = {"token": token, "expires_at": expires_at}
-    await redis_store.set(_key(provider, provider_user_id), json.dumps(entry), ttl)
+    entry = {
+        "provider": provider,
+        "provider_user_id": provider_user_id,
+        "email": email,
+        "teams": teams,
+        "expires_at": expires_at,
+    }
+    await redis_store.set(_token_key(token), json.dumps(entry), ttl)
+    await redis_store.set(_user_key(provider, provider_user_id), token, ttl)
 
 
-async def get_session(provider: str, provider_user_id: str) -> Optional[str]:
-    raw = await redis_store.get(_key(provider, provider_user_id))
+async def get_session(token: str) -> Optional[dict]:
+    raw = await redis_store.get(_token_key(token))
     if not raw:
         return None
     data = json.loads(raw)
     if time.time() >= data.get("expires_at", 0):
         return None
-    return data["token"]
+    return data
 
 
 async def invalidate_session(provider: str, provider_user_id: str) -> None:
-    await redis_store.delete(_key(provider, provider_user_id))
+    token = await redis_store.get(_user_key(provider, provider_user_id))
+    if token:
+        await redis_store.delete(_token_key(token))
+    await redis_store.delete(_user_key(provider, provider_user_id))
 
 
 # --- Cookie helpers ---
@@ -61,27 +80,23 @@ def _get_cookie_params() -> dict:
 async def create_session_cookies(
     response: Response, openid, teams: List[str]
 ) -> Response:
-    """Create JWT + CSRF cookies and store session in Redis."""
-    env = environment.get_env_vars()
-    jwt_secret_key = env["JWT_SECRET_KEY"]
+    """Create opaque session token + CSRF nonce cookies and store session in Redis."""
     expiration = datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(
         days=SESSION_EXPIRY_DAYS
     )
     expires_at = expiration.timestamp()
 
-    token = jwt.encode(
-        {
-            "pld": openid.model_dump(),
-            "exp": expiration,
-            "sub": openid.id,
-            "teams": teams,
-        },
-        key=cast(str, jwt_secret_key),
-        algorithm="HS256",
-    )
+    token = secrets.token_urlsafe(32)
+    csrf_nonce = secrets.token_urlsafe(24)
 
-    # Store in Redis for server-side invalidation
-    await create_session(openid.provider, str(openid.id), token, expires_at)
+    await create_session(
+        token=token,
+        provider=openid.provider,
+        provider_user_id=str(openid.id),
+        email=openid.email,
+        teams=teams,
+        expires_at=expires_at,
+    )
 
     cookie_params = _get_cookie_params()
 
@@ -95,19 +110,10 @@ async def create_session_cookies(
         **cookie_params,
     )
 
-    # Signed CSRF token (readable by JS for double-submit)
-    csrf_payload = {
-        "sub": openid.id,
-        "iat": int(time.time()),
-        "nonce": secrets.token_urlsafe(8),
-    }
-    csrf_signed = jwt.encode(
-        csrf_payload, key=cast(str, jwt_secret_key), algorithm="HS256"
-    )
-
+    # JS-readable CSRF nonce for double-submit pattern
     response.set_cookie(
         key="csrf_token",
-        value=csrf_signed,
+        value=csrf_nonce,
         expires=expiration,
         httponly=False,
         samesite="lax",

@@ -1,20 +1,15 @@
 import logging
-import os
-import time
-from typing import List, Optional, cast
+from typing import List, Optional
 
 from fastapi import Depends, HTTPException, Request, Security
 from fastapi.security import APIKeyCookie, APIKeyHeader
-from fastapi_sso.sso.base import OpenID
-from jose import JWTError, jwt
 
 import database.database as database
+import environment
 from schemas.common import Identity, Role, RouteCategory
 from services import session_service
 
 logger = logging.getLogger(__name__)
-
-import environment
 
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
 API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
@@ -87,110 +82,41 @@ async def get_user_by_api_key(api_key: str) -> Identity:
     )
 
 
-# Update Identity creation to use teams (list)
 async def get_user_by_cookie(request, token: str) -> Identity:
-    env = environment.get_env_vars()
-    JWT_SECRET_KEY = env["JWT_SECRET_KEY"]
-    JWT_AUDIENCE = env.get("JWT_AUDIENCE")
-    JWT_ISSUER = env.get("JWT_ISSUER")
+    session = await session_service.get_session(token)
+    if not session:
+        raise HTTPException(status_code=401, detail="Session expired or invalidated")
 
-    try:
-        decode_kwargs = {"key": cast(str, JWT_SECRET_KEY), "algorithms": ["HS256"]}
-        if JWT_AUDIENCE:
-            decode_kwargs["audience"] = JWT_AUDIENCE
-        if JWT_ISSUER:
-            decode_kwargs["issuer"] = JWT_ISSUER
-        claims = jwt.decode(token, **decode_kwargs)
-        payload = claims.get("pld", claims)
-    except JWTError as e:
-        logger.debug(f"JWT decode failed: {e}")
-        raise HTTPException(
-            status_code=401, detail="Invalid authentication credentials"
-        )
-
-    logger.debug("checking for session...")
-    # Check if session was invalidated (e.g., logout)
-    provider = payload.get("provider")
-    provider_user_id = str(claims.get("sub", ""))
-    if provider and provider_user_id:
-        stored = await session_service.get_session(provider, provider_user_id)
-        if stored is None:
-            raise HTTPException(
-                status_code=401, detail="Session expired or invalidated"
-            )
-    logger.debug(f"session check passed")
-    # CSRF protection for cookie-authenticated unsafe requests
     if request.method.upper() in UNSAFE_METHODS:
-        csrf_token = request.headers.get("x-csrf-token")
-        logger.debug(
-            f"CSRF check: method={request.method}, has_csrf_header={csrf_token is not None}"
-        )
-        if not csrf_token:
+        csrf_header = request.headers.get("x-csrf-token")
+        if not csrf_header:
             form = await request.form()
-            csrf_token = form.get("csrf_token")
-            logger.debug(
-                f"CSRF check: fell back to form field, has_csrf_form={csrf_token is not None}"
-            )
+            csrf_header = form.get("csrf_token")
 
         csrf_cookie = request.cookies.get("csrf_token")
-        logger.debug(
-            f"CSRF check: has_csrf_cookie={csrf_cookie is not None}, tokens_match={csrf_token == csrf_cookie if csrf_token and csrf_cookie else False}"
-        )
-        if not csrf_token or not csrf_cookie or csrf_token != csrf_cookie:
+        if not csrf_header or not csrf_cookie or csrf_header != csrf_cookie:
             logger.debug(
-                f"CSRF double-submit failed: csrf_token={bool(csrf_token)}, csrf_cookie={bool(csrf_cookie)}"
+                f"CSRF double-submit failed: has_header={bool(csrf_header)}, has_cookie={bool(csrf_cookie)}"
             )
             raise HTTPException(
                 status_code=403,
                 detail="CSRF check failed for cookie-authenticated request",
             )
 
-        try:
-            decoded_csrf = jwt.decode(
-                csrf_cookie, key=cast(str, JWT_SECRET_KEY), algorithms=["HS256"]
-            )
-            logger.debug(
-                f"CSRF JWT decoded successfully: sub={decoded_csrf.get('sub')}, iat={decoded_csrf.get('iat')}"
-            )
-        except JWTError as e:
-            logger.debug(f"CSRF JWT decode failed: {e}")
-            raise HTTPException(status_code=403, detail="Invalid CSRF token")
-
-        csrf_sub = decoded_csrf.get("sub")
-        auth_sub = claims.get("sub")
-        if not csrf_sub or not auth_sub or str(csrf_sub) != str(auth_sub):
-            logger.debug(f"CSRF subject mismatch: csrf_sub={csrf_sub}, auth_sub={auth_sub}")
-            raise HTTPException(status_code=403, detail="CSRF token subject mismatch")
-
-        iat = decoded_csrf.get("iat")
-        now = int(time.time())
-        if not iat or (now - int(iat) > 24 * 3600):
-            logger.debug(
-                f"CSRF token expired: iat={iat}, now={now}, age={now - int(iat) if iat else 'N/A'}s"
-            )
-            raise HTTPException(status_code=403, detail="Expired CSRF token")
-
-        logger.debug("CSRF validation passed")
-
-    openid_obj = OpenID(**payload)
-    teams = payload.get("teams")  # <-- expect a list from token payload
-
+    teams = session.get("teams") or []
     if not teams:
-        provider = payload.get("provider") or getattr(openid_obj, "provider", None)
-        provider_user_id = (
-            payload.get("sub") or payload.get("id") or getattr(openid_obj, "id", None)
-        )
-        if provider and provider_user_id:
-            user_row = await database.get_user(provider, provider_user_id)
-            if user_row and user_row.get("teams"):
-                teams = user_row["teams"]
+        provider = session["provider"]
+        provider_user_id = session["provider_user_id"]
+        user_row = await database.get_user(provider, provider_user_id)
+        if user_row and user_row.get("teams"):
+            teams = user_row["teams"]
 
     return Identity(
         type="cookie",
-        provider=openid_obj.provider,
-        provider_user_id=openid_obj.id,
-        email=openid_obj.email,
-        teams=teams or [],
+        provider=session["provider"],
+        provider_user_id=session["provider_user_id"],
+        email=session.get("email"),
+        teams=teams,
     )
 
 
