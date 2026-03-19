@@ -48,7 +48,7 @@ def preprocess_page_content(
     #runtime_identities = getattr(
     #    context.data.process_page_content_step, "identities", {}
     #)
-    identities = context.data.config.identities or research_identities
+    identities = research_identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html)

@@ -77,8 +77,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     identities = get_identities(context)
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
-    # If config data is available, use that
-    roles_hint = context.data.config.roles if context.data.config.roles else setup_data.roles
+    roles_hint = setup_data.roles
 
     updated_links, is_relevant = await check_page_relevance(context, page_to_process, content)
     if not is_relevant:
@@ -91,7 +90,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
 
     if heuristics_passed:
-        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
+        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, roles_hint, updated_records)
     else:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL)
 
@@ -114,7 +113,7 @@ def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentSte
 def get_identities(context: PeopleCollectorContext) -> Dict:
     elected_officials = context.data.research_municipality_step.elected_officials
     research_identities = {official.name: [official.name] for official in elected_officials}
-    return context.data.config.identities or research_identities
+    return research_identities
 
 
 def create_process_page_content_step(required_data: int) -> ProcessPageContentStep:

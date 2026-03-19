@@ -17,7 +17,7 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
         else []
     )
     officials = context.data.format_output_step.officials
-    identities = context.data.format_output_step.config.identities or {}
+    identities = {}
 
     result = generate_review(research_people, officials, identities)
 

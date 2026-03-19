@@ -39,7 +39,7 @@ def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[s
         official.name: [official.name]
         for official in context.data.research_municipality_step.elected_officials
     }
-    return context.data.config.identities or research_identities
+    return research_identities
 
 
 def _merge_groups(

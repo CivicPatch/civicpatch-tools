@@ -7,7 +7,6 @@ from domain.models import Official
 from jobs.people_collector.schemas import (
     FormatOutputStep,
     PeopleCollectorContext,
-    WorkflowConfig,
     WorkflowStatus,
 )
 from shared.utils.config_utils import get_designations
