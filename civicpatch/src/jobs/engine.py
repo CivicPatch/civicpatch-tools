@@ -67,9 +67,6 @@ async def run_workflow(
 
             if persist_fn:
                 persist_fn(ctx)
-    except Exception:
-        ctx = ctx.copy(update={"current_state": WorkflowStatus.ERROR, "updated_at": time.time()})
-        raise
     finally:
         log_system_usage()
         final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress

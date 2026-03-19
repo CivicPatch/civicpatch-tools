@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { fetchPullRequestsWithData, fetchJobsWithErrors, mergePullRequest, closePullRequest } from "../../api.js";
+import { useAuth } from "../../hooks/useAuth.js";
+import { fetchPullRequestsWithData, fetchJobsWithErrors, mergePullRequest, closePullRequest, resolveJob } from "../../api.js";
 import { pullRequestUrlToNumber } from "./pr-utils.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
@@ -35,6 +36,7 @@ function JobsPage() {
   const [stateCode, setStateCode] = useState(getStateFromUrl());
   const [total, setTotal] = useState(0);
   const [errorJobs, setErrorJobs] = useState([]);
+  const { loading: authLoading, permissions } = useAuth();
   const perPage = 20;
 
   useEffect(() => {
@@ -115,6 +117,16 @@ function JobsPage() {
     }
   };
 
+  const handleResolveError = async (event) => {
+    const { job } = event.detail;
+    try {
+      await resolveJob(job.request_id);
+      setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
+    } catch (err) {
+      console.error("Failed to resolve job:", err);
+    }
+  };
+
   const handleStateChange = (e) => {
     const newState = e.detail.state;
     const params = new URLSearchParams(window.location.search);
@@ -155,14 +167,14 @@ function JobsPage() {
             `;
           });
 
-  const errorSection = errorJobs.length === 0 ? null : html`
+  const errorSection = !authLoading && permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
       <h2>Pipeline errors</h2>
       <div style="display: flex; gap: 2rem; flex-direction: column;">
-        ${errorJobs.map((job) => html`<error-card .job=${job}></error-card>`)}
+        ${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}
       </div>
     </section>
-  `;
+  ` : null;
 
   return html`
     <main>

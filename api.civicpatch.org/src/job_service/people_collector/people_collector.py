@@ -53,34 +53,37 @@ async def handle_submit_job_artifacts(
     file_utils.copy_files_preserving_hierarchy(extracted_dir, artifact_file_dir, patterns=artifact_file_patterns)
     file_utils.copy_files_preserving_hierarchy(extracted_dir, debug_file_dir, patterns=debug_file_patterns)
 
-    # Validate expected files exist
-    is_valid = await file_utils.validate_file_patterns(artifact_file_dir, artifact_file_patterns)
-    if not is_valid:
-        raise Exception(f"Uploaded zip file is missing expected files matching patterns: {artifact_file_patterns}")
-    
-    # For every file in debug_file_dir, upload to storage,
-    # Including image files
+    is_success = request.job_status == "SUCCESS"
+
     filenames_to_urls = await _upload_debug_files(debug_file_dir, request.request_id)
-    data_file_path = file_utils.find_file(artifact_file_dir, "data/*/local/*.yml")
-    with open(data_file_path, "r") as f:
-        data = yaml.safe_load(f)
-    updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
-    with open(data_file_path, "w") as f:
-        yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
+
+    try:
+        await _send_costs(debug_file_dir)
+    except Exception as e:
+        logger.error(f"Failed to send costs for {request.request_id}: {e}")
 
     artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
     zip_file_url = await storage_service.upload_file_to_storage(
-        "civicpatch-artifacts", 
-        artifact_zip_path, 
-        key=zip_file_key, 
+        "civicpatch-artifacts",
+        artifact_zip_path,
+        key=zip_file_key,
         with_presigned_url=True
     )
 
+    if is_success:
+        is_valid = await file_utils.validate_file_patterns(artifact_file_dir, artifact_file_patterns)
+        if not is_valid:
+            raise Exception(f"Uploaded zip file is missing expected files matching patterns: {artifact_file_patterns}")
 
-    await _send_costs(debug_file_dir)
+        data_file_path = file_utils.find_file(artifact_file_dir, "data/*/local/*.yml")
+        with open(data_file_path, "r") as f:
+            data = yaml.safe_load(f)
+        updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
+        with open(data_file_path, "w") as f:
+            yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
 
-    await github_service.trigger_github_data_intake_workflow(
+        await github_service.trigger_github_data_intake_workflow(
             request.server_detail.user_email,
             request.server_detail.server_url,
             request_id=request.request_id,
@@ -93,7 +96,7 @@ async def handle_submit_job_artifacts(
         status="uploaded",
         zip_file_url=zip_file_url,
         request_id=request.request_id,
-        jurisdiction_ocdid=request.jurisdiction_ocdid
+        jurisdiction_ocdid=request.jurisdiction_ocdid,
     )
 
 async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: List[Dict]) -> List[Dict]:

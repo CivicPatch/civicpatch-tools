@@ -1,8 +1,8 @@
 import time
-import instructor
 import requests
 import json
 from google import genai
+from google.genai import types
 from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
@@ -23,16 +23,13 @@ MODEL_FALLBACKS = [
 MAX_RETRIES = 5
 
 async def run_prompt(
-        request_id, 
-        jurisdiction_ocdid: str, 
-        prompt, 
-        response_schema=None, 
-        content="", 
+        request_id,
+        jurisdiction_ocdid: str,
+        prompt,
+        response_schema=None,
+        content="",
         with_search=False
     ):
-    """
-    Run a prompt against Google Gemini's API
-    """
     logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
@@ -44,32 +41,30 @@ async def run_prompt(
         if with_search:
             response, input_tokens_num, output_tokens_num = make_request_with_search(logger, model, api_key, prompt)
         else:
-            client = instructor.from_provider(model=f"google/{model}", api_key=api_key)
-            
-            # Set up messages
-            messages = [
-                {"role": "system", "content": prompt}
-            ]
-            if content:
-                messages.append({"role": "user", "content": content})
-
-            response, completion = client.chat.completions.create_with_completion(
-                response_model=response_schema,
-                messages=messages
+            client = genai.Client(api_key=api_key)
+            config = types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=response_schema,
+                temperature=0,
+                system_instruction=prompt,
             )
-            
-            usage = completion.usage_metadata
-            input_tokens_num = usage.prompt_token_count
-            output_tokens_num = usage.candidates_token_count
+            completion = client.models.generate_content(
+                model=model,
+                contents=content or ".",
+                config=config,
+            )
+            response = response_schema.model_validate_json(completion.text)
+            input_tokens_num = completion.usage_metadata.prompt_token_count
+            output_tokens_num = completion.usage_metadata.candidates_token_count
 
         cost_utils.add_llm_cost(
             logger,
             request_id,
-            jurisdiction_ocdid, 
-            "google_gemini", 
-            model, 
-            input_tokens_num, 
-            output_tokens_num, 
+            jurisdiction_ocdid,
+            "google_gemini",
+            model,
+            input_tokens_num,
+            output_tokens_num,
             with_search=with_search
         )
 
@@ -81,7 +76,7 @@ async def run_prompt(
             result = await with_retry(logger, MAX_RETRIES, lambda: execute(model))
             end_time = time.time()
             logger.info(f"gemini {model} LLM call took {end_time - start_time:.2f} seconds")
-            return result   
+            return result
         except Exception:
             continue
 
@@ -114,14 +109,5 @@ def make_request_with_search(logger, model, api_key, prompt):
     return response, input_tokens_num, output_tokens_num
 
 def parse_raw_response(response):
-    """
-    Parse the JSON response from the API.
-
-    Args:
-        response: The API response.
-
-    Returns:
-        Parsed JSON content or None if parsing fails.
-    """
     response_text = response["candidates"][0]["content"]["parts"][0]["text"]
     return json.loads(response_text.replace("```json", "").replace("```", ""))

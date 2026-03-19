@@ -88,7 +88,8 @@ class WorkflowStatus(Enum):
     CLEANUP = "CLEANUP"
     REVIEW_OUTPUT = "REVIEW_OUTPUT"
     SAVE_OUTPUT = "SAVE_OUTPUT"
-    MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
+    SEND_SUCCESS = "SEND_SUCCESS"
+    SEND_ERROR = "SEND_ERROR"
     RETRY = "RETRY"
     FINALIZE = "FINALIZE"
     ERROR = "ERROR"
@@ -165,7 +166,8 @@ class PeopleCollectorData(BaseModel):
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     format_output_step: Optional[FormatOutputStep] = None
     review_output_step: Optional[ReviewOutputStep] = None
-    maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
+    send_success_step: Optional[MaybeSendToGitHubStep] = None
+    send_error_step: Optional[MaybeSendToGitHubStep] = None
     error_step: Optional[str] = None
 
 class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, WorkflowStatus]):

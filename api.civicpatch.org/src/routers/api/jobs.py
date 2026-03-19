@@ -26,12 +26,14 @@ from database.database import (
     update_job_status,
 )
 from job_service.people_collector import people_collector
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
 from services import pubsub_service
 from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)
+
+ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 
 
 class CreateJobRequest(BaseModel):
@@ -48,8 +50,8 @@ class CreateRegisterJobRequest(BaseModel):
 
 class UpdateJobStatusRequest(BaseModel):
     status: str
-    progress: Optional[int]
-    jurisdiction_ocdid: str
+    progress: Optional[int] = None
+    jurisdiction_ocdid: Optional[str] = None
 
 
 class UpdateJobStatusResponse(BaseModel):
@@ -168,24 +170,25 @@ def get_router(api_key_header):
         request: UpdateJobStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.SERVICE, ["default"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])
         ),
     ):
         async def _update_and_publish():
             await update_job_status(
                 request_id=request_id, status=request.status, progress=request.progress
             )
-            key = f"people:{request.jurisdiction_ocdid}"
-            await pubsub_service.publish(
-                key,
-                json.dumps(
-                    {
-                        "request_id": request_id,
-                        "status": request.status,
-                        "progress": request.progress,
-                    }
-                ),
-            )
+            if request.jurisdiction_ocdid:
+                key = f"people:{request.jurisdiction_ocdid}"
+                await pubsub_service.publish(
+                    key,
+                    json.dumps(
+                        {
+                            "request_id": request_id,
+                            "status": request.status,
+                            "progress": request.progress,
+                        }
+                    ),
+                )
 
         background_tasks.add_task(_update_and_publish)
 
@@ -242,7 +245,8 @@ def get_router(api_key_header):
         file: UploadFile,
         background_tasks: BackgroundTasks,
         jurisdiction_ocdid: str = Form(...),
-        _user: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+        job_status: Optional[str] = Form(None),
+        _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
     ):
         start_time = time.time()
 
@@ -268,6 +272,7 @@ def get_router(api_key_header):
             ),
             zip_path=file_path,
             temp_dir=temp_dir,
+            job_status=job_status,
         )
 
         background_tasks.add_task(
@@ -309,15 +314,37 @@ def get_router(api_key_header):
                 status_code=404,
             )
 
+    @router.post(
+        "/{request_id}/resolve",
+        summary="Manually resolve a job that is stuck in an error state",
+    )
+    async def resolve_job_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
+    ):
+        updated = await update_job_status(request_id=request_id, status="RESOLVED", progress=None)
+        if not updated:
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404,
+            )
+        return {"request_id": request_id, "status": "RESOLVED"}
+
     @router.get(
         "/errors",
         summary="List jobs stuck in the pipeline with an error status",
     )
     async def get_jobs_with_errors_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
     ):
         jobs = await get_jobs_with_errors(state_code=state_code)
+
+        for job in jobs:
+            ocdid = job["jurisdiction_ocdid"]
+            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
+            job["workflow_log_url"] = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}/workflow.log"
+
         return {"data": jobs}
 
     @router.get(

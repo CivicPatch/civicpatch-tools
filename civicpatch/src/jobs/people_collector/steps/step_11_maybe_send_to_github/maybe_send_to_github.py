@@ -1,32 +1,16 @@
 import os
-import zipfile
+
 from civicpatch_environment import get_env_vars
 
-from shared.utils import id_utils
-from shared.utils.data_path_utils import (
-    get_data_file_path,
-    get_data_source_path_for_jurisdiction_ocdid,
-)
-
 import services.civicpatch_api
-from jobs.people_collector.schemas import (
-    MaybeSendToGitHubStep,
-    PeopleCollectorContext,
-    WorkflowStatus,
-)
-from utils import cost_utils, log_utils
-
-GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
+from jobs.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, WorkflowStatus
+from utils import cost_utils, log_utils, file_utils
 
 
-async def maybe_send_to_github(
-    context: PeopleCollectorContext,
-) -> MaybeSendToGitHubStep:
+async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 11: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
+    logger.info(f"Step 11: {WorkflowStatus.SEND_SUCCESS.value}")
 
-    # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
-    # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     env = get_env_vars()
     SERVICE_API_KEY = env["SERVICE_API_KEY"]
     API_CIVICPATCH_ORG_URL = env["API_CIVICPATCH_ORG_URL"]
@@ -39,18 +23,15 @@ async def maybe_send_to_github(
                 "SERVICE_API_KEY is not set, skipping github workflow dispatch."
             )
             logger.error(f"Generate api key from CRUDDER at {API_CIVICPATCH_ORG_URL}")
-
             return MaybeSendToGitHubStep(status="skipped_no_token")
 
-        zip_file_path = zip_files(context.request_id, context.data.jurisdiction_ocdid)
+        zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
         file_size_bytes = os.path.getsize(zip_file_path)
-        logger.info(
-            f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes"
-        )
+        logger.info(f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes")
         cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
         response = await services.civicpatch_api.submit_job_artifacts(
-            request_id, jurisdiction_ocdid, zip_file_path
+            request_id, jurisdiction_ocdid, zip_file_path, "SUCCESS"
         )
         if not response:
             logger.error("Failed to get a response from Crudder after retries.")
@@ -65,34 +46,3 @@ async def maybe_send_to_github(
     except Exception as e:
         logger.error(f"Error sending to api.civicpatch.org: {e}")
         return MaybeSendToGitHubStep(status="failed", response_text=str(e))
-
-
-def zip_files(request_id, jurisdiction_ocdid):
-    data_municipality_file = get_data_file_path(jurisdiction_ocdid)
-    data_source_municipality_path = get_data_source_path_for_jurisdiction_ocdid(
-        jurisdiction_ocdid
-    )
-
-    git_branch_name = id_utils.make_git_branch(jurisdiction_ocdid, request_id)
-    zip_file_name = f"{git_branch_name}.zip"
-    zip_file_path = os.path.join("crudder_data", zip_file_name)
-
-    # Ensure the crudder_data directory exists
-    os.makedirs(os.path.dirname(zip_file_path), exist_ok=True)
-
-    with zipfile.ZipFile(zip_file_path, "w", zipfile.ZIP_DEFLATED) as zipf:
-        # Add data_source files - preserve structure starting from "data_source/"
-        for root, _dirs, files in os.walk(data_source_municipality_path):
-            for file in files:
-                file_path = os.path.join(root, file)
-                # Keep the "data_source/..." structure in the zip
-                arcname = f"data_source/{os.path.relpath(file_path, data_source_municipality_path.split('data_source/')[0] + 'data_source/')}"
-                zipf.write(file_path, arcname)
-
-        # Add data municipality file - preserve structure starting from "data/"
-        # Assuming data_municipality_file is like "/app/data/wa/seattle.yml"
-        data_dir = data_municipality_file.split("data/")[0] + "data/"
-        data_arcname = f"data/{os.path.relpath(data_municipality_file, data_dir)}"
-        zipf.write(data_municipality_file, data_arcname)
-
-    return zip_file_path

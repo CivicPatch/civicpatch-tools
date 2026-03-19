@@ -31,6 +31,7 @@ def get_router() -> APIRouter:
         authenticated = data.get("authenticated", False)
 
         PERMISSIONS = {
+            "can_view_jobs_page_errors": "admins" in data.get("teams", []),
             "can_scrape_local": services.civicpatch_api.can_scrape_locally,
             "can_scrape_remote": "maintainers" in data.get("teams", []),
             "can_view_jurisdiction_page": len(data.get("teams", [])) > 0

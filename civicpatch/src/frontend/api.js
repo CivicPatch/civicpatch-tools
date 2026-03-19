@@ -153,6 +153,20 @@ export const fetchReview = async (requestId) => {
   return res.json();
 };
 
+export const resolveJob = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/${requestId}/status`, {
+    credentials: "include",
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ status: "RESOLVED" }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const closePullRequest = async (pullRequestNumber) => {
   const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
     credentials: "include",
