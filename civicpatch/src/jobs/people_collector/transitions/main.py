@@ -28,6 +28,7 @@ from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
 from jobs.people_collector.steps.step_10_review_output.review_output import review_output
 from jobs.people_collector.steps.step_10_save_output.save_output import save_output
 from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
+from jobs.people_collector.steps.step_11_send_error.send_error import send_error
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
 from jobs.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
@@ -185,8 +186,15 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         # TODO: call legger here
         return context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
 
-    page_to_process = preprocessed_links[0] 
-    links, result = await process_page_content(context, page_to_process)
+    page_to_process = preprocessed_links[0]
+    try:
+        links, result = await process_page_content(context, page_to_process)
+    except Exception as e:
+        logger.error(f"process_page_content failed: {e}")
+        next_context = context.copy(update={
+            "data": context.data.copy(update={"error_step": str(e)})
+        })
+        return next_context, WorkflowStatus.SEND_ERROR
     progress = calculate_progress_percentage(context.data, 5)
     next_context = context.copy(update={
         "progress": progress,
@@ -232,7 +240,7 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogg
                 "error_step": f"merge_records_within_llm: heuristics failed: {reasons_str}"
             })
         })
-        return next_context, WorkflowStatus.ERROR
+        return next_context, WorkflowStatus.SEND_ERROR
 
     return next_context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
 
@@ -294,33 +302,30 @@ async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: 
         "progress": progress
     })
 
-    next_state = WorkflowStatus.MAYBE_SEND_TO_GITHUB
+    next_state = WorkflowStatus.SEND_SUCCESS
     return next_context, next_state
 
-async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    cost_utils.log_costs(
-        context.request_id, context.data.jurisdiction_ocdid
-    )
+async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
 
-    _ = await maybe_send_to_github(context)
+    result = await maybe_send_to_github(context)
 
     progress = calculate_progress_percentage(context.data, 12)
     next_context = context.copy(update={
-        "progress": progress
+        "progress": progress,
+        "data": context.data.copy(update={"send_success_step": result})
     })
 
-    next_state = WorkflowStatus.FINALIZE
-    return next_context, next_state
-
-async def finalize_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    next_context = context.copy(update={
-        "progress": 100
-    })
     return next_context, WorkflowStatus.DONE
 
-async def error_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]: 
-    logger.error("An error occurred during processing.")
-    return context, WorkflowStatus.ERROR
+async def send_error_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    result = await send_error(context)
+
+    next_context = context.copy(update={
+        "data": context.data.copy(update={"send_error_step": result})
+    })
+
+    return next_context, WorkflowStatus.ERROR
 
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
@@ -350,7 +355,6 @@ TRANSITION_MAP = {
   WorkflowStatus.CLEANUP: cleanup_transition,
   WorkflowStatus.REVIEW_OUTPUT: review_output_transition,
   WorkflowStatus.SAVE_OUTPUT: save_output_transition,
-  WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,
-  WorkflowStatus.FINALIZE: finalize_transition, 
-  WorkflowStatus.ERROR: error_transition
+  WorkflowStatus.SEND_SUCCESS: send_success_transition,
+  WorkflowStatus.SEND_ERROR: send_error_transition,
 }

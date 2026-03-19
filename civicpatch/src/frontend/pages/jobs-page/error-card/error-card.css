@@ -13,7 +13,6 @@ error-card {
     align-items: center;
     gap: 0.6rem;
     padding: 0.75rem 1rem 0.6rem;
-    border-bottom: 1px solid var(--pico-muted-border-color);
 
     .header-item-left {
         display: flex;
@@ -34,6 +33,14 @@ error-card {
     font-family: var(--pico-font-family-monospace);
     font-size: 0.75rem;
     color: var(--pico-muted-color);
+}
+
+.error-card__state--clickable {
+    cursor: pointer;
+}
+
+.error-card__state--clickable:hover {
+    opacity: 0.8;
 }
 
 .error-card__state {
@@ -70,12 +77,19 @@ error-card {
     letter-spacing: 0.02em;
 }
 
-.error-card__body {
-    padding: 0.5rem 1rem;
+
+.error-card__log-popover {
+    width: min(860px, 90vw);
+    height: min(520px, 80vh);
+    padding: 0;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
 }
 
-.error-card__placeholder {
-    font-family: var(--pico-font-family-monospace);
-    font-size: 0.75rem;
-    color: var(--pico-muted-color);
+.error-card__log {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
 }

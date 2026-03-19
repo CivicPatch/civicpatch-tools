@@ -15,3 +15,4 @@ class HandleSubmitJobArtifactsRequest(BaseModel):
     request_id: str
     jurisdiction_ocdid: str
     server_detail: ServerDetail
+    job_status: Optional[str] = None

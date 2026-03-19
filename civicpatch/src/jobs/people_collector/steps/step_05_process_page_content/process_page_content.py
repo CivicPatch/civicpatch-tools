@@ -413,17 +413,17 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
     input_text_lower = input_text.lower()
     for person in records_found:
         if person.name and not _name_in_text(person.name, input_text_lower):
-            logger.warning(f"Name not found in input text: {person.name}")
+            logger.warning(f"Name not found in input text: {person.name} under source url: {source_url}")
             return False 
         if person.email and person.email.lower() not in input_text_lower:
-            logger.warning(f"Email not found in input text: {person.email}")
+            logger.warning(f"Email not found in input text: {person.email} under source url: {source_url}")
             return False
         if person.phone and not _phone_in_text(person.phone, input_text):
-            logger.warning(f"Phone not found in input text: {person.phone}")
+            logger.warning(f"Phone not found in input text: {person.phone} under source url: {source_url}")
             return False
         if person.url and person.url not in input_text:
             if not url_utils.same_url(person.url, source_url):
-                logger.warning(f"URL not found in input text: {person.url}")
+                logger.warning(f"URL not found in input text: {person.url} under source url: {source_url}")
                 return False
             
         # TODO: Need to use a free model/spacy to do fuzzy matching on roles and dates
