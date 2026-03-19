@@ -27,7 +27,7 @@ from jobs.people_collector.steps.step_08_format_output.format_output import form
 from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
 from jobs.people_collector.steps.step_10_review_output.review_output import review_output
 from jobs.people_collector.steps.step_10_save_output.save_output import save_output
-from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
+from jobs.people_collector.steps.step_11_send_success.send_success import send_success
 from jobs.people_collector.steps.step_11_send_error.send_error import send_error
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
@@ -308,7 +308,7 @@ async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: 
 async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
 
-    result = await maybe_send_to_github(context)
+    result = await send_success(context)
 
     progress = calculate_progress_percentage(context.data, 12)
     next_context = context.copy(update={

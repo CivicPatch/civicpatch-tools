@@ -413,6 +413,10 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
     input_text_lower = input_text.lower()
     for person in records_found:
         if person.name and not _name_in_text(person.name, input_text_lower):
+            if "Vacant" in person.name:
+                logger.info(f"Name appears to be vacant for record with source url: {source_url}, likely will not be in source data")
+                continue
+
             logger.warning(f"Name not found in input text: {person.name} under source url: {source_url}")
             return False 
         if person.email and person.email.lower() not in input_text_lower:

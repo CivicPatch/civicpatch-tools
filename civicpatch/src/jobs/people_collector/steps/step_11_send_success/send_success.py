@@ -7,7 +7,7 @@ from jobs.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollector
 from utils import cost_utils, log_utils, file_utils
 
 
-async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
+async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 11: {WorkflowStatus.SEND_SUCCESS.value}")
 
