@@ -42,20 +42,14 @@ def get_router() -> APIRouter:
             p for p in people
             if shared.utils.name_utils.fuzzy_match(name, p.name)
             or shared.utils.name_utils.exact_match(name, p.name)
+            or shared.utils.name_utils.last_name_match(name, p.name)
             or any(
                 shared.utils.name_utils.fuzzy_match(name, alias)
+                or shared.utils.name_utils.last_name_match(name, alias)
                 for alias in (p.other_names or [])
             )
         ]
         return {"data": matches}
-
-    @router.get("/search/by-ids")
-    async def check_person_ids_endpoint(
-        ids: list[str] = Query(),
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
-    ):
-        existing_ids = await database.filter_existing_person_ids(ids)
-        return {"data": {"existing_ids": existing_ids}}
 
     @router.get("/geo")
     async def list_people_by_geo_endpoint(

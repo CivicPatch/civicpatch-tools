@@ -1,0 +1,52 @@
+/* ── Profile Modal ── */
+
+.profile-modal__link-suggestions,
+.profile-modal__search-suggestions {
+    background: rgb(var(--catppuccin-crust));
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-modal__link-suggestions p,
+.profile-modal__search-suggestions p {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+}
+
+.profile-modal__match-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.profile-modal__match-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    background: rgb(var(--catppuccin-base));
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+}
+
+.profile-modal__match-item span {
+    font-size: 0.8rem;
+    color: var(--pico-color);
+    flex: 1;
+}
+
+.profile-modal__match-item span + span {
+    color: var(--pico-muted-color);
+    flex: none;
+}
+
+.profile-modal__match-item button {
+    margin: 0;
+    flex-shrink: 0;
+}

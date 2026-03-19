@@ -47,11 +47,43 @@ def _normalize_suffix(suffix: str) -> str:
     return suffix.lower().strip().rstrip(".")
 
 
+def _within_one_edit(a: str, b: str) -> bool:
+    """Return True if a and b differ by at most one insertion, deletion, or substitution."""
+    if a == b:
+        return True
+    la, lb = len(a), len(b)
+    if abs(la - lb) > 1:
+        return False
+    if la > lb:
+        a, b = b, a
+        la, lb = lb, la
+    i = j = diffs = 0
+    while i < la and j < lb:
+        if a[i] != b[j]:
+            diffs += 1
+            if diffs > 1:
+                return False
+            if la == lb:
+                i += 1
+            j += 1
+        else:
+            i += 1
+            j += 1
+    return True
+
+
+def last_name_match(name1: str, name2: str) -> bool:
+    """Return True if the last name components match (within one edit)."""
+    p1 = parse_name(name1)
+    p2 = parse_name(name2)
+    return _within_one_edit(p1.last.lower(), p2.last.lower())
+
+
 def fuzzy_match(name1: str, name2: str) -> bool:
     p1 = parse_name(name1)
     p2 = parse_name(name2)
 
-    if p1.first.lower() != p2.first.lower() or p1.last.lower() != p2.last.lower():
+    if not _within_one_edit(p1.first.lower(), p2.first.lower()) or not _within_one_edit(p1.last.lower(), p2.last.lower()):
         return False
     if p1.middle and p2.middle and p1.middle.lower() != p2.middle.lower():
         return False

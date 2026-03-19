@@ -43,7 +43,7 @@ function renderImageRow(label, currentPerson, proposedPerson) {
   `;
 }
 
-function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [] }) {
+function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [], searchSuggestions = [] }) {
   function handleLink(e, matchedId) {
     e.target.dispatchEvent(new CustomEvent("link-person", {
       detail: { personId: matchedId },
@@ -72,7 +72,30 @@ function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [] 
     `
     : "";
 
+  const searchSuggestionsSection = person?._isNew && searchSuggestions.length
+    ? html`
+      <section class="profile-modal__search-suggestions">
+        <p><strong>Suggested profiles</strong> — link this person to an existing record:</p>
+        <ul class="profile-modal__match-list">
+          ${searchSuggestions.map(m => html`
+            <li class="profile-modal__match-item">
+              <person-image .person=${m}></person-image>
+              <span>${m.name}</span>
+              <span>${[m.office?.name, m.office?.division_ocdid].filter(Boolean).join(" — ")}</span>
+              <button
+                type="button"
+                class="secondary btn-sm"
+                @click=${(e) => handleLink(e, m.id)}
+              >Link</button>
+            </li>
+          `)}
+        </ul>
+      </section>
+    `
+    : "";
+
   const content = person ? html`
+    ${searchSuggestionsSection}
     ${linkSuggestions}
     <table class="pico">
       <thead>

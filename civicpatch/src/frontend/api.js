@@ -101,15 +101,6 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
   return res.json();
 };
 
-export const checkPersonIds = async (ids) => {
-  const params = new URLSearchParams(ids.map(id => ["ids", id]));
-  const res = await fetch(`${API_URL}/api/v1/people/search/by-ids?${params}`, {
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
   const params = new URLSearchParams({
     jurisdiction_ocdid: jurisdictionOcdid,
