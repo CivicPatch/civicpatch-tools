@@ -158,6 +158,26 @@ async def submit_job_artifacts(
         return response
 
 
+async def search_people(
+    jurisdiction_ocdid: str,
+    state: Optional[str] = None,
+    name: Optional[str] = None,
+) -> List[dict]:
+    env = get_env_vars()
+    params: dict = {"jurisdiction_ocdid": jurisdiction_ocdid}
+    if state is not None:
+        params["state"] = state
+    if name is not None:
+        params["name"] = name
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/people/search",
+            params=params,
+        )
+        response.raise_for_status()
+        return response.json().get("data", [])
+
+
 async def batch_resolve_people(
     jurisdiction_ocdid: str, people: List[Official]
 ) -> List[dict]:

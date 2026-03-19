@@ -57,13 +57,17 @@ def relevant_page_prompt(page_url: str):
     return prompt
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(roles_hint: List[str]):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
     """
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
+
+    roles_hint_str = ""
+    if roles_hint:
+        roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(roles_hint) + "."
 
     return f"""
     You are a data extraction assistant. Extract information about the currently 
@@ -98,6 +102,7 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
     - Do not include designations (ex: ward, place, position numbers) as part of the role name.
     - Correct: role="City Commissioner", designation="Place 4"
     - Incorrect: role="City Commissioner Place 4", designation=[]
+    {roles_hint_str}
 
     designations:
       Known types: {designations_str}

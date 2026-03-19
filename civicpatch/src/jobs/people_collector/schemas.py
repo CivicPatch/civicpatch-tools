@@ -70,10 +70,6 @@ class WorkflowConfig(BaseModel):
     url: str  # Municipality url. Without it we can't scrape anything.
     name: Optional[str] = None # Human-readable name
     source_urls: Optional[List[str]] = None
-    identities: Optional[Dict[str, List[str]]] = None # Canonical name to other names found while scraping
-
-    # TODO: implement 
-    should_crawl: bool = True # Whether to run the crawl step or follow links
 
 class WorkflowStatus(Enum):
     INIT = "INIT"
@@ -99,6 +95,9 @@ class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
     designations: List[str]
+
+class PreparePipelineStep(BaseModel):
+    existing_people: List[dict]
 
 class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]
@@ -139,7 +138,6 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
 
 class FormatOutputStep(BaseModel):
     officials: List[Official]
-    config: WorkflowConfig
 
 class ReviewOutputStep(BaseModel):
     issues: List[str]
@@ -158,6 +156,7 @@ class PeopleCollectorData(BaseModel):
 
     links: List[Link] = []
 
+    prepare_pipeline_step: Optional[PreparePipelineStep] = None
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     search_links_step: SearchLinksStep = SearchLinksStep()
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None

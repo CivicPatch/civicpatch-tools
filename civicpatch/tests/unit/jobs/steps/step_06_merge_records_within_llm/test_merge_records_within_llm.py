@@ -62,8 +62,6 @@ def _build_context(records_by_llm: dict, elected_officials: list, identities=Non
     config = WorkflowConfig(
         url="https://myportisabel.com/",
         name="Port Isabel city",
-        identities=identities,
-        should_crawl=True,
     )
     data = PeopleCollectorData(
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:tx/place:port_isabel/government",

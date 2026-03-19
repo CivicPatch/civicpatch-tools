@@ -35,9 +35,14 @@ def get_router() -> APIRouter:
     @router.get("/search")
     async def search_people_endpoint(
         jurisdiction_ocdid: str,
-        name: str,
+        state: Optional[str] = Query(None, description="Filter by state"),
+        name: Optional[str] = Query(None, description="Filter by name"),
     ):
-        people = await database.get_people_for_jurisdiction(jurisdiction_ocdid)
+        people = await database.get_people_for_jurisdiction(jurisdiction_ocdid, status=state)
+
+        if name is None:
+            return {"data": people}
+
         matches = [
             p for p in people
             if shared.utils.name_utils.fuzzy_match(name, p.name)
