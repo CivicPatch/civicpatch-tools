@@ -97,7 +97,9 @@ class ResearchedPerson(BaseModel):
     designations: List[str]
 
 class PreparePipelineStep(BaseModel):
-    existing_people: List[dict]
+    roles_hint: list[str]
+    identities: dict[str, list[str]] # canonical name to list of other names/aliases
+    source_urls: list[str]
 
 class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]

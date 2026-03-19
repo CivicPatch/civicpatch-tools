@@ -28,7 +28,7 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         official.name: [] # TBD -- we can pull other_names from the database after scraping
         for official in context.data.research_municipality_step.elected_officials
     }
-    identities = context.data.config.identities or research_identities
+    identities = research_identities
 
     # Flatten records per LLM
     flattened_records_by_llm = {
