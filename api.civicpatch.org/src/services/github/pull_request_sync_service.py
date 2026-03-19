@@ -59,7 +59,7 @@ async def register_and_sync_pr_job(
         job_type="people",
         arguments_json={"jurisdiction_ocdid": jurisdiction_ocdid},
         jurisdiction_ocdid=jurisdiction_ocdid,
-        status="completed",
+        status="COMPLETED",
         progress=100,
     )
     await database.update_job_pull_request_status(request_id, "open", None, pull_request_url=pr_url)
@@ -95,7 +95,7 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
                 pr_info["jurisdiction_ocdid"],
                 pr_info["url"],
                 provider="github_sync",
-                status="completed",
+                status="DONE",
                 progress=100,
             )
         else:

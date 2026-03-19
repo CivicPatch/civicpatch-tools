@@ -19,6 +19,7 @@ from database.database import (
     get_job_result,
     get_job_data_json,
     get_job_status,
+    get_jobs_with_errors,
     register_job,
     update_job_pull_request_url,
     update_job_data,
@@ -129,7 +130,7 @@ def get_router(api_key_header):
                 status_code=500,
             )
 
-        return CreateJobResponse(request_id=request_id, status="pending")
+        return CreateJobResponse(request_id=request_id, status="PENDING")
 
     @router.post(
         "/register",
@@ -307,6 +308,17 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Job not found").model_dump(),
                 status_code=404,
             )
+
+    @router.get(
+        "/errors",
+        summary="List jobs stuck in the pipeline with an error status",
+    )
+    async def get_jobs_with_errors_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])),
+    ):
+        jobs = await get_jobs_with_errors(state_code=state_code)
+        return {"data": jobs}
 
     @router.get(
         "/{request_id}/status",
