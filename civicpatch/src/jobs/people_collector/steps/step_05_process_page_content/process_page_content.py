@@ -77,12 +77,15 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     identities = get_identities(context)
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
+    # If config data is available, use that
+    roles_hint = context.data.config.roles if context.data.config.roles else setup_data.roles
+
     updated_links, is_relevant = await check_page_relevance(context, page_to_process, content)
     if not is_relevant:
         return updated_links, current_step.copy(update={"links": updated_links})
 
     updated_raw_records, updated_records, heuristics_passed = await run_llm_loop(
-        context, page_to_process, content, setup_data, current_step, identities, logger
+        context, page_to_process, content, roles_hint, current_step, identities, logger
     )
 
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
@@ -184,9 +187,9 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
 
 async def run_llm_loop(
     context: PeopleCollectorContext,
+    roles_hint: list[str],
     page_to_process: Link,
     content: str,
-    setup_data: ProcessingSetup,
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
@@ -207,7 +210,7 @@ async def run_llm_loop(
 
         llm_responses, records_found = await process_with_llm(
             page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
-            content, setup_data.people_hint, llm,
+            content, roles_hint, llm,
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
@@ -244,7 +247,7 @@ async def process_with_llm(
     request_id,
     jurisdiction_ocdid: str,
     content: str,
-    people_hint: List[ResearchedPerson],
+    roles_hint: list[str],
     llm: dict,
 ) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
     """
@@ -254,7 +257,7 @@ async def process_with_llm(
     if llm.get("with_batch_api", False):
         raise NotImplementedError(f"Batch API not yet implemented for LLM: {llm['name']}")
 
-    prompt = llm["prompt"].municipality_officials_prompt(people_hint)
+    prompt = llm["prompt"].municipality_officials_prompt(roles_hint)
     response = await llm["service"].run_prompt(
         request_id,
         jurisdiction_ocdid,

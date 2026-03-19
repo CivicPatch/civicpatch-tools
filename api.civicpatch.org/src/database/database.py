@@ -1021,16 +1021,25 @@ async def get_jurisdiction_updates() -> List[dict]:
             }
     return jurisdictions
 
-async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
+async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str = None) -> List[Person]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT data FROM people
-            WHERE jurisdiction_ocdid = %s
-            """,
-            (jurisdiction_ocdid,),
-        )
+        if status is not None:
+            await cur.execute(
+                """
+                SELECT data FROM people
+                WHERE jurisdiction_ocdid = %s AND status = %s
+                """,
+                (jurisdiction_ocdid, status),
+            )
+        else:
+            await cur.execute(
+                """
+                SELECT data FROM people
+                WHERE jurisdiction_ocdid = %s
+                """,
+                (jurisdiction_ocdid,),
+            )
         rows = await cur.fetchall()
         people = [Person(**row[0]) for row in rows]
     return people
