@@ -201,6 +201,40 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
     # "alex@noemail.com" is not in input_text
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
+def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
+    # LLM returns straight apostrophe; page has curly right-single-quote (U+2019)
+    records = [
+        LLMPerson(
+            name="Mario D'Agostino",
+            other_names=[],
+            roles=["council"],
+            phone=None,
+            email=None,
+            url=None,
+            designations=[],
+            source_url="http://example.com",
+        )
+    ]
+    input_text = "Council member Mario D\u2019Agostino represents District 4."
+    assert check_page_heuristics(dummy_logger(), "http://example.com", input_text, records) is True
+
+def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_name():
+    # LLM returns curly apostrophe; page has straight apostrophe
+    records = [
+        LLMPerson(
+            name="Mario D\u2019Agostino",
+            other_names=[],
+            roles=["council"],
+            phone=None,
+            email=None,
+            url=None,
+            designations=[],
+            source_url="http://example.com",
+        )
+    ]
+    input_text = "Council member Mario D'Agostino represents District 4."
+    assert check_page_heuristics(dummy_logger(), "http://example.com", input_text, records) is True
+
 def test_check_page_heuristics_returns_false_if_url_not_in_text():
     records = [
         LLMPerson(

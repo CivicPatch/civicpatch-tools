@@ -72,6 +72,25 @@ def test_build_canonical_map_with_identities():
     assert canonical_map["Martin Cantu Jr."] == "Martin Cantu, Jr."
     assert canonical_map["Martin C. Cantu"] == "Martin C. Cantu, Sr."
 
+def test_normalize_text_for_search_lowercases():
+    assert name_utils.normalize_text_for_search("Hello World") == "hello world"
+
+def test_normalize_text_for_search_strips_accents():
+    assert name_utils.normalize_text_for_search("José Álvarez") == "jose alvarez"
+
+def test_normalize_text_for_search_strips_straight_apostrophe():
+    assert name_utils.normalize_text_for_search("D'Agostino") == "dagostino"
+
+def test_normalize_text_for_search_strips_curly_apostrophe():
+    # U+2019 RIGHT SINGLE QUOTATION MARK
+    assert name_utils.normalize_text_for_search("D\u2019Agostino") == "dagostino"
+
+def test_normalize_text_for_search_both_apostrophe_variants_equal():
+    straight = name_utils.normalize_text_for_search("D'Agostino")
+    curly = name_utils.normalize_text_for_search("D\u2019Agostino")
+    assert straight == curly
+
+
 def test_build_canonical_map_fuzzy():
     identities = {}
     all_people = [{"name": "Jeffery David Martinez"}, {"name": "Jeffery Martinez"}]

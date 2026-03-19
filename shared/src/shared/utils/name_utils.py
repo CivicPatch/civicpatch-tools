@@ -1,3 +1,4 @@
+import re
 import unicodedata
 from typing import Dict, List, Protocol
 
@@ -81,6 +82,12 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
     ):
         score += 1
     return score
+
+
+def normalize_text_for_search(text: str) -> str:
+    """Normalize text for loose substring search: strips accents, punctuation, and lowercases."""
+    ascii_text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^\w\s]", "", ascii_text).lower()
 
 
 def normalize_name(name: str) -> str:
