@@ -11,7 +11,7 @@ import "./pull-request-tabs.js";
 import "./profile-modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview } from "../../api.js";
+import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople } from "../../api.js";
 import "../diff-panel/diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -45,6 +45,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [profileModal, setProfileModal] = useState({
     open: false,
     person: null,
+    searchSuggestions: [],
   });
   const [resolvedMatches, setResolvedMatches] = useState({});
   useEffect(() => {
@@ -171,7 +172,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }
   }
 
-  function openProfileModal(person) {
+  async function openProfileModal(person) {
     const resolved = resolvedMatches[person.id];
     let existingPerson = people.find(p => p.id === person.id) ?? resolved?.person ?? null;
     let nameMatches = [];
@@ -185,17 +186,27 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       }
     }
 
-    setProfileModal({ open: true, person, existingPerson, nameMatches });
+    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [] });
+
+    if (person._isNew && person.name) {
+      try {
+        const result = await searchPeople(jurisdiction_ocdid, person.name);
+        setProfileModal(prev => ({ ...prev, searchSuggestions: result.data ?? [] }));
+      } catch {
+        // non-blocking
+      }
+    }
   }
 
   function handleLinkPerson(e) {
     const { personId } = e.detail;
-    updatePerson(profileModal.person.id, { id: personId });
+    updatePerson(profileModal.person.id, { id: personId, _isNew: false });
     setProfileModal(prev => ({
       ...prev,
-      person: { ...prev.person, id: personId },
+      person: { ...prev.person, id: personId, _isNew: false },
       existingPerson: people.find(p => p.id === personId),
       nameMatches: [],
+      searchSuggestions: [],
     }));
   }
 
@@ -307,9 +318,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .person=${profileModal.person}
       .existingPerson=${profileModal.existingPerson}
       .nameMatches=${profileModal.nameMatches ?? []}
+      .searchSuggestions=${profileModal.searchSuggestions ?? []}
       @link-person=${handleLinkPerson}
       @close=${() =>
-        setProfileModal({ open: false, person: null, existingPerson: null })}
+        setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}
     ></profile-modal>
   `;
 }

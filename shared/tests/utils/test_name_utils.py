@@ -58,6 +58,42 @@ def test_fuzzy_match():
     assert name_utils.fuzzy_match("Jeffery David Martinez", "Jeffery Martinez")
     assert not name_utils.fuzzy_match("Martin Cantu, Jr.", "Martin C. Cantu, Sr.")
 
+
+def test_fuzzy_match_one_char_substitution_in_first_name():
+    assert name_utils.fuzzy_match("Emmanual Guerrero", "Emmanuel Guerrero")
+
+
+def test_fuzzy_match_one_char_substitution_in_last_name():
+    assert name_utils.fuzzy_match("John Smyth", "John Smith")
+
+
+def test_last_name_match_different_first_names():
+    assert name_utils.last_name_match("Ralph Buell", "Buster Buell")
+
+
+def test_last_name_match_does_not_match_different_last_names():
+    assert not name_utils.last_name_match("Ralph Buell", "Ralph Smith")
+
+
+def test_fuzzy_match_does_not_match_two_char_diff():
+    assert not name_utils.fuzzy_match("Jn Smith", "John Smith")
+
+
+def test_within_one_edit_substitution():
+    assert name_utils._within_one_edit("emmanual", "emmanuel")
+
+
+def test_within_one_edit_insertion():
+    assert name_utils._within_one_edit("john", "johnn")
+
+
+def test_within_one_edit_identical():
+    assert name_utils._within_one_edit("john", "john")
+
+
+def test_within_one_edit_two_diffs():
+    assert not name_utils._within_one_edit("jon", "johnn")
+
 def test_normalize_name():
     assert name_utils.normalize_name("José Álvarez, Jr.") == "jose alvarez"
     assert name_utils.normalize_name("Martin Cantu, Jr.") == "martin cantu"
