@@ -32,7 +32,7 @@ async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
             await database.update_job_data(request_id, data)
             logger.info("maybe_backfill_job_result: data_json set for %s", request_id)
 
-    if result["review_json"] is None:
+    if not result["review_json"]:
         workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
         review_json = _derive_review_step(workflow_context)
         await database.update_job_review_json(request_id, review_json)
@@ -51,8 +51,6 @@ async def register_and_sync_pr_job(
     jurisdiction_ocdid: str,
     pr_url: str | None,
     provider: str,
-    status: str = "pending",
-    progress: int = 0,
 ):
     await database.register_job(
         requested_by_provider=provider,
@@ -61,8 +59,8 @@ async def register_and_sync_pr_job(
         job_type="people",
         arguments_json={"jurisdiction_ocdid": jurisdiction_ocdid},
         jurisdiction_ocdid=jurisdiction_ocdid,
-        status=status,
-        progress=progress,
+        status="completed",
+        progress=100,
     )
     await database.update_job_pull_request_status(request_id, "open", None, pull_request_url=pr_url)
     await maybe_backfill_job_result(request_id, jurisdiction_ocdid)
