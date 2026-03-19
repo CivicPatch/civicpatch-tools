@@ -42,6 +42,16 @@ export const fetchPullRequests = async (jurisdictionOcdid) => {
   return res.json();
 };
 
+export const fetchJobsWithErrors = async (stateCode) => {
+  const params = new URLSearchParams();
+  if (stateCode) params.set("state_code", stateCode);
+  const res = await fetch(`${API_URL}/api/v1/jobs/errors?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
   const params = new URLSearchParams({ page, per_page: perPage });
   if (stateCode) params.set("state_code", stateCode);

@@ -646,7 +646,7 @@ async def register_job(
         arguments_json: dict,
         server_source: Optional[str] = None,
         jurisdiction_ocdid: Optional[str] = None,
-        status: str = "pending",
+        status: str = "PENDING",
         progress: int = 0,
 ):
     pool = await get_pool()
@@ -1111,6 +1111,46 @@ async def list_jobs_with_open_prs(
         for r in rows
     ]
     return results, total
+
+
+async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
+    conditions = ["status = 'ERROR'"]
+    params: list = []
+
+    if state_code:
+        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        params.append(f"%state:{state_code}%")
+
+    where = " AND ".join(conditions)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT j.request_id,
+                   j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
+                   jur.data->>'name' AS jurisdiction_name,
+                   j.created_at, j.updated_at
+            FROM jobs j
+            LEFT JOIN jurisdictions jur
+                   ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+            WHERE {where}
+            ORDER BY j.created_at DESC
+            """,
+            params,
+        )
+        rows = await cur.fetchall()
+
+    return [
+        {
+            "request_id": r[0],
+            "jurisdiction_ocdid": r[1],
+            "jurisdiction_name": r[2],
+            "created_at": to_iso(r[3]),
+            "updated_at": to_iso(r[4]),
+        }
+        for r in rows
+    ]
 
 
 async def get_job_data_json(request_id: str):

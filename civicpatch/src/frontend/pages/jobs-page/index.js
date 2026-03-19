@@ -1,9 +1,10 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { fetchPullRequestsWithData, mergePullRequest, closePullRequest } from "../../api.js";
+import { fetchPullRequestsWithData, fetchJobsWithErrors, mergePullRequest, closePullRequest } from "../../api.js";
 import { pullRequestUrlToNumber } from "./pr-utils.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
+import "./error-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 
 const DEFAULT_STATE = "tx";
@@ -33,6 +34,7 @@ function JobsPage() {
   const [page, setPage] = useState(getPageFromUrl());
   const [stateCode, setStateCode] = useState(getStateFromUrl());
   const [total, setTotal] = useState(0);
+  const [errorJobs, setErrorJobs] = useState([]);
   const perPage = 20;
 
   useEffect(() => {
@@ -51,10 +53,14 @@ function JobsPage() {
     setLoading(true);
     setError(null);
 
-    fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase())
-      .then((result) => {
-        setPullRequests(result.data || []);
-        setTotal(result.total || 0);
+    Promise.all([
+      fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase()),
+      fetchJobsWithErrors(stateCode.toLowerCase()),
+    ])
+      .then(([prResult, errResult]) => {
+        setPullRequests(prResult.data || []);
+        setTotal(prResult.total || 0);
+        setErrorJobs(errResult.data || []);
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
@@ -149,15 +155,26 @@ function JobsPage() {
             `;
           });
 
+  const errorSection = errorJobs.length === 0 ? null : html`
+    <section class="jobs-page__errors">
+      <h2>Pipeline errors</h2>
+      <div style="display: flex; gap: 2rem; flex-direction: column;">
+        ${errorJobs.map((job) => html`<error-card .job=${job}></error-card>`)}
+      </div>
+    </section>
+  `;
+
   return html`
     <main>
+      <div class="jobs-page__filters">
+        <civ-select-state
+          .selected=${stateCode}
+          @state-change=${handleStateChange}
+        ></civ-select-state>
+      </div>
+      ${errorSection}
       <section>
-        <div class="jobs-page__filters">
-          <civ-select-state
-            .selected=${stateCode}
-            @state-change=${handleStateChange}
-          ></civ-select-state>
-        </div>
+        <h2>Open pull requests</h2>
         <div style="display: flex; gap: 2rem; flex-direction: column;">
           ${prList}
         </div>
