@@ -436,14 +436,19 @@ def _name_in_text(name: str, text_lower: str) -> bool:
     Check if a name appears in text, allowing for minor formatting differences
     (e.g., "Martin Cantu Jr." vs "Martin Cantu, Jr.").
     """
-    # Exact match first
     if name.lower() in text_lower:
         return True
-    
+
+    # Normalize both sides (strips accents, punctuation variants like curly apostrophes)
+    name_norm = name_utils.normalize_text_for_search(name)
+    text_norm = name_utils.normalize_text_for_search(text_lower)
+    if name_norm in text_norm:
+        return True
+
     # Check if all name parts (first, middle, last) appear in the text
     parsed = name_utils.parse_name(name)
-    parts = [p.lower() for p in [parsed.first, parsed.middle, parsed.last] if p]
-    if parts and all(part in text_lower for part in parts):
+    parts = [name_utils.normalize_text_for_search(p) for p in [parsed.first, parsed.middle, parsed.last] if p]
+    if parts and all(part in text_norm for part in parts):
         return True
 
     return False
