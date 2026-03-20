@@ -5,10 +5,10 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
+  end_date: 2026-05
   image: null
 - name: Al Stephens
   roles:
@@ -16,10 +16,10 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
+  end_date: 2026-05
   image: null
 - name: Bobby Hanson
   roles:
@@ -27,10 +27,10 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
+  end_date: 2026-05
   image: null
 - name: Darrell Grintz
   roles:
@@ -38,10 +38,10 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: 2027-05
   image: null
 - name: Billy Wayne Martin
   roles:
@@ -49,10 +49,10 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: 2027-05
   image: null
 - name: Charles Wrenn
   roles:
@@ -60,8 +60,8 @@ people:
   designations:
   - At Large
   phone: 903-587-3334
-  email: citysec@cityofleonard.net
+  email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: 2027-05
   image: null

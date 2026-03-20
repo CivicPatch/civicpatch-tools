@@ -1,83 +1,61 @@
 aggregated_report:
+  email: 1.0
   name: 1.0
-  roles: 0.86
-  phone: 0.8400000000000001
-  email: 0.8
-  url: 0.7418181818181818
   designations: 1.0
-aggregate_failures:
-- field: roles
-  actual: 0.86
-  threshold: 0.9
-aggregate_failed_cases:
-  roles:
-  - case_id: coleman_council
-    person: Beau Brudney
-    expected:
-    - Council Member
-    actual:
-    - Place 3
-  - case_id: coleman_council
-    person: Monte Sides
-    expected:
-    - Council Member
-    actual:
-    - Place 4
-  - case_id: coleman_council
-    person: Sharlene T. Hetzel
-    expected:
-    - Council Member
-    - Mayor Pro-Tem
-    actual:
-    - Place 2
-    - Mayor Pro-Tem
-  - case_id: coleman_council
-    person: Tracy Rankin
-    expected:
-    - Council Member
-    actual:
-    - Place 1
+  url: 0.7848484848484848
+  phone: 0.8666666666666667
+  roles: 1.0
+aggregate_failures: []
+aggregate_failed_cases: {}
 per_case_scores:
 - case_id: austin_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 0.9090909090909091
+    name: 1.0
     designations: 1.0
+    url: 0.9090909090909091
+    phone: 1.0
+    roles: 1.0
 - case_id: board_of_aldermen
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 0.2
     email: 1.0
-    url: 0.0
+    name: 1.0
     designations: 1.0
+    url: 0.0
+    phone: 0.2
+    roles: 1.0
 - case_id: coleman_council
   scores:
-    name: 1.0
-    roles: 0.3
-    phone: 1.0
     email: 1.0
-    url: 1.0
+    name: 1.0
     designations: 1.0
+    url: 1.0
+    phone: 1.0
+    roles: 1.0
+- case_id: la_porte_council
+  scores:
+    email: 1.0
+    name: 1.0
+    designations: 1.0
+    url: 1.0
+    phone: 1.0
+    roles: 1.0
 - case_id: mixed_current_past
   scores:
+    email: 1.0
     name: 1.0
-    roles: 1.0
-    phone: 1.0
-    email: 0.0
-    url: 1.0
     designations: 1.0
+    url: 1.0
+    phone: 1.0
+    roles: 1.0
 - case_id: vacant_positions_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 0.8
+    name: 1.0
     designations: 1.0
+    url: 0.8
+    phone: 1.0
+    roles: 1.0
 failed_cases:
 - model_client: gemini
   case_number: 1
@@ -99,61 +77,3 @@ failed_cases:
     field: phone
     expected: null
     actual: 956-350-4093
-- model_client: gemini
-  case_number: 2
-  case_id: coleman_council
-  failures:
-  - person: Beau Brudney
-    field: roles
-    expected:
-    - Council Member
-    actual:
-    - Place 3
-  - person: Monte Sides
-    field: roles
-    expected:
-    - Council Member
-    actual:
-    - Place 4
-  - person: Sharlene T. Hetzel
-    field: roles
-    expected:
-    - Council Member
-    - Mayor Pro-Tem
-    actual:
-    - Place 2
-    - Mayor Pro-Tem
-  - person: Tracy Rankin
-    field: roles
-    expected:
-    - Council Member
-    actual:
-    - Place 1
-- model_client: gemini
-  case_number: 3
-  case_id: mixed_current_past
-  failures:
-  - person: Michael Pye
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
-  - person: Al Stephens
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
-  - person: Bobby Hanson
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
-  - person: Darrell Grintz
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
-  - person: Billy Wayne Martin
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
-  - person: Charles Wrenn
-    field: email
-    expected: cityadmin@cityofleonard.net
-    actual: citysec@cityofleonard.net
