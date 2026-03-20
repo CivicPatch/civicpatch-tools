@@ -1,0 +1,42 @@
+civ-table table {
+  table-layout: auto;
+  width: auto;
+  min-width: 100%;
+}
+civ-table table:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire)) !important;
+}
+
+civ-table tr:last-child {
+}
+civ-table td {
+}
+civ-table td:focus-within {
+  background-color: rgb(var(--catppuccin-base));
+}
+civ-table-cell {
+}
+civ-table tr {
+  border: 1px solid rgb(var(--catppuccin-crust));
+  transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
+}
+civ-table tr:focus-within {
+  background-color: rgba(var(--catppuccin-teal), 0.1);
+}
+civ-table tr.dragging {
+  opacity: 0.3;
+}
+civ-table tr.drop-indicator td div {
+  animation: expand 250ms ease-out forwards;
+}
+@keyframes expand {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 8rem;
+    opacity: 1;
+  }
+}

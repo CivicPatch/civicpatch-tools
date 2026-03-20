@@ -142,6 +142,7 @@ const DiffPanel = ({ data }) => {
   return html`
     <div class="diff-panel">
       <div class="diff-panel__toolbar">
+        <span class="diff-panel__label">Changes Since Last Scrape</span>
         ${diffEntries.length === 0
           ? html`<span class="diff-panel__summary">No changes detected.</span>`
           : ""}
