@@ -11,20 +11,20 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
 - name: Brandon Lunsford
   roles:
-  - Councilperson
+  - Councilperson At-Large
   designations:
-  - At Large
+  - At Large A
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/692/At-Large-A
-  start_date: '2025'
-  end_date: '2028'
+  start_date: null
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
 - name: Brent McCaulley
   roles:
-  - Councilperson
+  - Councilperson At-Large
   designations:
-  - At Large
+  - At Large B
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/693/At-Large-B
@@ -72,8 +72,8 @@ people:
   phone: 281-471-5021
   email: null
   url: https://www.laportetx.gov/883/District-4
-  start_date: '2025'
-  end_date: '2028'
+  start_date: null
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
 - name: Jay Martin
   roles:
@@ -83,8 +83,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/698/District-5
-  start_date: '2025'
-  end_date: '2028'
+  start_date: null
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
 - name: Robbie McLarrin
   roles:

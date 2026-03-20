@@ -92,12 +92,17 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
     If structured and unstructured content are mixed, extract only from the
     structured portion.
 
+    Do NOT extract office staff, aides, assistants, schedulers, constituent services
+    representatives, chiefs of staff, or other administrative employees who work for
+    an elected official — only extract elected or appointed members of the primary
+    governing body (Mayor, Council Members, Commissioners, etc.).
+
     Examples of valid sources to extract from:
     - A table listing council members with their names, roles, and contact info
     - A dedicated "Meet Your Council" page with individual bios
-    - A staff directory with names, titles, and phone numbers
 
     Examples of sources to ignore:
+    - A staff directory for a council member's office (lists aides, not officials)
     - "Mayor Johnson attended the ribbon cutting ceremony last Tuesday"
     - "The council voted 4-1 in favor, with Alderman Smith dissenting"
 

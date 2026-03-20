@@ -30,7 +30,7 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         person for person in people if not person.name == "Vacant Vacant"
     ]
 
-    image_map = _get_image_map(context.data.jurisdiction_ocdid)
+    image_map = _get_image_map(context.data.jurisdiction_ocdid, logger)
     for person in filtered_people:
         person = _swap_local_image(person, image_map)
         person = _maybe_add_fallback_url(person)
@@ -55,16 +55,21 @@ def _maybe_add_fallback_url(person: Official) -> Official:
     return person
 
 
-def _get_image_map(jurisdiction_ocdid: str) -> dict:
+def _get_image_map(jurisdiction_ocdid: str, logger) -> dict:
     try:
         images_dir = data_path_utils.get_images_path(jurisdiction_ocdid)
-    except FileNotFoundError:
+    except FileNotFoundError as e:
+        logger.warning(f"_get_image_map: data_source dir not found: {e}")
         return {}
     map_file = os.path.join(images_dir, "image_map.json")
+    logger.info(f"_get_image_map: looking for image_map at {map_file}")
     if not os.path.exists(map_file):
+        logger.warning(f"_get_image_map: image_map.json not found at {map_file}")
         return {}
     with open(map_file, "r") as f:
-        return json.load(f)
+        image_map = json.load(f)
+    logger.info(f"_get_image_map: loaded {len(image_map)} entries")
+    return image_map
 
 
 def _swap_local_image(official: Official, image_map: dict) -> Official:

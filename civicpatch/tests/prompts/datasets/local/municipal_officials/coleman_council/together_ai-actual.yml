@@ -5,20 +5,18 @@ people:
   designations: []
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
 - name: Sharlene T. Hetzel
   roles:
   - Council Member
-  - Mayor Pro-Tem
   designations:
   - Place 2
-  - West Ward
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -27,10 +25,9 @@ people:
   - Council Member
   designations:
   - Place 1
-  - North Ward
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -39,10 +36,9 @@ people:
   - Council Member
   designations:
   - Place 3
-  - East Ward
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -51,10 +47,9 @@ people:
   - Council Member
   designations:
   - Place 4
-  - South Ward
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null

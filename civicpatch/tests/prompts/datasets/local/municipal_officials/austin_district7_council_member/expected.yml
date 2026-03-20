@@ -1,0 +1,10 @@
+people:
+  - name: Mike Siegel
+    phone: null
+    email: null
+    url: https://www.austintexas.gov/email/1416
+    start_date: "2025-01-06"
+    end_date: "2029-01-06"
+    roles: [Council Member]
+    designations: [District 7]
+    image: null

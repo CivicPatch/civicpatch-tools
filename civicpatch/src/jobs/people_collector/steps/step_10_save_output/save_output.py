@@ -6,9 +6,8 @@ from jobs.people_collector.schemas import (
   PeopleCollectorContext
 )
 import utils.log_utils
-from shared.utils import data_path_utils 
+from shared.utils import data_path_utils
 import yaml
-from services.civicpatch_api import update_people_job_result
 
 async def save_output(context: PeopleCollectorContext):
   logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
@@ -20,7 +19,6 @@ async def save_output(context: PeopleCollectorContext):
 
   format_output = context.data.format_output_step
   save_data_to_file(format_output.officials, data_file_path)
-  await update_people_job_result(logger, context.request_id, format_output.officials)
 
 def save_data_to_file(people: List[Official], file_path: str):
     # Create parent directories if not exists
