@@ -11,6 +11,7 @@ const FIELDS = [
   { key: "urls",                  label: "URLs" },
   { key: "start_date",            label: "Start Date" },
   { key: "end_date",              label: "End Date" },
+  { key: "image",                 label: "Image" }
 ];
 
 function getFieldValue(person, key) {

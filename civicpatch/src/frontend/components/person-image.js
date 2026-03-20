@@ -13,7 +13,7 @@ function PersonImage({ person, onClick }) {
       .join("");
   }
 
-  const value = person?.cdn_image || person?.image;
+  const value = person?.cdn_image;
   const showInitials = !value || imgError;
 
   return html`

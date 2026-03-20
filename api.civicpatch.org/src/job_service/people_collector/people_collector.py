@@ -121,12 +121,15 @@ async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: Li
 
     for person in data:
         if person.get("image"):
-            if person["image"] in image_map and image_map[person["image"]] in filenames_to_urls:
+            if person["image"] not in image_map:
+                logger.warning("_process_images: image URL not in image_map for person %s: %s", person.get("id"), person["image"])
+            elif image_map[person["image"]] not in filenames_to_urls:
+                logger.warning("_process_images: mapped filename not in filenames_to_urls for person %s: %s", person.get("id"), image_map[person["image"]])
+            else:
                 storage_url = filenames_to_urls[image_map[person["image"]]]
                 # convert storage URL to the civicpatch-artifacts bucket
                 # temp TODO move
                 cdn_image_url = storage_url.replace(f"{STORAGE_ENDPOINT}/civicpatch-artifacts", f"https://civicpatch-artifacts.{INSTANCE_DOMAIN}")
-
                 person["cdn_image"] = cdn_image_url
     return data
 
@@ -142,13 +145,13 @@ async def _upload_debug_files(debug_file_dir: str, file_suffix_without_ext: str)
         dict: A mapping of relative file paths to their URLs in storage.
     """
     filename_to_url = {}
-    try:
-        for root, _, files in os.walk(debug_file_dir):
-            for file in files:
-                file_path = os.path.join(root, file)
-                relative_path = os.path.relpath(file_path, debug_file_dir)  # Preserve the hierarchy
-                base_filename = os.path.basename(file_path)
-                storage_key = f"{file_suffix_without_ext}/{relative_path}"  # Use request_id as the root folder
+    for root, _, files in os.walk(debug_file_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            relative_path = os.path.relpath(file_path, debug_file_dir)  # Preserve the hierarchy
+            base_filename = os.path.basename(file_path)
+            storage_key = f"{file_suffix_without_ext}/{relative_path}"  # Use request_id as the root folder
+            try:
                 url = await storage_service.upload_file_to_storage(
                     "civicpatch-artifacts",
                     file_path,
@@ -156,8 +159,8 @@ async def _upload_debug_files(debug_file_dir: str, file_suffix_without_ext: str)
                     with_presigned_url=False
                 )
                 filename_to_url[base_filename] = url
-    except Exception as e:
-        logger.error(f"Failed to upload debug files for request {file_suffix_without_ext}: {e}")
+            except Exception as e:
+                logger.error(f"Failed to upload debug file {file_path} for request {file_suffix_without_ext}: {e}")
 
     logger.info("DEBUG: Uploaded debug files with the following URLs: %s", filename_to_url)
     return filename_to_url
