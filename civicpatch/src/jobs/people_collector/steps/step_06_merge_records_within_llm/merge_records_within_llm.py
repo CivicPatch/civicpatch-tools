@@ -23,12 +23,7 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         for k, people in records_by_llm.items()
     } if isinstance(records_by_llm, dict) else records_by_llm
 
-    # Build identities from research step
-    research_identities = {
-        official.name: [] # TBD -- we can pull other_names from the database after scraping
-        for official in context.data.research_municipality_step.elected_officials
-    }
-    identities = research_identities
+    identities = context.data.prepare_pipeline_step.identities
 
     # Flatten records per LLM
     flattened_records_by_llm = {

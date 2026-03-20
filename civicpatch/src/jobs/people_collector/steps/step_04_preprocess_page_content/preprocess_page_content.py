@@ -41,14 +41,7 @@ def preprocess_page_content(
         output_html = f.read()
 
 
-    research_elected_officials = getattr(
-        context.data.research_municipality_step, "elected_officials", {}
-    )
-    research_identities = {official.name: [official.name] for official in research_elected_officials}
-    #runtime_identities = getattr(
-    #    context.data.process_page_content_step, "identities", {}
-    #)
-    identities = research_identities
+    identities = context.data.prepare_pipeline_step.identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html)
