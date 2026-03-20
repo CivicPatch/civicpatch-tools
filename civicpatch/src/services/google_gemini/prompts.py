@@ -4,6 +4,70 @@ from shared.utils import config_utils
 from shared.utils import id_utils
 from jobs.people_collector.schemas import ResearchedPerson
 
+
+def relevant_page_prompt(page_url: str):
+    return f"""
+    Your task is to determine if the provided content contains information about the **currently serving main officials**
+    of the target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of the municipality.
+
+    Also consider the page URL: {page_url}
+    The URL may help you select relevant_urls, but do NOT use it to determine is_relevant.
+    is_relevant must be based solely on the page content.
+
+    **Relevant content includes:**
+    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)
+      for the main officials of the municipality.
+    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.
+
+    **Irrelevant content includes:**
+    - Pages that only mention auxiliary committees, department heads, supervisors, or other non-elected officials.
+      For example: Planning and Zoning Committee, Parks and Recreation Board, etc.
+    - Pages about the City Manager's or City Administrator's office. The City Manager is an appointed
+      administrator who serves at the discretion of the governing body — they are NOT a member of the
+      primary governing body (Mayor, Council, etc.) and their page must be marked is_relevant: false.
+
+    **Steps for selecting relevant_urls:**
+    1. Extract ALL links found anywhere on the page into a complete list.
+    2. For each link, ask: "If I followed this link, would I likely land on a page that lists or describes
+       the primary governing body (mayor, council members, commissioners, etc.) or provides a directory
+       of municipal departments and staff?"
+       Keep the link if the answer is yes.
+    3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to
+       a navigational index or overview page, or to a single specific article, event, or news item?"
+       - Keep: section indexes like /Government, /Council, /Directory, /Directory/Departments, /Mayor
+       - Keep: individual pages explicitly for the Mayor (e.g., /Mayor/Bio, /About-the-Mayor, /Our-Mayor) —
+         the mayor is a primary official, so their dedicated page is always relevant
+       - Discard: individual news stories, press releases, or event pages about a specific item —
+         even if they mention an official's name in the title or URL
+    4. Return the filtered list as relevant_urls.
+
+    **Output Format:**
+    Return a JSON object with the following fields:
+    {{
+        "relevant_urls": ["https://example.com/council", "https://example.com/directory/departments"],
+        "is_relevant": true/false,
+    }}
+
+    **Critical rules:**
+    - `is_relevant` must be true ONLY if the page content itself contains names, roles, contact info,
+      or biographical details of currently serving primary governing officials.
+      A page that merely links to such information is NOT relevant — set is_relevant to false.
+    - `relevant_urls` must include ANY navigation or directory link on the page that could lead to
+      the primary governing body — including department directories, staff listings, and government
+      section pages — even if the current page itself is not relevant.
+    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
+    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
+    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
+    - Only include URLs hosted on the municipality's own domain(s) (e.g. city, county, town websites).
+      Do NOT include URLs from third-party external domains, even if civic-related. Examples to exclude:
+      social media (facebook.com, twitter.com, instagram.com, linkedin.com, youtube.com),
+      third-party agenda/meeting platforms (civicclerk.com, civicplus.com, granicus.com),
+      third-party code/ordinance sites (municode.com, library.municode.com),
+      third-party reporting tools (seeclickfix.com), or any other non-municipal domain.
+    """
+
+
 def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str):
     """
     Generate a prompt for researching municipality information.

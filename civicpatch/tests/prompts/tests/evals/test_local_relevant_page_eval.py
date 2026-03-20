@@ -1,5 +1,7 @@
 import pytest
 import pytest_asyncio
+from services.google_gemini.llm import run_prompt as run_gemini_prompt
+from services.google_gemini.prompts import relevant_page_prompt as make_gemini_prompt
 from services.together_ai.llm import run_prompt as run_together_prompt
 from services.together_ai.prompts import relevant_page_prompt as make_together_prompt
 from jobs.people_collector.schemas import RelevantPageResponseSchema
@@ -8,7 +10,7 @@ import pathlib
 import yaml
 import os
 
-pytestmark = [pytest.mark.evals, pytest.mark.evals_relevant]
+pytestmark = [pytest.mark.evals_relevant]
 
 EVAL_CASES_DIR = "tests/prompts/datasets/local/relevant_page"
 
@@ -42,13 +44,14 @@ async def run_eval(model_client, case):
     make_prompt = model_client["make_prompt"]
 
     prompt = make_prompt(page_url)
+    extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         "run-eval",
         "ocd-jurisdiction/country:us/state:tx/place:example/government",
         prompt,
         response_schema=RelevantPageResponseSchema,
         content=case_input,
-        model_type="STANDARD"
+        **extra_kwargs,
     )
     actual = cast(RelevantPageResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
@@ -107,20 +110,25 @@ def load_eval_cases():
 
 @pytest_asyncio.fixture
 async def model_client(request):
-    """
-    Fixture to provide the model client for the test.
-    """
-    if request.param == "together_ai":
+    if request.param == "google_gemini":
+        return {
+            "name": "google_gemini",
+            "run_prompt": run_gemini_prompt,
+            "make_prompt": make_gemini_prompt,
+            "extra_kwargs": {},
+        }
+    elif request.param == "together_ai":
         return {
             "name": "together_ai",
             "run_prompt": run_together_prompt,
             "make_prompt": make_together_prompt,
+            "extra_kwargs": {"model_type": "STANDARD"},
         }
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
 
-@pytest.mark.parametrize("model_client", ["together_ai"], indirect=True)
+@pytest.mark.parametrize("model_client", ["google_gemini", "together_ai"], indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
     """

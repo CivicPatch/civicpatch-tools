@@ -45,6 +45,17 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     )
     for person, resolved_person in zip(filtered_people, resolved_people):
         person.id = resolved_person.get("id")
+        existing = resolved_person.get("person")
+        if existing and not resolved_person.get("ambiguous"):
+            existing_name = existing.get("name") if isinstance(existing, dict) else existing.name
+            existing_other_names = (existing.get("other_names") if isinstance(existing, dict) else existing.other_names) or []
+            names_differ = existing_name and existing_name != person.name
+            extra_names = (
+                ([person.name] if names_differ else [])
+                + ([existing_name] if names_differ else [])
+                + list(existing_other_names)
+            )
+            person.other_names = list(dict.fromkeys(person.other_names + extra_names))
 
     return FormatOutputStep(officials=filtered_people)
 

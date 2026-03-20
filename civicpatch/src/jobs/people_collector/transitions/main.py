@@ -30,7 +30,7 @@ from jobs.people_collector.steps.step_10_save_output.save_output import save_out
 from jobs.people_collector.steps.step_11_send_success.send_success import send_success
 from jobs.people_collector.steps.step_11_send_error.send_error import send_error
 
-from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
+from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state, should_fallback_to_main_url
 from jobs.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
 from jobs.people_collector.utils.links import (
     get_next_link_with_status,
@@ -136,7 +136,7 @@ async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: 
     if not page_to_scrape:
         logger.info("No pending links left to scrape.")
         next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
-        return context, next_state 
+        return context, next_state
 
     result = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
@@ -220,6 +220,16 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         job_config=job_config,
         progress=result.progress
     )
+
+    if next_state == WorkflowStatus.SCRAPE_PAGE:
+        main_url = context.data.config.url
+        if should_fallback_to_main_url(next_context.data.links, main_url):
+            logger.info("Links exhausted with no stop condition. Falling back to main page URL.")
+            next_context = next_context.copy(update={
+                "data": next_context.data.copy(update={
+                    "links": next_context.data.links + [Link(url=main_url, status=LinkStatus.PENDING.value)]
+                })
+            })
 
     return next_context, next_state
 

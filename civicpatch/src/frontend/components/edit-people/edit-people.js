@@ -229,11 +229,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function handleLinkPerson(e) {
     const { personId } = e.detail;
-    updatePerson(profileModal.person.id, { id: personId, _isNew: false });
+    const existingPerson = people.find(p => p.id === personId);
+    const proposedPerson = profileModal.person;
+    const currentOtherNames = proposedPerson.other_names || [];
+    const other_names = Array.from(new Set([
+      ...currentOtherNames,
+      ...(existingPerson?.name && existingPerson.name !== proposedPerson.name ? [existingPerson.name] : []),
+    ]));
+    updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
     setProfileModal(prev => ({
       ...prev,
-      person: { ...prev.person, id: personId, _isNew: false },
-      existingPerson: people.find(p => p.id === personId),
+      person: { ...prev.person, id: personId, _isNew: false, other_names },
+      existingPerson,
       nameMatches: [],
       searchSuggestions: [],
     }));
