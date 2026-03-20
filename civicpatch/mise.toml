@@ -120,21 +120,6 @@ run = "docker compose -f docker-compose.development.yml run --rm civicpatch uv r
 ## 🚀✨ GITHUB ACTIONS TASKS ✨🚀
 ###############################################
 
-# The bulk of these tasks are actually run under the open-data
-# repo. These commands are just left here for testing (and so
-# they might not be up-to-date or complete).
-[tasks.upload-images-to-cdn]
-run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
-  python src/scripts/upload_images_to_cdn.py {{ option(name="jurisdiction-ocdid") }}
-"""
-
-[tasks.send-costs-to-google-sheets]
-run = """
-docker compose -f docker-compose.slim.yml run --rm civicpatch-slim uv run \
-  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-ocdid") }}
-"""
-
 [tasks.pipeline-run]
 run = """
 docker compose -f docker-compose.yml run --rm civicpatch uv run \
