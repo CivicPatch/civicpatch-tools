@@ -64,23 +64,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      # Really not that slim; it is 2GB
-      # TODO: make it smaller
-      # Or get rid of it altogether
-      - name: Build and push (slim)
-        if: ${{ github.ref_name == 'main' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: .
-          file: ./civicpatch/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/civicpatch/civicpatch-slim:latest
-            ghcr.io/civicpatch/civicpatch-slim:${{ needs.get-date.outputs.date-tag }}
-          target: image-base
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   build-production:
     needs: get-date
     runs-on: ubuntu-latest
