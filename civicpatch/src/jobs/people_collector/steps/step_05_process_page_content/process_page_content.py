@@ -178,7 +178,10 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
 
     updated_links = copy.deepcopy(context.data.links)
     if response.relevant_urls:
-        updated_links = add_relevant_urls(response.relevant_urls, updated_links)
+        existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
+        names, designations = _extract_names_and_designations(existing_records)
+        roles_hint = context.data.prepare_pipeline_step.roles_hint if context.data.prepare_pipeline_step else []
+        updated_links = add_relevant_urls(response.relevant_urls, updated_links, names, designations + roles_hint)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -483,7 +486,8 @@ def update_links(domain, context_links: List[Link], processed_page: Link, logger
 
 def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
-    return move_links_to_top(domain, list(set(found_websites)), existing_links)
+    names, designations = _extract_names_and_designations(records_by_llm)
+    return add_relevant_urls(found_websites, existing_links, names, designations + roles)
 
 
 def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
@@ -502,49 +506,78 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
     return found_websites
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link]) -> List[Link]:
-    """Add LLM-identified relevant URLs as pending links without domain filtering."""
-    updated_links = copy.deepcopy(existing_links)
-    for link_url in urls:
-        formatted_link_url = url_utils.format_url(link_url)
-        already_present = any(link.url == formatted_link_url for link in updated_links)
-        if not already_present:
-            insert_index = next((i for i, link in enumerate(updated_links) if link.status != LinkStatus.PENDING.value), len(updated_links))
-            updated_links.insert(insert_index, Link(
-                url=formatted_link_url,
-                status=LinkStatus.PENDING.value,
-                folder_name="",
-            ))
-    return updated_links
+def _url_contains_all_tokens(url: str, terms: List[str]) -> bool:
+    """Returns True if any term's complete token set is a subset of the URL's tokens."""
+    url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
+    for term in terms:
+        term_tokens = {t for t in re.split(r'[^a-z0-9]', term.lower()) if t}
+        if term_tokens and term_tokens.issubset(url_tokens):
+            return True
+    return False
 
 
-def move_links_to_top(domain: str, urls: List[str], existing_links: List[Link]) -> List[Link]:
-    updated_links = copy.deepcopy(existing_links)
-    for link_url in urls:
-        if not url_utils.same_domain(domain, link_url):
-            continue
-        formatted_link_url = url_utils.format_url(link_url)
-        existing_link = next((link for link in updated_links if link.url == formatted_link_url), None)
-        insert_index = next((i for i, link in enumerate(updated_links) if link.status != LinkStatus.PENDING.value), len(updated_links))
+def _url_contains_any_token(url: str, terms: List[str], min_len: int = 4) -> bool:
+    """Returns True if any significant token (len >= min_len) from any term appears in the URL."""
+    url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
+    for term in terms:
+        significant = {t for t in re.split(r'[^a-z0-9]', term.lower()) if len(t) >= min_len}
+        if significant & url_tokens:
+            return True
+    return False
 
-        if existing_link:
-            updated_links.remove(existing_link)
-            updated_links.insert(insert_index, existing_link)
-        else:
-            updated_links.insert(insert_index, Link(
-                url=formatted_link_url,
-                status=LinkStatus.PENDING.value,
-                folder_name="",
-            ))
 
-    # Sort pending links by path depth so shallower paths (e.g. /mayor) 
-    # are processed before deeper ones (e.g. /mayor/bio/photo)
-    pending = [l for l in updated_links if l.status == LinkStatus.PENDING.value]
-    non_pending = [l for l in updated_links if l.status != LinkStatus.PENDING.value]
-    pending.sort(key=lambda l: len(url_utils.get_path(l.url).split("/")))
+def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[str], List[str]]:
+    names = []
+    designations = []
+    for people_by_name in records_by_llm.values():
+        for name, person_list in people_by_name.items():
+            if name and name not in names:
+                names.append(name)
+            for person in person_list:
+                for d in (person.designations or []):
+                    if d and d not in designations:
+                        designations.append(d)
+    return names, designations
 
+
+def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> tuple:
+    return (
+        -int(_url_contains_all_tokens(link.url, names)),
+        -int(_url_contains_any_token(link.url, designations)),
+        -link.num_references,
+        len(url_utils.get_path(link.url).split("/")),
+    )
+
+
+def _find_link(links: List[Link], url: str):
+    return next((link for link in links if url_utils.same_url(link.url, url)), None)
+
+
+def _sort_pending(links: List[Link], names: List[str], designations: List[str]) -> List[Link]:
+    pending = [l for l in links if l.status == LinkStatus.PENDING.value]
+    non_pending = [l for l in links if l.status != LinkStatus.PENDING.value]
+    pending.sort(key=lambda l: _pending_sort_key(l, names, designations))
     return pending + non_pending
 
+
+def add_relevant_urls(urls: List[str], existing_links: List[Link], names: List[str] = None, designations: List[str] = None) -> List[Link]:
+    """Add LLM-identified relevant URLs as pending links without domain filtering."""
+    names = names or []
+    designations = designations or []
+    updated_links = copy.deepcopy(existing_links)
+    for link_url in urls:
+        formatted_link_url = url_utils.format_url(link_url)
+        existing_link = _find_link(updated_links, formatted_link_url)
+        if existing_link and existing_link.status == LinkStatus.PENDING.value:
+            existing_link.num_references += 1
+        elif not existing_link:
+            updated_links.append(Link(
+                url=formatted_link_url,
+                status=LinkStatus.PENDING.value,
+                folder_name="",
+                num_references=1,
+            ))
+    return _sort_pending(updated_links, names, designations)
 
 def mark_link_as_terminating_status(link_url: str, existing_links: List[Link], status: LinkStatus) -> List[Link]:
     updated_links = copy.deepcopy(existing_links)

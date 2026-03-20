@@ -9,7 +9,7 @@ import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github.github_api_service as github_service
-from database.database import update_job_data
+from database.database import update_job_data, update_job_review_json
 import logging
 import yaml
 
@@ -75,6 +75,12 @@ async def handle_submit_job_artifacts(
         with open(data_file_path, "w") as f:
             yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
         await update_job_data(request.request_id, updated_data)
+
+        workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/workflow_context.json")
+        with open(workflow_context_path, "r") as f:
+            workflow_context = json.load(f)
+        review_json = workflow_context.get("data", {}).get("review_output_step", {})
+        await update_job_review_json(request.request_id, review_json)
 
     artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
