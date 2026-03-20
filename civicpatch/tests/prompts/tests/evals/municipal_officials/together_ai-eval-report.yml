@@ -1,51 +1,75 @@
 aggregated_report:
+  email: 0.9
   name: 1.0
-  roles: 1.0
-  phone: 1.0
-  email: 1.0
-  url: 0.7418181818181818
   designations: 1.0
+  url: 0.6181818181818182
+  phone: 1.0
+  roles: 1.0
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
 - case_id: austin_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 0.9090909090909091
+    name: 1.0
     designations: 1.0
+    url: 0.9090909090909091
+    phone: 1.0
+    roles: 1.0
 - case_id: board_of_aldermen
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 0.0
+    name: 1.0
     designations: 1.0
+    url: 0.0
+    phone: 1.0
+    roles: 1.0
 - case_id: coleman_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 1.0
+    name: 1.0
     designations: 1.0
+    url: 0.0
+    phone: 1.0
+    roles: 1.0
+- case_id: la_porte_council
+  scores:
+    email: 1.0
+    name: 1.0
+    designations: 1.0
+    url: 1.0
+    phone: 1.0
+    roles: 1.0
 - case_id: mixed_current_past
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 1.0
+    name: 1.0
     designations: 1.0
+    url: 1.0
+    phone: 1.0
+    roles: 1.0
 - case_id: vacant_positions_council
   scores:
+    email: 0.4
     name: 1.0
-    roles: 1.0
-    phone: 1.0
-    email: 1.0
-    url: 0.8
     designations: 1.0
-failed_cases: []
+    url: 0.8
+    phone: 1.0
+    roles: 1.0
+failed_cases:
+- model_client: together_ai
+  case_number: 5
+  case_id: vacant_positions_council
+  failures:
+  - person: Alysa Jarvis
+    field: email
+    expected: null
+    actual: https://www.seadrifttx.org/email-contact/node/741/field_email
+  - person: Tracey Johnson
+    field: email
+    expected: null
+    actual: https://www.seadrifttx.org/email-contact/node/756/field_email
+  - person: Kenneth Reese
+    field: email
+    expected: null
+    actual: https://www.seadrifttx.org/email-contact/node/751/field_email

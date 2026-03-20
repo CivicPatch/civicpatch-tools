@@ -122,32 +122,39 @@ def normalize_roles(roles: List[str]) -> List[str]:
     Normalize roles using configured aliases.
     Tries progressively shorter suffixes to handle location prefixes
     like "Seattle City Councilmember" -> "city councilmember" -> "council member".
+
+    Strings that match a known designation are dropped — they belong in designations.
     """
     if not roles:
         return []
 
     role_aliases = config_utils.get_role_alias_map()
+    designation_aliases = config_utils.get_designation_alias_map()
     seen = set()
 
     for role in roles:
-        # skip falsy values early to avoid converting None -> "None"
         if not role:
             continue
 
-        role = str(role).strip().lower()
+        role = str(role).strip()
+        if not role:
+            continue
 
-        if not role or role == "":
+        role_lower = role.lower()
+
+        # Drop anything that matches a known designation
+        if designation_aliases.get(role_lower):
             continue
 
         # Try exact match first
-        direct_match = role_aliases.get(role)
+        direct_match = role_aliases.get(role_lower)
         if direct_match:
             seen.add(direct_match)
             continue
 
         # Try progressively shorter suffixes
         # "Seattle City Councilmember" -> "City Councilmember" -> "Councilmember"
-        words = role.split()
+        words = role_lower.split()
         matched = False
         for i in range(1, len(words)):
             suffix = " ".join(words[i:])
@@ -158,12 +165,9 @@ def normalize_roles(roles: List[str]) -> List[str]:
                 break
 
         if not matched:
-            # No match found - keep original
-            seen.add(role)
+            seen.add(role_lower)
 
-    sorted_roles = sort_roles(seen)
-
-    return [r.title() for r in sorted_roles]
+    return [r.title() for r in sort_roles(seen)]
 
 
 def normalize_designations(designations: List[str]) -> List[str]:

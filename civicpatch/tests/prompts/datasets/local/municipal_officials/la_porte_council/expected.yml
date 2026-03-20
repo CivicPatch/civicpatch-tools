@@ -1,0 +1,104 @@
+people:
+- name: Rick Helton
+  roles:
+  - Mayor
+  designations: []
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/691/Mayor
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
+- name: Brandon Lunsford
+  roles:
+  - Council Member
+  designations:
+  - At-Large A
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/692/At-Large-A
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
+- name: Brent McCaulley
+  roles:
+  - Council Member
+  designations:
+  - At-Large B
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/693/At-Large-B
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
+- name: Mandi Williams
+  roles:
+  - Council Member
+  designations:
+  - District 1
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/694/District-1
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
+- name: Chuck Engelken
+  roles:
+  - Council Member
+  designations:
+  - District 2
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/695/District-2
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
+- name: Bill Bentley
+  roles:
+  - Council Member
+  designations:
+  - District 3
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/696/District-3
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
+- name: Robert Guerra
+  roles:
+  - Council Member
+  designations:
+  - District 4
+  phone: 281-471-5021
+  email: null
+  url: https://www.laportetx.gov/883/District-4
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
+- name: Jay Martin
+  roles:
+  - Council Member
+  designations:
+  - District 5
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/698/District-5
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
+- name: Robbie McLarrin
+  roles:
+  - Council Member
+  designations:
+  - District 6
+  phone: 281-471-5021
+  email: null
+  url: http://laportetx.gov/699/District-6
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6491
+thought: 'The page is a structured listing of the La Porte City Council. The Mayor
+  and eight council members are shown with names, roles (via section headers), profile
+  photo images, and bio links. At-Large A and At-Large B are position designations,
+  not roles — the role is Council Member. Districts 1-6 are district designations.
+  The council office phone 281-471-5021 is the contact number available for all members.'

@@ -29,7 +29,10 @@ for _var, _val in _test_env.items():
 
 
 @pytest.fixture(autouse=True)
-def patch_get_env_vars(monkeypatch):
+def patch_get_env_vars(request, monkeypatch):
+    if request.node.get_closest_marker("evals") or request.node.get_closest_marker("evals_relevant"):
+        yield
+        return
     monkeypatch.setattr("civicpatch_environment.get_env_vars", _make_test_env)
     yield
 
