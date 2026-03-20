@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 from domain.models import Official
 from jobs.people_collector.schemas import PeopleCollectorContext, PreparePipelineStep, WorkflowConfig, WorkflowStatus
@@ -25,17 +26,8 @@ async def prepare_pipeline(context: PeopleCollectorContext) -> PreparePipelineSt
     logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     logger.clear()
 
-    # Create/clear cache folder
-    cache_path = get_cache_path(jurisdiction_ocdid)
-    if os.path.exists(cache_path):
-        shutil.rmtree(cache_path)  # Recursively delete all files and subdirectories
-    os.makedirs(cache_path, exist_ok=True)  # Recreate the folder
-
-    # Create/clear images folder
-    images_path = get_images_path(jurisdiction_ocdid)
-    if os.path.exists(images_path):
-        shutil.rmtree(images_path)
-    os.makedirs(images_path, exist_ok=True)  # Recreate the folder
+    reset_folder(get_cache_path(jurisdiction_ocdid))
+    reset_folder(get_images_path(jurisdiction_ocdid))
 
     data = await search_people(jurisdiction_ocdid, state="current")
     existing_people = [Person(**person) for person in data]
@@ -45,10 +37,9 @@ async def prepare_pipeline(context: PeopleCollectorContext) -> PreparePipelineSt
     research_elected_officials = getattr(
         context.data.research_municipality_step, "elected_officials", []
     )
-
     roles_hint = get_roles_hint(research_elected_officials, existing_people)
-    identities = person_list_to_identities(existing_people)
-    source_urls = get_source_urls(existing_people)
+    identities = get_identities(research_elected_officials, existing_people)
+    source_urls = get_source_urls(context.data.config, existing_people)
 
     return PreparePipelineStep(
         roles_hint=roles_hint,
@@ -56,24 +47,28 @@ async def prepare_pipeline(context: PeopleCollectorContext) -> PreparePipelineSt
         source_urls=source_urls,
     )
 
-def get_roles_hint(researched_officials: list[Official], people: list[Person]) -> list[str]:
-    # If there are no people, use the researched officials data to get role hints for the LLMs
-    if not people:
-        roles_hint = set()
-        for official in researched_officials:
-            office = getattr(official, "office", None) or {}
-            office_name = office.get("name", "")
-            if office_name:
-                roles_hint.add(office_name)
-        return list(roles_hint)
+def reset_folder(path: str) -> None:
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path, exist_ok=True)
 
-    roles_hint = set()
-    for person in people:
-        office = getattr(person, "office", None) or {}
-        office_name = office.get("name", "")
-        if office_name:
-            roles_hint.add(office_name)
-    return list(roles_hint)
+def get_roles_hint(researched_officials: list[Official], people: list[Person]) -> list[str]:
+    source = people if people else researched_officials
+    return list({
+        office_name
+        for item in source
+        if (office_name := (getattr(item, "office", None) or {}).get("name", ""))
+        and not _is_designation_specific(office_name)
+    })
+
+def _is_designation_specific(office_name: str) -> bool:
+    # Filter out names containing digits or standalone single letters (e.g. "Place 6", "District A")
+    return bool(re.search(r'\d', office_name)) or bool(re.search(r'\b[A-Za-z]\b', office_name))
+
+def get_identities(researched_officials: list[Official], people: list[Person]) -> dict[str, list[str]]:
+    if not people:
+        return {official.name: [official.name] for official in researched_officials}
+    return person_list_to_identities(people)
 
 def get_source_urls(config: WorkflowConfig, people: list[Person]) -> list[str]:
     # If workflow config is avaliable, use that
@@ -86,5 +81,4 @@ def get_source_urls(config: WorkflowConfig, people: list[Person]) -> list[str]:
     for person in people:
         for url in person.source_urls:
             url_counts[url] = url_counts.get(url, 0) + 1
-    source_urls = [url for url, count in url_counts.items() if count > 1]
-    return set(source_urls)
+    return [url for url, count in url_counts.items() if count > 1]

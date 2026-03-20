@@ -73,13 +73,14 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         "data": new_data
     })
 
-    if next_context.data.config.source_urls and len(next_context.data.config.source_urls) > 0:
+    source_urls = next_context.data.prepare_pipeline_step.source_urls
+    if source_urls:
         logger.info("Source URLs provided, skipping link search.")
         next_context = next_context.copy(update={
             "data": next_context.data.copy(update={
                 "links": [
                     Link(url=sl, status=LinkStatus.PENDING.value)
-                    for sl in next_context.data.config.source_urls
+                    for sl in source_urls
                 ]
             })
         })
