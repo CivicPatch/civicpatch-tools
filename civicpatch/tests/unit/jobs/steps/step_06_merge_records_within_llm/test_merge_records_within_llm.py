@@ -5,6 +5,7 @@ from jobs.people_collector.schemas import (
     ProcessPageContentStep, ResearchMunicipalityStep,
     SearchLinksStep,
     PreprocessPageContentStep,
+    PreparePipelineStep,
     WorkflowConfig
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
@@ -49,6 +50,7 @@ def _make_llm_person(**kwargs) -> LLMPerson:
 
 
 def _build_context(records_by_llm: dict, elected_officials: list, identities=None) -> PeopleCollectorContext:
+    resolved_identities = identities if identities is not None else {o["name"]: [o["name"]] for o in elected_officials}
     research_step = ResearchMunicipalityStep(
         people=elected_officials,
         elected_officials=elected_officials,
@@ -59,18 +61,15 @@ def _build_context(records_by_llm: dict, elected_officials: list, identities=Non
         records_by_llm=records_by_llm,
         progress={"required_data": 5, "current_data": 5, "has_target_role": True, "has_target_designations": True},
     )
-    config = WorkflowConfig(
-        url="https://myportisabel.com/",
-        name="Port Isabel city",
-    )
     data = PeopleCollectorData(
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:tx/place:port_isabel/government",
-        config=config,
+        config=WorkflowConfig(url="https://myportisabel.com/", name="Port Isabel city"),
         links=[],
         research_municipality_step=research_step,
         search_links_step=SearchLinksStep(search_link_pointer=0, search_engines={}),
         preprocess_page_content_step=PreprocessPageContentStep(elapsed_times=[], total_elapsed_time_seconds=0, average_elapsed_time_seconds=0),
         process_page_content_step=process_step,
+        prepare_pipeline_step=PreparePipelineStep(roles_hint=[], identities=resolved_identities, source_urls=[]),
     )
     return PeopleCollectorContext(
         data=data,
