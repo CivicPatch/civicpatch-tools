@@ -244,13 +244,11 @@ async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
     page = 1
     while True:
         url = f"{open_data_repo_url}/pulls?state=open&per_page={per_page}&page={page}"
-        headers = await get_default_headers()
-        async with httpx.AsyncClient(timeout=timeout) as client:
-            response = await client.get(url, headers=headers)
-        if response.status_code != 200:
-            logger.error(f"get_all_open_prs_raw: GitHub API error on page {page}: {response.status_code}")
+        cache_key = f"github:open_prs:page:{page}:per_page:{per_page}"
+        prs = await cached_github_get(url, cache_key)
+        if prs is None:
+            logger.error("get_all_open_prs_raw: GitHub API error on page %d", page)
             break
-        prs = response.json()
         results.extend(prs)
         if len(prs) < per_page:
             break

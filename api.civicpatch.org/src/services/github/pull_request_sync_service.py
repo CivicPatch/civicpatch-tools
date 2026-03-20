@@ -95,8 +95,6 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
                 pr_info["jurisdiction_ocdid"],
                 pr_info["url"],
                 provider="github_sync",
-                status="DONE",
-                progress=100,
             )
         else:
             await maybe_backfill_job_result(request_id, pr_info["jurisdiction_ocdid"])

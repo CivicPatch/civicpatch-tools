@@ -48,9 +48,9 @@ function JurisdictionSidebar({
       <button
         @click=${onScrapeClick}
         ?disabled=${!canStartScrape}
-        class="primary"
+        class="primary jurisdiction-sidebar__scrape-btn"
       >
-        Scrape Data for Jurisdiction
+        Scrape for Jurisdiction
       </button>
     </div>
   `;

@@ -53,7 +53,7 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset, renderImage
   const isSourceUrlsChanged = person._changes?.includes('source_urls');
   const isImageChanged = person._changes?.includes('image');
 
-  const imageUrl = person.image || person.cdn_image || null;
+  const imageUrl = person.cdn_image || null;
 
   const readMode = html`
       <style>

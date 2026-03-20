@@ -29,9 +29,11 @@ def relevant_page_prompt(page_url: str):
        the primary governing body (mayor, council members, commissioners, etc.) or provides a directory 
        of municipal departments and staff?"
        Keep the link if the answer is yes.
-    3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to 
+    3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to
        a navigational index or overview page, or to a single specific article, event, or news item?"
        - Keep: section indexes like /Government, /Council, /Directory, /Directory/Departments, /Mayor
+       - Keep: individual pages explicitly for the Mayor (e.g., /Mayor/Bio, /About-the-Mayor, /Our-Mayor) —
+         the mayor is a primary official, so their dedicated page is always relevant
        - Discard: individual news stories, press releases, or event pages about a specific item —
          even if they mention an official's name in the title or URL
     4. Return the filtered list as relevant_urls.
