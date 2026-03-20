@@ -55,7 +55,7 @@ async def test_format_output(httpx_mock):
 # ── _get_image_map ────────────────────────────────────────────
 
 def test_get_image_map_returns_empty_when_data_source_missing():
-    result = _get_image_map("ocd-jurisdiction/country:us/state:xx/place:nowhere/government")
+    result = _get_image_map("ocd-jurisdiction/country:us/state:xx/place:nowhere/government", logger)
     assert result == {}
 
 
@@ -64,7 +64,7 @@ def test_get_image_map_returns_empty_when_file_missing(tmp_path, monkeypatch):
     images_dir = tmp_path / "data_source" / "tx" / "local" / "place_austin"
     images_dir.mkdir(parents=True)
 
-    result = _get_image_map(AUSTIN_OCDID)
+    result = _get_image_map(AUSTIN_OCDID, logger)
     assert result == {}
 
 
@@ -74,7 +74,7 @@ def test_get_image_map_reads_file(tmp_path, monkeypatch):
     images_dir.mkdir(parents=True)
     (images_dir / "image_map.json").write_text(json.dumps({"abc123.png": "https://example.gov/abc123.png"}))
 
-    result = _get_image_map(AUSTIN_OCDID)
+    result = _get_image_map(AUSTIN_OCDID, logger)
     assert result == {"abc123.png": "https://example.gov/abc123.png"}
 
 
