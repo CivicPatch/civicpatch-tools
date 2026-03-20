@@ -44,8 +44,8 @@ def mock_images_dir():
 @patch("os.path.isfile")
 @patch("os.path.getsize")
 @patch("builtins.open", new_callable=mock_open, read_data='''{
-    "https://example.com/image1.jpg": "mapped_image1.jpg",
-    "https://example.com/image2.jpg": "mapped_image2.jpg"
+    "mapped_image1.jpg": "https://example.com/image1.jpg",
+    "mapped_image2.jpg": "https://example.com/image2.jpg"
 }''')
 @patch("os.remove")
 def test_cleanup_images_respects_image_map(
@@ -54,8 +54,8 @@ def test_cleanup_images_respects_image_map(
 ):
     # Mock inputs
     people_list = [
-        person_factory(image="https://example.com/image1.jpg"),
-        person_factory(image="https://example.com/image2.jpg"),
+        person_factory(image="mapped_image1.jpg"),
+        person_factory(image="mapped_image2.jpg"),
     ]
 
     # Mock directory structure
