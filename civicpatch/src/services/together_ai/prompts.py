@@ -22,6 +22,9 @@ def relevant_page_prompt(page_url: str):
     **Irrelevant content includes:**
     - Pages that only mention auxiliary committees, department heads, supervisors, or other non-elected officials.
       For example: Planning and Zoning Committee, Parks and Recreation Board, etc.
+    - Pages about the City Manager's or City Administrator's office. The City Manager is an appointed
+      administrator who serves at the discretion of the governing body — they are NOT a member of the
+      primary governing body (Mayor, Council, etc.) and their page must be marked is_relevant: false.
 
     **Steps for selecting relevant_urls:**
     1. Extract ALL links found anywhere on the page into a complete list.
@@ -55,6 +58,12 @@ def relevant_page_prompt(page_url: str):
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
     - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
     - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
+    - Only include URLs hosted on the municipality's own domain(s) (e.g. city, county, town websites).
+      Do NOT include URLs from third-party external domains, even if civic-related. Examples to exclude:
+      social media (facebook.com, twitter.com, instagram.com, linkedin.com, youtube.com),
+      third-party agenda/meeting platforms (civicclerk.com, civicplus.com, granicus.com),
+      third-party code/ordinance sites (municode.com, library.municode.com),
+      third-party reporting tools (seeclickfix.com), or any other non-municipal domain.
     """
     return prompt
 

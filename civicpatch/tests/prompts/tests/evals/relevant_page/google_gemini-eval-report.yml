@@ -1,0 +1,13 @@
+failed_cases:
+- model_client: google_gemini
+  case_id: quitaque_council
+  failures:
+  - field: relevant_urls
+    expected:
+    - https://quitaque.us/cityofficials.html
+    actual:
+    - https://quitaque.us/phonenumbers.html
+    - https://quitaque.us/contact.html
+    - https://quitaque.us/
+    score: 0.0
+    threshold: 0.75

@@ -87,6 +87,12 @@ export function usePeopleState({ people }) {
       ));
     }
 
+    // Names from merged-away people become other_names on the survivor
+    const nonCanonicalNames = peopleToMerge
+      .map(p => p.name)
+      .filter(n => n && n !== merged.name);
+    merged.other_names = Array.from(new Set([...merged.other_names, ...nonCanonicalNames]));
+
     // Office gets special treatment: merge names, keep other fields from base
     const officeNames = Array.from(new Set(peopleToMerge.map(p => p.office?.name).filter(Boolean)));
     if (officeNames.length > 0) {

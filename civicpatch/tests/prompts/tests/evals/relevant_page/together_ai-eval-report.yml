@@ -1,1 +1,22 @@
-failed_cases: []
+failed_cases:
+- model_client: together_ai
+  case_id: bay_city_council
+  failures:
+  - field: relevant_urls
+    expected:
+    - https://www.baycitytx.gov/296/Office-of-the-Mayor
+    - https://www.cityofbaycity.org/285/Jim-Folse
+    - https://www.cityofbaycity.org/286/Floyce-Brown
+    - https://www.cityofbaycity.org/655/Susan-Reardon
+    - https://www.cityofbaycity.org/458/Blayne-Finlay
+    - https://www.cityofbaycity.org/287/Brad-Westmoreland
+    actual:
+    - https://www.baycitytx.gov/458/Blayne-Finlay
+    - https://www.baycitytx.gov/296/Office-of-the-Mayor
+    - https://www.baycitytx.gov/285/Jim-Folse
+    - https://www.baycitytx.gov/287/Brad-Westmoreland
+    - https://www.baycitytx.gov/27/Government
+    - https://www.baycitytx.gov/655/Susan-Reardon
+    - https://www.baycitytx.gov/286/Floyce-Brown
+    score: 0.16666666666666666
+    threshold: 0.75

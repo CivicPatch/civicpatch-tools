@@ -35,6 +35,10 @@ import services.google_gemini.prompts as google_gemini_prompt
 import services.together_ai.llm as together_ai_llm
 import services.together_ai.prompts as together_ai_prompt
 
+# Relevance check uses Gemini Flash for better instruction-following on complex URL filtering rules
+_relevance_llm = google_gemini_llm
+_relevance_prompt = google_gemini_prompt
+
 @dataclass
 class ProcessingSetup:
     people_hint: List[ResearchedPerson]
@@ -162,8 +166,8 @@ def get_target_designations(designations_with_geo: List[str], people_hint: List[
 
 
 async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str) -> Tuple[List[Link], bool]:
-    prompt = together_ai_prompt.relevant_page_prompt(page_to_process.url)
-    raw_response = await together_ai_llm.run_prompt(
+    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url)
+    raw_response = await _relevance_llm.run_prompt(
         context.request_id,
         context.data.jurisdiction_ocdid,
         prompt,
@@ -174,7 +178,7 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
 
     updated_links = copy.deepcopy(context.data.links)
     if response.relevant_urls:
-        updated_links = move_links_to_top(context.data.config.url, response.relevant_urls, updated_links)
+        updated_links = add_relevant_urls(response.relevant_urls, updated_links)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -496,6 +500,22 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
                     if domain and not any(ignore in domain for ignore in IGNORE_WEBSITES):
                         found_websites.append(url)
     return found_websites
+
+
+def add_relevant_urls(urls: List[str], existing_links: List[Link]) -> List[Link]:
+    """Add LLM-identified relevant URLs as pending links without domain filtering."""
+    updated_links = copy.deepcopy(existing_links)
+    for link_url in urls:
+        formatted_link_url = url_utils.format_url(link_url)
+        already_present = any(link.url == formatted_link_url for link in updated_links)
+        if not already_present:
+            insert_index = next((i for i, link in enumerate(updated_links) if link.status != LinkStatus.PENDING.value), len(updated_links))
+            updated_links.insert(insert_index, Link(
+                url=formatted_link_url,
+                status=LinkStatus.PENDING.value,
+                folder_name="",
+            ))
+    return updated_links
 
 
 def move_links_to_top(domain: str, urls: List[str], existing_links: List[Link]) -> List[Link]:

@@ -1,13 +1,14 @@
 import pytest
 import os
-from unittest.mock import patch
+from unittest.mock import patch, AsyncMock
 from jobs.people_collector.schemas import (
-    LLMPerson, LinkStatus, Link
+    LLMPerson, LinkStatus, Link, RelevantPageResponseSchema
 )
 from jobs.people_collector.steps.step_05_process_page_content.process_page_content import (
-    has_role_and_contact_info, move_links_to_top, check_page_heuristics
+    has_role_and_contact_info, move_links_to_top, check_page_heuristics, check_page_relevance, add_relevant_urls
 )
 from jobs.people_collector.schemas import LLMPerson
+from tests.factories.workflow_context import workflow_context_factory
 
 pytestmark = pytest.mark.unit
 
@@ -251,3 +252,54 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
     input_text = "Council member Jamie NoUrlInText can be reached at jamie@nourl.com or 555-8765. Ward 4."
     # "http://nourl.com/jamie" is not in input_text
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
+
+
+def test_add_relevant_urls_includes_cross_domain():
+    """Relevant URLs identified by the LLM should be added even if they are on a different domain."""
+    existing_links = [
+        Link(url="https://cityofbaycity.org/city-council", status=LinkStatus.DONE.value, folder_name="council"),
+    ]
+    mayor_url = "https://www.baycitytx.gov/296/Office-of-the-Mayor"
+    result = add_relevant_urls([mayor_url], existing_links)
+    pending_urls = [l.url for l in result if l.status == LinkStatus.PENDING.value]
+    assert mayor_url in pending_urls
+
+
+def test_add_relevant_urls_skips_already_present():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor"),
+    ]
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links)
+    assert len(result) == 1
+
+
+def test_add_relevant_urls_skips_ignored_sites():
+    existing_links = []
+    result = add_relevant_urls(["https://facebook.com/baycity"], existing_links)
+    assert result == []
+
+
+@pytest.mark.asyncio
+async def test_check_page_relevance_adds_cross_domain_relevant_urls():
+    """relevant_urls from check_page_relevance should be added even when on a different domain than config.url."""
+    context = workflow_context_factory(steps={})
+    # config.url is seattle.gov; mayor URL is on a different domain
+    mayor_url = "https://seattle-mayor.gov/mayor"
+    context = context.copy(update={
+        "data": context.data.copy(update={
+            "links": [
+                Link(url="https://seattle.gov/council", status=LinkStatus.DONE.value, folder_name="council"),
+            ]
+        })
+    })
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value, folder_name="council")
+    llm_response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[mayor_url])
+
+    with patch(
+        "jobs.people_collector.steps.step_05_process_page_content.process_page_content._relevance_llm.run_prompt",
+        new=AsyncMock(return_value=llm_response.model_dump()),
+    ):
+        updated_links, _ = await check_page_relevance(context, page, "some page content")
+
+    pending_urls = [l.url for l in updated_links if l.status == LinkStatus.PENDING.value]
+    assert mayor_url in pending_urls
