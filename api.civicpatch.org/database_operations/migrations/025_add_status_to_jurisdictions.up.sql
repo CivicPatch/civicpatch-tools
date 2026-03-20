@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE jurisdictions ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'current';
+
+COMMIT;

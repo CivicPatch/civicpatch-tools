@@ -11,7 +11,7 @@ import "./pull-request-tabs.js";
 import "./profile-modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople } from "../../api.js";
+import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, mergePullRequest, closePullRequest } from "../../api.js";
 import "../diff-panel/diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -39,6 +39,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [selectedPullRequest, setSelectedPullRequest] = useState(undefined);
   const [notice, setNotice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [prStatus, setPrStatus] = useState(null);
   const [isMobile, setIsMobile] = useState(
     window.matchMedia("(max-width: 700px)").matches,
   );
@@ -82,6 +83,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   useEffect(() => {
     if (selectedPullRequest === undefined) return;
+    setPrStatus(null);
     if (!selectedPullRequest) {
       assignPeople(people);
       setReviewData(null);
@@ -145,6 +147,33 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
       updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
     });
+  }
+
+  async function handlePublish() {
+    const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
+    if (!prNumber) return;
+    setPrStatus("loading_merge");
+    try {
+      await mergePullRequest(prNumber);
+      setPrStatus("merged");
+      setNotice("Pull request published.");
+    } catch {
+      setPrStatus("error");
+      setError("Failed to publish pull request.");
+    }
+  }
+
+  async function handleClosePR() {
+    const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
+    if (!prNumber) return;
+    setPrStatus("loading_close");
+    try {
+      await closePullRequest(prNumber);
+      setPrStatus("closed");
+    } catch {
+      setPrStatus("error");
+      setError("Failed to close pull request.");
+    }
   }
 
   async function handleSubmit() {
@@ -262,7 +291,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
     ${selectedPullRequest
       ? html`
-          <a href=${selectedPullRequest.url} target="_blank" class="contrast"
+          <a href=${selectedPullRequest.pull_request_url} target="_blank" class="contrast"
             >View Pull Request</a
           >
           <hr />
@@ -274,7 +303,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         `
       : ""}
 
-    <civ-people-action-buttonsfetchJobReview 
+    <civ-people-action-buttons
       .onAdd=${handleAdd}
       .onMerge=${handleMerge}
       .onBulkDelete=${handleBulkDelete}
@@ -283,10 +312,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           ? handleSelectedPullRequestData(selectedPullRequest)
           : assignPeople(people)}
       .onSubmit=${handleSubmit}
+      .onPublish=${handlePublish}
+      .onClosePR=${handleClosePR}
       .selectedPeople=${selectedPeople}
       .dirty=${dirty}
       .isLoading=${isLoading}
       .notice=${notice}
+      .hasPullRequest=${!!selectedPullRequest}
+      .prStatus=${prStatus}
     ></civ-people-action-buttons>
 
     ${notice

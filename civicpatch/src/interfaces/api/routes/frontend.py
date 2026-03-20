@@ -50,7 +50,12 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         jurisdiction_ocdid: str,
         user: dict = Depends(get_current_user)
     ):
-        jurisdiction = await civicpatch_api.get_jurisdiction(jurisdiction_ocdid, request)
+        try:
+            jurisdiction = await civicpatch_api.get_jurisdiction(jurisdiction_ocdid, request)
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 404:
+                raise HTTPException(status_code=404, detail="Jurisdiction not found")
+            raise
 
         return templates.TemplateResponse(
             "pages/jurisdiction.html",

@@ -363,7 +363,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                         ST_Y(ST_Centroid(g.geom)) AS lat
                     FROM jurisdictions j
                     LEFT JOIN geo g ON j.data->>'geoid' = g.geoid
-                    WHERE j.jurisdiction_ocdid = %s
+                    WHERE j.jurisdiction_ocdid = %s AND j.status = 'current'
                     LIMIT 1;
                     """,
                     (jurisdiction_ocdid,),
@@ -378,7 +378,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 await cur.execute(
                     """
                     SELECT data FROM jurisdictions
-                    WHERE jurisdiction_ocdid = %s
+                    WHERE jurisdiction_ocdid = %s AND status = 'current'
                     LIMIT 1;
                     """,
                     (jurisdiction_ocdid,),
@@ -997,7 +997,8 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
         DO UPDATE SET
             data = EXCLUDED.data,
             updated_at = EXCLUDED.updated_at,
-            git_commit = EXCLUDED.git_commit
+            git_commit = EXCLUDED.git_commit,
+            status = 'current'
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -1235,10 +1236,10 @@ async def bulk_close_stale_prs(request_ids: List[str]):
         )
 
 
-async def delete_jurisdictions_by_ocdids(ocdids: List[str]):
+async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)",
+            "UPDATE jurisdictions SET status = 'inactive' WHERE jurisdiction_ocdid = ANY(%s)",
             (ocdids,)
         )

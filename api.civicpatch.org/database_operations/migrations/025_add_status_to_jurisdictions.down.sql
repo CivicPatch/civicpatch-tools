@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE jurisdictions DROP COLUMN IF EXISTS status;
+
+COMMIT;
