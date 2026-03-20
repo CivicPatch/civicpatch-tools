@@ -42,7 +42,12 @@ def is_safe_redirect(url: str, allowed_hosts: list) -> bool:
 
     hostname = parsed.hostname or ""
     # Use parsed.netloc-aware port check to avoid example.com:evil matching.
-    return hostname in allowed_hosts
+    if hostname in allowed_hosts:
+        return True
+    return any(
+        pat.startswith("*.") and hostname.endswith("." + pat[2:])
+        for pat in allowed_hosts
+    )
 
 
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
@@ -52,7 +57,7 @@ def get_router(is_production: bool) -> APIRouter:
     github_callback_url = f"{instance_url}/api/v1/auth/github/callback"
 
     if is_production:
-        allowed_hosts = ["civicpatch.org", "test.civicpatch.org", "test-api.civicpatch.org"]
+        allowed_hosts = ["civicpatch.org", "*.civicpatch.org"]
     else:
         allowed_hosts = ["localhost"]
 

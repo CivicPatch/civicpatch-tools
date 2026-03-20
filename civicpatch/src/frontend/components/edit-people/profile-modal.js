@@ -29,7 +29,7 @@ function renderLinks(arr) {
 }
 
 function renderImageRow(label, currentPerson, proposedPerson) {
-  const isChanged = (currentPerson?.cdn_image) !== (proposedPerson?.cdn_image || proposedPerson?.image);
+  const isChanged = (currentPerson?.cdn_image || currentPerson?.image) !== (proposedPerson?.cdn_image || proposedPerson?.image);
   return html`
     <tr>
       <th>${label}</th>
