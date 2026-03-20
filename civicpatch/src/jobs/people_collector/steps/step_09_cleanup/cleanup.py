@@ -60,7 +60,7 @@ def cleanup_images(
 ):
     # Clear out any images that are not under image
     image_files_to_keep = set()
-    # This is image source urls mapped to local file names
+    # This is local file names mapped to original source urls
     image_map_file_path = os.path.join(images_dir, "image_map.json")
     image_map_data = {}
     missing_images = set()
@@ -73,9 +73,9 @@ def cleanup_images(
             continue
 
         if person.image in image_map_data:
-            if not os.path.exists(image_map_data[person.image]):
-                missing_images.add(image_map_data[person.image])
-            image_files_to_keep.add(image_map_data[person.image])
+            if not os.path.exists(os.path.join(images_dir, person.image)):
+                missing_images.add(person.image)
+            image_files_to_keep.add(person.image)
 
     logger.debug(f"Image files to keep: {image_files_to_keep}")
     logger.debug(f"All image map data: {image_map_data}")

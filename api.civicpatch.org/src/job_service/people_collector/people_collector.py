@@ -100,37 +100,21 @@ async def handle_submit_job_artifacts(
     )
 
 async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: List[Dict]) -> List[Dict]:
-    """
-    Replace local image paths in data with their corresponding URLs from storage.
-
-    Args:
-        artifact_file_dir (str): The directory containing artifact files.
-        debug_file_dir (str): The directory containing debug files.
-        filenames_to_urls (dict): A mapping of original filenames to their URLs in storage.
-        data (list): The list of person dictionaries to process.
-
-    Returns:
-        list: The updated list of person dictionaries with image URLs.
-    """
     env = environment.get_env_vars()
     STORAGE_ENDPOINT = env["STORAGE_ENDPOINT"]
 
-    image_map_file = file_utils.find_file(debug_file_dir, "data_source/*/local/*/images/image_map.json")
-    with open(image_map_file, "r") as f:
-        image_map = json.load(f)
-
     for person in data:
-        if person.get("image"):
-            if person["image"] not in image_map:
-                logger.warning("_process_images: image URL not in image_map for person %s: %s", person.get("id"), person["image"])
-            elif image_map[person["image"]] not in filenames_to_urls:
-                logger.warning("_process_images: mapped filename not in filenames_to_urls for person %s: %s", person.get("id"), image_map[person["image"]])
-            else:
-                storage_url = filenames_to_urls[image_map[person["image"]]]
-                # convert storage URL to the civicpatch-artifacts bucket
-                # temp TODO move
-                cdn_image_url = storage_url.replace(f"{STORAGE_ENDPOINT}/civicpatch-artifacts", f"https://civicpatch-artifacts.{INSTANCE_DOMAIN}")
-                person["cdn_image"] = cdn_image_url
+        raw_cdn_image = person.get("cdn_image")
+        if not raw_cdn_image or not raw_cdn_image.startswith("local://"):
+            continue
+        basename = raw_cdn_image.removeprefix("local://")
+        if basename not in filenames_to_urls:
+            logger.warning("_process_images: basename not in filenames_to_urls for person %s: %s", person.get("id"), raw_cdn_image)
+            continue
+        storage_url = filenames_to_urls[basename]
+        # convert storage URL to the civicpatch-artifacts bucket
+        # temp TODO move
+        person["cdn_image"] = storage_url.replace(f"{STORAGE_ENDPOINT}/civicpatch-artifacts", f"https://civicpatch-artifacts.{INSTANCE_DOMAIN}")
     return data
 
 async def _upload_debug_files(debug_file_dir: str, file_suffix_without_ext: str) -> dict:
