@@ -151,7 +151,7 @@ async def bulk_sync():
     ocdids_to_delete = local_ocdids - remote_ocdids
     if ocdids_to_delete:
         logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
-        await database.delete_jurisdictions_by_ocdids(list(ocdids_to_delete))
+        await database.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
 
     logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
     logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")

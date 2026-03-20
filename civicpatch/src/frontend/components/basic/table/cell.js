@@ -232,10 +232,9 @@ function TableCell({
   }
 
   function handleRemoveItem(e, index) {
-    // Only update local state, do not dispatch event
     const newList = editList.filter((_, i) => i !== index);
     setEditList(newList);
-
+    dispatchDataChange(e, field, newList);
     return newList;
   }
 

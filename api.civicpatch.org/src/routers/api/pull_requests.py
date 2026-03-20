@@ -16,6 +16,7 @@ from pydantic import BaseModel
 import database.database
 import database.people
 import services.github.github_api_service as github_service
+import services.github.pull_request_sync_service as pr_sync_service
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, RouteCategory
 from utils.auth_utils import require_route_access
@@ -79,6 +80,7 @@ def get_router(api_key_header):
     async def get_pull_request_data_endpoint(
         jurisdiction_ocdid: str,
         request_id: str,
+        background_tasks: BackgroundTasks,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
@@ -87,15 +89,32 @@ def get_router(api_key_header):
             jurisdiction_ocdid
         )
 
+        # Fast path: serve from DB if already backfilled
+        cached = await database.database.get_job_data_json(request_id)
+        if cached is not None:
+            return {
+                "request_id": request_id,
+                "file_path": file_path,
+                "data": cached,
+            }
+
         file_content = await github_service.get_pull_request_file_yaml(
             jurisdiction_ocdid=jurisdiction_ocdid,
             request_id=request_id,
             file_path=f"data/{file_path}.yml",
         )
         if file_content is None:
+            # Branch or file not found — trigger a full PR sync in the background
+            # so the next request succeeds once the sync completes.
+            background_tasks.add_task(pr_sync_service.sync_open_pr_state)
             return JSONResponse(
                 content={"error": "Data file not found on branch"}, status_code=404
             )
+
+        # Backfill DB so future requests skip the GitHub roundtrip
+        background_tasks.add_task(
+            database.database.update_job_data, request_id, file_content
+        )
 
         return {
             "request_id": request_id,

@@ -74,7 +74,7 @@ def get_router() -> APIRouter:
     ):
         jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
 
-        if jurisdiction_data is None:
+        if jurisdiction_data is None or jurisdiction_data.get("data") is None:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
 
         open_prs, _ = await database.list_jobs_with_open_prs(jurisdiction_ocdid=jurisdiction_ocdid)
