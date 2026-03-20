@@ -1,7 +1,4 @@
 import json
-import hashlib
-import hmac
-import os
 import secrets
 import math
 from typing import List, cast, Optional, Any
@@ -28,7 +25,12 @@ async def get_pool() -> AsyncConnectionPool:
         db_url = env["CIVICPATCH_API_DB_URL"]
         if not db_url:
             raise RuntimeError("CIVICPATCH_API_DB_URL is not set")
-        _pool = AsyncConnectionPool(db_url, open=False)
+        _pool = AsyncConnectionPool(
+            db_url, 
+            open=False,
+            min_size=4,
+            max_size=20
+        )
         await _pool.open()
         logger.info("Database pool opened")
     return _pool
@@ -1124,7 +1126,7 @@ async def list_jobs_with_open_prs(
 
 
 async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
-    conditions = ["status = 'ERROR'"]
+    conditions = ["j.status = 'ERROR'"]
     params: list = []
 
     if state_code:
