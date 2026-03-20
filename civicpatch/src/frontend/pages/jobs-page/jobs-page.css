@@ -14,6 +14,42 @@
     color: var(--pico-muted-color);
 }
 
+.jobs-page__summary {
+    margin-bottom: 2rem;
+}
+
+.jobs-page__summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.jobs-page__stat-card {
+    background: var(--pico-card-background-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.jobs-page__stat-label {
+    font-size: 0.9rem;
+    color: var(--pico-muted-color);
+}
+
+.jobs-page__stat-main {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pico-primary);
+    line-height: 1.1;
+}
+
+.jobs-page__stat-sub {
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+}
+
 .jobs-page__filters select {
     width: auto;
     margin: 0;

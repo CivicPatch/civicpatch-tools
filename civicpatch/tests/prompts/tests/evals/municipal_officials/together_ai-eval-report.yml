@@ -1,64 +1,93 @@
 aggregated_report:
-  email: 0.9
   name: 1.0
+  roles: 0.9857142857142858
   designations: 1.0
-  url: 0.6181818181818182
   phone: 1.0
-  roles: 1.0
+  email: 0.9012987012987013
+  url: 0.6727272727272727
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
+- case_id: austin_city_manager_staff
+  scores: {}
 - case_id: austin_council
   scores:
-    email: 1.0
     name: 1.0
-    designations: 1.0
-    url: 0.9090909090909091
-    phone: 1.0
     roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 0.9090909090909091
+    url: 0.9090909090909091
+- case_id: austin_district7_council_member
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 1.0
+    url: 0.0
 - case_id: board_of_aldermen
   scores:
-    email: 1.0
     name: 1.0
-    designations: 1.0
-    url: 0.0
-    phone: 1.0
     roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 1.0
+    url: 0.0
 - case_id: coleman_council
   scores:
-    email: 1.0
     name: 1.0
+    roles: 0.9
     designations: 1.0
-    url: 0.0
     phone: 1.0
-    roles: 1.0
+    email: 1.0
+    url: 1.0
 - case_id: la_porte_council
   scores:
-    email: 1.0
     name: 1.0
-    designations: 1.0
-    url: 1.0
-    phone: 1.0
     roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 1.0
+    url: 1.0
 - case_id: mixed_current_past
   scores:
-    email: 1.0
     name: 1.0
-    designations: 1.0
-    url: 1.0
-    phone: 1.0
     roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 1.0
+    url: 1.0
 - case_id: vacant_positions_council
   scores:
-    email: 0.4
     name: 1.0
-    designations: 1.0
-    url: 0.8
-    phone: 1.0
     roles: 1.0
+    designations: 1.0
+    phone: 1.0
+    email: 0.4
+    url: 0.8
 failed_cases:
 - model_client: together_ai
-  case_number: 5
+  case_number: 1
+  case_id: austin_council
+  failures:
+  - person: Kirk Watson
+    field: email
+    expected: null
+    actual: mayorwatson@austintexas.gov
+- model_client: together_ai
+  case_number: 4
+  case_id: coleman_council
+  failures:
+  - person: Sharlene T. Hetzel
+    field: roles
+    expected:
+    - Council Member
+    - Mayor Pro-Tem
+    actual:
+    - Council Member
+- model_client: together_ai
+  case_number: 7
   case_id: vacant_positions_council
   failures:
   - person: Alysa Jarvis

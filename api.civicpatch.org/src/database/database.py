@@ -1125,6 +1125,39 @@ async def list_jobs_with_open_prs(
     return results, total
 
 
+async def get_jobs_review_summary() -> dict:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT
+                COUNT(*) FILTER (WHERE pull_request_review_state = 'changes_requested') AS changes_requested,
+                COUNT(*) FILTER (WHERE pull_request_url IS NOT NULL) AS total_with_pr
+            FROM jobs
+            """
+        )
+        row = await cur.fetchone()
+    return {"changes_requested": row[0], "total_with_pr": row[1]}
+
+
+async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
+    conditions = ["status = 'ERROR'"]
+    params: list = []
+
+    if state_code:
+        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        params.append(f"%state:{state_code}%")
+
+    where = " AND ".join(conditions)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(f"SELECT COUNT(*) FROM jobs WHERE {where}", params)
+        row = await cur.fetchone()
+
+    return row[0]
+
+
 async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
     conditions = ["j.status = 'ERROR'"]
     params: list = []

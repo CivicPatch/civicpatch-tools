@@ -84,6 +84,10 @@ def municipality_officials_prompt(roles_hint: List[str]):
     Do NOT extract officials mentioned only in news articles, event summaries,
     meeting notes, or scattered references. If no structured listing exists,
     return an empty array for "people".
+    Do NOT extract office staff, aides, assistants, schedulers, constituent services
+    representatives, chiefs of staff, or other administrative employees who work for
+    an elected official — only extract elected or appointed members of the primary
+    governing body (Mayor, Council Members, Commissioners, etc.).
     Treat officials as currently serving unless the content explicitly states
     the roster is historical or past.
 

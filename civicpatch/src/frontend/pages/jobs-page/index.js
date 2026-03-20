@@ -36,6 +36,7 @@ function JobsPage() {
   const [stateCode, setStateCode] = useState(getStateFromUrl());
   const [total, setTotal] = useState(0);
   const [errorJobs, setErrorJobs] = useState([]);
+  const [jobsSummary, setJobsSummary] = useState(null);
   const { loading: authLoading, permissions } = useAuth();
   const perPage = 20;
 
@@ -63,6 +64,7 @@ function JobsPage() {
         setPullRequests(prResult.data || []);
         setTotal(prResult.total || 0);
         setErrorJobs(errResult.data || []);
+        setJobsSummary(errResult.summary || null);
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
@@ -167,6 +169,27 @@ function JobsPage() {
             `;
           });
 
+  const changesRequestedPct = jobsSummary?.total_with_pr
+    ? ((jobsSummary.changes_requested / jobsSummary.total_with_pr) * 100).toFixed(1)
+    : null;
+
+  const summarySection = jobsSummary ? html`
+    <section class="jobs-page__summary">
+      <div class="jobs-page__summary-grid">
+        <div class="jobs-page__stat-card">
+          <div class="jobs-page__stat-label">Changes requested</div>
+          <div class="jobs-page__stat-main">${jobsSummary.changes_requested}</div>
+          <div class="jobs-page__stat-sub">${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs</div>
+        </div>
+        <div class="jobs-page__stat-card">
+          <div class="jobs-page__stat-label">Open pull requests</div>
+          <div class="jobs-page__stat-main">${jobsSummary.total_with_pr}</div>
+          <div class="jobs-page__stat-sub">awaiting review or merge</div>
+        </div>
+      </div>
+    </section>
+  ` : null;
+
   const errorSection = !authLoading && permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
       <h2>Pipeline errors</h2>
@@ -184,6 +207,7 @@ function JobsPage() {
           @state-change=${handleStateChange}
         ></civ-select-state>
       </div>
+      ${summarySection}
       ${errorSection}
       <section>
         <h2>Open pull requests</h2>

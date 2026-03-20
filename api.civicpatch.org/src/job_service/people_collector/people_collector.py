@@ -9,6 +9,7 @@ import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github.github_api_service as github_service
+from database.database import update_job_data
 import logging
 import yaml
 
@@ -62,15 +63,6 @@ async def handle_submit_job_artifacts(
     except Exception as e:
         logger.error(f"Failed to send costs for {request.request_id}: {e}")
 
-    artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
-    zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
-    zip_file_url = await storage_service.upload_file_to_storage(
-        "civicpatch-artifacts",
-        artifact_zip_path,
-        key=zip_file_key,
-        with_presigned_url=True
-    )
-
     if is_success:
         is_valid = await file_utils.validate_file_patterns(artifact_file_dir, artifact_file_patterns)
         if not is_valid:
@@ -82,7 +74,18 @@ async def handle_submit_job_artifacts(
         updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
         with open(data_file_path, "w") as f:
             yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
+        await update_job_data(request.request_id, updated_data)
 
+    artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
+    zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
+    zip_file_url = await storage_service.upload_file_to_storage(
+        "civicpatch-artifacts",
+        artifact_zip_path,
+        key=zip_file_key,
+        with_presigned_url=True
+    )
+
+    if is_success:
         await github_service.trigger_github_data_intake_workflow(
             request.server_detail.user_email,
             request.server_detail.server_url,
