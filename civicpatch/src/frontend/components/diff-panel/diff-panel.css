@@ -11,6 +11,15 @@
     margin-bottom: 0.6rem;
 }
 
+.diff-panel__label {
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--pico-muted-color);
+}
+
 .diff-panel__summary {
     font-family: var(--pico-font-family-monospace);
     font-size: 0.7rem;
