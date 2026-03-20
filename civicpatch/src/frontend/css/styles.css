@@ -1,5 +1,6 @@
 /* ── Components ──────────────────────────────────────────────────────────── */
 
+@import "../components/basic/table/cell.css";
 @import "../components/badge/badge.css";
 @import "../components/diff-panel/diff-panel.css";
 @import "../components/review-panel/review-panel.css";

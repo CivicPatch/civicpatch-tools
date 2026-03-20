@@ -1,5 +1,5 @@
 import { useState, component, useEffect, useLayoutEffect, useRef } from 'haunted';
-import { html, css } from 'lit';
+import { html } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 
 const KEYCODES = {
@@ -14,110 +14,6 @@ const KEYCODES = {
 // & keyboard logic might be better off moved to the parent
 // This cell should not really care about
 
-const styles = css`
-  civ-table-cell {
-    span {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        display: block;
-        min-height: 1em;
-        box-sizing: border-box;
-        border: 2px solid transparent;
-        white-space: normal;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
-    span.cell-content[contenteditable="true"]:focus {
-        box-sizing: border-box;
-        outline: 2px solid rgb(var(--catppuccin-mauve));
-        border-radius: var(--pico-border-radius);
-    }
-    div.tag-list:focus-within {
-        outline: 2px solid rgb(var(--catppuccin-mauve));
-        border-radius: var(--pico-border-radius);
-    }
-
-    .tag-list {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        align-content: flex-start;
-        gap: 0.25rem;
-        padding: 0.4rem;
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
-    .tag-list button:hover {
-        background: rgb(var(--catppuccin-sapphire), 0.2);
-        border-color: rgb(var(--catppuccin-crust));
-    }
-
-    .tag-list button {
-        appearance: none;
-        border: 1px solid rgb(var(--catppuccin-crust));
-        background: rgb(var(--catppuccin-base));
-        border-radius: 999px;
-        padding: 0.1rem 0.35rem 0.1rem 0.5rem;
-        font-size: 0.72rem;
-        font-family: inherit;
-        cursor: pointer;
-        color: #333;
-        width: fit-content;      /* shrinks to content */
-        max-width: 200px;        /* but won't exceed this */
-        display: inline-flex;
-        align-items: center;
-        gap: 0;
-        line-height: 1;
-    }
-
-    .tag-list button span.tag-label {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        min-width: 0;
-        margin-right: 0.2rem;
-        flex: auto;
-    }
-
-    .tag-list button span.tag-remove {
-        flex: content;
-    }
-
-    .tag-input {
-        flex-basis: 100%;
-        min-height: 1.2em;
-        outline: none;
-        border: none;
-        background: transparent;
-        padding: 0;
-        font-size: 0.8rem;
-        font-family: inherit;
-        color: inherit;
-        white-space: normal;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
-
-    span:not(.tag-input) {
-        display: inline-block;
-        ...
-      }
-    span.tag-input {
-      display: inline;
-      min-width: 4em;
-    }
-
-    .tag-input:empty::before {
-        content: attr(data-placeholder);
-        color: #aaa;
-        pointer-events: none;
-    }
-  }
-`;
 
 function TableCell({
   identifier,
@@ -286,7 +182,7 @@ function TableCell({
       <div class="tag-list ${editing ? 'editing' : ''}">
         ${editList.map((item, i) => editing
           ? html`
-            <button type="button" @click=${e => handleRemoveItem(e, i)}>
+            <button type="button" @mousedown=${e => e.preventDefault()} @click=${e => handleRemoveItem(e, i)}>
               <span class="tag-label">${item}</span>
               <span class="tag-remove">×</span>
             </button>`
@@ -353,7 +249,6 @@ function TableCell({
   }
 
   return html`
-        <style>${styles}</style>
         <div
             tabIndex="-1"
             data-field=${field} 

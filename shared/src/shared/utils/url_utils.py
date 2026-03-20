@@ -2,8 +2,10 @@ from urllib.parse import urlparse, urlunparse
 
 def format_url(url: str):
     """
-    Formats a URL by ensuring it has the correct scheme and normalizing
-    only the case-insensitive parts (scheme and host).
+    Formats a URL into a canonical form for storage and comparison:
+    - Lowercases scheme, host, and path
+    - Strips www. prefix from host
+    - Strips trailing slash
     """
     url = url.strip().rstrip("/")
     if not url.startswith("http"):
@@ -12,7 +14,8 @@ def format_url(url: str):
     parsed = urlparse(url)
     normalized = parsed._replace(
         scheme=parsed.scheme.lower(),
-        netloc=parsed.netloc.lower(),
+        netloc=parsed.netloc.lower().removeprefix("www."),
+        path=parsed.path.lower(),
     )
     return urlunparse(normalized)
 

@@ -262,7 +262,8 @@ def test_add_relevant_urls_includes_cross_domain():
     mayor_url = "https://www.baycitytx.gov/296/Office-of-the-Mayor"
     result = add_relevant_urls([mayor_url], existing_links)
     pending_urls = [l.url for l in result if l.status == LinkStatus.PENDING.value]
-    assert mayor_url in pending_urls
+    # URL is canonicalized: www. stripped, path lowercased
+    assert "https://baycitytx.gov/296/office-of-the-mayor" in pending_urls
 
 
 def test_add_relevant_urls_skips_already_present():
@@ -273,10 +274,94 @@ def test_add_relevant_urls_skips_already_present():
     assert len(result) == 1
 
 
-def test_add_relevant_urls_skips_ignored_sites():
+def test_add_relevant_urls_increments_existing_pending():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+        Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=0),
+    ]
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links)
+    mayor = next(l for l in result if "mayor" in l.url)
+    assert mayor.num_references == 2
+
+
+def test_add_relevant_urls_sorts_by_num_references():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=3),
+        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+    ]
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links)
+    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
+    # mayor now has 2 references, council has 3 — council should still be first
+    assert pending[0].url == "https://cityofbaycity.org/council"
+    assert pending[1].url == "https://cityofbaycity.org/mayor"
+
+    result2 = add_relevant_urls(["https://cityofbaycity.org/mayor"], result)
+    pending2 = [l for l in result2 if l.status == LinkStatus.PENDING.value]
+    # mayor now has 3 references, tied with council — path depth tiebreak (same), stable order
+    assert pending2[0].url == "https://cityofbaycity.org/council"
+
+    result3 = add_relevant_urls(["https://cityofbaycity.org/mayor"], result2)
+    pending3 = [l for l in result3 if l.status == LinkStatus.PENDING.value]
+    # mayor now has 4 references, beats council's 3 — mayor should be first
+    assert pending3[0].url == "https://cityofbaycity.org/mayor"
+
+
+def test_add_relevant_urls_does_not_increment_non_pending():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor", num_references=1),
+    ]
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links)
+    assert len(result) == 1
+    assert result[0].num_references == 1  # unchanged
+
+
+def test_add_relevant_urls_no_domain_filtering():
+    # add_relevant_urls does not filter by domain — that's the LLM prompt's responsibility
     existing_links = []
     result = add_relevant_urls(["https://facebook.com/baycity"], existing_links)
-    assert result == []
+    assert len(result) == 1
+    assert result[0].url == "https://facebook.com/baycity"
+
+
+def test_add_relevant_urls_name_match_beats_more_references():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
+        Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+    ]
+    result = add_relevant_urls([], existing_links, names=["Susan Reardon"])
+    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
+    assert pending[0].url == "https://cityofbaycity.org/655/Susan-Reardon"
+
+
+def test_add_relevant_urls_designation_match_beats_more_references():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
+        Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+    ]
+    result = add_relevant_urls([], existing_links, designations=["Position 4"])
+    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
+    assert pending[0].url == "https://cityofbaycity.org/position-4/seat"
+
+
+def test_add_relevant_urls_name_match_beats_designation_match():
+    existing_links = [
+        Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=3),
+        Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+    ]
+    result = add_relevant_urls([], existing_links, names=["Susan Reardon"], designations=["Position 4"])
+    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
+    assert pending[0].url == "https://cityofbaycity.org/655/Susan-Reardon"
+
+
+def test_add_relevant_urls_role_hint_in_url_beats_more_references():
+    # "city-council" contains "council" which is a significant token of "Council Member"
+    existing_links = [
+        Link(url="https://cityofbaycity.org/general-info", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
+        Link(url="https://cityofbaycity.org/283/city-council", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
+    ]
+    result = add_relevant_urls([], existing_links, designations=["Council Member"])
+    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
+    assert pending[0].url == "https://cityofbaycity.org/283/city-council"
 
 
 @pytest.mark.asyncio
