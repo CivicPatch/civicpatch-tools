@@ -2,9 +2,10 @@ from typing import Any, Dict, Union
 from domain.models import Official
 from jobs.people_collector.schemas import (
     PeopleCollectorData,
-    PeopleCollectorContext, 
+    PeopleCollectorContext,
     WorkflowStatus,
     WorkflowConfig,
+    PreparePipelineStep,
     ResearchMunicipalityStep,
     SearchLinksStep,
     PreprocessPageContentStep,
@@ -17,6 +18,7 @@ from jobs.people_collector.schemas import (
 
 def workflow_context_factory(
     steps: dict[WorkflowStatus, Any],
+    prepare_pipeline_step=None,
 ) -> PeopleCollectorContext:
     default_steps: Dict[WorkflowStatus, Union[
         ResearchMunicipalityStep,
@@ -48,5 +50,6 @@ def workflow_context_factory(
             merge_records_within_llm_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_WITHIN_LLM),
             merge_records_across_llms_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS),
             format_output_step=default_steps.get(WorkflowStatus.FORMAT_OUTPUT),
+            prepare_pipeline_step=prepare_pipeline_step or PreparePipelineStep(roles_hint=[], identities={}, source_urls=[]),
         )
     )
