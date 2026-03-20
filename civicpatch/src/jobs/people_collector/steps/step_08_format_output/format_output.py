@@ -1,4 +1,6 @@
-from typing import List, Tuple
+import json
+import os
+from typing import List
 
 import services.civicpatch_api
 import utils.log_utils as log_utils
@@ -10,6 +12,7 @@ from jobs.people_collector.schemas import (
     WorkflowStatus,
 )
 from shared.utils.config_utils import get_designations
+import shared.utils.data_path_utils as data_path_utils
 
 
 async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
@@ -27,9 +30,10 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         person for person in people if not person.name == "Vacant Vacant"
     ]
 
-    # TODO: Make this more generic later
+    image_map = _get_image_map(context.data.jurisdiction_ocdid)
     for person in filtered_people:
-        person = maybe_add_fallback_url(person)
+        person = _swap_local_image(person, image_map)
+        person = _maybe_add_fallback_url(person)
 
     resolved_people = await services.civicpatch_api.batch_resolve_people(
         context.data.jurisdiction_ocdid,
@@ -45,7 +49,30 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     return FormatOutputStep(officials=filtered_people)
 
 
-def maybe_add_fallback_url(person: Official) -> Official:
+def _maybe_add_fallback_url(person: Official) -> Official:
     if not person.urls and person.source_urls:
         person.urls = [person.source_urls[0]]
     return person
+
+
+def _get_image_map(jurisdiction_ocdid: str) -> dict:
+    try:
+        images_dir = data_path_utils.get_images_path(jurisdiction_ocdid)
+    except FileNotFoundError:
+        return {}
+    map_file = os.path.join(images_dir, "image_map.json")
+    if not os.path.exists(map_file):
+        return {}
+    with open(map_file, "r") as f:
+        return json.load(f)
+
+
+def _swap_local_image(official: Official, image_map: dict) -> Official:
+    if not official.image or not official.image.startswith("local://"):
+        return official
+    basename = official.image.removeprefix("local://")
+    if basename not in image_map:
+        return official
+    official.cdn_image = official.image
+    official.image = image_map[basename]
+    return official

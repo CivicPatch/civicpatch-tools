@@ -347,7 +347,8 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
                     logger.debug(f"Attempting to intercept and save image for: {src}")
                     intercepted_image_path = await load_and_save_image(page, image_dir, src, logger, file_name)
                     if intercepted_image_path:
-                        image_map[src] = file_name 
+                        image_map[file_name] = src
+                        await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
                         return
                 except Exception as e:
                     logger.warning(f"Failed to intercept and save image for {src}: {e}")
@@ -378,7 +379,8 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
                     with open(file_path, "wb") as f:
                         f.write(base64.b64decode(encoded))
                     logger.debug(f"Image saved from canvas: {file_name}")
-                    image_map[src] = file_name 
+                    image_map[file_name] = src
+                    await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
                     return
                 except Exception as e:
                     logger.warning(f"Failed to create canvas for image: {src} - {e}")
@@ -388,7 +390,8 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
                     logger.debug(f"Attempting to screenshot image element: {src}")
                     await img.screenshot(path=file_name)
                     logger.debug(f"Image captured via element screenshot: {file_name}")
-                    image_map[src] = file_name
+                    image_map[file_name] = src
+                    await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
                 except Exception as e:
                     logger.warning(f"Failed to screenshot image element: {src} - {e}")
 

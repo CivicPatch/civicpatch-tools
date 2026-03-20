@@ -89,13 +89,18 @@ def get_router(api_key_header):
             jurisdiction_ocdid
         )
 
+        existing, cached = await asyncio.gather(
+            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
+            database.database.get_job_data_json(request_id),
+        )
+
         # Fast path: serve from DB if already backfilled
-        cached = await database.database.get_job_data_json(request_id)
         if cached is not None:
             return {
                 "request_id": request_id,
                 "file_path": file_path,
                 "data": cached,
+                "existing": existing,
             }
 
         file_content = await github_service.get_pull_request_file_yaml(
@@ -120,6 +125,7 @@ def get_router(api_key_header):
             "request_id": request_id,
             "file_path": file_path,
             "data": file_content,
+            "existing": existing,
         }
 
     # ── Pull Requests: Update Data ───────────

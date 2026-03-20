@@ -94,7 +94,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
     - If the position is vacant, use "Vacant Vacant".
 
     image:
-    - URL to a profile photo. Must start with https://.
+    - The image src value for a profile photo, exactly as it appears in the content.
     - If none found, use null.
 
     roles:
