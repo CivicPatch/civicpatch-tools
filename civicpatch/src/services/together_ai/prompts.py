@@ -145,6 +145,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
     url:
     - Use in this order: official profile page, biography page, contact form URL,
       position listing page, general listing page.
+    - Copy the URL exactly as it appears in the content. Do not normalize, lowercase, or remove subdomains like "www".
     - If none found, use null.
 
     start_date:

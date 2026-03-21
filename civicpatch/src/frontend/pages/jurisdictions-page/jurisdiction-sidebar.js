@@ -45,13 +45,14 @@ function JurisdictionSidebar({
         .sseError=${sseError}
       ></civ-scrape-history-list>
 
-      <button
-        @click=${onScrapeClick}
-        ?disabled=${!canStartScrape}
-        class="primary jurisdiction-sidebar__scrape-btn"
-      >
-        Scrape for Jurisdiction
-      </button>
+      ${canStartScrape ? html`
+        <button
+          @click=${onScrapeClick}
+          class="primary jurisdiction-sidebar__scrape-btn"
+        >
+          Scrape for Jurisdiction
+        </button>
+      ` : null}
     </div>
   `;
 }

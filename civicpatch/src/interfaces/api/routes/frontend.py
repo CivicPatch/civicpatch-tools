@@ -16,8 +16,28 @@ import httpx
 from civicpatch_environment import get_env_vars
 
 async def get_current_user(request: Request):
-    data = await civicpatch_api.get_me(request)
-    return data
+    try:
+        user = await civicpatch_api.get_me(request)
+        permissions = build_permissions(user)
+        return {
+            "authenticated": user.get("authenticated", False),
+            "email": user.get("email"),
+            "permissions": permissions,
+        }
+    except (httpx.ConnectError, httpx.TimeoutException):
+        return {"authenticated": False, "email": None, "permissions": {}}
+
+
+def build_permissions(user_data: dict) -> dict:
+    teams = user_data.get("teams", [])
+    return {
+        "can_view_jobs_page": any(t in teams for t in ("maintainers", "contributors")),
+        "can_view_jobs_page_errors": "admins" in teams,
+        "can_scrape_local": civicpatch_api.can_scrape_locally(),
+        "can_scrape_remote": "maintainers" in teams,
+        "can_view_jurisdiction_page": "default" in teams,
+    }
+
 
 def get_router(templates: Jinja2Templates) -> APIRouter:
     router = APIRouter()
@@ -46,7 +66,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
 
     @router.get("/jurisdictions", include_in_schema=False)
     async def jurisdiction_page(
-        request: Request, 
+        request: Request,
         jurisdiction_ocdid: str,
         user: dict = Depends(get_current_user)
     ):
@@ -63,13 +83,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
                 "request": request,
                 "jurisdiction_ocdid": jurisdiction_ocdid,
                 "jurisdiction_data": json.dumps(jurisdiction),
-                "user": user
+                "user": user,
             }
         )
 
     @router.get("/progress", include_in_schema=False)
     async def progress_page(
-        request: Request, 
+        request: Request,
     ):
         return templates.TemplateResponse(
             "pages/progress.html",
@@ -80,27 +100,17 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
 
     @router.get("/jobs", include_in_schema=False)
     async def jobs_page(
-        request: Request, 
+        request: Request,
         user: dict = Depends(get_current_user)
     ):
-        not_logged_in = not user
-        not_authenticated = not user.get('authenticated')
-        not_maintainer = 'maintainers' not in user.get('teams', [])
-
-        if not_logged_in or not_authenticated or not_maintainer:
+        if not user.get("authenticated") or not user.get("permissions", {}).get("can_view_jobs_page"):
             return templates.TemplateResponse(
                 "pages/unauthorized.html",
-                {
-                    "request": request,
-                    "user": user
-                }
+                {"request": request, "user": user}
             )
         return templates.TemplateResponse(
             "pages/jobs.html",
-            {
-                "request": request,
-                "user": user,
-            }
+            {"request": request, "user": user}
         )
 
     return router

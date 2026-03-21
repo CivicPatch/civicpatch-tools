@@ -42,6 +42,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
     setScrapeModalOpen(false);
     const body = {
       jurisdiction_ocdid: jurisdictionData.data.id,
+      scrape_mode: details.scrapeMode,
       config: {
         url: details.data.url || jurisdictionData.data.url,
         name: jurisdictionData.data.name,
@@ -57,7 +58,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   };
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
-  const canStartScrape = true;
+  const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
 
   return html`
     <div style="display: flex; flex-direction: column; gap: 2rem;">
@@ -102,6 +103,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
                 closeOnBackdropClick: false
               }}
               .identities=${identities}
+              .canScrapeRemote=${permissions.JURISDICTION_PAGE_SCRAPE_REMOTE}
+              .canScrapeLocal=${permissions.JURISDICTION_PAGE_SCRAPE_LOCAL}
             ></civ-scrape-modal>
           ` : null}
 

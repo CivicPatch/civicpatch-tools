@@ -10,6 +10,7 @@ function CivSelectJurisdiction() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
+  console.log("permissions in CivSelectJurisdiction:", permissions);
 
   const isInitialMount = useRef(true);
 

@@ -169,3 +169,23 @@ export const closePullRequest = async (pullRequestNumber) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
+
+export const fetchPeople = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`/api/api_proxy/people?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchDashboard = async () => {
+  const res = await fetch(`${API_URL}/api/v1/data/dashboard`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
+  const params = new URLSearchParams({ lat, long: lng, zoom });
+  const res = await fetch(`/api/api_proxy/jurisdictions/geojson?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};

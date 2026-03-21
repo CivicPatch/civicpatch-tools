@@ -18,7 +18,7 @@ import database.people
 import services.github.github_api_service as github_service
 import services.github.pull_request_sync_service as pr_sync_service
 from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -64,7 +64,7 @@ def get_router(api_key_header):
     async def list_pull_requests_endpoint(
         jurisdiction_ocdid: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         pull_requests, _ = await database.database.list_jobs_with_open_prs(
@@ -82,7 +82,7 @@ def get_router(api_key_header):
         request_id: str,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
@@ -134,7 +134,7 @@ def get_router(api_key_header):
     async def post_job_pull_request_data_endpoint(
         request: PostJobPullRequestDataRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
     ):
         user_name = user.email
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
@@ -174,7 +174,7 @@ def get_router(api_key_header):
         state_code: str | None = None,
         view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         paged_pull_requests, total = await database.database.list_jobs_with_open_prs(
@@ -211,7 +211,7 @@ def get_router(api_key_header):
     async def get_pull_request_review_endpoint(
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         result = await database.database.get_job_result(request_id)
@@ -222,7 +222,7 @@ def get_router(api_key_header):
     async def close_pull_request_endpoint(
         pull_request_number: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         success = await github_service.close_pull_request(
@@ -242,7 +242,7 @@ def get_router(api_key_header):
     async def merge_pull_request_endpoint(
         pull_request_number: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         _github_response = await github_service.merge_pull_request(

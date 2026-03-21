@@ -1,7 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import { config } from '../../assets/config.js';
-const API_URL = config.apiUrl;
+import { fetchPeople, fetchDashboard, fetchJurisdictionsGeojson } from "../../api.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 
@@ -14,16 +13,11 @@ function SearchJurisdictions() {
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) return;
-    const encoded = encodeURIComponent(selectedJurisdictionOcdid);
-    fetch(`/api/api_proxy/people?jurisdiction_ocdid=${encoded}`)
-      .then(r => r.json())
-      .then(data => setPeople(data.data));
+    fetchPeople(selectedJurisdictionOcdid).then(data => setPeople(data.data));
   }, [selectedJurisdictionOcdid]);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/v1/data/dashboard`)
-      .then(r => r.json())
-      .then(data => setDashboardData(data.data));
+    fetchDashboard().then(data => setDashboardData(data.data));
   }, []);
 
   const handleSelectJurisdictionChange = (event) => {
@@ -35,9 +29,7 @@ function SearchJurisdictions() {
   const handleMapChange = (event) => {
     const { latlng, zoom } = event.detail;
     if (!latlng || !zoom) return;
-    fetch(`/api/api_proxy/jurisdictions/geojson?lat=${latlng.lat}&long=${latlng.lng}&zoom=${zoom}`)
-      .then(r => r.json())
-      .then(data => setGeojson(data));
+    fetchJurisdictionsGeojson(latlng.lat, latlng.lng, zoom).then(data => setGeojson(data));
   };
 
   return html`
