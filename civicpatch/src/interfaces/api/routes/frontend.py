@@ -22,6 +22,7 @@ async def get_current_user(request: Request):
         return {
             "authenticated": user.get("authenticated", False),
             "email": user.get("email"),
+            "teams": user.get("teams", []),
             "permissions": permissions,
         }
     except (httpx.ConnectError, httpx.TimeoutException):

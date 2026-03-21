@@ -54,7 +54,7 @@ function LocalityGaps({ stats, state = 'TX' }) {
   return html`
     <div>
       <h3>Locality Data Gaps:</h3>
-      ${renderSingleGapTable('Scrapeable but not covered', gaps.not_yet_scraped)}
+      ${renderSingleGapTable('Not scraped', gaps.not_yet_scraped)}
       ${renderSideBySideTable(
         'In external, not in civicpatch',
         gaps.in_external_not_known,

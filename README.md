@@ -60,7 +60,12 @@ graph TD
 
 ## Contributing
 
-Still trying to figure this out! Email me at michelle@civicpatch.org.
+Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and join our weekly sync and biweekly hackathon meetings.
+
+Weekly Sync - Introductions and Updates
+Biweekly Hackathons - Onboarding, bug bashing
+
+[Issues](https://github.com/orgs/CivicPatch/projects/3)
 
 ## Development
 
