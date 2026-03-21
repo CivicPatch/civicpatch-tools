@@ -183,6 +183,20 @@ export const fetchDashboard = async () => {
   return res.json();
 };
 
+export const triggerRemoteJob = async (jurisdictionOcdid, name, url) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ jurisdiction_ocdid: jurisdictionOcdid, name, url }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   const params = new URLSearchParams({ lat, long: lng, zoom });
   const res = await fetch(`/api/api_proxy/jurisdictions/geojson?${params}`, { credentials: "include" });
