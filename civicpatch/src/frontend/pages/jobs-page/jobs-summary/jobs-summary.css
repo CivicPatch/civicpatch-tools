@@ -1,0 +1,62 @@
+.jobs-summary {
+    margin-bottom: 2rem;
+}
+
+.jobs-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.jobs-summary__stat-card {
+    background: var(--pico-card-background-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    text-align: left;
+    border: 1.5px solid var(--pico-muted-border-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    width: 100%;
+    position: relative;
+}
+
+.jobs-summary__stat-card:hover {
+    border-color: var(--pico-primary);
+}
+
+.jobs-summary__stat-label {
+    font-size: 0.9rem;
+    color: var(--pico-muted-color);
+}
+
+.jobs-summary__stat-main {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pico-primary);
+    line-height: 1.1;
+}
+
+.jobs-summary__stat-sub {
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+}
+
+.jobs-summary__copy-icon {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.85rem;
+    font-size: 0.7rem;
+    color: var(--pico-muted-color);
+    transition: color 0.15s ease;
+}
+
+.jobs-summary__stat-card:hover .jobs-summary__copy-icon {
+    color: var(--pico-primary);
+}
+
+.jobs-summary__copy-icon--copied {
+    color: var(--pico-ins-color);
+}
