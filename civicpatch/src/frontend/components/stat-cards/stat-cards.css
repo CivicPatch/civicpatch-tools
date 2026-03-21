@@ -1,0 +1,65 @@
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-cards__card {
+    background: var(--pico-card-background-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    text-align: left;
+    border: 1.5px solid var(--pico-muted-border-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    width: 100%;
+    position: relative;
+}
+
+.stat-cards__card:hover {
+    border-color: var(--pico-primary);
+}
+
+.stat-cards__label {
+    font-size: 0.9rem;
+    color: var(--pico-muted-color);
+}
+
+.stat-cards__value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pico-primary);
+    line-height: 1.1;
+}
+
+.stat-cards__sub {
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+}
+
+.stat-cards__card[data-tooltip]::before {
+    white-space: normal;
+    max-width: 220px;
+    text-align: left;
+}
+
+.stat-cards__copy-icon {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.85rem;
+    font-size: 0.7rem;
+    color: var(--pico-muted-color);
+    transition: color 0.15s ease;
+}
+
+.stat-cards__card:hover .stat-cards__copy-icon {
+    color: var(--pico-primary);
+}
+
+.stat-cards__copy-icon--copied {
+    color: var(--pico-ins-color);
+}

@@ -46,7 +46,7 @@ graph TD
     %% Data flow to api.civicpatch.org
     CP1 --> SCRAPE
     CP2 --> SCRAPE
-    ZIP -->|zip payload| C[api.civicpatch.org.civicpatch.org]
+    ZIP -->|zip payload| C[api.civicpatch.org]
     
     %% Simplified: api.civicpatch.org sends to open-data, which auto-processes
     C -->|sends data| OD[open-data repo<br/>auto-processes & creates PR]

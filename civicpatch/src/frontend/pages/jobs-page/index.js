@@ -6,6 +6,7 @@ import { pullRequestUrlToNumber } from "./pr-utils.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./pull-request-card";
 import "./error-card/index.js";
+import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 
 const DEFAULT_STATE = "tx";
@@ -173,22 +174,26 @@ function JobsPage() {
     ? ((jobsSummary.changes_requested / jobsSummary.total_with_pr) * 100).toFixed(1)
     : null;
 
-  const summarySection = jobsSummary ? html`
-    <section class="jobs-page__summary">
-      <div class="jobs-page__summary-grid">
-        <div class="jobs-page__stat-card">
-          <div class="jobs-page__stat-label">Changes requested</div>
-          <div class="jobs-page__stat-main">${jobsSummary.changes_requested}</div>
-          <div class="jobs-page__stat-sub">${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs</div>
-        </div>
-        <div class="jobs-page__stat-card">
-          <div class="jobs-page__stat-label">Open pull requests</div>
-          <div class="jobs-page__stat-main">${jobsSummary.total_with_pr}</div>
-          <div class="jobs-page__stat-sub">awaiting review or merge</div>
-        </div>
-      </div>
-    </section>
-  ` : null;
+  const summaryStats = jobsSummary ? [
+    {
+      key: "changes",
+      label: "Changes requested",
+      value: jobsSummary.changes_requested,
+      sub: `${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs`,
+      copyText: `[changes requested] ${jobsSummary.changes_requested} (${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs)`,
+    },
+    {
+      key: "open",
+      label: "Open pull requests",
+      value: jobsSummary.total_with_pr,
+      sub: "awaiting review or merge",
+      copyText: `[open pull requests] ${jobsSummary.total_with_pr}`,
+    },
+  ] : null;
+
+  const summarySection = summaryStats
+    ? html`<stat-cards .stats=${summaryStats}></stat-cards>`
+    : null;
 
   const errorSection = permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
