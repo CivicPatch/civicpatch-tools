@@ -1,7 +1,7 @@
 import logging
 from typing import List, Optional
 
-from fastapi import Depends, HTTPException, Request, Security
+from fastapi import Depends, HTTPException, Request, Security, WebSocket
 from fastapi.security import APIKeyCookie, APIKeyHeader
 
 import database.database as database
@@ -208,6 +208,29 @@ def require_route_access(
         )
 
     return _dependency
+
+
+async def get_ws_user(websocket: WebSocket) -> Optional[Identity]:
+    token = websocket.cookies.get("token")
+    if not token:
+        return None
+    session = await session_service.get_session(token)
+    if not session:
+        return None
+    teams = session.get("teams") or []
+    if not teams:
+        provider = session["provider"]
+        provider_user_id = session["provider_user_id"]
+        user_row = await database.get_user(provider, provider_user_id)
+        if user_row and user_row.get("teams"):
+            teams = user_row["teams"]
+    return Identity(
+        type="cookie",
+        provider=session["provider"],
+        provider_user_id=session["provider_user_id"],
+        email=session.get("email"),
+        teams=teams,
+    )
 
 
 def expect_user(identity, expected_provider, expected_provider_user_id):

@@ -182,7 +182,7 @@ def get_router(api_key_header):
                 request_id=request_id, status=request.status, progress=request.progress
             )
             if request.jurisdiction_ocdid:
-                key = f"people:{request.jurisdiction_ocdid}"
+                key = f"job_status:{request.jurisdiction_ocdid}"
                 await pubsub_service.publish(
                     key,
                     json.dumps(
@@ -325,6 +325,7 @@ def get_router(api_key_header):
     )
     async def resolve_job_endpoint(
         request_id: str,
+        background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
     ):
         updated = await update_job_status(request_id=request_id, status="RESOLVED", progress=None)
@@ -333,6 +334,17 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Job not found").model_dump(),
                 status_code=404,
             )
+
+        async def _publish():
+            job = await get_job(request_id)
+            jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
+            if jurisdiction_ocdid:
+                await pubsub_service.publish(
+                    f"job_status:{jurisdiction_ocdid}",
+                    json.dumps({"request_id": request_id, "status": "RESOLVED", "progress": None}),
+                )
+
+        background_tasks.add_task(_publish)
         return {"request_id": request_id, "status": "RESOLVED"}
 
     @router.get(
