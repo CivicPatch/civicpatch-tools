@@ -27,6 +27,7 @@ function setPageInUrl(page) {
 }
 
 function JobsPage() {
+  const { permissions } = useAuth();
   const [pullRequests, setPullRequests] = useState([]);
   const [pullRequestState, setPullRequestState] = useState({});
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,6 @@ function JobsPage() {
   const [total, setTotal] = useState(0);
   const [errorJobs, setErrorJobs] = useState([]);
   const [jobsSummary, setJobsSummary] = useState(null);
-  const { loading: authLoading, permissions } = useAuth();
   const perPage = 20;
 
   useEffect(() => {
@@ -190,7 +190,7 @@ function JobsPage() {
     </section>
   ` : null;
 
-  const errorSection = !authLoading && permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
+  const errorSection = permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
       <h2>Pipeline errors</h2>
       <div style="display: flex; gap: 2rem; flex-direction: column;">

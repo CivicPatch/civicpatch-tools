@@ -113,7 +113,7 @@ def get_router(api_key_header):
     async def create_people_job_endpoint(
         request: CreateJobRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.SERVICE, ["default"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
         try:
@@ -143,7 +143,7 @@ def get_router(api_key_header):
     )
     async def register_people_job_endpoint(
         request: CreateRegisterJobRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
     ):
         print(
             f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
@@ -171,7 +171,7 @@ def get_router(api_key_header):
         request: UpdateJobStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])
         ),
     ):
         async def _update_and_publish():
@@ -337,7 +337,7 @@ def get_router(api_key_header):
     )
     async def get_jobs_with_errors_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
     ):
         jobs, summary = await asyncio.gather(
             get_jobs_with_errors(state_code=state_code),

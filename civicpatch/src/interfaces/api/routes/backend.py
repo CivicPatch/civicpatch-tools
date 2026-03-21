@@ -7,6 +7,7 @@ from typing import List, Optional
 from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
 
+from interfaces.api.routes.frontend import build_permissions
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
@@ -28,18 +29,9 @@ def get_router() -> APIRouter:
     @router.get("/permissions")
     async def get_permissions(request: Request):
         data = await services.civicpatch_api.get_me(request)
-        authenticated = data.get("authenticated", False)
-
-        PERMISSIONS = {
-            "can_view_jobs_page_errors": "admins" in data.get("teams", []),
-            "can_scrape_local": services.civicpatch_api.can_scrape_locally,
-            "can_scrape_remote": "maintainers" in data.get("teams", []),
-            "can_view_jurisdiction_page": len(data.get("teams", [])) > 0
-        }
-
         return {
-            "permissions": PERMISSIONS, 
-            "authenticated": authenticated, 
+            "permissions": build_permissions(data),
+            "authenticated": data.get("authenticated", False),
             "data": data
         }
 
@@ -53,9 +45,15 @@ def get_router() -> APIRouter:
     async def post_pipelines(
         request: PeopleCollectorJobRequest,
         background_tasks: BackgroundTasks,
+        http_request: Request,
     ):
-        if not services.civicpatch_api.can_scrape_locally:
-            raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
+        if request.scrape_mode == "remote":
+            me = await services.civicpatch_api.get_me(http_request)
+            if "maintainers" not in me.get("teams", []):
+                raise HTTPException(status_code=403, detail="Remote scraping requires maintainer access")
+        else:
+            if not services.civicpatch_api.can_scrape_locally:
+                raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
 
         request_id = id_utils.make_request_id()
         warnings, errors = validate_people_request(request)

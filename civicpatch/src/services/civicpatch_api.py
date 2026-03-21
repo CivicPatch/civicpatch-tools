@@ -169,10 +169,12 @@ async def search_people(
         params["state"] = state
     if name is not None:
         params["name"] = name
+    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     async with httpx.AsyncClient() as client:
         response = await client.get(
             f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/people/search",
             params=params,
+            headers=system_auth_header,
         )
         response.raise_for_status()
         return response.json().get("data", [])

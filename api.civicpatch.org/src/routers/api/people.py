@@ -3,7 +3,7 @@ from utils.auth_utils import require_route_access
 from pydantic import BaseModel
 from typing import Optional
 import uuid
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, Role, RouteCategory
 
 import database.database as database
 from shared.utils.person_id_utils import resolve_people_ids
@@ -37,6 +37,7 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str,
         state: Optional[str] = Query(None, description="Filter by state"),
         name: Optional[str] = Query(None, description="Filter by name"),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
     ):
         people = await database.get_people_for_jurisdiction(jurisdiction_ocdid, status=state)
 
@@ -69,7 +70,7 @@ def get_router() -> APIRouter:
     @router.post("/batch-resolve")
     async def batch_resolve_people_endpoint(
         request: PeopleBatchResolveRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT]))
     ):
         people = await database.get_people_for_jurisdiction(request.jurisdiction_ocdid)
         identities = shared.utils.name_utils.person_list_to_identities(people)
@@ -89,7 +90,7 @@ def get_router() -> APIRouter:
 
     @router.post("/generate-id")
     async def generate_person_id(
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT]))
     ):
         return {
             "data": {

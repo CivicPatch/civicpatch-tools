@@ -2,8 +2,10 @@ import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
 
-function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {} }) {
+function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {}, canScrapeRemote = false, canScrapeLocal = false }) {
+  const defaultScrapeMode = canScrapeLocal ? "local" : "remote";
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
+  const [scrapeMode, setScrapeMode] = useState(defaultScrapeMode);
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
 
@@ -61,11 +63,16 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
       ? currentUrlIsValid()
       : currentSourceUrlsValid();
 
+  const handleModeChange = (event) => {
+    setScrapeMode(event.target.value);
+  };
+
   const submitScrape = () => {
     let data = {};
     if (scrapeScope == "top-level-url") {
       data = {
         scrapeScope,
+        scrapeMode,
         data: {
           url: currentUrl,
         },
@@ -73,6 +80,7 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     } else {
       data = {
         scrapeScope,
+        scrapeMode,
         data: {
           sourceUrls: currentSourceUrls,
         },
@@ -81,58 +89,99 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     onStartScrape(data);
   };
 
+  const bothModesAvailable = canScrapeRemote && canScrapeLocal;
+  const onlyOneMode = (canScrapeRemote || canScrapeLocal) && !bothModesAvailable;
+
   const content = html`
-    <fieldset>
-      <input
-        type="radio"
-        id="top-level-url"
-        name="scrape-scope"
-        value="top-level-url"
-        ?checked=${scrapeScope === "top-level-url"}
-        @change=${handleScopeChange}
-      />
-      <label for="top-level-url">Top-level URL only</label>
-
-      <input
-        type="radio"
-        id="specific-urls"
-        name="scrape-scope"
-        value="specific-urls"
-        ?checked=${scrapeScope === "specific-urls"}
-        @change=${handleScopeChange}
-      />
-      <label for="specific-urls">Specific URLs</label>
-    </fieldset>
-
-    ${scrapeScope === "top-level-url"
-      ? html`
-        <form @submit=${(e) => e.preventDefault()}>
-          <fieldset role="group">
+    <div class="scrape-modal__body">
+      ${bothModesAvailable ? html`
+        <fieldset class="scrape-modal__radio-group scrape-modal__radio-group--inline">
+          <legend>Mode</legend>
+          <label class="scrape-modal__radio-label">
             <input
-              type="url"
-              .value="${currentUrl}"
-              @input=${handleUrlChange}
+              type="radio"
+              name="scrape-mode"
+              value="local"
+              ?checked=${scrapeMode === "local"}
+              @change=${handleModeChange}
             />
-            <button type="button" @click=${resetUrl}>Reset</button>
-          </fieldset>
-        </form>
-        `
-      : html`
-          ${currentSourceUrls.map(
-            (url, index) => html`
-              <fieldset role="group">
-                <input
-                  type="url"
-                  @input=${(e) => handleSourceUrlChange(index, e)}
-                />
-                <button type="button" @click=${() => removeSourceUrl(index)}>
-                  Delete
-                </button>
-              </fieldset>
-            `,
-          )}
-          <button @click=${addSourceUrl}>Add URL</button>
-        `}
+            Local
+          </label>
+          <label class="scrape-modal__radio-label">
+            <input
+              type="radio"
+              name="scrape-mode"
+              value="remote"
+              ?checked=${scrapeMode === "remote"}
+              @change=${handleModeChange}
+            />
+            Remote
+          </label>
+        </fieldset>
+      ` : onlyOneMode ? html`
+        <div class="scrape-modal__mode-row">
+          <span class="scrape-modal__mode-label">Mode</span>
+          <span class="civ-badge civ-badge--primary">${scrapeMode}</span>
+        </div>
+      ` : null}
+
+      <fieldset class="scrape-modal__radio-group">
+        <legend>Scope</legend>
+        <label class="scrape-modal__radio-label">
+          <input
+            type="radio"
+            name="scrape-scope"
+            value="top-level-url"
+            ?checked=${scrapeScope === "top-level-url"}
+            @change=${handleScopeChange}
+          />
+          Top-level URL only
+        </label>
+        <label class="scrape-modal__radio-label">
+          <input
+            type="radio"
+            name="scrape-scope"
+            value="specific-urls"
+            ?checked=${scrapeScope === "specific-urls"}
+            @change=${handleScopeChange}
+          />
+          Specific URLs
+        </label>
+      </fieldset>
+
+      <div class="scrape-modal__url-section">
+        ${scrapeScope === "top-level-url"
+          ? html`
+            <fieldset role="group">
+              <input
+                type="url"
+                .value="${currentUrl}"
+                @input=${handleUrlChange}
+                placeholder="https://…"
+              />
+              <button type="button" class="secondary" @click=${resetUrl}>Reset</button>
+            </fieldset>
+          `
+          : html`
+            ${currentSourceUrls.map(
+              (url, index) => html`
+                <fieldset role="group">
+                  <input
+                    type="url"
+                    .value="${url}"
+                    @input=${(e) => handleSourceUrlChange(index, e)}
+                    placeholder="https://…"
+                  />
+                  <button type="button" class="secondary destructive" @click=${() => removeSourceUrl(index)}>
+                    Delete
+                  </button>
+                </fieldset>
+              `,
+            )}
+            <button class="outline scrape-modal__add-url" @click=${addSourceUrl}>+ Add URL</button>
+          `}
+      </div>
+    </div>
   `;
 
   const footer = html`

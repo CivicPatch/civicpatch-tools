@@ -1,7 +1,7 @@
 from jobs.people_collector.schemas import WorkflowStatus, WorkflowConfig
 from pydantic import BaseModel
 from shared.utils import id_utils
-from typing import List, Optional
+from typing import List, Literal, Optional
 from urllib.parse import urlparse
 
 class PeopleCollectorJobRequest(BaseModel):
@@ -9,6 +9,7 @@ class PeopleCollectorJobRequest(BaseModel):
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
     state: WorkflowStatus = WorkflowStatus.INIT
     config: WorkflowConfig
+    scrape_mode: Literal["remote", "local"] = "local"
 
 def validate_people_request(request: PeopleCollectorJobRequest) -> tuple[List[str], List[str]]:
     warnings = []
