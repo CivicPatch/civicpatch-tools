@@ -1,68 +1,70 @@
 import { useState, useEffect, useCallback } from "haunted";
+import { config } from "../assets/config.js";
+
+const WS_URL = config.apiUrl.replace(/^http/, "ws") + "/ws";
 
 /**
- * useSSE - Generalized Server-Sent Events hook
- * @param {string|function} endpoint - SSE endpoint URL or function that returns a URL
- * @param {object} [options] - Optional config (e.g., autoConnect)
- * @returns {object} { data, isConnected, error, connect, disconnect }
+ * useWS - WebSocket hook, subscribes to a single pub/sub topic
+ * @param {string|null} topic - e.g. "people:ocd-division/..."
+ * @param {object} [options] - { autoConnect: bool }
+ * @returns {{ data, isConnected, error, connect, disconnect }}
  */
-export function useSSE(endpoint, options = {}) {
+export function useWS(topic, options = {}) {
   const [data, setData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState(null);
-  const [eventSource, setEventSource] = useState(null);
-
-  const getUrl = useCallback(
-    () => (typeof endpoint === "function" ? endpoint() : endpoint),
-    [endpoint]
-  );
+  const [ws, setWs] = useState(null);
 
   const connect = useCallback(() => {
-    if (eventSource) return;
-    const url = getUrl();
+    if (ws || !topic) return;
     try {
-      const es = new EventSource(url);
-      setEventSource(es);
+      const socket = new WebSocket(WS_URL);
+      setWs(socket);
       setError(null);
 
-      es.onopen = () => setIsConnected(true);
+      socket.onopen = () => {
+        setIsConnected(true);
+        socket.send(JSON.stringify({ action: "subscribe", topics: [topic] }));
+      };
 
-      es.onmessage = (event) => {
+      socket.onmessage = (event) => {
         try {
           setData(JSON.parse(event.data));
-        } catch (e) {
-          setError("Error parsing SSE data.");
+        } catch {
+          setError("Error parsing WebSocket message.");
         }
       };
 
-      es.onerror = (e) => {
-        console.error("SSE error:", e);
+      socket.onerror = () => {
         setIsConnected(false);
-        setError("SSE connection error.");
+        setError("WebSocket connection error.");
       };
-    } catch (e) {
-      setError("Failed to initialize SSE.");
+
+      socket.onclose = () => {
+        setIsConnected(false);
+        setWs(null);
+      };
+    } catch {
+      setError("Failed to initialize WebSocket.");
     }
-  }, [eventSource, getUrl]);
+  }, [ws, topic]);
 
   const disconnect = useCallback(() => {
-    if (eventSource) {
-      eventSource.close();
-      setEventSource(null);
+    if (ws) {
+      ws.close();
+      setWs(null);
       setIsConnected(false);
     }
-  }, [eventSource]);
+  }, [ws]);
 
-  // Auto-connect if options.autoConnect is true
   useEffect(() => {
     if (options.autoConnect) {
       connect();
     }
-    // Cleanup on unmount
     return () => {
-      if (eventSource) eventSource.close();
+      if (ws) ws.close();
     };
-  }, [options.autoConnect, connect, eventSource]);
+  }, [options.autoConnect, connect, ws]);
 
   return { data, isConnected, error, connect, disconnect };
 }

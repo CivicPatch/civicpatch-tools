@@ -1,6 +1,6 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import { useSSE } from "../../hooks/useSse.js";
+import { useWS } from "../../hooks/useSse.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
@@ -30,12 +30,10 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const jurisdictionData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
   const identities = buildIdentitiesMap(people);
 
-  const sseUrl = jurisdiction_ocdid
-    ? `${API_URL}/api/v1/sse/jobs/status?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}&job_type=people`
-    : null;
+  const wsTopic = jurisdiction_ocdid ? `job_status:${jurisdiction_ocdid}` : null;
 
-  const { data: jobStatus, isConnected, error: sseError } = useSSE(sseUrl, {
-    autoConnect: !!sseUrl
+  const { data: jobStatus, isConnected, error: sseError } = useWS(wsTopic, {
+    autoConnect: !!wsTopic,
   });
 
   const handleScrapeStartClick = async (details) => {

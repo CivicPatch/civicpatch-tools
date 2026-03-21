@@ -8,6 +8,8 @@ from fastapi import (
     Depends,
     FastAPI,
     Request,
+    WebSocket,
+    WebSocketDisconnect,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, StreamingResponse
@@ -37,7 +39,8 @@ from database.database import (
 from routers.auth import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
 from services import pubsub_service
-from utils.auth_utils import get_optional_user, require_route_access
+from schemas.ws import SubscribeMessage
+from utils.auth_utils import get_optional_user, get_ws_user, require_route_access
 
 # Set up logger at the top of your file
 logger = logging.getLogger(__name__)
@@ -239,8 +242,8 @@ async def get_me(user: Identity = Depends(get_optional_user)):
 
 
 @app.get("/api/v1/sse/jobs/status", include_in_schema=False)
-async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Request):
-    key = f"{job_type}:{jurisdiction_ocdid}"
+async def sse_job_status(jurisdiction_ocdid: str, request: Request):
+    key = f"job_status:{jurisdiction_ocdid}"
 
     async def event_generator():
         try:
@@ -260,6 +263,42 @@ async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Reques
             "X-Accel-Buffering": "no",
         },
     )
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    user = await get_ws_user(websocket)
+    if not user or not user.teams:
+        await websocket.close(code=1008)
+        return
+
+    subscribed: set[str] = set()
+    tasks: dict[str, asyncio.Task] = {}
+
+    async def stream_topic(topic: str):
+        async for message in pubsub_service.subscribe(topic):
+            if message.startswith(":"):  # skip SSE heartbeat artifacts
+                continue
+            await websocket.send_text(message)
+
+    try:
+        while True:
+            raw = await websocket.receive_text()
+            msg = SubscribeMessage.model_validate_json(raw)
+            if msg.action == "subscribe":
+                for topic in msg.topics:
+                    if topic not in subscribed:
+                        subscribed.add(topic)
+                        tasks[topic] = asyncio.create_task(stream_topic(topic))
+            elif msg.action == "unsubscribe":
+                for topic in msg.topics:
+                    if topic in tasks:
+                        tasks.pop(topic).cancel()
+                        subscribed.discard(topic)
+    except WebSocketDisconnect:
+        for task in tasks.values():
+            task.cancel()
 
 
 async def _run_every(interval: int, coro_fn):

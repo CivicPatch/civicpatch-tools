@@ -29,6 +29,17 @@ def same_url(url1: str, url2: str) -> bool:
     """
     return normalize_url(url1) == normalize_url(url2)
 
+def url_in_text(url: str, text: str) -> bool:
+    """
+    Check if a URL appears in text, tolerating www./non-www. variants.
+    """
+    url_lower = url.lower()
+    text_lower = text.lower()
+    if url_lower in text_lower:
+        return True
+    www_variant = url_lower.replace("://", "://www.", 1) if "://www." not in url_lower else url_lower.replace("://www.", "://", 1)
+    return www_variant in text_lower
+
 def extract_domain(url: str):
     """
     Extracts the domain from a URL.
