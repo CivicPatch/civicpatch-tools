@@ -53,10 +53,13 @@ async def run_workflow(
     try:
         while ctx.current_state not in terminal_states:
             log_system_usage()
-            await civicpatch_api.update_job_status(
-                logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
-                status=ctx.current_state.value, progress=ctx.progress
-            )
+            try:
+                await civicpatch_api.update_job_status(
+                    logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+                    status=ctx.current_state.value, progress=ctx.progress
+                )
+            except Exception as e:
+                logger.warning(f"Failed to update job status (non-fatal): {e}")
             if workflow_stop_requested(jurisdiction_ocdid):
                 break
 
@@ -70,11 +73,15 @@ async def run_workflow(
     finally:
         log_system_usage()
         final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
-        await civicpatch_api.update_job_status(
-            logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
-            status=ctx.current_state.value, progress=final_progress
-        )
-        unregister_workflow(jurisdiction_ocdid)
+        try:
+            await civicpatch_api.update_job_status(
+                logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+                status=ctx.current_state.value, progress=final_progress
+            )
+        except Exception as e:
+            logger.warning(f"Failed to update final job status (non-fatal): {e}")
+        finally:
+            unregister_workflow(jurisdiction_ocdid)
 
     if ctx.current_state == WorkflowStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)
