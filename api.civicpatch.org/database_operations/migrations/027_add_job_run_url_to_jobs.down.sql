@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE jobs DROP COLUMN job_run_url;
+
+COMMIT;

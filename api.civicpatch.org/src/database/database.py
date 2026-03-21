@@ -650,6 +650,7 @@ async def register_job(
         jurisdiction_ocdid: Optional[str] = None,
         status: str = "PENDING",
         progress: int = 0,
+        job_run_url: Optional[str] = None,
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -666,10 +667,11 @@ async def register_job(
                 arguments_json,
                 server_source,
                 jurisdiction_ocdid,
+                job_run_url,
                 created_at, updated_at
             )
             VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                 CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
             );
             """,
@@ -683,6 +685,7 @@ async def register_job(
                 serialized_arguments,
                 server_source,
                 jurisdiction_ocdid,
+                job_run_url,
             ),
         )
 
@@ -691,7 +694,7 @@ async def get_job(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url FROM jobs
+            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url, job_run_url FROM jobs
             WHERE request_id = %s;
             """,
             (request_id,),
@@ -707,9 +710,10 @@ async def get_job(request_id: str):
                 "created_at": to_iso(row[4]),
                 "updated_at": to_iso(row[5]),
                 "pull_request_url": row[6],
+                "job_run_url": row[7],
             }
         return None
-    
+
 async def get_job_status(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

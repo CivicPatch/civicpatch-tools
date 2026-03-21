@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE jobs ADD COLUMN job_run_url TEXT;
+
+COMMIT;

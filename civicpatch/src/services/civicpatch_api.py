@@ -71,6 +71,7 @@ async def register_people_job(logger, request_id: str, arguments: dict):
         "request_id": request_id,
         "arguments": arguments,
         "server_source": SERVER_SOURCE,
+        "job_run_url": env.get("JOB_RUN_URL"),
     }
     async with httpx.AsyncClient(headers=system_auth_header) as client:
         response = await client.post(

@@ -47,6 +47,7 @@ class CreateRegisterJobRequest(BaseModel):
     request_id: str
     arguments: dict
     server_source: Optional[str] = None
+    job_run_url: Optional[str] = None
 
 
 class UpdateJobStatusRequest(BaseModel):
@@ -82,7 +83,8 @@ class GetJobResponse(BaseModel):
     progress: int
     arguments: dict
     result: Optional[Any] = None
-    pull_request_url: Optional[str] = None  # TODO: implement
+    pull_request_url: Optional[str] = None
+    job_run_url: Optional[str] = None
     created_at: float
     updated_at: float
 
@@ -155,6 +157,7 @@ def get_router(api_key_header):
             job_type="people",
             arguments_json=request.arguments,
             server_source=request.server_source or None,
+            job_run_url=request.job_run_url or None,
         )
         return {"request_id": request.request_id, "status": "pending"}
 
@@ -306,6 +309,7 @@ def get_router(api_key_header):
                 arguments=job["arguments_json"],
                 result=job["data_json"],
                 pull_request_url=job["pull_request_url"],
+                job_run_url=job["job_run_url"],
                 created_at=job["created_at"],
                 updated_at=job["updated_at"],
             )
