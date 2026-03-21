@@ -24,7 +24,7 @@ function PullRequestTabs({ pullRequests = [], selectedPullRequest, loading, onTa
           pr => html`
             <a
               href="#"
-              class="pr-tabs__link ${selectedPullRequest?.branch_name === pr.branch_name ? 'active' : ''}"
+              class="pr-tabs__link ${selectedPullRequest?.request_id === pr.request_id ? 'active' : ''}"
               @click=${(e) => { e.preventDefault(); onTabClick?.(pr); }}
             >${truncateBranchName(requestIdToFriendly(pr.request_id))}</a>
           `

@@ -60,7 +60,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setPullRequestsLoading(true);
     try {
       const data = await fetchPullRequests(jurisdiction_ocdid);
-      const prs = data.data || [];
+      const prs = (data.data || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setPullRequests(prs);
       setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
     } catch {

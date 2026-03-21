@@ -25,6 +25,7 @@ function ScrapeHistoryModal({ open, job, onClose }) {
       .content=${html`
         <div>
           <p><strong>Date / Time:</strong> ${fmtDate(job.created_at)}</p>
+          <p><strong>Request ID:</strong> <code>${job.request_id}</code></p>
           <p><strong>Status:</strong> ${job.status}</p>
           <p><strong>Progress:</strong> ${job.progress ?? "?"}%</p>
           <p><strong>Time to scrape:</strong> ${getDurationString(job.created_at, job.updated_at)}</p>
