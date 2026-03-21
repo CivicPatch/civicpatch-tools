@@ -28,6 +28,19 @@ function JurisdictionSidebar({
     loadHistory();
   }, [jurisdiction_ocdid]);
 
+  useEffect(() => {
+    if (!jobStatus || !jurisdiction_ocdid) return;
+    const timer = setTimeout(async () => {
+      try {
+        const data = await fetchJurisdictionHistory(jurisdiction_ocdid);
+        setHistory(data);
+      } catch {
+        // keep existing history on error
+      }
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [jobStatus]);
+
   if (!jurisdictionData) {
     return html`<p>Loading jurisdiction data...</p>`;
   }
