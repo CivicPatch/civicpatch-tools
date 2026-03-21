@@ -1,11 +1,10 @@
 import pytest
-import os
 from unittest.mock import patch, AsyncMock
 from jobs.people_collector.schemas import (
     LLMPerson, LinkStatus, Link, RelevantPageResponseSchema
 )
 from jobs.people_collector.steps.step_05_process_page_content.process_page_content import (
-    has_role_and_contact_info, move_links_to_top, check_page_heuristics, check_page_relevance, add_relevant_urls
+    has_role_and_contact_info, check_page_heuristics, check_page_relevance, add_relevant_urls
 )
 from jobs.people_collector.schemas import LLMPerson
 from tests.factories.workflow_context import workflow_context_factory
@@ -86,52 +85,6 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
         LLMPerson(name="Jane Doe", other_names=[], roles=["mayor"], phone=None, email=None, url="http://example.com", designations=[], source_url="test"),
     ]
     assert has_role_and_contact_info(roles, records) == True
-
-def test_move_existing_link_to_top():
-    domain = "https://foo.com"
-    links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
-        Link(url="https://foo.com/c", status=LinkStatus.PENDING.value, folder_name=""),
-    ]
-    result = move_links_to_top(domain, ["https://foo.com/b"], links)
-    urls = [l.url for l in result]
-    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
-
-def test_add_new_link():
-    domain = "https://foo.com"
-    links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
-    ]
-    # Add new link 'c'
-    result = move_links_to_top(domain, ["https://foo.com/c"], links)
-    urls = [l.url for l in result]
-    # Should be: a (PENDING), c (PENDING), b (DONE)
-    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
-    assert result[1].status == LinkStatus.PENDING.value
-
-def test_ignore_out_of_domain():
-    domain = "https://foo.com"
-    links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
-    ]
-    # Try to add out-of-domain link
-    result = move_links_to_top(domain, ["https://bar.com/x"], links)
-    urls = [l.url for l in result]
-    assert urls == ["https://foo.com/a"]
-
-def test_multiple_links():
-    domain = "https://foo.com"
-    links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
-    ]
-    # Add new and move existing
-    result = move_links_to_top(domain, ["https://foo.com/b", "https://foo.com/c"], links)
-    urls = [l.url for l in result]
-    # Should be: a (PENDING), c (PENDING), b (DONE)
-    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
 
 def test_check_page_heuristics_returns_true_with_empty_records():
     assert check_page_heuristics(dummy_logger(), "dummy-link", "Some markdown content", []) is True
