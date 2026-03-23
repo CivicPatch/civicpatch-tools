@@ -60,10 +60,11 @@ graph TD
 
 ## Contributing
 
-Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and join our weekly sync and biweekly hackathon meetings.
+Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and 
+join our weekly sync and biweekly hackathon meetings.
 
-Weekly Sync - Introductions and Updates
-Biweekly Hackathons - Onboarding, bug bashing
+- Weekly Sync — Introductions and Updates
+- Biweekly Hackathons — Onboarding, bug bashing
 
 [Issues](https://github.com/orgs/CivicPatch/projects/3)
 
@@ -73,7 +74,15 @@ Biweekly Hackathons - Onboarding, bug bashing
 
 - Docker (required for running services; tested on OSX)
 - [mise](https://mise.jdx.dev/getting-started.html) (for managing environments and scripts)
+
   - `brew install openssl readline` (for postgres tool)
+
+- A [github](https://github.com/) account
+
+  - Poke a maintainer [michelle@civicpatch.org], or see [Contributing](#contributing) guide for onboarding
+    for additional setup as needed. This project integrates heavily with the [open-data](https://github.com/CivicPatch/open-data) 
+    repo and multiple other services so you'll either want to set up your own mirror repos and corresponding 
+    github apps, or you can use keys provided for you during onboarding.
 
 ### Setup
 
