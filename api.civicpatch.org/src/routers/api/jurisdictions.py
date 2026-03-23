@@ -115,7 +115,7 @@ def get_router() -> APIRouter:
             )
         jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_file_content)
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
-        open_pull_requests = await github_service.get_open_pull_requests()
+        open_pull_requests = await github_service.get_open_pull_requests(state_code=state)
         jurisdictions_entries = jurisdictions_data.get("jurisdictions", [])
         jurisdictions = []
 

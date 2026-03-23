@@ -56,7 +56,6 @@ export function usePeopleState({ people }) {
     const next = keys.reduce((acc, key) => {
       const person = acc.find(p => p.id === key);
       if (!person) return acc;
-      if (person._isNew) return acc.filter(p => p.id !== key);
       const without = acc.filter(p => p.id !== key);
       const deleted = { ...person, _deleted: true, _dirty: true, _changes: TRACKED_FIELDS };
       return [...without, deleted];
