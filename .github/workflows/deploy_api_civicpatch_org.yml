@@ -1,4 +1,4 @@
-name: Build & Deploy api.civicpatch.org
+name: Deploy api.civicpatch.org
 
 on:
   push:
@@ -9,42 +9,52 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read
   packages: write
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - name: Install uv
+      - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
       - name: Install dependencies
         run: uv sync --all-packages
 
-      - name: Run shared unit tests
+      - name: Run api tests
         run: |
           uv run pytest api.civicpatch.org/tests
 
-  deploy:
+      - name: Run shared tests
+        run: |
+          uv run pytest shared/tests
+
+  get-date:
+    runs-on: ubuntu-latest
+    outputs:
+      date-tag: ${{ steps.date.outputs.date-tag }}
+    steps:
+      - name: Get Current Date
+        id: date
+        run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+  build:
+    needs: [run-tests, get-date]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
         with:
-          python-version: "3.12"
+          ref: ${{ github.ref_name }}
 
-      - name: Login to  GitHub Container Registry
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -54,23 +64,26 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Get Current Date
-        id: date
-        run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
       - name: Build and push (api.civicpatch.org)
         uses: docker/build-push-action@v7
         with:
-          context: ./
+          context: .
           file: ./api.civicpatch.org/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/civicpatch_api:latest
-            ghcr.io/civicpatch/civicpatch_api:${{ steps.date.outputs.date-tag }}
+            ghcr.io/civicpatch/civicpatch_api:${{ needs.get-date.outputs.date-tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      - name: Deploy api.civicpatch.org to production
-        env:
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_USERNAME: ${{ github.actor }}
-          REMOTELAB_WORKFLOW_TOKEN: ${{ secrets.CRUDDER_REMOTELAB_WORKFLOW_TOKEN }}
-        run: ./api.civicpatch.org/scripts/deploy.py
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy workflow
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-api-civicpatch-org.yml/dispatches \
+            -d '{"ref":"main"}'
