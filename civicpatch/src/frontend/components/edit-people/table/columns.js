@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { divisionOcdidToFriendly } from "../../../pages/jobs-page/ocdid-utils"
+import { divisionOcdidToFriendly } from "../../ocdid-utils"
 
 const customCss = (person, field) => {
     if (person._deleted) {

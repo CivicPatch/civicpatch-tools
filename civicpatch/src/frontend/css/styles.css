@@ -8,7 +8,7 @@
 @import "../components/review-panel/review-panel.css";
 @import "../components/edit-people/tabs.css";
 @import "../components/edit-people/profile-modal.css";
-@import "../pages/jobs-page/pull-request-card/pr-card.css";
+@import "../components/pull-request-card/pr-card.css";
 @import "../pages/jobs-page/error-card/error-card.css";
 @import "../pages/jobs-page/jobs-page.css";
 @import "../components/stat-cards/stat-cards.css";

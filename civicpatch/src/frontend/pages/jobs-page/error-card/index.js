@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { createRef, ref } from "lit-html/directives/ref.js";
-import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
+import { jurisdictionOcdidToFriendly } from "../../../components/ocdid-utils.js";
 import "../../../components/badge/badge.js";
 
 function ErrorCard({ job }) {

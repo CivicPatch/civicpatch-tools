@@ -2,11 +2,11 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
-import { PULL_REQUEST_STATUS } from "../pull-request-status.js";
-import { pullRequestUrlToNumber } from "../pr-utils.js";
-import { fetchReview, fetchPullRequestData } from "../../../api.js";
-import "../../../components/badge/badge.js";
-import "../../../components/review-panel/review-panel.js";
+import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
+import { pullRequestUrlToNumber } from "./pr-utils.js";
+import { fetchReview, fetchPullRequestData } from "../../api.js";
+import "../badge/badge.js";
+import "../review-panel/review-panel.js";
 
 export function stateColor(state) {
   switch (state) {

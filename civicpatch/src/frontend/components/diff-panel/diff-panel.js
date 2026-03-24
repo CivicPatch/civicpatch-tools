@@ -1,6 +1,6 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import { divisionOcdidToFriendly } from "../../pages/jobs-page/ocdid-utils.js";
+import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 
 const FIELDS = [
   { key: "name",                  label: "Name" },
