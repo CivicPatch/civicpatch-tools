@@ -3,14 +3,21 @@ from datetime import date
 from enum import StrEnum
 from typing import Any
 from database.database import get_pool
+from psycopg.rows import namedtuple_row
 
 logger = logging.getLogger(__name__)
 
 
 class ReviewSessionEntryStatus(StrEnum):
     VIEWING = "viewing"
-    SKIPPED = "skipped"
+    DEFERRED = "deferred"
+    PASSED = "passed"
     RESOLVED = "resolved"
+
+
+class AdvanceDoneReason(StrEnum):
+    GOAL_REACHED = "goal_reached"
+    NO_MORE_CARDS = "no_more_cards"
 
 
 async def create_or_get_review_session(
@@ -22,7 +29,7 @@ async def create_or_get_review_session(
 ) -> dict[str, Any]:
     pool = await get_pool()
     async with pool.connection() as conn:
-        async with conn.cursor() as cur:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
             if daily_goal is None:
                 await cur.execute(
                     """
@@ -34,7 +41,7 @@ async def create_or_get_review_session(
                     (provider, provider_user_id),
                 )
                 row = await cur.fetchone()
-                daily_goal = row[0] if row else 10
+                daily_goal = row.daily_goal if row else 10
 
             await cur.execute(
                 """
@@ -42,34 +49,23 @@ async def create_or_get_review_session(
                     (provider, provider_user_id, session_date, state_code, daily_goal)
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (provider, provider_user_id, session_date, state_code)
-                DO UPDATE SET daily_goal = EXCLUDED.daily_goal
+                    DO UPDATE SET daily_goal = EXCLUDED.daily_goal
+                RETURNING id, state_code, daily_goal, session_date, created_at
                 """,
                 (provider, provider_user_id, session_date, state_code, daily_goal),
-            )
-
-            await cur.execute(
-                """
-                SELECT id, state_code, daily_goal, session_date, created_at
-                FROM review_sessions
-                WHERE provider = %s
-                  AND provider_user_id = %s
-                  AND session_date = %s
-                  AND state_code = %s
-                """,
-                (provider, provider_user_id, session_date, state_code),
             )
             row = await cur.fetchone()
 
     return {
-        "id": str(row[0]),
-        "state_code": row[1],
-        "daily_goal": row[2],
-        "session_date": row[3].isoformat(),
-        "created_at": row[4].isoformat(),
+        "id": str(row.id),
+        "state_code": row.state_code,
+        "daily_goal": row.daily_goal,
+        "session_date": row.session_date.isoformat(),
+        "created_at": row.created_at.isoformat(),
     }
 
 
-# TODO: rename to get_current_session_with_current_entry 
+# TODO: rename to get_current_session_with_current_entry
 async def get_today_session_with_current_entry(
     provider: str,
     provider_user_id: str,
@@ -77,172 +73,234 @@ async def get_today_session_with_current_entry(
 ) -> dict[str, Any] | None:
     pool = await get_pool()
     async with pool.connection() as conn:
-        async with conn.cursor() as cur:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
             await cur.execute(
                 """
-                SELECT id, state_code, daily_goal, session_date, created_at
-                FROM review_sessions
-                WHERE provider = %s
-                  AND provider_user_id = %s
-                  AND session_date = CURRENT_DATE
-                  AND state_code = %s
+                SELECT rs.id, rs.state_code, rs.daily_goal, rs.session_date, rs.created_at,
+                       rse.request_id, rse.jurisdiction_ocdid, rse.entry_number,
+                       (
+                           SELECT array_agg(entry_number)
+                           FROM review_session_entries
+                           WHERE review_session_id = rs.id AND status = 'passed'
+                       ) AS passed_entry_numbers
+                FROM review_sessions rs
+                LEFT JOIN review_session_entries rse
+                    ON rse.review_session_id = rs.id AND rse.status = 'viewing'
+                WHERE rs.provider = %s
+                  AND rs.provider_user_id = %s
+                  AND rs.session_date = CURRENT_DATE
+                  AND rs.state_code = %s
+                LIMIT 1
                 """,
                 (provider, provider_user_id, state_code),
             )
-            session_row = await cur.fetchone()
-            if not session_row:
+            row = await cur.fetchone()
+            if not row:
                 return None
 
-            session = {
-                "id": str(session_row[0]),
-                "state_code": session_row[1],
-                "daily_goal": session_row[2],
-                "session_date": session_row[3].isoformat(),
-                "created_at": session_row[4].isoformat(),
-            }
+    session = {
+        "id": str(row.id),
+        "state_code": row.state_code,
+        "daily_goal": row.daily_goal,
+        "session_date": row.session_date.isoformat(),
+        "created_at": row.created_at.isoformat(),
+    }
+    current_entry = {
+        "request_id": row.request_id,
+        "jurisdiction_ocdid": row.jurisdiction_ocdid,
+        "entry_number": row.entry_number,
+    } if row.request_id is not None else None
 
-            await cur.execute(
-                """
-                SELECT
-                    rse.id, rse.request_id, rse.jurisdiction_ocdid,
-                    rse.status, rse.created_at,
-                    j.pull_request_url, j.pull_request_review_state,
-                    j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid_job,
-                    jur.data->>'name' AS jurisdiction_name,
-                    j.created_at AS job_created_at,
-                    j.updated_at AS job_updated_at
-                FROM review_session_entries rse
-                JOIN jobs j ON j.request_id = rse.request_id
-                LEFT JOIN jurisdictions jur
-                    ON jur.jurisdiction_ocdid = rse.jurisdiction_ocdid
-                WHERE rse.review_session_id = %s
-                  AND rse.status = 'viewing'
-                LIMIT 1
-                """,
-                (session_row[0],),
-            )
-            entry_row = await cur.fetchone()
-
-            if not entry_row:
-                return {"session": session, "current_entry": None}
-
-            entry = {
-                "id": str(entry_row[0]),
-                "request_id": entry_row[1],
-                "jurisdiction_ocdid": entry_row[2],
-                "status": entry_row[3],
-                "created_at": entry_row[4].isoformat(),
-            }
-            job = {
-                "request_id": entry_row[1],
-                "pull_request_url": entry_row[5],
-                "pull_request_review_state": entry_row[6],
-                "jurisdiction_ocdid": entry_row[7],
-                "jurisdiction_name": entry_row[8],
-                "created_at": entry_row[9].isoformat() if entry_row[9] else None,
-                "updated_at": entry_row[10].isoformat() if entry_row[10] else None,
-            }
-
-    return {"session": session, "current_entry": {"entry": entry, "job": job}}
+    return {
+        "session": session,
+        "current_entry": current_entry,
+        "passed_entry_numbers": row.passed_entry_numbers or [],
+    }
 
 
-async def advance_review_session(
-    review_session_id: str,
-) -> dict[str, Any] | None:
+async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: int = 1):
+    await cur.execute(
+        """
+        WITH
+        done AS (
+            SELECT jurisdiction_ocdid FROM review_session_entries
+            WHERE review_session_id = %s AND status IN ('resolved', 'passed')
+        ),
+        claimed AS (
+            SELECT rse.jurisdiction_ocdid
+            FROM review_session_entries rse
+            JOIN review_sessions rs ON rs.id = rse.review_session_id
+            WHERE rse.status = 'viewing'
+              AND rs.session_date = CURRENT_DATE
+              AND rs.id != %s
+        ),
+        deferred AS (
+            SELECT jurisdiction_ocdid FROM review_session_entries
+            WHERE review_session_id = %s AND status = 'deferred'
+        )
+        SELECT j.request_id,
+               j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid
+        FROM jobs j
+        WHERE j.pull_request_status = 'open'
+          AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
+          AND NOT EXISTS (
+              SELECT 1 FROM done
+              WHERE done.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+          )
+          AND NOT EXISTS (
+              SELECT 1 FROM claimed
+              WHERE claimed.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+          )
+        ORDER BY
+            (j.arguments_json->>'jurisdiction_ocdid' IN (SELECT jurisdiction_ocdid FROM deferred)) ASC,
+            (j.pull_request_review_state = 'changes_requested') DESC,
+            j.created_at DESC
+        LIMIT %s
+        """,
+        (review_session_id, review_session_id, review_session_id, f"%state:{state_code}%", limit),
+    )
+    return await cur.fetchall()
+
+
+
+async def pass_current_entry(review_session_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
-                "SELECT state_code, daily_goal FROM review_sessions WHERE id = %s",
-                (review_session_id,),
-            )
-            session_row = await cur.fetchone()
-            if not session_row:
-                return None
-            state_code, daily_goal = session_row[0], session_row[1]
-
-            await cur.execute(
                 """
                 UPDATE review_session_entries
-                SET status = 'skipped'
+                SET status = 'passed'
                 WHERE review_session_id = %s AND status = 'viewing'
                 """,
                 (review_session_id,),
             )
 
+
+async def pause_review_session(review_session_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
             await cur.execute(
-                "SELECT COUNT(*) FROM review_session_entries WHERE review_session_id = %s",
+                """
+                DELETE FROM review_session_entries
+                WHERE review_session_id = %s AND status NOT IN ('resolved')
+                """,
                 (review_session_id,),
             )
-            count_row = await cur.fetchone()
-            if count_row[0] >= daily_goal:
+
+
+async def navigate_to_entry(
+    review_session_id: str,
+    entry_number: int,
+) -> dict[str, Any] | None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
+            await cur.execute(
+                "SELECT state_code, daily_goal FROM review_sessions WHERE id = %s FOR UPDATE",
+                (review_session_id,),
+            )
+            session_row = await cur.fetchone()
+            if not session_row:
                 return None
+
+            # Demote any currently viewing entry back to deferred
+            await cur.execute(
+                """
+                UPDATE review_session_entries
+                SET status = 'deferred'
+                WHERE review_session_id = %s AND status = 'viewing'
+                """,
+                (review_session_id,),
+            )
+
+            # Try to find an existing entry at the requested position (deferred or passed)
+            await cur.execute(
+                """
+                SELECT id, request_id, jurisdiction_ocdid, status
+                FROM review_session_entries
+                WHERE review_session_id = %s
+                  AND entry_number = %s
+                  AND status IN ('deferred', 'passed')
+                """,
+                (review_session_id, entry_number),
+            )
+            existing = await cur.fetchone()
+
+            if existing:
+                # Only activate deferred entries; passed entries stay passed (shown with badge)
+                if existing.status == ReviewSessionEntryStatus.DEFERRED:
+                    await cur.execute(
+                        "UPDATE review_session_entries SET status = 'viewing' WHERE id = %s",
+                        (existing.id,),
+                    )
+                request_id = existing.request_id
+                jurisdiction_ocdid = existing.jurisdiction_ocdid
+                entry_status = existing.status
+
+                # has_more: next slot already exists, or new cards are available
+                await cur.execute(
+                    """
+                    SELECT 1 FROM review_session_entries
+                    WHERE review_session_id = %s AND entry_number = %s AND status = 'deferred'
+                    """,
+                    (review_session_id, entry_number + 1),
+                )
+                has_more = (await cur.fetchone()) is not None
+                if not has_more:
+                    peek = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=1)
+                    has_more = len(peek) > 0
+            else:
+                # Frontier: check goal, then allocate the next card at this position
+                await cur.execute(
+                    """
+                    SELECT COUNT(*) FILTER (WHERE status = 'resolved') AS resolved
+                    FROM review_session_entries
+                    WHERE review_session_id = %s
+                    """,
+                    (review_session_id,),
+                )
+                counts_row = await cur.fetchone()
+                if counts_row.resolved >= session_row.daily_goal:
+                    return {"done": AdvanceDoneReason.GOAL_REACHED}
+
+                rows = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=2)
+                if not rows:
+                    return {"done": AdvanceDoneReason.NO_MORE_CARDS}
+
+                next_card = rows[0]
+                await cur.execute(
+                    """
+                    INSERT INTO review_session_entries
+                        (review_session_id, request_id, jurisdiction_ocdid, status, entry_number)
+                    VALUES (%s, %s, %s, 'viewing', %s)
+                    """,
+                    (review_session_id, next_card.request_id, next_card.jurisdiction_ocdid, entry_number),
+                )
+                request_id = next_card.request_id
+                jurisdiction_ocdid = next_card.jurisdiction_ocdid
+                entry_status = ReviewSessionEntryStatus.VIEWING
+                has_more = len(rows) > 1
 
             await cur.execute(
                 """
-                SELECT j.request_id, j.pull_request_url, j.pull_request_review_state,
-                       j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
-                       jur.data->>'name' AS jurisdiction_name,
-                       j.created_at, j.updated_at
-                FROM jobs j
-                LEFT JOIN jurisdictions jur
-                    ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
-                WHERE j.pull_request_status = 'open'
-                  AND j.arguments_json->>'jurisdiction_ocdid' NOT IN (
-                      SELECT jurisdiction_ocdid
-                      FROM review_session_entries
-                      WHERE review_session_id = %s AND status = 'resolved'
-                  )
-                  AND j.arguments_json->>'jurisdiction_ocdid' NOT IN (
-                      SELECT rse.jurisdiction_ocdid
-                      FROM review_session_entries rse
-                      JOIN review_sessions rs ON rs.id = rse.review_session_id
-                      WHERE rse.status = 'viewing'
-                        AND rs.session_date = CURRENT_DATE
-                        AND rs.id != %s
-                  )
-                  AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
-                ORDER BY
-                    -- skipped items defer to the end; unseen items come first
-                    (CASE WHEN j.arguments_json->>'jurisdiction_ocdid' IN (
-                        SELECT jurisdiction_ocdid FROM review_session_entries
-                        WHERE review_session_id = %s AND status = 'skipped'
-                    ) THEN 1 ELSE 0 END) ASC,
-                    (j.pull_request_review_state = 'changes_requested') DESC,
-                    j.created_at DESC
-                LIMIT 1
+                SELECT COUNT(*) FILTER (WHERE status = 'resolved') AS resolved_count
+                FROM review_session_entries
+                WHERE review_session_id = %s
                 """,
-                (review_session_id, review_session_id, f"%state:{state_code}%", review_session_id),
+                (review_session_id,),
             )
-            next_row = await cur.fetchone()
+            counts = await cur.fetchone()
 
-            if not next_row:
-                return None
-
-            request_id = next_row[0]
-            jurisdiction_ocdid = next_row[3]
-
-            await cur.execute(
-                """
-                INSERT INTO review_session_entries
-                    (review_session_id, request_id, jurisdiction_ocdid, status)
-                VALUES (%s, %s, %s, 'viewing')
-                """,
-                (review_session_id, request_id, jurisdiction_ocdid),
-            )
-            entry_number = count_row[0] + 1
-
-    job = {
+    return {
         "request_id": request_id,
-        "pull_request_url": next_row[1],
-        "pull_request_review_state": next_row[2],
         "jurisdiction_ocdid": jurisdiction_ocdid,
-        "jurisdiction_name": next_row[4],
-        "created_at": next_row[5].isoformat() if next_row[5] else None,
-        "updated_at": next_row[6].isoformat() if next_row[6] else None,
+        "entry_number": entry_number,
+        "entry_status": entry_status,
+        "resolved_count": counts.resolved_count,
+        "has_more": has_more,
     }
-
-    return {"job": job, "entry_number": entry_number}
 
 
 async def resolve_review_session_entries_by_request_id(request_id: str) -> None:
@@ -275,3 +333,73 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
                 """,
                 (f"%/pull/{pr_number}",),
             )
+
+
+async def get_review_stats(
+    provider: str,
+    provider_user_id: str,
+    state_code: str,
+) -> dict[str, Any]:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
+            await cur.execute(
+                """
+                SELECT
+                    COUNT(*) FILTER (WHERE rs.session_date = CURRENT_DATE) AS today_resolved,
+                    COUNT(*) AS all_time_resolved
+                FROM review_session_entries rse
+                JOIN review_sessions rs ON rs.id = rse.review_session_id
+                WHERE rs.provider = %s AND rs.provider_user_id = %s
+                  AND rse.status = 'resolved'
+                """,
+                (provider, provider_user_id),
+            )
+            stats = await cur.fetchone()
+
+            await cur.execute(
+                """
+                WITH daily AS (
+                    SELECT DISTINCT rs.session_date
+                    FROM review_session_entries rse
+                    JOIN review_sessions rs ON rs.id = rse.review_session_id
+                    WHERE rs.provider = %s AND rs.provider_user_id = %s
+                      AND rse.status = 'resolved'
+                      AND rs.session_date >= CURRENT_DATE - INTERVAL '365 days'
+                ),
+                grouped AS (
+                    SELECT session_date,
+                           session_date - (ROW_NUMBER() OVER (ORDER BY session_date))::int AS grp
+                    FROM daily
+                ),
+                streaks AS (
+                    SELECT COUNT(*) AS length, MAX(session_date) AS last_day
+                    FROM grouped
+                    GROUP BY grp
+                )
+                SELECT length FROM streaks
+                WHERE last_day >= CURRENT_DATE - 1
+                ORDER BY last_day DESC
+                LIMIT 1
+                """,
+                (provider, provider_user_id),
+            )
+            streak_row = await cur.fetchone()
+
+            await cur.execute(
+                """
+                SELECT COUNT(DISTINCT j.arguments_json->>'jurisdiction_ocdid') AS available_count
+                FROM jobs j
+                WHERE j.pull_request_status = 'open'
+                  AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
+                """,
+                (f"%state:{state_code}%",),
+            )
+            available = await cur.fetchone()
+
+    return {
+        "today_resolved": stats.today_resolved,
+        "streak": streak_row.length if streak_row else 0,
+        "all_time_resolved": stats.all_time_resolved,
+        "available_count": available.available_count,
+    }

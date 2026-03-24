@@ -6,9 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 
-import database.people
 import database.review_sessions as review_sessions_db
-from database.database import get_pool
 from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access
 
@@ -20,8 +18,24 @@ class CreateReviewSessionRequest(BaseModel):
     daily_goal: Optional[int] = None
 
 
+class NavigateToEntryRequest(BaseModel):
+    entry_number: int
+
+
 def get_router() -> APIRouter:
     router = APIRouter()
+
+    @router.get("/stats")
+    async def get_review_stats(
+        state_code: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        stats = await review_sessions_db.get_review_stats(
+            user.provider, user.provider_user_id, state_code
+        )
+        return {"data": stats}
 
     @router.get("/today")
     async def get_today_session(
@@ -33,14 +47,7 @@ def get_router() -> APIRouter:
         result = await review_sessions_db.get_today_session_with_current_entry(
             user.provider, user.provider_user_id, state_code
         )
-        if result is None:
-            return {"data": None}
-
-        current_entry = result.get("current_entry")
-        if current_entry:
-            current_entry = await _enrich_entry(current_entry)
-
-        return {"data": {**result, "current_entry": current_entry}}
+        return {"data": result}
 
     @router.post("")
     async def create_review_session(
@@ -58,66 +65,50 @@ def get_router() -> APIRouter:
         )
         return {"data": session}
 
-    @router.post("/{session_id}/next")
-    async def advance_session(
+    @router.post("/{session_id}/navigate")
+    async def navigate_session(
+        session_id: str,
+        body: NavigateToEntryRequest,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        return await _navigate_response(session_id, body.entry_number)
+
+    @router.post("/{session_id}/pass")
+    async def pass_session(
+        session_id: str,
+        body: NavigateToEntryRequest,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        await review_sessions_db.pass_current_entry(session_id)
+        return await _navigate_response(session_id, body.entry_number)
+
+    @router.post("/{session_id}/pause")
+    async def pause_session(
         session_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        result = await _advance_with_retry(session_id)
-        if result is None:
-            return {"data": None}
-
-        daily_goal = await _get_session_daily_goal(session_id)
-        enriched = await _enrich_entry({"job": result["job"]})
-        return {
-            "data": {
-                **enriched,
-                "entry_number": result["entry_number"],
-                "daily_goal": daily_goal,
-            }
-        }
+        await review_sessions_db.pause_review_session(session_id)
+        return {"data": None}
 
     return router
 
 
-async def _advance_with_retry(session_id: str):
+async def _navigate_response(session_id: str, entry_number: int):
     try:
-        return await review_sessions_db.advance_review_session(session_id)
+        result = await review_sessions_db.navigate_to_entry(session_id, entry_number)
     except UniqueViolation:
         try:
-            return await review_sessions_db.advance_review_session(session_id)
+            result = await review_sessions_db.navigate_to_entry(session_id, entry_number)
         except UniqueViolation:
             raise HTTPException(status_code=409, detail="Could not claim a jurisdiction; please try again")
-
-
-async def _enrich_entry(entry: dict) -> dict:
-    job = entry.get("job", {})
-    jurisdiction_ocdid = job.get("jurisdiction_ocdid")
-    request_id = job.get("request_id")
-    if not jurisdiction_ocdid or not request_id:
-        return entry
-
-    people_data = await database.people.get_people_data_by_request_ids(
-        [jurisdiction_ocdid], [request_id]
-    )
-    enriched = people_data.get(request_id, {})
-    return {
-        **entry,
-        "job": job,
-        "existing": enriched.get("existing", []),
-        "pull_request": enriched.get("pull_request", []),
-    }
-
-
-async def _get_session_daily_goal(session_id: str) -> int:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        async with conn.cursor() as cur:
-            await cur.execute(
-                "SELECT daily_goal FROM review_sessions WHERE id = %s",
-                (session_id,),
-            )
-            row = await cur.fetchone()
-    return row[0] if row else 10
+    if result is None:
+        raise HTTPException(status_code=404)
+    if "done" in result:
+        return {"data": None, "reason": result["done"]}
+    return {"data": result}

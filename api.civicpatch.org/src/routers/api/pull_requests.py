@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 import database.database
+import database.jobs
 import database.people
 import database.review_sessions as review_sessions_db
 import services.github.github_api_service as github_service
@@ -205,6 +206,36 @@ def get_router(api_key_header):
             "total_pages": total_pages,
             "page": page,
             "per_page": per_page,
+        }
+
+    @router.get("/{request_id}/detail")
+    async def get_pull_request_detail(
+        request_id: str,
+        background_tasks: BackgroundTasks,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        job = await database.jobs.get_job_for_review(request_id)
+        if not job:
+            raise HTTPException(status_code=404, detail="Job not found")
+
+        pr_number = int(job["pull_request_url"].split("/")[-1]) if job.get("pull_request_url") else None
+        live_review_state = await github_service.get_pull_request_review_state(pr_number) if pr_number else None
+        if live_review_state != job.get("pull_request_review_state"):
+            background_tasks.add_task(database.database.update_job_pull_request_review_state, request_id, live_review_state)
+        job = {**job, "pull_request_review_state": live_review_state}
+
+        people = await database.people.get_people_data_by_request_ids(
+            [job["jurisdiction_ocdid"]], [request_id]
+        )
+        enriched = people.get(request_id, {})
+        return {
+            "data": {
+                "job": job,
+                "existing": enriched.get("existing", []),
+                "pull_request": enriched.get("pull_request", []),
+            }
         }
 
     # -- Pull Requests: Issues for a job ---

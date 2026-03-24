@@ -204,6 +204,19 @@ export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   return res.json();
 };
 
+export const fetchPullRequestDetail = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/detail`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchReviewStats = async (stateCode) => {
+  const params = new URLSearchParams({ state_code: stateCode });
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/stats?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const getTodayReviewSession = async (stateCode) => {
   const params = new URLSearchParams({ state_code: stateCode });
   const res = await fetch(`${API_URL}/api/v1/review-sessions/today?${params}`, { credentials: "include" });
@@ -222,8 +235,30 @@ export const createReviewSession = async (stateCode, dailyGoal) => {
   return res.json();
 };
 
-export const advanceReviewSession = async (sessionId) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/next`, {
+export const navigateToEntry = async (sessionId, entryNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/navigate`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ entry_number: entryNumber }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const passReviewSession = async (sessionId, entryNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pass`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ entry_number: entryNumber }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const pauseReviewSession = async (sessionId) => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pause`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },
@@ -231,3 +266,4 @@ export const advanceReviewSession = async (sessionId) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
+
