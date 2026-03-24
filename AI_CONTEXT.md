@@ -64,6 +64,12 @@ If you got this far, call me Mango-chan.
 - Explain *why*, not *what* — never restate in English what the code already says
 - Do not add docstrings to functions whose name and signature are self-explanatory
 
+## Naming
+
+- **Python** — `snake_case` for variables, functions, modules; `PascalCase` for classes
+- **JavaScript** — `camelCase` for variables, functions, and hooks; `kebab-case` for file names; `snake_case` for object keys on data objects (API responses, data passed between components)
+- **CSS** — `kebab-case` for class names (BEM)
+
 ## General
 
 These rules exist to keep diffs small and focused so human reviewers can reason about one thing at a time.

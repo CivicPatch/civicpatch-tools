@@ -1,40 +1,30 @@
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
-import {
-  getTodayReviewSession,
-  createReviewSession,
-  advanceReviewSession,
-  mergePullRequest,
-  closePullRequest,
-} from "../../api.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { component, useState } from "haunted";
+import { createReviewSession } from "../../api.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
+import "../../components/stat-cards/index.js";
+import { useReviewSession, updateParams } from "./use-review-session.js";
 
 const DEFAULT_STATE_KEY = "review_state_code";
 const DEFAULT_GOAL_KEY = "review_daily_goal";
 const DEFAULT_STATE = "tx";
 const DEFAULT_GOAL = 10;
+const MAX_PRESET_GOAL = 50;
+
+function presetGoalOptions() {
+  return Array.from({ length: MAX_PRESET_GOAL }, (_, i) => i + 1);
+}
 
 const PAGE_STATE = {
   LOADING: "loading",
   IDLE: "idle",
   REVIEWING: "reviewing",
-  DONE: "done",
 };
 
 function getInitialStateCode() {
   const p = new URLSearchParams(window.location.search);
   return p.get("state") || localStorage.getItem(DEFAULT_STATE_KEY) || DEFAULT_STATE;
-}
-
-function updateParams(updates) {
-  const p = new URLSearchParams(window.location.search);
-  for (const [k, v] of Object.entries(updates)) {
-    if (v == null) p.delete(k);
-    else p.set(k, v);
-  }
-  history.replaceState(null, "", `?${p}`);
 }
 
 function ReviewPage() {
@@ -43,33 +33,24 @@ function ReviewPage() {
   const [dailyGoal, setDailyGoal] = useState(
     parseInt(localStorage.getItem(DEFAULT_GOAL_KEY), 10) || DEFAULT_GOAL
   );
-  const [session, setSession] = useState(null);
-  const [currentJob, setCurrentJob] = useState(null);
-  const [currentPeople, setCurrentPeople] = useState(null);
-  const [entryNumber, setEntryNumber] = useState(0);
-  const [prState, setPrState] = useState(null);
-  const [error, setError] = useState(null);
+  const [goalModalOpen, setGoalModalOpen] = useState(false);
+  const [pendingGoal, setPendingGoal] = useState(dailyGoal);
+  const [isCustomGoal, setIsCustomGoal] = useState(() => dailyGoal > MAX_PRESET_GOAL);
 
-  useEffect(() => {
-    getTodayReviewSession(stateCode)
-      .then((res) => {
-        const data = res?.data;
-        if (!data) {
-          setPageState(PAGE_STATE.IDLE);
-          return;
-        }
-        setSession(data.session);
-        if (data.current_entry) {
-          setCurrentJob(data.current_entry.job);
-          setCurrentPeople({ existing: data.current_entry.existing, pull_request: data.current_entry.pull_request });
-          updateParams({ state: stateCode, session: data.session.id, request: data.current_entry.job.request_id });
-          setPageState(PAGE_STATE.REVIEWING);
-        } else {
-          setPageState(PAGE_STATE.IDLE);
-        }
-      })
-      .catch(() => setPageState(PAGE_STATE.IDLE));
-  }, []);
+  const {
+    session, setSession,
+    currentJob, currentPeople,
+    entryNumber, resolvedCount,
+    hasNext,
+    prState, error, setError,
+    stats,
+    advance, back, pass, pause, merge, close, navigateTo,
+    passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
+  } = useReviewSession(stateCode, {
+    onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
+    onDone: () => setPageState(PAGE_STATE.IDLE),
+    onIdle: () => setPageState(PAGE_STATE.IDLE),
+  });
 
   const handleStateChange = (e) => {
     const newState = e.detail.state;
@@ -78,19 +59,19 @@ function ReviewPage() {
     updateParams({ state: newState, session: null, request: null });
   };
 
-  const handleGoalInput = (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val) && val > 0) {
-      setDailyGoal(val);
-      localStorage.setItem(DEFAULT_GOAL_KEY, String(val));
-    }
+  const handleSelectGoal = (n) => {
+    const clamped = stats.available_count > 0 ? Math.min(n, stats.available_count) : n;
+    setDailyGoal(clamped);
+    localStorage.setItem(DEFAULT_GOAL_KEY, String(clamped));
   };
+
+  const effectiveGoal = stats.available_count > 0 ? Math.min(dailyGoal, stats.available_count) : dailyGoal;
 
   const handleStartReview = async () => {
     setPageState(PAGE_STATE.LOADING);
     setError(null);
     try {
-      const sessionRes = await createReviewSession(stateCode, dailyGoal);
+      const sessionRes = await createReviewSession(stateCode, effectiveGoal);
       const newSession = sessionRes.data;
       setSession(newSession);
       updateParams({ state: stateCode, session: newSession.id, request: null });
@@ -101,136 +82,153 @@ function ReviewPage() {
     }
   };
 
-  const advance = async (sessionId) => {
-    const sid = sessionId ?? session?.id;
-    setPrState(null);
-    try {
-      const res = await advanceReviewSession(sid);
-      const data = res?.data;
-      if (!data) {
-        updateParams({ state: stateCode, session: sid, request: null });
-        setPageState(PAGE_STATE.DONE);
-        return;
-      }
-      setCurrentJob(data.job);
-      setCurrentPeople({ existing: data.existing, pull_request: data.pull_request });
-      setEntryNumber(data.entry_number);
-      if (data.daily_goal && !session?.daily_goal) {
-        setSession((s) => ({ ...s, daily_goal: data.daily_goal }));
-      }
-      updateParams({ state: stateCode, session: sid, request: data.job.request_id });
-      setPageState(PAGE_STATE.REVIEWING);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleNext = () => advance();
-
-  const handleMerge = async (event) => {
-    const pullRequestNumber = event.detail.pullRequestNumber;
-    setPrState({ status: PULL_REQUEST_STATUS.LOADING_MERGE });
-    try {
-      await mergePullRequest(pullRequestNumber);
-      setPrState({ status: PULL_REQUEST_STATUS.MERGED });
-      await advance(null, { resolved: true });
-    } catch (err) {
-      setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
-    }
-  };
-
-  const handleClose = async (event) => {
-    const pullRequestNumber = event.detail.pullRequestNumber;
-    setPrState({ status: PULL_REQUEST_STATUS.LOADING_CLOSE });
-    try {
-      await closePullRequest(pullRequestNumber);
-      setPrState({ status: PULL_REQUEST_STATUS.CLOSED });
-      await advance();
-    } catch (err) {
-      setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
-    }
-  };
-
   if (pageState === PAGE_STATE.LOADING) {
     return html`<main class="review-page"><p>Loading...</p></main>`;
-  }
-
-  if (pageState === PAGE_STATE.DONE) {
-    const currentGoal = session?.daily_goal ?? dailyGoal;
-    const handleExtend = async (increment) => {
-      setPageState(PAGE_STATE.LOADING);
-      setError(null);
-      try {
-        const newGoal = currentGoal + increment;
-        const sessionRes = await createReviewSession(stateCode, newGoal);
-        const updated = sessionRes.data;
-        setSession(updated);
-        setDailyGoal(newGoal);
-        localStorage.setItem(DEFAULT_GOAL_KEY, String(newGoal));
-        await advance(updated.id);
-      } catch (err) {
-        setError(err.message);
-        setPageState(PAGE_STATE.DONE);
-      }
-    };
-    return html`
-      <main class="review-page">
-        <div class="review-page__done">
-          <span>Goal of ${currentGoal} reached for ${stateCode.toUpperCase()}.</span>
-          <div class="review-page__extend-btns">
-            ${[5, 10, 25].map((n) => html`
-              <button class="btn-sm" @click=${() => handleExtend(n)}>+${n}</button>
-            `)}
-          </div>
-        </div>
-      </main>
-    `;
   }
 
   if (pageState === PAGE_STATE.IDLE) {
     return html`
       <main class="review-page">
-        ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-        <div class="review-page__setup">
-          <div class="review-page__field-label">
-            State
-            <civ-select-state
-              .selected=${stateCode}
-              @state-change=${handleStateChange}
-            ></civ-select-state>
-          </div>
-          <label class="review-page__field-label" for="review-daily-goal">
-            Daily goal
-            <input
-              id="review-daily-goal"
-              class="review-page__goal-input"
-              type="number"
-              min="1"
-              .value=${String(dailyGoal)}
-              @input=${handleGoalInput}
-            />
-          </label>
-          <button class="btn review-page__start-btn" @click=${handleStartReview}>Start Session</button>
+        <div class="review-page__state-bar">
+          <civ-select-state .selected=${stateCode} @state-change=${handleStateChange}></civ-select-state>
         </div>
+        <div class="review-page__main-grid">
+          <div class="review-page__streak-card">
+            <span class="review-page__streak-label">Day Streak</span>
+            <span class="review-page__streak-value">${stats.streak}</span>
+            <span class="review-page__streak-sub">${stats.streak === 1 ? "day" : "days"}</span>
+          </div>
+          <div class="review-page__ready-card">
+            <div class="review-page__ready-header">
+              <span class="review-page__ready-title">Ready for Review</span>
+              <div class="review-page__goal-control">
+                <button class="review-page__gear-btn" @click=${() => {
+                  setPendingGoal(dailyGoal);
+                  setIsCustomGoal(true);
+                  setGoalModalOpen(true);
+                }}>
+                  <i class="fa-solid fa-gear"></i>
+                </button>
+                <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
+              </div>
+            </div>
+            <span class="review-page__ready-count">${effectiveGoal}</span>
+            <span class="review-page__ready-sub">reviews today · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
+            ${stats.today_resolved >= effectiveGoal ? html`
+              <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
+            ` : ""}
+            ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+            <button class="review-page__start-btn" @click=${handleStartReview} ?disabled=${stats.today_resolved >= effectiveGoal}>Review →</button>
+          </div>
+        </div>
+        <stat-cards class="review-page__stat-cards" .stats=${[
+          { key: "today", label: "Today", value: stats.today_resolved, sub: "reviews" },
+          { key: "all_time", label: "All time", value: stats.all_time_resolved, sub: "reviews" },
+        ]}></stat-cards>
+        ${goalModalOpen ? html`
+          <div class="review-page__modal-backdrop" @click=${() => setGoalModalOpen(false)}>
+            <div class="review-page__modal" @click=${(e) => e.stopPropagation()}>
+              <div class="review-page__modal-header">
+                <span>Daily Goal</span>
+                <button class="modal-close" @click=${() => setGoalModalOpen(false)}>✕</button>
+              </div>
+              <select
+                .value=${isCustomGoal ? "custom" : String(pendingGoal)}
+                @change=${(e) => {
+                  if (e.target.value === "custom") {
+                    setIsCustomGoal(true);
+                  } else {
+                    setIsCustomGoal(false);
+                    setPendingGoal(parseInt(e.target.value, 10));
+                  }
+                }}
+              >
+                ${presetGoalOptions().map((n) => html`
+                  <option value=${n}>${n}</option>
+                `)}
+                <option value="custom">Custom…</option>
+              </select>
+              ${isCustomGoal ? html`
+                <input
+                  type="number"
+                  min="1"
+                  .value=${String(pendingGoal)}
+                  @input=${(e) => setPendingGoal(parseInt(e.target.value, 10) || 1)}
+                />
+              ` : ""}
+              <button class="review-page__modal-save" @click=${() => {
+                handleSelectGoal(pendingGoal);
+                setGoalModalOpen(false);
+              }}>Save</button>
+            </div>
+          </div>
+        ` : ""}
       </main>
     `;
   }
 
   // REVIEWING
-  const goal = session?.daily_goal ?? dailyGoal;
+  const goal = session.daily_goal;
+  const displayMax = hasNext ? goal : entryNumber;
+  const progressPct = Math.min(100, Math.round((resolvedCount / goal) * 100));
+
+  const getDotStatus = (n) => {
+    if (n === entryNumber) return "current";
+    if (resolvedEntryNumbers.has(n)) return "resolved";
+    if (passedEntryNumbers.has(n)) return "passed";
+    if (n <= frontierEntry) return "deferred";
+    return "future";
+  };
+  const debug_state = {
+    server: {
+      session,
+      current_job: currentJob,
+      current_people: currentPeople ? { existing: currentPeople.existing?.length, pull_request: currentPeople.pull_request?.length } : null,
+      entry_number: entryNumber,
+      resolved_count: resolvedCount,
+      stats,
+    },
+    client: {
+      page_state: pageState,
+      state_code: stateCode,
+      daily_goal: dailyGoal,
+      goal_modal_open: goalModalOpen,
+      pending_goal: pendingGoal,
+      is_custom_goal: isCustomGoal,
+      has_next: hasNext,
+      pr_state: prState,
+      error,
+      goal,
+      progress_pct: progressPct,
+    },
+  };
 
   return html`
-    <main class="review-page" @onMerge=${handleMerge} @onClose=${handleClose}>
-      <div class="review-page__toolbar">
-        <span class="review-page__progress">${entryNumber} of ${goal}</span>
-        <button class="btn-sm" @click=${handleNext}>Next →</button>
+    <main class="review-page" @onMerge=${merge} @onClose=${close}>
+      <div class="review-page__dots">
+        ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
+          const status = getDotStatus(n);
+          return html`<button
+            class="review-page__dot review-page__dot--${status}"
+            ?disabled=${status === "future" || status === "current"}
+            @click=${() => navigateTo(n)}
+          ></button>`;
+        })}
       </div>
+      <div class="review-page__toolbar">
+        <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${entryNumber <= 1}>← Back</button>
+        <button class="btn-sm review-page__pass-btn" @click=${pass} ?disabled=${!hasNext}>Pass</button>
+        <button class="btn-sm" @click=${() => advance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
+      </div>
+      <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <pr-card
         .pr=${currentJob}
         .data=${currentPeople}
         .state=${prState}
       ></pr-card>
+      <pre style="font-size:0.75rem;opacity:0.6;overflow:auto">${JSON.stringify(debug_state, null, 2)}</pre>
+      <button class="review-page__end-btn" @click=${pause}>End session</button>
     </main>
   `;
 }
