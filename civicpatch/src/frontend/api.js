@@ -203,3 +203,31 @@ export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
+
+export const getTodayReviewSession = async (stateCode) => {
+  const params = new URLSearchParams({ state_code: stateCode });
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/today?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const createReviewSession = async (stateCode, dailyGoal) => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ state_code: stateCode, daily_goal: dailyGoal }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const advanceReviewSession = async (sessionId) => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/next`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};

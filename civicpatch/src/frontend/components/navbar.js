@@ -206,6 +206,7 @@ function renderAuthed(user) {
       <span class="user-email">${user.email || 'User'}</span>
     </span>
     <a href="/jobs" class="nav-link">Jobs</a>
+    ${(user.permissions?.can_view_jobs_page) ? html`<a href="/review" class="nav-link">Review</a>` : ""}
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
       class="btn-outline"
