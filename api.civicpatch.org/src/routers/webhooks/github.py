@@ -9,6 +9,7 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
 from database.database import update_job_pull_request_review_state, update_job_pull_request_status
+import database.review_sessions as review_sessions_db
 from environment import get_env_vars
 from services.github.pull_request_sync_service import register_and_sync_pr_job
 
@@ -79,6 +80,8 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
         return
     request_id, jurisdiction_ocdid, status, merged_at, pr_url = result
     updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
+    if status in ("merged", "closed"):
+        await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
     if not updated and status == "open":
         logger.info("Webhook: no job found for %s, creating", request_id)
         await register_and_sync_pr_job(request_id, jurisdiction_ocdid, pr_url, provider="github_webhook")

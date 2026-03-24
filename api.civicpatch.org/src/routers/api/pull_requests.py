@@ -15,6 +15,7 @@ from pydantic import BaseModel
 
 import database.database
 import database.people
+import database.review_sessions as review_sessions_db
 import services.github.github_api_service as github_service
 import services.github.pull_request_sync_service as pr_sync_service
 from database.people import DEFAULT_VIEW, VIEWS
@@ -235,6 +236,7 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
+        await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
         return {"status": "success"}
 
     # -- Pull Requests: Merge Pull Request ---
@@ -255,6 +257,7 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
+        await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
         return {"status": "success"}
 
     return router
