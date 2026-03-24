@@ -7,7 +7,6 @@ import {
   mergePullRequest,
   closePullRequest,
 } from "../../api.js";
-import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
@@ -24,11 +23,23 @@ const PAGE_STATE = {
   DONE: "done",
 };
 
+function getInitialStateCode() {
+  const p = new URLSearchParams(window.location.search);
+  return p.get("state") || localStorage.getItem(DEFAULT_STATE_KEY) || DEFAULT_STATE;
+}
+
+function updateParams(updates) {
+  const p = new URLSearchParams(window.location.search);
+  for (const [k, v] of Object.entries(updates)) {
+    if (v == null) p.delete(k);
+    else p.set(k, v);
+  }
+  history.replaceState(null, "", `?${p}`);
+}
+
 function ReviewPage() {
   const [pageState, setPageState] = useState(PAGE_STATE.LOADING);
-  const [stateCode, setStateCode] = useState(
-    localStorage.getItem(DEFAULT_STATE_KEY) || DEFAULT_STATE
-  );
+  const [stateCode, setStateCode] = useState(getInitialStateCode);
   const [dailyGoal, setDailyGoal] = useState(
     parseInt(localStorage.getItem(DEFAULT_GOAL_KEY), 10) || DEFAULT_GOAL
   );
@@ -51,6 +62,7 @@ function ReviewPage() {
         if (data.current_entry) {
           setCurrentJob(data.current_entry.job);
           setCurrentPeople({ existing: data.current_entry.existing, pull_request: data.current_entry.pull_request });
+          updateParams({ state: stateCode, session: data.session.id, request: data.current_entry.job.request_id });
           setPageState(PAGE_STATE.REVIEWING);
         } else {
           setPageState(PAGE_STATE.IDLE);
@@ -63,6 +75,7 @@ function ReviewPage() {
     const newState = e.detail.state;
     setStateCode(newState);
     localStorage.setItem(DEFAULT_STATE_KEY, newState);
+    updateParams({ state: newState, session: null, request: null });
   };
 
   const handleGoalInput = (e) => {
@@ -80,6 +93,7 @@ function ReviewPage() {
       const sessionRes = await createReviewSession(stateCode, dailyGoal);
       const newSession = sessionRes.data;
       setSession(newSession);
+      updateParams({ state: stateCode, session: newSession.id, request: null });
       await advance(newSession.id);
     } catch (err) {
       setError(err.message);
@@ -94,6 +108,7 @@ function ReviewPage() {
       const res = await advanceReviewSession(sid);
       const data = res?.data;
       if (!data) {
+        updateParams({ state: stateCode, session: sid, request: null });
         setPageState(PAGE_STATE.DONE);
         return;
       }
@@ -103,6 +118,7 @@ function ReviewPage() {
       if (data.daily_goal && !session?.daily_goal) {
         setSession((s) => ({ ...s, daily_goal: data.daily_goal }));
       }
+      updateParams({ state: stateCode, session: sid, request: data.job.request_id });
       setPageState(PAGE_STATE.REVIEWING);
     } catch (err) {
       setError(err.message);
@@ -117,7 +133,7 @@ function ReviewPage() {
     try {
       await mergePullRequest(pullRequestNumber);
       setPrState({ status: PULL_REQUEST_STATUS.MERGED });
-      await advance();
+      await advance(null, { resolved: true });
     } catch (err) {
       setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
     }
@@ -140,9 +156,33 @@ function ReviewPage() {
   }
 
   if (pageState === PAGE_STATE.DONE) {
+    const currentGoal = session?.daily_goal ?? dailyGoal;
+    const handleExtend = async (increment) => {
+      setPageState(PAGE_STATE.LOADING);
+      setError(null);
+      try {
+        const newGoal = currentGoal + increment;
+        const sessionRes = await createReviewSession(stateCode, newGoal);
+        const updated = sessionRes.data;
+        setSession(updated);
+        setDailyGoal(newGoal);
+        localStorage.setItem(DEFAULT_GOAL_KEY, String(newGoal));
+        await advance(updated.id);
+      } catch (err) {
+        setError(err.message);
+        setPageState(PAGE_STATE.DONE);
+      }
+    };
     return html`
       <main class="review-page">
-        <p class="review-page__done">All caught up for ${stateCode.toUpperCase()} today.</p>
+        <div class="review-page__done">
+          <span>Goal of ${currentGoal} reached for ${stateCode.toUpperCase()}.</span>
+          <div class="review-page__extend-btns">
+            ${[5, 10, 25].map((n) => html`
+              <button class="btn-sm" @click=${() => handleExtend(n)}>+${n}</button>
+            `)}
+          </div>
+        </div>
       </main>
     `;
   }
@@ -178,7 +218,6 @@ function ReviewPage() {
 
   // REVIEWING
   const goal = session?.daily_goal ?? dailyGoal;
-  const pullRequestNumber = pullRequestUrlToNumber(currentJob?.pull_request_url);
 
   return html`
     <main class="review-page" @onMerge=${handleMerge} @onClose=${handleClose}>

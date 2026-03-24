@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class ReviewSessionEntryStatus(StrEnum):
     VIEWING = "viewing"
     SKIPPED = "skipped"
+    RESOLVED = "resolved"
 
 
 async def create_or_get_review_session(
@@ -41,7 +42,7 @@ async def create_or_get_review_session(
                     (provider, provider_user_id, session_date, state_code, daily_goal)
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (provider, provider_user_id, session_date, state_code)
-                DO NOTHING
+                DO UPDATE SET daily_goal = EXCLUDED.daily_goal
                 """,
                 (provider, provider_user_id, session_date, state_code, daily_goal),
             )
@@ -152,13 +153,13 @@ async def advance_review_session(
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
-                "SELECT state_code FROM review_sessions WHERE id = %s",
+                "SELECT state_code, daily_goal FROM review_sessions WHERE id = %s",
                 (review_session_id,),
             )
             session_row = await cur.fetchone()
             if not session_row:
                 return None
-            state_code = session_row[0]
+            state_code, daily_goal = session_row[0], session_row[1]
 
             await cur.execute(
                 """
@@ -168,6 +169,14 @@ async def advance_review_session(
                 """,
                 (review_session_id,),
             )
+
+            await cur.execute(
+                "SELECT COUNT(*) FROM review_session_entries WHERE review_session_id = %s",
+                (review_session_id,),
+            )
+            count_row = await cur.fetchone()
+            if count_row[0] >= daily_goal:
+                return None
 
             await cur.execute(
                 """
@@ -182,7 +191,7 @@ async def advance_review_session(
                   AND j.arguments_json->>'jurisdiction_ocdid' NOT IN (
                       SELECT jurisdiction_ocdid
                       FROM review_session_entries
-                      WHERE review_session_id = %s
+                      WHERE review_session_id = %s AND status = 'resolved'
                   )
                   AND j.arguments_json->>'jurisdiction_ocdid' NOT IN (
                       SELECT rse.jurisdiction_ocdid
@@ -193,11 +202,17 @@ async def advance_review_session(
                         AND rs.id != %s
                   )
                   AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
-                ORDER BY (j.pull_request_review_state = 'changes_requested') DESC,
-                         j.created_at DESC
+                ORDER BY
+                    -- skipped items defer to the end; unseen items come first
+                    (CASE WHEN j.arguments_json->>'jurisdiction_ocdid' IN (
+                        SELECT jurisdiction_ocdid FROM review_session_entries
+                        WHERE review_session_id = %s AND status = 'skipped'
+                    ) THEN 1 ELSE 0 END) ASC,
+                    (j.pull_request_review_state = 'changes_requested') DESC,
+                    j.created_at DESC
                 LIMIT 1
                 """,
-                (review_session_id, review_session_id, f"%state:{state_code}%"),
+                (review_session_id, review_session_id, f"%state:{state_code}%", review_session_id),
             )
             next_row = await cur.fetchone()
 
@@ -215,16 +230,7 @@ async def advance_review_session(
                 """,
                 (review_session_id, request_id, jurisdiction_ocdid),
             )
-
-            await cur.execute(
-                """
-                SELECT COUNT(*) FROM review_session_entries
-                WHERE review_session_id = %s
-                """,
-                (review_session_id,),
-            )
-            count_row = await cur.fetchone()
-            entry_number = count_row[0]
+            entry_number = count_row[0] + 1
 
     job = {
         "request_id": request_id,
@@ -237,3 +243,35 @@ async def advance_review_session(
     }
 
     return {"job": job, "entry_number": entry_number}
+
+
+async def resolve_review_session_entries_by_request_id(request_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                UPDATE review_session_entries
+                SET status = 'resolved'
+                WHERE request_id = %s AND status != 'resolved'
+                """,
+                (request_id,),
+            )
+
+
+async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                UPDATE review_session_entries
+                SET status = 'resolved'
+                WHERE request_id IN (
+                    SELECT request_id FROM jobs
+                    WHERE pull_request_url LIKE %s
+                )
+                AND status != 'resolved'
+                """,
+                (f"%/pull/{pr_number}",),
+            )
