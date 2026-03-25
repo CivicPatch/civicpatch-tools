@@ -3,6 +3,7 @@ import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { fetchPullRequestsWithData, fetchJobsWithErrors, mergePullRequest, closePullRequest, resolveJob } from "../../api.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
+import "./jobs-page.css";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
 import "./error-card/index.js";

@@ -30,6 +30,12 @@ def get_data_source_path():
 
     return data_source_path
 
+def get_data_source_path_for_file(jurisdiction_ocdid: str, relative_file_path: str):
+    jurisdiction_folder = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    path = os.path.join("data_source", jurisdiction_folder, relative_file_path)
+    return path
+
+
 def get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid: str):
     data_source_path = get_data_source_path()
     folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)

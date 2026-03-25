@@ -3,6 +3,7 @@ import { component, useState } from "haunted";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../../../components/ocdid-utils.js";
 import "../../../components/badge/badge.js";
+import "./error-card.css";
 
 function ErrorCard({ job }) {
   const name = job?.jurisdiction_name || jurisdictionOcdidToFriendly(job?.jurisdiction_ocdid);

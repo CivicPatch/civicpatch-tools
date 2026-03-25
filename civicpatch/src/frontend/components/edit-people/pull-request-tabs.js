@@ -1,4 +1,5 @@
 import { html, component } from 'haunted';
+import "./tabs.css";
 
 function PullRequestTabs({ pullRequests = [], selectedPullRequest, loading, onTabClick }) {
   function truncateBranchName(branchName, maxLength = 24) {

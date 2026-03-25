@@ -3,6 +3,7 @@ import { component } from "haunted";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./header.js";
 import "./data-panel.js";
+import "./pr-card.css";
 
 const PrTimestamp = ({ createdAt }) =>
   createdAt

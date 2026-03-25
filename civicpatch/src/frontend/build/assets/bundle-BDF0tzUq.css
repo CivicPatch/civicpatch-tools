@@ -1,0 +1,26 @@
+
+
+.review-page__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+
+.source-content {
+  background: var(--pico-card-background-color);
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1rem;
+  box-sizing: border-box;
+}
+
+
+.pr-card {
+  background: var(--pico-card-background-color);
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1rem;
+  box-sizing: border-box;
+}
