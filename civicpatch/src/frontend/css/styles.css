@@ -6,6 +6,8 @@
 @import "../components/badge/badge.css";
 @import "../components/diff-panel/diff-panel.css";
 @import "../components/review-panel/review-panel.css";
+@import "../components/review-checklist/review-checklist.css";
+@import "../components/review-people-editor/review-people-editor.css";
 @import "../components/edit-people/tabs.css";
 @import "../components/edit-people/profile-modal.css";
 @import "../components/pull-request-card/pr-card.css";

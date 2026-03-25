@@ -136,7 +136,7 @@ const DiffPanel = ({ data }) => {
   }
 
   if (diffEntries.length === 0 && unchangedEntries.length === 0) {
-    return html`<div class="diff-panel"><p class="diff-panel__empty">No data.</p></div>`;
+    return html``;
   }
 
   return html`

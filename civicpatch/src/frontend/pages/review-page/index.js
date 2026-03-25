@@ -4,7 +4,9 @@ import { createReviewSession } from "../../api.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
-import "../../components/review-panel/review-panel.js";
+import "../../components/review-checklist/review-checklist.js";
+import "../../components/review-people-editor/review-people-editor.js";
+import "../../components/diff-panel/diff-panel.js";
 import "./source-content.js";
 import "./review-page.css";
 
@@ -203,18 +205,27 @@ function ReviewPage() {
         <button class="btn-sm" @click=${() => advance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
       </div>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+      <div class="review-page__info-row">
+        <civ-review-checklist
+          .reviewData=${reviewData}
+        ></civ-review-checklist>
+        <pr-card
+          .pr=${currentJob}
+          .data=${currentPeople}
+          .state=${prState}
+        ></pr-card>
+      </div>
+      <civ-diff-panel
+        .existing=${currentPeople?.existing ?? []}
+        .pullRequest=${currentPeople?.pull_request ?? []}
+      ></civ-diff-panel>
       <div class="review-page__content">
         <div class="review-page__left-col">
-          <pr-card
-            .pr=${currentJob}
-            .data=${currentPeople}
-            .state=${prState}
-          ></pr-card>
-          <civ-review-panel
-            .reviewData=${reviewData}
-            .existing=${currentPeople?.existing ?? []}
-            .pullRequest=${currentPeople?.pull_request ?? []}
-          ></civ-review-panel>
+          <civ-review-people-editor
+            .people=${currentPeople?.pull_request ?? []}
+            .requestId=${currentJob?.request_id}
+            .jurisdictionOcdid=${currentJob?.jurisdiction_ocdid}
+          ></civ-review-people-editor>
         </div>
         <source-content
           .sourceContentUrls=${sourceContentUrls}
