@@ -1,3 +1,73 @@
+source-content {
+  display: block;
+}
+
+.source-content {
+  background: var(--pico-card-background-color);
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: 1rem;
+  padding: 0.75rem 0.75rem 0 0.75rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}
+
+.source-content__tabs {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.source-content__tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.source-content__tab {
+  background: var(--pico-muted-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 0.4rem 0.4rem 0 0;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  width: auto;
+  margin: 0;
+  min-width: unset;
+}
+
+.source-content__tab--active {
+  background: var(--pico-card-background-color);
+  color: var(--pico-primary);
+  border-bottom: 2px solid var(--pico-primary);
+  font-weight: 600;
+  z-index: 1;
+}
+
+.source-content__tab-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: var(--pico-background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.source-content__iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: var(--pico-background-color);
+  display: block;
+}
+
 .review-page {
     max-width: 1800px;
     margin: 0 auto;
@@ -344,8 +414,8 @@
     min-width: 0;
 }
 
-.review-page__info-row > pr-card {
-    flex: 2;
+.review-page__info-row > civ-diff-panel {
+    flex: 3;
     min-width: 0;
 }
 
