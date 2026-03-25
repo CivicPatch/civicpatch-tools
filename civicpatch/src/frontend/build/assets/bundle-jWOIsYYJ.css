@@ -1,10 +1,76 @@
+.source-content {
+  background: var(--pico-card-background-color);
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: 1rem;
+  padding: 0.75rem 0.75rem 0 0.75rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}
+
+.source-content__tabs {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.source-content__tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.source-content__tab {
+  background: var(--pico-muted-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 0.4rem 0.4rem 0 0;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  width: auto;
+  margin: 0;
+  min-width: unset;
+}
+
+.source-content__tab--active {
+  background: var(--pico-card-background-color);
+  color: var(--pico-primary);
+  border-bottom: 2px solid var(--pico-primary);
+  font-weight: 600;
+  z-index: 1;
+}
+
+.source-content__tab-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: var(--pico-background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.source-content__iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: var(--pico-background-color);
+  display: block;
+}
+
 .review-page {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem 1.5rem;
+    padding: 2.5rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 2rem;
 }
 
 .review-page__stat-cards {
@@ -244,19 +310,13 @@
     margin: 0;
 }
 
-.review-page__nav {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-}
-
 .review-page__dots {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: 0.35rem;
-    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .review-page__dot {
@@ -298,11 +358,16 @@
     cursor: default;
 }
 
+.review-page__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .review-page__progress {
     font-family: var(--pico-font-family-monospace);
     font-size: 0.8rem;
     color: var(--pico-muted-color);
-    white-space: nowrap;
 }
 
 
@@ -335,20 +400,12 @@
 .review-page__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: start;
     width: 100%;
-    margin-top: 0.75rem;
 }
 
 .review-page__content > * {
     min-width: 0;
     box-sizing: border-box;
-}
-
-.review-page__left-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    min-width: 0;
 }

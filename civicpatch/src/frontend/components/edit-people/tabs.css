@@ -7,21 +7,22 @@
 .pr-tabs__list {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 0.5rem 0;
     display: flex;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    gap: 0.25rem;
 }
 
 .pr-tabs__link {
     display: block;
-    padding: 0.45rem 0.9rem;
+    padding: 0.2rem 0.75rem;
     font-family: var(--pico-font-family-monospace);
     font-size: 0.75rem;
     text-decoration: none;
     color: var(--pico-muted-color);
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color 0.15s, border-color 0.15s;
+    background: var(--pico-muted-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 0.4rem 0.4rem 0 0;
+    transition: color 0.15s, background 0.15s;
     white-space: nowrap;
 }
 
@@ -31,6 +32,8 @@
 }
 
 .pr-tabs__link.active {
+    background: var(--pico-card-background-color);
     color: var(--pico-primary);
-    border-bottom-color: var(--pico-primary);
+    border-bottom: 2px solid var(--pico-primary);
+    font-weight: 600;
 }

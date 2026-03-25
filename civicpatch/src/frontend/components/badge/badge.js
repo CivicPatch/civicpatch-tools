@@ -1,6 +1,5 @@
 import { html } from "lit-html";
 import { component } from "haunted";
-import "./badge.css";
 
 function CivBadge({ label, variant = "primary", popoverText, popoverId }) {
   if (popoverText !== undefined && popoverId) {

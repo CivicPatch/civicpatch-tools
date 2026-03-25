@@ -1,7 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchPeople, fetchDashboard, fetchJurisdictionsGeojson } from "../../api.js";
-import "./search-jurisdictions.css";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 

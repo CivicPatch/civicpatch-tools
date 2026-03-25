@@ -2,7 +2,6 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import "../edit-people/review-table.js";
 import "../diff-panel/diff-panel.js";
-import "./review-panel.css";
 
 const ReviewPanel = ({ reviewData, existing, pullRequest }) => html`
   <civ-review-table
