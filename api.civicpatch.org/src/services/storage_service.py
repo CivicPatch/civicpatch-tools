@@ -213,3 +213,7 @@ def get_presigned_url_from_object_url(
     key = path_parts[1]
     
     return get_presigned_url_cached(bucket_name, key, expiration)
+
+def get_civicpatch_artifacts_url(key: str) -> str:
+    url = "https://civicpatch-artifacts.civicpatch.org"
+    return f"{url}/{key}"

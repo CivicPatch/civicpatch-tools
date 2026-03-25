@@ -4,6 +4,9 @@ import { createReviewSession } from "../../api.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
+import "./source-content.js";
+import "./review-page.css";
+
 import { useReviewSession, updateParams } from "./use-review-session.js";
 
 const DEFAULT_STATE_KEY = "review_state_code";
@@ -46,6 +49,7 @@ function ReviewPage() {
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
+    sourceContentUrls
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
     onDone: () => setPageState(PAGE_STATE.IDLE),
@@ -202,6 +206,10 @@ function ReviewPage() {
       progress_pct: progressPct,
     },
   };
+  /**
+   * source-content
+   * sourceContentUrls: []
+   */
 
   return html`
     <main class="review-page" @onMerge=${merge} @onClose=${close}>
@@ -222,11 +230,16 @@ function ReviewPage() {
       </div>
       <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-      <pr-card
-        .pr=${currentJob}
-        .data=${currentPeople}
-        .state=${prState}
-      ></pr-card>
+      <div class="review-page__content">
+        <pr-card
+          .pr=${currentJob}
+          .data=${currentPeople}
+          .state=${prState}
+        ></pr-card>
+        <source-content
+          .sourceContentUrls=${sourceContentUrls}
+        ></source-content>
+      </div>
       <pre style="font-size:0.75rem;opacity:0.6;overflow:auto">${JSON.stringify(debug_state, null, 2)}</pre>
       <button class="review-page__end-btn" @click=${pause}>End session</button>
     </main>

@@ -39,6 +39,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [prState, setPrState] = useState(null);
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0 });
+  const [sourceContentUrls, setSourceContentUrls] = useState([]);
 
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
@@ -71,6 +72,9 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
     setResolvedCount(sessionData.resolved_count ?? 0);
+
+    const sourceMarkdownUrls = [...new Set(card.data.pull_request?.map(pr => pr.markdown_urls).flat())]
+    setSourceContentUrls(sourceMarkdownUrls);
     updateParams({ state: stateCode, session: sid, request: sessionData.request_id });
   };
 
@@ -208,5 +212,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
+    sourceContentUrls
   };
 }

@@ -3,6 +3,8 @@ import { keyed } from 'lit/directives/keyed.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import { useSortableList } from '../../../hooks/useSortableList.js';
 import "./cell"
+import "./table.css";
+import "./cell.css";
 
 // See: https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/
 // See: https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/#kbd_label

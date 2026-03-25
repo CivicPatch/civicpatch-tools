@@ -1,3 +1,207 @@
+civ-table table {
+  table-layout: auto;
+  width: auto;
+  min-width: 100%;
+}
+civ-table table:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire)) !important;
+}
+
+civ-table tr:last-child {
+}
+civ-table td {
+}
+civ-table td:focus-within {
+  background-color: rgb(var(--catppuccin-base));
+}
+civ-table-cell {
+}
+civ-table tr {
+  border: 1px solid rgb(var(--catppuccin-crust));
+  transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
+}
+civ-table tr:focus-within {
+  background-color: rgba(var(--catppuccin-teal), 0.1);
+}
+civ-table tr.dragging {
+  opacity: 0.3;
+}
+civ-table tr.drop-indicator td div {
+  animation: expand 250ms ease-out forwards;
+}
+@keyframes expand {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 8rem;
+    opacity: 1;
+  }
+}
+
+civ-table-cell {
+    span {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        min-height: 1em;
+        box-sizing: border-box;
+        border: 2px solid transparent;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    span.cell-content[contenteditable="true"]:focus {
+        box-sizing: border-box;
+        outline: 2px solid rgb(var(--catppuccin-mauve));
+        border-radius: var(--pico-border-radius);
+    }
+    div.tag-list:focus-within {
+        outline: 2px solid rgb(var(--catppuccin-mauve));
+        border-radius: var(--pico-border-radius);
+    }
+
+    .tag-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 0.25rem;
+        padding: 0.4rem;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .tag-list button:hover {
+        background: rgb(var(--catppuccin-sapphire), 0.2);
+        border-color: rgb(var(--catppuccin-crust));
+    }
+
+    .tag-list button {
+        appearance: none;
+        border: 1px solid rgb(var(--catppuccin-crust));
+        background: rgb(var(--catppuccin-base));
+        border-radius: 999px;
+        padding: 0.1rem 0.35rem 0.1rem 0.5rem;
+        font-size: 0.72rem;
+        font-family: inherit;
+        cursor: pointer;
+        color: #333;
+        width: fit-content;      /* shrinks to content */
+        max-width: 200px;        /* but won't exceed this */
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        line-height: 1;
+    }
+
+    .tag-list button span.tag-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+        margin-right: 0.2rem;
+        flex: auto;
+    }
+
+    .tag-list button span.tag-remove {
+        flex: content;
+    }
+
+    .tag-input {
+        flex-basis: 100%;
+        min-height: 1.2em;
+        outline: none;
+        border: none;
+        background: transparent;
+        padding: 0;
+        font-size: 0.8rem;
+        font-family: inherit;
+        color: inherit;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    span:not(.tag-input) {
+        display: inline-block;
+        ...
+      }
+    span.tag-input {
+      display: inline;
+      min-width: 4em;
+    }
+
+    .tag-input:empty::before {
+        content: attr(data-placeholder);
+        color: #aaa;
+        pointer-events: none;
+    }
+}
+
+.source-content__iframe {
+  width: 100%;
+  height: 60vh;
+  min-height: 200px;
+  max-height: 80vh;
+  border: none;
+  background: var(--pico-background-color);
+  display: block;
+}
+
+.source-content {
+  background: var(--pico-card-background-color);
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.source-content__tabs {
+  width: 100%;
+}
+
+.source-content__tab-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.source-content__tab {
+  background: var(--pico-muted-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 0.5rem 0.5rem 0 0;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+}
+
+.source-content__tab--active {
+  background: var(--pico-card-background-color);
+  color: var(--pico-primary);
+  border-bottom: 2px solid var(--pico-primary);
+  font-weight: 600;
+  z-index: 1;
+}
+
+.source-content__tab-content {
+  width: 100%;
+  border-radius: 0 0 0.5rem 0.5rem;
+  overflow: hidden;
+  background: var(--pico-background-color);
+}
+
 .review-page {
     max-width: 1400px;
     margin: 0 auto;

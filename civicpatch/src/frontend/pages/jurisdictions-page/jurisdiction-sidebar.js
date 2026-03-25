@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import { fetchJurisdictionHistory } from "../../api.js";
 import "../../components/scrape-history/scrape-history-list.js";
 import "./jurisdiction-detail.js";
+import "./jurisdiction-sidebar.css";
 
 function JurisdictionSidebar({
   jurisdictionData,
