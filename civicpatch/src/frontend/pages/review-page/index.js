@@ -4,6 +4,7 @@ import { createReviewSession } from "../../api.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
+import "../../components/review-panel/review-panel.js";
 import "./source-content.js";
 import "./review-page.css";
 
@@ -43,13 +44,13 @@ function ReviewPage() {
   const {
     session, setSession,
     currentJob, currentPeople,
-    entryNumber, resolvedCount,
+    entryNumber,
     hasNext,
     prState, error, setError,
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
-    sourceContentUrls
+    sourceContentUrls, reviewData
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
     onDone: () => setPageState(PAGE_STATE.IDLE),
@@ -174,7 +175,6 @@ function ReviewPage() {
   // REVIEWING
   const goal = session.daily_goal;
   const displayMax = hasNext ? goal : entryNumber;
-  const progressPct = Math.min(100, Math.round((resolvedCount / goal) * 100));
 
   const getDotStatus = (n) => {
     if (n === entryNumber) return "current";
@@ -183,64 +183,43 @@ function ReviewPage() {
     if (n <= frontierEntry) return "deferred";
     return "future";
   };
-  const debug_state = {
-    server: {
-      session,
-      current_job: currentJob,
-      current_people: currentPeople ? { existing: currentPeople.existing?.length, pull_request: currentPeople.pull_request?.length } : null,
-      entry_number: entryNumber,
-      resolved_count: resolvedCount,
-      stats,
-    },
-    client: {
-      page_state: pageState,
-      state_code: stateCode,
-      daily_goal: dailyGoal,
-      goal_modal_open: goalModalOpen,
-      pending_goal: pendingGoal,
-      is_custom_goal: isCustomGoal,
-      has_next: hasNext,
-      pr_state: prState,
-      error,
-      goal,
-      progress_pct: progressPct,
-    },
-  };
-  /**
-   * source-content
-   * sourceContentUrls: []
-   */
 
   return html`
     <main class="review-page" @onMerge=${merge} @onClose=${close}>
-      <div class="review-page__dots">
-        ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
-          const status = getDotStatus(n);
-          return html`<button
-            class="review-page__dot review-page__dot--${status}"
-            ?disabled=${status === "future" || status === "current"}
-            @click=${() => navigateTo(n)}
-          ></button>`;
-        })}
-      </div>
-      <div class="review-page__toolbar">
+      <div class="review-page__nav">
         <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${entryNumber <= 1}>← Back</button>
+        <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
+        <div class="review-page__dots">
+          ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
+            const status = getDotStatus(n);
+            return html`<button
+              class="review-page__dot review-page__dot--${status}"
+              ?disabled=${status === "future" || status === "current"}
+              @click=${() => navigateTo(n)}
+            ></button>`;
+          })}
+        </div>
         <button class="btn-sm review-page__pass-btn" @click=${pass} ?disabled=${!hasNext}>Pass</button>
         <button class="btn-sm" @click=${() => advance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
       </div>
-      <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <div class="review-page__content">
-        <pr-card
-          .pr=${currentJob}
-          .data=${currentPeople}
-          .state=${prState}
-        ></pr-card>
+        <div class="review-page__left-col">
+          <pr-card
+            .pr=${currentJob}
+            .data=${currentPeople}
+            .state=${prState}
+          ></pr-card>
+          <civ-review-panel
+            .reviewData=${reviewData}
+            .existing=${currentPeople?.existing ?? []}
+            .pullRequest=${currentPeople?.pull_request ?? []}
+          ></civ-review-panel>
+        </div>
         <source-content
           .sourceContentUrls=${sourceContentUrls}
         ></source-content>
       </div>
-      <pre style="font-size:0.75rem;opacity:0.6;overflow:auto">${JSON.stringify(debug_state, null, 2)}</pre>
       <button class="review-page__end-btn" @click=${pause}>End session</button>
     </main>
   `;

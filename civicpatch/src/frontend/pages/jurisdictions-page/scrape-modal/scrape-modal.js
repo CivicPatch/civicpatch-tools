@@ -1,7 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
-import "./scrape-modal.css";
 
 function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {}, canScrapeRemote = false, canScrapeLocal = false }) {
   const defaultScrapeMode = canScrapeLocal ? "local" : "remote";

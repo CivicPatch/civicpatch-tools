@@ -1,6 +1,5 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import "./stat-cards.css";
 
 // Each stat: { key, label, value, sub, copyText?, description? }
 // copyText is optional — omit it to render a plain non-interactive card

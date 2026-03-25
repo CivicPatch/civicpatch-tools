@@ -2,7 +2,6 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import "../basic/modal.js";
 import "../person-image.js";
-import "./profile-modal.css";
 
 function renderFieldRow(label, currentValue, proposedValue, changed) {
   const isChanged = changed !== undefined ? changed : currentValue !== proposedValue;

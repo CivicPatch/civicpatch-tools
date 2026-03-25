@@ -1,7 +1,6 @@
 import { component, useState, useEffect, useMemo } from 'haunted';
 import { html } from 'lit-html';
 import { ref } from "lit-html/directives/ref.js";
-import "./auto-complete-select.css";
 
 // Debounce Utility
 const debounce = (func, delay) => {

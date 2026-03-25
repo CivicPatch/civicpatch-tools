@@ -1,6 +1,5 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import "./source-content.css";
 
 function SourceContent({ sourceContentUrls }) {
     const [selectedTab, setSelectedTab] = useState(0);

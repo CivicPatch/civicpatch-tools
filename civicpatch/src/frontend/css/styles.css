@@ -1,3 +1,23 @@
+/* ── Components ──────────────────────────────────────────────────────────── */
+
+@import "../components/basic/table/table.css";
+@import "../components/basic/table/cell.css";
+@import "../components/inputs/auto-complete-select.css";
+@import "../components/badge/badge.css";
+@import "../components/diff-panel/diff-panel.css";
+@import "../components/review-panel/review-panel.css";
+@import "../components/edit-people/tabs.css";
+@import "../components/edit-people/profile-modal.css";
+@import "../components/pull-request-card/pr-card.css";
+@import "../pages/jobs-page/error-card/error-card.css";
+@import "../pages/jobs-page/jobs-page.css";
+@import "../pages/review-page/review-page.css";
+@import "../pages/review-page/source-content.css";
+@import "../components/stat-cards/stat-cards.css";
+@import "../components/search-jurisdictions/search-jurisdictions.css";
+@import "../pages/jurisdictions-page/jurisdiction-sidebar.css";
+@import "../pages/jurisdictions-page/scrape-modal/scrape-modal.css";
+
 /* ── Global ──────────────────────────────────────────────────────────────── */
 
 :root,
@@ -353,7 +373,7 @@ main.container-fluid {
     :root,
     :host {
         --pico-font-size: 118.75%;
-        padding: 1rem 2rem;
+        padding: 0.5rem 1rem;
     }
 }
 
@@ -361,14 +381,14 @@ main.container-fluid {
     :root,
     :host {
         --pico-font-size: 125%;
-        padding: 2rem 3rem;
+        padding: 0.5rem 2rem;
     }
 }
 
 @media (min-width: 1536px) {
     :root,
     :host {
-        padding: 2rem 4rem;
+        padding: 0.5rem 4rem;
     }
 }
 

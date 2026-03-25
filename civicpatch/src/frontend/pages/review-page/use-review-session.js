@@ -2,6 +2,7 @@ import { useState, useEffect } from "haunted";
 import {
   fetchReviewStats,
   fetchPullRequestDetail,
+  fetchReview,
   getTodayReviewSession,
   passReviewSession,
   pauseReviewSession,
@@ -40,6 +41,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0 });
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
+  const [reviewData, setReviewData] = useState(null);
 
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
@@ -66,12 +68,16 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   }, []);
 
   const applyEntry = async (sid, sessionData) => {
-    const card = await fetchPullRequestDetail(sessionData.request_id);
+    const [card, review] = await Promise.all([
+      fetchPullRequestDetail(sessionData.request_id),
+      fetchReview(sessionData.request_id).catch(() => null),
+    ]);
     setCurrentJob(card.data.job);
     setCurrentPeople({ existing: card.data.existing, pull_request: card.data.pull_request });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
     setResolvedCount(sessionData.resolved_count ?? 0);
+    setReviewData(review?.data ?? null);
 
     const sourceMarkdownUrls = [...new Set(card.data.pull_request?.map(pr => pr.markdown_urls).flat())]
     setSourceContentUrls(sourceMarkdownUrls);
@@ -212,6 +218,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
-    sourceContentUrls
+    sourceContentUrls, reviewData
   };
 }
