@@ -313,7 +313,8 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED)
+        user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Merge Pull Request ---
@@ -335,7 +336,8 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED)
+        user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     return router

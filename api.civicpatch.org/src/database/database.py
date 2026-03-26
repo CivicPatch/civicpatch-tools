@@ -1006,11 +1006,23 @@ async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str = Non
         people = [Person(**row[0]) for row in rows]
     return people
 
+async def get_user_id_by_provider(provider: str, provider_user_id: str) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id FROM users WHERE provider = %s AND provider_user_id = %s",
+            (provider, provider_user_id),
+        )
+        row = await cur.fetchone()
+    return str(row[0]) if row else None
+
+
 async def update_job_pull_request_status(
     request_id: str,
     pull_request_status: str,
     pull_request_merged_at=None,
     pull_request_url: Optional[str] = None,
+    resolved_by_user_id: Optional[str] = None,
 ) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -1030,15 +1042,16 @@ async def update_job_pull_request_status(
 
         await cur.execute(
             """
-            INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, resolved_by_user_id, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             ON CONFLICT (request_id) DO UPDATE
                 SET status = EXCLUDED.status,
                     merged_at = EXCLUDED.merged_at,
                     url = COALESCE(EXCLUDED.url, pull_requests.url),
+                    resolved_by_user_id = EXCLUDED.resolved_by_user_id,
                     updated_at = CURRENT_TIMESTAMP
             """,
-            (request_uuid, pull_request_url, pull_request_status, pull_request_merged_at, pr_number),
+            (request_uuid, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
         )
         return True
 
