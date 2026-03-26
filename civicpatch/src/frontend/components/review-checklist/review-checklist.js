@@ -20,12 +20,6 @@ function ReviewChecklist({ reviewData }) {
       ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color);"></i>`
       : html`<i class="fa-solid fa-xmark" style="color: var(--pico-del-color);"></i>`;
 
-  const getRowClass = (row) => {
-    if (!row.in_research && row.in_data) return "row-extra";
-    if (row.in_research && !row.in_data) return "row-missing";
-    return "";
-  };
-
   return html`
     <div class="review-checklist">
       ${reviewData.issues?.length ? html`
@@ -62,7 +56,7 @@ function ReviewChecklist({ reviewData }) {
             </thead>
             <tbody>
               ${reviewData.people_by_source.map(row => html`
-                <tr class=${getRowClass(row)}>
+                <tr>
                   <td>${row.name}</td>
                   <td style="text-align: center;">${renderCheckmark(row.in_research)}</td>
                   <td style="text-align: center;">${renderCheckmark(row.in_data)}</td>

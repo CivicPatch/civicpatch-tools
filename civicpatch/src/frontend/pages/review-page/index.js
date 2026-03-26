@@ -4,13 +4,14 @@ import { createReviewSession } from "../../api.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
 import "../../components/review-checklist/review-checklist.js";
-import "../../components/diff-summary/diff-summary.js";
+import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "./source-content.js";
 import "./review-page.css";
 
+import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
 
 const DEFAULT_STATE_KEY = "review_state_code";
@@ -29,17 +30,13 @@ const PAGE_STATE = {
   REVIEWING: "reviewing",
 };
 
-function getInitialStateCode() {
-  const p = new URLSearchParams(window.location.search);
-  return p.get("state") || localStorage.getItem(DEFAULT_STATE_KEY) || DEFAULT_STATE;
-}
-
 function ReviewPage() {
   const [pageState, setPageState] = useState(PAGE_STATE.LOADING);
-  const [stateCode, setStateCode] = useState(getInitialStateCode);
-  const [dailyGoal, setDailyGoal] = useState(
-    parseInt(localStorage.getItem(DEFAULT_GOAL_KEY), 10) || DEFAULT_GOAL
-  );
+  const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, () => {
+    const p = new URLSearchParams(window.location.search);
+    return p.get("state") || DEFAULT_STATE;
+  });
+  const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL);
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [pendingGoal, setPendingGoal] = useState(dailyGoal);
   const [isCustomGoal, setIsCustomGoal] = useState(() => dailyGoal > MAX_PRESET_GOAL);
@@ -48,7 +45,7 @@ function ReviewPage() {
     session, setSession,
     currentJob, currentPeople,
     entryNumber,
-    hasNext,
+    hasNext, hasPrev,
     prState, error, setError,
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
@@ -63,17 +60,18 @@ function ReviewPage() {
   const handleStateChange = (e) => {
     const newState = e.detail.state;
     setStateCode(newState);
-    localStorage.setItem(DEFAULT_STATE_KEY, newState);
-    updateParams({ state: newState, session: null, request: null });
+    updateParams({ state: newState });
   };
 
   const handleSelectGoal = (n) => {
     const clamped = stats.available_count > 0 ? Math.min(n, stats.available_count) : n;
     setDailyGoal(clamped);
-    localStorage.setItem(DEFAULT_GOAL_KEY, String(clamped));
   };
 
-  const effectiveGoal = stats.available_count > 0 ? Math.min(dailyGoal, stats.available_count) : dailyGoal;
+  const effectiveGoal = Math.max(
+    stats.available_count > 0 ? Math.min(dailyGoal, stats.available_count) : dailyGoal,
+    stats.claimed_count ?? 0
+  );
 
   const handleStartReview = async () => {
     setPageState(PAGE_STATE.LOADING);
@@ -82,7 +80,7 @@ function ReviewPage() {
       const sessionRes = await createReviewSession(stateCode, effectiveGoal);
       const newSession = sessionRes.data;
       setSession(newSession);
-      updateParams({ state: stateCode, session: newSession.id, request: null });
+      updateParams({ state: stateCode });
       await advance(newSession.id);
     } catch (err) {
       setError(err.message);
@@ -121,7 +119,7 @@ function ReviewPage() {
               </div>
             </div>
             <span class="review-page__ready-count">${effectiveGoal}</span>
-            <span class="review-page__ready-sub">reviews today · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
+            <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
             ${stats.today_resolved >= effectiveGoal ? html`
               <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
             ` : ""}
@@ -199,7 +197,7 @@ function ReviewPage() {
   return html`
     <main class="review-page">
       <div class="review-page__nav">
-        <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${entryNumber <= 1}>← Back</button>
+        <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${!hasPrev}>← Back</button>
         <span class="review-page__jurisdiction">${currentJob?.jurisdiction_name || currentJob?.jurisdiction_ocdid || ""}</span>
         <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
         <div class="review-page__dots">
@@ -227,10 +225,9 @@ function ReviewPage() {
           .reviewData=${reviewData}
         ></civ-review-checklist>
       </div>
-      <civ-diff-summary
-        .existing=${currentPeople?.existing ?? []}
-        .pullRequest=${currentPeople?.pull_request ?? []}
-      ></civ-diff-summary>
+      <civ-diff-panel
+        .data=${{ existing: currentPeople?.existing ?? [], pull_request: currentPeople?.pull_request ?? [] }}
+      ></civ-diff-panel>
       <div class="review-page__content">
         <civ-review-workspace
           .pullRequest=${currentPeople?.pull_request ?? []}

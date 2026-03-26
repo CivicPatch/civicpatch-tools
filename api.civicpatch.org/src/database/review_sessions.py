@@ -48,7 +48,14 @@ async def create_or_get_review_session(
                     (provider, provider_user_id, session_date, state_code, daily_goal)
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (provider, provider_user_id, session_date, state_code)
-                    DO UPDATE SET daily_goal = EXCLUDED.daily_goal
+                    DO UPDATE SET daily_goal = GREATEST(
+                        EXCLUDED.daily_goal,
+                        (
+                            SELECT COUNT(*) FROM review_session_entries
+                            WHERE review_session_id = review_sessions.id
+                              AND status NOT IN ('resolved')
+                        )
+                    )
                 RETURNING id, state_code, daily_goal, session_date, created_at
                 """,
                 (provider, provider_user_id, session_date, state_code, daily_goal),
@@ -264,12 +271,26 @@ async def navigate_to_entry(
             )
             counts = await cur.fetchone()
 
+            await cur.execute(
+                """
+                SELECT EXISTS (
+                    SELECT 1 FROM review_session_entries
+                    WHERE review_session_id = %s
+                      AND entry_number < %s
+                      AND status = 'claimed'
+                ) AS has_prev
+                """,
+                (review_session_id, entry_number),
+            )
+            prev_row = await cur.fetchone()
+
     return {
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
         "resolved_count": counts.resolved_count,
         "has_more": has_more,
+        "has_prev": prev_row.has_prev,
     }
 
 
@@ -367,9 +388,24 @@ async def get_review_stats(
             )
             available = await cur.fetchone()
 
+            await cur.execute(
+                """
+                SELECT COUNT(*) AS claimed_count
+                FROM review_session_entries rse
+                JOIN review_sessions rs ON rs.id = rse.review_session_id
+                WHERE rs.provider = %s AND rs.provider_user_id = %s
+                  AND rs.session_date = CURRENT_DATE
+                  AND rs.state_code = %s
+                  AND rse.status NOT IN ('resolved')
+                """,
+                (provider, provider_user_id, state_code),
+            )
+            claimed = await cur.fetchone()
+
     return {
         "today_resolved": stats.today_resolved,
         "streak": streak_row.length if streak_row else 0,
         "all_time_resolved": stats.all_time_resolved,
         "available_count": available.available_count,
+        "claimed_count": claimed.claimed_count,
     }
