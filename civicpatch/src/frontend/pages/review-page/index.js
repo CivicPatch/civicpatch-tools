@@ -1,12 +1,13 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { createReviewSession } from "../../api.js";
-import "../../components/pull-request-card/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
 import "../../components/review-checklist/review-checklist.js";
-import "../../components/review-people-editor/review-people-editor.js";
-import "../../components/diff-panel/diff-panel.js";
+import "../../components/diff-summary/diff-summary.js";
+import "../../components/review-workspace/review-workspace.js";
+import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
+import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "./source-content.js";
 import "./review-page.css";
 
@@ -177,6 +178,15 @@ function ReviewPage() {
   // REVIEWING
   const goal = session.daily_goal;
   const displayMax = hasNext ? goal : entryNumber;
+  const prNumber = pullRequestUrlToNumber(currentJob?.pull_request_url);
+  const isTerminal = prState?.status === PULL_REQUEST_STATUS.MERGED
+    || prState?.status === PULL_REQUEST_STATUS.CLOSED
+    || prState?.status === PULL_REQUEST_STATUS.ERROR;
+  const isMerging = prState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
+  const isClosing = prState?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+
+  const handleMerge = () => merge({ detail: { pullRequestNumber: prNumber } });
+  const handleClose = () => close({ detail: { pullRequestNumber: prNumber } });
 
   const getDotStatus = (n) => {
     if (n === entryNumber) return "current";
@@ -187,9 +197,10 @@ function ReviewPage() {
   };
 
   return html`
-    <main class="review-page" @onMerge=${merge} @onClose=${close}>
+    <main class="review-page">
       <div class="review-page__nav">
         <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${entryNumber <= 1}>← Back</button>
+        <span class="review-page__jurisdiction">${currentJob?.jurisdiction_name || currentJob?.jurisdiction_ocdid || ""}</span>
         <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
         <div class="review-page__dots">
           ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
@@ -203,30 +214,30 @@ function ReviewPage() {
         </div>
         <button class="btn-sm review-page__pass-btn" @click=${pass} ?disabled=${!hasNext}>Pass</button>
         <button class="btn-sm" @click=${() => advance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
+        <button class="destructive btn-sm" @click=${handleClose} ?disabled=${isTerminal || isMerging || isClosing}>
+          ${isClosing ? "Closing…" : prState?.status === PULL_REQUEST_STATUS.CLOSED ? "Closed" : "Close"}
+        </button>
+        <button class="btn-sm" @click=${handleMerge} ?disabled=${isTerminal || isMerging || isClosing}>
+          ${isMerging ? "Merging…" : prState?.status === PULL_REQUEST_STATUS.MERGED ? "Merged" : "Merge"}
+        </button>
       </div>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <div class="review-page__info-row">
         <civ-review-checklist
           .reviewData=${reviewData}
         ></civ-review-checklist>
-        <pr-card
-          .pr=${currentJob}
-          .data=${currentPeople}
-          .state=${prState}
-        ></pr-card>
       </div>
-      <civ-diff-panel
+      <civ-diff-summary
         .existing=${currentPeople?.existing ?? []}
         .pullRequest=${currentPeople?.pull_request ?? []}
-      ></civ-diff-panel>
+      ></civ-diff-summary>
       <div class="review-page__content">
-        <div class="review-page__left-col">
-          <civ-review-people-editor
-            .people=${currentPeople?.pull_request ?? []}
-            .requestId=${currentJob?.request_id}
-            .jurisdictionOcdid=${currentJob?.jurisdiction_ocdid}
-          ></civ-review-people-editor>
-        </div>
+        <civ-review-workspace
+          .pullRequest=${currentPeople?.pull_request ?? []}
+          .existing=${currentPeople?.existing ?? []}
+          .requestId=${currentJob?.request_id}
+          .jurisdictionOcdid=${currentJob?.jurisdiction_ocdid}
+        ></civ-review-workspace>
         <source-content
           .sourceContentUrls=${sourceContentUrls}
         ></source-content>

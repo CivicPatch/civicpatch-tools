@@ -359,6 +359,11 @@
     min-width: 0;
 }
 
+.review-page__info-row > civ-diff-summary {
+    flex: 2;
+    min-width: 0;
+}
+
 .review-page__content {
     display: grid;
     grid-template-columns: 2fr 1fr;

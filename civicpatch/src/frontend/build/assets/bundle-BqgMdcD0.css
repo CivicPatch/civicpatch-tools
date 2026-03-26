@@ -251,16 +251,6 @@
     width: 100%;
 }
 
-.review-page__jurisdiction {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--pico-muted-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 16rem;
-}
-
 .review-page__dots {
     display: flex;
     flex-wrap: wrap;
@@ -355,6 +345,11 @@
 }
 
 .review-page__info-row > civ-review-checklist {
+    flex: 2;
+    min-width: 0;
+}
+
+.review-page__info-row > civ-diff-summary {
     flex: 2;
     min-width: 0;
 }
