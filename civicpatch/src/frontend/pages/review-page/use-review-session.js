@@ -11,6 +11,7 @@ import {
   closePullRequest,
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { useLocalStorage } from "../../hooks/use-local-storage.js";
 
 const ADVANCE_DONE_REASON = {
   GOAL_REACHED: "goal_reached",
@@ -33,15 +34,17 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [entryNumber, setEntryNumber] = useState(0);
   const [resolvedCount, setResolvedCount] = useState(0);
   const [hasNext, setHasNext] = useState(true);
+  const [hasPrev, setHasPrev] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [passedEntryNumbers, setPassedEntryNumbers] = useState(new Set());
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
   const [prState, setPrState] = useState(null);
   const [error, setError] = useState(null);
-  const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0 });
+  const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0, claimed_count: 0 });
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
   const [reviewData, setReviewData] = useState(null);
+  const [storedEntry, setStoredEntry] = useLocalStorage("review_current_entry", null);
 
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
@@ -57,17 +60,21 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
         setPassedEntryNumbers(loadedPassed);
         const allVisited = [data.current_entry?.entry_number, ...(data.passed_entry_numbers || [])].filter(Boolean);
         setFrontierEntry(allVisited.length > 0 ? Math.max(...allVisited) : 0);
-        if (data.current_entry) {
-          await applyEntry(data.session.id, data.current_entry);
-          onReviewing();
-        } else {
-          onIdle();
+        if (storedEntry?.state_code === stateCode) {
+          const res = await navigateToEntry(data.session.id, storedEntry.entry_number);
+          const entryData = res?.data;
+          if (entryData) {
+            await applyEntry(entryData);
+            onReviewing();
+            return;
+          }
         }
+        onIdle();
       })
       .catch(() => onIdle());
   }, []);
 
-  const applyEntry = async (sid, sessionData) => {
+  const applyEntry = async (sessionData) => {
     const [card, review] = await Promise.all([
       fetchPullRequestDetail(sessionData.request_id),
       fetchReview(sessionData.request_id).catch(() => null),
@@ -77,20 +84,22 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
     setResolvedCount(sessionData.resolved_count ?? 0);
+    setHasPrev(sessionData.has_prev ?? false);
     setReviewData(review?.data ?? null);
 
     const sourceMarkdownUrls = [...new Set(card.data.pull_request?.map(pr => pr.markdown_urls).flat())]
     setSourceContentUrls(sourceMarkdownUrls);
-    updateParams({ state: stateCode, session: sid, request: sessionData.request_id });
+    setStoredEntry({ state_code: stateCode, entry_number: sessionData.entry_number });
+    updateParams({ state: stateCode });
   };
 
-  const handleAdvanceResult = (sid, res) => {
+  const handleAdvanceResult = (res) => {
     const data = res?.data;
     if (!data) {
       if (res?.reason === ADVANCE_DONE_REASON.NO_MORE_CARDS) {
         setHasNext(false);
       } else {
-        updateParams({ state: stateCode, session: sid, request: null });
+        updateParams({ state: stateCode });
         onDone();
       }
       return null;
@@ -106,10 +115,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
       let target = entryNumber + 1;
       while (passedEntryNumbers.has(target)) target++;
       const res = await navigateToEntry(sid, target);
-      const data = handleAdvanceResult(sid, res);
+      const data = handleAdvanceResult(res);
       if (!data) return;
       setHasNext(data.has_more !== false);
-      await applyEntry(sid, data);
+      await applyEntry(data);
       onReviewing();
     } catch (err) {
       setError(err.message);
@@ -130,10 +139,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
       let target = passed + 1;
       while (nextPassedSet.has(target)) target++;
       const res = await navigateToEntry(sid, target);
-      const data = handleAdvanceResult(sid, res);
+      const data = handleAdvanceResult(res);
       if (!data) return;
       setHasNext(data.has_more !== false);
-      await applyEntry(sid, data);
+      await applyEntry(data);
       onReviewing();
     } catch (err) {
       setError(err.message);
@@ -146,12 +155,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setPrState(null);
     setIsNavigating(true);
     try {
-      let target = entryNumber - 1;
-      while (target > 0 && passedEntryNumbers.has(target)) target--;
-      const res = await navigateToEntry(session?.id, target);
+      const res = await navigateToEntry(session?.id, entryNumber - 1);
       const data = res?.data;
       if (!data) return;
-      await applyEntry(session?.id, data);
+      await applyEntry(data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -180,7 +187,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
       const data = res?.data;
       if (!data) return;
       setHasNext(data.has_more !== false);
-      await applyEntry(session?.id, data);
+      await applyEntry(data);
       onReviewing();
     } catch (err) {
       setError(err.message);
@@ -189,10 +196,25 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     }
   };
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== "visible" || !session) return;
+      const today = new Date().toISOString().split("T")[0];
+      if (session.session_date !== today) {
+        setSession(null);
+        setStoredEntry(null);
+        onIdle();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [session]);
+
   const pause = async () => {
     const sid = session?.id;
     if (!sid) return;
     await pauseReviewSession(sid);
+    setStoredEntry(null);
     onIdle();
   };
 
@@ -213,7 +235,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     session, setSession,
     currentJob, currentPeople,
     entryNumber, resolvedCount,
-    hasNext, isNavigating,
+    hasNext, hasPrev, isNavigating,
     prState, error, setError,
     stats,
     advance, back, pass, pause, merge, close, navigateTo,
