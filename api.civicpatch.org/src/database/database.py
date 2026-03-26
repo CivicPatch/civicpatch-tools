@@ -1205,8 +1205,9 @@ async def get_job_data_json(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.result_data FROM requests r
-            JOIN jobs j ON j.id = r.job_id
+            SELECT r.result_data
+            FROM jobs j
+            LEFT JOIN requests r ON r.job_id = j.id
             WHERE j.request_id = %s LIMIT 1
             """,
             (request_id,),

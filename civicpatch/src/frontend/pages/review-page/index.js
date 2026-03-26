@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { createReviewSession } from "../../api.js";
+import { createReviewSession, updatePullRequestData } from "../../api.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
 import "../../components/review-checklist/review-checklist.js";
@@ -13,6 +13,7 @@ import "./review-page.css";
 
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
+import { useDirtyPeople } from "./use-dirty-people.js";
 
 const DEFAULT_STATE_KEY = "review_state_code";
 const DEFAULT_GOAL_KEY = "review_daily_goal";
@@ -43,7 +44,7 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    currentJob, currentPeople,
+    currentRequest, currentPeople,
     entryNumber,
     hasNext, hasPrev,
     prState, error, setError,
@@ -56,6 +57,8 @@ function ReviewPage() {
     onDone: () => setPageState(PAGE_STATE.IDLE),
     onIdle: () => setPageState(PAGE_STATE.IDLE),
   });
+
+  const { isDirty, setIsDirty, pendingPeople, handleDirtyChange } = useDirtyPeople(currentRequest);
 
   const handleStateChange = (e) => {
     const newState = e.detail.state;
@@ -176,14 +179,20 @@ function ReviewPage() {
   // REVIEWING
   const goal = session.daily_goal;
   const displayMax = hasNext ? goal : entryNumber;
-  const prNumber = pullRequestUrlToNumber(currentJob?.pull_request_url);
+  const prNumber = pullRequestUrlToNumber(currentRequest?.pull_request_url);
   const isTerminal = prState?.status === PULL_REQUEST_STATUS.MERGED
     || prState?.status === PULL_REQUEST_STATUS.CLOSED
     || prState?.status === PULL_REQUEST_STATUS.ERROR;
   const isMerging = prState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
   const isClosing = prState?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
 
-  const handleMerge = () => merge({ detail: { pullRequestNumber: prNumber } });
+  const handleMerge = async () => {
+    if (isDirty && pendingPeople) {
+      await updatePullRequestData(currentRequest.request_id, currentRequest.jurisdiction_ocdid, pendingPeople);
+      setIsDirty(false);
+    }
+    merge({ detail: { pullRequestNumber: prNumber } });
+  };
   const handleClose = () => close({ detail: { pullRequestNumber: prNumber } });
 
   const getDotStatus = (n) => {
@@ -198,7 +207,7 @@ function ReviewPage() {
     <main class="review-page">
       <div class="review-page__nav">
         <button class="btn-sm review-page__back-btn" @click=${back} ?disabled=${!hasPrev}>← Back</button>
-        <span class="review-page__jurisdiction">${currentJob?.jurisdiction_name || currentJob?.jurisdiction_ocdid || ""}</span>
+        <span class="review-page__jurisdiction">${currentRequest?.jurisdiction_name || currentRequest?.jurisdiction_ocdid || ""}</span>
         <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
         <div class="review-page__dots">
           ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
@@ -216,7 +225,7 @@ function ReviewPage() {
           ${isClosing ? "Closing…" : prState?.status === PULL_REQUEST_STATUS.CLOSED ? "Closed" : "Close"}
         </button>
         <button class="btn-sm" @click=${handleMerge} ?disabled=${isTerminal || isMerging || isClosing}>
-          ${isMerging ? "Merging…" : prState?.status === PULL_REQUEST_STATUS.MERGED ? "Merged" : "Merge"}
+          ${isMerging ? "Merging…" : prState?.status === PULL_REQUEST_STATUS.MERGED ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
         </button>
       </div>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
@@ -232,8 +241,7 @@ function ReviewPage() {
         <civ-review-workspace
           .pullRequest=${currentPeople?.pull_request ?? []}
           .existing=${currentPeople?.existing ?? []}
-          .requestId=${currentJob?.request_id}
-          .jurisdictionOcdid=${currentJob?.jurisdiction_ocdid}
+          @dirty-change=${handleDirtyChange}
         ></civ-review-workspace>
         <source-content
           .sourceContentUrls=${sourceContentUrls}

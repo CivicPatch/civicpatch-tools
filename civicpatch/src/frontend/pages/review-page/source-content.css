@@ -62,6 +62,13 @@ source-content {
   flex-direction: column;
 }
 
+.source-content__markdown {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: 0.75rem;
+}
+
 .source-content__iframe {
   flex: 1;
   width: 100%;

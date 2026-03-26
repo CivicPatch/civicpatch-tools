@@ -208,6 +208,7 @@ export const closeStaleDuplicatePrs = async () => {
   const res = await fetch(`${API_URL}/api/v1/jobs/duplicates/close-stale`, {
     method: "POST",
     credentials: "include",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

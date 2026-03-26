@@ -253,26 +253,33 @@ def get_router(api_key_header):
             background_tasks.add_task(database.database.update_job_pull_request_review_state, request_id, live_review_state)
         job = {**job, "pull_request_review_state": live_review_state}
 
-        people = await database.people.get_people_data_by_request_ids(
-            [job["jurisdiction_ocdid"]], [request_id]
+        jurisdiction_ocdid = job["jurisdiction_ocdid"]
+        folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+
+        existing, pull_request = await asyncio.gather(
+            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
+            database.database.get_job_data_json(request_id),
         )
-        enriched = people.get(request_id, {})
 
-        pull_request = enriched.get("pull_request", [])
-        unique_source_urls = list({url for person in pull_request for url in person.get("source_urls", [])})
+        if pull_request is None:
+            pull_request = await github_service.get_pull_request_file_yaml(
+                request_id=request_id,
+                jurisdiction_ocdid=jurisdiction_ocdid,
+                file_path=f"data/{folder}.yml",
+            )
+            if pull_request is not None:
+                background_tasks.add_task(database.database.update_job_data, request_id, pull_request)
 
-        sources = _source_urls_to_sources(
-            request_id, 
-            job["jurisdiction_ocdid"], 
-            unique_source_urls
-        ) 
+        pull_request = pull_request or []
+        unique_source_urls = list({url for person in pull_request for url in (person.get("source_urls") or [])})
+        sources = _source_urls_to_sources(request_id, jurisdiction_ocdid, unique_source_urls)
 
         return {
             "data": {
-                "job": job,
-                "existing": enriched.get("existing", []),
+                "request": job,
+                "existing": existing,
                 "pull_request": pull_request,
-                "sources": sources
+                "sources": sources,
             }
         }
 

@@ -112,23 +112,6 @@ async def update_job_status(
     return await with_retry(logger, MAX_RETRIES, _update)
 
 
-async def update_people_job_result(logger, request_id: str, people: List[Official]):
-    env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-    people_dicts = [official.model_dump() for official in people]
-    data = {"data": people_dicts}
-    async with httpx.AsyncClient(headers=system_auth_header) as client:
-        response = await client.post(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/result",
-            json=data,
-        )
-        if response.status_code != 200:
-            logger.error(
-                f"Failed to update job result with api.civicpatch.org: {response.status_code} {response.text}"
-            )
-        return response
-
-
 async def submit_job_artifacts(
     request_id: str, jurisdiction_ocdid: str, zip_file_path: str, job_status: str
 ):
