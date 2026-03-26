@@ -150,11 +150,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   async function handlePublish() {
+    const request_id = selectedPullRequest?.request_id;
     const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
     if (!prNumber) return;
     setPrStatus("loading_merge");
     try {
-      await mergePullRequest(prNumber);
+      await mergePullRequest(request_id, prNumber);
       setPrStatus("merged");
       setNotice("Pull request published.");
     } catch {

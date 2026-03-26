@@ -650,7 +650,7 @@ async def register_job(
         jurisdiction_ocdid: Optional[str] = None,
         status: str = "PENDING",
         progress: int = 0,
-        job_run_url: Optional[str] = None,
+        run_url: Optional[str] = None,
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -667,7 +667,7 @@ async def register_job(
                 arguments_json,
                 server_source,
                 jurisdiction_ocdid,
-                job_run_url,
+                run_url,
                 created_at, updated_at
             )
             VALUES (
@@ -685,7 +685,7 @@ async def register_job(
                 serialized_arguments,
                 server_source,
                 jurisdiction_ocdid,
-                job_run_url,
+                run_url,
             ),
         )
 
@@ -694,7 +694,7 @@ async def get_job(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url, job_run_url FROM jobs
+            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url, run_url FROM jobs
             WHERE request_id = %s;
             """,
             (request_id,),
@@ -710,7 +710,7 @@ async def get_job(request_id: str):
                 "created_at": to_iso(row[4]),
                 "updated_at": to_iso(row[5]),
                 "pull_request_url": row[6],
-                "job_run_url": row[7],
+                "run_url": row[7],
             }
         return None
 
@@ -901,7 +901,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT request_id, created_at, updated_at, status, progress, pull_request_url, job_run_url
+            SELECT request_id, created_at, updated_at, status, progress, pull_request_url, run_url 
             FROM jobs
             WHERE arguments_json->>'jurisdiction_ocdid' = %s
                 AND job_type = %s
@@ -921,7 +921,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
                     "status": row[3],
                     "progress": row[4],
                     "pull_request_url": row[5],
-                    "job_run_url": row[6],
+                    "run_url": row[6],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name
                 }
@@ -1079,14 +1079,14 @@ async def list_jobs_with_open_prs(
     page: int = 1,
     per_page: int = 20,
 ) -> tuple[List[dict], int]:
-    conditions = ["pull_request_status = 'open'"]
+    conditions = ["pull_request_status = 'open'", "j.status NOT IN ('REQUEST_TO_CLOSE', 'REQUEST_TO_MERGE')"]
     params: list = []
 
     if jurisdiction_ocdid:
-        conditions.append("'jurisdiction_ocdid' = %s")
+        conditions.append("j.jurisdiction_ocdid = %s")
         params.append(jurisdiction_ocdid)
     elif state_code:
-        conditions.append("'jurisdiction_ocdid' LIKE %s")
+        conditions.append("j.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
@@ -1100,12 +1100,12 @@ async def list_jobs_with_open_prs(
         await cur.execute(
             f"""
             SELECT j.request_id, j.pull_request_url, j.pull_request_status,
-                   j.jurisdiction_ocdid' AS jurisdiction_ocdid,
+                   j.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at, j.pull_request_review_state
             FROM jobs j
             LEFT JOIN jurisdictions jur
-                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid'
+                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE {where}
             ORDER BY (j.pull_request_review_state = 'changes_requested') DESC, j.created_at DESC
             LIMIT %s OFFSET %s
@@ -1175,7 +1175,7 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
     params: list = []
 
     if state_code:
-        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        conditions.append("j.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
@@ -1185,12 +1185,12 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
         await cur.execute(
             f"""
             SELECT j.request_id,
-                   j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
+                   j.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
             LEFT JOIN jurisdictions jur
-                   ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE {where}
             ORDER BY j.created_at DESC
             """,

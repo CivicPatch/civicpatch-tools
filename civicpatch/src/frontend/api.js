@@ -62,8 +62,8 @@ export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
   return res.json();
 };
 
-export const mergePullRequest = async (pullRequestNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge`, {
+export const mergePullRequest = async (request_id, pullRequestNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge?request_id=${request_id}`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -158,8 +158,8 @@ export const resolveJob = async (requestId) => {
   return res.json();
 };
 
-export const closePullRequest = async (pullRequestNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}`, {
+export const closePullRequest = async (request_id, pullRequestNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}?request_id=${request_id}`, {
     credentials: "include",
     method: "DELETE",
     headers: {

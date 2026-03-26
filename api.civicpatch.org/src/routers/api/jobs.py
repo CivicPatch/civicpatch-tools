@@ -14,6 +14,7 @@ from pydantic import BaseModel
 import job_service.people_collector.people_data_utils as people_data_utils
 import services.github.github_api_service as github_service
 import utils.file_utils
+import database.jobs
 from database.database import (
     get_job,
     get_job_result,
@@ -47,7 +48,7 @@ class CreateRegisterJobRequest(BaseModel):
     request_id: str
     arguments: dict
     server_source: Optional[str] = None
-    job_run_url: Optional[str] = None
+    run_url: Optional[str] = None
 
 
 class UpdateJobStatusRequest(BaseModel):
@@ -84,7 +85,7 @@ class GetJobResponse(BaseModel):
     arguments: dict
     result: Optional[Any] = None
     pull_request_url: Optional[str] = None
-    job_run_url: Optional[str] = None
+    run_url: Optional[str] = None
     created_at: float
     updated_at: float
 
@@ -157,7 +158,7 @@ def get_router(api_key_header):
             job_type="people",
             arguments_json=request.arguments,
             server_source=request.server_source or None,
-            job_run_url=request.job_run_url or None,
+            run_url=request.run_url or None,
         )
         return {"request_id": request.request_id, "status": "pending"}
 
@@ -289,35 +290,35 @@ def get_router(api_key_header):
         )
         return {"request_id": request_id, "status": "processing"}
 
-    @router.get(
-        "/people/{request_id}",
-        summary="Get job and job results, if available",
-        description="Retrieve the status of a specific job by its request ID.",
-        response_model=GetJobResponse,
-        responses={404: {"model": ErrorResponse, "description": "Job not found"}},
-    )
-    async def get_job_endpoint(
-        request_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        job = await get_job(request_id)
-        if job:
-            return GetJobResponse(
-                request_id=request_id,
-                status=job["status"],
-                progress=job["progress"],
-                arguments=job["arguments_json"],
-                result=job["data_json"],
-                pull_request_url=job["pull_request_url"],
-                job_run_url=job["job_run_url"],
-                created_at=job["created_at"],
-                updated_at=job["updated_at"],
-            )
-        else:
-            return JSONResponse(
-                content=ErrorResponse(error="Job not found").model_dump(),
-                status_code=404,
-            )
+    #@router.get(
+    #    "/people/{request_id}",
+    #    summary="Get job and job results, if available",
+    #    description="Retrieve the status of a specific job by its request ID.",
+    #    response_model=GetJobResponse,
+    #    responses={404: {"model": ErrorResponse, "description": "Job not found"}},
+    #)
+    #async def get_job_endpoint(
+    #    request_id: str,
+    #    _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    #):
+    #    job = await get_job(request_id)
+    #    if job:
+    #        return GetJobResponse(
+    #            request_id=request_id,
+    #            status=job["status"],
+    #            progress=job["progress"],
+    #            arguments=job["arguments_json"],
+    #            result=job["data_json"],
+    #            pull_request_url=job["pull_request_url"],
+    #            run_url=job["run_url"],
+    #            created_at=job["created_at"],
+    #            updated_at=job["updated_at"],
+    #        )
+    #    else:
+    #        return JSONResponse(
+    #            content=ErrorResponse(error="Job not found").model_dump(),
+    #            status_code=404,
+    #        )
 
     @router.post(
         "/{request_id}/resolve",
@@ -391,35 +392,20 @@ def get_router(api_key_header):
             progress=response["progress"],
         )
 
-    @router.get("/people/pull_request/open", include_in_schema=False)
-    async def get_open_people_pull_requests_endpoint(
-        jurisdiction_ocdid: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_slug(
-            jurisdiction_ocdid
-        )
-        open_pull_requests = (
-            await github_service.get_open_pull_request_by_branch_suffix(
-                branch_name_suffix
-            )
-        )
-        return {"data": open_pull_requests}
+    #@router.get("/people/pull_request/{branch_name}/data", include_in_schema=False)
+    #async def get_job_pull_request_data_endpoint(
+    #    branch_name: str,
+    #    jurisdiction_ocdid: str,
+    #    _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    #):
+    #    request_id = branch_name.split("-")[-1]
+    #    result = await get_job_result(request_id)
 
-    @router.get("/people/pull_request/{branch_name}/data", include_in_schema=False)
-    async def get_job_pull_request_data_endpoint(
-        branch_name: str,
-        jurisdiction_ocdid: str,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        request_id = branch_name.split("-")[-1]
-        result = await get_job_result(request_id)
-
-        return {
-            "branch_name": branch_name,
-            "data": result["data"] if result else None,
-            "review_json": result["review_json"] if result else {},
-        }
+    #    return {
+    #        "branch_name": branch_name,
+    #        "data": result["data"] if result else None,
+    #        "review_json": result["review_json"] if result else {},
+    #    }
 
     # -- Jobs: List Jobs where the pull requests have duplicate jurisdictions ───────────
     @router.get(

@@ -19,7 +19,7 @@ OPTIONAL_ENV_VARS = [
 
     "GOOGLE_GEMINI_TOKEN",
     "TOGETHER_AI_TOKEN",
-    "JOB_RUN_URL",
+    "JOB_RUN_URL"
 ]
 
 def get_env_vars():

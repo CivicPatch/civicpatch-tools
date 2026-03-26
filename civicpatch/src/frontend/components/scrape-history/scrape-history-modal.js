@@ -29,8 +29,8 @@ function ScrapeHistoryModal({ open, job, onClose }) {
           <p><strong>Status:</strong> ${job.status}</p>
           <p><strong>Progress:</strong> ${job.progress ?? "?"}%</p>
           <p><strong>Time to scrape:</strong> ${getDurationString(job.created_at, job.updated_at)}</p>
-          ${job.job_run_url ? html`
-            <p><strong>Job run:</strong> <a href="${job.job_run_url}" target="_blank" rel="noopener">${job.job_run_url}</a></p>
+          ${job.run_url ? html`
+            <p><strong>Job run:</strong> <a href="${job.run_url}" target="_blank" rel="noopener">${job.run_url}</a></p>
           ` : null}
           <p><strong>URLs scraped:</strong></p>
           <ul>

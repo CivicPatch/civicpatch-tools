@@ -71,7 +71,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
-        detail: { pullRequestNumber },
+        detail: { request_id: pr.request_id, pullRequestNumber },
         bubbles: true,
       }),
     );
@@ -80,7 +80,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleClose = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onClose", {
-        detail: { pullRequestNumber },
+        detail: { request_id: pr.request_id, pullRequestNumber },
         bubbles: true,
       }),
     );

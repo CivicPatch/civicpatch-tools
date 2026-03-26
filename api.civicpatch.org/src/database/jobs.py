@@ -1,5 +1,6 @@
 from database.database import get_pool, to_iso
 from collections import Counter
+
 async def get_duplicate_jurisdiction_ocdids() -> set:
     """Return a set of jurisdiction_ocdids that appear in more than one open PR."""
     pool = await get_pool()
@@ -9,6 +10,7 @@ async def get_duplicate_jurisdiction_ocdids() -> set:
             SELECT j.jurisdiction_ocdid AS jurisdiction_ocdid
             FROM jobs j
             WHERE j.pull_request_status = 'open'
+            AND j.status NOT IN ('REQUEST_TO_CLOSE', 'REQUEST_TO_MERGE')
             """
         )
         rows = await cur.fetchall()
