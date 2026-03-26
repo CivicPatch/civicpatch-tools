@@ -7,7 +7,8 @@ import {
   mergePullRequest, 
   closePullRequest, 
   resolveJob,
-  fetchDuplicatePrJurisdictionJobs
+  fetchDuplicatePrJurisdictionJobs,
+  fetchPullRequests
 } from "../../api.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
@@ -42,7 +43,8 @@ function JobsPage() {
 
   const [jobsSummary, setJobsSummary] = useState(null);
 
-  const [duplicatePullRequests, setDuplicatePullRequests] = useState([]);
+  const [duplicateJurisdictions, setDuplicateJurisdictions] = useState([]);
+  const [duplicateJurisdictionPRs, setDuplicateJurisdictionPRs] = useState({});
   const [pullRequests, setPullRequests] = useState([]);
   const [pullRequestState, setPullRequestState] = useState({});
 
@@ -79,7 +81,10 @@ function JobsPage() {
         setTotal(prResult.total || 0);
         setErrorJobs(errResult.data || []);
         setJobsSummary(errResult.summary || null);
-        setDuplicatePullRequests(duplicatePrResult.data || []);
+        // Expecting duplicatePrResult.jurisdiction_ocdids or .data as array of ocdids
+        setDuplicateJurisdictions(
+          duplicatePrResult.data || []
+        );
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
@@ -94,7 +99,7 @@ function JobsPage() {
           status: PULL_REQUEST_STATUS.LOADING_MERGE,
         },
       });
-      const response = await mergePullRequest(pullRequestNumber);
+      const response = await mergePullRequest(request_id, pullRequestNumber);
       if (response) {
         setPullRequestState({
           ...pullRequestState,
@@ -116,12 +121,13 @@ function JobsPage() {
 
   const handleClose = async (event) => {
     const pullRequestNumber = event.detail.pullRequestNumber;
+    const request_id = event.detail.request_id;
     try {
       setPullRequestState({
         ...pullRequestState,
         [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE },
       });
-      await closePullRequest(pullRequestNumber);
+      await closePullRequest(request_id, pullRequestNumber);
       setPullRequestState({
         ...pullRequestState,
         [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED },
@@ -162,21 +168,40 @@ function JobsPage() {
 
   const totalPages = Math.ceil(total / perPage);
 
-  const duplicatePrList = duplicatePullRequests.map((pr) => {
-    const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
-    return html`
-      <pr-card
-        @onMerge=${handleMerge}
-        @onClose=${handleClose}
-        .pr=${pr.details}
-        .state=${pullRequestState[pullRequestNumber]}
-        .data=${{
-          existing: pr.existing,
-          pull_request: pr.pull_request,
-        }}
-      ></pr-card>
-    `;
-  });
+  // Lazy-load PRs for a jurisdiction_ocdid
+  const loadJurisdictionPRs = async (ocdid) => {
+    if (duplicateJurisdictionPRs[ocdid]) return; // already loaded
+    const prs = await fetchPullRequests(ocdid);
+    setDuplicateJurisdictionPRs((prev) => ({
+      ...prev,
+      [ocdid]: prs.data || [],
+    }));
+  };
+
+  const duplicatePrList = duplicateJurisdictions.map((ocdid) => html`
+    <div class="duplicate-jurisdiction-card">
+      <button @click=${() => loadJurisdictionPRs(ocdid)}>
+        Load PRs for ${ocdid}
+      </button>
+      <div>
+        ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
+          const pullRequestNumber = pullRequestUrlToNumber(pr.pull_request_url);
+          return html`
+            <pr-card
+              @onMerge=${handleMerge}
+              @onClose=${handleClose}
+              .pr=${pr}
+              .state=${pullRequestState[pullRequestNumber]}
+              .data=${{
+                existing: pr.existing,
+                pull_request: pr.pull_request,
+              }}
+            ></pr-card>
+          `;
+        })}
+      </div>
+    </div>
+  `);
 
   const prList = loading
     ? html`<div>Loading...</div>`

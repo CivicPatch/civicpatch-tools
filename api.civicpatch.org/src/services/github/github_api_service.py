@@ -286,13 +286,6 @@ async def get_open_pull_requests(
     return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
 
 
-async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
-    pull_requests = await get_open_pull_requests()
-    matching_prs = [pr for pr in pull_requests if pr.branch_name.endswith(suffix)]
-    logger.info(f"Found {len(matching_prs)} pull requests matching suffix '{suffix}'.")
-    return matching_prs
-
-
 async def update_pull_request_file(
     branch_name: str,
     file_path: str,

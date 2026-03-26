@@ -290,6 +290,7 @@ def get_router(api_key_header):
     @router.delete("/{pull_request_number}", include_in_schema=False)
     async def close_pull_request_endpoint(
         pull_request_number: str,
+        request_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
@@ -304,13 +305,16 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
+        # TODO: what is this doing here? Get rid of it
+        # await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
+        await database.database.update_job_status(request_id, "REQUEST_TO_CLOSE")
         return {"status": "success"}
 
     # -- Pull Requests: Merge Pull Request ---
     @router.post("/{pull_request_number}/merge", include_in_schema=False)
     async def merge_pull_request_endpoint(
         pull_request_number: str,
+        request_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
@@ -325,7 +329,9 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
+        # TODO: what is this doing here? Get rid of it
+        # await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
+        await database.database.update_job_status(request_id, "REQUEST_TO_MERGE")
         return {"status": "success"}
 
     return router

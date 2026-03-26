@@ -65,4 +65,4 @@ class PeopleJobHistory(BaseModel):
     status: str
     progress: int
     pull_request_url: Optional[str]
-    job_run_url: Optional[str] = None
+    run_url: Optional[str] = None
