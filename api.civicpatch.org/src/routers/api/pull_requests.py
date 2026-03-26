@@ -1,6 +1,10 @@
+import os
 import asyncio
 import logging
 from typing import Any, Dict, List
+import services.storage_service
+import shared.utils.data_path_utils
+import shared.utils.url_utils
 
 import shared.utils.id_utils
 import yaml
@@ -59,6 +63,8 @@ def get_router(api_key_header):
     router = APIRouter()
 
     # -- Pull Requests: List Open Pull Requests ───────────
+    # Note: Used by jurisdiction detail page
+    # So that's why this isn't paged. Expect max of 1 pull request
     @router.get(
         "",
         summary="List open pull requests",
@@ -208,6 +214,26 @@ def get_router(api_key_header):
             "per_page": per_page,
         }
 
+    def _source_url_to_markdown_url(request_id, jurisdiction_ocdid_folder, source_url: str) -> str:
+        # For now, let's assume the markdown url is the same as the source url but with "/markdown" appended
+        # In the future, this could be a more complex transformation or lookup
+        source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
+        relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
+        return services.storage_service.get_civicpatch_artifacts_url(relative_path)
+
+    def _source_urls_to_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[str]:
+        # For every source URL, let's figure out the markdown url
+        # The URL will be under storage_service.get_url(bucket, key) where bucket is "civicpatch-artifacts" 
+        # and key is "{request_id}/{jurisdiction_ocdid_folder}/{filename}"
+        jurisdiction_ocd_id_folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+        return [
+            {
+                "source_url": url, 
+                "markdown_url": _source_url_to_markdown_url(request_id, jurisdiction_ocd_id_folder, url)
+            }
+            for url in source_urls
+        ]
+
     @router.get("/{request_id}/detail")
     async def get_pull_request_detail(
         request_id: str,
@@ -230,11 +256,22 @@ def get_router(api_key_header):
             [job["jurisdiction_ocdid"]], [request_id]
         )
         enriched = people.get(request_id, {})
+
+        pull_request = enriched.get("pull_request", [])
+        unique_source_urls = list({url for person in pull_request for url in person.get("source_urls", [])})
+
+        sources = _source_urls_to_sources(
+            request_id, 
+            job["jurisdiction_ocdid"], 
+            unique_source_urls
+        ) 
+
         return {
             "data": {
                 "job": job,
                 "existing": enriched.get("existing", []),
-                "pull_request": enriched.get("pull_request", []),
+                "pull_request": pull_request,
+                "sources": sources
             }
         }
 

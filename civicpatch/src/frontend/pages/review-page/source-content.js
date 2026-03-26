@@ -11,7 +11,7 @@ function SourceContent({ sourceContentUrls }) {
         <div class="source-content">
             <div class="source-content__tabs">
                 <div class="source-content__tab-bar">
-                    ${sourceContentUrls.map((url, idx) => html`
+                    ${sourceContentUrls.map((source, idx) => html`
                         <button
                             class="source-content__tab${selectedTab === idx ? ' source-content__tab--active' : ''}"
                             @click=${() => setSelectedTab(idx)}
@@ -21,8 +21,9 @@ function SourceContent({ sourceContentUrls }) {
                     `)}
                 </div>
                 <div class="source-content__tab-content">
+                    <a href="${sourceContentUrls[selectedTab].source_url}" target="_blank" rel="noopener noreferrer">View Original</a>
                     <iframe
-                        src=${sourceContentUrls[selectedTab]}
+                        src=${sourceContentUrls[selectedTab].markdown_url}
                         title=${`Source Content ${selectedTab + 1}`}
                         class="source-content__iframe"
                     ></iframe>
