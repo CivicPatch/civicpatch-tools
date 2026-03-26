@@ -8,6 +8,8 @@
 @import "../components/review-panel/review-panel.css";
 @import "../components/review-checklist/review-checklist.css";
 @import "../components/review-people-editor/review-people-editor.css";
+@import "../components/diff-summary/diff-summary.css";
+@import "../components/review-workspace/review-workspace.css";
 @import "../components/edit-people/tabs.css";
 @import "../components/edit-people/profile-modal.css";
 @import "../components/pull-request-card/pr-card.css";

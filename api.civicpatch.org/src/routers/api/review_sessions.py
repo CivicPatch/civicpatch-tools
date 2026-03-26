@@ -83,7 +83,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        await review_sessions_db.pass_current_entry(session_id)
+        await review_sessions_db.pass_current_entry(session_id, body.entry_number)
         return await _navigate_response(session_id, body.entry_number)
 
     @router.post("/{session_id}/pause")

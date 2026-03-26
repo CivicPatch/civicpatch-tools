@@ -9,8 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReviewSessionEntryStatus(StrEnum):
-    VIEWING = "viewing"
-    DEFERRED = "deferred"
+    CLAIMED = "claimed"
     PASSED = "passed"
     RESOLVED = "resolved"
 
@@ -77,15 +76,12 @@ async def get_today_session_with_current_entry(
             await cur.execute(
                 """
                 SELECT rs.id, rs.state_code, rs.daily_goal, rs.session_date, rs.created_at,
-                       rse.request_id, rse.jurisdiction_ocdid, rse.entry_number,
                        (
                            SELECT array_agg(entry_number)
                            FROM review_session_entries
                            WHERE review_session_id = rs.id AND status = 'passed'
                        ) AS passed_entry_numbers
                 FROM review_sessions rs
-                LEFT JOIN review_session_entries rse
-                    ON rse.review_session_id = rs.id AND rse.status = 'viewing'
                 WHERE rs.provider = %s
                   AND rs.provider_user_id = %s
                   AND rs.session_date = CURRENT_DATE
@@ -105,15 +101,9 @@ async def get_today_session_with_current_entry(
         "session_date": row.session_date.isoformat(),
         "created_at": row.created_at.isoformat(),
     }
-    current_entry = {
-        "request_id": row.request_id,
-        "jurisdiction_ocdid": row.jurisdiction_ocdid,
-        "entry_number": row.entry_number,
-    } if row.request_id is not None else None
 
     return {
         "session": session,
-        "current_entry": current_entry,
         "passed_entry_numbers": row.passed_entry_numbers or [],
     }
 
@@ -130,13 +120,13 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             SELECT rse.jurisdiction_ocdid
             FROM review_session_entries rse
             JOIN review_sessions rs ON rs.id = rse.review_session_id
-            WHERE rse.status = 'viewing'
+            WHERE rse.status = 'claimed'
               AND rs.session_date = CURRENT_DATE
               AND rs.id != %s
         ),
-        deferred AS (
+        reclaimed AS (
             SELECT jurisdiction_ocdid FROM review_session_entries
-            WHERE review_session_id = %s AND status = 'deferred'
+            WHERE review_session_id = %s AND status = 'claimed'
         )
         SELECT j.request_id,
                j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid
@@ -152,7 +142,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
               WHERE claimed.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
           )
         ORDER BY
-            (j.arguments_json->>'jurisdiction_ocdid' IN (SELECT jurisdiction_ocdid FROM deferred)) ASC,
+            (j.arguments_json->>'jurisdiction_ocdid' IN (SELECT jurisdiction_ocdid FROM reclaimed)) ASC,
             (j.pull_request_review_state = 'changes_requested') DESC,
             j.created_at DESC
         LIMIT %s
@@ -162,8 +152,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
     return await cur.fetchall()
 
 
-
-async def pass_current_entry(review_session_id: str) -> None:
+async def pass_current_entry(review_session_id: str, entry_number: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
@@ -171,9 +160,9 @@ async def pass_current_entry(review_session_id: str) -> None:
                 """
                 UPDATE review_session_entries
                 SET status = 'passed'
-                WHERE review_session_id = %s AND status = 'viewing'
+                WHERE review_session_id = %s AND entry_number = %s AND status = 'claimed'
                 """,
-                (review_session_id,),
+                (review_session_id, entry_number),
             )
 
 
@@ -205,45 +194,28 @@ async def navigate_to_entry(
             if not session_row:
                 return None
 
-            # Demote any currently viewing entry back to deferred
+            # Try to find an existing entry at the requested position (claimed or passed)
             await cur.execute(
                 """
-                UPDATE review_session_entries
-                SET status = 'deferred'
-                WHERE review_session_id = %s AND status = 'viewing'
-                """,
-                (review_session_id,),
-            )
-
-            # Try to find an existing entry at the requested position (deferred or passed)
-            await cur.execute(
-                """
-                SELECT id, request_id, jurisdiction_ocdid, status
+                SELECT id, request_id, jurisdiction_ocdid
                 FROM review_session_entries
                 WHERE review_session_id = %s
                   AND entry_number = %s
-                  AND status IN ('deferred', 'passed')
+                  AND status IN ('claimed', 'passed')
                 """,
                 (review_session_id, entry_number),
             )
             existing = await cur.fetchone()
 
             if existing:
-                # Only activate deferred entries; passed entries stay passed (shown with badge)
-                if existing.status == ReviewSessionEntryStatus.DEFERRED:
-                    await cur.execute(
-                        "UPDATE review_session_entries SET status = 'viewing' WHERE id = %s",
-                        (existing.id,),
-                    )
                 request_id = existing.request_id
                 jurisdiction_ocdid = existing.jurisdiction_ocdid
-                entry_status = existing.status
 
                 # has_more: next slot already exists, or new cards are available
                 await cur.execute(
                     """
                     SELECT 1 FROM review_session_entries
-                    WHERE review_session_id = %s AND entry_number = %s AND status = 'deferred'
+                    WHERE review_session_id = %s AND entry_number = %s AND status = 'claimed'
                     """,
                     (review_session_id, entry_number + 1),
                 )
@@ -274,13 +246,12 @@ async def navigate_to_entry(
                     """
                     INSERT INTO review_session_entries
                         (review_session_id, request_id, jurisdiction_ocdid, status, entry_number)
-                    VALUES (%s, %s, %s, 'viewing', %s)
+                    VALUES (%s, %s, %s, 'claimed', %s)
                     """,
                     (review_session_id, next_card.request_id, next_card.jurisdiction_ocdid, entry_number),
                 )
                 request_id = next_card.request_id
                 jurisdiction_ocdid = next_card.jurisdiction_ocdid
-                entry_status = ReviewSessionEntryStatus.VIEWING
                 has_more = len(rows) > 1
 
             await cur.execute(
@@ -297,7 +268,6 @@ async def navigate_to_entry(
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
-        "entry_status": entry_status,
         "resolved_count": counts.resolved_count,
         "has_more": has_more,
     }
