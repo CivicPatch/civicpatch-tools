@@ -1083,10 +1083,10 @@ async def list_jobs_with_open_prs(
     params: list = []
 
     if jurisdiction_ocdid:
-        conditions.append("arguments_json->>'jurisdiction_ocdid' = %s")
+        conditions.append("'jurisdiction_ocdid' = %s")
         params.append(jurisdiction_ocdid)
     elif state_code:
-        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        conditions.append("'jurisdiction_ocdid' LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
@@ -1100,12 +1100,12 @@ async def list_jobs_with_open_prs(
         await cur.execute(
             f"""
             SELECT j.request_id, j.pull_request_url, j.pull_request_status,
-                   j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid,
+                   j.jurisdiction_ocdid' AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at, j.pull_request_review_state
             FROM jobs j
             LEFT JOIN jurisdictions jur
-                   ON jur.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid'
             WHERE {where}
             ORDER BY (j.pull_request_review_state = 'changes_requested') DESC, j.created_at DESC
             LIMIT %s OFFSET %s
