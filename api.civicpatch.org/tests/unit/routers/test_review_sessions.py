@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock, patch
 from fastapi import HTTPException
 from psycopg.errors import UniqueViolation
 
+<<<<<<< HEAD
 from routers.api.review_sessions import _navigate_response
 
 
@@ -60,3 +61,5 @@ async def test_navigate_response_returns_done_reason_when_no_more_cards():
     with patch("routers.api.review_sessions.review_sessions_db.navigate_to_entry", new=AsyncMock(return_value={"done": "no_more_cards"})):
         response = await _navigate_response("session-1", 1)
     assert response == {"data": None, "reason": "no_more_cards"}
+=======
+>>>>>>> a0dc5bfe2 (Display markdown content with marked)
