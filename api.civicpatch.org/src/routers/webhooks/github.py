@@ -8,6 +8,7 @@ from urllib.parse import parse_qs
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
+from shared.utils.statuses import PullRequestStatus
 from database.database import update_job_pull_request_review_state, update_job_pull_request_status
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
@@ -38,11 +39,11 @@ def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None
     jurisdiction_ocdid = parts["jurisdiction_ocdid"]
 
     if action in ("opened", "reopened"):
-        return request_id, jurisdiction_ocdid, "open", None, pr_url
+        return request_id, jurisdiction_ocdid, PullRequestStatus.OPEN, None, pr_url
     if action == "closed" and pr.get("merged"):
-        return request_id, jurisdiction_ocdid, "merged", pr.get("merged_at"), pr_url
+        return request_id, jurisdiction_ocdid, PullRequestStatus.MERGED, pr.get("merged_at"), pr_url
     if action == "closed":
-        return request_id, jurisdiction_ocdid, "closed", None, pr_url
+        return request_id, jurisdiction_ocdid, PullRequestStatus.CLOSED, None, pr_url
 
     # assigned, labeled, synchronized, converted_to_draft, etc. — intentionally ignored
     logger.debug("Ignoring pull_request action: %s", action)
@@ -80,9 +81,9 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
         return
     request_id, jurisdiction_ocdid, status, merged_at, pr_url = result
     updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
-    if status in ("merged", "closed"):
+    if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
         await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
-    if not updated and status == "open":
+    if not updated and status == PullRequestStatus.OPEN:
         logger.info("Webhook: no job found for %s, creating", request_id)
         await register_and_sync_pr_job(request_id, jurisdiction_ocdid, pr_url, provider="github_webhook")
 

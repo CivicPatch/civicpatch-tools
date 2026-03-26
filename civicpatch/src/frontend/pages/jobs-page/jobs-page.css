@@ -20,3 +20,57 @@
     padding: 0.2em 0.75em;
     font-size: 0.8rem;
 }
+
+.jobs-page__duplicate-list {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+.jobs-page__duplicate-item {
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
+}
+
+.jobs-page__duplicate-item-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.85rem;
+    color: var(--pico-color);
+    margin: 0;
+}
+
+.jobs-page__duplicate-item-header:hover {
+    background: var(--pico-card-sectioning-background-color);
+}
+
+.jobs-page__duplicate-item-header--open {
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.jobs-page__duplicate-chevron {
+    font-size: 0.7rem;
+    color: var(--pico-muted-color);
+    transition: transform 0.15s ease;
+}
+
+.jobs-page__duplicate-item-header--open .jobs-page__duplicate-chevron {
+    transform: rotate(180deg);
+}
+
+.jobs-page__duplicate-item-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

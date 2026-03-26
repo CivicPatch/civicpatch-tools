@@ -136,20 +136,22 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             WHERE review_session_id = %s AND status = 'claimed'
         )
         SELECT j.request_id,
-               j.arguments_json->>'jurisdiction_ocdid' AS jurisdiction_ocdid
+               r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM jobs j
-        WHERE j.pull_request_status = 'open'
-          AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
+        JOIN requests r ON r.job_id = j.id
+        JOIN pull_requests pr ON pr.request_id = r.id
+        WHERE pr.status = 'open'
+          AND r.jurisdiction_ocdid LIKE %s
           AND NOT EXISTS (
               SELECT 1 FROM done
-              WHERE done.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+              WHERE done.jurisdiction_ocdid = r.jurisdiction_ocdid
           )
           AND NOT EXISTS (
               SELECT 1 FROM claimed
-              WHERE claimed.jurisdiction_ocdid = j.arguments_json->>'jurisdiction_ocdid'
+              WHERE claimed.jurisdiction_ocdid = r.jurisdiction_ocdid
           )
         ORDER BY
-            (j.arguments_json->>'jurisdiction_ocdid' IN (SELECT jurisdiction_ocdid FROM reclaimed)) ASC,
+            (r.jurisdiction_ocdid IN (SELECT jurisdiction_ocdid FROM reclaimed)) ASC,
             (j.pull_request_review_state = 'changes_requested') DESC,
             j.created_at DESC
         LIMIT %s
@@ -317,8 +319,10 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
                 UPDATE review_session_entries
                 SET status = 'resolved'
                 WHERE request_id IN (
-                    SELECT request_id FROM jobs
-                    WHERE pull_request_url LIKE %s
+                    SELECT j.request_id FROM jobs j
+                    JOIN requests r ON r.job_id = j.id
+                    JOIN pull_requests pr ON pr.request_id = r.id
+                    WHERE pr.url LIKE %s
                 )
                 AND status != 'resolved'
                 """,
@@ -379,10 +383,12 @@ async def get_review_stats(
 
             await cur.execute(
                 """
-                SELECT COUNT(DISTINCT j.arguments_json->>'jurisdiction_ocdid') AS available_count
+                SELECT COUNT(*) AS available_count
                 FROM jobs j
-                WHERE j.pull_request_status = 'open'
-                  AND j.arguments_json->>'jurisdiction_ocdid' LIKE %s
+                JOIN requests r ON r.job_id = j.id
+                JOIN pull_requests pr ON pr.request_id = r.id
+                WHERE pr.status = 'open'
+                  AND r.jurisdiction_ocdid LIKE %s
                 """,
                 (f"%state:{state_code}%",),
             )

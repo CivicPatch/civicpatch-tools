@@ -6,6 +6,7 @@ from typing import Any, Optional
 
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
+from shared.utils.statuses import JobStatus, PullRequestStatus
 import yaml
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
@@ -22,11 +23,12 @@ from database.database import (
     get_job_status,
     get_jobs_review_summary,
     get_jobs_with_errors,
-    register_job,
     update_job_pull_request_url,
+    update_job_pull_request_status,
     update_job_data,
     update_job_status,
 )
+from database.requests import register_request_with_job
 from job_service.people_collector import people_collector
 from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
@@ -47,9 +49,7 @@ class CreateJobRequest(BaseModel):
 class CreateRegisterJobRequest(BaseModel):
     request_id: str
     arguments: dict
-    server_source: Optional[str] = None
     run_url: Optional[str] = None
-
 
 class UpdateJobStatusRequest(BaseModel):
     status: str
@@ -136,7 +136,7 @@ def get_router(api_key_header):
                 status_code=500,
             )
 
-        return CreateJobResponse(request_id=request_id, status="PENDING")
+        return CreateJobResponse(request_id=request_id, status=JobStatus.PENDING)
 
     @router.post(
         "/register",
@@ -151,16 +151,16 @@ def get_router(api_key_header):
         print(
             f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
         )
-        _response = await register_job(
+        _response = await register_request_with_job(
             requested_by_provider=user.provider,
             requested_by_provider_user_id=user.provider_user_id,
             request_id=request.request_id,
             job_type="people",
             arguments_json=request.arguments,
-            server_source=request.server_source or None,
+            jurisdiction_ocdid=request.arguments.get("jurisdiction_ocdid"),
             run_url=request.run_url or None,
         )
-        return {"request_id": request.request_id, "status": "pending"}
+        return {"request_id": request.request_id, "status": JobStatus.PENDING}
 
     # ── Jobs: Status & Progress ──────────────
 
@@ -329,7 +329,7 @@ def get_router(api_key_header):
         background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
     ):
-        updated = await update_job_status(request_id=request_id, status="RESOLVED", progress=None)
+        updated = await update_job_status(request_id=request_id, status=JobStatus.RESOLVED, progress=None)
         if not updated:
             return JSONResponse(
                 content=ErrorResponse(error="Job not found").model_dump(),
@@ -342,11 +342,11 @@ def get_router(api_key_header):
             if jurisdiction_ocdid:
                 await pubsub_service.publish(
                     f"job_status:{jurisdiction_ocdid}",
-                    json.dumps({"request_id": request_id, "status": "RESOLVED", "progress": None}),
+                    json.dumps({"request_id": request_id, "status": JobStatus.RESOLVED, "progress": None}),
                 )
 
         background_tasks.add_task(_publish)
-        return {"request_id": request_id, "status": "RESOLVED"}
+        return {"request_id": request_id, "status": JobStatus.RESOLVED}
 
     @router.get(
         "/errors",
@@ -419,5 +419,25 @@ def get_router(api_key_header):
     ):
         jurisdiction_ocdids = await database.jobs.get_duplicate_jurisdiction_ocdids()
         return {"data": list(jurisdiction_ocdids)}
+
+    @router.post(
+        "/duplicates/close-stale",
+        summary="Close all but the latest open PR for each duplicate jurisdiction",
+    )
+    async def close_stale_duplicate_prs_endpoint(
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])
+        ),
+    ):
+        stale = await database.jobs.get_stale_duplicate_pr_info()
+        closed, failed = [], []
+        for item in stale:
+            success = await github_service.close_pull_request(str(item["pr_number"]))
+            if success:
+                await update_job_pull_request_status(item["request_id"], PullRequestStatus.CLOSED)
+                closed.append(item["request_id"])
+            else:
+                failed.append(item["request_id"])
+        return {"closed": closed, "failed": failed}
 
     return router

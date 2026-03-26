@@ -1,14 +1,15 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
-import { 
-  fetchPullRequestsWithData, 
-  fetchJobsWithErrors, 
-  mergePullRequest, 
-  closePullRequest, 
+import {
+  fetchPullRequestsWithData,
+  fetchJobsWithErrors,
+  mergePullRequest,
+  closePullRequest,
   resolveJob,
   fetchDuplicatePrJurisdictionJobs,
-  fetchPullRequests
+  fetchPullRequests,
+  closeStaleDuplicatePrs,
 } from "../../api.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
@@ -45,6 +46,8 @@ function JobsPage() {
 
   const [duplicateJurisdictions, setDuplicateJurisdictions] = useState([]);
   const [duplicateJurisdictionPRs, setDuplicateJurisdictionPRs] = useState({});
+  const [openJurisdictions, setOpenJurisdictions] = useState({});
+  const [closingStale, setClosingStale] = useState(false);
   const [pullRequests, setPullRequests] = useState([]);
   const [pullRequestState, setPullRequestState] = useState({});
 
@@ -168,40 +171,61 @@ function JobsPage() {
 
   const totalPages = Math.ceil(total / perPage);
 
-  // Lazy-load PRs for a jurisdiction_ocdid
-  const loadJurisdictionPRs = async (ocdid) => {
-    if (duplicateJurisdictionPRs[ocdid]) return; // already loaded
-    const prs = await fetchPullRequests(ocdid);
-    setDuplicateJurisdictionPRs((prev) => ({
-      ...prev,
-      [ocdid]: prs.data || [],
-    }));
+  const handleCloseStaleDuplicates = async () => {
+    setClosingStale(true);
+    try {
+      await closeStaleDuplicatePrs();
+      const result = await fetchDuplicatePrJurisdictionJobs();
+      setDuplicateJurisdictions(result.data || []);
+      setDuplicateJurisdictionPRs({});
+      setOpenJurisdictions({});
+    } finally {
+      setClosingStale(false);
+    }
   };
 
-  const duplicatePrList = duplicateJurisdictions.map((ocdid) => html`
-    <div class="duplicate-jurisdiction-card">
-      <button @click=${() => loadJurisdictionPRs(ocdid)}>
-        Load PRs for ${ocdid}
-      </button>
-      <div>
-        ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
-          const pullRequestNumber = pullRequestUrlToNumber(pr.pull_request_url);
-          return html`
-            <pr-card
-              @onMerge=${handleMerge}
-              @onClose=${handleClose}
-              .pr=${pr}
-              .state=${pullRequestState[pullRequestNumber]}
-              .data=${{
-                existing: pr.existing,
-                pull_request: pr.pull_request,
-              }}
-            ></pr-card>
-          `;
-        })}
+  // Lazy-load PRs for a jurisdiction_ocdid and toggle accordion open state
+  const loadJurisdictionPRs = async (ocdid) => {
+    setOpenJurisdictions((prev) => ({ ...prev, [ocdid]: !prev[ocdid] }));
+    if (!duplicateJurisdictionPRs[ocdid]) {
+      const prs = await fetchPullRequests(ocdid);
+      setDuplicateJurisdictionPRs((prev) => ({ ...prev, [ocdid]: prs.data || [] }));
+    }
+  };
+
+  const duplicatePrList = duplicateJurisdictions.map((ocdid) => {
+    const isOpen = openJurisdictions[ocdid];
+    return html`
+      <div class="jobs-page__duplicate-item">
+        <button
+          class="jobs-page__duplicate-item-header${isOpen ? ' jobs-page__duplicate-item-header--open' : ''}"
+          @click=${() => loadJurisdictionPRs(ocdid)}
+        >
+          <span>${ocdid}</span>
+          <span class="jobs-page__duplicate-chevron">▼</span>
+        </button>
+        ${isOpen ? html`
+          <div class="jobs-page__duplicate-item-body">
+            ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
+              const pullRequestNumber = pullRequestUrlToNumber(pr.pull_request_url);
+              return html`
+                <pr-card
+                  @onMerge=${handleMerge}
+                  @onClose=${handleClose}
+                  .pr=${pr}
+                  .state=${pullRequestState[pullRequestNumber]}
+                  .data=${{
+                    existing: pr.existing,
+                    pull_request: pr.pull_request,
+                  }}
+                ></pr-card>
+              `;
+            })}
+          </div>
+        ` : null}
       </div>
-    </div>
-  `);
+    `;
+  });
 
   const prList = loading
     ? html`<div>Loading...</div>`
@@ -269,9 +293,18 @@ function JobsPage() {
       </div>
       ${summarySection}
       ${errorSection}
-      <section>
-        <h2>Pull requests - duplicate jurisdictions</h2>
-        <div style="display: flex; gap: 2rem; flex-direction: column;">
+      <section class="jobs-page__duplicate-jurisdictions">
+        <div class="jobs-page__section-header">
+          <h2>Pull requests - duplicate jurisdictions</h2>
+          ${duplicateJurisdictions.length > 0 ? html`
+            <button
+              class="btn btn-sm destructive"
+              @click=${handleCloseStaleDuplicates}
+              ?disabled=${closingStale}
+            >${closingStale ? "Closing…" : "Close stale"}</button>
+          ` : null}
+        </div>
+        <div class="jobs-page__duplicate-list">
           ${duplicatePrList}
         </div>
       </section>
