@@ -87,8 +87,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setHasPrev(sessionData.has_prev ?? false);
     setReviewData(review?.data ?? null);
 
-    const sourceMarkdownUrls = [...new Set(card.data.pull_request?.map(pr => pr.markdown_urls).flat())]
-    setSourceContentUrls(sourceMarkdownUrls);
+    setSourceContentUrls(card.data.sources);
     setStoredEntry({ state_code: stateCode, entry_number: sessionData.entry_number });
     updateParams({ state: stateCode });
   };

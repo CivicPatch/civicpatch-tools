@@ -57,22 +57,6 @@ async def get_people_by_jurisdiction_ocdid(
 
     return [row[0] for row in rows]
 
-def _source_url_to_markdown_url(request_id, jurisdiction_ocdid_folder, source_url: str) -> str:
-    # For now, let's assume the markdown url is the same as the source url but with "/markdown" appended
-    # In the future, this could be a more complex transformation or lookup
-    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-    cache_url = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return cache_url
-
-def _enrich_with_markdown_urls(request_id: str, jurisdiction_ocdid: str, person: dict[str, Any]) -> dict[str, Any]:
-    # For ever source URL, let's figure out the markdown url
-    # The URL will be under storage_service.get_url(bucket, key) where bucket is "civicpatch-artifacts" 
-    # and key is "{request_id}/{jurisdiction_ocdid_folder}/{filename}"
-    jurisdiction_ocdid_folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    relative_paths = [_source_url_to_markdown_url(request_id, jurisdiction_ocdid_folder, url) for url in person.get("source_urls", [])]
-    markdown_urls = [services.storage_service.get_civicpatch_artifacts_url(relative_path) for relative_path in relative_paths]
-    return markdown_urls
-
 async def get_people_data_by_request_ids(
     jurisdiction_ocdids: list[str],
     request_ids: list[str],
@@ -119,13 +103,9 @@ async def get_people_data_by_request_ids(
 
     results: dict[str, dict[str, Any]] = {}
     for request_id, people_data, jurisdiction_ocdid in jobs_rows:
-        people_data_with_markdown_urls = [
-            {**person, "markdown_urls": _enrich_with_markdown_urls(request_id, jurisdiction_ocdid, person)}
-            for person in (people_data or [])
-        ]
         results[request_id] = {
             "existing": people_map.get(jurisdiction_ocdid, []),
-            "pull_request": people_data_with_markdown_urls,
+            "pull_request": people_data,
         }
 
     return results
