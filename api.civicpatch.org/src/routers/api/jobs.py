@@ -421,4 +421,17 @@ def get_router(api_key_header):
             "review_json": result["review_json"] if result else {},
         }
 
+    # -- Jobs: List Jobs where the pull requests have duplicate jurisdictions ───────────
+    @router.get(
+        "/duplicates",
+        summary="List jobs where the pull requests have duplicate jurisdictions",
+    )
+    async def list_jobs_with_duplicate_jurisdictions_endpoint(
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        jurisdiction_ocdids = await database.jobs.get_duplicate_jurisdiction_ocdids()
+        return {"data": list(jurisdiction_ocdids)}
+
     return router

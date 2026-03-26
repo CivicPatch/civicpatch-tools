@@ -1,7 +1,14 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
-import { fetchPullRequestsWithData, fetchJobsWithErrors, mergePullRequest, closePullRequest, resolveJob } from "../../api.js";
+import { 
+  fetchPullRequestsWithData, 
+  fetchJobsWithErrors, 
+  mergePullRequest, 
+  closePullRequest, 
+  resolveJob,
+  fetchDuplicatePrJurisdictionJobs
+} from "../../api.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
@@ -28,17 +35,22 @@ function setPageInUrl(page) {
 }
 
 function JobsPage() {
-  const { permissions } = useAuth();
+  const { permissions } = useAuth(); 
+  const [stateCode, setStateCode] = useState(getStateFromUrl());
+  const [page, setPage] = useState(getPageFromUrl());
+  const [total, setTotal] = useState(0);
+
+  const [jobsSummary, setJobsSummary] = useState(null);
+
+  const [duplicatePullRequests, setDuplicatePullRequests] = useState([]);
   const [pullRequests, setPullRequests] = useState([]);
   const [pullRequestState, setPullRequestState] = useState({});
+
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(getPageFromUrl());
-  const [stateCode, setStateCode] = useState(getStateFromUrl());
-  const [total, setTotal] = useState(0);
+
   const [errorJobs, setErrorJobs] = useState([]);
-  const [jobsSummary, setJobsSummary] = useState(null);
+  const [error, setError] = useState(null);
   const perPage = 20;
 
   useEffect(() => {
@@ -60,12 +72,14 @@ function JobsPage() {
     Promise.all([
       fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase()),
       fetchJobsWithErrors(stateCode.toLowerCase()),
+      fetchDuplicatePrJurisdictionJobs(),
     ])
-      .then(([prResult, errResult]) => {
+      .then(([prResult, errResult, duplicatePrResult]) => {
         setPullRequests(prResult.data || []);
         setTotal(prResult.total || 0);
         setErrorJobs(errResult.data || []);
         setJobsSummary(errResult.summary || null);
+        setDuplicatePullRequests(duplicatePrResult.data || []);
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
@@ -148,6 +162,22 @@ function JobsPage() {
 
   const totalPages = Math.ceil(total / perPage);
 
+  const duplicatePrList = duplicatePullRequests.map((pr) => {
+    const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
+    return html`
+      <pr-card
+        @onMerge=${handleMerge}
+        @onClose=${handleClose}
+        .pr=${pr.details}
+        .state=${pullRequestState[pullRequestNumber]}
+        .data=${{
+          existing: pr.existing,
+          pull_request: pr.pull_request,
+        }}
+      ></pr-card>
+    `;
+  });
+
   const prList = loading
     ? html`<div>Loading...</div>`
     : error
@@ -214,6 +244,12 @@ function JobsPage() {
       </div>
       ${summarySection}
       ${errorSection}
+      <section>
+        <h2>Pull requests - duplicate jurisdictions</h2>
+        <div style="display: flex; gap: 2rem; flex-direction: column;">
+          ${duplicatePrList}
+        </div>
+      </section>
       <section>
         <h2>Open pull requests</h2>
         <div style="display: flex; gap: 2rem; flex-direction: column;">
