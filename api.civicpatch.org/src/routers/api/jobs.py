@@ -426,7 +426,7 @@ def get_router(api_key_header):
     )
     async def close_stale_duplicate_prs_endpoint(
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])
         ),
     ):
         stale = await database.jobs.get_stale_duplicate_pr_info()

@@ -29,7 +29,7 @@ export function updateParams(updates) {
 
 export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [session, setSession] = useState(null);
-  const [currentJob, setCurrentJob] = useState(null);
+  const [currentRequest, setCurrentRequest] = useState(null);
   const [currentPeople, setCurrentPeople] = useState(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [resolvedCount, setResolvedCount] = useState(0);
@@ -79,7 +79,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
       fetchPullRequestDetail(sessionData.request_id),
       fetchReview(sessionData.request_id).catch(() => null),
     ]);
-    setCurrentJob(card.data.job);
+    setCurrentRequest(card.data.request);
     setCurrentPeople({ existing: card.data.existing, pull_request: card.data.pull_request });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
@@ -232,7 +232,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
 
   return {
     session, setSession,
-    currentJob, currentPeople,
+    currentRequest, currentPeople,
     entryNumber, resolvedCount,
     hasNext, hasPrev, isNavigating,
     prState, error, setError,

@@ -63,7 +63,7 @@ async def get_job_for_review(request_id: str) -> dict | None:
         await cur.execute(
             """
             SELECT pr.url, pr.status, j.pull_request_review_state,
-                   r.jurisdiction_ocdid AS jurisdiction_ocdid,
+                   r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j

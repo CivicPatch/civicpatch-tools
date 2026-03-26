@@ -21,6 +21,17 @@
     font-size: 0.8rem;
 }
 
+.jobs-page__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.jobs-page__section-header h2 {
+    margin: 0;
+}
+
 .jobs-page__duplicate-list {
     display: flex;
     gap: 0.5rem;

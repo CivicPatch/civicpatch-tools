@@ -89,9 +89,9 @@ async def get_people_data_by_request_ids(
                         SELECT jsonb_agg({result_projection})
                         FROM jsonb_array_elements(r.result_data) AS elem
                     ) AS people_data,
-                    r.jurisdiction_ocdid AS jurisdiction_ocdid
+                    r.jurisdiction_ocdid
                 FROM jobs j
-                JOIN requests r ON r.job_id = j.id
+                LEFT JOIN requests r ON r.job_id = j.id
                 WHERE j.request_id = ANY(%s)
                 """,
                 (request_ids,)
@@ -106,7 +106,7 @@ async def get_people_data_by_request_ids(
     for request_id, people_data, jurisdiction_ocdid in jobs_rows:
         results[request_id] = {
             "existing": people_map.get(jurisdiction_ocdid, []),
-            "pull_request": people_data,
+            "pull_request": people_data or [],  # jsonb_agg returns None for empty/null result_data
         }
 
     return results
