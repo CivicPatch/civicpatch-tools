@@ -7,6 +7,7 @@ import shared.utils.data_path_utils
 import shared.utils.url_utils
 
 import shared.utils.id_utils
+from shared.utils.statuses import PullRequestStatus
 import yaml
 from fastapi import (
     APIRouter,
@@ -305,9 +306,7 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        # TODO: what is this doing here? Get rid of it
-        # await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
-        await database.database.update_job_status(request_id, "REQUEST_TO_CLOSE")
+        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED)
         return {"status": "success"}
 
     # -- Pull Requests: Merge Pull Request ---
@@ -329,9 +328,7 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        # TODO: what is this doing here? Get rid of it
-        # await review_sessions_db.resolve_review_session_entries_by_pr_number(pull_request_number)
-        await database.database.update_job_status(request_id, "REQUEST_TO_MERGE")
+        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED)
         return {"status": "success"}
 
     return router

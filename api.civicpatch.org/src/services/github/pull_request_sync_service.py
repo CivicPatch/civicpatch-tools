@@ -1,8 +1,10 @@
 import logging
 
 import database.database as database
+import database.requests as requests_db
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
+from shared.utils.statuses import PullRequestStatus
 from utils.github_utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
@@ -52,17 +54,7 @@ async def register_and_sync_pr_job(
     pr_url: str | None,
     provider: str,
 ):
-    await database.register_job(
-        requested_by_provider=provider,
-        requested_by_provider_user_id=provider,
-        request_id=request_id,
-        job_type="people",
-        arguments_json={"jurisdiction_ocdid": jurisdiction_ocdid},
-        jurisdiction_ocdid=jurisdiction_ocdid,
-        status="COMPLETED",
-        progress=100,
-    )
-    await database.update_job_pull_request_status(request_id, "open", None, pull_request_url=pr_url)
+    await requests_db.register_foreign_request(request_id, jurisdiction_ocdid, pr_url, provider)
     await maybe_backfill_job_result(request_id, jurisdiction_ocdid)
 
 
@@ -86,7 +78,7 @@ async def _fetch_open_github_prs() -> dict[str, dict]:
 async def _sync_known_prs(github_prs: dict[str, dict]):
     for request_id, pr_info in github_prs.items():
         updated = await database.update_job_pull_request_status(
-            request_id, "open", None, pull_request_url=pr_info["url"]
+            request_id, PullRequestStatus.OPEN, None, pull_request_url=pr_info["url"]
         )
         if not updated:
             logger.info("sync_open_pr_state: no job found for %s, creating", request_id)
@@ -112,9 +104,9 @@ async def _close_stale_prs(github_request_ids: set[str]):
     for request_id in stale_ids:
         pr_url = db_open_jobs[request_id]
         pr_number = pull_request_url_to_number(pr_url) if pr_url else None
-        status, merged_at = "closed", None
+        status, merged_at = PullRequestStatus.CLOSED, None
         if pr_number:
             pr_data = await github_service.get_pull_request(pr_number)
             if pr_data and pr_data.get("merged"):
-                status, merged_at = "merged", pr_data.get("merged_at")
+                status, merged_at = PullRequestStatus.MERGED, pr_data.get("merged_at")
         await database.update_job_pull_request_status(request_id, status, merged_at)

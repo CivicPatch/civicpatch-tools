@@ -4,7 +4,9 @@ import math
 from typing import List, cast, Optional, Any
 from environment import get_env_vars
 import shared.utils.id_utils
+from shared.utils.statuses import JobStatus, PullRequestStatus
 from utils import hash_utils
+from utils.github_utils import pull_request_url_to_number
 from schemas.requests import ServerDetail
 
 from psycopg_pool import AsyncConnectionPool
@@ -640,62 +642,17 @@ async def list_jobs():
     return jobs
 
 
-async def register_job(
-        requested_by_provider: str,
-        requested_by_provider_user_id: str,
-        request_id: str,
-        job_type: str,
-        arguments_json: dict,
-        server_source: Optional[str] = None,
-        jurisdiction_ocdid: Optional[str] = None,
-        status: str = "PENDING",
-        progress: int = 0,
-        run_url: Optional[str] = None,
-):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        serialized_arguments = json.dumps(arguments_json)
-        await conn.execute(
-            """
-            INSERT INTO jobs (
-                request_id,
-                requested_by_provider,
-                requested_by_provider_user_id,
-                job_type,
-                status,
-                progress,
-                arguments_json,
-                server_source,
-                jurisdiction_ocdid,
-                run_url,
-                created_at, updated_at
-            )
-            VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-            );
-            """,
-            (
-                request_id,
-                requested_by_provider,
-                requested_by_provider_user_id,
-                job_type,
-                status,
-                progress,
-                serialized_arguments,
-                server_source,
-                jurisdiction_ocdid,
-                run_url,
-            ),
-        )
-
 async def get_job(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress, arguments_json, data_json, created_at, updated_at, pull_request_url, run_url FROM jobs
-            WHERE request_id = %s;
+            SELECT j.status, j.progress, r.arguments_json, r.result_data,
+                   j.created_at, j.updated_at, pr.url, j.run_url
+            FROM jobs j
+            LEFT JOIN requests r ON r.job_id = j.id
+            LEFT JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE j.request_id = %s;
             """,
             (request_id,),
         )
@@ -766,10 +723,11 @@ async def update_job_data(request_id: str, data_json: Any):
     async with pool.connection() as conn:
         result = await conn.execute(
             """
-            UPDATE jobs
-            SET data_json = %s,
+            UPDATE requests r
+            SET result_data = %s,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE request_id = %s;
+            FROM jobs j
+            WHERE j.id = r.job_id AND j.request_id = %s;
             """,
             (
                 json.dumps(data_json),
@@ -782,35 +740,35 @@ async def update_job_data(request_id: str, data_json: Any):
 
 async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
     pool = await get_pool()
-    async with pool.connection() as conn:
-        # Update jobs table
-        result = await conn.execute(
-            """
-            UPDATE jobs
-            SET pull_request_url = %s,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE request_id = %s;
-            """,
-            (
-                pull_request_url, 
-                request_id
-            ),
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT r.id FROM requests r JOIN jobs j ON j.id = r.job_id WHERE j.request_id = %s",
+            (request_id,),
         )
-        # Update status table
-        await conn.execute(
-            """
-            UPDATE status
-            SET status = %s,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE request_id = %s;
-            """,
-            (
-                "OPEN_PULL_REQUEST",
-                request_id
-            ),
-        )
-        if result.rowcount == 0:
+        row = await cur.fetchone()
+        if not row:
             return False
+        request_uuid = row[0]
+
+        pr_number = 0
+        if pull_request_url:
+            num = pull_request_url_to_number(pull_request_url)
+            pr_number = int(num) if num else 0
+
+        await cur.execute(
+            """
+            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
+            VALUES (%s, %s, 'DEFAULT', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (request_id) DO UPDATE
+                SET url = EXCLUDED.url,
+                    updated_at = CURRENT_TIMESTAMP
+            """,
+            (request_uuid, pull_request_url, pr_number),
+        )
+        await cur.execute(
+            "UPDATE requests SET pr_id = p.id FROM pull_requests p WHERE requests.id = %s AND p.request_id = requests.id",
+            (request_uuid,),
+        )
         return True
 
 async def check_user_owns_request_id(provider: str, provider_user_id: str, request_id: str) -> bool:
@@ -892,20 +850,16 @@ async def get_jurisdiction_states():
 
 ### Jurisdiction History ###
 async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]:
-    """
-    Get jobs where arguments_json->>'jurisdiction_ocdid' matches the given jurisdiction_ocdid.
-    and job_type = 'people'
-    Ordered by created_at DESC.
-    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT request_id, created_at, updated_at, status, progress, pull_request_url, run_url 
-            FROM jobs
-            WHERE arguments_json->>'jurisdiction_ocdid' = %s
-                AND job_type = %s
-            ORDER BY created_at DESC;
+            SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, j.run_url
+            FROM jobs j
+            JOIN requests r ON r.job_id = j.id
+            LEFT JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE r.jurisdiction_ocdid = %s AND r.request_type = %s
+            ORDER BY j.created_at DESC;
             """,
             (jurisdiction_ocdid, "people"),
         )
@@ -1061,16 +1015,32 @@ async def update_job_pull_request_status(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            UPDATE jobs
-            SET pull_request_status = %s,
-                pull_request_merged_at = %s,
-                pull_request_url = COALESCE(%s, pull_request_url)
-            WHERE request_id = %s
-            """,
-            (pull_request_status, pull_request_merged_at, pull_request_url, request_id),
+            "SELECT r.id FROM requests r JOIN jobs j ON j.id = r.job_id WHERE j.request_id = %s",
+            (request_id,),
         )
-        return cur.rowcount > 0
+        row = await cur.fetchone()
+        if not row:
+            return False
+        request_uuid = row[0]
+
+        pr_number = 0
+        if pull_request_url:
+            num = pull_request_url_to_number(pull_request_url)
+            pr_number = int(num) if num else 0
+
+        await cur.execute(
+            """
+            INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (request_id) DO UPDATE
+                SET status = EXCLUDED.status,
+                    merged_at = EXCLUDED.merged_at,
+                    url = COALESCE(EXCLUDED.url, pull_requests.url),
+                    updated_at = CURRENT_TIMESTAMP
+            """,
+            (request_uuid, pull_request_url, pull_request_status, pull_request_merged_at, pr_number),
+        )
+        return True
 
 
 async def list_jobs_with_open_prs(
@@ -1079,14 +1049,14 @@ async def list_jobs_with_open_prs(
     page: int = 1,
     per_page: int = 20,
 ) -> tuple[List[dict], int]:
-    conditions = ["pull_request_status = 'open'", "j.status NOT IN ('REQUEST_TO_CLOSE', 'REQUEST_TO_MERGE')"]
+    conditions = ["pr.status = 'open'"]
     params: list = []
 
     if jurisdiction_ocdid:
-        conditions.append("j.jurisdiction_ocdid = %s")
+        conditions.append("r.jurisdiction_ocdid = %s")
         params.append(jurisdiction_ocdid)
     elif state_code:
-        conditions.append("j.jurisdiction_ocdid LIKE %s")
+        conditions.append("r.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
@@ -1094,18 +1064,28 @@ async def list_jobs_with_open_prs(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(f"SELECT COUNT(*) FROM jobs j WHERE {where}", params)
+        await cur.execute(
+            f"""
+            SELECT COUNT(*)
+            FROM jobs j
+            JOIN requests r ON r.job_id = j.id
+            JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE {where}
+            """,
+            params,
+        )
         total = (await cur.fetchone())[0]
 
         await cur.execute(
             f"""
-            SELECT j.request_id, j.pull_request_url, j.pull_request_status,
-                   j.jurisdiction_ocdid AS jurisdiction_ocdid,
+            SELECT j.request_id, pr.url, pr.status,
+                   r.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at, j.pull_request_review_state
             FROM jobs j
-            LEFT JOIN jurisdictions jur
-                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid
+            JOIN requests r ON r.job_id = j.id
+            JOIN pull_requests pr ON pr.request_id = r.id
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
             ORDER BY (j.pull_request_review_state = 'changes_requested') DESC, j.created_at DESC
             LIMIT %s OFFSET %s
@@ -1134,16 +1114,18 @@ async def get_jobs_review_summary(state_code: Optional[str] = None) -> dict:
     params: list = []
     where = ""
     if state_code:
-        where = "WHERE arguments_json->>'jurisdiction_ocdid' LIKE %s"
+        where = "WHERE r.jurisdiction_ocdid LIKE %s"
         params.append(f"%state:{state_code}%")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
             SELECT
-                COUNT(*) FILTER (WHERE pull_request_review_state = 'changes_requested') AS changes_requested,
-                COUNT(*) FILTER (WHERE pull_request_url IS NOT NULL) AS total_with_pr
-            FROM jobs
+                COUNT(*) FILTER (WHERE j.pull_request_review_state = 'changes_requested' AND pr.status = 'open') AS changes_requested,
+                COUNT(*) FILTER (WHERE pr.status = 'open') AS total_with_pr
+            FROM jobs j
+            JOIN requests r ON r.job_id = j.id
+            LEFT JOIN pull_requests pr ON pr.request_id = r.id
             {where}
             """,
             params,
@@ -1153,18 +1135,26 @@ async def get_jobs_review_summary(state_code: Optional[str] = None) -> dict:
 
 
 async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
-    conditions = ["status = 'ERROR'"]
+    conditions = ["j.status = 'ERROR'"]
     params: list = []
 
     if state_code:
-        conditions.append("arguments_json->>'jurisdiction_ocdid' LIKE %s")
+        conditions.append("r.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(f"SELECT COUNT(*) FROM jobs WHERE {where}", params)
+        await cur.execute(
+            f"""
+            SELECT COUNT(*)
+            FROM jobs j
+            JOIN requests r ON r.job_id = j.id
+            WHERE {where}
+            """,
+            params,
+        )
         row = await cur.fetchone()
 
     return row[0]
@@ -1175,7 +1165,7 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
     params: list = []
 
     if state_code:
-        conditions.append("j.jurisdiction_ocdid LIKE %s")
+        conditions.append("r.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
 
     where = " AND ".join(conditions)
@@ -1185,12 +1175,12 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
         await cur.execute(
             f"""
             SELECT j.request_id,
-                   j.jurisdiction_ocdid AS jurisdiction_ocdid,
+                   r.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
-            LEFT JOIN jurisdictions jur
-                   ON jur.jurisdiction_ocdid = j.jurisdiction_ocdid
+            JOIN requests r ON r.job_id = j.id
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
             ORDER BY j.created_at DESC
             """,
@@ -1214,7 +1204,11 @@ async def get_job_data_json(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT data_json FROM jobs WHERE request_id = %s LIMIT 1",
+            """
+            SELECT r.result_data FROM requests r
+            JOIN jobs j ON j.id = r.job_id
+            WHERE j.request_id = %s LIMIT 1
+            """,
             (request_id,),
         )
         row = await cur.fetchone()
@@ -1225,7 +1219,11 @@ async def get_job_result(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT data_json, review_json FROM jobs WHERE request_id = %s LIMIT 1",
+            """
+            SELECT r.result_data, r.review_json FROM requests r
+            JOIN jobs j ON j.id = r.job_id
+            WHERE j.request_id = %s LIMIT 1
+            """,
             (request_id,),
         )
         row = await cur.fetchone()
@@ -1253,10 +1251,11 @@ async def update_job_review_json(request_id: str, review_json: dict):
     async with pool.connection() as conn:
         await conn.execute(
             """
-            UPDATE jobs
+            UPDATE requests r
             SET review_json = %s,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE request_id = %s;
+            FROM jobs j
+            WHERE j.id = r.job_id AND j.request_id = %s;
             """,
             (json.dumps(review_json), request_id),
         )
@@ -1266,7 +1265,13 @@ async def get_open_pr_request_ids() -> List[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT request_id, pull_request_url FROM jobs WHERE pull_request_status = 'open'"
+            """
+            SELECT j.request_id, pr.url
+            FROM jobs j
+            JOIN requests r ON r.job_id = j.id
+            JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE pr.status = 'open'
+            """
         )
         rows = await cur.fetchall()
     return {r[0]: r[1] for r in rows}
@@ -1278,7 +1283,13 @@ async def bulk_close_stale_prs(request_ids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE jobs SET pull_request_status = 'closed' WHERE request_id = ANY(%s)",
+            """
+            UPDATE pull_requests pr
+            SET status = 'closed', updated_at = CURRENT_TIMESTAMP
+            FROM requests r
+            JOIN jobs j ON j.id = r.job_id
+            WHERE pr.request_id = r.id AND j.request_id = ANY(%s)
+            """,
             (request_ids,),
         )
 

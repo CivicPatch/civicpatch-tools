@@ -202,7 +202,16 @@ export const fetchDuplicatePrJurisdictionJobs = async () => {
   const res = await fetch(`${API_URL}/api/v1/jobs/duplicates`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
-}
+};
+
+export const closeStaleDuplicatePrs = async () => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/duplicates/close-stale`, {
+    method: "POST",
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
 
 export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   const params = new URLSearchParams({ lat, long: lng, zoom });
