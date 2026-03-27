@@ -650,7 +650,7 @@ async def get_job(request_id: str):
             SELECT j.status, j.progress, r.arguments_json, r.result_data,
                    j.created_at, j.updated_at, pr.url, j.run_url
             FROM jobs j
-            LEFT JOIN requests r ON r.job_id = j.id
+            LEFT JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE j.request_id = %s;
             """,
@@ -727,7 +727,7 @@ async def update_job_data(request_id: str, data_json: Any):
             SET result_data = %s,
                 updated_at = CURRENT_TIMESTAMP
             FROM jobs j
-            WHERE j.id = r.job_id AND j.request_id = %s;
+            WHERE r.id = j.request_id AND j.request_id = %s;
             """,
             (
                 json.dumps(data_json),
@@ -740,22 +740,13 @@ async def update_job_data(request_id: str, data_json: Any):
 
 async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
     pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT r.id FROM requests r JOIN jobs j ON j.id = r.job_id WHERE j.request_id = %s",
-            (request_id,),
-        )
-        row = await cur.fetchone()
-        if not row:
-            return False
-        request_uuid = row[0]
+    pr_number = 0
+    if pull_request_url:
+        num = pull_request_url_to_number(pull_request_url)
+        pr_number = int(num) if num else 0
 
-        pr_number = 0
-        if pull_request_url:
-            num = pull_request_url_to_number(pull_request_url)
-            pr_number = int(num) if num else 0
-
-        await cur.execute(
+    async with pool.connection() as conn:
+        result = await conn.execute(
             """
             INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
             VALUES (%s, %s, 'DEFAULT', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
@@ -763,13 +754,9 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str = N
                 SET url = EXCLUDED.url,
                     updated_at = CURRENT_TIMESTAMP
             """,
-            (request_uuid, pull_request_url, pr_number),
+            (request_id, pull_request_url, pr_number),
         )
-        await cur.execute(
-            "UPDATE requests SET pr_id = p.id FROM pull_requests p WHERE requests.id = %s AND p.request_id = requests.id",
-            (request_uuid,),
-        )
-        return True
+        return result.rowcount > 0
 
 async def check_user_owns_request_id(provider: str, provider_user_id: str, request_id: str) -> bool:
     pool = await get_pool()
@@ -804,7 +791,6 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
                 ON ul.provider = j.requested_by_provider 
                 AND ul.provider_user_id = j.requested_by_provider_user_id
                 AND j.created_at >= NOW() - INTERVAL '24 hours'
-                AND j.server_source = 'origin_github_server'
             WHERE ul.provider = %s AND ul.provider_user_id = %s
             GROUP BY ul.daily_limit;
             """,
@@ -856,7 +842,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
             """
             SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, j.run_url
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = %s
             ORDER BY j.created_at DESC;
@@ -1025,22 +1011,13 @@ async def update_job_pull_request_status(
     resolved_by_user_id: Optional[str] = None,
 ) -> bool:
     pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT r.id FROM requests r JOIN jobs j ON j.id = r.job_id WHERE j.request_id = %s",
-            (request_id,),
-        )
-        row = await cur.fetchone()
-        if not row:
-            return False
-        request_uuid = row[0]
+    pr_number = 0
+    if pull_request_url:
+        num = pull_request_url_to_number(pull_request_url)
+        pr_number = int(num) if num else 0
 
-        pr_number = 0
-        if pull_request_url:
-            num = pull_request_url_to_number(pull_request_url)
-            pr_number = int(num) if num else 0
-
-        await cur.execute(
+    async with pool.connection() as conn:
+        await conn.execute(
             """
             INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, resolved_by_user_id, created_at, updated_at)
             VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
@@ -1051,7 +1028,7 @@ async def update_job_pull_request_status(
                     resolved_by_user_id = EXCLUDED.resolved_by_user_id,
                     updated_at = CURRENT_TIMESTAMP
             """,
-            (request_uuid, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
+            (request_id, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
         )
         return True
 
@@ -1081,7 +1058,7 @@ async def list_jobs_with_open_prs(
             f"""
             SELECT COUNT(*)
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE {where}
             """,
@@ -1096,7 +1073,7 @@ async def list_jobs_with_open_prs(
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at, j.pull_request_review_state
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
@@ -1137,7 +1114,7 @@ async def get_jobs_review_summary(state_code: Optional[str] = None) -> dict:
                 COUNT(*) FILTER (WHERE j.pull_request_review_state = 'changes_requested' AND pr.status = 'open') AS changes_requested,
                 COUNT(*) FILTER (WHERE pr.status = 'open') AS total_with_pr
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             {where}
             """,
@@ -1163,7 +1140,7 @@ async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
             f"""
             SELECT COUNT(*)
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             WHERE {where}
             """,
             params,
@@ -1192,7 +1169,7 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
             ORDER BY j.created_at DESC
@@ -1220,7 +1197,7 @@ async def get_job_data_json(request_id: str):
             """
             SELECT r.result_data
             FROM jobs j
-            LEFT JOIN requests r ON r.job_id = j.id
+            LEFT JOIN requests r ON r.id = j.request_id
             WHERE j.request_id = %s LIMIT 1
             """,
             (request_id,),
@@ -1235,7 +1212,7 @@ async def get_job_result(request_id: str):
         await cur.execute(
             """
             SELECT r.result_data, r.review_json FROM requests r
-            JOIN jobs j ON j.id = r.job_id
+            JOIN jobs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
             (request_id,),
@@ -1269,7 +1246,7 @@ async def update_job_review_json(request_id: str, review_json: dict):
             SET review_json = %s,
                 updated_at = CURRENT_TIMESTAMP
             FROM jobs j
-            WHERE j.id = r.job_id AND j.request_id = %s;
+            WHERE r.id = j.request_id AND j.request_id = %s;
             """,
             (json.dumps(review_json), request_id),
         )
@@ -1282,7 +1259,7 @@ async def get_open_pr_request_ids() -> List[str]:
             """
             SELECT j.request_id, pr.url
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE pr.status = 'open'
             """
@@ -1300,9 +1277,8 @@ async def bulk_close_stale_prs(request_ids: List[str]):
             """
             UPDATE pull_requests pr
             SET status = 'closed', updated_at = CURRENT_TIMESTAMP
-            FROM requests r
-            JOIN jobs j ON j.id = r.job_id
-            WHERE pr.request_id = r.id AND j.request_id = ANY(%s)
+            FROM jobs j
+            WHERE pr.request_id = j.request_id AND j.request_id = ANY(%s)
             """,
             (request_ids,),
         )

@@ -138,7 +138,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
         SELECT j.request_id,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM jobs j
-        JOIN requests r ON r.job_id = j.id
+        JOIN requests r ON r.id = j.request_id
         JOIN pull_requests pr ON pr.request_id = r.id
         WHERE pr.status = 'open'
           AND r.jurisdiction_ocdid LIKE %s
@@ -320,7 +320,7 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
                 SET status = 'resolved'
                 WHERE request_id IN (
                     SELECT j.request_id FROM jobs j
-                    JOIN requests r ON r.job_id = j.id
+                    JOIN requests r ON r.id = j.request_id
                     JOIN pull_requests pr ON pr.request_id = r.id
                     WHERE pr.url LIKE %s
                 )
@@ -385,7 +385,7 @@ async def get_review_stats(
                 """
                 SELECT COUNT(*) AS available_count
                 FROM jobs j
-                JOIN requests r ON r.job_id = j.id
+                JOIN requests r ON r.id = j.request_id
                 JOIN pull_requests pr ON pr.request_id = r.id
                 WHERE pr.status = 'open'
                   AND r.jurisdiction_ocdid LIKE %s

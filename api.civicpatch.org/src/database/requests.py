@@ -20,17 +20,15 @@ async def register_request_with_job(
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
-        cur = await conn.execute(
+        await conn.execute(
             """
-            INSERT INTO requests (status, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            RETURNING id
+            INSERT INTO requests (id, status, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (status, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
+            (request_id, status, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
         )
-        request_uuid = (await cur.fetchone())[0]
 
-        cur = await conn.execute(
+        await conn.execute(
             """
             INSERT INTO jobs (
                 request_id, requested_by_provider, requested_by_provider_user_id,
@@ -38,16 +36,9 @@ async def register_request_with_job(
                 created_at, updated_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            RETURNING id
             """,
             (request_id, requested_by_provider, requested_by_provider_user_id,
              status, progress, server_source, run_url),
-        )
-        job_id = (await cur.fetchone())[0]
-
-        await conn.execute(
-            "UPDATE requests SET job_id = %s WHERE id = %s",
-            (job_id, request_uuid),
         )
 
 
@@ -64,33 +55,24 @@ async def register_foreign_request(
     """
     pool = await get_pool()
     async with pool.connection() as conn:
-        cur = await conn.execute(
+        await conn.execute(
             """
-            INSERT INTO requests (status, request_type, jurisdiction_ocdid, created_at, updated_at)
-            VALUES (%s, 'people', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            RETURNING id
+            INSERT INTO requests (id, status, request_type, jurisdiction_ocdid, created_at, updated_at)
+            VALUES (%s, %s, 'people', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (JobStatus.COMPLETED, jurisdiction_ocdid),
+            (request_id, JobStatus.COMPLETED, jurisdiction_ocdid),
         )
-        request_uuid = (await cur.fetchone())[0]
 
         # Minimal job row so the request can be looked up by its foreign request_id string
-        cur = await conn.execute(
+        await conn.execute(
             """
             INSERT INTO jobs (
                 request_id, requested_by_provider, requested_by_provider_user_id,
                 status, progress, created_at, updated_at
             )
             VALUES (%s, %s, %s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            RETURNING id
             """,
             (request_id, provider, provider, JobStatus.COMPLETED),
-        )
-        job_id = (await cur.fetchone())[0]
-
-        await conn.execute(
-            "UPDATE requests SET job_id = %s WHERE id = %s",
-            (job_id, request_uuid),
         )
 
         pr_number = 0
@@ -98,17 +80,10 @@ async def register_foreign_request(
             num = pull_request_url_to_number(pr_url)
             pr_number = int(num) if num else 0
 
-        cur = await conn.execute(
+        await conn.execute(
             """
             INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
             VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            RETURNING id
             """,
-            (request_uuid, pr_url, PullRequestStatus.OPEN, pr_number),
-        )
-        pr_uuid = (await cur.fetchone())[0]
-
-        await conn.execute(
-            "UPDATE requests SET pr_id = %s WHERE id = %s",
-            (pr_uuid, request_uuid),
+            (request_id, pr_url, PullRequestStatus.OPEN, pr_number),
         )

@@ -1,7 +1,8 @@
 import os
 import asyncio
 import logging
-from typing import Any, Dict, List
+from typing import List
+from shared.schemas import Official
 import services.storage_service
 import shared.utils.data_path_utils
 import shared.utils.url_utils
@@ -38,7 +39,7 @@ logger = logging.getLogger(__name__)
 class PostJobPullRequestDataRequest(BaseModel):
     jurisdiction_ocdid: str
     request_id: str
-    data: List[Dict[str, Any]]
+    data: List[Official]
 
 
 # ──────────────────────────────────────────────
@@ -152,16 +153,17 @@ def get_router(api_key_header):
         branch_name = shared.utils.id_utils.make_git_branch(
             request.jurisdiction_ocdid, request.request_id
         )
+        normalized = [official.model_dump() for official in request.data]
         _github_response = await github_service.update_pull_request_file(
             branch_name=branch_name,
             file_path=f"data/{file_path}.yml",
-            new_data=request.data,
+            new_data=normalized,
             commit_message=f"Data update by {user_name}",
         )
 
         # Update the results_json in the background, too
         background_tasks.add_task(
-            database.database.update_job_data, request.request_id, request.data
+            database.database.update_job_data, request.request_id, normalized
         )
         if not _github_response:
             return JSONResponse(

@@ -1,7 +1,29 @@
 from decimal import Decimal
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
+
+
+class Office(BaseModel):
+    name: str
+    division_ocdid: Optional[str] = None
+
+
+class Official(BaseModel):
+    id: str
+    name: str
+    other_names: List[str] = []
+    phones: List[str] = []
+    emails: List[str] = []
+    urls: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    office: Optional[Office] = None
+    image: Optional[str] = None
+    jurisdiction_ocdid: str
+    cdn_image: Optional[str] = None
+    source_urls: List[str]
+    updated_at: str
 
 
 class Person(BaseModel):
