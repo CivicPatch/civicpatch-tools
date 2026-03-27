@@ -1016,8 +1016,11 @@ async def update_job_pull_request_status(
         num = pull_request_url_to_number(pull_request_url)
         pr_number = int(num) if num else 0
 
-    async with pool.connection() as conn:
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT 1 FROM requests WHERE id = %s", (request_id,))
+        if not await cur.fetchone():
+            return False
+        await cur.execute(
             """
             INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, resolved_by_user_id, created_at, updated_at)
             VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
