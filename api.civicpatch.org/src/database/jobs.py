@@ -10,7 +10,7 @@ async def get_duplicate_jurisdiction_ocdids() -> set:
             """
             SELECT r.jurisdiction_ocdid
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE pr.status = 'open'
             """
@@ -37,13 +37,13 @@ async def get_stale_duplicate_pr_info() -> list[dict]:
                         PARTITION BY r.jurisdiction_ocdid ORDER BY j.created_at DESC
                     ) AS rn
                 FROM jobs j
-                JOIN requests r ON r.job_id = j.id
+                JOIN requests r ON r.id = j.request_id
                 JOIN pull_requests pr ON pr.request_id = r.id
                 WHERE pr.status = 'open'
                   AND r.jurisdiction_ocdid IN (
                       SELECT r2.jurisdiction_ocdid
                       FROM jobs j2
-                      JOIN requests r2 ON r2.job_id = j2.id
+                      JOIN requests r2 ON r2.id = j2.request_id
                       JOIN pull_requests pr2 ON pr2.request_id = r2.id
                       WHERE pr2.status = 'open'
                       GROUP BY r2.jurisdiction_ocdid
@@ -67,7 +67,7 @@ async def get_job_for_review(request_id: str) -> dict | None:
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
-            JOIN requests r ON r.job_id = j.id
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE j.request_id = %s
