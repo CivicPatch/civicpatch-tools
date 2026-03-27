@@ -10,7 +10,6 @@ class Office(BaseModel):
 
 
 class Official(BaseModel):
-    id: str
     name: str
     other_names: List[str] = []
     phones: List[str] = []
@@ -24,6 +23,7 @@ class Official(BaseModel):
     cdn_image: Optional[str] = None
     source_urls: List[str]
     updated_at: str
+    id: str
 
 
 class Person(BaseModel):
