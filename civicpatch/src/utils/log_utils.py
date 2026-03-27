@@ -29,8 +29,7 @@ class WorkflowLogger:
             self._write("DEBUG", message)
 
     def warning(self, message: str):
-        if get_env_vars().get("LOG_LEVEL", "INFO").upper() == "DEBUG":
-            self._write("WARNING", message)
+        self._write("WARNING", message)
     
     def info(self, message: str):
         self._write("INFO", message)

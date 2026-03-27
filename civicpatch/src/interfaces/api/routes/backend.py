@@ -52,7 +52,7 @@ def get_router() -> APIRouter:
             if "maintainers" not in me.get("teams", []):
                 raise HTTPException(status_code=403, detail="Remote scraping requires maintainer access")
         else:
-            if not services.civicpatch_api.can_scrape_locally:
+            if not services.civicpatch_api.can_scrape_locally():
                 raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
 
         request_id = id_utils.make_request_id()
@@ -80,7 +80,7 @@ def get_router() -> APIRouter:
     async def stop_pipeline_endpoint(
         jurisdiction_ocdid: str,
     ):
-        if not services.civicpatch_api.can_scrape_locally:
+        if not services.civicpatch_api.can_scrape_locally():
             raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
 
         workflow = get_workflow(jurisdiction_ocdid)
