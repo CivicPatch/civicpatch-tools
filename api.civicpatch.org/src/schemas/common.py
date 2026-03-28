@@ -56,6 +56,7 @@ class Identity(BaseModel):
     provider_user_id: str
     email: str | None
     teams: list[str] | None
+    user_id: str | None = None
 
 
 class PeopleJobHistory(BaseModel):

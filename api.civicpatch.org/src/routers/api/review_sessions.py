@@ -1,6 +1,5 @@
 import logging
 import time
-from datetime import date
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -37,13 +36,13 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        cache_key = f"review_stats:{user.provider}:{user.provider_user_id}:{state_code}"
+        cache_key = f"review_stats:{user.user_id}:{state_code}"
         cached = await cache_service.get_cached(cache_key)
         if cached:
             cached.pop("expires_at", None)
             return {"data": cached}
         stats = await review_sessions_db.get_review_stats(
-            user.provider, user.provider_user_id, state_code
+            user.user_id, state_code
         )
         await cache_service.set_cached(cache_key, stats, expires_at=time.time() + STATS_CACHE_TTL)
         return {"data": stats}
@@ -56,9 +55,7 @@ def get_router() -> APIRouter:
         ),
     ):
         session = await review_sessions_db.create_or_get_review_session(
-            user.provider,
-            user.provider_user_id,
-            date.today(),
+            user.user_id,
             body.state_code,
             body.daily_goal,
         )

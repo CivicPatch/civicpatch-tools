@@ -153,6 +153,7 @@ async def get_user(provider, provider_user_id):
         await cur.execute(
             """
             SELECT
+                u.id,
                 u.email,
                 u.server_url,
                 u.created_at,
@@ -161,7 +162,7 @@ async def get_user(provider, provider_user_id):
             LEFT JOIN user_roles r
                 ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
             WHERE u.provider_user_id = %s AND u.provider = %s
-            GROUP BY u.email, u.server_url, u.created_at
+            GROUP BY u.id, u.email, u.server_url, u.created_at
             """,
             (provider_user_id, provider),
         )
@@ -169,10 +170,11 @@ async def get_user(provider, provider_user_id):
         if not row:
             return None
         return {
-            "email": row[0],
-            "server_url": row[1],
-            "created_at": row[2],
-            "teams": row[3], 
+            "id": str(row[0]),
+            "email": row[1],
+            "server_url": row[2],
+            "created_at": row[3],
+            "teams": row[4],
         }
 async def get_user_by_api_key_id(api_key_id):
     pool = await get_pool()
@@ -206,6 +208,7 @@ async def get_user_by_api_key(api_key):
         await cur.execute(
             """
             SELECT
+                u.id,
                 u.provider,
                 u.provider_user_id,
                 u.email,
@@ -216,7 +219,7 @@ async def get_user_by_api_key(api_key):
             JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
             LEFT JOIN user_roles r ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
             WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
-            GROUP BY u.provider, u.provider_user_id, u.email, u.server_url, u.created_at
+            GROUP BY u.id, u.provider, u.provider_user_id, u.email, u.server_url, u.created_at
             """,
             (candidate_api_key_hash,),
         )
@@ -225,12 +228,13 @@ async def get_user_by_api_key(api_key):
             return None
 
         return {
-            "provider": row[0],
-            "provider_user_id": row[1],
-            "email": row[2],
-            "server_url": row[3],
-            "created_at": row[4],
-            "teams": row[5],
+            "id": str(row[0]),
+            "provider": row[1],
+            "provider_user_id": row[2],
+            "email": row[3],
+            "server_url": row[4],
+            "created_at": row[5],
+            "teams": row[6],
         }
 
 async def get_user_details(provider, provider_user_id):

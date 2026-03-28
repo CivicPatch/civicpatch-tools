@@ -78,7 +78,8 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         provider=user.get("provider"),
         provider_user_id=user.get("provider_user_id"),
         email=user.get("email"),
-        teams=user.get("teams", []),  # <-- pass list of teams
+        teams=user.get("teams", []),
+        user_id=user.get("id"),
     )
 
 
@@ -103,20 +104,18 @@ async def get_user_by_cookie(request, token: str) -> Identity:
                 detail="CSRF check failed for cookie-authenticated request",
             )
 
-    teams = session.get("teams") or []
-    if not teams:
-        provider = session["provider"]
-        provider_user_id = session["provider_user_id"]
-        user_row = await database.get_user(provider, provider_user_id)
-        if user_row and user_row.get("teams"):
-            teams = user_row["teams"]
+    provider = session["provider"]
+    provider_user_id = session["provider_user_id"]
+    user_row = await database.get_user(provider, provider_user_id)
+    teams = session.get("teams") or (user_row.get("teams") if user_row else []) or []
 
     return Identity(
         type="cookie",
-        provider=session["provider"],
-        provider_user_id=session["provider_user_id"],
+        provider=provider,
+        provider_user_id=provider_user_id,
         email=session.get("email"),
         teams=teams,
+        user_id=user_row.get("id") if user_row else None,
     )
 
 
