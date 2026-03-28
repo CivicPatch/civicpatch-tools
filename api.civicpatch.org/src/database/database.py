@@ -1254,6 +1254,29 @@ async def get_requests_for_export(
     ]
 
 
+async def get_people_by_state(state: str) -> list[dict]:
+    state_prefix = f"ocd-jurisdiction/country:us/state:{state.lower()}%"
+    pool = await get_pool()
+    rows = []
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, data
+            FROM people
+            WHERE jurisdiction_ocdid LIKE %s
+              AND status = 'current'
+            ORDER BY jurisdiction_ocdid
+            """,
+            (state_prefix,),
+        )
+        while True:
+            batch = await cur.fetchmany(200)
+            if not batch:
+                break
+            rows.extend(batch)
+    return [{"jurisdiction_ocdid": r[0], **r[1]} for r in rows]
+
+
 async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:
