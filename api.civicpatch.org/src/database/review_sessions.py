@@ -4,6 +4,7 @@ from enum import StrEnum
 from typing import Any
 from database.database import get_pool
 from psycopg.rows import namedtuple_row
+from shared.utils.date_utils import today_utc_isoformat
 
 logger = logging.getLogger(__name__)
 
@@ -42,20 +43,29 @@ async def create_or_get_review_session(
                 row = await cur.fetchone()
                 daily_goal = row.daily_goal if row else 10
 
+            # Clear non-resolved entries so every "start review" is a fresh slate
+            await cur.execute(
+                """
+                DELETE FROM review_session_entries
+                WHERE review_session_id IN (
+                    SELECT id FROM review_sessions
+                    WHERE provider = %s
+                      AND provider_user_id = %s
+                      AND session_date = %s
+                      AND state_code = %s
+                )
+                AND status NOT IN ('resolved')
+                """,
+                (provider, provider_user_id, session_date, state_code),
+            )
+
             await cur.execute(
                 """
                 INSERT INTO review_sessions
                     (provider, provider_user_id, session_date, state_code, daily_goal)
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (provider, provider_user_id, session_date, state_code)
-                    DO UPDATE SET daily_goal = GREATEST(
-                        EXCLUDED.daily_goal,
-                        (
-                            SELECT COUNT(*) FROM review_session_entries
-                            WHERE review_session_id = review_sessions.id
-                              AND status NOT IN ('resolved')
-                        )
-                    )
+                    DO UPDATE SET daily_goal = EXCLUDED.daily_goal
                 RETURNING id, state_code, daily_goal, session_date, created_at
                 """,
                 (provider, provider_user_id, session_date, state_code, daily_goal),
@@ -71,54 +81,19 @@ async def create_or_get_review_session(
     }
 
 
-# TODO: rename to get_current_session_with_current_entry
-async def get_today_session_with_current_entry(
-    provider: str,
-    provider_user_id: str,
-    state_code: str,
-) -> dict[str, Any] | None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        async with conn.cursor(row_factory=namedtuple_row) as cur:
-            await cur.execute(
-                """
-                SELECT rs.id, rs.state_code, rs.daily_goal, rs.session_date, rs.created_at,
-                       (
-                           SELECT array_agg(entry_number)
-                           FROM review_session_entries
-                           WHERE review_session_id = rs.id AND status = 'passed'
-                       ) AS passed_entry_numbers
-                FROM review_sessions rs
-                WHERE rs.provider = %s
-                  AND rs.provider_user_id = %s
-                  AND rs.session_date = CURRENT_DATE
-                  AND rs.state_code = %s
-                LIMIT 1
-                """,
-                (provider, provider_user_id, state_code),
-            )
-            row = await cur.fetchone()
-            if not row:
-                return None
-
-    session = {
-        "id": str(row.id),
-        "state_code": row.state_code,
-        "daily_goal": row.daily_goal,
-        "session_date": row.session_date.isoformat(),
-        "created_at": row.created_at.isoformat(),
-    }
-
-    return {
-        "session": session,
-        "passed_entry_numbers": row.passed_entry_numbers or [],
-    }
-
-
 async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: int = 1):
     await cur.execute(
         """
         WITH
+        cleanup AS (
+            DELETE FROM review_session_entries
+            WHERE review_session_id IN (
+                SELECT id FROM review_sessions
+                WHERE session_date = CURRENT_DATE AND id != %s
+            )
+            AND status NOT IN ('resolved')
+            AND created_at < NOW() - INTERVAL '30 minutes'
+        ),
         done AS (
             SELECT jurisdiction_ocdid FROM review_session_entries
             WHERE review_session_id = %s AND status IN ('resolved', 'passed')
@@ -156,7 +131,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             j.created_at DESC
         LIMIT %s
         """,
-        (review_session_id, review_session_id, review_session_id, f"%state:{state_code}%", limit),
+        (review_session_id, review_session_id, review_session_id, review_session_id, f"%state:{state_code}%", limit),
     )
     return await cur.fetchall()
 
@@ -408,10 +383,27 @@ async def get_review_stats(
             )
             claimed = await cur.fetchone()
 
+            await cur.execute(
+                """
+                SELECT rs.session_date::text AS date, COUNT(*) AS count
+                FROM review_session_entries rse
+                JOIN review_sessions rs ON rs.id = rse.review_session_id
+                WHERE rs.provider = %s AND rs.provider_user_id = %s
+                  AND rse.status = 'resolved'
+                  AND rs.session_date >= CURRENT_DATE - INTERVAL '16 weeks'
+                GROUP BY rs.session_date
+                ORDER BY rs.session_date
+                """,
+                (provider, provider_user_id),
+            )
+            daily_rows = await cur.fetchall()
+
     return {
         "today_resolved": stats.today_resolved,
         "streak": streak_row.length if streak_row else 0,
         "all_time_resolved": stats.all_time_resolved,
         "available_count": available.available_count,
         "claimed_count": claimed.claimed_count,
+        "daily_counts": [{"date": row.date, "count": row.count} for row in daily_rows],
+        "current_date": today_utc_isoformat(),
     }

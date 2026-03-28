@@ -8,7 +8,7 @@ import "./source-content/index.js";
 
 function ReviewSession({
   goal, entryNumber, hasNext, hasPrev,
-  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState, jurisdictionOcdid,
+  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState, pullRequestStatus, jurisdictionOcdid,
   currentPeople, tableData, selectedPeople, reviewData, sourceContentUrls,
   passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
   onMerge, onAdvance, onBack, onPass, onNavigateTo, onPause,
@@ -52,6 +52,7 @@ function ReviewSession({
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<span class="review-page__jurisdiction">${jurisdictionName}</span>` : ""}
+          ${pullRequestStatus ? html`<span class="review-page__pr-status review-page__pr-status--${pullRequestStatus}">${pullRequestStatus}</span>` : ""}
           ${reviewState ? html`<span class="review-page__review-state review-page__review-state--${reviewState}">${reviewState === "changes_requested" ? "Changes requested" : "Approved"}</span>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
           ${jurisdictionOcdid ? html`<a class="btn btn-sm" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">Detail ↗</a>` : ""}

@@ -14,13 +14,16 @@
     gap: 0.2em;
     text-align: left;
     border: 1.5px solid var(--pico-muted-border-color);
-    cursor: pointer;
     transition: border-color 0.15s ease;
     width: 100%;
     position: relative;
 }
 
-.stat-cards__card:hover {
+button.stat-cards__card {
+    cursor: pointer;
+}
+
+button.stat-cards__card:hover {
     border-color: var(--pico-primary);
 }
 
@@ -56,7 +59,7 @@
     transition: color 0.15s ease;
 }
 
-.stat-cards__card:hover .stat-cards__copy-icon {
+button.stat-cards__card:hover .stat-cards__copy-icon {
     color: var(--pico-primary);
 }
 

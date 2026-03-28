@@ -251,7 +251,6 @@ def get_router(api_key_header):
     @router.get("/{request_id}/detail")
     async def get_pull_request_detail(
         request_id: str,
-        background_tasks: BackgroundTasks,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
@@ -259,8 +258,6 @@ def get_router(api_key_header):
         pr_metadata = await database.pull_requests.get_pull_request_for_review(request_id)
         if not pr_metadata:
             raise HTTPException(status_code=404, detail="Pull request not found")
-
-        # TODO: get live status if syncs are slow
 
         jurisdiction_ocdid = pr_metadata["jurisdiction_ocdid"]
         folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)

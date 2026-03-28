@@ -241,13 +241,6 @@ export const fetchReviewStats = async (stateCode) => {
   return res.json();
 };
 
-export const getTodayReviewSession = async (stateCode) => {
-  const params = new URLSearchParams({ state_code: stateCode });
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/today?${params}`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const createReviewSession = async (stateCode, dailyGoal) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions`, {
     method: "POST",

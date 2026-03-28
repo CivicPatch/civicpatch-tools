@@ -16,6 +16,7 @@
 @import "../pages/review-page/review-page.css";
 @import "../pages/review-page/source-content/source-content.css";
 @import "../components/stat-cards/stat-cards.css";
+@import "../components/streak-graph/streak-graph.css";
 @import "../components/search-jurisdictions/search-jurisdictions.css";
 @import "../pages/jurisdictions-page/jurisdiction-sidebar.css";
 @import "../pages/jurisdictions-page/scrape-modal/scrape-modal.css";

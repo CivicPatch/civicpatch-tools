@@ -432,15 +432,9 @@ async def get_pull_request_review_state(pr_number: int) -> str | None:
 
 async def get_pull_request(pull_request_number: str) -> dict | None:
     _, _, _, open_data_repo_url = _get_github_config()
-    async with httpx.AsyncClient() as client:
-        default_headers = await get_default_headers()
-        response = await client.get(
-            f"{open_data_repo_url}/pulls/{pull_request_number}",
-            headers=default_headers,
-        )
-        if response.status_code != 200:
-            return None
-        return response.json()
+    url = f"{open_data_repo_url}/pulls/{pull_request_number}"
+    cache_key = f"github:pr:{pull_request_number}"
+    return await cached_github_get(url, cache_key)
 
 
 async def close_pull_request(pull_request_number: str) -> bool:
