@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { createReviewSession } from "../../api.js";
+import { createReviewSession, generatePersonId } from "../../api.js";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
@@ -50,12 +50,53 @@ function ReviewPage() {
     peopleToSubmit,
     selectedPeople,
     assignPeople,
+    addPerson,
+    updatePerson,
     handleTableDataChange,
     handleTableDataReorder,
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
     handleResetAll,
   } = usePeopleState({ people: prPeople?.pull_request ?? [] });
+
+  async function handleAdd() {
+    const person_id = await generatePersonId();
+    const people = prPeople?.pull_request ?? [];
+    const last = people[people.length - 1] ?? null;
+    addPerson({
+      id: person_id,
+      _changes: [],
+      _selected: false,
+      _deleted: false,
+      _isNew: true,
+      name: "",
+      other_names: [],
+      phones: [],
+      emails: [],
+      urls: last?.urls?.[0] ? [last.urls[0]] : [],
+      start_date: null,
+      end_date: null,
+      office: {
+        name: "Council Member",
+        division_ocdid: people[0]?.office?.division_ocdid ?? null,
+      },
+      image: null,
+      cdn_image: null,
+      jurisdiction_ocdid: jurisdictionOcdid,
+      source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
+      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
+    });
+  }
+
+  function handleLinkPerson(proposedPerson, personId, existingPeople) {
+    const existingPerson = existingPeople.find(p => p.id === personId);
+    const currentOtherNames = proposedPerson.other_names || [];
+    const other_names = Array.from(new Set([
+      ...currentOtherNames,
+      ...(existingPerson?.name && existingPerson.name !== proposedPerson.name ? [existingPerson.name] : []),
+    ]));
+    updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
+  }
 
   useEffect(() => {
     assignPeople(prPeople?.pull_request ?? []);
@@ -144,6 +185,8 @@ function ReviewPage() {
     .onPeopleMerge=${handlePeopleMerge}
     .onBulkDelete=${handleBulkDelete}
     .onReset=${handleResetAll}
+    .onAdd=${handleAdd}
+    .onLinkPerson=${handleLinkPerson}
   ></review-session>`;
 }
 

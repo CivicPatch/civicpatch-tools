@@ -96,6 +96,7 @@ roles:
       - member
       - councilmen
       - councilwomen
+      - council members
   - role: committee member
     is_unique: true
     aliases:
