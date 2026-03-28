@@ -24,7 +24,7 @@ WHERE j.created_at = ir.created_at;
 UPDATE requests r
 SET job_id = j.id
 FROM jobs j
-WHERE r.id = j.request_id;
+WHERE r.id = j.request_id::uuid;
 
 -- 4. Port Pull Requests
 INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, created_at, updated_at)
@@ -39,7 +39,7 @@ WHERE j.pull_request_url IS NOT NULL;
 UPDATE requests r
 SET pr_id = p.id
 FROM pull_requests p
-WHERE r.id = p.request_id;
+WHERE r.id = p.request_id::uuid;
 
 -- 6. Simple Renames (No DO block, less risk of syntax error)
 -- If these fail because you already renamed them, just comment them out.
