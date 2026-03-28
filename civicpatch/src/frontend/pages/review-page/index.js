@@ -29,7 +29,7 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    pullRequestUrl, jurisdictionName,
+    pullRequestUrl, jurisdictionName, reviewState,
     currentPeople: prPeople,
     entryNumber,
     hasNext, hasPrev,
@@ -129,6 +129,7 @@ function ReviewPage() {
     .frontierEntry=${frontierEntry}
     .pullRequestUrl=${pullRequestUrl}
     .jurisdictionName=${jurisdictionName}
+    .reviewState=${reviewState}
     .onMerge=${handleMerge}
     .onUpdateBranch=${updateBranch}
     .onAdvance=${advance}
