@@ -142,21 +142,19 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
       </a>
     </div>
     <div class="header-item-center">
-      ${pr?.pull_request_review_state ? html`
-        <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>
-          <civ-badge
-            .label=${reviewLoading ? "Loading..." : (REVIEW_STATE[pr.pull_request_review_state]?.label ?? pr.pull_request_review_state)}
-            .variant=${REVIEW_STATE[pr.pull_request_review_state]?.variant ?? "primary"}
-          ></civ-badge>
-        </button>
-        <div popover ${ref(popoverRef)} class="review-popover">
-          <civ-review-panel
-            .reviewData=${reviewData}
-            .existing=${fullData?.existing ?? []}
-            .pullRequest=${fullData?.pull_request ?? []}
-          ></civ-review-panel>
-        </div>
-      ` : ""}
+      <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>
+        <civ-badge
+          .label=${reviewLoading ? "Loading..." : (REVIEW_STATE[pr?.pull_request_review_state]?.label ?? "Approved")}
+          .variant=${REVIEW_STATE[pr?.pull_request_review_state]?.variant ?? "success"}
+        ></civ-badge>
+      </button>
+      <div popover ${ref(popoverRef)} class="review-popover">
+        <civ-review-panel
+          .reviewData=${reviewData}
+          .existing=${fullData?.existing ?? []}
+          .pullRequest=${fullData?.pull_request ?? []}
+        ></civ-review-panel>
+      </div>
       ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">

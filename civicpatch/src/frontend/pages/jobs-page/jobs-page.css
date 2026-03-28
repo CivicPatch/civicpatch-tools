@@ -14,6 +14,53 @@
     color: var(--pico-muted-color);
 }
 
+.jobs-page__pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.jobs-page__page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.jobs-page__page-btn {
+    font-family: var(--pico-font-family-monospace);
+    min-width: 2rem;
+    text-align: center;
+}
+
+.jobs-page__page-btn--active {
+    font-weight: bold;
+    outline: 2px solid var(--pico-primary);
+}
+
+.jobs-page__page-ellipsis {
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+    padding: 0 0.25rem;
+}
+
+.jobs-page__per-page {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+    margin-left: auto;
+}
+
+.jobs-page__per-page select {
+    width: auto;
+    margin: 0;
+    padding: 0.2em 0.75em;
+    font-size: 0.8rem;
+}
+
 .jobs-page__filters select {
     width: auto;
     margin: 0;
