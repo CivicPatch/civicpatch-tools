@@ -22,6 +22,7 @@ from pydantic import BaseModel
 import database.database
 import database.jobs
 import database.people
+import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import services.github.github_api_service as github_service
 import services.github.pull_request_sync_service as pr_sync_service
@@ -77,7 +78,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        pull_requests, _ = await database.database.list_jobs_with_open_prs(
+        pull_requests, _, _ = await pull_requests_db.list_open_pull_requests(
             jurisdiction_ocdid=jurisdiction_ocdid
         )
         return {"data": pull_requests}
@@ -188,7 +189,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        paged_pull_requests, total = await database.database.list_jobs_with_open_prs(
+        paged_pull_requests, total, changes_requested = await pull_requests_db.list_open_pull_requests(
             state_code=state_code, page=page, per_page=per_page
         )
         total_pages = (total + per_page - 1) // per_page
@@ -215,6 +216,10 @@ def get_router(api_key_header):
             "total_pages": total_pages,
             "page": page,
             "per_page": per_page,
+            "summary": {
+                "total_with_pr": total,
+                "changes_requested": changes_requested,
+            },
         }
 
     def _source_url_to_markdown_url(request_id, jurisdiction_ocdid_folder, source_url: str) -> str:
@@ -245,17 +250,13 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        job = await database.jobs.get_job_for_review(request_id)
-        if not job:
-            raise HTTPException(status_code=404, detail="Job not found")
+        pr_metadata = await database.pull_requests.get_pull_request_for_review(request_id)
+        if not pr_metadata:
+            raise HTTPException(status_code=404, detail="Pull request not found")
 
-        pr_number = int(job["pull_request_url"].split("/")[-1]) if job.get("pull_request_url") else None
-        live_review_state = await github_service.get_pull_request_review_state(pr_number) if pr_number else None
-        if live_review_state != job.get("pull_request_review_state"):
-            background_tasks.add_task(database.database.update_job_pull_request_review_state, request_id, live_review_state)
-        job = {**job, "pull_request_review_state": live_review_state}
+        # TODO: get live status if syncs are slow
 
-        jurisdiction_ocdid = job["jurisdiction_ocdid"]
+        jurisdiction_ocdid = pr_metadata["jurisdiction_ocdid"]
         folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
 
         existing, pull_request = await asyncio.gather(
@@ -278,7 +279,7 @@ def get_router(api_key_header):
 
         return {
             "data": {
-                "request": job,
+                "request": pr_metadata,
                 "existing": existing,
                 "pull_request": pull_request,
                 "sources": sources,
@@ -328,18 +329,35 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        _github_response = await github_service.merge_pull_request(
+        merge_error = await github_service.merge_pull_request(
             pull_request_number=pull_request_number,
         )
-        if not _github_response:
+        if merge_error:
+            status_code = 409 if "out of date" in merge_error.lower() else 500
             return JSONResponse(
-                content=ErrorResponse(
-                    error="Failed to merge pull request on GitHub"
-                ).model_dump(),
-                status_code=500,
+                content=ErrorResponse(error=merge_error).model_dump(),
+                status_code=status_code,
             )
         user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
         await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        return {"status": "success"}
+
+    # -- Pull Requests: Update Branch ---
+    @router.post("/{pull_request_number}/update-branch", include_in_schema=False)
+    async def update_pull_request_branch_endpoint(
+        pull_request_number: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        error = await github_service.update_pull_request_branch(
+            pull_request_number=pull_request_number,
+        )
+        if error:
+            return JSONResponse(
+                content=ErrorResponse(error=error).model_dump(),
+                status_code=500,
+            )
         return {"status": "success"}
 
     return router

@@ -96,24 +96,23 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
 
 async def sync_people_by_ocdids(jurisdiction_ocdids):
     logger.info(f"Syncing people data for OCDIDs: {jurisdiction_ocdids}")
-    people_list: List[tuple] = []
-    for jurisdiction_ocdid in jurisdiction_ocdids:
+    semaphore = asyncio.Semaphore(10)
+
+    async def _fetch(jurisdiction_ocdid):
         folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
         people_file_path = os.path.join("data", f"{folder_path}.yml")
-        logger.debug(f"Fetching people file: {people_file_path}")
-        remote_data = await github_service.get_github_file_contents(people_file_path)
+        async with semaphore:
+            remote_data = await github_service.get_github_file_contents(people_file_path)
         remote_data_list = yaml.safe_load(remote_data) if remote_data else None
+        if not remote_data_list:
+            return []
+        return [
+            (person.get("id"), jurisdiction_ocdid, people_file_path, json.dumps(person), person.get("updated_at"), "dummy_git_commit_hash")
+            for person in remote_data_list
+        ]
 
-        if remote_data_list:
-            logger.debug(f"Loaded {len(remote_data_list)} people for {jurisdiction_ocdid}")
-            for person in remote_data_list:
-                person_id = person.get("id")
-                updated_at = person.get("updated_at")
-                serialized_data = json.dumps(person)
-                people_list.append((person_id, jurisdiction_ocdid, people_file_path, serialized_data, updated_at, "dummy_git_commit_hash"))
-        else:
-            logger.debug(f"No people data found for {jurisdiction_ocdid}")
-
+    results = await asyncio.gather(*[_fetch(ocdid) for ocdid in jurisdiction_ocdids])
+    people_list = [row for rows in results for row in rows]
     logger.debug(f"Prepared {len(people_list)} people for bulk update.")
     await database.bulk_update_people(people_list)
 

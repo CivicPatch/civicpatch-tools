@@ -18,8 +18,8 @@ function StatCards({ stats }) {
         <button
           class="stat-cards__card"
           @click=${() => copy(stat.key, stat.copyText)}
-          data-tooltip=${stat.description || undefined}
-          data-placement=${stat.description ? "bottom" : undefined}
+          data-tooltip=${stat.description || stat.sub || null}
+          data-placement=${stat.description || stat.sub ? "bottom" : null}
         >
           <div class="stat-cards__label">${stat.label}</div>
           <div class="stat-cards__value">${stat.value}</div>

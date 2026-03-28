@@ -62,13 +62,13 @@ async def get_job_for_review(request_id: str) -> dict | None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT pr.url, pr.status, j.pull_request_review_state,
+            SELECT pr.url, pr.status, pr.review_state,
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
-            LEFT JOIN pull_requests pr ON pr.request_id = r.id
+            LEFT JOIN pull_requests pr ON pr.request_id = j.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE j.request_id = %s
             """,

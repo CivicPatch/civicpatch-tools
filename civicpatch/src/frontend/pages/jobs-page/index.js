@@ -83,7 +83,7 @@ function JobsPage() {
         setPullRequests(prResult.data || []);
         setTotal(prResult.total || 0);
         setErrorJobs(errResult.data || []);
-        setJobsSummary(errResult.summary || null);
+        setJobsSummary(prResult.summary || null);
         // Expecting duplicatePrResult.jurisdiction_ocdids or .data as array of ocdids
         setDuplicateJurisdictions(
           duplicatePrResult.data || []

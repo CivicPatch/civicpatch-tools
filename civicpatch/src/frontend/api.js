@@ -70,7 +70,27 @@ export const mergePullRequest = async (request_id, pullRequestNumber) => {
       "X-CSRF-Token": getCsrfCookie(),
     },
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(body.error || `HTTP ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+};
+
+export const updatePullRequestBranch = async (pullRequestNumber) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/update-branch`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || `HTTP ${res.status}`);
+  }
   return res.json();
 };
 
