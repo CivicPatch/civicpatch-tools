@@ -61,7 +61,7 @@ async def handle_submit_job_artifacts(
     try:
         await _send_costs(debug_file_dir)
     except Exception as e:
-        logger.error(f"Failed to send costs for {request.request_id}: {e}")
+        logger.error(f"Failed to send costs for {request.request_id}: {e}", exc_info=True)
 
     if is_success:
         is_valid = await file_utils.validate_file_patterns(artifact_file_dir, artifact_file_patterns)

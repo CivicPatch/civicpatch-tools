@@ -164,7 +164,7 @@ erDiagram
         text file_path
         text git_commit
         text status
-        timestamp updated_at
+        timestamptz updated_at
     }
 
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"

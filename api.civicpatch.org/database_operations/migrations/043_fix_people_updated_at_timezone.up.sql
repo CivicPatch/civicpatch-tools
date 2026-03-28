@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE people
+    ALTER COLUMN updated_at TYPE TIMESTAMPTZ USING updated_at AT TIME ZONE 'UTC';
+
+COMMIT;
