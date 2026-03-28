@@ -70,6 +70,7 @@ mise run psql
 - Every migration must be wrapped in `BEGIN` / `COMMIT`
 - Down migrations must exactly reverse the up migration — test that the round-trip is clean
 - Create a new migration file whenever you add, rename, or drop a column, table, or index — never edit an existing migration
+- **After every migration, update the Mermaid schema diagram in `README.md`** — the diagram must always reflect the current state of the database
 
 ## Background tasks
 
