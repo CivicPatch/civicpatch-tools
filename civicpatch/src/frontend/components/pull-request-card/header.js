@@ -71,7 +71,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
-        detail: { request_id: pr.request_id, pullRequestNumber },
+        detail: { request_id: pr.request_id, pullRequestNumber, jurisdiction_ocdid: pr.jurisdiction_ocdid },
         bubbles: true,
       }),
     );

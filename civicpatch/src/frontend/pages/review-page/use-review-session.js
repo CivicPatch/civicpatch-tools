@@ -7,9 +7,7 @@ import {
   passReviewSession,
   pauseReviewSession,
   navigateToEntry,
-  mergePullRequest,
-  updatePullRequestBranch,
-  updatePullRequestData,
+  saveAndMerge,
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
@@ -179,26 +177,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     const pullRequestNumber = pullRequestUrlToNumber(pullRequestUrl);
     setPrState({ status: PULL_REQUEST_STATUS.LOADING_MERGE });
     try {
-      if (people) await updatePullRequestData(requestId, jurisdictionOcdid, people);
-      await mergePullRequest(requestId, pullRequestNumber);
+      await saveAndMerge(pullRequestNumber, requestId, jurisdictionOcdid, people ?? null);
       setPrState({ status: PULL_REQUEST_STATUS.MERGED });
       setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
       await advance();
-    } catch (err) {
-      if (err.status === 409) {
-        setPrState({ status: PULL_REQUEST_STATUS.BRANCH_OUT_OF_DATE });
-      } else {
-        setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
-      }
-    }
-  };
-
-  const updateBranch = async () => {
-    const pullRequestNumber = pullRequestUrlToNumber(pullRequestUrl);
-    setPrState({ status: PULL_REQUEST_STATUS.LOADING_UPDATE_BRANCH });
-    try {
-      await updatePullRequestBranch(pullRequestNumber);
-      setPrState(null);
     } catch (err) {
       setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
     }
@@ -251,7 +233,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     hasNext, hasPrev, isNavigating,
     prState, error, setError,
     stats,
-    advance, back, pass, pause, merge, updateBranch, navigateTo,
+    advance, back, pass, pause, merge, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
     sourceContentUrls, reviewData
   };

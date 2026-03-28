@@ -43,6 +43,12 @@ class PostJobPullRequestDataRequest(BaseModel):
     data: List[Official]
 
 
+class SaveAndMergeRequest(BaseModel):
+    request_id: str
+    jurisdiction_ocdid: str
+    data: List[Official] | None = None
+
+
 # ──────────────────────────────────────────────
 # Response models
 # ──────────────────────────────────────────────
@@ -318,6 +324,62 @@ def get_router(api_key_header):
             )
         user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
         await database.database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        return {"status": "success"}
+
+    # -- Pull Requests: Save and Merge ---
+    @router.post("/{pull_request_number}/save-and-merge", include_in_schema=False)
+    async def save_and_merge_endpoint(
+        pull_request_number: str,
+        request: SaveAndMergeRequest,
+        background_tasks: BackgroundTasks,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        if request.data:
+            file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
+            branch_name = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
+            normalized = [official.model_dump() for official in request.data]
+            success = await github_service.update_pull_request_file(
+                branch_name=branch_name,
+                file_path=f"data/{file_path}.yml",
+                new_data=normalized,
+                commit_message=f"Data update by {user.email}",
+            )
+            if not success:
+                return JSONResponse(
+                    content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
+                    status_code=500,
+                )
+            background_tasks.add_task(database.database.update_job_data, request.request_id, normalized)
+
+        mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number)
+        if mergeable_state == "dirty":
+            return JSONResponse(
+                content=ErrorResponse(error="Pull request has merge conflicts and cannot be merged automatically").model_dump(),
+                status_code=422,
+            )
+
+        merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number)
+
+        if merge_error and "out of date" in merge_error.lower():
+            update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
+            if update_error:
+                return JSONResponse(
+                    content=ErrorResponse(error=update_error).model_dump(),
+                    status_code=500,
+                )
+            await github_service.get_pull_request_mergeability(pull_request_number)
+            merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number)
+
+        if merge_error:
+            return JSONResponse(
+                content=ErrorResponse(error=merge_error).model_dump(),
+                status_code=500,
+            )
+
+        user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await database.database.update_job_pull_request_status(request.request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Merge Pull Request ---
