@@ -32,7 +32,7 @@ UPDATE jobs j
 SET request_id = r.id
 FROM requests r
 WHERE r.job_id = j.id
-  AND j.request_id IS DISTINCT FROM r.id;
+  AND j.request_id::uuid IS DISTINCT FROM r.id;
 
 -- Step 3: Re-copy data columns from the authoritative *_to_delete sources
 -- now that the job_id links are correct.
