@@ -478,11 +478,12 @@ async def get_pull_request_mergeability(pull_request_number: str) -> str | None:
     return None
 
 
-async def merge_pull_request(pull_request_number: str) -> str | None:
+async def merge_pull_request(pull_request_number: str, approved_by: str | None = None) -> str | None:
     """Returns None on success, or a GitHub error message string on failure."""
+    label = f"Approved by {approved_by}" if approved_by else "Approved by unknown"
     data = {
-        "commit_title": "Approved in app",
-        "commit_message": "Approved in app",
+        "commit_title": label,
+        "commit_message": label,
         "merge_method": "squash",
     }
 

@@ -11,7 +11,7 @@ import "./pull-request-tabs.js";
 import "./profile-modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { updatePullRequestData, fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, mergePullRequest, closePullRequest } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest } from "../../api.js";
 import "../diff-panel/diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -155,12 +155,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     if (!prNumber) return;
     setPrStatus("loading_merge");
     try {
-      await mergePullRequest(request_id, prNumber);
+      await saveAndMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
       setPrStatus("merged");
-      setNotice("Pull request published.");
+      setNotice("Pull request merged.");
     } catch {
       setPrStatus("error");
-      setError("Failed to publish pull request.");
+      setError("Failed to merge pull request.");
     }
   }
 
@@ -177,23 +177,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }
   }
 
-  async function handleSubmit() {
-    setIsLoading(true);
-    const response = await updatePullRequestData(
-      selectedPullRequest.request_id,
-      selectedPullRequest.jurisdiction_ocdid,
-      peopleToSubmit,
-    );
-    if (!response) {
-      setError("Failed to submit changes.");
-    } else {
-      setNotice("Changes submitted.");
-    }
-    setIsLoading(false);
-    return response;
-  }
-
-  function handleCardKeyDown(e, idx, key) {
+function handleCardKeyDown(e, idx, key) {
     handleKeyDown(e, idx);
     if (e.target !== e.currentTarget) return;
     if ((e.key === " " || e.key === "Enter") && key) {
@@ -319,7 +303,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         selectedPullRequest
           ? handleSelectedPullRequestData(selectedPullRequest)
           : assignPeople(people)}
-      .onSubmit=${handleSubmit}
       .onPublish=${handlePublish}
       .onClosePR=${handleClosePR}
       .selectedPeople=${selectedPeople}

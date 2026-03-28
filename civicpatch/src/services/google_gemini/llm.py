@@ -109,5 +109,9 @@ def make_request_with_search(logger, model, api_key, prompt):
     return response, input_tokens_num, output_tokens_num
 
 def parse_raw_response(response):
-    response_text = response["candidates"][0]["content"]["parts"][0]["text"]
+    candidates = response.get("candidates")
+    if not candidates:
+        block_reason = response.get("promptFeedback", {}).get("blockReason", "unknown")
+        raise ValueError(f"Gemini returned no candidates. Block reason: {block_reason}. Full response: {response}")
+    response_text = candidates[0]["content"]["parts"][0]["text"]
     return json.loads(response_text.replace("```json", "").replace("```", ""))

@@ -8,7 +8,6 @@ function PeopleActionButtons({
   onMerge,
   onBulkDelete,
   onReset,
-  onSubmit,
   onPublish,
   onClosePR,
   selectedPeople,
@@ -32,15 +31,12 @@ function PeopleActionButtons({
       <button @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">
         Reset
       </button>
-      <button @click=${onSubmit} ?disabled=${dirty === false} class="btn-sm">
-        Submit
-      </button>
-      ${hasPullRequest ? html`
+${hasPullRequest ? html`
         <button @click=${onClosePR} ?disabled=${isTerminal || isPublishing || isClosing} class="destructive btn-sm">
           ${isClosing ? "Closing..." : prStatus === "closed" ? "Closed" : "Close PR"}
         </button>
         <button @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
-          ${isPublishing ? "Publishing..." : prStatus === "merged" ? "Published" : "Publish"}
+          ${isPublishing ? "Merging..." : prStatus === "merged" ? "Merged" : dirty ? "Save and Merge" : "Merge"}
         </button>
       ` : ""}
     </div>

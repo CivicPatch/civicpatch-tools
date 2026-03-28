@@ -419,15 +419,13 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
     """
     input_text_lower = input_text.lower()
     for person in records_found:
-        # TODO: Tighten name heuristic with fuzzy matching
-        # But for now, names can vary on the page
-        #if person.name and not _name_in_text(person.name, input_text_lower):
-        #    if "Vacant" in person.name:
-        #        logger.info(f"Name appears to be vacant for record with source url: {source_url}, likely will not be in source data.")
-        #        continue
+        if person.name and not _name_in_text(person.name, input_text_lower):
+            if "Vacant" in person.name:
+                logger.info(f"Name appears to be vacant for record with source url: {source_url}, likely will not be in source data.")
+                continue
 
-        #    logger.warning(f"Name not found in input text: {person.name} under source url: {source_url}")
-        #    return False 
+            logger.warning(f"Name not found in input text: {person.name} under source url: {source_url}")
+            return False 
         if person.email and person.email.lower() not in input_text_lower:
             logger.warning(f"Email not found in input text: {person.email} under source url: {source_url}")
             return False
@@ -449,22 +447,15 @@ def _name_in_text(name: str, text_lower: str) -> bool:
     Check if a name appears in text, allowing for minor formatting differences
     (e.g., "Martin Cantu Jr." vs "Martin Cantu, Jr.").
     """
-    if name.lower() in text_lower:
-        return True
-
-    # Normalize both sides (strips accents, punctuation variants like curly apostrophes)
     name_norm = name_utils.normalize_text_for_search(name)
     text_norm = name_utils.normalize_text_for_search(text_lower)
+
     if name_norm in text_norm:
         return True
 
-    # Check if all name parts (first, middle, last) appear in the text
     parsed = name_utils.parse_name(name)
-    parts = [name_utils.normalize_text_for_search(p) for p in [parsed.first, parsed.middle, parsed.last] if p]
-    if parts and all(part in text_norm for part in parts):
-        return True
-
-    return False
+    parts = [name_utils.normalize_text_for_search(p) for p in [parsed.first, parsed.last] if p]
+    return bool(parts) and all(part in text_norm for part in parts)
 
 def _normalize_phone(phone: str) -> str:
     """Strip all non-digit characters."""
@@ -512,7 +503,7 @@ def _url_contains_all_tokens(url: str, terms: List[str]) -> bool:
     """Returns True if any term's complete token set is a subset of the URL's tokens."""
     url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
     for term in terms:
-        term_tokens = {t for t in re.split(r'[^a-z0-9]', term.lower()) if t}
+        term_tokens = {t for t in re.split(r'[^a-z0-9]', name_utils.normalize_text_for_search(term)) if t}
         if term_tokens and term_tokens.issubset(url_tokens):
             return True
     return False
@@ -522,7 +513,7 @@ def _url_contains_any_token(url: str, terms: List[str], min_len: int = 4) -> boo
     """Returns True if any significant token (len >= min_len) from any term appears in the URL."""
     url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
     for term in terms:
-        significant = {t for t in re.split(r'[^a-z0-9]', term.lower()) if len(t) >= min_len}
+        significant = {t for t in re.split(r'[^a-z0-9]', name_utils.normalize_text_for_search(term)) if len(t) >= min_len}
         if significant & url_tokens:
             return True
     return False
@@ -530,14 +521,19 @@ def _url_contains_any_token(url: str, terms: List[str], min_len: int = 4) -> boo
 
 def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[str], List[str]]:
     names = []
+    seen_names = set()
     designations = []
+    seen_designations = set()
     for people_by_name in records_by_llm.values():
         for name, person_list in people_by_name.items():
-            if name and name not in names:
+            normalized = name_utils.normalize_text_for_search(name) if name else None
+            if normalized and normalized not in seen_names:
+                seen_names.add(normalized)
                 names.append(name)
             for person in person_list:
                 for d in (person.designations or []):
-                    if d and d not in designations:
+                    if d and d not in seen_designations:
+                        seen_designations.add(d)
                         designations.append(d)
     return names, designations
 

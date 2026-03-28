@@ -360,7 +360,7 @@ def get_router(api_key_header):
                 status_code=422,
             )
 
-        merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number)
+        merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
 
         if merge_error and "out of date" in merge_error.lower():
             update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
@@ -370,7 +370,7 @@ def get_router(api_key_header):
                     status_code=500,
                 )
             await github_service.get_pull_request_mergeability(pull_request_number)
-            merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number)
+            merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
 
         if merge_error:
             return JSONResponse(
@@ -393,6 +393,7 @@ def get_router(api_key_header):
     ):
         merge_error = await github_service.merge_pull_request(
             pull_request_number=pull_request_number,
+            approved_by=user.email,
         )
         if merge_error:
             status_code = 409 if "out of date" in merge_error.lower() else 500
