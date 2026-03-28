@@ -91,7 +91,7 @@ async def get_people_data_by_request_ids(
                     ) AS people_data,
                     r.jurisdiction_ocdid
                 FROM jobs j
-                LEFT JOIN requests r ON r.id = j.request_id
+                LEFT JOIN requests r ON r.id = j.request_id::uuid
                 WHERE j.request_id = ANY(%s)
                 """,
                 (request_ids,)
