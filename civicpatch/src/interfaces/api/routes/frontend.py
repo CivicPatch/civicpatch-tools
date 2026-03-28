@@ -32,11 +32,15 @@ async def get_current_user(request: Request):
 def build_permissions(user_data: dict) -> dict:
     teams = user_data.get("teams", [])
     return {
-        "can_view_jobs_page": any(t in teams for t in ("maintainers", "contributors")),
         "can_view_jobs_page_errors": "admins" in teams,
+
+        "can_view_jobs_page": any(t in teams for t in ("maintainers", "contributors")),
+
+        "can_view_jurisdiction_page": "default" in teams,
         "can_scrape_local": civicpatch_api.can_scrape_locally(),
         "can_scrape_remote": "maintainers" in teams,
-        "can_view_jurisdiction_page": "default" in teams,
+
+        "can_view_reviews_page": "default" in teams,
     }
 
 
@@ -119,7 +123,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request,
         user: dict = Depends(get_current_user)
     ):
-        if not user.get("authenticated") or not user.get("permissions", {}).get("can_view_jobs_page"):
+        if not user.get("authenticated") or not user.get("permissions", {}).get("can_view_reviews_page"):
             return templates.TemplateResponse(
                 "pages/unauthorized.html",
                 {"request": request, "user": user}
