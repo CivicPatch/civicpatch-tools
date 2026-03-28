@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import http
 import json
@@ -22,6 +23,13 @@ from services import cache_service
 
 timeout = httpx.Timeout(60.0)
 
+_RATE_LIMIT_THRESHOLD = 50  # sleep proactively when remaining drops below this
+
+
+class RateLimitError(Exception):
+    pass
+
+## TODO: Replace bulk sync calls with graphql
 
 def _get_github_config():
     env = environment.get_env_vars()
@@ -218,7 +226,16 @@ async def cached_github_get(
         content = response.json() if return_json else response.text
         logger.debug(f"Fetched new data for {url} (etag: {etag})")
         await cache_service.set_cached(cache_key, {"content": content, "etag": etag})
+        remaining = int(response.headers.get("X-RateLimit-Remaining", 9999))
+        if remaining < _RATE_LIMIT_THRESHOLD:
+            reset_at = int(response.headers.get("X-RateLimit-Reset", 0))
+            wait = max(reset_at - time.time(), 1)
+            logger.warning("GitHub rate limit low (%d remaining), sleeping %.0fs", remaining, wait)
+            await asyncio.sleep(wait)
         return content
+    elif response.status_code in (403, 429) and response.headers.get("X-RateLimit-Remaining") == "0":
+        reset_at = response.headers.get("X-RateLimit-Reset", "unknown")
+        raise RateLimitError(f"GitHub rate limit exceeded, resets at {reset_at}")
     else:
         logger.error(f"Error fetching {url}: {response.status_code} {response.text}")
         return None
@@ -247,8 +264,7 @@ async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
         cache_key = f"github:open_prs:page:{page}:per_page:{per_page}"
         prs = await cached_github_get(url, cache_key)
         if prs is None:
-            logger.error("get_all_open_prs_raw: GitHub API error on page %d", page)
-            break
+            raise RuntimeError(f"get_all_open_prs_raw: GitHub API error on page {page}")
         results.extend(prs)
         if len(prs) < per_page:
             break
@@ -441,7 +457,8 @@ async def close_pull_request(pull_request_number: str) -> bool:
         return response.status_code == 200
 
 
-async def merge_pull_request(pull_request_number: str) -> bool:
+async def merge_pull_request(pull_request_number: str) -> str | None:
+    """Returns None on success, or a GitHub error message string on failure."""
     data = {
         "commit_title": "Approved in app",
         "commit_message": "Approved in app",
@@ -458,5 +475,26 @@ async def merge_pull_request(pull_request_number: str) -> bool:
         )
 
         if response.status_code != 200:
-            return False
-        return True
+            github_message = response.json().get("message", "Unknown error")
+            logger.error(f"GitHub merge failed ({response.status_code}): {github_message}")
+            return github_message
+        return None
+
+
+async def update_pull_request_branch(pull_request_number: str) -> str | None:
+    """Updates the PR branch to be current with the base branch.
+    Returns None on success, or an error message string on failure."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    async with httpx.AsyncClient() as client:
+        default_headers = await get_default_headers()
+        response = await client.put(
+            f"{open_data_repo_url}/pulls/{pull_request_number}/update-branch",
+            headers=default_headers,
+            json={},
+        )
+        # 202 = accepted (async), 200 = done
+        if response.status_code not in (200, 202):
+            github_message = response.json().get("message", "Unknown error")
+            logger.error(f"Branch update failed ({response.status_code}): {github_message}")
+            return github_message
+        return None

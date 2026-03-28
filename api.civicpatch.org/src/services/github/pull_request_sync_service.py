@@ -96,6 +96,9 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
 
 
 async def _close_stale_prs(github_request_ids: set[str]):
+    if not github_request_ids:
+        logger.warning("_close_stale_prs: skipping, github_request_ids is empty")
+        return
     db_open_jobs = await database.get_open_pr_request_ids()
     stale_ids = [rid for rid in db_open_jobs if rid not in github_request_ids]
     if not stale_ids:
@@ -104,9 +107,10 @@ async def _close_stale_prs(github_request_ids: set[str]):
     for request_id in stale_ids:
         pr_url = db_open_jobs[request_id]
         pr_number = pull_request_url_to_number(pr_url) if pr_url else None
-        status, merged_at = PullRequestStatus.CLOSED, None
+        status, merged_at = None, None
         if pr_number:
             pr_data = await github_service.get_pull_request(pr_number)
             if pr_data and pr_data.get("merged"):
                 status, merged_at = PullRequestStatus.MERGED, pr_data.get("merged_at")
-        await database.update_job_pull_request_status(request_id, status, merged_at)
+            if status:
+                await database.update_job_pull_request_status(request_id, status, merged_at)

@@ -139,7 +139,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM jobs j
         JOIN requests r ON r.id = j.request_id
-        JOIN pull_requests pr ON pr.request_id = r.id
+        JOIN pull_requests pr ON pr.request_id = j.request_id
         WHERE pr.status = 'open'
           AND r.jurisdiction_ocdid LIKE %s
           AND NOT EXISTS (
@@ -152,7 +152,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
           )
         ORDER BY
             (r.jurisdiction_ocdid IN (SELECT jurisdiction_ocdid FROM reclaimed)) ASC,
-            (j.pull_request_review_state = 'changes_requested') DESC,
+            (pr.review_state = 'changes_requested') DESC,
             j.created_at DESC
         LIMIT %s
         """,

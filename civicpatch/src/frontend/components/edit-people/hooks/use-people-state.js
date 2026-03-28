@@ -115,6 +115,10 @@ export function usePeopleState({ people }) {
     }
   }
 
+  function handleResetAll() {
+    setCurrentPeople([...originalPeople]);
+  }
+
   function handleTableDataChange(e) {
     const { identifier, field, value } = e.detail;
     if (field === "_selected") {
@@ -146,6 +150,7 @@ export function usePeopleState({ people }) {
     handleBulkDelete,
     handleMerge,
     handleReset,
+    handleResetAll,
     handleTableDataChange,
     handleTableDataReorder,
   };

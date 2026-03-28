@@ -21,7 +21,6 @@ from database.database import (
     get_job_result,
     get_job_data_json,
     get_job_status,
-    get_jobs_review_summary,
     get_jobs_with_errors,
     update_job_pull_request_url,
     update_job_pull_request_status,
@@ -356,17 +355,14 @@ def get_router(api_key_header):
         state_code: Optional[str] = None,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
     ):
-        jobs, summary = await asyncio.gather(
-            get_jobs_with_errors(state_code=state_code),
-            get_jobs_review_summary(),
-        )
+        jobs = await get_jobs_with_errors(state_code=state_code)
 
         for job in jobs:
             ocdid = job["jurisdiction_ocdid"]
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
             job["workflow_log_url"] = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}/workflow.log"
 
-        return {"data": jobs, "summary": summary}
+        return {"data": jobs}
 
     @router.get(
         "/{request_id}/status",

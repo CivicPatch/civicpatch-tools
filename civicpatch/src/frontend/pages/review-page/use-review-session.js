@@ -8,9 +8,11 @@ import {
   pauseReviewSession,
   navigateToEntry,
   mergePullRequest,
-  closePullRequest,
+  updatePullRequestBranch,
+  updatePullRequestData,
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
 
 const ADVANCE_DONE_REASON = {
@@ -29,7 +31,10 @@ export function updateParams(updates) {
 
 export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [session, setSession] = useState(null);
-  const [currentRequest, setCurrentRequest] = useState(null);
+  const [requestId, setRequestId] = useState(null);
+  const [jurisdictionOcdid, setJurisdictionOcdid] = useState(null);
+  const [pullRequestUrl, setPullRequestUrl] = useState(null);
+  const [jurisdictionName, setJurisdictionName] = useState(null);
   const [currentPeople, setCurrentPeople] = useState(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [resolvedCount, setResolvedCount] = useState(0);
@@ -79,7 +84,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
       fetchPullRequestDetail(sessionData.request_id),
       fetchReview(sessionData.request_id).catch(() => null),
     ]);
-    setCurrentRequest(card.data.request);
+    setRequestId(sessionData.request_id);
+    setJurisdictionOcdid(sessionData.jurisdiction_ocdid);
+    setPullRequestUrl(card.data.request?.pull_request_url ?? null);
+    setJurisdictionName(card.data.request?.jurisdiction_name ?? null);
     setCurrentPeople({ existing: card.data.existing, pull_request: card.data.pull_request });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
@@ -165,14 +173,30 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     }
   };
 
-  const merge = async (event) => {
-    const pullRequestNumber = event.detail.pullRequestNumber;
+  const merge = async (people) => {
+    const pullRequestNumber = pullRequestUrlToNumber(pullRequestUrl);
     setPrState({ status: PULL_REQUEST_STATUS.LOADING_MERGE });
     try {
-      await mergePullRequest(pullRequestNumber);
+      if (people) await updatePullRequestData(requestId, jurisdictionOcdid, people);
+      await mergePullRequest(requestId, pullRequestNumber);
       setPrState({ status: PULL_REQUEST_STATUS.MERGED });
       setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
       await advance();
+    } catch (err) {
+      if (err.status === 409) {
+        setPrState({ status: PULL_REQUEST_STATUS.BRANCH_OUT_OF_DATE });
+      } else {
+        setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
+      }
+    }
+  };
+
+  const updateBranch = async () => {
+    const pullRequestNumber = pullRequestUrlToNumber(pullRequestUrl);
+    setPrState({ status: PULL_REQUEST_STATUS.LOADING_UPDATE_BRANCH });
+    try {
+      await updatePullRequestBranch(pullRequestNumber);
+      setPrState(null);
     } catch (err) {
       setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
     }
@@ -217,27 +241,15 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     onIdle();
   };
 
-  const close = async (event) => {
-    const pullRequestNumber = event.detail.pullRequestNumber;
-    setPrState({ status: PULL_REQUEST_STATUS.LOADING_CLOSE });
-    try {
-      await closePullRequest(pullRequestNumber);
-      setPrState({ status: PULL_REQUEST_STATUS.CLOSED });
-      setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
-      await advance();
-    } catch (err) {
-      setPrState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
-    }
-  };
-
   return {
     session, setSession,
-    currentRequest, currentPeople,
+    requestId, jurisdictionOcdid, pullRequestUrl, jurisdictionName,
+    currentPeople,
     entryNumber, resolvedCount,
     hasNext, hasPrev, isNavigating,
     prState, error, setError,
     stats,
-    advance, back, pass, pause, merge, close, navigateTo,
+    advance, back, pass, pause, merge, updateBranch, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
     sourceContentUrls, reviewData
   };
