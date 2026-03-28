@@ -102,6 +102,83 @@ An hourly background task also reconciles DB state against GitHub's open-PR list
 
 To register the webhook in GitHub, set the payload URL to `https://api.civicpatch.org/webhooks/github` and set the secret to match `GITHUB_WEBHOOK_SECRET`.
 
-## Code standards
+## Database schema
 
-See [AI_CONTEXT.md](./AI_CONTEXT.md).
+> **Keep this diagram in sync with migrations.** Whenever a migration adds, renames, or drops a column or table, update the chart below.
+
+```mermaid
+erDiagram
+    jurisdictions {
+        text jurisdiction_ocdid PK
+        text state
+        text status
+        jsonb data
+        text file_path
+        text git_commit
+        timestamp updated_at
+    }
+
+    requests {
+        uuid id PK
+        text status
+        text request_type
+        text jurisdiction_ocdid FK
+        jsonb arguments_json
+        jsonb result_data
+        jsonb review_json
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    jobs {
+        int id PK
+        uuid request_id FK
+        text requested_by_provider
+        text requested_by_provider_user_id
+        int progress
+        text status
+        text server_source
+        text run_url
+        text pull_request_review_state_to_delete
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    pull_requests {
+        uuid id PK
+        uuid request_id FK
+        int pr_number
+        text url
+        text status
+        text review_state
+        timestamptz closed_at
+        timestamptz merged_at
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    people {
+        uuid id PK
+        text jurisdiction_ocdid FK
+        jsonb data
+        text file_path
+        text git_commit
+        text status
+        timestamp updated_at
+    }
+
+    jurisdictions ||--o{ requests : "jurisdiction_ocdid"
+    jurisdictions ||--o{ people : "jurisdiction_ocdid"
+    requests ||--o| jobs : "request_id"
+    requests ||--o| pull_requests : "request_id"
+```
+
+**Notes:**
+- `requests.result_data` — array of scraped `Official` objects returned by the civicpatch pipeline
+- `requests.review_json` — pipeline review output (`issues`, `warnings`, etc.)
+- `people.data` — full `Official` JSONB blob; the canonical record for a jurisdiction's current officials
+- `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
+- `jobs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
+- `people` has no FK to `requests` — it is updated independently when a PR is merged
+- `people` has no FK to `requests` — it is updated independently when a PR is merged
+
