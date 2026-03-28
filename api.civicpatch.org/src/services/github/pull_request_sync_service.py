@@ -4,11 +4,15 @@ import database.database as database
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import services.github.github_api_service as github_service
+import services.lock_service as lock_service
 import shared.utils.id_utils
 from shared.utils.statuses import PullRequestStatus
 from utils.github_utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
+
+_SYNC_LOCK_KEY = "lock:sync_open_pr_state"
+_SYNC_LOCK_TTL = 1800  # 30 min — longer than any expected sync duration
 
 
 async def sync_single_pr_state(request_id: str):
@@ -24,7 +28,7 @@ async def sync_single_pr_state(request_id: str):
         return
     if pr_data.get("merged"):
         await database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
-    elif pr_data.get("state") == "closed":
+    elif pr_data.get("state") == PullRequestStatus.CLOSED:
         await database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
     else:
         review_state = await github_service.get_pull_request_review_state(pr_number)
@@ -32,11 +36,18 @@ async def sync_single_pr_state(request_id: str):
 
 
 async def sync_open_pr_state():
-    logger.info("sync_open_pr_state: starting")
-    github_prs = await _fetch_open_github_prs()
-    await _sync_known_prs(github_prs)
-    await _close_stale_prs(set(github_prs.keys()))
-    logger.info("sync_open_pr_state: done")
+    acquired = await lock_service.acquire_lock(_SYNC_LOCK_KEY, _SYNC_LOCK_TTL)
+    if not acquired:
+        logger.info("sync_open_pr_state: skipping, lock held by another worker")
+        return
+    try:
+        logger.info("sync_open_pr_state: starting")
+        github_prs = await _fetch_open_github_prs()
+        await _sync_known_prs(github_prs)
+        await _close_stale_prs(set(github_prs.keys()))
+        logger.info("sync_open_pr_state: done")
+    finally:
+        await lock_service.release_lock(_SYNC_LOCK_KEY)
 
 
 async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
@@ -133,5 +144,7 @@ async def _close_stale_prs(github_request_ids: set[str]):
             pr_data = await github_service.get_pull_request(pr_number)
             if pr_data and pr_data.get("merged"):
                 status, merged_at = PullRequestStatus.MERGED, pr_data.get("merged_at")
+            elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:
+                status = PullRequestStatus.CLOSED
             if status:
                 await database.update_job_pull_request_status(request_id, status, merged_at)
