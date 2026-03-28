@@ -35,6 +35,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [jurisdictionOcdid, setJurisdictionOcdid] = useState(null);
   const [pullRequestUrl, setPullRequestUrl] = useState(null);
   const [jurisdictionName, setJurisdictionName] = useState(null);
+  const [reviewState, setReviewState] = useState(null);
   const [currentPeople, setCurrentPeople] = useState(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [resolvedCount, setResolvedCount] = useState(0);
@@ -88,6 +89,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setJurisdictionOcdid(sessionData.jurisdiction_ocdid);
     setPullRequestUrl(card.data.request?.pull_request_url ?? null);
     setJurisdictionName(card.data.request?.jurisdiction_name ?? null);
+    setReviewState(card.data.request?.pull_request_review_state ?? null);
     setCurrentPeople({ existing: card.data.existing, pull_request: card.data.pull_request });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
@@ -243,7 +245,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
 
   return {
     session, setSession,
-    requestId, jurisdictionOcdid, pullRequestUrl, jurisdictionName,
+    requestId, jurisdictionOcdid, pullRequestUrl, jurisdictionName, reviewState,
     currentPeople,
     entryNumber, resolvedCount,
     hasNext, hasPrev, isNavigating,

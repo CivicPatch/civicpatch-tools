@@ -8,7 +8,7 @@ import "./source-content.js";
 
 function ReviewSession({
   goal, entryNumber, hasNext, hasPrev,
-  prState, error, isDirty, pullRequestUrl, jurisdictionName,
+  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState,
   currentPeople, tableData, selectedPeople, reviewData, sourceContentUrls,
   passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
   onMerge, onUpdateBranch, onAdvance, onBack, onPass, onNavigateTo, onPause,
@@ -59,6 +59,7 @@ function ReviewSession({
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<span class="review-page__jurisdiction">${jurisdictionName}</span>` : ""}
+          ${reviewState ? html`<span class="review-page__review-state review-page__review-state--${reviewState}">${reviewState === "changes_requested" ? "Changes requested" : "Approved"}</span>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
         </div>
         <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
