@@ -204,11 +204,14 @@ async def navigate_to_entry(
                 # Frontier: check goal, then allocate the next card at this position
                 await cur.execute(
                     """
-                    SELECT COUNT(*) FILTER (WHERE status = 'resolved') AS resolved
+                    SELECT COUNT(*) FILTER (
+                        WHERE status = 'resolved'
+                          AND (created_at AT TIME ZONE %s)::date = (NOW() AT TIME ZONE %s)::date
+                    ) AS resolved
                     FROM review_session_entries
                     WHERE review_session_id = %s
                     """,
-                    (review_session_id,),
+                    (STREAK_TIMEZONE, STREAK_TIMEZONE, review_session_id),
                 )
                 counts_row = await cur.fetchone()
                 if counts_row.resolved >= session_row.daily_goal:
@@ -233,11 +236,14 @@ async def navigate_to_entry(
 
             await cur.execute(
                 """
-                SELECT COUNT(*) FILTER (WHERE status = 'resolved') AS resolved_count
+                SELECT COUNT(*) FILTER (
+                    WHERE status = 'resolved'
+                      AND (created_at AT TIME ZONE %s)::date = (NOW() AT TIME ZONE %s)::date
+                ) AS resolved_count
                 FROM review_session_entries
                 WHERE review_session_id = %s
                 """,
-                (review_session_id,),
+                (STREAK_TIMEZONE, STREAK_TIMEZONE, review_session_id),
             )
             counts = await cur.fetchone()
 

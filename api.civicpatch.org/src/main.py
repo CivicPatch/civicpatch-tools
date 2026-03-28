@@ -25,6 +25,7 @@ import routers.api.jobs as api_jobs_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.pull_requests as api_pull_requests_router
+import routers.api.requests as api_requests_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.user as api_user_router
 import services.github.pull_request_sync_service
@@ -203,6 +204,12 @@ app.include_router(
     prefix="/api/v1/data",
     tags=["data"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
+)
+
+app.include_router(
+    api_requests_router.get_router(api_key_header),
+    prefix="/api/v1/requests",
+    tags=["requests"],
 )
 
 app.include_router(

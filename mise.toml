@@ -84,3 +84,7 @@ run = """
 docker compose run --rm api_civicpatch_org \
     python database_operations/migrate.py down
 """
+
+[tasks.psql]
+description = "Open a psql shell against the dev database"
+run = "psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db"
