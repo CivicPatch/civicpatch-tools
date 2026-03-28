@@ -39,7 +39,15 @@ def parse_name(name: str) -> HumanName:
 
 def exact_match(name1: str, name2: str) -> bool:
     """Exact name comparison (case-insensitive, whitespace-normalized)."""
-    return name1.lower().strip() == name2.lower().strip()
+    return _casefold(name1).strip() == _casefold(name2).strip()
+
+
+def _strip_accents(s: str) -> str:
+    return unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
+
+
+def _casefold(s: str) -> str:
+    return _strip_accents(s).lower()
 
 
 def _normalize_suffix(suffix: str) -> str:
@@ -76,16 +84,16 @@ def last_name_match(name1: str, name2: str) -> bool:
     """Return True if the last name components match (within one edit)."""
     p1 = parse_name(name1)
     p2 = parse_name(name2)
-    return _within_one_edit(p1.last.lower(), p2.last.lower())
+    return _within_one_edit(_casefold(p1.last), _casefold(p2.last))
 
 
 def fuzzy_match(name1: str, name2: str) -> bool:
     p1 = parse_name(name1)
     p2 = parse_name(name2)
 
-    if not _within_one_edit(p1.first.lower(), p2.first.lower()) or not _within_one_edit(p1.last.lower(), p2.last.lower()):
+    if not _within_one_edit(_casefold(p1.first), _casefold(p2.first)) or not _within_one_edit(_casefold(p1.last), _casefold(p2.last)):
         return False
-    if p1.middle and p2.middle and p1.middle.lower() != p2.middle.lower():
+    if p1.middle and p2.middle and _casefold(p1.middle) != _casefold(p2.middle):
         return False
     if (
         p1.suffix
@@ -101,11 +109,11 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
     p1 = parse_name(name1)
     p2 = parse_name(name2)
     score = 0
-    if p1.first.lower() == p2.first.lower():
+    if _casefold(p1.first) == _casefold(p2.first):
         score += 1
-    if p1.last.lower() == p2.last.lower():
+    if _casefold(p1.last) == _casefold(p2.last):
         score += 1
-    if p1.middle and p2.middle and p1.middle.lower() == p2.middle.lower():
+    if p1.middle and p2.middle and _casefold(p1.middle) == _casefold(p2.middle):
         score += 1
     if (
         p1.suffix
@@ -118,8 +126,7 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
 
 def normalize_text_for_search(text: str) -> str:
     """Normalize text for loose substring search: strips accents, punctuation, and lowercases."""
-    ascii_text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
-    return re.sub(r"[^\w\s]", "", ascii_text).lower()
+    return re.sub(r"[^\w\s]", "", _strip_accents(text)).lower()
 
 
 def normalize_name(name: str) -> str:
@@ -129,8 +136,7 @@ def normalize_name(name: str) -> str:
     if hn.nickname:
         parts.append(f'"{hn.nickname}"')
     base = " ".join(p for p in parts if p)
-    base = unicodedata.normalize("NFKD", base).encode("ascii", "ignore").decode("ascii")
-    return base.lower().strip()
+    return _strip_accents(base).lower().strip()
 
 
 def best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | None:

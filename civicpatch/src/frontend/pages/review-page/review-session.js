@@ -4,7 +4,7 @@ import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-req
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
-import "./source-content.js";
+import "./source-content/index.js";
 
 function ReviewSession({
   goal, entryNumber, hasNext, hasPrev,

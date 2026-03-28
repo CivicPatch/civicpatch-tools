@@ -127,6 +127,20 @@ def test_normalize_text_for_search_both_apostrophe_variants_equal():
     assert straight == curly
 
 
+def test_exact_match_ignores_accents():
+    assert name_utils.exact_match("aleman", "aléman")
+    assert name_utils.exact_match("José Alvarez", "Jose Alvarez")
+
+
+def test_fuzzy_match_ignores_accents():
+    assert name_utils.fuzzy_match("José Martinez", "Jose Martinez")
+    assert name_utils.fuzzy_match("María García", "Maria Garcia")
+
+
+def test_last_name_match_ignores_accents():
+    assert name_utils.last_name_match("John Alemán", "John Aleman")
+
+
 def test_build_canonical_map_fuzzy():
     identities = {}
     all_people = [{"name": "Jeffery David Martinez"}, {"name": "Jeffery Martinez"}]
