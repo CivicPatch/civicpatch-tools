@@ -1,6 +1,7 @@
 import logging
 
 import database.database as database
+import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
@@ -8,6 +9,26 @@ from shared.utils.statuses import PullRequestStatus
 from utils.github_utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
+
+
+async def sync_single_pr_state(request_id: str):
+    pr_metadata = await pull_requests_db.get_pull_request_for_review(request_id)
+    if not pr_metadata:
+        return
+    pull_request_url = pr_metadata.get("pull_request_url")
+    pr_number = pull_request_url_to_number(pull_request_url) if pull_request_url else None
+    if not pr_number:
+        return
+    pr_data = await github_service.get_pull_request(pr_number)
+    if not pr_data:
+        return
+    if pr_data.get("merged"):
+        await database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
+    elif pr_data.get("state") == "closed":
+        await database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
+    else:
+        review_state = await github_service.get_pull_request_review_state(pr_number)
+        await database.update_job_pull_request_review_state(request_id, review_state)
 
 
 async def sync_open_pr_state():

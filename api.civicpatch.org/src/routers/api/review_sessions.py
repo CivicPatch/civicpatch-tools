@@ -1,4 +1,5 @@
 import logging
+import time
 from datetime import date
 from typing import Optional
 
@@ -7,8 +8,12 @@ from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 
 import database.review_sessions as review_sessions_db
+import services.cache_service as cache_service
+import services.github.pull_request_sync_service as pr_sync_service
 from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access
+
+STATS_CACHE_TTL = 300  # 5 minutes
 
 logger = logging.getLogger(__name__)
 
@@ -32,22 +37,16 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
+        cache_key = f"review_stats:{user.provider}:{user.provider_user_id}:{state_code}"
+        cached = await cache_service.get_cached(cache_key)
+        if cached:
+            cached.pop("expires_at", None)
+            return {"data": cached}
         stats = await review_sessions_db.get_review_stats(
             user.provider, user.provider_user_id, state_code
         )
+        await cache_service.set_cached(cache_key, stats, expires_at=time.time() + STATS_CACHE_TTL)
         return {"data": stats}
-
-    @router.get("/today")
-    async def get_today_session(
-        state_code: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
-        ),
-    ):
-        result = await review_sessions_db.get_today_session_with_current_entry(
-            user.provider, user.provider_user_id, state_code
-        )
-        return {"data": result}
 
     @router.post("")
     async def create_review_session(
@@ -111,4 +110,5 @@ async def _navigate_response(session_id: str, entry_number: int):
         raise HTTPException(status_code=404)
     if "done" in result:
         return {"data": None, "reason": result["done"]}
+    await pr_sync_service.sync_single_pr_state(result["request_id"])
     return {"data": result}

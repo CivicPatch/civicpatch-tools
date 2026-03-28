@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import { component, useState } from "haunted";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
+import "../../components/streak-graph/streak-graph.js";
 
 const MAX_PRESET_GOAL = 50;
 
@@ -21,9 +22,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
       </div>
       <div class="review-page__main-grid">
         <div class="review-page__streak-card">
-          <span class="review-page__streak-label">Day Streak</span>
-          <span class="review-page__streak-value">${stats.streak}</span>
-          <span class="review-page__streak-sub">${stats.streak === 1 ? "day" : "days"}</span>
+          <civ-streak-graph .dailyCounts=${stats.daily_counts ?? []} .streak=${stats.streak} .currentDate=${stats.current_date ?? null}></civ-streak-graph>
         </div>
         <div class="review-page__ready-card">
           <div class="review-page__ready-header">

@@ -20,7 +20,7 @@ const PAGE_STATE = {
 };
 
 function ReviewPage() {
-  const [pageState, setPageState] = useState(PAGE_STATE.LOADING);
+  const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
   const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, () => {
     const p = new URLSearchParams(window.location.search);
     return p.get("state") || DEFAULT_STATE;
@@ -29,7 +29,7 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    pullRequestUrl, jurisdictionOcdid, jurisdictionName, reviewState,
+    pullRequestUrl, jurisdictionOcdid, jurisdictionName, reviewState, pullRequestStatus,
     currentPeople: prPeople,
     entryNumber,
     hasNext, hasPrev,
@@ -131,8 +131,10 @@ function ReviewPage() {
     .jurisdictionOcdid=${jurisdictionOcdid}
     .jurisdictionName=${jurisdictionName}
     .reviewState=${reviewState}
+    .pullRequestStatus=${pullRequestStatus}
+
     .onMerge=${handleMerge}
-.onAdvance=${advance}
+    .onAdvance=${advance}
     .onBack=${back}
     .onPass=${pass}
     .onNavigateTo=${navigateTo}
