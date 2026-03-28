@@ -1,15 +1,12 @@
 import asyncio
-import csv
-import io
 import logging
+import re
 from datetime import date
 from typing import Any, Optional
 import database.database
-import database.people
 import database.requests
-import services.github.github_api_service as github_service
-import shared.utils.id_utils
-import re
+import services.csv_service as csv_service
+import services.requests_export_service as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -18,157 +15,13 @@ from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)
 
-_DIFF_FIELDS = [
-    "name",
-    "office.name",
-    "office.division_ocdid",
-    "phones",
-    "emails",
-    "urls",
-    "start_date",
-    "end_date",
-]
-
-_SIDE_BY_SIDE_FIELDS = [
-    "name",
-    "other_names",
-    "office_name",
-    "office_division_ocdid",
-    "phones",
-    "emails",
-    "urls",
-    "source_urls",
-    "start_date",
-    "end_date",
-    "updated_at",
-]
-
-CSV_FIELDNAMES = [
-    "request_id",
-    "jurisdiction_ocdid",
-    "created_at",
-    "review_issues",
-    "diff_status",
-    "changed_fields",
-    "id",
-    *[f"existing_{f}" for f in _SIDE_BY_SIDE_FIELDS],
-    *[f"proposed_{f}" for f in _SIDE_BY_SIDE_FIELDS],
-]
-
-
-def _get_field(official: dict, key: str) -> str:
-    if key == "office.name":
-        val = (official.get("office") or {}).get("name", "")
-    elif key == "office.division_ocdid":
-        val = (official.get("office") or {}).get("division_ocdid", "")
-    else:
-        val = official.get(key, "")
-    if isinstance(val, list):
-        return " | ".join(str(v) for v in val)
-    return str(val or "")
-
-
-def _normalize(val: str) -> str:
-    return val.lower().strip()
-
-
-def _changed_field_names(existing: dict, pr: dict) -> list[str]:
-    return [k for k in _DIFF_FIELDS if _normalize(_get_field(existing, k)) != _normalize(_get_field(pr, k))]
-
-
-def _extract_fields(official: dict) -> dict:
-    office = official.get("office") or {}
-    return {
-        "name": official.get("name", ""),
-        "other_names": " | ".join(official.get("other_names") or []),
-        "office_name": office.get("name", ""),
-        "office_division_ocdid": office.get("division_ocdid", ""),
-        "phones": " | ".join(official.get("phones") or []),
-        "emails": " | ".join(official.get("emails") or []),
-        "urls": " | ".join(official.get("urls") or []),
-        "source_urls": " | ".join(official.get("source_urls") or []),
-        "start_date": official.get("start_date") or "",
-        "end_date": official.get("end_date") or "",
-        "updated_at": official.get("updated_at") or "",
-    }
-
-
-_EMPTY_FIELDS = {f: "" for f in _SIDE_BY_SIDE_FIELDS}
-
-
-def _flatten_official(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    created_at: str | None,
-    review_issues: str,
-    existing: dict | None,
-    proposed: dict | None,
-    diff_status: str,
-    changed_fields: list[str],
-) -> dict:
-    existing_fields = _extract_fields(existing) if existing else _EMPTY_FIELDS
-    proposed_fields = _extract_fields(proposed) if proposed else _EMPTY_FIELDS
-    official_id = (proposed or existing or {}).get("id", "")
-    return {
-        "request_id": request_id,
-        "jurisdiction_ocdid": jurisdiction_ocdid,
-        "created_at": created_at or "",
-        "review_issues": review_issues,
-        "diff_status": diff_status,
-        "changed_fields": " | ".join(changed_fields),
-        "id": official_id,
-        **{f"existing_{k}": v for k, v in existing_fields.items()},
-        **{f"proposed_{k}": v for k, v in proposed_fields.items()},
-    }
-
-
-def _request_to_rows(
-    request: dict,
-    existing_people: list[dict],
-    include_unchanged: bool,
-) -> list[dict]:
-    review_issues = " | ".join((request["review_json"] or {}).get("issues") or [])
-    result_data = request["result_data"] or []
-
-    existing_map = {p["id"]: p for p in existing_people if p.get("id")}
-    pr_map = {p["id"]: p for p in result_data if p.get("id")}
-    all_ids = set(existing_map) | set(pr_map)
-
-    rows = []
-    for oid in all_ids:
-        existing = existing_map.get(oid)
-        pr = pr_map.get(oid)
-
-        if not existing:
-            diff_status = "added"
-            changed = []
-        elif not pr:
-            diff_status = "removed"
-            changed = []
-        else:
-            changed = _changed_field_names(existing, pr)
-            diff_status = "changed" if changed else "unchanged"
-
-        if diff_status == "unchanged" and not include_unchanged:
-            continue
-
-        rows.append(_flatten_official(
-            request["request_id"],
-            request["jurisdiction_ocdid"],
-            request["created_at"],
-            review_issues,
-            existing,
-            pr,
-            diff_status,
-            changed,
-        ))
-
-    return rows
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 class CreateRegisterRequest(BaseModel):
     request_id: str
     arguments: dict
+
 
 class PostResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
@@ -179,11 +32,11 @@ def get_router(api_key_header):
     router = APIRouter()
 
     @router.post(
-            "/register",
-            summary="Register a new request",
-            description="Register a new request in the system.",
-            include_in_schema=False,
-        )
+        "/register",
+        summary="Register a new request",
+        description="Register a new request in the system.",
+        include_in_schema=False,
+    )
     async def register_people_job_endpoint(
         request: CreateRegisterRequest,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
@@ -249,49 +102,16 @@ def get_router(api_key_header):
         if not re.fullmatch(r"[a-z]{2}", state.lower()):
             raise HTTPException(status_code=400, detail="state must be a two-letter code, e.g. 'tx'")
         state = state.lower()
-        _date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-        if from_date and not _date_re.match(from_date):
+        if from_date and not _DATE_RE.match(from_date):
             raise HTTPException(status_code=400, detail="from_date must be ISO format: YYYY-MM-DD")
-        if to_date and not _date_re.match(to_date):
+        if to_date and not _DATE_RE.match(to_date):
             raise HTTPException(status_code=400, detail="to_date must be ISO format: YYYY-MM-DD")
-        requests_data = await database.database.get_requests_for_export(state, from_date, to_date)
 
-        uncached = [r for r in requests_data if not r["result_data"]]
-        if uncached:
-            async def _fetch_result_data(r):
-                folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"])
-                data = await github_service.get_pull_request_file_yaml(
-                    r["request_id"], r["jurisdiction_ocdid"], f"data/{folder}.yml"
-                )
-                r["result_data"] = data or []
-
-            await asyncio.gather(*[_fetch_result_data(r) for r in uncached])
-
-        unique_ocdids = list({r["jurisdiction_ocdid"] for r in requests_data})
-        existing_by_ocdid: dict[str, list] = {}
-        if unique_ocdids:
-            results = await asyncio.gather(
-                *[database.people.get_people_by_jurisdiction_ocdid(ocdid) for ocdid in unique_ocdids]
-            )
-            existing_by_ocdid = dict(zip(unique_ocdids, results))
-
-        def _generate():
-            buf = io.StringIO()
-            writer = csv.DictWriter(buf, fieldnames=CSV_FIELDNAMES, lineterminator="\n")
-            writer.writeheader()
-            yield buf.getvalue()
-
-            for request in requests_data:
-                existing = existing_by_ocdid.get(request["jurisdiction_ocdid"], [])
-                for row in _request_to_rows(request, existing, include_unchanged):
-                    buf = io.StringIO()
-                    writer = csv.DictWriter(buf, fieldnames=CSV_FIELDNAMES, lineterminator="\n")
-                    writer.writerow(row)
-                    yield buf.getvalue()
+        requests_data, existing_by_ocdid = await requests_export_service.fetch_export_data(state, from_date, to_date)
 
         filename = f"requests_export_{state}_{date.today().isoformat()}.csv"
         return StreamingResponse(
-            _generate(),
+            csv_service.generate_requests_csv(requests_data, existing_by_ocdid, include_unchanged),
             media_type="text/csv",
             headers={"Content-Disposition": f'attachment; filename="{filename}"'},
         )
