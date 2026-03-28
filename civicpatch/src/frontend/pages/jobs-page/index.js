@@ -336,9 +336,14 @@ function JobsPage() {
         ${permissions.JOBS_PAGE_ERRORS ? html`
           <a
             class="btn btn-sm"
+            href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}"
+            download
+          >Export people</a>
+          <a
+            class="btn btn-sm"
             href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}"
             download
-          >Export CSV</a>
+          >Export open PRs</a>
         ` : null}
       </div>
       ${summarySection}
