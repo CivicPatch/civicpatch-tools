@@ -650,7 +650,7 @@ async def get_job(request_id: str):
             SELECT j.status, j.progress, r.arguments_json, r.result_data,
                    j.created_at, j.updated_at, pr.url, j.run_url
             FROM jobs j
-            LEFT JOIN requests r ON r.id = j.request_id::uuid
+            LEFT JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE j.request_id = %s;
             """,
@@ -727,7 +727,7 @@ async def update_job_data(request_id: str, data_json: Any):
             SET result_data = %s,
                 updated_at = CURRENT_TIMESTAMP
             FROM jobs j
-            WHERE r.id = j.request_id::uuid AND j.request_id = %s;
+            WHERE r.id = j.request_id AND j.request_id = %s;
             """,
             (
                 json.dumps(data_json),
@@ -846,7 +846,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
             """
             SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, j.run_url
             FROM jobs j
-            JOIN requests r ON r.id = j.request_id::uuid
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = %s
             ORDER BY j.created_at DESC;
@@ -1059,7 +1059,7 @@ async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
             f"""
             SELECT COUNT(*)
             FROM jobs j
-            JOIN requests r ON r.id = j.request_id::uuid
+            JOIN requests r ON r.id = j.request_id
             WHERE {where}
             """,
             params,
@@ -1088,7 +1088,7 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
                    jur.data->>'name' AS jurisdiction_name,
                    j.created_at, j.updated_at
             FROM jobs j
-            JOIN requests r ON r.id = j.request_id::uuid
+            JOIN requests r ON r.id = j.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
             ORDER BY j.created_at DESC
@@ -1116,7 +1116,7 @@ async def get_job_data_json(request_id: str):
             """
             SELECT r.result_data
             FROM jobs j
-            LEFT JOIN requests r ON r.id = j.request_id::uuid
+            LEFT JOIN requests r ON r.id = j.request_id
             WHERE j.request_id = %s LIMIT 1
             """,
             (request_id,),
@@ -1131,7 +1131,7 @@ async def get_job_result(request_id: str):
         await cur.execute(
             """
             SELECT r.result_data, r.review_json FROM requests r
-            JOIN jobs j ON j.request_id::uuid = r.id
+            JOIN jobs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
             (request_id,),
@@ -1165,7 +1165,7 @@ async def update_job_review_json(request_id: str, review_json: dict):
             SET review_json = %s,
                 updated_at = CURRENT_TIMESTAMP
             FROM jobs j
-            WHERE r.id = j.request_id::uuid AND j.request_id = %s;
+            WHERE r.id = j.request_id AND j.request_id = %s;
             """,
             (json.dumps(review_json), request_id),
         )
@@ -1178,7 +1178,7 @@ async def get_open_pr_request_ids() -> List[str]:
             """
             SELECT j.request_id, pr.url
             FROM jobs j
-            JOIN requests r ON r.id = j.request_id::uuid
+            JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE pr.status = 'open'
             """
@@ -1197,7 +1197,7 @@ async def bulk_close_stale_prs(request_ids: List[str]):
             UPDATE pull_requests pr
             SET status = 'closed', updated_at = CURRENT_TIMESTAMP
             FROM jobs j
-            WHERE pr.request_id = j.request_id::uuid AND j.request_id = ANY(%s)
+            WHERE pr.request_id = j.request_id AND j.request_id = ANY(%s)
             """,
             (request_ids,),
         )
