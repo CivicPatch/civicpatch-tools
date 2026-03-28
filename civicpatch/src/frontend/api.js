@@ -62,34 +62,21 @@ export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
   return res.json();
 };
 
-export const mergePullRequest = async (request_id, pullRequestNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge?request_id=${request_id}`, {
+export const saveAndMerge = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save-and-merge`, {
     credentials: "include",
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
+    body: JSON.stringify({ request_id, jurisdiction_ocdid, ...(people ? { data: people } : {}) }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     const err = new Error(body.error || `HTTP ${res.status}`);
     err.status = res.status;
     throw err;
-  }
-  return res.json();
-};
-
-export const updatePullRequestBranch = async (pullRequestNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/update-branch`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || `HTTP ${res.status}`);
   }
   return res.json();
 };

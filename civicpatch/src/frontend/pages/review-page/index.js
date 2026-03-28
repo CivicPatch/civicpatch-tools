@@ -29,13 +29,13 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    pullRequestUrl, jurisdictionName, reviewState,
+    pullRequestUrl, jurisdictionOcdid, jurisdictionName, reviewState,
     currentPeople: prPeople,
     entryNumber,
     hasNext, hasPrev,
     prState, error, setError,
     stats,
-    advance, back, pass, pause, merge, updateBranch, navigateTo,
+    advance, back, pass, pause, merge, navigateTo,
     passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
     sourceContentUrls, reviewData,
   } = useReviewSession(stateCode, {
@@ -128,11 +128,11 @@ function ReviewPage() {
     .resolvedEntryNumbers=${resolvedEntryNumbers}
     .frontierEntry=${frontierEntry}
     .pullRequestUrl=${pullRequestUrl}
+    .jurisdictionOcdid=${jurisdictionOcdid}
     .jurisdictionName=${jurisdictionName}
     .reviewState=${reviewState}
     .onMerge=${handleMerge}
-    .onUpdateBranch=${updateBranch}
-    .onAdvance=${advance}
+.onAdvance=${advance}
     .onBack=${back}
     .onPass=${pass}
     .onNavigateTo=${navigateTo}

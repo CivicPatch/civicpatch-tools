@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 import {
   fetchPullRequestsWithData,
   fetchJobsWithErrors,
-  mergePullRequest,
+  saveAndMerge,
   closePullRequest,
   resolveJob,
   fetchDuplicatePrJurisdictionJobs,
@@ -94,30 +94,21 @@ function JobsPage() {
   }, [page, stateCode]);
 
   const handleMerge = async (event) => {
-    const pullRequestNumber = event.detail.pullRequestNumber;
+    const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
     try {
       setPullRequestState({
         ...pullRequestState,
-        [pullRequestNumber]: {
-          status: PULL_REQUEST_STATUS.LOADING_MERGE,
-        },
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE },
       });
-      const response = await mergePullRequest(request_id, pullRequestNumber);
-      if (response) {
-        setPullRequestState({
-          ...pullRequestState,
-          [pullRequestNumber]: {
-            status: PULL_REQUEST_STATUS.MERGED,
-          },
-        });
-      }
+      await saveAndMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null);
+      setPullRequestState({
+        ...pullRequestState,
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED },
+      });
     } catch (error) {
       setPullRequestState({
         ...pullRequestState,
-        [pullRequestNumber]: {
-          status: PULL_REQUEST_STATUS.ERROR,
-          error,
-        },
+        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error },
       });
     }
   };

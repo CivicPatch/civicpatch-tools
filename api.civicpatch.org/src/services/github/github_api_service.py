@@ -457,6 +457,27 @@ async def close_pull_request(pull_request_number: str) -> bool:
         return response.status_code == 200
 
 
+async def get_pull_request_mergeability(pull_request_number: str) -> str | None:
+    """Polls until GitHub has computed mergeability (up to 5 attempts, 2s apart).
+    Returns the mergeable_state string ("clean", "dirty", "blocked", etc.)
+    or None if still unknown after all retries."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    async with httpx.AsyncClient() as client:
+        default_headers = await get_default_headers()
+        for _ in range(5):
+            response = await client.get(
+                f"{open_data_repo_url}/pulls/{pull_request_number}",
+                headers=default_headers,
+            )
+            if response.status_code != 200:
+                return None
+            data = response.json()
+            if data.get("mergeable") is not None:
+                return data.get("mergeable_state")
+            await asyncio.sleep(2)
+    return None
+
+
 async def merge_pull_request(pull_request_number: str) -> str | None:
     """Returns None on success, or a GitHub error message string on failure."""
     data = {

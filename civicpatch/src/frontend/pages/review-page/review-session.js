@@ -8,16 +8,14 @@ import "./source-content.js";
 
 function ReviewSession({
   goal, entryNumber, hasNext, hasPrev,
-  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState,
+  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState, jurisdictionOcdid,
   currentPeople, tableData, selectedPeople, reviewData, sourceContentUrls,
   passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
-  onMerge, onUpdateBranch, onAdvance, onBack, onPass, onNavigateTo, onPause,
+  onMerge, onAdvance, onBack, onPass, onNavigateTo, onPause,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset,
 }) {
   const isTerminal = prState?.status === PULL_REQUEST_STATUS.MERGED;
   const isMerging = prState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
-  const isUpdatingBranch = prState?.status === PULL_REQUEST_STATUS.LOADING_UPDATE_BRANCH;
-  const isBranchOutOfDate = prState?.status === PULL_REQUEST_STATUS.BRANCH_OUT_OF_DATE;
   const displayMax = hasNext ? goal : entryNumber;
 
   function getDotStatus(n) {
@@ -45,22 +43,18 @@ function ReviewSession({
         </div>
         <button class="btn-sm review-page__pass-btn" @click=${onPass} ?disabled=${!hasNext}>Pass</button>
         <button class="btn-sm" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
-        ${isBranchOutOfDate
-          ? html`<button class="btn-sm" @click=${onUpdateBranch} ?disabled=${isUpdatingBranch}>
-              ${isUpdatingBranch ? "Updating…" : "Update Branch"}
-            </button>`
-          : html`<button class="btn-sm" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
-              ${isMerging ? "Merging…" : prState?.status === PULL_REQUEST_STATUS.MERGED ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
-            </button>`}
+        <button class="btn-sm" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
+          ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
+        </button>
       </div>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       ${prState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${prState.error}</p>` : ""}
-      ${isBranchOutOfDate ? html`<p class="review-page__error">Branch is out of date — update it, then merge.</p>` : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<span class="review-page__jurisdiction">${jurisdictionName}</span>` : ""}
           ${reviewState ? html`<span class="review-page__review-state review-page__review-state--${reviewState}">${reviewState === "changes_requested" ? "Changes requested" : "Approved"}</span>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
+          ${jurisdictionOcdid ? html`<a class="btn btn-sm" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">Detail ↗</a>` : ""}
         </div>
         <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
       </div>
