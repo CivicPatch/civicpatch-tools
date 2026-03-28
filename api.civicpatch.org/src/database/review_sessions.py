@@ -1,10 +1,9 @@
 import logging
-from datetime import date
 from enum import StrEnum
 from typing import Any
 from database.database import get_pool
 from psycopg.rows import namedtuple_row
-from shared.utils.date_utils import today_utc_isoformat
+from shared.utils.date_utils import STREAK_TIMEZONE
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +20,7 @@ class AdvanceDoneReason(StrEnum):
 
 
 async def create_or_get_review_session(
-    provider: str,
-    provider_user_id: str,
-    session_date: date,
+    user_id: str,
     state_code: str,
     daily_goal: int | None = None,
 ) -> dict[str, Any]:
@@ -34,11 +31,11 @@ async def create_or_get_review_session(
                 await cur.execute(
                     """
                     SELECT daily_goal FROM review_sessions
-                    WHERE provider = %s AND provider_user_id = %s
-                    ORDER BY session_date DESC
+                    WHERE user_id = %s
+                    ORDER BY created_at DESC
                     LIMIT 1
                     """,
-                    (provider, provider_user_id),
+                    (user_id,),
                 )
                 row = await cur.fetchone()
                 daily_goal = row.daily_goal if row else 10
@@ -49,26 +46,23 @@ async def create_or_get_review_session(
                 DELETE FROM review_session_entries
                 WHERE review_session_id IN (
                     SELECT id FROM review_sessions
-                    WHERE provider = %s
-                      AND provider_user_id = %s
-                      AND session_date = %s
-                      AND state_code = %s
+                    WHERE user_id = %s AND state_code = %s
                 )
                 AND status NOT IN ('resolved')
                 """,
-                (provider, provider_user_id, session_date, state_code),
+                (user_id, state_code),
             )
 
             await cur.execute(
                 """
                 INSERT INTO review_sessions
-                    (provider, provider_user_id, session_date, state_code, daily_goal)
-                VALUES (%s, %s, %s, %s, %s)
-                ON CONFLICT (provider, provider_user_id, session_date, state_code)
+                    (user_id, state_code, daily_goal)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (user_id, state_code)
                     DO UPDATE SET daily_goal = EXCLUDED.daily_goal
-                RETURNING id, state_code, daily_goal, session_date, created_at
+                RETURNING id, state_code, daily_goal, created_at
                 """,
-                (provider, provider_user_id, session_date, state_code, daily_goal),
+                (user_id, state_code, daily_goal),
             )
             row = await cur.fetchone()
 
@@ -76,7 +70,6 @@ async def create_or_get_review_session(
         "id": str(row.id),
         "state_code": row.state_code,
         "daily_goal": row.daily_goal,
-        "session_date": row.session_date.isoformat(),
         "created_at": row.created_at.isoformat(),
     }
 
@@ -89,7 +82,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             DELETE FROM review_session_entries
             WHERE review_session_id IN (
                 SELECT id FROM review_sessions
-                WHERE session_date = CURRENT_DATE AND id != %s
+                WHERE DATE(created_at) = CURRENT_DATE AND id != %s
             )
             AND status NOT IN ('resolved')
             AND created_at < NOW() - INTERVAL '30 minutes'
@@ -103,7 +96,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             FROM review_session_entries rse
             JOIN review_sessions rs ON rs.id = rse.review_session_id
             WHERE rse.status = 'claimed'
-              AND rs.session_date = CURRENT_DATE
+              AND DATE(rs.created_at) = CURRENT_DATE
               AND rs.id != %s
         ),
         reclaimed AS (
@@ -306,53 +299,55 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
 
 
 async def get_review_stats(
-    provider: str,
-    provider_user_id: str,
+    user_id: str,
     state_code: str,
 ) -> dict[str, Any]:
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
             await cur.execute(
-                """
+                f"""
                 SELECT
-                    COUNT(*) FILTER (WHERE rs.session_date = CURRENT_DATE) AS today_resolved,
-                    COUNT(*) AS all_time_resolved
+                    COUNT(*) FILTER (
+                        WHERE (rse.created_at AT TIME ZONE %s)::date = (NOW() AT TIME ZONE %s)::date
+                    ) AS today_resolved,
+                    COUNT(*) AS all_time_resolved,
+                    (NOW() AT TIME ZONE %s)::date AS current_date
                 FROM review_session_entries rse
                 JOIN review_sessions rs ON rs.id = rse.review_session_id
-                WHERE rs.provider = %s AND rs.provider_user_id = %s
+                WHERE rs.user_id = %s
                   AND rse.status = 'resolved'
                 """,
-                (provider, provider_user_id),
+                (STREAK_TIMEZONE, STREAK_TIMEZONE, STREAK_TIMEZONE, user_id),
             )
             stats = await cur.fetchone()
 
             await cur.execute(
                 """
                 WITH daily AS (
-                    SELECT DISTINCT rs.session_date
+                    SELECT DISTINCT (rse.created_at AT TIME ZONE %s)::date AS activity_date
                     FROM review_session_entries rse
                     JOIN review_sessions rs ON rs.id = rse.review_session_id
-                    WHERE rs.provider = %s AND rs.provider_user_id = %s
+                    WHERE rs.user_id = %s
                       AND rse.status = 'resolved'
-                      AND rs.session_date >= CURRENT_DATE - INTERVAL '365 days'
+                      AND (rse.created_at AT TIME ZONE %s)::date >= (NOW() AT TIME ZONE %s)::date - INTERVAL '365 days'
                 ),
                 grouped AS (
-                    SELECT session_date,
-                           session_date - (ROW_NUMBER() OVER (ORDER BY session_date))::int AS grp
+                    SELECT activity_date,
+                           activity_date - (ROW_NUMBER() OVER (ORDER BY activity_date))::int AS grp
                     FROM daily
                 ),
                 streaks AS (
-                    SELECT COUNT(*) AS length, MAX(session_date) AS last_day
+                    SELECT COUNT(*) AS length, MAX(activity_date) AS last_day
                     FROM grouped
                     GROUP BY grp
                 )
                 SELECT length FROM streaks
-                WHERE last_day >= CURRENT_DATE - 1
+                WHERE last_day >= (NOW() AT TIME ZONE %s)::date - 1
                 ORDER BY last_day DESC
                 LIMIT 1
                 """,
-                (provider, provider_user_id),
+                (STREAK_TIMEZONE, user_id, STREAK_TIMEZONE, STREAK_TIMEZONE, STREAK_TIMEZONE),
             )
             streak_row = await cur.fetchone()
 
@@ -374,27 +369,29 @@ async def get_review_stats(
                 SELECT COUNT(*) AS claimed_count
                 FROM review_session_entries rse
                 JOIN review_sessions rs ON rs.id = rse.review_session_id
-                WHERE rs.provider = %s AND rs.provider_user_id = %s
-                  AND rs.session_date = CURRENT_DATE
+                WHERE rs.user_id = %s
                   AND rs.state_code = %s
                   AND rse.status NOT IN ('resolved')
                 """,
-                (provider, provider_user_id, state_code),
+                (user_id, state_code),
             )
             claimed = await cur.fetchone()
 
             await cur.execute(
                 """
-                SELECT rs.session_date::text AS date, COUNT(*) AS count
-                FROM review_session_entries rse
-                JOIN review_sessions rs ON rs.id = rse.review_session_id
-                WHERE rs.provider = %s AND rs.provider_user_id = %s
-                  AND rse.status = 'resolved'
-                  AND rs.session_date >= CURRENT_DATE - INTERVAL '16 weeks'
-                GROUP BY rs.session_date
-                ORDER BY rs.session_date
+                SELECT activity_date::text AS date, COUNT(*) AS count
+                FROM (
+                    SELECT (rse.created_at AT TIME ZONE %s)::date AS activity_date
+                    FROM review_session_entries rse
+                    JOIN review_sessions rs ON rs.id = rse.review_session_id
+                    WHERE rs.user_id = %s
+                      AND rse.status = 'resolved'
+                      AND (rse.created_at AT TIME ZONE %s)::date >= (NOW() AT TIME ZONE %s)::date - INTERVAL '16 weeks'
+                ) sub
+                GROUP BY activity_date
+                ORDER BY activity_date
                 """,
-                (provider, provider_user_id),
+                (STREAK_TIMEZONE, user_id, STREAK_TIMEZONE, STREAK_TIMEZONE),
             )
             daily_rows = await cur.fetchall()
 
@@ -405,5 +402,5 @@ async def get_review_stats(
         "available_count": available.available_count,
         "claimed_count": claimed.claimed_count,
         "daily_counts": [{"date": row.date, "count": row.count} for row in daily_rows],
-        "current_date": today_utc_isoformat(),
+        "current_date": stats.current_date.isoformat(),
     }
