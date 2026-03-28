@@ -1207,6 +1207,53 @@ async def bulk_close_stale_prs(request_ids: List[str]):
         )
 
 
+async def get_requests_for_export(
+    state: str,
+    from_date: str | None,
+    to_date: str | None,
+) -> list[dict]:
+    state_prefix = f"ocd-jurisdiction/country:us/state:{state.lower()}%"
+    params: list = [state_prefix]
+    date_clauses = ""
+    if from_date:
+        params.append(from_date)
+        date_clauses += f" AND r.created_at >= %s"
+    if to_date:
+        params.append(to_date)
+        date_clauses += f" AND r.created_at <= %s"
+
+    pool = await get_pool()
+    rows = []
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.result_data, r.review_json
+            FROM requests r
+            JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE r.jurisdiction_ocdid LIKE %s
+              AND pr.status = 'open'
+              {date_clauses}
+            ORDER BY r.created_at DESC
+            """,
+            params,
+        )
+        while True:
+            batch = await cur.fetchmany(200)
+            if not batch:
+                break
+            rows.extend(batch)
+    return [
+        {
+            "request_id": str(r[0]),
+            "jurisdiction_ocdid": r[1],
+            "created_at": r[2].isoformat() if r[2] else None,
+            "result_data": r[3] or [],
+            "review_json": r[4] or {},
+        }
+        for r in rows
+    ]
+
+
 async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:

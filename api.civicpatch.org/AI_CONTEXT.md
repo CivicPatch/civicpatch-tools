@@ -54,6 +54,16 @@ tests/
 - Services are thin — they call DB or external APIs and return typed results
 - Side effects (network calls, DB writes) live here, not in routers
 
+## Database (dev)
+
+The dev database is exposed on `127.0.0.1:6000`. Connect with:
+
+```sh
+psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db
+# or via mise:
+mise run psql
+```
+
 ## Migrations
 
 - Migration files live in `database_operations/migrations/` and are named `NNN_description.up.sql` / `NNN_description.down.sql`

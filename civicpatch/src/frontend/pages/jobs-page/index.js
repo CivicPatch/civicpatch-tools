@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
+import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
   fetchJobsWithErrors,
@@ -17,6 +18,8 @@ import "../../components/pull-request-card/index.js";
 import "./error-card/index.js";
 import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
+
+const API_URL = config.apiUrl;
 
 const DEFAULT_STATE = "tx";
 const DEFAULT_PER_PAGE = 20;
@@ -330,6 +333,13 @@ function JobsPage() {
             )}
           </select>
         </label>
+        ${permissions.JOBS_PAGE_ERRORS ? html`
+          <a
+            class="btn btn-sm"
+            href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}"
+            download
+          >Export CSV</a>
+        ` : null}
       </div>
       ${summarySection}
       ${errorSection}
