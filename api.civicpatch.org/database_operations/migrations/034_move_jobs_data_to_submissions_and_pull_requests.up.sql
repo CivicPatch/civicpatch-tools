@@ -29,7 +29,7 @@ WHERE r.id = j.request_id::uuid;
 -- 4. Port Pull Requests
 INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, created_at, updated_at)
 SELECT 
-    j.request_id, j.pull_request_url, j.pull_request_status, j.pull_request_merged_at,
+    j.request_id::uuid, j.pull_request_url, j.pull_request_status, j.pull_request_merged_at,
     COALESCE(substring(j.pull_request_url from 'pull/([0-9]+)')::int, 0),
     j.created_at, j.updated_at
 FROM jobs j
