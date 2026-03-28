@@ -94,6 +94,8 @@ roles:
       - representative
       - council
       - member
+      - councilmen
+      - councilwomen
   - role: committee member
     is_unique: true
     aliases:
