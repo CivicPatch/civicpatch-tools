@@ -28,7 +28,7 @@ services:
 
       # Optional; only for scraping
       GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID}
-      GOOGLE_SHEETS_PRIVATE_KEY: ${GOOGLE_SHEETS_PRIVATE_KEY}
+      GOOGLE_SHEETS_PRIVATE_KEY_BASE64: ${GOOGLE_SHEETS_PRIVATE_KEY_BASE64}
       GOOGLE_SHEETS_CLIENT_EMAIL: ${GOOGLE_SHEETS_CLIENT_EMAIL}
       GOOGLE_SHEETS_TOKEN_URI: ${GOOGLE_SHEETS_TOKEN_URI}
 
@@ -72,48 +72,6 @@ services:
       - '6379:6379'
     networks:
       - civicpatch_net
-
-  # api_civicpatch_org_test:
-  #   build:
-  #     context: ..
-  #     dockerfile: api.civicpatch.org/Dockerfile
-  #     target: development
-  #   ports:
-  #     - "8002:8001" # Use a different port for the test service
-  #   volumes:
-  #     - ./:/app
-  #     - ../shared/src/shared:/app/src/shared:ro
-  #   networks:
-  #     - civicpatch_test_net
-  #   depends_on:
-  #     - api_civicpatch_org_test_db
-  #   environment:
-  #     APP_ENVIRONMENT: test
-  #     GITHUB_APP_CLIENT_ID: test_GITHUB_APP_CLIENT_ID
-  #     GITHUB_APP_CLIENT_SECRET: test_GITHUB_APP_CLIENT_SECRET
-  #     JWT_SECRET_KEY: test_jwt_secret_key
-  #     DATABASE_HASH_KEY: test_database_hash_key
-  #     CRUDDER_DB_PASSWORD: test_password
-  #     CIVICPATCH_API_DB_URL: "postgres://civicpatch_test:test_password@api_civicpatch_org_test_db:5432/test_db?sslmode=disable"
-  #     INSTANCE_URL: "http://localhost:8002"
-  #     MAINTAINER_EMAIL: test_maintainer@email.com
-  #     STORAGE_ENDPOINT: http://localhost:9000
-  #     STORAGE_ACCESS_KEY: test_storage_access_key
-  #     STORAGE_SECRET_ACCESS_KEY: test_storage_secret_key
-  #   command: ["pytest", "--disable-warnings", "--maxfail=1", "--tb=short"] # Run tests automatically
-
-  #api_civicpatch_org_test_db:
-  #  image: postgis/postgis:17-3.5
-  #  environment:
-  #    POSTGRES_USER: civicpatch_test
-  #    POSTGRES_PASSWORD: test_password
-  #    POSTGRES_DB: test_db
-  #  volumes:
-  #    - test_pgdata:/var/lib/postgresql/data
-  #  ports:
-  #    - "127.0.0.1:6001:5432" # Use a different port for the test database
-  #  networks:
-  #    - civicpatch_test_net
 
 volumes:
   api_civicpatch_org_db_data:

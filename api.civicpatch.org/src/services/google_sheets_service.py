@@ -1,4 +1,5 @@
 import os
+import base64
 from google.oauth2 import service_account
 import googleapiclient.discovery
 import environment
@@ -24,8 +25,8 @@ def update_spreadsheet(sheet_name, values):
 
 def get_credentials():
     env = environment.get_env_vars()
-    if env["GOOGLE_SHEETS_PRIVATE_KEY"] is None or env["GOOGLE_SHEETS_PRIVATE_KEY"] == "":
-        raise ValueError("GOOGLE_SHEETS_PRIVATE_KEY environment variable is not set.")
+    if env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"] is None or env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"] == "":
+        raise ValueError("GOOGLE_SHEETS_PRIVATE_KEY_BASE64 environment variable is not set.")
 
     if env["GOOGLE_SHEETS_CLIENT_EMAIL"] is None or env["GOOGLE_SHEETS_CLIENT_EMAIL"] == "":
         raise ValueError("GOOGLE_SHEETS_CLIENT_EMAIL environment variable is not set.")
@@ -35,7 +36,7 @@ def get_credentials():
 
     scopes =  ["https://www.googleapis.com/auth/spreadsheets"]
     account_info = {
-        "private_key": env["GOOGLE_SHEETS_PRIVATE_KEY"],
+        "private_key": base64.b64decode(env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"]).decode("utf-8"),
         "client_email": env["GOOGLE_SHEETS_CLIENT_EMAIL"],
         "token_uri": env["GOOGLE_SHEETS_TOKEN_URI"],
     }
