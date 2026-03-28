@@ -19,6 +19,8 @@ import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 
 const DEFAULT_STATE = "tx";
+const DEFAULT_PER_PAGE = 20;
+const PER_PAGE_OPTIONS = [10, 20, 50, 100];
 
 function getPageFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -30,10 +32,35 @@ function getStateFromUrl() {
   return (new URLSearchParams(window.location.search).get("state") || DEFAULT_STATE).toLowerCase();
 }
 
+function getPerPageFromUrl() {
+  const val = parseInt(new URLSearchParams(window.location.search).get("per_page"), 10);
+  return PER_PAGE_OPTIONS.includes(val) ? val : DEFAULT_PER_PAGE;
+}
+
 function setPageInUrl(page) {
   const params = new URLSearchParams(window.location.search);
   params.set("page", page);
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+}
+
+function getPageRange(page, totalPages) {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+  const delta = 2;
+  const pages = new Set([1, totalPages]);
+  for (let i = page - delta; i <= page + delta; i++) {
+    if (i >= 1 && i <= totalPages) pages.add(i);
+  }
+  const sorted = Array.from(pages).sort((a, b) => a - b);
+  const result = [];
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && sorted[i] - sorted[i - 1] === 2) {
+      result.push(sorted[i - 1] + 1);
+    } else if (i > 0 && sorted[i] - sorted[i - 1] > 2) {
+      result.push("...");
+    }
+    result.push(sorted[i]);
+  }
+  return result;
 }
 
 function JobsPage() {
@@ -56,16 +83,20 @@ function JobsPage() {
 
   const [errorJobs, setErrorJobs] = useState([]);
   const [error, setError] = useState(null);
-  const perPage = 20;
+  const [perPage, setPerPage] = useState(getPerPageFromUrl());
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (!params.get("state")) {
       params.set("state", stateCode);
       if (!params.get("page")) params.set("page", page);
+      if (!params.get("per_page")) params.set("per_page", perPage);
       window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
     }
-    const onPopState = () => setPage(getPageFromUrl());
+    const onPopState = () => {
+      setPage(getPageFromUrl());
+      setPerPage(getPerPageFromUrl());
+    };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
@@ -158,6 +189,16 @@ function JobsPage() {
     setPageLoading(true);
     setPageInUrl(newPage);
     setPage(newPage);
+  };
+
+  const handlePerPageChange = (e) => {
+    const newPerPage = parseInt(e.target.value, 10);
+    const params = new URLSearchParams(window.location.search);
+    params.set("per_page", newPerPage);
+    params.set("page", 1);
+    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+    setPerPage(newPerPage);
+    setPage(1);
   };
 
   const totalPages = Math.ceil(total / perPage);
@@ -281,6 +322,14 @@ function JobsPage() {
           .selected=${stateCode}
           @state-change=${handleStateChange}
         ></civ-select-state>
+        <label class="jobs-page__per-page">
+          Per page
+          <select @change=${handlePerPageChange}>
+            ${PER_PAGE_OPTIONS.map(
+              (n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`
+            )}
+          </select>
+        </label>
       </div>
       ${summarySection}
       ${errorSection}
@@ -304,34 +353,41 @@ function JobsPage() {
         <div style="display: flex; gap: 2rem; flex-direction: column;">
           ${prList}
         </div>
-        <div
-          style="margin-top:2rem; display:flex; gap:1rem; align-items:center;"
-        >
-          ${!pageLoading && page > 1
-            ? html`<a
-                class="btn"
-                href="?page=${page - 1}"
-                @click=${(e) => {
-                  e.preventDefault();
-                  goToPage(page - 1);
-                }}
-                >← Previous</a
-              >`
-            : null}
+        <div class="jobs-page__pagination">
+          ${!pageLoading ? html`
+            <a
+              class="btn btn-sm"
+              href="?page=${page - 1}"
+              aria-disabled=${page <= 1}
+              @click=${(e) => { e.preventDefault(); if (page > 1) goToPage(page - 1); }}
+            >←</a>
+            <nav class="jobs-page__page-numbers">
+              ${getPageRange(page, totalPages).map((n) =>
+                n === "..."
+                  ? html`<span class="jobs-page__page-ellipsis">…</span>`
+                  : html`<a
+                      class="btn btn-sm jobs-page__page-btn${n === page ? " jobs-page__page-btn--active" : ""}"
+                      href="?page=${n}"
+                      @click=${(e) => { e.preventDefault(); goToPage(n); }}
+                    >${n}</a>`
+              )}
+            </nav>
+            <a
+              class="btn btn-sm"
+              href="?page=${page + 1}"
+              aria-disabled=${page >= totalPages}
+              @click=${(e) => { e.preventDefault(); if (page < totalPages) goToPage(page + 1); }}
+            >→</a>
+          ` : null}
 
-          ${!pageLoading ? html`<span class="jobs-page__page-counter">Page ${page} of ${totalPages}</span>` : null}
-
-          ${!pageLoading && page < totalPages
-            ? html`<a
-                class="btn"
-                href="?page=${page + 1}"
-                @click=${(e) => {
-                  e.preventDefault();
-                  goToPage(page + 1);
-                }}
-                >Next →</a
-              >`
-            : null}
+          <label class="jobs-page__per-page">
+            Per page
+            <select @change=${handlePerPageChange}>
+              ${PER_PAGE_OPTIONS.map(
+                (n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`
+              )}
+            </select>
+          </label>
         </div>
       </section>
     </main>
