@@ -9,7 +9,8 @@ import database.people
 import database.requests
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
-from fastapi import APIRouter, Depends, Query
+import re
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from schemas.common import Identity, Role, RouteCategory
@@ -28,14 +29,7 @@ _DIFF_FIELDS = [
     "end_date",
 ]
 
-CSV_FIELDNAMES = [
-    "request_id",
-    "jurisdiction_ocdid",
-    "created_at",
-    "review_issues",
-    "diff_status",
-    "changed_fields",
-    "id",
+_SIDE_BY_SIDE_FIELDS = [
     "name",
     "other_names",
     "office_name",
@@ -47,6 +41,18 @@ CSV_FIELDNAMES = [
     "start_date",
     "end_date",
     "updated_at",
+]
+
+CSV_FIELDNAMES = [
+    "request_id",
+    "jurisdiction_ocdid",
+    "created_at",
+    "review_issues",
+    "diff_status",
+    "changed_fields",
+    "id",
+    *[f"existing_{f}" for f in _SIDE_BY_SIDE_FIELDS],
+    *[f"proposed_{f}" for f in _SIDE_BY_SIDE_FIELDS],
 ]
 
 
@@ -70,24 +76,9 @@ def _changed_field_names(existing: dict, pr: dict) -> list[str]:
     return [k for k in _DIFF_FIELDS if _normalize(_get_field(existing, k)) != _normalize(_get_field(pr, k))]
 
 
-def _flatten_official(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    created_at: str | None,
-    review_issues: str,
-    official: dict,
-    diff_status: str,
-    changed_fields: list[str],
-) -> dict:
+def _extract_fields(official: dict) -> dict:
     office = official.get("office") or {}
     return {
-        "request_id": request_id,
-        "jurisdiction_ocdid": jurisdiction_ocdid,
-        "created_at": created_at or "",
-        "review_issues": review_issues,
-        "diff_status": diff_status,
-        "changed_fields": " | ".join(changed_fields),
-        "id": official.get("id", ""),
         "name": official.get("name", ""),
         "other_names": " | ".join(official.get("other_names") or []),
         "office_name": office.get("name", ""),
@@ -99,6 +90,35 @@ def _flatten_official(
         "start_date": official.get("start_date") or "",
         "end_date": official.get("end_date") or "",
         "updated_at": official.get("updated_at") or "",
+    }
+
+
+_EMPTY_FIELDS = {f: "" for f in _SIDE_BY_SIDE_FIELDS}
+
+
+def _flatten_official(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    created_at: str | None,
+    review_issues: str,
+    existing: dict | None,
+    proposed: dict | None,
+    diff_status: str,
+    changed_fields: list[str],
+) -> dict:
+    existing_fields = _extract_fields(existing) if existing else _EMPTY_FIELDS
+    proposed_fields = _extract_fields(proposed) if proposed else _EMPTY_FIELDS
+    official_id = (proposed or existing or {}).get("id", "")
+    return {
+        "request_id": request_id,
+        "jurisdiction_ocdid": jurisdiction_ocdid,
+        "created_at": created_at or "",
+        "review_issues": review_issues,
+        "diff_status": diff_status,
+        "changed_fields": " | ".join(changed_fields),
+        "id": official_id,
+        **{f"existing_{k}": v for k, v in existing_fields.items()},
+        **{f"proposed_{k}": v for k, v in proposed_fields.items()},
     }
 
 
@@ -121,16 +141,13 @@ def _request_to_rows(
 
         if not existing:
             diff_status = "added"
-            official = pr
             changed = []
         elif not pr:
             diff_status = "removed"
-            official = existing
             changed = []
         else:
             changed = _changed_field_names(existing, pr)
             diff_status = "changed" if changed else "unchanged"
-            official = pr
 
         if diff_status == "unchanged" and not include_unchanged:
             continue
@@ -140,7 +157,8 @@ def _request_to_rows(
             request["jurisdiction_ocdid"],
             request["created_at"],
             review_issues,
-            official,
+            existing,
+            pr,
             diff_status,
             changed,
         ))
@@ -228,6 +246,14 @@ def get_router(api_key_header):
         include_unchanged: bool = Query(False),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
     ):
+        if not re.fullmatch(r"[a-z]{2}", state.lower()):
+            raise HTTPException(status_code=400, detail="state must be a two-letter code, e.g. 'tx'")
+        state = state.lower()
+        _date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+        if from_date and not _date_re.match(from_date):
+            raise HTTPException(status_code=400, detail="from_date must be ISO format: YYYY-MM-DD")
+        if to_date and not _date_re.match(to_date):
+            raise HTTPException(status_code=400, detail="to_date must be ISO format: YYYY-MM-DD")
         requests_data = await database.database.get_requests_for_export(state, from_date, to_date)
 
         uncached = [r for r in requests_data if not r["result_data"]]
@@ -267,7 +293,7 @@ def get_router(api_key_header):
         return StreamingResponse(
             _generate(),
             media_type="text/csv",
-            headers={"Content-Disposition": f"attachment; filename={filename}"},
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
         )
 
     return router
