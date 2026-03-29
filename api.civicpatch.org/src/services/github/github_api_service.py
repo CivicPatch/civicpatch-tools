@@ -451,14 +451,17 @@ async def close_pull_request(pull_request_number: str) -> bool:
         return response.status_code == 200
 
 
-async def get_pull_request_mergeability(pull_request_number: str) -> str | None:
-    """Polls until GitHub has computed mergeability (up to 5 attempts, 2s apart).
+async def get_pull_request_mergeability(pull_request_number: str, wait_for_change_from: str | None = None) -> str | None:
+    """Polls until GitHub has computed mergeability (up to 10 attempts, 2s apart).
     Returns the mergeable_state string ("clean", "dirty", "blocked", etc.)
-    or None if still unknown after all retries."""
+    or None if still unknown after all retries.
+
+    If wait_for_change_from is provided, keeps polling until the state differs from
+    that value — useful after a branch update to avoid reading a stale result."""
     _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
-        for _ in range(5):
+        for _ in range(10):
             response = await client.get(
                 f"{open_data_repo_url}/pulls/{pull_request_number}",
                 headers=default_headers,
@@ -466,8 +469,9 @@ async def get_pull_request_mergeability(pull_request_number: str) -> str | None:
             if response.status_code != 200:
                 return None
             data = response.json()
-            if data.get("mergeable") is not None:
-                return data.get("mergeable_state")
+            state = data.get("mergeable_state")
+            if data.get("mergeable") is not None and state != wait_for_change_from:
+                return state
             await asyncio.sleep(2)
     return None
 

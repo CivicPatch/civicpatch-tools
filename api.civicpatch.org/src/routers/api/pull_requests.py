@@ -351,23 +351,30 @@ def get_router(api_key_header):
             background_tasks.add_task(database.database.update_job_data, request.request_id, normalized)
 
         mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number)
+        logger.info(f"PR {pull_request_number} mergeable_state={mergeable_state!r}")
+
         if mergeable_state == "dirty":
             return JSONResponse(
                 content=ErrorResponse(error="Pull request has merge conflicts and cannot be merged automatically").model_dump(),
                 status_code=422,
             )
 
-        merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
-
-        if merge_error and "out of date" in merge_error.lower():
+        if mergeable_state == "behind":
             update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
             if update_error:
                 return JSONResponse(
                     content=ErrorResponse(error=update_error).model_dump(),
                     status_code=500,
                 )
-            await github_service.get_pull_request_mergeability(pull_request_number)
-            merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
+            mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number, wait_for_change_from="behind")
+            logger.info(f"PR {pull_request_number} mergeable_state after branch update={mergeable_state!r}")
+            if mergeable_state == "dirty":
+                return JSONResponse(
+                    content=ErrorResponse(error="Pull request has merge conflicts and cannot be merged automatically").model_dump(),
+                    status_code=422,
+                )
+
+        merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
 
         if merge_error:
             return JSONResponse(

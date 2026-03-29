@@ -31,6 +31,16 @@ docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest
 """
 # /jobs/steps/step_04_preprocess_page_content
 
+[tasks.integration]
+run = """
+docker compose -f docker-compose.yml run --rm civicpatch_test pytest -vvm integration tests/integration
+"""
+
+[tasks.integration-preprocess]
+run = """
+docker compose -f docker-compose.yml run --rm civicpatch_test pytest -vvm integration tests/integration/jobs/steps/step_04_preprocess_page_content
+"""
+
 [tasks.contracts]
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm contracts tests/prompts

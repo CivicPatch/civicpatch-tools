@@ -52,6 +52,21 @@ services:
     # temporary
     # network_mode: host
 
+  civicpatch_test:
+    build:
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: development
+    environment:
+      APP_ROOT: /app
+      LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+    volumes:
+      - .:/app
+      - ../shared/src/shared:/app/src/shared:ro
+    networks:
+      - civicpatch_net
+    entrypoint: []
+
 networks:
   civicpatch_net:
     driver: bridge

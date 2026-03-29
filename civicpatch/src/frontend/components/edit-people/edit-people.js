@@ -12,6 +12,7 @@ import "./profile-modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest } from "../../api.js";
+import { buildOtherNames } from "../../utils/name-utils.js";
 import "../diff-panel/diff-panel.js";
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -216,11 +217,7 @@ function handleCardKeyDown(e, idx, key) {
     const { personId } = e.detail;
     const existingPerson = people.find(p => p.id === personId);
     const proposedPerson = profileModal.person;
-    const currentOtherNames = proposedPerson.other_names || [];
-    const other_names = Array.from(new Set([
-      ...currentOtherNames,
-      ...(existingPerson?.name && existingPerson.name !== proposedPerson.name ? [existingPerson.name] : []),
-    ]));
+    const other_names = buildOtherNames(proposedPerson, existingPerson);
     updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
     setProfileModal(prev => ({
       ...prev,

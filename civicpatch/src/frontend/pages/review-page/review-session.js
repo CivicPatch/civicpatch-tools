@@ -11,8 +11,9 @@ function ReviewSession({
   prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState, pullRequestStatus, jurisdictionOcdid,
   currentPeople, tableData, selectedPeople, reviewData, sourceContentUrls,
   passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
+  resolvedMatches,
   onMerge, onAdvance, onBack, onPass, onNavigateTo, onPause,
-  onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd, onLinkPerson,
+  onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }) {
   const isTerminal = prState?.status === PULL_REQUEST_STATUS.MERGED;
   const isMerging = prState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
@@ -68,11 +69,12 @@ function ReviewSession({
           .existing=${currentPeople?.existing ?? []}
           .selectedPeople=${selectedPeople ?? []}
           .isDirty=${isDirty}
+          .resolvedMatches=${resolvedMatches ?? {}}
+          .jurisdictionOcdid=${jurisdictionOcdid}
           .onMerge=${onPeopleMerge}
           .onBulkDelete=${onBulkDelete}
           .onReset=${onReset}
           .onAdd=${onAdd}
-          .onLinkPerson=${onLinkPerson}
           @data-change=${onTableDataChange}
           @reorder=${onTableReorder}
         ></civ-review-workspace>

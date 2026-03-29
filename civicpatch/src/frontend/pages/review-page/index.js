@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { createReviewSession, generatePersonId } from "../../api.js";
+import { createReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
+import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
@@ -43,6 +44,8 @@ function ReviewPage() {
     onDone: () => setPageState(PAGE_STATE.IDLE),
     onIdle: () => setPageState(PAGE_STATE.IDLE),
   });
+
+  const [resolvedMatches, setResolvedMatches] = useState({});
 
   const {
     currentPeople,
@@ -88,18 +91,36 @@ function ReviewPage() {
     });
   }
 
-  function handleLinkPerson(proposedPerson, personId, existingPeople) {
+  function handleLinkPerson(e) {
+    const { personId, proposedPerson, existingPeople } = e.detail;
     const existingPerson = existingPeople.find(p => p.id === personId);
-    const currentOtherNames = proposedPerson.other_names || [];
-    const other_names = Array.from(new Set([
-      ...currentOtherNames,
-      ...(existingPerson?.name && existingPerson.name !== proposedPerson.name ? [existingPerson.name] : []),
-    ]));
+    const other_names = buildOtherNames(proposedPerson, existingPerson);
     updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
   }
 
   useEffect(() => {
-    assignPeople(prPeople?.pull_request ?? []);
+    const people = prPeople?.pull_request ?? [];
+    if (!people.length) {
+      assignPeople([]);
+      setResolvedMatches({});
+      return;
+    }
+    const cleanPeople = people.map(({ _isNew, _dirty, _changes, _selected, _deleted, ...p }) => p);
+    batchResolvePeople(jurisdictionOcdid, cleanPeople)
+      .then((resolved) => {
+        const matchMap = {};
+        const tagged = people.map((p, i) => {
+          const r = resolved.data[i];
+          matchMap[p.id] = r;
+          return { ...p, _isNew: !r?.person };
+        });
+        assignPeople(tagged);
+        setResolvedMatches(matchMap);
+      })
+      .catch(() => {
+        assignPeople(people);
+        setResolvedMatches({});
+      });
   }, [prPeople]);
 
   const effectiveGoal = Math.max(
@@ -186,7 +207,8 @@ function ReviewPage() {
     .onBulkDelete=${handleBulkDelete}
     .onReset=${handleResetAll}
     .onAdd=${handleAdd}
-    .onLinkPerson=${handleLinkPerson}
+    @link-person=${handleLinkPerson}
+    .resolvedMatches=${resolvedMatches}
   ></review-session>`;
 }
 

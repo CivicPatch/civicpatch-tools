@@ -1,30 +1,56 @@
 import { html, component, useState } from "haunted";
 import { getColumns } from "../edit-people/table/columns.js";
+import { searchPeople } from "../../api.js";
 import "../basic/table/table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
 
-function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, onMerge, onBulkDelete, onReset, onAdd, onLinkPerson }) {
+function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, onMerge, onBulkDelete, onReset, onAdd }) {
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
   const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
+  const matches = resolvedMatches ?? {};
 
   const existingIds = new Set(existingArr.map((p) => p.id));
   const matchedPeople = pullRequestArr.filter((p) => existingIds.has(p.id));
   const newPeople = pullRequestArr.filter((p) => !existingIds.has(p.id));
   const allEditable = [...matchedPeople, ...newPeople];
 
-  const [profileModal, setProfileModal] = useState({ open: false, person: null, existingPerson: null });
+  const [profileModal, setProfileModal] = useState({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] });
 
-  function openProfileModal(person) {
-    const existingPerson = existingArr.find(p => p.id === person.id) ?? null;
-    setProfileModal({ open: true, person, existingPerson });
+  async function openProfileModal(person) {
+    const resolved = matches[person.id];
+    let existingPerson = existingArr.find(p => p.id === person.id) ?? resolved?.person ?? null;
+    let nameMatches = [];
+
+    if (resolved && resolved.id !== person.id) {
+      if (resolved.ambiguous) {
+        nameMatches = resolved.person;
+      } else {
+        existingPerson = resolved.person;
+        nameMatches = [resolved.person];
+      }
+    }
+
+    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [] });
+
+    if (person._isNew && person.name && jurisdictionOcdid) {
+      try {
+        const result = await searchPeople(jurisdictionOcdid, person.name);
+        setProfileModal(prev => ({ ...prev, searchSuggestions: result.data ?? [] }));
+      } catch {
+        // non-blocking
+      }
+    }
   }
 
   function handleLinkPerson(e) {
     const { personId } = e.detail;
-    if (onLinkPerson) onLinkPerson(profileModal.person, personId, existingArr);
     setProfileModal(prev => ({ ...prev, open: false }));
+    e.target.dispatchEvent(new CustomEvent("link-person", {
+      detail: { personId, proposedPerson: profileModal.person, existingPeople: existingArr },
+      bubbles: true,
+    }));
   }
 
   const columns = getColumns(openProfileModal);
@@ -53,10 +79,10 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, onMer
         .open=${profileModal.open}
         .person=${profileModal.person}
         .existingPerson=${profileModal.existingPerson}
-        .nameMatches=${[]}
-        .searchSuggestions=${[]}
+        .nameMatches=${profileModal.nameMatches ?? []}
+        .searchSuggestions=${profileModal.searchSuggestions ?? []}
         @link-person=${handleLinkPerson}
-        @close=${() => setProfileModal({ open: false, person: null, existingPerson: null })}
+        @close=${() => setProfileModal({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
       ></profile-modal>
     </div>
   `;
