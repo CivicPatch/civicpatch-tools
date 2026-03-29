@@ -190,13 +190,14 @@ def get_router(api_key_header):
         page: int = 1,
         per_page: int = 10,
         state_code: str | None = None,
+        jurisdiction_ocdid: str | None = None,
         view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         paged_pull_requests, total, changes_requested = await pull_requests_db.list_open_pull_requests(
-            state_code=state_code, page=page, per_page=per_page
+            state_code=state_code, jurisdiction_ocdid=jurisdiction_ocdid, page=page, per_page=per_page
         )
         total_pages = (total + per_page - 1) // per_page
 
@@ -356,6 +357,12 @@ def get_router(api_key_header):
         if mergeable_state == "dirty":
             return JSONResponse(
                 content=ErrorResponse(error="Pull request has merge conflicts and cannot be merged automatically").model_dump(),
+                status_code=422,
+            )
+
+        if mergeable_state == "blocked":
+            return JSONResponse(
+                content=ErrorResponse(error="Pull request is blocked — required reviews or status checks have not been satisfied").model_dump(),
                 status_code=422,
             )
 

@@ -323,7 +323,8 @@ async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: 
 async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
 
-    result = await send_success(context)
+    # result = await send_success(context)
+    result = {}
 
     progress = calculate_progress_percentage(context.data, 12)
     next_context = context.copy(update={

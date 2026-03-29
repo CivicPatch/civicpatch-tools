@@ -42,19 +42,13 @@ docker compose -f docker-compose.yml run --rm civicpatch_test pytest -vvm integr
 """
 
 [tasks.contracts]
-run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm contracts tests/prompts
-"""
+run = "uv run pytest -vvm contracts tests/prompts"
 
 [tasks.evals]
-run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm evals tests/prompts
-"""
+run = "uv run pytest -vvm evals tests/prompts"
 
 [tasks.evals_relevant]
-run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm evals_relevant tests/prompts
-"""
+run = "uv run pytest -vvm evals_relevant tests/prompts"
 
 [tasks.scratchtest]
 run = """

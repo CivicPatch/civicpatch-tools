@@ -5,18 +5,17 @@ people:
   designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Al Stephens
   roles:
-  - Council Member
-  designations:
   - Mayor Pro Tem
+  designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -26,7 +25,7 @@ people:
   designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -36,7 +35,7 @@ people:
   designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -46,7 +45,7 @@ people:
   designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -56,7 +55,7 @@ people:
   designations: []
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null

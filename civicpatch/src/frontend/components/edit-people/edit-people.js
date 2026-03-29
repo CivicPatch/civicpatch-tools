@@ -61,7 +61,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setPullRequestsLoading(true);
     try {
       const data = await fetchPullRequests(jurisdiction_ocdid);
-      const prs = (data.data || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      const prs = (data.data || []).map((item) => item.details).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setPullRequests(prs);
       setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
     } catch {
@@ -166,11 +166,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   async function handleClosePR() {
+    const request_id = selectedPullRequest?.request_id;
     const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
     if (!prNumber) return;
     setPrStatus("loading_close");
     try {
-      await closePullRequest(prNumber);
+      await closePullRequest(request_id, prNumber);
       setPrStatus("closed");
     } catch {
       setPrStatus("error");

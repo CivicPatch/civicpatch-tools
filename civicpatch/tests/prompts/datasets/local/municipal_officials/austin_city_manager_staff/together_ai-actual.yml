@@ -1,1 +1,91 @@
-people: []
+people:
+- name: T.C. Broadnax
+  roles:
+  - City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/tc-broadnax
+  start_date: null
+  end_date: null
+  image: local://b306fc6ea5a3.png
+- name: Jon Fortune
+  roles:
+  - Deputy City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/jon-fortune
+  start_date: null
+  end_date: null
+  image: local://d0e9216d2d5b.png
+- name: Dr. Eric A. Johnson
+  roles:
+  - Assistant City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/dr-eric-johnson
+  start_date: null
+  end_date: null
+  image: local://8a57fcdebdf6.png
+- name: Michael Rogers
+  roles:
+  - Assistant City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/michael-rogers
+  start_date: null
+  end_date: null
+  image: local://4fdcc60eb325.png
+- name: Stephanie Hayden-Howard
+  roles:
+  - Assistant City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/stephanie-hayden-howard
+  start_date: null
+  end_date: null
+  image: local://866c8c929274.png
+- name: Vacant
+  roles:
+  - Assistant City Manager
+  designations: []
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: local://9822dd5f21b3.png
+- name: Susana Carbajal
+  roles:
+  - Assistant City Manager
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/susana-carbajal
+  start_date: null
+  end_date: null
+  image: local://c5dd1375b8b8.png
+- name: Ed Van Eenoo
+  roles:
+  - Chief Financial Officer
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/ed-van-eenoo
+  start_date: null
+  end_date: null
+  image: local://c80e6a33e20c.png
+- name: Genesis D. Gavino
+  roles:
+  - Chief of Staff
+  designations: []
+  phone: null
+  email: null
+  url: https://www.austintexas.gov/city-manager/genesis-d-gavino
+  start_date: null
+  end_date: null
+  image: local://65401372c8f2.png

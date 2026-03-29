@@ -1,23 +1,14 @@
 failed_cases:
 - model_client: together_ai
-  case_id: bay_city_council
+  case_id: gatesville_ordinances
   failures:
   - field: relevant_urls
     expected:
-    - https://www.cityofbaycity.org/458/Blayne-Finlay
-    - https://www.cityofbaycity.org/655/Susan-Reardon
-    - https://www.cityofbaycity.org/286/Floyce-Brown
-    - https://www.baycitytx.gov/296/Office-of-the-Mayor
-    - https://www.cityofbaycity.org/287/Brad-Westmoreland
-    - https://www.cityofbaycity.org/285/Jim-Folse
+    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
+    - https://gatesvilletx.com/government/city_council/index.php
+    - https://gatesvilletx.com/government/city_council/agendas_minutes.php
     actual:
-    - https://www.baycitytx.gov/458/Blayne-Finlay
-    - https://www.baycitytx.gov/296/Office-of-the-Mayor
-    - https://www.baycitytx.gov/655/Susan-Reardon
-    - https://www.baycitytx.gov/285/Jim-Folse
-    - https://www.baycitytx.gov/286/Floyce-Brown
-    - https://www.baycitytx.gov/287/Brad-Westmoreland
-    - https://www.baycitytx.gov/185/Boards-Commissions
-    - https://www.baycitytx.gov/27/Government
-    score: 0.16666666666666666
+    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
+    - https://gatesvilletx.com/government/city_council/agendas_minutes.php
+    score: 0.6666666666666666
     threshold: 0.75

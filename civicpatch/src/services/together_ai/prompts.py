@@ -7,12 +7,13 @@ import shared.utils.config_utils as config_utils
 def relevant_page_prompt(page_url: str):
     prompt = f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials** 
-    of the target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members, 
+    of a municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members, 
     Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of the municipality.
 
-    Also consider the page URL: {page_url}
-    The URL may help you select relevant_urls, but do NOT use it to determine is_relevant.
-    is_relevant must be based solely on the page content.
+    Page URL: {page_url}
+    The URL may help you identify which links belong to the municipality's domain(s) when selecting
+    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.
+    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.
 
     **Relevant content includes:**
     - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages) 
@@ -29,8 +30,7 @@ def relevant_page_prompt(page_url: str):
     **Steps for selecting relevant_urls:**
     1. Extract ALL links found anywhere on the page into a complete list.
     2. For each link, ask: "If I followed this link, would I likely land on a page that lists or describes 
-       the primary governing body (mayor, council members, commissioners, etc.) or provides a directory 
-       of municipal departments and staff?"
+       the primary governing body (mayor, council members, commissioners, etc.) or provides contact info for those officials?"
        Keep the link if the answer is yes.
     3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to
        a navigational index or overview page, or to a single specific article, event, or news item?"
@@ -39,8 +39,7 @@ def relevant_page_prompt(page_url: str):
          (e.g. /Government, /Council, /CityOfficials, /Directory/Departments)
        - Keep: individual pages explicitly for the Mayor (e.g., /Mayor/Bio, /About-the-Mayor, /Our-Mayor) —
          the mayor is a primary official, so their dedicated page is always relevant
-       - Discard: individual news stories, press releases, or event pages about a specific item —
-         even if they mention an official's name in the title or URL
+       - Discard: individual news stories, press releases, or event pages.
     4. Return the filtered list as relevant_urls.
 
     **Output Format:**
@@ -54,14 +53,17 @@ def relevant_page_prompt(page_url: str):
     - `is_relevant` must be true ONLY if the page is *about* currently serving primary governing
       officials — e.g., a council roster, a staff directory, or a bio/profile page for an official.
       Names appearing incidentally inside news items, legal notices, tax notices, meeting minutes,
-      or vote records do NOT make a page relevant — set is_relevant to false.
+      vote records, or ordinances do NOT make a page relevant — set is_relevant to false.
+      A city council landing page whose content is ordinances and vote rolls (e.g.
+      "UPON CALLING FOR A VOTE ... Gary Chumley, Mayor — Does not Vote; Aaron Smith — Aye")
+      is NOT relevant — it is a legislative archive, not a roster.
       A page that merely links to such information is also NOT relevant — set is_relevant to false.
     - `relevant_urls` must include ANY navigation or directory link on the page that could lead to 
       the primary governing body — including department directories, staff listings, and government 
       section pages — even if the current page itself is not relevant.
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
     - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
-    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
+    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.
     - Only include URLs hosted on the municipality's own domain(s) (e.g. city, county, town websites).
       Do NOT include URLs from third-party external domains, even if civic-related. Examples to exclude:
       social media (facebook.com, twitter.com, instagram.com, linkedin.com, youtube.com),
@@ -94,6 +96,10 @@ def municipality_officials_prompt(roles_hint: List[str]):
     Only extract officials from:
     - A structured table, list, or directory of officials
     - A dedicated biography, about, or contact section for an official
+    - A page section clearly labeled with a governing body name (e.g. "City Council
+      Members", "Board of Aldermen") that lists names as headings or line items —
+      even if no contact info, roles, or other details are present; infer the role
+      from the section heading
     Do NOT extract officials mentioned only in news articles, event summaries,
     meeting notes, or scattered references. If no structured listing exists,
     return an empty array for "people".

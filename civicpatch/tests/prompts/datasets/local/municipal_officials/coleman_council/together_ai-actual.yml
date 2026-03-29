@@ -5,10 +5,10 @@ people:
   designations: []
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Sharlene T. Hetzel
   roles:
   - Council Member
@@ -18,10 +18,10 @@ people:
   - West Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Tracy Rankin
   roles:
   - Council Member
@@ -30,10 +30,10 @@ people:
   - North Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Beau Brudney
   roles:
   - Council Member
@@ -42,10 +42,10 @@ people:
   - East Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Monte Sides
   roles:
   - Council Member
@@ -54,7 +54,7 @@ people:
   - South Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
