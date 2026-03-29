@@ -113,6 +113,7 @@ class ResearchMunicipalityStep(BaseModel):
     people: List[ResearchedPerson]
     elected_officials: List[ResearchedPerson]
     notes: Optional[str] = None
+    origin_source: str = "google_gemini"
 
 class SearchLinksStep(BaseModel):
     search_link_pointer: int = 0  # Index of the next search engine to use
@@ -150,6 +151,7 @@ class FormatOutputStep(BaseModel):
 class ReviewOutputStep(BaseModel):
     issues: List[str]
     people_by_source: List[dict]
+    origin_source: str = "google_gemini"
 
 class MaybeSendToGitHubStep(BaseModel):
     status: str

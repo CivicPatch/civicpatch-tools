@@ -1290,8 +1290,8 @@ async def insert_unrecognized_roles(request_id: str, roles: list[dict]) -> None:
     if not roles:
         return
     pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.executemany(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
             """
             INSERT INTO unrecognized_roles (request_id, role, person_name)
             VALUES (%s, %s, %s)

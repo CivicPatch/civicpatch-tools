@@ -38,6 +38,7 @@ def generate_review(
     research_people,
     people,
     identities: Dict[str, List[str]] | None = None,
+    origin_source: str = "google_gemini",
 ):
     identities = identities or {}
 
@@ -58,6 +59,7 @@ def generate_review(
     return {
         "issues": issues,
         "people_by_source": rows,
+        "origin_source": origin_source,
     }
 
 
