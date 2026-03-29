@@ -1,0 +1,78 @@
+people:
+- name: Gary Chumley
+  roles:
+  - Mayor
+  designations:
+  - At Large
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Aaron Smith
+  roles:
+  - Council Member
+  designations:
+  - Ward 1, Place 1
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Jon Salter
+  roles:
+  - Council Member
+  designations:
+  - Ward 1, Place 2
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Meredith Rainer
+  roles:
+  - Council Member
+  designations:
+  - Ward 1, Place 3
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Joe Patterson
+  roles:
+  - Council Member
+  designations:
+  - Ward 2, Place 4
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Greg Casey
+  roles:
+  - Council Member
+  designations:
+  - Ward 2, Place 5
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Kalinda Westbrook
+  roles:
+  - Council Member
+  designations:
+  - Ward 2, Place 6
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null

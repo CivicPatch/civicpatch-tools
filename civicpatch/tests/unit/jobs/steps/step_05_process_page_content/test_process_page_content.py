@@ -219,6 +219,20 @@ def test_normalize_record_strips_internal_whitespace_from_email():
     assert result.email == "john@example.com"
 
 
+def test_normalize_record_moves_url_from_email_to_url_when_url_empty():
+    record = LLMPerson(name="John Doe", other_names=[], roles=["mayor"], phone=None, email="https://example.com/contact", url=None, designations=[], source_url="test")
+    result = normalize_record(dummy_logger(), record)
+    assert result.email is None
+    assert result.url == "https://example.com/contact"
+
+
+def test_normalize_record_clears_url_from_email_when_url_already_set():
+    record = LLMPerson(name="John Doe", other_names=[], roles=["mayor"], phone=None, email="https://example.com/contact-form", url="https://example.com/bio", designations=[], source_url="test")
+    result = normalize_record(dummy_logger(), record)
+    assert result.email is None
+    assert result.url == "https://example.com/bio"
+
+
 def test_add_relevant_urls_includes_cross_domain():
     """Relevant URLs identified by the LLM should be added even if they are on a different domain."""
     existing_links = [

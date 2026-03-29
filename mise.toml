@@ -69,9 +69,25 @@ dir = "civicpatch"
 run = "uv run pytest tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
 dir = "civicpatch"
 
+[tasks.evalsr]
+run = "uv run pytest tests/prompts/tests/evals/test_local_relevant_page_eval.py"
+dir = "civicpatch"
+
+[tasks.evals]
+run = "uv run pytest -m evals tests/prompts"
+dir = "civicpatch"
+
 [tasks.tapi]
 run = "uv run pytest"
 dir = "api.civicpatch.org"
+
+###################################################
+## 🚀✨ Scripts                             ✨🚀 ##
+###################################################
+
+[tasks.script]
+description = "Run a one-off script: mise run script -- <script_name> [args]"
+run = "uv run python scripts/{{ arg(name=\"script\") }}.py {{ args() }}"
 
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
@@ -92,3 +108,32 @@ docker compose run --rm api_civicpatch_org \
 [tasks.psql]
 description = "Open a psql shell against the dev database"
 run = "psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db"
+
+[tasks.jurisdictions-tsv]
+description = "Dump jurisdictions table with flattened data column as TSV. Optionally filter by state: mise run jurisdictions-tsv -- tx"
+run = """
+STATE="{{ arg(name="state", required=false) }}"
+FILTER=""
+if [ -n "$STATE" ]; then
+  FILTER="WHERE state = '$STATE'"
+fi
+psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db \
+  --no-align --field-separator $'\\t' --tuples-only \
+  -c "
+    SELECT
+        jurisdiction_ocdid,
+        state,
+        status,
+        data->>'id'         AS data_id,
+        data->>'name'       AS data_name,
+        data->>'url'        AS data_url,
+        data->>'geoid'      AS data_geoid,
+        data->>'population' AS data_population,
+        file_path,
+        git_commit,
+        updated_at
+    FROM jurisdictions
+    $FILTER
+    ORDER BY jurisdiction_ocdid;
+  "
+"""

@@ -35,7 +35,7 @@ export const updatePullRequestData = async (
 
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`${API_URL}/api/v1/pull_requests?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

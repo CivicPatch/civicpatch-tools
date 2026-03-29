@@ -227,8 +227,8 @@ function JobsPage() {
   const loadJurisdictionPRs = async (ocdid) => {
     setOpenJurisdictions((prev) => ({ ...prev, [ocdid]: !prev[ocdid] }));
     if (!duplicateJurisdictionPRs[ocdid]) {
-      const prs = await fetchPullRequests(ocdid);
-      setDuplicateJurisdictionPRs((prev) => ({ ...prev, [ocdid]: prs.data || [] }));
+      const result = await fetchPullRequests(ocdid);
+      setDuplicateJurisdictionPRs((prev) => ({ ...prev, [ocdid]: result.data || [] }));
     }
   };
 
@@ -246,12 +246,12 @@ function JobsPage() {
         ${isOpen ? html`
           <div class="jobs-page__duplicate-item-body">
             ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
-              const pullRequestNumber = pullRequestUrlToNumber(pr.pull_request_url);
+              const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
               return html`
                 <pr-card
                   @onMerge=${handleMerge}
                   @onClose=${handleClose}
-                  .pr=${pr}
+                  .pr=${pr.details}
                   .state=${pullRequestState[pullRequestNumber]}
                   .data=${{
                     existing: pr.existing,

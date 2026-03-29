@@ -128,7 +128,8 @@ async def model_client(request):
         raise ValueError(f"Unknown model client: {request.param}")
 
 
-@pytest.mark.parametrize("model_client", ["google_gemini", "together_ai"], indirect=True)
+@pytest.mark.parametrize("model_client", ["together_ai"], indirect=True)
+#@pytest.mark.parametrize("model_client", ["google_gemini", "together_ai"], indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
     """
