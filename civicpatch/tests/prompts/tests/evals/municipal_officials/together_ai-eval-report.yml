@@ -1,10 +1,10 @@
 aggregated_report:
-  name: 1.0
-  roles: 0.9857142857142858
-  designations: 1.0
-  phone: 1.0
-  email: 0.9012987012987013
-  url: 0.6727272727272727
+  url: 0.6886363636363636
+  email: 0.9386363636363636
+  roles: 0.9291666666666667
+  designations: 0.95
+  name: 0.95
+  phone: 0.95
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
@@ -12,60 +12,68 @@ per_case_scores:
   scores: {}
 - case_id: austin_council
   scores:
-    name: 1.0
+    url: 0.9090909090909091
+    email: 0.9090909090909091
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 0.9090909090909091
-    url: 0.9090909090909091
 - case_id: austin_district7_council_member
   scores:
-    name: 1.0
+    url: 0.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 0.0
 - case_id: board_of_aldermen
   scores:
-    name: 1.0
+    url: 1.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 0.0
 - case_id: coleman_council
   scores:
-    name: 1.0
-    roles: 0.9
-    designations: 1.0
-    phone: 1.0
-    email: 1.0
     url: 1.0
+    email: 1.0
+    roles: 1.0
+    designations: 1.0
+    name: 1.0
+    phone: 1.0
 - case_id: la_porte_council
   scores:
-    name: 1.0
+    url: 1.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 1.0
 - case_id: mixed_current_past
   scores:
+    url: 1.0
+    email: 1.0
+    roles: 0.8333333333333334
+    designations: 1.0
     name: 1.0
+    phone: 1.0
+- case_id: redundant_place_role
+  scores:
+    url: 0.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 1.0
 - case_id: vacant_positions_council
   scores:
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    phone: 1.0
-    email: 0.4
-    url: 0.8
+    url: 0.6
+    email: 0.6
+    roles: 0.6
+    designations: 0.6
+    name: 0.6
+    phone: 0.6
 failed_cases:
 - model_client: together_ai
   case_number: 1
@@ -76,29 +84,34 @@ failed_cases:
     expected: null
     actual: mayorwatson@austintexas.gov
 - model_client: together_ai
-  case_number: 4
-  case_id: coleman_council
+  case_number: 6
+  case_id: mixed_current_past
   failures:
-  - person: Sharlene T. Hetzel
+  - person: Al Stephens
     field: roles
     expected:
-    - Council Member
-    - Mayor Pro-Tem
+    - Mayor Pro Tem
     actual:
     - Council Member
 - model_client: together_ai
-  case_number: 7
+  case_number: 8
   case_id: vacant_positions_council
   failures:
-  - person: Alysa Jarvis
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/741/field_email
-  - person: Tracey Johnson
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/756/field_email
-  - person: Kenneth Reese
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/751/field_email
+  - person: Vacant Vacant
+    field: name
+    expected: Vacant Vacant
+    actual: ''
+  - person: Vacant Vacant
+    field: roles
+    expected:
+    - Council
+    actual: ''
+  - person: Vacant Vacant
+    field: name
+    expected: Vacant Vacant
+    actual: ''
+  - person: Vacant Vacant
+    field: roles
+    expected:
+    - Council
+    actual: ''

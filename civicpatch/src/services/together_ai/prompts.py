@@ -114,11 +114,8 @@ def municipality_officials_prompt(roles_hint: List[str]):
     - The official's role exactly as written in the source. Do not rename or normalize.
     - Common roles you may encounter: Mayor, Council Member, Alderman, Commissioner,
       Select Board Member. Always use the source's exact wording.
-    - Do not include position identifiers (numbers, letters, or at-large qualifiers) as part of the role name. These belong in designations.
-    - Correct: role="City Commissioner", designation="Place 4"
-    - Incorrect: role="City Commissioner Place 4", designation=[]
-    - Correct: role="Council Member", designation="At-Large A"
-    - Incorrect: role="Council Member At-Large A", designation=[]
+    - Strip any trailing position identifier (Place N, Ward N, District N, At-Large, etc.) from the role — it belongs in designations.
+      Example: "Council Place 1" or "Council Member Place 1" → role="Council Member", designation="Place 1"
     {roles_hint_str}
 
     designations:

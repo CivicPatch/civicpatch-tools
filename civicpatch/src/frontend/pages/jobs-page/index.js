@@ -5,6 +5,7 @@ import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
   fetchJobsWithErrors,
+  fetchUnrecognizedRoles,
   saveAndMerge,
   closePullRequest,
   resolveJob,
@@ -85,6 +86,7 @@ function JobsPage() {
   const [pageLoading, setPageLoading] = useState(false);
 
   const [errorJobs, setErrorJobs] = useState([]);
+  const [unrecognizedRoles, setUnrecognizedRoles] = useState([]);
   const [error, setError] = useState(null);
   const [perPage, setPerPage] = useState(getPerPageFromUrl());
 
@@ -112,8 +114,9 @@ function JobsPage() {
       fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase()),
       fetchJobsWithErrors(stateCode.toLowerCase()),
       fetchDuplicatePrJurisdictionJobs(),
+      fetchUnrecognizedRoles(stateCode.toLowerCase()),
     ])
-      .then(([prResult, errResult, duplicatePrResult]) => {
+      .then(([prResult, errResult, duplicatePrResult, unrecognizedResult]) => {
         setPullRequests(prResult.data || []);
         setTotal(prResult.total || 0);
         setErrorJobs(errResult.data || []);
@@ -122,6 +125,7 @@ function JobsPage() {
         setDuplicateJurisdictions(
           duplicatePrResult.data || []
         );
+        setUnrecognizedRoles(unrecognizedResult.data || []);
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
@@ -318,6 +322,25 @@ function JobsPage() {
     </section>
   ` : null;
 
+  const unrecognizedSection = permissions.JOBS_PAGE_ERRORS && unrecognizedRoles.length ? html`
+    <section class="jobs-page__unrecognized-roles">
+      <h2>Unrecognized roles</h2>
+      <table>
+        <thead><tr><th>Role</th><th>Person</th><th>Status</th><th>Jurisdiction</th></tr></thead>
+        <tbody>
+          ${unrecognizedRoles.map((ur) => html`
+            <tr>
+              <td><code>${ur.role}</code></td>
+              <td>${ur.person_name}</td>
+              <td>${ur.status}</td>
+              <td><a href="/jurisdictions?jurisdiction_ocdid=${ur.jurisdiction_ocdid}" target="_blank">${ur.jurisdiction_ocdid}</a></td>
+            </tr>
+          `)}
+        </tbody>
+      </table>
+    </section>
+  ` : null;
+
   return html`
     <main>
       <div class="jobs-page__filters">
@@ -348,6 +371,7 @@ function JobsPage() {
       </div>
       ${summarySection}
       ${errorSection}
+      ${unrecognizedSection}
       <section class="jobs-page__duplicate-jurisdictions">
         <div class="jobs-page__section-header">
           <h2>Pull requests - duplicate jurisdictions</h2>

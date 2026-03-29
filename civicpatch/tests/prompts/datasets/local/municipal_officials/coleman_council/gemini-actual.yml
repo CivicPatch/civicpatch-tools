@@ -10,7 +10,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Monte Sides
   roles:
   - Council Member
@@ -22,7 +22,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Tommy Sloan
   roles:
   - Mayor
@@ -32,7 +32,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Sharlene T. Hetzel
   roles:
   - Council Member
@@ -45,7 +45,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Tracy Rankin
   roles:
   - Council Member
@@ -57,4 +57,4 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null

@@ -186,10 +186,13 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
       normalize, or substitute role titles.
       Roles you may encounter include: Mayor, Council Member, Alderman,
       Commissioner, Select Board Member — but always use the source's exact wording.
-      If the listing does not explicitly state a role but the surrounding content 
-      clearly identifies the group (e.g. "The City Council is comprised of a Mayor 
+      If the listing does not explicitly state a role but the surrounding content
+      clearly identifies the group (e.g. "The City Council is comprised of a Mayor
       and 4 Council Members"), use that contextual role for all members in the listing.
-      **If the value matches a known designation type ({designations_str}), 
+      **Strip any trailing position identifier (Place N, Ward N, District N, At-Large, etc.)
+      from the role — it belongs in "designations".**
+      Example: "Council Place 1" or "Council Member Place 1" → role="Council Member", designation="Place 1"
+      **If the value matches a known designation type ({designations_str}),
       it belongs in "designations", not here.**
 
     - **designations** (Array of strings)

@@ -1,10 +1,9 @@
 from typing import Dict, List, Optional, cast
 from collections import defaultdict, Counter
 from jobs.people_collector.schemas import (
-    LLMPerson, Person, 
-    RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep,
+    LLMPerson, Person,
+    RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep, UnrecognizedRole,
 )
-from utils import role_utils
 from shared.utils import config_utils, name_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
 
@@ -31,6 +30,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         for llm, people_by_name in records_by_llm.items()
     }
 
+    roles_to_keep = set(config_utils.get_role_names())
+    all_unrecognized: List[UnrecognizedRole] = []
     people_by_llm: Dict[str, List[Person]] = {}
 
     for llm, records in flattened_records_by_llm.items():
@@ -58,13 +59,14 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
 
             merged_people.append(merged_person)
 
-        # Filter out records by the roles we want to keep
-        roles_to_keep = config_utils.get_role_names()
-        merged_people = role_utils.people_with_roles(merged_people, roles_to_keep)
+        for person in merged_people:
+            unknown = [r for r in person.roles if r.lower() not in roles_to_keep]
+            for role in unknown:
+                all_unrecognized.append(UnrecognizedRole(role=role, person_name=person.name))
 
         people_by_llm[llm] = merged_people
 
-    return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm)
+    return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm, unrecognized_roles=all_unrecognized)
 
 
 def get_source_urls(person_records: list, person: Person) -> list:
