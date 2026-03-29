@@ -30,9 +30,6 @@ async def sync_single_pr_state(request_id: str):
         await database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
     elif pr_data.get("state") == PullRequestStatus.CLOSED:
         await database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
-    else:
-        review_state = await github_service.get_pull_request_review_state(pr_number)
-        await database.update_job_pull_request_review_state(request_id, review_state)
 
 
 async def sync_open_pr_state():
@@ -122,9 +119,6 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
             )
         else:
             await maybe_backfill_job_result(request_id, pr_info["jurisdiction_ocdid"])
-        if pr_info.get("pr_number"):
-            review_state = await github_service.get_pull_request_review_state(pr_info["pr_number"])
-            await database.update_job_pull_request_review_state(request_id, review_state)
 
 
 async def _close_stale_prs(github_request_ids: set[str]):

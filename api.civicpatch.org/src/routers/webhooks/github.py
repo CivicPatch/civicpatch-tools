@@ -9,7 +9,7 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
-from database.database import update_job_pull_request_review_state, update_job_pull_request_status
+from database.database import update_job_pull_request_status
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
 from services.github.pull_request_sync_service import register_and_sync_pr_job
@@ -50,30 +50,6 @@ def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None
     return None
 
 
-def _parse_pr_review(payload: dict[str, Any]) -> tuple[str, str] | None:
-    """Returns (request_id, review_state) or None to ignore."""
-    if payload.get("action") != "submitted":
-        return None
-    review_state = payload.get("review", {}).get("state", "").lower()
-    if review_state not in ("approved", "changes_requested"):
-        return None
-    pr = payload.get("pull_request", {})
-    branch_name = pr.get("head", {}).get("ref", "")
-    try:
-        parts = id_utils.git_branch_to_parts(branch_name)
-    except ValueError:
-        logger.warning("Unrecognised branch name in PR review webhook: %r", branch_name)
-        return None
-    return parts["request_id"], review_state
-
-
-async def _handle_pull_request_review_event(payload: dict[str, Any]):
-    result = _parse_pr_review(payload)
-    if result is None:
-        return
-    request_id, review_state = result
-    await update_job_pull_request_review_state(request_id, review_state)
-
 
 async def _handle_pull_request_event(payload: dict[str, Any]):
     result = _parse_pr_status(payload)
@@ -110,16 +86,13 @@ def get_router() -> APIRouter:
 
         logger.info("GitHub webhook received: event=%s", x_github_event)
 
-        if x_github_event in ("pull_request", "pull_request_review"):
+        if x_github_event == "pull_request":
             content_type = request.headers.get("content-type", "")
             if "application/x-www-form-urlencoded" in content_type:
                 payload: dict[str, Any] = json.loads(parse_qs(body.decode())["payload"][0])
             else:
                 payload = json.loads(body)
-            if x_github_event == "pull_request":
-                background_tasks.add_task(_handle_pull_request_event, payload)
-            else:
-                background_tasks.add_task(_handle_pull_request_review_event, payload)
+            background_tasks.add_task(_handle_pull_request_event, payload)
 
         return {"ok": True}
 
