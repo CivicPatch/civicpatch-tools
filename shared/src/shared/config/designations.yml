@@ -32,7 +32,8 @@ designations:
       - council seat
   place:
     is_unique: true
-    aliases: []
+    aliases:
+      - council place
   post:
     is_unique: true
     has_geographic_area: false

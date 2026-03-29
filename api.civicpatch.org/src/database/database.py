@@ -1284,3 +1284,51 @@ async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
             "UPDATE jurisdictions SET status = 'inactive' WHERE jurisdiction_ocdid = ANY(%s)",
             (ocdids,)
         )
+
+
+async def insert_unrecognized_roles(request_id: str, roles: list[dict]) -> None:
+    if not roles:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.executemany(
+            """
+            INSERT INTO unrecognized_roles (request_id, role, person_name)
+            VALUES (%s, %s, %s)
+            """,
+            [(request_id, r["role"], r["person_name"]) for r in roles],
+        )
+
+
+async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]:
+    conditions, params = [], []
+    if state_code:
+        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        params.append(f"%state:{state_code}%")
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT ur.id, ur.role, ur.person_name, ur.status,
+                   ur.created_at, ur.request_id, r.jurisdiction_ocdid
+            FROM unrecognized_roles ur
+            JOIN requests r ON r.id = ur.request_id
+            {where}
+            ORDER BY ur.created_at DESC LIMIT 500
+            """,
+            params,
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "id": str(r[0]),
+            "role": r[1],
+            "person_name": r[2],
+            "status": r[3],
+            "created_at": r[4].isoformat() if r[4] else None,
+            "request_id": str(r[5]),
+            "jurisdiction_ocdid": r[6],
+        }
+        for r in rows
+    ]

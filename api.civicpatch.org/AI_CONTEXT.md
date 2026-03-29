@@ -88,4 +88,4 @@ mise run psql
 - Tests are part of the feature — do not ship a new function or endpoint without corresponding tests unless explicitly told to skip them.
 - Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` or `tests/integration/` directory to understand available builders and patterns.
 - After writing tests, run them and fix any failures before considering the task done.
-- Run tests: `uv run pytest api.civicpatch.org/tests`
+- Run tests: `mise run tapi`

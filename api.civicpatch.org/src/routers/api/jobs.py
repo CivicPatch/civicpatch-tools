@@ -22,6 +22,7 @@ from database.database import (
     get_job_data_json,
     get_job_status,
     get_jobs_with_errors,
+    get_unrecognized_roles,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -363,6 +364,17 @@ def get_router(api_key_header):
             job["workflow_log_url"] = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}/workflow.log"
 
         return {"data": jobs}
+
+    @router.get(
+        "/unrecognized-roles",
+        summary="List roles not found in roles.yml",
+    )
+    async def get_unrecognized_roles_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+    ):
+        rows = await get_unrecognized_roles(state_code=state_code)
+        return {"data": rows}
 
     @router.get(
         "/{request_id}/status",

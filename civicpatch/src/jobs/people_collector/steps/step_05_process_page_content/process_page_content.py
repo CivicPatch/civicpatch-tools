@@ -53,12 +53,12 @@ LLMS = [
         "prompt": together_ai_prompt,
         "with_batch_api": False,
     },
-    {
-        "name": "google_gemini",
-        "service": google_gemini_llm,
-        "prompt": google_gemini_prompt,
-        "with_batch_api": False,
-    }
+    #{
+    #    "name": "google_gemini",
+    #    "service": google_gemini_llm,
+    #    "prompt": google_gemini_prompt,
+    #    "with_batch_api": False,
+    #}
 ]
 
 IGNORE_WEBSITES = [
@@ -339,18 +339,19 @@ def normalize_record(logger, record: LLMPerson) -> LLMPerson:
         logger.warning(f"Failed to parse phone number: {record.phone}")
         normalized_phone = None
 
-    if record.email and not email_utils.is_valid_email(record.email):
+    normalized_email = email_utils.normalize_email(record.email)
+    if normalized_email and not email_utils.is_valid_email(normalized_email):
         logger.warning(f"Invalid email address found: {record.email}")
-        if not record.url and url_utils.is_valid_url(record.email):
-            record.url = url_utils.format_url(record.email)
-        record.email = None
+        if not record.url and url_utils.is_valid_url(normalized_email):
+            record.url = url_utils.format_url(normalized_email)
+        normalized_email = None
 
     return LLMPerson(
         name=record.name,
         roles=people_utils.normalize_roles(record.roles),
         designations=people_utils.normalize_designations(record.designations),
         phone=normalized_phone,
-        email=record.email,
+        email=normalized_email,
         url=record.url,
         start_date=record.start_date,
         end_date=record.end_date,
