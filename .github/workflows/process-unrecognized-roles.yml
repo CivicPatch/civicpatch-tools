@@ -1,0 +1,30 @@
+# Uncomment to enable daily processing of unrecognized roles.
+# Requires secrets: CIVICPATCH_API_DB_URL, GOOGLE_GEMINI_TOKEN,
+#   GITHUB_APP_PRIVATE_KEY_BASE64, GITHUB_APP_ID, GITHUB_APP_INSTALLATION_ID,
+#   OPEN_DATA_REPO_URL
+
+# name: Process Unrecognized Roles
+# on:
+#   schedule:
+#     - cron: '0 6 * * *'  # daily at 6am UTC
+#   workflow_dispatch: {}
+# permissions:
+#   contents: read
+# jobs:
+#   process:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v6
+#       - name: Install uv
+#         uses: astral-sh/setup-uv@v7
+#       - name: Install dependencies
+#         run: uv sync --all-packages
+#       - name: Process unrecognized roles
+#         run: uv run python api.civicpatch.org/scripts/process_unrecognized_roles.py
+#         env:
+#           CIVICPATCH_API_DB_URL: ${{ secrets.CIVICPATCH_API_DB_URL }}
+#           GOOGLE_GEMINI_TOKEN: ${{ secrets.GOOGLE_GEMINI_TOKEN }}
+#           GITHUB_APP_PRIVATE_KEY_BASE64: ${{ secrets.GITHUB_APP_PRIVATE_KEY_BASE64 }}
+#           GITHUB_APP_ID: ${{ secrets.GITHUB_APP_ID }}
+#           GITHUB_APP_INSTALLATION_ID: ${{ secrets.GITHUB_APP_INSTALLATION_ID }}
+#           OPEN_DATA_REPO_URL: ${{ secrets.OPEN_DATA_REPO_URL }}

@@ -50,9 +50,11 @@ def relevant_page_prompt(page_url: str):
     }}
 
     **Critical rules:**
-    - `is_relevant` must be true ONLY if the page content itself contains names, roles, contact info,
-      or biographical details of currently serving primary governing officials.
-      A page that merely links to such information is NOT relevant — set is_relevant to false.
+    - `is_relevant` must be true ONLY if the page is *about* currently serving primary governing
+      officials — e.g., a council roster, a staff directory, or a bio/profile page for an official.
+      Names appearing incidentally inside news items, legal notices, tax notices, meeting minutes,
+      or vote records do NOT make a page relevant — set is_relevant to false.
+      A page that merely links to such information is also NOT relevant — set is_relevant to false.
     - `relevant_urls` must include ANY navigation or directory link on the page that could lead to
       the primary governing body — including department directories, staff listings, and government
       section pages — even if the current page itself is not relevant.

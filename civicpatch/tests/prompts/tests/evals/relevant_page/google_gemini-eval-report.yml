@@ -1,13 +1,9 @@
 failed_cases:
 - model_client: google_gemini
-  case_id: quitaque_council
+  case_id: olton_newslist_irrelevant
   failures:
-  - field: relevant_urls
-    expected:
-    - https://quitaque.us/cityofficials.html
-    actual:
-    - https://quitaque.us/phonenumbers.html
-    - https://quitaque.us/contact.html
-    - https://quitaque.us/
+  - field: is_relevant
+    expected: false
+    actual: true
     score: 0.0
-    threshold: 0.75
+    threshold: 1.0

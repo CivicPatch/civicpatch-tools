@@ -9,7 +9,7 @@ import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github.github_api_service as github_service
-from database.database import update_job_data, update_job_review_json
+from database.database import update_job_data, update_job_review_json, insert_unrecognized_roles
 import logging
 import yaml
 
@@ -81,6 +81,13 @@ async def handle_submit_job_artifacts(
             workflow_context = json.load(f)
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_job_review_json(request.request_id, review_json)
+
+        unrecognized = (
+            workflow_context.get("data", {})
+            .get("merge_records_within_llm_step", {})
+            .get("unrecognized_roles", [])
+        )
+        await insert_unrecognized_roles(request.request_id, unrecognized)
 
     artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"

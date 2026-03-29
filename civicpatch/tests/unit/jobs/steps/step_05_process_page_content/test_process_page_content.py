@@ -4,7 +4,7 @@ from jobs.people_collector.schemas import (
     LLMPerson, LinkStatus, Link, RelevantPageResponseSchema
 )
 from jobs.people_collector.steps.step_05_process_page_content.process_page_content import (
-    has_role_and_contact_info, check_page_heuristics, check_page_relevance, add_relevant_urls
+    has_role_and_contact_info, check_page_heuristics, check_page_relevance, add_relevant_urls, normalize_record
 )
 from jobs.people_collector.schemas import LLMPerson
 from tests.factories.workflow_context import workflow_context_factory
@@ -205,6 +205,18 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
     input_text = "Council member Jamie NoUrlInText can be reached at jamie@nourl.com or 555-8765. Ward 4."
     # "http://nourl.com/jamie" is not in input_text
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
+
+
+def test_normalize_record_strips_whitespace_from_email():
+    record = LLMPerson(name="John Doe", other_names=[], roles=["mayor"], phone=None, email="john @example.com", url=None, designations=[], source_url="test")
+    result = normalize_record(dummy_logger(), record)
+    assert result.email == "john@example.com"
+
+
+def test_normalize_record_strips_internal_whitespace_from_email():
+    record = LLMPerson(name="John Doe", other_names=[], roles=["mayor"], phone=None, email="john@ example .com", url=None, designations=[], source_url="test")
+    result = normalize_record(dummy_logger(), record)
+    assert result.email == "john@example.com"
 
 
 def test_add_relevant_urls_includes_cross_domain():

@@ -167,10 +167,21 @@ erDiagram
         timestamptz updated_at
     }
 
+    unrecognized_roles {
+        uuid id PK
+        uuid request_id FK
+        text role
+        text person_name
+        text status
+        text pr_url
+        timestamptz created_at
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
+    requests ||--o{ unrecognized_roles : "request_id"
 ```
 
 **Notes:**

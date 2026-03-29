@@ -65,6 +65,10 @@ dir = "shared"
 run = "uv run pytest tests/unit"
 dir = "civicpatch"
 
+[tasks.evalsm]
+run = "uv run pytest tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
+dir = "civicpatch"
+
 [tasks.tapi]
 run = "uv run pytest"
 dir = "api.civicpatch.org"

@@ -14,4 +14,4 @@ def normalize_email(email):
     """
     if not email:
         return None
-    return email.strip().lower()
+    return re.sub(r"\s+", "", email).lower()

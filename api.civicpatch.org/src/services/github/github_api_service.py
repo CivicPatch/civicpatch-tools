@@ -470,7 +470,7 @@ async def get_pull_request_mergeability(pull_request_number: str, wait_for_chang
                 return None
             data = response.json()
             state = data.get("mergeable_state")
-            if data.get("mergeable") is not None and state != wait_for_change_from:
+            if data.get("mergeable") is not None and state not in ("unknown", wait_for_change_from):
                 return state
             await asyncio.sleep(2)
     return None
