@@ -1,9 +1,1 @@
-failed_cases:
-- model_client: google_gemini
-  case_id: olton_newslist_irrelevant
-  failures:
-  - field: is_relevant
-    expected: false
-    actual: true
-    score: 0.0
-    threshold: 1.0
+failed_cases: []
