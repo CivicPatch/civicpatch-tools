@@ -32,17 +32,6 @@ const renderStats = ({ added, removed, changed }) => {
   `;
 };
 
-const REVIEW_STATE = {
-  "changes_requested": {
-    label: "Issues",
-    variant: "danger",
-  },
-  "approved": {
-    label: "Approved",
-    variant: "success",
-  },
-}
-
 const PullRequestCardHeader = ({ pr, state, stats }) => {
   const [reviewData, setReviewData] = useState(null);
   const [fullData, setFullData] = useState(null);
@@ -144,8 +133,8 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
     <div class="header-item-center">
       <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>
         <civ-badge
-          .label=${reviewLoading ? "Loading..." : (REVIEW_STATE[pr?.pull_request_review_state]?.label ?? "Approved")}
-          .variant=${REVIEW_STATE[pr?.pull_request_review_state]?.variant ?? "success"}
+          .label=${reviewLoading ? "Loading..." : (pr?.issue_count > 0 ? `${pr.issue_count} issue${pr.issue_count !== 1 ? 's' : ''}` : "Approved")}
+          .variant=${pr?.issue_count > 0 ? "danger" : "success"}
         ></civ-badge>
       </button>
       <div popover ${ref(popoverRef)} class="review-popover">

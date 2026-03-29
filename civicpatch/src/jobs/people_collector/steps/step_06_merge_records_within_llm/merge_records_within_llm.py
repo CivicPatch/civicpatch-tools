@@ -47,6 +47,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
             canonical = canonical_map.get(record.name, record.name)
             groups[canonical].append(record)
 
+        groups = merge_weak_tie_groups_within_llm(groups)
+
         # Merge each group into a Person
         merged_people: List[Person] = []
         for canonical_name, group in groups.items():
@@ -67,6 +69,51 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         people_by_llm[llm] = merged_people
 
     return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm, unrecognized_roles=all_unrecognized)
+
+
+def merge_weak_tie_groups_within_llm(
+    groups: Dict[str, List[LLMPerson]]
+) -> Dict[str, List[LLMPerson]]:
+    """
+    Merge last-name-only canonical groups into full-name groups when they share
+    the same last name and at least one (role, designation) pair.
+    """
+    def is_last_name_only(name: str) -> bool:
+        return len(name.split()) == 1
+
+    def parsed_last_name(name: str) -> str:
+        parsed = name_utils.parse_name(name)
+        return parsed.last.lower() if parsed.last else name.split()[-1].lower()
+
+    def role_designation_pairs(records: List[LLMPerson]) -> set:
+        result = set()
+        for r in records:
+            for role in (r.roles or []):
+                for desig in (r.designations or [""]):
+                    result.add((role, desig))
+        return result
+
+    weak_keys = [k for k in groups if is_last_name_only(k)]
+    result: Dict[str, List[LLMPerson]] = dict(groups)
+
+    for wk in weak_keys:
+        if wk not in result:
+            continue
+        weak_pairs = role_designation_pairs(result[wk])
+        if not weak_pairs:
+            continue
+        for sk in list(result):
+            if sk == wk or is_last_name_only(sk):
+                continue
+            if parsed_last_name(sk) != wk.lower():
+                continue
+            if not weak_pairs & role_designation_pairs(result[sk]):
+                continue
+            result[sk] = result[sk] + result[wk]
+            del result[wk]
+            break
+
+    return result
 
 
 def get_source_urls(person_records: list, person: Person) -> list:

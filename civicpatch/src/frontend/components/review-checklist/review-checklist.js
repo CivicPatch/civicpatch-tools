@@ -1,6 +1,12 @@
 import { html, component, useState, useEffect } from "haunted";
 
+const ORIGIN_SOURCE_LABELS = {
+  google_gemini: "Google Gemini",
+  existing: "Existing",
+};
+
 function ReviewChecklist({ reviewData }) {
+  const researchLabel = ORIGIN_SOURCE_LABELS[reviewData?.origin_source] ?? "Research";
   const [checked, setChecked] = useState(new Set());
 
   useEffect(() => {
@@ -50,7 +56,7 @@ function ReviewChecklist({ reviewData }) {
             <thead>
               <tr>
                 <th>Name</th>
-                <th style="text-align: center;">Research</th>
+                <th style="text-align: center;">${researchLabel}</th>
                 <th style="text-align: center;">Data</th>
               </tr>
             </thead>
