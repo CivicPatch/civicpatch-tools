@@ -7,6 +7,7 @@ from jobs.people_collector.schemas import (
     ResearchedPerson,
     ProgressState,
 )
+import services.civicpatch_api as civicpatch_api
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 from shared.utils import config_utils
@@ -15,17 +16,28 @@ from utils.request_utils import with_retry
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
-async def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressState, ResearchMunicipalityStep]:
-    """
-    Research the municipality to gather necessary data for further processing.
-    """
+async def research_municipality(context: PeopleCollectorContext) -> ResearchMunicipalityStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 1: {WorkflowStatus.RESEARCH_MUNICIPALITY.value}")
-    
+
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
+
+    existing = await civicpatch_api.get_current_people(jurisdiction_ocdid)
+    if existing:
+        logger.info(f"research_municipality: using {len(existing)} existing DB people, skipping Gemini.")
+        researched = [
+            ResearchedPerson(name=p["name"], roles=[], designations=[])
+            for p in existing
+        ]
+        return ResearchMunicipalityStep(
+            people=researched,
+            elected_officials=researched,
+            origin_source="existing",
+        )
+
     municipality_name = context.data.config.name
 
-    # Tool call + JSON output doesn't work at the same time for Google Gemini, 
+    # Tool call + JSON output doesn't work at the same time for Google Gemini,
     # let's retry a couple times til it works.
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
 
@@ -37,12 +49,10 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     role_configs = config_utils.get_role_configs()
     target_people = people_utils.filter_people_by_roles(role_configs, people)
 
-    result = ResearchMunicipalityStep(
+    return ResearchMunicipalityStep(
         people=people,
         elected_officials=target_people,
     )
-
-    return result
 
 async def research_with_llm(context: PeopleCollectorContext, prompt: str) -> List[ResearchedPerson]:
     """

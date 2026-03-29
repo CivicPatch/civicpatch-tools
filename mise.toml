@@ -89,6 +89,14 @@ dir = "api.civicpatch.org"
 description = "Run a one-off script: mise run script -- <script_name> [args]"
 run = "uv run python scripts/{{ arg(name=\"script\") }}.py {{ args() }}"
 
+[tasks.regenerate-review-json]
+description = "One-off: regenerate review_json for all requests using current DB people as research baseline"
+run = """
+read -p "DB URL [postgres://civicpatch:development_password@127.0.0.1:6000/development_db]: " url
+CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0.1:6000/development_db}" \
+  uv run python scripts/regenerate_review_json.py
+"""
+
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
 ###################################################

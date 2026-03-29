@@ -142,6 +142,10 @@ async def submit_job_artifacts(
         return response
 
 
+async def get_current_people(jurisdiction_ocdid: str) -> List[dict]:
+    return await search_people(jurisdiction_ocdid, state="current")
+
+
 async def search_people(
     jurisdiction_ocdid: str,
     state: Optional[str] = None,
