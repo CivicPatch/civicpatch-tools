@@ -108,11 +108,12 @@ To register the webhook in GitHub, set the payload URL to `https://api.civicpatc
 
 ```mermaid
 erDiagram
+    %% idx = regular index, functional idx noted inline
     jurisdictions {
         text jurisdiction_ocdid PK
         text state
         text status
-        jsonb data
+        jsonb data "idx: (data->>'geoid'), LOWER(data->>'name')"
         text file_path
         text git_commit
         timestamp updated_at
@@ -125,21 +126,21 @@ erDiagram
         text jurisdiction_ocdid FK
         jsonb arguments_json
         jsonb result_data
-        jsonb review_json
+        jsonb review_json "idx: jsonb_array_length(review_json->'issues')"
         timestamptz created_at
         timestamptz updated_at
     }
 
     jobs {
         int id PK
-        uuid request_id FK
-        text requested_by_provider
+        uuid request_id FK "idx"
+        text requested_by_provider "idx: (requested_by_provider, requested_by_provider_user_id)"
         text requested_by_provider_user_id
         int progress
-        text status
+        text status "idx"
         text server_source
         text run_url
-        text pull_request_review_state_to_delete
+        text pull_request_review_state_to_delete "idx"
         timestamptz created_at
         timestamptz updated_at
     }
@@ -169,10 +170,10 @@ erDiagram
 
     unrecognized_roles {
         uuid id PK
-        uuid request_id FK
+        uuid request_id FK "idx"
         text role
         text person_name
-        text status
+        text status "idx"
         text pr_url
         timestamptz created_at
     }
@@ -190,6 +191,5 @@ erDiagram
 - `people.data` — full `Official` JSONB blob; the canonical record for a jurisdiction's current officials
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `jobs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
-- `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 

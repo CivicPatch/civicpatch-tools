@@ -196,7 +196,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        paged_pull_requests, total, changes_requested = await pull_requests_db.list_open_pull_requests(
+        paged_pull_requests, total, with_issues = await pull_requests_db.list_open_pull_requests(
             state_code=state_code, jurisdiction_ocdid=jurisdiction_ocdid, page=page, per_page=per_page
         )
         total_pages = (total + per_page - 1) // per_page
@@ -225,7 +225,7 @@ def get_router(api_key_header):
             "per_page": per_page,
             "summary": {
                 "total_with_pr": total,
-                "changes_requested": changes_requested,
+                "with_issues": with_issues,
             },
         }
 
