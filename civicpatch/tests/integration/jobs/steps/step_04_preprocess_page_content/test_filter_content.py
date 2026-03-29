@@ -520,6 +520,42 @@ def test_with_board_of_aldermen():
     assert actual_md.strip() == expected_md.strip()
 
 
+@pytest.mark.integration
+def test_tmm_mailto_links_preserved():
+    """TMM-style pages: after clean_html strips divs, filter_content must preserve mailto links
+    even though the <a> contains only an <img> and no text content.
+    Full pipeline: clean_html → filter_content → markdownify → .md"""
+    folder = os.path.join(FIXTURE_DIR, "tmm_email_links")
+    with open(os.path.join(folder, "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(logger, input_html)
+    identities = {
+        "Tom Leverentz": [],
+        "Mitchell Burnett": [],
+        "Rhonda Landrum": [],
+        "Heena Kanase": [],
+        "Michelle Hillery": [],
+        "Cody Cockerham": [],
+    }
+    filtered = filter_content(logger, identities, cleaned_html)
+    assert 'href="mailto:' in filtered, "mailto links were dropped by filter_content"
+
+    #with open(os.path.join(folder, "expected_filter_content.html"), "w", encoding="utf-8") as f:
+    #    f.write(filtered)
+    with open(os.path.join(folder, "expected_filter_content.html"), "r", encoding="utf-8") as f:
+        expected_html = f.read()
+    assert filtered.strip() == expected_html.strip()
+
+    actual_md = to_markdown(filtered)
+    assert "mailto:tleverentz@oakleaftexas.org" in actual_md, "mailto link lost after markdownify"
+
+    #with open(os.path.join(folder, "expected_filter_content.md"), "w", encoding="utf-8") as f:
+    #    f.write(actual_md)
+    with open(os.path.join(folder, "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()
+
+
 def test_with_wix_site():
     folder = os.path.join(FIXTURE_DIR, "wix_site")
     with open(os.path.join(folder, "expected_clean_html.html"), "r", encoding="utf-8") as f:

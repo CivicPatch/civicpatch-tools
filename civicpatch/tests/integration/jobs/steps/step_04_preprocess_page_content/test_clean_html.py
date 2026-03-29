@@ -139,3 +139,31 @@ def test_with_wix_site():
     with open(os.path.join(FIXTURE_DIR, "wix_site", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         expected_output = f.read()
     assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
+
+def test_tmm_email_links_preserved():
+    """TMM-style pages: email links wrap an <img> inside nested divs.
+    All divs are stripped by clean_html — mailto hrefs must survive."""
+    with open(os.path.join(FIXTURE_DIR, "tmm_email_links", "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(None, input_html)
+    assert 'href="mailto:' in cleaned_html, "mailto links were dropped during clean_html"
+
+
+def test_markdownify_preserves_mailto_on_image_only_anchor():
+    """<a href="mailto:..."><img></a> — anchor whose only content is an image.
+    markdownify must emit the mailto href, not silently drop the link."""
+    html = '<a href="mailto:tleverentz@oakleaftexas.org"><img alt="email" src="email.png"></a>'
+    result = md(html, keep_inline_images_in=["td", "th", "tr", "h1", "h2", "h3", "h4", "h5", "h6"])
+    assert "mailto:tleverentz@oakleaftexas.org" in result
+
+
+def test_tmm_email_links_survive_clean_html_to_markdown():
+    """Full clean_html → markdownify chain: mailto hrefs must appear in the final .md output."""
+    with open(os.path.join(FIXTURE_DIR, "tmm_email_links", "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(None, input_html)
+    result = md(cleaned_html, keep_inline_images_in=["td", "th", "tr", "h1", "h2", "h3", "h4", "h5", "h6"])
+    with open(os.path.join(FIXTURE_DIR, "tmm_email_links", "expected_preprocessed.md"), "r", encoding="utf-8") as f:
+        expected = f.read()
+    assert result == expected
+    assert "mailto:tleverentz@oakleaftexas.org" in result, "mailto link lost after clean_html → markdownify"

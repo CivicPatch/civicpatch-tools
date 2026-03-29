@@ -84,15 +84,14 @@ async def get_people_data_by_request_ids(
             await cur.execute(
                 f"""
                 SELECT
-                    j.request_id,
+                    r.id AS request_id,
                     (
                         SELECT jsonb_agg({result_projection})
                         FROM jsonb_array_elements(r.result_data) AS elem
                     ) AS people_data,
                     r.jurisdiction_ocdid
-                FROM jobs j
-                LEFT JOIN requests r ON r.id = j.request_id
-                WHERE j.request_id = ANY(%s)
+                FROM requests r
+                WHERE r.id = ANY(%s)
                 """,
                 (request_ids,)
             )

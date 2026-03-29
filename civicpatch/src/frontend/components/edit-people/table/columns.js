@@ -15,6 +15,9 @@ export const getColumns = (openProfileModal) => {
           field: "_isNew",
           editable: false,
           label: "New",
+          renderCell: (person) => person._isNew
+            ? html`<span style="background:var(--pico-ins-background);padding:0.1em 0.4em;border-radius:3px;font-size:0.85em;">New</span>`
+            : "",
         },
         {
           field: "_selected",
