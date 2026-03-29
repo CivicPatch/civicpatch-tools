@@ -61,7 +61,7 @@ tests/
 - Tests are part of the feature — do not ship a new function without corresponding tests unless explicitly told to skip them.
 - Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` or `tests/integration/` directory to understand available builders and patterns.
 - After writing tests, run them and fix any failures before considering the task done.
-- Run unit tests: `docker compose run --rm civicpatch_test pytest -m unit tests/unit`
+- Run unit tests: `mise run tcp`
 
 ## LLM prompts
 

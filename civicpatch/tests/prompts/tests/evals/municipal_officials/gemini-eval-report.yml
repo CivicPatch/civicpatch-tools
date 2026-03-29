@@ -1,10 +1,10 @@
 aggregated_report:
-  name: 1.0
-  roles: 0.9682539682539683
-  designations: 1.0
-  phone: 0.8857142857142858
+  url: 0.5886363636363636
   email: 1.0
-  url: 0.6727272727272727
+  roles: 1.0
+  designations: 1.0
+  name: 1.0
+  phone: 0.9
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
@@ -12,60 +12,68 @@ per_case_scores:
   scores: {}
 - case_id: austin_council
   scores:
-    name: 1.0
+    url: 0.9090909090909091
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 0.9090909090909091
 - case_id: austin_district7_council_member
   scores:
-    name: 1.0
+    url: 0.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 0.0
 - case_id: board_of_aldermen
   scores:
-    name: 1.0
+    url: 0.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 0.2
-    email: 1.0
-    url: 0.0
 - case_id: coleman_council
   scores:
-    name: 1.0
+    url: 1.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 1.0
 - case_id: la_porte_council
   scores:
-    name: 1.0
-    roles: 0.7777777777777778
-    designations: 1.0
-    phone: 1.0
-    email: 1.0
     url: 1.0
+    email: 1.0
+    roles: 1.0
+    designations: 1.0
+    name: 1.0
+    phone: 1.0
 - case_id: mixed_current_past
   scores:
-    name: 1.0
+    url: 1.0
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
+- case_id: redundant_place_role
+  scores:
+    url: 0.0
     email: 1.0
-    url: 1.0
+    roles: 1.0
+    designations: 1.0
+    name: 1.0
+    phone: 1.0
 - case_id: vacant_positions_council
   scores:
-    name: 1.0
+    url: 0.8
+    email: 1.0
     roles: 1.0
     designations: 1.0
+    name: 1.0
     phone: 1.0
-    email: 1.0
-    url: 0.8
 failed_cases:
 - model_client: gemini
   case_number: 3
@@ -87,19 +95,3 @@ failed_cases:
     field: phone
     expected: null
     actual: 956-350-4093
-- model_client: gemini
-  case_number: 5
-  case_id: la_porte_council
-  failures:
-  - person: Brandon Lunsford
-    field: roles
-    expected:
-    - Council Member
-    actual:
-    - Councilperson At-Large
-  - person: Brent McCaulley
-    field: roles
-    expected:
-    - Council Member
-    actual:
-    - Councilperson At-Large

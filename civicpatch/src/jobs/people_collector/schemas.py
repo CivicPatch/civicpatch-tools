@@ -58,6 +58,10 @@ class RelevantPageResponseSchema(BaseModel):
     relevant_urls: List[str] = []
     # thoughts: str
 
+class UnrecognizedRole(BaseModel):
+    role: str
+    person_name: str
+
 class LLMPerson(RawLLMPerson):
     source_url: str
 
@@ -135,6 +139,7 @@ class ProcessPageContentStep(BaseModel):
 
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
+    unrecognized_roles: List[UnrecognizedRole] = []
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
