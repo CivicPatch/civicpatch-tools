@@ -1,10 +1,10 @@
 aggregated_report:
   phone: 0.96
-  url: 0.7509090909090909
   name: 0.96
-  roles: 0.9333333333333333
   designations: 0.96
   email: 0.96
+  url: 0.5509090909090909
+  roles: 0.96
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
@@ -13,107 +13,86 @@ per_case_scores:
 - case_id: austin_council
   scores:
     phone: 1.0
-    url: 0.9090909090909091
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 0.9090909090909091
+    roles: 1.0
 - case_id: austin_district7_council_member
   scores:
     phone: 1.0
-    url: 0.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 0.0
+    roles: 1.0
 - case_id: board_of_aldermen
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 1.0
+    roles: 1.0
 - case_id: coleman_council
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 0.9
     designations: 1.0
     email: 1.0
+    url: 0.0
+    roles: 1.0
 - case_id: inverted_name_format
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 1.0
+    roles: 1.0
 - case_id: la_porte_council
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 1.0
+    roles: 1.0
 - case_id: mixed_current_past
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 0.8333333333333334
     designations: 1.0
     email: 1.0
+    url: 0.0
+    roles: 1.0
 - case_id: name_only_roster
   scores:
     phone: 1.0
-    url: 0.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 0.0
+    roles: 1.0
 - case_id: ordinance_vote_records
   scores: {}
 - case_id: redundant_place_role
   scores:
     phone: 1.0
-    url: 1.0
     name: 1.0
-    roles: 1.0
     designations: 1.0
     email: 1.0
+    url: 1.0
+    roles: 1.0
 - case_id: vacant_positions_council
   scores:
     phone: 0.6
-    url: 0.6
     name: 0.6
-    roles: 0.6
     designations: 0.6
     email: 0.6
+    url: 0.6
+    roles: 0.6
 failed_cases:
-- model_client: together_ai
-  case_number: 4
-  case_id: coleman_council
-  failures:
-  - person: Sharlene T. Hetzel
-    field: roles
-    expected:
-    - Council Member
-    - Mayor Pro-Tem
-    actual:
-    - Council Member
-- model_client: together_ai
-  case_number: 7
-  case_id: mixed_current_past
-  failures:
-  - person: Al Stephens
-    field: roles
-    expected:
-    - Mayor Pro Tem
-    actual:
-    - Council Member
 - model_client: together_ai
   case_number: 11
   case_id: vacant_positions_council

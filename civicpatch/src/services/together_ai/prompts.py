@@ -68,12 +68,6 @@ def relevant_page_prompt(page_url: str):
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
     - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
     - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.
-    - Only include URLs hosted on the municipality's own domain(s) (e.g. city, county, town websites).
-      Do NOT include URLs from third-party external domains, even if civic-related. Examples to exclude:
-      social media (facebook.com, twitter.com, instagram.com, linkedin.com, youtube.com),
-      third-party agenda/meeting platforms (civicclerk.com, civicplus.com, granicus.com),
-      third-party code/ordinance sites (municode.com, library.municode.com),
-      third-party reporting tools (seeclickfix.com), or any other non-municipal domain.
     """
     return prompt
 
@@ -117,7 +111,8 @@ def municipality_officials_prompt(roles_hint: List[str]):
     STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING
 
     name:
-    - Extract the name exactly as it appears in the content. Do not reorder, reformat, or remove punctuation.
+    - The person's name only — include all personal name components (honorifics, suffixes, generational markers: Dr., Hon., Jr., Sr., III, etc.) but exclude role or position labels (Mayor, Council Member, City Secretary, etc.).
+    - Preserve name punctuation as-is (e.g. a "Last, First" comma is part of the name format, not a separator).
     - If the position is vacant, use "Vacant Vacant".
 
     image:
