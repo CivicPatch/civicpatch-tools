@@ -10,6 +10,7 @@ from jobs.people_collector.schemas import (
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
     merge_records_within_llm, merge_llm_people_to_person, get_source_urls,
+    merge_weak_tie_groups_within_llm,
 )
 
 pytestmark = pytest.mark.unit
@@ -320,3 +321,75 @@ def test_duplicate_records_merged_within_same_name():
     assert len(holland_people) == 1
     assert "(956) 943-2682" in holland_people[0].phones
     assert "sholland@example.com" in holland_people[0].emails
+
+
+# --- merge_weak_tie_groups_within_llm ---
+
+class TestMergeWeakTieGroupsWithinLlm:
+    def test_merges_by_last_name_and_role(self):
+        """Last-name-only canonical merges into full-name canonical with same role."""
+        groups = {
+            "Lindamood": [make_llm_person("Lindamood", roles=["mayor"])],
+            "Bobby Lindamood": [make_llm_person("Bobby Lindamood", roles=["mayor"], email="b@city.gov")],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Lindamood" not in result
+        assert "Bobby Lindamood" in result
+        assert len(result["Bobby Lindamood"]) == 2
+
+    def test_merges_by_last_name_role_and_designation(self):
+        """Last-name-only canonical merges when role AND designation match."""
+        groups = {
+            "Elder": [make_llm_person("Elder", roles=["mayor pro tempore"], designations=["place 1"])],
+            "Brandi Elder": [make_llm_person("Brandi Elder", roles=["mayor pro tempore"], designations=["place 1"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Elder" not in result
+        assert len(result["Brandi Elder"]) == 2
+
+    def test_no_merge_when_role_differs(self):
+        """Same last name but different roles — must not merge."""
+        groups = {
+            "Smith": [make_llm_person("Smith", roles=["mayor"])],
+            "John Smith": [make_llm_person("John Smith", roles=["council member"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Smith" in result
+        assert "John Smith" in result
+
+    def test_no_merge_when_designation_differs(self):
+        """Same last name and role but different designation — must not merge."""
+        groups = {
+            "Smith": [make_llm_person("Smith", roles=["council member"], designations=["place 2"])],
+            "John Smith": [make_llm_person("John Smith", roles=["council member"], designations=["place 4"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Smith" in result
+
+    def test_no_merge_when_no_roles(self):
+        """Last-name-only group with no roles is not merged."""
+        groups = {
+            "Smith": [make_llm_person("Smith", roles=[])],
+            "John Smith": [make_llm_person("John Smith", roles=["mayor"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Smith" in result
+
+    def test_full_name_groups_not_treated_as_weak(self):
+        """Two full-name groups sharing a last name are not merged."""
+        groups = {
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", roles=["mayor"])],
+            "Marty D Smith Sr": [make_llm_person("Marty D Smith Sr", roles=["council member"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert len(result) == 2
+
+    def test_suffix_does_not_confuse_last_name_extraction(self):
+        """A last-name-only group still resolves correctly against a suffixed full name."""
+        groups = {
+            "Smith": [make_llm_person("Smith", roles=["mayor"])],
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", roles=["mayor"])],
+        }
+        result = merge_weak_tie_groups_within_llm(groups)
+        assert "Smith" not in result
+        assert len(result["Marty C Smith Jr"]) == 2

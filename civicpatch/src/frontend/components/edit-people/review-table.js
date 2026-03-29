@@ -1,6 +1,13 @@
 import { html, component, useState, useEffect } from 'haunted';
 
+const ORIGIN_SOURCE_LABELS = {
+  google_gemini: "Google Gemini",
+  existing: "Existing",
+};
+
 function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeople }) {
+  const researchLabel = ORIGIN_SOURCE_LABELS[reviewData?.origin_source] ?? "Research";
+
   function renderCheckmark(value) {
     return value
       ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color, #4caf50);"></i>`
@@ -34,7 +41,7 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
         <thead>
           <tr>
             <th>Name</th>
-            <th style="text-align: center;">Research</th>
+            <th style="text-align: center;">${researchLabel}</th>
             <th style="text-align: center;">Data</th>
           </tr>
         </thead>
