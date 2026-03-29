@@ -1,0 +1,10 @@
+page_url: https://ellago-tx.gov/city-council/mayor-history/
+page:
+  is_relevant: false
+  relevant_urls:
+  - https://ellago-tx.gov/city-council/
+  thoughts: This page is a historical archive of past mayors listed in reverse chronological
+    order. Although the most recent entry (Shawn Findley, 2021-Current) is a currently
+    serving official, the page's purpose is to document the history of the office, not
+    to serve as a current roster. Historical mayor listing pages are not relevant even
+    when the current incumbent appears as the most recent entry.

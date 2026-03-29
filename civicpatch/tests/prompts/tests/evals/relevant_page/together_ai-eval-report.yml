@@ -1,14 +1,1 @@
-failed_cases:
-- model_client: together_ai
-  case_id: gatesville_ordinances
-  failures:
-  - field: relevant_urls
-    expected:
-    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
-    - https://gatesvilletx.com/government/city_council/index.php
-    - https://gatesvilletx.com/government/city_council/agendas_minutes.php
-    actual:
-    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
-    - https://gatesvilletx.com/government/city_council/agendas_minutes.php
-    score: 0.6666666666666666
-    threshold: 0.75
+failed_cases: []

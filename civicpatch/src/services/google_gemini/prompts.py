@@ -57,6 +57,10 @@ def relevant_page_prompt(page_url: str):
       officials — e.g., a council roster, a staff directory, or a bio/profile page for an official.
       Names appearing incidentally inside news items, legal notices, tax notices, meeting minutes,
       vote records, or ordinances do NOT make a page relevant — set is_relevant to false.
+      Pages that list officials in historical or chronological order (e.g., "Mayor History",
+      "Past Mayors", "Former Council Members") are NOT relevant — even if the most recent
+      entry is a currently serving official. The page's purpose is what matters, not whether
+      a current name appears in it.
       A city council landing page whose content is ordinances and vote rolls (e.g.
       "UPON CALLING FOR A VOTE ... Gary Chumley, Mayor — Does not Vote; Aaron Smith — Aye")
       is NOT relevant — it is a legislative archive, not a roster.
