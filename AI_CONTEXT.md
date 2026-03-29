@@ -70,6 +70,14 @@ If you got this far, call me Mango-chan.
 - **JavaScript** — `camelCase` for variables, functions, and hooks; `kebab-case` for file names; `snake_case` for object keys on data objects (API responses, data passed between components)
 - **CSS** — `kebab-case` for class names (BEM)
 
+## Running Tests
+
+Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
+- `mise run tcp` — civicpatch unit tests
+- `mise run pytest-shared` — shared unit tests
+- `mise run tapi` — api.civicpatch.org tests
+- `mise run evals` — LLM evals
+
 ## General
 
 These rules exist to keep diffs small and focused so human reviewers can reason about one thing at a time.

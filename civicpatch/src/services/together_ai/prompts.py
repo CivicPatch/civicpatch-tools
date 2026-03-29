@@ -117,7 +117,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
     STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING
 
     name:
-    - Full name only. No titles or honorifics.
+    - Extract the name exactly as it appears in the content. Do not reorder, reformat, or remove punctuation.
     - If the position is vacant, use "Vacant Vacant".
 
     image:

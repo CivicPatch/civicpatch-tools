@@ -141,6 +141,22 @@ def test_last_name_match_ignores_accents():
     assert name_utils.last_name_match("John Alemán", "John Aleman")
 
 
+def test_reorder_name_if_inverted_basic():
+    assert name_utils.reorder_name_if_inverted("Kincannon, Laurie") == "Laurie Kincannon"
+
+def test_reorder_name_if_inverted_with_suffix():
+    assert name_utils.reorder_name_if_inverted("Smith, John Jr.") == "John Smith Jr."
+
+def test_reorder_name_if_inverted_with_middle_name():
+    assert name_utils.reorder_name_if_inverted("Burke, Rory Thomas") == "Rory Thomas Burke"
+
+def test_reorder_name_if_inverted_no_comma_unchanged():
+    assert name_utils.reorder_name_if_inverted("Laurie Kincannon") == "Laurie Kincannon"
+
+def test_reorder_name_if_inverted_single_name_unchanged():
+    assert name_utils.reorder_name_if_inverted("Kincannon") == "Kincannon"
+
+
 def test_build_canonical_map_fuzzy():
     identities = {}
     all_people = [{"name": "Jeffery David Martinez"}, {"name": "Jeffery Martinez"}]

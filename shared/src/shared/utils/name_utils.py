@@ -124,6 +124,17 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
     return score
 
 
+def reorder_name_if_inverted(name: str) -> str:
+    """
+    If a name is in 'Last, First' format (detected by comma), reorder to 'First Last'.
+    HumanName detects the comma convention and str() outputs in First Last order.
+    Names without a comma are returned unchanged.
+    """
+    if "," not in name:
+        return name
+    return str(HumanName(name)).strip()
+
+
 def normalize_text_for_search(text: str) -> str:
     """Normalize text for loose substring search: strips accents, punctuation, and lowercases."""
     return re.sub(r"[^\w\s]", "", _strip_accents(text)).lower()
