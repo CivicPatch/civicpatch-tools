@@ -132,14 +132,16 @@ def normalize_roles(roles: List[str]) -> List[str]:
     designation_aliases = config_utils.get_designation_alias_map()
     seen = set()
 
+    expanded_roles = []
     for role in roles:
         if not role:
             continue
+        for part in str(role).split("/"):
+            part = part.strip()
+            if part:
+                expanded_roles.append(part)
 
-        role = str(role).strip()
-        if not role:
-            continue
-
+    for role in expanded_roles:
         role_lower = role.lower()
 
         # Drop anything that matches a known designation
