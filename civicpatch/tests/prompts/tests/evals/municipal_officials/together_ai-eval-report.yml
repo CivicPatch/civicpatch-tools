@@ -1,10 +1,10 @@
 aggregated_report:
-  roles: 0.9555555555555555
-  url: 0.501010101010101
-  email: 0.8888888888888888
-  name: 0.9555555555555555
-  phone: 0.8444444444444444
-  designations: 0.9555555555555555
+  phone: 0.96
+  url: 0.7509090909090909
+  name: 0.96
+  roles: 0.9333333333333333
+  designations: 0.96
+  email: 0.96
 aggregate_failures: []
 aggregate_failed_cases: {}
 per_case_scores:
@@ -12,105 +12,110 @@ per_case_scores:
   scores: {}
 - case_id: austin_council
   scores:
-    roles: 1.0
-    url: 0.9090909090909091
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 0.9090909090909091
+    name: 1.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: austin_district7_council_member
   scores:
-    roles: 1.0
-    url: 0.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 0.0
+    name: 1.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: board_of_aldermen
   scores:
-    roles: 1.0
-    url: 1.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: coleman_council
   scores:
-    roles: 1.0
-    url: 0.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 0.9
     designations: 1.0
+    email: 1.0
+- case_id: inverted_name_format
+  scores:
+    phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 1.0
 - case_id: la_porte_council
   scores:
-    roles: 1.0
-    url: 1.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: mixed_current_past
   scores:
-    roles: 1.0
-    url: 0.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 0.8333333333333334
     designations: 1.0
+    email: 1.0
 - case_id: name_only_roster
   scores:
-    roles: 1.0
+    phone: 1.0
     url: 0.0
-    email: 1.0
     name: 1.0
-    phone: 0.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: ordinance_vote_records
   scores: {}
 - case_id: redundant_place_role
   scores:
-    roles: 1.0
-    url: 1.0
-    email: 1.0
-    name: 1.0
     phone: 1.0
+    url: 1.0
+    name: 1.0
+    roles: 1.0
     designations: 1.0
+    email: 1.0
 - case_id: vacant_positions_council
   scores:
-    roles: 0.6
-    url: 0.6
-    email: 0.0
-    name: 0.6
     phone: 0.6
+    url: 0.6
+    name: 0.6
+    roles: 0.6
     designations: 0.6
+    email: 0.6
 failed_cases:
 - model_client: together_ai
-  case_number: 7
-  case_id: name_only_roster
+  case_number: 4
+  case_id: coleman_council
   failures:
-  - person: Chris Beard
-    field: phone
-    expected: null
-    actual: 325-762-3133
-  - person: Lester Galbreath
-    field: phone
-    expected: null
-    actual: 325-762-3133
-  - person: Lynsi Perry
-    field: phone
-    expected: null
-    actual: 325-762-3133
-  - person: Austin Sherwood
-    field: phone
-    expected: null
-    actual: 325-762-3133
-  - person: Don Taggart
-    field: phone
-    expected: null
-    actual: 325-762-3133
+  - person: Sharlene T. Hetzel
+    field: roles
+    expected:
+    - Council Member
+    - Mayor Pro-Tem
+    actual:
+    - Council Member
 - model_client: together_ai
-  case_number: 10
+  case_number: 7
+  case_id: mixed_current_past
+  failures:
+  - person: Al Stephens
+    field: roles
+    expected:
+    - Mayor Pro Tem
+    actual:
+    - Council Member
+- model_client: together_ai
+  case_number: 11
   case_id: vacant_positions_council
   failures:
   - person: Vacant Vacant
@@ -131,15 +136,3 @@ failed_cases:
     expected:
     - Council
     actual: ''
-  - person: Alysa Jarvis
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/741/field_email
-  - person: Tracey Johnson
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/756/field_email
-  - person: Kenneth Reese
-    field: email
-    expected: null
-    actual: https://www.seadrifttx.org/email-contact/node/751/field_email

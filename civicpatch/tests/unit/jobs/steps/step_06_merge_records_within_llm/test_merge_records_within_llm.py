@@ -323,6 +323,21 @@ def test_duplicate_records_merged_within_same_name():
     assert "sholland@example.com" in holland_people[0].emails
 
 
+def test_inverted_name_format_normalized():
+    """Names in 'Last, First' format are reordered to 'First Last' before merging."""
+    records_by_llm = {
+        "together_ai": {
+            "Kincannon, Laurie": [make_llm_person("Kincannon, Laurie", roles=["Mayor"], phone="(979) 235-9434")],
+            "Burke, Rory": [make_llm_person("Burke, Rory", roles=["Councilman"], designations=["Position 4"])],
+        }
+    }
+    result = merge_records_within_llm(_build_context(records_by_llm, []))
+    names = {p.name for p in result.people_by_llm["together_ai"]}
+    assert "Laurie Kincannon" in names
+    assert "Rory Burke" in names
+    assert not any("," in name for name in names)
+
+
 # --- merge_weak_tie_groups_within_llm ---
 
 class TestMergeWeakTieGroupsWithinLlm:

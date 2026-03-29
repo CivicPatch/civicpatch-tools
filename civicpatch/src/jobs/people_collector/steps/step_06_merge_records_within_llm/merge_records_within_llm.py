@@ -35,6 +35,9 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
     people_by_llm: Dict[str, List[Person]] = {}
 
     for llm, records in flattened_records_by_llm.items():
+        for record in records:
+            record.name = name_utils.reorder_name_if_inverted(record.name)
+
         # Use name_utils to map every record's name to a canonical name
         canonical_map = name_utils.build_canonical_map(
             [{"name": r.name} for r in records],

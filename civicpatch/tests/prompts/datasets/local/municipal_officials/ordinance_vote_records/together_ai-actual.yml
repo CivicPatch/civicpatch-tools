@@ -2,8 +2,7 @@ people:
 - name: Gary Chumley
   roles:
   - Mayor
-  designations:
-  - At Large
+  designations: []
   phone: null
   email: null
   url: null
