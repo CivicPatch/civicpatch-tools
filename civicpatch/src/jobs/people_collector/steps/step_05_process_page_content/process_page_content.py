@@ -181,7 +181,7 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
         existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
         names, designations = _extract_names_and_designations(existing_records)
         roles_hint = context.data.prepare_pipeline_step.roles_hint if context.data.prepare_pipeline_step else []
-        updated_links = add_relevant_urls(response.relevant_urls, updated_links, names, designations + roles_hint)
+        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -481,7 +481,7 @@ def update_links(domain, context_links: List[Link], processed_page: Link, logger
 def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
     names, designations = _extract_names_and_designations(records_by_llm)
-    return add_relevant_urls(found_websites, existing_links, names, designations + roles)
+    return add_relevant_urls(found_websites, existing_links, domain, names, designations + roles)
 
 
 def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
@@ -559,12 +559,14 @@ def _sort_pending(links: List[Link], names: List[str], designations: List[str]) 
     return pending + non_pending
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link], names: List[str] = None, designations: List[str] = None) -> List[Link]:
-    """Add LLM-identified relevant URLs as pending links without domain filtering."""
+def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: List[str] = None, designations: List[str] = None) -> List[Link]:
+    """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
     names = names or []
     designations = designations or []
     updated_links = copy.deepcopy(existing_links)
     for link_url in urls:
+        if not url_utils.same_domain(domain, link_url):
+            continue
         formatted_link_url = url_utils.format_url(link_url)
         existing_link = _find_link(updated_links, formatted_link_url)
         if existing_link and existing_link.status == LinkStatus.PENDING.value:

@@ -233,16 +233,26 @@ def test_normalize_record_clears_url_from_email_when_url_already_set():
     assert result.url == "https://example.com/bio"
 
 
-def test_add_relevant_urls_includes_cross_domain():
-    """Relevant URLs identified by the LLM should be added even if they are on a different domain."""
+def test_add_relevant_urls_includes_same_domain():
+    """Relevant URLs on the same domain should be added."""
     existing_links = [
         Link(url="https://cityofbaycity.org/city-council", status=LinkStatus.DONE.value, folder_name="council"),
     ]
-    mayor_url = "https://www.baycitytx.gov/296/Office-of-the-Mayor"
-    result = add_relevant_urls([mayor_url], existing_links)
+    mayor_url = "https://www.cityofbaycity.org/296/Office-of-the-Mayor"
+    result = add_relevant_urls([mayor_url], existing_links, domain="https://cityofbaycity.org")
     pending_urls = [l.url for l in result if l.status == LinkStatus.PENDING.value]
-    # URL is canonicalized: www. stripped, path lowercased
-    assert "https://baycitytx.gov/296/office-of-the-mayor" in pending_urls
+    assert "https://cityofbaycity.org/296/office-of-the-mayor" in pending_urls
+
+
+def test_add_relevant_urls_filters_cross_domain():
+    """Relevant URLs on a different domain should be excluded."""
+    existing_links = []
+    result = add_relevant_urls(
+        ["https://www.baycitytx.gov/296/Office-of-the-Mayor"],
+        existing_links,
+        domain="https://cityofbaycity.org",
+    )
+    assert len(result) == 0
 
 
 def test_add_relevant_urls_skips_already_present():
