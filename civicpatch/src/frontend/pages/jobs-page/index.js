@@ -288,17 +288,17 @@ function JobsPage() {
             `;
           });
 
-  const changesRequestedPct = jobsSummary?.total_with_pr
-    ? ((jobsSummary.changes_requested / jobsSummary.total_with_pr) * 100).toFixed(1)
+  const withIssuesPct = jobsSummary?.total_with_pr
+    ? ((jobsSummary.with_issues / jobsSummary.total_with_pr) * 100).toFixed(1)
     : null;
 
   const summaryStats = jobsSummary ? [
     {
-      key: "changes",
-      label: "Changes requested",
-      value: jobsSummary.changes_requested,
-      sub: `${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs`,
-      copyText: `[changes requested] ${jobsSummary.changes_requested} (${changesRequestedPct}% of ${jobsSummary.total_with_pr} open PRs)`,
+      key: "with_issues",
+      label: "With issues",
+      value: jobsSummary.with_issues,
+      sub: `${withIssuesPct}% of ${jobsSummary.total_with_pr} open PRs`,
+      copyText: `[with issues] ${jobsSummary.with_issues} (${withIssuesPct}% of ${jobsSummary.total_with_pr} open PRs)`,
     },
     {
       key: "open",

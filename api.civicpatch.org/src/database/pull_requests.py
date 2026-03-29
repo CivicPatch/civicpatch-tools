@@ -26,26 +26,28 @@ async def list_open_pull_requests(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT COUNT(*), COUNT(*) FILTER (WHERE pr.review_state = 'changes_requested')
+            SELECT COUNT(*),
+                   COUNT(*) FILTER (WHERE jsonb_array_length(r.review_json->'issues') > 0)
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             WHERE {where}
             """,
             params,
         )
-        total, changes_requested = await cur.fetchone()
+        total, with_issues = await cur.fetchone()
 
         await cur.execute(
             f"""
             SELECT pr.request_id, pr.url, pr.status,
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   pr.created_at, pr.updated_at, pr.review_state
+                   pr.created_at, pr.updated_at, pr.review_state,
+                   COALESCE(jsonb_array_length(r.review_json->'issues'), 0) AS issue_count
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE {where}
-            ORDER BY (pr.review_state = 'changes_requested') DESC, pr.created_at DESC
+            ORDER BY jsonb_array_length(r.review_json->'issues') DESC NULLS LAST, pr.created_at DESC
             LIMIT %s OFFSET %s
             """,
             params + [per_page, offset],
@@ -62,10 +64,11 @@ async def list_open_pull_requests(
             "created_at": to_iso(r[5]),
             "updated_at": to_iso(r[6]),
             "pull_request_review_state": r[7],
+            "issue_count": r[8],
         }
         for r in rows
     ]
-    return results, total, changes_requested
+    return results, total, with_issues
 
 async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
     pool = await get_pool()
