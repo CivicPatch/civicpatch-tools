@@ -1,9 +1,11 @@
 is_relevant: false
 relevant_urls:
 - https://townofdish.com/
-- https://townofdish.com/community/
 - https://townofdish.com/government/
 - https://townofdish.com/government/town-council/
-- https://townofdish.com/services/
+- https://townofdish.com/government/agendas-and-minutes/
+- https://townofdish.com/government/election-voter-information/
+- https://townofdish.com/government/town-documents/
 - https://townofdish.com/how-do-i/
+- https://townofdish.com/government/town-documents/public-information/
 - https://townofdish.com/contact-us/

@@ -34,7 +34,9 @@ def relevant_page_prompt(page_url: str):
        Keep the link if the answer is yes.
     3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to
        a navigational index or overview page, or to a single specific article, event, or news item?"
-       - Keep: section indexes like /Government, /Council, /Directory, /Directory/Departments, /Mayor
+       - Keep: any link whose anchor text or URL refers to government, officials, council, board members,
+         aldermen, commissioners, mayor, or municipal staff and directories
+         (e.g. /Government, /Council, /CityOfficials, /Directory/Departments)
        - Keep: individual pages explicitly for the Mayor (e.g., /Mayor/Bio, /About-the-Mayor, /Our-Mayor) —
          the mayor is a primary official, so their dedicated page is always relevant
        - Discard: individual news stories, press releases, or event pages about a specific item —
