@@ -38,7 +38,7 @@ async def test_returns_data_for_request_id():
         )
 
     assert "req-1" in result
-    assert result["req-1"]["pull_request"] == [{"id": "p1", "name": "Jane Doe"}]
+    assert result["req-1"]["proposed"] == [{"id": "p1", "name": "Jane Doe"}]
     assert result["req-1"]["existing"] == [{"id": "p1", "name": "Jane Doe"}]
 
 
@@ -59,7 +59,7 @@ async def test_returns_data_without_job_row():
         )
 
     assert "req-no-job" in result
-    assert result["req-no-job"]["pull_request"] == [{"id": "p2", "name": "Tom Lee"}]
+    assert result["req-no-job"]["proposed"] == [{"id": "p2", "name": "Tom Lee"}]
     assert result["req-no-job"]["existing"] == []
 
 
@@ -96,8 +96,8 @@ async def test_multiple_prs_same_jurisdiction():
 
     assert result["req-a"]["existing"] == [existing_person]
     assert result["req-b"]["existing"] == [existing_person]
-    assert result["req-a"]["pull_request"] == [{"id": "p2", "name": "Bob"}]
-    assert result["req-b"]["pull_request"] == [{"id": "p3", "name": "Carol"}]
+    assert result["req-a"]["proposed"] == [{"id": "p2", "name": "Bob"}]
+    assert result["req-b"]["proposed"] == [{"id": "p3", "name": "Carol"}]
 
 
 @pytest.mark.asyncio
@@ -112,4 +112,4 @@ async def test_null_result_data_returns_empty_pull_request():
     with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
         result = await get_people_data_by_request_ids([jur], ["req-empty"])
 
-    assert result["req-empty"]["pull_request"] == []
+    assert result["req-empty"]["proposed"] == []
