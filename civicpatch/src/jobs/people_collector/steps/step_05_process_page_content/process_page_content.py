@@ -166,7 +166,7 @@ def get_target_designations(designations_with_geo: List[str], people_hint: List[
 
 
 async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str) -> Tuple[List[Link], bool]:
-    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url)
+    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "")
     raw_response = await _relevance_llm.run_prompt(
         context.request_id,
         context.data.jurisdiction_ocdid,

@@ -36,7 +36,7 @@ const MAP_COLORS = {
 }
 
 // https://leafletjs.com/reference.html#latlng
-function CivMap({ latlng, canmove = true, geojson = null, height = "40rem" }) {
+function CivMap({ latlng, canmove = true, geojson = null, height = "25rem" }) {
   const canMove = canmove === "true" || canmove === true;
 
   const [mapInstance, setMapInstance] = useState(null);

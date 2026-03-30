@@ -56,7 +56,6 @@ class PeopleArrayLLMResponseSchema(BaseModel):
 class RelevantPageResponseSchema(BaseModel):
     is_relevant: bool
     relevant_urls: List[str] = []
-    # thoughts: str
 
 class UnrecognizedRole(BaseModel):
     role: str

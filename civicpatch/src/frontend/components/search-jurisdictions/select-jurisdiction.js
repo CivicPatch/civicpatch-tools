@@ -17,7 +17,7 @@ function CivSelectJurisdiction() {
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
-      return; 
+      return;
     }
     // Call the handler with the current selections
     handleInputChange(selectedState, selectedJurisdiction);

@@ -25,6 +25,8 @@
             {% block content %}{% endblock %}
         </main>
 
+        {% block footer %}{% endblock %}
+
         <script
             type="module"
             src="{{ url_for('frontend', path='/assets/env.js') }}"

@@ -1,1 +1,9 @@
-failed_cases: []
+failed_cases:
+- model_client: together_ai
+  case_id: beeville_water_supply_district_irrelevant
+  failures:
+  - field: is_relevant
+    expected: false
+    actual: true
+    score: 0.0
+    threshold: 1.0

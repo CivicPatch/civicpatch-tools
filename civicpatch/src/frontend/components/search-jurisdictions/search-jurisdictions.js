@@ -34,6 +34,13 @@ function SearchJurisdictions() {
 
   return html`
     <div class="search-page">
+      <hgroup>
+        <h1>Find your representatives</h1>
+        
+        <p>Find contact information for local government officials across the U.S.</p>
+
+        <p>Select a jurisdiction below to get started.</p>
+      </hgroup>
       <div class="page-grid">
 
         <div class="map-col">
@@ -41,6 +48,7 @@ function SearchJurisdictions() {
             @on-map-change=${handleMapChange}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
             .geojson=${geojson}
+            height="26rem"
           ></civ-map>
         </div>
 
@@ -60,7 +68,7 @@ function SearchJurisdictions() {
       </div>
 
       <div class="below-grid">
-        <civ-people-list .local=${people}></civ-people-list>
+        <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>
         ${dashboardData && selectedState ? html`
           <locality-gaps .stats=${dashboardData} .state=${selectedState}></locality-gaps>
         ` : ''}

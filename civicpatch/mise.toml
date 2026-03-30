@@ -50,6 +50,9 @@ run = "uv run pytest -vvm evals tests/prompts"
 [tasks.evals_relevant]
 run = "uv run pytest -vvm evals_relevant tests/prompts"
 
+[tasks.evals_relevant_case]
+run = "EVAL_CASE='{{ arg(name=\"case\") }}' uv run pytest -vvm evals_relevant tests/prompts"
+
 [tasks.scratchtest]
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm unit tests/unit/jobs/steps/step_04_preprocess_page_content
