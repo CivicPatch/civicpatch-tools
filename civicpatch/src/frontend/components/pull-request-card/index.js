@@ -16,17 +16,17 @@ const PrTimestamp = ({ createdAt }) =>
       </div>`
     : "";
 
-function diffStats(data) {
+function diffStats(entry) {
   const existingMap = Object.fromEntries(
-    (data?.existing ?? []).map((p) => [p?.id, p]),
+    (entry?.existing ?? []).map((p) => [p?.id, p]),
   );
-  const prMap = Object.fromEntries(
-    (data?.pull_request ?? []).map((p) => [p?.id, p]),
+  const proposedMap = Object.fromEntries(
+    (entry?.proposed ?? []).map((p) => [p?.id, p]),
   );
-  const allKeys = new Set([...Object.keys(existingMap), ...Object.keys(prMap)]);
+  const allKeys = new Set([...Object.keys(existingMap), ...Object.keys(proposedMap)]);
   let added = 0, removed = 0, changed = 0;
   for (const key of allKeys) {
-    const e = existingMap[key], p = prMap[key];
+    const e = existingMap[key], p = proposedMap[key];
     if (!e) added++;
     else if (!p) removed++;
     else if (
@@ -37,8 +37,8 @@ function diffStats(data) {
   return { added, removed, changed };
 }
 
-function PrCard({ pr, data, state }) {
-  const stats = diffStats(data);
+function PrCard({ entry, state }) {
+  const stats = diffStats(entry);
 
   const renderCardContent = () => {
     if (state?.status === PULL_REQUEST_STATUS.MERGED) {
@@ -51,14 +51,14 @@ function PrCard({ pr, data, state }) {
       return html`<div class="pr-card__content">Error: ${state?.error}</div>`;
     }
 
-    return html`<data-panel .data=${data}></data-panel>`;
+    return html`<data-panel .entry=${entry}></data-panel>`;
   };
 
   return html`
     <div class="pr-card">
-      ${PrTimestamp({ createdAt: pr?.created_at })}
+      ${PrTimestamp({ createdAt: entry?.created_at })}
       <pull-request-card-header
-        .pr=${pr}
+        .entry=${entry}
         .state=${state}
         .stats=${stats}
       ></pull-request-card-header>

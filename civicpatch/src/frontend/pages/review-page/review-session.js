@@ -4,19 +4,22 @@ import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-req
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
-import "./source-content/index.js";
+import "../../components/source-content/index.js";
 
 function ReviewSession({
-  goal, entryNumber, hasNext, hasPrev,
-  prState, error, isDirty, pullRequestUrl, jurisdictionName, reviewState, pullRequestStatus, jurisdictionOcdid,
-  currentPeople, tableData, selectedPeople, reviewData, sourceContentUrls,
-  passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
+  progress, jurisdiction, pr,
+  mergeState, error, isDirty,
+  prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
   resolvedMatches,
   onMerge, onAdvance, onBack, onPass, onNavigateTo, onPause,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }) {
-  const isTerminal = prState?.status === PULL_REQUEST_STATUS.MERGED;
-  const isMerging = prState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
+  const { entryNumber, hasNext, hasPrev, passedEntryNumbers, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
+  const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
+  const { url: pullRequestUrl, status: pullRequestStatus, reviewState } = pr ?? {};
+
+  const isTerminal = mergeState?.status === PULL_REQUEST_STATUS.MERGED;
+  const isMerging = mergeState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
   const displayMax = hasNext ? goal : entryNumber;
 
   function getDotStatus(n) {
@@ -49,7 +52,7 @@ function ReviewSession({
         </button>
       </div>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-      ${prState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${prState.error}</p>` : ""}
+      ${mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<span class="review-page__jurisdiction">${jurisdictionName}</span>` : ""}
@@ -61,12 +64,20 @@ function ReviewSession({
         <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
       </div>
       <civ-diff-panel
-        .data=${{ existing: currentPeople?.existing ?? [], pull_request: currentPeople?.pull_request ?? [] }}
+        .data=${{
+          existing: prPeople?.existing ?? [],
+          proposed: (currentPeople ?? [])
+            .filter(p => !p._deleted)
+            .map(p => {
+              const match = resolvedMatches?.[p.id];
+              return match?.person && !match.ambiguous ? { ...p, id: match.person.id } : p;
+            }),
+        }}
       ></civ-diff-panel>
       <div class="review-page__content">
         <civ-review-workspace
-          .pullRequest=${tableData ?? []}
-          .existing=${currentPeople?.existing ?? []}
+          .pullRequest=${currentPeople ?? []}
+          .existing=${prPeople?.existing ?? []}
           .selectedPeople=${selectedPeople ?? []}
           .isDirty=${isDirty}
           .resolvedMatches=${resolvedMatches ?? {}}

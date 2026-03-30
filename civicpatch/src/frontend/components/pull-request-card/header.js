@@ -3,23 +3,9 @@ import { html } from "lit-html";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
-import { pullRequestUrlToNumber } from "./pr-utils.js";
 import { fetchReview, fetchPullRequestData } from "../../api.js";
 import "../badge/badge.js";
 import "../review-panel/review-panel.js";
-
-export function stateColor(state) {
-  switch (state) {
-    case "open":
-      return "open";
-    case "closed":
-      return "closed";
-    case "merged":
-      return "merged";
-    default:
-      return "draft";
-  }
-}
 
 const renderStats = ({ added, removed, changed }) => {
   if (!added && !removed && !changed) return "";
@@ -32,11 +18,11 @@ const renderStats = ({ added, removed, changed }) => {
   `;
 };
 
-const PullRequestCardHeader = ({ pr, state, stats }) => {
+const PullRequestCardHeader = ({ entry, state, stats }) => {
   const [reviewData, setReviewData] = useState(null);
   const [fullData, setFullData] = useState(null);
   const [reviewLoading, setReviewLoading] = useState(false);
-  const pullRequestNumber = pullRequestUrlToNumber(pr?.pull_request_url);
+  const pullRequestNumber = entry?.pr?.number;
   const popoverRef = createRef();
 
   async function handleIssuesClick() {
@@ -45,8 +31,8 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
       setReviewLoading(true);
       try {
         const [review, prData] = await Promise.all([
-          fetchReview(pr.request_id),
-          fetchPullRequestData(pr.jurisdiction_ocdid, pr.request_id),
+          fetchReview(entry.request_id),
+          fetchPullRequestData(entry.jurisdiction.ocdid, entry.request_id),
         ]);
         setReviewData(review?.data ?? null);
         setFullData({ existing: prData?.existing ?? [], pull_request: prData?.data ?? [] });
@@ -60,7 +46,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleMerge = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onMerge", {
-        detail: { request_id: pr.request_id, pullRequestNumber, jurisdiction_ocdid: pr.jurisdiction_ocdid },
+        detail: { request_id: entry.request_id, pullRequestNumber, jurisdiction_ocdid: entry.jurisdiction.ocdid },
         bubbles: true,
       }),
     );
@@ -69,7 +55,7 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   const handleClose = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent("onClose", {
-        detail: { request_id: pr.request_id, pullRequestNumber },
+        detail: { request_id: entry.request_id, pullRequestNumber },
         bubbles: true,
       }),
     );
@@ -111,19 +97,14 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
   return html` <div class="pr-card__header">
     <div class="header-item-left">
       <civ-badge
-        .label=${pr?.jurisdiction_name || jurisdictionOcdidToFriendly(pr?.jurisdiction_ocdid)}
+        .label=${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
       ></civ-badge>
-      <a class="pr-card__link" href=${pr?.pull_request_url} target="_blank" rel="noopener">
+      <a class="pr-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">
         #${pullRequestNumber || "—"}
       </a>
-      <span
-        class="pr-card__state pr-card__state--${stateColor(pr?.pull_request_status)}"
-      >
-        ${pr?.pull_request_status || "unknown"}
-      </span>
       <a
         class="pr-card__link"
-        href="/jurisdictions?jurisdiction_ocdid=${pr?.jurisdiction_ocdid}"
+        href="/jurisdictions?jurisdiction_ocdid=${entry?.jurisdiction?.ocdid}"
         target="_blank"
         rel="noopener"
       >
@@ -133,8 +114,8 @@ const PullRequestCardHeader = ({ pr, state, stats }) => {
     <div class="header-item-center">
       <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>
         <civ-badge
-          .label=${reviewLoading ? "Loading..." : (pr?.issue_count > 0 ? `${pr.issue_count} issue${pr.issue_count !== 1 ? 's' : ''}` : "Approved")}
-          .variant=${pr?.issue_count > 0 ? "danger" : "success"}
+          .label=${reviewLoading ? "Loading..." : (entry?.issue_count > 0 ? `${entry.issue_count} issue${entry.issue_count !== 1 ? 's' : ''}` : "Approved")}
+          .variant=${entry?.issue_count > 0 ? "danger" : "success"}
         ></civ-badge>
       </button>
       <div popover ${ref(popoverRef)} class="review-popover">

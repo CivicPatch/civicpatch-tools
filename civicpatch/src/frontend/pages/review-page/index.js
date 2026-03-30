@@ -30,14 +30,11 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    pullRequestUrl, jurisdictionOcdid, jurisdictionName, reviewState, pullRequestStatus,
-    currentPeople: prPeople,
-    entryNumber,
-    hasNext, hasPrev,
-    prState, error, setError,
+    jurisdiction, pr, progress,
+    prPeople,
+    mergeState, error, setError,
     stats,
     advance, back, pass, pause, merge, navigateTo,
-    passedEntryNumbers, resolvedEntryNumbers, frontierEntry,
     sourceContentUrls, reviewData,
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
@@ -60,11 +57,11 @@ function ReviewPage() {
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
     handleResetAll,
-  } = usePeopleState({ people: prPeople?.pull_request ?? [] });
+  } = usePeopleState({ people: prPeople?.proposed ?? [] });
 
   async function handleAdd() {
     const person_id = await generatePersonId();
-    const people = prPeople?.pull_request ?? [];
+    const people = prPeople?.proposed ?? [];
     const last = people[people.length - 1] ?? null;
     addPerson({
       id: person_id,
@@ -85,7 +82,7 @@ function ReviewPage() {
       },
       image: null,
       cdn_image: null,
-      jurisdiction_ocdid: jurisdictionOcdid,
+      jurisdiction_ocdid: jurisdiction.ocdid,
       source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
       updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
     });
@@ -99,14 +96,14 @@ function ReviewPage() {
   }
 
   useEffect(() => {
-    const people = prPeople?.pull_request ?? [];
+    const people = prPeople?.proposed ?? [];
     if (!people.length) {
       assignPeople([]);
       setResolvedMatches({});
       return;
     }
     const cleanPeople = people.map(({ _isNew, _dirty, _changes, _selected, _deleted, ...p }) => p);
-    batchResolvePeople(jurisdictionOcdid, cleanPeople)
+    batchResolvePeople(jurisdiction.ocdid, cleanPeople)
       .then((resolved) => {
         const matchMap = {};
         const tagged = people.map((p, i) => {
@@ -174,26 +171,17 @@ function ReviewPage() {
   }
 
   return html`<review-session
-    .goal=${session.daily_goal}
-    .entryNumber=${entryNumber}
-    .hasNext=${hasNext}
-    .hasPrev=${hasPrev}
-    .prState=${prState}
+    .progress=${{ ...progress, goal: session.daily_goal }}
+    .jurisdiction=${jurisdiction}
+    .pr=${pr}
+    .mergeState=${mergeState}
     .error=${error}
     .isDirty=${dirty}
-    .currentPeople=${prPeople}
-    .tableData=${currentPeople}
+    .prPeople=${prPeople}
+    .currentPeople=${currentPeople}
     .selectedPeople=${selectedPeople}
     .reviewData=${reviewData}
     .sourceContentUrls=${sourceContentUrls}
-    .passedEntryNumbers=${passedEntryNumbers}
-    .resolvedEntryNumbers=${resolvedEntryNumbers}
-    .frontierEntry=${frontierEntry}
-    .pullRequestUrl=${pullRequestUrl}
-    .jurisdictionOcdid=${jurisdictionOcdid}
-    .jurisdictionName=${jurisdictionName}
-    .reviewState=${reviewState}
-    .pullRequestStatus=${pullRequestStatus}
 
     .onMerge=${handleMerge}
     .onAdvance=${advance}

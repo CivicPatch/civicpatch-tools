@@ -43,6 +43,7 @@ tests/
 - All queries live in `database/database.py` — routers and services never write SQL directly
 - Use the async connection pool (`get_pool()`) — never open a raw connection outside of it
 - DB functions are named after what they do: `get_jurisdiction_people`, `create_update_user`, etc.
+- **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `request_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
 
 ## Environment
 

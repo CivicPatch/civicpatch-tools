@@ -2,12 +2,12 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils";
 
-const DataPanel = ({ data }) => {
+const DataPanel = ({ entry }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);
 
   const getKey = (person) => person?.id;
-  const existingData = Array.isArray(data?.existing) ? data.existing : [];
-  const prData = Array.isArray(data?.pull_request) ? data.pull_request : [];
+  const existingData = Array.isArray(entry?.existing) ? entry.existing : [];
+  const prData = Array.isArray(entry?.proposed) ? entry.proposed : [];
   const existingMap = Object.fromEntries(
     existingData.map((p) => [getKey(p), p]),
   );

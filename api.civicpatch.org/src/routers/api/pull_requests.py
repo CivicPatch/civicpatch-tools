@@ -1,12 +1,8 @@
-import os
 import asyncio
 import logging
 from typing import List
 from shared.schemas import Official
-import services.storage_service
 import shared.utils.data_path_utils
-import shared.utils.url_utils
-
 import shared.utils.id_utils
 from shared.utils.statuses import PullRequestStatus
 import yaml
@@ -202,21 +198,24 @@ def get_router(api_key_header):
         total_pages = (total + per_page - 1) // per_page
 
         jurisdiction_ocdids = list(
-            {pr["jurisdiction_ocdid"] for pr in paged_pull_requests if pr.get("jurisdiction_ocdid")}
+            {pr["jurisdiction"]["ocdid"] for pr in paged_pull_requests if pr.get("jurisdiction")}
         )
         request_ids = list({pr["request_id"] for pr in paged_pull_requests})
         data = await database.people.get_people_data_by_request_ids(
             jurisdiction_ocdids, request_ids, view=view
         )
 
-        results = [
-            {
-                "details": pr,
-                "existing": data.get(pr["request_id"], {}).get("existing", []),
-                "pull_request": data.get(pr["request_id"], {}).get("pull_request", []),
-            }
-            for pr in paged_pull_requests
-        ]
+        results = []
+        for pr in paged_pull_requests:
+            entry = data.get(pr["request_id"], {})
+            proposed = entry.get("proposed", [])
+            unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
+            results.append({
+                **pr,
+                "existing": entry.get("existing", []),
+                "proposed": proposed,
+                "sources": pull_requests_db.build_sources(pr["request_id"], pr["jurisdiction"]["ocdid"], unique_source_urls),
+            })
         return {
             "data": results,
             "total": total,
@@ -227,67 +226,6 @@ def get_router(api_key_header):
                 "total_with_pr": total,
                 "with_issues": with_issues,
             },
-        }
-
-    def _source_url_to_markdown_url(request_id, jurisdiction_ocdid_folder, source_url: str) -> str:
-        # For now, let's assume the markdown url is the same as the source url but with "/markdown" appended
-        # In the future, this could be a more complex transformation or lookup
-        source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-        relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-        return services.storage_service.get_civicpatch_artifacts_url(relative_path)
-
-    def _source_urls_to_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[str]:
-        # For every source URL, let's figure out the markdown url
-        # The URL will be under storage_service.get_url(bucket, key) where bucket is "civicpatch-artifacts" 
-        # and key is "{request_id}/{jurisdiction_ocdid_folder}/{filename}"
-        jurisdiction_ocd_id_folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-        return [
-            {
-                "source_url": url, 
-                "markdown_url": _source_url_to_markdown_url(request_id, jurisdiction_ocd_id_folder, url)
-            }
-            for url in source_urls
-        ]
-
-    @router.get("/{request_id}/detail")
-    async def get_pull_request_detail(
-        request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
-        ),
-    ):
-        pr_metadata = await database.pull_requests.get_pull_request_for_review(request_id)
-        if not pr_metadata:
-            raise HTTPException(status_code=404, detail="Pull request not found")
-
-        jurisdiction_ocdid = pr_metadata["jurisdiction_ocdid"]
-        folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-
-        existing, pull_request = await asyncio.gather(
-            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
-            database.database.get_job_data_json(request_id),
-        )
-
-        if pull_request is None:
-            pull_request = await github_service.get_pull_request_file_yaml(
-                request_id=request_id,
-                jurisdiction_ocdid=jurisdiction_ocdid,
-                file_path=f"data/{folder}.yml",
-            )
-            if pull_request is not None:
-                background_tasks.add_task(database.database.update_job_data, request_id, pull_request)
-
-        pull_request = pull_request or []
-        unique_source_urls = list({url for person in pull_request for url in (person.get("source_urls") or [])})
-        sources = _source_urls_to_sources(request_id, jurisdiction_ocdid, unique_source_urls)
-
-        return {
-            "data": {
-                "request": pr_metadata,
-                "existing": existing,
-                "pull_request": pull_request,
-                "sources": sources,
-            }
         }
 
     # -- Pull Requests: Issues for a job ---

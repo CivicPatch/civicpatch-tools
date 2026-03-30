@@ -238,12 +238,6 @@ export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   return res.json();
 };
 
-export const fetchPullRequestDetail = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/detail`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const fetchReviewStats = async (stateCode) => {
   const params = new URLSearchParams({ state_code: stateCode });
   const res = await fetch(`${API_URL}/api/v1/review-sessions/stats?${params}`, { credentials: "include" });

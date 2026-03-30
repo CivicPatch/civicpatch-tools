@@ -16,7 +16,7 @@ function SourceContent({ sourceContentUrls }) {
             setMarkdownHtml("");
             return;
         }
-        const url = sourceContentUrls[selectedTab].markdown_url;
+        const url = sourceContentUrls[selectedTab].markdown;
         fetch(url)
             .then(res => res.text())
             .then(markdown => DOMPurify.sanitize(marked.parse(markdown)))
@@ -34,7 +34,7 @@ function SourceContent({ sourceContentUrls }) {
         <div class="source-content">
             <div class="source-content__tabs">
                 <div class="source-content__tab-bar">
-                    ${sourceContentUrls.map((source, idx) => html`
+                    ${sourceContentUrls.map((_, idx) => html`
                         <button
                             class="source-content__tab${selectedTab === idx ? ' source-content__tab--active' : ''}"
                             @click=${() => setSelectedTab(idx)}
@@ -44,7 +44,7 @@ function SourceContent({ sourceContentUrls }) {
                     `)}
                 </div>
                 <div class="source-content__tab-content">
-                    <a href="${sourceContentUrls[selectedTab].source_url}" target="_blank" rel="noopener noreferrer">View Original</a>
+                    <a href="${sourceContentUrls[selectedTab].url}" target="_blank" rel="noopener noreferrer">View Original</a>
                     <div class="source-content__markdown">${unsafeHTML(markdownHtml)}</div>
                 </div>
             </div>
