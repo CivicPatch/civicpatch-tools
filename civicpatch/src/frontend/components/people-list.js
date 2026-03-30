@@ -1,120 +1,60 @@
 import { component } from "haunted";
 import { html } from "lit-html";
+import "./basic/table/table.js";
 import "./person-image.js";
 
 function PeopleList({ local = [] }) {
   const people = local;
 
   const hasSubdivision = (person) => {
-    const divisionOcdid = person.office.division_ocdid || "";
-    if (divisionOcdid.includes("district") || divisionOcdid.includes("ward")) {
-      return true;
-    }
-    return false;
+    const divisionOcdid = person.office?.division_ocdid || "";
+    return divisionOcdid.includes("district") || divisionOcdid.includes("ward");
   };
 
   const getSubdivisionLabel = (person) => {
-    const divisionOcdid = person.office.division_ocdid || "";
-    const parts = divisionOcdid.split("/");
-    for (const part of parts) {
-      if (part.startsWith("council_district:")) {
-        return `District ${part.split(":")[1]}`;
-      } else if (part.startsWith("ward:")) {
-        return `Ward ${part.split(":")[1]}`;
-      }
+    const divisionOcdid = person.office?.division_ocdid || "";
+    for (const part of divisionOcdid.split("/")) {
+      if (part.startsWith("council_district:")) return `District ${part.split(":")[1]}`;
+      if (part.startsWith("ward:")) return `Ward ${part.split(":")[1]}`;
     }
   };
 
-  const subDivision = (person) => {
-    if (hasSubdivision(person)) {
-      return `${getSubdivisionLabel(person)}`;
-    }
-    return null;
-  };
-
-  const formatSources = (sources) => {
-    if (!sources || sources.length === 0) {
-      return html`<small>No Sources</small>`;
-    }
-
-    return html`
-      <div style="line-height: 1.2; font-size: 0.8rem;">
-        ${sources.map(
-          (source, index) => html`
-            <a
-              href="${source}"
-              target="_blank"
-              title="${source}"
-              style="margin-right: 0.25rem;"
-            >
-              [${index + 1}]
-            </a>
-          `,
-        )}
-      </div>
-    `;
-  };
+  const columns = [
+    {
+      label: "Photo",
+      field: "photo",
+      renderCell: (person) => html`<person-image .person=${person}></person-image>`,
+    },
+    {
+      label: "Official",
+      field: "official",
+      renderCell: (person) => html`
+        <strong>${person.name}</strong>
+        <small style="display: block;">${person.office?.name}</small>
+        ${hasSubdivision(person) ? html`<small style="display: block;">${getSubdivisionLabel(person)}</small>` : ""}
+      `,
+    },
+    {
+      label: "Contact",
+      field: "contact",
+      renderCell: (person) => html`
+        ${person.emails?.length > 0 ? html`<a href="mailto:${person.emails.join(",")}" style="display: block;">${person.emails.join(",")}</a>` : ""}
+        ${person.phones?.length > 0 ? html`<a href="tel:${person.phones.join(",")}" style="display: block;">${person.phones.join(",")}</a>` : ""}
+        ${person.urls?.length > 0 ? html`<a href="${person.urls[0]}" target="_blank" class="secondary">Link</a>` : ""}
+      `,
+    },
+  ];
 
   if (!people || people.length === 0) {
     return html`<p role="alert">No data available for this jurisdiction.</p>`;
   }
 
   return html`
-    <figure>
-      <table role="grid">
-        <thead>
-          <tr>
-            <th style="width: 1%;">Photo</th>
-            <th style="width: 15%;">Official</th>
-            <th style="width: 15%">Contact</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${people.map(
-            (person) => html`
-              <tr>
-                <td data-label="Photo">
-                  <person-image .person=${person}></person-image>
-                </td>
-
-                <td data-label="Official">
-                  <strong>${person.name}</strong>
-                  <small style="display: block;"
-                    >${person.office && person.office.name}</small
-                  >
-                  <small style="display: block;">${subDivision(person)}</small>
-                </td>
-
-                <td data-label="Contact">
-                  ${person.emails?.length > 0
-                    ? html`<a
-                        href="mailto:${person.emails.join(",")}"
-                        style="display: block;"
-                        >${person.emails.join(",")}</a
-                      >`
-                    : ""}
-                  ${person.phones?.length > 0
-                    ? html`<a
-                        href="tel:${person.phones.join(",")}"
-                        style="display: block;"
-                        >${person.phones.join(",")}</a
-                      >`
-                    : ""}
-                  ${person.urls?.length > 0
-                    ? html`<a
-                        href="${person.urls.join(",")}"
-                        target="_blank"
-                        class="secondary"
-                        >Link</a
-                      >`
-                    : ""}
-                </td>
-              </tr>
-            `,
-          )}
-        </tbody>
-      </table>
-    </figure>
+    <civ-table
+      .columns=${columns}
+      .data=${people}
+      .identifier=${"id"}
+    ></civ-table>
   `;
 }
 

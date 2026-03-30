@@ -4,7 +4,7 @@ import { keyed } from "lit/directives/keyed.js";
 import { getColumns } from "./table/columns.js";
 import "../person-image.js";
 import "./person-card.js";
-import "../basic/table/table.js";
+import "./people-table.js";
 import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
 import "./action-buttons.js";
 import "./pull-request-tabs.js";
@@ -230,16 +230,12 @@ function handleCardKeyDown(e, idx, key) {
   }
 
   function renderTableView() {
-    return html`<civ-table
-      .identifier=${"id"}
-      .selectedIdentifiers=${selectedPeople}
-      .canReorder=${true}
-      .columns=${getColumns(openProfileModal)}
+    return html`<civ-people-table
       .data=${currentPeople}
+      .columns=${getColumns(openProfileModal)}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
-    >
-    </civ-table>`;
+    ></civ-people-table>`;
   }
 
   function renderCardView() {

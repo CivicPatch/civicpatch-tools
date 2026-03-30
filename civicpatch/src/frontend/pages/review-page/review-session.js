@@ -64,15 +64,7 @@ function ReviewSession({
         <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
       </div>
       <civ-diff-panel
-        .data=${{
-          existing: prPeople?.existing ?? [],
-          proposed: (currentPeople ?? [])
-            .filter(p => !p._deleted)
-            .map(p => {
-              const match = resolvedMatches?.[p.id];
-              return match?.person && !match.ambiguous ? { ...p, id: match.person.id } : p;
-            }),
-        }}
+        .data=${prPeople ?? { existing: [], proposed: [] }}
       ></civ-diff-panel>
       <div class="review-page__content">
         <civ-review-workspace

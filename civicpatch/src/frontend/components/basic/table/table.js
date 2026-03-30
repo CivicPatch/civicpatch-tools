@@ -307,10 +307,12 @@ function BasicTable(props) {
     }
   }
 
+  const isEditable = props.columns.some(col => col.editable);
+
   return html`
     <table
-      role="grid" 
-      tabindex="0"
+      role="grid"
+      tabindex="${isEditable ? '0' : '-1'}"
       @keydown=${handleTableKeyDown}
       @blur=${handleTableBlur}
       ${ref(el => tableRef.current = el)}
@@ -327,7 +329,7 @@ function BasicTable(props) {
           ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(props.columns.length, dropIndex) : null}
           ${dropIndex < props.data.length ? html`
             <tr
-              draggable="${props.canReorder && (editingCell.row !== null && editingCell.col !== null) ? "false" : "true"}"
+              draggable="${isEditable && !(editingCell.row !== null && editingCell.col !== null) ? "true" : "false"}"
               class=${dropIndex === draggedIndex ? "dragging" : ""}
               @dragstart=${e => handleDragStart(dropIndex, e)}
               @dragend=${handleDragEnd}
