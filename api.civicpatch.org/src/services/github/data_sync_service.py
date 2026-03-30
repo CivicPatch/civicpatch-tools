@@ -79,6 +79,7 @@ async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids: List[str]):
 
 async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, jurisdiction_ocdids: List[str]):
     jurisdictions: List[tuple] = []
+    inactive_ocdids: List[str] = []
     logger.debug(f"Syncing jurisdictions with metadata for OCDIDs: {jurisdiction_ocdids}")
     for jurisdiction_ocdid in jurisdiction_ocdids:
         jurisdiction_data = jurisdiction_metadata.get(jurisdiction_ocdid)
@@ -87,10 +88,16 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
         state = parsed_ocdid.state
         updated_at = jurisdiction_data.get("updated_at") if jurisdiction_data else None
         nested_jurisdiction_data = jurisdiction_data.get("jurisdiction") if jurisdiction_data else None
-        serialized_data = json.dumps(nested_jurisdiction_data) if nested_jurisdiction_data else None
+        if not nested_jurisdiction_data:
+            logger.warning(f"No jurisdiction entry found for {jurisdiction_ocdid}, marking as inactive")
+            inactive_ocdids.append(jurisdiction_ocdid)
+            continue
+        serialized_data = json.dumps(nested_jurisdiction_data)
         jurisdictions.append((jurisdiction_ocdid, state, "can-delete", serialized_data, updated_at, "can-delete"))
 
     logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
+    if inactive_ocdids:
+        await database.mark_jurisdictions_inactive(inactive_ocdids)
     await database.bulk_update_jurisdictions(jurisdictions)
 
 

@@ -5,9 +5,9 @@ source-content {
 }
 
 .source-content {
-  background: var(--pico-card-background-color);
-  border: 1.5px solid var(--pico-muted-border-color);
-  border-radius: 1rem;
+  background: transparent;
+  border: 1px solid var(--pico-form-element-border-color);
+  border-radius: var(--pico-border-radius);
   padding: 0.75rem 0.75rem 0 0.75rem;
   box-sizing: border-box;
   display: flex;
@@ -32,7 +32,7 @@ source-content {
 .source-content__tab {
   background: var(--pico-muted-background-color);
   border: 1px solid var(--pico-muted-border-color);
-  border-radius: 0.4rem 0.4rem 0 0;
+  border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
   padding: 0.2rem 0.75rem;
   font-size: 0.75rem;
   color: var(--pico-muted-color);
@@ -45,7 +45,7 @@ source-content {
 }
 
 .source-content__tab--active {
-  background: var(--pico-card-background-color);
+  background: transparent;
   color: var(--pico-primary);
   border-bottom: 2px solid var(--pico-primary);
   font-weight: 600;
@@ -56,8 +56,8 @@ source-content {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  border-radius: 0 0 0.5rem 0.5rem;
-  background: var(--pico-background-color);
+  border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+  background: transparent;
   display: flex;
   flex-direction: column;
 }
@@ -73,6 +73,6 @@ source-content {
   flex: 1;
   width: 100%;
   border: none;
-  background: var(--pico-background-color);
+  background: transparent;
   display: block;
 }

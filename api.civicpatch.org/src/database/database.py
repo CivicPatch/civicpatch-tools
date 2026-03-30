@@ -575,7 +575,7 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
     if limit <= 0:
         limit = 100  # Set a default reasonable limit if 0 is passed
 
-    where_clauses = ["state = %s"]
+    where_clauses = ["state = %s", "status = 'current'"]
     params = [state.lower()]
 
     if search_string:
@@ -962,6 +962,14 @@ async def bulk_update_people(people_records: list):
                 """,
                 (jurisdiction_ocdid, incoming_ids)
             )
+
+async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            "UPDATE jurisdictions SET status = 'inactive' WHERE jurisdiction_ocdid = %s",
+            [(ocdid,) for ocdid in jurisdiction_ocdids],
+        )
 
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """

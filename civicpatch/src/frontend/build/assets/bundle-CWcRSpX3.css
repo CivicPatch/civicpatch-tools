@@ -253,20 +253,13 @@
 }
 
 .review-page__jurisdiction {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--pico-color);
-    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--pico-muted-color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 28rem;
-    letter-spacing: -0.02em;
-}
-
-.review-page__jurisdiction:hover {
-    color: var(--pico-primary);
-    text-decoration: none;
+    max-width: 16rem;
 }
 
 .review-page__dots {

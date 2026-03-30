@@ -1,3 +1,11 @@
+civ-table {
+  display: block;
+  border: 1px solid var(--pico-form-element-border-color);
+  border-radius: var(--pico-border-radius);
+  overflow: hidden;
+  background: var(--pico-background-color);
+}
+
 civ-table table {
   table-layout: auto;
   width: auto;
@@ -5,20 +13,21 @@ civ-table table {
 }
 civ-table table:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire)) !important;
+}
+
+civ-table:focus-within {
+  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire));
 }
 
 civ-table tr:last-child {
+  border-bottom: none;
 }
-civ-table td {
-}
+
 civ-table td:focus-within {
   background-color: rgb(var(--catppuccin-base));
 }
-civ-table-cell {
-}
 civ-table tr {
-  border: 1px solid rgb(var(--catppuccin-crust));
+  border-bottom: 1px solid var(--pico-form-element-border-color);
   transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
 }
 civ-table tr:focus-within {

@@ -15,7 +15,7 @@ const NAVBAR_CSS = html`
       align-items: center;
       justify-content: space-between;
       padding: 0.875rem 0;
-      background: var(--pico-background-color);
+      background: transparent;
       border-bottom: 1px solid var(--pico-muted-border-color);
       user-select: none;
     }

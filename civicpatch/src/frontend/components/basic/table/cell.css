@@ -13,11 +13,11 @@ civ-table-cell {
     }
     span.cell-content[contenteditable="true"]:focus {
         box-sizing: border-box;
-        outline: 2px solid rgb(var(--catppuccin-mauve));
+        outline: 2px solid rgb(var(--catppuccin-sapphire));
         border-radius: var(--pico-border-radius);
     }
     div.tag-list:focus-within {
-        outline: 2px solid rgb(var(--catppuccin-mauve));
+        outline: 2px solid rgb(var(--catppuccin-sapphire));
         border-radius: var(--pico-border-radius);
     }
 

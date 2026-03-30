@@ -150,6 +150,10 @@ function AutocompleteSelect({
     }, 0);
   };
 
+  const handleFocusOut = (e) => {
+    if (!this.contains(e.relatedTarget)) setIsListOpen(false);
+  };
+
   const handleButtonClick = () => {
     const newState = !isListOpen;
     setIsListOpen(newState);
@@ -164,7 +168,7 @@ function AutocompleteSelect({
 
   return html`
     <label class="visually-hidden">${label}</label>
-    <div class="autocomplete-wrapper">
+    <div class="autocomplete-wrapper" @focusout=${handleFocusOut}>
       <fieldset class="grid" role="group">
         <input 
           class="autocomplete-input" 
@@ -176,7 +180,6 @@ function AutocompleteSelect({
           .value=${inputValue}
           @input=${handleInput}
           @keydown=${handleKeyDown}
-          @blur=${() => setIsListOpen(false)}
           @focus=${() => setIsListOpen(true)}
           ${ref(setInputElement)}
         >
