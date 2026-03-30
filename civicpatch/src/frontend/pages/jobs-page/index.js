@@ -13,7 +13,6 @@ import {
   fetchPullRequests,
   closeStaleDuplicatePrs,
 } from "../../api.js";
-import { pullRequestUrlToNumber } from "../../components/pull-request-card/pr-utils.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
 import "./error-card/index.js";
@@ -90,6 +89,9 @@ function JobsPage() {
   const [error, setError] = useState(null);
   const [perPage, setPerPage] = useState(getPerPageFromUrl());
 
+  const [openSections, setOpenSections] = useState({ errors: true, duplicates: true, prs: true });
+  const toggleSection = (key) => setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (!params.get("state")) {
@@ -129,7 +131,7 @@ function JobsPage() {
       })
       .catch((err) => setError(err.message))
       .finally(() => { setLoading(false); setPageLoading(false); });
-  }, [page, stateCode]);
+  }, [page, perPage, stateCode]);
 
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
@@ -246,17 +248,13 @@ function JobsPage() {
         ${isOpen ? html`
           <div class="jobs-page__duplicate-item-body">
             ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
-              const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
+              const pullRequestNumber = pr.pr.number;
               return html`
                 <pr-card
                   @onMerge=${handleMerge}
                   @onClose=${handleClose}
-                  .pr=${pr.details}
+                  .entry=${pr}
                   .state=${pullRequestState[pullRequestNumber]}
-                  .data=${{
-                    existing: pr.existing,
-                    pull_request: pr.pull_request,
-                  }}
                 ></pr-card>
               `;
             })}
@@ -273,17 +271,13 @@ function JobsPage() {
       : pullRequests.length === 0
         ? html`<p>No pull requests found.</p>`
         : pullRequests.map((pr) => {
-            const pullRequestNumber = pullRequestUrlToNumber(pr.details.pull_request_url);
+            const pullRequestNumber = pr.pr.number;
             return html`
               <pr-card
                 @onMerge=${handleMerge}
                 @onClose=${handleClose}
-                .pr=${pr.details}
+                .entry=${pr}
                 .state=${pullRequestState[pullRequestNumber]}
-                .data=${{
-                  existing: pr.existing,
-                  pull_request: pr.pull_request,
-                }}
               ></pr-card>
             `;
           });
@@ -315,10 +309,15 @@ function JobsPage() {
 
   const errorSection = permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
-      <h2>Pipeline errors</h2>
-      <div style="display: flex; gap: 2rem; flex-direction: column;">
-        ${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}
+      <div class="jobs-page__section-header">
+        <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors</h2>
+        <button class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('errors')}>▼</button>
       </div>
+      ${openSections.errors ? html`
+        <div style="display: flex; gap: 2rem; flex-direction: column;">
+          ${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}
+        </div>
+      ` : null}
     </section>
   ` : null;
 
@@ -374,24 +373,34 @@ function JobsPage() {
       ${unrecognizedSection}
       <section class="jobs-page__duplicate-jurisdictions">
         <div class="jobs-page__section-header">
-          <h2>Pull requests - duplicate jurisdictions</h2>
-          ${duplicateJurisdictions.length > 0 ? html`
-            <button
-              class="btn btn-sm destructive"
-              @click=${handleCloseStaleDuplicates}
-              ?disabled=${closingStale}
-            >${closingStale ? "Closing…" : "Close stale"}</button>
-          ` : null}
+          <h2 class="jobs-page__section-title jobs-page__section-title--warning">Duplicate jurisdictions</h2>
+          <div class="jobs-page__section-header-actions">
+            ${duplicateJurisdictions.length > 0 ? html`
+              <button
+                class="btn btn-sm destructive"
+                @click=${handleCloseStaleDuplicates}
+                ?disabled=${closingStale}
+              >${closingStale ? "Closing…" : "Close stale"}</button>
+            ` : null}
+            <button class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('duplicates')}>▼</button>
+          </div>
         </div>
-        <div class="jobs-page__duplicate-list">
-          ${duplicatePrList}
-        </div>
+        ${openSections.duplicates ? html`
+          <div class="jobs-page__duplicate-list">
+            ${duplicatePrList}
+          </div>
+        ` : null}
       </section>
       <section>
-        <h2>Open pull requests</h2>
-        <div style="display: flex; gap: 2rem; flex-direction: column;">
-          ${prList}
+        <div class="jobs-page__section-header">
+          <h2 class="jobs-page__section-title jobs-page__section-title--primary">Open pull requests</h2>
+          <button class="jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('prs')}>▼</button>
         </div>
+        ${openSections.prs ? html`
+          <div style="display: flex; gap: 2rem; flex-direction: column;">
+            ${prList}
+          </div>
+        ` : null}
         <div class="jobs-page__pagination">
           ${!pageLoading ? html`
             <a
@@ -418,15 +427,6 @@ function JobsPage() {
               @click=${(e) => { e.preventDefault(); if (page < totalPages) goToPage(page + 1); }}
             >→</a>
           ` : null}
-
-          <label class="jobs-page__per-page">
-            Per page
-            <select @change=${handlePerPageChange}>
-              ${PER_PAGE_OPTIONS.map(
-                (n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`
-              )}
-            </select>
-          </label>
         </div>
       </section>
     </main>

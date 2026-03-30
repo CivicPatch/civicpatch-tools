@@ -27,7 +27,8 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     ]
 
     filtered_people = [
-        person for person in people if not person.name == "Vacant Vacant"
+        person for person in people
+        if person.name != "Vacant Vacant" and len(person.name.split()) >= 2
     ]
 
     image_map = _get_image_map(context.data.jurisdiction_ocdid, logger)

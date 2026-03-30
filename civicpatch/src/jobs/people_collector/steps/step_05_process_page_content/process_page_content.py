@@ -274,6 +274,8 @@ async def process_with_llm(
     processed_people = []
     for p in formatted_response.people:
         p = p.model_dump()
+        if not p.get("name") or not p["name"].strip():
+            continue
         p["source_url"] = source_url
         if p["url"]:
             p["url"] = url_utils.format_url(p["url"])

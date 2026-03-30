@@ -103,7 +103,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
             SELECT jurisdiction_ocdid FROM review_session_entries
             WHERE review_session_id = %s AND status = 'claimed'
         )
-        SELECT j.request_id,
+        SELECT j.request_id::text,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM jobs j
         JOIN requests r ON r.id = j.request_id
@@ -174,7 +174,7 @@ async def navigate_to_entry(
             # Try to find an existing entry at the requested position (claimed or passed)
             await cur.execute(
                 """
-                SELECT id, request_id, jurisdiction_ocdid
+                SELECT id, request_id::text, jurisdiction_ocdid
                 FROM review_session_entries
                 WHERE review_session_id = %s
                   AND entry_number = %s

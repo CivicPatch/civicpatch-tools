@@ -61,7 +61,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setPullRequestsLoading(true);
     try {
       const data = await fetchPullRequests(jurisdiction_ocdid);
-      const prs = (data.data || []).map((item) => item.details).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      const prs = (data.data || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setPullRequests(prs);
       setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
     } catch {
@@ -152,7 +152,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   async function handlePublish() {
     const request_id = selectedPullRequest?.request_id;
-    const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
+    const prNumber = selectedPullRequest?.pr?.number;
     if (!prNumber) return;
     setPrStatus("loading_merge");
     try {
@@ -167,7 +167,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   async function handleClosePR() {
     const request_id = selectedPullRequest?.request_id;
-    const prNumber = selectedPullRequest?.pull_request_url?.split("/").pop();
+    const prNumber = selectedPullRequest?.pr?.number;
     if (!prNumber) return;
     setPrStatus("loading_close");
     try {
@@ -281,7 +281,7 @@ function handleCardKeyDown(e, idx, key) {
 
     ${selectedPullRequest
       ? html`
-          <a href=${selectedPullRequest.pull_request_url} target="_blank" class="contrast"
+          <a href=${selectedPullRequest.pr.url} target="_blank" class="contrast"
             >View Pull Request</a
           >
           <hr />

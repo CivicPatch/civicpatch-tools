@@ -84,7 +84,7 @@ async def get_people_data_by_request_ids(
             await cur.execute(
                 f"""
                 SELECT
-                    r.id AS request_id,
+                    r.id::text AS request_id,
                     (
                         SELECT jsonb_agg({result_projection})
                         FROM jsonb_array_elements(r.result_data) AS elem
@@ -105,7 +105,7 @@ async def get_people_data_by_request_ids(
     for request_id, people_data, jurisdiction_ocdid in jobs_rows:
         results[request_id] = {
             "existing": people_map.get(jurisdiction_ocdid, []),
-            "pull_request": people_data or [],  # jsonb_agg returns None for empty/null result_data
+            "proposed": people_data or [],  # jsonb_agg returns None for empty/null result_data
         }
 
     return results

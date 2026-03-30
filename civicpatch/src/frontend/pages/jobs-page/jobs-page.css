@@ -79,6 +79,54 @@
     margin: 0;
 }
 
+.jobs-page__section-title {
+    padding-left: 0.65rem;
+}
+
+.jobs-page__section-title--error {
+    border-left: 3px solid var(--pico-del-color);
+}
+
+.jobs-page__section-title--warning {
+    border-left: 3px solid var(--pico-warn-color);
+}
+
+.jobs-page__section-title--primary {
+    border-left: 3px solid var(--pico-primary);
+}
+
+.jobs-page__section-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.jobs-page__section-toggle {
+    background: none;
+    border: none;
+    color: var(--pico-muted-color);
+    padding: 0;
+    margin: 0;
+    min-width: unset;
+    min-height: unset;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.15s;
+}
+
+.jobs-page__section-toggle:hover {
+    color: var(--pico-contrast);
+}
+
+.jobs-page__section-toggle--open {
+    transform: rotate(180deg);
+}
+
 .jobs-page__duplicate-list {
     display: flex;
     gap: 0.5rem;

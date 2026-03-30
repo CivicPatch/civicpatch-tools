@@ -1,22 +1,31 @@
-import { component, useState } from "haunted";
+import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { useWS } from "../../hooks/useSse.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import "../../components/edit-people/edit-people.js";
+import "../../components/source-content/index.js";
 import "./config-detail.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerRemoteJob } from '../../api.js';
+import { triggerRemoteJob, fetchPullRequests } from '../../api.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
+  const [sourceContentUrls, setSourceContentUrls] = useState([]);
+
+  useEffect(() => {
+    if (!jurisdiction_ocdid) return;
+    fetchPullRequests(jurisdiction_ocdid)
+      .then((res) => setSourceContentUrls(res.data?.[0]?.sources ?? []))
+      .catch(() => {});
+  }, [jurisdiction_ocdid]);
 
   // Guards after all hooks (hooks must not be called conditionally)
   if (authLoading) {
@@ -119,10 +128,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
       </div>
 
       ${!peopleLoading ? html`
-        <civ-editable-people-list
-          jurisdiction_ocdid=${jurisdiction_ocdid}
-          .people=${people}
-        ></civ-editable-people-list>
+        <div class="review-page__content">
+          <civ-editable-people-list
+            jurisdiction_ocdid=${jurisdiction_ocdid}
+            .people=${people}
+          ></civ-editable-people-list>
+          <source-content .sourceContentUrls=${sourceContentUrls}></source-content>
+        </div>
       ` : null}
     </div>
   `;

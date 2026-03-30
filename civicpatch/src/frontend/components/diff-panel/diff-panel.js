@@ -42,7 +42,7 @@ const DiffPanel = ({ data }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);
 
   const existingData = Array.isArray(data?.existing) ? data.existing : [];
-  const prData = Array.isArray(data?.pull_request) ? data.pull_request : [];
+  const prData = Array.isArray(data?.proposed) ? data.proposed : [];
   const existingMap = Object.fromEntries(existingData.map((p) => [p?.id, p]));
   const prMap = Object.fromEntries(prData.map((p) => [p?.id, p]));
   const allKeys = Array.from(new Set([...Object.keys(existingMap), ...Object.keys(prMap)]));
