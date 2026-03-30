@@ -620,6 +620,25 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
         print(f"Database error in get_jurisdictions: {e}")
         return 0, []
 
+async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
+    if not ocdids:
+        return []
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid,
+                   data->>'name' AS name,
+                   data->>'jurisdiction_ocdid_slug' AS slug
+            FROM jurisdictions
+            WHERE jurisdiction_ocdid = ANY(%s)
+            ORDER BY data->>'name'
+            """,
+            (ocdids,),
+        )
+        rows = await cur.fetchall()
+        return [{"ocdid": row[0], "name": row[1], "slug": row[2]} for row in rows]
+
 # Jobs
 
 async def list_jobs():
