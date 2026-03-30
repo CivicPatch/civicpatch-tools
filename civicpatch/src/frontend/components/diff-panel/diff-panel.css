@@ -74,6 +74,7 @@
     border-radius: var(--pico-border-radius);
     overflow: hidden;
     border: 1px solid var(--pico-muted-border-color);
+    background: var(--pico-background-color);
 }
 
 .diff-person__header {
@@ -144,6 +145,13 @@
 
 /* ── Diff table ── */
 
+.diff-table__wrapper {
+    border: 1px solid var(--pico-form-element-border-color);
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
+    background: var(--pico-background-color);
+}
+
 .diff-table {
     width: 100%;
     border-collapse: collapse;
@@ -159,7 +167,8 @@
     text-transform: uppercase;
     color: var(--pico-muted-color);
     padding: 0.3rem 0.5rem 0.4rem;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--pico-form-element-border-color);
+    background: transparent;
 }
 
 .diff-table td {
@@ -169,7 +178,8 @@
     white-space: nowrap;
     vertical-align: middle;
     color: var(--pico-muted-color);
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--pico-form-element-border-color);
+    background: transparent;
 }
 
 .diff-table tbody tr:last-child td {

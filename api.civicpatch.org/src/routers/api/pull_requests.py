@@ -319,6 +319,12 @@ def get_router(api_key_header):
                     status_code=422,
                 )
 
+        if mergeable_state != "clean":
+            return JSONResponse(
+                content=ErrorResponse(error=f"Pull request is not in a mergeable state ({mergeable_state!r})").model_dump(),
+                status_code=422,
+            )
+
         merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
 
         if merge_error:

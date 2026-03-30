@@ -124,7 +124,7 @@ const DataPanel = ({ entry }) => {
             </button>`
           : ""}
       </div>
-      <table class="diff-table">
+      <div class="diff-table__wrapper"><table class="diff-table">
         <colgroup>
           <col class="col-name" />
           <col class="col-before" />
@@ -147,7 +147,7 @@ const DataPanel = ({ entry }) => {
             ? unchangedRows.map((row) => renderRow({ row, type: row.type }))
             : ""}
         </tbody>
-      </table>
+      </table></div>
     </div>
   `;
 };

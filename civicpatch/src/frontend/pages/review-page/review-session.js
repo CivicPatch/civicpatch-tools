@@ -55,11 +55,8 @@ function ReviewSession({
       ${mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
-          ${jurisdictionName ? html`<span class="review-page__jurisdiction">${jurisdictionName}</span>` : ""}
-          ${pullRequestStatus ? html`<span class="review-page__pr-status review-page__pr-status--${pullRequestStatus}">${pullRequestStatus}</span>` : ""}
-          ${reviewState ? html`<span class="review-page__review-state review-page__review-state--${reviewState}">${reviewState === "changes_requested" ? "Changes requested" : "Approved"}</span>` : ""}
+          ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName} ↗</a>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
-          ${jurisdictionOcdid ? html`<a class="btn btn-sm" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">Detail ↗</a>` : ""}
         </div>
         <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
       </div>

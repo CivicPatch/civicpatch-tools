@@ -13,6 +13,7 @@ from database.database import update_job_pull_request_status
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
 from services.github.pull_request_sync_service import register_and_sync_pr_job
+from services.github.data_sync_service import sync_people_by_ocdids
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +60,8 @@ async def _handle_pull_request_event(payload: dict[str, Any]):
     updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
     if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
         await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
+    if status == PullRequestStatus.MERGED:
+        await sync_people_by_ocdids([jurisdiction_ocdid])
     if not updated and status == PullRequestStatus.OPEN:
         logger.info("Webhook: no job found for %s, creating", request_id)
         await register_and_sync_pr_job(request_id, jurisdiction_ocdid, pr_url, provider="github_webhook")

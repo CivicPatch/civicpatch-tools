@@ -488,17 +488,24 @@ async def merge_pull_request(pull_request_number: str, approved_by: str | None =
     _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
-        response = await client.put(
-            f"{open_data_repo_url}/pulls/{pull_request_number}/merge",
-            headers=default_headers,
-            json=data,
-        )
-
-        if response.status_code != 200:
+        for attempt in range(2):
+            response = await client.put(
+                f"{open_data_repo_url}/pulls/{pull_request_number}/merge",
+                headers=default_headers,
+                json=data,
+            )
+            if response.status_code == 200:
+                return None
             github_message = response.json().get("message", "Unknown error")
+            # GitHub can transiently report "not mergeable" immediately after a commit is pushed
+            # while it recomputes mergeability; retry once to let it settle
+            if attempt == 0 and response.status_code == 405 and "not mergeable" in github_message.lower():
+                logger.warning(f"PR {pull_request_number} transiently not mergeable, retrying after recompute")
+                await asyncio.sleep(5)
+                continue
             logger.error(f"GitHub merge failed ({response.status_code}): {github_message}")
             return github_message
-        return None
+    return github_message
 
 
 async def update_pull_request_branch(pull_request_number: str) -> str | None:

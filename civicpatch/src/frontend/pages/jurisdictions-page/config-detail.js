@@ -7,15 +7,8 @@ const DummyNotes = [
   { date: "2024-01-02", content: "Maybe collect comments from previous pull requests" },
 ];
 
-function ConfigDetail({ config = DummyConfig, onSave, people, notes = DummyNotes }) {
+function ConfigDetail({ notes = DummyNotes }) {
   const [isEditMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState(config);
-
-  const offices = people?.map(p => ({
-    name: p.office?.name,
-    division_ocdid: p.office?.division_ocdid
-  })) || [];
-
   const toggleEditMode = () => setEditMode(!isEditMode);
 
   const noteItem = (note) => html`

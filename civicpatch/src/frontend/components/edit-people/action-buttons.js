@@ -21,21 +21,21 @@ function PeopleActionButtons({
 
   return html`
     <div class="action-buttons">
-      <button @click=${onAdd} class="secondary btn-sm">Add</button>
-      <button @click=${onMerge} ?disabled=${selectedPeople.length < 2} class="secondary btn-sm">
+      <button type="button" @click=${onAdd} class="secondary btn-sm">Add</button>
+      <button type="button" @click=${onMerge} ?disabled=${selectedPeople.length < 2} class="secondary btn-sm">
         Merge (${selectedPeople.length})
       </button>
-      <button @click=${onBulkDelete} ?disabled=${selectedPeople.length === 0} class="secondary btn-sm">
+      <button type="button" @click=${onBulkDelete} ?disabled=${selectedPeople.length === 0} class="secondary btn-sm">
         Delete (${selectedPeople.length})
       </button>
-      <button @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">
+      <button type="button" @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">
         Reset
       </button>
 ${hasPullRequest ? html`
-        <button @click=${onClosePR} ?disabled=${isTerminal || isPublishing || isClosing} class="destructive btn-sm">
+        <button type="button" @click=${onClosePR} ?disabled=${isTerminal || isPublishing || isClosing} class="destructive btn-sm">
           ${isClosing ? "Closing..." : prStatus === "closed" ? "Closed" : "Close PR"}
         </button>
-        <button @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
+        <button type="button" @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
           ${isPublishing ? "Merging..." : prStatus === "merged" ? "Merged" : dirty ? "Save and Merge" : "Merge"}
         </button>
       ` : ""}

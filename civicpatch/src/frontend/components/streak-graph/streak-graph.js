@@ -4,7 +4,6 @@ import { toLocalDateStr } from "../../utils/date-utils.js";
 
 const WEEKS = 16;
 const DOW_LABELS = ["Mon", "", "Wed", "", "Fri", "", "Sun"];
-const SPARKLINE_DAYS = 30;
 const BARS = "▁▂▃▄▅▆▇█";
 const MAX_COUNT = 10;
 
@@ -59,13 +58,14 @@ function buildMonthLabels(days) {
 }
 
 function buildCopyText(days, streak) {
-  const past = days.filter((d) => !d.isFuture).slice(-SPARKLINE_DAYS);
-  const max = Math.max(...past.map((d) => d.count), 1);
-  const sparkline = past.map((d) => {
+  const thisWeek = days.filter((d) => !d.isFuture).slice(-7);
+  const total = thisWeek.reduce((sum, d) => sum + d.count, 0);
+  const max = Math.max(...thisWeek.map((d) => d.count), 1);
+  const sparkline = thisWeek.map((d) => {
     if (d.count === 0) return "▁";
     return BARS[Math.round((d.count / max) * (BARS.length - 1))];
   }).join("");
-  return `${streak ?? 0} day streak · civicpatch.org\n${sparkline}`;
+  return `${streak ?? 0} day streak · ${total} review${total === 1 ? "" : "s"} this week · civicpatch.org\n${sparkline}`;
 }
 
 function StreakGraph({ dailyCounts, streak, currentDate }) {
