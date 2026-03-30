@@ -3,7 +3,7 @@ import { html } from "lit-html";
 import "./basic/table/table.js";
 import "./person-image.js";
 
-function PeopleList({ local = [] }) {
+function PeopleList({ local = [], jurisdictionSelected = false }) {
   const people = local;
 
   const hasSubdivision = (person) => {
@@ -46,7 +46,9 @@ function PeopleList({ local = [] }) {
   ];
 
   if (!people || people.length === 0) {
-    return html`<p role="alert">No data available for this jurisdiction.</p>`;
+    return jurisdictionSelected
+      ? html`<p role="alert">No data available for this jurisdiction.</p>`
+      : html``;
   }
 
   return html`

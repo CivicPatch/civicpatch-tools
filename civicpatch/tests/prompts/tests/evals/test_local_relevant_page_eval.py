@@ -41,9 +41,10 @@ async def run_eval(model_client, case):
     case_input = case["input"]
     expected = case["expected"]
     page_url = expected.get("page_url", "")
+    jurisdiction_name = expected.get("jurisdiction_name", "")
     make_prompt = model_client["make_prompt"]
 
-    prompt = make_prompt(page_url)
+    prompt = make_prompt(page_url, jurisdiction_name)
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         "run-eval",
@@ -74,8 +75,12 @@ def load_cases_from_dir(base_dir: str) -> list:
     if not base.exists():
         raise FileNotFoundError(f"Eval cases directory not found: {base_dir}")
 
+    only_case = os.environ.get("EVAL_CASE")
+
     cases = []
     for case_dir in sorted(base.iterdir()):
+        if only_case and case_dir.name != only_case:
+            continue
         print(f"Loading case from {case_dir}")
         if not case_dir.is_dir():
             continue

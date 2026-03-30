@@ -5,13 +5,15 @@ from shared.utils import id_utils
 from jobs.people_collector.schemas import ResearchedPerson
 
 
-def relevant_page_prompt(page_url: str):
+def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
+    jurisdiction_line = f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
     return f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials**
-    of the target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
-    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of the municipality.
+    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.
 
     Page URL: {page_url}
+{jurisdiction_line}
     The URL may help you identify which links belong to the municipality's domain(s) when selecting
     relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.
     Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.

@@ -1,0 +1,9 @@
+page_url: https://www.beevilletx.gov/departments/BWSD
+jurisdiction_name: City of Beeville
+page:
+  is_relevant: false
+  relevant_urls:
+  - https://www.beevilletx.gov/citycouncilmembers
+  thoughts: This page is about the Beeville Water Supply District board, an auxiliary
+    utility district, not the primary municipal governing body. The nav contains a
+    City Council Members link which is directly relevant.
