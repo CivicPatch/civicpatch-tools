@@ -1,6 +1,5 @@
 from datetime import datetime
 from typing import List
-from jobs.people_collector.schemas import ResearchedPerson
 import shared.utils.config_utils as config_utils
 
 def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
@@ -190,6 +189,6 @@ def municipality_officials_prompt(roles_hint: List[str]):
 
     STEP 4 - RETURN JSON
 
-    Return a JSON object with exactly these two fields:
+    Return a JSON object with exactly this field:
     - people: array of official objects as described above
     """
