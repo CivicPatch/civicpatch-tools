@@ -1,0 +1,13 @@
+page_url: https://cityofmcgregor.com/city-announcement/
+jurisdiction_name: McGregor city
+page:
+  is_relevant: false
+  relevant_urls:
+  - https://cityofmcgregor.com/city-government/city-council/
+  - https://cityofmcgregor.com/city-government/city-manager/
+  thoughts: This page is a city announcements feed — road closures, utility notices,
+    weather advisories, and press releases. A May 2025 bulletin mentions newly elected
+    council members by name and ward, which could mislead the classifier into treating
+    this as a governing body roster. The page's purpose is news/announcements; the
+    names appear incidentally inside a single bulletin item, not in a structured roster.
+    The nav contains City Council and City Staff links which are genuine relevant targets.

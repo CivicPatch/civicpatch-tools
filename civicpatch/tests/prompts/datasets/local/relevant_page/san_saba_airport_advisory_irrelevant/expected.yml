@@ -1,0 +1,15 @@
+page_url: https://sansabatexas.com/boards-commissions/airport-advisory/
+jurisdiction_name: San Saba city
+page:
+  is_relevant: false
+  relevant_urls:
+  - https://sansabatexas.com/city-hall/city-council/
+  - https://sansabatexas.com/city-hall/administration/
+  - https://sansabatexas.com/city-hall/department-heads/
+  - https://sansabatexas.com/government/
+  thoughts: This page is about the Airport Advisory Commission, an auxiliary advisory
+    body, not the primary governing body. The committee table lists "City Mayor" and
+    "City Alderman" as member occupations, which could mislead a classifier into treating
+    this as a primary governing body roster — but the page's purpose is the airport
+    commission. The nav contains links to City Hall and City Council which are genuinely
+    relevant navigation targets.

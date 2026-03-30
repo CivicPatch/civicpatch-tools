@@ -24,8 +24,13 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.
 
     **Irrelevant content includes:**
-    - Pages that only mention auxiliary committees, department heads, supervisors, or other non-elected officials.
-      For example: Planning and Zoning Committee, Parks and Recreation Board, etc.
+    - Pages about auxiliary committees, department heads, supervisors, or other non-elected officials.
+      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.
+      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members
+      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.
+    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply
+      District, Fire District, Library Board) — even if they contain a structured roster of named members.
+      These are separate legal entities, not the primary governing body of the municipality.
     - Pages about the City Manager's or City Administrator's office. The City Manager is an appointed
       administrator who serves at the discretion of the governing body — they are NOT a member of the
       primary governing body (Mayor, Council, etc.) and their page must be marked is_relevant: false.
@@ -55,17 +60,16 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     }}
 
     **Critical rules:**
-    - `is_relevant` must be true ONLY if the page is *about* currently serving primary governing
-      officials — e.g., a council roster, a staff directory, or a bio/profile page for an official.
-      Names appearing incidentally inside news items, legal notices, tax notices, meeting minutes,
-      vote records, or ordinances do NOT make a page relevant — set is_relevant to false.
-      Pages that list officials in historical or chronological order (e.g., "Mayor History",
-      "Past Mayors", "Former Council Members") are NOT relevant — even if the most recent
-      entry is a currently serving official. The page's purpose is what matters, not whether
-      a current name appears in it.
-      A city council landing page whose content is ordinances and vote rolls (e.g.
-      "UPON CALLING FOR A VOTE ... Gary Chumley, Mayor — Does not Vote; Aaron Smith — Aye")
-      is NOT relevant — it is a legislative archive, not a roster.
+    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently
+      serving primary governing officials. Ask: "Does this page exist to show who is on the
+      governing body right now?" If the answer is no, set is_relevant to false.
+      The following are NOT relevant regardless of what names appear in them:
+      - News and announcements feeds — even if a post lists newly elected council members by name and ward
+      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is
+        titled "City Council" or lives at a city council URL; read the body content, not the title
+      - Historical rosters (e.g., "Past Mayors", "Mayor History") — even if the most recent entry is current
+      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee
+      The test is always the page's purpose, not its content patterns.
     - `relevant_urls` must include ANY navigation or directory link on the page that could lead to
       the primary governing body — including department directories, staff listings, and government
       section pages — even if the current page itself is not relevant.
