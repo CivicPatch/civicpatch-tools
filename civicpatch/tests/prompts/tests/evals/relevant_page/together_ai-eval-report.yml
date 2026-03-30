@@ -1,9 +1,16 @@
 failed_cases:
 - model_client: together_ai
-  case_id: beeville_water_supply_district_irrelevant
+  case_id: san_saba_airport_advisory_irrelevant
   failures:
-  - field: is_relevant
-    expected: false
-    actual: true
-    score: 0.0
-    threshold: 1.0
+  - field: relevant_urls
+    expected:
+    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/department-heads/
+    - https://sansabatexas.com/city-hall/city-council/
+    - https://sansabatexas.com/city-hall/administration/
+    actual:
+    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/
+    - https://sansabatexas.com/city-hall/city-council/
+    score: 0.5
+    threshold: 0.75
