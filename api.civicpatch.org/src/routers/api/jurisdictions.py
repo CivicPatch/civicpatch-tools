@@ -10,6 +10,7 @@ import database.database as database
 import services.github.github_api_service as github_service
 # import services.auth_service as AuthService
 from schemas.common import Jurisdiction
+from schemas.requests import JurisdictionsByOcdidsRequest
 
 VALID_STATES = [
     "al",
@@ -202,6 +203,11 @@ def get_router() -> APIRouter:
             "buffer_m": results.get("buffer_m"),
         }
  
+    @router.post("/by-ocdids")
+    async def get_jurisdictions_by_ocdids_endpoint(body: JurisdictionsByOcdidsRequest):
+        results = await database.get_jurisdictions_by_ocdids(body.ocdids)
+        return {"data": results}
+
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(
         state: str,

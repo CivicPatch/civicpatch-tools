@@ -144,6 +144,7 @@
     display: flex;
     gap: 0.5rem;
     flex-direction: column;
+    padding-left: 1rem;
 }
 
 .jobs-page__duplicate-item {
@@ -165,7 +166,7 @@
     cursor: pointer;
     font-family: var(--pico-font-family-monospace);
     font-size: 0.85rem;
-    color: var(--pico-color);
+    color: inherit;
     margin: 0;
 }
 

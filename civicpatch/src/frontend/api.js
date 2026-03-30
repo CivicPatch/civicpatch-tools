@@ -194,6 +194,17 @@ export const fetchPeople = async (jurisdictionOcdid) => {
   return res.json();
 };
 
+export const fetchJurisdictionsByOcdids = async (ocdids) => {
+  const res = await fetch(`/api/api_proxy/jurisdictions/by-ocdids`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ocdids }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchDashboard = async () => {
   const res = await fetch(`${API_URL}/api/v1/data/dashboard`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -2,6 +2,9 @@ from fastapi import UploadFile
 from pydantic import BaseModel
 from typing import Optional, List
 
+class JurisdictionsByOcdidsRequest(BaseModel):
+    ocdids: List[str]
+
 class OdSyncRequestSchema(BaseModel):
     jurisdiction_ocdids: Optional[List[str]] = None
 

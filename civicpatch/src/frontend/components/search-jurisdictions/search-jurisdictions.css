@@ -33,11 +33,44 @@
     align-items: start;
 }
 
-.map-col {
+/* .map-col — map temporarily disabled */
+.about-col {
     order: 1;
-    position: sticky;
-    top: 1rem;
-    align-self: start;
+}
+
+.about-blurb {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.about-blurb h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.about-blurb h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pico-muted-color);
+    margin: 1rem 0 0.25rem;
+}
+
+.about-blurb p,
+.about-blurb ul {
+    font-size: 0.95rem;
+    color: var(--pico-muted-color);
+    margin: 0;
+}
+
+.about-blurb ul {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .select-col {
@@ -72,9 +105,8 @@
     .page-grid {
         grid-template-columns: 1fr;
     }
-    .map-col {
+    .about-col {
         order: 2;
-        position: static;
     }
     .select-col {
         order: 1;

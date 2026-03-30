@@ -68,8 +68,8 @@ tests/
 - Prompt templates live in `tests/prompts/` — contracts pin the expected output shape, evals verify quality
 - When writing or modifying a prompt, update the corresponding contract test in `tests/prompts/`
 - After modifying a prompt, run the relevant evals to verify quality is maintained:
-  - Relevant-page prompt (`relevant_page_prompt`): `pytest -m evals_relevant`
-  - Any other prompt change: `pytest -m evals`
+  - Relevant-page prompt (`relevant_page_prompt`): `mise run evalsr`
+  - Municipality officials prompt: `mise run evalsm`
 - Prompt strings are single-responsibility: one task per prompt, no multi-step instructions collapsed into one string
 - Variable substitution uses clearly named placeholders — document each placeholder above the prompt string with a comment
 

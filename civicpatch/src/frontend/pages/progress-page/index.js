@@ -1,7 +1,6 @@
 import { html } from 'lit-html';
 import { useState, useEffect, component } from 'haunted';
 import '../../components/progress-dashboard/summary-stats.js';
-import '../../components/progress-dashboard/locality-gaps.js';
 import { config } from '../../assets/config.js';
 const API_URL = config.apiUrl;
 
@@ -35,7 +34,6 @@ function ProgressPage() {
       </section>
       <section>
         <summary-stats .stats=${data} .state=${selectedState}></summary-stats>
-        <locality-gaps .stats=${data} .state=${selectedState}></locality-gaps>
       </section>
     </main>
   `;

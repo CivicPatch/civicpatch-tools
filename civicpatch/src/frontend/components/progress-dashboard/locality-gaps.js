@@ -1,66 +1,48 @@
 import { html } from 'lit-html';
-import { component } from 'haunted';
+import { component, useState, useEffect } from 'haunted';
+import { useAuth } from '../../hooks/useAuth.js';
+import { fetchJurisdictionsByOcdids } from '../../api.js';
 
-function renderSingleGapTable(title, list) {
-  return html`
-    <div>
-      <strong>${title} (count: ${list.length})</strong>
-      <table>
-        <thead>
-          <tr>
-            <th>Jurisdiction OCDID</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${list.map(loc => html`
-            <tr>
-              <td>${loc}</td>
-            </tr>
-          `)}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
+const PAGE_SIZE = 25;
 
-function renderSideBySideTable(leftTitle, leftList, rightTitle, rightList) {
-  const maxRows = Math.max(leftList.length, rightList.length);
-  return html`
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>${leftTitle}</th>
-            <th>${rightTitle}</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${Array.from({ length: maxRows }).map((_, i) => html`
-            <tr>
-              <td>${leftList[i] || ''}</td>
-              <td>${rightList[i] || ''}</td>
-            </tr>
-          `)}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
+function LocalityGaps({ stats, state }) {
+  const { permissions } = useAuth();
+  const [page, setPage] = useState(1);
+  const [jurisdictions, setJurisdictions] = useState([]);
 
-function LocalityGaps({ stats, state = 'TX' }) {
+  if (!permissions.JURISDICTION_PAGE) return html``;
   if (!stats || !stats.states || !stats.states[state]) return html``;
-  const gaps = stats.states[state].locality_gaps;
+
+  const notScraped = stats.states[state].locality_gaps.not_yet_scraped;
+  if (!notScraped || notScraped.length === 0) return html``;
+
+  const totalPages = Math.ceil(notScraped.length / PAGE_SIZE);
+  const pageOcdids = notScraped.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  useEffect(() => {
+    fetchJurisdictionsByOcdids(pageOcdids).then(res => setJurisdictions(res.data || []));
+  }, [page, state]);
+
+  const nameMap = Object.fromEntries(jurisdictions.map(j => [j.ocdid, j]));
 
   return html`
     <div>
-      <h3>Locality Data Gaps:</h3>
-      ${renderSingleGapTable('Not scraped', gaps.not_yet_scraped)}
-      ${renderSideBySideTable(
-        'In external, not in civicpatch',
-        gaps.in_external_not_known,
-        'In civicpatch, not in external',
-        gaps.in_civicpatch_not_external
-      )}
+      <small>${notScraped.length} jurisdictions</small>
+      <ul>
+        ${pageOcdids.map(ocdid => {
+          const j = nameMap[ocdid];
+          return j
+            ? html`<li><a href="/jurisdictions/${j.slug}">${j.name}</a></li>`
+            : html`<li>${ocdid}</li>`;
+        })}
+      </ul>
+      ${totalPages > 1 ? html`
+        <nav style="display:flex; gap:1rem; align-items:center; margin-top:1rem;">
+          <button ?disabled=${page <= 1} @click=${() => setPage(p => p - 1)}>← Previous</button>
+          <span>Page ${page} of ${totalPages}</span>
+          <button ?disabled=${page >= totalPages} @click=${() => setPage(p => p + 1)}>Next →</button>
+        </nav>
+      ` : ''}
     </div>
   `;
 }
