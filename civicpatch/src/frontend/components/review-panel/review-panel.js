@@ -8,7 +8,7 @@ const ReviewPanel = ({ reviewData, existing, pullRequest }) => html`
     .reviewData=${reviewData}
   ></civ-review-table>
   <civ-diff-panel
-    .data=${{ existing: existing ?? [], pull_request: pullRequest ?? [] }}
+    .data=${{ existing: existing ?? [], proposed: pullRequest ?? [] }}
   ></civ-diff-panel>
 `;
 

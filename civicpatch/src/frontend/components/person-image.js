@@ -16,36 +16,41 @@ function PersonImage({ person, onClick }) {
   const value = person?.cdn_image;
   const showInitials = !value || imgError;
 
+  const avatar = showInitials
+    ? html`<div
+        style="
+        width: 2rem; height: 2rem; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.7rem; font-weight: 600;
+        background: var(--pico-muted-background);
+        color: var(--pico-muted-color);
+      "
+      >
+        ${initials}
+      </div>`
+    : html`<img
+        src="${value}"
+        alt="Profile image"
+        style="
+        width: 2rem; height: 2rem; border-radius: 50%;
+        object-fit: cover; object-position: center;
+        display: block; flex-shrink: 0;
+      "
+        @error=${() => setImgError(true)}
+      />`;
+
+  if (!onClick) {
+    return avatar;
+  }
+
   return html`
     <button
       type="button"
       style="all: unset; cursor: pointer; display: flex; align-items: center; justify-content: center;"
       @click=${() => onClick(person)}
-      ?disabled=${!onClick}
       title="Edit profile"
     >
-      ${showInitials
-        ? html`<div
-            style="
-            width: 2rem; height: 2rem; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.7rem; font-weight: 600;
-            background: var(--pico-muted-background);
-            color: var(--pico-muted-color);
-          "
-          >
-            ${initials}
-          </div>`
-        : html`<img
-            src="${value}"
-            alt="Profile image"
-            style="
-            width: 2rem; height: 2rem; border-radius: 50%;
-            object-fit: cover; object-position: center;
-            display: block; flex-shrink: 0;
-          "
-            @error=${() => setImgError(true)}
-          />`}
+      ${avatar}
     </button>
   `;
 }

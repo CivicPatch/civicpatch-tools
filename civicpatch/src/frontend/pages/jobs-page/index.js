@@ -309,9 +309,9 @@ function JobsPage() {
 
   const errorSection = permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
     <section class="jobs-page__errors">
-      <div class="jobs-page__section-header">
+      <div class="jobs-page__section-header" @click=${() => toggleSection('errors')}>
         <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors</h2>
-        <button class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('errors')}>▼</button>
+        <span class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}">▼</span>
       </div>
       ${openSections.errors ? html`
         <div style="display: flex; gap: 2rem; flex-direction: column;">
@@ -341,7 +341,7 @@ function JobsPage() {
   ` : null;
 
   return html`
-    <main>
+    <main class="jobs-page">
       <div class="jobs-page__filters">
         <civ-select-state
           .selected=${stateCode}
@@ -356,33 +356,35 @@ function JobsPage() {
           </select>
         </label>
         ${permissions.JOBS_PAGE_ERRORS ? html`
-          <a
-            class="btn btn-sm"
-            href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}"
-            download
-          >Export people</a>
-          <a
-            class="btn btn-sm"
-            href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}"
-            download
-          >Export open PRs</a>
+          <div class="jobs-page__filters-right">
+            <a
+              class="btn btn-sm"
+              href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}"
+              download
+            >Export people</a>
+            <a
+              class="btn btn-sm"
+              href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}"
+              download
+            >Export open PRs</a>
+          </div>
         ` : null}
       </div>
       ${summarySection}
       ${errorSection}
       ${unrecognizedSection}
       <section class="jobs-page__duplicate-jurisdictions">
-        <div class="jobs-page__section-header">
+        <div class="jobs-page__section-header" @click=${() => toggleSection('duplicates')}>
           <h2 class="jobs-page__section-title jobs-page__section-title--warning">Duplicate jurisdictions</h2>
           <div class="jobs-page__section-header-actions">
             ${duplicateJurisdictions.length > 0 ? html`
               <button
                 class="btn btn-sm destructive"
-                @click=${handleCloseStaleDuplicates}
+                @click=${(e) => { e.stopPropagation(); handleCloseStaleDuplicates(); }}
                 ?disabled=${closingStale}
               >${closingStale ? "Closing…" : "Close stale"}</button>
             ` : null}
-            <button class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('duplicates')}>▼</button>
+            <span class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}">▼</span>
           </div>
         </div>
         ${openSections.duplicates ? html`
@@ -392,9 +394,9 @@ function JobsPage() {
         ` : null}
       </section>
       <section>
-        <div class="jobs-page__section-header">
+        <div class="jobs-page__section-header" @click=${() => toggleSection('prs')}>
           <h2 class="jobs-page__section-title jobs-page__section-title--primary">Open pull requests</h2>
-          <button class="jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}" @click=${() => toggleSection('prs')}>▼</button>
+          <span class="jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}">▼</span>
         </div>
         ${openSections.prs ? html`
           <div style="display: flex; gap: 2rem; flex-direction: column;">

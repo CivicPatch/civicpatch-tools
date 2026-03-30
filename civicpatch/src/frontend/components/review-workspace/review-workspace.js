@@ -1,7 +1,7 @@
 import { html, component, useState } from "haunted";
 import { getColumns } from "../edit-people/table/columns.js";
 import { searchPeople } from "../../api.js";
-import "../basic/table/table.js";
+import "../edit-people/people-table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
 
@@ -11,10 +11,7 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
   const matches = resolvedMatches ?? {};
 
-  const existingIds = new Set(existingArr.map((p) => p.id));
-  const matchedPeople = pullRequestArr.filter((p) => existingIds.has(p.id));
-  const newPeople = pullRequestArr.filter((p) => !existingIds.has(p.id));
-  const allEditable = [...matchedPeople, ...newPeople];
+  const allEditable = pullRequestArr;
 
   const [profileModal, setProfileModal] = useState({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] });
 
@@ -67,14 +64,10 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
         </button>
         <button class="secondary btn-sm" @click=${onReset} ?disabled=${!isDirty}>Reset</button>
       </div>
-      ${allEditable.length ? html`
-        <civ-table
-          .identifier=${"id"}
-          .data=${allEditable}
-          .columns=${columns}
-          .canReorder=${true}
-        ></civ-table>
-      ` : ""}
+      <civ-people-table
+        .data=${allEditable}
+        .columns=${columns}
+      ></civ-people-table>
       <profile-modal
         .open=${profileModal.open}
         .person=${profileModal.person}

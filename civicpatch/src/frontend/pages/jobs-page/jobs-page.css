@@ -1,9 +1,14 @@
 /* ── Jobs page ── */
 
+.jobs-page {
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
 .jobs-page__filters {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
@@ -51,6 +56,12 @@
     gap: 0.4rem;
     font-size: 0.8rem;
     color: var(--pico-muted-color);
+}
+
+.jobs-page__filters-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-left: auto;
 }
 
@@ -73,6 +84,8 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+    cursor: pointer;
+    user-select: none;
 }
 
 .jobs-page__section-header h2 {

@@ -1,43 +1,20 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils";
+import { computePeopleDiff } from "../../utils/diff-utils.js";
 
 const DataPanel = ({ entry }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);
 
-  const getKey = (person) => person?.id;
   const existingData = Array.isArray(entry?.existing) ? entry.existing : [];
   const prData = Array.isArray(entry?.proposed) ? entry.proposed : [];
-  const existingMap = Object.fromEntries(
-    existingData.map((p) => [getKey(p), p]),
+  const { diffEntries: diffRows, unchangedEntries: unchangedRows } = computePeopleDiff(
+    existingData,
+    prData,
+    (e, p) =>
+      (e.office?.name || "") !== (p.office?.name || "") ||
+      (e.office?.division_ocdid || "") !== (p.office?.division_ocdid || ""),
   );
-  const prMap = Object.fromEntries(prData.map((p) => [getKey(p), p]));
-  const allKeys = Array.from(
-    new Set([...Object.keys(existingMap), ...Object.keys(prMap)]),
-  );
-
-  const diffRows = [];
-  const unchangedRows = [];
-
-  for (const key of allKeys) {
-    const existing = existingMap[key];
-    const pr = prMap[key];
-    if (existing && !pr) {
-      diffRows.push({ type: "removed", person: existing, from: existing });
-    } else if (!existing && pr) {
-      diffRows.push({ type: "added", person: pr, from: pr });
-    } else if (existing && pr) {
-      const changed =
-        (existing.office?.name || "") !== (pr.office?.name || "") ||
-        (existing.office?.division_ocdid || "") !==
-          (pr.office?.division_ocdid || "");
-      if (changed) {
-        diffRows.push({ type: "changed", person: pr, from: existing });
-      } else {
-        unchangedRows.push({ type: "unchanged", person: pr, from: existing });
-      }
-    }
-  }
 
   // ─── Row renderer ──────────────────────────────────────────────────────────
 

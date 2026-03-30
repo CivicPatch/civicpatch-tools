@@ -1,6 +1,7 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
+import { computePeopleDiff } from "../../utils/diff-utils.js";
 
 const FIELDS = [
   { key: "name",                  label: "Name" },
@@ -43,25 +44,11 @@ const DiffPanel = ({ data }) => {
 
   const existingData = Array.isArray(data?.existing) ? data.existing : [];
   const prData = Array.isArray(data?.proposed) ? data.proposed : [];
-  const existingMap = Object.fromEntries(existingData.map((p) => [p?.id, p]));
-  const prMap = Object.fromEntries(prData.map((p) => [p?.id, p]));
-  const allKeys = Array.from(new Set([...Object.keys(existingMap), ...Object.keys(prMap)]));
-
-  const diffEntries = [];
-  const unchangedEntries = [];
-
-  for (const key of allKeys) {
-    const existing = existingMap[key];
-    const pr = prMap[key];
-    if (!existing)
-      diffEntries.push({ type: "added", person: pr, from: null });
-    else if (!pr)
-      diffEntries.push({ type: "removed", person: existing, from: existing });
-    else if (changedFields(existing, pr).length > 0)
-      diffEntries.push({ type: "changed", person: pr, from: existing });
-    else
-      unchangedEntries.push({ type: "unchanged", person: pr, from: existing });
-  }
+  const { diffEntries, unchangedEntries } = computePeopleDiff(
+    existingData,
+    prData,
+    (e, p) => changedFields(e, p).length > 0,
+  );
 
   function renderAdded(person) {
     return html`

@@ -1,4 +1,6 @@
 .search-page {
+    max-width: 1200px;
+    margin-inline: auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
