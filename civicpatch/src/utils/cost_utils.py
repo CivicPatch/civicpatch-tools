@@ -30,7 +30,11 @@ llm_model_prices = {
         'meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8': {
             'input_cost_per_1m': Decimal('0.27'),
             'output_cost_per_1m': Decimal('0.85')
-        }
+        },
+        'deepseek-ai/DeepSeek-V3.1': {
+            'input_cost_per_1m': Decimal('0.60'),
+            'output_cost_per_1m': Decimal('1.70')
+        },
     }
 }
 

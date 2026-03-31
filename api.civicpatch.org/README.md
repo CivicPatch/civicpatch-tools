@@ -196,12 +196,21 @@ erDiagram
         timestamptz created_at
     }
 
+    job_events {
+        uuid id PK
+        uuid request_id FK "idx"
+        text event_type "idx"
+        jsonb data
+        timestamptz created_at
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
     requests ||--o{ unrecognized_roles : "request_id"
+    requests ||--o{ job_events : "request_id"
 ```
 
 **Notes:**

@@ -31,7 +31,6 @@ tmp/
 todo.md
 
 .scratch/*
-.aider*
 
 *.egg-info/
 

@@ -172,11 +172,15 @@ async def run_eval(model_client, cases):
         case_scores = score_cases(actual.people, expected)
         # Aggregate scores for this case
         case_aggregate = {}
-        all_keys = set()
-        for score in case_scores:
-            all_keys.update(score["scores"].keys())
-        for key in all_keys:
-            case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
+        if not expected and actual.people:
+            # Expected empty but model returned people — hallucination
+            case_aggregate["hallucination"] = 0.0
+        else:
+            all_keys = set()
+            for score in case_scores:
+                all_keys.update(score["scores"].keys())
+            for key in all_keys:
+                case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
         per_case_scores.append((case["id"], case_aggregate))
         scores.append(case_scores)
 
@@ -243,6 +247,7 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
         "email": 0.80,
         "phone": 0.80,
         "url": 0.0,
+        "hallucination": 1.0,
     }
 
     failed_cases = []
@@ -258,6 +263,15 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                 actual_people = yaml.safe_load(f).get("people", [])
         else:
             actual_people = []
+
+        # Hallucination check: expected empty but model returned people
+        if not expected_people and actual_people:
+            failed.append({
+                "person": None,
+                "field": "hallucination",
+                "expected": [],
+                "actual": [p.get("name") for p in actual_people],
+            })
 
         # Build lookup for actual people by normalized name
         actual_by_norm_name = {
@@ -415,3 +429,5 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     assert report["email"] >= thresholds["email"]
     assert report["phone"] >= thresholds["phone"]
     assert report["url"] >= thresholds["url"]
+    assert len([c for c in failed_cases if any(f["field"] == "hallucination" for f in c["failures"])]) == 0, \
+        "Model returned people when expected empty"

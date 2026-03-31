@@ -1,163 +1,111 @@
 aggregated_report:
-  name: 0.8333333333333334
-  roles: 0.8250000000000001
-  phone: 0.8333333333333334
-  email: 0.8333333333333334
-  url: 0.5757575757575758
-  designations: 0.8333333333333334
+  email: 0.8181818181818182
+  name: 0.9090909090909091
+  url: 0.71900826446281
+  roles: 0.9
+  designations: 0.9090909090909091
+  phone: 0.8181818181818182
 aggregate_failures:
-- field: roles
-  actual: 0.8250000000000001
-  threshold: 0.9
-- field: designations
-  actual: 0.8333333333333334
-  threshold: 0.85
+- field: hallucination
+  actual: 0.0
+  threshold: 1.0
 aggregate_failed_cases:
-  roles:
-  - case_id: coleman_council
-    person: Sharlene T. Hetzel
-    expected:
-    - Council Member
-    - Mayor Pro-Tem
-    actual:
-    - Council Member
-  - case_id: name_only_roster
-    person: Chris Beard
-    expected:
-    - Council Member
-    actual: ''
-  - case_id: name_only_roster
-    person: Lester Galbreath
-    expected:
-    - Council Member
-    actual: ''
-  - case_id: name_only_roster
-    person: Lynsi Perry
-    expected:
-    - Council Member
-    actual: ''
-  - case_id: name_only_roster
-    person: Austin Sherwood
-    expected:
-    - Council Member
-    actual: ''
-  - case_id: name_only_roster
-    person: Don Taggart
-    expected:
-    - Council Member
-    actual: ''
-  - case_id: name_only_roster
-    person: Kenisha Lucas
-    expected:
-    - City Secretary
-    actual: ''
-  - case_id: nav_links_no_names
-    person: Edward Zapalac
-    expected:
-    - Councilmember
-    actual: ''
-  designations: []
+  hallucination: []
 per_case_scores:
 - case_id: austin_city_manager_staff
   scores: {}
 - case_id: austin_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 0.9090909090909091
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: austin_district7_council_member
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
-    url: 0.0
+    name: 1.0
+    url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: board_of_aldermen
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: coleman_council
   scores:
-    name: 1.0
-    roles: 0.9
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 0.0
+    roles: 0.9
     designations: 1.0
+    phone: 1.0
 - case_id: inverted_name_format
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: la_porte_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: mixed_current_past
   scores:
+    email: 0.0
     name: 1.0
-    roles: 1.0
-    phone: 1.0
-    email: 1.0
     url: 0.0
+    roles: 1.0
     designations: 1.0
+    phone: 0.0
 - case_id: name_only_roster
   scores:
-    name: 0.0
-    roles: 0.0
-    phone: 0.0
     email: 0.0
+    name: 0.0
     url: 0.0
+    roles: 0.0
     designations: 0.0
+    phone: 0.0
 - case_id: nav_links_no_names
-  scores:
-    name: 0.0
-    roles: 0.0
-    phone: 0.0
-    email: 0.0
-    url: 0.0
-    designations: 0.0
+  scores: {}
 - case_id: ordinance_vote_records
   scores: {}
 - case_id: placeholder_name_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: redundant_place_role
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 - case_id: vacant_positions_council
   scores:
-    name: 1.0
-    roles: 1.0
-    phone: 1.0
     email: 1.0
+    name: 1.0
     url: 1.0
+    roles: 1.0
     designations: 1.0
+    phone: 1.0
 failed_cases:
 - model_client: together_ai
   case_number: 4
@@ -170,6 +118,58 @@ failed_cases:
     - Mayor Pro-Tem
     actual:
     - Council Member
+- model_client: together_ai
+  case_number: 7
+  case_id: mixed_current_past
+  failures:
+  - person: Michael Pye
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Michael Pye
+    field: phone
+    expected: 903-587-3334
+    actual: null
+  - person: Al Stephens
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Al Stephens
+    field: phone
+    expected: 903-587-3334
+    actual: null
+  - person: Bobby Hanson
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Bobby Hanson
+    field: phone
+    expected: 903-587-3334
+    actual: null
+  - person: Darrell Grintz
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Darrell Grintz
+    field: phone
+    expected: 903-587-3334
+    actual: null
+  - person: Billy Wayne Martin
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Billy Wayne Martin
+    field: phone
+    expected: 903-587-3334
+    actual: null
+  - person: Charles Wrenn
+    field: email
+    expected: cityadmin@cityofleonard.net
+    actual: null
+  - person: Charles Wrenn
+    field: phone
+    expected: 903-587-3334
+    actual: null
 - model_client: together_ai
   case_number: 8
   case_id: name_only_roster
@@ -244,24 +244,6 @@ failed_cases:
     expected: Kenisha Lucas
     actual: ''
   - person: Kenisha Lucas
-    field: roles
-    expected:
-    - City Secretary
-    actual: ''
-  - person: Kenisha Lucas
     field: phone
     expected: 325-762-3133
-    actual: ''
-- model_client: together_ai
-  case_number: 9
-  case_id: nav_links_no_names
-  failures:
-  - person: Edward Zapalac
-    field: name
-    expected: Edward Zapalac
-    actual: ''
-  - person: Edward Zapalac
-    field: roles
-    expected:
-    - Councilmember
     actual: ''

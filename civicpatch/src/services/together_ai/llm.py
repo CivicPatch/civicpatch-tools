@@ -24,13 +24,17 @@ MODELS_BY_TYPE = {
 
     },
     "STANDARD": { 
-        #"model": "Qwen/Qwen3.5-397B-A17B", 
-        #"input_cost": 0.60 / 1000000,
-        #"output_cost": 3.60 / 1000000,
-        "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", # Deprecation Notice: March 31, 2026 - 
-        "input_cost": 0.27 / 1000000, # Good model for our current prompt
-        "output_cost": 0.85 / 1000000,
+        # Models Used:
+        "model": "deepseek-ai/DeepSeek-V3.1",  # REALLY good. Needs prompt tweaks
+        "input_cost": 0.60 / 1000000, 
+        "output_cost": 1.70 / 1000000,
 
+        # Deprecated: March 31, 2026 - 
+        #"model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+        #"input_cost": 0.27 / 1000000, # Good model for our current prompt
+        #"output_cost": 0.85 / 1000000,
+
+        # Models Tested:
         #"model": "moonshotai/Kimi-K2.5", exhausted its thinking budget
         #"input_cost": 0.50 / 1000000, 
         #"output_cost": 2.80 / 1000000,
@@ -144,9 +148,10 @@ MODELS_BY_TYPE = {
         # "model": "Qwen/Qwen3-Coder-Next-FP8", # Pretty good results, but returns roles like city manager; etc
         # "input_cost": 0.50 / 1000000, # So we'll maybe want to collect these & tweak the prompt 
         # "output_cost": 1.20 / 1000000,
-        #"model": "deepseek-ai/DeepSeek-V3.1",  # REALLY good. Needs prompt tweaks
-        #"input_cost": 0.60 / 1000000, 
-        #"output_cost": 1.70 / 1000000,
+
+        #"model": "Qwen/Qwen3.5-397B-A17B", 
+        #"input_cost": 0.60 / 1000000,
+        #"output_cost": 3.60 / 1000000,
     },
 }
 

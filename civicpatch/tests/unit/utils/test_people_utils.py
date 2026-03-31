@@ -10,13 +10,27 @@ pytestmark = pytest.mark.unit
 @pytest.mark.parametrize("roles, expected", [
     (["Mayor", "mayor"], ["Mayor"]),  # Case-insensitive deduplication
     (["Mayor", "Chief Executive"], ["Mayor", "Chief Executive"]),  # Alias normalization
-    (["Mayor/City Administrator"], ["Mayor", "City Administrator"]),  # Slash-separated dual roles
+    (["Mayor/City Administrator"], ["Mayor"]),  # Slash-separated — City Administrator is excluded
     ([], []),  # Empty input
     ([None, ""], []),  # Invalid roles
     (["  mayor  ", "MAYOR"], ["Mayor"]),  # Mixed case and whitespace
 ])
 def test_normalize_roles(roles, expected):
     assert people_utils.normalize_roles(roles) == expected
+
+
+def test_normalize_roles_excluded_role_is_dropped():
+    assert people_utils.normalize_roles(["City Attorney"]) == []
+
+def test_normalize_roles_excluded_alias_is_dropped():
+    assert people_utils.normalize_roles(["Municipal Attorney"]) == []
+
+def test_normalize_roles_unknown_role_is_kept():
+    assert people_utils.normalize_roles(["Parks Liaison"]) == ["Parks Liaison"]
+
+def test_normalize_roles_excluded_role_removed_from_mix():
+    result = people_utils.normalize_roles(["Mayor", "City Secretary"])
+    assert result == ["Mayor"]
 
 
 @pytest.mark.parametrize("divisions, expected", [

@@ -59,6 +59,22 @@ def get_designation_alias_map() -> Dict[str, str]:
             alias_map[alias.lower()] = canonical
     return alias_map
 
+def get_excluded_role_names() -> set:
+    excluded = _load_config_file('roles.yml', 'excluded_roles', [])
+    names = []
+    for entry in excluded:
+        names.append(entry['role'])
+        names.extend(entry.get('aliases', []))
+    return {n.lower() for n in names}
+
+def get_excluded_role_names() -> set:
+    excluded = _load_config_file('roles.yml', 'excluded_roles', [])
+    names = []
+    for entry in excluded:
+        names.append(entry['role'])
+        names.extend(entry.get('aliases', []))
+    return {n.lower() for n in names}
+
 def get_unique_roles() -> List[str]:
     role_configs = get_role_configs()
     unique_roles = [entry['role'] for entry in role_configs if entry.get('is_unique', False)]
