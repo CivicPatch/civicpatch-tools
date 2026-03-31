@@ -256,12 +256,17 @@ async def get_me(user: Identity = Depends(get_optional_user)):
     """
     if not user:
         return {"authenticated": False}
+    avatar_url = None
+    if user.provider == "github" and user.provider_user_id:
+        avatar_url = f"https://avatars.githubusercontent.com/u/{user.provider_user_id}"
     return {
         "authenticated": True,
         "provider": user.provider,
         "provider_user_id": user.provider_user_id,
         "email": user.email,
         "teams": getattr(user, "teams", None),
+        "display_name": user.display_name,
+        "avatar_url": avatar_url,
     }
 
 

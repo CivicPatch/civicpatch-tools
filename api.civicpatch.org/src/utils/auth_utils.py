@@ -116,6 +116,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
         email=session.get("email"),
         teams=teams,
         user_id=user_row.get("id") if user_row else None,
+        display_name=user_row.get("display_name") if user_row else None,
     )
 
 
