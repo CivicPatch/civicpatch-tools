@@ -1,24 +1,4 @@
 people:
-- name: Vacant Vacant
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman-0
-  start_date: null
-  end_date: null
-  image: null
-- name: Vacant Vacant
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman
-  start_date: null
-  end_date: null
-  image: null
 - name: Alysa Jarvis
   roles:
   - Council

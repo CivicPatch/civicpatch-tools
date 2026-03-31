@@ -3,7 +3,7 @@ people:
   roles:
   - City Manager
   designations: []
-  phone: 512-974-6783
+  phone: null
   email: null
   url: https://www.austintexas.gov/city-manager/tc-broadnax
   start_date: null
@@ -49,16 +49,6 @@ people:
   start_date: null
   end_date: null
   image: local://866c8c929274.png
-- name: Vacant
-  roles:
-  - Assistant City Manager
-  designations: []
-  phone: null
-  email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: local://9822dd5f21b3.png
 - name: Susana Carbajal
   roles:
   - Assistant City Manager

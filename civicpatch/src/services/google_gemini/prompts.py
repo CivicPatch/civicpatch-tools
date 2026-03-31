@@ -117,7 +117,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
        {{
          "people": [
            {{
-             "name": "Full name of the official or "Vacant Vacant" if uncertain",
+             "name": "Name of the official",
              "roles": ["Mayor", "Council Member", "Commissioner", etc.],
              "designations": ["Ward 1", "District 2", etc.] or [],
            }}
@@ -193,7 +193,7 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
 
     - **name** (String or null)
       Full name only, no titles or honorifics.
-      If the position is vacant, use "Vacant Vacant".
+      Only include an entry if a real person's name is present. If the position appears vacant, unfilled, or the only available name is a placeholder or role description (e.g., "Councilmember Place 6 Name", "Council Member 2 Name"), omit the entry entirely.
 
     - **image** (String or null)
       URL to a profile image (must start with https://).
