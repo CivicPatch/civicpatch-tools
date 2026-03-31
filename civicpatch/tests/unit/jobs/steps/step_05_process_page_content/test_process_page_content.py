@@ -314,7 +314,7 @@ def test_add_relevant_urls_includes_same_domain():
     mayor_url = "https://www.cityofbaycity.org/296/Office-of-the-Mayor"
     result = add_relevant_urls([mayor_url], existing_links, domain="https://cityofbaycity.org")
     pending_urls = [l.url for l in result if l.status == LinkStatus.PENDING.value]
-    assert "https://cityofbaycity.org/296/office-of-the-mayor" in pending_urls
+    assert "https://www.cityofbaycity.org/296/Office-of-the-Mayor" in pending_urls
 
 
 def test_add_relevant_urls_filters_cross_domain():

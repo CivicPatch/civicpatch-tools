@@ -10,8 +10,8 @@ _WORKFLOW_LOG_FILES = {}
 class WorkflowLogger:
     def __init__(self, jurisdiction_ocdid: str):
         self.jurisdiction_ocdid = jurisdiction_ocdid
-        log_path = get_workflow_log_path(jurisdiction_ocdid)
-        self.file = open(log_path, "a", encoding="utf-8")
+        self.log_path = get_workflow_log_path(jurisdiction_ocdid)
+        self.file = open(self.log_path, "a", encoding="utf-8")
         
     def _write(self, level: str, message: str):
         timestamp = datetime.now().isoformat()
@@ -38,9 +38,8 @@ class WorkflowLogger:
         self._write("ERROR", message)
     
     def clear(self):
-        self.file.seek(0)      # Go to beginning of file
-        self.file.truncate(0)  # Truncate to 0 bytes
-        self.file.flush()      # Ensure it's written to disk
+        self.file.close()
+        self.file = open(self.log_path, "w", encoding="utf-8")
 
     def close(self):
         self.file.close()

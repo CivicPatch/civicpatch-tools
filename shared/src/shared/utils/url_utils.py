@@ -14,14 +14,15 @@ def format_url(url: str):
     parsed = urlparse(url)
     normalized = parsed._replace(
         scheme=parsed.scheme.lower(),
-        netloc=parsed.netloc.lower().removeprefix("www."),
-        path=parsed.path.lower(),
+        netloc=parsed.netloc.lower(),
     )
     return urlunparse(normalized)
 
 # For the purposes of comparing
 def normalize_url(url: str):
-    return format_url(url).lower()
+    parsed = urlparse(format_url(url))
+    return urlunparse(parsed._replace(netloc=parsed.netloc.removeprefix("www."))).lower()
+
 
 def same_url(url1: str, url2: str) -> bool:
     """
