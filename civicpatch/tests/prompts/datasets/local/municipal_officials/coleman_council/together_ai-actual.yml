@@ -9,25 +9,22 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Sharlene T. Hetzel
+- name: Tracy Rankin
   roles:
   - Council Member
-  - Mayor Pro-Tem
   designations:
-  - Place 2
-  - West Ward
+  - Place 1
   phone: (325) 625-5114
   email: null
   url: null
   start_date: null
   end_date: null
   image: null
-- name: Tracy Rankin
+- name: Sharlene T. Hetzel
   roles:
   - Council Member
   designations:
-  - Place 1
-  - North Ward
+  - Place 2
   phone: (325) 625-5114
   email: null
   url: null
@@ -39,7 +36,6 @@ people:
   - Council Member
   designations:
   - Place 3
-  - East Ward
   phone: (325) 625-5114
   email: null
   url: null
@@ -51,7 +47,6 @@ people:
   - Council Member
   designations:
   - Place 4
-  - South Ward
   phone: (325) 625-5114
   email: null
   url: null

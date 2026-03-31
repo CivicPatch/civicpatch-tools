@@ -1,7 +1,7 @@
 import pytest
 import pytest_asyncio
-from utils import merge_utils
-from services.google_gemini.llm import run_prompt as run_gemini_prompt 
+from utils import merge_utils, cost_utils
+from services.google_gemini.llm import run_prompt as run_gemini_prompt
 from services.google_gemini.prompts import municipality_officials_prompt as make_gemini_prompt
 from services.together_ai.llm import run_prompt as run_together_prompt
 from services.together_ai.prompts import municipality_officials_prompt as make_together_prompt

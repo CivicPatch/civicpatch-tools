@@ -173,6 +173,61 @@ def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source()
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
 
 
+def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore():
+    records = [
+        LLMPerson(
+            name="Alfredo Macedo",
+            other_names=[],
+            roles=["council member"],
+            phone=None,
+            email="amacedo_84@hotmail.com",
+            url=None,
+            designations=[],
+            source_url="http://cityofmcgregor.com"
+        )
+    ]
+    # Markdown escapes the underscore as \_
+    input_text = "Council Member Alfredo Macedo  amacedo\\_84@hotmail.com"
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+
+
+def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
+    # CMS bug: <a href="mailto:user@domain.tx">user@domain.tx</a> .us
+    # LLM reconstructs the full email; heuristic must find it despite the split
+    records = [
+        LLMPerson(
+            name="Joseph Smith",
+            other_names=[],
+            roles=["council member"],
+            phone=None,
+            email="district1@ci.lamesa.tx.us",
+            url=None,
+            designations=["District 1"],
+            source_url="http://ci.lamesa.tx.us"
+        )
+    ]
+    input_text = "Joseph Smith, District 1  [district1@ci.lamesa.tx](mailto:district1@ci.lamesa.tx) .us"
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+
+
+def test_check_page_heuristics_does_not_match_email_without_at_sign():
+    # Alnum fallback must not match if there is no @ in the normalized email
+    records = [
+        LLMPerson(
+            name="Jane Doe",
+            other_names=[],
+            roles=["council member"],
+            phone=None,
+            email="notanemail",
+            url=None,
+            designations=[],
+            source_url="http://example.com"
+        )
+    ]
+    input_text = "Jane Doe council member notanemail"
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
+
+
 def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
     # LLM returns straight apostrophe; page has curly right-single-quote (U+2019)
     records = [

@@ -11,7 +11,7 @@
 .review-issues__heading {
     margin: 0 0 0.5rem;
     color: var(--pico-del-color);
-    font-size: 0.9rem;
+    font-size: var(--text-md);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -27,14 +27,14 @@
     align-items: baseline;
     gap: 0.5rem;
     padding: 0.25rem 0;
-    font-size: 0.875rem;
+    font-size: var(--text-md);
     color: var(--pico-color);
 }
 
 .review-issues__icon {
     color: var(--pico-del-color);
     flex-shrink: 0;
-    font-size: 0.75rem;
+    font-size: var(--text-sm);
 }
 
 /* ── Review popover ── */

@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
+    font-size: var(--text-sm);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -32,7 +32,7 @@
 }
 
 .notes-panel__chevron {
-    font-size: 0.8rem;
+    font-size: var(--text-md);
     line-height: 1;
 }
 
@@ -45,7 +45,7 @@
 
 .notes-panel__loading,
 .notes-panel__empty {
-    font-size: 0.85rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
     margin: 0;
 }
@@ -71,7 +71,7 @@
 }
 
 .notes-panel__item-body {
-    font-size: 0.85rem;
+    font-size: var(--text-md);
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -80,7 +80,7 @@
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.7rem;
+    font-size: var(--text-sm);
     color: var(--pico-muted-color);
     font-family: var(--pico-font-family-monospace);
 }
@@ -114,7 +114,7 @@
 }
 
 .notes-panel__page-info {
-    font-size: 0.75rem;
+    font-size: var(--text-sm);
     font-family: var(--pico-font-family-monospace);
     color: var(--pico-muted-color);
 }
@@ -130,6 +130,6 @@
 .notes-panel__textarea {
     width: 100%;
     resize: vertical;
-    font-size: 0.85rem;
+    font-size: var(--text-md);
     margin: 0;
 }

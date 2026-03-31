@@ -28,19 +28,19 @@
 }
 
 .jobs-summary__stat-label {
-    font-size: 0.9rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
 }
 
 .jobs-summary__stat-main {
-    font-size: 2rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--pico-primary);
     line-height: 1.1;
 }
 
 .jobs-summary__stat-sub {
-    font-size: 0.85rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
 }
 
@@ -48,7 +48,7 @@
     position: absolute;
     bottom: 0.75rem;
     right: 0.85rem;
-    font-size: 0.7rem;
+    font-size: var(--text-sm);
     color: var(--pico-muted-color);
     transition: color 0.15s ease;
 }

@@ -83,7 +83,7 @@
 }
 
 .autocomplete-pagination-info {
-  font-size: 0.875rem;
+  font-size: var(--text-md);
   color: var(--pico-muted-color);
 }
 
@@ -94,7 +94,7 @@
 
 .autocomplete-pagination button {
   padding: 0.25rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: var(--text-md);
   margin: 0;
 }
 

@@ -19,7 +19,7 @@
 }
 
 .review-checklist__section-title {
-  font-size: 0.8rem;
+  font-size: var(--text-md);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -37,7 +37,7 @@
 }
 
 .review-checklist__item {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   list-style: none;
   padding: 0;
 }

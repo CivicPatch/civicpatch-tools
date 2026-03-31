@@ -197,8 +197,8 @@ export const deletePerson = async (personId) => {
   return res.json();
 };
 
-export const fetchPeopleDirectory = async (jurisdictionOcdid) => {
-  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+export const fetchPeopleDirectory = async (jurisdictionOcdid, page = 1, perPage = 20) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
   const res = await fetch(`${API_URL}/api/v1/people/directory?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

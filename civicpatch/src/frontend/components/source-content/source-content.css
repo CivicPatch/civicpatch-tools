@@ -32,7 +32,7 @@ source-content {
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
   padding: 0.2rem 0.75rem;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: var(--pico-muted-color);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;

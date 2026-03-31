@@ -1,3 +1,5 @@
 .jurisdiction-sidebar__scrape-btn {
     margin-top: var(--pico-spacing);
+    background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
+    border-color: transparent;
 }

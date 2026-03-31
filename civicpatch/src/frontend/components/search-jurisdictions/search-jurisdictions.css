@@ -14,7 +14,7 @@
 
 .search-page hgroup h1 {
     color: var(--pico-primary);
-    font-size: 2rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
     margin-bottom: 0.4rem;
     letter-spacing: -0.02em;
@@ -22,7 +22,7 @@
 
 .search-page hgroup p {
     color: var(--pico-muted-color);
-    font-size: 1rem;
+    font-size: var(--text-base);
     margin: 0;
 }
 
@@ -45,13 +45,13 @@
 }
 
 .about-blurb h2 {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     font-weight: 700;
     margin: 0 0 0.25rem;
 }
 
 .about-blurb h3 {
-    font-size: 0.9rem;
+    font-size: var(--text-md);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -61,7 +61,7 @@
 
 .about-blurb p,
 .about-blurb ul {
-    font-size: 0.95rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
     margin: 0;
 }
@@ -88,7 +88,7 @@
 
 .state-progress h3 {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: var(--text-md);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;

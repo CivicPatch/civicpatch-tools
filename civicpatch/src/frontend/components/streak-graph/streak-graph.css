@@ -13,14 +13,14 @@
 }
 
 .streak-graph__streak {
-  font-size: 2rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
   line-height: 1;
   color: var(--pico-primary);
 }
 
 .streak-graph__label {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   color: var(--pico-muted-color);
 }
 
@@ -81,7 +81,7 @@
   position: absolute;
   bottom: 0.75rem;
   right: 0.85rem;
-  font-size: 0.7rem;
+  font-size: var(--text-sm);
   color: var(--pico-muted-color);
   transition: color 0.15s ease;
 }
