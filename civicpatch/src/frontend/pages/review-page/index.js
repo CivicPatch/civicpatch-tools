@@ -9,9 +9,8 @@ import "./review-landing.js";
 import "./review-session.js";
 import "./review-page.css";
 
-const DEFAULT_STATE_KEY = "review_state_code";
+const DEFAULT_STATE_KEY = "app:default-state";
 const DEFAULT_GOAL_KEY = "review_daily_goal";
-const DEFAULT_STATE = "tx";
 const DEFAULT_GOAL = 10;
 
 const PAGE_STATE = {
@@ -24,7 +23,7 @@ function ReviewPage() {
   const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
   const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, () => {
     const p = new URLSearchParams(window.location.search);
-    return p.get("state") || DEFAULT_STATE;
+    return p.get("state") || "";
   });
   const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL);
 

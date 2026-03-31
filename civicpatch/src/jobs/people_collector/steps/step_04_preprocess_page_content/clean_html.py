@@ -22,12 +22,12 @@ def clean_html(logger, input_html: str) -> str:
             # Move image to be a sibling after the header
             header_tag.insert_after(img.extract())
 
-    # Move images to be direct children of their table cells
+    # Move images to be direct children of their table cells,
+    # but leave images inside <a> tags in place to preserve image-link associations
     for cell in soup.find_all(["td", "th"]):
         images = cell.find_all("img")
         for img in images:
-            # If image is not already a direct child of the cell, move it
-            if img.parent != cell:
+            if img.parent != cell and not img.find_parent("a"):
                 cell.insert(0, img.extract())
 
     return soup.prettify()

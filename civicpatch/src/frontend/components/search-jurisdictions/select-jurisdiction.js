@@ -1,13 +1,15 @@
 import { component, useEffect, useState, useRef } from "haunted";
 import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import "./select-state.js";
 
 function CivSelectJurisdiction() {
   const { permissions } = useAuth();
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
-  const [selectedState, setSelectedState] = useState("");
+  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [selectedState, setSelectedState] = useState(defaultState);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
   console.log("permissions in CivSelectJurisdiction:", permissions);
@@ -87,7 +89,7 @@ function CivSelectJurisdiction() {
     >
       <civ-select-state
         .selected=${selectedState}
-        @state-change=${(e) => setSelectedState(e.detail.state)}
+        @state-change=${(e) => { setSelectedState(e.detail.state); setDefaultState(e.detail.state || ""); }}
       ></civ-select-state>
       <civ-autocomplete-select
         id="jurisdiction-autocomplete"

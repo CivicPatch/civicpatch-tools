@@ -345,7 +345,7 @@ function BasicTable(props) {
           <tr>
             <td
               colspan=${props.columns.length}
-              style="height: 10rem; padding: 0;"
+              style="height: ${draggedIndex !== null ? '10rem' : '1.5rem'}; padding: 0; transition: height 200ms ease;"
               @dragover=${e => handleDragOver(props.data.length, e)}
               @drop=${e => handleDrop(props.data.length, e)}
             ></td>
