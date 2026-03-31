@@ -155,6 +155,24 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
     # "alex@noemail.com" is not in input_text
     assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
 
+def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source():
+    records = [
+        LLMPerson(
+            name="Alexandria Inocencio",
+            other_names=[],
+            roles=["mayor"],
+            phone=None,
+            email="alexandria.inocencio@cityofdilleytx.com",
+            url=None,
+            designations=[],
+            source_url="http://cityofdilleytx.com"
+        )
+    ]
+    # Source page has broken email with space before @
+    input_text = "Mayor Alexandria Inocencio  alexandria.inocencio @cityofdilleytx.com"
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+
+
 def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
     # LLM returns straight apostrophe; page has curly right-single-quote (U+2019)
     records = [
