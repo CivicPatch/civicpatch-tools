@@ -7,15 +7,16 @@ import "./person-card.js";
 import "./people-table.js";
 import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
 import "./action-buttons.js";
-import "./pull-request-tabs.js";
+import "./people-tabs.js";
 import "./profile-modal.js";
+import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import "../diff-panel/diff-panel.js";
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, sourceUrlMap = new Map() }) {
   const {
     currentPeople,
     selectedPeople,
@@ -50,6 +51,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     searchSuggestions: [],
   });
   const [resolvedMatches, setResolvedMatches] = useState({});
+  const [directoryPeople, setDirectoryPeople] = useState([]);
+  const [directoryLoading, setDirectoryLoading] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 700px)");
     const handler = (e) => setIsMobile(e.matches);
@@ -85,7 +89,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   useEffect(() => {
     if (selectedPullRequest === undefined) return;
     setPrStatus(null);
-    if (!selectedPullRequest) {
+    if (selectedPullRequest === 'directory') {
+      handleFetchDirectory();
+    } else if (!selectedPullRequest) {
       assignPeople(people);
       setReviewData(null);
       setResolvedMatches({});
@@ -93,6 +99,31 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       handleSelectedPullRequestData(selectedPullRequest);
     }
   }, [selectedPullRequest]);
+
+  async function handleConfirmDelete() {
+    const person = deleteConfirm;
+    setDeleteConfirm(null);
+    try {
+      await deletePerson(person._id);
+      setDirectoryPeople(prev => prev.filter(p => p._id !== person._id));
+    } catch (err) {
+      setError("Failed to delete person.");
+      console.error(err);
+    }
+  }
+
+  async function handleFetchDirectory() {
+    setDirectoryLoading(true);
+    try {
+      const data = await fetchPeopleDirectory(jurisdiction_ocdid);
+      setDirectoryPeople(data.data ?? []);
+    } catch (err) {
+      setError("Failed to load directory.");
+      console.error(err);
+    } finally {
+      setDirectoryLoading(false);
+    }
+  }
 
   async function handleSelectedPullRequestData(pullRequest) {
     if (!pullRequest) return;
@@ -229,10 +260,70 @@ function handleCardKeyDown(e, idx, key) {
     }));
   }
 
+  function formatDate(isoString) {
+    if (!isoString) return "—";
+    return isoString.slice(0, 10);
+  }
+
+  function renderDirectoryView() {
+    if (directoryLoading) return html`<p>Loading directory...</p>`;
+    if (!directoryPeople.length) return html`<p>No people found.</p>`;
+    return html`
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Name</th>
+            <th>Office</th>
+            <th>Division</th>
+            <th>Updated</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${directoryPeople.map(p => html`
+            <tr>
+              <td>
+                <button
+                  type="button"
+                  class="secondary btn-sm"
+                  @click=${() => setProfileModal({ open: true, person: p, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
+                >View</button>
+              </td>
+              <td @click=${() => setProfileModal({ open: true, person: p, existingPerson: null, nameMatches: [], searchSuggestions: [] })} style="cursor:pointer;">
+                <person-image .person=${p}></person-image>
+              </td>
+              <td>${p.name}</td>
+              <td>${p.office?.name ?? "—"}</td>
+              <td>${p.office?.division_ocdid ?? "—"}</td>
+              <td>${formatDate(p.updated_at)}</td>
+              <td>
+                <span class="status-badge status-badge--${p.status ?? 'current'}">
+                  ${p.status ?? 'current'}
+                </span>
+              </td>
+              ${canDeletePeople ? html`
+                <td>
+                  <button
+                    type="button"
+                    class="destructive btn-sm"
+                    @click=${() => setDeleteConfirm(p)}
+                  >Delete</button>
+                </td>
+              ` : html`<td></td>`}
+            </tr>
+          `)}
+        </tbody>
+      </table>
+    `;
+  }
+
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(openProfileModal)}
+      .columns=${getColumns(openProfileModal, sourceUrlMap)}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
@@ -267,45 +358,60 @@ function handleCardKeyDown(e, idx, key) {
     </div>`;
   }
 
+  function renderContent() {
+    if (selectedPullRequest === 'directory') {
+      return renderDirectoryView();
+    }
+    return html`
+      ${selectedPullRequest
+        ? html`
+            <a href=${selectedPullRequest.pr.url} target="_blank" class="contrast"
+              >View Pull Request</a
+            >
+            <hr />
+            <civ-review-panel
+              .reviewData=${reviewData}
+              .existing=${people}
+              .pullRequest=${currentPeople}
+            ></civ-review-panel>
+          `
+        : ""}
+      <civ-people-action-buttons
+        .onAdd=${handleAdd}
+        .onMerge=${handleMerge}
+        .onBulkDelete=${handleBulkDelete}
+        .onReset=${() =>
+          selectedPullRequest
+            ? handleSelectedPullRequestData(selectedPullRequest)
+            : assignPeople(people)}
+        .onPublish=${handlePublish}
+        .onClosePR=${handleClosePR}
+        .selectedPeople=${selectedPeople}
+        .dirty=${dirty}
+        .isLoading=${isLoading}
+        .notice=${notice}
+        .hasPullRequest=${!!selectedPullRequest}
+        .prStatus=${prStatus}
+      ></civ-people-action-buttons>
+      ${isLoading
+        ? html`<div
+            style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"
+          >
+            Loading pull request data...
+          </div>`
+        : isMobile
+          ? renderCardView()
+          : renderTableView()}
+    `;
+  }
+
   return html`
-    <civ-pull-request-tabs
+    <civ-people-tabs
       .pullRequests=${pullRequests}
       .selectedPullRequest=${selectedPullRequest}
       .loading=${pullRequestsLoading}
       .onTabClick=${(pr) => setSelectedPullRequest(pr)}
-    ></civ-pull-request-tabs>
-
-    ${selectedPullRequest
-      ? html`
-          <a href=${selectedPullRequest.pr.url} target="_blank" class="contrast"
-            >View Pull Request</a
-          >
-          <hr />
-          <civ-review-panel
-            .reviewData=${reviewData}
-            .existing=${people}
-            .pullRequest=${currentPeople}
-          ></civ-review-panel>
-        `
-      : ""}
-
-    <civ-people-action-buttons
-      .onAdd=${handleAdd}
-      .onMerge=${handleMerge}
-      .onBulkDelete=${handleBulkDelete}
-      .onReset=${() =>
-        selectedPullRequest
-          ? handleSelectedPullRequestData(selectedPullRequest)
-          : assignPeople(people)}
-      .onPublish=${handlePublish}
-      .onClosePR=${handleClosePR}
-      .selectedPeople=${selectedPeople}
-      .dirty=${dirty}
-      .isLoading=${isLoading}
-      .notice=${notice}
-      .hasPullRequest=${!!selectedPullRequest}
-      .prStatus=${prStatus}
-    ></civ-people-action-buttons>
+    ></civ-people-tabs>
 
     ${notice
       ? html`<div
@@ -321,15 +427,8 @@ function handleCardKeyDown(e, idx, key) {
           ${error}
         </div>`
       : ""}
-    ${isLoading
-      ? html`<div
-          style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"
-        >
-          Loading pull request data...
-        </div>`
-      : isMobile
-        ? renderCardView()
-        : renderTableView()}
+
+    ${renderContent()}
 
     <profile-modal
       .open=${profileModal.open}
@@ -337,10 +436,27 @@ function handleCardKeyDown(e, idx, key) {
       .existingPerson=${profileModal.existingPerson}
       .nameMatches=${profileModal.nameMatches ?? []}
       .searchSuggestions=${profileModal.searchSuggestions ?? []}
+      .readOnly=${selectedPullRequest === 'directory'}
       @link-person=${handleLinkPerson}
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}
     ></profile-modal>
+
+    <civ-modal
+      .title=${"Delete person?"}
+      .content=${deleteConfirm ? html`
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <person-image .person=${deleteConfirm}></person-image>
+          <span>${deleteConfirm.name}</span>
+        </div>
+        <p style="margin-top:1rem;">This cannot be undone.</p>
+      ` : null}
+      .footer=${html`
+        <button type="button" class="secondary" @click=${() => setDeleteConfirm(null)}>Cancel</button>
+        <button type="button" class="destructive" @click=${handleConfirmDelete}>Delete</button>
+      `}
+      .modalProps=${{ open: !!deleteConfirm, onClose: () => setDeleteConfirm(null) }}
+    ></civ-modal>
   `;
 }
 

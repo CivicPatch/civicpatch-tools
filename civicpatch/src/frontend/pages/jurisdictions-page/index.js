@@ -4,6 +4,7 @@ import { useWS } from "../../hooks/useSse.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
+import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../../components/edit-people/edit-people.js";
 import "../../components/source-content/index.js";
 import "./config-detail.js";
@@ -116,7 +117,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
               .modalProps=${{
                 open: scrapeModalOpen,
                 onClose: () => setScrapeModalOpen(false),
-                closeOnBackdropClick: false
+                closeOnBackdropClick: true
               }}
               .identities=${identities}
               .canScrapeRemote=${permissions.JURISDICTION_PAGE_SCRAPE_REMOTE}
@@ -132,6 +133,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
           <civ-editable-people-list
             jurisdiction_ocdid=${jurisdiction_ocdid}
             .people=${people}
+            .canDeletePeople=${permissions.DIRECTORY_DELETE}
+            .sourceUrlMap=${buildSourceUrlMap(sourceContentUrls)}
           ></civ-editable-people-list>
           <source-content .sourceContentUrls=${sourceContentUrls}></source-content>
         </div>

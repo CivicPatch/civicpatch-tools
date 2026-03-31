@@ -1,10 +1,10 @@
 /* ── Tabs ── */
 
-.pr-tabs {
+.people-tabs {
     margin-bottom: 1.5rem;
 }
 
-.pr-tabs__list {
+.people-tabs__list {
     list-style: none;
     padding: 0;
     margin: 0 0 0.5rem 0;
@@ -12,7 +12,7 @@
     gap: 0.25rem;
 }
 
-.pr-tabs__link {
+.people-tabs__link {
     display: block;
     padding: 0.2rem 0.75rem;
     font-family: var(--pico-font-family-monospace);
@@ -26,14 +26,38 @@
     white-space: nowrap;
 }
 
-.pr-tabs__link:hover {
+.people-tabs__link:hover {
     color: var(--pico-color);
     text-decoration: none;
 }
 
-.pr-tabs__link.active {
+.people-tabs__link.active {
     background: var(--pico-card-background-color);
     color: var(--pico-primary);
     border-bottom: 2px solid var(--pico-primary);
     font-weight: 600;
+}
+
+/* ── Status badges (Directory view) ── */
+
+.status-badge {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    font-family: var(--pico-font-family-monospace);
+    font-size: 0.7rem;
+    border-radius: 0.3rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+.status-badge--current {
+    background: color-mix(in srgb, var(--pico-primary) 12%, transparent);
+    color: var(--pico-primary);
+    border: 1px solid var(--pico-primary-border);
+}
+
+.status-badge--past {
+    background: var(--pico-muted-background-color);
+    color: var(--pico-muted-color);
+    border: 1px solid var(--pico-muted-border-color);
 }

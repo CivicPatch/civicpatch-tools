@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../../ocdid-utils"
+import { getSourceColorClass } from "../../../utils/source-color-utils.js";
 
 const customCss = (person, field) => {
     if (person._deleted) {
@@ -9,7 +10,7 @@ const customCss = (person, field) => {
     }
     return "";
 }
-export const getColumns = (openProfileModal) => {
+export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
     return [
         {
           field: "_isNew",
@@ -106,7 +107,12 @@ export const getColumns = (openProfileModal) => {
           editable: true,
           type: "multiple",
           customCss: customCss,
-          renderValue: (url, index) => html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">[${index}]</a>`,
+          renderValue: (url, index) => {
+            const entry = sourceUrlMap.get(url);
+            const colorClass = entry ? entry.colorClass : getSourceColorClass(url);
+            const label = entry ? entry.number : index + 1;
+            return html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link ${colorClass}" tabindex="-1">[${label}]</a>`;
+          },
         },
         //{
         //  field: "id",

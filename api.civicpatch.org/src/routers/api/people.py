@@ -67,6 +67,22 @@ def get_router() -> APIRouter:
             "data": people
         }
     
+    @router.delete("/{person_id}")
+    async def delete_person_endpoint(
+        person_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+    ):
+        await database.delete_person(person_id)
+        return {"data": None}
+
+    @router.get("/directory")
+    async def list_directory_endpoint(
+        jurisdiction_ocdid: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
+    ):
+        people = await database.get_all_people_for_jurisdiction(jurisdiction_ocdid)
+        return {"data": people}
+
     @router.post("/batch-resolve")
     async def batch_resolve_people_endpoint(
         request: PeopleBatchResolveRequest,

@@ -23,6 +23,34 @@
 
 /* ── Global ──────────────────────────────────────────────────────────────── */
 
+/* ── Color palette ───────────────────────────────────────────────────────── */
+/* All 10 catppuccin accent colors at full opacity.                           */
+/* getSourceColorClass() in utils/source-color-utils.js hashes a URL to one.  */
+
+:root {
+    --color-1:  var(--catppuccin-blue);
+    --color-2:  var(--catppuccin-mauve);
+    --color-3:  var(--catppuccin-yellow);
+    --color-4:  var(--catppuccin-pink);
+    --color-5:  var(--catppuccin-sky);
+    --color-6:  var(--catppuccin-teal);
+    --color-7:  var(--catppuccin-lavender);
+    --color-8:  var(--catppuccin-green);
+    --color-9:  var(--catppuccin-red);
+    --color-10: var(--catppuccin-sapphire);
+}
+
+.color-1  { --_c: var(--color-1);  color: rgb(var(--color-1));  }
+.color-2  { --_c: var(--color-2);  color: rgb(var(--color-2));  }
+.color-3  { --_c: var(--color-3);  color: rgb(var(--color-3));  }
+.color-4  { --_c: var(--color-4);  color: rgb(var(--color-4));  }
+.color-5  { --_c: var(--color-5);  color: rgb(var(--color-5));  }
+.color-6  { --_c: var(--color-6);  color: rgb(var(--color-6));  }
+.color-7  { --_c: var(--color-7);  color: rgb(var(--color-7));  }
+.color-8  { --_c: var(--color-8);  color: rgb(var(--color-8));  }
+.color-9  { --_c: var(--color-9);  color: rgb(var(--color-9));  }
+.color-10 { --_c: var(--color-10); color: rgb(var(--color-10)); }
+
 :root,
 :host {
     font-size: 14px;

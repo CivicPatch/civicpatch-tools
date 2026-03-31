@@ -30,6 +30,7 @@ tests/
 1. Read the file(s) you are about to change — understand existing patterns before adding new ones
 2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
 3. All queries go in `database/database.py` — check there before adding a new function
+4. **Before touching the database, read the schema diagram in `README.md`** — it is the authoritative reference for table structure; do not read migration files to infer schema
 
 ## FastAPI conventions
 

@@ -52,6 +52,11 @@ source-content {
   z-index: 1;
 }
 
+.source-content__tab--active[class*="color-"] {
+  color: rgb(var(--_c));
+  border-bottom-color: rgb(var(--_c));
+}
+
 .source-content__tab-content {
   flex: 1;
   min-height: 0;

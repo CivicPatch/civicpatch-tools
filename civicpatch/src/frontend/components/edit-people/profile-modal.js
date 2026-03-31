@@ -43,7 +43,29 @@ function renderImageRow(label, currentPerson, proposedPerson) {
   `;
 }
 
-function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [], searchSuggestions = [] }) {
+function renderReadOnlyContent(person) {
+  if (!person) return html`<p>No person data available.</p>`;
+  return html`
+    <table class="pico">
+      <tbody>
+        <tr><th>Image</th><td><person-image .person=${person}></person-image></td></tr>
+        <tr><th>Name</th><td>${person.name || ""}</td></tr>
+        <tr><th>Other Names</th><td>${joinOrEmpty(person.other_names)}</td></tr>
+        <tr><th>Office</th><td>${person.office?.name || ""}</td></tr>
+        <tr><th>Division</th><td>${person.office?.division_ocdid || ""}</td></tr>
+        <tr><th>Email</th><td>${joinOrEmpty(person.emails)}</td></tr>
+        <tr><th>Phone</th><td>${joinOrEmpty(person.phones)}</td></tr>
+        <tr><th>Start Date</th><td>${person.start_date || ""}</td></tr>
+        <tr><th>End Date</th><td>${person.end_date || ""}</td></tr>
+        <tr><th>URLs</th><td>${renderLinks(person.urls)}</td></tr>
+        <tr><th>Source URLs</th><td>${renderLinks(person.source_urls)}</td></tr>
+        <tr><th>Updated At</th><td>${person.updated_at || ""}</td></tr>
+      </tbody>
+    </table>
+  `;
+}
+
+function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [], searchSuggestions = [], readOnly = false }) {
   function handleLink(e, matchedId) {
     e.target.dispatchEvent(new CustomEvent("link-person", {
       detail: { personId: matchedId },
@@ -94,7 +116,9 @@ function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [],
     `
     : "";
 
-  const content = person ? html`
+  const content = readOnly
+    ? renderReadOnlyContent(person)
+    : person ? html`
     ${searchSuggestionsSection}
     ${linkSuggestions}
     <table class="pico">
