@@ -178,8 +178,17 @@ erDiagram
         timestamptz created_at
     }
 
+    notes {
+        uuid id PK
+        text jurisdiction_ocdid FK "idx"
+        text body
+        text user_id
+        timestamptz created_at
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
+    jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
     requests ||--o{ unrecognized_roles : "request_id"

@@ -20,6 +20,8 @@
 @import "../components/search-jurisdictions/search-jurisdictions.css";
 @import "../pages/jurisdictions-page/jurisdiction-sidebar.css";
 @import "../pages/jurisdictions-page/scrape-modal/scrape-modal.css";
+@import "../components/notes-panel/notes-panel.css";
+@import "../components/side-panel/side-panel.css";
 
 /* ── Global ──────────────────────────────────────────────────────────────── */
 
@@ -299,14 +301,26 @@
 
 /* ── Body background ─────────────────────────────────────────────────────── */
 
-[data-theme="light"] body,
-:root:not([data-theme="dark"]) body {
+body {
+    min-height: 100vh;
+}
+
+[data-theme="light"] body {
     background: linear-gradient(
         to bottom,
         #fafafa 0%,
         rgba(var(--catppuccin-mauve), 0.02) 100%
     );
-    min-height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) body {
+        background: linear-gradient(
+            to bottom,
+            #fafafa 0%,
+            rgba(var(--catppuccin-mauve), 0.02) 100%
+        );
+    }
 }
 
 /* ── Component overrides ─────────────────────────────────────────────────── */

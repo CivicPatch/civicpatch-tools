@@ -316,3 +316,22 @@ export const pauseReviewSession = async (sessionId) => {
   return res.json();
 };
 
+export const fetchNotes = async (jurisdictionOcdid, page = 1, perPage = 10) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
+  const res = await fetch(`${API_URL}/api/v1/notes?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const createNote = async (jurisdictionOcdid, body) => {
+  const res = await fetch(`${API_URL}/api/v1/notes`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ jurisdiction_ocdid: jurisdictionOcdid, body }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+
