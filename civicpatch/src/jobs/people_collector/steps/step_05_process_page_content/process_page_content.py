@@ -425,7 +425,7 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
         if person.name and not _name_in_text(person.name, input_text_lower):
             logger.warning(f"Name not found in input text: {person.name} under source url: {source_url}")
             return False 
-        if person.email and person.email.lower() not in input_text_lower:
+        if person.email and not _email_in_text(person.email, input_text_lower):
             logger.warning(f"Email not found in input text: {person.email} under source url: {source_url}")
             return False
         if person.phone and not _phone_in_text(person.phone, input_text):
@@ -455,6 +455,16 @@ def _name_in_text(name: str, text_lower: str) -> bool:
     parsed = name_utils.parse_name(name)
     parts = [name_utils.normalize_text_for_search(p) for p in [parsed.first, parsed.last] if p]
     return bool(parts) and all(part in text_norm for part in parts)
+
+def _email_in_text(email: str, text_lower: str) -> bool:
+    """Check if an email appears in text, tolerating whitespace around the @ sign."""
+    normalized = email_utils.normalize_email(email)
+    if normalized and normalized in text_lower:
+        return True
+    # page source may have broken email with spaces; strip whitespace from text for comparison
+    text_no_space = re.sub(r"\s+", "", text_lower)
+    return bool(normalized) and normalized in text_no_space
+
 
 def _normalize_phone(phone: str) -> str:
     """Strip all non-digit characters."""
