@@ -13,6 +13,7 @@ from utils import log_utils
 from utils.array_utils import interleave_arrays
 
 from services.google_search import search as google_search
+from shared.utils import url_utils
 from utils import cost_utils
 
 from jobs.people_collector.steps.step_02_search_links.crawl import crawl
@@ -90,8 +91,7 @@ async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], Sea
     updated_links = context.data.links.copy()
 
     for url in interleaved_urls:
-        # Do not re-add existing link
-        if not any(link.url == url for link in updated_links):
+        if not any(url_utils.same_url(link.url, url) for link in updated_links):
             updated_links.append(Link(url=url, status=LinkStatus.PENDING.value))
 
     updated_search_engines = {

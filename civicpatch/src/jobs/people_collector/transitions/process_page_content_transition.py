@@ -26,10 +26,6 @@ def next_state_for_process_content_state(
     
     return WorkflowStatus.SCRAPE_PAGE
 
-def should_fallback_to_main_url(links: List[Link], main_url: str) -> bool:
-    no_pending = get_next_link_with_status(links, LinkStatus.PENDING) is None
-    already_visited = get_link_status_by_url(links, main_url) is not None
-    return no_pending and not already_visited
 
 def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | None:
     for link in links:

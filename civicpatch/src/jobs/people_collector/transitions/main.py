@@ -30,12 +30,13 @@ from jobs.people_collector.steps.step_10_save_output.save_output import save_out
 from jobs.people_collector.steps.step_11_send_success.send_success import send_success
 from jobs.people_collector.steps.step_11_send_error.send_error import send_error
 
-from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state, should_fallback_to_main_url
+from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
 from jobs.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
 from jobs.people_collector.utils.links import (
     get_next_link_with_status,
     get_link_status_by_url,
-    get_links_with_status
+    get_links_with_status,
+    add_links,
 )
 from shared.schemas import JobConfig
 from utils import cost_utils
@@ -46,7 +47,10 @@ async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: Peop
     result = await prepare_pipeline(context) # Contacts api to get things like identities, source urls, and previous scrape data
 
     next_context = context.copy(update={
-        "data": context.data.copy(update={"prepare_pipeline_step": result})
+        "data": context.data.copy(update={
+            "prepare_pipeline_step": result,
+            "links": add_links([], [context.data.config.url]),
+        })
     })
     await register_people_job(
         logger,
@@ -78,10 +82,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         logger.info("Source URLs provided, skipping link search.")
         next_context = next_context.copy(update={
             "data": next_context.data.copy(update={
-                "links": [
-                    Link(url=sl, status=LinkStatus.PENDING.value)
-                    for sl in source_urls
-                ]
+                "links": add_links(next_context.data.links, source_urls)
             })
         })
 
@@ -102,13 +103,6 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
     if search_link_pointer >= len(SearchEngineNames):
         logger.info("All search engines have been processed.")
 
-        if len(context.data.links) == 0:
-            logger.info("No links found after processing all search engines, use main web URL.")
-            next_context = context.copy(update={
-                "data": context.data.copy(update={
-                    "links": [Link(url=context.data.config.url, status=LinkStatus.PENDING.value)]
-                })
-            })
         next_state = WorkflowStatus.SCRAPE_PAGE
     else:
         links, result = await search_links(context)
@@ -220,16 +214,6 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         job_config=job_config,
         progress=result.progress
     )
-
-    if next_state == WorkflowStatus.SCRAPE_PAGE:
-        main_url = context.data.config.url
-        if should_fallback_to_main_url(next_context.data.links, main_url):
-            logger.info("Links exhausted with no stop condition. Falling back to main page URL.")
-            next_context = next_context.copy(update={
-                "data": next_context.data.copy(update={
-                    "links": next_context.data.links + [Link(url=main_url, status=LinkStatus.PENDING.value)]
-                })
-            })
 
     return next_context, next_state
 
