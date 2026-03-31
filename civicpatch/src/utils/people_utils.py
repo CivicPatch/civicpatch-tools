@@ -130,6 +130,7 @@ def normalize_roles(roles: List[str]) -> List[str]:
 
     role_aliases = config_utils.get_role_alias_map()
     designation_aliases = config_utils.get_designation_alias_map()
+    excluded = config_utils.get_excluded_role_names()
     seen = set()
 
     expanded_roles = []
@@ -148,10 +149,15 @@ def normalize_roles(roles: List[str]) -> List[str]:
         if designation_aliases.get(role_lower):
             continue
 
+        # Drop explicitly excluded roles
+        if role_lower in excluded:
+            continue
+
         # Try exact match first
         direct_match = role_aliases.get(role_lower)
         if direct_match:
-            seen.add(direct_match)
+            if direct_match.lower() not in excluded:
+                seen.add(direct_match)
             continue
 
         # Try progressively shorter suffixes
@@ -162,12 +168,13 @@ def normalize_roles(roles: List[str]) -> List[str]:
             suffix = " ".join(words[i:])
             suffix_match = role_aliases.get(suffix)
             if suffix_match:
-                seen.add(suffix_match)
+                if suffix_match.lower() not in excluded:
+                    seen.add(suffix_match)
                 matched = True
                 break
 
         if not matched:
-            seen.add(role_lower)
+            seen.add(role_lower)  # unknown — keep as-is
 
     return [r.title() for r in sort_roles(seen)]
 

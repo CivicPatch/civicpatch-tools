@@ -177,3 +177,31 @@ roles:
     - vice-chairman
     - vice-chairwoman
   - role: chair pro tem
+
+excluded_roles:
+  - role: city secretary
+  - role: city administrator
+    aliases:
+      - city manager
+      - town manager
+      - village manager
+  - role: city attorney
+    aliases:
+      - town attorney
+      - village attorney
+      - municipal attorney
+      - city solicitor
+
+excluded_roles:
+  - role: city secretary
+  - role: city administrator
+    aliases:
+      - city manager
+      - town manager
+      - village manager
+  - role: city attorney
+    aliases:
+      - town attorney
+      - village attorney
+      - municipal attorney
+      - city solicitor

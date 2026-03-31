@@ -1406,6 +1406,57 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
     ]
 
 
+async def insert_job_events(request_id: str, event_type: str, events: list[dict]) -> None:
+    if not events:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            """
+            INSERT INTO job_events (request_id, event_type, data)
+            VALUES (%s, %s, %s)
+            """,
+            [(request_id, event_type, json.dumps(e)) for e in events],
+        )
+
+
+async def get_job_events(event_type: str, state_code: Optional[str] = None) -> list[dict]:
+    conditions = ["je.event_type = %s"]
+    params: list[Any] = [event_type]
+    if state_code:
+        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        params.append(f"%state:{state_code}%")
+    where = "WHERE " + " AND ".join(conditions)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT je.id::text, je.event_type, je.data, je.created_at,
+                   je.request_id::text, r.jurisdiction_ocdid,
+                   j.data->>'name' AS jurisdiction_name
+            FROM job_events je
+            JOIN requests r ON r.id = je.request_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
+            {where}
+            ORDER BY je.created_at DESC LIMIT 500
+            """,
+            params,
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "id": r[0],
+            "event_type": r[1],
+            "data": r[2],
+            "created_at": r[3].isoformat() if r[3] else None,
+            "request_id": r[4],
+            "jurisdiction_ocdid": r[5],
+            "jurisdiction_name": r[6],
+        }
+        for r in rows
+    ]
+
+
 async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset: int):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

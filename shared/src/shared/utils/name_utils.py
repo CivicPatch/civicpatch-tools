@@ -142,6 +142,7 @@ def normalize_text_for_search(text: str) -> str:
 
 def normalize_name(name: str) -> str:
     """Normalize name by removing accents, titles, suffixes, and extra whitespace, but preserving nickname."""
+    name = name.replace('\u201C', '"').replace('\u201D', '"').replace('\u2018', "'").replace('\u2019', "'")
     hn = HumanName(name)
     parts = [hn.first, hn.middle, hn.last]
     if hn.nickname:

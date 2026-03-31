@@ -2,8 +2,9 @@ from typing import Dict, List, Optional, cast
 from collections import defaultdict, Counter
 from jobs.people_collector.schemas import (
     LLMPerson, Person,
-    RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep, UnrecognizedRole,
+    RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep, UnrecognizedRole, ExcludedPerson,
 )
+from utils import log_utils
 from shared.utils import config_utils, name_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
 
@@ -30,8 +31,10 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         for llm, people_by_name in records_by_llm.items()
     }
 
+    logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     roles_to_keep = set(config_utils.get_role_names())
     all_unrecognized: List[UnrecognizedRole] = []
+    all_excluded: List[ExcludedPerson] = []
     people_by_llm: Dict[str, List[Person]] = {}
 
     for llm, records in flattened_records_by_llm.items():
@@ -53,8 +56,9 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         groups = merge_weak_tie_groups_within_llm(groups)
 
         # Merge each group into a Person
-        merged_people: List[Person] = []
+        kept_people: List[Person] = []
         for canonical_name, group in groups.items():
+            raw_roles = list({r for record in group for r in (record.roles or [])})
             merged_person = merge_llm_people_to_person(canonical_name, group, jurisdiction_ocdid)
 
             all_names = set(person.name for person in group if person.name)
@@ -62,16 +66,30 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
             merged_person.other_names = list(all_names)
             merged_person.source_urls = get_source_urls(group, merged_person)
 
-            merged_people.append(merged_person)
+            if raw_roles and not merged_person.roles:
+                raw_designations = list({d for record in group for d in (record.designations or [])})
+                logger.info(f"Excluded person: {canonical_name} — all roles excluded: {raw_roles}")
+                all_excluded.append(ExcludedPerson(
+                    name=canonical_name,
+                    roles=raw_roles,
+                    designations=raw_designations,
+                    source_urls=merged_person.source_urls,
+                ))
+            else:
+                kept_people.append(merged_person)
 
-        for person in merged_people:
+        for person in kept_people:
             unknown = [r for r in person.roles if r.lower() not in roles_to_keep]
             for role in unknown:
                 all_unrecognized.append(UnrecognizedRole(role=role, person_name=person.name))
 
-        people_by_llm[llm] = merged_people
+        people_by_llm[llm] = kept_people
 
-    return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm, unrecognized_roles=all_unrecognized)
+    return MergeRecordsWithinLLMStep(
+        people_by_llm=people_by_llm,
+        unrecognized_roles=all_unrecognized,
+        excluded_people=all_excluded,
+    )
 
 
 def merge_weak_tie_groups_within_llm(

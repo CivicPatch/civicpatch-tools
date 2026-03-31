@@ -47,6 +47,11 @@ def preprocess_page_content(
     preprocessed_html  = filter_content(logger, identities, cleaned_html)
     try:
         preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], escape_underscores=False)
+        # Collapse consecutive duplicate lines — common artifact of sites that render
+        # the same nav/content block multiple times (mobile nav, footer nav, carousels)
+        lines = preprocessed_md.splitlines()
+        deduped = [line for i, line in enumerate(lines) if i == 0 or line != lines[i - 1]]
+        preprocessed_md = "\n".join(deduped)
     except RecursionError:
         logger.warning("RecursionError converting preprocessed HTML to markdown - DOM too deeply nested, skipping")
         preprocessed_md = ""

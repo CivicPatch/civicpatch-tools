@@ -23,6 +23,7 @@ from database.database import (
     get_job_status,
     get_jobs_with_errors,
     get_unrecognized_roles,
+    get_job_events,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -376,6 +377,17 @@ def get_router(api_key_header):
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
     ):
         rows = await get_unrecognized_roles(state_code=state_code)
+        return {"data": rows}
+
+    @router.get(
+        "/excluded-people",
+        summary="List people excluded due to excluded roles config",
+    )
+    async def get_excluded_people_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+    ):
+        rows = await get_job_events("excluded_person", state_code=state_code)
         return {"data": rows}
 
     @router.get(

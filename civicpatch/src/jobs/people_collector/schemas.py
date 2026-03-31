@@ -61,6 +61,12 @@ class UnrecognizedRole(BaseModel):
     role: str
     person_name: str
 
+class ExcludedPerson(BaseModel):
+    name: str
+    roles: List[str]
+    designations: List[str] = []
+    source_urls: List[str] = []
+
 class LLMPerson(RawLLMPerson):
     source_url: str
 
@@ -140,6 +146,7 @@ class ProcessPageContentStep(BaseModel):
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
     unrecognized_roles: List[UnrecognizedRole] = []
+    excluded_people: List[ExcludedPerson] = []
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]

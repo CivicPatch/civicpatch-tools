@@ -36,21 +36,24 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
       primary governing body (Mayor, Council, etc.) and their page must be marked is_relevant: false.
 
     **Steps for selecting relevant_urls:**
+    `relevant_urls` feeds a web crawler whose goal is to eventually reach a page listing the primary
+    governing officials. Think of each URL as a breadcrumb: keep it if it could plausibly be one or
+    more hops away from an officials roster — even if it is not directly about officials itself.
+    Err heavily on the side of keeping. A false positive costs one extra scrape; a false negative
+    means the crawler never finds the officials.
+
     1. Extract ALL links found anywhere on the page into a complete list.
-    2. For each link, ask: "If I followed this link, would I likely land on a page that lists or describes
-       the primary governing body (mayor, council members, commissioners, etc.) or provides a directory
-       of municipal departments and staff?"
-       Keep the link if the answer is yes.
-    3. Prefer section-level or landing pages over individual content items. Ask: "Does this link point to
-       a navigational index or overview page, or to a single specific article, event, or news item?"
-       - Keep: any link whose anchor text or URL refers to government, officials, council, board members,
-         aldermen, commissioners, mayor, or municipal staff and directories
-         (e.g. /Government, /Council, /CityOfficials, /Directory/Departments)
-       - Keep: individual pages explicitly for the Mayor (e.g., /Mayor/Bio, /About-the-Mayor, /Our-Mayor) —
-         the mayor is a primary official, so their dedicated page is always relevant
-       - Discard: individual news stories, press releases, or event pages about a specific item —
-         even if they mention an official's name in the title or URL
-    4. Return the filtered list as relevant_urls.
+    2. Keep a link if it could be on the path to an officials roster. This includes:
+       - Any broad navigational or directory page, even if it does not explicitly mention officials
+         (e.g. /Departments, /Government, /City-Hall, /About, /Our-City, /Services)
+       - Pages that name a governing body or official role
+         (e.g. /Council, /Mayor, /Aldermen, /Commissioners, /Board-Members)
+       - Staff or personnel directories that may list elected officials among other staff
+       - Individual pages dedicated to the Mayor or other primary officials
+    3. Discard only obvious dead ends:
+       - Individual news stories, press releases, blog posts, or event pages
+       - Non-municipal external domains
+       - File downloads (PDFs, DOCs) that are a single document rather than a navigable page
 
     **Output Format:**
     Return a JSON object with the following fields:
@@ -70,9 +73,8 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
       - Historical rosters (e.g., "Past Mayors", "Mayor History") — even if the most recent entry is current
       - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee
       The test is always the page's purpose, not its content patterns.
-    - `relevant_urls` must include ANY navigation or directory link on the page that could lead to
-      the primary governing body — including department directories, staff listings, and government
-      section pages — even if the current page itself is not relevant.
+    - `relevant_urls` is a crawl frontier, not a relevance filter. Include any link that could be
+      one or more hops from an officials roster. When in doubt, keep it.
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
     - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
     - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.
@@ -167,6 +169,9 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
 
     If only unstructured mentions exist (news articles, event summaries, meeting
     notes, scattered references), return an empty array for "people".
+    Only extract from content whose primary purpose is to present who currently
+    holds office. Do not extract from content whose primary purpose is to record
+    what officials did — even if it is structured and includes roles and designations.
 
     If structured and unstructured content are mixed, extract only from the
     structured portion.

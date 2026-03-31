@@ -42,7 +42,7 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: "Jos\xE9 \u201CChito\u201D Vela"
+- name: "Jos\xE9 \"Chito\" Vela"
   roles:
   - Council Member
   designations:
@@ -97,7 +97,7 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: "Zohaib \u201CZo\u201D Qadri"
+- name: Zohaib "Zo" Qadri
   roles:
   - Council Member
   designations:
