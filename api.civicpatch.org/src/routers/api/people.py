@@ -1,3 +1,4 @@
+import math
 from fastapi import APIRouter, Depends, Query
 from utils.auth_utils import require_route_access
 from pydantic import BaseModel
@@ -78,10 +79,18 @@ def get_router() -> APIRouter:
     @router.get("/directory")
     async def list_directory_endpoint(
         jurisdiction_ocdid: str,
+        page: int = Query(1, ge=1),
+        per_page: int = Query(20, ge=1, le=100),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
     ):
-        people = await database.get_all_people_for_jurisdiction(jurisdiction_ocdid)
-        return {"data": people}
+        offset = (page - 1) * per_page
+        total, people = await database.get_all_people_for_jurisdiction(jurisdiction_ocdid, per_page, offset)
+        return {
+            "total_items": total,
+            "page": page,
+            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
+            "data": people,
+        }
 
     @router.post("/batch-resolve")
     async def batch_resolve_people_endpoint(

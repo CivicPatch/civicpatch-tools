@@ -19,11 +19,22 @@ MODELS_BY_TYPE = {
         #"token_limit": 8192,
         #FAILS
         #"model": "zai-org/GLM-4.5-Air-FP8",
-        "input_cost": 0.20 / 1000000,
-        "output_cost": 1.10 / 1000000,
+        #"input_cost": 0.20 / 1000000,
+        #"output_cost": 1.10 / 1000000,
 
     },
-    "STANDARD": { # Used for municipality official extraction
+    "STANDARD": { 
+        #"model": "Qwen/Qwen3.5-397B-A17B", 
+        #"input_cost": 0.60 / 1000000,
+        #"output_cost": 3.60 / 1000000,
+        "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", # Deprecation Notice: March 31, 2026 - 
+        "input_cost": 0.27 / 1000000, # Good model for our current prompt
+        "output_cost": 0.85 / 1000000,
+
+        #"model": "moonshotai/Kimi-K2.5", exhausted its thinking budget
+        #"input_cost": 0.50 / 1000000, 
+        #"output_cost": 2.80 / 1000000,
+        # Used for municipality official extraction
         # MUNICIPALITY_PROMPT TESTS
         # FAILS @ temperature 0.2, top_p 1.0
             # Sometimes returns only 1 instead of 8 offiicials
@@ -123,15 +134,19 @@ MODELS_BY_TYPE = {
         #"output_cost": 0.68 / 1000000
         # FAILS
         #"model": "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
-        #"input_cost": 0.20 / 1000000,
+        #"input_cost": 0.20 / 1000000, # Bad email output
         #"output_cost": 0.60 / 1000000
         # "model": "zai-org/GLM-4.5-Air-FP8",
         # "input_cost": 0.20 / 1000000,
         # "output_cost": 1.10 / 1000000,
         # ^^ Mostly good results but fails at vacant_positions_council for roles
-        "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
-        "input_cost": 0.27 / 1000000,
-        "output_cost": 0.85 / 1000000,
+
+        # "model": "Qwen/Qwen3-Coder-Next-FP8", # Pretty good results, but returns roles like city manager; etc
+        # "input_cost": 0.50 / 1000000, # So we'll maybe want to collect these & tweak the prompt 
+        # "output_cost": 1.20 / 1000000,
+        #"model": "deepseek-ai/DeepSeek-V3.1",  # REALLY good. Needs prompt tweaks
+        #"input_cost": 0.60 / 1000000, 
+        #"output_cost": 1.70 / 1000000,
     },
 }
 
@@ -174,7 +189,7 @@ def run_prompt(
             response_model=response_schema,
             messages=messages,
             temperature=0.2,
-            top_p=1.0
+            top_p=1.0,
         )
 
         print("RAW RESPONSE", response)

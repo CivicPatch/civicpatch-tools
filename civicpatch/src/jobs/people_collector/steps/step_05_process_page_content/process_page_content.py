@@ -457,13 +457,21 @@ def _name_in_text(name: str, text_lower: str) -> bool:
     return bool(parts) and all(part in text_norm for part in parts)
 
 def _email_in_text(email: str, text_lower: str) -> bool:
-    """Check if an email appears in text, tolerating whitespace around the @ sign."""
     normalized = email_utils.normalize_email(email)
-    if normalized and normalized in text_lower:
+    if not normalized or "@" not in normalized:
+        return False
+    if normalized in text_lower:
         return True
-    # page source may have broken email with spaces; strip whitespace from text for comparison
-    text_no_space = re.sub(r"\s+", "", text_lower)
-    return bool(normalized) and normalized in text_no_space
+    # Strip whitespace, unescape \_, and remove all non-email characters so markdown link syntax
+    # and broken mailto hrefs (e.g. [user@domain.tx](mailto:user@domain.tx) .us) collapse together
+    text_clean = re.sub(r"[^a-z0-9@._+\-]", "", text_lower.replace("\\_", "_"))
+    if normalized in text_clean:
+        return True
+    # Last resort: strip all separators from both sides so district1@ci.lamesa.tx.us
+    # matches district1cilamaesatxus in text
+    email_alnum = re.sub(r"[^a-z0-9]", "", normalized)
+    text_alnum = re.sub(r"[^a-z0-9]", "", text_clean)
+    return bool(email_alnum) and email_alnum in text_alnum
 
 
 def _normalize_phone(phone: str) -> str:

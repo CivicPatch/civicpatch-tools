@@ -46,7 +46,7 @@ def preprocess_page_content(
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html)
     try:
-        preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], escape_underscores=False)
     except RecursionError:
         logger.warning("RecursionError converting preprocessed HTML to markdown - DOM too deeply nested, skipping")
         preprocessed_md = ""

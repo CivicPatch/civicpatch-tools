@@ -46,19 +46,19 @@
 }
 
 .review-page__streak-label {
-    font-size: var(--text-md);
+    font-size: 0.9rem;
     color: var(--pico-muted-color);
 }
 
 .review-page__streak-value {
-    font-size: var(--text-2xl);
+    font-size: 2rem;
     font-weight: 700;
     color: var(--pico-primary);
     line-height: 1.1;
 }
 
 .review-page__streak-sub {
-    font-size: var(--text-md);
+    font-size: 0.85rem;
     color: var(--pico-muted-color);
 }
 
@@ -86,7 +86,7 @@
 }
 
 .review-page__goal-label {
-    font-size: var(--text-xs);
+    font-size: 0.65rem;
     color: var(--pico-muted-color);
     opacity: 0.6;
 }
@@ -104,7 +104,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--text-md);
+    font-size: 0.8rem;
     cursor: pointer;
 }
 
@@ -113,12 +113,12 @@
 }
 
 .review-page__ready-title {
-    font-size: var(--text-md);
+    font-size: 0.9rem;
     color: var(--pico-muted-color);
 }
 
 .review-page__ready-count {
-    font-size: var(--text-2xl);
+    font-size: 2rem;
     font-weight: 700;
     color: var(--pico-primary);
     line-height: 1.1;
@@ -126,7 +126,7 @@
 }
 
 .review-page__ready-sub {
-    font-size: var(--text-md);
+    font-size: 0.85rem;
     color: var(--pico-muted-color);
 }
 
@@ -144,7 +144,7 @@
 }
 
 .review-page__setup-title {
-    font-size: var(--text-xl);
+    font-size: 1.75rem;
     font-weight: 800;
     margin: 0;
 }
@@ -175,7 +175,7 @@
     align-items: center;
     justify-content: space-between;
     font-weight: 700;
-    font-size: var(--text-base);
+    font-size: 1rem;
 }
 
 .review-page__custom-goal {
@@ -205,7 +205,7 @@
     border: 2px solid var(--pico-muted-border-color);
     border-radius: 0.75rem;
     font-weight: 700;
-    font-size: var(--text-md);
+    font-size: 0.95rem;
     cursor: pointer;
     transition: border-color 0.15s, background-color 0.15s, color 0.15s;
 }
@@ -221,7 +221,7 @@
     padding: 0.85rem;
     border: none;
     border-radius: 0.75rem;
-    background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
+    background: linear-gradient(135deg, var(--pico-primary), var(--pico-primary-hover));
     color: rgb(var(--catppuccin-base));
     font-size: 1.1rem;
     font-weight: 800;
@@ -240,7 +240,7 @@
 }
 
 .review-page__goal-met {
-    font-size: var(--text-md);
+    font-size: 0.8rem;
     color: var(--pico-muted-color);
     margin: 0;
 }
@@ -319,7 +319,7 @@
 
 .review-page__progress {
     font-family: var(--pico-font-family-monospace);
-    font-size: var(--text-md);
+    font-size: 0.8rem;
     color: var(--pico-muted-color);
     white-space: nowrap;
 }
@@ -347,7 +347,7 @@
 
 
 .review-page__error {
-    font-size: var(--text-md);
+    font-size: 0.85rem;
     color: var(--pico-del-color);
 }
 
@@ -378,7 +378,7 @@
 }
 
 .review-page__review-state {
-    font-size: var(--text-sm);
+    font-size: 0.7rem;
     font-family: var(--pico-font-family-monospace);
     font-weight: 600;
     padding: 0.15em 0.5em;

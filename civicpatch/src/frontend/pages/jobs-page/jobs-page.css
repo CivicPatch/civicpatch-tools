@@ -15,7 +15,7 @@
 
 .jobs-page__page-counter {
     font-family: var(--pico-font-family-monospace);
-    font-size: 0.75rem;
+    font-size: var(--text-sm);
     color: var(--pico-muted-color);
 }
 
@@ -51,7 +51,7 @@
 
 .jobs-page__page-ellipsis {
     font-family: var(--pico-font-family-monospace);
-    font-size: 0.8rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
     padding: 0 0.25rem;
 }
@@ -60,7 +60,7 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.8rem;
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
 }
 
@@ -75,14 +75,14 @@
     width: auto;
     margin: 0;
     padding: 0.2em 0.75em;
-    font-size: 0.8rem;
+    font-size: var(--text-md);
 }
 
 .jobs-page__filters select {
     width: auto;
     margin: 0;
     padding: 0.2em 0.75em;
-    font-size: 0.8rem;
+    font-size: var(--text-md);
 }
 
 .jobs-page__section-header {
@@ -146,7 +146,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: var(--text-sm);
     cursor: pointer;
     transition: transform 0.15s ease, color 0.15s;
 }
@@ -184,7 +184,7 @@
     box-shadow: none;
     cursor: pointer;
     font-family: var(--pico-font-family-monospace);
-    font-size: 0.85rem;
+    font-size: var(--text-md);
     color: inherit;
     margin: 0;
 }
@@ -198,7 +198,7 @@
 }
 
 .jobs-page__duplicate-chevron {
-    font-size: 0.7rem;
+    font-size: var(--text-sm);
     color: var(--pico-muted-color);
     transition: transform 0.15s ease;
 }

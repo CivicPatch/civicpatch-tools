@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -23,7 +23,7 @@
 
 .review-workspace__section-icon {
   font-family: var(--pico-font-family-monospace);
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   font-weight: 900;
 }
 
@@ -35,6 +35,6 @@
 }
 
 .review-workspace__error {
-  font-size: 0.85rem;
+  font-size: var(--text-md);
   color: var(--pico-del-color);
 }

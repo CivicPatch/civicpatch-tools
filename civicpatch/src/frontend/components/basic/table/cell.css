@@ -45,7 +45,7 @@ civ-table-cell {
         background: rgb(var(--catppuccin-base));
         border-radius: 999px;
         padding: 0.1rem 0.35rem 0.1rem 0.5rem;
-        font-size: 0.72rem;
+        font-size: var(--text-sm);
         font-family: inherit;
         cursor: pointer;
         color: #333;
@@ -77,7 +77,7 @@ civ-table-cell {
         border: none;
         background: transparent;
         padding: 0;
-        font-size: 0.8rem;
+        font-size: var(--text-md);
         font-family: inherit;
         color: inherit;
         white-space: normal;

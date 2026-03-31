@@ -38,13 +38,13 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
               <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
             </div>
           </div>
-          <span class="review-page__ready-count">${effectiveGoal}</span>
+          <span class="review-page__ready-count">${Math.min(effectiveGoal, stats.available_count ?? 0)}</span>
           <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
           ${stats.today_resolved >= effectiveGoal ? html`
             <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
           ` : ""}
-          ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <button class="review-page__start-btn" @click=${onStartReview} ?disabled=${stats.today_resolved >= effectiveGoal}>Review →</button>
+${error ? html`<p class="review-page__error">${error}</p>` : ""}
+          <button class="review-page__start-btn" @click=${onStartReview} ?disabled=${stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review →</button>
         </div>
       </div>
       <stat-cards class="review-page__stat-cards" .stats=${[

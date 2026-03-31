@@ -233,7 +233,7 @@ function handleCardKeyDown(e, idx, key) {
       }
     }
 
-    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [] });
+    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [], jurisdictionOcdid: jurisdiction_ocdid });
 
     if (person._isNew && person.name) {
       try {
@@ -436,6 +436,7 @@ function handleCardKeyDown(e, idx, key) {
       .existingPerson=${profileModal.existingPerson}
       .nameMatches=${profileModal.nameMatches ?? []}
       .searchSuggestions=${profileModal.searchSuggestions ?? []}
+      .jurisdictionOcdid=${profileModal.jurisdictionOcdid ?? jurisdiction_ocdid}
       .readOnly=${selectedPullRequest === 'directory'}
       @link-person=${handleLinkPerson}
       @close=${() =>

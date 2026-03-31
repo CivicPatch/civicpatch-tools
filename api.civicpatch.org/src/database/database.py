@@ -1,6 +1,7 @@
 import json
 import secrets
 import math
+from enum import StrEnum
 from typing import List, cast, Optional, Any
 from environment import get_env_vars
 import shared.utils.id_utils
@@ -16,6 +17,12 @@ from shared.schemas import Person
 
 import logging
 logger = logging.getLogger(__name__)
+
+
+class PeopleStatus(StrEnum):
+    CURRENT = "current"
+    PAST = "past"
+
 
 _pool: AsyncConnectionPool | None = None
 
@@ -337,20 +344,28 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
     return people
 
 
-async def get_all_people_for_jurisdiction(jurisdiction_ocdid: str) -> list[dict]:
+async def get_all_people_for_jurisdiction(
+    jurisdiction_ocdid: str, limit: int, offset: int
+) -> tuple[int, list[dict]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, data, status
+            SELECT COUNT(*) OVER(), id::text, data, status
             FROM people
             WHERE jurisdiction_ocdid = %s
-            ORDER BY (data->>'updated_at') DESC NULLS LAST
+            ORDER BY
+                CASE WHEN status = 'current' THEN 0 ELSE 1 END,
+                (data->>'updated_at') DESC NULLS LAST
+            LIMIT %s OFFSET %s
             """,
-            (jurisdiction_ocdid,),
+            (jurisdiction_ocdid, limit, offset),
         )
         rows = await cur.fetchall()
-    return [{**row[1], "_id": row[0], "status": row[2]} for row in rows]
+    if not rows:
+        return 0, []
+    total = rows[0][0]
+    return total, [{**row[2], "_id": row[1], "status": row[3]} for row in rows]
 
 
 async def delete_person(person_id: str) -> None:
