@@ -362,7 +362,7 @@ input:not(
 [type="submit"],
 [type="button"],
 [type="reset"],
-button:not(.btn-ghost) {
+button:not(.btn-ghost):not(.profile-modal__tab) {
     --pico-background-color: var(--pico-primary);
     --pico-border-color: var(--pico-primary);
     --pico-color: var(--pico-primary-inverse);
