@@ -250,7 +250,6 @@
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.5rem 1rem;
 }
 
 .review-page__jurisdiction {
@@ -360,6 +359,10 @@
     -webkit-backdrop-filter: blur(8px);
     margin: 0 -1rem;
     border-bottom: 1px solid var(--pico-form-element-border-color);
+}
+
+.review-page__nav {
+    padding: 0.5rem 1rem;
 }
 
 .review-page__info-row {

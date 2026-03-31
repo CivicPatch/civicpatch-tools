@@ -205,6 +205,7 @@ function renderAuthed(user) {
       <span class="user-dot"></span>
       <span class="user-email">${user.email || 'User'}</span>
     </span>
+    <a href="/" class="nav-link">Home</a>
     <a href="/jobs" class="nav-link">Jobs</a>
     ${(user.permissions?.can_view_jobs_page) ? html`<a href="/review" class="nav-link">Review</a>` : ""}
     <a

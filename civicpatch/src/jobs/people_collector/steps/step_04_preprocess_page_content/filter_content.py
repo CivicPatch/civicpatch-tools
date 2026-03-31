@@ -96,7 +96,12 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
                 node._keep_table = True
                 return True
 
-        # Table is not relevant - extract images before removing
+        # Table is not relevant - extract links (with any imgs inside) then remaining standalone imgs
+        links = node.find_all("a")
+        if links and node.parent and hasattr(node.parent, 'name'):
+            for link in links:
+                node.insert_before(link.extract())
+        # find_all after link extraction: only standalone imgs remaining in the table
         images = node.find_all("img")
         if images and node.parent and hasattr(node.parent, 'name'):
             for img in images:

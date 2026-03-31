@@ -362,6 +362,10 @@
     border-bottom: 1px solid var(--pico-form-element-border-color);
 }
 
+.review-page__nav {
+    padding: 0.5rem 1rem;
+}
+
 .review-page__info-row {
     display: flex;
     gap: 1.5rem;

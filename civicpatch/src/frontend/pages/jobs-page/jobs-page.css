@@ -22,8 +22,14 @@
 .jobs-page__pagination {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     margin-top: 2rem;
+}
+
+.jobs-page__pagination--top {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
 }
 
 .jobs-page__page-numbers {
@@ -106,6 +112,19 @@
 
 .jobs-page__section-title--primary {
     border-left: 3px solid var(--pico-primary);
+}
+
+.jobs-page__select-state-prompt {
+    color: var(--pico-muted-color);
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.jobs-page__section-count {
+    font-size: 0.75em;
+    font-weight: 400;
+    color: var(--pico-muted-color);
+    font-family: var(--pico-font-family-monospace);
 }
 
 .jobs-page__section-header-actions {

@@ -10,7 +10,8 @@ import "../../components/progress-dashboard/locality-gaps.js";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
-  const [selectedState, setSelectedState] = useState(null);
+  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [selectedState, setSelectedState] = useState(defaultState);
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
@@ -30,9 +31,12 @@ function SearchJurisdictions() {
     fetchDashboard().then(data => setDashboardData(data.data));
   }, []);
 
+  const handleStateChange = (event) => {
+    setSelectedState(event.detail.state);
+  };
+
   const handleSelectJurisdictionChange = (event) => {
-    const { state, jurisdiction_ocdid } = event.detail;
-    setSelectedState(state);
+    const { jurisdiction_ocdid } = event.detail;
     setSelectedJurisdictionOcdid(jurisdiction_ocdid);
   };
 
@@ -84,18 +88,19 @@ function SearchJurisdictions() {
 
         <div class="select-col">
           <civ-select-jurisdiction
+            @state-change=${handleStateChange}
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
-
-          ${dashboardData && selectedState ? html`
-            <details ?open=${progressOpen} @toggle=${e => setProgressOpen(e.target.open)}>
-              <summary>Progress — ${selectedState}</summary>
-              <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
-            </details>
-          ` : ''}
         </div>
 
       </div>
+
+      ${dashboardData && selectedState ? html`
+        <details ?open=${progressOpen} @toggle=${e => setProgressOpen(e.target.open)}>
+          <summary>Progress — ${selectedState}</summary>
+          <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
+        </details>
+      ` : ''}
 
       <div class="below-grid">
         <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>

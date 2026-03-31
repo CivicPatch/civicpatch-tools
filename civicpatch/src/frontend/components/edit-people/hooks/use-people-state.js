@@ -93,7 +93,9 @@ export function usePeopleState({ people }) {
     merged.other_names = Array.from(new Set([...merged.other_names, ...nonCanonicalNames]));
 
     // Office gets special treatment: merge names, keep other fields from base
-    const officeNames = Array.from(new Set(peopleToMerge.map(p => p.office?.name).filter(Boolean)));
+    const officeNames = Array.from(new Set(
+      peopleToMerge.flatMap(p => (p.office?.name || "").split(" - ").map(s => s.trim())).filter(Boolean)
+    ));
     if (officeNames.length > 0) {
       merged.office = { ...(merged.office || {}), name: officeNames.join(" - ") };
     }

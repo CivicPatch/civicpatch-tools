@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
@@ -21,7 +22,6 @@ import "../../components/search-jurisdictions/select-state.js";
 
 const API_URL = config.apiUrl;
 
-const DEFAULT_STATE = "tx";
 const DEFAULT_PER_PAGE = 20;
 const PER_PAGE_OPTIONS = [10, 20, 50, 100];
 
@@ -32,7 +32,8 @@ function getPageFromUrl() {
 }
 
 function getStateFromUrl() {
-  return (new URLSearchParams(window.location.search).get("state") || DEFAULT_STATE).toLowerCase();
+  const val = new URLSearchParams(window.location.search).get("state");
+  return val ? val.toLowerCase() : "";
 }
 
 function getPerPageFromUrl() {
@@ -68,7 +69,8 @@ function getPageRange(page, totalPages) {
 
 function JobsPage() {
   const { permissions } = useAuth(); 
-  const [stateCode, setStateCode] = useState(getStateFromUrl());
+  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
   const [page, setPage] = useState(getPageFromUrl());
   const [total, setTotal] = useState(0);
 
@@ -89,13 +91,16 @@ function JobsPage() {
   const [error, setError] = useState(null);
   const [perPage, setPerPage] = useState(getPerPageFromUrl());
 
-  const [openSections, setOpenSections] = useState({ errors: true, duplicates: true, prs: true });
-  const toggleSection = (key) => setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  const [openSections, setOpenSections] = useLocalStorage(
+    "jobs-page:open-sections",
+    { errors: true, duplicates: true, prs: true },
+    { ttl: PERSIST_FOREVER },
+  );
+  const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (!params.get("state")) {
-      params.set("state", stateCode);
+    if (stateCode) {
       if (!params.get("page")) params.set("page", page);
       if (!params.get("per_page")) params.set("per_page", perPage);
       window.history.replaceState({}, "", `${window.location.pathname}?${params}`);
@@ -109,14 +114,16 @@ function JobsPage() {
   }, []);
 
   useEffect(() => {
+    if (!stateCode) return;
+
     setLoading(true);
     setError(null);
 
     Promise.all([
-      fetchPullRequestsWithData(page, perPage, stateCode.toLowerCase()),
-      fetchJobsWithErrors(stateCode.toLowerCase()),
+      fetchPullRequestsWithData(page, perPage, stateCode),
+      fetchJobsWithErrors(stateCode),
       fetchDuplicatePrJurisdictionJobs(),
-      fetchUnrecognizedRoles(stateCode.toLowerCase()),
+      fetchUnrecognizedRoles(stateCode),
     ])
       .then(([prResult, errResult, duplicatePrResult, unrecognizedResult]) => {
         setPullRequests(prResult.data || []);
@@ -190,6 +197,7 @@ function JobsPage() {
     params.set("state", newState);
     params.set("page", 1);
     window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+    setDefaultState(newState || "");
     setStateCode(newState);
     setPage(1);
   };
@@ -307,17 +315,21 @@ function JobsPage() {
     ? html`<stat-cards .stats=${summaryStats}></stat-cards>`
     : null;
 
-  const errorSection = permissions.JOBS_PAGE_ERRORS && errorJobs.length > 0 ? html`
+  const errorSection = permissions.JOBS_PAGE_ERRORS ? html`
     <section class="jobs-page__errors">
-      <div class="jobs-page__section-header" @click=${() => toggleSection('errors')}>
-        <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors</h2>
-        <span class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}">▼</span>
-      </div>
-      ${openSections.errors ? html`
-        <div style="display: flex; gap: 2rem; flex-direction: column;">
-          ${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}
+      ${errorJobs.length === 0 ? html`
+        <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors <span class="jobs-page__section-count">${errorJobs.length}</span></h2>
+      ` : html`
+        <div class="jobs-page__section-header" @click=${() => toggleSection('errors')}>
+          <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors <span class="jobs-page__section-count">${errorJobs.length}</span></h2>
+          <span class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}">▼</span>
         </div>
-      ` : null}
+        ${openSections.errors ? html`
+          <div style="display: flex; gap: 2rem; flex-direction: column;">
+            ${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}
+          </div>
+        ` : null}
+      `}
     </section>
   ` : null;
 
@@ -340,6 +352,32 @@ function JobsPage() {
     </section>
   ` : null;
 
+  const paginationControls = !pageLoading ? html`
+    <a
+      class="btn btn-sm"
+      href="?page=${page - 1}"
+      aria-disabled=${page <= 1}
+      @click=${(e) => { e.preventDefault(); if (page > 1) goToPage(page - 1); }}
+    >←</a>
+    <nav class="jobs-page__page-numbers">
+      ${getPageRange(page, totalPages).map((n) =>
+        n === "..."
+          ? html`<span class="jobs-page__page-ellipsis">…</span>`
+          : html`<a
+              class="btn btn-sm jobs-page__page-btn${n === page ? " jobs-page__page-btn--active" : ""}"
+              href="?page=${n}"
+              @click=${(e) => { e.preventDefault(); goToPage(n); }}
+            >${n}</a>`
+      )}
+    </nav>
+    <a
+      class="btn btn-sm"
+      href="?page=${page + 1}"
+      aria-disabled=${page >= totalPages}
+      @click=${(e) => { e.preventDefault(); if (page < totalPages) goToPage(page + 1); }}
+    >→</a>
+  ` : null;
+
   return html`
     <main class="jobs-page">
       <div class="jobs-page__filters">
@@ -347,14 +385,6 @@ function JobsPage() {
           .selected=${stateCode}
           @state-change=${handleStateChange}
         ></civ-select-state>
-        <label class="jobs-page__per-page">
-          Per page
-          <select @change=${handlePerPageChange}>
-            ${PER_PAGE_OPTIONS.map(
-              (n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`
-            )}
-          </select>
-        </label>
         ${permissions.JOBS_PAGE_ERRORS ? html`
           <div class="jobs-page__filters-right">
             <a
@@ -370,67 +400,58 @@ function JobsPage() {
           </div>
         ` : null}
       </div>
+      ${!stateCode ? html`<p class="jobs-page__select-state-prompt">Select a state to get started.</p>` : html`
       ${summarySection}
       ${errorSection}
       ${unrecognizedSection}
       <section class="jobs-page__duplicate-jurisdictions">
-        <div class="jobs-page__section-header" @click=${() => toggleSection('duplicates')}>
-          <h2 class="jobs-page__section-title jobs-page__section-title--warning">Duplicate jurisdictions</h2>
-          <div class="jobs-page__section-header-actions">
-            ${duplicateJurisdictions.length > 0 ? html`
+        ${duplicateJurisdictions.length === 0 ? html`
+          <h2 class="jobs-page__section-title jobs-page__section-title--warning">Duplicate jurisdictions <span class="jobs-page__section-count">${duplicateJurisdictions.length}</span></h2>
+        ` : html`
+          <div class="jobs-page__section-header" @click=${() => toggleSection('duplicates')}>
+            <h2 class="jobs-page__section-title jobs-page__section-title--warning">Duplicate jurisdictions <span class="jobs-page__section-count">${duplicateJurisdictions.length}</span></h2>
+            <div class="jobs-page__section-header-actions">
               <button
                 class="btn btn-sm destructive"
                 @click=${(e) => { e.stopPropagation(); handleCloseStaleDuplicates(); }}
                 ?disabled=${closingStale}
               >${closingStale ? "Closing…" : "Close stale"}</button>
-            ` : null}
-            <span class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+              <span class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+            </div>
           </div>
-        </div>
-        ${openSections.duplicates ? html`
-          <div class="jobs-page__duplicate-list">
-            ${duplicatePrList}
-          </div>
-        ` : null}
+          ${openSections.duplicates ? html`
+            <div class="jobs-page__duplicate-list">
+              ${duplicatePrList}
+            </div>
+          ` : null}
+        `}
       </section>
       <section>
         <div class="jobs-page__section-header" @click=${() => toggleSection('prs')}>
-          <h2 class="jobs-page__section-title jobs-page__section-title--primary">Open pull requests</h2>
+          <h2 class="jobs-page__section-title jobs-page__section-title--primary">Open pull requests <span class="jobs-page__section-count">${total}</span></h2>
           <span class="jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}">▼</span>
         </div>
         ${openSections.prs ? html`
+          <div class="jobs-page__pagination jobs-page__pagination--top">
+            ${paginationControls}
+            <label class="jobs-page__per-page">
+              Per page
+              <select @change=${handlePerPageChange}>
+                ${PER_PAGE_OPTIONS.map(
+                  (n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`
+                )}
+              </select>
+            </label>
+          </div>
           <div style="display: flex; gap: 2rem; flex-direction: column;">
             ${prList}
           </div>
+          <div class="jobs-page__pagination">
+            ${paginationControls}
+          </div>
         ` : null}
-        <div class="jobs-page__pagination">
-          ${!pageLoading ? html`
-            <a
-              class="btn btn-sm"
-              href="?page=${page - 1}"
-              aria-disabled=${page <= 1}
-              @click=${(e) => { e.preventDefault(); if (page > 1) goToPage(page - 1); }}
-            >←</a>
-            <nav class="jobs-page__page-numbers">
-              ${getPageRange(page, totalPages).map((n) =>
-                n === "..."
-                  ? html`<span class="jobs-page__page-ellipsis">…</span>`
-                  : html`<a
-                      class="btn btn-sm jobs-page__page-btn${n === page ? " jobs-page__page-btn--active" : ""}"
-                      href="?page=${n}"
-                      @click=${(e) => { e.preventDefault(); goToPage(n); }}
-                    >${n}</a>`
-              )}
-            </nav>
-            <a
-              class="btn btn-sm"
-              href="?page=${page + 1}"
-              aria-disabled=${page >= totalPages}
-              @click=${(e) => { e.preventDefault(); if (page < totalPages) goToPage(page + 1); }}
-            >→</a>
-          ` : null}
-        </div>
       </section>
+      `}
     </main>
   `;
 }

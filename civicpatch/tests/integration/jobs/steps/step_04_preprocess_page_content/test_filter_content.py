@@ -139,6 +139,35 @@ def test_filter_content_keeps_images_in_removed_table():
     assert_markdown_equal({}, original, expected)
 
 
+def test_filter_content_keeps_links_in_image_only_table():
+    """Links wrapping images in a text-empty table must survive intact.
+    Full pipeline: clean_html → filter_content → markdownify.
+    The table is irrelevant (no text content) and gets removed, but <a> links
+    must be extracted before decompose with their <img> children still inside —
+    not as empty shells with the img extracted separately."""
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr>
+                    <td><a href="/Members"><img src="members.png" alt="council members"></a></td>
+                    <td><a href="/Meetings"><img src="meetings.png" alt="meetings"></a></td>
+                </tr>
+            </table>
+        </body>
+    </html>
+    """
+    cleaned = clean_html(logger, original)
+    result = filter_content(logger, {}, cleaned)
+    assert "/Members" in result, "link to /Members was dropped when its image-only table was removed"
+    assert "/Meetings" in result, "link to /Meetings was dropped when its image-only table was removed"
+
+    # The link must wrap its image — markdownify needs <a href><img></a> to produce [![](src)](href)
+    result_md = to_markdown(result)
+    assert "(/Members)" in result_md, "link to /Members lost in markdown — <a> was empty (img extracted separately)"
+    assert "(/Meetings)" in result_md, "link to /Meetings lost in markdown — <a> was empty (img extracted separately)"
+
+
 def test_filter_content_keeps_multiple_images_in_removed_container():
     """Multiple images should be preserved when their container is removed"""
     original = """
