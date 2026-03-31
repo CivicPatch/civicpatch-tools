@@ -3,7 +3,8 @@ import { useState, useEffect } from "haunted";
 const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE: false,
   JURISDICTION_PAGE_SCRAPE_REMOTE: false,
-  JURISDICTION_PAGE_SCRAPE_LOCAL: false
+  JURISDICTION_PAGE_SCRAPE_LOCAL: false,
+  DIRECTORY_DELETE: false,
 };
 
 // Module-level cache
@@ -16,7 +17,8 @@ function toPermissions(permissions) {
     JOBS_PAGE_ERRORS: permissions["can_view_jobs_page_errors"],
     JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
     JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
-    JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"]
+    JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"],
+    DIRECTORY_DELETE: permissions["can_delete_directory_person"],
   }
 }
 

@@ -4,6 +4,7 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 import DOMPurify from "dompurify";
 import { marked } from "marked";
+import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 
 
 function SourceContent({ sourceContentUrls }) {
@@ -34,14 +35,20 @@ function SourceContent({ sourceContentUrls }) {
         <div class="source-content">
             <div class="source-content__tabs">
                 <div class="source-content__tab-bar">
-                    ${sourceContentUrls.map((_, idx) => html`
-                        <button
-                            class="source-content__tab${selectedTab === idx ? ' source-content__tab--active' : ''}"
-                            @click=${() => setSelectedTab(idx)}
-                        >
-                            Tab ${idx + 1}
-                        </button>
-                    `)}
+                    ${(() => {
+                        const urlMap = buildSourceUrlMap(sourceContentUrls);
+                        return sourceContentUrls.map(({ url }, idx) => {
+                            const entry = urlMap.get(url);
+                            return html`
+                                <button
+                                    class="source-content__tab ${entry.colorClass}${selectedTab === idx ? ' source-content__tab--active' : ''}"
+                                    @click=${() => setSelectedTab(idx)}
+                                >
+                                    ${entry.number}
+                                </button>
+                            `;
+                        });
+                    })()}
                 </div>
                 <div class="source-content__tab-content">
                     <a href="${sourceContentUrls[selectedTab].url}" target="_blank" rel="noopener noreferrer">View Original</a>

@@ -41,6 +41,8 @@ def build_permissions(user_data: dict) -> dict:
         "can_scrape_remote": "maintainers" in teams,
 
         "can_view_reviews_page": "default" in teams,
+
+        "can_delete_directory_person": any(t in teams for t in ("contributors", "maintainers", "admins")),
     }
 
 

@@ -187,6 +187,23 @@ export const closePullRequest = async (request_id, pullRequestNumber) => {
   return res.json();
 };
 
+export const deletePerson = async (personId) => {
+  const res = await fetch(`${API_URL}/api/v1/people/${personId}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchPeopleDirectory = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`${API_URL}/api/v1/people/directory?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchPeople = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/api_proxy/people?${params}`, { credentials: "include" });

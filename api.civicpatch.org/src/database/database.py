@@ -335,6 +335,31 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
     return people
 
 
+async def get_all_people_for_jurisdiction(jurisdiction_ocdid: str) -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, data, status
+            FROM people
+            WHERE jurisdiction_ocdid = %s
+            ORDER BY (data->>'updated_at') DESC NULLS LAST
+            """,
+            (jurisdiction_ocdid,),
+        )
+        rows = await cur.fetchall()
+    return [{**row[1], "_id": row[0], "status": row[2]} for row in rows]
+
+
+async def delete_person(person_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM people WHERE id = %s",
+            (person_id,),
+        )
+
+
 async def get_states() -> List[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
