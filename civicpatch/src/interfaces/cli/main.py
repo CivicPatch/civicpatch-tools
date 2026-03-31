@@ -1,5 +1,6 @@
 import argparse
 import asyncio
+import json
 import sys
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
@@ -68,15 +69,20 @@ def main():
     run_pipeline_parser.add_argument(
         "--request-id", required=False, help="Optional request ID"
     )
+    run_pipeline_parser.add_argument(
+        "--source-urls", required=False, help="JSON array of specific URLs to scrape"
+    )
 
     args = parser.parse_args()
 
     if args.command == "run_pipeline":
+        source_urls = json.loads(args.source_urls) if args.source_urls else None
         request = PeopleCollectorJobRequest(
-            jurisdiction_ocdid=args.jurisdiction_ocdid, 
+            jurisdiction_ocdid=args.jurisdiction_ocdid,
             config={
                 "name": args.name,
                 "url": args.url,
+                "source_urls": source_urls,
             }
         )
         request_id = args.request_id or id_utils.make_request_id()

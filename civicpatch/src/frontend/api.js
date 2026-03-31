@@ -229,7 +229,7 @@ export const fetchDashboard = async () => {
 };
 
 /** Jobs */
-export const triggerRemoteJob = async (jurisdictionOcdid, name, url) => {
+export const triggerRemoteJob = async (jurisdictionOcdid, name, url, sourceUrls) => {
   const res = await fetch(`${API_URL}/api/v1/jobs`, {
     method: "POST",
     credentials: "include",
@@ -237,7 +237,12 @@ export const triggerRemoteJob = async (jurisdictionOcdid, name, url) => {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ jurisdiction_ocdid: jurisdictionOcdid, name, url }),
+    body: JSON.stringify({
+      jurisdiction_ocdid: jurisdictionOcdid,
+      name,
+      url,
+      ...(sourceUrls?.length ? { source_urls: sourceUrls } : {}),
+    }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

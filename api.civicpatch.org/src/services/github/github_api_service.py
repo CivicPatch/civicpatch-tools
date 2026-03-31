@@ -103,6 +103,7 @@ async def trigger_people_job_workflow(
     jurisdiction_ocdid: str,
     name: str | None = None,
     url: str | None = None,
+    source_urls: list[str] | None = None,
 ):
     logger.info(
         f"Triggering people job workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}"
@@ -119,6 +120,8 @@ async def trigger_people_job_workflow(
         data["inputs"]["name"] = name
     if url:
         data["inputs"]["url"] = url
+    if source_urls:
+        data["inputs"]["source_urls"] = json.dumps(source_urls)
     default_headers = await get_default_headers()
 
     headers = {

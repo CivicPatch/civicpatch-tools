@@ -53,6 +53,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
         jurisdictionData.data.id,
         jurisdictionData.data.name,
         details.data.url || jurisdictionData.data.url,
+        details.data.sourceUrls,
       );
       return;
     }
