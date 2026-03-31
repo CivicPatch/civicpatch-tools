@@ -131,7 +131,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
     name:
     - The person's name only — include all personal name components (honorifics, suffixes, generational markers: Dr., Hon., Jr., Sr., III, etc.) but exclude role or position labels (Mayor, Council Member, City Secretary, etc.).
     - Preserve name punctuation as-is (e.g. a "Last, First" comma is part of the name format, not a separator).
-    - If the position is vacant, use "Vacant Vacant".
+    - Only include an entry if a real person's name is present. If the position appears vacant, unfilled, or the only available name is a placeholder or role description (e.g., "Councilmember Place 6 Name", "Council Member 2 Name"), omit the entry entirely.
 
     image:
     - The image src value for a profile photo, exactly as it appears in the content.

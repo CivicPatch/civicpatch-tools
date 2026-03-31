@@ -78,7 +78,7 @@ async def research_with_llm(context: PeopleCollectorContext, prompt: str) -> Lis
 def format_response(people: List[dict]) -> List[ResearchedPerson]:
     formatted_people = []
     for person in people:
-        if person.get("name") is None:
-            person["name"] = "Vacant Vacant"
+        if not person.get("name"):
+            continue
         formatted_people.append(ResearchedPerson.model_validate(person))
     return formatted_people
