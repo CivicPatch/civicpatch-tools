@@ -3,3 +3,10 @@ repos:
     rev: v8.24.2
     hooks:
       - id: gitleaks
+  - repo: local
+    hooks:
+      - id: run-tests
+        name: Run unit tests
+        language: system
+        entry: scripts/run_tests.sh
+        pass_filenames: false
