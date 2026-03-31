@@ -119,6 +119,10 @@ def municipality_officials_prompt(roles_hint: List[str]):
     Do NOT extract officials mentioned only in news articles, event summaries,
     meeting notes, or scattered references. If no structured listing exists,
     return an empty array for "people".
+    Do NOT treat a list of links whose text is only a role or position label (e.g.,
+    "Mayor", "Councilmember, Place 1", "Alderman") as a structured listing —
+    that is a navigation or index section pointing to pages, not a roster of people.
+    A valid listing must contain actual person names, not just titles.
     Do NOT extract office staff, aides, assistants, schedulers, constituent services
     representatives, chiefs of staff, or other administrative employees who work for
     an elected official — only extract elected or appointed members of the primary
@@ -131,7 +135,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
     name:
     - The person's name only — include all personal name components (honorifics, suffixes, generational markers: Dr., Hon., Jr., Sr., III, etc.) but exclude role or position labels (Mayor, Council Member, City Secretary, etc.).
     - Preserve name punctuation as-is (e.g. a "Last, First" comma is part of the name format, not a separator).
-    - Only include an entry if you can see a real person's name. If no name is present, do not add an entry — never invent or infer one. "Mayor Name", "Councilmember Place 3 Name", and similar are not names; omit them.
+    - Only include an entry if you can see a real person's name. If no name is present, do not add an entry — never invent or infer one. Role or position labels alone (e.g., "Mayor", "Councilmember, Place 1", "Alderman") are not person names, even when they appear as link text; omit them.
 
     image:
     - The image src value for a profile photo, exactly as it appears in the content.

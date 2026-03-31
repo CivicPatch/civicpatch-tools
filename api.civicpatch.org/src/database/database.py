@@ -1384,3 +1384,61 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
         }
         for r in rows
     ]
+
+
+async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset: int):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT COUNT(*) FROM notes WHERE jurisdiction_ocdid = %s
+            """,
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+        total = row[0]
+
+        await cur.execute(
+            """
+            SELECT id::text, jurisdiction_ocdid, body, user_id, created_at
+            FROM notes
+            WHERE jurisdiction_ocdid = %s
+            ORDER BY created_at DESC
+            LIMIT %s OFFSET %s
+            """,
+            (jurisdiction_ocdid, limit, offset),
+        )
+        rows = await cur.fetchall()
+
+    notes = [
+        {
+            "id": r[0],
+            "jurisdiction_ocdid": r[1],
+            "body": r[2],
+            "user_id": r[3],
+            "created_at": r[4].isoformat() if r[4] else None,
+        }
+        for r in rows
+    ]
+    return total, notes
+
+
+async def create_note(jurisdiction_ocdid: str, body: str, user_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO notes (jurisdiction_ocdid, body, user_id)
+            VALUES (%s, %s, %s)
+            RETURNING id::text, jurisdiction_ocdid, body, user_id, created_at
+            """,
+            (jurisdiction_ocdid, body, user_id),
+        )
+        r = await cur.fetchone()
+    return {
+        "id": r[0],
+        "jurisdiction_ocdid": r[1],
+        "body": r[2],
+        "user_id": r[3],
+        "created_at": r[4].isoformat() if r[4] else None,
+    }

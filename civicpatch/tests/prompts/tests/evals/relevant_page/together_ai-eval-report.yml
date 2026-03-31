@@ -1,36 +1,12 @@
 failed_cases:
 - model_client: together_ai
-  case_id: bay_city_council
-  failures:
-  - field: relevant_urls
-    expected:
-    - https://www.cityofbaycity.org/655/Susan-Reardon
-    - https://www.cityofbaycity.org/458/Blayne-Finlay
-    - https://www.baycitytx.gov/296/Office-of-the-Mayor
-    - https://www.cityofbaycity.org/286/Floyce-Brown
-    - https://www.cityofbaycity.org/287/Brad-Westmoreland
-    - https://www.cityofbaycity.org/285/Jim-Folse
-    actual:
-    - https://www.baycitytx.gov/285/Jim-Folse
-    - https://www.baycitytx.gov/287/Brad-Westmoreland
-    - https://www.baycitytx.gov/458/Blayne-Finlay
-    - https://www.baycitytx.gov/296/Office-of-the-Mayor
-    - https://www.baycitytx.gov/149/Departments
-    - https://www.baycitytx.gov/655/Susan-Reardon
-    - https://www.baycitytx.gov/286/Floyce-Brown
-    - https://www.baycitytx.gov/27/Government
-    score: 0.16666666666666666
-    threshold: 0.75
-- model_client: together_ai
   case_id: mcgregor_city_announcement_irrelevant
   failures:
   - field: relevant_urls
     expected:
-    - https://cityofmcgregor.com/city-government/city-manager/
     - https://cityofmcgregor.com/city-government/city-council/
+    - https://cityofmcgregor.com/city-government/city-manager/
     actual:
-    - https://cityofmcgregor.com/city-government/agenda/
-    - https://cityofmcgregor.com/city-government/contact-information/
     - https://cityofmcgregor.com/city-government/city-council/
     score: 0.5
     threshold: 0.75
@@ -42,7 +18,6 @@ failed_cases:
     - https://quitaque.us/cityofficials.html
     actual:
     - https://quitaque.us/contact.html
-    - https://quitaque.us/phonenumbers.html
     score: 0.0
     threshold: 0.75
 - model_client: together_ai
@@ -50,11 +25,13 @@ failed_cases:
   failures:
   - field: relevant_urls
     expected:
-    - https://sansabatexas.com/city-hall/department-heads/
+    - https://sansabatexas.com/government/
     - https://sansabatexas.com/city-hall/city-council/
     - https://sansabatexas.com/city-hall/administration/
-    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/department-heads/
     actual:
     - https://sansabatexas.com/city-hall/city-council/
-    score: 0.25
+    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/
+    score: 0.5
     threshold: 0.75

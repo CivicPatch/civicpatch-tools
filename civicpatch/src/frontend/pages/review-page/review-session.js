@@ -4,7 +4,7 @@ import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-req
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
-import "../../components/source-content/index.js";
+import "../../components/side-panel/side-panel.js";
 
 function ReviewSession({
   progress, jurisdiction, pr,
@@ -80,7 +80,7 @@ function ReviewSession({
           @data-change=${onTableDataChange}
           @reorder=${onTableReorder}
         ></civ-review-workspace>
-        <source-content .sourceContentUrls=${sourceContentUrls}></source-content>
+        <civ-side-panel .jurisdictionOcdid=${jurisdictionOcdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
       </div>
       <button class="review-page__end-btn" @click=${onPause}>End session</button>
     </main>

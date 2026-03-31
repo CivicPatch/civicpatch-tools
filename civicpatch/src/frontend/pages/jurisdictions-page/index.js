@@ -6,7 +6,7 @@ import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../../components/edit-people/edit-people.js";
-import "../../components/source-content/index.js";
+import "../../components/side-panel/side-panel.js";
 import "./config-detail.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
@@ -136,7 +136,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .canDeletePeople=${permissions.DIRECTORY_DELETE}
             .sourceUrlMap=${buildSourceUrlMap(sourceContentUrls)}
           ></civ-editable-people-list>
-          <source-content .sourceContentUrls=${sourceContentUrls}></source-content>
+          <civ-side-panel .jurisdictionOcdid=${jurisdiction_ocdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
         </div>
       ` : null}
     </div>

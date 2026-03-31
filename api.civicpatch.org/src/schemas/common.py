@@ -59,6 +59,19 @@ class Identity(BaseModel):
     user_id: str | None = None
 
 
+class NoteResponse(BaseModel):
+    id: str
+    jurisdiction_ocdid: str
+    body: str
+    user_id: str
+    created_at: str
+
+
+class CreateNoteRequest(BaseModel):
+    jurisdiction_ocdid: str
+    body: str
+
+
 class PeopleJobHistory(BaseModel):
     request_id: str
     created_at: float

@@ -119,3 +119,13 @@ people:
   start_date: null
   end_date: null
   image: null
+- name: T.C. Broadnax
+  roles:
+  - City Manager
+  designations: []
+  phone: 512-974-2200
+  email: null
+  url: https://www.austintexas.gov/department/city-manager
+  start_date: null
+  end_date: null
+  image: null
