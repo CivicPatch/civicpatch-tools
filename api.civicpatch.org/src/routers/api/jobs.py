@@ -43,7 +43,8 @@ ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 class CreateJobRequest(BaseModel):
     jurisdiction_ocdid: str
     name: Optional[str] = None
-    url: str
+    url: Optional[str] = None
+    source_urls: Optional[list[str]] = None
 
 
 class CreateRegisterJobRequest(BaseModel):
@@ -126,6 +127,7 @@ def get_router(api_key_header):
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 name=request.name,
                 url=request.url,
+                source_urls=request.source_urls,
             )
         except Exception as e:
             print(f"Error triggering people job with GitHub: {e}")
