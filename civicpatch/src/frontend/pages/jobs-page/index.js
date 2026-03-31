@@ -93,7 +93,7 @@ function JobsPage() {
 
   const [openSections, setOpenSections] = useLocalStorage(
     "jobs-page:open-sections",
-    { errors: true, duplicates: true, prs: true },
+    { errors: true, duplicates: true, prs: true, unrecognized: true },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -335,20 +335,25 @@ function JobsPage() {
 
   const unrecognizedSection = permissions.JOBS_PAGE_ERRORS && unrecognizedRoles.length ? html`
     <section class="jobs-page__unrecognized-roles">
-      <h2>Unrecognized roles</h2>
-      <table>
-        <thead><tr><th>Role</th><th>Person</th><th>Status</th><th>Jurisdiction</th></tr></thead>
-        <tbody>
-          ${unrecognizedRoles.map((ur) => html`
-            <tr>
-              <td><code>${ur.role}</code></td>
-              <td>${ur.person_name}</td>
-              <td>${ur.status}</td>
-              <td><a href="/jurisdictions?jurisdiction_ocdid=${ur.jurisdiction_ocdid}" target="_blank">${ur.jurisdiction_ocdid}</a></td>
-            </tr>
-          `)}
-        </tbody>
-      </table>
+      <div class="jobs-page__section-header" @click=${() => toggleSection('unrecognized')}>
+        <h2 class="jobs-page__section-title jobs-page__section-title--warning">Unrecognized roles <span class="jobs-page__section-count">${unrecognizedRoles.length}</span></h2>
+        <span class="jobs-page__section-toggle${openSections.unrecognized ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+      </div>
+      ${openSections.unrecognized ? html`
+        <table>
+          <thead><tr><th>Role</th><th>Person</th><th>Status</th><th>Jurisdiction</th></tr></thead>
+          <tbody>
+            ${unrecognizedRoles.map((ur) => html`
+              <tr>
+                <td><code>${ur.role}</code></td>
+                <td>${ur.person_name}</td>
+                <td>${ur.status}</td>
+                <td><a href="/jurisdictions?jurisdiction_ocdid=${ur.jurisdiction_ocdid}" target="_blank">${ur.jurisdiction_name || ur.jurisdiction_ocdid}</a></td>
+              </tr>
+            `)}
+          </tbody>
+        </table>
+      ` : null}
     </section>
   ` : null;
 

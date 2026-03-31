@@ -57,6 +57,7 @@ class Identity(BaseModel):
     email: str | None
     teams: list[str] | None
     user_id: str | None = None
+    display_name: str | None = None
 
 
 class NoteResponse(BaseModel):
@@ -65,6 +66,9 @@ class NoteResponse(BaseModel):
     body: str
     user_id: str
     created_at: str
+    avatar_url: Optional[str] = None
+    display_name: Optional[str] = None
+    profile_url: Optional[str] = None
 
 
 class CreateNoteRequest(BaseModel):

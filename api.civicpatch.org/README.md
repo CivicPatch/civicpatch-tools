@@ -109,6 +109,16 @@ To register the webhook in GitHub, set the payload URL to `https://api.civicpatc
 ```mermaid
 erDiagram
     %% idx = regular index, functional idx noted inline
+    users {
+        text provider PK
+        text provider_user_id PK
+        text email
+        text display_name
+        text server_url
+        bool is_approved
+        timestamptz created_at
+    }
+
     jurisdictions {
         text jurisdiction_ocdid PK
         text state

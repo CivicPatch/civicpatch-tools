@@ -51,18 +51,18 @@ def to_iso(dt):
         return dt.isoformat()
     return None
 
-async def create_update_user(provider, provider_user_id, email, teams: List[str]):
+async def create_update_user(provider, provider_user_id, email, teams: List[str], display_name: str = None):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # Upsert user
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email)
-            VALUES (%s, %s, %s)
+            INSERT INTO users (provider, provider_user_id, email, display_name)
+            VALUES (%s, %s, %s, %s)
             ON CONFLICT (provider, provider_user_id)
-            DO UPDATE SET email = EXCLUDED.email
+            DO UPDATE SET email = EXCLUDED.email, display_name = EXCLUDED.display_name
             """,
-            (provider, provider_user_id, email),
+            (provider, provider_user_id, email, display_name),
         )
         # Remove existing teams for user
         await cur.execute(
@@ -157,12 +157,13 @@ async def get_user(provider, provider_user_id):
                 u.email,
                 u.server_url,
                 u.created_at,
-                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
+                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles,
+                u.display_name
             FROM users u
             LEFT JOIN user_roles r
                 ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
             WHERE u.provider_user_id = %s AND u.provider = %s
-            GROUP BY u.id, u.email, u.server_url, u.created_at
+            GROUP BY u.id, u.email, u.server_url, u.created_at, u.display_name
             """,
             (provider_user_id, provider),
         )
@@ -175,6 +176,7 @@ async def get_user(provider, provider_user_id):
             "server_url": row[2],
             "created_at": row[3],
             "teams": row[4],
+            "display_name": row[5],
         }
 async def get_user_by_api_key_id(api_key_id):
     pool = await get_pool()
@@ -1363,9 +1365,11 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
         await cur.execute(
             f"""
             SELECT ur.id, ur.role, ur.person_name, ur.status,
-                   ur.created_at, ur.request_id, r.jurisdiction_ocdid
+                   ur.created_at, ur.request_id, r.jurisdiction_ocdid,
+                   j.data->>'name' AS jurisdiction_name
             FROM unrecognized_roles ur
             JOIN requests r ON r.id = ur.request_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
             {where}
             ORDER BY ur.created_at DESC LIMIT 500
             """,
@@ -1381,6 +1385,7 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
             "created_at": r[4].isoformat() if r[4] else None,
             "request_id": str(r[5]),
             "jurisdiction_ocdid": r[6],
+            "jurisdiction_name": r[7],
         }
         for r in rows
     ]
@@ -1400,10 +1405,25 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
 
         await cur.execute(
             """
-            SELECT id::text, jurisdiction_ocdid, body, user_id, created_at
-            FROM notes
-            WHERE jurisdiction_ocdid = %s
-            ORDER BY created_at DESC
+            SELECT
+                n.id::text,
+                n.jurisdiction_ocdid,
+                n.body,
+                n.user_id,
+                n.created_at,
+                CASE WHEN u.provider = 'github'
+                    THEN 'https://avatars.githubusercontent.com/u/' || u.provider_user_id
+                    ELSE NULL
+                END AS avatar_url,
+                u.display_name,
+                CASE WHEN u.provider = 'github'
+                    THEN 'https://github.com/' || u.display_name
+                    ELSE NULL
+                END AS profile_url
+            FROM notes n
+            LEFT JOIN users u ON u.id::text = n.user_id
+            WHERE n.jurisdiction_ocdid = %s
+            ORDER BY n.created_at DESC
             LIMIT %s OFFSET %s
             """,
             (jurisdiction_ocdid, limit, offset),
@@ -1417,6 +1437,9 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
             "body": r[2],
             "user_id": r[3],
             "created_at": r[4].isoformat() if r[4] else None,
+            "avatar_url": r[5],
+            "display_name": r[6],
+            "profile_url": r[7],
         }
         for r in rows
     ]

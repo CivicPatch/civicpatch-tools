@@ -57,7 +57,7 @@ const NAVBAR_CSS = html`
       gap: 1.25rem;
     }
 
-    /* User email — plain inline, no pill */
+    /* User identity — avatar + display name */
     .user-info {
       display: inline-flex;
       align-items: center;
@@ -67,6 +67,14 @@ const NAVBAR_CSS = html`
       color: var(--pico-color);
       cursor: default;
       max-width: 220px;
+      text-decoration: none;
+    }
+    .user-avatar {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: block;
     }
     .user-dot {
       width: 0.5rem;
@@ -75,7 +83,7 @@ const NAVBAR_CSS = html`
       background: var(--pico-primary);
       flex-shrink: 0;
     }
-    .user-email {
+    .user-name {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -202,8 +210,10 @@ function renderAuthed(user) {
       data-tooltip="${tooltip}"
       data-placement="bottom"
     >
-      <span class="user-dot"></span>
-      <span class="user-email">${user.email || 'User'}</span>
+      ${user.avatar_url
+        ? html`<img class="user-avatar" src="${user.avatar_url}" alt="" />`
+        : html`<span class="user-dot"></span>`}
+      <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
     <a href="/" class="nav-link">Home</a>
     <a href="/jobs" class="nav-link">Jobs</a>

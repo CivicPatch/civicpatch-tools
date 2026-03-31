@@ -128,7 +128,7 @@ def get_router(is_production: bool) -> APIRouter:
         else:
             teams = []
         await database.create_update_user(
-            openid.provider, openid.id, openid.email, teams
+            openid.provider, openid.id, openid.email, teams, openid.display_name
         )
 
         response = RedirectResponse(url=redirect_url, status_code=302)
