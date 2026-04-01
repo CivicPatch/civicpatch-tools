@@ -5,7 +5,6 @@ from jobs.people_collector.schemas import (
     PeopleCollectorContext,
     WorkflowStatus,
     WorkflowConfig,
-    PreparePipelineStep,
     ResearchMunicipalityStep,
     SearchLinksStep,
     PreprocessPageContentStep,
@@ -18,7 +17,7 @@ from jobs.people_collector.schemas import (
 
 def workflow_context_factory(
     steps: dict[WorkflowStatus, Any],
-    prepare_pipeline_step=None,
+    research_municipality_step=None,
 ) -> PeopleCollectorContext:
     default_steps: Dict[WorkflowStatus, Union[
         ResearchMunicipalityStep,
@@ -43,13 +42,14 @@ def workflow_context_factory(
             ),
             links=[],
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
-            research_municipality_step=default_steps.get(WorkflowStatus.RESEARCH_MUNICIPALITY),
+            research_municipality_step=research_municipality_step or default_steps.get(WorkflowStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
+                names=[], expected_count=0, target_designations=[], roles_hint=[], identities={}, source_urls=[]
+            ),
             search_links_step=default_steps.get(WorkflowStatus.SEARCH_LINKS, SearchLinksStep()),
             preprocess_page_content_step=default_steps.get(WorkflowStatus.PREPROCESS_PAGE_CONTENT),
             process_page_content_step=default_steps.get(WorkflowStatus.PROCESS_PAGE_CONTENT),
             merge_records_within_llm_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_WITHIN_LLM),
             merge_records_across_llms_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS),
             format_output_step=default_steps.get(WorkflowStatus.FORMAT_OUTPUT),
-            prepare_pipeline_step=prepare_pipeline_step or PreparePipelineStep(roles_hint=[], identities={}, source_urls=[]),
         )
     )

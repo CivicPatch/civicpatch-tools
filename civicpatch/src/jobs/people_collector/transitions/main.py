@@ -44,11 +44,10 @@ from utils.log_utils import WorkflowLogger
 from services.civicpatch_api import register_people_job
 
 async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    result = await prepare_pipeline(context) # Contacts api to get things like identities, source urls, and previous scrape data
+    await prepare_pipeline(context)
 
     next_context = context.copy(update={
         "data": context.data.copy(update={
-            "prepare_pipeline_step": result,
             "links": add_links([], [context.data.config.url]),
         })
     })
@@ -77,7 +76,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         "data": new_data
     })
 
-    source_urls = next_context.data.prepare_pipeline_step.source_urls
+    source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
         logger.info("Source URLs provided, skipping link search.")
         next_context = next_context.copy(update={

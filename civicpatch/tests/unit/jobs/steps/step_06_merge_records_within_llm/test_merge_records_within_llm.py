@@ -5,7 +5,6 @@ from jobs.people_collector.schemas import (
     ProcessPageContentStep, ResearchMunicipalityStep,
     SearchLinksStep,
     PreprocessPageContentStep,
-    PreparePipelineStep,
     WorkflowConfig
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
@@ -53,9 +52,9 @@ def _make_llm_person(**kwargs) -> LLMPerson:
 def _build_context(records_by_llm: dict, elected_officials: list, identities=None) -> PeopleCollectorContext:
     resolved_identities = identities if identities is not None else {o["name"]: [o["name"]] for o in elected_officials}
     research_step = ResearchMunicipalityStep(
-        people=elected_officials,
-        elected_officials=elected_officials,
-        notes=None,
+        names=[o["name"] for o in elected_officials],
+        expected_count=len(elected_officials),
+        identities=resolved_identities,
     )
     process_step = ProcessPageContentStep(
         raw_records_by_llm={},
@@ -70,7 +69,6 @@ def _build_context(records_by_llm: dict, elected_officials: list, identities=Non
         search_links_step=SearchLinksStep(search_link_pointer=0, search_engines={}),
         preprocess_page_content_step=PreprocessPageContentStep(elapsed_times=[], total_elapsed_time_seconds=0, average_elapsed_time_seconds=0),
         process_page_content_step=process_step,
-        prepare_pipeline_step=PreparePipelineStep(roles_hint=[], identities=resolved_identities, source_urls=[]),
     )
     return PeopleCollectorContext(
         data=data,

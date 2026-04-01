@@ -7,7 +7,6 @@ from jobs.people_collector.schemas import (
     MergeRecordsAcrossLLMsStep,
     FormatOutputStep,
     ResearchMunicipalityStep,
-    ResearchedPerson,
 )
 
 pytestmark = pytest.mark.unit

@@ -179,6 +179,18 @@ def normalize_roles(roles: List[str]) -> List[str]:
     return [r.title() for r in sort_roles(seen)]
 
 
+def office_name_to_roles(office_name: str) -> List[str]:
+    # office.name from the DB is already normalized — no alias resolution needed.
+    # Split on " - " and keep only parts that are recognized role names.
+    if not office_name or office_name == "Unknown Office":
+        return []
+    role_alias_map = config_utils.get_role_alias_map()
+    return [
+        part for part in (p.strip() for p in office_name.split(" - "))
+        if part and role_alias_map.get(part.lower())
+    ]
+
+
 def normalize_designations(designations: List[str]) -> List[str]:
     """
     Normalize designations using configured aliases.
@@ -516,6 +528,33 @@ def extract_role_names_and_division_from_designations(designation_configs, juris
         division = division_base
 
     return role_names, division
+
+def division_ocdid_to_designation(division_ocdid: str | None, jurisdiction_ocdid: str) -> List[str]:
+    if not division_ocdid:
+        return []
+    division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
+    if division_ocdid == division_base:
+        return []
+    match = re.search(r"/([^/:]+):(\d+)$", division_ocdid)
+    if not match:
+        return []
+    ocd_slug, value = match.group(1), match.group(2)
+    # council_district is the OCD-ID slug for "district" per format_division
+    canonical = "district" if ocd_slug == "council_district" else ocd_slug
+    return [f"{canonical.title()} {value}"]
+
+
+def filter_geographic_designations(designations: List[str]) -> List[str]:
+    designation_configs = config_utils.get_designations()
+    result = []
+    for d in designations:
+        if not d or not d.strip():
+            continue
+        key = d.strip().lower().split()[0] if d.strip() else ""
+        if designation_configs.get(key, {}).get("has_geographic_area", False):
+            result.append(d.strip().lower())
+    return result
+
 
 def format_division(division_base: str, designation_key: str, designation_value: str) -> str:
     formatted_designation_key = designation_key

@@ -110,17 +110,16 @@ class ResearchedPerson(BaseModel):
     roles: List[str]
     designations: List[str]
 
-class PreparePipelineStep(BaseModel):
-    roles_hint: list[str]
-    identities: dict[str, list[str]] # canonical name to list of other names/aliases
-    source_urls: list[str]
-
 class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]
 
 class ResearchMunicipalityStep(BaseModel):
-    people: List[ResearchedPerson]
-    elected_officials: List[ResearchedPerson]
+    names: List[str] = []           # all researched people, for review name-matching
+    expected_count: int = 0         # how many officials the pipeline expects to find
+    target_designations: List[str] = []  # geographic designations to look for
+    roles_hint: list[str] = []
+    identities: dict[str, list[str]] = {}  # canonical name to list of other names/aliases
+    source_urls: list[str] = []
     notes: Optional[str] = None
     origin_source: str = "google_gemini"
 
@@ -177,7 +176,6 @@ class PeopleCollectorData(BaseModel):
     links: List[Link] = []
     dead_urls: List[DeadUrl] = []
 
-    prepare_pipeline_step: Optional[PreparePipelineStep] = None
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     search_links_step: SearchLinksStep = SearchLinksStep()
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None

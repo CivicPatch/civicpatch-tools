@@ -36,7 +36,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
 # --- Helpers for main ---
 
 def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[str]]:
-    return context.data.prepare_pipeline_step.identities
+    return context.data.research_municipality_step.identities
 
 
 def _merge_groups(

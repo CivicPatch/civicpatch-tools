@@ -57,8 +57,8 @@ def make_context(people_by_llm: Dict[str, List[Person]]):
             people_by_llm=people_by_llm,
         ),
         WorkflowStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
-            people=[],
-            elected_officials=[],
+            names=[],
+            expected_count=0,
         ),
         WorkflowStatus.PROCESS_PAGE_CONTENT: ProcessPageContentStep(
             raw_records_by_llm={},
