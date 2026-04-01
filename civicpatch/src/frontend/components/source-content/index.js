@@ -15,20 +15,24 @@ function SourceContent({ sourceContentUrls }) {
         setSelectedTab(0);
     }, [sourceContentUrls]);
 
+    const safeTab = sourceContentUrls && sourceContentUrls.length > 0
+        ? Math.min(selectedTab, sourceContentUrls.length - 1)
+        : 0;
+
     useEffect(() => {
         let isMounted = true;
         if (!sourceContentUrls || sourceContentUrls.length === 0) {
             setMarkdownHtml("");
             return;
         }
-        const url = sourceContentUrls[selectedTab].markdown;
+        const url = sourceContentUrls[safeTab].markdown;
         fetch(url)
             .then(res => res.text())
             .then(markdown => DOMPurify.sanitize(marked.parse(markdown)))
             .then(html => { if (isMounted) setMarkdownHtml(html); })
             .catch(() => { if (isMounted) setMarkdownHtml("<p>Failed to load markdown.</p>"); });
         return () => { isMounted = false; };
-    }, [selectedTab, sourceContentUrls]);
+    }, [safeTab, sourceContentUrls]);
 
     if (!sourceContentUrls || sourceContentUrls.length === 0) {
         return html`<div class="source-content"><p>No source content available.</p></div>`;
@@ -45,7 +49,7 @@ function SourceContent({ sourceContentUrls }) {
                             const entry = urlMap.get(url);
                             return html`
                                 <button
-                                    class="source-content__tab ${entry.colorClass}${selectedTab === idx ? ' source-content__tab--active' : ''}"
+                                    class="source-content__tab ${entry.colorClass}${safeTab === idx ? ' source-content__tab--active' : ''}"
                                     @click=${() => setSelectedTab(idx)}
                                 >
                                     ${entry.number}
@@ -55,7 +59,7 @@ function SourceContent({ sourceContentUrls }) {
                     })()}
                 </div>
                 <div class="source-content__tab-content">
-                    <a href="${sourceContentUrls[selectedTab].url}" target="_blank" rel="noopener noreferrer">View Original</a>
+                    <a href="${sourceContentUrls[safeTab].url}" target="_blank" rel="noopener noreferrer">View Original</a>
                     <div class="source-content__markdown">${unsafeHTML(markdownHtml)}</div>
                 </div>
             </div>

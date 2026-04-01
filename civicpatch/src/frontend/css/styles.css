@@ -19,6 +19,7 @@
 @import "../components/source-content/source-content.css";
 @import "../components/stat-cards/stat-cards.css";
 @import "../components/streak-graph/streak-graph.css";
+@import "../components/goal-ring/goal-ring.css";
 @import "../components/search-jurisdictions/search-jurisdictions.css";
 @import "../pages/jurisdictions-page/jurisdiction-sidebar.css";
 @import "../pages/jurisdictions-page/scrape-modal/scrape-modal.css";
@@ -402,14 +403,17 @@ button.btn-ghost {
     font-size: inherit;
 }
 
-button.destructive {
+button.destructive,
+[type="button"].destructive {
     --pico-background-color: rgb(var(--catppuccin-red));
     --pico-border-color: rgb(var(--catppuccin-red));
     --pico-color: rgb(var(--catppuccin-base));
 }
 
 button.destructive:hover,
-button.destructive:active {
+button.destructive:active,
+[type="button"].destructive:hover,
+[type="button"].destructive:active {
     --pico-background-color: rgba(var(--catppuccin-red), 0.8);
     --pico-border-color: rgba(var(--catppuccin-red), 0.8);
     --pico-color: rgb(var(--catppuccin-base));

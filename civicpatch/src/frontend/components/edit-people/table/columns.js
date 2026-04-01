@@ -15,6 +15,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
         {
           type: "drag-row",
           editable: false,
+          colClass: "col-shrink col-icon",
           renderCell: (_person) => html`
             <span class="drag-handle" title="Drag to reorder">
               <i class="fas fa-grip-vertical"></i>
@@ -22,22 +23,16 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           `,
         },
         {
-          field: "_isNew",
-          editable: false,
-          label: "New",
-          renderCell: (person) => person._isNew
-            ? html`<span style="background:var(--pico-ins-background);padding:0.1em 0.4em;border-radius:3px;font-size:0.85em;">New</span>`
-            : "",
-        },
-        {
           field: "_selected",
           editable: true,
           type: "checkbox",
+          colClass: "col-shrink col-icon",
         },
         {
           field: "cdn_image",
           label: "Image",
           editable: false,
+          colClass: "col-shrink col-icon",
           renderCell: (person) => html`
             <person-image .person=${person} .onClick=${openProfileModal}></person-image>
           `
@@ -48,6 +43,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "single",
           customCss: customCss,
+          colClass: "col-name col-shrink",
         },
         {
           field: "phones",
@@ -56,6 +52,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           format: "phone",
           type: "multiple",
           customCss: customCss,
+          colClass: "col-shrink col-phone",
         },
         {
           field: "emails",
@@ -64,6 +61,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           format: "email",
           type: "multiple",
           customCss: customCss,
+          colClass: "col-shrink col-email",
         },
         {
           field: "urls",
@@ -71,6 +69,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "multiple",
           customCss: customCss,
+          colClass: "col-shrink",
           renderValue: (url, index) => html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">[${index}]</a>`,
         },
         {
@@ -79,6 +78,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "date",
           customCss: customCss,
+          colClass: "col-shrink",
         },
         {
           field: "end_date",
@@ -86,6 +86,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "date",
           customCss: customCss,
+          colClass: "col-shrink",
         },
         {
           field: "office.name",
@@ -93,6 +94,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "single",
           customCss: customCss,
+          colClass: "col-shrink col-office-name",
         },
         {
           field: "office.division_ocdid",
@@ -100,6 +102,8 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "single",
           customCss: customCss,
+          colClass: "col-shrink col-division",
+          renderValue: (value) => value ? divisionOcdidToFriendly(value) : "",
         },
         {
           field: "source_urls",
@@ -107,6 +111,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           editable: true,
           type: "multiple",
           customCss: customCss,
+          colClass: "col-shrink",
           renderValue: (url, index) => {
             const entry = sourceUrlMap.get(url);
             const colorClass = entry ? entry.colorClass : getSourceColorClass(url);

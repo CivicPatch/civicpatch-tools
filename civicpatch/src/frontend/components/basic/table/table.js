@@ -1,4 +1,4 @@
-import { html, component, useState, useLayoutEffect } from 'haunted';
+import { html, component, useState, useLayoutEffect, useRef } from 'haunted';
 import { keyed } from 'lit/directives/keyed.js';
 import { ref, createRef } from 'lit/directives/ref.js';
 import { useSortableList } from '../../../hooks/useSortableList.js';
@@ -32,6 +32,7 @@ function BasicTable(props) {
   const [editingCell, setEditingCell] = useState({ row: null, col: null });
   
   const tableRef = createRef();
+  const dragFromHandle = useRef(false);
 
   const {
     draggedIndex,
@@ -50,7 +51,7 @@ function BasicTable(props) {
   });
 
   function handleDragStart(index, e) {
-    if (!e.target.closest('.drag-handle')) {
+    if (!dragFromHandle.current) {
       e.preventDefault();
       return;
     }
@@ -243,6 +244,7 @@ function BasicTable(props) {
       <td
         data-row=${rowIndex}
         data-col=${colIndex}
+        class=${col.colClass ?? ""}
         style=${col.customCss ? col.customCss(row, actualField) : ""}
         @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable, isSelectCell: col.type === 'checkbox' })}
         @click=${() => handleCellClick({ row: rowIndex, col: colIndex, editable: col.editable })}
@@ -328,7 +330,7 @@ function BasicTable(props) {
       <thead>
         <tr>
           ${props.columns.map((col, colIndex) => html`
-            <th>${col.label}</th>
+            <th class=${col.colClass ?? ""}>${col.label}</th>
           `)}
         </tr>
       </thead>
@@ -338,7 +340,8 @@ function BasicTable(props) {
           ${dropIndex < props.data.length ? html`
             <tr
               draggable="${isEditable && !(editingCell.row !== null && editingCell.col !== null) ? "true" : "false"}"
-              class=${dropIndex === draggedIndex ? "dragging" : ""}
+              class=${[dropIndex === draggedIndex ? "dragging" : "", props.rowClass ? props.rowClass(props.data[dropIndex]) : ""].filter(Boolean).join(" ")}
+              @pointerdown=${(e) => { dragFromHandle.current = !!e.target.closest('.drag-handle'); }}
               @dragstart=${e => handleDragStart(dropIndex, e)}
               @dragend=${handleDragEnd}
             >

@@ -170,7 +170,7 @@ function ReviewPage() {
   }
 
   return html`<review-session
-    .progress=${{ ...progress, goal: session.daily_goal }}
+    .progress=${{ ...progress, goal: session.daily_goal - (stats.today_resolved ?? 0) }}
     .jurisdiction=${jurisdiction}
     .pr=${pr}
     .mergeState=${mergeState}
