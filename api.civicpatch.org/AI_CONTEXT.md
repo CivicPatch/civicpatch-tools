@@ -80,6 +80,10 @@ mise run psql
 - Do not use `BackgroundTasks` for work that the caller needs to observe the result of — await it directly instead
 - Background tasks must not silently swallow exceptions; wrap in try/except and log failures
 
+## API consumers
+
+This API has a single consumer: the civicpatch frontend. Backward compatibility is not required — endpoints can be renamed, removed, or changed freely as long as the frontend is updated in the same changeset.
+
 ## Testing
 
 - Framework: pytest

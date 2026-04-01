@@ -12,6 +12,10 @@ function SourceContent({ sourceContentUrls }) {
     const [markdownHtml, setMarkdownHtml] = useState("");
 
     useEffect(() => {
+        setSelectedTab(0);
+    }, [sourceContentUrls]);
+
+    useEffect(() => {
         let isMounted = true;
         if (!sourceContentUrls || sourceContentUrls.length === 0) {
             setMarkdownHtml("");

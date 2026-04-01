@@ -44,6 +44,8 @@ def build_permissions(user_data: dict) -> dict:
 
         "can_view_reviews_page": "default" in teams,
 
+        "can_view_issues_page": "maintainers" in teams,
+
         "can_delete_directory_person": any(t in teams for t in ("contributors", "maintainers", "admins")),
     }
 
@@ -107,7 +109,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             }
         )
 
-    @router.get("/jobs", include_in_schema=False)
+    @router.get("/queue", include_in_schema=False)
     async def jobs_page(
         request: Request,
         user: dict = Depends(get_current_user)
@@ -119,6 +121,21 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             )
         return templates.TemplateResponse(
             "pages/jobs.html",
+            {"request": request, "user": user}
+        )
+
+    @router.get("/issues", include_in_schema=False)
+    async def issues_page(
+        request: Request,
+        user: dict = Depends(get_current_user)
+    ):
+        if not user.get("authenticated") or not user.get("permissions", {}).get("can_view_issues_page"):
+            return templates.TemplateResponse(
+                "pages/unauthorized.html",
+                {"request": request, "user": user}
+            )
+        return templates.TemplateResponse(
+            "pages/issues.html",
             {"request": request, "user": user}
         )
 

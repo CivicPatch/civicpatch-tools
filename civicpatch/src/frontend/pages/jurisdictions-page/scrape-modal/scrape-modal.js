@@ -185,13 +185,13 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
   `;
 
   const footer = html`
-    <button @click=${modalProps.onClose} class="secondary">Cancel</button>
+    <button @click=${modalProps.onClose} class="secondary btn-sm">Cancel</button>
     <button
       @click=${() => {
         submitScrape();
         modalProps.onClose();
       }}
-      class="primary"
+      class="primary btn-sm"
       ?disabled=${!canStartScrape}
     >
       Start Scrape

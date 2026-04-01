@@ -21,7 +21,7 @@
         
     </head>
     <body>
-        <main class="container-fluid">
+        <main class="container-fluid {% block main_class %}{% endblock %}">
             {% block content %}{% endblock %}
         </main>
 

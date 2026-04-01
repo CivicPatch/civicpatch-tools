@@ -1410,6 +1410,54 @@ async def insert_job_events(request_id: str, event_type: str, events: list[dict]
         )
 
 
+async def get_job_events_page(
+    event_types: list[str],
+    page: int,
+    per_page: int,
+    sort_desc: bool = True,
+) -> tuple[list[dict], int]:
+    conditions = []
+    params: list[Any] = []
+    if event_types:
+        placeholders = ", ".join(["%s"] * len(event_types))
+        conditions.append(f"je.event_type IN ({placeholders})")
+        params.extend(event_types)
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    order = "DESC" if sort_desc else "ASC"
+    offset = (page - 1) * per_page
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT je.id::text, je.event_type, je.data, je.created_at,
+                   je.request_id::text, r.jurisdiction_ocdid,
+                   j.data->>'name' AS jurisdiction_name,
+                   COUNT(*) OVER() AS total_count
+            FROM job_events je
+            JOIN requests r ON r.id = je.request_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
+            {where}
+            ORDER BY je.created_at {order}
+            LIMIT %s OFFSET %s
+            """,
+            params + [per_page, offset],
+        )
+        rows = await cur.fetchall()
+    total = rows[0][7] if rows else 0
+    return [
+        {
+            "id": r[0],
+            "event_type": r[1],
+            "data": r[2],
+            "created_at": r[3].isoformat() if r[3] else None,
+            "request_id": r[4],
+            "jurisdiction_ocdid": r[5],
+            "jurisdiction_name": r[6],
+        }
+        for r in rows
+    ], total
+
+
 async def get_job_events(event_type: str, state_code: Optional[str] = None) -> list[dict]:
     conditions = ["je.event_type = %s"]
     params: list[Any] = [event_type]
