@@ -213,12 +213,7 @@ function TableCell({
 
   function renderCheckboxCell() {
     return html`
-        <div style="display:flex; 
-          align-items:center; 
-          justify-content:center; 
-          height:100%;
-          margin:0 1rem"
-          >
+        <div style="display:flex; align-items:center; justify-content:center;">
             <input type="checkbox" style="margin: 0" tabIndex="-1"
               ${ref(el => {
                 checkboxRef.current = el;

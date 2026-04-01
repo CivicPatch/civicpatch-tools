@@ -1,70 +1,127 @@
+/* ── Container ──────────────────────────────────────────────────────────── */
+
 civ-table {
   display: block;
+  background: var(--pico-background-color);
   border: 1px solid var(--pico-form-element-border-color);
   border-radius: var(--pico-border-radius);
-  overflow: hidden;
-  background: var(--pico-background-color);
-}
-
-civ-table table {
-  table-layout: auto;
-  width: auto;
-  min-width: 100%;
-}
-civ-table table:focus {
-  outline: none;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 civ-table:focus-within {
   box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire));
 }
 
+/* ── Table base ─────────────────────────────────────────────────────────── */
+
+civ-table table {
+  table-layout: auto;
+  width: max-content;
+  min-width: 100%;
+}
+
+civ-table table:focus {
+  outline: none;
+}
+
 civ-table th,
 civ-table td {
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem 0.25rem;
+}
+
+civ-table tr {
+  border-bottom: 1px solid var(--pico-form-element-border-color);
+  transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
 }
 
 civ-table tr:last-child {
   border-bottom: none;
 }
 
-.drag-handle {
+/* ── Interactive states ─────────────────────────────────────────────────── */
+
+civ-table td:focus-within {
+  background-color: rgb(var(--catppuccin-base));
+}
+
+civ-table tr:focus-within {
+  background-color: rgba(var(--catppuccin-teal), 0.1);
+}
+
+/* ── Drag & drop ────────────────────────────────────────────────────────── */
+
+civ-table .drag-handle {
   cursor: grab;
   color: var(--pico-muted-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.25rem;
   user-select: none;
 }
 
-.drag-handle:active {
+civ-table .drag-handle:active {
   cursor: grabbing;
 }
 
-civ-table td:focus-within {
-  background-color: rgb(var(--catppuccin-base));
-}
-civ-table tr {
-  border-bottom: 1px solid var(--pico-form-element-border-color);
-  transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
-}
-civ-table tr:focus-within {
-  background-color: rgba(var(--catppuccin-teal), 0.1);
-}
 civ-table tr.dragging {
   opacity: 0.3;
 }
+
 civ-table tr.drop-indicator td div {
   animation: expand 250ms ease-out forwards;
 }
+
 @keyframes expand {
-  from {
-    height: 0;
-    opacity: 0;
-  }
-  to {
-    height: 8rem;
-    opacity: 1;
-  }
+  from { height: 0; opacity: 0; }
+  to   { height: 8rem; opacity: 1; }
+}
+
+/* ── Row modifiers ──────────────────────────────────────────────────────── */
+
+civ-table tr.row-new td:first-child {
+  box-shadow: inset 3px 0 0 var(--pico-ins-color);
+}
+
+/* ── Column modifiers ───────────────────────────────────────────────────── */
+
+/* shrink to content width — prevents extra space being distributed to the column */
+civ-table th.col-shrink,
+civ-table td.col-shrink {
+  width: 1px;
+  white-space: nowrap;
+}
+
+/* icon-only columns (drag handle, checkbox) — no padding, shrink to content */
+civ-table th.col-icon,
+civ-table td.col-icon {
+  padding: 0;
+}
+
+civ-table td.col-icon civ-table-cell,
+civ-table td.col-icon civ-table-cell > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* phone numbers must never be squashed */
+civ-table th.col-phone,
+civ-table td.col-phone {
+  white-space: nowrap;
+}
+
+/* name/office: wrap at word boundaries, never mid-word */
+civ-table td.col-name span.cell-content,
+civ-table td.col-office-name span.cell-content {
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* division OCD-IDs and emails: allow character-level breaks for compact display */
+civ-table td.col-division span.cell-content,
+civ-table td.col-email .tag-link {
+  white-space: normal;
+  word-break: break-all;
 }

@@ -35,7 +35,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [frontierEntry, setFrontierEntry] = useState(0);
   const [mergeState, setMergeState] = useState(null);
   const [error, setError] = useState(null);
-  const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0, claimed_count: 0 });
+  const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0, claimed_count: 0, best_streak: 0, avg_seconds_per_review: null });
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
   const [reviewData, setReviewData] = useState(null);
 

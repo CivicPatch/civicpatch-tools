@@ -277,7 +277,7 @@ async def resolve_review_session_entries_by_request_id(request_id: str) -> None:
             await cur.execute(
                 """
                 UPDATE review_session_entries
-                SET status = 'resolved'
+                SET status = 'resolved', resolved_at = NOW()
                 WHERE request_id = %s AND status != 'resolved'
                 """,
                 (request_id,),
@@ -291,7 +291,7 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
             await cur.execute(
                 """
                 UPDATE review_session_entries
-                SET status = 'resolved'
+                SET status = 'resolved', resolved_at = NOW()
                 WHERE request_id IN (
                     SELECT j.request_id FROM jobs j
                     JOIN requests r ON r.id = j.request_id
@@ -401,6 +401,45 @@ async def get_review_stats(
             )
             daily_rows = await cur.fetchall()
 
+            await cur.execute(
+                """
+                WITH daily AS (
+                    SELECT DISTINCT (rse.created_at AT TIME ZONE %s)::date AS activity_date
+                    FROM review_session_entries rse
+                    JOIN review_sessions rs ON rs.id = rse.review_session_id
+                    WHERE rs.user_id = %s
+                      AND rse.status = 'resolved'
+                ),
+                grouped AS (
+                    SELECT activity_date,
+                           activity_date - (ROW_NUMBER() OVER (ORDER BY activity_date))::int AS grp
+                    FROM daily
+                ),
+                streaks AS (
+                    SELECT COUNT(*) AS length
+                    FROM grouped
+                    GROUP BY grp
+                )
+                SELECT COALESCE(MAX(length), 0) AS best_streak FROM streaks
+                """,
+                (STREAK_TIMEZONE, user_id),
+            )
+            best_streak_row = await cur.fetchone()
+
+            await cur.execute(
+                """
+                SELECT EXTRACT(EPOCH FROM AVG(rse.resolved_at - rse.created_at))::int AS avg_seconds
+                FROM review_session_entries rse
+                JOIN review_sessions rs ON rs.id = rse.review_session_id
+                WHERE rs.user_id = %s
+                  AND rse.status = 'resolved'
+                  AND rse.resolved_at IS NOT NULL
+                  AND rse.resolved_at >= NOW() - INTERVAL '30 days'
+                """,
+                (user_id,),
+            )
+            avg_row = await cur.fetchone()
+
     return {
         "today_resolved": stats.today_resolved,
         "streak": streak_row.length if streak_row else 0,
@@ -409,4 +448,6 @@ async def get_review_stats(
         "claimed_count": claimed.claimed_count,
         "daily_counts": [{"date": row.date, "count": row.count} for row in daily_rows],
         "current_date": stats.current_date.isoformat(),
+        "best_streak": best_streak_row.best_streak,
+        "avg_seconds_per_review": avg_row.avg_seconds,
     }

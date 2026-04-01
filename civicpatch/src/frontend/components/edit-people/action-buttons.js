@@ -25,7 +25,7 @@ function PeopleActionButtons({
       <button type="button" @click=${onMerge} ?disabled=${selectedPeople.length < 2} class="secondary btn-sm">
         Merge (${selectedPeople.length})
       </button>
-      <button type="button" @click=${onBulkDelete} ?disabled=${selectedPeople.length === 0} class="secondary btn-sm">
+      <button type="button" @click=${onBulkDelete} ?disabled=${selectedPeople.length === 0} class="destructive btn-sm">
         Delete (${selectedPeople.length})
       </button>
       <button type="button" @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">

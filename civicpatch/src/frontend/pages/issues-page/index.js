@@ -376,16 +376,14 @@ function IssuesPage() {
       ` : html`
         <div class="issues-page__section-header" @click=${() => toggleSection("duplicates")}>
           <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">${duplicatesCount}</span></h2>
-          <div class="issues-page__section-header-actions">
-            <button
-              class="btn btn-sm destructive"
-              @click=${(e) => { e.stopPropagation(); handleCloseStaleDuplicates(); }}
-              ?disabled=${closingStale}
-            >${closingStale ? "Closing…" : "Close stale"}</button>
-            <i class="fa-solid fa-chevron-down btn-icon${openSections.duplicates ? " btn-icon--rotated" : ""}"></i>
-          </div>
+          <i class="fa-solid fa-chevron-down btn-icon${openSections.duplicates ? " btn-icon--rotated" : ""}"></i>
         </div>
         ${openSections.duplicates ? html`
+          <button
+            class="btn btn-sm destructive"
+            @click=${handleCloseStaleDuplicates}
+            ?disabled=${closingStale}
+          >${closingStale ? "Closing…" : "Close stale"}</button>
           <div class="issues-page__duplicate-list">${duplicatePrList}</div>
         ` : null}
       `}

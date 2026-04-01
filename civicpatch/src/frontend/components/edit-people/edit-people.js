@@ -17,7 +17,15 @@ import { buildOtherNames } from "../../utils/name-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../diff-panel/diff-panel.js";
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false }) {
+function updateTabParam(tab) {
+  const p = new URLSearchParams(window.location.search);
+  if (tab === 'directory') p.set('tab', 'directory');
+  else if (tab == null) p.set('tab', 'current');
+  else p.set('tab', tab.request_id);
+  history.replaceState(null, '', `?${p}`);
+}
+
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, onSourceUrlsChange = () => {} }) {
   const {
     currentPeople,
     selectedPeople,
@@ -68,7 +76,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       const data = await fetchPullRequests(jurisdiction_ocdid);
       const prs = (data.data || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setPullRequests(prs);
-      setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
+      const tabParam = new URLSearchParams(window.location.search).get('tab');
+      if (tabParam === 'directory') {
+        setSelectedPullRequest('directory');
+      } else if (tabParam === 'current') {
+        setSelectedPullRequest(null);
+      } else if (tabParam) {
+        setSelectedPullRequest(prs.find(pr => pr.request_id === tabParam) ?? (prs.length > 0 ? prs[0] : null));
+      } else {
+        setSelectedPullRequest(prs.length > 0 ? prs[0] : null);
+      }
     } catch {
       setSelectedPullRequest(null);
     } finally {
@@ -90,6 +107,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   useEffect(() => {
     if (selectedPullRequest === undefined) return;
     setPrStatus(null);
+    onSourceUrlsChange(selectedPullRequest && selectedPullRequest !== 'directory' ? selectedPullRequest.sources ?? [] : []);
     if (selectedPullRequest === 'directory') {
       handleFetchDirectory();
     } else if (!selectedPullRequest) {
@@ -381,14 +399,11 @@ function handleCardKeyDown(e, idx, key) {
             ></civ-review-panel>
           `
         : ""}
-      <civ-people-action-buttons
+      ${selectedPullRequest ? html`<civ-people-action-buttons
         .onAdd=${handleAdd}
         .onMerge=${handleMerge}
         .onBulkDelete=${handleBulkDelete}
-        .onReset=${() =>
-          selectedPullRequest
-            ? handleSelectedPullRequestData(selectedPullRequest)
-            : assignPeople(people)}
+        .onReset=${() => handleSelectedPullRequestData(selectedPullRequest)}
         .onPublish=${handlePublish}
         .onClosePR=${handleClosePR}
         .selectedPeople=${selectedPeople}
@@ -397,7 +412,7 @@ function handleCardKeyDown(e, idx, key) {
         .notice=${notice}
         .hasPullRequest=${!!selectedPullRequest}
         .prStatus=${prStatus}
-      ></civ-people-action-buttons>
+      ></civ-people-action-buttons>` : ""}
       ${isLoading
         ? html`<div
             style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"
@@ -415,7 +430,7 @@ function handleCardKeyDown(e, idx, key) {
       .pullRequests=${pullRequests}
       .selectedPullRequest=${selectedPullRequest}
       .loading=${pullRequestsLoading}
-      .onTabClick=${(pr) => setSelectedPullRequest(pr)}
+      .onTabClick=${(pr) => { setSelectedPullRequest(pr); updateTabParam(pr); }}
     ></civ-people-tabs>
 
     ${notice
@@ -458,8 +473,8 @@ function handleCardKeyDown(e, idx, key) {
         <p style="margin-top:1rem;">This cannot be undone.</p>
       ` : null}
       .footer=${html`
-        <button type="button" class="secondary" @click=${() => setDeleteConfirm(null)}>Cancel</button>
-        <button type="button" class="destructive" @click=${handleConfirmDelete}>Delete</button>
+        <button type="button" class="secondary btn-sm" @click=${() => setDeleteConfirm(null)}>Cancel</button>
+        <button type="button" class="destructive btn-sm" @click=${handleConfirmDelete}>Delete</button>
       `}
       .modalProps=${{ open: !!deleteConfirm, onClose: () => setDeleteConfirm(null) }}
     ></civ-modal>
