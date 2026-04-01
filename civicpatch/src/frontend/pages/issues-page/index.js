@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { useSummary } from "../../hooks/useSummary.js";
 import {
   fetchJobsWithErrors,
   fetchJobEvents,
@@ -82,6 +83,7 @@ function formatDate(isoString) {
 
 function IssuesPage() {
   const { permissions } = useAuth();
+  const summary = useSummary(true);
 
   // Errors section
   const [errorJobs, setErrorJobs] = useState([]);
@@ -259,8 +261,8 @@ function IssuesPage() {
   const eventsSection = html`
     <section class="issues-page__section">
       <div class="issues-page__section-header" @click=${() => toggleSection("events")}>
-        <h2 class="issues-page__section-title">Events <span class="issues-page__section-count">${eventsTotal}</span></h2>
-        <i class="fa-solid fa-chevron-down issues-page__section-toggle${openSections.events ? " issues-page__section-toggle--open" : ""}"></i>
+        <h2 class="issues-page__section-title issues-page__section-title--info">Events <span class="issues-page__section-count">${eventsTotal || summary?.events_total || ""}</span></h2>
+        <i class="fa-solid fa-chevron-down btn-icon${openSections.events ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${openSections.events ? html`
         <div class="issues-page__events-filters">
@@ -316,14 +318,15 @@ function IssuesPage() {
     </section>
   `;
 
+  const errorsCount = openSections.errors ? errorJobs.length : (summary?.pipeline_errors ?? "");
   const errorsSection = html`
     <section class="issues-page__section">
-      ${errorJobs.length === 0 && !errorsLoading ? html`
+      ${errorsCount === 0 && !errorsLoading ? html`
         <h2 class="issues-page__section-title issues-page__section-title--error">Pipeline errors <span class="issues-page__section-count">0</span></h2>
       ` : html`
         <div class="issues-page__section-header" @click=${() => toggleSection("errors")}>
-          <h2 class="issues-page__section-title issues-page__section-title--error">Pipeline errors <span class="issues-page__section-count">${errorJobs.length}</span></h2>
-          <i class="fa-solid fa-chevron-down issues-page__section-toggle${openSections.errors ? " issues-page__section-toggle--open" : ""}"></i>
+          <h2 class="issues-page__section-title issues-page__section-title--error">Pipeline errors <span class="issues-page__section-count">${errorsCount}</span></h2>
+          <i class="fa-solid fa-chevron-down btn-icon${openSections.errors ? " btn-icon--rotated" : ""}"></i>
         </div>
         ${openSections.errors ? html`
           ${errorsLoading
@@ -344,7 +347,7 @@ function IssuesPage() {
           @click=${() => loadJurisdictionPRs(ocdid)}
         >
           <span>${ocdid}</span>
-          <i class="fa-solid fa-chevron-down issues-page__duplicate-chevron"></i>
+          <i class="fa-solid fa-chevron-down btn-icon${isOpen ? " btn-icon--rotated" : ""}"></i>
         </button>
         ${isOpen ? html`
           <div class="issues-page__duplicate-item-body">
@@ -365,20 +368,21 @@ function IssuesPage() {
     `;
   });
 
+  const duplicatesCount = openSections.duplicates ? duplicateJurisdictions.length : (summary?.duplicate_jurisdictions ?? "");
   const duplicatesSection = html`
     <section class="issues-page__section">
-      ${duplicateJurisdictions.length === 0 ? html`
+      ${duplicatesCount === 0 ? html`
         <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">0</span></h2>
       ` : html`
         <div class="issues-page__section-header" @click=${() => toggleSection("duplicates")}>
-          <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">${duplicateJurisdictions.length}</span></h2>
+          <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">${duplicatesCount}</span></h2>
           <div class="issues-page__section-header-actions">
             <button
               class="btn btn-sm destructive"
               @click=${(e) => { e.stopPropagation(); handleCloseStaleDuplicates(); }}
               ?disabled=${closingStale}
             >${closingStale ? "Closing…" : "Close stale"}</button>
-            <i class="fa-solid fa-chevron-down issues-page__section-toggle${openSections.duplicates ? " issues-page__section-toggle--open" : ""}"></i>
+            <i class="fa-solid fa-chevron-down btn-icon${openSections.duplicates ? " btn-icon--rotated" : ""}"></i>
           </div>
         </div>
         ${openSections.duplicates ? html`
@@ -389,7 +393,7 @@ function IssuesPage() {
   `;
 
   return html`
-    <main class="issues-page">
+    <main class="issues-page page-content">
       ${errorsSection}
       ${eventsSection}
       ${duplicatesSection}

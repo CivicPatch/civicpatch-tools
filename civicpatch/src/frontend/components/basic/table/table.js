@@ -36,7 +36,7 @@ function BasicTable(props) {
   const {
     draggedIndex,
     dragOverIndex,
-    handleDragStart,
+    handleDragStart: _handleDragStart,
     handleDragOver,
     handleDrop,
     handleDragEnd,
@@ -48,6 +48,14 @@ function BasicTable(props) {
       composed: true
     }));
   });
+
+  function handleDragStart(index, e) {
+    if (!e.target.closest('.drag-handle')) {
+      e.preventDefault();
+      return;
+    }
+    _handleDragStart(index, e);
+  }
 
   function handleDataChange(event, row) {
     const { identifier, field, value } = event.detail;
@@ -232,7 +240,7 @@ function BasicTable(props) {
     const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
     const cellIsEditing = editingCell.row === rowIndex && editingCell.col === colIndex;
     return keyed(mapKey, html`
-      <td style="padding: 0;" 
+      <td
         data-row=${rowIndex}
         data-col=${colIndex}
         style=${col.customCss ? col.customCss(row, actualField) : ""}

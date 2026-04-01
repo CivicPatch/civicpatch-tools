@@ -56,7 +56,7 @@ function ReviewSession({
           </div>
           <div class="review-page__nav-right">
             <button class="btn-sm review-page__pass-btn" @click=${onPass} ?disabled=${!hasNext}>Pass</button>
-            <button class="btn-sm review-page__merge-btn" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
+            <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
               ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
             </button>
           </div>

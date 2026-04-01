@@ -1,6 +1,7 @@
 import { component } from 'haunted';
 import { html } from 'lit';
 import { config } from '../assets/config.js';
+import { useSummary } from '../hooks/useSummary.js';
 const API_URL = config.apiUrl;
 
 const NAVBAR_CSS = html`
@@ -105,6 +106,28 @@ const NAVBAR_CSS = html`
       text-decoration: none;
     }
 
+    /* Count badge on nav links */
+    .nav-count--hidden {
+      visibility: hidden;
+    }
+    .nav-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.5em;
+      padding: 0.15em 0.45em;
+      height: 1.5em;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-family: var(--pico-font-family-monospace);
+      font-weight: 700;
+      background: var(--pico-primary);
+      color: var(--pico-primary-inverse);
+      line-height: 1;
+      vertical-align: middle;
+      margin-left: 0.2em;
+    }
+
     /* Logout — outline button, no fill */
     .btn-outline {
       display: inline-flex;
@@ -203,7 +226,7 @@ function getTeamsTooltip(teams) {
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
-function renderAuthed(user) {
+function renderAuthed(user, summary) {
   const teams = user.teams || [];
   const tooltip = getTeamsTooltip(teams);
   return html`
@@ -218,8 +241,8 @@ function renderAuthed(user) {
       <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
     <a href="/" class="nav-link">Home</a>
-    <a href="/queue" class="nav-link">Queue</a>
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="nav-link">Issues</a>` : ""}
+    <a href="/queue" class="nav-link">Queue <span class="nav-count ${summary?.open_prs == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? ''}</span></a>
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="nav-link">Issues <span class="nav-count ${!summary || (!summary.pipeline_errors && !summary.duplicate_jurisdictions) ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : ''}</span></a>` : ""}
     ${(user.permissions?.can_view_jobs_page) ? html`<a href="/review" class="nav-link">Review</a>` : ""}
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
@@ -249,6 +272,9 @@ function Navbar({ user }) {
   } catch (e) {
     userData = null;
   }
+  const isAuthed = userData?.authenticated;
+  const canViewQueue = isAuthed && userData.permissions?.can_view_jobs_page;
+  const summary = useSummary(canViewQueue);
   return html`
     ${NAVBAR_CSS}
     <nav>
@@ -259,7 +285,7 @@ function Navbar({ user }) {
         CivicPatch
       </a>
       <div class="nav-links">
-        ${userData && userData.authenticated ? renderAuthed(userData) : renderLogin()}
+        ${isAuthed ? renderAuthed(userData, summary) : renderLogin()}
       </div>
     </nav>
   `;

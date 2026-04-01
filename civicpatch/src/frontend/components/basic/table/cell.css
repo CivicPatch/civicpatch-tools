@@ -11,6 +11,13 @@ civ-table-cell {
         word-break: break-word;
         overflow-wrap: break-word;
     }
+    span.cell-content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: normal;
+        overflow-wrap: normal;
+    }
     span.cell-content[contenteditable="true"]:focus {
         box-sizing: border-box;
         outline: 2px solid rgb(var(--catppuccin-sapphire));
@@ -48,7 +55,7 @@ civ-table-cell {
         font-size: var(--text-sm);
         font-family: inherit;
         cursor: pointer;
-        color: #333;
+        color: var(--pico-color);
         width: fit-content;      /* shrinks to content */
         max-width: 200px;        /* but won't exceed this */
         display: inline-flex;
@@ -96,7 +103,7 @@ civ-table-cell {
 
     .tag-input:empty::before {
         content: attr(data-placeholder);
-        color: #aaa;
+        color: var(--pico-muted-color);
         pointer-events: none;
     }
 }

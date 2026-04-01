@@ -6,25 +6,33 @@ import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import "../../components/edit-people/edit-people.js";
 import "../../components/side-panel/side-panel.js";
-import "./config-detail.js";
+import "../../components/scrape-history/scrape-history-list.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerRemoteJob, fetchPullRequests } from '../../api.js';
+import { triggerRemoteJob, fetchPullRequests, fetchJurisdictionHistory } from '../../api.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
+  const [history, setHistory] = useState(null);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
     fetchPullRequests(jurisdiction_ocdid)
       .then((res) => setSourceContentUrls(res.data?.[0]?.sources ?? []))
       .catch(() => {});
+  }, [jurisdiction_ocdid]);
+
+  useEffect(() => {
+    if (!jurisdiction_ocdid) return;
+    fetchJurisdictionHistory(jurisdiction_ocdid)
+      .then(setHistory)
+      .catch(() => setHistory(null));
   }, [jurisdiction_ocdid]);
 
   // Guards after all hooks (hooks must not be called conditionally)
@@ -78,7 +86,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
 
   return html`
-    <div style="display: flex; flex-direction: column; gap: 2rem;">
+    <div class="jurisdictions-page page-content" style="display: flex; flex-direction: column; gap: 2rem;">
       <div class="grid">
         <div style="display: flex; flex-direction: column; gap: 2rem;">
           <civ-map
@@ -88,7 +96,12 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
               : null}
             .height=${"20rem"}
           ></civ-map>
-          <civ-config-detail .people=${people}></civ-config-detail>
+          <civ-scrape-history-list
+            .history=${history}
+            .jobStatus=${jobStatus}
+            .isConnected=${isConnected}
+            .sseError=${sseError}
+          ></civ-scrape-history-list>
         </div>
 
         <div>
@@ -102,10 +115,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
           <civ-jurisdiction-sidebar
             .jurisdictionData=${jurisdictionData}
-            .jurisdiction_ocdid=${jurisdiction_ocdid}
-            .jobStatus=${jobStatus}
-            .isConnected=${isConnected}
-            .sseError=${sseError}
             .onScrapeClick=${() => setScrapeModalOpen(true)}
             .canStartScrape=${canStartScrape}
           ></civ-jurisdiction-sidebar>

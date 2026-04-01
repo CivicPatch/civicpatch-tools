@@ -1,8 +1,6 @@
 /* ── Issues page ── */
 
 .issues-page {
-    max-width: 1200px;
-    margin-inline: auto;
 }
 
 .issues-page__section {
@@ -40,6 +38,10 @@
     border-left: 3px solid var(--pico-warn-color);
 }
 
+.issues-page__section-title--info {
+    border-left: 3px solid rgb(var(--color-1));
+}
+
 .issues-page__section-count {
     font-size: 0.75em;
     font-weight: 400;
@@ -47,31 +49,6 @@
     font-family: var(--pico-font-family-monospace);
 }
 
-.issues-page__section-toggle {
-    background: none;
-    border: none;
-    color: var(--pico-muted-color);
-    padding: 0;
-    margin: 0;
-    min-width: unset;
-    min-height: unset;
-    width: 1.25rem;
-    height: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--text-sm);
-    cursor: pointer;
-    transition: transform 0.15s ease, color 0.15s;
-}
-
-.issues-page__section-toggle:hover {
-    color: var(--pico-contrast);
-}
-
-.issues-page__section-toggle--open {
-    transform: rotate(180deg);
-}
 
 /* ── Events filters ── */
 
@@ -256,15 +233,6 @@
     border-bottom: 1px solid var(--pico-muted-border-color);
 }
 
-.issues-page__duplicate-chevron {
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
-    transition: transform 0.15s ease;
-}
-
-.issues-page__duplicate-item-header--open .issues-page__duplicate-chevron {
-    transform: rotate(180deg);
-}
 
 .issues-page__duplicate-item-body {
     padding: 1rem;

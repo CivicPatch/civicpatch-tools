@@ -1569,3 +1569,32 @@ async def create_note(jurisdiction_ocdid: str, body: str, user_id: str):
         "user_id": r[3],
         "created_at": r[4].isoformat() if r[4] else None,
     }
+
+
+async def get_summary_counts(include_issues: bool) -> dict:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT
+                (SELECT COUNT(*) FROM pull_requests WHERE status = 'open') AS open_prs,
+                (SELECT COUNT(*) FROM jobs WHERE status = 'ERROR') AS pipeline_errors,
+                (SELECT COUNT(*) FROM job_events) AS events_total,
+                (SELECT COUNT(*) FROM (
+                    SELECT r.jurisdiction_ocdid
+                    FROM jobs j
+                    JOIN requests r ON r.id = j.request_id
+                    JOIN pull_requests pr ON pr.request_id = r.id
+                    WHERE pr.status = 'open'
+                    GROUP BY r.jurisdiction_ocdid
+                    HAVING COUNT(*) > 1
+                ) sub) AS duplicate_jurisdictions
+            """
+        )
+        row = await cur.fetchone()
+    result: dict = {"open_prs": row[0]}
+    if include_issues:
+        result["pipeline_errors"] = row[1]
+        result["events_total"] = row[2]
+        result["duplicate_jurisdictions"] = row[3]
+    return result
