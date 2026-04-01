@@ -17,7 +17,7 @@ def validate_people_request(request: PeopleCollectorJobRequest) -> tuple[List[st
 
     jurisdiction_ocdid_obj = id_utils.parse_jurisdiction_ocdid(request.jurisdiction_ocdid)
     if not jurisdiction_ocdid_obj:
-        errors.append(f"Invalid jurisdiction_ocdid format: {request.jurisdiction_ocdiddid}.")
+        errors.append(f"Invalid jurisdiction_ocdid format: {request.jurisdiction_ocdid}.")
     if not request.config.name:
         warnings.append(
             "Missing 'name' field. Substituting with place name from jurisdiction_ocdid."

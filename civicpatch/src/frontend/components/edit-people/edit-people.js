@@ -14,9 +14,10 @@ import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
+import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../diff-panel/diff-panel.js";
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, sourceUrlMap = new Map() }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false }) {
   const {
     currentPeople,
     selectedPeople,
@@ -320,10 +321,14 @@ function handleCardKeyDown(e, idx, key) {
     `;
   }
 
+  const activeSourceUrlMap = selectedPullRequest && selectedPullRequest !== 'directory'
+    ? buildSourceUrlMap(selectedPullRequest.sources ?? [])
+    : new Map();
+
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(openProfileModal, sourceUrlMap)}
+      .columns=${getColumns(openProfileModal, activeSourceUrlMap)}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;

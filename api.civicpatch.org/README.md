@@ -178,16 +178,6 @@ erDiagram
         timestamptz updated_at
     }
 
-    unrecognized_roles {
-        uuid id PK
-        uuid request_id FK "idx"
-        text role
-        text person_name
-        text status "idx"
-        text pr_url
-        timestamptz created_at
-    }
-
     notes {
         uuid id PK
         text jurisdiction_ocdid FK "idx"
@@ -209,7 +199,6 @@ erDiagram
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
-    requests ||--o{ unrecognized_roles : "request_id"
     requests ||--o{ job_events : "request_id"
 ```
 

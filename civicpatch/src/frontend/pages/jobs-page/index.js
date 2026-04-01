@@ -333,27 +333,31 @@ function JobsPage() {
     </section>
   ` : null;
 
-  const unrecognizedSection = permissions.JOBS_PAGE_ERRORS && unrecognizedRoles.length ? html`
+  const unrecognizedSection = permissions.JOBS_PAGE_ERRORS ? html`
     <section class="jobs-page__unrecognized-roles">
-      <div class="jobs-page__section-header" @click=${() => toggleSection('unrecognized')}>
+      ${unrecognizedRoles.length === 0 ? html`
         <h2 class="jobs-page__section-title jobs-page__section-title--warning">Unrecognized roles <span class="jobs-page__section-count">${unrecognizedRoles.length}</span></h2>
-        <span class="jobs-page__section-toggle${openSections.unrecognized ? ' jobs-page__section-toggle--open' : ''}">▼</span>
-      </div>
-      ${openSections.unrecognized ? html`
-        <table>
-          <thead><tr><th>Role</th><th>Person</th><th>Status</th><th>Jurisdiction</th></tr></thead>
-          <tbody>
-            ${unrecognizedRoles.map((ur) => html`
-              <tr>
-                <td><code>${ur.role}</code></td>
-                <td>${ur.person_name}</td>
-                <td>${ur.status}</td>
-                <td><a href="/jurisdictions?jurisdiction_ocdid=${ur.jurisdiction_ocdid}" target="_blank">${ur.jurisdiction_name || ur.jurisdiction_ocdid}</a></td>
-              </tr>
-            `)}
-          </tbody>
-        </table>
-      ` : null}
+      ` : html`
+        <div class="jobs-page__section-header" @click=${() => toggleSection('unrecognized')}>
+          <h2 class="jobs-page__section-title jobs-page__section-title--warning">Unrecognized roles <span class="jobs-page__section-count">${unrecognizedRoles.length}</span></h2>
+          <span class="jobs-page__section-toggle${openSections.unrecognized ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+        </div>
+        ${openSections.unrecognized ? html`
+          <table>
+            <thead><tr><th>Role</th><th>Person</th><th>Status</th><th>Jurisdiction</th></tr></thead>
+            <tbody>
+              ${unrecognizedRoles.map((ur) => html`
+                <tr>
+                  <td><code>${ur.role}</code></td>
+                  <td>${ur.person_name}</td>
+                  <td>${ur.status}</td>
+                  <td><a href="/jurisdictions?jurisdiction_ocdid=${ur.jurisdiction_ocdid}" target="_blank">${ur.jurisdiction_name || ur.jurisdiction_ocdid}</a></td>
+                </tr>
+              `)}
+            </tbody>
+          </table>
+        ` : null}
+      `}
     </section>
   ` : null;
 

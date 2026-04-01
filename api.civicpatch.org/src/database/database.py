@@ -1355,22 +1355,9 @@ async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
         )
 
 
-async def insert_unrecognized_roles(request_id: str, roles: list[dict]) -> None:
-    if not roles:
-        return
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.executemany(
-            """
-            INSERT INTO unrecognized_roles (request_id, role, person_name)
-            VALUES (%s, %s, %s)
-            """,
-            [(request_id, r["role"], r["person_name"]) for r in roles],
-        )
-
-
 async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]:
-    conditions, params = [], []
+    conditions = ["je.event_type = 'unrecognized_role'"]
+    params = []
     if state_code:
         conditions.append("r.jurisdiction_ocdid LIKE %s")
         params.append(f"%state:{state_code}%")
@@ -1379,14 +1366,17 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT ur.id, ur.role, ur.person_name, ur.status,
-                   ur.created_at, ur.request_id, r.jurisdiction_ocdid,
+            SELECT je.id::text,
+                   je.data->>'role' AS role,
+                   je.data->>'person_name' AS person_name,
+                   'pending' AS status,
+                   je.created_at, je.request_id::text, r.jurisdiction_ocdid,
                    j.data->>'name' AS jurisdiction_name
-            FROM unrecognized_roles ur
-            JOIN requests r ON r.id = ur.request_id
+            FROM job_events je
+            JOIN requests r ON r.id = je.request_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
             {where}
-            ORDER BY ur.created_at DESC LIMIT 500
+            ORDER BY je.created_at DESC LIMIT 500
             """,
             params,
         )

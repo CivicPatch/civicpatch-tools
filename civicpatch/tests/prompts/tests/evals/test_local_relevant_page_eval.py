@@ -5,6 +5,7 @@ from services.google_gemini.prompts import relevant_page_prompt as make_gemini_p
 from services.together_ai.llm import run_prompt as run_together_prompt
 from services.together_ai.prompts import relevant_page_prompt as make_together_prompt
 from jobs.people_collector.schemas import RelevantPageResponseSchema
+from utils import cost_utils
 from typing import cast
 import pathlib
 import yaml
@@ -183,11 +184,21 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
             print(f"[{model_client['name']}] Case '{case['id']}' failed: {failed}")
 
     # Write full report to file
+    eval_ocdid = "ocd-jurisdiction/country:us/state:tx/place:example/government"
+    llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
+    cost_summary = {
+        "model": llm_costs[0]["model"] if llm_costs else None,
+        "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
+        "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
+        "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
+    }
+
     evals_dir = "tests/prompts/tests/evals/relevant_page"
     os.makedirs(evals_dir, exist_ok=True)
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
         yaml.safe_dump({
+            "cost_summary": cost_summary,
             "failed_cases": failed_cases
         }, f, sort_keys=False)
     print(f"Saved evaluation report to {report_path}")
