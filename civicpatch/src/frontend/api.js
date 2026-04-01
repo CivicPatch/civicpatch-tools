@@ -62,8 +62,8 @@ export const fetchJobEvents = async (tags, page, perPage, sort) => {
   return res.json();
 };
 
-export const fetchPullRequestsWithData = async (page, perPage, stateCode) => {
-  const params = new URLSearchParams({ page, per_page: perPage });
+export const fetchPullRequestsWithData = async (stateCode) => {
+  const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
   const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
     credentials: "include",
@@ -317,6 +317,12 @@ export const pauseReviewSession = async (sessionId) => {
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },
   });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchSummary = async () => {
+  const res = await fetch(`${API_URL}/api/v1/summary`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

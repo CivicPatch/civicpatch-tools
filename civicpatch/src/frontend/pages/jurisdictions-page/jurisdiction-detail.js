@@ -79,20 +79,49 @@ function JurisdictionDetail({ data, onSave }) {
       .jd-form {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
       }
       .jd-array-item {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        padding: 1rem;
+        gap: 0.35rem;
+        padding: 0.5rem 0.75rem;
         border: 1px solid var(--pico-muted-border-color);
         border-radius: var(--pico-border-radius);
         background: var(--pico-card-sectioning-background-color);
       }
+      .jd-array-item label,
+      .jd-array-item input,
+      .jd-array-item textarea,
+      .jd-array-item select {
+        margin: 0;
+      }
       .jd-array-item button {
         align-self: flex-start;
         margin-top: 0.25rem;
+      }
+
+      /* Add row button — secondary outline replacement with correct contrast */
+      .jd-btn-add {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        padding: 0.3rem 0.75rem;
+        border-radius: var(--pico-border-radius);
+        border: 1px solid var(--pico-muted-border-color);
+        background: transparent;
+        color: var(--pico-muted-color);
+        cursor: pointer;
+        width: auto;
+        margin: 0;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .jd-btn-add:hover {
+        border-color: var(--pico-color);
+        color: var(--pico-color);
+        background: transparent;
       }
 
       /* Edit/View toggle button — small, unobtrusive */
@@ -180,10 +209,10 @@ function JurisdictionDetail({ data, onSave }) {
                 <label><strong>Last Known Term End Date:</strong>
                   <input type="date" .value=${term.last_known_term_end_date || ''} @input=${e => handleArrayChange('term', index, 'last_known_term_end_date', e.target.value)} />
                 </label>
-                <button type="button" class="secondary outline" @click=${() => handleArrayRemove('term', index)}>Remove Term</button>
+                <button type="button" class="destructive" @click=${() => handleArrayRemove('term', index)}>Remove Term</button>
               </div>
             `)}
-            <button type="button" class="secondary outline"
+            <button type="button" class="jd-btn-add"
               @click=${() => handleArrayAdd('term', { duration: '', term_description: '', number_of_positions: '', term_limits: '', last_known_term_end_date: '' })}>
               + Add Term
             </button>
@@ -205,10 +234,10 @@ function JurisdictionDetail({ data, onSave }) {
                 <label><strong>Source Type:</strong>
                   <input type="text" .value=${source.source_type || ''} @input=${e => handleArrayChange('sourcing', index, 'source_type', e.target.value)} />
                 </label>
-                <button type="button" class="secondary outline" @click=${() => handleArrayRemove('sourcing', index)}>Remove Source</button>
+                <button type="button" class="destructive" @click=${() => handleArrayRemove('sourcing', index)}>Remove Source</button>
               </div>
             `)}
-            <button type="button" class="secondary outline"
+            <button type="button" class="jd-btn-add"
               @click=${() => handleArrayAdd('sourcing', { field: '', source_name: '', source_url: '', source_type: '' })}>
               + Add Source
             </button>
@@ -221,10 +250,10 @@ function JurisdictionDetail({ data, onSave }) {
                 <label><strong>URL:</strong>
                   <input type="url" .value=${url || ''} @input=${e => handleArrayChange('metadata', index, 'urls', e.target.value)} />
                 </label>
-                <button type="button" class="secondary outline" @click=${() => handleArrayRemove('metadata', index)}>Remove URL</button>
+                <button type="button" class="destructive" @click=${() => handleArrayRemove('metadata', index)}>Remove URL</button>
               </div>
             `)}
-            <button type="button" class="secondary outline" @click=${() => handleArrayAdd('metadata', '')}>+ Add URL</button>
+            <button type="button" class="jd-btn-add" @click=${() => handleArrayAdd('metadata', '')}>+ Add URL</button>
           </div>
 
           <button type="submit">Save Changes</button>

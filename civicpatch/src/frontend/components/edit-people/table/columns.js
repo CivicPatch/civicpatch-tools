@@ -13,6 +13,15 @@ const customCss = (person, field) => {
 export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
     return [
         {
+          type: "drag-row",
+          editable: false,
+          renderCell: (_person) => html`
+            <span class="drag-handle" title="Drag to reorder">
+              <i class="fas fa-grip-vertical"></i>
+            </span>
+          `,
+        },
+        {
           field: "_isNew",
           editable: false,
           label: "New",
@@ -24,15 +33,6 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           field: "_selected",
           editable: true,
           type: "checkbox",
-        },
-        {
-          type: "drag-row",
-          editable: false,
-          renderCell: (_person) => html`
-            <span class="drag-handle" title="Drag to reorder">
-              <i class="fas fa-grip-vertical"></i>
-            </span>
-          `, 
         },
         {
           field: "cdn_image",

@@ -28,7 +28,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
           <div class="review-page__ready-header">
             <span class="review-page__ready-title">Ready for Review</span>
             <div class="review-page__goal-control">
-              <button class="review-page__gear-btn" @click=${() => {
+              <button class="review-page__gear-btn btn-icon" @click=${() => {
                 setPendingGoal(dailyGoal);
                 setIsCustomGoal(true);
                 setGoalModalOpen(true);
@@ -44,7 +44,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
             <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
           ` : ""}
 ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <button class="review-page__start-btn" @click=${onStartReview} ?disabled=${stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </div>
       <stat-cards class="review-page__stat-cards" .stats=${[
