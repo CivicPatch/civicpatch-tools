@@ -22,6 +22,19 @@ const NAVBAR_CSS = html`
       max-width: 1200px;
       margin-inline: auto;
     }
+    nav.nav--logged-out {
+      border-bottom: none;
+      position: relative;
+      justify-content: flex-end;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+    nav.nav--logged-out .nav-brand {
+      font-size: 2.25rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
     /* Brand */
     .nav-brand {
@@ -98,12 +111,16 @@ const NAVBAR_CSS = html`
       font-weight: 600;
       color: var(--pico-primary);
       text-decoration: none;
+      opacity: 0.45;
       transition: opacity 0.15s ease;
     }
     .nav-link:hover {
-      opacity: 0.75;
+      opacity: 0.7;
       color: var(--pico-primary);
       text-decoration: none;
+    }
+    .nav-link--active {
+      opacity: 1;
     }
 
     /* Count badge on nav links */
@@ -215,6 +232,21 @@ const NAVBAR_CSS = html`
       box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
     }
 
+    /* Login link when logged out */
+    .login-link {
+      font-size: 0.85rem;
+      color: var(--pico-muted-color);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.15s ease;
+    }
+    .login-link:hover {
+      color: var(--pico-color);
+      text-decoration: none;
+    }
+
     @media (max-width: 640px) {
       .user-info { display: none; }
     }
@@ -226,9 +258,13 @@ function getTeamsTooltip(teams) {
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
-function renderAuthed(user, summary) {
+function renderAuthed(user, summary, currentPath) {
   const teams = user.teams || [];
   const tooltip = getTeamsTooltip(teams);
+  const active = (href) => {
+    const isActive = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+    return isActive ? 'nav-link nav-link--active' : 'nav-link';
+  };
   return html`
     <span
       class="user-info"
@@ -240,10 +276,10 @@ function renderAuthed(user, summary) {
         : html`<span class="user-dot"></span>`}
       <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
-    <a href="/" class="nav-link">Home</a>
-    <a href="/queue" class="nav-link">Queue <span class="nav-count ${summary?.open_prs == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? ''}</span></a>
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="nav-link">Issues <span class="nav-count ${!summary || (!summary.pipeline_errors && !summary.duplicate_jurisdictions) ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : ''}</span></a>` : ""}
-    ${(user.permissions?.can_view_jobs_page) ? html`<a href="/review" class="nav-link">Review</a>` : ""}
+    <a href="/" class="${active('/')}">Home</a>
+    <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary?.open_prs == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? ''}</span></a>
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${!summary || (!summary.pipeline_errors && !summary.duplicate_jurisdictions) ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : ''}</span></a>` : ""}
+    ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
       class="btn-outline"
@@ -253,17 +289,6 @@ function renderAuthed(user, summary) {
   `;
 }
 
-function renderLogin() {
-  return html`
-    <a
-      href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"
-      class="btn-primary"
-    >
-      <i class="fab fa-github"></i>
-      Login with GitHub
-    </a>
-  `;
-}
 
 function Navbar({ user }) {
   let userData = null;
@@ -273,11 +298,12 @@ function Navbar({ user }) {
     userData = null;
   }
   const isAuthed = userData?.authenticated;
-  const canViewQueue = isAuthed && userData.permissions?.can_view_jobs_page;
+  const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
   const summary = useSummary(canViewQueue);
+  const currentPath = window.location.pathname;
   return html`
     ${NAVBAR_CSS}
-    <nav>
+    <nav class="${!isAuthed ? 'nav--logged-out' : ''}">
       <a href="/" class="nav-brand">
         <span class="nav-brand-icon">
           <i class="fas fa-landmark"></i>
@@ -285,7 +311,9 @@ function Navbar({ user }) {
         CivicPatch
       </a>
       <div class="nav-links">
-        ${isAuthed ? renderAuthed(userData, summary) : renderLogin()}
+        ${isAuthed
+          ? renderAuthed(userData, summary, currentPath)
+          : html`<a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>`}
       </div>
     </nav>
   `;

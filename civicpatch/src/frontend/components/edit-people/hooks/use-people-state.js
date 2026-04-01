@@ -60,7 +60,7 @@ export function usePeopleState({ people }) {
       const deleted = { ...person, _deleted: true, _dirty: true, _changes: TRACKED_FIELDS, _selected: false };
       return [...without, deleted];
     }, currentPeople);
-    setCurrentPeople(next);
+    setCurrentPeople(next.map(p => ({ ...p, _selected: false })));
   }
 
   function handleBulkDelete() {
@@ -68,46 +68,47 @@ export function usePeopleState({ people }) {
   }
 
   function handleMerge() {
-    // When merging a set of people, always keep the person who is not new as the base
-    const peopleToMerge = currentPeople.filter(p => selectedPeople.includes(p.id));
-    const preferredIndex = currentPeople.findIndex(p => selectedPeople.includes(p.id) && !p._isNew);
-    const baseIndex = preferredIndex !== -1
-      ? preferredIndex
-      : currentPeople.findLastIndex(p => selectedPeople.includes(p.id));
-    if (baseIndex === -1) return;
-    const merged = { ...currentPeople[baseIndex] };
+    setCurrentPeople(current => {
+      // When merging a set of people, always keep the person who is not new as the base
+      const selectedIds = current.filter(p => p._selected).map(p => p.id);
+      const peopleToMerge = current.filter(p => selectedIds.includes(p.id));
+      const preferredIndex = current.findIndex(p => selectedIds.includes(p.id) && !p._isNew);
+      const baseIndex = preferredIndex !== -1
+        ? preferredIndex
+        : current.findLastIndex(p => selectedIds.includes(p.id));
+      if (baseIndex === -1) return current;
+      const merged = { ...current[baseIndex] };
 
-    for (const field of PERSON_FIELDS.single) {
-      merged[field] = peopleToMerge.map(p => p[field]).find(v => v != null && v !== "") ?? null;
-    }
-    for (const field of PERSON_FIELDS.array) {
-      merged[field] = Array.from(new Set(
-        peopleToMerge.flatMap(p => [p[field]].flat().filter(Boolean))
+      for (const field of PERSON_FIELDS.single) {
+        merged[field] = peopleToMerge.map(p => p[field]).find(v => v != null && v !== "") ?? null;
+      }
+      for (const field of PERSON_FIELDS.array) {
+        merged[field] = Array.from(new Set(
+          peopleToMerge.flatMap(p => [p[field]].flat().filter(Boolean))
+        ));
+      }
+
+      // Names from merged-away people become other_names on the survivor
+      const nonCanonicalNames = peopleToMerge
+        .map(p => p.name)
+        .filter(n => n && n !== merged.name);
+      merged.other_names = Array.from(new Set([...merged.other_names, ...nonCanonicalNames]));
+
+      // Office gets special treatment: merge names, keep other fields from base
+      const officeNames = Array.from(new Set(
+        peopleToMerge.flatMap(p => (p.office?.name || "").split(" - ").map(s => s.trim())).filter(Boolean)
       ));
-    }
+      if (officeNames.length > 0) {
+        merged.office = { ...(merged.office || {}), name: officeNames.join(" - ") };
+      }
 
-    // Names from merged-away people become other_names on the survivor
-    const nonCanonicalNames = peopleToMerge
-      .map(p => p.name)
-      .filter(n => n && n !== merged.name);
-    merged.other_names = Array.from(new Set([...merged.other_names, ...nonCanonicalNames]));
-
-    // Office gets special treatment: merge names, keep other fields from base
-    const officeNames = Array.from(new Set(
-      peopleToMerge.flatMap(p => (p.office?.name || "").split(" - ").map(s => s.trim())).filter(Boolean)
-    ));
-    if (officeNames.length > 0) {
-      merged.office = { ...(merged.office || {}), name: officeNames.join(" - ") };
-    }
-
-    setCurrentPeople(current =>
-      current
-        .filter(p => !selectedPeople.includes(p.id) || p.id === merged.id)
+      return current
+        .filter(p => !selectedIds.includes(p.id) || p.id === merged.id)
         .map(p => p.id === merged.id
           ? { ...merged, _dirty: true, _changes: TRACKED_FIELDS, _selected: false }
           : { ...p, _selected: false }
-        )
-    );
+        );
+    });
   }
 
   function handleReset(key) {

@@ -5,7 +5,7 @@ import "../components/search-jurisdictions/index.js";
 import "../components/navbar.js";
 import "../components/map.js";
 import "../pages/progress-page/index.js";
-import "../pages/jobs-page/index.js";
+import "../pages/queue-page/index.js";
 import "../pages/issues-page/index.js";
 import "../pages/jurisdictions-page/index.js";
 import "../pages/review-page/index.js";

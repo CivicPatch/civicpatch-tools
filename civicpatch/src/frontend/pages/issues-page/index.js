@@ -15,7 +15,7 @@ import {
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
-import "../jobs-page/error-card/index.js";
+import "../queue-page/error-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "./issues-page.css";
 
