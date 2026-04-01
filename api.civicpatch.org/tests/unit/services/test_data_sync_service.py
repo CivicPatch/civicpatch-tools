@@ -1,8 +1,8 @@
 import pytest
 import yaml
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, patch, call
 
-from services.github.data_sync_service import get_jurisdiction_metadata
+from services.github.data_sync_service import get_jurisdiction_metadata, bulk_sync
 
 LACY_LAKEVIEW_OCDID = "ocd-jurisdiction/country:us/state:tx/place:lacy-lakeview/government"
 AUSTIN_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
@@ -109,3 +109,58 @@ async def test_returns_none_when_entries_file_missing():
         result = await get_jurisdiction_metadata("tx")
 
     assert result is None
+
+
+# ── bulk_sync: people_count=0 forces people sync ─────────────────────────────
+
+MOUNTAIN_CITY_OCDID = "ocd-jurisdiction/country:us/state:tx/place:mountain_city/government"
+
+def _mock_bulk_sync_deps(remote_metadata, local_jurisdictions):
+    """Patch all external calls used by bulk_sync."""
+    return (
+        patch("services.github.data_sync_service.config_utils.get_states", return_value=[{"code": "tx"}]),
+        patch("services.github.data_sync_service.get_jurisdiction_metadata", new=AsyncMock(return_value=remote_metadata)),
+        patch("services.github.data_sync_service.database.get_jurisdiction_updates", new=AsyncMock(return_value=local_jurisdictions)),
+        patch("services.github.data_sync_service.database.deactivate_jurisdictions_by_ocdids", new=AsyncMock()),
+        patch("services.github.data_sync_service.sync_jurisdictions_by_ocdids_with_metadata", new=AsyncMock()),
+        patch("services.github.data_sync_service.sync_people_by_ocdids", new=AsyncMock()),
+    )
+
+
+@pytest.mark.asyncio
+async def test_bulk_sync_skips_people_when_up_to_date_and_has_people():
+    """Jurisdiction with current updated_at and existing people is not re-synced."""
+    remote = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "jurisdiction": {"id": MOUNTAIN_CITY_OCDID}}}
+    local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 3}}
+
+    patches = _mock_bulk_sync_deps(remote, local)
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+        await bulk_sync()
+
+    mock_sync_people.assert_called_once_with([])
+
+
+@pytest.mark.asyncio
+async def test_bulk_sync_syncs_people_when_no_people_in_db():
+    """Jurisdiction with zero people in DB is always synced even if updated_at is unchanged."""
+    remote = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "jurisdiction": {"id": MOUNTAIN_CITY_OCDID}}}
+    local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 0}}
+
+    patches = _mock_bulk_sync_deps(remote, local)
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+        await bulk_sync()
+
+    mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])
+
+
+@pytest.mark.asyncio
+async def test_bulk_sync_syncs_people_for_new_jurisdiction():
+    """Jurisdiction not yet in DB (never synced) is synced even if remote updated_at is old."""
+    remote = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "jurisdiction": {"id": MOUNTAIN_CITY_OCDID}}}
+    local = {}
+
+    patches = _mock_bulk_sync_deps(remote, local)
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+        await bulk_sync()
+
+    mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])

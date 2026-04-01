@@ -150,7 +150,8 @@ async def bulk_sync():
         remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
         jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
         local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
-        if is_newer(remote_updated_at, local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None):
+        has_no_people = not local_jurisdiction_data or local_jurisdiction_data.get("people_count", 0) == 0
+        if has_no_people or is_newer(remote_updated_at, local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None):
             jurisdictions_to_update_data.append(jurisdiction_ocdid)
         await asyncio.sleep(0)
 

@@ -1033,8 +1033,11 @@ async def get_jurisdiction_updates() -> List[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT jurisdiction_ocdid, updated_at FROM jurisdictions
-            ORDER BY jurisdiction_ocdid;
+            SELECT j.jurisdiction_ocdid, j.updated_at, COUNT(p.id) AS people_count
+            FROM jurisdictions j
+            LEFT JOIN people p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            GROUP BY j.jurisdiction_ocdid, j.updated_at
+            ORDER BY j.jurisdiction_ocdid;
             """
         )
         rows = await cur.fetchall()
@@ -1043,6 +1046,7 @@ async def get_jurisdiction_updates() -> List[dict]:
             jurisdictions[row[0]] = {
                 "jurisdiction_ocdids": row[0],
                 "updated_at": to_iso(row[1]),
+                "people_count": row[2],
             }
     return jurisdictions
 

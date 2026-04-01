@@ -41,7 +41,7 @@ def preprocess_page_content(
         output_html = f.read()
 
 
-    identities = context.data.prepare_pipeline_step.identities
+    identities = context.data.research_municipality_step.identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html)

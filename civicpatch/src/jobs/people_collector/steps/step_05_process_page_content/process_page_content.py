@@ -11,7 +11,6 @@ from jobs.people_collector.schemas import (
   RecordsByLLM,
   ProcessPageContentStep,
   ResearchMunicipalityStep,
-  ResearchedPerson,
   ProgressState,
   RelevantPageResponseSchema
 )
@@ -41,7 +40,6 @@ _relevance_prompt = google_gemini_prompt
 
 @dataclass
 class ProcessingSetup:
-    people_hint: List[ResearchedPerson]
     roles: List[str]
     target_role: str
     target_designations: List[str]
@@ -81,7 +79,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     identities = get_identities(context)
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
-    roles_hint = context.data.prepare_pipeline_step.roles_hint
+    roles_hint = context.data.research_municipality_step.roles_hint
 
     updated_links, is_relevant = await check_page_relevance(context, page_to_process, content)
     if not is_relevant:
@@ -108,14 +106,14 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
 
 
 def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentStep:
-    elected_officials = context.data.research_municipality_step.elected_officials
+    expected_count = context.data.research_municipality_step.expected_count
     return context.data.process_page_content_step or create_process_page_content_step(
-        required_data=max(MINIMUM_NUM_PEOPLE, len(elected_officials))
+        required_data=max(MINIMUM_NUM_PEOPLE, expected_count)
     )
 
 
 def get_identities(context: PeopleCollectorContext) -> Dict:
-    return context.data.prepare_pipeline_step.identities
+    return context.data.research_municipality_step.identities
 
 
 def create_process_page_content_step(required_data: int) -> ProcessPageContentStep:
@@ -141,28 +139,11 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
 
 
 def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup:
-    designations = config_utils.get_designations()
-    designations_with_geo = [d for d, v in designations.items() if v.get("has_geographic_area", False)]
-
-    roles = config_utils.get_role_names()
-    target_role = "Mayor"  # TBD hardcoded
-    target_designations = get_target_designations(designations_with_geo, municipality_research.elected_officials)
-
     return ProcessingSetup(
-        people_hint=municipality_research.elected_officials,
-        roles=roles,
-        target_role=target_role,
-        target_designations=target_designations
+        roles=config_utils.get_role_names(),
+        target_role="Mayor",  # TBD hardcoded
+        target_designations=municipality_research.target_designations,
     )
-
-
-def get_target_designations(designations_with_geo: List[str], people_hint: List[ResearchedPerson]) -> List[str]:
-    designations = set()
-    for person in people_hint:
-        for designation in person.designations:
-            if designation and designation.strip() and any(dg in designation.lower() for dg in designations_with_geo):
-                designations.add(designation.strip().lower())
-    return list(designations)
 
 
 async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str) -> Tuple[List[Link], bool]:
@@ -180,7 +161,7 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
     if response.relevant_urls:
         existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
         names, designations = _extract_names_and_designations(existing_records)
-        roles_hint = context.data.prepare_pipeline_step.roles_hint if context.data.prepare_pipeline_step else []
+        roles_hint = context.data.research_municipality_step.roles_hint if context.data.research_municipality_step else []
         updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint)
 
     if not response.is_relevant:
