@@ -31,10 +31,6 @@
     color: var(--pico-muted-color);
 }
 
-.notes-panel__chevron {
-    font-size: var(--text-md);
-    line-height: 1;
-}
 
 .notes-panel__body {
     display: flex;

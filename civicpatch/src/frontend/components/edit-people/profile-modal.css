@@ -77,8 +77,12 @@
 }
 
 .profile-modal__tab:hover {
-    color: var(--pico-color);
+    color: var(--pico-form-element-color);
     background: transparent;
+}
+
+.profile-modal__tab:focus-visible {
+    border-radius: var(--pico-border-radius);
 }
 
 .profile-modal__tab--active {

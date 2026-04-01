@@ -62,7 +62,7 @@ function NotesPanel({ jurisdictionOcdid }) {
                 setOpen(next);
             }}>
                 <span>Notes</span>
-                <span class="notes-panel__chevron">${open ? "▾" : "▸"}</span>
+                <i class="fa-solid ${open ? "fa-chevron-up" : "fa-chevron-down"}"></i>
             </button>
             ${open ? html`
                 <div class="notes-panel__body">
