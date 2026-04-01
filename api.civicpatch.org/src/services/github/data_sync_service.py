@@ -47,16 +47,19 @@ async def get_jurisdiction_metadata(state: str):
     jurisdiction_entries = yaml.safe_load(jurisdiction_entries_response)
     logger.debug(f"Loaded jurisdictions_metadata keys: {list(jurisdictions_metadata.keys())}")
     logger.debug(f"Loaded jurisdiction_entries keys: {list(jurisdiction_entries.keys())}")
-    metadata = jurisdictions_metadata.get("jurisdictions_by_id", {})
+    metadata_by_id = jurisdictions_metadata.get("jurisdictions_by_id", {})
+    result = {}
 
-    for jurisdiction_ocdid, jurisdiction_metadata in metadata.items():
-        jurisdictions = jurisdiction_entries.get("jurisdictions", [])
-        jurisdiction_entry = next((entry for entry in jurisdictions if entry.get("id") == jurisdiction_ocdid), None)
-        if jurisdiction_entry:
-            jurisdiction_metadata["jurisdiction"] = jurisdiction_entry
+    for entry in jurisdiction_entries.get("jurisdictions", []):
+        ocdid = entry.get("id")
+        if not ocdid:
+            continue
+        jurisdiction_metadata = metadata_by_id.get(ocdid, {})
+        jurisdiction_metadata["jurisdiction"] = entry
+        result[ocdid] = jurisdiction_metadata
 
-    logger.debug(f"Returning metadata for state {state}: {list(metadata.keys())}")
-    return metadata
+    logger.debug(f"Returning metadata for state {state}: {list(result.keys())}")
+    return result
 
 
 async def get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids: List[str]) -> dict:
