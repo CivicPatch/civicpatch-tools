@@ -296,7 +296,6 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem;
-    max-width: 24rem;
 }
 
 .review-page__dot {
@@ -351,12 +350,6 @@
     --pico-background-color: transparent;
     --pico-border-color: transparent;
     padding-left: 0;
-}
-
-.review-page__next-btn {
-    --pico-color: var(--pico-primary);
-    --pico-background-color: transparent;
-    --pico-border-color: var(--pico-primary);
 }
 
 .review-page__collapse-btn {
@@ -427,7 +420,6 @@
 
 .review-page__info-row {
     display: flex;
-    flex-wrap: wrap;
     gap: 1.5rem;
     align-items: flex-start;
     width: 100%;
@@ -438,7 +430,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    flex: 0 0 18rem;
     min-width: 0;
 }
 
@@ -462,7 +453,7 @@
 }
 
 .review-page__info-row > civ-review-checklist {
-    flex: 1 1 20rem;
+    flex: 2;
     min-width: 0;
 }
 
