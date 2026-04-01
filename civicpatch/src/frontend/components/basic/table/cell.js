@@ -217,9 +217,8 @@ function TableCell({
             <input type="checkbox" style="margin: 0" tabIndex="-1"
               ${ref(el => {
                 checkboxRef.current = el;
-                if (el && !el.dataset.initialized) {
+                if (el) {
                   el.checked = !!value;
-                  el.dataset.initialized = 'true';
                 }
               })}
               @change=${(e) => dispatchDataChange(e, field, e.target.checked)}

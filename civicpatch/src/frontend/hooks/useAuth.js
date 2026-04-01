@@ -13,8 +13,8 @@ let cachedPromise = null;
 
 function toPermissions(permissions) {
   return {
-    JOBS_PAGE: permissions["can_view_jobs_page"],
-    JOBS_PAGE_ERRORS: permissions["can_view_jobs_page_errors"],
+    QUEUE_PAGE: permissions["can_view_queue_page"],
+    QUEUE_PAGE_ERRORS: permissions["can_view_queue_page_errors"],
     ISSUES_PAGE: permissions["can_view_issues_page"],
     JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
     JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],

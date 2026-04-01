@@ -12,8 +12,8 @@
 @import "../components/edit-people/profile-modal.css";
 @import "../components/pull-request-card/pr-card.css";
 @import "../components/pagination/pagination.css";
-@import "../pages/jobs-page/error-card/error-card.css";
-@import "../pages/jobs-page/jobs-page.css";
+@import "../pages/queue-page/error-card/error-card.css";
+@import "../pages/queue-page/queue-page.css";
 @import "../pages/issues-page/issues-page.css";
 @import "../pages/review-page/review-page.css";
 @import "../components/source-content/source-content.css";

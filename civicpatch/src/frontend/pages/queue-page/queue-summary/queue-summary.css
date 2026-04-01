@@ -1,14 +1,14 @@
-.jobs-summary {
+.queue-summary {
     margin-bottom: 2rem;
 }
 
-.jobs-summary__grid {
+.queue-summary__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
 }
 
-.jobs-summary__stat-card {
+.queue-summary__stat-card {
     background: var(--pico-card-background-color);
     border-radius: 0.75rem;
     padding: 1.25rem 1rem;
@@ -23,28 +23,28 @@
     position: relative;
 }
 
-.jobs-summary__stat-card:hover {
+.queue-summary__stat-card:hover {
     border-color: var(--pico-primary);
 }
 
-.jobs-summary__stat-label {
+.queue-summary__stat-label {
     font-size: var(--text-md);
     color: var(--pico-muted-color);
 }
 
-.jobs-summary__stat-main {
+.queue-summary__stat-main {
     font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--pico-primary);
     line-height: 1.1;
 }
 
-.jobs-summary__stat-sub {
+.queue-summary__stat-sub {
     font-size: var(--text-md);
     color: var(--pico-muted-color);
 }
 
-.jobs-summary__copy-icon {
+.queue-summary__copy-icon {
     position: absolute;
     bottom: 0.75rem;
     right: 0.85rem;
@@ -53,10 +53,10 @@
     transition: color 0.15s ease;
 }
 
-.jobs-summary__stat-card:hover .jobs-summary__copy-icon {
+.queue-summary__stat-card:hover .queue-summary__copy-icon {
     color: var(--pico-primary);
 }
 
-.jobs-summary__copy-icon--copied {
+.queue-summary__copy-icon--copied {
     color: var(--pico-ins-color);
 }

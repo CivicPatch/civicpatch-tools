@@ -62,9 +62,11 @@ export const fetchJobEvents = async (tags, page, perPage, sort) => {
   return res.json();
 };
 
-export const fetchPullRequestsWithData = async (stateCode) => {
+export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10) => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
+  params.set("page", page);
+  params.set("per_page", perPage);
   const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
     credentials: "include",
   });
