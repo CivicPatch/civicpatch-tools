@@ -64,7 +64,7 @@
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
-    border-radius: 0;
+    border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
     padding: 0.4rem 1rem;
     font-size: var(--text-md);
     font-weight: 600;
@@ -82,7 +82,8 @@
 }
 
 .profile-modal__tab:focus-visible {
-    border-radius: var(--pico-border-radius);
+    border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
+    outline-offset: 2px;
 }
 
 .profile-modal__tab--active {

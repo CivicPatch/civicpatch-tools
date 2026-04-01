@@ -462,7 +462,7 @@
 }
 
 .review-page__info-row > civ-review-checklist {
-    flex: 1 1 20rem;
+    flex: 2;
     min-width: 0;
 }
 

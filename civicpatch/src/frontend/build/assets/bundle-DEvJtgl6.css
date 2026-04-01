@@ -246,32 +246,11 @@
 }
 
 .review-page__nav {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
+    gap: 0.5rem;
     width: 100%;
     padding: 0.75rem 1.25rem;
-    gap: 0.5rem;
-}
-
-.review-page__nav-left {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.review-page__nav-center {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.review-page__nav-right {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: flex-end;
 }
 
 .review-page__jurisdiction {
@@ -296,7 +275,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem;
-    max-width: 24rem;
+    flex: 1;
 }
 
 .review-page__dot {
@@ -353,12 +332,6 @@
     padding-left: 0;
 }
 
-.review-page__next-btn {
-    --pico-color: var(--pico-primary);
-    --pico-background-color: transparent;
-    --pico-border-color: var(--pico-primary);
-}
-
 .review-page__collapse-btn {
     display: flex;
     align-items: center;
@@ -393,17 +366,13 @@
     background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
     color: rgb(var(--catppuccin-base));
     border: none;
-    transition: opacity 0.15s;
-}
-
-.review-page__merge-btn:hover:not(:disabled) {
-    opacity: 0.85;
 }
 
 .review-page__end-btn {
     --pico-color: var(--pico-muted-color);
     --pico-background-color: transparent;
     --pico-border-color: var(--pico-muted-border-color);
+    margin-left: 0.5rem;
 }
 
 
@@ -427,7 +396,6 @@
 
 .review-page__info-row {
     display: flex;
-    flex-wrap: wrap;
     gap: 1.5rem;
     align-items: flex-start;
     width: 100%;
@@ -438,7 +406,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    flex: 0 0 18rem;
     min-width: 0;
 }
 
@@ -462,7 +429,7 @@
 }
 
 .review-page__info-row > civ-review-checklist {
-    flex: 1 1 20rem;
+    flex: 2;
     min-width: 0;
 }
 

@@ -36,23 +36,30 @@ function ReviewSession({
     <main class="review-page">
       <div class="review-page__sticky-header">
         <div class="review-page__nav">
-          <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}>← Back</button>
-          <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
-          <div class="review-page__dots">
-            ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
-              const status = getDotStatus(n);
-              return html`<button
-                class="review-page__dot review-page__dot--${status}"
-                ?disabled=${status === "future" || status === "current"}
-                @click=${() => onNavigateTo(n)}
-              ></button>`;
-            })}
+          <div class="review-page__nav-left">
+            <button class="btn-sm review-page__end-btn" @click=${onPause}>End session</button>
           </div>
-          <button class="btn-sm review-page__pass-btn" @click=${onPass} ?disabled=${!hasNext}>Pass</button>
-          <button class="btn-sm" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next →</button>
-          <button class="btn-sm" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
-            ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
-          </button>
+          <div class="review-page__nav-center">
+            <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
+            <div class="review-page__dots">
+              ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
+                const status = getDotStatus(n);
+                return html`<button
+                  class="review-page__dot review-page__dot--${status}"
+                  ?disabled=${status === "future" || status === "current"}
+                  @click=${() => onNavigateTo(n)}
+                ></button>`;
+              })}
+            </div>
+            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+          <div class="review-page__nav-right">
+            <button class="btn-sm review-page__pass-btn" @click=${onPass} ?disabled=${!hasNext}>Pass</button>
+            <button class="btn-sm review-page__merge-btn" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
+              ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
+            </button>
+          </div>
         </div>
         ${!collapsed && error ? html`<p class="review-page__error">${error}</p>` : ""}
         ${!collapsed && mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
@@ -88,7 +95,6 @@ function ReviewSession({
         ></civ-review-workspace>
         <civ-side-panel .jurisdictionOcdid=${jurisdictionOcdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
       </div>
-      <button class="review-page__end-btn" @click=${onPause}>End session</button>
     </main>
   `;
 }
