@@ -67,6 +67,10 @@ class ExcludedPerson(BaseModel):
     designations: List[str] = []
     source_urls: List[str] = []
 
+class DeadUrl(BaseModel):
+    url: str
+    error: str
+
 class LLMPerson(RawLLMPerson):
     source_url: str
 
@@ -171,6 +175,7 @@ class PeopleCollectorData(BaseModel):
     config: WorkflowConfig 
 
     links: List[Link] = []
+    dead_urls: List[DeadUrl] = []
 
     prepare_pipeline_step: Optional[PreparePipelineStep] = None
     research_municipality_step: Optional[ResearchMunicipalityStep] = None

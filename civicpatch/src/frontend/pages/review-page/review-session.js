@@ -58,13 +58,12 @@ function ReviewSession({
         ${!collapsed && mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
         ${collapsed ? "" : html`<div class="review-page__info-row">
           <div class="review-page__pr-meta">
-            ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName} ↗</a>` : ""}
-            ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
+            ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
+            ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
           </div>
           <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
         </div>`}
-        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)}>
-          <span>${collapsed ? "Show details" : "Hide details"}</span>
+        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)} aria-label=${collapsed ? "Show details" : "Hide details"}>
           <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
         </button>
       </div>

@@ -391,6 +391,17 @@ def get_router(api_key_header):
         return {"data": rows}
 
     @router.get(
+        "/dead-urls",
+        summary="List URLs that returned HTTP errors on failed pipeline runs",
+    )
+    async def get_dead_urls_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+    ):
+        rows = await get_job_events("dead_url", state_code=state_code)
+        return {"data": rows}
+
+    @router.get(
         "/{request_id}/status",
         summary="Get job status and progress",
         description="Retrieve the progress of a specific job by its request ID.",
