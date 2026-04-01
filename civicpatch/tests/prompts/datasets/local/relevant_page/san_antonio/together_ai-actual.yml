@@ -1,24 +1,5 @@
 is_relevant: false
 relevant_urls:
-- https://www.sa.gov/Home#main-content
-- https://www.sa.gov/Home?oc_lang=en-US
-- https://www.sa.gov/Home?oc_lang=es
-- https://www.sa.gov/Home?oc_lang=ar
-- https://www.sa.gov/Home?oc_lang=zh-CN
-- https://www.sa.gov/Home?oc_lang=zh-TW
-- https://www.sa.gov/Home?oc_lang=tl
-- https://www.sa.gov/Home?oc_lang=fr
-- https://www.sa.gov/Home?oc_lang=de
-- https://www.sa.gov/Home?oc_lang=gu
-- https://www.sa.gov/Home?oc_lang=ja
-- https://www.sa.gov/Home?oc_lang=ko
-- https://www.sa.gov/Home?oc_lang=ps
-- https://www.sa.gov/Home?oc_lang=fa
-- https://www.sa.gov/Home?oc_lang=sw
-- https://www.sa.gov/Home?oc_lang=ta
-- https://www.sa.gov/Home?oc_lang=te
-- https://www.sa.gov/Home?oc_lang=ur
-- https://www.sa.gov/Home?oc_lang=vi
 - https://www.sa.gov/Community
 - https://www.sa.gov/Community/Animals-Pets-Wildlife
 - https://www.sa.gov/Community/Arts-Culture-Entertainment
@@ -69,6 +50,7 @@ relevant_urls:
 - https://www.sa.gov/Directory/Departments/SAMHD/News-Events/Events/STI-Mobile-Clinics
 - https://www.sa.gov/Directory/Departments/ACS/About/News/Events
 - https://www.sa.gov/Government/Closures
+- https://www.sa.gov/Directory/Events-Directory
 - https://www.sa.gov/Government/Emergency-Crisis-Response/Severe-Weather/Floods
 - https://saheadstart.org/
 - https://www.sa.gov/Directory/Departments/DHS/Financial-Assistance/VITA
@@ -92,5 +74,6 @@ relevant_urls:
 - https://www.sa.gov/Directory/Departments/COA/Civil-Rights/Submit-a-Discrimination-Complaint
 - https://www.sa.gov/Directory/Departments/COA/Disability-Access
 - https://www.sa.gov/Directory/Departments/CE/Open-Government-Request
+- https://www.sa.gov/Site-Footer/Contact-Us
 - https://www.sa.gov/Disclaimer
 - https://www.sanantonio.gov/EASI
