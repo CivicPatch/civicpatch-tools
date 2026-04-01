@@ -192,16 +192,7 @@ function AutocompleteSelect({
           tabindex="-1"
           @click=${handleButtonClick}
         >
-          <svg width="18" height="16" aria-hidden="true" focusable="false">
-            <polygon 
-              class="arrow" 
-              stroke-width="0" 
-              fill-opacity="0.75" 
-              fill="currentcolor" 
-              points="3,6 15,6 9,14"
-              style="transform: rotate(${isListOpen ? '180deg' : '0deg'}); transform-origin: 50% 50%; transition: transform 0.2s;"
-            ></polygon>
-          </svg>
+          <i class="fa-solid fa-caret-down autocomplete-toggle__icon${isListOpen ? ' autocomplete-toggle__icon--open' : ''}"></i>
         </button>
       </fieldset>
       

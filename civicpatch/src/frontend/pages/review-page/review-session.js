@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { component } from "haunted";
+import { component, useState } from "haunted";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
@@ -17,6 +17,8 @@ function ReviewSession({
   const { entryNumber, hasNext, hasPrev, passedEntryNumbers, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus, reviewState } = pr ?? {};
+
+  const [collapsed, setCollapsed] = useState(false);
 
   const isTerminal = mergeState?.status === PULL_REQUEST_STATUS.MERGED;
   const isMerging = mergeState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
@@ -52,15 +54,19 @@ function ReviewSession({
             ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
           </button>
         </div>
-        ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-        ${mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
-        <div class="review-page__info-row">
+        ${!collapsed && error ? html`<p class="review-page__error">${error}</p>` : ""}
+        ${!collapsed && mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
+        ${collapsed ? "" : html`<div class="review-page__info-row">
           <div class="review-page__pr-meta">
             ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName} ↗</a>` : ""}
             ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR ↗</a>` : ""}
           </div>
           <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
-        </div>
+        </div>`}
+        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)}>
+          <span>${collapsed ? "Show details" : "Hide details"}</span>
+          <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
+        </button>
       </div>
       <civ-diff-panel
         .data=${prPeople ?? { existing: [], proposed: [] }}
@@ -73,6 +79,7 @@ function ReviewSession({
           .isDirty=${isDirty}
           .resolvedMatches=${resolvedMatches ?? {}}
           .jurisdictionOcdid=${jurisdictionOcdid}
+          .sourceContentUrls=${sourceContentUrls}
           .onMerge=${onPeopleMerge}
           .onBulkDelete=${onBulkDelete}
           .onReset=${onReset}

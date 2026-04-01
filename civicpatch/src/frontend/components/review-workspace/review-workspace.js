@@ -1,11 +1,12 @@
 import { html, component, useState } from "haunted";
 import { getColumns } from "../edit-people/table/columns.js";
+import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { searchPeople } from "../../api.js";
 import "../edit-people/people-table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
 
-function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, onMerge, onBulkDelete, onReset, onAdd }) {
+function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd }) {
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
   const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
@@ -50,7 +51,8 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
     }));
   }
 
-  const columns = getColumns(openProfileModal);
+  const sourceUrlMap = buildSourceUrlMap(sourceContentUrls ?? []);
+  const columns = getColumns(openProfileModal, sourceUrlMap);
 
   return html`
     <div class="review-workspace">
@@ -74,6 +76,7 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
         .existingPerson=${profileModal.existingPerson}
         .nameMatches=${profileModal.nameMatches ?? []}
         .searchSuggestions=${profileModal.searchSuggestions ?? []}
+        .jurisdictionOcdid=${jurisdictionOcdid}
         @link-person=${handleLinkPerson}
         @close=${() => setProfileModal({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
       ></profile-modal>

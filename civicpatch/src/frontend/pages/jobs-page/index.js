@@ -251,7 +251,7 @@ function JobsPage() {
           @click=${() => loadJurisdictionPRs(ocdid)}
         >
           <span>${ocdid}</span>
-          <span class="jobs-page__duplicate-chevron">▼</span>
+          <i class="fa-solid fa-chevron-down jobs-page__duplicate-chevron"></i>
         </button>
         ${isOpen ? html`
           <div class="jobs-page__duplicate-item-body">
@@ -322,7 +322,7 @@ function JobsPage() {
       ` : html`
         <div class="jobs-page__section-header" @click=${() => toggleSection('errors')}>
           <h2 class="jobs-page__section-title jobs-page__section-title--error">Pipeline errors <span class="jobs-page__section-count">${errorJobs.length}</span></h2>
-          <span class="jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+          <i class="fa-solid fa-chevron-down jobs-page__section-toggle${openSections.errors ? ' jobs-page__section-toggle--open' : ''}"></i>
         </div>
         ${openSections.errors ? html`
           <div style="display: flex; gap: 2rem; flex-direction: column;">
@@ -340,7 +340,7 @@ function JobsPage() {
       ` : html`
         <div class="jobs-page__section-header" @click=${() => toggleSection('unrecognized')}>
           <h2 class="jobs-page__section-title jobs-page__section-title--warning">Unrecognized roles <span class="jobs-page__section-count">${unrecognizedRoles.length}</span></h2>
-          <span class="jobs-page__section-toggle${openSections.unrecognized ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+          <i class="fa-solid fa-chevron-down jobs-page__section-toggle${openSections.unrecognized ? ' jobs-page__section-toggle--open' : ''}"></i>
         </div>
         ${openSections.unrecognized ? html`
           <table>
@@ -425,7 +425,7 @@ function JobsPage() {
                 @click=${(e) => { e.stopPropagation(); handleCloseStaleDuplicates(); }}
                 ?disabled=${closingStale}
               >${closingStale ? "Closing…" : "Close stale"}</button>
-              <span class="jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+              <i class="fa-solid fa-chevron-down jobs-page__section-toggle${openSections.duplicates ? ' jobs-page__section-toggle--open' : ''}"></i>
             </div>
           </div>
           ${openSections.duplicates ? html`
@@ -438,7 +438,7 @@ function JobsPage() {
       <section>
         <div class="jobs-page__section-header" @click=${() => toggleSection('prs')}>
           <h2 class="jobs-page__section-title jobs-page__section-title--primary">Open pull requests <span class="jobs-page__section-count">${total}</span></h2>
-          <span class="jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}">▼</span>
+          <i class="fa-solid fa-chevron-down jobs-page__section-toggle${openSections.prs ? ' jobs-page__section-toggle--open' : ''}"></i>
         </div>
         ${openSections.prs ? html`
           <div class="jobs-page__pagination jobs-page__pagination--top">

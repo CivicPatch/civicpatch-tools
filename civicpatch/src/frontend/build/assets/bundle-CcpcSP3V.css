@@ -335,18 +335,14 @@
 .review-page__collapse-btn {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 0.4rem;
+    justify-content: center;
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.35rem 0.75rem;
     background: transparent;
     border: none;
     border-radius: 0;
     color: var(--pico-muted-color);
     font-size: var(--text-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     cursor: pointer;
     margin: 0;
     min-width: unset;

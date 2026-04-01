@@ -25,6 +25,14 @@
   margin-bottom: 0;
 }
 
+.autocomplete-toggle__icon {
+  transition: transform 0.2s ease;
+}
+
+.autocomplete-toggle__icon--open {
+  transform: rotate(180deg);
+}
+
 .autocomplete-dropdown {
   position: absolute;
   top: 100%;

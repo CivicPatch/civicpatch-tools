@@ -31,6 +31,11 @@
     text-decoration: none;
 }
 
+.people-tabs__link:focus-visible {
+    border-radius: 0.4rem 0.4rem 0 0;
+    outline-offset: 2px;
+}
+
 .people-tabs__link.active {
     background: var(--pico-card-background-color);
     color: var(--pico-primary);
