@@ -12,7 +12,7 @@ import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerRemoteJob, fetchPullRequests, fetchJurisdictionHistory } from '../../api.js';
+import { triggerRemoteJob, fetchJurisdictionHistory } from '../../api.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
@@ -20,13 +20,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
   const [history, setHistory] = useState(null);
-
-  useEffect(() => {
-    if (!jurisdiction_ocdid) return;
-    fetchPullRequests(jurisdiction_ocdid)
-      .then((res) => setSourceContentUrls(res.data?.[0]?.sources ?? []))
-      .catch(() => {});
-  }, [jurisdiction_ocdid]);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
@@ -143,6 +136,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             jurisdiction_ocdid=${jurisdiction_ocdid}
             .people=${people}
             .canDeletePeople=${permissions.DIRECTORY_DELETE}
+            .onSourceUrlsChange=${setSourceContentUrls}
           ></civ-editable-people-list>
           <civ-side-panel .jurisdictionOcdid=${jurisdiction_ocdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
         </div>

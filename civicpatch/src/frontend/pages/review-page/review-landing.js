@@ -3,8 +3,17 @@ import { component, useState } from "haunted";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
 import "../../components/streak-graph/streak-graph.js";
+import "../../components/goal-ring/goal-ring.js";
 
 const MAX_PRESET_GOAL = 50;
+
+function formatDuration(seconds) {
+  if (seconds == null) return "—";
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return s > 0 ? `${m}m ${s}s` : `${m}m`;
+}
 
 function presetGoalOptions() {
   return Array.from({ length: MAX_PRESET_GOAL }, (_, i) => i + 1);
@@ -38,7 +47,8 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
               <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
             </div>
           </div>
-          <span class="review-page__ready-count">${Math.min(effectiveGoal, stats.available_count ?? 0)}</span>
+          <span class="review-page__ready-count">${Math.max(0, Math.min(stats.available_count ?? 0, dailyGoal) - (stats.today_resolved ?? 0))}</span>
+          <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
           <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
           ${stats.today_resolved >= effectiveGoal ? html`
             <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
@@ -50,6 +60,8 @@ ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <stat-cards class="review-page__stat-cards" .stats=${[
         { key: "today", label: "Today", value: stats.today_resolved, sub: "reviews" },
         { key: "all_time", label: "All time", value: stats.all_time_resolved, sub: "reviews" },
+        { key: "best_streak", label: "Best streak", value: stats.best_streak ?? 0, sub: "days" },
+        { key: "avg_time", label: "Avg time", value: formatDuration(stats.avg_seconds_per_review), sub: "per review (30d)" },
       ]}></stat-cards>
       ${goalModalOpen ? html`
         <div class="review-page__modal-backdrop" @click=${() => setGoalModalOpen(false)}>

@@ -194,12 +194,33 @@ erDiagram
         timestamptz created_at
     }
 
+    review_sessions {
+        uuid id PK
+        uuid user_id FK
+        text state_code
+        int daily_goal
+        timestamptz created_at
+    }
+
+    review_session_entries {
+        uuid id PK
+        uuid review_session_id FK "idx: (review_session_id, status, created_at DESC)"
+        text request_id
+        text jurisdiction_ocdid
+        text status
+        int entry_number
+        timestamptz created_at
+        timestamptz resolved_at
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
     requests ||--o{ job_events : "request_id"
+    users ||--o{ review_sessions : "user_id"
+    review_sessions ||--o{ review_session_entries : "review_session_id"
 ```
 
 **Notes:**

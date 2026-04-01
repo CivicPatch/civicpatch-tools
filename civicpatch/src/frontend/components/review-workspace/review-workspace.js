@@ -45,7 +45,7 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
   function handleLinkPerson(e) {
     const { personId } = e.detail;
     setProfileModal(prev => ({ ...prev, open: false }));
-    e.target.dispatchEvent(new CustomEvent("link-person", {
+    e.target.parentNode.dispatchEvent(new CustomEvent("link-person", {
       detail: { personId, proposedPerson: profileModal.person, existingPeople: existingArr },
       bubbles: true,
     }));

@@ -9,6 +9,7 @@ function PeopleTable({ data, columns }) {
       .canReorder=${true}
       .data=${data}
       .columns=${columns}
+      .rowClass=${(row) => row._isNew ? 'row-new' : ''}
     ></civ-table>
   `;
 }
