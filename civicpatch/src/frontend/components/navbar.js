@@ -18,6 +18,8 @@ const NAVBAR_CSS = html`
       background: transparent;
       border-bottom: 1px solid var(--pico-muted-border-color);
       user-select: none;
+      max-width: 1200px;
+      margin-inline: auto;
     }
 
     /* Brand */
@@ -216,7 +218,8 @@ function renderAuthed(user) {
       <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
     <a href="/" class="nav-link">Home</a>
-    <a href="/jobs" class="nav-link">Jobs</a>
+    <a href="/queue" class="nav-link">Queue</a>
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="nav-link">Issues</a>` : ""}
     ${(user.permissions?.can_view_jobs_page) ? html`<a href="/review" class="nav-link">Review</a>` : ""}
     <a
       href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"

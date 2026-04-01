@@ -52,10 +52,10 @@ export const fetchJobsWithErrors = async (stateCode) => {
   return res.json();
 };
 
-export const fetchUnrecognizedRoles = async (stateCode) => {
-  const params = new URLSearchParams();
-  if (stateCode) params.set("state_code", stateCode);
-  const res = await fetch(`${API_URL}/api/v1/jobs/unrecognized-roles?${params}`, {
+export const fetchJobEvents = async (tags, page, perPage, sort) => {
+  const params = new URLSearchParams({ page, per_page: perPage, sort });
+  if (tags && tags.length) params.set("tags", tags.join(","));
+  const res = await fetch(`${API_URL}/api/v1/jobs/events?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

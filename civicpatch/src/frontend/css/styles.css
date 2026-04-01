@@ -11,8 +11,10 @@
 @import "../components/edit-people/tabs.css";
 @import "../components/edit-people/profile-modal.css";
 @import "../components/pull-request-card/pr-card.css";
+@import "../components/pagination/pagination.css";
 @import "../pages/jobs-page/error-card/error-card.css";
 @import "../pages/jobs-page/jobs-page.css";
+@import "../pages/issues-page/issues-page.css";
 @import "../pages/review-page/review-page.css";
 @import "../components/source-content/source-content.css";
 @import "../components/stat-cards/stat-cards.css";
@@ -550,6 +552,10 @@ main.container-fluid {
     gap: 1rem;
     padding: 0.5rem 1rem;
     flex: 1;
+}
+
+main.container-fluid--wide {
+    padding-inline: 0.5rem;
 }
 
 @media (min-width: 576px) {
