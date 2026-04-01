@@ -406,11 +406,21 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
             aggregate_failed_cases[field] = field_failures
 
     # Write full report to file
+    eval_ocdid = "ocd-jurisdiction/country:us/state:tx/place:example/government"
+    llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
+    cost_summary = {
+        "model": llm_costs[0]["model"] if llm_costs else None,
+        "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
+        "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
+        "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
+    }
+
     evals_dir = "tests/prompts/tests/evals/municipal_officials"
     os.makedirs(evals_dir, exist_ok=True)
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
         yaml.safe_dump({
+            "cost_summary": cost_summary,
             "aggregated_report": report,
             "aggregate_failures": aggregate_failures,
             "aggregate_failed_cases": aggregate_failed_cases,

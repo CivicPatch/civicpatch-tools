@@ -359,8 +359,8 @@ input:not(
     --pico-border-color: rgb(var(--catppuccin-sapphire));
 }
 
-[type="submit"],
-[type="button"],
+[type="submit"]:not(.profile-modal__tab),
+[type="button"]:not(.profile-modal__tab),
 [type="reset"],
 button:not(.btn-ghost):not(.profile-modal__tab) {
     --pico-background-color: var(--pico-primary);
@@ -369,8 +369,8 @@ button:not(.btn-ghost):not(.profile-modal__tab) {
 }
 
 button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.profile-modal__tab):hover,
-[type="submit"]:hover,
-[type="button"]:hover {
+[type="submit"]:not(.profile-modal__tab):hover,
+[type="button"]:not(.profile-modal__tab):hover {
     --pico-background-color: var(--pico-primary-hover-background);
     --pico-border-color: var(--pico-primary-hover-background);
     --pico-color: var(--pico-primary-inverse);
