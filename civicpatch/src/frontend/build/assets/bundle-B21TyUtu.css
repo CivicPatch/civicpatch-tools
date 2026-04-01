@@ -267,7 +267,7 @@
 
 .review-page__jurisdiction:hover {
     color: var(--pico-primary);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .review-page__dots {

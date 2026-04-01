@@ -132,12 +132,14 @@ async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: 
         next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
-    result = await scrape_page(context, page_to_scrape)
+    links, dead_url = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
+    updated_dead_urls = context.data.dead_urls + ([dead_url] if dead_url else [])
     next_context = context.copy(update={
         "progress": progress,
         "data": context.data.copy(update={
-            "links": result
+            "links": links,
+            "dead_urls": updated_dead_urls,
         })
     })
 

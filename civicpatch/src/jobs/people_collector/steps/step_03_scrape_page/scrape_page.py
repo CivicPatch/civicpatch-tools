@@ -1,13 +1,15 @@
 import os
-from typing import List
+from typing import List, Optional
 from shared.utils import data_path_utils, url_utils
 import jobs.people_collector.steps.step_03_scrape_page.scrape_utils as scrape_utils
 from jobs.people_collector.schemas import (
-    PeopleCollectorContext, Link, LinkStatus, WorkflowStatus 
+    PeopleCollectorContext, Link, LinkStatus, WorkflowStatus, DeadUrl
 )
-from utils import log_utils 
+from utils import log_utils
 
-async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> List[Link]:
+_NAVIGATION_FAILURE_MESSAGE = "Failed to load page with all wait strategies"
+
+async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> tuple[List[Link], Optional[DeadUrl]]:
     """
     Scrape pages based on the links found in the previous search step.
     """
@@ -41,7 +43,7 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
                 link.status = LinkStatus.SCRAPED.value
                 link.folder_name = folder_name
             updated_links.append(link)
-        return updated_links
+        return updated_links, None
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
         # If error, update the link status to "error"
@@ -52,4 +54,5 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
                 link.status = LinkStatus.ERROR.value
             updated_links.append(link)
 
-        return updated_links
+        dead_url = DeadUrl(url=link_to_scrape.url, error=str(e)) if _NAVIGATION_FAILURE_MESSAGE in str(e) else None
+        return updated_links, dead_url

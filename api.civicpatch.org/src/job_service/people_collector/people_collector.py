@@ -96,6 +96,16 @@ async def handle_submit_job_artifacts(
         )
         await insert_job_events(request.request_id, "excluded_person", excluded_people)
 
+    else:
+        try:
+            workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/workflow_context.json")
+            with open(workflow_context_path, "r") as f:
+                workflow_context = json.load(f)
+            dead_urls = workflow_context.get("data", {}).get("dead_urls", [])
+            await insert_job_events(request.request_id, "dead_url", dead_urls)
+        except FileNotFoundError:
+            pass
+
     artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
     zip_file_url = await storage_service.upload_file_to_storage(
