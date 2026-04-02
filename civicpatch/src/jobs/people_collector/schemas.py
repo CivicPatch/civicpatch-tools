@@ -114,7 +114,6 @@ class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]
 
 class ResearchMunicipalityStep(BaseModel):
-    names: List[str] = []           # all researched people, for review name-matching
     expected_count: int = 0         # how many officials the pipeline expects to find
     target_designations: List[str] = []  # geographic designations to look for
     roles_hint: list[str] = []

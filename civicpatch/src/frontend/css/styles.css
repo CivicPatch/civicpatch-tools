@@ -9,6 +9,7 @@
 @import "../components/review-checklist/review-checklist.css";
 @import "../components/review-workspace/review-workspace.css";
 @import "../components/edit-people/tabs.css";
+@import "../components/civ-tab-bar/civ-tab-bar.css";
 @import "../components/edit-people/profile-modal.css";
 @import "../components/pull-request-card/pr-card.css";
 @import "../components/pagination/pagination.css";
@@ -394,13 +395,16 @@ button.btn-ghost {
     margin: 0;
     color: inherit;
     cursor: pointer;
-    box-shadow: none;
     display: inline-flex;
     align-items: center;
     height: auto;
     width: auto;
     line-height: inherit;
     font-size: inherit;
+}
+
+button.btn-ghost:not(:focus-visible) {
+    box-shadow: none;
 }
 
 button.destructive,
@@ -658,10 +662,15 @@ a.btn:focus-visible {
     box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
 }
 
+a {
+    border-radius: var(--pico-border-radius);
+    padding: 0.1em 0.2em;
+    margin: 0 -0.2em;
+}
+
 a:focus-visible {
     outline: none;
     box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
-    border-radius: var(--pico-border-radius);
 }
 
 :focus-visible {
@@ -758,6 +767,9 @@ a:focus-visible {
     .about-footer__grid {
         grid-template-columns: 1fr;
         gap: 1.25rem;
+    }
+    .about-footer {
+        padding: 2rem 1.5rem;
     }
 }
 

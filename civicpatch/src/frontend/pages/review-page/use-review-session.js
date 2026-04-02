@@ -2,7 +2,6 @@ import { useState, useEffect } from "haunted";
 import {
   fetchReviewStats,
   fetchReview,
-  passReviewSession,
   pauseReviewSession,
   navigateToEntry,
   saveAndMerge,
@@ -30,7 +29,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [hasNext, setHasNext] = useState(true);
   const [hasPrev, setHasPrev] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [passedEntryNumbers, setPassedEntryNumbers] = useState(new Set());
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
   const [mergeState, setMergeState] = useState(null);
@@ -76,32 +74,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     setMergeState(null);
     setIsNavigating(true);
     try {
-      let target = entryNumber + 1;
-      while (passedEntryNumbers.has(target)) target++;
-      const res = await navigateToEntry(sid, target);
-      const data = handleAdvanceResult(res);
-      if (!data) return;
-      setHasNext(data.has_next !== false);
-      await applyEntry(data);
-      onReviewing();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsNavigating(false);
-    }
-  };
-
-  const pass = async () => {
-    const sid = session?.id;
-    const passed = entryNumber;
-    setMergeState(null);
-    setIsNavigating(true);
-    try {
-      await passReviewSession(sid, passed);
-      const nextPassedSet = new Set([...passedEntryNumbers, passed]);
-      setPassedEntryNumbers(nextPassedSet);
-      let target = passed + 1;
-      while (nextPassedSet.has(target)) target++;
+      const target = entryNumber + 1;
       const res = await navigateToEntry(sid, target);
       const data = handleAdvanceResult(res);
       if (!data) return;
@@ -171,11 +144,11 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     session, setSession,
     jurisdiction,
     pr,
-    progress: { entryNumber, hasNext, hasPrev, passedEntryNumbers, resolvedEntryNumbers, frontierEntry, isNavigating },
+    progress: { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, isNavigating },
     prPeople,
     mergeState, error, setError,
     stats,
-    advance, back, pass, pause, merge, navigateTo,
+    advance, back, pause, merge, navigateTo,
     sourceContentUrls, reviewData,
   };
 }

@@ -15,7 +15,7 @@ import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 
 const DEFAULT_PER_PAGE = 10;
-const PER_PAGE_OPTIONS = [10, 25, 50, 100];
+const PER_PAGE_OPTIONS = [10, 25, 50];
 
 function getPageFromUrl() {
   const val = parseInt(new URLSearchParams(window.location.search).get("page"), 10);
@@ -77,7 +77,7 @@ function QueuePage() {
     setLoading(true);
     setError(null);
 
-    fetchPullRequestsWithData(stateCode, page, perPage)
+    fetchPullRequestsWithData(stateCode, page, perPage, viewMode)
       .then((prResult) => {
         setPullRequests(prResult.data || []);
         setQueueSummary(prResult.summary || null);
@@ -85,7 +85,7 @@ function QueuePage() {
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [stateCode, page, perPage]);
+  }, [stateCode, page, perPage, viewMode]);
 
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
