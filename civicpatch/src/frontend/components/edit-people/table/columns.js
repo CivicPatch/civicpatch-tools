@@ -18,7 +18,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           colClass: "col-shrink col-icon",
           renderCell: (_person) => html`
             <span class="drag-handle" title="Drag to reorder">
-              <i class="fas fa-grip-vertical"></i>
+              <i class="fa-solid fa-grip-vertical"></i>
             </span>
           `,
         },

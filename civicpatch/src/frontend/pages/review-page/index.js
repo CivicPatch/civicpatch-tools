@@ -33,7 +33,7 @@ function ReviewPage() {
     prPeople,
     mergeState, error, setError,
     stats,
-    advance, back, pass, pause, merge, navigateTo,
+    advance, back, pause, merge, navigateTo,
     sourceContentUrls, reviewData,
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
@@ -185,7 +185,6 @@ function ReviewPage() {
     .onMerge=${handleMerge}
     .onAdvance=${advance}
     .onBack=${back}
-    .onPass=${pass}
     .onNavigateTo=${navigateTo}
     .onPause=${pause}
     .onTableDataChange=${handleTableDataChange}

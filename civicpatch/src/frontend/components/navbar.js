@@ -14,7 +14,7 @@ const NAVBAR_CSS = html`
     nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 1.25rem;
       padding: 0.875rem 0;
       background: transparent;
       border-bottom: 1px solid var(--pico-muted-border-color);
@@ -22,10 +22,24 @@ const NAVBAR_CSS = html`
       max-width: 1200px;
       margin-inline: auto;
     }
+
+    .nav-logout {
+      font-size: var(--text-sm);
+      font-weight: 400;
+      color: var(--pico-muted-color);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-logout:hover {
+      opacity: 1;
+      color: var(--pico-muted-color);
+      text-decoration: none;
+    }
     nav.nav--logged-out {
       border-bottom: none;
       position: relative;
-      justify-content: flex-end;
       padding-top: 2.5rem;
       padding-bottom: 2.5rem;
     }
@@ -71,6 +85,7 @@ const NAVBAR_CSS = html`
       display: flex;
       align-items: center;
       gap: 1.25rem;
+      margin-left: auto;
     }
 
     /* User identity — avatar + display name */
@@ -222,11 +237,7 @@ const NAVBAR_CSS = html`
     /* Rounded focus outlines */
     .nav-brand:focus-visible,
     .nav-link:focus-visible,
-    .btn-primary:focus-visible {
-      outline: var(--pico-outline-width) solid var(--pico-primary-focus);
-      outline-offset: 0.2rem;
-      border-radius: var(--pico-border-radius);
-    }
+    .btn-primary:focus-visible,
     .btn-outline:focus-visible {
       outline: none;
       box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
@@ -249,6 +260,30 @@ const NAVBAR_CSS = html`
 
     @media (max-width: 640px) {
       .user-info { display: none; }
+      nav {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-inline: 0.5rem;
+      }
+      nav.nav--logged-out {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+      nav.nav--logged-out .nav-brand {
+        position: static;
+        transform: none;
+      }
+      .nav-links {
+        width: 100%;
+        margin-left: 0;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
     }
   </style>
 `;
@@ -280,12 +315,6 @@ function renderAuthed(user, summary, currentPath) {
     <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary?.open_prs == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? ''}</span></a>
     ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${!summary || (!summary.pipeline_errors && !summary.duplicate_jurisdictions) ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : ''}</span></a>` : ""}
     ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
-    <a
-      href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}"
-      class="btn-outline"
-    >
-      Logout
-    </a>
   `;
 }
 
@@ -306,10 +335,11 @@ function Navbar({ user }) {
     <nav class="${!isAuthed ? 'nav--logged-out' : ''}">
       <a href="/" class="nav-brand">
         <span class="nav-brand-icon">
-          <i class="fas fa-landmark"></i>
+          <i class="fa-solid fa-landmark"></i>
         </span>
         CivicPatch
       </a>
+      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout"><i class="fab fa-github"></i> Logout</a>` : ''}
       <div class="nav-links">
         ${isAuthed
           ? renderAuthed(userData, summary, currentPath)

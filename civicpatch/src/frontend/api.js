@@ -62,11 +62,12 @@ export const fetchJobEvents = async (tags, page, perPage, sort) => {
   return res.json();
 };
 
-export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10) => {
+export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10, view = "quick") => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
   params.set("page", page);
   params.set("per_page", perPage);
+  params.set("view", view);
   const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
     credentials: "include",
   });
@@ -302,16 +303,6 @@ export const navigateToEntry = async (sessionId, entryNumber) => {
   return res.json();
 };
 
-export const passReviewSession = async (sessionId, entryNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pass`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ entry_number: entryNumber }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
 
 export const pauseReviewSession = async (sessionId) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pause`, {

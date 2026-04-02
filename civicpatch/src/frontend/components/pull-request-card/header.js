@@ -18,7 +18,7 @@ const renderStats = ({ added, removed, changed }) => {
   `;
 };
 
-const PullRequestCardHeader = ({ entry, state, stats }) => {
+const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   const [reviewData, setReviewData] = useState(null);
   const [fullData, setFullData] = useState(null);
   const [reviewLoading, setReviewLoading] = useState(false);
@@ -96,19 +96,11 @@ const PullRequestCardHeader = ({ entry, state, stats }) => {
 
   return html` <div class="pr-card__header">
     <div class="header-item-left">
-      <civ-badge
-        .label=${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
-      ></civ-badge>
+      <a class="pr-card__jurisdiction-link" href="/jurisdictions?jurisdiction_ocdid=${entry?.jurisdiction?.ocdid}" target="_blank" rel="noopener">
+        ${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
+      </a>
       <a class="pr-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">
         #${pullRequestNumber || "—"}
-      </a>
-      <a
-        class="pr-card__link"
-        href="/jurisdictions?jurisdiction_ocdid=${entry?.jurisdiction?.ocdid}"
-        target="_blank"
-        rel="noopener"
-      >
-        Detail
       </a>
     </div>
     <div class="header-item-center">
@@ -128,6 +120,7 @@ const PullRequestCardHeader = ({ entry, state, stats }) => {
       ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">
+      ${createdAt ? html`<span class="pr-card__meta">${new Date(createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>` : ""}
       ${renderCloseButton()} ${renderMergeButton()}
     </div>
   </div>`;

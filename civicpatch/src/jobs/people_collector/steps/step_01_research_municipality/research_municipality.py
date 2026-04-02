@@ -45,13 +45,12 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
     target_people = people_utils.filter_people_by_roles(role_configs, people)
 
     return ResearchMunicipalityStep(
-        names=[p.name for p in people],
         expected_count=len(target_people),
         target_designations=people_utils.filter_geographic_designations(
             [d for p in target_people for d in p.designations]
         ),
         roles_hint=_roles_hint(target_people),
-        identities={p.name: [p.name] for p in people},
+        identities={p.name: [] for p in people},
         source_urls=_source_urls(context.data.config, []),
     )
 
@@ -60,7 +59,6 @@ def _step_from_db(config, jurisdiction_ocdid: str, existing: list) -> ResearchMu
     existing_people = [Person(**p) for p in existing]
 
     return ResearchMunicipalityStep(
-        names=[p["name"] for p in existing],
         expected_count=len(existing),
         target_designations=list({
             d

@@ -5,18 +5,6 @@ import "./header.js";
 import "./data-panel.js";
 import "../diff-panel/diff-panel.js";
 
-const PrTimestamp = ({ createdAt }) =>
-  createdAt
-    ? html`<div class="pr-card__meta">
-        created
-        ${new Date(createdAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
-      </div>`
-    : "";
-
 function diffStats(entry) {
   const existingMap = Object.fromEntries(
     (entry?.existing ?? []).map((p) => [p?.id, p]),
@@ -62,11 +50,11 @@ function PrCard({ entry, state, viewMode = "quick" }) {
 
   return html`
     <div class="pr-card">
-      ${PrTimestamp({ createdAt: entry?.created_at })}
       <pull-request-card-header
         .entry=${entry}
         .state=${state}
         .stats=${stats}
+        .createdAt=${entry?.created_at}
       ></pull-request-card-header>
       ${renderCardContent()}
     </div>

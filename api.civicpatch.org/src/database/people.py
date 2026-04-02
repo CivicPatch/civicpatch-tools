@@ -13,6 +13,12 @@ _PEOPLE_TABLE_EXPRS = {
     "name":        ("'name'",        "data#>>'{name}'"),
     "office":      ("'office'",      "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')"),
     "source_urls": ("'source_urls'", "data#>'{source_urls}'"),
+    "phones":      ("'phones'",      "data#>'{phones}'"),
+    "emails":      ("'emails'",      "data#>'{emails}'"),
+    "urls":        ("'urls'",        "data#>'{urls}'"),
+    "start_date":  ("'start_date'",  "data#>>'{start_date}'"),
+    "end_date":    ("'end_date'",    "data#>>'{end_date}'"),
+    "image":       ("'image'",       "data#>>'{image}'"),
 }
 
 _RESULT_JSON_EXPRS = {
@@ -20,13 +26,22 @@ _RESULT_JSON_EXPRS = {
     "name":        ("'name'",        "elem->>'name'"),
     "office":      ("'office'",      "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')"),
     "source_urls": ("'source_urls'", "elem->'source_urls'"),
+    "phones":      ("'phones'",      "elem->'phones'"),
+    "emails":      ("'emails'",      "elem->'emails'"),
+    "urls":        ("'urls'",        "elem->'urls'"),
+    "start_date":  ("'start_date'",  "elem->>'start_date'"),
+    "end_date":    ("'end_date'",    "elem->>'end_date'"),
+    "image":       ("'image'",       "elem->>'image'"),
 }
 
+_QUICK_FIELDS = frozenset({"id", "name", "office", "source_urls"})
+_DETAIL_FIELDS = frozenset({"id", "name", "office", "source_urls", "phones", "emails", "urls", "start_date", "end_date", "image"})
+
 VIEWS: dict[str, frozenset[str]] = {
-    "diff": frozenset({"id", "name", "office", "source_urls"}),
-    "full": frozenset({"id", "name", "office", "source_urls"}),  # extend when full view is defined
+    "quick": _QUICK_FIELDS,
+    "detail": _DETAIL_FIELDS,
 }
-DEFAULT_VIEW = "diff"
+DEFAULT_VIEW = "quick"
 
 
 def _build_jsonb_obj(exprs: dict, fields: frozenset[str]) -> str:

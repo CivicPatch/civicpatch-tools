@@ -50,12 +50,19 @@ const DiffPanel = ({ data }) => {
     (e, p) => changedFields(e, p).length > 0,
   );
 
+  function renderSourceLinks(person) {
+    const urls = person?.source_urls;
+    if (!urls?.length) return "";
+    return urls.map((url, i) => html`<a class="source-link" href=${url} target="_blank" rel="noopener">[${i + 1}]</a>`);
+  }
+
   function renderAdded(person) {
     return html`
       <div class="diff-person diff-person--added">
         <div class="diff-person__header">
           <span class="diff-person__badge diff-person__badge--added">+</span>
           <span class="diff-person__name">${person.name || "—"}</span>
+          ${renderSourceLinks(person)}
         </div>
         <table class="diff-person__fields">
           ${FIELDS.filter(({ key }) => key !== "name").map(({ key, label }) => {
@@ -77,6 +84,7 @@ const DiffPanel = ({ data }) => {
         <div class="diff-person__header">
           <span class="diff-person__badge diff-person__badge--removed">−</span>
           <span class="diff-person__name">${person.name || "—"}</span>
+          ${renderSourceLinks(person)}
         </div>
         <table class="diff-person__fields">
           ${FIELDS.filter(({ key }) => key !== "name").map(({ key, label }) => {
@@ -99,6 +107,7 @@ const DiffPanel = ({ data }) => {
         <div class="diff-person__header">
           <span class="diff-person__badge diff-person__badge--changed">~</span>
           <span class="diff-person__name">${person.name || from?.name || "—"}</span>
+          ${renderSourceLinks(person)}
         </div>
         <table class="diff-person__fields">
           ${fields.map(({ key, label }) => html`<tr>
@@ -117,6 +126,7 @@ const DiffPanel = ({ data }) => {
         <div class="diff-person__header">
           <span class="diff-person__badge">·</span>
           <span class="diff-person__name">${person.name || "—"}</span>
+          ${renderSourceLinks(person)}
         </div>
       </div>
     `;

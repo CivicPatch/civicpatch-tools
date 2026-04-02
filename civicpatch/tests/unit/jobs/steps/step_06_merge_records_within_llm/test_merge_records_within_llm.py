@@ -52,7 +52,6 @@ def _make_llm_person(**kwargs) -> LLMPerson:
 def _build_context(records_by_llm: dict, elected_officials: list, identities=None) -> PeopleCollectorContext:
     resolved_identities = identities if identities is not None else {o["name"]: [o["name"]] for o in elected_officials}
     research_step = ResearchMunicipalityStep(
-        names=[o["name"] for o in elected_officials],
         expected_count=len(elected_officials),
         identities=resolved_identities,
     )

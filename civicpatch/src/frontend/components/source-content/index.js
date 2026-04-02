@@ -5,6 +5,7 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
+import "../civ-tab-bar/civ-tab-bar.js";
 
 
 function SourceContent({ sourceContentUrls }) {
@@ -42,22 +43,17 @@ function SourceContent({ sourceContentUrls }) {
     return html`
         <div class="source-content">
             <div class="source-content__tabs">
-                <div class="source-content__tab-bar">
-                    ${(() => {
+                <civ-tab-bar
+                    .tabs=${(() => {
                         const urlMap = buildSourceUrlMap(sourceContentUrls);
-                        return sourceContentUrls.map(({ url }, idx) => {
+                        return sourceContentUrls.map(({ url }) => {
                             const entry = urlMap.get(url);
-                            return html`
-                                <button
-                                    class="source-content__tab ${entry.colorClass}${safeTab === idx ? ' source-content__tab--active' : ''}"
-                                    @click=${() => setSelectedTab(idx)}
-                                >
-                                    ${entry.number}
-                                </button>
-                            `;
+                            return { label: entry.number, colorClass: entry.colorClass };
                         });
                     })()}
-                </div>
+                    .selectedIndex=${safeTab}
+                    .onTabClick=${(idx) => setSelectedTab(idx)}
+                ></civ-tab-bar>
                 <div class="source-content__tab-content">
                     <a href="${sourceContentUrls[safeTab].url}" target="_blank" rel="noopener noreferrer">View Original</a>
                     <div class="source-content__markdown">${unsafeHTML(markdownHtml)}</div>

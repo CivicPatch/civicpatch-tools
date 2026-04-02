@@ -20,39 +20,9 @@ source-content {
   min-height: 0;
 }
 
-.source-content__tab-bar {
-  display: flex;
-  gap: 0.25rem;
+.source-content__tabs civ-tab-bar {
   margin-bottom: 0.5rem;
   flex-shrink: 0;
-}
-
-.source-content__tab {
-  background: var(--pico-muted-background-color);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
-  padding: 0.2rem 0.75rem;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  outline: none;
-  width: auto;
-  margin: 0;
-  min-width: unset;
-}
-
-.source-content__tab--active {
-  background: transparent;
-  color: var(--pico-primary);
-  border-bottom: 2px solid var(--pico-primary);
-  font-weight: 600;
-  z-index: 1;
-}
-
-.source-content__tab--active[class*="color-"] {
-  color: rgb(var(--_c));
-  border-bottom-color: rgb(var(--_c));
 }
 
 .source-content__tab-content {

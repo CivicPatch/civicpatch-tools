@@ -11,10 +11,10 @@ function ReviewSession({
   mergeState, error, isDirty,
   prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
   resolvedMatches,
-  onMerge, onAdvance, onBack, onPass, onNavigateTo, onPause,
+  onMerge, onAdvance, onBack, onNavigateTo, onPause,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }) {
-  const { entryNumber, hasNext, hasPrev, passedEntryNumbers, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
+  const { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus, reviewState } = pr ?? {};
 
@@ -27,7 +27,6 @@ function ReviewSession({
   function getDotStatus(n) {
     if (n === entryNumber) return "current";
     if (resolvedEntryNumbers.has(n)) return "resolved";
-    if (passedEntryNumbers.has(n)) return "passed";
     if (n <= frontierEntry) return "deferred";
     return "future";
   }
@@ -35,44 +34,45 @@ function ReviewSession({
   return html`
     <main class="review-page">
       <div class="review-page__sticky-header">
-        <div class="review-page__nav">
-          <div class="review-page__nav-left">
-            <button class="btn-sm review-page__end-btn" @click=${onPause}>End session</button>
-          </div>
-          <div class="review-page__nav-center">
-            <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
-            <div class="review-page__dots">
-              ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
-                const status = getDotStatus(n);
-                return html`<button
-                  class="review-page__dot review-page__dot--${status}"
-                  ?disabled=${status === "future" || status === "current"}
-                  @click=${() => onNavigateTo(n)}
-                ></button>`;
-              })}
-            </div>
-            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
-          <div class="review-page__nav-right">
-            <button class="btn-sm review-page__pass-btn" @click=${onPass} ?disabled=${!hasNext}>Pass</button>
-            <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
-              ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
-            </button>
-          </div>
-        </div>
-        ${!collapsed && error ? html`<p class="review-page__error">${error}</p>` : ""}
-        ${!collapsed && mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
-        ${collapsed ? "" : html`<div class="review-page__info-row">
-          <div class="review-page__pr-meta">
-            ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
-            ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
-          </div>
-          <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
-        </div>`}
-        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)} aria-label=${collapsed ? "Show details" : "Hide details"}>
+        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)} aria-label=${collapsed ? "Show controls" : "Hide controls"}>
           <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
         </button>
+        ${collapsed ? "" : html`
+          <div class="review-page__nav">
+            <div class="review-page__nav-left">
+              <button class="btn-sm review-page__end-btn" @click=${onPause}>End session</button>
+            </div>
+            <div class="review-page__nav-center">
+              <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
+              <div class="review-page__dots">
+                ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
+                  const status = getDotStatus(n);
+                  return html`<button
+                    class="review-page__dot review-page__dot--${status}"
+                    ?disabled=${status === "future" || status === "current"}
+                    @click=${() => onNavigateTo(n)}
+                  ></button>`;
+                })}
+              </div>
+              <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="review-page__nav-right">
+              <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
+                ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
+              </button>
+            </div>
+          </div>
+          ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+          ${mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
+          <div class="review-page__info-row">
+            <div class="review-page__pr-meta">
+              ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdid}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
+              ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+            </div>
+            <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
+          </div>
+        `}
       </div>
       <civ-diff-panel
         .data=${prPeople ?? { existing: [], proposed: [] }}

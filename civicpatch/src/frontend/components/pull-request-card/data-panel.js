@@ -102,11 +102,9 @@ const DataPanel = ({ entry }) => {
       <div class="diff-panel__toolbar">
         <span class="diff-panel__summary">No changes detected.</span>
         <button
-          class="diff-panel__toggle"
+          class="diff-panel__toggle btn-sm"
           @click=${() => setShowUnchanged(true)}
-        >
-          Show ${unchangedRows.length} unchanged
-        </button>
+        >Show ${unchangedRows.length} unchanged</button>
       </div>
     </div>`;
   }
@@ -114,14 +112,12 @@ const DataPanel = ({ entry }) => {
   return html`
     <div class="diff-panel">
       <div class="diff-panel__toolbar">
+        <span class="diff-panel__label">Changes Since Last Scrape</span>
         ${unchangedRows.length > 0
-          ? html` <button
-              class="diff-panel__toggle"
+          ? html`<button
+              class="diff-panel__toggle btn-sm"
               @click=${() => setShowUnchanged(!showUnchanged)}
-            >
-              ${showUnchanged ? "Hide" : `Show ${unchangedRows.length}`}
-              unchanged
-            </button>`
+            >${showUnchanged ? "Hide" : `Show ${unchangedRows.length}`} unchanged</button>`
           : ""}
       </div>
       <div class="diff-table__wrapper"><table class="diff-table">

@@ -200,6 +200,7 @@
     gap: 0.5rem;
     flex-direction: column;
     padding-left: 1rem;
+    margin-top: 1rem;
 }
 
 .issues-page__duplicate-item {
