@@ -93,7 +93,7 @@ def fuzzy_match(name1: str, name2: str) -> bool:
 
     if not _within_one_edit(_casefold(p1.first), _casefold(p2.first)) or not _within_one_edit(_casefold(p1.last), _casefold(p2.last)):
         return False
-    if p1.middle and p2.middle and _casefold(p1.middle) != _casefold(p2.middle):
+    if p1.middle and p2.middle and _normalize_suffix(_casefold(p1.middle)) != _normalize_suffix(_casefold(p2.middle)):
         return False
     if (
         p1.suffix
@@ -113,7 +113,7 @@ def _fuzzy_match_score(name1: str, name2: str) -> int:
         score += 1
     if _casefold(p1.last) == _casefold(p2.last):
         score += 1
-    if p1.middle and p2.middle and _casefold(p1.middle) == _casefold(p2.middle):
+    if p1.middle and p2.middle and _normalize_suffix(_casefold(p1.middle)) == _normalize_suffix(_casefold(p2.middle)):
         score += 1
     if (
         p1.suffix

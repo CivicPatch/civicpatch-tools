@@ -3,6 +3,7 @@ import { component } from "haunted";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
 import "./header.js";
 import "./data-panel.js";
+import "../diff-panel/diff-panel.js";
 
 const PrTimestamp = ({ createdAt }) =>
   createdAt
@@ -37,7 +38,7 @@ function diffStats(entry) {
   return { added, removed, changed };
 }
 
-function PrCard({ entry, state }) {
+function PrCard({ entry, state, viewMode = "quick" }) {
   const stats = diffStats(entry);
 
   const renderCardContent = () => {
@@ -51,6 +52,11 @@ function PrCard({ entry, state }) {
       return html`<div class="pr-card__content">Error: ${state?.error}</div>`;
     }
 
+    if (viewMode === "detail") {
+      return html`<civ-diff-panel
+        .data=${{ existing: entry?.existing ?? [], proposed: entry?.proposed ?? [] }}
+      ></civ-diff-panel>`;
+    }
     return html`<data-panel .entry=${entry}></data-panel>`;
   };
 
