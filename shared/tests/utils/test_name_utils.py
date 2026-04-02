@@ -163,3 +163,7 @@ def test_build_canonical_map_fuzzy():
     canonical_map = name_utils.build_canonical_map(all_people, identities)
     # Both should map to the same canonical name
     assert canonical_map["Jeffery David Martinez"] == canonical_map["Jeffery Martinez"]
+
+
+def test_fuzzy_match_middle_initial_with_and_without_period():
+    assert name_utils.fuzzy_match("John G. Sutton Jr.", "John G Sutton Jr.")

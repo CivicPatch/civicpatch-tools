@@ -15,7 +15,7 @@ import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 
 const DEFAULT_PER_PAGE = 10;
-const PER_PAGE_OPTIONS = [10, 25, 50];
+const PER_PAGE_OPTIONS = [10, 25, 50, 100];
 
 function getPageFromUrl() {
   const val = parseInt(new URLSearchParams(window.location.search).get("page"), 10);
@@ -41,9 +41,15 @@ function getStateFromUrl() {
   return val ? val.toLowerCase() : "";
 }
 
+function getViewFromUrl() {
+  const val = new URLSearchParams(window.location.search).get("view");
+  return val === "detail" ? "detail" : val === "quick" ? "quick" : null;
+}
+
 function QueuePage() {
   const { permissions } = useAuth();
   const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [defaultView, setDefaultView] = useLocalStorage("app:queue-view", "quick", { ttl: PERSIST_FOREVER });
   const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
   const [queueSummary, setQueueSummary] = useState(null);
   const [pullRequests, setPullRequests] = useState([]);
@@ -53,11 +59,13 @@ function QueuePage() {
   const [page, setPage] = useState(getPageFromUrl());
   const [perPage, setPerPage] = useState(getPerPageFromUrl());
   const [totalPages, setTotalPages] = useState(1);
+  const [viewMode, setViewMode] = useState(getViewFromUrl() || defaultView);
 
   useEffect(() => {
     const onPopState = () => {
       setPage(getPageFromUrl());
       setPerPage(getPerPageFromUrl());
+      setViewMode(getViewFromUrl() || defaultView);
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -99,6 +107,14 @@ function QueuePage() {
     } catch (error) {
       setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } });
     }
+  };
+
+  const handleViewChange = (newView) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("view", newView);
+    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+    setDefaultView(newView);
+    setViewMode(newView);
   };
 
   const handleStateChange = (e) => {
@@ -164,6 +180,7 @@ function QueuePage() {
                 @onClose=${handleClose}
                 .entry=${pr}
                 .state=${pullRequestState[pullRequestNumber]}
+                .viewMode=${viewMode}
               ></pr-card>
             `;
           });
@@ -194,6 +211,16 @@ function QueuePage() {
         ${summarySection}
         <section>
           <div class="queue-page__top-controls">
+            <div class="queue-page__view-toggle">
+              <button
+                class="queue-page__view-toggle-btn ${viewMode === "quick" ? "queue-page__view-toggle-btn--active" : ""}"
+                @click=${() => handleViewChange("quick")}
+              >Quick</button>
+              <button
+                class="queue-page__view-toggle-btn ${viewMode === "detail" ? "queue-page__view-toggle-btn--active" : ""}"
+                @click=${() => handleViewChange("detail")}
+              >Detail</button>
+            </div>
             <div class="queue-page__pagination queue-page__pagination--top">
               ${Pagination({ page, totalPages, onPrevious: () => handlePageChange(page - 1), onNext: () => handlePageChange(page + 1), onGoToPage: handlePageChange })}
             </div>
