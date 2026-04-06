@@ -6,7 +6,7 @@ import "../edit-people/people-table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
 
-function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd }) {
+function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false }) {
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
   const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
@@ -57,14 +57,14 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
   return html`
     <div class="review-workspace">
       <div class="action-buttons">
-        <button class="secondary btn-sm" @click=${onAdd}>Add</button>
-        <button class="secondary btn-sm" @click=${onMerge} ?disabled=${selected.length < 2}>
+        <button class="secondary btn-sm" @click=${onAdd} ?disabled=${isTerminal}>Add</button>
+        <button class="secondary btn-sm" @click=${onMerge} ?disabled=${isTerminal || selected.length < 2}>
           Merge (${selected.length})
         </button>
-        <button class="secondary btn-sm" @click=${onBulkDelete} ?disabled=${selected.length === 0}>
+        <button class="secondary btn-sm" @click=${onBulkDelete} ?disabled=${isTerminal || selected.length === 0}>
           Delete (${selected.length})
         </button>
-        <button class="secondary btn-sm" @click=${onReset} ?disabled=${!isDirty}>Reset</button>
+        <button class="secondary btn-sm action-buttons__reset" @click=${onReset} ?disabled=${isTerminal || !isDirty}>Reset</button>
       </div>
       <civ-people-table
         .data=${allEditable}

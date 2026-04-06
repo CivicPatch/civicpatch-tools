@@ -69,9 +69,9 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   const isLoading = state?.status === PULL_REQUEST_STATUS.LOADING_MERGE || state?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
 
   const renderMergeButton = () => {
-    let buttonName = "Merge";
-    if (state?.status === PULL_REQUEST_STATUS.LOADING_MERGE) buttonName = "Merging...";
-    else if (state?.status === PULL_REQUEST_STATUS.MERGED) buttonName = "Merged";
+    let buttonName = "Publish";
+    if (state?.status === PULL_REQUEST_STATUS.LOADING_MERGE) buttonName = "Publishing...";
+    else if (state?.status === PULL_REQUEST_STATUS.MERGED) buttonName = "Published";
     else if (state?.status === PULL_REQUEST_STATUS.ERROR) buttonName = "Error";
 
     return html`<button

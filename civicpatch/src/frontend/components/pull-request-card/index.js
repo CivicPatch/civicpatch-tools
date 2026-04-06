@@ -30,9 +30,6 @@ function PrCard({ entry, state, viewMode = "quick" }) {
   const stats = diffStats(entry);
 
   const renderCardContent = () => {
-    if (state?.status === PULL_REQUEST_STATUS.MERGED) {
-      return html`<div class="pr-card__content">Merged</div>`;
-    }
     if (state?.status === PULL_REQUEST_STATUS.CLOSED) {
       return html`<div class="pr-card__content">Closed</div>`;
     }
@@ -48,6 +45,9 @@ function PrCard({ entry, state, viewMode = "quick" }) {
     return html`<data-panel .entry=${entry}></data-panel>`;
   };
 
+  const isPublished = state?.status === PULL_REQUEST_STATUS.MERGED;
+  const isPublishing = state?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
+
   return html`
     <div class="pr-card">
       <pull-request-card-header
@@ -57,6 +57,8 @@ function PrCard({ entry, state, viewMode = "quick" }) {
         .createdAt=${entry?.created_at}
       ></pull-request-card-header>
       ${renderCardContent()}
+      ${isPublished ? html`<div class="pr-card__overlay pr-card__overlay--published"><span>Published.</span></div>` : null}
+      ${isPublishing ? html`<div class="pr-card__overlay pr-card__overlay--publishing"><span>Publishing…</span></div>` : null}
     </div>
   `;
 }
