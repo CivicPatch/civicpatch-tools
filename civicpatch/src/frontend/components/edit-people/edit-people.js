@@ -17,6 +17,18 @@ import { buildOtherNames } from "../../utils/name-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../diff-panel/diff-panel.js";
 
+const TAB = {
+  directory: 'directory',
+  current: 'current',
+  pull_request: 'pull_request',
+};
+
+function activeTabFromSelection(selectedPullRequest) {
+  if (selectedPullRequest === 'directory') return TAB.directory;
+  if (selectedPullRequest) return TAB.pull_request;
+  return TAB.current;
+}
+
 function updateTabParam(tab) {
   const p = new URLSearchParams(window.location.search);
   if (tab === 'directory') p.set('tab', 'directory');
@@ -104,13 +116,15 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     handleKeyDown,
   } = useRovingFocusList(currentPeople.length);
 
+  const activeTab = activeTabFromSelection(selectedPullRequest);
+
   useEffect(() => {
     if (selectedPullRequest === undefined) return;
     setPrStatus(null);
-    onSourceUrlsChange(selectedPullRequest && selectedPullRequest !== 'directory' ? selectedPullRequest.sources ?? [] : []);
-    if (selectedPullRequest === 'directory') {
+    onSourceUrlsChange(activeTab === TAB.pull_request ? selectedPullRequest.sources ?? [] : []);
+    if (activeTab === TAB.directory) {
       handleFetchDirectory();
-    } else if (!selectedPullRequest) {
+    } else if (activeTab === TAB.current) {
       assignPeople(people);
       setReviewData(null);
       setResolvedMatches({});
@@ -218,12 +232,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   async function handleOpenPR() {
     setPrStatus("loading_merge");
     try {
-      const result = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
+      const { data } = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
+      await saveAndMerge(data.pr_number, data.request_id, jurisdiction_ocdid, null);
       setPrStatus("merged");
-      setNotice(`PR opened: ${result.data.pr_url}`);
+      setNotice(`Published: ${data.pr_url}`);
     } catch (err) {
       setPrStatus("error");
-      setError("Failed to open pull request.");
+      setError("Failed to publish.");
     }
   }
 
@@ -351,14 +366,14 @@ function handleCardKeyDown(e, idx, key) {
     `;
   }
 
-  const activeSourceUrlMap = selectedPullRequest && selectedPullRequest !== 'directory'
+  const activeSourceUrlMap = activeTab === TAB.pull_request
     ? buildSourceUrlMap(selectedPullRequest.sources ?? [])
     : new Map();
 
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(openProfileModal, activeSourceUrlMap)}
+      .columns=${getColumns(openProfileModal, activeSourceUrlMap, { showOtherNames: activeTab === TAB.current })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
@@ -394,11 +409,11 @@ function handleCardKeyDown(e, idx, key) {
   }
 
   function renderContent() {
-    if (selectedPullRequest === 'directory') {
+    if (activeTab === TAB.directory) {
       return renderDirectoryView();
     }
     return html`
-      ${selectedPullRequest
+      ${activeTab === TAB.pull_request
         ? html`
             <a href=${selectedPullRequest.pr.url} target="_blank" class="contrast"
               >View Pull Request</a
@@ -415,14 +430,14 @@ function handleCardKeyDown(e, idx, key) {
         .onAdd=${handleAdd}
         .onMerge=${handleMerge}
         .onBulkDelete=${handleBulkDelete}
-        .onReset=${selectedPullRequest ? () => handleSelectedPullRequestData(selectedPullRequest) : handleReset}
-        .onPublish=${selectedPullRequest ? handlePublish : handleOpenPR}
+        .onReset=${activeTab === TAB.pull_request ? () => handleSelectedPullRequestData(selectedPullRequest) : handleReset}
+        .onPublish=${activeTab === TAB.pull_request ? handlePublish : handleOpenPR}
         .onClosePR=${handleClosePR}
         .selectedPeople=${selectedPeople}
         .dirty=${dirty}
         .isLoading=${isLoading}
         .notice=${notice}
-        .hasPullRequest=${!!selectedPullRequest}
+        .hasPullRequest=${activeTab === TAB.pull_request}
         .prStatus=${prStatus}
       ></civ-people-action-buttons>
       ${isLoading
@@ -469,7 +484,7 @@ function handleCardKeyDown(e, idx, key) {
       .nameMatches=${profileModal.nameMatches ?? []}
       .searchSuggestions=${profileModal.searchSuggestions ?? []}
       .jurisdictionOcdid=${profileModal.jurisdictionOcdid ?? jurisdiction_ocdid}
-      .readOnly=${selectedPullRequest === 'directory'}
+      .readOnly=${activeTab === TAB.directory}
       @link-person=${handleLinkPerson}
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}

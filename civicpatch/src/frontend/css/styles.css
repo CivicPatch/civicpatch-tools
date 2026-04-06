@@ -453,19 +453,24 @@ button.destructive:active,
     background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
     border-color: transparent;
     color: rgb(var(--catppuccin-base));
-    transition: opacity 0.15s;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: opacity 0.15s, box-shadow 0.15s;
 }
 
 .btn-gradient:hover:not(:disabled) {
     background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
     border-color: transparent;
     color: rgb(var(--catppuccin-base));
-    opacity: 0.85;
+    opacity: 0.88;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
 }
 
 .btn-gradient:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .btn-sm {
@@ -654,7 +659,7 @@ main.container-fluid--wide {
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 
 .page-content {
-    max-width: 1200px;
+    max-width: 1400px;
     margin-inline: auto;
 }
 
@@ -725,7 +730,7 @@ a:focus-visible {
 }
 
 .about-footer__inner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin-inline: auto;
     display: flex;
     flex-direction: column;

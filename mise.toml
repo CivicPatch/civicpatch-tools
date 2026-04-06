@@ -85,6 +85,10 @@ dir = "civicpatch"
 run = "uv run pytest"
 dir = "api.civicpatch.org"
 
+[tasks.tfe]
+run = "npm test"
+dir = "civicpatch/src/frontend"
+
 ###################################################
 ## 🚀✨ Scripts                             ✨🚀 ##
 ###################################################

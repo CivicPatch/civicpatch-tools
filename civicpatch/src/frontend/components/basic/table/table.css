@@ -25,9 +25,22 @@ civ-table table:focus {
   outline: none;
 }
 
-civ-table th,
-civ-table td {
+civ-table th {
   padding: 0.2rem 0.25rem;
+}
+
+civ-table td {
+  padding: 0;
+}
+
+civ-table td civ-table-cell {
+  display: flex;
+  width: 100%;
+  align-self: stretch;
+}
+
+civ-table td civ-table-cell > div {
+  flex: 1;
 }
 
 civ-table tr {
@@ -111,12 +124,78 @@ civ-table td.col-phone {
   white-space: nowrap;
 }
 
+civ-table th.col-email,
+civ-table td.col-email {
+  min-width: 12rem;
+}
+
 /* name/office: wrap at word boundaries, never mid-word */
 civ-table td.col-name span.cell-content,
 civ-table td.col-office-name span.cell-content {
   white-space: normal;
   word-break: normal;
   overflow-wrap: normal;
+}
+
+/* empty-column expander — vertical bar with expansion symbol */
+civ-table th.col-expand-toggle,
+civ-table td.col-expand-toggle {
+  width: 1.25rem;
+  min-width: 1.25rem;
+  padding: 0;
+  position: relative;
+}
+
+civ-table th.col-expand-toggle .col-expand-toggle__btn {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 2rem;
+  cursor: pointer;
+  background: rgb(var(--catppuccin-surface0));
+  border-left: 2px solid rgb(var(--catppuccin-surface1));
+  color: var(--pico-muted-color);
+  font-size: 0.6rem;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+civ-table th.col-expand-toggle .col-expand-toggle__btn::after {
+  content: '›';
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+civ-table th.col-expand-toggle .col-expand-toggle__btn.is-expanded::after {
+  content: '‹';
+}
+
+civ-table th.col-expand-toggle .col-expand-toggle__btn:hover {
+  background: rgb(var(--catppuccin-surface1));
+  border-color: rgb(var(--catppuccin-sapphire));
+  color: var(--pico-color);
+}
+
+civ-table th.col-expand-toggle .col-expand-toggle__popover {
+  position: absolute;
+  right: 1.5rem;
+  top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: rgb(var(--catppuccin-surface0));
+  border: 1px solid rgb(var(--catppuccin-surface2));
+  border-radius: var(--pico-border-radius);
+  padding: 0.3rem 0.5rem;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* division OCD-IDs and emails: allow character-level breaks for compact display */

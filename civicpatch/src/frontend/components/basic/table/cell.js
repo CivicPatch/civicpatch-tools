@@ -172,7 +172,7 @@ function TableCell({
         case 'email':
           return html`<a href="mailto:${item}" class="tag-link" tabindex="-1">${item}</a>`;
         default:
-          return html`<a href="${item}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">${item}</a>`;
+          return html`<span class="tag-link">${item}</span>`;
       }
     };
 
