@@ -1,3 +1,10 @@
+civ-table-cell > div {
+    padding: 0.2rem 0.25rem;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+}
+
 civ-table-cell {
     span.cell-content {
         flex: 1;
@@ -11,14 +18,22 @@ civ-table-cell {
         word-break: normal;
         overflow-wrap: normal;
     }
-    span.cell-content[contenteditable="true"]:focus {
-        box-sizing: border-box;
+    /* focus: cell selected via keyboard navigation, not yet editing */
+    & > div:focus {
+        outline: 2px solid rgb(var(--catppuccin-teal));
+        border-radius: var(--pico-border-radius);
+    }
+
+    /* active edit: a descendant (contenteditable or tag input) has focus */
+    & > div:focus-within:not(:focus) {
         outline: 2px solid rgb(var(--catppuccin-sapphire));
         border-radius: var(--pico-border-radius);
     }
-    div.tag-list:focus-within {
-        outline: 2px solid rgb(var(--catppuccin-sapphire));
-        border-radius: var(--pico-border-radius);
+
+    /* suppress browser default outlines — the div handles all focus rings */
+    span.cell-content[contenteditable]:focus,
+    .tag-input:focus {
+        outline: none;
     }
 
     .tag-list {
@@ -32,27 +47,38 @@ civ-table-cell {
         box-sizing: border-box;
     }
 
-    .tag-list button:hover {
-        background: rgb(var(--catppuccin-sapphire), 0.2);
-        border-color: rgb(var(--catppuccin-crust));
+    /* view-mode: plain text or link, no pill */
+    .tag-list .tag-link {
+        display: inline;
+        font-size: var(--text-sm);
+    }
+
+    .tag-list span.tag-link {
+        color: inherit;
+        text-decoration: none;
     }
 
     .tag-list button {
-        appearance: none;
-        border: 1px solid rgb(var(--catppuccin-crust));
-        background: rgb(var(--catppuccin-base));
+        all: unset;
+        /* re-apply shared styles after reset */
+        border: 1px solid rgb(var(--catppuccin-surface1));
+        background: rgb(var(--catppuccin-surface0));
         border-radius: 999px;
-        padding: 0.1rem 0.35rem 0.1rem 0.5rem;
+        padding: 0.1rem 0.5rem;
         font-size: var(--text-sm);
         font-family: inherit;
+        line-height: 1;
+        color: var(--_c, rgb(var(--catppuccin-text)));
+        max-width: 200px;
         cursor: pointer;
-        color: var(--pico-color);
-        width: fit-content;      /* shrinks to content */
-        max-width: 200px;        /* but won't exceed this */
         display: inline-flex;
         align-items: center;
-        gap: 0;
-        line-height: 1;
+        box-sizing: border-box;
+    }
+
+    .tag-list button:hover {
+        background: rgba(var(--catppuccin-sapphire), 0.2);
+        border-color: rgb(var(--catppuccin-surface2));
     }
 
     .tag-list button span.tag-label {
@@ -65,7 +91,7 @@ civ-table-cell {
     }
 
     .tag-list button span.tag-remove {
-        flex: content;
+        flex: none;
     }
 
     .tag-input {

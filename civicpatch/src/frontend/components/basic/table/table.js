@@ -27,9 +27,15 @@ const KEYCODES = {
   //CONTROL_END: 'Control+End',
 }
 
+function isValueEmpty(val) {
+  if (Array.isArray(val)) return val.length === 0;
+  return val == null || val === '';
+}
+
 function BasicTable(props) {
   const [focusedCell, setFocusedCell] = useState({ row: null, col: null });
   const [editingCell, setEditingCell] = useState({ row: null, col: null });
+  const [showEmptyCols, setShowEmptyCols] = useState(false);
   
   const tableRef = createRef();
   const dragFromHandle = useRef(false);
@@ -57,6 +63,8 @@ function BasicTable(props) {
     }
     _handleDragStart(index, e);
   }
+
+  const isInternalDrag = () => draggedIndex !== null;
 
   function handleDataChange(event, row) {
     const { identifier, field, value } = event.detail;
@@ -223,7 +231,7 @@ function BasicTable(props) {
         <td 
           colspan=${colspan} 
           style="padding:0;"
-          @dragover=${e => handleDragOver(dragOverIndex, e)}
+          @dragover=${e => isInternalDrag() && handleDragOver(dragOverIndex, e)}
           @drop=${e => handleDrop(dragOverIndex, e)}
           >
           <div style="background:rgba(var(--catppuccin-sapphire),0.18); border-radius:var(--pico-border-radius);"></div>
@@ -248,7 +256,7 @@ function BasicTable(props) {
         style=${col.customCss ? col.customCss(row, actualField) : ""}
         @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable, isSelectCell: col.type === 'checkbox' })}
         @click=${() => handleCellClick({ row: rowIndex, col: colIndex, editable: col.editable })}
-        @dragover=${e => handleDragOver(rowIndex, e)}
+        @dragover=${e => isInternalDrag() && handleDragOver(rowIndex, e)}
         @drop=${e => handleDrop(rowIndex, e)}
       >
         <civ-table-cell
@@ -317,7 +325,23 @@ function BasicTable(props) {
     }
   }
 
-  const isEditable = props.columns.some(col => col.editable);
+  function isColEmpty(col) {
+    if (!col.field || !props.data.length) return false;
+    if (col.type === 'drag-row' || col.type === 'checkbox' || col.renderCell) return false;
+    return props.data.every(row => {
+      const topField = col.field.split('.')[0];
+      const val = col.field.includes('.')
+        ? getNestedValue(row[topField], col.field)
+        : row[col.field];
+      return isValueEmpty(val);
+    });
+  }
+
+  const emptyCols = new Set(props.columns.filter(isColEmpty).map(c => c.field));
+  const visibleColumns = props.columns.filter(col => !emptyCols.has(col.field) || showEmptyCols);
+  const hiddenColLabels = showEmptyCols ? [] : props.columns.filter(col => emptyCols.has(col.field)).map(col => col.label).filter(Boolean);
+
+  const isEditable = visibleColumns.some(col => col.editable);
 
   return html`
     <table
@@ -329,14 +353,29 @@ function BasicTable(props) {
     >
       <thead>
         <tr>
-          ${props.columns.map((col, colIndex) => html`
+          ${visibleColumns.map((col) => html`
             <th class=${col.colClass ?? ""}>${col.label}</th>
           `)}
+          ${emptyCols.size > 0 ? html`
+            <th class="col-expand-toggle">
+              <button
+                type="button"
+                class=${`col-expand-toggle__btn${showEmptyCols ? ' is-expanded' : ''}`}
+                @click=${() => setShowEmptyCols(v => !v)}
+              >
+                ${hiddenColLabels.length > 0 ? html`
+                  <span class="col-expand-toggle__popover">
+                    ${hiddenColLabels.map(label => html`<span>${label}</span>`)}
+                  </span>
+                ` : ''}
+              </button>
+            </th>
+          ` : ''}
         </tr>
       </thead>
       <tbody style="height: 100%">
         ${[...Array(props.data.length + 1)].map((_, dropIndex) => html`
-          ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(props.columns.length, dropIndex) : null}
+          ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(visibleColumns.length, dropIndex) : null}
           ${dropIndex < props.data.length ? html`
             <tr
               draggable="${isEditable && !(editingCell.row !== null && editingCell.col !== null) ? "true" : "false"}"
@@ -345,9 +384,8 @@ function BasicTable(props) {
               @dragstart=${e => handleDragStart(dropIndex, e)}
               @dragend=${handleDragEnd}
             >
-              ${props.columns.map((col, colIndex) => {
-                return renderDataCell(col, colIndex, dropIndex);
-              })}
+              ${visibleColumns.map((col, colIndex) => renderDataCell(col, colIndex, dropIndex))}
+              ${emptyCols.size > 0 ? html`<td></td>` : ''}
             </tr>
           ` : null}
         `)}
@@ -355,9 +393,9 @@ function BasicTable(props) {
         ${dragOverIndex !== props.data.length ? html`
           <tr>
             <td
-              colspan=${props.columns.length}
+              colspan=${visibleColumns.length + (emptyCols.size > 0 ? 1 : 0)}
               style="height: ${draggedIndex !== null ? '10rem' : '1.5rem'}; padding: 0; transition: height 200ms ease;"
-              @dragover=${e => handleDragOver(props.data.length, e)}
+              @dragover=${e => isInternalDrag() && handleDragOver(props.data.length, e)}
               @drop=${e => handleDrop(props.data.length, e)}
             ></td>
           </tr>

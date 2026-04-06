@@ -10,7 +10,7 @@ const customCss = (person, field) => {
     }
     return "";
 }
-export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
+export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOtherNames = false } = {}) => {
     return [
         {
           type: "drag-row",
@@ -45,6 +45,14 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map()) => {
           customCss: customCss,
           colClass: "col-name col-shrink",
         },
+        ...(showOtherNames ? [{
+          field: "other_names",
+          label: "Other Names",
+          editable: true,
+          type: "multiple",
+          customCss: customCss,
+          colClass: "col-shrink",
+        }] : []),
         {
           field: "phones",
           label: "Phones",

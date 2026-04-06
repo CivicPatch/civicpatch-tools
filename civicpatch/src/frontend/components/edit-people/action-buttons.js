@@ -36,11 +36,11 @@ function PeopleActionButtons({
           ${isClosing ? "Closing..." : prStatus === "closed" ? "Closed" : "Close PR"}
         </button>
         <button type="button" @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
-          ${isPublishing ? "Merging..." : prStatus === "merged" ? "Merged" : dirty ? "Save and Merge" : "Merge"}
+          ${isPublishing ? "Publishing..." : prStatus === "merged" ? "Published" : dirty ? "Save and Publish" : "Publish"}
         </button>
       ` : html`
         <button type="button" @click=${onPublish} ?disabled=${!dirty || isPublishing} class="btn-sm">
-          ${isPublishing ? "Opening..." : "Open PR"}
+          ${isPublishing ? "Publishing..." : dirty ? "Save and Publish" : "Publish"}
         </button>
       `}
     </div>
