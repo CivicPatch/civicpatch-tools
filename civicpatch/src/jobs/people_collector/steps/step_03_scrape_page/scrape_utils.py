@@ -388,7 +388,7 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
                 # Fallback 3: Screenshot the image element
                 try:
                     logger.debug(f"Attempting to screenshot image element: {src}")
-                    await img.screenshot(path=file_name)
+                    await img.screenshot(path=file_path)
                     logger.debug(f"Image captured via element screenshot: {file_name}")
                     image_map[file_name] = src
                     await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
