@@ -13,6 +13,7 @@ import { Pagination } from "../../components/pagination/index.js";
 import "../../components/pull-request-card/index.js";
 import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
+import "../../components/publish-log/index.js";
 
 const DEFAULT_PER_PAGE = 10;
 const PER_PAGE_OPTIONS = [10, 25, 50];
@@ -90,22 +91,22 @@ function QueuePage() {
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
     try {
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } }));
       await saveAndMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null);
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } }));
     } catch (error) {
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } }));
     }
   };
 
   const handleClose = async (event) => {
     const { pullRequestNumber, request_id } = event.detail;
     try {
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } }));
       await closePullRequest(request_id, pullRequestNumber);
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } }));
     } catch (error) {
-      setPullRequestState({ ...pullRequestState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } });
+      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } }));
     }
   };
 
@@ -165,6 +166,17 @@ function QueuePage() {
   const summarySection = summaryStats
     ? html`<stat-cards .stats=${summaryStats}></stat-cards>`
     : null;
+
+  const publishLogEntries = Object.entries(pullRequestState)
+    .filter(([, s]) => s.status === PULL_REQUEST_STATUS.LOADING_MERGE || s.status === PULL_REQUEST_STATUS.MERGED || s.status === PULL_REQUEST_STATUS.ERROR)
+    .map(([prNumber, s]) => {
+      const pr = pullRequests.find((p) => p.pr.number === parseInt(prNumber, 10));
+      return {
+        pullRequestNumber: parseInt(prNumber, 10),
+        jurisdictionName: pr?.jurisdiction?.name || `#${prNumber}`,
+        status: s.status,
+      };
+    });
 
   const prList = loading
     ? html`<div>Loading...</div>`
@@ -241,6 +253,7 @@ function QueuePage() {
         </section>
       `}
     </main>
+    <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
   `;
 }
 

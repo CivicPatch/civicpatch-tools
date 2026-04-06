@@ -5,6 +5,37 @@ pr-card {
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius);
     overflow: hidden;
+    position: relative;
+}
+
+.pr-card__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pr-card__overlay span {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-md);
+    font-weight: 600;
+}
+
+.pr-card__overlay--published {
+    background: color-mix(in srgb, var(--pico-ins-color) 20%, transparent);
+}
+
+.pr-card__overlay--published span {
+    color: var(--pico-ins-color);
+}
+
+.pr-card__overlay--publishing {
+    background: color-mix(in srgb, var(--pico-info-color) 20%, transparent);
+}
+
+.pr-card__overlay--publishing span {
+    color: var(--pico-info-color);
 }
 
 .pr-card__header {
