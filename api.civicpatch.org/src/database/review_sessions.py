@@ -121,7 +121,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
         ORDER BY
             (r.jurisdiction_ocdid IN (SELECT jurisdiction_ocdid FROM reclaimed)) ASC,
             jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
-            j.created_at DESC
+            pr.created_at DESC
         LIMIT %s
         """,
         (review_session_id, review_session_id, review_session_id, review_session_id, f"%state:{state_code}%", limit),
