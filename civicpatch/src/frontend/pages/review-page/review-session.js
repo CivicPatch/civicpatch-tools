@@ -58,8 +58,9 @@ function ReviewSession({
               <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
             </div>
             <div class="review-page__nav-right">
+              <button class="btn-sm secondary review-page__reset-btn" @click=${onReset} ?disabled=${!isDirty || isTerminal}>Reset</button>
               <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
-                ${isMerging ? "Merging…" : isTerminal ? "Merged" : isDirty ? "Save and Merge" : "Merge"}
+                ${isMerging ? "Publishing…" : isTerminal ? "Published" : isDirty ? "Save and Publish" : "Publish"}
               </button>
             </div>
           </div>
