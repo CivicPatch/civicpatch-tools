@@ -167,3 +167,13 @@ def test_build_canonical_map_fuzzy():
 
 def test_fuzzy_match_middle_initial_with_and_without_period():
     assert name_utils.fuzzy_match("John G. Sutton Jr.", "John G Sutton Jr.")
+
+
+def test_fuzzy_match_does_not_match_jr_vs_sr_standard():
+    # "Jim Barnett, Jr." parses suffix correctly — guard against regression
+    assert not name_utils.fuzzy_match("Jim Barnett, Jr.", "Jim Barnett, Sr.")
+
+
+def test_fuzzy_match_does_not_match_jr_vs_sr_title_position():
+    # "Jr. Barnett Jim" (str(HumanName("Barnett, Jr., Jim"))) puts Jr./Sr. in title field
+    assert not name_utils.fuzzy_match("Jr. Barnett Jim", "Sr. Barnett Jim")

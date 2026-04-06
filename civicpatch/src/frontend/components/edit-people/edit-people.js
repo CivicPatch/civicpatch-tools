@@ -12,7 +12,7 @@ import "./profile-modal.js";
 import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../diff-panel/diff-panel.js";
@@ -215,6 +215,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     }
   }
 
+  async function handleOpenPR() {
+    setPrStatus("loading_merge");
+    try {
+      const result = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
+      setPrStatus("merged");
+      setNotice(`PR opened: ${result.data.pr_url}`);
+    } catch (err) {
+      setPrStatus("error");
+      setError("Failed to open pull request.");
+    }
+  }
+
   async function handleClosePR() {
     const request_id = selectedPullRequest?.request_id;
     const prNumber = selectedPullRequest?.pr?.number;
@@ -399,12 +411,12 @@ function handleCardKeyDown(e, idx, key) {
             ></civ-review-panel>
           `
         : ""}
-      ${selectedPullRequest ? html`<civ-people-action-buttons
+      <civ-people-action-buttons
         .onAdd=${handleAdd}
         .onMerge=${handleMerge}
         .onBulkDelete=${handleBulkDelete}
-        .onReset=${() => handleSelectedPullRequestData(selectedPullRequest)}
-        .onPublish=${handlePublish}
+        .onReset=${selectedPullRequest ? () => handleSelectedPullRequestData(selectedPullRequest) : handleReset}
+        .onPublish=${selectedPullRequest ? handlePublish : handleOpenPR}
         .onClosePR=${handleClosePR}
         .selectedPeople=${selectedPeople}
         .dirty=${dirty}
@@ -412,7 +424,7 @@ function handleCardKeyDown(e, idx, key) {
         .notice=${notice}
         .hasPullRequest=${!!selectedPullRequest}
         .prStatus=${prStatus}
-      ></civ-people-action-buttons>` : ""}
+      ></civ-people-action-buttons>
       ${isLoading
         ? html`<div
             style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"

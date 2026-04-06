@@ -1,5 +1,6 @@
 import math
 from fastapi import APIRouter, Depends, Query
+from fastapi.responses import JSONResponse
 from utils.auth_utils import require_route_access
 from pydantic import BaseModel
 from typing import Optional
@@ -7,6 +8,8 @@ import uuid
 from schemas.common import Identity, Role, RouteCategory
 
 import database.database as database
+import services.github.github_api_service as github_service
+import shared.utils.id_utils
 from shared.utils.person_id_utils import resolve_people_ids
 import shared.utils.name_utils
 
@@ -19,6 +22,10 @@ class PeopleBatchResolveRequest(BaseModel):
     jurisdiction_ocdid: str
     people: list[BatchPersonRequest]
     with_data: bool = False
+
+class OpenPrRequest(BaseModel):
+    jurisdiction_ocdid: str
+    data: list[dict]
 
 
 def get_router() -> APIRouter:
@@ -122,5 +129,39 @@ def get_router() -> APIRouter:
                 "person_id": uuid.uuid4()
             }
         }
+
+    @router.patch("/data")
+    async def patch_people_data_endpoint(
+        request: OpenPrRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+    ):
+        folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
+        file_path = f"data/{folder_path}.yml"
+
+        request_id = shared.utils.id_utils.make_request_id()
+        branch_name = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request_id)
+
+        branch_error = await github_service.create_branch(branch_name)
+        if branch_error:
+            return JSONResponse({"error": f"Failed to create branch: {branch_error}"}, status_code=500)
+
+        committed = await github_service.update_pull_request_file(
+            branch_name=branch_name,
+            file_path=file_path,
+            new_data=request.data,
+            commit_message=f"Manual edit by {user.email}",
+        )
+        if not committed:
+            return JSONResponse({"error": "Failed to commit file update"}, status_code=500)
+
+        pr_number, pr_url = await github_service.create_pull_request(
+            branch_name=branch_name,
+            title=f"Manual edit: {folder_path}",
+            body=f"Manual data edit for `{file_path}`.\n\nEdited by {user.email}.",
+        )
+        if pr_number is None:
+            return JSONResponse({"error": f"Failed to open PR: {pr_url}"}, status_code=500)
+
+        return {"data": {"request_id": request_id, "pr_number": pr_number, "pr_url": pr_url}}
 
     return router
