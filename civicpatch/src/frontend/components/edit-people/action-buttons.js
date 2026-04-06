@@ -31,14 +31,18 @@ function PeopleActionButtons({
       <button type="button" @click=${onReset} ?disabled=${dirty === false} class="secondary btn-sm action-buttons__reset">
         Reset
       </button>
-${hasPullRequest ? html`
+      ${hasPullRequest ? html`
         <button type="button" @click=${onClosePR} ?disabled=${isTerminal || isPublishing || isClosing} class="destructive btn-sm">
           ${isClosing ? "Closing..." : prStatus === "closed" ? "Closed" : "Close PR"}
         </button>
         <button type="button" @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
           ${isPublishing ? "Merging..." : prStatus === "merged" ? "Merged" : dirty ? "Save and Merge" : "Merge"}
         </button>
-      ` : ""}
+      ` : html`
+        <button type="button" @click=${onPublish} ?disabled=${!dirty || isPublishing} class="btn-sm">
+          ${isPublishing ? "Opening..." : "Open PR"}
+        </button>
+      `}
     </div>
   `;
 }

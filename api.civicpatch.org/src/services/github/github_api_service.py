@@ -528,3 +528,57 @@ async def update_pull_request_branch(pull_request_number: str) -> str | None:
             logger.error(f"Branch update failed ({response.status_code}): {github_message}")
             return github_message
         return None
+
+
+async def create_branch(branch_name: str, base_ref: str = "main") -> str | None:
+    """Creates a new branch off base_ref in the open-data repo.
+    Returns None on success, or an error message string on failure."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    default_headers = await get_default_headers()
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        ref_response = await client.get(
+            f"{open_data_repo_url}/git/ref/heads/{base_ref}",
+            headers=default_headers,
+        )
+        if ref_response.status_code != 200:
+            message = ref_response.json().get("message", "Unknown error")
+            logger.error(f"Failed to resolve {base_ref} SHA ({ref_response.status_code}): {message}")
+            return message
+        sha = ref_response.json()["object"]["sha"]
+
+        create_response = await client.post(
+            f"{open_data_repo_url}/git/refs",
+            headers=default_headers,
+            json={"ref": f"refs/heads/{branch_name}", "sha": sha},
+        )
+        if create_response.status_code != 201:
+            message = create_response.json().get("message", "Unknown error")
+            logger.error(f"Failed to create branch {branch_name!r} ({create_response.status_code}): {message}")
+            return message
+    logger.info(f"Created branch {branch_name!r} off {base_ref} at {sha}")
+    return None
+
+
+async def create_pull_request(
+    branch_name: str,
+    title: str,
+    body: str = "",
+    base: str = "main",
+) -> tuple[int, str] | tuple[None, str]:
+    """Opens a PR in the open-data repo from branch_name into base.
+    Returns (pr_number, pr_url) on success, or (None, error_message) on failure."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    default_headers = await get_default_headers()
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.post(
+            f"{open_data_repo_url}/pulls",
+            headers=default_headers,
+            json={"title": title, "body": body, "head": branch_name, "base": base},
+        )
+        if response.status_code != 201:
+            message = response.json().get("message", "Unknown error")
+            logger.error(f"Failed to create PR from {branch_name!r} ({response.status_code}): {message}")
+            return None, message
+        data = response.json()
+    logger.info(f"Created PR #{data['number']} from {branch_name!r}: {data['html_url']}")
+    return data["number"], data["html_url"]

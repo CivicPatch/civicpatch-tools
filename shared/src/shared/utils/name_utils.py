@@ -101,6 +101,12 @@ def fuzzy_match(name1: str, name2: str) -> bool:
         and _normalize_suffix(p1.suffix) != _normalize_suffix(p2.suffix)
     ):
         return False
+    if (
+        p1.title
+        and p2.title
+        and _normalize_suffix(p1.title) != _normalize_suffix(p2.title)
+    ):
+        return False
 
     return True
 
