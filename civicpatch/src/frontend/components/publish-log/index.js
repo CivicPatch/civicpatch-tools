@@ -7,10 +7,12 @@ function PublishLog({ entries = [] }) {
 
   if (!entries.length) return null;
 
+  const inFlight = entries.filter((e) => e.status === PULL_REQUEST_STATUS.LOADING_MERGE).length;
+
   return html`
     <div class="publish-log">
       <div class="publish-log__header">
-        <span class="publish-log__title">Publishing</span>
+        <span class="publish-log__title">Publishing${inFlight ? html` <span class="civ-badge civ-badge--primary">${inFlight}</span>` : ""}</span>
         <button
           class="publish-log__toggle"
           @click=${() => setCollapsed((c) => !c)}

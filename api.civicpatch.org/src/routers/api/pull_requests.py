@@ -327,6 +327,15 @@ def get_router(api_key_header):
 
         merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
 
+        if merge_error and "base branch was modified" in merge_error.lower():
+            # Race condition: base branch was updated between our mergeability check and the merge.
+            # PRs touch non-overlapping file paths, so updating the branch and retrying almost always succeeds.
+            logger.info(f"PR {pull_request_number} base branch modified race condition — updating branch and retrying merge")
+            update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
+            if not update_error:
+                await github_service.get_pull_request_mergeability(pull_request_number, wait_for_change_from="behind")
+                merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=user.email)
+
         if merge_error:
             return JSONResponse(
                 content=ErrorResponse(error=merge_error).model_dump(),
