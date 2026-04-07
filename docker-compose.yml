@@ -30,6 +30,28 @@ services:
     networks:
       - civicpatch_net
 
+  # ── Temporal worker ────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    depends_on:
+      temporal:
+        condition: service_healthy
+    environment:
+      TEMPORAL_HOST: temporal:7233
+      TEMPORAL_NAMESPACE: default
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
+      GITHUB_ORG: ${GITHUB_ORG:-CivicPatch}
+      GITHUB_REPO: ${GITHUB_REPO:-server}
+      API_CIVICPATCH_ORG_URL: http://api_civicpatch_org:8001
+      SERVICE_API_KEY: ${SERVICE_API_KEY}
+    networks:
+      - civicpatch_net
+    restart: unless-stopped
+
   # ── Temporal ───────────────────────────────────────────────────────────────
   temporal-postgres:
     image: postgres:16
@@ -63,7 +85,7 @@ services:
     networks:
       - civicpatch_net
     volumes:
-      - ./spike/temporal/scripts:/scripts
+      - ./worker/temporal/scripts:/scripts
     entrypoint: ["/bin/sh"]
     command: /scripts/setup-postgres.sh
 
@@ -85,7 +107,7 @@ services:
     networks:
       - civicpatch_net
     volumes:
-      - ./spike/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig
+      - ./worker/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "7233"]
       interval: 5s
@@ -105,7 +127,7 @@ services:
     networks:
       - civicpatch_net
     volumes:
-      - ./spike/temporal/scripts:/scripts
+      - ./worker/temporal/scripts:/scripts
     entrypoint: ["/bin/sh"]
     command: /scripts/create-namespace.sh
 

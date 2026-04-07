@@ -1,4 +1,5 @@
 import { config } from "./assets/config.js";
+import { JOB_STATUS } from "./components/job-status.js";
 
 const API_URL = config.apiUrl;
 
@@ -188,7 +189,17 @@ export const resolveJob = async (requestId) => {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ status: "RESOLVED" }),
+    body: JSON.stringify({ status: JOB_STATUS.RESOLVED }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const resumeJob = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/${requestId}/resume`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

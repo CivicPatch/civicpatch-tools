@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../../../components/ocdid-utils.js";
+import { JOB_STATUS } from "../../../components/job-status.js";
 import "../../../components/badge/badge.js";
 
 function ErrorCard({ job }) {
@@ -16,8 +17,17 @@ function ErrorCard({ job }) {
   const logPopoverRef = createRef();
   const [logLoaded, setLogLoaded] = useState(false);
 
+  const isPaused = job?.status === JOB_STATUS.PAUSED;
+
   const handleResolve = (el) => {
     el.currentTarget.dispatchEvent(new CustomEvent("resolve-error", {
+      bubbles: true,
+      detail: { job },
+    }));
+  };
+
+  const handleResume = (el) => {
+    el.currentTarget.dispatchEvent(new CustomEvent("resume-job", {
       bubbles: true,
       detail: { job },
     }));
@@ -35,9 +45,9 @@ function ErrorCard({ job }) {
           <civ-badge .label=${name}></civ-badge>
           <span class="error-card__request-id">${job?.request_id}</span>
           <span
-            class="error-card__state ${job?.workflow_log_url ? "error-card__state--clickable" : ""}"
+            class="error-card__state error-card__state--${isPaused ? "paused" : "error"} ${job?.workflow_log_url ? "error-card__state--clickable" : ""}"
             @click=${job?.workflow_log_url ? handleLogClick : null}
-          >error</span>
+          >${isPaused ? "paused" : "error"}</span>
           ${job?.workflow_log_url ? html`
             <div popover ${ref(logPopoverRef)} class="error-card__log-popover">
               <iframe
@@ -55,7 +65,10 @@ function ErrorCard({ job }) {
           >Detail</a>
         </div>
         <div class="header-item-right">
-          <button class="btn-sm" @click=${handleResolve}>Resolve</button>
+          ${isPaused
+            ? html`<button class="btn-sm" @click=${handleResume}>Resume</button>`
+            : html`<button class="btn-sm" @click=${handleResolve}>Resolve</button>`
+          }
         </div>
       </div>
       ${updatedAt ? html`<div class="error-card__meta">last updated ${updatedAt}</div>` : ""}

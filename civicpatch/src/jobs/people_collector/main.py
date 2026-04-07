@@ -1,8 +1,9 @@
 import asyncio
+import json
 import traceback
 import logging
 
-from jobs.engine import run_workflow, WorkflowError
+from jobs.engine import run_workflow, WorkflowError, WorkflowPausedError
 from jobs.people_collector.schemas import (
   WorkflowConfig,
   WorkflowStatus,
@@ -15,6 +16,7 @@ from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
 from utils import log_utils
 from jobs.registry import RUNNING_WORKFLOWS, WorkflowEntry, stop_workflow
+import services.storage_service as storage_service
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +55,39 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig
     except Exception as e:
         logger.error(
             f"Unexpected error in pipeline for {jurisdiction_ocdid}: {e}\n"
+            f"{traceback.format_exc()}"
+        )
+        raise
+
+
+async def resume(request_id: str) -> PeopleCollectorContext:
+    """Download saved context from S3 and continue from the paused step."""
+    context_json = storage_service.download_paused_context(request_id)
+    context = PeopleCollectorContext.model_validate_json(context_json)
+
+    paused_at = context.data.paused_at_state
+    if not paused_at:
+        raise ValueError(f"No paused_at_state in context for {request_id}")
+
+    resume_state = WorkflowStatus(paused_at)
+    context = context.copy(update={"current_state": resume_state})
+
+    workflow_logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
+    RUNNING_WORKFLOWS[context.data.jurisdiction_ocdid] = WorkflowEntry(
+        current_state=context.current_state,
+        stop_flag=False,
+    )
+
+    try:
+        result = await run_workflow(context, workflow_logger, TRANSITION_MAP, persist_context)
+        storage_service.delete_paused_context(request_id)
+        return result
+    except (WorkflowError, WorkflowPausedError) as e:
+        logger.error(f"Pipeline failed/paused again on resume for {e.jurisdiction_ocdid}: {e}")
+        raise
+    except Exception as e:
+        logger.error(
+            f"Unexpected error on resume for {request_id}: {e}\n"
             f"{traceback.format_exc()}"
         )
         raise

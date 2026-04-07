@@ -25,6 +25,7 @@ dependencies = [
     "pyjwt>=2.11.0",
     "shared",
     "githubkit>=0.15.1",
+    "temporalio>=1.10.0",
 ]
 
 [dependency-groups]

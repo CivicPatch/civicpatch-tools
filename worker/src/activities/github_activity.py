@@ -8,10 +8,12 @@ import httpx
 import jwt
 from temporalio import activity
 
+from constants import RunMode
+
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.environ["GITHUB_APP_PRIVATE_KEY_BASE64"]
 GITHUB_APP_INSTALLATION_ID = os.environ["GITHUB_APP_INSTALLATION_ID"]
-GITHUB_ORG = os.environ.get("GITHUB_ORG", "CivicPatch")  # default to "CivicPatch" if not set
+GITHUB_ORG = os.environ.get("GITHUB_ORG", "CivicPatch")
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "server")
 
 _HEADERS = {
@@ -41,7 +43,7 @@ async def _get_installation_token() -> str:
 
 
 @activity.defn
-async def trigger_github_action(jurisdiction_ocdid: str, request_id: str) -> int:
+async def trigger_github_action(jurisdiction_ocdid: str, request_id: str, mode: str = RunMode.START) -> int:
     token = await _get_installation_token()
     async with httpx.AsyncClient() as client:
         resp = await client.post(
@@ -52,10 +54,11 @@ async def trigger_github_action(jurisdiction_ocdid: str, request_id: str) -> int
                 "inputs": {
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "request_id": request_id,
+                    "mode": mode,
                 },
             },
         )
-        print(f"workflow_dispatch response: {resp.status_code}")
+        activity.logger.info(f"workflow_dispatch response: {resp.status_code}")
         resp.raise_for_status()
         # workflow_dispatch returns 204 No Content — find our run by matching request_id in step names
         for attempt in range(10):
@@ -75,9 +78,9 @@ async def trigger_github_action(jurisdiction_ocdid: str, request_id: str) -> int
                 for job in jobs_resp.json()["jobs"]:
                     for step in job.get("steps", []):
                         if request_id in step["name"]:
-                            print(f"Run ID: {run['id']}")
+                            activity.logger.info(f"Found run ID: {run['id']}")
                             return run["id"]
-            print(f"Run not found yet (attempt {attempt + 1}/10), retrying...")
+            activity.logger.info(f"Run not found yet (attempt {attempt + 1}/10), retrying...")
         raise RuntimeError(f"No run found with request_id={request_id} after 10 attempts")
 
 
@@ -96,7 +99,7 @@ async def poll_run_status(run_id: int) -> str:
             run = resp.json()
             status = run["status"]
             conclusion = run.get("conclusion")
-            print(f"Run {run_id}: status={status} conclusion={conclusion}")
+            activity.logger.info(f"Run {run_id}: status={status} conclusion={conclusion}")
 
             if status == "completed":
                 return conclusion or "unknown"

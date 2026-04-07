@@ -30,10 +30,10 @@ def client():
 @pytest.mark.unit
 def test_create_job_returns_request_id(client):
     with patch(
-        "routers.api.jobs.github_service.trigger_people_job_workflow",
+        "routers.api.jobs.temporal_service.start_people_collector_workflow",
         new_callable=AsyncMock,
-    ) as mock_trigger:
-        mock_trigger.return_value = {"status": "ok"}
+        return_value="people-collector-ocd-jurisdiction-country-us-state-ca-place-oakland",
+    ):
         response = client.post(
             "/jobs/",
             json={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland"},
@@ -46,11 +46,11 @@ def test_create_job_returns_request_id(client):
 
 
 @pytest.mark.unit
-def test_create_job_returns_500_on_github_error(client):
+def test_create_job_returns_500_on_temporal_error(client):
     with patch(
-        "routers.api.jobs.github_service.trigger_people_job_workflow",
+        "routers.api.jobs.temporal_service.start_people_collector_workflow",
         new_callable=AsyncMock,
-        side_effect=Exception("GitHub unavailable"),
+        side_effect=Exception("Temporal unavailable"),
     ):
         response = client.post(
             "/jobs/",

@@ -10,6 +10,7 @@ import {
   fetchPullRequests,
   closeStaleDuplicatePrs,
   resolveJob,
+  resumeJob,
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
@@ -160,6 +161,16 @@ function IssuesPage() {
       setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
     } catch (err) {
       console.error("Failed to resolve job:", err);
+    }
+  };
+
+  const handleResumeJob = async (event) => {
+    const { job } = event.detail;
+    try {
+      await resumeJob(job.request_id);
+      setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
+    } catch (err) {
+      console.error("Failed to resume job:", err);
     }
   };
 
@@ -331,7 +342,7 @@ function IssuesPage() {
         ${openSections.errors ? html`
           ${errorsLoading
             ? html`<div>Loading…</div>`
-            : html`<div style="display:flex;gap:2rem;flex-direction:column;">${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError}></error-card>`)}</div>`
+            : html`<div style="display:flex;gap:2rem;flex-direction:column;">${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError} @resume-job=${handleResumeJob}></error-card>`)}</div>`
           }
         ` : null}
       `}
