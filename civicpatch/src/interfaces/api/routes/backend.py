@@ -13,11 +13,9 @@ from interfaces.schemas import (
     validate_people_request
 )
 from jobs.people_collector.main import start_threaded as start_people_collector
-from jobs.people_collector.main import stop as stop_people_collector
 from jobs.people_collector.schemas import WorkflowStatus
 from jobs.engine import WorkflowError
 from shared.utils import id_utils
-from jobs.registry import get_workflow
 import services.civicpatch_api
 
 logger = logging.getLogger(__name__)
@@ -75,19 +73,5 @@ def get_router() -> APIRouter:
                 "message": "Workflow started"
             }
         }
-
-    @router.post("/pipelines/stop")
-    async def stop_pipeline_endpoint(
-        jurisdiction_ocdid: str,
-    ):
-        if not services.civicpatch_api.can_scrape_locally():
-            raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
-
-        workflow = get_workflow(jurisdiction_ocdid)
-        if workflow is None:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-
-        stop_people_collector(jurisdiction_ocdid) 
-        return {"status": "stopping", "jurisdiction_ocdid": jurisdiction_ocdid}
 
     return router

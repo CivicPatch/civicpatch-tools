@@ -15,7 +15,6 @@ from domain.workflow_context import WorkflowContext
 from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
 from utils import log_utils
-from jobs.registry import RUNNING_WORKFLOWS, WorkflowEntry, stop_workflow
 import services.storage_service as storage_service
 
 logger = logging.getLogger(__name__)
@@ -31,10 +30,6 @@ def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowCon
         ),
     )
     workflow_logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
-    RUNNING_WORKFLOWS[jurisdiction_ocdid] = WorkflowEntry(
-        current_state=context.current_state,
-        stop_flag=False
-    )
     return context, workflow_logger
 
 
@@ -73,10 +68,6 @@ async def resume(request_id: str) -> PeopleCollectorContext:
     context = context.copy(update={"current_state": resume_state})
 
     workflow_logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    RUNNING_WORKFLOWS[context.data.jurisdiction_ocdid] = WorkflowEntry(
-        current_state=context.current_state,
-        stop_flag=False,
-    )
 
     try:
         result = await run_workflow(context, workflow_logger, TRANSITION_MAP, persist_context)
@@ -100,9 +91,6 @@ async def start_threaded(request_id, jurisdiction_ocdid, config):
 
     await asyncio.to_thread(run_start)
 
-
-def stop(context: PeopleCollectorContext) -> PeopleCollectorContext:
-    stop_workflow(context.data.jurisdiction_ocdid)
 
 
 def persist_context(context: PeopleCollectorContext):
