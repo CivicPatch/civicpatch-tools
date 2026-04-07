@@ -70,7 +70,10 @@ services:
       start_period: 30s
 
   temporal-admin-tools:
-    image: temporalio/admin-tools:1.30.1
+    image: ghcr.io/civicpatch/civicpatch_temporal_admin_tools:latest
+    build:
+      context: ./worker/temporal
+      dockerfile: Dockerfile.admin-tools
     restart: on-failure:6
     depends_on:
       temporal-postgres:
@@ -84,13 +87,14 @@ services:
       - SQL_PASSWORD=temporal
     networks:
       - civicpatch_net
-    volumes:
-      - ./worker/temporal/scripts:/scripts
     entrypoint: ["/bin/sh"]
     command: /scripts/setup-postgres.sh
 
   temporal:
-    image: temporalio/server:1.30.1
+    image: ghcr.io/civicpatch/civicpatch_temporal:latest
+    build:
+      context: ./worker/temporal
+      dockerfile: Dockerfile.server
     depends_on:
       temporal-admin-tools:
         condition: service_completed_successfully
@@ -106,8 +110,6 @@ services:
       - "7233:7233"
     networks:
       - civicpatch_net
-    volumes:
-      - ./worker/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "7233"]
       interval: 5s
@@ -116,7 +118,10 @@ services:
       retries: 60
 
   temporal-create-namespace:
-    image: temporalio/admin-tools:1.30.1
+    image: ghcr.io/civicpatch/civicpatch_temporal_admin_tools:latest
+    build:
+      context: ./worker/temporal
+      dockerfile: Dockerfile.admin-tools
     restart: on-failure:5
     depends_on:
       temporal:
@@ -126,8 +131,6 @@ services:
       - DEFAULT_NAMESPACE=default
     networks:
       - civicpatch_net
-    volumes:
-      - ./worker/temporal/scripts:/scripts
     entrypoint: ["/bin/sh"]
     command: /scripts/create-namespace.sh
 
