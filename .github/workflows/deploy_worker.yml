@@ -31,7 +31,7 @@ jobs:
       - name: Build and push (worker)
         uses: docker/build-push-action@v7
         with:
-          context: ./worker
+          context: .
           file: ./worker/Dockerfile
           push: true
           tags: ghcr.io/civicpatch/civicpatch_worker:latest
