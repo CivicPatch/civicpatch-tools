@@ -9,7 +9,8 @@ import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github.github_api_service as github_service
-from database.database import update_job_data, update_job_review_json, insert_job_events
+from database.database import update_job_data, update_job_review_json, insert_job_events, update_job_status
+from shared.utils.statuses import JobStatus
 import logging
 import yaml
 
@@ -25,7 +26,18 @@ INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 logger = logging.getLogger(__name__)
 
 async def handle_submit_job_artifacts(
-        request: HandleSubmitJobArtifactsRequest, 
+        request: HandleSubmitJobArtifactsRequest,
+) -> SubmitJobArtifactsResponse:
+    try:
+        return await _handle_submit_job_artifacts(request)
+    except Exception as e:
+        logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
+        await update_job_status(request.request_id, status=JobStatus.ERROR, progress=None)
+        raise
+
+
+async def _handle_submit_job_artifacts(
+        request: HandleSubmitJobArtifactsRequest,
 ) -> SubmitJobArtifactsResponse:
     file_suffix = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
 
@@ -116,13 +128,16 @@ async def handle_submit_job_artifacts(
     )
 
     if is_success:
-        await github_service.trigger_github_data_intake_workflow(
-            request.server_detail.user_email,
-            request.server_detail.server_url,
-            request_id=request.request_id,
-            jurisdiction_ocdid=request.jurisdiction_ocdid,
-            zip_file_url=zip_file_url,
-        )
+        try:
+            await github_service.trigger_github_data_intake_workflow(
+                request.server_detail.user_email,
+                request.server_detail.server_url,
+                request_id=request.request_id,
+                jurisdiction_ocdid=request.jurisdiction_ocdid,
+                zip_file_url=zip_file_url,
+            )
+        except Exception as e:
+            logger.error(f"[{request.request_id}] Failed to trigger data intake workflow: {e}", exc_info=True)
 
     return SubmitJobArtifactsResponse(
         filename=file_suffix,

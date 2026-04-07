@@ -40,6 +40,15 @@ logger = logging.getLogger(__name__)
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 
 
+async def update_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str]):
+    await update_job_status(request_id=request_id, status=status, progress=progress)
+    if jurisdiction_ocdid:
+        await pubsub_service.publish(
+            f"job_status:{jurisdiction_ocdid}",
+            json.dumps({"request_id": request_id, "status": status, "progress": progress}),
+        )
+
+
 class CreateJobRequest(BaseModel):
     jurisdiction_ocdid: str
     name: Optional[str] = None
@@ -180,24 +189,13 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])
         ),
     ):
-        async def _update_and_publish():
-            await update_job_status(
-                request_id=request_id, status=request.status, progress=request.progress
-            )
-            if request.jurisdiction_ocdid:
-                key = f"job_status:{request.jurisdiction_ocdid}"
-                await pubsub_service.publish(
-                    key,
-                    json.dumps(
-                        {
-                            "request_id": request_id,
-                            "status": request.status,
-                            "progress": request.progress,
-                        }
-                    ),
-                )
-
-        background_tasks.add_task(_update_and_publish)
+        background_tasks.add_task(
+            update_and_publish,
+            request_id,
+            request.status,
+            request.progress,
+            request.jurisdiction_ocdid,
+        )
 
         return UpdateJobStatusResponse(
             request_id=request_id, status=request.status, progress=request.progress

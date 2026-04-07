@@ -10,6 +10,7 @@ from jobs.engine import WorkflowError
 from jobs.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from civicpatch_environment import get_env_vars
+from services.civicpatch_api import get_jurisdiction_info
 
 
 async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
@@ -61,10 +62,10 @@ def main():
         "--jurisdiction-ocdid", required=True, help="Jurisdiction ID"
     )
     run_pipeline_parser.add_argument(
-        "--name", required=True, help="Name of the municipality"
+        "--name", required=False, default=None, help="Name of the municipality"
     )
     run_pipeline_parser.add_argument(
-        "--url", required=True, help="URL of the city council page"
+        "--url", required=False, default=None, help="URL of the city council page"
     )
     run_pipeline_parser.add_argument(
         "--request-id", required=False, help="Optional request ID"
@@ -77,11 +78,17 @@ def main():
 
     if args.command == "run_pipeline":
         source_urls = json.loads(args.source_urls) if args.source_urls else None
+        name = args.name
+        url = args.url
+        if not name or not url:
+            info = asyncio.run(get_jurisdiction_info(args.jurisdiction_ocdid))
+            name = name or info.get("name")
+            url = url or info.get("url")
         request = PeopleCollectorJobRequest(
             jurisdiction_ocdid=args.jurisdiction_ocdid,
             config={
-                "name": args.name,
-                "url": args.url,
+                "name": name,
+                "url": url,
                 "source_urls": source_urls,
             }
         )

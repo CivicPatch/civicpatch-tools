@@ -671,7 +671,8 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
             """
             SELECT jurisdiction_ocdid,
                    data->>'name' AS name,
-                   data->>'jurisdiction_ocdid_slug' AS slug
+                   data->>'jurisdiction_ocdid_slug' AS slug,
+                   data->>'url' AS url
             FROM jurisdictions
             WHERE jurisdiction_ocdid = ANY(%s)
             ORDER BY data->>'name'
@@ -679,7 +680,7 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
             (ocdids,),
         )
         rows = await cur.fetchall()
-        return [{"ocdid": row[0], "name": row[1], "slug": row[2]} for row in rows]
+        return [{"ocdid": row[0], "name": row[1], "slug": row[2], "url": row[3]} for row in rows]
 
 # Jobs
 
