@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./worker/temporal
-          file: ./worker/temporal/Dockerfile.server
+          file: ./worker/temporal/Dockerfile.temporal
           push: true
           tags: ghcr.io/civicpatch/civicpatch_temporal:latest
           cache-from: type=gha,scope=temporal-server
