@@ -98,8 +98,7 @@ async def run_workflow(
                 logger.info(f"Uploaded paused context for {ctx.request_id}")
             except Exception as e:
                 logger.warning(f"Failed to upload paused context (non-fatal): {e}")
-        finally:
-            unregister_workflow(jurisdiction_ocdid)
+        unregister_workflow(jurisdiction_ocdid)
 
     if ctx.current_state == WorkflowStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)
