@@ -1,4 +1,3 @@
 FROM temporalio/admin-tools:1.30.1
 COPY scripts/setup-postgres.sh /scripts/setup-postgres.sh
 COPY scripts/create-namespace.sh /scripts/create-namespace.sh
-RUN chmod +x /scripts/setup-postgres.sh /scripts/create-namespace.sh

@@ -94,7 +94,7 @@ services:
     image: ghcr.io/civicpatch/civicpatch_temporal:latest
     build:
       context: ./worker/temporal
-      dockerfile: Dockerfile.server
+      dockerfile: Dockerfile.temporal
     depends_on:
       temporal-admin-tools:
         condition: service_completed_successfully
