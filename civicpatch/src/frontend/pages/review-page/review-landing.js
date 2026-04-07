@@ -5,8 +5,6 @@ import "../../components/stat-cards/index.js";
 import "../../components/streak-graph/streak-graph.js";
 import "../../components/goal-ring/goal-ring.js";
 
-const MAX_PRESET_GOAL = 50;
-
 function formatDuration(seconds) {
   if (seconds == null) return "—";
   if (seconds < 60) return `${seconds}s`;
@@ -15,14 +13,9 @@ function formatDuration(seconds) {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
-function presetGoalOptions() {
-  return Array.from({ length: MAX_PRESET_GOAL }, (_, i) => i + 1);
-}
-
 function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onStateChange, onGoalChange, onStartReview }) {
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [pendingGoal, setPendingGoal] = useState(dailyGoal);
-  const [isCustomGoal, setIsCustomGoal] = useState(() => dailyGoal > MAX_PRESET_GOAL);
 
   return html`
     <main class="review-page">
@@ -39,7 +32,6 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
             <div class="review-page__goal-control">
               <button class="review-page__gear-btn btn-icon" @click=${() => {
                 setPendingGoal(dailyGoal);
-                setIsCustomGoal(true);
                 setGoalModalOpen(true);
               }}>
                 <i class="fa-solid fa-gear"></i>
@@ -70,28 +62,12 @@ ${error ? html`<p class="review-page__error">${error}</p>` : ""}
               <span>Daily Goal</span>
               <button class="modal-close" @click=${() => setGoalModalOpen(false)}>✕</button>
             </div>
-            <select
-              .value=${isCustomGoal ? "custom" : String(pendingGoal)}
-              @change=${(e) => {
-                if (e.target.value === "custom") {
-                  setIsCustomGoal(true);
-                } else {
-                  setIsCustomGoal(false);
-                  setPendingGoal(parseInt(e.target.value, 10));
-                }
-              }}
-            >
-              ${presetGoalOptions().map((n) => html`<option value=${n}>${n}</option>`)}
-              <option value="custom">Custom…</option>
-            </select>
-            ${isCustomGoal ? html`
-              <input
-                type="number"
-                min="1"
-                .value=${String(pendingGoal)}
-                @input=${(e) => setPendingGoal(parseInt(e.target.value, 10) || 1)}
-              />
-            ` : ""}
+            <input
+              type="number"
+              min="1"
+              .value=${String(pendingGoal)}
+              @input=${(e) => setPendingGoal(parseInt(e.target.value, 10) || 1)}
+            />
             <button class="review-page__modal-save" @click=${() => {
               onGoalChange(pendingGoal);
               setGoalModalOpen(false);

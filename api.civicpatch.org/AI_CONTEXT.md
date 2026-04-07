@@ -76,9 +76,11 @@ mise run psql
 
 ## Background tasks
 
-- Use `BackgroundTasks` (FastAPI) for fire-and-forget work that should not block the HTTP response — e.g., DB writes triggered by a webhook burst
-- Do not use `BackgroundTasks` for work that the caller needs to observe the result of — await it directly instead
-- Background tasks must not silently swallow exceptions; wrap in try/except and log failures
+- Use `BackgroundTasks` (FastAPI) for work that should not block the HTTP response — including long-running operations where the caller polls for status via a separate endpoint
+- Background task functions must be defined at **module level**, not nested inside route handlers — this makes them independently importable and unit-testable
+- Pass all needed context as explicit parameters; do not rely on closures over request state
+- Background tasks must not silently swallow exceptions; wrap in try/except, log failures, and write error state to the appropriate store (Redis, DB)
+- `asyncio.sleep` is acceptable inside background tasks — the response has already been sent, so no connection is held open
 
 ## API consumers
 
@@ -88,10 +90,10 @@ This API has a single consumer: the civicpatch frontend. Backward compatibility 
 
 - Framework: pytest
 - `tests/factories/` for test data builders — never construct raw objects in test bodies
-- Do not mock what you can test directly; mock external services (GitHub, Redis) at the service boundary, not deeper
-- **Write unit tests for any new function with meaningful logic** — pure functions, data transformations, validation, business logic. Trivial pass-through wrappers do not need tests.
-- **Write integration tests for new endpoints** — route handlers are thin wrappers; test them against a real DB, not mocks.
+- **Unit test business logic functions directly** — import and call them, mock only external boundaries (GitHub API, Redis, DB). Do not test logic through the HTTP layer.
+- **Route handler tests are thin** — verify the HTTP contract only (status code, response shape). Mock the background task function itself; don't re-test its logic in route tests.
+- Mock external services (GitHub, Redis, DB) at the service-call boundary — patch the module-level function, not internal implementation details.
 - Tests are part of the feature — do not ship a new function or endpoint without corresponding tests unless explicitly told to skip them.
-- Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` or `tests/integration/` directory to understand available builders and patterns.
+- Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` directory to understand available builders and patterns.
 - After writing tests, run them and fix any failures before considering the task done.
 - Run tests: `mise run tapi`

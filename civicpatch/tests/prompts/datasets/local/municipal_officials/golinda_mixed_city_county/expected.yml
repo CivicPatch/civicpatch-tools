@@ -1,0 +1,70 @@
+people:
+- name: Joyce Farar
+  roles:
+  - Mayor
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Bobby Farney
+  roles:
+  - Mayor Pro Tem
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Wanda Ray
+  roles:
+  - Council
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Michael Reed
+  roles:
+  - Council
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Joe M Farney
+  roles:
+  - Council
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Billy Elkins
+  roles:
+  - Council
+  designations: []
+  phone: (254) 881-7333
+  email: cityofgolinda@gmail.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+thought: 'The page lists City of Golinda officials alongside Falls County officials.
+  Only elected governing body members are extracted: the Mayor, Mayor Pro Tem, and
+  four Council members. Lisa Faulkner (Administrative Assistant), Justin Anderson
+  (City Attorney), Gary Cunha (Municipal Court Judge), Paul Estrada (Code Enforcement),
+  Cindy Bunch (Municipal Court Clerk), and Bill Shipp (City Building Inspector) are
+  staff, not elected governing body members. Jay Elliott (County Judge), Nita Wuebker
+  (County Commissioner), Jeremy Hack (Falls County Septic Inspector), Judge M. Elliott
+  (JP Precinct 4), and Jerry Wood (Constable Precinct 4) belong to Falls County, a
+  different jurisdiction.'
