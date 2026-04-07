@@ -1,0 +1,7 @@
+page_url: https://gatesvilletx.com/government/city_council/index.php
+jurisdiction_name: Gatesville city
+page:
+  is_relevant: false
+  relevant_urls:
+  - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
+  - https://gatesvilletx.com/government/city_council/agendas_minutes.php
