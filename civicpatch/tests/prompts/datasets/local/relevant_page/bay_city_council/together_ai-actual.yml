@@ -1,5 +1,9 @@
 is_relevant: true
 relevant_urls:
+- https://www.baycitytx.gov/MyAccount/ProfileCreate
+- https://www.baycitytx.gov/MyAccount
+- https://www.baycitytx.gov/
+- https://www.baycitytx.gov/Search/Results
 - https://www.baycitytx.gov/157/About-Us
 - https://www.baycitytx.gov/35/Commercial
 - https://www.baycitytx.gov/101/Community
@@ -35,7 +39,7 @@ relevant_urls:
 - https://www.baycitytx.gov/677/Running-Candidate-Page
 - https://www.baycitytx.gov/617/2025-Elections
 - https://www.baycitytx.gov/639/Proposed-Charter
-- https://www.baycitytx.gov/640/Election-Times-and-Dates
+- https://www.baycitytx.gov/640/Election-Times-and-Times
 - https://www.baycitytx.gov/641/Running-Candidate-Page
 - https://www.baycitytx.gov/642/Election-Results
 - https://www.baycitytx.gov/474/2023-Elections
@@ -63,6 +67,7 @@ relevant_urls:
 - https://www.visitbaycitytx.org/events
 - https://www.baycitytx.gov/168/Municipal-Elections
 - https://www.cityofbaycity.org/186/Emergency-Preparedness
+- https://www.baycitytx.gov/QuickLinks.aspx
 - https://www.baycitytx.gov/QuickLinks.aspx?CID=14
 - https://www.baycitytx.gov/
 - https://www.baycitytx.gov/sitemap
