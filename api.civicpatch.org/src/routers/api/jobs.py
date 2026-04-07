@@ -14,6 +14,7 @@ from pydantic import BaseModel
 
 import job_service.people_collector.people_data_utils as people_data_utils
 import services.github.github_api_service as github_service
+import services.temporal_service as temporal_service
 import utils.file_utils
 import database.jobs
 from database.database import (
@@ -131,18 +132,15 @@ def get_router(api_key_header):
     ):
         try:
             request_id = shared.utils.id_utils.make_request_id()
-            _response = await github_service.trigger_people_job_workflow(
-                request_id=request_id,
+            await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
-                name=request.name,
-                url=request.url,
-                source_urls=request.source_urls,
+                request_id=request_id,
             )
         except Exception as e:
-            print(f"Error triggering people job with GitHub: {e}")
+            logger.exception(f"Error starting Temporal workflow: {e}")
             return JSONResponse(
                 content=ErrorResponse(
-                    error="Failed to trigger people job with GitHub"
+                    error="Failed to start people collector workflow"
                 ).model_dump(),
                 status_code=500,
             )
@@ -347,6 +345,68 @@ def get_router(api_key_header):
 
         background_tasks.add_task(_publish)
         return {"request_id": request_id, "status": JobStatus.RESOLVED}
+
+    @router.post(
+        "/{request_id}/resume",
+        summary="Resume a paused job",
+        description="Send a human_approval signal to the Temporal workflow for this job.",
+    )
+    async def resume_job_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])),
+    ):
+        job = await get_job(request_id)
+        if not job:
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404,
+            )
+        jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
+        if not jurisdiction_ocdid:
+            return JSONResponse(
+                content=ErrorResponse(error="No jurisdiction_ocdid for job").model_dump(),
+                status_code=422,
+            )
+        try:
+            await temporal_service.signal_human_approval(jurisdiction_ocdid)
+        except Exception as e:
+            logger.exception(f"Error signalling human_approval: {e}")
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to signal workflow").model_dump(),
+                status_code=500,
+            )
+        return {"request_id": request_id, "status": "resumed"}
+
+    @router.post(
+        "/{request_id}/cancel",
+        summary="Cancel a running job",
+        description="Cancel the Temporal workflow for this job.",
+    )
+    async def cancel_job_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
+    ):
+        job = await get_job(request_id)
+        if not job:
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404,
+            )
+        jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
+        if not jurisdiction_ocdid:
+            return JSONResponse(
+                content=ErrorResponse(error="No jurisdiction_ocdid for job").model_dump(),
+                status_code=422,
+            )
+        try:
+            await temporal_service.cancel_workflow(jurisdiction_ocdid)
+        except Exception as e:
+            logger.exception(f"Error cancelling workflow: {e}")
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to cancel workflow").model_dump(),
+                status_code=500,
+            )
+        return {"request_id": request_id, "status": "cancelled"}
 
     @router.get(
         "/errors",

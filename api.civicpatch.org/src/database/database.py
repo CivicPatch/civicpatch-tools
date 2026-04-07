@@ -1148,7 +1148,7 @@ async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
 
 
 async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
-    conditions = ["j.status = 'ERROR'"]
+    conditions = ["j.status IN ('ERROR', 'PAUSED')"]
     params: list = []
 
     if state_code:
@@ -1164,6 +1164,7 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
             SELECT j.request_id,
                    r.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
+                   j.status,
                    j.created_at, j.updated_at
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
@@ -1180,8 +1181,9 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
             "request_id": r[0],
             "jurisdiction_ocdid": r[1],
             "jurisdiction_name": r[2],
-            "created_at": to_iso(r[3]),
-            "updated_at": to_iso(r[4]),
+            "status": r[3],
+            "created_at": to_iso(r[4]),
+            "updated_at": to_iso(r[5]),
         }
         for r in rows
     ]

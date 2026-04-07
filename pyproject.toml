@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [tool.uv.workspace]
-members = ["civicpatch", "api.civicpatch.org", "shared"]
+members = ["civicpatch", "api.civicpatch.org", "shared", "worker"]
 
 [dependency-groups]
 dev = [

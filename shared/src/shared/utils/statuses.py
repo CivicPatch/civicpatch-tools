@@ -10,6 +10,8 @@ class JobStatus(StrEnum):
     ERROR = "ERROR"
     # Error was manually acknowledged and cleared by a maintainer
     RESOLVED = "RESOLVED"
+    # Pipeline exited mid-run awaiting human review; resumes on human_approval signal
+    PAUSED = "PAUSED"
 
 
 class PullRequestStatus(StrEnum):
