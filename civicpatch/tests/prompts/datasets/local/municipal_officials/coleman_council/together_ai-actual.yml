@@ -3,7 +3,7 @@ people:
   roles:
   - Mayor
   designations: []
-  phone: (325) 625-5114
+  phone: 325-625-5114
   email: null
   url: null
   start_date: null
@@ -13,8 +13,8 @@ people:
   roles:
   - Council Member
   designations:
-  - Ward 1
-  phone: (325) 625-5114
+  - Place 1
+  phone: 325-625-5114
   email: null
   url: null
   start_date: null
@@ -24,8 +24,8 @@ people:
   roles:
   - Council Member
   designations:
-  - Ward 2
-  phone: (325) 625-5114
+  - Place 2
+  phone: 325-625-5114
   email: null
   url: null
   start_date: null
@@ -35,8 +35,8 @@ people:
   roles:
   - Council Member
   designations:
-  - Ward 3
-  phone: (325) 625-5114
+  - Place 3
+  phone: 325-625-5114
   email: null
   url: null
   start_date: null
@@ -46,8 +46,8 @@ people:
   roles:
   - Council Member
   designations:
-  - Ward 4
-  phone: (325) 625-5114
+  - Place 4
+  phone: 325-625-5114
   email: null
   url: null
   start_date: null

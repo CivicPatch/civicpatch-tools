@@ -129,10 +129,10 @@ def municipality_officials_prompt(roles_hint: List[str]):
     "Mayor", "Councilmember, Place 1", "Alderman") as a structured listing —
     that is a navigation or index section pointing to pages, not a roster of people.
     A valid listing must contain actual person names, not just titles.
-    Do NOT extract office staff, aides, assistants, schedulers, constituent services
-    representatives, chiefs of staff, or other administrative employees who work for
-    an elected official — only extract elected or appointed members of the primary
-    governing body (Mayor, Council Members, Commissioners, etc.).
+    Only extract elected members of the governing body (e.g. Mayor, City Council,
+    Board of Aldermen, Board of Commissioners). Exclude everyone else: appointed staff
+    and officials from other jurisdictions (county, precinct, special district) even
+    when listed alongside governing officials on the same page.
     Treat officials as currently serving unless the content explicitly states
     the roster is historical or past.
 

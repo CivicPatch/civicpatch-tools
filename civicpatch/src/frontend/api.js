@@ -91,7 +91,23 @@ export const saveAndMerge = async (pullRequestNumber, request_id, jurisdiction_o
     err.status = res.status;
     throw err;
   }
-  return res.json();
+
+  const POLL_INTERVAL_MS = 2000;
+  const MAX_ATTEMPTS = 120;
+  for (let i = 0; i < MAX_ATTEMPTS; i++) {
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+    const statusRes = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge-status`, {
+      credentials: "include",
+    });
+    if (!statusRes.ok) {
+      const body = await statusRes.json().catch(() => ({}));
+      throw new Error(body.error || `HTTP ${statusRes.status}`);
+    }
+    const { status, error } = await statusRes.json();
+    if (status === "merged") return { status: "success" };
+    if (status === "error") throw new Error(error || "Merge failed");
+  }
+  throw new Error("Merge timed out");
 };
 
 export const searchPeople = async (jurisdictionOcdid, name) => {

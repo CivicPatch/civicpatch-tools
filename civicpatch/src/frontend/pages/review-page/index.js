@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { createReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
-import { useLocalStorage } from "../../hooks/use-local-storage.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import "./review-landing.js";
@@ -25,7 +25,7 @@ function ReviewPage() {
     const p = new URLSearchParams(window.location.search);
     return p.get("state") || "";
   });
-  const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL);
+  const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL, { ttl: PERSIST_FOREVER });
 
   const {
     session, setSession,
@@ -119,8 +119,11 @@ function ReviewPage() {
       });
   }, [prPeople]);
 
+  // Cap at total reviewable today (already-resolved + still-available), not just remaining.
+  // today_resolved can exceed available_count as merged PRs drop out of the pool.
+  const maxReviewable = (stats.today_resolved ?? 0) + (stats.available_count ?? 0);
   const effectiveGoal = Math.max(
-    stats.available_count > 0 ? Math.min(dailyGoal, stats.available_count) : dailyGoal,
+    maxReviewable > 0 ? Math.min(dailyGoal, maxReviewable) : dailyGoal,
     stats.claimed_count ?? 0
   );
 
@@ -131,7 +134,7 @@ function ReviewPage() {
   };
 
   const handleGoalChange = (n) => {
-    const clamped = stats.available_count > 0 ? Math.min(n, stats.available_count) : n;
+    const clamped = maxReviewable > 0 ? Math.min(n, maxReviewable) : n;
     setDailyGoal(clamped);
   };
 
