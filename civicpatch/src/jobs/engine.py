@@ -11,12 +11,6 @@ import services.storage_service as storage_service
 import psutil
 
 from jobs.people_collector.schemas import WorkflowStatus
-from jobs.registry import (
-    register_workflow,
-    workflow_stop_requested,
-    update_workflow_state,
-    unregister_workflow,
-)
 
 
 class WorkflowError(Exception):
@@ -55,7 +49,6 @@ async def run_workflow(
 
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
-    register_workflow(jurisdiction_ocdid, ctx.current_state)
 
     terminal_states = {WorkflowStatus.DONE, WorkflowStatus.ERROR, WorkflowStatus.PAUSED}
 
@@ -69,8 +62,6 @@ async def run_workflow(
                 )
             except Exception as e:
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
-            if workflow_stop_requested(jurisdiction_ocdid):
-                break
 
             transition_fn = transition_map[ctx.current_state]
             ctx, next_state = await transition_fn(job_config, logger, ctx)
@@ -78,7 +69,6 @@ async def run_workflow(
                 updated_data = ctx.data.model_copy(update={"paused_at_state": ctx.current_state.value})
                 ctx = ctx.copy(update={"data": updated_data})
             ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
-            update_workflow_state(jurisdiction_ocdid, ctx.current_state)
 
             if persist_fn:
                 persist_fn(ctx)
@@ -98,7 +88,6 @@ async def run_workflow(
                 logger.info(f"Uploaded paused context for {ctx.request_id}")
             except Exception as e:
                 logger.warning(f"Failed to upload paused context (non-fatal): {e}")
-        unregister_workflow(jurisdiction_ocdid)
 
     if ctx.current_state == WorkflowStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)

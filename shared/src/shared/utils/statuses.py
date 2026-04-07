@@ -4,6 +4,8 @@ from enum import StrEnum
 class JobStatus(StrEnum):
     # Workflow runner has been triggered; job has not started yet
     PENDING = "PENDING"
+    # Workflow runner is actively executing
+    RUNNING = "RUNNING"
     # Workflow runner finished successfully and produced output
     COMPLETED = "COMPLETED"
     # Workflow runner encountered an unrecoverable error
