@@ -63,6 +63,21 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
         return response.json()
 
 
+async def get_jurisdiction_info(jurisdiction_ocdid: str) -> dict:
+    env = get_env_vars()
+    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
+    async with httpx.AsyncClient(headers=system_auth_header) as client:
+        response = await client.post(
+            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
+            json={"ocdids": [jurisdiction_ocdid]},
+        )
+        response.raise_for_status()
+        results = response.json().get("data", [])
+        if not results:
+            raise RuntimeError(f"Jurisdiction not found: {jurisdiction_ocdid}")
+        return results[0]
+
+
 # System calls
 async def register_people_job(logger, request_id: str, arguments: dict):
     env = get_env_vars()

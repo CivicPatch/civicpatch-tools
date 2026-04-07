@@ -6,6 +6,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from schemas.common import Identity, Role
 from utils.auth_utils import get_optional_user
 from routers.api import jobs as jobs_router
+from routers.api.jobs import update_and_publish
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -141,6 +142,31 @@ def test_get_jobs_with_errors_returns_list(client):
     data = response.json()
     assert "data" in data
     assert isinstance(data["data"], list)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_update_and_publish_publishes_when_jurisdiction_provided():
+    with (
+        patch("routers.api.jobs.update_job_status", new_callable=AsyncMock) as mock_update,
+        patch("routers.api.jobs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
+    ):
+        await update_and_publish(TEST_REQUEST_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
+
+        mock_update.assert_awaited_once_with(request_id=TEST_REQUEST_ID, status="running", progress=50)
+        mock_publish.assert_awaited_once()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_update_and_publish_skips_publish_when_no_jurisdiction():
+    with (
+        patch("routers.api.jobs.update_job_status", new_callable=AsyncMock),
+        patch("routers.api.jobs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
+    ):
+        await update_and_publish(TEST_REQUEST_ID, "running", 50, None)
+
+        mock_publish.assert_not_awaited()
 
 
 @pytest.mark.unit
