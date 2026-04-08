@@ -1,3 +1,4 @@
+import "./badge.css";
 import { html } from "lit-html";
 import { component } from "haunted";
 

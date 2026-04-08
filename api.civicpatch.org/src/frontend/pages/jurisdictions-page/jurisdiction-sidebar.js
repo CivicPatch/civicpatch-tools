@@ -1,3 +1,4 @@
+import "./jurisdiction-sidebar.css";
 import { component } from "haunted";
 import { html } from "lit-html";
 import "./jurisdiction-detail.js";

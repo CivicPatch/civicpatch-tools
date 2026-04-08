@@ -9,8 +9,6 @@ CMD ["npm", "start"]
 
 FROM node:24-slim AS frontend-build
 
-ENV NODE_ENV="development" BUILD_ENV="production"
-
 WORKDIR /app
 
 COPY api.civicpatch.org/src/frontend/package*.json /app/

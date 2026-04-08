@@ -1,3 +1,4 @@
+import "./tabs.css";
 import { html, component } from "haunted";
 import "../civ-tab-bar/civ-tab-bar.js";
 

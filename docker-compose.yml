@@ -22,11 +22,10 @@ services:
       context: .
       dockerfile: api.civicpatch.org/Dockerfile
       target: frontend-dev
-    environment:
-      BUILD_ENV: development
+    ports:
+      - "5173:5173"
     volumes:
       - ./api.civicpatch.org/src/frontend:/app
-      - ./components/build:/app/cdn:ro
       - /app/node_modules
     networks:
       - civicpatch_net

@@ -1,3 +1,4 @@
+import "./notes-panel.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchNotes, createNote } from "../../api.js";

@@ -1,3 +1,4 @@
+import "../review-page/review-page.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { useWS } from "../../hooks/useSse.js";

@@ -1,3 +1,4 @@
+import "./table.css";
 import { html, component, useState, useLayoutEffect, useRef } from 'haunted';
 import { keyed } from 'lit/directives/keyed.js';
 import { ref, createRef } from 'lit/directives/ref.js';

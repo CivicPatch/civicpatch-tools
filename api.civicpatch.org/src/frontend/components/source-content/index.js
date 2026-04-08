@@ -1,3 +1,4 @@
+import "./source-content.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";

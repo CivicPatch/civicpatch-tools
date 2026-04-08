@@ -1,3 +1,4 @@
+import "./error-card.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { createRef, ref } from "lit-html/directives/ref.js";

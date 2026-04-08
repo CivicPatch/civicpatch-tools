@@ -1,4 +1,6 @@
-{% extends "layouts/base.html" %} {% block title %}Jurisdiction{% endblock %} 
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/jurisdiction.js') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/jurisdiction.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Jurisdiction{% endblock %} 
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 

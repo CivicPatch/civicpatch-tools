@@ -1,3 +1,4 @@
+import "./pagination.css";
 import { html } from 'lit-html';
 
 function getPageRange(page, totalPages) {

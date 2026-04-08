@@ -1,4 +1,6 @@
-{% extends "layouts/base.html" %} {% block title %}Issues{% endblock %}
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/issues.js') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/issues.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Issues{% endblock %}
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 

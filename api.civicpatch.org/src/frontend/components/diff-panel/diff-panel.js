@@ -1,3 +1,4 @@
+import "./diff-panel.css";
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";

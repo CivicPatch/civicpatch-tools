@@ -14,9 +14,9 @@ import {
 import { LocateControl } from "leaflet.locatecontrol";
 import { Geocoder, geocoders } from "leaflet-control-geocoder";
 
-import leafletStyles from "leaflet/dist/leaflet.css";
-import locateStyles from "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
-import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css";
+import leafletStyles from "leaflet/dist/leaflet.css?raw";
+import locateStyles from "leaflet.locatecontrol/dist/L.Control.Locate.min.css?raw";
+import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css?raw";
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 

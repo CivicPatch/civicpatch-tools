@@ -1,3 +1,4 @@
+import "./publish-log.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { PULL_REQUEST_STATUS } from "../pull-request-card/pull-request-status.js";

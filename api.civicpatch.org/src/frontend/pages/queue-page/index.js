@@ -1,3 +1,4 @@
+import "./queue-page.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";

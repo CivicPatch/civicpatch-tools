@@ -1,3 +1,4 @@
+import "./side-panel.css";
 import { component } from "haunted";
 import { html } from "lit-html";
 import "../notes-panel/notes-panel.js";

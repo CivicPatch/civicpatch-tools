@@ -14,12 +14,14 @@
             rel="stylesheet"
         />
 
+        {% block styles %}{% endblock %}
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
         <script src="https://kit.fontawesome.com/ac3d436b83.js" crossorigin="anonymous"></script>
-        
+
     </head>
     <body>
         <main class="container-fluid {% block main_class %}{% endblock %}">
@@ -28,17 +30,12 @@
 
         {% block footer %}{% endblock %}
 
-        <script
-            type="module"
-            src="{{ url_for('frontend', path='/assets/env.js') }}"
-        ></script>
+        <script src="{{ url_for('frontend', path='/assets/env.js') }}"></script>
 
-        <script
-            type="module"
-            src="{{ url_for('frontend', path='/build/bundle.js') }}"
-        ></script>
-
-        {% if hot_reload is defined %}
-            {{ hot_reload.script(url_for('hot-reload')) | safe }}
+        {% if not is_production %}
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
         {% endif %}
+
+        {% block scripts %}{% endblock %}
+    </body>
 </html>

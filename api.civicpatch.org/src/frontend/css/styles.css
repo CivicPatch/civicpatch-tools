@@ -1,33 +1,3 @@
-/* ── Components ──────────────────────────────────────────────────────────── */
-
-@import "../components/basic/table/table.css";
-@import "../components/basic/table/cell.css";
-@import "../components/inputs/auto-complete-select.css";
-@import "../components/badge/badge.css";
-@import "../components/diff-panel/diff-panel.css";
-@import "../components/review-panel/review-panel.css";
-@import "../components/review-checklist/review-checklist.css";
-@import "../components/review-workspace/review-workspace.css";
-@import "../components/edit-people/tabs.css";
-@import "../components/civ-tab-bar/civ-tab-bar.css";
-@import "../components/edit-people/profile-modal.css";
-@import "../components/pull-request-card/pr-card.css";
-@import "../components/pagination/pagination.css";
-@import "../pages/queue-page/error-card/error-card.css";
-@import "../pages/queue-page/queue-page.css";
-@import "../pages/issues-page/issues-page.css";
-@import "../pages/review-page/review-page.css";
-@import "../components/source-content/source-content.css";
-@import "../components/stat-cards/stat-cards.css";
-@import "../components/streak-graph/streak-graph.css";
-@import "../components/goal-ring/goal-ring.css";
-@import "../components/search-jurisdictions/search-jurisdictions.css";
-@import "../pages/jurisdictions-page/jurisdiction-sidebar.css";
-@import "../pages/jurisdictions-page/scrape-modal/scrape-modal.css";
-@import "../components/notes-panel/notes-panel.css";
-@import "../components/side-panel/side-panel.css";
-@import "../components/publish-log/publish-log.css";
-
 /* ── Global ──────────────────────────────────────────────────────────────── */
 
 /* ── Color palette ───────────────────────────────────────────────────────── */
@@ -726,8 +696,9 @@ a:focus-visible {
 .about-footer {
     background: rgb(var(--catppuccin-base));
     border-top: 1px solid var(--pico-form-element-border-color);
-    padding: 2rem 1.5rem;
+    padding: 2rem 2rem;
     margin-top: auto;
+    margin-inline: 0;
 }
 
 .about-footer__inner {
@@ -774,8 +745,24 @@ a:focus-visible {
         grid-template-columns: 1fr;
         gap: 1.25rem;
     }
+}
+
+@media (max-width: 640px) {
     .about-footer {
-        padding: 2rem 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 }
 
+
+@media (min-width: 1280px) {
+    .about-footer {
+        padding: 2rem 2rem;
+    }
+}
+
+@media (min-width: 1536px) {
+    .about-footer {
+        padding: 2rem 4rem;
+    }
+}

@@ -1,3 +1,4 @@
+import "./cell.css";
 import { useState, component, useEffect, useLayoutEffect, useRef } from 'haunted';
 import { html } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
