@@ -123,6 +123,47 @@ def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
     return folder
 
 
+def folder_to_jurisdiction_ocdid(folder: str) -> str:
+    """
+    Converts a folder path back to a jurisdiction ID.
+    Inverse of jurisdiction_ocdid_to_folder.
+    Example:
+      "wa/local/place_seattle"
+      -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+      "il/local/county_dupage__place_naperville"
+      -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+    """
+    segments = folder.strip("/").split("/")
+    if len(segments) < 3:
+        raise ValueError(f"Invalid jurisdiction folder path: {folder}")
+
+    state = segments[0]
+    # segments[1] is output_type — not needed to reconstruct ocdid
+    place_segment = segments[2]
+
+    ocdid = f"ocd-jurisdiction/country:us/state:{state}/"
+
+    if "__" in place_segment:
+        county_part, place_part = place_segment.split("__", 1)
+        county = county_part.split("_", 1)[1]
+        ocdid += f"county:{county}/"
+    else:
+        place_part = place_segment
+
+    place_found = False
+    for key in KNOWN_PLACE_KEYS:
+        if place_part.startswith(f"{key}_"):
+            place = place_part[len(key) + 1:]
+            ocdid += f"{key}:{place}/government"
+            place_found = True
+            break
+
+    if not place_found:
+        raise ValueError(f"Unknown place key in folder segment: {place_part}")
+
+    return ocdid
+
+
 def jurisdiction_ocdid_to_slug(jurisdiction_ocdid: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly slug.

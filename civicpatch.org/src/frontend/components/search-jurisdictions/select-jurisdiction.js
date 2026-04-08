@@ -12,7 +12,6 @@ function CivSelectJurisdiction() {
   const [selectedState, setSelectedState] = useState(defaultState);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
-  console.log("permissions in CivSelectJurisdiction:", permissions);
 
   const isInitialMount = useRef(true);
 
@@ -69,16 +68,14 @@ function CivSelectJurisdiction() {
     e.preventDefault();
 
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
-    const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
-    window.location.href = `/jurisdictions/${jurisdiction_ocdid_slug}`;
+    window.location.href = `/${jurisdiction_data["jurisdiction_path"]}`;
   };
 
   const jurisdictionLink = () => {
-    if (!selectedJurisdiction) return "";
-    if (!jurisdictions) return "";
-
-    const jurisdictionOcdidFormatted = encodeURIComponent(selectedJurisdiction);
-    return jurisdictionOcdidFormatted ? `/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdidFormatted}` : "";
+    if (!selectedJurisdiction || !jurisdictions.length) return "";
+    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
+    const path = jurisdiction_data?.jurisdiction_path;
+    return path ? `/${path}` : "";
   };
 
   return html`

@@ -119,8 +119,6 @@ app.add_middleware(
 )
 
 
-app.include_router(frontend_router(templates))
-
 app.include_router(
     api_admin_router.get_router(),
     prefix="/api/admin",
@@ -226,7 +224,6 @@ app.include_router(
     tags=["webhooks"],
 )
 
-
 @app.get("/api/v1/me", tags=["auth"])
 async def get_me(user: Identity = Depends(get_optional_user)):
     """
@@ -315,3 +312,7 @@ async def _run_every(interval: int, coro_fn):
         except Exception:
             logger.exception("Periodic task %s failed", coro_fn.__name__)
         await asyncio.sleep(interval)
+
+
+# Must be last: contains a /{path:path} catch-all for jurisdiction pages
+app.include_router(frontend_router(templates))

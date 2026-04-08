@@ -60,7 +60,7 @@ function ErrorCard({ job }) {
           ` : ""}
           <a
             class="error-card__link"
-            href="/jurisdictions?jurisdiction_ocdid=${job?.jurisdiction_ocdid}"
+            href="/${job?.jurisdiction_path}"
             target="_blank"
             rel="noopener"
           >Detail</a>

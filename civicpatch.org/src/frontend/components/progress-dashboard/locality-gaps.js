@@ -32,7 +32,7 @@ function LocalityGaps({ stats, state }) {
         ${pageOcdids.map(ocdid => {
           const j = nameMap[ocdid];
           return j
-            ? html`<li><a href="/jurisdictions/${j.slug}">${j.name}</a></li>`
+            ? html`<li><a href="/${j.slug}">${j.name}</a></li>`
             : html`<li>${ocdid}</li>`;
         })}
       </ul>

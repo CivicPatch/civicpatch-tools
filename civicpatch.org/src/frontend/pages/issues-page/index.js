@@ -302,7 +302,7 @@ function IssuesPage() {
                     <td class="issues-page__event-detail">${getEventDetail(ev.event_type, ev.data)}</td>
                     <td>
                       ${ev.jurisdiction_ocdid
-                        ? html`<a href="/jurisdictions?jurisdiction_ocdid=${ev.jurisdiction_ocdid}" target="_blank">${ev.jurisdiction_name || ev.jurisdiction_ocdid}</a>`
+                        ? html`<a href="/${ev.jurisdiction_path}" target="_blank">${ev.jurisdiction_name || ev.jurisdiction_ocdid}</a>`
                         : "—"}
                     </td>
                     <td class="issues-page__event-date">${formatDate(ev.created_at)}</td>

@@ -20,6 +20,7 @@ import environment
 
 from schemas.common import PullRequest
 from services import cache_service
+import shared.utils.id_utils
 
 timeout = httpx.Timeout(60.0)
 

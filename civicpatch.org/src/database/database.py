@@ -442,6 +442,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
         return None
 
 
+
 async def get_jurisdiction_geom(jurisdiction_ocdid: str):
     """Return the GeoJSON geometry for the given jurisdiction_ocdid by resolving the jurisdiction's geoid
     and returning the corresponding geo.geom as GeoJSON (parsed JSON).
@@ -654,7 +655,11 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
             # Process the results
             jurisdictions = []
             for row in results:
-                jurisdictions.append({"jurisdiction_ocdid": row[0], **row[1]})
+                jurisdictions.append({
+                    "jurisdiction_ocdid": row[0],
+                    "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[0]),
+                    **row[1],
+                })
 
             return total_count, jurisdictions
 
@@ -671,7 +676,6 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
             """
             SELECT jurisdiction_ocdid,
                    data->>'name' AS name,
-                   data->>'jurisdiction_ocdid_slug' AS slug,
                    data->>'url' AS url
             FROM jurisdictions
             WHERE jurisdiction_ocdid = ANY(%s)
@@ -680,7 +684,15 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
             (ocdids,),
         )
         rows = await cur.fetchall()
-        return [{"ocdid": row[0], "name": row[1], "slug": row[2], "url": row[3]} for row in rows]
+        return [
+            {
+                "ocdid": row[0],
+                "name": row[1],
+                "slug": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[0]),
+                "url": row[2],
+            }
+            for row in rows
+        ]
 
 # Jobs
 
@@ -1460,6 +1472,7 @@ async def get_job_events_page(
             "request_id": r[4],
             "jurisdiction_ocdid": r[5],
             "jurisdiction_name": r[6],
+            "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[5]) if r[5] else None,
         }
         for r in rows
     ], total
