@@ -22,5 +22,16 @@ def vite_asset(path: str, production: bool) -> str:
 def vite_css(path: str, production: bool) -> list[str]:
     if not production:
         return []
-    entry = _load_manifest().get(path, {})
-    return [f"/frontend/build/{f}" for f in entry.get("css", [])]
+    manifest = _load_manifest()
+    return _collect_css(path, manifest, set())
+
+
+def _collect_css(key: str, manifest: dict, seen: set) -> list[str]:
+    if key in seen:
+        return []
+    seen.add(key)
+    entry = manifest.get(key, {})
+    css = [f"/frontend/build/{f}" for f in entry.get("css", [])]
+    for imported_key in entry.get("imports", []):
+        css.extend(_collect_css(imported_key, manifest, seen))
+    return css
