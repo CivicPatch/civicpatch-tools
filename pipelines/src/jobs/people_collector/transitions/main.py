@@ -1,5 +1,5 @@
 from jobs.people_collector.schemas import (
-  WorkflowStatus,
+  PipelineStatus,
   PeopleCollectorContext,
   Link,
   LinkStatus,
@@ -43,7 +43,7 @@ from utils import cost_utils
 from utils.log_utils import WorkflowLogger
 from services.civicpatch_api import register_people_job
 
-async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     await prepare_pipeline(context)
 
     next_context = context.copy(update={
@@ -60,11 +60,11 @@ async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: Peop
             "url": context.data.config.url
         }
     )
-    return next_context, WorkflowStatus.RESEARCH_MUNICIPALITY
+    return next_context, PipelineStatus.RESEARCH_MUNICIPALITY
 
-async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await research_municipality(context)
-    next_state = WorkflowStatus.SEARCH_LINKS
+    next_state = PipelineStatus.SEARCH_LINKS
 
     new_data = context.data.copy(update={
         "research_municipality_step": result
@@ -85,24 +85,24 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
             })
         })
 
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        next_state = PipelineStatus.SCRAPE_PAGE
     else:
         logger.info("Source URLs not found, using search engine for links.")
-        next_state = WorkflowStatus.SEARCH_LINKS
+        next_state = PipelineStatus.SEARCH_LINKS
 
     
     return next_context, next_state
 
-async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     search_links_step = context.data.search_links_step
     search_link_pointer = search_links_step.search_link_pointer
-    next_state = WorkflowStatus.SCRAPE_PAGE
+    next_state = PipelineStatus.SCRAPE_PAGE
     next_context = context
 
     if search_link_pointer >= len(SearchEngineNames):
         logger.info("All search engines have been processed.")
 
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        next_state = PipelineStatus.SCRAPE_PAGE
     else:
         links, result = await search_links(context)
         progress = calculate_progress_percentage(context.data, 2)
@@ -115,20 +115,20 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
         })
         if len(links) == 0:
             logger.info("No links found, re-running step to try next search engine.")
-            next_state = WorkflowStatus.SEARCH_LINKS
+            next_state = PipelineStatus.SEARCH_LINKS
         else:
-            next_state = WorkflowStatus.SCRAPE_PAGE
+            next_state = PipelineStatus.SCRAPE_PAGE
 
     
     return next_context, next_state
 
-async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_scrape = get_next_link_with_status(context.data.links, LinkStatus.PENDING)
-    next_state = WorkflowStatus.PREPROCESS_PAGE_CONTENT
+    next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
 
     if not page_to_scrape:
         logger.info("No pending links left to scrape.")
-        next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+        next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
     links, dead_url = await scrape_page(context, page_to_scrape)
@@ -144,20 +144,20 @@ async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: 
 
     link_status = get_link_status_by_url(context.data.links, page_to_scrape.url)
     if link_status == LinkStatus.SCRAPED:
-        next_state = WorkflowStatus.PREPROCESS_PAGE_CONTENT
+        next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
     else:
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        next_state = PipelineStatus.SCRAPE_PAGE
 
     
     return next_context, next_state
 
-async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_preprocess = get_next_link_with_status(context.data.links, LinkStatus.SCRAPED)
-    next_state = WorkflowStatus.PROCESS_PAGE_CONTENT
+    next_state = PipelineStatus.PROCESS_PAGE_CONTENT
 
     if not page_to_preprocess:
         logger.info("No scraped links left to preprocess.")
-        next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+        next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
     links, result = preprocess_page_content(context, page_to_preprocess)
@@ -173,18 +173,18 @@ async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogge
     link_status = get_link_status_by_url(context.data.links, page_to_preprocess.url)
 
     if link_status == LinkStatus.PREPROCESSED:
-        next_state = WorkflowStatus.PROCESS_PAGE_CONTENT
+        next_state = PipelineStatus.PROCESS_PAGE_CONTENT
     else:  # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        next_state = PipelineStatus.SCRAPE_PAGE
     
     
     return next_context, next_state
 
-async def process_page_content_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def process_page_content_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
     if len(preprocessed_links) == 0:
         # TODO: call legger here
-        return context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
+        return context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
     page_to_process = preprocessed_links[0]
     try:
@@ -194,7 +194,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         next_context = context.copy(update={
             "data": context.data.copy(update={"error_step": str(e)})
         })
-        return next_context, WorkflowStatus.SEND_ERROR
+        return next_context, PipelineStatus.SEND_ERROR
     progress = calculate_progress_percentage(context.data, 5)
     next_context = context.copy(update={
         "progress": progress,
@@ -218,7 +218,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
 
     return next_context, next_state
 
-async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_within_llm(context)
     progress = calculate_progress_percentage(context.data, 6)
     next_context = context.copy(update={
@@ -240,11 +240,11 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogg
                 "error_step": f"merge_records_within_llm: heuristics failed: {reasons_str}"
             })
         })
-        return next_context, WorkflowStatus.SEND_ERROR
+        return next_context, PipelineStatus.SEND_ERROR
 
-    return next_context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
+    return next_context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
-async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_across_llms(context)
 
     progress = calculate_progress_percentage(context.data, 7)
@@ -255,10 +255,10 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
         })
     })
 
-    next_state = WorkflowStatus.FORMAT_OUTPUT
+    next_state = PipelineStatus.FORMAT_OUTPUT
     return next_context, next_state
 
-async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await format_output(context)
     progress = calculate_progress_percentage(context.data, 8)
     next_context = context.copy(update={
@@ -268,10 +268,10 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
         })
     })
 
-    next_state = WorkflowStatus.CLEANUP
+    next_state = PipelineStatus.CLEANUP
     return next_context, next_state
 
-async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     _result = cleanup(context)
 
     progress = calculate_progress_percentage(context.data, 9)
@@ -279,9 +279,9 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
     next_context = context.copy(update={
         "progress": progress
     })
-    return next_context, WorkflowStatus.REVIEW_OUTPUT
+    return next_context, PipelineStatus.REVIEW_OUTPUT
 
-async def review_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def review_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = review_output(context)
 
     progress = calculate_progress_percentage(context.data, 10)
@@ -292,9 +292,9 @@ async def review_output_transition(_: JobConfig, logger: WorkflowLogger, context
         })
     })
 
-    return next_context, WorkflowStatus.SAVE_OUTPUT
+    return next_context, PipelineStatus.SAVE_OUTPUT
 
-async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     _result = await save_output(context)
 
     progress = calculate_progress_percentage(context.data, 11)
@@ -302,10 +302,10 @@ async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: 
         "progress": progress
     })
 
-    next_state = WorkflowStatus.SEND_SUCCESS
+    next_state = PipelineStatus.SEND_SUCCESS
     return next_context, next_state
 
-async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
 
     result = await send_success(context)
@@ -316,16 +316,16 @@ async def send_success_transition(_: JobConfig, logger: WorkflowLogger, context:
         "data": context.data.copy(update={"send_success_step": result})
     })
 
-    return next_context, WorkflowStatus.DONE
+    return next_context, PipelineStatus.COMPLETED
 
-async def send_error_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+async def send_error_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await send_error(context)
 
     next_context = context.copy(update={
         "data": context.data.copy(update={"send_error_step": result})
     })
 
-    return next_context, WorkflowStatus.ERROR
+    return next_context, PipelineStatus.ERROR
 
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
@@ -343,18 +343,18 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     return progress_percent
 
 TRANSITION_MAP = {
-  WorkflowStatus.INIT: start_job,
-  WorkflowStatus.RESEARCH_MUNICIPALITY: research_municipality_transition,
-  WorkflowStatus.SEARCH_LINKS: search_links_transition,
-  WorkflowStatus.SCRAPE_PAGE: scrape_page_transition,
-  WorkflowStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
-  WorkflowStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
-  WorkflowStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
-  WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
-  WorkflowStatus.FORMAT_OUTPUT: format_output_transition,
-  WorkflowStatus.CLEANUP: cleanup_transition,
-  WorkflowStatus.REVIEW_OUTPUT: review_output_transition,
-  WorkflowStatus.SAVE_OUTPUT: save_output_transition,
-  WorkflowStatus.SEND_SUCCESS: send_success_transition,
-  WorkflowStatus.SEND_ERROR: send_error_transition,
+  PipelineStatus.INIT: start_job,
+  PipelineStatus.RESEARCH_MUNICIPALITY: research_municipality_transition,
+  PipelineStatus.SEARCH_LINKS: search_links_transition,
+  PipelineStatus.SCRAPE_PAGE: scrape_page_transition,
+  PipelineStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
+  PipelineStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
+  PipelineStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
+  PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
+  PipelineStatus.FORMAT_OUTPUT: format_output_transition,
+  PipelineStatus.CLEANUP: cleanup_transition,
+  PipelineStatus.REVIEW_OUTPUT: review_output_transition,
+  PipelineStatus.SAVE_OUTPUT: save_output_transition,
+  PipelineStatus.SEND_SUCCESS: send_success_transition,
+  PipelineStatus.SEND_ERROR: send_error_transition,
 }

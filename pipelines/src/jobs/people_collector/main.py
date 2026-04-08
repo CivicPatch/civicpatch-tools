@@ -6,7 +6,7 @@ import logging
 from jobs.engine import run_workflow, WorkflowError, WorkflowPausedError
 from jobs.people_collector.schemas import (
   WorkflowConfig,
-  WorkflowStatus,
+  PipelineStatus,
   PeopleCollectorData,
   PeopleCollectorContext,
 )
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowConfig) -> PeopleCollectorContext:
     context = PeopleCollectorContext(
         request_id=request_id,
-        current_state=WorkflowStatus.INIT,
+        current_state=PipelineStatus.INIT,
         data=PeopleCollectorData(
           jurisdiction_ocdid=jurisdiction_ocdid,
           config=config,
@@ -64,7 +64,7 @@ async def resume(request_id: str) -> PeopleCollectorContext:
     if not paused_at:
         raise ValueError(f"No paused_at_state in context for {request_id}")
 
-    resume_state = WorkflowStatus(paused_at)
+    resume_state = PipelineStatus(paused_at)
     context = context.copy(update={"current_state": resume_state})
 
     workflow_logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)

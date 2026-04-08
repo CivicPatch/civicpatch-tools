@@ -5,7 +5,7 @@ from jobs.people_collector.schemas import (
     PeopleCollectorContext,
     Link, 
     LinkStatus, 
-    WorkflowStatus, 
+    PipelineStatus, 
     PreprocessPageContentStep, 
 )
 from shared.utils import data_path_utils
@@ -30,7 +30,7 @@ def preprocess_page_content(
     Preprocess the scraped HTML content of a page.
     """
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 4: {WorkflowStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess.url}")
+    logger.info(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess.url}")
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     time_start = time.time()
@@ -102,7 +102,7 @@ def preprocess_page_content(
 
     average_elapsed_time_seconds = total_elapsed_time_seconds / len(elapsed_times) if elapsed_times else 0
 
-    logger.info(f"/Step 4: {WorkflowStatus.PREPROCESS_PAGE_CONTENT.value}\n")
+    logger.info(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}\n")
     logger.info(f"-> Elapsed time: {elapsed_time:.2f} seconds")
     logger.info(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
     logger.info(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")

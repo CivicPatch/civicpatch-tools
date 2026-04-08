@@ -9,7 +9,7 @@ from domain.models import Official
 from jobs.people_collector.schemas import (
     FormatOutputStep,
     PeopleCollectorContext,
-    WorkflowStatus,
+    PipelineStatus,
 )
 from shared.utils.config_utils import get_designations
 import shared.utils.data_path_utils as data_path_utils
@@ -17,7 +17,7 @@ import shared.utils.data_path_utils as data_path_utils
 
 async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 8: {WorkflowStatus.FORMAT_OUTPUT} Formatting output data.")
+    logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
     designation_configs = get_designations()
 
     data = context.data.merge_records_across_llms_step.people

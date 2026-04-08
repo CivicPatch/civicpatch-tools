@@ -7,7 +7,7 @@ from jobs.people_collector.steps.step_08_format_output.format_output import (
     _get_image_map,
     _swap_local_image,
 )
-from jobs.people_collector.schemas import WorkflowStatus, FormatOutputStep, MergeRecordsAcrossLLMsStep
+from jobs.people_collector.schemas import PipelineStatus, FormatOutputStep, MergeRecordsAcrossLLMsStep
 from tests.factories.official import official_factory
 from tests.factories.person import person_factory
 from tests.factories.workflow_context import workflow_context_factory
@@ -41,7 +41,7 @@ async def test_format_output(httpx_mock):
     ]
 
     context = workflow_context_factory({
-        WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(people=people),
+        PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(people=people),
     })
 
     output = await format_output(context)

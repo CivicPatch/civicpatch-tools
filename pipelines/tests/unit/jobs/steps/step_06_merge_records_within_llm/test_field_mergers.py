@@ -1,7 +1,7 @@
 import pytest
 
 from jobs.people_collector.schemas import (
-    LLMPerson, WorkflowStatus 
+    LLMPerson, PipelineStatus 
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers import (
     merge_roles, merge_designations, merge_field

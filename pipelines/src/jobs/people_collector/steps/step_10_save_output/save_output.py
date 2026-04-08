@@ -2,7 +2,7 @@ import os
 from typing import List
 from domain.models import Official
 from jobs.people_collector.schemas import (
-  WorkflowStatus,
+  PipelineStatus,
   PeopleCollectorContext
 )
 import utils.log_utils
@@ -11,7 +11,7 @@ import yaml
 
 async def save_output(context: PeopleCollectorContext):
   logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-  logger.info(f"Step 10: {WorkflowStatus.SAVE_OUTPUT} Saving output data and config files.")
+  logger.info(f"Step 10: {PipelineStatus.SAVE_OUTPUT} Saving output data and config files.")
 
   data_file_path = data_path_utils.get_data_file_path(
     context.data.jurisdiction_ocdid

@@ -10,7 +10,7 @@ import services.civicpatch_api as civicpatch_api
 import services.storage_service as storage_service
 import psutil
 
-from jobs.people_collector.schemas import WorkflowStatus
+from jobs.people_collector.schemas import PipelineStatus
 
 
 class WorkflowError(Exception):
@@ -50,7 +50,7 @@ async def run_workflow(
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
 
-    terminal_states = {WorkflowStatus.DONE, WorkflowStatus.ERROR, WorkflowStatus.PAUSED}
+    terminal_states = {PipelineStatus.COMPLETED, PipelineStatus.ERROR, PipelineStatus.PAUSED}
 
     try:
         while ctx.current_state not in terminal_states:
@@ -65,7 +65,7 @@ async def run_workflow(
 
             transition_fn = transition_map[ctx.current_state]
             ctx, next_state = await transition_fn(job_config, logger, ctx)
-            if next_state == WorkflowStatus.PAUSED and ctx.data.paused_at_state is None:
+            if next_state == PipelineStatus.PAUSED and ctx.data.paused_at_state is None:
                 updated_data = ctx.data.model_copy(update={"paused_at_state": ctx.current_state.value})
                 ctx = ctx.copy(update={"data": updated_data})
             ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
@@ -74,7 +74,7 @@ async def run_workflow(
                 persist_fn(ctx)
     finally:
         log_system_usage()
-        final_progress = 100 if ctx.current_state == WorkflowStatus.DONE else ctx.progress
+        final_progress = 100 if ctx.current_state == PipelineStatus.COMPLETED else ctx.progress
         try:
             await civicpatch_api.update_job_status(
                 logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
@@ -82,17 +82,17 @@ async def run_workflow(
             )
         except Exception as e:
             logger.warning(f"Failed to update final job status (non-fatal): {e}")
-        if ctx.current_state == WorkflowStatus.PAUSED:
+        if ctx.current_state == PipelineStatus.PAUSED:
             try:
                 storage_service.upload_paused_context(ctx.request_id, ctx.model_dump_json())
                 logger.info(f"Uploaded paused context for {ctx.request_id}")
             except Exception as e:
                 logger.warning(f"Failed to upload paused context (non-fatal): {e}")
 
-    if ctx.current_state == WorkflowStatus.ERROR:
+    if ctx.current_state == PipelineStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)
 
-    if ctx.current_state == WorkflowStatus.PAUSED:
+    if ctx.current_state == PipelineStatus.PAUSED:
         raise WorkflowPausedError(jurisdiction_ocdid, ctx)
 
     return ctx

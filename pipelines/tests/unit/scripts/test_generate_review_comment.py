@@ -3,7 +3,7 @@ from domain.models import Official
 
 from shared.utils.review_utils import get_identity_issues
 from jobs.people_collector.schemas import (
-    WorkflowStatus,
+    PipelineStatus,
     MergeRecordsAcrossLLMsStep,
     FormatOutputStep,
     ResearchMunicipalityStep,

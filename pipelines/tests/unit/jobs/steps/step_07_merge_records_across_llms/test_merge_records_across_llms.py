@@ -11,7 +11,7 @@ from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records
     merge_urls,
 )
 from jobs.people_collector.schemas import (
-    WorkflowStatus,
+    PipelineStatus,
     ProcessPageContentStep,
     MergeRecordsAcrossLLMsStep,
     MergeRecordsWithinLLMStep,
@@ -53,13 +53,13 @@ def create_person(
 
 def make_context(people_by_llm: Dict[str, List[Person]]):
     return workflow_context_factory({
-        WorkflowStatus.MERGE_RECORDS_WITHIN_LLM: MergeRecordsWithinLLMStep(
+        PipelineStatus.MERGE_RECORDS_WITHIN_LLM: MergeRecordsWithinLLMStep(
             people_by_llm=people_by_llm,
         ),
-        WorkflowStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
+        PipelineStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
             expected_count=0,
         ),
-        WorkflowStatus.PROCESS_PAGE_CONTENT: ProcessPageContentStep(
+        PipelineStatus.PROCESS_PAGE_CONTENT: ProcessPageContentStep(
             raw_records_by_llm={},
             records_by_llm={},
         ),

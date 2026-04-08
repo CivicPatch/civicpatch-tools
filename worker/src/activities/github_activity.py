@@ -10,7 +10,6 @@ import jwt
 from temporalio import activity
 
 from constants import RunConclusion, RunMode
-from shared.utils.statuses import JobStatus
 
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.environ["GITHUB_APP_PRIVATE_KEY_BASE64"]
@@ -109,9 +108,7 @@ async def poll_run_status(run_id: int) -> str:
             await asyncio.sleep(15)
 
 
-_CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://civicpatch:8000")
-
-_LOCAL_TERMINAL_STATUSES = {JobStatus.COMPLETED, JobStatus.ERROR, JobStatus.PAUSED}
+_CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://pipelines:8000")
 
 
 @activity.defn
@@ -138,18 +135,3 @@ async def trigger_local_job(
         activity.logger.info(f"Local job triggered: {request_id}")
 
 
-@activity.defn
-async def poll_local_job_status(request_id: str) -> str:
-    """Polls the civicpatch server until the local job reaches a terminal status."""
-    async with httpx.AsyncClient() as client:
-        while True:
-            activity.heartbeat(f"polling local job {request_id}")
-            resp = await client.get(f"{_CIVICPATCH_LOCAL_URL}/jobs/{request_id}", timeout=10)
-            resp.raise_for_status()
-            status = resp.json()["status"]
-            activity.logger.info(f"Local job {request_id}: status={status}")
-
-            if status in _LOCAL_TERMINAL_STATUSES:
-                return RunConclusion.SUCCESS if status == JobStatus.COMPLETED else RunConclusion.FAILURE
-
-            await asyncio.sleep(15)
