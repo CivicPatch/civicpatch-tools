@@ -63,23 +63,23 @@ dir = "shared"
 
 [tasks.tcp]
 run = "uv run pytest tests/unit"
-dir = "civicpatch"
+dir = "pipelines"
 
 [tasks.tcpi]
 run = "uv run pytest tests/integration"
-dir = "civicpatch"
+dir = "pipelines"
 
 [tasks.evalsm]
 run = "uv run pytest tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
-dir = "civicpatch"
+dir = "pipelines"
 
 [tasks.evalsr]
 run = "uv run pytest tests/prompts/tests/evals/test_local_relevant_page_eval.py"
-dir = "civicpatch"
+dir = "pipelines"
 
 [tasks.evals]
 run = "uv run pytest -m evals tests/prompts"
-dir = "civicpatch"
+dir = "pipelines"
 
 [tasks.tapi]
 run = "uv run pytest"
@@ -87,7 +87,7 @@ dir = "civicpatch.org"
 
 [tasks.tfe]
 run = "npm test"
-dir = "civicpatch/src/frontend"
+dir = "pipelines/src/frontend"
 
 ###################################################
 ## 🚀✨ Scripts                             ✨🚀 ##

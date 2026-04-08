@@ -1,0 +1,62 @@
+FROM python:3.12.11-slim-trixie AS image-base 
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    xvfb \
+    x11-utils \
+    dbus-x11 \
+    # env substitution
+    gettext-base \ 
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH="/app/src" \
+    PLAYWRIGHT_BROWSERS_PATH="/ms-playwright" \
+    # Override for playwright to play nicely
+    # with python 3.12-trixie
+    # https://github.com/microsoft/playwright/issues/34255#issuecomment-2579839102
+    # https://github.com/microsoft/playwright/blob/ef40dcbd59fcff11dde5eb6146e58ce3cccff1a4/packages/playwright-core/src/server/registry/index.ts#L231
+    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="debian12-x64" \
+    # DEBUG="pw:browser" \
+    XDG_CACHE_HOME="/tmp/.cache" \
+    XDG_CONFIG_HOME="/tmp/.config" \
+    PROJECT_NAME="pipelines" \
+    APP_ROOT="/app" \
+    # uv: install packages into /venv
+    UV_PROJECT_ENVIRONMENT="/venv" \
+    UV_CACHE_DIR="/tmp/.cache/uv" \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PYTHON="/usr/local/bin/python3" \
+    PATH="/venv/bin:/root/.local/bin:$PATH"
+
+WORKDIR /app
+
+# Needed especially for post-install step
+# cache files are 8GB
+RUN pip install uv --no-cache-dir
+
+# For xvfb
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
+    mkdir -p /tmp/.cache && \
+    mkdir -p /tmp/.config
+
+# Copy workspace manifests first for layer caching
+COPY pyproject.toml uv.lock ./
+COPY shared/pyproject.toml ./shared/pyproject.toml
+COPY shared/src/shared ./shared/src/shared
+COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
+
+# Install deps for this workspace member (shared installs into venv as a package)
+RUN uv sync --package pipelines --no-dev --frozen --no-install-project
+
+COPY ${PROJECT_NAME}/src ./src
+
+FROM image-base AS post-install
+
+RUN patchright install --with-deps chrome
+
+RUN python -m spacy download en_core_web_md
+
+#https://github.com/microsoft/playwright-python/issues/2572
+ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]

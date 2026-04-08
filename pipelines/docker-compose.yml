@@ -1,0 +1,30 @@
+services:
+  pipelines:
+    environment:
+      CIVICPATCH_ORG_URL: ${CIVICPATCH_ORG_URL:-http://civicpatch-org:8001}
+      SERVICE_API_KEY: ${SERVICE_API_KEY:-service-api-key}
+      PIPELINE_RUN_COST_LIMIT: ${PIPELINE_RUN_COST_LIMIT:-0.20}
+      LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+      GOOGLE_SEARCH_TOKEN: ${GOOGLE_SEARCH_TOKEN}
+      GOOGLE_SEARCH_ENGINE_ID: ${GOOGLE_SEARCH_ENGINE_ID}
+      GOOGLE_GEMINI_TOKEN: ${GOOGLE_GEMINI_TOKEN}
+      TOGETHER_AI_TOKEN: ${TOGETHER_AI_TOKEN}
+      APP_ROOT: /app
+    init: true
+    build:
+      context: ..
+      dockerfile: pipelines/Dockerfile
+      target: development
+    volumes:
+      - ./data:/app/data
+      - ./data_source:/app/data_source
+      - ../shared/src/shared:/app/src/shared:ro
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - civicpatch_net
+
+networks:
+  civicpatch_net:
+    driver: bridge
