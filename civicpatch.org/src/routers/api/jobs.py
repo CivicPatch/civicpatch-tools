@@ -436,6 +436,7 @@ def get_router(api_key_header):
             ocdid = job["jurisdiction_ocdid"]
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
             job["workflow_log_url"] = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}/workflow.log"
+            job["jurisdiction_path"] = folder
 
         return {"data": jobs}
 

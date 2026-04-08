@@ -96,7 +96,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
   return html` <div class="pr-card__header">
     <div class="header-item-left">
-      <a class="pr-card__jurisdiction-link" href="/jurisdictions?jurisdiction_ocdid=${entry?.jurisdiction?.ocdid}" target="_blank" rel="noopener">
+      <a class="pr-card__jurisdiction-link" href="/${entry?.jurisdiction?.path}" target="_blank" rel="noopener">
         ${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
       </a>
       <a class="pr-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">

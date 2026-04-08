@@ -64,7 +64,7 @@ async def list_open_pull_requests(
             "request_id": r[0],
             "created_at": to_iso(r[5]),
             "issue_count": r[7],
-            "jurisdiction": {"ocdid": r[3], "name": r[4]},
+            "jurisdiction": {"ocdid": r[3], "name": r[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[3])},
             "pr": {"url": r[1], "status": r[2], "review_state": r[6], "number": r[8]},
         }
         for r in rows

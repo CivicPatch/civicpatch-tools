@@ -430,12 +430,18 @@ button.destructive:active,
     transition: opacity 0.15s, box-shadow 0.15s;
 }
 
-.btn-gradient:hover:not(:disabled) {
+.btn-gradient:hover:not(:disabled),
+.btn-gradient:focus:not(:disabled) {
     background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
     border-color: transparent;
     color: rgb(var(--catppuccin-base));
     opacity: 0.88;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.btn-gradient:focus-visible:not(:disabled) {
+    outline: var(--pico-outline-width) solid var(--pico-primary);
+    outline-offset: 3px;
 }
 
 .btn-gradient:disabled {

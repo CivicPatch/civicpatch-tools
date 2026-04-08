@@ -7,6 +7,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 from database.database import get_jurisdiction
+from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
 from utils.auth_utils import get_optional_user
 
@@ -61,26 +62,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         user = _build_user_dict(identity)
         return templates.TemplateResponse("pages/index.html", {"request": request, "user": user})
 
-    @router.get("/jurisdictions", response_class=HTMLResponse, include_in_schema=False)
-    async def jurisdiction_page(
-        request: Request,
-        jurisdiction_ocdid: str,
-        identity: Optional[Identity] = Depends(get_optional_user),
-    ):
-        jurisdiction = await get_jurisdiction(jurisdiction_ocdid)
-        if not jurisdiction:
-            raise HTTPException(status_code=404, detail="Jurisdiction not found")
-        user = _build_user_dict(identity)
-        return templates.TemplateResponse(
-            "pages/jurisdiction.html",
-            {
-                "request": request,
-                "jurisdiction_ocdid": jurisdiction_ocdid,
-                "jurisdiction_data": json.dumps(jurisdiction),
-                "user": user,
-            },
-        )
-
     @router.get("/queue", response_class=HTMLResponse, include_in_schema=False)
     async def queue_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
@@ -112,5 +93,29 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     ):
         user = _build_user_dict(identity)
         return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+
+    @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)
+    async def jurisdiction_page(
+        request: Request,
+        path: str,
+        identity: Optional[Identity] = Depends(get_optional_user),
+    ):
+        try:
+            jurisdiction_ocdid = folder_to_jurisdiction_ocdid(path)
+        except ValueError:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+        jurisdiction = await get_jurisdiction(jurisdiction_ocdid)
+        if not jurisdiction:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+        user = _build_user_dict(identity)
+        return templates.TemplateResponse(
+            "pages/jurisdiction.html",
+            {
+                "request": request,
+                "jurisdiction_ocdid": jurisdiction_ocdid,
+                "jurisdiction_data": json.dumps(jurisdiction),
+                "user": user,
+            },
+        )
 
     return router
