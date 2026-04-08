@@ -2,7 +2,7 @@ from decimal import Decimal
 from typing import List
 
 from jobs.people_collector.schemas import (
-  WorkflowStatus,
+  PipelineStatus,
   ProgressState,
   Link,
   LinkStatus
@@ -14,17 +14,17 @@ def next_state_for_process_content_state(
     current_cost: Decimal,
     job_config: JobConfig,
     progress: ProgressState
-) -> WorkflowStatus:
+) -> PipelineStatus:
     if should_stop_for_cost_limit(current_cost, job_config):
-        return WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     
     if should_stop_for_data_requirement(progress):
-        return WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     
     if should_stop_for_max_pages(processed_count, job_config, progress):
-        return WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     
-    return WorkflowStatus.SCRAPE_PAGE
+    return PipelineStatus.SCRAPE_PAGE
 
 
 def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | None:

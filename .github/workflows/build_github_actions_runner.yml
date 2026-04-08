@@ -71,7 +71,7 @@ jobs:
           file: ./pipelines/Dockerfile.github-actions
           push: true
           tags: |
-            ghcr.io/pipelines/pipelines-github-actions:latest
-            ghcr.io/pipelines/pipelines-github-actions:${{ needs.get-date.outputs.date-tag }}
+            ghcr.io/civicpatch/pipelines:latest
+            ghcr.io/civicpatch/pipelines:${{ needs.get-date.outputs.date-tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -4,8 +4,8 @@ from typing import Optional
 from temporalio import workflow
 
 with workflow.unsafe.imports_passed_through():
-    from activities.github_activity import trigger_github_action, poll_run_status, trigger_local_job, poll_local_job_status
-    from activities.job_status_activity import update_job_status
+    from activities.github_activity import trigger_github_action, poll_run_status, trigger_local_job
+    from activities.job_status_activity import update_job_status, poll_job_status
     from constants import RunConclusion, RunMode
     from shared.utils.statuses import JobStatus
 
@@ -46,7 +46,7 @@ class PeopleCollectorWorkflow:
                 start_to_close_timeout=timedelta(minutes=2),
             )
             conclusion = await workflow.execute_activity(
-                poll_local_job_status,
+                poll_job_status,
                 args=[request_id],
                 start_to_close_timeout=timedelta(minutes=35),
                 heartbeat_timeout=timedelta(seconds=60),

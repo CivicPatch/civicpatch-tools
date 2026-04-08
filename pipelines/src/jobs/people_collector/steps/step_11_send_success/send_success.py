@@ -3,13 +3,13 @@ import os
 from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
-from jobs.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, WorkflowStatus
+from jobs.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
 from utils import cost_utils, log_utils, file_utils
 
 
 async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 11: {WorkflowStatus.SEND_SUCCESS.value}")
+    logger.info(f"Step 11: {PipelineStatus.SEND_SUCCESS.value}")
 
     env = get_env_vars()
     SERVICE_API_KEY = env["SERVICE_API_KEY"]

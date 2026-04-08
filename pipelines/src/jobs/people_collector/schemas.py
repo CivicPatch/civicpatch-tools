@@ -85,7 +85,7 @@ class WorkflowConfig(BaseModel):
     name: Optional[str] = None # Human-readable name
     source_urls: Optional[List[str]] = None
 
-class WorkflowStatus(Enum):
+class PipelineStatus(Enum):
     INIT = "INIT"
     RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
     SEARCH_LINKS = "SEARCH_LINKS"
@@ -103,7 +103,7 @@ class WorkflowStatus(Enum):
     RETRY = "RETRY"
     FINALIZE = "FINALIZE"
     ERROR = "ERROR"
-    DONE = "DONE"
+    COMPLETED = "COMPLETED"
     PAUSED = "PAUSED"
 
 class ResearchedPerson(BaseModel):
@@ -190,5 +190,5 @@ class PeopleCollectorData(BaseModel):
     pause_diagnostic: Optional[str] = None
     paused_at_state: Optional[str] = None
 
-class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, WorkflowStatus]):
+class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, PipelineStatus]):
     pass

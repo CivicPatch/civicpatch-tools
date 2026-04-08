@@ -2,14 +2,14 @@ import utils.log_utils as log_utils
 from jobs.people_collector.schemas import (
     PeopleCollectorContext,
     ReviewOutputStep,
-    WorkflowStatus,
+    PipelineStatus,
 )
 from shared.utils.review_utils import generate_review
 
 
 def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 10: {WorkflowStatus.REVIEW_OUTPUT} Reviewing output data.")
+    logger.info(f"Step 10: {PipelineStatus.REVIEW_OUTPUT} Reviewing output data.")
 
     research_step = context.data.research_municipality_step
     research_people = [{"name": n} for n in research_step.identities] if research_step else []

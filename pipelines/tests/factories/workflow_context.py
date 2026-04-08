@@ -3,7 +3,7 @@ from domain.models import Official
 from jobs.people_collector.schemas import (
     PeopleCollectorData,
     PeopleCollectorContext,
-    WorkflowStatus,
+    PipelineStatus,
     WorkflowConfig,
     ResearchMunicipalityStep,
     SearchLinksStep,
@@ -16,10 +16,10 @@ from jobs.people_collector.schemas import (
 )
 
 def workflow_context_factory(
-    steps: dict[WorkflowStatus, Any],
+    steps: dict[PipelineStatus, Any],
     research_municipality_step=None,
 ) -> PeopleCollectorContext:
-    default_steps: Dict[WorkflowStatus, Union[
+    default_steps: Dict[PipelineStatus, Union[
         ResearchMunicipalityStep,
         SearchLinksStep,
         PreprocessPageContentStep,
@@ -34,7 +34,7 @@ def workflow_context_factory(
 
     return PeopleCollectorContext(
         request_id="random-request-id",
-        current_state=WorkflowStatus.SAVE_OUTPUT,
+        current_state=PipelineStatus.SAVE_OUTPUT,
         data=PeopleCollectorData(
             config=WorkflowConfig(
                 name="Seattle",
@@ -42,14 +42,14 @@ def workflow_context_factory(
             ),
             links=[],
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
-            research_municipality_step=research_municipality_step or default_steps.get(WorkflowStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
+            research_municipality_step=research_municipality_step or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
                 expected_count=0, target_designations=[], roles_hint=[], identities={}, source_urls=[]
             ),
-            search_links_step=default_steps.get(WorkflowStatus.SEARCH_LINKS, SearchLinksStep()),
-            preprocess_page_content_step=default_steps.get(WorkflowStatus.PREPROCESS_PAGE_CONTENT),
-            process_page_content_step=default_steps.get(WorkflowStatus.PROCESS_PAGE_CONTENT),
-            merge_records_within_llm_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_WITHIN_LLM),
-            merge_records_across_llms_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS),
-            format_output_step=default_steps.get(WorkflowStatus.FORMAT_OUTPUT),
+            search_links_step=default_steps.get(PipelineStatus.SEARCH_LINKS, SearchLinksStep()),
+            preprocess_page_content_step=default_steps.get(PipelineStatus.PREPROCESS_PAGE_CONTENT),
+            process_page_content_step=default_steps.get(PipelineStatus.PROCESS_PAGE_CONTENT),
+            merge_records_within_llm_step=default_steps.get(PipelineStatus.MERGE_RECORDS_WITHIN_LLM),
+            merge_records_across_llms_step=default_steps.get(PipelineStatus.MERGE_RECORDS_ACROSS_LLMS),
+            format_output_step=default_steps.get(PipelineStatus.FORMAT_OUTPUT),
         )
     )

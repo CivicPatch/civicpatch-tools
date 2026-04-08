@@ -5,7 +5,7 @@ from unittest.mock import patch
 from jobs.people_collector.steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from jobs.people_collector.steps.step_04_preprocess_page_content.clean_html import clean_html
 from jobs.people_collector.schemas import (
-    Link, LinkStatus, WorkflowStatus
+    Link, LinkStatus, PipelineStatus
 )
 
 pytestmark = pytest.mark.integration
@@ -69,7 +69,7 @@ def mock_context():
             {"url": "http://example.com/page2", "folder_name": "page2", "status": LinkStatus.SCRAPED.value},
         ],
         "steps": {
-            WorkflowStatus.PREPROCESS_PAGE_CONTENT.value: {
+            PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {
                 "elapsed_times": [],
                 "total_elapsed_time_seconds": 0,
             }

@@ -5,7 +5,7 @@ from jobs.people_collector.schemas import (
   PeopleCollectorContext, 
   Link, 
   LinkStatus, 
-  WorkflowStatus, 
+  PipelineStatus, 
   LLMPerson, 
   PeopleArrayLLMResponseSchema, 
   RecordsByLLM,
@@ -72,7 +72,7 @@ MINIMUM_NUM_PEOPLE = 5
 
 async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> Tuple[List[Link], ProcessPageContentStep]:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 5: {WorkflowStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
+    logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
     setup_data = get_setup_data(context.data.research_municipality_step)
     current_step = get_or_create_step(context)

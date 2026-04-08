@@ -3,7 +3,7 @@ from typing import List, Optional
 from shared.utils import data_path_utils, url_utils
 import jobs.people_collector.steps.step_03_scrape_page.scrape_utils as scrape_utils
 from jobs.people_collector.schemas import (
-    PeopleCollectorContext, Link, LinkStatus, WorkflowStatus, DeadUrl
+    PeopleCollectorContext, Link, LinkStatus, PipelineStatus, DeadUrl
 )
 from utils import log_utils
 
@@ -14,7 +14,7 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
     Scrape pages based on the links found in the previous search step.
     """
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 3: {WorkflowStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}")
+    logger.info(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}")
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     try:

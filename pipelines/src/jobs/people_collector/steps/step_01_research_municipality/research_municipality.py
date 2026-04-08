@@ -1,7 +1,7 @@
 from typing import List
 from jobs.people_collector.schemas import (
     PeopleCollectorContext,
-    WorkflowStatus,
+    PipelineStatus,
     ResearchMunicipalityLLMSchema,
     ResearchMunicipalityStep,
     ResearchedPerson,
@@ -20,7 +20,7 @@ MAX_RETRIES = 5 # flakyLLM call
 
 async def research_municipality(context: PeopleCollectorContext) -> ResearchMunicipalityStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 1: {WorkflowStatus.RESEARCH_MUNICIPALITY.value}")
+    logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
 
     existing = await civicpatch_api.get_current_people(context.data.jurisdiction_ocdid)
 
