@@ -72,8 +72,8 @@ jobs:
           push: true
           target: production
           tags: |
-            ghcr.io/civicpatch/civicpatch_api:latest
-            ghcr.io/civicpatch/civicpatch_api:${{ needs.get-date.outputs.date-tag }}
+            ghcr.io/civicpatch/civicpatch-org:latest
+            ghcr.io/civicpatch/civicpatch-org:${{ needs.get-date.outputs.date-tag }}
           cache-from: |
             type=gha,scope=api-frontend
             type=gha,scope=api-python

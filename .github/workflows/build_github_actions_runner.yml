@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "civicpatch/**"
+      - "pipelines/**"
   workflow_dispatch:
 
 permissions:
@@ -29,9 +29,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-packages
 
-      - name: Run civicpatch tests
+      - name: Run pipelines tests
         run: |
-          uv run pytest civicpatch/tests/unit
+          uv run pytest pipelines/tests/unit
 
       - name: Run shared tests
         run: |
@@ -68,10 +68,10 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          file: ./civicpatch/Dockerfile.github-actions
+          file: ./pipelines/Dockerfile.github-actions
           push: true
           tags: |
-            ghcr.io/civicpatch/civicpatch-github-actions:latest
-            ghcr.io/civicpatch/civicpatch-github-actions:${{ needs.get-date.outputs.date-tag }}
+            ghcr.io/pipelines/pipelines-github-actions:latest
+            ghcr.io/pipelines/pipelines-github-actions:${{ needs.get-date.outputs.date-tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
