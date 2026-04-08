@@ -105,13 +105,23 @@ join our weekly sync and biweekly hackathon meetings.
 
 4. Run `docker compose up`
 
-   Services will be available at `localhost:8000` (pipelines) and `localhost:8001` (api).
-
    Migrations run automatically on startup. If you need to run them manually:
 
    ```sh
    cd civicpatch.org && mise migrate_up
    ```
+
+### Local services
+
+| Port | Service |
+|------|---------|
+| 5173 | Frontend (Vite dev) |
+| 6000 | PostgreSQL (civicpatch.org DB) |
+| 6379 | Redis |
+| 7233 | Temporal (gRPC) |
+| 8000 | pipelines |
+| 8001 | civicpatch.org API |
+| 8002 | Temporal UI |
 
 ## Testing
 

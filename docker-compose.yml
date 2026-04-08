@@ -150,7 +150,7 @@ services:
       - TEMPORAL_ADDRESS=temporal:7233
       - TEMPORAL_CORS_ORIGINS=http://localhost:8080
     ports:
-      - "8233:8080"
+      - "8002:8080"
     networks:
       - civicpatch_net
   # ── End Temporal ───────────────────────────────────────────────────────────
