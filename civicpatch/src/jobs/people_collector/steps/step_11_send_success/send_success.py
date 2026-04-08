@@ -13,7 +13,7 @@ async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep
 
     env = get_env_vars()
     SERVICE_API_KEY = env["SERVICE_API_KEY"]
-    API_CIVICPATCH_ORG_URL = env["API_CIVICPATCH_ORG_URL"]
+    CIVICPATCH_ORG_URL = env["CIVICPATCH_ORG_URL"]
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
@@ -22,7 +22,7 @@ async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep
             logger.error(
                 "SERVICE_API_KEY is not set, skipping github workflow dispatch."
             )
-            logger.error(f"Generate api key from CRUDDER at {API_CIVICPATCH_ORG_URL}")
+            logger.error(f"Generate api key from CRUDDER at {CIVICPATCH_ORG_URL}")
             return MaybeSendToGitHubStep(status="skipped_no_token")
 
         zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
@@ -44,5 +44,5 @@ async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep
         )
 
     except Exception as e:
-        logger.error(f"Error sending to api.civicpatch.org: {e}")
+        logger.error(f"Error sending to civicpatch.org: {e}")
         return MaybeSendToGitHubStep(status="failed", response_text=str(e))

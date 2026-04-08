@@ -105,7 +105,7 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 
 [tasks.get_jurisdictions_prod]
 run = """
-curl -s -X GET "https://api.civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=1&state=tx" \
+curl -s -X GET "https://civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=1&state=tx" \
   -H "Authorization: $PROD_SERVICE_API_KEY" > debug.txt
 """
 

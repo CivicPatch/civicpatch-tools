@@ -22,7 +22,7 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 
 - [civicpatch](./civicpatch/README.md)
   The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
-- [api.civicpatch.org](./api.civicpatch.org/README.md)
+- [civicpatch.org](./civicpatch.org/README.md)
   Coordinates data submissions between civicpatch servers and the open-data repo. Receives GitHub webhook events to keep pull request state in sync.
 - [shared](./shared/)
   Python utilities shared across both projects — import as `from shared.utils import ...`. Put cross-cutting logic here rather than duplicating it.
@@ -43,12 +43,12 @@ graph TD
         PROCESS --> ZIP[Create ZIP Payload]
     end
     
-    %% Data flow to api.civicpatch.org
+    %% Data flow to civicpatch.org
     CP1 --> SCRAPE
     CP2 --> SCRAPE
-    ZIP -->|zip payload| C[api.civicpatch.org]
+    ZIP -->|zip payload| C[civicpatch.org]
     
-    %% Simplified: api.civicpatch.org sends to open-data, which auto-processes
+    %% Simplified: civicpatch.org sends to open-data, which auto-processes
     C -->|sends data| OD[open-data repo<br/>auto-processes & creates PR]
     
     %% Final data available
@@ -98,10 +98,10 @@ join our weekly sync and biweekly hackathon meetings.
    - Reference [civicpatch/docker-compose.yml](./civicpatch/docker-compose.yml) for available variables
    - Create `../civicpatch.env` with the variables you need
 
-3. Set up environment variables for **api.civicpatch.org** (contact the maintainer for GitHub App keys):
+3. Set up environment variables for **civicpatch.org** (contact the maintainer for GitHub App keys):
 
-   - Reference [api.civicpatch.org/docker-compose.yml](./api.civicpatch.org/docker-compose.yml) for available variables
-   - Create `../api.civicpatch.org.env` with the variables you need
+   - Reference [civicpatch.org/docker-compose.yml](./civicpatch.org/docker-compose.yml) for available variables
+   - Create `../civicpatch.org.env` with the variables you need
 
 4. Run `docker compose up`
 
@@ -110,7 +110,7 @@ join our weekly sync and biweekly hackathon meetings.
    Migrations run automatically on startup. If you need to run them manually:
 
    ```sh
-   cd api.civicpatch.org && mise migrate_up
+   cd civicpatch.org && mise migrate_up
    ```
 
 ## Testing
@@ -123,7 +123,7 @@ join our weekly sync and biweekly hackathon meetings.
 mise tcp
 ```
 
-### api.civicpatch.org
+### civicpatch.org
 
 ```sh
 mise tapi

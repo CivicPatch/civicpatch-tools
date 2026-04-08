@@ -1,38 +1,38 @@
 [env]
 # _.file = ".deployment.env"
-_.file = "../../api.civicpatch.org.env"
+_.file = "../../civicpatch.org.env"
 PYTHONPATH = "./src"
 
 [tasks.unit]
 run = """
-docker compose -f docker-compose.yml run --rm api_civicpatch_org_test pytest -vvm unit tests/unit
+docker compose -f docker-compose.yml run --rm civicpatch-org-test pytest -vvm unit tests/unit
 """
 
 [tasks.dev]
 run = """
-docker compose run --rm api_civicpatch_org
+docker compose run --rm civicpatch-org
 """
 
 [tasks.containsh]
-run = "docker compose exec api.civicpatch.org bash"
+run = "docker compose exec civicpatch-org bash"
 
-[tasks.deploy_api_civicpatch_org]
+[tasks.deploy_civicpatch_org]
 run = "python scripts/deploy.py"
 
 [tasks.generate-url]
-run = "docker compose run --rm api.civicpatch.org uv run python src/scripts/one-off-generate-file-url.py request_fa6157f0-c3bf-4432-b3b3-f7c8c8b2905e_wa_5336045.zip"
+run = "docker compose run --rm civicpatch-org uv run python src/scripts/one-off-generate-file-url.py request_fa6157f0-c3bf-4432-b3b3-f7c8c8b2905e_wa_5336045.zip"
 
 [tasks.trigger-github]
 run = "docker compose run --rm api.civiccpatch.org uv run pytest -vv -s tests/test_github_service.py"
 
 [tasks.process-zip]
-run = "docker compose run --rm api.civicpatch.org uv run pytest -vv -s tests/test_cloudflare.py"
+run = "docker compose run --rm civicpatch-org uv run pytest -vv -s tests/test_cloudflare.py"
 
 # New task to test R2 credentials
 [tasks.test-r2]
 description = "Test Cloudflare R2 credentials by uploading a small test file"
 run = """
-docker compose run --rm api.civicpatch.org uv run python -c '
+docker compose run --rm civicpatch-org uv run python -c '
 import boto3, os
 from botocore.client import Config
 from io import BytesIO
@@ -73,7 +73,7 @@ run = """
 
 [tasks.pr_sync_prod]
 run = """
-    curl -X POST "https://api.civicpatch.org/api/admin/pr_sync" \
+    curl -X POST "https://civicpatch.org/api/admin/pr_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_SERVICE_API_KEY"
 """
@@ -90,7 +90,7 @@ run = """
 
 [tasks.query_jurisdictions]
 run = """
-    curl -X GET "https://api.civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=10&state=tx" \
+    curl -X GET "https://civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=10&state=tx" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_SERVICE_API_KEY"
 """

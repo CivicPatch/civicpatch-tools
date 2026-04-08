@@ -2,7 +2,7 @@ FROM node:24-slim AS frontend-dev
 
 WORKDIR /app
 
-COPY api.civicpatch.org/src/frontend/package*.json /app/
+COPY civicpatch.org/src/frontend/package*.json /app/
 RUN npm install
 
 CMD ["npm", "start"]
@@ -11,9 +11,9 @@ FROM node:24-slim AS frontend-build
 
 WORKDIR /app
 
-COPY api.civicpatch.org/src/frontend/package*.json /app/
+COPY civicpatch.org/src/frontend/package*.json /app/
 RUN npm install
-COPY api.civicpatch.org/src/frontend/ /app/
+COPY civicpatch.org/src/frontend/ /app/
 RUN npm run build
 
 FROM python:3.12.11-slim-trixie AS image-base
@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y \
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH="/app/src" \
-    PROJECT_NAME="api.civicpatch.org" \
+    PROJECT_NAME="civicpatch.org" \
     # uv: install packages into /venv
     UV_PROJECT_ENVIRONMENT="/venv" \
     UV_CACHE_DIR="/tmp/.cache/uv" \
@@ -48,7 +48,7 @@ COPY shared/pyproject.toml ./shared/pyproject.toml
 COPY ${PROJECT_NAME}/pyproject.toml ./${PROJECT_NAME}/pyproject.toml
 
 # Install prod deps only (dev stage will reinstall with --dev)
-RUN uv sync --package api.civicpatch.org --no-dev --frozen --no-install-project
+RUN uv sync --package civicpatch.org --no-dev --frozen --no-install-project
 
 # Copy source
 COPY $PROJECT_NAME /app
@@ -70,7 +70,7 @@ FROM image-base AS development
 ENV APP_ENVIRONMENT=development
 
 # Reinstall with dev dependencies included
-RUN uv sync --package api.civicpatch.org --frozen --no-install-project
+RUN uv sync --package civicpatch.org --frozen --no-install-project
 
 WORKDIR /app
 USER civicpatch_user

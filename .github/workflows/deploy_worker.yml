@@ -76,5 +76,5 @@ jobs:
           curl -X POST --fail --show-error \
             -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-api-civicpatch-org.yml/dispatches \
+            https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-civicpatch-org.yml/dispatches \
             -d '{"ref":"main"}'

@@ -1,10 +1,10 @@
-name: 0. Run api.civicpatch.org Tests
+name: 0. Run civicpatch.org Tests
 on:
   pull_request:
     branches:
       - main
     paths:
-      - "api.civicpatch.org/**"
+      - "civicpatch.org/**"
 permissions:
   contents: read
 
@@ -20,6 +20,6 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-packages
 
-      - name: Run api.civicpatch.org unit tests
+      - name: Run civicpatch.org unit tests
         run: |
-          uv run pytest api.civicpatch.org/tests
+          uv run pytest civicpatch.org/tests

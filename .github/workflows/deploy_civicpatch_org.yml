@@ -1,11 +1,11 @@
-name: Deploy api.civicpatch.org
+name: Deploy civicpatch.org
 
 on:
   push:
     branches:
       - main
     paths:
-      - "api.civicpatch.org/**"
+      - "civicpatch.org/**"
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Run api tests
         run: |
-          uv run pytest api.civicpatch.org/tests
+          uv run pytest civicpatch.org/tests
 
       - name: Run shared tests
         run: |
@@ -64,11 +64,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build and push (api.civicpatch.org)
+      - name: Build and push (civicpatch.org)
         uses: docker/build-push-action@v7
         with:
           context: .
-          file: ./api.civicpatch.org/Dockerfile
+          file: ./civicpatch.org/Dockerfile
           push: true
           target: production
           tags: |
@@ -99,5 +99,5 @@ jobs:
           curl -X POST --fail --show-error \
             -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-api-civicpatch-org.yml/dispatches \
+            https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-civicpatch-org.yml/dispatches \
             -d '{"ref":"main"}'

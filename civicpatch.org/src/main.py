@@ -100,7 +100,6 @@ templates.env.globals["is_production"] = is_production
 if is_production:
     allowed_origins = [
         "https://civicpatch.org",
-        "https://api.civicpatch.org",
         "https://app.civicpatch.org",
         "https://test.civicpatch.org",
         "https://components.civicpatch.org",

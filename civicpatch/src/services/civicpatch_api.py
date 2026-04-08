@@ -28,7 +28,7 @@ async def get_me(request: Request) -> dict:
         try:
             async with httpx.AsyncClient(timeout=10) as client:
                 response = await client.get(
-                    f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/me", cookies=_get_cookies(request)
+                    f"{env['CIVICPATCH_ORG_URL']}/api/v1/me", cookies=_get_cookies(request)
                 )
                 response.raise_for_status()
                 return response.json()
@@ -42,7 +42,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
     params = {"jurisdiction_ocdid": jurisdiction_ocdid, "with_geom": "true"}
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jurisdictions",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions",
             params=params,
             cookies=_get_cookies(request),
         )
@@ -55,7 +55,7 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
     params = {"jurisdiction_ocdid": jurisdiction_ocdid}
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/history",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/history",
             params=params,
             cookies=_get_cookies(request),
         )
@@ -68,7 +68,7 @@ async def get_jurisdiction_info(jurisdiction_ocdid: str) -> dict:
     system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     async with httpx.AsyncClient(headers=system_auth_header) as client:
         response = await client.post(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
             json={"ocdids": [jurisdiction_ocdid]},
         )
         response.raise_for_status()
@@ -90,12 +90,12 @@ async def register_people_job(logger, request_id: str, arguments: dict):
     }
     async with httpx.AsyncClient(headers=system_auth_header) as client:
         response = await client.post(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jobs/register",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/register",
             json=data,
         )
         if response.status_code != 200:
             logger.error(
-                f"Failed to register job with api.civicpatch.org: {response.status_code} {response.text}"
+                f"Failed to register job with civicpatch.org: {response.status_code} {response.text}"
             )
         return response
 
@@ -117,7 +117,7 @@ async def update_job_status(
 
         async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
             response = await client.patch(
-                f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/status",
+                f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/status",
                 json=data,
             )
             logger.debug(f"Response: {response.status_code}, {response.text}")
@@ -150,7 +150,7 @@ async def submit_job_artifacts(
         }
         async with httpx.AsyncClient(headers=system_auth_header) as client:
             response = await client.post(
-                f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/submit",
+                f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/submit",
                 data=data,
                 files=files,
             )
@@ -175,7 +175,7 @@ async def search_people(
     system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/people/search",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search",
             params=params,
             headers=system_auth_header,
         )
@@ -201,7 +201,7 @@ async def batch_resolve_people(
     data = {"jurisdiction_ocdid": jurisdiction_ocdid, "people": formatted_people_dicts}
     async with httpx.AsyncClient(headers=system_auth_header) as client:
         response = await client.post(
-            f"{env['API_CIVICPATCH_ORG_URL']}/api/v1/people/batch-resolve",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/batch-resolve",
             json=data,
         )
         response.raise_for_status()

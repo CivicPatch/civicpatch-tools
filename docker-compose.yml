@@ -5,34 +5,34 @@ services:
       service: civicpatch
     networks:
       - civicpatch_net
-  api_civicpatch_org:
+  civicpatch-org:
     extends:
-      file: api.civicpatch.org/docker-compose.yml
-      service: api_civicpatch_org
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org
     networks:
       - civicpatch_net
-  api_civicpatch_org_redis:
+  civicpatch-org-redis:
     extends:
-      file: api.civicpatch.org/docker-compose.yml
-      service: api_civicpatch_org_redis
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-redis
     networks:
       - civicpatch_net
   api-frontend:
     build:
       context: .
-      dockerfile: api.civicpatch.org/Dockerfile
+      dockerfile: civicpatch.org/Dockerfile
       target: frontend-dev
     ports:
       - "5173:5173"
     volumes:
-      - ./api.civicpatch.org/src/frontend:/app
+      - ./civicpatch.org/src/frontend:/app
       - /app/node_modules
     networks:
       - civicpatch_net
-  api_civicpatch_org_db:
+  civicpatch-org-db:
     extends:
-      file: api.civicpatch.org/docker-compose.yml
-      service: api_civicpatch_org_db
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-db
     networks:
       - civicpatch_net
 
@@ -52,7 +52,7 @@ services:
       GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
       GITHUB_ORG: ${GITHUB_ORG:-CivicPatch}
       GITHUB_REPO: ${GITHUB_REPO:-server}
-      API_CIVICPATCH_ORG_URL: http://api_civicpatch_org:8001
+      CIVICPATCH_ORG_URL: http://civicpatch-org:8001
       SERVICE_API_KEY: ${SERVICE_API_KEY}
     networks:
       - civicpatch_net

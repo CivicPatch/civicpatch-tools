@@ -10,7 +10,7 @@ services:
       - TOGETHER_AI_TOKEN
 
       - SERVICE_API_KEY
-      - API_CIVICPATCH_ORG_URL
+      - CIVICPATCH_ORG_URL
 
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container

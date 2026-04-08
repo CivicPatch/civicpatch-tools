@@ -9,7 +9,7 @@ node = "25.8"
 [env]
 _.file = [
     "../civicpatch.env",
-    "../api.civicpatch.org.env"
+    "../civicpatch.org.env"
 ]
 
 [tasks.setup]
@@ -29,7 +29,7 @@ run = """
 
 [tasks.pr_sync_prod]
 run = """
-    curl -X POST "https://api.civicpatch.org/api/admin/pr_sync" \
+    curl -X POST "https://civicpatch.org/api/admin/pr_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_SERVICE_API_KEY"
 """
@@ -46,7 +46,7 @@ run = """
 
 [tasks.od_sync_prod]
 run = """
-    curl -X POST "https://api.civicpatch.org/api/admin/od_sync" \
+    curl -X POST "https://civicpatch.org/api/admin/od_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_SERVICE_API_KEY" \
       -d '{}'
@@ -83,7 +83,7 @@ dir = "civicpatch"
 
 [tasks.tapi]
 run = "uv run pytest"
-dir = "api.civicpatch.org"
+dir = "civicpatch.org"
 
 [tasks.tfe]
 run = "npm test"
@@ -111,13 +111,13 @@ CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0
 
 [tasks.migrate_up]
 run = """
-docker compose run --rm api_civicpatch_org \
+docker compose run --rm civicpatch-org \
     python database_operations/migrate.py up
 """
 
 [tasks.migrate_down]
 run = """
-docker compose run --rm api_civicpatch_org \
+docker compose run --rm civicpatch-org \
     python database_operations/migrate.py down
 """
 

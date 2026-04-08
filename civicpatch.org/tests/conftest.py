@@ -1,4 +1,4 @@
-"""Pytest configuration and fixtures for api.civicpatch.org tests."""
+"""Pytest configuration and fixtures for civicpatch.org tests."""
 import sys
 import os
 from pathlib import Path
