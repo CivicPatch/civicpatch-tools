@@ -32,6 +32,14 @@ tests/
 3. All queries go in `database/database.py` — check there before adding a new function
 4. **Before touching the database, read the schema diagram in `README.md`** — it is the authoritative reference for table structure; do not read migration files to infer schema
 
+## Permissions
+
+The role → capability mapping is documented in `README.md` under the **Permissions** section. Before adding or changing any `require_route_access` call or modifying `build_permissions()` in `routers/frontend.py`:
+
+1. Read the Permissions table in `README.md` to understand the intended policy
+2. Update `README.md` to reflect any changes you make to `build_permissions()` or route-level enforcement
+3. Keep frontend permissions (`build_permissions`) and backend enforcement (`require_route_access`) in sync — a permission granted on the frontend must be enforceable by the corresponding API route
+
 ## FastAPI conventions
 
 - Routers are created via `get_router() -> APIRouter` factory functions — one file per resource

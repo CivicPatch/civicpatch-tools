@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -8,6 +9,8 @@ from fastapi.templating import Jinja2Templates
 from database.database import get_jurisdiction
 from schemas.common import Identity, Role
 from utils.auth_utils import get_optional_user
+
+_is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 
 def _build_user_dict(identity: Optional[Identity]) -> dict:
@@ -33,13 +36,11 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_queue_page": Role.MAINTAINERS in teams or Role.CONTRIBUTORS in teams,
         "can_view_queue_page_errors": Role.ADMINS in teams,
         "can_view_jurisdiction_page": Role.DEFAULT in teams,
-        "can_scrape_local": False,
+        "can_scrape_local": not _is_production and Role.MAINTAINERS in teams,
         "can_scrape_remote": Role.MAINTAINERS in teams,
         "can_view_reviews_page": Role.DEFAULT in teams,
         "can_view_issues_page": Role.MAINTAINERS in teams,
-        "can_delete_directory_person": any(
-            r in teams for r in (Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS)
-        ),
+        "can_delete_directory_person": Role.CONTRIBUTORS in teams,
     }
 
 
