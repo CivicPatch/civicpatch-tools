@@ -1,6 +1,6 @@
 # civicpatch
 
-Scrapes municipal government websites to collect contact information for elected officials, then submits the results to [api.civicpatch.org](../api.civicpatch.org/README.md) for publication in the [open-data](https://github.com/CivicPatch/open-data/) repository.
+Scrapes municipal government websites to collect contact information for elected officials, then submits the results to [civicpatch.org](../civicpatch.org/README.md) for publication in the [open-data](https://github.com/CivicPatch/open-data/) repository.
 
 ## Data collected
 
@@ -24,7 +24,7 @@ Each scrape job runs a pipeline against a single jurisdiction (identified by an 
 | 7. Merge across LLMs | Reconciles results across multiple LLM passes |
 | 8. Format output | Resolves people IDs against existing records in the API |
 | 9. Cleanup | Removes temporary files |
-| 10. Save output | Writes YAML data files and reports results to api.civicpatch.org |
+| 10. Save output | Writes YAML data files and reports results to civicpatch.org |
 | 11. Maybe send to GitHub | Optionally opens a PR to the open-data repo |
 
 Pipeline steps live in `src/jobs/people_collector/steps/`, one directory per step.
@@ -61,8 +61,8 @@ Environment variables are documented in [docker-compose.yml](./docker-compose.ym
 | `GOOGLE_GEMINI_TOKEN` | LLM calls and web search |
 | `TOGETHER_AI_TOKEN` | Secondary LLM |
 | `GOOGLE_SEARCH_TOKEN` + `GOOGLE_SEARCH_ENGINE_ID` | Link search |
-| `API_CIVICPATCH_ORG_URL` | Where to submit results |
-| `SERVICE_API_KEY` | Auth for api.civicpatch.org |
+| `CIVICPATCH_ORG_URL` | Where to submit results |
+| `SERVICE_API_KEY` | Auth for civicpatch.org |
 
 ## Running a scrape locally
 
@@ -92,7 +92,7 @@ Each step in `src/jobs/people_collector/steps/` is a directory with a single pri
 
 ### Adding shared utilities
 
-Logic reusable across `civicpatch` and `api.civicpatch.org` belongs in the [`shared`](../shared/) workspace package.
+Logic reusable across `civicpatch` and `civicpatch.org` belongs in the [`shared`](../shared/) workspace package.
 
 ### Code standards
 

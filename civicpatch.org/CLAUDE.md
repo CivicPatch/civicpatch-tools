@@ -1,4 +1,4 @@
-# api.civicpatch.org — Project Context
+# civicpatch.org — Project Context
 
 See root `CLAUDE.md` for shared coding standards.
 

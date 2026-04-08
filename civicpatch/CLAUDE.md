@@ -4,7 +4,7 @@ See root `CLAUDE.md` for shared coding standards.
 
 ## What this is
 
-A pipeline that scrapes and processes municipal government officials data, then submits results to `api.civicpatch.org`.
+A pipeline that scrapes and processes municipal government officials data, then submits results to `civicpatch.org`.
 
 ## Project layout
 

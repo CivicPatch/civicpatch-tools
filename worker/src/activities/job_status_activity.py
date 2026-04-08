@@ -4,7 +4,7 @@ from typing import Optional
 import httpx
 from temporalio import activity
 
-API_URL = os.environ["API_CIVICPATCH_ORG_URL"]
+API_URL = os.environ["CIVICPATCH_ORG_URL"]
 SERVICE_API_KEY = os.environ["SERVICE_API_KEY"]
 
 _HEADERS = {"Authorization": SERVICE_API_KEY}

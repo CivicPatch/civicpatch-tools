@@ -1,5 +1,5 @@
 """
-Environment variable loader for api.civicpatch.org
+Environment variable loader for civicpatch.org
 References variables and defaults from docker-compose.yml
 """
 import os

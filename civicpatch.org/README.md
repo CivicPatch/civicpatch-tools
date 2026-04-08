@@ -1,4 +1,4 @@
-# api.civicpatch.org
+# civicpatch.org
 
 The backend API for civicpatch.org. Receives scrape results from `civicpatch`, creates PRs to the [open-data](https://github.com/CivicPatch/open-data/) repository, and exposes data to the web UI.
 
@@ -56,7 +56,7 @@ Most values have safe development defaults in `docker-compose.yml`. The only one
 | `GITHUB_WEBHOOK_SECRET` | Optional | Required to receive webhook events |
 | `STORAGE_ENDPOINT` / `STORAGE_ACCESS_KEY_ID` / `STORAGE_SECRET_ACCESS_KEY` | Optional | Cloudflare R2, only for zip storage |
 
-Create `../api.civicpatch.org.env` with these values. Everything else in `docker-compose.yml` uses defaults.
+Create `../civicpatch.org.env` with these values. Everything else in `docker-compose.yml` uses defaults.
 
 ## Permissions
 
@@ -120,7 +120,7 @@ The API listens for `pull_request` events at `POST /webhooks/github`. It uses HM
 
 An hourly background task also reconciles DB state against GitHub's open-PR list to recover from any missed events.
 
-To register the webhook in GitHub, set the payload URL to `https://api.civicpatch.org/webhooks/github` and set the secret to match `GITHUB_WEBHOOK_SECRET`.
+To register the webhook in GitHub, set the payload URL to `https://civicpatch.org/webhooks/github` and set the secret to match `GITHUB_WEBHOOK_SECRET`.
 
 ## Database schema
 

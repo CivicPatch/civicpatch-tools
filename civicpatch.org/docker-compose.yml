@@ -1,6 +1,6 @@
 services:
-  api_civicpatch_org:
-    container_name: api_civicpatch_org
+  civicpatch-org:
+    container_name: civicpatch-org
     environment:
       # Required
       GITHUB_APP_ID: ${GITHUB_APP_ID}
@@ -11,14 +11,14 @@ services:
 
       # Defaults OK
       CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
-      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@api_civicpatch_org_db:5432/development_db}
+      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@civicpatch-org-db:5432/development_db}
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8001"
       OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
       MAINTAINER_EMAIL: "michelle@civicpatch.org"
 
-      REDIS_HOST: api_civicpatch_org_redis
+      REDIS_HOST: civicpatch-org-redis
       JWT_SECRET_KEY: jwt-secret-key-here
       DATABASE_HASH_KEY: database-hash-key
       SERVICE_API_KEY: "service-api-key"
@@ -37,7 +37,7 @@ services:
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
     build:
       context: ..
-      dockerfile: api.civicpatch.org/Dockerfile
+      dockerfile: civicpatch.org/Dockerfile
       target: development
     # restart: unless-stopped
     ports:
@@ -48,9 +48,9 @@ services:
     networks:
       - civicpatch_net
     depends_on:
-      - api_civicpatch_org_db
+      - civicpatch-org-db
 
-  api_civicpatch_org_db:
+  civicpatch-org-db:
     image: postgis/postgis:17-3.5
     # restart: always
     environment:
@@ -64,7 +64,7 @@ services:
     networks:
       - civicpatch_net
 
-  api_civicpatch_org_redis:
+  civicpatch-org-redis:
     image: redis:alpine
     #expose:
     #  - "6379"

@@ -1,11 +1,11 @@
 """
-Environment variable loader for api.civicpatch.org
+Environment variable loader for civicpatch.org
 References variables and defaults from docker-compose.yml
 """
 import os
 
 REQUIRED_ENV_VARS = [
-    "API_CIVICPATCH_ORG_URL",
+    "CIVICPATCH_ORG_URL",
     "SERVICE_API_KEY"
 ]
 

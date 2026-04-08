@@ -1,7 +1,7 @@
 services:
   civicpatch:
     environment:
-      API_CIVICPATCH_ORG_URL: ${API_CIVICPATCH_ORG_URL:-http://api_civicpatch_org:8001}
+      CIVICPATCH_ORG_URL: ${CIVICPATCH_ORG_URL:-http://civicpatch-org:8001}
       SERVICE_API_KEY: ${SERVICE_API_KEY:-service-api-key}
       PIPELINE_RUN_COST_LIMIT: ${PIPELINE_RUN_COST_LIMIT:-0.20}
       LOG_LEVEL: ${LOG_LEVEL:-DEBUG}

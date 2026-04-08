@@ -29,7 +29,7 @@ function DemoApiConfig() {
           class="contrast"
           .value=${baseUrl}
           @input=${(e) => setBaseUrl(e.target.value)}
-          placeholder="https://api.civicpatch.org or /api/api_proxy"
+          placeholder="https://civicpatch.org or /api/api_proxy"
         />
       </label>
       <label>
@@ -39,7 +39,7 @@ function DemoApiConfig() {
           class="contrast"
           .value=${token}
           @input=${(e) => setToken(e.target.value)}
-          placeholder="API token from api.civicpatch.org"
+          placeholder="API token from civicpatch.org"
         />
       </label>
       <button @click=${saveConfig} style="margin-top: 0.5rem;">

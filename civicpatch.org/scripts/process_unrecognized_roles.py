@@ -5,7 +5,7 @@ to a canonical role in roles.yml or is genuinely new, then open a single PR to
 add any novel roles as stubs.
 
 This script is ready but the GitHub Actions workflow is commented out.
-Run manually: uv run python api.civicpatch.org/scripts/process_unrecognized_roles.py
+Run manually: uv run python civicpatch.org/scripts/process_unrecognized_roles.py
 """
 import asyncio
 import base64
