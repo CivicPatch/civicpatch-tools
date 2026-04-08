@@ -58,6 +58,26 @@ Most values have safe development defaults in `docker-compose.yml`. The only one
 
 Create `../api.civicpatch.org.env` with these values. Everything else in `docker-compose.yml` uses defaults.
 
+## Permissions
+
+Roles are assigned via GitHub team membership. The `build_permissions()` function in `routers/frontend.py` maps roles to frontend capabilities; backend routes enforce the same boundaries via `require_route_access`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+
+| Feature | default | contributors | maintainers | admins |
+|---|:---:|:---:|:---:|:---:|
+| Jurisdictions — read | ✓ | ✓ | ✓ | ✓ |
+| People — read | ✓ | ✓ | ✓ | ✓ |
+| People — create / update | | ✓ | | |
+| People — delete | | ✓ | | |
+| Pull requests — read / merge | ✓ | ✓ | ✓ | ✓ |
+| Review sessions | ✓ | ✓ | ✓ | ✓ |
+| Notes — read | ✓ | ✓ | ✓ | ✓ |
+| Notes — create | | ✓ | ✓ | ✓ |
+| Jobs — read errors / events | | | ✓ | ✓ |
+| Jobs — trigger (remote) | | | ✓ | |
+| Jobs — trigger (local, dev only) | | | ✓ | |
+| Jobs — resume (paused) | | | ✓ | |
+| Jobs — resolve / cancel | | | | ✓ |
+
 ## Local setup
 
 See the [root README](../README.md) for `mise install` / Docker setup.
