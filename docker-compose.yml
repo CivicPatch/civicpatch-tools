@@ -1,8 +1,8 @@
 services:
-  civicpatch:
+  pipelines:
     extends:
-      file: civicpatch/docker-compose.yml
-      service: civicpatch
+      file: pipelines/docker-compose.yml
+      service: pipelines
     networks:
       - civicpatch_net
   civicpatch-org:
@@ -54,7 +54,7 @@ services:
       GITHUB_REPO: ${GITHUB_REPO:-server}
       CIVICPATCH_ORG_URL: http://civicpatch-org:8001
       SERVICE_API_KEY: ${SERVICE_API_KEY}
-      CIVICPATCH_LOCAL_URL: http://civicpatch:8000
+      CIVICPATCH_LOCAL_URL: http://pipelines:8000
     networks:
       - civicpatch_net
     restart: unless-stopped
