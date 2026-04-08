@@ -20,6 +20,8 @@ services:
       - ./data_source:/app/data_source
       - ../shared/src/shared:/app/src/shared:ro
       - .:/app
+    ports:
+      - "8000:8000"
     networks:
       - civicpatch_net
 

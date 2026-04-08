@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 from temporalio.client import Client, WorkflowFailureError
 from temporalio.exceptions import WorkflowAlreadyStartedError
@@ -24,12 +25,19 @@ async def _get_client() -> Client:
     return _client
 
 
-async def start_people_collector_workflow(jurisdiction_ocdid: str, request_id: str) -> str:
+async def start_people_collector_workflow(
+    jurisdiction_ocdid: str,
+    request_id: str,
+    dispatch_mode: str = "remote",
+    name: Optional[str] = None,
+    url: Optional[str] = None,
+    source_urls: Optional[list[str]] = None,
+) -> str:
     client = await _get_client()
     workflow_id = _workflow_id(jurisdiction_ocdid)
     handle = await client.start_workflow(
         WORKFLOW_CLASS_NAME,
-        args=[jurisdiction_ocdid, request_id],
+        args=[jurisdiction_ocdid, request_id, dispatch_mode, name, url, source_urls],
         id=workflow_id,
         task_queue=TASK_QUEUE,
     )
