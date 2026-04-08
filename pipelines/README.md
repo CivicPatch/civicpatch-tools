@@ -1,4 +1,4 @@
-# civicpatch
+# pipelines
 
 Scrapes municipal government websites to collect contact information for elected officials, then submits the results to [civicpatch.org](../civicpatch.org/README.md) for publication in the [open-data](https://github.com/CivicPatch/open-data/) repository.
 
@@ -69,7 +69,7 @@ Environment variables are documented in [docker-compose.yml](./docker-compose.ym
 Trigger a job via the web UI (`http://localhost:8000`) or the CLI:
 
 ```sh
-docker compose run --rm civicpatch uv run python -m interfaces.cli.main --jurisdiction-ocdid ocd-division/country:us/state:ca/place:oakland
+docker compose run --rm pipelines uv run python -m interfaces.cli.main --jurisdiction-ocdid ocd-division/country:us/state:ca/place:oakland
 ```
 
 ## Testing
@@ -92,7 +92,7 @@ Each step in `src/jobs/people_collector/steps/` is a directory with a single pri
 
 ### Adding shared utilities
 
-Logic reusable across `civicpatch` and `civicpatch.org` belongs in the [`shared`](../shared/) workspace package.
+Logic reusable across `pipelines` and `civicpatch.org` belongs in the [`shared`](../shared/) workspace package.
 
 ### Code standards
 

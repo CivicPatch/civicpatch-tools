@@ -1,4 +1,4 @@
-# civicpatch — Project Context
+# pipelines — Project Context
 
 See root `CLAUDE.md` for shared coding standards.
 
