@@ -1,0 +1,6 @@
+{% extends "layouts/base.html" %} {% block title %}Queue{% endblock %} 
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<queue-page></queue-page>
+{% endblock %}

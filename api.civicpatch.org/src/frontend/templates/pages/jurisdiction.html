@@ -1,0 +1,10 @@
+{% extends "layouts/base.html" %} {% block title %}Jurisdiction{% endblock %} 
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+
+<civ-jurisdiction-page
+    jurisdiction_ocdid="{{ jurisdiction_ocdid }}"
+    jurisdiction_data="{{ jurisdiction_data }}"
+></civ-jurisdiction-page>
+{% endblock %}

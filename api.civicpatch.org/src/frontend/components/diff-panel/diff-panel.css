@@ -1,0 +1,210 @@
+/* ── Diff panel ── */
+
+.diff-panel {
+    padding: 0.75rem 1rem 1rem;
+}
+
+.diff-panel__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.diff-panel__label {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--pico-muted-color);
+}
+
+.diff-panel__summary {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    letter-spacing: 0.03em;
+}
+
+.diff-panel__toggle {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    background: transparent;
+    border: 1px solid var(--pico-muted-border-color);
+    color: var(--pico-muted-color);
+    padding: 0.25em 0.75em;
+    border-radius: var(--pico-border-radius);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition:
+        border-color 0.15s,
+        color 0.15s;
+}
+
+.diff-panel__toggle:hover,
+.diff-panel__toggle:active {
+    --pico-background-color: transparent;
+    background: transparent;
+    border-color: var(--pico-contrast);
+    color: var(--pico-contrast);
+}
+
+/* ── civ-diff-panel (edit-people page) ── */
+
+.diff-panel__entries {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .diff-panel__entries {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .diff-panel__entries {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.diff-person {
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
+    border: 1px solid var(--pico-muted-border-color);
+    background: var(--pico-background-color);
+}
+
+.diff-person__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-md);
+    font-weight: 600;
+}
+
+.diff-person--added .diff-person__header    { background: var(--pico-ins-background); }
+.diff-person--removed .diff-person__header  { background: var(--pico-del-background); }
+.diff-person--changed .diff-person__header  { background: var(--pico-info-background); }
+.diff-person--unchanged .diff-person__header { background: transparent; color: var(--pico-muted-color); }
+
+.diff-person__badge {
+    font-weight: 700;
+    font-size: var(--text-md);
+    width: 1rem;
+    text-align: center;
+}
+
+.diff-person__badge--added   { color: var(--pico-ins-color); }
+.diff-person__badge--removed { color: var(--pico-del-color); }
+.diff-person__badge--changed { color: var(--pico-info-color); }
+
+.diff-person__fields {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+}
+
+.diff-person__fields tr + tr {
+    border-top: 1px solid var(--pico-muted-border-color);
+}
+
+.diff-field__label {
+    padding: 0.3rem 0.6rem;
+    color: var(--pico-muted-color);
+    white-space: nowrap;
+    width: 6rem;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.diff-field__before,
+.diff-field__after {
+    padding: 0.3rem 0.5rem;
+    width: 50%;
+}
+
+.diff-person__fields td:last-child:not(.diff-field__label) {
+    padding: 0.3rem 0.6rem;
+}
+
+.diff-panel__empty {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    padding: 1rem 0;
+    text-align: center;
+    letter-spacing: 0.03em;
+}
+
+/* ── Diff table ── */
+
+.diff-table__wrapper {
+    border: 1px solid var(--pico-form-element-border-color);
+    border-radius: var(--pico-border-radius);
+    overflow: hidden;
+    background: var(--pico-background-color);
+}
+
+.diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    table-layout: fixed;
+}
+
+.diff-table th {
+    text-align: left;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pico-muted-color);
+    padding: 0.3rem 0.5rem 0.4rem;
+    border-bottom: 1px solid var(--pico-form-element-border-color);
+    background: transparent;
+}
+
+.diff-table td {
+    padding: 0.28rem 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: var(--pico-muted-color);
+    border-bottom: 1px solid var(--pico-form-element-border-color);
+    background: transparent;
+}
+
+.diff-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.diff-table td:first-child {
+    color: var(--pico-color);
+    padding-left: 0.85rem;
+}
+
+.diff-table .col-name   { width: 22%; }
+.diff-table .col-before { width: 26%; }
+.diff-table .col-after  { width: 26%; }
+.diff-table .col-div    { width: 16%; }
+.diff-table .col-src    { width: 10%; }
+
+.source-link {
+    font-size: var(--text-xs);
+    color: var(--pico-primary);
+    text-decoration: none;
+    margin-right: 0.3em;
+    opacity: 0.75;
+}
+
+.source-link:hover {
+    opacity: 1;
+}

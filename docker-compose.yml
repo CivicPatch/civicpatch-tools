@@ -17,10 +17,17 @@ services:
       service: api_civicpatch_org_redis
     networks:
       - civicpatch_net
-  civicpatch-frontend:
-    extends:
-      file: civicpatch/docker-compose.yml
-      service: civicpatch-frontend
+  api-frontend:
+    build:
+      context: .
+      dockerfile: api.civicpatch.org/Dockerfile
+      target: frontend-dev
+    environment:
+      BUILD_ENV: development
+    volumes:
+      - ./api.civicpatch.org/src/frontend:/app
+      - ./components/build:/app/cdn:ro
+      - /app/node_modules
     networks:
       - civicpatch_net
   api_civicpatch_org_db:

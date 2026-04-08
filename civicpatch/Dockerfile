@@ -63,23 +63,6 @@ RUN python -m spacy download en_core_web_md
 USER civicpatch_user
 
 # ==========================================
-# Companion Stage: development-fe
-# ==========================================
-FROM node:24-slim AS development-fe
-
-ENV NODE_ENV="development" \
-    BUILD_ENV="development" \
-    PROJECT_NAME="civicpatch"
-
-WORKDIR /app
-
-COPY ${PROJECT_NAME}/src/frontend/package*.json /app/
-RUN npm install
-COPY ${PROJECT_NAME}/src/frontend/ /app/
-
-CMD ["npm", "run", "start"]
-
-# ==========================================
 # Final Stage: development
 # ==========================================
 FROM post-install AS development
@@ -103,23 +86,6 @@ ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
 CMD ["fastapi", "dev", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
-# Stage: production-fe
-# ==========================================
-FROM node:24-slim AS production-build
-
-ENV NODE_ENV="development" \
-    BUILD_ENV="production" \
-    PROJECT_NAME="civicpatch"
-
-WORKDIR /app
-
-COPY ${PROJECT_NAME}/src/frontend/package*.json /app/
-RUN npm install
-COPY ${PROJECT_NAME}/src/frontend/ /app/
-
-RUN ["npm", "run", "build"]
-
-# ==========================================
 # Final Stage: production
 # ==========================================
 FROM post-install AS production
@@ -128,13 +94,10 @@ ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
 
-COPY --from=production-build /app/build/. /app/src/frontend/build
-
 USER root
 
 RUN chown -R root:root /app && \
-    chmod -R 755 /app && \
-    chown -R civicpatch_user:civicpatch_user /app/src/frontend/assets
+    chmod -R 755 /app
 
 USER civicpatch_user
 

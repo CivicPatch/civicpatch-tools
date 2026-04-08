@@ -1,0 +1,118 @@
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete-wrapper fieldset.grid {
+  margin-bottom: 0;
+  gap: 0;
+}
+
+.autocomplete-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+
+.autocomplete-toggle {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0.5rem 0.75rem;
+  min-width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.autocomplete-toggle__icon {
+  transition: transform 0.2s ease;
+}
+
+.autocomplete-toggle__icon--open {
+  transform: rotate(180deg);
+}
+
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--pico-background-color);
+  border: var(--pico-border-width) solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  margin-top: 0.25rem;
+  max-height: 400px;
+  z-index: 99;
+  box-shadow: var(--pico-box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.autocomplete-options {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.autocomplete-option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  transition: background-color 0.1s ease;
+  list-style: none;
+}
+
+.autocomplete-option:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-option:hover,
+.autocomplete-option.active {
+  background-color: var(--pico-secondary-background);
+  color: var(--pico-secondary-inverse);
+}
+
+.autocomplete-option[aria-selected="true"] {
+  background-color: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+}
+
+.autocomplete-pagination {
+  border-top: 1px solid var(--pico-muted-border-color);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--pico-card-background-color);
+  border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+}
+
+.autocomplete-pagination-info {
+  font-size: var(--text-md);
+  color: var(--pico-muted-color);
+}
+
+.autocomplete-pagination-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.autocomplete-pagination button {
+  padding: 0.25rem 0.75rem;
+  font-size: var(--text-md);
+  margin: 0;
+}
+
+.autocomplete-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.autocomplete-selected {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--pico-muted-color);
+}

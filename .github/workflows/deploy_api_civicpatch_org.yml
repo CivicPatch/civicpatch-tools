@@ -70,11 +70,16 @@ jobs:
           context: .
           file: ./api.civicpatch.org/Dockerfile
           push: true
+          target: production
           tags: |
             ghcr.io/civicpatch/civicpatch_api:latest
             ghcr.io/civicpatch/civicpatch_api:${{ needs.get-date.outputs.date-tag }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: |
+            type=gha,scope=api-frontend
+            type=gha,scope=api-python
+          cache-to: |
+            type=gha,scope=api-frontend,mode=max
+            type=gha,scope=api-python,mode=max
 
   deploy:
     needs: build

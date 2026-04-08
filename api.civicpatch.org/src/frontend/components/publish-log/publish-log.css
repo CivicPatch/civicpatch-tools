@@ -1,0 +1,107 @@
+/* ── Publish Log ── */
+
+civ-publish-log {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 100;
+}
+
+.publish-log {
+    background: var(--pico-card-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+    min-width: 280px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.publish-log__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem 0.4rem;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.publish-log__title {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--pico-muted-color);
+}
+
+.publish-log__toggle {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.publish-log__toggle:hover {
+    color: var(--pico-color);
+}
+
+.publish-log__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem 0;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.publish-log__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem;
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+}
+
+.publish-log__name {
+    flex: 1;
+    color: var(--pico-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.publish-log__pr {
+    color: var(--pico-muted-color);
+}
+
+.publish-log__status {
+    width: 1.2em;
+    text-align: center;
+    color: var(--pico-muted-color);
+}
+
+.publish-log__spinner {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    border: 2px solid var(--pico-muted-border-color);
+    border-top-color: var(--pico-primary);
+    border-radius: 50%;
+    animation: publish-log-spin 0.7s linear infinite;
+}
+
+@keyframes publish-log-spin {
+    to { transform: rotate(360deg); }
+}
+
+.publish-log__item--done .publish-log__status {
+    color: var(--pico-ins-color);
+}
+
+.publish-log__item--error .publish-log__status {
+    color: var(--pico-del-color);
+}
