@@ -142,7 +142,7 @@ async def test_bulk_sync_skips_people_when_up_to_date_and_has_people():
 
 @pytest.mark.asyncio
 async def test_bulk_sync_syncs_people_when_no_people_in_db():
-    """Jurisdiction with zero people in DB is always synced even if updated_at is unchanged."""
+    """Jurisdiction with zero people is re-synced when remote has a valid updated_at, even if timestamps match."""
     remote = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "jurisdiction": {"id": MOUNTAIN_CITY_OCDID}}}
     local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 0}}
 
@@ -151,6 +151,19 @@ async def test_bulk_sync_syncs_people_when_no_people_in_db():
         await bulk_sync()
 
     mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])
+
+
+@pytest.mark.asyncio
+async def test_bulk_sync_skips_people_when_no_people_and_no_remote_updated_at():
+    """Jurisdiction with zero people is NOT re-synced when remote has no updated_at."""
+    remote = {MOUNTAIN_CITY_OCDID: {"jurisdiction": {"id": MOUNTAIN_CITY_OCDID}}}
+    local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 0}}
+
+    patches = _mock_bulk_sync_deps(remote, local)
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+        await bulk_sync()
+
+    mock_sync_people.assert_called_once_with([])
 
 
 @pytest.mark.asyncio

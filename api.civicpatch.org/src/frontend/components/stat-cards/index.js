@@ -1,3 +1,4 @@
+import "./stat-cards.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 

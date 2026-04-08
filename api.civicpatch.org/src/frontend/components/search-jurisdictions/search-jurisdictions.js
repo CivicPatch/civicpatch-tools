@@ -1,3 +1,4 @@
+import "./search-jurisdictions.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchPeople, fetchDashboard } from "../../api.js";

@@ -1,3 +1,4 @@
+import "./streak-graph.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { toLocalDateStr } from "../../utils/date-utils.js";
@@ -65,7 +66,8 @@ function buildCopyText(days, streak) {
     if (d.count === 0) return "▁";
     return BARS[Math.round((d.count / max) * (BARS.length - 1))];
   }).join("");
-  return `${streak ?? 0} day streak · ${total} review${total === 1 ? "" : "s"} this week · civicpatch.org\n${sparkline}`;
+  return `${streak ?? 0} day streak · ${total} review${total === 1 ? "" : "s"} this week · civicpatch.org
+${sparkline}`;
 }
 
 function StreakGraph({ dailyCounts, streak, currentDate }) {

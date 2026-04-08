@@ -1,3 +1,4 @@
+import "./auto-complete-select.css";
 import { component, useState, useEffect, useMemo } from 'haunted';
 import { html } from 'lit-html';
 import { ref } from "lit-html/directives/ref.js";

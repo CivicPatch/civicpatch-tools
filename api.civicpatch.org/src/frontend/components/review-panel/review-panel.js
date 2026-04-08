@@ -1,3 +1,4 @@
+import "./review-panel.css";
 import { component } from "haunted";
 import { html } from "lit-html";
 import "../edit-people/review-table.js";

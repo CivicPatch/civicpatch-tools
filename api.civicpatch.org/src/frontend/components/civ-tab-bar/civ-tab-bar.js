@@ -1,3 +1,4 @@
+import "./civ-tab-bar.css";
 import { html, component } from "haunted";
 
 function CivTabBar({ tabs = [], selectedIndex = 0, onTabClick }) {

@@ -1,3 +1,4 @@
+import "./goal-ring.css";
 import { html } from "lit-html";
 import { component } from "haunted";
 

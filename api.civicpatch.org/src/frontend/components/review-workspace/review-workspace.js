@@ -1,3 +1,4 @@
+import "./review-workspace.css";
 import { html, component, useState } from "haunted";
 import { getColumns } from "../edit-people/table/columns.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";

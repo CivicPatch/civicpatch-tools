@@ -1,3 +1,4 @@
+import "./pr-card.css";
 import { html } from "lit-html";
 import { component } from "haunted";
 import { PULL_REQUEST_STATUS } from "./pull-request-status.js";

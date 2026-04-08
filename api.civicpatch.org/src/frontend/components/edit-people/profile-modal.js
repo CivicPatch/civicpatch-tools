@@ -1,3 +1,4 @@
+import "./profile-modal.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../basic/modal.js";

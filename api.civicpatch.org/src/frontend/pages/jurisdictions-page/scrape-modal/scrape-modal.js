@@ -1,3 +1,4 @@
+import "./scrape-modal.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";

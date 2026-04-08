@@ -41,6 +41,7 @@ from schemas.common import Identity, Role, RouteCategory
 from services import pubsub_service
 from schemas.ws import SubscribeMessage
 from utils.auth_utils import get_optional_user, get_ws_user, require_route_access
+from utils.vite import vite_asset, vite_css
 
 # Set up logger at the top of your file
 logger = logging.getLogger(__name__)
@@ -65,7 +66,6 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
-
 
 @asynccontextmanager
 async def lifespan(app):
@@ -92,6 +92,10 @@ app = FastAPI(
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
 templates = Jinja2Templates(directory="src/frontend/templates")
+
+templates.env.globals["vite_asset"] = lambda path: vite_asset(path, is_production)
+templates.env.globals["vite_css"] = lambda path: vite_css(path, is_production)
+templates.env.globals["is_production"] = is_production
 
 if is_production:
     allowed_origins = [

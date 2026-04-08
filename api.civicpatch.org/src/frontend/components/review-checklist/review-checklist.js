@@ -1,3 +1,4 @@
+import "./review-checklist.css";
 import { html, component, useState, useEffect } from "haunted";
 
 const ORIGIN_SOURCE_LABELS = {
