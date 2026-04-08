@@ -24,9 +24,6 @@ while ! xdpyinfo -display "${DISPLAY}" >/dev/null 2>&1; do
   fi
 done
 
-# Update frontend variables
-envsubst < /app/src/frontend/assets/env.template.js > /app/src/frontend/assets/env.js
-
 echo "  Done - Xvfb is ready!"
 
 exec "$@"

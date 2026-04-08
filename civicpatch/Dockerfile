@@ -80,10 +80,8 @@ RUN apt-get update && apt-get install -y \
 RUN uv sync --inexact
 
 WORKDIR /app
-EXPOSE 8000
 
 ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
-CMD ["fastapi", "dev", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
 # Final Stage: production
@@ -101,7 +99,4 @@ RUN chown -R root:root /app && \
 
 USER civicpatch_user
 
-EXPOSE 8000
-
 ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
-CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0", "--workers", "2"]
