@@ -2,7 +2,6 @@ import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
-from environment import get_env_vars
 
 from fastapi import (
     Depends,
@@ -12,12 +11,13 @@ from fastapi import (
     WebSocketDisconnect,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import StreamingResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import routers.api.admin as api_admin_router
+from routers.frontend import get_router as frontend_router
 import routers.webhooks.github as github_webhook_router
 import routers.api.api_keys as api_keys_router
 import routers.api.data as api_data_router
@@ -34,11 +34,7 @@ import services.github.pull_request_sync_service
 import services.github.data_sync_service
 from database.database import (
     close_pool,
-    get_api_keys_for_user,
-    get_api_usage_for_user,
     get_pool,
-    get_user_details,
-    user_is_approved,
 )
 from routers.auth import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
@@ -93,7 +89,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
+app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 
@@ -120,35 +116,7 @@ app.add_middleware(
 )
 
 
-@app.get("/", response_class=HTMLResponse, include_in_schema=False)
-async def home(request: Request, user: Identity = Depends(get_optional_user)):
-    env = get_env_vars()
-    try:
-        provider_user_id = user.provider_user_id
-        api_keys = await get_api_keys_for_user(user.provider, provider_user_id)
-        api_usage = await get_api_usage_for_user(user.provider, provider_user_id)
-        approved_user = await user_is_approved(user.provider, provider_user_id)
-        user_details = await get_user_details(user.provider, provider_user_id)
-    except Exception as e:
-        user = None
-        api_keys = []
-        api_usage = {}
-        approved_user = False
-        user_details = None
-
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={
-            "user": user,
-            "api_keys": api_keys,
-            "api_usage": api_usage,
-            "approved_user": approved_user,
-            "maintainer_email": env.get("MAINTAINER_EMAIL"),
-            "user_details": user_details,
-        },
-    )
-
+app.include_router(frontend_router(templates))
 
 app.include_router(
     api_admin_router.get_router(),

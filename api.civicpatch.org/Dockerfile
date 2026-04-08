@@ -1,3 +1,23 @@
+FROM node:24-slim AS frontend-dev
+
+WORKDIR /app
+
+COPY api.civicpatch.org/src/frontend/package*.json /app/
+RUN npm install
+
+CMD ["npm", "start"]
+
+FROM node:24-slim AS frontend-build
+
+ENV NODE_ENV="development" BUILD_ENV="production"
+
+WORKDIR /app
+
+COPY api.civicpatch.org/src/frontend/package*.json /app/
+RUN npm install
+COPY api.civicpatch.org/src/frontend/ /app/
+RUN npm run build
+
 FROM python:3.12.11-slim-trixie AS image-base
 
 # Install system dependencies
@@ -35,6 +55,8 @@ RUN uv sync --package api.civicpatch.org --no-dev --frozen --no-install-project
 # Copy source
 COPY $PROJECT_NAME /app
 COPY shared/src/shared /app/src/shared
+
+COPY --from=frontend-build /app/build /app/src/frontend/build
 
 RUN useradd -m -s /bin/bash civicpatch_user && \
     chown -R civicpatch_user:civicpatch_user /app && \

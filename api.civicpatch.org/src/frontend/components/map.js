@@ -1,0 +1,345 @@
+import { html } from "lit-html";
+import { ref } from "lit-html/directives/ref.js";
+import { useEffect, useState, component } from "haunted";
+
+import {
+  Map,
+  TileLayer,
+  Marker,
+  Icon,
+  Control,
+  geoJSON,
+  FeatureGroup,
+} from "leaflet";
+import { LocateControl } from "leaflet.locatecontrol";
+import { Geocoder, geocoders } from "leaflet-control-geocoder";
+
+import leafletStyles from "leaflet/dist/leaflet.css";
+import locateStyles from "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css";
+
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
+
+const DEFAULT_LOCATION = { lat: 47.60813, lng: -122.335167 }; // Seattle, WA
+
+// Use accessible colors for map
+const MAP_COLORS = {
+  color1: "#1b9e77",
+  color2: "#d95f02",
+  color3: "#7570b3",
+  color4: "#e7298a",
+  color5: "#66a61e",
+  color6: "#e6ab02",
+  color7: "#a6761d",
+  color8: "#666666",
+
+}
+
+// https://leafletjs.com/reference.html#latlng
+function CivMap({ latlng, canmove = true, geojson = null, height = "25rem" }) {
+  const canMove = canmove === "true" || canmove === true;
+
+  const [mapInstance, setMapInstance] = useState(null);
+  const [homeLatlng, setHomeLatlng] = useState(latlng || DEFAULT_LOCATION);
+  const [currentLatlng, setCurrentLatlng] = useState(latlng);
+  const [marker, setMarker] = useState(null);
+  const [controls, setControls] = useState({ gc: null });
+  const [zoom, setZoom] = useState(null);
+  const [geo, setGeo] = useState({ data: null, featureGroup: null });
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [prevSelectedJurisdictionOcdid, setPrevSelectedJurisdictionOcdid] = useState(null);
+
+  // --- START: helpers to color geojson features ---
+  const _colorPalette = Object.values(MAP_COLORS);
+
+  const _hashStringToIndex = (str = "") => {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+      h = (h << 5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h) % _colorPalette.length;
+  };
+
+  const colorForFeature = (feature) => {
+    // Prefer a stable property for color grouping (jurisdiction_ocdid or id)
+    const key =
+      feature?.properties?.jurisdiction_ocdid ||
+      feature?.properties?.id ||
+      feature?.id ||
+      feature?.properties?.name ||
+      "";
+    return _colorPalette[_hashStringToIndex(String(key))];
+  };
+
+  const styleForFeature = (feature) => {
+    const c = colorForFeature(feature);
+    return {
+      color: c, // stroke
+      weight: 2,
+      fillColor: c,
+      fillOpacity: 0.25,
+    };
+  };
+  // --- END helpers ---
+
+  // Create a geoJSON layer with per-feature styles and popups
+  const createGeoDataLayer = (map) => {
+    const _geoData = new geoJSON(null, {
+      style: styleForFeature,
+      onEachFeature: (feature, layer) => {
+        const title =
+          feature?.properties?.name ||
+          feature?.properties?.jurisdiction_ocdid ||
+          feature?.properties?.id ||
+          "Feature";
+        layer.bindPopup(String(title));
+      },
+    });
+
+    const _geoLayer = new FeatureGroup([_geoData]).addTo(map);
+    return { data: _geoData, featureGroup: _geoLayer };
+  };
+
+  // Replace layers in the existing geo.data cleanly
+  const updateGeoData = (geoData, newGeojson) => {
+    if (!geoData || !newGeojson) return;
+    try {
+      geoData.clearLayers();
+      geoData.addData(newGeojson);
+    } catch (err) {
+      console.error("updateGeoData error:", err);
+    }
+  };
+
+  // Create and attach optional controls (geocoder + locate)
+  const createAndAttachControls = (map) => {
+    let _gc = null;
+    let _lc = null;
+    if (canMove) {
+      _gc = new Geocoder({
+        geocoder: new geocoders.Nominatim({
+          geocodingQueryParams: { countrycodes: "US" },
+        }),
+        defaultMarkGeocode: false,
+        position: "topleft",
+      })
+        .on("markgeocode", handleAddressResult)
+        .addTo(map);
+
+      _lc = new LocateControl({
+        keepCurrentZoomLevel: true,
+        drawMarker: false,
+        drawCircle: false,
+        position: "bottomright",
+        setView: false,
+        clickBehavior: {
+          inView: "stop",
+          outOfView: "stop",
+          inViewNotFollowing: "stop",
+        },
+      }).addTo(map);
+    }
+    return { gc: _gc, lc: _lc };
+  };
+
+  useEffect(() => {
+    if (!mapInstance) return;
+    if (!canMove) return;
+
+    mapInstance.on("locationerror", handleLocationError);
+    mapInstance.on("locationfound", handleLocationFound);
+    mapInstance.on("locationactivate", handleLocationFound);
+    mapInstance.on("zoomend", handleZoomChange);
+    mapInstance.on("click", handleClick);
+    geo.data.on("click", handleFeatureClick);
+
+    return () => {
+      mapInstance.off("locationerror", handleLocationError);
+      mapInstance.off("locationfound", handleLocationFound);
+      mapInstance.off("locationactivate", handleLocationFound);
+      mapInstance.off("zoomend", handleZoomChange);
+      mapInstance.off("click", handleClick);
+      geo.data.off("click", handleFeatureClick);
+
+      if (controls.gc) {
+        controls.gc.off("markgeocode", handleAddressResult);
+      }
+    };
+  }, [mapInstance, canmove]);
+
+  useEffect(() => {
+    return () => {
+      if (mapInstance) {
+        mapInstance.remove();
+      }
+    }
+
+  }, [mapInstance])
+
+  useEffect(() => {
+    if ((!latlng && !homeLatlng && !currentLatlng) || !mapInstance) return;
+
+    if (controls.lc) {
+      controls.lc.stop();
+    }
+
+    const latlngToUse = latlng || currentLatlng || homeLatlng;
+
+    moveMarker(latlngToUse);
+
+    // Debounce the event dispatch to avoid excessive firing
+    const timer = setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent("on-map-change", {
+          detail: {
+            zoom: mapInstance.getZoom(),
+            latlng: latlngToUse,
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [latlng, geo, homeLatlng, currentLatlng, zoom, mapInstance]);
+
+  // wire geojson updates through a small helper
+  useEffect(() => {
+    if (!geo.data || !geojson) return;
+    updateGeoData(geo.data, geojson);
+    // handleGeojsonChange({ geoData: geo.data });
+  }, [geo, geojson]);
+
+  useEffect(() => {
+    const jurisdictionOcdid = selectedFeature?.jurisdiction_ocdid || null;
+
+    if (jurisdictionOcdid === prevSelectedJurisdictionOcdid) return;
+
+    setPrevSelectedJurisdictionOcdid(jurisdictionOcdid);
+
+    const event = new CustomEvent("on-jurisdiction-change", {
+      detail: {
+        jurisdiction_ocdid: jurisdictionOcdid,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+  }, [selectedFeature]);
+
+  const handleLocationError = (event) => {
+    console.error("Location error occurred:", event.message);
+    setCurrentLatlng(homeLatlng);
+  };
+
+  const handleLocationFound = (event) => {
+    setCurrentLatlng(event.latlng);
+    setHomeLatlng(event.latlng);
+  };
+
+  const handleAddressResult = (event) => {
+    if (event?.geocode?.center) {
+      if (event.geocode.center.lat && event.geocode.center.lng) {
+        setCurrentLatlng(event.geocode.center);
+      }
+    }
+  };
+
+  const handleZoomChange = (e) => {
+    setZoom(e.target.getZoom());
+  };
+
+  const setupMap = (el) => {
+    if (!el || mapInstance) return;
+    let _gc, _lc;
+
+    let newMapInstance = new Map(el, {
+      zoomControl: false,
+      zoom: 12,
+    });
+
+    let urlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+    newMapInstance.addLayer(new TileLayer(urlTemplate));
+
+    if (canMove) {
+      const ctrls = createAndAttachControls(newMapInstance);
+      _gc = ctrls.gc;
+      _lc = ctrls.lc;
+    }
+
+    const { data: _geoData, featureGroup: _geoLayer } = createGeoDataLayer(newMapInstance);
+
+    let _zoom = new Control.Zoom({
+      position: "bottomright",
+    }).addTo(newMapInstance);
+
+    setMapInstance(newMapInstance);
+    setControls({ gc: _gc, lc: _lc });
+    setGeo({ data: _geoData, featureGroup: _geoLayer });
+  };
+
+  const handleClick = (e) => {
+    setCurrentLatlng(e.latlng);
+  };
+
+  const moveMarker = (markerLatlng) => {
+    if (!mapInstance) return;
+
+    if (!marker) {
+      let newMarker = new Marker(markerLatlng, {
+        icon: new Icon({
+          iconUrl: markerIconPng,
+        }),
+      });
+      newMarker.addTo(mapInstance);
+      setMarker(newMarker);
+    } else {
+      marker.setLatLng(markerLatlng);
+    }
+    
+    mapInstance.panTo(markerLatlng);
+  };
+
+  const handleGeojsonChange = ({ geoData }) => {
+    if (!geoData) return;
+
+    // Check if latlong is within any geo layer
+    // let foundFeature = null;
+    // geoData.eachLayer((layer) => {
+    //   if (layer.getBounds && layer.getBounds().contains(currentLatlng)) {
+    //     foundFeature = layer.feature.properties;
+    //   }
+    // });
+    // setSelectedFeature(foundFeature);
+  }
+//
+const handleFeatureClick = (e) => {
+  setSelectedFeature(e.layer.feature.properties);
+}
+
+  return html`
+    <style>
+      ${leafletStyles} ${locateStyles} ${geocoderStyles}
+      :host {
+        display: block;
+        border-radius: var(--pico-border-radius);
+        overflow: hidden;
+        border: 1px solid var(--pico-muted-border-color);
+      }
+
+      .map-container {
+        height: ${height};
+      }
+      .map-container .map {
+        height: 100%;
+      } 
+    </style>
+    <div class="map-container">
+      <div class="map" ${ref(setupMap)}></div>
+    </div>
+  `;
+}
+
+customElements.define("civ-map", component(CivMap, {useShadowDOM: true, observedAttributes: ["canmove"] }));
