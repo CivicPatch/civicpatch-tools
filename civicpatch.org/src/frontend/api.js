@@ -276,7 +276,7 @@ export const fetchDashboard = async () => {
 };
 
 /** Jobs */
-export const triggerRemoteJob = async (jurisdictionOcdid, name, url, sourceUrls) => {
+export const triggerJob = async (mode, jurisdictionOcdid, name, url, sourceUrls) => {
   const res = await fetch(`${API_URL}/api/v1/jobs`, {
     method: "POST",
     credentials: "include",
@@ -285,6 +285,7 @@ export const triggerRemoteJob = async (jurisdictionOcdid, name, url, sourceUrls)
       "X-CSRF-Token": getCsrfCookie(),
     },
     body: JSON.stringify({
+      dispatch_mode: mode,
       jurisdiction_ocdid: jurisdictionOcdid,
       name,
       url,

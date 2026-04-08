@@ -13,7 +13,7 @@ import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerRemoteJob, fetchJurisdictionHistory } from '../../api.js';
+import { triggerJob, fetchJurisdictionHistory } from '../../api.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
@@ -48,32 +48,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const handleScrapeStartClick = async (details) => {
     setScrapeModalOpen(false);
-
-    if (details.scrapeMode === "remote") {
-      await triggerRemoteJob(
-        jurisdictionData.data.id,
-        jurisdictionData.data.name,
-        details.data.url || jurisdictionData.data.url,
-        details.data.sourceUrls,
-      );
-      return;
-    }
-
-    const body = {
-      jurisdiction_ocdid: jurisdictionData.data.id,
-      scrape_mode: details.scrapeMode,
-      config: {
-        url: details.data.url || jurisdictionData.data.url,
-        name: jurisdictionData.data.name,
-        source_urls: details.data.sourceUrls,
-      }
-    };
-
-    await fetch(`/api/pipelines`, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(body),
-    });
+    await triggerJob(
+      details.scrapeMode,
+      jurisdictionData.data.id,
+      jurisdictionData.data.name,
+      details.data.url || jurisdictionData.data.url,
+      details.data.sourceUrls,
+    );
   };
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";

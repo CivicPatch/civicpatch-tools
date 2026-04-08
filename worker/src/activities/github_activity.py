@@ -3,12 +3,14 @@ import base64
 import os
 import time
 from datetime import datetime, timezone
+from typing import Optional
 
 import httpx
 import jwt
 from temporalio import activity
 
-from constants import RunMode
+from constants import RunConclusion, RunMode
+from shared.utils.statuses import JobStatus
 
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.environ["GITHUB_APP_PRIVATE_KEY_BASE64"]
@@ -103,5 +105,51 @@ async def poll_run_status(run_id: int) -> str:
 
             if status == "completed":
                 return conclusion or "unknown"
+
+            await asyncio.sleep(15)
+
+
+_CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://civicpatch:8000")
+
+_LOCAL_TERMINAL_STATUSES = {JobStatus.COMPLETED, JobStatus.ERROR, JobStatus.PAUSED}
+
+
+@activity.defn
+async def trigger_local_job(
+    jurisdiction_ocdid: str,
+    request_id: str,
+    name: Optional[str],
+    url: str,
+    source_urls: Optional[list[str]],
+) -> None:
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{_CIVICPATCH_LOCAL_URL}/jobs",
+            json={
+                "request_id": request_id,
+                "jurisdiction_ocdid": jurisdiction_ocdid,
+                "name": name,
+                "url": url,
+                "source_urls": source_urls,
+            },
+            timeout=10,
+        )
+        resp.raise_for_status()
+        activity.logger.info(f"Local job triggered: {request_id}")
+
+
+@activity.defn
+async def poll_local_job_status(request_id: str) -> str:
+    """Polls the civicpatch server until the local job reaches a terminal status."""
+    async with httpx.AsyncClient() as client:
+        while True:
+            activity.heartbeat(f"polling local job {request_id}")
+            resp = await client.get(f"{_CIVICPATCH_LOCAL_URL}/jobs/{request_id}", timeout=10)
+            resp.raise_for_status()
+            status = resp.json()["status"]
+            activity.logger.info(f"Local job {request_id}: status={status}")
+
+            if status in _LOCAL_TERMINAL_STATUSES:
+                return RunConclusion.SUCCESS if status == JobStatus.COMPLETED else RunConclusion.FAILURE
 
             await asyncio.sleep(15)

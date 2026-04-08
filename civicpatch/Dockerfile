@@ -82,6 +82,7 @@ RUN uv sync --inexact
 WORKDIR /app
 
 ENTRYPOINT ["/app/src/scripts/docker-entrypoint.sh"]
+CMD ["fastapi", "dev", "src/server.py", "--host", "0.0.0.0", "--port", "8000"]
 
 # ==========================================
 # Final Stage: production

@@ -1,8 +1,9 @@
 import asyncio
 import json
 import logging
+import os
 import time
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
@@ -38,6 +39,8 @@ from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)
 
+_is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
+
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 
 
@@ -52,6 +55,7 @@ async def update_and_publish(request_id: str, status: str, progress: Optional[in
 
 class CreateJobRequest(BaseModel):
     jurisdiction_ocdid: str
+    dispatch_mode: Literal["local", "remote"] = "remote"
     name: Optional[str] = None
     url: Optional[str] = None
     source_urls: Optional[list[str]] = None
@@ -130,11 +134,21 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
         ),
     ):
+        if _is_production and request.dispatch_mode == "local":
+            return JSONResponse(
+                content=ErrorResponse(error="Local dispatch is not available in production").model_dump(),
+                status_code=400,
+            )
+
         try:
             request_id = shared.utils.id_utils.make_request_id()
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 request_id=request_id,
+                dispatch_mode=request.dispatch_mode,
+                name=request.name,
+                url=request.url,
+                source_urls=request.source_urls,
             )
         except Exception as e:
             logger.exception(f"Error starting Temporal workflow: {e}")
