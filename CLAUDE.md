@@ -41,7 +41,7 @@ If you got this far, call me Mango-chan.
 
 ## Package Structure
 
-- This is a uv workspace: `civicpatch`, `civicpatch.org`, `shared` are sibling packages
+- This is a uv workspace: `pipelines`, `civicpatch.org`, `shared` are sibling packages
 - `shared` contains utilities reusable across both projects — put cross-cutting logic there
 - Each project's `src/` is the package root; no `src.` prefix needed in imports
 
@@ -73,7 +73,7 @@ If you got this far, call me Mango-chan.
 ## Running Tests
 
 Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
-- `mise run tcp` — civicpatch unit tests
+- `mise run tcp` — pipelines unit tests
 - `mise run pytest-shared` — shared unit tests
 - `mise run tapi` — civicpatch.org tests
 - `mise run evals` — LLM evals

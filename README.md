@@ -20,7 +20,7 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 
 ## Projects
 
-- [civicpatch](./civicpatch/README.md)
+- [pipelines](./pipelines/README.md)
   The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
 - [civicpatch.org](./civicpatch.org/README.md)
   Coordinates data submissions between civicpatch servers and the open-data repo. Receives GitHub webhook events to keep pull request state in sync.
@@ -35,7 +35,7 @@ graph TD
     A1[CivicPatch Org<br/>GitHub Actions Scheduled<br/>Top most populous municipalities in a specific state] 
     
     %% civicpatch servers with internal pipeline
-    A1 --> CP1[civicpatch server]
+    A1 --> CP1[pipelines server]
     
     subgraph "run pipeline job"
         SCRAPE[Web Scraping] --> S[Municipal Websites<br/>Contact Info]
@@ -95,7 +95,7 @@ join our weekly sync and biweekly hackathon meetings.
 
 2. Set up environment variables for **civicpatch** (optional — skip if you don't need to run scrapes):
 
-   - Reference [civicpatch/docker-compose.yml](./civicpatch/docker-compose.yml) for available variables
+   - Reference [pipelines/docker-compose.yml](./pipelines/docker-compose.yml) for available variables
    - Create `../civicpatch.env` with the variables you need
 
 3. Set up environment variables for **civicpatch.org** (contact the maintainer for GitHub App keys):
@@ -105,7 +105,7 @@ join our weekly sync and biweekly hackathon meetings.
 
 4. Run `docker compose up`
 
-   Services will be available at `localhost:8000` (civicpatch) and `localhost:8001` (api).
+   Services will be available at `localhost:8000` (pipelines) and `localhost:8001` (api).
 
    Migrations run automatically on startup. If you need to run them manually:
 
@@ -117,7 +117,7 @@ join our weekly sync and biweekly hackathon meetings.
 
 - Each project contains its own test suite.
 
-### civicpatch
+### pipelines
 
 ```sh
 mise tcp
