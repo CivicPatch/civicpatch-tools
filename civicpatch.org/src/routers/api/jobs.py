@@ -15,6 +15,7 @@ from pydantic import BaseModel
 
 import job_service.people_collector.people_data_utils as people_data_utils
 import services.github.github_api_service as github_service
+import services.storage_service as storage_service
 import services.temporal_service as temporal_service
 import utils.file_utils
 import database.jobs
@@ -42,6 +43,7 @@ logger = logging.getLogger(__name__)
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
+PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
 
 
 async def update_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str]):
@@ -514,5 +516,44 @@ def get_router(api_key_header):
             else:
                 failed.append(item["request_id"])
         return {"closed": closed, "failed": failed}
+
+    @router.get(
+        "/{request_id}/context/upload-url",
+        summary="Get a presigned PUT URL for uploading paused workflow context",
+        include_in_schema=False,
+    )
+    async def get_context_upload_url_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        key = f"{request_id}/paused_context.json"
+        url = storage_service.get_presigned_put_url(PAUSED_CONTEXT_BUCKET, key)
+        return {"url": url}
+
+    @router.get(
+        "/{request_id}/context/download-url",
+        summary="Get a presigned GET URL for downloading paused workflow context",
+        include_in_schema=False,
+    )
+    async def get_context_download_url_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        key = f"{request_id}/paused_context.json"
+        url = storage_service.get_presigned_url_cached(PAUSED_CONTEXT_BUCKET, key)
+        return {"url": url}
+
+    @router.delete(
+        "/{request_id}/context",
+        summary="Delete paused workflow context from storage",
+        include_in_schema=False,
+    )
+    async def delete_context_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        key = f"{request_id}/paused_context.json"
+        storage_service.delete_object(PAUSED_CONTEXT_BUCKET, key)
+        return {"request_id": request_id}
 
     return router

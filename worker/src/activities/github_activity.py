@@ -105,7 +105,10 @@ async def poll_run_status(run_id: int) -> str:
             if status == "completed":
                 return conclusion or "unknown"
 
-            await asyncio.sleep(15)
+            try:
+                await asyncio.sleep(15)
+            except asyncio.CancelledError:
+                raise
 
 
 _CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://pipelines:8000")

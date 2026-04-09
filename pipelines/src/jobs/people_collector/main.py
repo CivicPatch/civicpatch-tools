@@ -15,7 +15,7 @@ from domain.workflow_context import WorkflowContext
 from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
 from utils import log_utils
-import services.storage_service as storage_service
+import services.civicpatch_api as civicpatch_api
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig
 
 async def resume(request_id: str) -> PeopleCollectorContext:
     """Download saved context from S3 and continue from the paused step."""
-    context_json = storage_service.download_paused_context(request_id)
+    context_json = await civicpatch_api.download_paused_context(request_id)
     context = PeopleCollectorContext.model_validate_json(context_json)
 
     paused_at = context.data.paused_at_state
@@ -71,7 +71,7 @@ async def resume(request_id: str) -> PeopleCollectorContext:
 
     try:
         result = await run_workflow(context, workflow_logger, TRANSITION_MAP, persist_context)
-        storage_service.delete_paused_context(request_id)
+        await civicpatch_api.delete_paused_context(request_id)
         return result
     except (WorkflowError, WorkflowPausedError) as e:
         logger.error(f"Pipeline failed/paused again on resume for {e.jurisdiction_ocdid}: {e}")

@@ -175,6 +175,39 @@ async def test_update_and_publish_skips_publish_when_no_jurisdiction():
 
 
 @pytest.mark.unit
+def test_get_context_upload_url_returns_url(client):
+    with patch(
+        "routers.api.jobs.storage_service.get_presigned_put_url",
+        return_value="https://storage.example.com/presigned-put",
+    ):
+        response = client.get(f"/jobs/{TEST_REQUEST_ID}/context/upload-url")
+
+    assert response.status_code == 200
+    assert response.json()["url"] == "https://storage.example.com/presigned-put"
+
+
+@pytest.mark.unit
+def test_get_context_download_url_returns_url(client):
+    with patch(
+        "routers.api.jobs.storage_service.get_presigned_url_cached",
+        return_value="https://storage.example.com/presigned-get",
+    ):
+        response = client.get(f"/jobs/{TEST_REQUEST_ID}/context/download-url")
+
+    assert response.status_code == 200
+    assert response.json()["url"] == "https://storage.example.com/presigned-get"
+
+
+@pytest.mark.unit
+def test_delete_context_returns_request_id(client):
+    with patch("routers.api.jobs.storage_service.delete_object"):
+        response = client.delete(f"/jobs/{TEST_REQUEST_ID}/context")
+
+    assert response.status_code == 200
+    assert response.json()["request_id"] == TEST_REQUEST_ID
+
+
+@pytest.mark.unit
 def test_get_job_events_returns_paginated_list(client):
     with patch(
         "routers.api.jobs.get_job_events_page",

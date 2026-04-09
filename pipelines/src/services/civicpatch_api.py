@@ -162,6 +162,43 @@ async def search_people(
         return response.json().get("data", [])
 
 
+async def upload_paused_context(request_id: str, context_json: str) -> None:
+    env = get_env_vars()
+    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
+    async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
+        resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/context/upload-url")
+        resp.raise_for_status()
+        upload_url = resp.json()["url"]
+    async with httpx.AsyncClient(timeout=30) as client:
+        resp = await client.put(
+            upload_url,
+            content=context_json.encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+        )
+        resp.raise_for_status()
+
+
+async def download_paused_context(request_id: str) -> str:
+    env = get_env_vars()
+    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
+    async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
+        resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/context/download-url")
+        resp.raise_for_status()
+        download_url = resp.json()["url"]
+    async with httpx.AsyncClient(timeout=30) as client:
+        resp = await client.get(download_url)
+        resp.raise_for_status()
+        return resp.text
+
+
+async def delete_paused_context(request_id: str) -> None:
+    env = get_env_vars()
+    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
+    async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
+        resp = await client.delete(f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/{request_id}/context")
+        resp.raise_for_status()
+
+
 async def batch_resolve_people(
     jurisdiction_ocdid: str, people: List[Official]
 ) -> List[dict]:

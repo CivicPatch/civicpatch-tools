@@ -7,7 +7,6 @@ from utils import log_utils
 import time
 from datetime import datetime, timezone
 import services.civicpatch_api as civicpatch_api
-import services.storage_service as storage_service
 import psutil
 
 from jobs.people_collector.schemas import PipelineStatus
@@ -84,7 +83,7 @@ async def run_workflow(
             logger.warning(f"Failed to update final job status (non-fatal): {e}")
         if ctx.current_state == PipelineStatus.PAUSED:
             try:
-                storage_service.upload_paused_context(ctx.request_id, ctx.model_dump_json())
+                await civicpatch_api.upload_paused_context(ctx.request_id, ctx.model_dump_json())
                 logger.info(f"Uploaded paused context for {ctx.request_id}")
             except Exception as e:
                 logger.warning(f"Failed to upload paused context (non-fatal): {e}")
