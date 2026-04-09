@@ -9,22 +9,22 @@ from jobs.people_collector.schemas import (
 )
 from shared.schemas import JobConfig
 
-def next_state_for_process_content_state(
+def next_process_content_state(
     processed_count: int,
     current_cost: Decimal,
     job_config: JobConfig,
-    progress: ProgressState
-) -> PipelineStatus:
-    if should_stop_for_cost_limit(current_cost, job_config):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-    
+    progress: ProgressState,
+) -> tuple[PipelineStatus, str | None]:
     if should_stop_for_data_requirement(progress):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-    
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, None
+
+    if should_stop_for_cost_limit(current_cost, job_config):
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Cost limit reached before data requirements were met"
+
     if should_stop_for_max_pages(processed_count, job_config, progress):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-    
-    return PipelineStatus.SCRAPE_PAGE
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Max pages reached before data requirements were met"
+
+    return PipelineStatus.SCRAPE_PAGE, None
 
 
 def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | None:

@@ -84,7 +84,7 @@ class PeopleCollectorWorkflow:
 
             resume_run_id = await workflow.execute_activity(
                 trigger_github_action,
-                args=[jurisdiction_ocdid, request_id, RunMode.RESUME],
+                args=[jurisdiction_ocdid, request_id, RunMode.START],
                 start_to_close_timeout=timedelta(minutes=2),
             )
             resume_conclusion = await workflow.execute_activity(

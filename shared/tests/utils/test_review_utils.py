@@ -1,8 +1,7 @@
-from unittest.mock import patch
-
 import pytest
 
 from shared.utils.review_utils import (
+    ReviewInputs,
     _build_row,
     _check_division_sequence,
     _check_office_name_sequence,
@@ -148,16 +147,14 @@ def test_unique_roles_no_duplicates():
         _person("Alice", office_name="Mayor"),
         _person("Bob", office_name="Council Member"),
     ]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=["Mayor"]):
-        assert _check_unique_roles(people) == []
+    assert _check_unique_roles(people, ["Mayor"]) == []
 
 def test_unique_roles_duplicate_flagged():
     people = [
         _person("Alice", office_name="Mayor"),
         _person("Bob", office_name="Mayor"),
     ]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=["Mayor"]):
-        issues = _check_unique_roles(people)
+    issues = _check_unique_roles(people, ["Mayor"])
     assert len(issues) == 1
     assert "mayor" in issues[0]
     assert "Alice" in issues[0]
@@ -168,15 +165,13 @@ def test_unique_roles_compound_office_name():
         _person("Alice", office_name="Mayor - Council Member"),
         _person("Bob", office_name="Mayor - Finance Chair"),
     ]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=["Mayor"]):
-        issues = _check_unique_roles(people)
+    issues = _check_unique_roles(people, ["Mayor"])
     assert len(issues) == 1
     assert "mayor" in issues[0].lower()
 
 def test_unique_roles_empty_unique_roles():
     people = [_person("Alice", office_name="Mayor"), _person("Bob", office_name="Mayor")]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=[]):
-        assert _check_unique_roles(people) == []
+    assert _check_unique_roles(people, []) == []
 
 
 # ── _parse_office_name_entries ────────────────────────────────────────────────
@@ -314,28 +309,25 @@ def test_get_data_issues_returns_count_issue():
 def test_generate_review_clean():
     research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
     people = [_person(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=[]):
-        result = generate_review(research, people)
+    result = generate_review(research, people)
     assert result["issues"] == []
     assert len(result["people_by_source"]) == 3
 
 def test_generate_review_missing_official():
     research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
     people = [_person(n) for n in ["Alice Smith", "Carol White", "Carol White"]]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=[]):
-        result = generate_review(research, people)
+    result = generate_review(research, people)
     assert any("Missing official" in i for i in result["issues"])
 
 def test_generate_review_too_few_people():
     research = [_rp("Alice Smith")]
     people = [_person("Alice Smith")]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=[]):
-        result = generate_review(research, people)
+    result = generate_review(research, people)
     assert any("minimum expected" in i for i in result["issues"])
 
 def test_generate_review_with_identities():
     research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
     people = [_person(n) for n in ["Al Smith", "Bob Jones", "Carol White"]]
-    with patch("shared.utils.review_utils.config_utils.get_unique_roles", return_value=[]):
-        result = generate_review(research, people, identities={"Alice Smith": ["Al Smith"]})
+    inputs = ReviewInputs(identities={"Alice Smith": ["Al Smith"]})
+    result = generate_review(research, people, inputs)
     assert result["issues"] == []

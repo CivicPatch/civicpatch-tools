@@ -1,7 +1,9 @@
 import pytest
 from shared.utils.review_utils import (
+    ReviewInputs,
     _check_division_sequence,
     _check_people_count,
+    _check_unrecognized_roles,
     _collect_all_canonicals,
     _generate_issues,
     _build_row,
@@ -228,6 +230,34 @@ def test_generate_review_with_identities():
     # "Al Smith" is an alias for "Alice Smith"
     research = [_rp("Alice Smith"), _rp("Bob Jones"), _rp("Carol White")]
     people = [_dp("Al Smith"), _dp("Bob Jones"), _dp("Carol White")]
-    identities = {"Alice Smith": ["Al Smith"]}
-    result = generate_review(research, people, identities)
+    inputs = ReviewInputs(identities={"Alice Smith": ["Al Smith"]})
+    result = generate_review(research, people, inputs)
     assert result["issues"] == []
+
+
+# ── _check_unrecognized_roles ─────────────────────────────────────────────────
+
+def test_check_unrecognized_roles_empty():
+    assert _check_unrecognized_roles([]) == []
+
+def test_check_unrecognized_roles_single():
+    roles = [{"role": "Alderman", "person_name": "John Smith"}]
+    issues = _check_unrecognized_roles(roles)
+    assert issues == ["Unrecognized role 'Alderman' on John Smith"]
+
+def test_check_unrecognized_roles_multiple():
+    roles = [
+        {"role": "Alderman", "person_name": "John Smith"},
+        {"role": "Selectman", "person_name": "Jane Doe"},
+    ]
+    issues = _check_unrecognized_roles(roles)
+    assert len(issues) == 2
+    assert any("Alderman" in i for i in issues)
+    assert any("Selectman" in i for i in issues)
+
+def test_generate_review_includes_unrecognized_roles():
+    research = [_rp(n) for n in ["Alice", "Bob", "Carol"]]
+    people = [_dp(n) for n in ["Alice", "Bob", "Carol"]]
+    inputs = ReviewInputs(unrecognized_roles=[{"role": "Alderman", "person_name": "Alice"}])
+    result = generate_review(research, people, inputs)
+    assert any("Alderman" in i for i in result["issues"])

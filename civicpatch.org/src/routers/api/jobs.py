@@ -46,6 +46,9 @@ ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 
 async def update_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str]):
     await update_job_status(request_id=request_id, status=status, progress=progress)
+    if not jurisdiction_ocdid:
+        job = await get_job(request_id)
+        jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid") if job else None
     if jurisdiction_ocdid:
         await pubsub_service.publish(
             f"job_status:{jurisdiction_ocdid}",

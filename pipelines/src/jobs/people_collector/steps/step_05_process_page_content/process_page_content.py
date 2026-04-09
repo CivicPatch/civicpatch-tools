@@ -96,8 +96,6 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     else:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL)
 
-    logger.info(f"links updated: {updated_links}")
-
     return updated_links, ProcessPageContentStep(
         progress=updated_progress,
         raw_records_by_llm=updated_raw_records,
