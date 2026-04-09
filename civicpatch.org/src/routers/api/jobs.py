@@ -61,11 +61,6 @@ class CreateJobRequest(BaseModel):
     source_urls: Optional[list[str]] = None
 
 
-class CreateRegisterJobRequest(BaseModel):
-    request_id: str
-    arguments: dict
-    run_url: Optional[str] = None
-
 class UpdateJobStatusRequest(BaseModel):
     status: str
     progress: Optional[int] = None
@@ -142,6 +137,19 @@ def get_router(api_key_header):
 
         try:
             request_id = shared.utils.id_utils.make_request_id()
+            await register_request_with_job(
+                requested_by_provider=user.provider,
+                requested_by_provider_user_id=user.provider_user_id,
+                request_id=request_id,
+                job_type="people",
+                arguments_json={
+                    "jurisdiction_ocdid": request.jurisdiction_ocdid,
+                    "name": request.name,
+                    "url": request.url,
+                    "source_urls": request.source_urls,
+                },
+                jurisdiction_ocdid=request.jurisdiction_ocdid,
+            )
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 request_id=request_id,
@@ -151,7 +159,7 @@ def get_router(api_key_header):
                 source_urls=request.source_urls,
             )
         except Exception as e:
-            logger.exception(f"Error starting Temporal workflow: {e}")
+            logger.exception(f"Error creating job: {e}")
             return JSONResponse(
                 content=ErrorResponse(
                     error="Failed to start people collector workflow"
@@ -160,30 +168,6 @@ def get_router(api_key_header):
             )
 
         return CreateJobResponse(request_id=request_id, status=JobStatus.PENDING)
-
-    @router.post(
-        "/register",
-        summary="Register a new job",
-        description="Register a new job in the system.",
-        include_in_schema=False,
-    )
-    async def register_people_job_endpoint(
-        request: CreateRegisterJobRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
-    ):
-        print(
-            f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
-        )
-        _response = await register_request_with_job(
-            requested_by_provider=user.provider,
-            requested_by_provider_user_id=user.provider_user_id,
-            request_id=request.request_id,
-            job_type="people",
-            arguments_json=request.arguments,
-            jurisdiction_ocdid=request.arguments.get("jurisdiction_ocdid"),
-            run_url=request.run_url or None,
-        )
-        return {"request_id": request.request_id, "status": JobStatus.PENDING}
 
     # ── Jobs: Status & Progress ──────────────
 

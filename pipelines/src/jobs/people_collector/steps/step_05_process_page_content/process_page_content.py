@@ -31,8 +31,8 @@ from utils import (
 from typing import List, Dict, Tuple, cast 
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
-import services.together_ai.llm as together_ai_llm
-import services.together_ai.prompts as together_ai_prompt
+import services.open_router.llm as open_router_llm
+import services.open_router.prompts as open_router_prompt
 
 # Relevance check uses Gemini Flash for better instruction-following on complex URL filtering rules
 _relevance_llm = google_gemini_llm
@@ -46,9 +46,9 @@ class ProcessingSetup:
 
 LLMS = [
     {
-        "name": "together_ai",
-        "service": together_ai_llm,
-        "prompt": together_ai_prompt,
+        "name": "open_router",
+        "service": open_router_llm,
+        "prompt": open_router_prompt,
         "with_batch_api": False,
     },
     #{
@@ -120,11 +120,11 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
     return ProcessPageContentStep(
         records_by_llm={
             "google_gemini": {},
-            "together_ai": {},
+            "open_router": {},
         },
         raw_records_by_llm={
             "google_gemini": {},
-            "together_ai": {},
+            "open_router": {},
         },
         links=[],
         progress=ProgressState(

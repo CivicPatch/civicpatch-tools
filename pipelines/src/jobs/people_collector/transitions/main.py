@@ -41,8 +41,6 @@ from jobs.people_collector.utils.links import (
 from shared.schemas import JobConfig
 from utils import cost_utils
 from utils.log_utils import WorkflowLogger
-from services.civicpatch_api import register_people_job
-
 async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     await prepare_pipeline(context)
 
@@ -51,15 +49,6 @@ async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: Peop
             "links": add_links([], [context.data.config.url]),
         })
     })
-    await register_people_job(
-        logger,
-        context.request_id,
-        {
-            "jurisdiction_ocdid": context.data.jurisdiction_ocdid,
-            "name": context.data.config.name,
-            "url": context.data.config.url
-        }
-    )
     return next_context, PipelineStatus.RESEARCH_MUNICIPALITY
 
 async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:

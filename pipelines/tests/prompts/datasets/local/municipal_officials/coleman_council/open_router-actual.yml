@@ -1,0 +1,55 @@
+people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  designations:
+  - Position 2
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Tracy Rankin
+  roles:
+  - Council Member
+  designations:
+  - Position 1
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Beau Brudney
+  roles:
+  - Council Member
+  designations:
+  - Position 3
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - Position 4
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null

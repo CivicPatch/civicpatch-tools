@@ -30,6 +30,9 @@ def client():
 @pytest.mark.unit
 def test_create_job_returns_request_id(client):
     with patch(
+        "routers.api.jobs.register_request_with_job",
+        new_callable=AsyncMock,
+    ), patch(
         "routers.api.jobs.temporal_service.start_people_collector_workflow",
         new_callable=AsyncMock,
         return_value="people-collector-ocd-jurisdiction-country-us-state-ca-place-oakland",
@@ -48,6 +51,9 @@ def test_create_job_returns_request_id(client):
 @pytest.mark.unit
 def test_create_job_returns_500_on_temporal_error(client):
     with patch(
+        "routers.api.jobs.register_request_with_job",
+        new_callable=AsyncMock,
+    ), patch(
         "routers.api.jobs.temporal_service.start_people_collector_workflow",
         new_callable=AsyncMock,
         side_effect=Exception("Temporal unavailable"),
