@@ -2,7 +2,7 @@ import pytest
 import yaml
 from unittest.mock import AsyncMock, patch, call
 
-from services.github.data_sync_service import get_jurisdiction_metadata, bulk_sync
+from services.github.data_sync_service import get_jurisdiction_metadata, od_sync as bulk_sync
 
 LACY_LAKEVIEW_OCDID = "ocd-jurisdiction/country:us/state:tx/place:lacy-lakeview/government"
 AUSTIN_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"

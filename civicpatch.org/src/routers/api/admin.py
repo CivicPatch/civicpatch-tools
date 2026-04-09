@@ -8,7 +8,7 @@ def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.post("/od_sync", include_in_schema=False)
-    async def bulk_sync_endpoint(
+    async def od_sync_endpoint(
         request: OdSyncRequestSchema,
         background_tasks: BackgroundTasks,
     ):
