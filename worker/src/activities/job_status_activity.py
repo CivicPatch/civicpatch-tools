@@ -28,20 +28,26 @@ async def update_job_status(request_id: str, status: str, progress: Optional[int
 
 @activity.defn
 async def poll_job_status(request_id: str) -> str:
-    async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
-        while True:
-            activity.heartbeat(f"polling job {request_id}")
-            try:
+    while True:
+        activity.heartbeat(f"polling job {request_id}")
+        status = None
+        try:
+            async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
                 resp = await client.get(f"{API_URL}/api/v1/jobs/{request_id}/status")
                 resp.raise_for_status()
-            except httpx.HTTPError as e:
-                raise RuntimeError(f"poll_job_status request failed: {type(e).__name__}: {e}") from None
             status = resp.json()["status"]
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code < 500:
+                raise RuntimeError(f"poll_job_status request failed: {type(e).__name__}: {e}") from None
+            activity.logger.warning(f"Job {request_id}: server error {e.response.status_code}, will retry")
+        except httpx.HTTPError as e:
+            activity.logger.warning(f"Job {request_id}: transient error ({type(e).__name__}), will retry")
+        if status is not None:
             activity.logger.info(f"Job {request_id}: status={status}")
             if status in _TERMINAL_STATUSES:
                 return RunConclusion.SUCCESS if status == JobStatus.COMPLETED else RunConclusion.FAILURE
-            try:
-                await asyncio.sleep(15)
-            except asyncio.CancelledError:
-                raise
-            activity.heartbeat(f"polling job {request_id}")
+        try:
+            await asyncio.sleep(15)
+        except asyncio.CancelledError:
+            raise
+        activity.heartbeat(f"polling job {request_id}")

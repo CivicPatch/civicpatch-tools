@@ -11,6 +11,9 @@ dependencies = [
     "shared",
 ]
 
+[project.optional-dependencies]
+dev = ["watchfiles>=1.0.0"]
+
 [tool.uv]
 package = true
 
