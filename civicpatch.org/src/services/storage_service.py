@@ -217,3 +217,15 @@ def get_presigned_url_from_object_url(
 def get_civicpatch_artifacts_url(key: str) -> str:
     url = "https://civicpatch-artifacts.civicpatch.org"
     return f"{url}/{key}"
+
+
+def get_presigned_put_url(bucket_name: str, key: str, expiration: int = 3600) -> str:
+    return get_client().generate_presigned_url(
+        ClientMethod="put_object",
+        Params={"Bucket": bucket_name, "Key": key, "ContentType": "application/json"},
+        ExpiresIn=expiration,
+    )
+
+
+def delete_object(bucket_name: str, key: str) -> None:
+    get_client().delete_object(Bucket=bucket_name, Key=key)

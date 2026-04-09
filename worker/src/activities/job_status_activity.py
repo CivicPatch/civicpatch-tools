@@ -40,5 +40,8 @@ async def poll_job_status(request_id: str) -> str:
             activity.logger.info(f"Job {request_id}: status={status}")
             if status in _TERMINAL_STATUSES:
                 return RunConclusion.SUCCESS if status == JobStatus.COMPLETED else RunConclusion.FAILURE
-            await asyncio.sleep(15)
+            try:
+                await asyncio.sleep(15)
+            except asyncio.CancelledError:
+                raise
             activity.heartbeat(f"polling job {request_id}")
