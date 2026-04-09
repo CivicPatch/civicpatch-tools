@@ -65,6 +65,10 @@ services:
       CIVICPATCH_ORG_URL: http://civicpatch-org:8001
       SERVICE_API_KEY: ${SERVICE_API_KEY}
       CIVICPATCH_LOCAL_URL: http://pipelines:8000
+    volumes:
+      - ./worker/src:/app/src
+      - ./shared/src/shared:/app/src/shared
+    command: watchfiles --filter python "python src/main.py" src/
     networks:
       - civicpatch_net
     restart: unless-stopped

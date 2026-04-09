@@ -3431,6 +3431,11 @@ dependencies = [
     { name = "temporalio" },
 ]
 
+[package.optional-dependencies]
+dev = [
+    { name = "watchfiles" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.28.0" },
@@ -3438,7 +3443,9 @@ requires-dist = [
     { name = "pyjwt", extras = ["crypto"], specifier = ">=2.10.0" },
     { name = "shared", editable = "shared" },
     { name = "temporalio", specifier = ">=1.10.0" },
+    { name = "watchfiles", marker = "extra == 'dev'", specifier = ">=1.0.0" },
 ]
+provides-extras = ["dev"]
 
 [[package]]
 name = "wrapt"

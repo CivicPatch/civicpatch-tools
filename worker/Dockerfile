@@ -23,7 +23,7 @@ COPY pyproject.toml uv.lock ./
 COPY shared/pyproject.toml ./shared/pyproject.toml
 COPY worker/pyproject.toml ./worker/pyproject.toml
 
-RUN uv sync --package worker --no-dev --frozen --no-install-project
+RUN uv sync --package worker --frozen --no-install-project
 
 # Copy source
 COPY worker/src /app/src
