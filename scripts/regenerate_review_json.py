@@ -14,8 +14,8 @@ import os
 from psycopg_pool import AsyncConnectionPool
 
 from shared.schemas import Person
-from shared.utils import name_utils
-from shared.utils.review_utils import generate_review
+from shared.utils import config_utils, name_utils
+from shared.utils.review_utils import generate_review, ReviewInputs
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -82,7 +82,11 @@ async def main() -> None:
             identities = name_utils.person_list_to_identities(all_people)
             origin_source = "existing" if current_people else "google_gemini"
 
-            review = generate_review(current_people, result_data, identities, origin_source)
+            inputs = ReviewInputs(
+                identities=identities,
+                unique_roles=config_utils.get_unique_roles(),
+            )
+            review = generate_review(current_people, result_data, inputs, origin_source)
 
             await update_review_json(pool, request_id, review)
             logger.info(

@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from contextlib import asynccontextmanager
 from typing import Optional
 
 from fastapi import FastAPI
@@ -13,7 +14,18 @@ from shared.utils.statuses import JobStatus
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+_running_tasks: set[asyncio.Task] = set()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    if _running_tasks:
+        logger.info("Waiting for %d in-flight job(s) to finish...", len(_running_tasks))
+        await asyncio.gather(*_running_tasks, return_exceptions=True)
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 class TriggerJobRequest(BaseModel):
@@ -42,5 +54,7 @@ async def _run(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig)
 @app.post("/jobs", response_model=JobStatusResponse)
 async def trigger_job(req: TriggerJobRequest) -> JobStatusResponse:
     config = WorkflowConfig(url=req.url, name=req.name, source_urls=req.source_urls)
-    asyncio.create_task(_run(req.request_id, req.jurisdiction_ocdid, config))
+    task = asyncio.create_task(_run(req.request_id, req.jurisdiction_ocdid, config))
+    _running_tasks.add(task)
+    task.add_done_callback(_running_tasks.discard)
     return JobStatusResponse(request_id=req.request_id, status=JobStatus.PENDING)

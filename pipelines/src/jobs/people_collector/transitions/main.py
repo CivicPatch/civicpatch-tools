@@ -30,7 +30,7 @@ from jobs.people_collector.steps.step_10_save_output.save_output import save_out
 from jobs.people_collector.steps.step_11_send_success.send_success import send_success
 from jobs.people_collector.steps.step_11_send_error.send_error import send_error
 
-from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
+from jobs.people_collector.transitions.process_page_content_transition import next_process_content_state
 from jobs.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
 from jobs.people_collector.utils.links import (
     get_next_link_with_status,
@@ -172,7 +172,12 @@ async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogge
 async def process_page_content_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
     if len(preprocessed_links) == 0:
-        # TODO: call legger here
+        error_links = get_links_with_status(context.data.links, [LinkStatus.ERROR])
+        if context.data.links and len(error_links) == len(context.data.links):
+            next_context = context.copy(update={
+                "data": context.data.copy(update={"error_step": "All pages were unreachable"})
+            })
+            return next_context, PipelineStatus.SEND_ERROR
         return context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
     page_to_process = preprocessed_links[0]
@@ -198,13 +203,17 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
     current_cost = cost_utils.total_cost_by_request(
         context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]
-    next_state = next_state_for_process_content_state(
+    next_state, stop_error = next_process_content_state(
         processed_count=len(links_processed),
         current_cost=current_cost,
         job_config=job_config,
-        progress=result.progress
+        progress=result.progress,
     )
-
+    if stop_error:
+        next_context = next_context.copy(update={
+            "data": next_context.data.copy(update={"error_step": stop_error})
+        })
+        return next_context, PipelineStatus.SEND_ERROR
     return next_context, next_state
 
 async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:

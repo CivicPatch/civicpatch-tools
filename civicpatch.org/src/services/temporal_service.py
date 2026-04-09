@@ -2,6 +2,7 @@ import os
 from typing import Optional
 
 from temporalio.client import Client, WorkflowFailureError
+from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.exceptions import WorkflowAlreadyStartedError
 from temporalio.service import RPCError
 
@@ -35,11 +36,14 @@ async def start_people_collector_workflow(
 ) -> str:
     client = await _get_client()
     workflow_id = _workflow_id(jurisdiction_ocdid)
+    # TERMINATE_EXISTING cleans up zombie Temporal workflows (e.g. after a worker crash).
+    # The frontend is responsible for not calling this endpoint when a job is actively running.
     handle = await client.start_workflow(
         WORKFLOW_CLASS_NAME,
         args=[jurisdiction_ocdid, request_id, dispatch_mode, name, url, source_urls],
         id=workflow_id,
         task_queue=TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
     )
     return handle.id
 

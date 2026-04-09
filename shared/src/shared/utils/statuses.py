@@ -7,7 +7,7 @@ class JobStatus(StrEnum):
     # Workflow runner is actively executing
     RUNNING = "RUNNING"
     # Workflow runner finished successfully and produced output
-    COMPLETED = "COMPLETED"
+    COMPLETED = "DONE"
     # Workflow runner encountered an unrecoverable error
     ERROR = "ERROR"
     # Error was manually acknowledged and cleared by a maintainer

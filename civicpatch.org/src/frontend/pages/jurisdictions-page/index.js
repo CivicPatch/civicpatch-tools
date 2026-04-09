@@ -14,6 +14,7 @@ import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
 import { triggerJob, fetchJurisdictionHistory } from '../../api.js';
+import { JOB_STATUS } from '../../components/job-status.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
@@ -21,6 +22,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
   const [history, setHistory] = useState(null);
+  const [isTriggering, setIsTriggering] = useState(false);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
@@ -48,6 +50,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const handleScrapeStartClick = async (details) => {
     setScrapeModalOpen(false);
+    setIsTriggering(true);
     await triggerJob(
       details.scrapeMode,
       jurisdictionData.data.id,
@@ -59,6 +62,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
+
+  const _TERMINAL_STATUSES = new Set([JOB_STATUS.COMPLETED, JOB_STATUS.ERROR, JOB_STATUS.RESOLVED, JOB_STATUS.PAUSED]);
+  const mostRecentJob = history?.data?.[0];
+  const effectiveStatus = (jobStatus && mostRecentJob && jobStatus.request_id === mostRecentJob.request_id)
+    ? jobStatus.status
+    : mostRecentJob?.status;
+  const isJobRunning = !!effectiveStatus && !_TERMINAL_STATUSES.has(effectiveStatus);
 
   return html`
     <div class="jurisdictions-page page-content" style="display: flex; flex-direction: column; gap: 2rem;">
@@ -92,6 +102,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .jurisdictionData=${jurisdictionData}
             .onScrapeClick=${() => setScrapeModalOpen(true)}
             .canStartScrape=${canStartScrape}
+            .isJobRunning=${isJobRunning || isTriggering}
           ></civ-jurisdiction-sidebar>
 
           ${jurisdictionData ? html`

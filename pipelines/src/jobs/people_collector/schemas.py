@@ -103,7 +103,7 @@ class PipelineStatus(Enum):
     RETRY = "RETRY"
     FINALIZE = "FINALIZE"
     ERROR = "ERROR"
-    COMPLETED = "COMPLETED"
+    COMPLETED = "DONE"
     PAUSED = "PAUSED"
 
 class ResearchedPerson(BaseModel):

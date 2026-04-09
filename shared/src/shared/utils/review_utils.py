@@ -4,7 +4,13 @@ from typing import List, Protocol, Dict, Set
 
 from pydantic import BaseModel
 
-from . import config_utils, name_utils
+from . import name_utils
+
+
+class ReviewInputs(BaseModel):
+    identities: Dict[str, List[str]] = {}
+    unique_roles: List[str] = []
+    unrecognized_roles: List[dict] = []
 
 
 MIN_EXPECTED_PEOPLE = 3
@@ -37,13 +43,13 @@ def get_identity_issues(
 def generate_review(
     research_people,
     people,
-    identities: Dict[str, List[str]] | None = None,
+    inputs: ReviewInputs | None = None,
     origin_source: str = "google_gemini",
 ):
-    identities = identities or {}
+    inputs = inputs or ReviewInputs()
 
     all_people = list(research_people) + list(people)
-    canonical_map = name_utils.build_canonical_map(all_people, identities)
+    canonical_map = name_utils.build_canonical_map(all_people, inputs.identities)
 
     research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
     people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
@@ -51,9 +57,10 @@ def generate_review(
     all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals)
     issues = _generate_issues(research_canonicals, people_canonicals)
     issues.extend(_check_people_count(people))
-    issues.extend(_check_unique_roles(people))
+    issues.extend(_check_unique_roles(people, inputs.unique_roles))
     issues.extend(_check_division_sequence(people))
     issues.extend(_check_office_name_sequence(people))
+    issues.extend(_check_unrecognized_roles(inputs.unrecognized_roles))
     rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
 
     return {
@@ -143,18 +150,25 @@ def _get_office_name(person) -> str:
     return getattr(getattr(person, "office", None), "name", "") or ""
 
 
-def _check_unique_roles(people) -> List[str]:
-    unique_roles = {r.lower() for r in config_utils.get_unique_roles()}
+def _check_unique_roles(people, unique_roles: List[str]) -> List[str]:
+    unique_roles_set = {r.lower() for r in unique_roles}
     role_to_persons = defaultdict(list)
     for person in people:
         tokens = [t.strip() for t in _get_office_name(person).lower().split(" - ") if t.strip()]
         for token in tokens:
-            if token in unique_roles:
+            if token in unique_roles_set:
                 role_to_persons[token].append(name_utils.get_person_name(person))
     return [
         f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(persons)}"
         for role, persons in role_to_persons.items()
         if len(persons) > 1
+    ]
+
+
+def _check_unrecognized_roles(unrecognized_roles: List[dict]) -> List[str]:
+    return [
+        f"Unrecognized role '{r['role']}' on {r['person_name']}"
+        for r in unrecognized_roles
     ]
 
 

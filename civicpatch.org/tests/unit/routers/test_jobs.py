@@ -95,10 +95,7 @@ def test_get_job_status_returns_404_when_not_found(client):
 
 @pytest.mark.unit
 def test_patch_job_status_returns_updated_status(client):
-    with (
-        patch("routers.api.jobs.update_job_status", new_callable=AsyncMock),
-        patch("routers.api.jobs.pubsub_service.publish", new_callable=AsyncMock),
-    ):
+    with patch("routers.api.jobs.update_and_publish", new_callable=AsyncMock):
         response = client.patch(
             f"/jobs/{TEST_REQUEST_ID}/status",
             json={"status": "complete", "progress": 100},
@@ -168,6 +165,8 @@ async def test_update_and_publish_publishes_when_jurisdiction_provided():
 async def test_update_and_publish_skips_publish_when_no_jurisdiction():
     with (
         patch("routers.api.jobs.update_job_status", new_callable=AsyncMock),
+        patch("routers.api.jobs.get_job", new_callable=AsyncMock, return_value=None),
+        patch("database.database.get_pool", new_callable=AsyncMock),
         patch("routers.api.jobs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
     ):
         await update_and_publish(TEST_REQUEST_ID, "running", 50, None)

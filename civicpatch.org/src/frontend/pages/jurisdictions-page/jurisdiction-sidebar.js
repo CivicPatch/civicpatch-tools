@@ -6,7 +6,8 @@ import "./jurisdiction-detail.js";
 function JurisdictionSidebar({
   jurisdictionData,
   onScrapeClick,
-  canStartScrape
+  canStartScrape,
+  isJobRunning
 }) {
   if (!jurisdictionData) {
     return html`<p>Loading jurisdiction data...</p>`;
@@ -20,6 +21,7 @@ function JurisdictionSidebar({
         <button
           @click=${onScrapeClick}
           class="primary jurisdiction-sidebar__scrape-btn btn-gradient"
+          ?disabled=${isJobRunning}
         >
           Scrape for Jurisdiction
         </button>
