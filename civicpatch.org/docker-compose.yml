@@ -73,6 +73,41 @@ services:
     networks:
       - civicpatch_net
 
+  civicpatch-org-worker:
+    container_name: civicpatch-org-worker
+    build:
+      context: ..
+      dockerfile: civicpatch.org/Dockerfile
+      target: development
+    entrypoint: ["python", "src/worker.py"]
+    environment:
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID}
+      GITHUB_APP_CLIENT_SECRET: ${GITHUB_APP_CLIENT_SECRET}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
+      CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@civicpatch-org-db:5432/development_db}
+      CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
+      REDIS_HOST: civicpatch-org-redis
+      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      INSTANCE_URL: "http://localhost:8001"
+      COOKIE_INSTANCE_URL: ".civicpatch.org"
+      MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}
+      DATABASE_HASH_KEY: ${DATABASE_HASH_KEY:-development_hash_key}
+      SERVICE_API_KEY: "service-api-key"
+      TEMPORAL_HOST: temporal:7233
+      TEMPORAL_NAMESPACE: default
+      DB_POOL_MIN_SIZE: 1
+      DB_POOL_MAX_SIZE: 2
+    volumes:
+      - ./:/app
+      - ../shared/src/shared:/app/src/shared:ro
+    networks:
+      - civicpatch_net
+    depends_on:
+      temporal:
+        condition: service_healthy
+
 volumes:
   api_civicpatch_org_db_data:
   #test_pgdata:

@@ -36,6 +36,13 @@ services:
     networks:
       - civicpatch_net
 
+  civicpatch-org-worker:
+    extends:
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-worker
+    networks:
+      - civicpatch_net
+
   # ── Temporal worker ────────────────────────────────────────────────────────
   worker:
     build:

@@ -35,10 +35,10 @@ async def get_pool() -> AsyncConnectionPool:
         if not db_url:
             raise RuntimeError("CIVICPATCH_API_DB_URL is not set")
         _pool = AsyncConnectionPool(
-            db_url, 
+            db_url,
             open=False,
-            min_size=4,
-            max_size=20
+            min_size=int(env.get("DB_POOL_MIN_SIZE", 4)),
+            max_size=int(env.get("DB_POOL_MAX_SIZE", 20)),
         )
         await _pool.open()
         logger.info("Database pool opened")

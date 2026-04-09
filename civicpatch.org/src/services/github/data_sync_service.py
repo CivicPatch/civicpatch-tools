@@ -127,7 +127,7 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
     await database.bulk_update_people(people_list)
 
 
-async def bulk_sync():
+async def od_sync():
     logger.info("Starting bulk sync")
     states_config = config_utils.get_states()
     states = [state["code"] for state in states_config]
@@ -182,7 +182,7 @@ async def sync(request: OdSyncRequestSchema):
         await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
         await sync_people_by_ocdids(jurisdiction_ocdids)
     else:
-        await bulk_sync()
+        await od_sync()
 
 
 def is_newer(date1, date2):

@@ -30,8 +30,6 @@ import routers.api.notes as api_notes_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
-import services.github.pull_request_sync_service
-import services.github.data_sync_service
 from database.database import (
     close_pool,
     get_pool,
@@ -70,15 +68,7 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
-    sync_task = None
-    if is_production:
-        asyncio.create_task(services.github.data_sync_service.bulk_sync())
-        sync_task = asyncio.create_task(_run_every(3600, services.github.pull_request_sync_service.sync_open_pr_state))
-
     yield
-
-    if sync_task:
-        sync_task.cancel()
     await close_pool()
 
 
@@ -303,15 +293,6 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         for task in tasks.values():
             task.cancel()
-
-
-async def _run_every(interval: int, coro_fn):
-    while True:
-        try:
-            await coro_fn()
-        except Exception:
-            logger.exception("Periodic task %s failed", coro_fn.__name__)
-        await asyncio.sleep(interval)
 
 
 # Must be last: contains a /{path:path} catch-all for jurisdiction pages
