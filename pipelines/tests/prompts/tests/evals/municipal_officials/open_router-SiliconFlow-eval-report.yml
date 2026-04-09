@@ -1,0 +1,106 @@
+cost_summary:
+  model: deepseek/deepseek-chat-v3.1
+  elapsed_seconds: 120.78
+  total_input_tokens: 90074
+  total_output_tokens: 5970
+  total_cost_usd: 0.0179886
+aggregated_report:
+  designations: 1.0
+  name: 1.0
+  url: 0.71900826446281
+  email: 0.9090909090909091
+  roles: 1.0
+  phone: 0.8181818181818182
+per_case_scores:
+- case_id: austin_city_manager_staff
+  scores: {}
+- case_id: austin_council
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 0.9090909090909091
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: austin_district7_council_member
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 0.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: board_of_aldermen
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: coleman_council
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 0.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: golinda_mixed_city_county
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: inverted_name_format
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: la_porte_council
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 0.0
+- case_id: mixed_current_past
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 0.0
+    email: 0.0
+    roles: 1.0
+    phone: 0.0
+- case_id: nav_links_no_names
+  scores: {}
+- case_id: placeholder_name_council
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: redundant_place_role
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0
+- case_id: vacant_positions_council
+  scores:
+    designations: 1.0
+    name: 1.0
+    url: 1.0
+    email: 1.0
+    roles: 1.0
+    phone: 1.0

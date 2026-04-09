@@ -106,7 +106,7 @@ def municipality_officials_prompt(roles_hint: List[str]):
         roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(roles_hint) + "."
 
     return f"""
-    You are a data extraction assistant. Extract information about the currently 
+    You are a data extraction assistant. Extract information about the currently
     serving elected officials of the target municipality from the provided content.
 
     Current Date: {current_date}
@@ -148,19 +148,24 @@ def municipality_officials_prompt(roles_hint: List[str]):
     - If none found, use null.
 
     roles:
-    - The official's role exactly as written in the source. Do not rename or normalize.
-    - Common roles you may encounter: Mayor, Council Member, Alderman, Commissioner,
-      Select Board Member. Always use the source's exact wording.
-    - Strip any trailing position identifier (Place N, Ward N, District N, At-Large, etc.) from the role — it belongs in designations.
-      Example: "Council Place 1" or "Council Member Place 1" → role="Council Member", designation="Place 1"
+    - Determine the role using this order:
+      1. If the label next to the name is a compound like "Council Member Place 1" or "Council Place 1" —
+         strip the trailing position identifier: role="Council Member", designation="Place 1"
+      2. If the label is entirely a position identifier ("District 6", "At-Large A", "Ward 3") with no
+         role prefix — it is purely a designation. Infer the role from the page title, governing body
+         description, or section heading (e.g. "Councilperson").
+      3. Otherwise, use the role exactly as written in the source. Do not rename or normalize.
+    - Common roles: Mayor, Council Member, Alderman, Commissioner, Select Board Member.
     {roles_hint_str}
 
     designations:
       Known types: {designations_str}
-      Normalize common variations to the canonical type (e.g. "Council Ward 3" → "Ward 3", 
+      Normalize common variations to the canonical type (e.g. "Council Ward 3" → "Ward 3",
       "Posn. 2" → "Position 2", "City-Wide" → "At Large").
       Format as "<canonical type> <value>". If no designation found, use an empty array.
-      Do not include role titles as designations.      
+      Do not include role titles as designations.
+      A person may have more than one designation — extract all of them.
+      Example: "Place 3 (East Ward)" → designations: ["Place 3", "Ward East"]
 
     phone:
     - A phone number explicitly present in the content.
@@ -183,17 +188,21 @@ def municipality_officials_prompt(roles_hint: List[str]):
     - If none found, use null.
 
     start_date:
-    - Date of the most recent election or appointment, if explicitly stated.
-    - Format: "YYYY", "YYYY-MM", or "YYYY-MM-DD".
-    - If not explicitly stated, use null.
+    - Date of the most recent election or appointment, if present anywhere in the content.
+    - Parse from any written format (e.g. "Jan. 6, 2023", "January 2023", "2023") and normalize.
+    - Output format: "YYYY", "YYYY-MM", or "YYYY-MM-DD" depending on precision available.
+    - If not present, use null.
 
     end_date:
-    - Date the current term expires, if explicitly stated.
-    - Format: "YYYY", "YYYY-MM", or "YYYY-MM-DD".
-    - If not explicitly stated, use null.
+    - Date the current term expires, if present anywhere in the content.
+    - Parse from any written format and normalize.
+    - Output format: "YYYY", "YYYY-MM", or "YYYY-MM-DD" depending on precision available.
+    - If not present, use null.
 
     STEP 3 - ADDITIONAL RULES
     - Only extract information explicitly present in the content. Do not guess or fabricate.
+      Exception: inferring a role from a governing body section heading, page title, or description
+      is permitted — this is the one case where inference is required rather than direct extraction.
     - One entry per unique person. If the same person appears multiple times, merge into one record.
     - All details must refer to the official's current term.
 

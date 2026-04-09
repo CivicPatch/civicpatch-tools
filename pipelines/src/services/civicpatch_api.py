@@ -78,27 +78,6 @@ async def get_jurisdiction_info(jurisdiction_ocdid: str) -> dict:
         return results[0]
 
 
-# System calls
-async def register_people_job(logger, request_id: str, arguments: dict):
-    env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-    data = {
-        "request_id": request_id,
-        "arguments": arguments,
-        "server_source": SERVER_SOURCE,
-        "run_url": env.get("JOB_RUN_URL"),
-    }
-    async with httpx.AsyncClient(headers=system_auth_header) as client:
-        response = await client.post(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jobs/register",
-            json=data,
-        )
-        if response.status_code != 200:
-            logger.error(
-                f"Failed to register job with civicpatch.org: {response.status_code} {response.text}"
-            )
-        return response
-
 
 async def update_job_status(
     logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int

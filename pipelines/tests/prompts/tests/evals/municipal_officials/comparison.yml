@@ -1,0 +1,64 @@
+providers:
+  open_router-Chutes:
+    elapsed_seconds: 66.86
+    cost_usd: 0.0165438
+    designations: 1.0
+    name: 1.0
+    url: 0.628099173553719
+    email: 0.9090909090909091
+    roles: 0.990909090909091
+    phone: 0.7272727272727273
+  open_router-SiliconFlow:
+    elapsed_seconds: 120.78
+    cost_usd: 0.0179886
+    designations: 1.0
+    name: 1.0
+    url: 0.71900826446281
+    email: 0.9090909090909091
+    roles: 1.0
+    phone: 0.8181818181818182
+  open_router-AtlasCloud:
+    elapsed_seconds: 114.13
+    cost_usd: 0.0192645
+    designations: 1.0
+    name: 1.0
+    url: 0.71900826446281
+    email: 1.0
+    roles: 0.990909090909091
+    phone: 0.9090909090909091
+  open_router-WandB:
+    elapsed_seconds: 115.85
+    cost_usd: 0.01800255
+    designations: 1.0
+    name: 1.0
+    url: 0.71900826446281
+    email: 0.9090909090909091
+    roles: 1.0
+    phone: 0.9090909090909091
+  open_router-Fireworks:
+    elapsed_seconds: 190.63
+    cost_usd: 0.0396177
+    designations: 1.0
+    name: 1.0
+    url: 0.8099173553719008
+    email: 0.9090909090909091
+    roles: 1.0
+    phone: 1.0
+  open_router-Google:
+    elapsed_seconds: 163.0
+    cost_usd: 0.0179133
+    designations: 1.0
+    name: 1.0
+    url: 0.71900826446281
+    email: 0.9090909090909091
+    roles: 1.0
+    phone: 0.9090909090909091
+  open_router-Together:
+    elapsed_seconds: 198.84
+    cost_usd: 0.01724055
+    designations: 0.9636363636363636
+    name: 1.0
+    url: 0.628099173553719
+    email: 1.0
+    roles: 0.990909090909091
+    phone: 0.8181818181818182

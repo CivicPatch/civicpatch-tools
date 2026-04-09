@@ -104,9 +104,6 @@ services:
       - ../shared/src/shared:/app/src/shared:ro
     networks:
       - civicpatch_net
-    depends_on:
-      temporal:
-        condition: service_healthy
 
 volumes:
   api_civicpatch_org_db_data:

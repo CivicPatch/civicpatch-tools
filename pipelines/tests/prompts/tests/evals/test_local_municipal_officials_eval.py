@@ -1,10 +1,12 @@
+import asyncio
+import time
 import pytest
 import pytest_asyncio
 from utils import merge_utils, cost_utils
 from services.google_gemini.llm import run_prompt as run_gemini_prompt
 from services.google_gemini.prompts import municipality_officials_prompt as make_gemini_prompt
-from services.together_ai.llm import run_prompt as run_together_prompt
-from services.together_ai.prompts import municipality_officials_prompt as make_together_prompt
+from services.open_router.llm import run_prompt as run_together_prompt
+from services.open_router.prompts import municipality_officials_prompt as make_together_prompt
 from jobs.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
 import phonenumbers
 from typing import cast, List
@@ -12,8 +14,9 @@ import pathlib
 import yaml
 import os
 from shared.utils import name_utils
-import utils.merge_utils 
+import utils.merge_utils
 import utils.people_utils
+from eval_utils import PROVIDER_COMPARISON, make_provider_client, write_comparison_report
 
 pytestmark = pytest.mark.evals
 
@@ -80,7 +83,7 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
     expected_vals["roles"] = expected.roles
 
     # designations
-    has_district_or_ward = any(d in ["district", "ward"] for d in expected.designations)
+    has_district_or_ward = any("district" in d.lower() or "ward" in d.lower() for d in expected.designations)
     if not expected.designations or not has_district_or_ward:
         score["designations"] = 1.0
     else:
@@ -144,46 +147,46 @@ def aggregate(scores):
 
     return final_aggregate
 
+async def _run_single_case(model_client, case, ocdid):
+    run_prompt = model_client["run_prompt"]
+    make_prompt = model_client["make_prompt"]
+    extra_kwargs = model_client.get("extra_kwargs", {})
+
+    prompt = make_prompt([])
+    response = await run_prompt(
+        "run-eval",
+        ocdid,
+        prompt,
+        response_schema=PeopleArrayLLMResponseSchema,
+        content=case["input"],
+        **extra_kwargs,
+    )
+    expected = [RawLLMPerson(**person) for person in case["expected"]["people"]]
+    actual = cast(PeopleArrayLLMResponseSchema, response)
+    case_path = case.get("case_path", "unknown_case")
+    with open(f"{case_path}/{model_client['name']}-actual.yml", 'w', encoding='utf-8') as f:
+        yaml_output = yaml.safe_dump(PeopleArrayLLMResponseSchema.model_dump(actual), sort_keys=False)
+        f.write(yaml_output)
+
+    case_scores = score_cases(actual.people, expected)
+    case_aggregate = {}
+    if not expected and actual.people:
+        case_aggregate["hallucination"] = 0.0
+    else:
+        all_keys = set()
+        for score in case_scores:
+            all_keys.update(score["scores"].keys())
+        for key in all_keys:
+            case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
+
+    return case["id"], case_aggregate, case_scores
+
+
 @pytest.mark.asyncio
-async def run_eval(model_client, cases):
-    scores = []
-    per_case_scores = []
-    for case in cases:
-        run_prompt = model_client["run_prompt"]
-        make_prompt = model_client["make_prompt"] 
-
-        case_input = case["input"]
-        prompt = make_prompt([])
-        response = await run_prompt(
-            "run-eval",
-            "ocd-jurisdiction/country:us/state:tx/place:example/government",
-            prompt,
-            response_schema=PeopleArrayLLMResponseSchema,
-            content=case_input
-        )
-        expected = [RawLLMPerson(**person) for person in case["expected"]["people"]] 
-        actual = cast(PeopleArrayLLMResponseSchema, response)
-        case_path = case.get("case_path", "unknown_case")
-        with open(f"{case_path}/{model_client["name"]}-actual.yml", 'w', encoding='utf-8') as f:
-            serialized_output = PeopleArrayLLMResponseSchema.model_dump(actual)
-            yaml_output = yaml.safe_dump(serialized_output, sort_keys=False)
-            f.write(yaml_output)
-
-        case_scores = score_cases(actual.people, expected)
-        # Aggregate scores for this case
-        case_aggregate = {}
-        if not expected and actual.people:
-            # Expected empty but model returned people — hallucination
-            case_aggregate["hallucination"] = 0.0
-        else:
-            all_keys = set()
-            for score in case_scores:
-                all_keys.update(score["scores"].keys())
-            for key in all_keys:
-                case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
-        per_case_scores.append((case["id"], case_aggregate))
-        scores.append(case_scores)
-
+async def run_eval(model_client, cases, ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government"):
+    results = await asyncio.gather(*[_run_single_case(model_client, case, ocdid) for case in cases])
+    per_case_scores = [(case_id, agg) for case_id, agg, _ in results]
+    scores = [case_scores for _, _, case_scores in results]
     return aggregate(scores), per_case_scores
 
 @pytest_asyncio.fixture
@@ -216,6 +219,7 @@ def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials")
 
     return cases
 
+
 @pytest_asyncio.fixture
 async def model_client(request):
     if request.param == "gemini":
@@ -224,20 +228,30 @@ async def model_client(request):
             "run_prompt": run_gemini_prompt,
             "make_prompt": make_gemini_prompt,
         }
-    elif request.param == "together_ai":
+    elif request.param == "open_router":
         return {
-            "name": "together_ai",
+            "name": "open_router",
             "run_prompt": run_together_prompt,
             "make_prompt": make_together_prompt,
+        }
+    elif request.param.startswith("open_router:"):
+        provider = request.param.split(":", 1)[1]
+        return {
+            "name": f"open_router-{provider}",
+            "run_prompt": run_together_prompt,
+            "make_prompt": make_together_prompt,
+            "extra_kwargs": {"model_type": "STANDARD", "provider_order": [provider], "allow_fallbacks": False},
         }
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
-# @pytest.mark.parametrize("model_client", ["gemini", "together_ai"], indirect=True)
-@pytest.mark.parametrize("model_client", ["together_ai"], indirect=True)
+# @pytest.mark.parametrize("model_client", ["gemini", "open_router"], indirect=True)
+@pytest.mark.parametrize("model_client", ["open_router:AtlasCloud"], indirect=True)
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
+    start_time = time.time()
     report, per_case_scores = await run_eval(model_client, load_eval_cases)
+    elapsed_seconds = round(time.time() - start_time, 2)
     print("Final aggregated report:", report)
 
     thresholds = {
@@ -410,6 +424,7 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
     cost_summary = {
         "model": llm_costs[0]["model"] if llm_costs else None,
+        "elapsed_seconds": elapsed_seconds,
         "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
         "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
         "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
@@ -441,3 +456,62 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     assert report["url"] >= thresholds["url"]
     assert len([c for c in failed_cases if any(f["field"] == "hallucination" for f in c["failures"])]) == 0, \
         "Model returned people when expected empty"
+
+
+
+async def _run_provider(client, cases):
+    ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example/{client['name']}/government"
+    start_time = time.time()
+    report, per_case_scores = await run_eval(client, cases, ocdid)
+    elapsed_seconds = round(time.time() - start_time, 2)
+    llm_costs = cost_utils.get_cost_tracker(ocdid)["llm_costs"]
+    return {
+        "client": client,
+        "report": report,
+        "per_case_scores": per_case_scores,
+        "elapsed_seconds": elapsed_seconds,
+        "llm_costs": llm_costs,
+    }
+
+
+@pytest.mark.asyncio
+async def test_provider_comparison(load_eval_cases):
+    """Runs all providers concurrently and writes one report per provider."""
+    clients = [make_provider_client(p, make_together_prompt) for p in PROVIDER_COMPARISON]
+    results = await asyncio.gather(*[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True)
+
+    evals_dir = "tests/prompts/tests/evals/municipal_officials"
+    os.makedirs(evals_dir, exist_ok=True)
+
+    comparison = {}
+    for result in results:
+        if isinstance(result, Exception):
+            print(f"Provider failed: {result}")
+            continue
+        client = result["client"]
+        llm_costs = result["llm_costs"]
+        cost_summary = {
+            "model": llm_costs[0]["model"] if llm_costs else None,
+            "elapsed_seconds": result["elapsed_seconds"],
+            "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
+            "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
+            "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
+        }
+        report_path = os.path.join(evals_dir, f"{client['name']}-eval-report.yml")
+        with open(report_path, "w", encoding="utf-8") as f:
+            yaml.safe_dump({
+                "cost_summary": cost_summary,
+                "aggregated_report": result["report"],
+                "per_case_scores": [
+                    {"case_id": case_id, "scores": case_aggregate}
+                    for case_id, case_aggregate in result["per_case_scores"]
+                ],
+            }, f, sort_keys=False)
+        print(f"Saved provider comparison report to {report_path}")
+        comparison[client["name"]] = {
+            "elapsed_seconds": result["elapsed_seconds"],
+            "cost_usd": cost_summary["total_cost_usd"],
+            **result["report"],
+        }
+
+    write_comparison_report(evals_dir, comparison)

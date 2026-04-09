@@ -27,35 +27,45 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 - [shared](./shared/)
   Python utilities shared across both projects — import as `from shared.utils import ...`. Put cross-cutting logic here rather than duplicating it.
 
-## Summary
+## Architecture
 
-```mermaid
-graph TD
-    %% Trigger Sources
-    A1[CivicPatch Org<br/>GitHub Actions Scheduled<br/>Top most populous municipalities in a specific state] 
-    
-    %% civicpatch servers with internal pipeline
-    A1 --> CP1[pipelines server]
-    
-    subgraph "run pipeline job"
-        SCRAPE[Web Scraping] --> S[Municipal Websites<br/>Contact Info]
-        S --> PROCESS[Data Processing]
-        PROCESS --> ZIP[Create ZIP Payload]
-    end
-    
-    %% Data flow to civicpatch.org
-    CP1 --> SCRAPE
-    CP2 --> SCRAPE
-    ZIP -->|zip payload| C[civicpatch.org]
-    
-    %% Simplified: civicpatch.org sends to open-data, which auto-processes
-    C -->|sends data| OD[open-data repo<br/>auto-processes & creates PR]
-    
-    %% Final data available
-    OD --> DATA["new open-data /data files"]
-    
-    %% Data consumers
-    DATA --> DC[Data Consumers<br/>OpenStates, ??, ??]
+```
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  Temporal (workflow engine)                        UI :8002 (local) │
+  │                                                                     │
+  │  Schedules:  pr-sync (hourly)  ·  od-sync (daily)                   │
+  └───────────┬──────────────────────────────┬──────────────────────────┘
+              │ orchestrates                 │ orchestrates
+              ▼                              ▼
+  ┌───────────────────────┐      ┌───────────────────────────────────┐
+  │  worker               │      │  civicpatch-org-worker            │
+  │  (people-collector    │      │  (civicpatch-org-sync queue)      │
+  │   queue)              │      │                                   │
+  │                       │      │  · sync open-data → DB            │
+  │  · trigger pipelines  │      │  · sync GitHub PR states → DB     │
+  │    or GitHub Actions  │      └───────────┬───────────────────────┘
+  │  · poll job status    │                  │ reads/writes
+  └──────────┬────────────┘                  │
+             │ calls                         ▼
+             ▼                   ┌───────────────────────┐
+  ┌──────────────────────┐       │  civicpatch.org API   │◄── GitHub webhooks
+  │  pipelines           │       │  :8001 (local)        │◄── browser / frontend
+  │  :8000 (local)       │       │                       │
+  │                      │       │  · job registration   │
+  │  · scrapes municipal │       │  · PR review UI       │
+  │    websites          │       │  · data API           │
+  │  · formats output    │       └──────────┬────────────┘
+  │  · submits ZIP       │                  │ reads/writes
+  └──────────┬───────────┘                  ▼
+             │ submits ZIP       ┌───────────────────────┐
+             └──────────────────►│  PostgreSQL DB        │
+                                 │  :6000 (local)        │
+                                 └───────────────────────┘
+                                              │
+  ┌───────────────────────────────────────────┘
+  │ on merge / data sync
+  ▼
+  open-data repo (GitHub)  ──►  PR created  ──►  data consumers
 ```
 
 ## Contributing

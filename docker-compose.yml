@@ -42,6 +42,9 @@ services:
       service: civicpatch-org-worker
     networks:
       - civicpatch_net
+    depends_on:
+      temporal:
+        condition: service_healthy
 
   # ── Temporal worker ────────────────────────────────────────────────────────
   worker:
