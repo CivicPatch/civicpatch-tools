@@ -5,7 +5,7 @@ from enum import StrEnum
 from typing import List, cast, Optional, Any
 from environment import get_env_vars
 import shared.utils.id_utils
-from shared.utils.statuses import JobStatus, PullRequestStatus
+from shared.utils.statuses import JobStatus, PullRequestStatus, TERMINAL_JOB_STATUSES
 from utils import hash_utils
 from utils.github_utils import pull_request_url_to_number
 from schemas.requests import ServerDetail
@@ -26,9 +26,14 @@ class PeopleStatus(StrEnum):
 
 _pool: AsyncConnectionPool | None = None
 
+
+def _on_reconnect_failed(pool: AsyncConnectionPool) -> None:
+    logger.error("Database connection pool failed to reconnect — pool may be exhausted")
+
+
 async def get_pool() -> AsyncConnectionPool:
     env = get_env_vars()
-    
+
     global _pool
     if _pool is None:
         db_url = env["CIVICPATCH_API_DB_URL"]
@@ -39,6 +44,7 @@ async def get_pool() -> AsyncConnectionPool:
             open=False,
             min_size=int(env.get("DB_POOL_MIN_SIZE", 4)),
             max_size=int(env.get("DB_POOL_MAX_SIZE", 20)),
+            reconnect_failed=_on_reconnect_failed,
         )
         await _pool.open()
         logger.info("Database pool opened")
@@ -757,6 +763,56 @@ async def set_job_github_run_id(request_id: str, github_run_id: int) -> bool:
             (github_run_id, request_id),
         )
         return result.rowcount > 0
+
+
+async def get_active_job_jurisdiction_ocdids() -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT r.jurisdiction_ocdid
+            FROM jobs j
+            JOIN requests r ON r.id = j.request_id
+            WHERE j.status NOT IN %s
+            AND r.jurisdiction_ocdid IS NOT NULL
+            """,
+            (TERMINAL_JOB_STATUSES,),
+        )
+        rows = await cur.fetchall()
+        return {row[0] for row in rows}
+
+
+async def get_active_jobs(state_code: Optional[str] = None) -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        query = """
+            SELECT j.request_id, j.status, j.progress, j.created_at,
+                   r.jurisdiction_ocdid, jur.state
+            FROM jobs j
+            JOIN requests r ON r.id = j.request_id
+            JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
+            WHERE j.status NOT IN %s
+            AND r.jurisdiction_ocdid IS NOT NULL
+            AND r.request_type = 'people'
+        """
+        params: list = [TERMINAL_JOB_STATUSES]
+        if state_code:
+            query += " AND jur.state = %s"
+            params.append(state_code.upper())
+        query += " ORDER BY jur.state, j.created_at DESC"
+        await cur.execute(query, params)
+        rows = await cur.fetchall()
+        return [
+            {
+                "request_id": row[0],
+                "status": row[1],
+                "progress": row[2],
+                "created_at": to_iso(row[3]),
+                "jurisdiction_ocdid": row[4],
+                "state": row[5],
+            }
+            for row in rows
+        ]
 
 
 async def get_job_github_run_id(request_id: str) -> int | None:

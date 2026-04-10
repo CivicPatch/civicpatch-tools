@@ -34,9 +34,8 @@ import services.google_gemini.prompts as google_gemini_prompt
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
 
-# Relevance check uses Gemini Flash for better instruction-following on complex URL filtering rules
-_relevance_llm = google_gemini_llm
-_relevance_prompt = google_gemini_prompt
+_relevance_llm = open_router_llm
+_relevance_prompt = open_router_prompt
 
 @dataclass
 class ProcessingSetup:

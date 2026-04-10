@@ -296,6 +296,13 @@ export const triggerJob = async (mode, jurisdictionOcdid, name, url, sourceUrls)
   return res.json();
 };
 
+export const fetchActiveJobs = async (stateCode) => {
+  const params = stateCode ? `?state_code=${encodeURIComponent(stateCode)}` : "";
+  const res = await fetch(`${API_URL}/api/v1/jobs/active${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchDuplicatePrJurisdictionJobs = async () => {
   const res = await fetch(`${API_URL}/api/v1/jobs/duplicates`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
