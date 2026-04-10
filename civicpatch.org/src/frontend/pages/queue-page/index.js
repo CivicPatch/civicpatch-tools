@@ -6,18 +6,18 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
+  fetchActiveJobs,
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
-import { Pagination } from "../../components/pagination/index.js";
-import "../../components/pull-request-card/index.js";
-import "../../components/stat-cards/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/publish-log/index.js";
+import "./queue-summary/index.js";
+import "./active-jobs/index.js";
+import "./pr-list/index.js";
 
-const DEFAULT_PER_PAGE = 10;
-const PER_PAGE_OPTIONS = [10, 25, 50];
+const API_URL = config.apiUrl;
 
 function getPageFromUrl() {
   const val = parseInt(new URLSearchParams(window.location.search).get("page"), 10);
@@ -26,7 +26,7 @@ function getPageFromUrl() {
 
 function getPerPageFromUrl() {
   const val = parseInt(new URLSearchParams(window.location.search).get("per_page"), 10);
-  return PER_PAGE_OPTIONS.includes(val) ? val : DEFAULT_PER_PAGE;
+  return [10, 25, 50].includes(val) ? val : 10;
 }
 
 function setPageParamsInUrl(page, perPage) {
@@ -35,8 +35,6 @@ function setPageParamsInUrl(page, perPage) {
   params.set("per_page", perPage);
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
-
-const API_URL = config.apiUrl;
 
 function getStateFromUrl() {
   const val = new URLSearchParams(window.location.search).get("state");
@@ -62,6 +60,7 @@ function QueuePage() {
   const [perPage, setPerPage] = useState(getPerPageFromUrl());
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState(getViewFromUrl() || defaultView);
+  const [activeJobs, setActiveJobs] = useState([]);
 
   useEffect(() => {
     const onPopState = () => {
@@ -75,39 +74,43 @@ function QueuePage() {
 
   useEffect(() => {
     if (!stateCode) return;
-
     setLoading(true);
     setError(null);
-
     fetchPullRequestsWithData(stateCode, page, perPage, viewMode)
-      .then((prResult) => {
-        setPullRequests(prResult.data || []);
-        setQueueSummary(prResult.summary || null);
-        setTotalPages(prResult.total_pages || 1);
+      .then((result) => {
+        setPullRequests(result.data || []);
+        setQueueSummary(result.summary || null);
+        setTotalPages(result.total_pages || 1);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [stateCode, page, perPage, viewMode]);
 
+  useEffect(() => {
+    fetchActiveJobs()
+      .then((result) => setActiveJobs(result.data || []))
+      .catch(() => setActiveJobs([]));
+  }, []);
+
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
     try {
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } }));
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } }));
       await saveAndMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null);
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } }));
-    } catch (error) {
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } }));
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } }));
+    } catch (err) {
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } }));
     }
   };
 
   const handleClose = async (event) => {
     const { pullRequestNumber, request_id } = event.detail;
     try {
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } }));
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } }));
       await closePullRequest(request_id, pullRequestNumber);
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } }));
-    } catch (error) {
-      setPullRequestState((prev) => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error } }));
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } }));
+    } catch (err) {
+      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } }));
     }
   };
 
@@ -143,60 +146,16 @@ function QueuePage() {
     setPage(1);
   };
 
-  const withIssuesPct = queueSummary?.total_with_pr
-    ? ((queueSummary.with_issues / queueSummary.total_with_pr) * 100).toFixed(1)
-    : null;
-
-  const summaryStats = queueSummary ? [
-    {
-      key: "with_issues",
-      label: "With issues",
-      value: queueSummary.with_issues,
-      sub: `${withIssuesPct}% of ${queueSummary.total_with_pr} open PRs`,
-      copyText: `[with issues] ${queueSummary.with_issues} (${withIssuesPct}% of ${queueSummary.total_with_pr} open PRs)`,
-    },
-    {
-      key: "open",
-      label: "Open pull requests",
-      value: queueSummary.total_with_pr,
-      sub: "awaiting review or merge",
-      copyText: `[open pull requests] ${queueSummary.total_with_pr}`,
-    },
-  ] : null;
-
-  const summarySection = summaryStats
-    ? html`<stat-cards .stats=${summaryStats}></stat-cards>`
-    : null;
-
   const publishLogEntries = Object.entries(pullRequestState)
-    .filter(([, s]) => s.status === PULL_REQUEST_STATUS.LOADING_MERGE || s.status === PULL_REQUEST_STATUS.MERGED || s.status === PULL_REQUEST_STATUS.ERROR)
+    .filter(([, s]) => [PULL_REQUEST_STATUS.LOADING_MERGE, PULL_REQUEST_STATUS.MERGED, PULL_REQUEST_STATUS.ERROR].includes(s.status))
     .map(([prNumber, s]) => {
-      const pr = pullRequests.find((p) => p.pr.number === parseInt(prNumber, 10));
+      const pr = pullRequests.find(p => p.pr.number === parseInt(prNumber, 10));
       return {
         pullRequestNumber: parseInt(prNumber, 10),
         jurisdictionName: pr?.jurisdiction?.name || `#${prNumber}`,
         status: s.status,
       };
     });
-
-  const prList = loading
-    ? html`<div>Loading...</div>`
-    : error
-      ? html`<div>Error: ${error}</div>`
-      : pullRequests.length === 0
-        ? html`<p>No pull requests found.</p>`
-        : pullRequests.map((pr) => {
-            const pullRequestNumber = pr.pr.number;
-            return html`
-              <pr-card
-                @onMerge=${handleMerge}
-                @onClose=${handleClose}
-                .entry=${pr}
-                .state=${pullRequestState[pullRequestNumber]}
-                .viewMode=${viewMode}
-              ></pr-card>
-            `;
-          });
 
   return html`
     <main class="queue-page page-content">
@@ -207,59 +166,36 @@ function QueuePage() {
         ></civ-select-state>
         ${permissions.QUEUE_PAGE_ERRORS ? html`
           <div class="queue-page__filters-right">
-            <a
-              class="btn btn-sm"
-              href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}"
-              download
-            >Export people</a>
-            <a
-              class="btn btn-sm"
-              href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}"
-              download
-            >Export queue</a>
+            <a class="btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>
+            <a class="btn btn-sm" href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}" download>Export queue</a>
           </div>
         ` : null}
       </div>
+
+      <queue-active-jobs .jobs=${activeJobs}></queue-active-jobs>
+
       ${!stateCode ? html`<p class="queue-page__select-state-prompt">Select a state to get started.</p>` : html`
-        ${summarySection}
-        <section>
-          <div class="queue-page__top-controls">
-            <div class="queue-page__view-toggle">
-              <button
-                class="queue-page__view-toggle-btn ${viewMode === "quick" ? "queue-page__view-toggle-btn--active" : ""}"
-                @click=${() => handleViewChange("quick")}
-              >Quick</button>
-              <button
-                class="queue-page__view-toggle-btn ${viewMode === "detail" ? "queue-page__view-toggle-btn--active" : ""}"
-                @click=${() => handleViewChange("detail")}
-              >Detail</button>
-            </div>
-            <div class="queue-page__pagination queue-page__pagination--top">
-              ${Pagination({ page, totalPages, onPrevious: () => handlePageChange(page - 1), onNext: () => handlePageChange(page + 1), onGoToPage: handlePageChange })}
-            </div>
-            <div class="queue-page__per-page">
-              <label>Per page
-                <select @change=${handlePerPageChange}>
-                  ${PER_PAGE_OPTIONS.map((n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`)}
-                </select>
-              </label>
-            </div>
-          </div>
-          <div style="display: flex; gap: 2rem; flex-direction: column;">
-            ${prList}
-          </div>
-          <div class="queue-page__pagination">
-            ${Pagination({ page, totalPages, onPrevious: () => handlePageChange(page - 1), onNext: () => handlePageChange(page + 1), onGoToPage: handlePageChange })}
-          </div>
-        </section>
+        ${queueSummary ? html`<queue-summary .summary=${queueSummary}></queue-summary>` : null}
+        <queue-pr-list
+          .pullRequests=${pullRequests}
+          .pullRequestState=${pullRequestState}
+          .loading=${loading}
+          .error=${error}
+          .page=${page}
+          .perPage=${perPage}
+          .totalPages=${totalPages}
+          .viewMode=${viewMode}
+          @onMerge=${handleMerge}
+          @onClose=${handleClose}
+          .onViewChange=${handleViewChange}
+          .onPageChange=${handlePageChange}
+          .onPerPageChange=${handlePerPageChange}
+        ></queue-pr-list>
       `}
     </main>
     <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
   `;
 }
 
-customElements.define(
-  "queue-page",
-  component(QueuePage, { useShadowDOM: false }),
-);
+customElements.define("queue-page", component(QueuePage, { useShadowDOM: false }));
 export default QueuePage;

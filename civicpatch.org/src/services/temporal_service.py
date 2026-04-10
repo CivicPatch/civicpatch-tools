@@ -1,10 +1,9 @@
 import os
+import uuid
 from typing import Optional
 
-from temporalio.client import Client, WorkflowFailureError
+from temporalio.client import Client
 from temporalio.common import WorkflowIDConflictPolicy
-from temporalio.exceptions import WorkflowAlreadyStartedError
-from temporalio.service import RPCError
 
 _client: Client | None = None
 
@@ -56,7 +55,7 @@ async def start_batch_people_collector_workflow(state: str, items: list[dict]) -
     handle = await client.start_workflow(
         "BatchPeopleCollectorWorkflow",
         args=[items],
-        id=f"batch-people-collector-{state}",
+        id=f"batch-people-collector-{state}-{uuid.uuid4().hex[:8]}",
         task_queue=TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
     )

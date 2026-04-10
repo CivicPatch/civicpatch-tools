@@ -16,6 +16,14 @@ class JobStatus(StrEnum):
     PAUSED = "PAUSED"
 
 
+TERMINAL_JOB_STATUSES = (
+    JobStatus.COMPLETED,
+    JobStatus.ERROR,
+    JobStatus.RESOLVED,
+    JobStatus.PAUSED,
+)
+
+
 class PullRequestStatus(StrEnum):
     # No PR has been created for this job yet
     DEFAULT = "DEFAULT"

@@ -28,6 +28,7 @@ from database.database import (
     get_job_github_run_id,
     get_jobs_with_errors,
     get_job_events_page,
+    get_active_jobs,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -261,7 +262,7 @@ def get_router(api_key_header):
         request: UpdateJobStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])
         ),
     ):
         background_tasks.add_task(
@@ -486,12 +487,23 @@ def get_router(api_key_header):
         return {"request_id": request_id, "status": "cancelled"}
 
     @router.get(
+        "/active",
+        summary="List currently active (non-terminal) jobs, optionally filtered by state",
+    )
+    async def get_active_jobs_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+    ):
+        jobs = await get_active_jobs(state_code=state_code)
+        return {"data": jobs}
+
+    @router.get(
         "/errors",
         summary="List jobs stuck in the pipeline with an error status",
     )
     async def get_jobs_with_errors_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         jobs = await get_jobs_with_errors(state_code=state_code)
 
@@ -516,7 +528,7 @@ def get_router(api_key_header):
         page: int = 1,
         per_page: int = 20,
         sort: str = "desc",
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         event_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"

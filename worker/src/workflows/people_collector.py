@@ -145,4 +145,4 @@ class BatchPeopleCollectorWorkflow:
                 id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )
             handles.append(handle)
-        await asyncio.gather(*[h.result() for h in handles])
+        await asyncio.gather(*handles)

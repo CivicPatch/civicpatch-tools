@@ -14,7 +14,7 @@ import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
 import { triggerJob, fetchJurisdictionHistory } from '../../api.js';
-import { JOB_STATUS } from '../../components/job-status.js';
+import { TERMINAL_JOB_STATUSES } from '../../components/job-status.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
@@ -51,24 +51,37 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const handleScrapeStartClick = async (details) => {
     setScrapeModalOpen(false);
     setIsTriggering(true);
-    await triggerJob(
+    const result = await triggerJob(
       details.scrapeMode,
       jurisdictionData.data.id,
       jurisdictionData.data.name,
       details.data.url || jurisdictionData.data.url,
       details.data.sourceUrls,
     );
+    const now = new Date().toISOString();
+    const newEntry = {
+      request_id: result.request_id,
+      status: result.status,
+      progress: 0,
+      created_at: now,
+      updated_at: now,
+      pull_request_url: null,
+      run_url: null,
+      branch_name: null,
+      jurisdiction_ocdid: jurisdiction_ocdid,
+    };
+    setHistory(prev => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
   };
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
 
-  const _TERMINAL_STATUSES = new Set([JOB_STATUS.COMPLETED, JOB_STATUS.ERROR, JOB_STATUS.RESOLVED, JOB_STATUS.PAUSED]);
   const mostRecentJob = history?.data?.[0];
   const effectiveStatus = (jobStatus && mostRecentJob && jobStatus.request_id === mostRecentJob.request_id)
     ? jobStatus.status
     : mostRecentJob?.status;
-  const isJobRunning = !!effectiveStatus && !_TERMINAL_STATUSES.has(effectiveStatus);
+  const isJobRunning = (jobStatus && !TERMINAL_JOB_STATUSES.has(jobStatus.status))
+    || (!!effectiveStatus && !TERMINAL_JOB_STATUSES.has(effectiveStatus));
 
   return html`
     <div class="jurisdictions-page page-content" style="display: flex; flex-direction: column; gap: 2rem;">
