@@ -26,10 +26,19 @@ llm_model_prices = {
             'output_cost_per_1m': Decimal('0.40')
         }
     },
+    # open_router prices are per (model, provider) — fetched 2026-04-10
     'open_router': {
         'deepseek/deepseek-chat-v3.1': {
-            'input_cost_per_1m': Decimal('0.15'),
-            'output_cost_per_1m': Decimal('0.75')
+            'SambaNova':   {'input_cost_per_1m': Decimal('0.15'),  'output_cost_per_1m': Decimal('0.75')},
+            'DeepInfra':   {'input_cost_per_1m': Decimal('0.21'),  'output_cost_per_1m': Decimal('0.79')},
+            'Chutes':      {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
+            'Novita':      {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
+            'SiliconFlow': {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
+            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.30'),  'output_cost_per_1m': Decimal('0.95')},
+            'WandB':       {'input_cost_per_1m': Decimal('0.55'),  'output_cost_per_1m': Decimal('1.65')},
+            'Fireworks':   {'input_cost_per_1m': Decimal('0.56'),  'output_cost_per_1m': Decimal('1.68')},
+            'Google':      {'input_cost_per_1m': Decimal('0.60'),  'output_cost_per_1m': Decimal('1.70')},
+            'Together':    {'input_cost_per_1m': Decimal('0.60'),  'output_cost_per_1m': Decimal('1.70')},
         },
     }
 }
@@ -53,40 +62,39 @@ class LLMCost(BaseModel):
     @property
     def timestamp(self) -> str:
         return get_timestamp()
-    
+
     jurisdiction_ocdid: str
     llm_name: str
     model: str
-    
+    provider: str = ""
+
     input_tokens: int
     output_tokens: int
-    with_search: bool = False # Sometimes not available
+    with_search: bool = False
+
+    def _model_prices(self) -> dict:
+        llm_prices = llm_model_prices.get(self.llm_name, {})
+        model_entry = llm_prices.get(self.model, {})
+        # open_router prices are keyed by provider
+        if self.llm_name == 'open_router' and self.provider:
+            return model_entry.get(self.provider, {})
+        return model_entry
 
     @property
     def input_cost_per_1m(self) -> Decimal:
-        llm_prices = llm_model_prices.get(self.llm_name, {})
-        model_prices = llm_prices.get(self.model, {})
-        return model_prices.get('input_cost_per_1m', Decimal('0.0'))    
-    
+        return self._model_prices().get('input_cost_per_1m', Decimal('0.0'))
+
     @property
     def output_cost_per_1m(self) -> Decimal:
-        llm_prices = llm_model_prices.get(self.llm_name, {})
-        model_prices = llm_prices.get(self.model, {})
-        return model_prices.get('output_cost_per_1m', Decimal('0.0'))
+        return self._model_prices().get('output_cost_per_1m', Decimal('0.0'))
 
     @property
     def input_cost(self) -> Decimal:
-        llm_prices = llm_model_prices.get(self.llm_name, {})
-        model_prices = llm_prices.get(self.model, {})
-        cost_per_1m = model_prices.get('input_cost_per_1m', Decimal('0.0'))
-        return (Decimal(self.input_tokens) / Decimal(1_000_000)) * cost_per_1m
+        return (Decimal(self.input_tokens) / Decimal(1_000_000)) * self.input_cost_per_1m
 
     @property
     def output_cost(self) -> Decimal:
-        llm_prices = llm_model_prices.get(self.llm_name, {})
-        model_prices = llm_prices.get(self.model, {})
-        cost_per_1m = model_prices.get('output_cost_per_1m', Decimal('0.0'))
-        return (Decimal(self.output_tokens) / Decimal(1_000_000)) * cost_per_1m
+        return (Decimal(self.output_tokens) / Decimal(1_000_000)) * self.output_cost_per_1m
 
     @property
     def total_cost(self) -> Decimal:
@@ -140,20 +148,22 @@ def get_cost_tracker(jurisdiction_ocdid: str):
 def add_llm_cost(
         logger: log_utils.WorkflowLogger,
         request_id: str,
-        jurisdiction_ocdid: str, 
-        llm_name: str, 
-        model: str, 
-        input_tokens: int, 
-        output_tokens: int, 
-        with_search=False
+        jurisdiction_ocdid: str,
+        llm_name: str,
+        model: str,
+        input_tokens: int,
+        output_tokens: int,
+        with_search=False,
+        provider: str = "",
 ):
     result = LLMCost(
         jurisdiction_ocdid=jurisdiction_ocdid,
         llm_name=llm_name,
         model=model,
+        provider=provider,
         input_tokens=input_tokens,
         output_tokens=output_tokens,
-        with_search=with_search
+        with_search=with_search,
     )
 
     # HEADERS = [
@@ -177,8 +187,9 @@ def add_llm_cost(
         "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "llm_name": result.llm_name,
         "model": result.model,
-        "model_input_price_per_1m": llm_model_prices.get(result.llm_name, {}).get(result.model, {}).get('input_cost_per_1m', Decimal('0.0')),
-        "model_output_price_per_1m": llm_model_prices.get(result.llm_name, {}).get(result.model, {}).get('output_cost_per_1m', Decimal('0.0')),
+        "provider": result.provider,
+        "model_input_price_per_1m": result.input_cost_per_1m,
+        "model_output_price_per_1m": result.output_cost_per_1m,
         "input_tokens": result.input_tokens,
         "output_tokens": result.output_tokens,
         "with_search": result.with_search,
