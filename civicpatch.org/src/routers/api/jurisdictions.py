@@ -8,6 +8,7 @@ from fastapi import APIRouter, HTTPException, Query
 import database.database as database
 
 import services.github.github_api_service as github_service
+import shared.utils.config_utils as config_utils
 # import services.auth_service as AuthService
 from schemas.common import Jurisdiction
 from schemas.requests import JurisdictionsByOcdidsRequest
@@ -163,7 +164,7 @@ def get_router() -> APIRouter:
     @router.get("/states")
     async def get_jurisdiction_states_endpoint(
     ):
-        states = await database.get_jurisdiction_states()
+        states = config_utils.get_states()
 
         return {"total_items": len(states), "data": states}
     

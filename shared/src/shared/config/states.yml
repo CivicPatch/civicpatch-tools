@@ -1,6 +1,6 @@
 - code: "co"
   name: "Colorado"
-- code: "tx"
-  name: "Texas"
 - code: "nj"
   name: "New Jersey"
+- code: "tx"
+  name: "Texas"

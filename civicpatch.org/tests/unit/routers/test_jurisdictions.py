@@ -15,10 +15,10 @@ def client():
 
 @pytest.mark.unit
 def test_get_jurisdiction_states_returns_list(client):
+    mock_states = [{"code": "ca", "name": "California"}, {"code": "ny", "name": "New York"}]
     with patch(
-        "database.database.get_jurisdiction_states",
-        new_callable=AsyncMock,
-        return_value=[{"state": "ca", "count": 100}, {"state": "ny", "count": 50}],
+        "shared.utils.config_utils.get_states",
+        return_value=mock_states,
     ):
         response = client.get("/jurisdictions/states")
 
