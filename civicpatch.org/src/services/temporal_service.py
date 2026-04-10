@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 from typing import Optional
 
 from temporalio.client import Client, WorkflowFailureError
@@ -26,8 +25,6 @@ async def _get_client() -> Client:
         _client = await Client.connect(
             TEMPORAL_HOST,
             namespace=TEMPORAL_NAMESPACE,
-            keep_alive_interval=timedelta(seconds=30),
-            keep_alive_timeout=timedelta(seconds=15),
         )
     return _client
 
