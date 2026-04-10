@@ -5,6 +5,7 @@ import os
 logging.basicConfig(level=logging.INFO)
 
 from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
+from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
 from activities.sync_activities import sync_pr_state_activity, od_sync_activity
@@ -29,8 +30,9 @@ async def _register_schedules(client: Client) -> None:
                 policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
             ),
         )
-    except ScheduleAlreadyRunningError:
-        pass
+    except (ScheduleAlreadyRunningError, RPCError) as e:
+        if isinstance(e, RPCError) and e.status != RPCStatusCode.ALREADY_EXISTS:
+            raise
 
     try:
         handle = await client.create_schedule(
@@ -46,8 +48,9 @@ async def _register_schedules(client: Client) -> None:
             ),
         )
         await handle.trigger()
-    except ScheduleAlreadyRunningError:
-        pass
+    except (ScheduleAlreadyRunningError, RPCError) as e:
+        if isinstance(e, RPCError) and e.status != RPCStatusCode.ALREADY_EXISTS:
+            raise
 
 
 async def main() -> None:
