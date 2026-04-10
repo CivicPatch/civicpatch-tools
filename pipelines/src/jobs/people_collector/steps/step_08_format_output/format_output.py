@@ -20,6 +20,7 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
     designation_configs = get_designations()
 
+    assert context.data.merge_records_across_llms_step is not None, "should never happen — merge_records_across_llms_step is required before format_output"
     data = context.data.merge_records_across_llms_step.people
 
     people = [
@@ -45,17 +46,19 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         f"Filtered people before assigning IDs: {[person.model_dump() for person in filtered_people]}"
     )
     for person, resolved_person in zip(filtered_people, resolved_people):
-        person.id = resolved_person.get("id")
+        # API returns None for id when person is not yet in the DB; "" is the Official default
+        person.id = resolved_person.get("id") or ""
         existing = resolved_person.get("person")
         if existing and not resolved_person.get("ambiguous"):
             existing_name = existing.get("name") if isinstance(existing, dict) else existing.name
             existing_other_names = (existing.get("other_names") if isinstance(existing, dict) else existing.other_names) or []
             names_differ = existing_name and existing_name != person.name
-            extra_names = (
-                ([person.name] if names_differ else [])
-                + ([existing_name] if names_differ else [])
-                + list(existing_other_names)
-            )
+            extra_names: List[str] = []
+            if names_differ:
+                extra_names.append(person.name)
+                if existing_name:
+                    extra_names.append(existing_name)
+            extra_names.extend(n for n in existing_other_names if isinstance(n, str))
             person.other_names = list(dict.fromkeys(person.other_names + extra_names))
 
     return FormatOutputStep(officials=filtered_people)

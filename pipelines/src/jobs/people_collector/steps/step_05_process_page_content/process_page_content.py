@@ -28,7 +28,7 @@ from utils import (
     people_utils,
     log_utils
 )
-from typing import List, Dict, Tuple, cast 
+from typing import List, Dict, Optional, Tuple, cast
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.open_router.llm as open_router_llm
@@ -73,6 +73,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before process_page_content"
     setup_data = get_setup_data(context.data.research_municipality_step)
     current_step = get_or_create_step(context)
     identities = get_identities(context)
@@ -103,6 +104,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
 
 
 def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentStep:
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before get_or_create_step"
     expected_count = context.data.research_municipality_step.expected_count
     return context.data.process_page_content_step or create_process_page_content_step(
         required_data=max(MINIMUM_NUM_PEOPLE, expected_count)
@@ -110,6 +112,7 @@ def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentSte
 
 
 def get_identities(context: PeopleCollectorContext) -> Dict:
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before get_identities"
     return context.data.research_municipality_step.identities
 
 
@@ -123,15 +126,12 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
             "google_gemini": {},
             "open_router": {},
         },
-        links=[],
         progress=ProgressState(
             required_data=required_data,
             current_data=0,
             has_target_role=False,
             has_target_designations=False
         ),
-        current_llm_index=0,
-        current_llm_retry_count=0,
     )
 
 
@@ -553,7 +553,7 @@ def _sort_pending(links: List[Link], names: List[str], designations: List[str]) 
     return pending + non_pending
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: List[str] = None, designations: List[str] = None) -> List[Link]:
+def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None) -> List[Link]:
     """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
     names = names or []
     designations = designations or []

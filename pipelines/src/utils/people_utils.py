@@ -176,7 +176,7 @@ def normalize_roles(roles: List[str]) -> List[str]:
         if not matched:
             seen.add(role_lower)  # unknown — keep as-is
 
-    return [r.title() for r in sort_roles(seen)]
+    return [r.title() for r in sort_roles(list(seen))]
 
 
 def office_name_to_roles(office_name: str) -> List[str]:
@@ -405,7 +405,7 @@ def get_designation_priority() -> Dict[str, int]:
 def generic_sort_key(
     value: str,
     primary_priority: dict,
-    secondary_priority: dict = None
+    secondary_priority: dict | None = None
 ):
     """
     Generates a tuple for sorting:

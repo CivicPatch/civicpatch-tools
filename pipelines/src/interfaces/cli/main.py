@@ -6,6 +6,7 @@ from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
+from jobs.people_collector.schemas import WorkflowConfig
 from jobs.engine import WorkflowError, WorkflowPausedError
 from jobs.people_collector.main import start as start_people_collector, resume as resume_people_collector
 from shared.utils import id_utils
@@ -108,11 +109,11 @@ def main():
                 url = url or info.get("url")
             request = PeopleCollectorJobRequest(
                 jurisdiction_ocdid=args.jurisdiction_ocdid,
-                config={
-                    "name": name,
-                    "url": url,
-                    "source_urls": source_urls,
-                }
+                config=WorkflowConfig(
+                    name=name,
+                    url=url or "",
+                    source_urls=source_urls,
+                ),
             )
             asyncio.run(run_pipeline_cli(request_id, request))
     else:

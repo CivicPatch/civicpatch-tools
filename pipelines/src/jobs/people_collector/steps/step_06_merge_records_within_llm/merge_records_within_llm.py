@@ -14,6 +14,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
     Consolidate records within each LLM to produce a unified list of Person objects.
     """
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
+    assert context.data.process_page_content_step is not None, "should never happen — process_page_content_step is required before merge_records_within_llm"
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before merge_records_within_llm"
     records_by_llm: RecordsByLLM = context.data.process_page_content_step.records_by_llm
     records_by_llm = {
         k: {
@@ -177,14 +179,14 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     ]
     
     # Use helper functions to merge fields
-    image = field_mergers.merge_field([r.image for r in records])
+    image = field_mergers.merge_field([r.image for r in records if r.image is not None])
     merged_roles = field_mergers.merge_roles(records)
     merged_designations = field_mergers.merge_designations(records)
-    phones = field_mergers.merge_field_to_list([r.phone for r in records])
-    emails = field_mergers.merge_field_to_list([r.email for r in records])
-    urls = field_mergers.merge_field_to_list([r.url for r in records])
-    start_date = field_mergers.merge_field([r.start_date for r in records])
-    end_date = field_mergers.merge_field([r.end_date for r in records])
+    phones = field_mergers.merge_field_to_list([r.phone for r in records if r.phone is not None])
+    emails = field_mergers.merge_field_to_list([r.email for r in records if r.email is not None])
+    urls = field_mergers.merge_field_to_list([r.url for r in records if r.url is not None])
+    start_date = field_mergers.merge_field([r.start_date for r in records if r.start_date is not None])
+    end_date = field_mergers.merge_field([r.end_date for r in records if r.end_date is not None])
 
     # Collect all unique names from the group, excluding the canonical name
     other_names = list(set(

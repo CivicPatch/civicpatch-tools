@@ -15,12 +15,13 @@ from domain.workflow_context import WorkflowContext
 from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
 from utils import log_utils
+from utils.log_utils import WorkflowLogger
 import services.civicpatch_api as civicpatch_api
 
 logger = logging.getLogger(__name__)
 
 
-def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowConfig) -> PeopleCollectorContext:
+def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowConfig) -> tuple[PeopleCollectorContext, WorkflowLogger]:
     context = PeopleCollectorContext(
         request_id=request_id,
         current_state=PipelineStatus.INIT,

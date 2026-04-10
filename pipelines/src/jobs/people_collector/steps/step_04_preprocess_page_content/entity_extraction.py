@@ -27,7 +27,7 @@ def sort_urls_by_keyword_similarity(keywords, urls):
         doc = nlp(f"{url} {text}")
         doc_vector = doc.vector  # Precompute vector for the current document
         # Compute similarity scores using dot product
-        score = max(doc_vector.dot(pattern_vector) for pattern_vector in pattern_vectors)
+        score = max(doc_vector.dot(pattern_vector) for pattern_vector in pattern_vectors)  # type: ignore[attr-defined]
         sorted_urls.append((url, float(score)))  # Convert score to Python float
 
     sorted_by_score = sorted(sorted_urls, key=lambda x: x[1], reverse=True)

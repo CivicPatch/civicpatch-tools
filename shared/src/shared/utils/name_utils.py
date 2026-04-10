@@ -1,6 +1,6 @@
 import re
 import unicodedata
-from typing import Dict, List, Protocol
+from typing import Any, Dict, List, Protocol, Sequence
 
 from nameparser import HumanName
 
@@ -18,7 +18,9 @@ def person_list_to_identities(people: List[Person]) -> Dict[str, List[str]]:
     return {person.name: person.other_names for person in people if person.name}
 
 
-def collect_other_names(group: List[HasName], canonical_name: str) -> List[str]:
+# TODO: tighten to List[HasName] once all call sites use the protocol directly.
+# Sequence (covariant) instead of List (invariant) so callers can pass List[ConcreteType].
+def collect_other_names(group: Sequence[HasName], canonical_name: str) -> List[str]:
     """Collect all names from a group, excluding the canonical name."""
     all_names = {p.name for p in group if p.name}
     for p in group:
@@ -170,8 +172,10 @@ def best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | No
     return best_canonical
 
 
+# TODO: tighten to Sequence[dict | HasName] once get_person_name is typed to handle both.
+# Sequence (covariant) instead of List (invariant) so callers can pass List[ConcreteType].
 def build_canonical_map(
-    all_people: List[dict], identities: Dict[str, List[str]]
+    all_people: Sequence[Any], identities: Dict[str, List[str]]
 ) -> Dict[str, str]:
     """
     Map every name to its canonical form, using identities and fuzzy matching across all sources.

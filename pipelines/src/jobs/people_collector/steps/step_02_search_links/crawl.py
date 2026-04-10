@@ -46,7 +46,7 @@ async def crawl(logger, keywords, site_search):
             soup = BeautifulSoup(response_html, "html.parser")
             for link in soup.find_all("a", href=True):
                 href = link["href"]
-                full_url = urljoin(current_url, href)
+                full_url = urljoin(current_url, str(href))
 
                 # Ensure the link belongs to the same domain
                 if not same_domain(site_search, full_url):

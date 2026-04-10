@@ -41,6 +41,7 @@ def preprocess_page_content(
         output_html = f.read()
 
 
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before preprocess_page_content"
     identities = context.data.research_municipality_step.identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)

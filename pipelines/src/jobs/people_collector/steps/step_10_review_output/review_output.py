@@ -15,6 +15,7 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
     research_step = context.data.research_municipality_step
     research_people = [{"name": n} for n in research_step.identities] if research_step else []
     origin_source = research_step.origin_source if research_step else "google_gemini"
+    assert context.data.format_output_step is not None, "should never happen — format_output_step is required before review_output"
     officials = context.data.format_output_step.officials
 
     merge_step = context.data.merge_records_within_llm_step

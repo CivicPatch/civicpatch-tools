@@ -23,7 +23,7 @@ def can_scrape_locally() -> bool:
 # User calls
 async def get_me(request: Request) -> dict:
     env = get_env_vars()
-    last_exc = None
+    last_exc: httpx.ReadTimeout | None = None
     for _ in range(3):
         try:
             async with httpx.AsyncClient(timeout=10) as client:
@@ -34,7 +34,7 @@ async def get_me(request: Request) -> dict:
                 return response.json()
         except httpx.ReadTimeout as e:
             last_exc = e
-    raise last_exc
+    raise last_exc or httpx.ReadTimeout("All retries failed")
 
 
 async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
