@@ -15,6 +15,7 @@ from pydantic import BaseModel
 
 import job_service.people_collector.people_data_utils as people_data_utils
 import services.github.github_api_service as github_service
+import services.pipeline.candidate_service as candidate_service
 import services.storage_service as storage_service
 import services.temporal_service as temporal_service
 import utils.file_utils
@@ -33,7 +34,7 @@ from database.database import (
 )
 from database.requests import register_request_with_job
 from job_service.people_collector import people_collector
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
 from services import pubsub_service
 from utils.auth_utils import require_route_access
@@ -64,6 +65,11 @@ class CreateJobRequest(BaseModel):
     name: Optional[str] = None
     url: Optional[str] = None
     source_urls: Optional[list[str]] = None
+
+
+class BatchJobRequest(BaseModel):
+    state: str
+    num_jurisdictions: int = 10
 
 
 class UpdateJobStatusRequest(BaseModel):
@@ -173,6 +179,44 @@ def get_router(api_key_header):
             )
 
         return CreateJobResponse(request_id=request_id, status=JobStatus.PENDING)
+
+    @router.post("/batch", summary="Register and start a batch scrape job for a state")
+    async def create_batch_jobs_endpoint(
+        request: BatchJobRequest,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+        ),
+    ):
+        try:
+            candidates = await candidate_service.get_scrape_candidates(request.state, request.num_jurisdictions)
+        except ValueError as e:
+            raise HTTPException(status_code=404, detail=str(e))
+
+        items = []
+        for candidate in candidates:
+            request_id = shared.utils.id_utils.make_request_id()
+            await register_request_with_job(
+                requested_by_provider=user.provider,
+                requested_by_provider_user_id=user.provider_user_id,
+                request_id=request_id,
+                job_type="people",
+                arguments_json={
+                    "jurisdiction_ocdid": candidate.id,
+                    "name": candidate.name,
+                    "url": candidate.url,
+                    "source_urls": None,
+                },
+                jurisdiction_ocdid=candidate.id,
+            )
+            items.append({
+                "jurisdiction_ocdid": candidate.id,
+                "request_id": request_id,
+                "name": candidate.name,
+                "url": candidate.url,
+            })
+
+        await temporal_service.start_batch_people_collector_workflow(request.state, items)
+        return {"jurisdictions": items}
 
     # ── Jobs: Status & Progress ──────────────
 

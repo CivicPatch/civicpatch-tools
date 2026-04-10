@@ -43,6 +43,27 @@ async def _get_installation_token() -> str:
         return resp.json()["token"]
 
 
+async def _find_run_by_request_id(client: httpx.AsyncClient, token: str, request_id: str) -> Optional[int]:
+    """Single scan of recent data_scrape.yml runs. Returns the run ID if a step name contains request_id, else None."""
+    runs_resp = await client.get(
+        f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/workflows/data_scrape.yml/runs",
+        headers={**_HEADERS, "Authorization": f"Bearer {token}"},
+        params={"per_page": 20},
+    )
+    runs_resp.raise_for_status()
+    for run in runs_resp.json()["workflow_runs"]:
+        jobs_resp = await client.get(
+            f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/runs/{run['id']}/jobs",
+            headers={**_HEADERS, "Authorization": f"Bearer {token}"},
+        )
+        jobs_resp.raise_for_status()
+        for job in jobs_resp.json()["jobs"]:
+            for step in job.get("steps", []):
+                if request_id in step["name"]:
+                    return run["id"]
+    return None
+
+
 @activity.defn
 async def trigger_github_action(jurisdiction_ocdid: str, request_id: str, mode: str = RunMode.START) -> int:
     token = await _get_installation_token()
@@ -61,28 +82,29 @@ async def trigger_github_action(jurisdiction_ocdid: str, request_id: str, mode: 
         )
         activity.logger.info(f"workflow_dispatch response: {resp.status_code}")
         resp.raise_for_status()
-        # workflow_dispatch returns 204 No Content — find our run by matching request_id in step names
-        for attempt in range(10):
+        while True:
+            activity.heartbeat(f"searching for dispatched run with request_id={request_id}")
+            run_id = await _find_run_by_request_id(client, token, request_id)
+            if run_id is not None:
+                activity.logger.info(f"Found run ID: {run_id}")
+                return run_id
+            activity.logger.info("Run not found yet, retrying in 5s...")
             await asyncio.sleep(5)
-            runs_resp = await client.get(
-                f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/workflows/data_scrape.yml/runs",
-                headers={**_HEADERS, "Authorization": f"Bearer {token}"},
-                params={"per_page": 10, "event": "workflow_dispatch"},
-            )
-            runs_resp.raise_for_status()
-            for run in runs_resp.json()["workflow_runs"]:
-                jobs_resp = await client.get(
-                    f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/runs/{run['id']}/jobs",
-                    headers={**_HEADERS, "Authorization": f"Bearer {token}"},
-                )
-                jobs_resp.raise_for_status()
-                for job in jobs_resp.json()["jobs"]:
-                    for step in job.get("steps", []):
-                        if request_id in step["name"]:
-                            activity.logger.info(f"Found run ID: {run['id']}")
-                            return run["id"]
-            activity.logger.info(f"Run not found yet (attempt {attempt + 1}/10), retrying...")
-        raise RuntimeError(f"No run found with request_id={request_id} after 10 attempts")
+
+
+@activity.defn
+async def find_github_run(request_id: str) -> int:
+    """Poll until a data_scrape.yml run containing request_id in a step name is found."""
+    token = await _get_installation_token()
+    async with httpx.AsyncClient() as client:
+        while True:
+            activity.heartbeat(f"searching for run with request_id={request_id}")
+            run_id = await _find_run_by_request_id(client, token, request_id)
+            if run_id is not None:
+                activity.logger.info(f"Found run ID: {run_id}")
+                return run_id
+            activity.logger.info("Run not found yet, retrying in 5s...")
+            await asyncio.sleep(5)
 
 
 @activity.defn
@@ -136,5 +158,3 @@ async def trigger_local_job(
         )
         resp.raise_for_status()
         activity.logger.info(f"Local job triggered: {request_id}")
-
-
