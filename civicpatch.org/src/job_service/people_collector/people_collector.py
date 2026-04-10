@@ -50,6 +50,7 @@ async def _handle_submit_job_artifacts(
         "data_source/*/local/*/images/*",
         "data_source/*/local/*/costs.json",
         "data_source/*/local/*/workflow.log",
+        "data_source/*/local/*/workflow_context.json",
     ]
 
     zip_path = request.zip_path
