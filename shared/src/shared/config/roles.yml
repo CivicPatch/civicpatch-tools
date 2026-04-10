@@ -99,7 +99,7 @@ roles:
       - councilwomen
       - council members
   - role: committee member
-    is_unique: true
+    is_unique: false 
     aliases:
       - township committee member
       - committeeman
