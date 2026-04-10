@@ -1,10 +1,10 @@
 import "./error-card.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../../../components/ocdid-utils.js";
 import { JOB_STATUS } from "../../../components/job-status.js";
 import "../../../components/badge/badge.js";
+import "../../../components/basic/modal.js";
 
 function ErrorCard({ job }) {
   const name = job?.jurisdiction_name || jurisdictionOcdidToFriendly(job?.jurisdiction_ocdid);
@@ -15,8 +15,9 @@ function ErrorCard({ job }) {
         day: "numeric",
       })
     : null;
-  const logPopoverRef = createRef();
-  const [logLoaded, setLogLoaded] = useState(false);
+
+  const [logOpen, setLogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("log");
 
   const isPaused = job?.status === JOB_STATUS.PAUSED;
 
@@ -35,9 +36,46 @@ function ErrorCard({ job }) {
   };
 
   const handleLogClick = () => {
-    setLogLoaded(true);
-    logPopoverRef.value?.showPopover();
+    setActiveTab("log");
+    setLogOpen(true);
   };
+
+  const tabs = [
+    { id: "log", label: "Log" },
+    { id: "context", label: "Context" },
+    { id: "cache", label: "Cache" },
+  ];
+
+  const tabUrls = {
+    log: job?.workflow_log_url,
+    context: job?.workflow_context_url,
+    cache: job?.cache_url,
+  };
+
+  const modalContent = html`
+    <div class="error-card__modal-content">
+      <div class="error-card__tabs">
+        ${tabs.map(tab => html`
+          <button
+            class="error-card__tab ${activeTab === tab.id ? "error-card__tab--active" : ""}"
+            @click=${() => setActiveTab(tab.id)}
+          >${tab.label}</button>
+        `)}
+      </div>
+      <div class="error-card__tab-body">
+        ${activeTab === "cache"
+          ? html`<div class="error-card__cache-link">
+              <a href=${tabUrls.cache} target="_blank" rel="noopener">${tabUrls.cache}</a>
+            </div>`
+          : html`<iframe
+              class="error-card__log"
+              src=${logOpen ? (tabUrls[activeTab] || "") : ""}
+              title=${activeTab}
+            ></iframe>`
+        }
+      </div>
+    </div>
+  `;
 
   return html`
     <div class="error-card">
@@ -49,15 +87,6 @@ function ErrorCard({ job }) {
             class="error-card__state error-card__state--${isPaused ? "paused" : "error"} ${job?.workflow_log_url ? "error-card__state--clickable" : ""}"
             @click=${job?.workflow_log_url ? handleLogClick : null}
           >${isPaused ? "paused" : "error"}</span>
-          ${job?.workflow_log_url ? html`
-            <div popover ${ref(logPopoverRef)} class="error-card__log-popover">
-              <iframe
-                class="error-card__log"
-                src=${logLoaded ? job.workflow_log_url : ""}
-                title="Workflow log"
-              ></iframe>
-            </div>
-          ` : ""}
           <a
             class="error-card__link"
             href="/${job?.jurisdiction_path}"
@@ -73,6 +102,13 @@ function ErrorCard({ job }) {
         </div>
       </div>
       ${updatedAt ? html`<div class="error-card__meta">last updated ${updatedAt}</div>` : ""}
+      ${job?.workflow_log_url ? html`
+        <civ-modal
+          .title=${"Pipeline Logs"}
+          .content=${modalContent}
+          .modalProps=${{ open: logOpen, onClose: () => setLogOpen(false), closeOnBackdropClick: true }}
+        ></civ-modal>
+      ` : ""}
     </div>
   `;
 }
