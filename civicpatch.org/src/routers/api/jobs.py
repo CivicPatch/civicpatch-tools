@@ -25,12 +25,14 @@ from database.database import (
     get_job_result,
     get_job_data_json,
     get_job_status,
+    get_job_github_run_id,
     get_jobs_with_errors,
     get_job_events_page,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
     update_job_status,
+    set_job_github_run_id,
 )
 from database.requests import register_request_with_job
 from job_service.people_collector import people_collector
@@ -70,6 +72,10 @@ class CreateJobRequest(BaseModel):
 class BatchJobRequest(BaseModel):
     state: str
     num_jurisdictions: int = 10
+
+
+class RegisterGithubRunRequest(BaseModel):
+    run_id: int
 
 
 class UpdateJobStatusRequest(BaseModel):
@@ -217,6 +223,30 @@ def get_router(api_key_header):
 
         await temporal_service.start_batch_people_collector_workflow(request.state, items)
         return {"jurisdictions": items}
+
+    @router.post("/{request_id}/run", include_in_schema=False)
+    async def register_github_run_endpoint(
+        request_id: str,
+        request: RegisterGithubRunRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        updated = await set_job_github_run_id(request_id, request.run_id)
+        if not updated:
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404,
+            )
+        return {"request_id": request_id, "run_id": request.run_id}
+
+    @router.get("/{request_id}/run", include_in_schema=False)
+    async def get_github_run_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        run_id = await get_job_github_run_id(request_id)
+        if run_id is None:
+            return JSONResponse(content={"run_id": None}, status_code=404)
+        return {"run_id": run_id}
 
     # ── Jobs: Status & Progress ──────────────
 

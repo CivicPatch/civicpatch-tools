@@ -2,20 +2,22 @@ import asyncio
 import base64
 import os
 import time
-from datetime import datetime, timezone
 from typing import Optional
 
 import httpx
 import jwt
 from temporalio import activity
 
-from constants import RunConclusion, RunMode
+from constants import RunMode
 
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.environ["GITHUB_APP_PRIVATE_KEY_BASE64"]
 GITHUB_APP_INSTALLATION_ID = os.environ["GITHUB_APP_INSTALLATION_ID"]
 GITHUB_ORG = os.environ.get("GITHUB_ORG", "CivicPatch")
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "server")
+
+_CIVICPATCH_ORG_URL = os.environ.get("CIVICPATCH_ORG_URL", "http://civicpatch-org:80")
+_SERVICE_API_KEY = os.environ.get("SERVICE_API_KEY", "")
 
 _HEADERS = {
     "Accept": "application/vnd.github+json",
@@ -43,24 +45,13 @@ async def _get_installation_token() -> str:
         return resp.json()["token"]
 
 
-async def _find_run_by_request_id(client: httpx.AsyncClient, token: str, request_id: str) -> Optional[int]:
-    """Single scan of recent data_scrape.yml runs. Returns the run ID if a step name contains request_id, else None."""
-    runs_resp = await client.get(
-        f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/workflows/data_scrape.yml/runs",
-        headers={**_HEADERS, "Authorization": f"Bearer {token}"},
-        params={"per_page": 20},
+async def _poll_run_id(client: httpx.AsyncClient, request_id: str) -> Optional[int]:
+    resp = await client.get(
+        f"{_CIVICPATCH_ORG_URL}/api/v1/jobs/{request_id}/run",
+        headers={"Authorization": _SERVICE_API_KEY},
     )
-    runs_resp.raise_for_status()
-    for run in runs_resp.json()["workflow_runs"]:
-        jobs_resp = await client.get(
-            f"https://api.github.com/repos/{GITHUB_ORG}/{GITHUB_REPO}/actions/runs/{run['id']}/jobs",
-            headers={**_HEADERS, "Authorization": f"Bearer {token}"},
-        )
-        jobs_resp.raise_for_status()
-        for job in jobs_resp.json()["jobs"]:
-            for step in job.get("steps", []):
-                if request_id in step["name"]:
-                    return run["id"]
+    if resp.status_code == 200:
+        return resp.json()["run_id"]
     return None
 
 
@@ -82,28 +73,29 @@ async def trigger_github_action(jurisdiction_ocdid: str, request_id: str, mode: 
         )
         activity.logger.info(f"workflow_dispatch response: {resp.status_code}")
         resp.raise_for_status()
+
+    async with httpx.AsyncClient() as client:
         while True:
-            activity.heartbeat(f"searching for dispatched run with request_id={request_id}")
-            run_id = await _find_run_by_request_id(client, token, request_id)
+            activity.heartbeat(f"waiting for run registration: request_id={request_id}")
+            run_id = await _poll_run_id(client, request_id)
             if run_id is not None:
                 activity.logger.info(f"Found run ID: {run_id}")
                 return run_id
-            activity.logger.info("Run not found yet, retrying in 5s...")
+            activity.logger.info("Run not registered yet, retrying in 5s...")
             await asyncio.sleep(5)
 
 
 @activity.defn
 async def find_github_run(request_id: str) -> int:
-    """Poll until a data_scrape.yml run containing request_id in a step name is found."""
-    token = await _get_installation_token()
+    """Poll until data_scrape.yml registers its run_id for this request_id."""
     async with httpx.AsyncClient() as client:
         while True:
-            activity.heartbeat(f"searching for run with request_id={request_id}")
-            run_id = await _find_run_by_request_id(client, token, request_id)
+            activity.heartbeat(f"waiting for run registration: request_id={request_id}")
+            run_id = await _poll_run_id(client, request_id)
             if run_id is not None:
                 activity.logger.info(f"Found run ID: {run_id}")
                 return run_id
-            activity.logger.info("Run not found yet, retrying in 5s...")
+            activity.logger.info("Run not registered yet, retrying in 5s...")
             await asyncio.sleep(5)
 
 
