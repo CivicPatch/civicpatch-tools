@@ -8,16 +8,16 @@ import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
+import "../../components/progress-dashboard/states-overview.js";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
   const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [selectedState, setSelectedState] = useState(defaultState);
+  const [selectedState, setSelectedState] = useState((defaultState || '').toLowerCase());
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
 
-  const [progressOpen, setProgressOpen] = useLocalStorage("search_page_progress_open", true, { ttl: PERSIST_FOREVER });
   const [gapsOpen, setGapsOpen] = useLocalStorage("search_page_gaps_open", true, { ttl: PERSIST_FOREVER });
 
   useEffect(() => {
@@ -32,8 +32,14 @@ function SearchJurisdictions() {
     fetchDashboard().then(data => setDashboardData(data.data));
   }, []);
 
+  useEffect(() => {
+    const handler = (e) => setSelectedState((e.detail.state || '').toLowerCase());
+    document.addEventListener('state-select', handler);
+    return () => document.removeEventListener('state-select', handler);
+  }, []);
+
   const handleStateChange = (event) => {
-    setSelectedState(event.detail.state);
+    setSelectedState((event.detail.state || '').toLowerCase());
   };
 
   const handleSelectJurisdictionChange = (event) => {
@@ -89,6 +95,7 @@ function SearchJurisdictions() {
 
         <div class="select-col">
           <civ-select-jurisdiction
+            .selected=${selectedState}
             @state-change=${handleStateChange}
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
@@ -96,18 +103,22 @@ function SearchJurisdictions() {
 
       </div>
 
+      ${dashboardData && !selectedState ? html`
+        <states-overview .stats=${dashboardData}></states-overview>
+      ` : ''}
+
       ${dashboardData && selectedState ? html`
-        <details ?open=${progressOpen} @toggle=${e => setProgressOpen(e.target.open)}>
-          <summary>Progress — ${selectedState}</summary>
+        <section>
+          <h4>Progress — ${selectedState.toUpperCase()}</h4>
           <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
-        </details>
+        </section>
       ` : ''}
 
       <div class="below-grid">
         <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>
         ${permissions.JURISDICTION_PAGE && dashboardData && selectedState && dashboardData.states?.[selectedState]?.locality_gaps?.not_yet_scraped?.length ? html`
           <details ?open=${gapsOpen} @toggle=${e => setGapsOpen(e.target.open)}>
-            <summary>Not yet scraped</summary>
+            <summary>Not scraped</summary>
             <locality-gaps .stats=${dashboardData} .state=${selectedState}></locality-gaps>
           </details>
         ` : ''}
