@@ -65,6 +65,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         "data": new_data
     })
 
+    assert next_context.data.research_municipality_step is not None, "should never happen — research_municipality_step must be set after research_municipality"
     source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
         logger.info("Source URLs provided, skipping link search.")

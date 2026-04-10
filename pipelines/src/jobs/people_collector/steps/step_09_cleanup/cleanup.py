@@ -24,6 +24,7 @@ def cleanup(context: PeopleCollectorContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
+    assert context.data.format_output_step is not None, "should never happen — format_output_step is required before cleanup"
     people = context.data.format_output_step.officials
 
     #if os.path.exists(cache_dir):

@@ -93,7 +93,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
             is_relevant = has_relevant_content(identities, table_text)
             if is_relevant:
                 # Mark this table to keep ALL its content (including images)
-                node._keep_table = True
+                node._keep_table = True  # type: ignore[attr-defined]
                 return True
 
         # Table is not relevant - extract links (with any imgs inside) then remaining standalone imgs
@@ -136,14 +136,12 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
 
     # For text nodes and other elements, check content but don't be too aggressive
     if node and node.name:
-        # pass the Tag so has_relevant_content can inspect attributes/descendants if implemented
-        if has_relevant_content(identities, node):
+        if has_relevant_content(identities, node.get_text(" ", strip=True)):
             return True  # Keep nodes with relevant content
 
     # Handle specific structural elements more carefully
     if node.name in ["p", "section", "article", "main", "header", "footer", "h1", "h2", "h3", "h4", "h5", "h6"]:
-        # pass Tag to has_relevant_content so it can check attributes/descendants
-        if has_relevant_content(identities, node):
+        if has_relevant_content(identities, node.get_text(" ", strip=True)):
             return True  # Keep structural elements that contain relevant content (including images)
 
         # Only extract images and <a> links if we're going to remove this element

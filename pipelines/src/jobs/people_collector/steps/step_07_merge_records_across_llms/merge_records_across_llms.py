@@ -21,6 +21,7 @@ GroupByLLM = Dict[str, List[Person]]
 def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAcrossLLMsStep:
     """Merge records across all LLMs to produce a unified list of Person objects."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
+    assert context.data.merge_records_within_llm_step is not None, "should never happen — merge_records_within_llm_step is required before merge_records_across_llms"
     people_by_llm: Dict[str, List[Person]] = context.data.merge_records_within_llm_step.people_by_llm
     identity_names = _resolve_identity_names(context)
 
@@ -36,6 +37,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
 # --- Helpers for main ---
 
 def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[str]]:
+    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before merge_records_across_llms"
     return context.data.research_municipality_step.identities
 
 
@@ -170,7 +172,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
         image=image[0][0] if image else "",
         cdn_image="",
         jurisdiction_ocdid=jurisdiction_ocdid,
-        source_urls=source_urls,
+        source_urls=list(source_urls),
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds'),
     )
 

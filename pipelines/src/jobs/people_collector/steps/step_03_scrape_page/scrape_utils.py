@@ -61,7 +61,7 @@ async def scrape(logger, website_url, options=None):
                 response = None
                 for wait_until in ["networkidle", "load", "domcontentloaded"]:
                     try:
-                        response = await page.goto(website_url, wait_until=wait_until, timeout=15000)
+                        response = await page.goto(website_url, wait_until=wait_until, timeout=15000)  # type: ignore[arg-type]
                         break
                     except Exception as e:
                         logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
@@ -70,7 +70,8 @@ async def scrape(logger, website_url, options=None):
                     raise Exception("Failed to load page with all wait strategies")
                 
                 # Check if, after redirect, we have already scraped this URL
-                if options.get('scraped_urls') and page.url in options.get('scraped_urls'):
+                scraped_urls = options.get('scraped_urls')
+                if scraped_urls and page.url in scraped_urls:
                     logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
                     raise ValueError("Already scraped this URL after redirect")
                 
@@ -91,9 +92,10 @@ async def scrape(logger, website_url, options=None):
                 await flatten_shadow_root(page)
                 await html_relative_to_absolute_urls(page)
                 
-                if options.get('image_directory'):
+                image_directory = options.get('image_directory')
+                if image_directory:
                     await convert_background_divs_to_imgs(page)
-                    await download_images(browser, logger, page, options.get('image_directory'))
+                    await download_images(browser, logger, page, image_directory)
                 
                 content = await page.content()
                 return content

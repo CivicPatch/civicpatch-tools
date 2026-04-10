@@ -40,7 +40,7 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_scrape_local": not _is_production and Role.MAINTAINERS in teams,
         "can_scrape_remote": Role.MAINTAINERS in teams,
         "can_view_reviews_page": Role.DEFAULT in teams,
-        "can_view_issues_page": Role.MAINTAINERS in teams or Role.ADMINS in teams,
+        "can_view_issues_page": Role.MAINTAINERS in teams,
         "can_delete_directory_person": Role.CONTRIBUTORS in teams,
     }
 

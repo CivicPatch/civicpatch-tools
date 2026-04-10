@@ -1,7 +1,7 @@
 import time
 import requests
 import json
-from google import genai
+from google import genai  # type: ignore[attr-defined]
 from google.genai import types
 from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
@@ -53,6 +53,7 @@ async def run_prompt(
                 contents=content or ".",
                 config=config,
             )
+            assert response_schema is not None
             response = response_schema.model_validate_json(completion.text)
             input_tokens_num = completion.usage_metadata.prompt_token_count
             output_tokens_num = completion.usage_metadata.candidates_token_count

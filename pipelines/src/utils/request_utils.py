@@ -2,8 +2,11 @@ import random
 import asyncio
 import inspect
 import requests
+from typing import TypeVar, Callable, Awaitable, Any, cast
 
 BASE_SLEEP = 2
+
+T = TypeVar('T')
 
 def _retry_after_seconds(e: Exception) -> float | None:
     """Returns the Retry-After value from a 429 HTTPError, or None."""
@@ -17,7 +20,7 @@ def _retry_after_seconds(e: Exception) -> float | None:
         return 60.0  # conservative fallback if header is missing
     return None
 
-async def with_retry(logger, max_retries, func, *args, **kwargs):
+async def with_retry(logger: Any, max_retries: int, func: Callable[..., Awaitable[T]], *args: Any, **kwargs: Any) -> T:
     """
     Execute a function with retry logic. Supports both sync and async functions.
 
@@ -38,9 +41,9 @@ async def with_retry(logger, max_retries, func, *args, **kwargs):
         try:
             result = func(*args, **kwargs)
             if inspect.isawaitable(result):
-                return await result
+                return cast(T, await result)
             else:
-                return result
+                return cast(T, result)
         except Exception as e:
             if isinstance(e, requests.HTTPError) and e.response is not None and e.response.status_code == 404:
                 raise e
@@ -56,3 +59,4 @@ async def with_retry(logger, max_retries, func, *args, **kwargs):
                 retry_attempts += 1
             else:
                 raise e
+    raise RuntimeError("unreachable — with_retry always returns or raises")

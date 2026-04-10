@@ -33,7 +33,7 @@ async def research_municipality(context: PeopleCollectorContext) -> ResearchMuni
 
 async def _step_from_gemini(context: PeopleCollectorContext, logger) -> ResearchMunicipalityStep:
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-    prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, context.data.config.name)
+    prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, context.data.config.name or "")
 
     # Tool call + JSON output doesn't work at the same time for Google Gemini,
     # let's retry a couple times til it works.

@@ -1,7 +1,9 @@
-from typing import Callable, Optional, Dict
+from typing import Callable, Optional, Dict, Any, TypeVar
 from dataclasses import replace
 from time import sleep
 from domain.workflow_context import WorkflowContext
+
+TContext = TypeVar("TContext", bound=WorkflowContext)
 from shared.utils.config_utils import get_job_config
 from utils import log_utils
 import time
@@ -37,11 +39,11 @@ def log_system_usage():
 
 
 async def run_workflow(
-    context,
+    context: TContext,
     logger: log_utils.WorkflowLogger,
-    transition_map: Dict[str, Callable[[WorkflowContext], str]],
+    transition_map: Dict[PipelineStatus, Callable[..., Any]],
     persist_fn: Optional[Callable] = None,
-) -> WorkflowContext:
+) -> TContext:
     ctx = context
     job_config = get_job_config(logger)
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid

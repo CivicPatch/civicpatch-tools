@@ -128,7 +128,7 @@ def resolve_from_known_mappings(name: str, known_mappings: OtherNamesByCanonical
     
     return name
 
-def find_indexed_name(normalized_name: str, people_by_name: PeopleByName, known_mappings: OtherNamesByCanonicalName = None) -> str:
+def find_indexed_name(normalized_name: str, people_by_name: PeopleByName, known_mappings: OtherNamesByCanonicalName | None = None) -> str:
     """
     Find the canonical name that matches the normalized name.
     Priority: 1) Known mappings (config + runtime), 2) Similarity matching

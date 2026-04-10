@@ -18,6 +18,7 @@ async def save_output(context: PeopleCollectorContext):
   )
 
   format_output = context.data.format_output_step
+  assert format_output is not None, "should never happen — format_output_step is required before save_output"
   save_data_to_file(format_output.officials, data_file_path)
 
 def save_data_to_file(people: List[Official], file_path: str):
