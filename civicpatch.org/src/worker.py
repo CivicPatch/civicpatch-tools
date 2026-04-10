@@ -4,7 +4,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
+from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
@@ -16,8 +16,18 @@ TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 
-async def _register_schedules(client: Client) -> None:
+async def _schedule_exists(client: Client, schedule_id: str) -> bool:
     try:
+        await client.get_schedule_handle(schedule_id).describe()
+        return True
+    except RPCError as e:
+        if e.status == RPCStatusCode.NOT_FOUND:
+            return False
+        raise
+
+
+async def _register_schedules(client: Client) -> None:
+    if not await _schedule_exists(client, "pr-sync"):
         await client.create_schedule(
             "pr-sync",
             Schedule(
@@ -30,11 +40,8 @@ async def _register_schedules(client: Client) -> None:
                 policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
             ),
         )
-    except (ScheduleAlreadyRunningError, RPCError) as e:
-        if isinstance(e, RPCError) and e.status != RPCStatusCode.ALREADY_EXISTS:
-            raise
 
-    try:
+    if not await _schedule_exists(client, "od-sync"):
         handle = await client.create_schedule(
             "od-sync",
             Schedule(
@@ -48,9 +55,6 @@ async def _register_schedules(client: Client) -> None:
             ),
         )
         await handle.trigger()
-    except (ScheduleAlreadyRunningError, RPCError) as e:
-        if isinstance(e, RPCError) and e.status != RPCStatusCode.ALREADY_EXISTS:
-            raise
 
 
 async def main() -> None:

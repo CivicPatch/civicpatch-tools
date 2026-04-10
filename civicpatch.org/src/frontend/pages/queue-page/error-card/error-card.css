@@ -77,19 +77,59 @@ error-card {
     letter-spacing: 0.02em;
 }
 
+/* ── Log modal sizing ── */
 
-.error-card__log-popover {
-    width: min(860px, 90vw);
-    height: min(520px, 80vh);
-    padding: 0;
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius);
-    overflow: hidden;
+error-card dialog article {
+    max-width: min(820px, 90vw);
+    width: min(820px, 90vw);
+}
+
+/* ── Tabs ── */
+
+.error-card__modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.error-card__tabs {
+    display: flex;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    margin-bottom: 0.75rem;
+}
+
+.error-card__tab {
+    padding: 0.4rem 1rem;
+    font-size: var(--text-sm);
+    font-family: var(--pico-font-family-monospace);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    color: var(--pico-muted-color);
+    margin-bottom: -1px;
+    border-radius: 0;
+}
+
+.error-card__tab--active {
+    color: var(--pico-primary);
+    border-bottom-color: var(--pico-primary);
 }
 
 .error-card__log {
     display: block;
     width: 100%;
-    height: 100%;
-    border: none;
+    height: min(420px, 55vh);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+}
+
+.error-card__cache-link {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    word-break: break-all;
 }
