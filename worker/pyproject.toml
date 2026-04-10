@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["watchfiles>=1.0.0"]
+dev = ["watchfiles>=1.0.0", "pyright>=1.1.0"]
 
 [tool.uv]
 package = true

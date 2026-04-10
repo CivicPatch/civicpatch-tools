@@ -85,6 +85,21 @@ dir = "pipelines"
 run = "uv run pytest"
 dir = "civicpatch.org"
 
+[tasks.typecheck]
+run = "uv run pyright"
+dir = "civicpatch.org"
+description = "Run pyright type checker on civicpatch.org"
+
+[tasks.typecheck-worker]
+run = "uv run pyright"
+dir = "worker"
+description = "Run pyright type checker on worker"
+
+[tasks.typecheck-pipelines]
+run = "uv run pyright"
+dir = "pipelines"
+description = "Run pyright type checker on pipelines"
+
 [tasks.tfe]
 run = "npm test"
 dir = "pipelines/src/frontend"
