@@ -749,6 +749,27 @@ async def get_job(request_id: str):
             }
         return None
 
+async def set_job_github_run_id(request_id: str, github_run_id: int) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        result = await conn.execute(
+            "UPDATE jobs SET github_run_id = %s WHERE request_id = %s",
+            (github_run_id, request_id),
+        )
+        return result.rowcount > 0
+
+
+async def get_job_github_run_id(request_id: str) -> int | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT github_run_id FROM jobs WHERE request_id = %s",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else None
+
+
 async def get_job_status(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

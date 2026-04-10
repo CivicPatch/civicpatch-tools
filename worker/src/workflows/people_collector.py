@@ -63,8 +63,8 @@ class PeopleCollectorWorkflow:
             run_id = await workflow.execute_activity(
                 find_github_run,
                 args=[request_id],
-                start_to_close_timeout=timedelta(minutes=5),
-                heartbeat_timeout=timedelta(seconds=30),
+                start_to_close_timeout=timedelta(minutes=30),
+                heartbeat_timeout=timedelta(seconds=60),
             )
             conclusion = await workflow.execute_activity(
                 poll_run_status,

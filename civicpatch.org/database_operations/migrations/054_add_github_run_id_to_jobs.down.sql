@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE jobs DROP COLUMN github_run_id;
+
+COMMIT;

@@ -170,6 +170,7 @@ erDiagram
         text status "idx"
         text server_source
         text run_url
+        bigint github_run_id
         text pull_request_review_state_to_delete "idx"
         timestamptz created_at
         timestamptz updated_at

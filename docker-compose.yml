@@ -76,6 +76,7 @@ services:
   # ── Temporal ───────────────────────────────────────────────────────────────
   temporal-postgres:
     image: postgres:16
+    stop_grace_period: 30s
     environment:
       POSTGRES_PASSWORD: temporal
       POSTGRES_USER: temporal
