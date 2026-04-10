@@ -54,6 +54,18 @@ async def start_people_collector_workflow(
     return handle.id
 
 
+async def start_batch_people_collector_workflow(state: str, items: list[dict]) -> str:
+    client = await _get_client()
+    handle = await client.start_workflow(
+        "BatchPeopleCollectorWorkflow",
+        args=[items],
+        id=f"batch-people-collector-{state}",
+        task_queue=TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+    )
+    return handle.id
+
+
 async def signal_human_approval(jurisdiction_ocdid: str) -> None:
     client = await _get_client()
     handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))

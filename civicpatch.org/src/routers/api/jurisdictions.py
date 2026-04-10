@@ -1,70 +1,13 @@
-import os
 import urllib
 
-import yaml
 from fastapi import APIRouter, HTTPException, Query
 
 
 import database.database as database
 
-import services.github.github_api_service as github_service
+import services.pipeline.candidate_service as candidate_service
 import shared.utils.config_utils as config_utils
-# import services.auth_service as AuthService
-from schemas.common import Jurisdiction
 from schemas.requests import JurisdictionsByOcdidsRequest
-
-VALID_STATES = [
-    "al",
-    "ak",
-    "az",
-    "ar",
-    "ca",
-    "co",
-    "ct",
-    "de",
-    "fl",
-    "ga",
-    "hi",
-    "id",
-    "il",
-    "in",
-    "ia",
-    "ks",
-    "ky",
-    "la",
-    "me",
-    "md",
-    "ma",
-    "mi",
-    "mn",
-    "ms",
-    "mo",
-    "mt",
-    "ne",
-    "nv",
-    "nh",
-    "nj",
-    "nm",
-    "ny",
-    "nc",
-    "nd",
-    "oh",
-    "ok",
-    "or",
-    "pa",
-    "ri",
-    "sc",
-    "sd",
-    "tn",
-    "tx",
-    "ut",
-    "vt",
-    "va",
-    "wa",
-    "wv",
-    "wi",
-    "wy",
-]
 
 def get_router() -> APIRouter:
     router = APIRouter()
@@ -93,73 +36,11 @@ def get_router() -> APIRouter:
         state: str,
         num_jurisdictions: int = 10,
     ):
-        jurisdictions_file_content = await github_service.get_github_file_contents(
-            f"data_source/{state}/jurisdictions.yml"
-        )
-        jurisdictions_metadata_file_content = await github_service.get_github_file_contents(
-            f"data_source/{state}/jurisdictions_metadata.yml"
-        )
-        if jurisdictions_metadata_file_content is None:
-            raise HTTPException(
-                status_code=404, detail="Could not find jurisdictions metadata file"
-            )
-
-        if jurisdictions_file_content is None:
-            raise HTTPException(
-                status_code=404, detail="Could not find jurisdictions file"
-            )
-        jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_file_content)
-        jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
-        open_pull_requests = await github_service.get_open_pull_requests(state_code=state)
-        jurisdictions_entries = jurisdictions_data.get("jurisdictions", [])
-        jurisdictions = []
-
-        # Helper to check if a jurisdiction is eligible (no open PR, has URL)
-        def is_eligible(jurisdiction_ocdid):
-            if any(pr.jurisdiction_ocdid == jurisdiction_ocdid for pr in open_pull_requests):
-                return False
-            entry = next((e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid), None)
-            return entry and entry.get("url")
-
-        # First, try to get jurisdictions with empty updated_at
-        empty_updated = []
-        for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
-            if not jurisdiction_metadata.get("updated_at") and is_eligible(jurisdiction_ocdid):
-                entry = next(e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid)
-                jurisdiction_metadata["jurisdiction"] = entry
-                empty_updated.append(
-                    Jurisdiction(
-                        id=entry["id"],
-                        name=entry["name"],
-                        url=entry["url"],
-                    )
-                )
-
-        # If not enough, fill with oldest eligible
-        jurisdictions = empty_updated
-        if len(jurisdictions) < num_jurisdictions:
-            # Find other eligible, excluding already added
-            already_added_ids = {j.id for j in jurisdictions}
-            eligible = []
-            for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
-                if is_eligible(jurisdiction_ocdid) and jurisdiction_ocdid not in already_added_ids:
-                    entry = next(e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid)
-                    eligible.append((jurisdiction_metadata.get("updated_at") or "", entry))
-            eligible.sort(key=lambda tup: tup[0])  # Oldest first
-            for _, entry in eligible:
-                if len(jurisdictions) >= num_jurisdictions:
-                    break
-                jurisdictions.append(
-                    Jurisdiction(
-                        id=entry["id"],
-                        name=entry["name"],
-                        url=entry["url"],
-                    )
-                )
-        else:
-            jurisdictions = jurisdictions[:num_jurisdictions]
-
-        return {"jurisdictions": jurisdictions}
+        try:
+            candidates = await candidate_service.get_scrape_candidates(state, num_jurisdictions)
+        except ValueError as e:
+            raise HTTPException(status_code=404, detail=str(e))
+        return {"jurisdictions": candidates}
 
     @router.get("/states")
     async def get_jurisdiction_states_endpoint(
