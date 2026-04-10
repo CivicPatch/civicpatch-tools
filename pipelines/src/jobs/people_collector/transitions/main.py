@@ -204,17 +204,18 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
     current_cost = cost_utils.total_cost_by_request(
         context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]
-    next_state, stop_error = next_process_content_state(
+    next_state, stop_warning = next_process_content_state(
         processed_count=len(links_processed),
         current_cost=current_cost,
         job_config=job_config,
         progress=result.progress,
     )
-    if stop_error:
+    if stop_warning and next_state == PipelineStatus.SEND_ERROR:
         next_context = next_context.copy(update={
-            "data": next_context.data.copy(update={"error_step": stop_error})
+            "data": next_context.data.copy(update={"error_step": stop_warning})
         })
-        return next_context, PipelineStatus.SEND_ERROR
+    elif stop_warning:
+        logger.warning(stop_warning)
     return next_context, next_state
 
 async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
