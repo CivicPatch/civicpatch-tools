@@ -501,7 +501,8 @@ def get_router(api_key_header):
             base = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}"
             job["workflow_log_url"] = f"{base}/workflow.log"
             job["workflow_context_url"] = f"{base}/workflow_context.json"
-            job["cache_url"] = f"{base}/cache/"
+            # TODO: move Cloudflare account ID to env var
+            job["debug_url"] = f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-artifacts?prefix={job['request_id']}%2F"
             job["jurisdiction_path"] = folder
 
         return {"data": jobs}

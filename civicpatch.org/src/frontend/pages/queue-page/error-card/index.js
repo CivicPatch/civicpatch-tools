@@ -43,13 +43,13 @@ function ErrorCard({ job }) {
   const tabs = [
     { id: "log", label: "Log" },
     { id: "context", label: "Context" },
-    { id: "cache", label: "Cache" },
+    { id: "debug", label: "Debug" },
   ];
 
   const tabUrls = {
     log: job?.workflow_log_url,
     context: job?.workflow_context_url,
-    cache: job?.cache_url,
+    debug: job?.debug_url,
   };
 
   const modalContent = html`
@@ -63,9 +63,9 @@ function ErrorCard({ job }) {
         `)}
       </div>
       <div class="error-card__tab-body">
-        ${activeTab === "cache"
+        ${activeTab === "debug"
           ? html`<div class="error-card__cache-link">
-              <a href=${tabUrls.cache} target="_blank" rel="noopener">${tabUrls.cache}</a>
+              <a href=${tabUrls.debug} target="_blank" rel="noopener">${tabUrls.debug}</a>
             </div>`
           : html`<iframe
               class="error-card__log"
