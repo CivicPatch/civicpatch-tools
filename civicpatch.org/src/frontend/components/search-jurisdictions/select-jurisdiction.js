@@ -4,12 +4,20 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import "./select-state.js";
 
-function CivSelectJurisdiction() {
+function CivSelectJurisdiction({ selected }) {
   const { permissions } = useAuth();
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
   const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
   const [selectedState, setSelectedState] = useState(defaultState);
+
+  useEffect(() => {
+    const normalized = (selected || '').toLowerCase();
+    if (normalized && normalized !== selectedState) {
+      setSelectedState(normalized);
+      setDefaultState(normalized);
+    }
+  }, [selected]);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
 

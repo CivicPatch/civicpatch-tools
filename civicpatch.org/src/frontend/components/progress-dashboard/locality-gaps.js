@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import { component, useState, useEffect } from 'haunted';
 import { useAuth } from '../../hooks/useAuth.js';
 import { fetchJurisdictionsByOcdids } from '../../api.js';
+import { Pagination } from '../pagination/index.js';
 
 const PAGE_SIZE = 25;
 
@@ -20,6 +21,7 @@ function LocalityGaps({ stats, state }) {
   const pageOcdids = notScraped.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   useEffect(() => {
+    setJurisdictions([]);
     fetchJurisdictionsByOcdids(pageOcdids).then(res => setJurisdictions(res.data || []));
   }, [page, state]);
 
@@ -37,10 +39,14 @@ function LocalityGaps({ stats, state }) {
         })}
       </ul>
       ${totalPages > 1 ? html`
-        <nav style="display:flex; gap:1rem; align-items:center; margin-top:1rem;">
-          <button ?disabled=${page <= 1} @click=${() => setPage(p => p - 1)}>← Previous</button>
-          <span>Page ${page} of ${totalPages}</span>
-          <button ?disabled=${page >= totalPages} @click=${() => setPage(p => p + 1)}>Next →</button>
+        <nav style="display:flex; gap:0.5rem; align-items:center; margin-top:1rem;">
+          ${Pagination({
+            page,
+            totalPages,
+            onPrevious: () => setPage(p => p - 1),
+            onNext: () => setPage(p => p + 1),
+            onGoToPage: (n) => setPage(n),
+          })}
         </nav>
       ` : ''}
     </div>

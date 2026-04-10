@@ -1,17 +1,24 @@
 import { html } from 'lit-html';
 import { useState, useEffect, component } from 'haunted';
 import '../../components/progress-dashboard/summary-stats.js';
+import '../../components/progress-dashboard/states-overview.js';
 import { config } from '../../assets/config.js';
 const API_URL = config.apiUrl;
 
 function ProgressPage() {
   const [data, setData] = useState(null);
-  const [selectedState, setSelectedState] = useState('TX');
+  const [selectedState, setSelectedState] = useState('');
 
   useEffect(() => {
     fetch(`${API_URL}/api/v1/data/dashboard`)
       .then(res => res.json())
       .then(data => setData(data.data));
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => setSelectedState((e.detail.state || '').toLowerCase());
+    document.addEventListener('state-select', handler);
+    return () => document.removeEventListener('state-select', handler);
   }, []);
 
   if (!data) return html`<div>Loading...</div>`;
@@ -27,13 +34,17 @@ function ProgressPage() {
           @change=${e => setSelectedState(e.target.value)}
           .value=${selectedState}
         >
+          <option value="">All states</option>
           ${stateOptions.map(
-            state => html`<option value=${state}>${state}</option>`
+            state => html`<option value=${state}>${state.toUpperCase()}</option>`
           )}
         </select>
       </section>
       <section>
-        <summary-stats .stats=${data} .state=${selectedState}></summary-stats>
+        ${selectedState
+          ? html`<summary-stats .stats=${data} .state=${selectedState}></summary-stats>`
+          : html`<states-overview .stats=${data}></states-overview>`
+        }
       </section>
     </main>
   `;
