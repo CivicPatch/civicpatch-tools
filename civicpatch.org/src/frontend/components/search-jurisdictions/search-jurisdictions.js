@@ -88,7 +88,7 @@ function SearchJurisdictions() {
                 or
                 <a href="https://unified.me/chat/!NcnsrToWrvzzzoLHWn" target="_blank" rel="noopener noreferrer"><civ-badge .label=${"community chat"} .variant=${"secondary"}></civ-badge></a>
               </li>
-              <li>Funding and support for ongoing operations: Reach out to <a href="mailto:info@civicdata.tech"><civ-badge .label=${"info@civicdata.tech"} .variant=${"primary"}></civ-badge></a></li>
+              <li>Funding and support for ongoing operations: <a href="https://ko-fi.com/civicpatch" target="_blank" rel="noopener noreferrer"><civ-badge .label=${"Ko-fi"} .variant=${"primary"}></civ-badge></a></li>
             </ul>
           </div>
         </div>

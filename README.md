@@ -68,6 +68,10 @@ This repository contains supporting infrastructure for the CivicPatch initiative
   open-data repo (GitHub)  ──►  PR created  ──►  data consumers
 ```
 
+## Support
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/civicpatch)
+
 ## Contributing
 
 Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and 

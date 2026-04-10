@@ -70,7 +70,7 @@ def test_cost_limit_without_data_is_failure():
         job_config=_job_config(cost_limit="1.00"),
         progress=_progress(),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.SEND_ERROR
     assert error is not None
     assert "Cost limit" in error
 
