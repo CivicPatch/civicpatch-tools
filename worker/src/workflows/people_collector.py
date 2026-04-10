@@ -3,7 +3,7 @@ from datetime import timedelta
 from typing import Optional
 
 from temporalio import workflow
-from temporalio.common import WorkflowIDConflictPolicy
+from temporalio.common import WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
     from activities.github_activity import trigger_github_action, find_github_run, poll_run_status, trigger_local_job
@@ -142,7 +142,7 @@ class BatchPeopleCollectorWorkflow:
                 PeopleCollectorWorkflow.run,
                 args=[item["jurisdiction_ocdid"], item["request_id"], _DISPATCH_MODE_WATCH, item["name"], item["url"], None],
                 id=_workflow_id(item["jurisdiction_ocdid"]),
-                id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+                id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )
             handles.append(handle)
         await asyncio.gather(*[h.result() for h in handles])
