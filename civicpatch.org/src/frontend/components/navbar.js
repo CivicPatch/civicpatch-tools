@@ -312,8 +312,8 @@ function renderAuthed(user, summary, currentPath) {
       <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
     <a href="/" class="${active('/')}">Home</a>
-    <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary?.open_prs == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? ''}</span></a>
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${!summary || (!summary.pipeline_errors && !summary.duplicate_jurisdictions) ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : ''}</span></a>` : ""}
+    <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : 0}</span></a>` : ""}
     ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
   `;
 }

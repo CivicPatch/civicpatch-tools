@@ -137,6 +137,8 @@ async def od_sync():
         logger.debug(f"Fetching remote metadata for state: {state}")
         remote_metadata_file = await get_jurisdiction_metadata(state)
         logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
+        if remote_metadata_file is None:
+            continue
         all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
         await asyncio.sleep(0)
 

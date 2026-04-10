@@ -108,7 +108,7 @@ async def run_prompt(
             request_id,
             jurisdiction_ocdid,
             "open_router",
-            model,
+            routed_model,
             usage.get("prompt_tokens", 0),
             usage.get("completion_tokens", 0),
             with_search=False
