@@ -11,7 +11,7 @@ async def get_scrape_candidates(state: str, num_jurisdictions: int) -> list[Juri
     if jurisdictions_content is None:
         raise ValueError(f"Could not find jurisdictions file for state {state!r}")
     if metadata_content is None:
-        raise ValueError(f"Could not find jurisdictions metadata file for state {state!r}")
+        raise ValueError(f"No jurisdictions_metadata.yml found for state {state!r} — run od_sync first to populate it")
 
     entries = yaml.safe_load(jurisdictions_content).get("jurisdictions", [])
     metadata_by_id = yaml.safe_load(metadata_content).get("jurisdictions_by_id", {})

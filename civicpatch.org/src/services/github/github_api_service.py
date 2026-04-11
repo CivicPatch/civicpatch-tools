@@ -240,8 +240,11 @@ async def cached_github_get(
     elif response.status_code in (403, 429) and response.headers.get("X-RateLimit-Remaining") == "0":
         reset_at = response.headers.get("X-RateLimit-Reset", "unknown")
         raise RateLimitError(f"GitHub rate limit exceeded, resets at {reset_at}")
+    elif response.status_code == 404:
+        logger.debug(f"File not found (404): {url}")
+        return None
     else:
-        logger.error(f"Error fetching {url}: {response.status_code} {response.text}")
+        logger.error(f"Unexpected response fetching {url}: {response.status_code} {response.text}")
         return None
 
 

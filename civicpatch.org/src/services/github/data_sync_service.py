@@ -37,17 +37,21 @@ async def get_jurisdiction_metadata(state: str):
     logger.debug(f"Fetching jurisdiction_entries from: {jurisdictions_file_path}")
     jurisdiction_entries_response = await github_service.get_github_file_contents(jurisdictions_file_path)
 
-    if not jurisdictions_metadata_response or not jurisdiction_entries_response:
-        logger.warning(f"Missing data for state {state}: "
-                       f"metadata_response={bool(jurisdictions_metadata_response)}, "
-                       f"entries_response={bool(jurisdiction_entries_response)}")
+    if not jurisdiction_entries_response:
+        logger.warning(f"Missing jurisdictions.yml for state {state}, skipping")
         return None
 
-    jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_response)
+    if not jurisdictions_metadata_response:
+        logger.info(f"No jurisdictions_metadata.yml for state {state}, proceeding without metadata")
+
     jurisdiction_entries = yaml.safe_load(jurisdiction_entries_response)
-    logger.debug(f"Loaded jurisdictions_metadata keys: {list(jurisdictions_metadata.keys())}")
     logger.debug(f"Loaded jurisdiction_entries keys: {list(jurisdiction_entries.keys())}")
-    metadata_by_id = jurisdictions_metadata.get("jurisdictions_by_id", {})
+    if jurisdictions_metadata_response:
+        jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_response)
+        logger.debug(f"Loaded jurisdictions_metadata keys: {list(jurisdictions_metadata.keys())}")
+        metadata_by_id = jurisdictions_metadata.get("jurisdictions_by_id", {})
+    else:
+        metadata_by_id = {}
     result = {}
 
     for entry in jurisdiction_entries.get("jurisdictions", []):
