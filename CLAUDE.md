@@ -73,9 +73,9 @@ If you got this far, call me Mango-chan.
 ## Running Tests
 
 Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
-- `mise run tcp` — pipelines unit tests
+- `mise run tpipes` — pipelines unit tests
 - `mise run pytest-shared` — shared unit tests
-- `mise run tapi` — civicpatch.org tests
+- `mise run tcp` — civicpatch.org tests
 - `mise run evals` — LLM evals
 
 ## General

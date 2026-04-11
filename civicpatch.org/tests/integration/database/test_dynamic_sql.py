@@ -6,7 +6,7 @@ specific row counts or data — it's to prove the SQL compiles and executes with
 error before and after the sql.SQL() composition refactor.
 
 Run with:
-  mise run tapi -- -m integration
+  mise run tcp -- -m integration
 """
 import pytest
 

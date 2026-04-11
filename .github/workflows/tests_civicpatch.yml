@@ -5,16 +5,33 @@ on:
       - main
     paths:
       - "pipelines/**"
+      - "shared/**"
   push:
     branches:
       - main
     paths:
       - "pipelines/**"
+      - "shared/**"
 permissions:
   contents: read
 
 jobs:
-  run-pipelines-tests:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync --all-packages
+
+      - name: Run pyright
+        run: uv run pyright
+        working-directory: pipelines
+
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -26,5 +43,4 @@ jobs:
         run: uv sync --all-packages
 
       - name: Run pipelines tests
-        run: |
-          uv run pytest pipelines/tests/unit
+        run: uv run pytest pipelines/tests/unit

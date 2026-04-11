@@ -2,10 +2,10 @@
 Fixtures for integration tests that connect to the integration test database.
 
 Start the test DB before running:
-  mise run tapi-db-up && mise run tapi-db-migrate
+  mise run tcp-db-up && mise run tcp-db-migrate
 
 Or run everything in one shot:
-  mise run tapi-integration
+  mise run tcp-integration
 
 Override the URL for CI by setting INTEGRATION_TEST_DB_URL. We use a separate
 env var (not CIVICPATCH_API_DB_URL) because the root conftest poisons that name
