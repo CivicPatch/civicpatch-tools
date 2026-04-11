@@ -1,0 +1,9 @@
+.aj-section { margin-bottom: 2rem; }
+.aj-table { width: 100%; font-size: 0.8125rem; margin: 0; }
+.aj-table th { font-size: 0.75rem; color: var(--pico-muted-color); font-weight: 600; padding: 0.3rem 0.5rem; }
+.aj-table td { padding: 0.3rem 0.5rem; vertical-align: middle; }
+.aj-table tr:last-child td { border-bottom: none; }
+.aj-name { color: var(--pico-primary); }
+.aj-meta { color: var(--pico-muted-color); white-space: nowrap; }
+.aj-mono { font-family: var(--pico-font-family-monospace); font-size: 0.75rem; }
+.aj-request-id { white-space: normal; word-break: break-all; min-width: 8rem; }

@@ -19,21 +19,11 @@ import "./pr-list/index.js";
 
 const API_URL = config.apiUrl;
 
-function getPageFromUrl() {
-  const val = parseInt(new URLSearchParams(window.location.search).get("page"), 10);
-  return isNaN(val) || val < 1 ? 1 : val;
-}
-
-function getPerPageFromUrl() {
-  const val = parseInt(new URLSearchParams(window.location.search).get("per_page"), 10);
-  return [10, 25, 50].includes(val) ? val : 10;
-}
-
-function setPageParamsInUrl(page, perPage) {
-  const params = new URLSearchParams(window.location.search);
-  params.set("page", page);
-  params.set("per_page", perPage);
-  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+function getIntParam(key, fallback, allowed = null) {
+  const val = parseInt(new URLSearchParams(window.location.search).get(key), 10);
+  if (isNaN(val) || val < 1) return fallback;
+  if (allowed && !allowed.includes(val)) return fallback;
+  return val;
 }
 
 function getStateFromUrl() {
@@ -46,6 +36,20 @@ function getViewFromUrl() {
   return val === "detail" ? "detail" : val === "quick" ? "quick" : null;
 }
 
+function setPrParamsInUrl(page, perPage) {
+  const params = new URLSearchParams(window.location.search);
+  params.set("pr_page", page);
+  params.set("pr_per_page", perPage);
+  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+}
+
+function setAjParamsInUrl(page, perPage) {
+  const params = new URLSearchParams(window.location.search);
+  params.set("aj_page", page);
+  params.set("aj_per_page", perPage);
+  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+}
+
 function QueuePage() {
   const { permissions } = useAuth();
   const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
@@ -56,16 +60,21 @@ function QueuePage() {
   const [pullRequestState, setPullRequestState] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(getPageFromUrl());
-  const [perPage, setPerPage] = useState(getPerPageFromUrl());
+  const [page, setPage] = useState(getIntParam("pr_page", 1));
+  const [perPage, setPerPage] = useState(getIntParam("pr_per_page", 10, [10, 25, 50]));
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState(getViewFromUrl() || defaultView);
   const [activeJobs, setActiveJobs] = useState([]);
+  const [activeJobsPage, setActiveJobsPage] = useState(getIntParam("aj_page", 1));
+  const [activeJobsTotalPages, setActiveJobsTotalPages] = useState(1);
+  const [activeJobsPerPage, setActiveJobsPerPage] = useState(getIntParam("aj_per_page", 25, [10, 25, 50]));
 
   useEffect(() => {
     const onPopState = () => {
-      setPage(getPageFromUrl());
-      setPerPage(getPerPageFromUrl());
+      setPage(getIntParam("pr_page", 1));
+      setPerPage(getIntParam("pr_per_page", 10, [10, 25, 50]));
+      setActiveJobsPage(getIntParam("aj_page", 1));
+      setActiveJobsPerPage(getIntParam("aj_per_page", 25, [10, 25, 50]));
       setViewMode(getViewFromUrl() || defaultView);
     };
     window.addEventListener("popstate", onPopState);
@@ -87,10 +96,13 @@ function QueuePage() {
   }, [stateCode, page, perPage, viewMode]);
 
   useEffect(() => {
-    fetchActiveJobs(stateCode || undefined)
-      .then((result) => setActiveJobs(result.data || []))
+    fetchActiveJobs(stateCode || undefined, activeJobsPage, activeJobsPerPage)
+      .then((result) => {
+        setActiveJobs(result.data || []);
+        setActiveJobsTotalPages(result.total_pages || 1);
+      })
       .catch(() => setActiveJobs([]));
-  }, [stateCode]);
+  }, [stateCode, activeJobsPage, activeJobsPerPage]);
 
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
@@ -126,22 +138,26 @@ function QueuePage() {
     const newState = e.detail.state;
     const params = new URLSearchParams(window.location.search);
     params.set("state", newState);
-    params.set("page", 1);
-    params.set("per_page", perPage);
+    params.set("pr_page", 1);
+    params.set("pr_per_page", perPage);
+    params.set("aj_page", 1);
+    params.set("aj_per_page", 25);
     window.history.pushState({}, "", `${window.location.pathname}?${params}`);
     setDefaultState(newState || "");
     setStateCode(newState);
     setPage(1);
+    setActiveJobsPage(1);
+    setActiveJobsPerPage(25);
   };
 
   const handlePageChange = (newPage) => {
-    setPageParamsInUrl(newPage, perPage);
+    setPrParamsInUrl(newPage, perPage);
     setPage(newPage);
   };
 
   const handlePerPageChange = (e) => {
     const newPerPage = parseInt(e.target.value, 10);
-    setPageParamsInUrl(1, newPerPage);
+    setPrParamsInUrl(1, newPerPage);
     setPerPage(newPerPage);
     setPage(1);
   };
@@ -172,10 +188,18 @@ function QueuePage() {
         ` : null}
       </div>
 
-      <queue-active-jobs .jobs=${activeJobs}></queue-active-jobs>
+      ${!stateCode ? html`<p class="queue-page__select-state-prompt">Select a state to get started.</p>` : null}
 
-      ${!stateCode ? html`<p class="queue-page__select-state-prompt">Select a state to get started.</p>` : html`
+      ${stateCode ? html`
         ${queueSummary ? html`<queue-summary .summary=${queueSummary}></queue-summary>` : null}
+        <queue-active-jobs
+          .jobs=${activeJobs}
+          .page=${activeJobsPage}
+          .totalPages=${activeJobsTotalPages}
+          .perPage=${activeJobsPerPage}
+          .onPageChange=${(p) => { setAjParamsInUrl(p, activeJobsPerPage); setActiveJobsPage(p); }}
+          .onPerPageChange=${(e) => { const n = parseInt(e.target.value, 10); setAjParamsInUrl(1, n); setActiveJobsPerPage(n); setActiveJobsPage(1); }}
+        ></queue-active-jobs>
         <queue-pr-list
           .pullRequests=${pullRequests}
           .pullRequestState=${pullRequestState}
@@ -191,7 +215,7 @@ function QueuePage() {
           .onPageChange=${handlePageChange}
           .onPerPageChange=${handlePerPageChange}
         ></queue-pr-list>
-      `}
+      ` : null}
     </main>
     <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
   `;
