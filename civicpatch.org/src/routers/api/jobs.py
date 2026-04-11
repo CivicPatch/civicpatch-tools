@@ -114,7 +114,6 @@ class GetJobResponse(BaseModel):
     arguments: dict
     result: Optional[Any] = None
     pull_request_url: Optional[str] = None
-    run_url: Optional[str] = None
     created_at: float
     updated_at: float
 
@@ -397,7 +396,6 @@ def get_router(api_key_header):
     #            arguments=job["arguments_json"],
     #            result=job["data_json"],
     #            pull_request_url=job["pull_request_url"],
-    #            run_url=job["run_url"],
     #            created_at=job["created_at"],
     #            updated_at=job["updated_at"],
     #        )

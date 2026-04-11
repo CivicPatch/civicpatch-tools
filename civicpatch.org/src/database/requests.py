@@ -12,11 +12,9 @@ async def register_request_with_job(
     request_id: str,
     job_type: str,
     arguments_json: dict,
-    server_source: Optional[str] = None,
     jurisdiction_ocdid: Optional[str] = None,
     status: JobStatus = JobStatus.PENDING,
     progress: int = 0,
-    run_url: Optional[str] = None,
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -32,13 +30,13 @@ async def register_request_with_job(
             """
             INSERT INTO jobs (
                 request_id, requested_by_provider, requested_by_provider_user_id,
-                status, progress, server_source, run_url,
+                status, progress,
                 created_at, updated_at
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (request_id, requested_by_provider, requested_by_provider_user_id,
-             status, progress, server_source, run_url),
+             status, progress),
         )
 
 

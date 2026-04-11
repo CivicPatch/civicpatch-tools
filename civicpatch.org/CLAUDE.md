@@ -32,7 +32,7 @@ tests/
 1. Read the file(s) you are about to change — understand existing patterns before adding new ones
 2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
 3. All queries go in `database/database.py` — check there before adding a new function
-4. **Before touching the database, read the schema diagram in `README.md`** — it is the authoritative reference for table structure; do not read migration files to infer schema
+4. **Before touching the database, read `DATABASE.md`** — it is the authoritative reference for table structure; do not read migration files to infer schema
 
 ## Permissions
 
@@ -82,7 +82,7 @@ mise run psql
 - Every migration must be wrapped in `BEGIN` / `COMMIT`
 - Down migrations must exactly reverse the up migration — test that the round-trip is clean
 - Create a new migration file whenever you add, rename, or drop a column, table, or index — never edit an existing migration
-- **After every migration, update the Mermaid schema diagram in `README.md`** — the diagram must always reflect the current state of the database, including index annotations (`"idx"` or `"idx: expression"`) on any affected fields
+- **After every migration, update the Mermaid schema diagram in `DATABASE.md`** — the diagram must always reflect the current state of the database, including index annotations (`"idx"` or `"idx: expression"`) on any affected fields
 
 ## Background tasks
 
