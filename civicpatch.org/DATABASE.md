@@ -29,7 +29,7 @@ erDiagram
         text jurisdiction_ocdid FK
         uuid requested_by_user_id FK
         jsonb arguments_json
-        jsonb result_data
+        jsonb data_json "scraped Official objects from pipeline"
         jsonb review_json "idx: jsonb_array_length(review_json->'issues')"
         timestamptz created_at
         timestamptz updated_at
@@ -63,7 +63,7 @@ erDiagram
     people {
         uuid id PK
         text jurisdiction_ocdid FK
-        jsonb data
+        jsonb data "canonical Official JSONB blob"
         text status
         timestamptz updated_at
     }
@@ -72,7 +72,7 @@ erDiagram
         uuid id PK
         text jurisdiction_ocdid FK "idx"
         text body
-        text user_id
+        uuid user_id FK
         timestamptz created_at
     }
 
@@ -112,13 +112,12 @@ erDiagram
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"
+    users ||--o{ notes : "user_id"
     review_sessions ||--o{ review_session_entries : "review_session_id"
 ```
 
 **Notes:**
-- `requests.result_data` — array of scraped `Official` objects returned by the civicpatch pipeline
 - `requests.review_json` — pipeline review output (`issues`, `warnings`, etc.)
-- `people.data` — full `Official` JSONB blob; the canonical record for a jurisdiction's current officials
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `jobs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged

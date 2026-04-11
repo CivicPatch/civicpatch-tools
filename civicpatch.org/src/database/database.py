@@ -714,7 +714,7 @@ async def get_job(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.status, j.progress, r.arguments_json, r.result_data,
+            SELECT j.status, j.progress, r.arguments_json, r.data_json,
                    j.created_at, j.updated_at, pr.url
             FROM jobs j
             LEFT JOIN requests r ON r.id = j.request_id
@@ -867,7 +867,7 @@ async def update_job_data(request_id: str, data_json: Any):
         result = await conn.execute(
             """
             UPDATE requests r
-            SET result_data = %s,
+            SET data_json = %s,
                 updated_at = CURRENT_TIMESTAMP
             FROM jobs j
             WHERE r.id = j.request_id AND j.request_id = %s;
@@ -1266,7 +1266,7 @@ async def get_job_data_json(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.result_data
+            SELECT r.data_json
             FROM jobs j
             LEFT JOIN requests r ON r.id = j.request_id
             WHERE j.request_id = %s LIMIT 1
@@ -1282,7 +1282,7 @@ async def get_job_result(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.result_data, r.review_json FROM requests r
+            SELECT r.data_json, r.review_json FROM requests r
             JOIN jobs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
@@ -1375,7 +1375,7 @@ async def get_requests_for_export(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.result_data, r.review_json
+            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.data_json, r.review_json
             FROM requests r
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid LIKE %s
@@ -1395,7 +1395,7 @@ async def get_requests_for_export(
             "request_id": str(r[0]),
             "jurisdiction_ocdid": r[1],
             "created_at": r[2].isoformat() if r[2] else None,
-            "result_data": r[3] or [],
+            "data_json": r[3] or [],
             "review_json": r[4] or {},
         }
         for r in rows
@@ -1593,7 +1593,7 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
                 n.id::text,
                 n.jurisdiction_ocdid,
                 n.body,
-                n.user_id,
+                n.user_id::text,
                 n.created_at,
                 CASE WHEN u.provider = 'github'
                     THEN 'https://avatars.githubusercontent.com/u/' || u.provider_user_id
@@ -1605,7 +1605,7 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
                     ELSE NULL
                 END AS profile_url
             FROM notes n
-            LEFT JOIN users u ON u.id::text = n.user_id
+            LEFT JOIN users u ON u.id = n.user_id
             WHERE n.jurisdiction_ocdid = %s
             ORDER BY n.created_at DESC
             LIMIT %s OFFSET %s
@@ -1637,7 +1637,7 @@ async def create_note(jurisdiction_ocdid: str, body: str, user_id: str):
             """
             INSERT INTO notes (jurisdiction_ocdid, body, user_id)
             VALUES (%s, %s, %s)
-            RETURNING id::text, jurisdiction_ocdid, body, user_id, created_at
+            RETURNING id::text, jurisdiction_ocdid, body, user_id::text, created_at
             """,
             (jurisdiction_ocdid, body, user_id),
         )
