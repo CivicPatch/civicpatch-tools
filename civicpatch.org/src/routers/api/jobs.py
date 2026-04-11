@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import math
 import os
 import time
 from typing import Any, Literal, Optional
@@ -484,7 +485,8 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Failed to cancel workflow").model_dump(),
                 status_code=500,
             )
-        return {"request_id": request_id, "status": "cancelled"}
+        await update_job_status(request_id=request_id, status=JobStatus.CANCELLED, progress=None)
+        return {"request_id": request_id, "status": JobStatus.CANCELLED}
 
     @router.get(
         "/active",
@@ -492,12 +494,14 @@ def get_router(api_key_header):
     )
     async def get_active_jobs_endpoint(
         state_code: Optional[str] = None,
+        page: int = 1,
+        per_page: int = 25,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
     ):
-        jobs = await get_active_jobs(state_code=state_code)
+        jobs, total = await get_active_jobs(state_code=state_code, page=page, per_page=per_page)
         for job in jobs:
             job["jurisdiction_path"] = shared.utils.id_utils.jurisdiction_ocdid_to_folder(job["jurisdiction_ocdid"])
-        return {"data": jobs}
+        return {"data": jobs, "total": total, "page": page, "per_page": per_page, "total_pages": math.ceil(total / per_page) if total else 1}
 
     @router.get(
         "/errors",

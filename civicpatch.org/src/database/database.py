@@ -782,12 +782,14 @@ async def get_active_job_jurisdiction_ocdids() -> set[str]:
         return {row[0] for row in rows}
 
 
-async def get_active_jobs(state_code: Optional[str] = None) -> list[dict]:
+async def get_active_jobs(state_code: Optional[str] = None, page: int = 1, per_page: int = 25) -> tuple[list[dict], int]:
     pool = await get_pool()
+    offset = (page - 1) * per_page
     async with pool.connection() as conn, conn.cursor() as cur:
         query = """
-            SELECT j.request_id, j.status, j.progress, j.created_at,
-                   r.jurisdiction_ocdid, jur.state
+            SELECT j.request_id, j.status, j.progress, j.created_at, j.updated_at,
+                   r.jurisdiction_ocdid, jur.state, jur.data->>'name',
+                   COUNT(*) OVER() AS total_count
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -798,21 +800,25 @@ async def get_active_jobs(state_code: Optional[str] = None) -> list[dict]:
         params: list = [list(TERMINAL_JOB_STATUSES)]
         if state_code:
             query += " AND jur.state = %s"
-            params.append(state_code.upper())
-        query += " ORDER BY jur.state, j.created_at DESC"
+            params.append(state_code.lower())
+        query += " ORDER BY j.updated_at DESC LIMIT %s OFFSET %s"
+        params.extend([per_page, offset])
         await cur.execute(query, params)
         rows = await cur.fetchall()
+        total = rows[0][8] if rows else 0
         return [
             {
                 "request_id": row[0],
                 "status": row[1],
                 "progress": row[2],
                 "created_at": to_iso(row[3]),
-                "jurisdiction_ocdid": row[4],
-                "state": row[5],
+                "updated_at": to_iso(row[4]),
+                "jurisdiction_ocdid": row[5],
+                "state": row[6],
+                "jurisdiction_name": row[7],
             }
             for row in rows
-        ]
+        ], total
 
 
 async def get_job_github_run_id(request_id: str) -> int | None:

@@ -296,9 +296,10 @@ export const triggerJob = async (mode, jurisdictionOcdid, name, url, sourceUrls)
   return res.json();
 };
 
-export const fetchActiveJobs = async (stateCode) => {
-  const params = stateCode ? `?state_code=${encodeURIComponent(stateCode)}` : "";
-  const res = await fetch(`${API_URL}/api/v1/jobs/active${params}`, { credentials: "include" });
+export const fetchActiveJobs = async (stateCode, page = 1, perPage = 25) => {
+  const params = new URLSearchParams({ page, per_page: perPage });
+  if (stateCode) params.set("state_code", stateCode);
+  const res = await fetch(`${API_URL}/api/v1/jobs/active?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

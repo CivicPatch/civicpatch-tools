@@ -146,6 +146,17 @@
     border-color: var(--pico-primary);
 }
 
+.queue-page__section-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--pico-muted-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    margin-bottom: 0.75rem;
+}
+
 .queue-page__select-state-prompt {
     color: var(--pico-muted-color);
     text-align: center;

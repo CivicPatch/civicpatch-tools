@@ -1,34 +1,35 @@
 /* ── Pagination ── */
 
-.civ-pagination__page-numbers {
+.civ-pagination {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
-a.btn.civ-pagination__prev-btn,
-a.btn.civ-pagination__next-btn {
+.civ-pagination__btn {
     padding: 0.2em 0.75em;
 }
 
-a.btn.civ-pagination__page-btn {
+.civ-pagination__counter {
     font-family: var(--pico-font-family-monospace);
-    min-width: 2rem;
-    text-align: center;
-    padding: 0.2em 0.75em;
-    border-color: transparent;
+    font-size: var(--text-sm);
     color: var(--pico-muted-color);
 }
 
-a.btn.civ-pagination__page-btn--active {
-    color: var(--pico-primary);
-    border-color: var(--pico-primary);
-    font-weight: bold;
-}
-
-.civ-pagination__page-ellipsis {
-    font-family: var(--pico-font-family-monospace);
+.civ-pagination__per-page {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-size: var(--text-md);
     color: var(--pico-muted-color);
-    padding: 0 0.25rem;
+}
+
+.civ-pagination__per-page select {
+    width: auto;
+    margin: 0;
+    padding-block: 0.2em;
+    padding-inline-start: 0.75em;
+    font-size: var(--text-md);
 }
