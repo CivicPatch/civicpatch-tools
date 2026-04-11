@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional
+from typing import cast, List, Optional
 
 from fastapi import Depends, HTTPException, Request, Security, WebSocket
 from fastapi.security import APIKeyCookie, APIKeyHeader
@@ -75,8 +75,8 @@ async def get_user_by_api_key(api_key: str) -> Identity:
 
     return Identity(
         type="user_key",
-        provider=user.get("provider"),
-        provider_user_id=user.get("provider_user_id"),
+        provider=cast(str, user.get("provider")),
+        provider_user_id=cast(str, user.get("provider_user_id")),
         email=user.get("email"),
         teams=user.get("teams", []),
         user_id=user.get("id"),

@@ -1,4 +1,5 @@
 import boto3
+import boto3.session
 from botocore.client import Config
 import sys
 import os

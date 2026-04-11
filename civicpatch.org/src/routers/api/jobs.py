@@ -421,6 +421,8 @@ def get_router(api_key_header):
 
         async def _publish():
             job = await get_job(request_id)
+            if job is None:
+                return
             jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
             if jurisdiction_ocdid:
                 await pubsub_service.publish(

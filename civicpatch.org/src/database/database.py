@@ -11,6 +11,7 @@ from utils.github_utils import pull_request_url_to_number
 from schemas.requests import ServerDetail
 
 from psycopg_pool import AsyncConnectionPool
+from psycopg import sql
 
 from schemas.common import PeopleJobHistory
 from shared.schemas import Person
@@ -64,7 +65,7 @@ def to_iso(dt):
         return dt.isoformat()
     return None
 
-async def create_update_user(provider, provider_user_id, email, teams: List[str], display_name: str = None):
+async def create_update_user(provider, provider_user_id, email, teams: List[str], display_name: str | None = None):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # Upsert user
@@ -218,7 +219,8 @@ async def get_user_by_api_key_id(api_key_id):
     
 async def get_user_by_api_key(api_key):
     pool = await get_pool()
-    candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
+    env = get_env_vars()
+    candidate_api_key_hash = hash_utils.hash_string(api_key, cast(str, env["DATABASE_HASH_KEY"]))
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -273,7 +275,8 @@ async def get_user_details(provider, provider_user_id):
     
 async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]:
     pool = await get_pool()
-    candidate_api_key_hash = hash_utils.hash_string(api_key, DATABASE_HASH_KEY)
+    env = get_env_vars()
+    candidate_api_key_hash = hash_utils.hash_string(api_key, cast(str, env["DATABASE_HASH_KEY"]))
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -495,7 +498,7 @@ async def get_people_by_geo(lat: float, long: float):
         print(f"Error in get_people_by_geo: {e}")
         return []
     
-async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
+async def get_geojson_by_latlong(lat: float, long: float, zoom: int | None = None):
     """
     Return multiple GeoJSON geometries from geo for polygons near the given point.
     At low zoom (zoomed out), geometries are simplified and exaggerated (buffered).
@@ -607,34 +610,33 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
     if limit <= 0:
         limit = 100  # Set a default reasonable limit if 0 is passed
 
-    where_clauses = ["state = %s", "status = 'current'"]
+    where_clauses: list[sql.Composable] = [sql.SQL("state = %s"), sql.SQL("status = 'current'")]
     params = [state.lower()]
 
     if search_string:
-        where_clauses.append("LOWER(data->>'name') LIKE %s")
+        where_clauses.append(sql.SQL("LOWER(data->>'name') LIKE %s"))
         params.append(f"%{search_string.lower()}%")
 
-    where_condition = " AND ".join(where_clauses)
+    where_condition = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(where_clauses))
 
     try:
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                f"""
-                SELECT COUNT(*) FROM jurisdictions WHERE {where_condition};
-                """,
+                sql.SQL("SELECT COUNT(*) FROM jurisdictions {};").format(where_condition),
                 params,
             )
-            total_count = (await cur.fetchone())[0]
+            count_row = await cur.fetchone()
+            total_count = count_row[0] if count_row is not None else 0
 
             await cur.execute(
-                f"""
+                sql.SQL("""
                 SELECT jurisdiction_ocdid, data
                 FROM jurisdictions
-                WHERE {where_condition}
-                ORDER BY jurisdiction_ocdid  -- Always use ORDER BY with LIMIT/OFFSET
+                {}
+                ORDER BY jurisdiction_ocdid
                 LIMIT %s OFFSET %s;
-                """,
+                """).format(where_condition),
                 (*params, limit, skip),
             )
 
@@ -829,7 +831,7 @@ async def get_job_status(request_id: str):
             return {"request_id": request_id, "status": row[0], "progress": row[1]}
         return None
 
-async def update_job_status(request_id: str, status: str = None, progress: Optional[int] = None):
+async def update_job_status(request_id: str, status: str | None = None, progress: Optional[int] = None):
     pool = await get_pool()
     set_clauses = []
     params = []
@@ -853,11 +855,11 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL(f"""
             UPDATE jobs
             SET {set_clause_str}
             WHERE request_id = %s;
-            """,
+            """),
             params,
         )
 
@@ -881,7 +883,7 @@ async def update_job_data(request_id: str, data_json: Any):
             return False
         return True
 
-async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
+async def update_job_pull_request_url(request_id: str, pull_request_url: str | None = None):
     pool = await get_pool()
     pr_number = 0
     if pull_request_url:
@@ -1082,7 +1084,7 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(query, jurisdiction_records)
 
-async def get_jurisdiction_updates() -> List[dict]:
+async def get_jurisdiction_updates() -> dict[str, dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -1104,7 +1106,7 @@ async def get_jurisdiction_updates() -> List[dict]:
             }
     return jurisdictions
 
-async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str = None) -> List[Person]:
+async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str | None = None) -> List[Person]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         if status is not None:
@@ -1175,45 +1177,45 @@ async def update_job_pull_request_status(
 
 
 async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
-    conditions = ["j.status = 'ERROR'"]
+    conditions: list[sql.Composable] = [sql.SQL("j.status = 'ERROR'")]
     params: list = []
 
     if state_code:
-        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
 
-    where = " AND ".join(conditions)
+    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT COUNT(*)
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
-            WHERE {where}
-            """,
+            {}
+            """).format(where),
             params,
         )
         row = await cur.fetchone()
 
-    return row[0]
+    return row[0] if row is not None else 0
 
 
 async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
-    conditions = ["j.status = 'ERROR'"]
+    conditions: list[sql.Composable] = [sql.SQL("j.status = 'ERROR'")]
     params: list = []
 
     if state_code:
-        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
 
-    where = " AND ".join(conditions)
+    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT j.request_id,
                    r.jurisdiction_ocdid AS jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
@@ -1222,9 +1224,9 @@ async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE {where}
+            {}
             ORDER BY j.created_at DESC
-            """,
+            """).format(where),
             params,
         )
         rows = await cur.fetchall()
@@ -1304,7 +1306,7 @@ async def update_job_review_json(request_id: str, review_json: dict):
         )
 
 
-async def get_open_pr_request_ids() -> List[str]:
+async def get_open_pr_request_ids() -> dict[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -1355,7 +1357,7 @@ async def get_requests_for_export(
     rows = []
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL(f"""
             SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.data_json, r.review_json
             FROM requests r
             JOIN pull_requests pr ON pr.request_id = r.id
@@ -1363,7 +1365,7 @@ async def get_requests_for_export(
               AND pr.status = 'open'
               {date_clauses}
             ORDER BY r.created_at DESC
-            """,
+            """),
             params,
         )
         while True:
@@ -1416,16 +1418,16 @@ async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
 
 
 async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]:
-    conditions = ["je.event_type = 'unrecognized_role'"]
+    conditions: list[sql.Composable] = [sql.SQL("je.event_type = 'unrecognized_role'")]
     params = []
     if state_code:
-        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
-    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT je.id::text,
                    je.data->>'role' AS role,
                    je.data->>'person_name' AS person_name,
@@ -1435,9 +1437,9 @@ async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]
             FROM job_events je
             JOIN requests r ON r.id = je.request_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            {where}
+            {}
             ORDER BY je.created_at DESC LIMIT 500
-            """,
+            """).format(where),
             params,
         )
         rows = await cur.fetchall()
@@ -1488,7 +1490,7 @@ async def get_job_events_page(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL(f"""
             SELECT je.id::text, je.event_type, je.data, je.created_at,
                    je.request_id::text, r.jurisdiction_ocdid,
                    j.data->>'name' AS jurisdiction_name,
@@ -1499,7 +1501,7 @@ async def get_job_events_page(
             {where}
             ORDER BY je.created_at {order}
             LIMIT %s OFFSET %s
-            """,
+            """),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
@@ -1520,25 +1522,25 @@ async def get_job_events_page(
 
 
 async def get_job_events(event_type: str, state_code: Optional[str] = None) -> list[dict]:
-    conditions = ["je.event_type = %s"]
+    conditions: list[sql.Composable] = [sql.SQL("je.event_type = %s")]
     params: list[Any] = [event_type]
     if state_code:
-        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
-    where = "WHERE " + " AND ".join(conditions)
+    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT je.id::text, je.event_type, je.data, je.created_at,
                    je.request_id::text, r.jurisdiction_ocdid,
                    j.data->>'name' AS jurisdiction_name
             FROM job_events je
             JOIN requests r ON r.id = je.request_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            {where}
+            {}
             ORDER BY je.created_at DESC LIMIT 500
-            """,
+            """).format(where),
             params,
         )
         rows = await cur.fetchall()
@@ -1566,7 +1568,7 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
             (jurisdiction_ocdid,),
         )
         row = await cur.fetchone()
-        total = row[0]
+        total = row[0] if row is not None else 0
 
         await cur.execute(
             """
@@ -1623,6 +1625,8 @@ async def create_note(jurisdiction_ocdid: str, body: str, user_id: str):
             (jurisdiction_ocdid, body, user_id),
         )
         r = await cur.fetchone()
+    if r is None:
+        raise RuntimeError("INSERT RETURNING returned no row")
     return {
         "id": r[0],
         "jurisdiction_ocdid": r[1],
@@ -1653,6 +1657,8 @@ async def get_summary_counts(include_issues: bool) -> dict:
             """
         )
         row = await cur.fetchone()
+    if row is None:
+        raise RuntimeError("Summary counts query returned no row")
     result: dict = {"open_prs": row[0]}
     if include_issues:
         result["pipeline_errors"] = row[1]

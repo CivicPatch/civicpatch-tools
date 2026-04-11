@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Form, Request, status
 from fastapi.responses import RedirectResponse
-from fastapi_sso.sso.base import OpenID
 
 import database.database as database
+from schemas.common import Identity
 from utils.auth_utils import get_user
 
 
@@ -14,7 +14,7 @@ def get_router() -> APIRouter:
     async def update_user_detail_endpoint(
         request: Request,
         server_url: str = Form(...),
-        user: OpenID = Depends(get_user),
+        user: Identity = Depends(get_user),
     ):
         # Update the user's server_url in the database
         await database.update_user_detail(
@@ -22,11 +22,11 @@ def get_router() -> APIRouter:
         )
 
         return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
-    
+
     @router.get("/usage")
     async def get_user_api_usage_endpoint(
         request: Request,
-        user: OpenID = Depends(get_user),
+        user: Identity = Depends(get_user),
     ):
         usage = await database.get_api_usage_for_user(
             user.provider, user.provider_user_id

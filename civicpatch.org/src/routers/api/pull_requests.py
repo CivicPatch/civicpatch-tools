@@ -11,6 +11,7 @@ from fastapi import (
     APIRouter,
     BackgroundTasks,
     Depends,
+    HTTPException,
     Query,
 )
 from fastapi.responses import JSONResponse
@@ -357,6 +358,8 @@ def get_router(api_key_header):
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=_MERGE_STATUS_TTL)
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
         background_tasks.add_task(do_merge, pull_request_number, request.request_id, user.email, user.user_id, merge_key)
         return JSONResponse(content={"status": "pending"}, status_code=202)
 

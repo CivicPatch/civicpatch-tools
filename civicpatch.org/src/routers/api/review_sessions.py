@@ -47,6 +47,8 @@ def get_router() -> APIRouter:
         if cached:
             cached.pop("expires_at", None)
             return {"data": cached}
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
         stats = await review_sessions_db.get_review_stats(
             user.user_id, state_code
         )
@@ -60,6 +62,8 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
         session = await review_sessions_db.create_or_get_review_session(
             user.user_id,
             body.state_code,
@@ -139,6 +143,8 @@ async def _navigate_response(session_id: str, entry_number: int):
     unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
     sources = pull_requests_db.build_sources(request_id, jurisdiction_ocdid, unique_source_urls)
 
+    if pr_meta is None:
+        raise HTTPException(status_code=404, detail="Pull request metadata not found")
     return {
         "data": {
             "request_id": request_id,

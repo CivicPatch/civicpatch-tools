@@ -44,10 +44,10 @@ def get_router(api_key_header):
         print(
             f"Registering request: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
         )
-        _response = await database.requests.register(
-            requested_by_user_id=user.id,
+        _response = await database.requests.register_request_with_job(
+            requested_by_user_id=user.user_id,
             request_id=request.request_id,
-            request_type="people",
+            job_type="people",
             arguments_json=request.arguments,
         )
         return {"request_id": request.request_id, "status": "pending"}
