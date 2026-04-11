@@ -134,6 +134,17 @@ function QueuePage() {
     setViewMode(newView);
   };
 
+  const handleCancel = (requestId) => {
+    setActiveJobs(prev => prev.filter(j => j.request_id !== requestId));
+  };
+
+  const handleActiveJobsPerPageChange = (e) => {
+    const n = parseInt(e.target.value, 10);
+    setAjParamsInUrl(1, n);
+    setActiveJobsPerPage(n);
+    setActiveJobsPage(1);
+  };
+
   const handleStateChange = (e) => {
     const newState = e.detail.state;
     const params = new URLSearchParams(window.location.search);
@@ -198,7 +209,9 @@ function QueuePage() {
           .totalPages=${activeJobsTotalPages}
           .perPage=${activeJobsPerPage}
           .onPageChange=${(p) => { setAjParamsInUrl(p, activeJobsPerPage); setActiveJobsPage(p); }}
-          .onPerPageChange=${(e) => { const n = parseInt(e.target.value, 10); setAjParamsInUrl(1, n); setActiveJobsPerPage(n); setActiveJobsPage(1); }}
+          .onPerPageChange=${handleActiveJobsPerPageChange}
+          .canCancel=${permissions.CANCEL_JOB}
+          .onCancel=${handleCancel}
         ></queue-active-jobs>
         <queue-pr-list
           .pullRequests=${pullRequests}

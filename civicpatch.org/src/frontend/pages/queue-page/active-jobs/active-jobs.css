@@ -7,3 +7,4 @@
 .aj-meta { color: var(--pico-muted-color); white-space: nowrap; }
 .aj-mono { font-family: var(--pico-font-family-monospace); font-size: 0.75rem; }
 .aj-request-id { white-space: normal; word-break: break-all; min-width: 8rem; }
+.aj-cancel-btn { font-size: 0.75rem; padding: 0.15rem 0.5rem; cursor: pointer; }

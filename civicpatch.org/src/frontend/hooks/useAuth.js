@@ -5,6 +5,7 @@ const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE_SCRAPE_REMOTE: false,
   JURISDICTION_PAGE_SCRAPE_LOCAL: false,
   DIRECTORY_DELETE: false,
+  CANCEL_JOB: false,
 };
 
 // Module-level cache
@@ -20,6 +21,7 @@ function toPermissions(permissions) {
     JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
     JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"],
     DIRECTORY_DELETE: permissions["can_delete_directory_person"],
+    CANCEL_JOB: permissions["can_cancel_job"],
   }
 }
 

@@ -1,10 +1,12 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import { dateStringToFriendly } from "../../utils/date-utils.js";
+import { dateStringToFriendly, durationBetween } from "../../utils/date-utils.js";
+import { cancelJob } from "../../api.js";
+import { TERMINAL_JOB_STATUSES } from "../job-status.js";
 import "./scrape-history-modal.js";
 import "../status-badge.js";
 
-function ScrapeHistoryList({ history, jobStatus }) {
+function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
   let parsedHistory = history?.["data"] ?? [];
 
   if (jobStatus && jobStatus.request_id) {
@@ -17,16 +19,27 @@ function ScrapeHistoryList({ history, jobStatus }) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [cancellingIds, setCancellingIds] = useState(new Set());
 
   const openFor = (job) => { setSelectedJob(job); setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); setSelectedJob(null); };
 
-  const getDurationString = (created_at, updated_at) => {
-    const duration = (new Date(updated_at) - new Date(created_at)) / 1000;
-    const minutes = Math.floor(duration / 60);
-    const seconds = Math.round(duration % 60);
-    return `${minutes}m ${seconds}s`;
+  const handleCancel = async (requestId) => {
+    setCancellingIds(prev => new Set(prev).add(requestId));
+    try {
+      await cancelJob(requestId);
+      if (onCancel) onCancel(requestId);
+    } catch (_) {
+      // noop — leave the row visible so the user can retry
+    } finally {
+      setCancellingIds(prev => {
+        const next = new Set(prev);
+        next.delete(requestId);
+        return next;
+      });
+    }
   };
+
 
   const statusBadgeProps = (status) => {
     const s = (status || "").toLowerCase().replace(/\s+/g, "-");
@@ -94,6 +107,11 @@ function ScrapeHistoryList({ history, jobStatus }) {
         text-align: right;
         white-space: nowrap;
       }
+      .sh-cancel-btn {
+        font-size: 0.75rem;
+        padding: 0.15rem 0.5rem;
+        cursor: pointer;
+      }
       progress {
         width: 100%;
         height: 0.3rem;
@@ -121,9 +139,7 @@ function ScrapeHistoryList({ history, jobStatus }) {
                     ` : null}
                   </td>
                   <td class="duration-cell">
-                    ${job.created_at && job.updated_at
-                      ? getDurationString(job.created_at, job.updated_at)
-                      : ""}
+                    ${durationBetween(job.created_at, job.updated_at)}
                   </td>
                   <td>
                     <civ-status-badge
@@ -132,6 +148,15 @@ function ScrapeHistoryList({ history, jobStatus }) {
                       color="${statusBadgeProps(job.status).color}"
                     ></civ-status-badge>
                   </td>
+                  ${canCancel && !TERMINAL_JOB_STATUSES.has(job.status) ? html`
+                    <td>
+                      <button
+                        class="sh-cancel-btn"
+                        ?disabled=${cancellingIds.has(job.request_id)}
+                        @click=${() => handleCancel(job.request_id)}
+                      >${cancellingIds.has(job.request_id) ? "Cancelling…" : "Cancel"}</button>
+                    </td>
+                  ` : html`<td></td>`}
                 </tr>
               `)}
             </tbody>
