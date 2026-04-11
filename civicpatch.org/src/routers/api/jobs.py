@@ -495,6 +495,8 @@ def get_router(api_key_header):
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
     ):
         jobs = await get_active_jobs(state_code=state_code)
+        for job in jobs:
+            job["jurisdiction_path"] = shared.utils.id_utils.jurisdiction_ocdid_to_folder(job["jurisdiction_ocdid"])
         return {"data": jobs}
 
     @router.get(
