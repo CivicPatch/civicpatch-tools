@@ -96,11 +96,16 @@ async def test_multiple_jurisdictions_mixed_metadata():
 
 
 @pytest.mark.asyncio
-async def test_returns_none_when_metadata_file_missing():
-    with _mock_github(None, _entries_yml([])):
+async def test_metadata_file_missing_still_returns_entries():
+    """Missing jurisdictions_metadata.yml is non-fatal; jurisdictions are still returned without metadata."""
+    entries = _entries_yml([{"id": LACY_LAKEVIEW_OCDID, "name": "Lacy-Lakeview city"}])
+
+    with _mock_github(None, entries):
         result = await get_jurisdiction_metadata("tx")
 
-    assert result is None
+    assert LACY_LAKEVIEW_OCDID in result
+    assert result[LACY_LAKEVIEW_OCDID]["jurisdiction"]["name"] == "Lacy-Lakeview city"
+    assert "updated_at" not in result[LACY_LAKEVIEW_OCDID]
 
 
 @pytest.mark.asyncio
