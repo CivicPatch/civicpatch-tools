@@ -36,20 +36,21 @@ def sort_urls_by_keyword_similarity(keywords, urls):
     #    json.dump({"keywords": keywords, "sorted_urls": [(url, float(score)) for url, score in sorted_by_score]}, f, indent=2)
     return [url for url, _score in sorted_by_score]
 
+def get_keyword_matcher():
+    global keyword_matchers
+    if "default" not in keyword_matchers:
+        nlp = get_nlp()
+        matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+        context_keywords = config_utils.get_keywords()
+        patterns = [nlp.make_doc(kw.lower()) for kw in context_keywords]
+        matcher.add("KEYWORD", patterns)
+        keyword_matchers["default"] = matcher
+    return keyword_matchers["default"]
+
 def extract_keywords(doc):
-    """Extract keywords using a PhraseMatcher."""
-    matcher = setup_keyword_entities()
+    matcher = get_keyword_matcher()
     matches = matcher(doc)
     return [doc[start:end].text for match_id, start, end in matches]
-
-def setup_keyword_entities():
-    """Setup function to initialize the keyword matcher."""
-    nlp = get_nlp()
-    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
-    context_keywords = config_utils.get_keywords()
-    patterns = [nlp.make_doc(kw.lower()) for kw in context_keywords]
-    matcher.add("KEYWORD", patterns)
-    return matcher
 
 def is_valid_phone_number(phone_text):
     """Validate phone number format and reject invalid patterns."""

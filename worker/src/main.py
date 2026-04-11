@@ -12,8 +12,20 @@ TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 
+async def connect_with_retry(host: str, namespace: str, retries: int = 10, delay: float = 3.0) -> Client:
+    for attempt in range(1, retries + 1):
+        try:
+            return await Client.connect(host, namespace=namespace)
+        except Exception as e:
+            if attempt == retries:
+                raise
+            print(f"Temporal not ready (attempt {attempt}/{retries}): {e} — retrying in {delay}s")
+            await asyncio.sleep(delay)
+    raise RuntimeError("unreachable")
+
+
 async def main() -> None:
-    client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
+    client = await connect_with_retry(TEMPORAL_HOST, TEMPORAL_NAMESPACE)
     async with Worker(
         client,
         task_queue=TASK_QUEUE,

@@ -34,6 +34,14 @@ dev = [
     "pyright (>=1.1.0)",
 ]
 
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
+markers = [
+    "unit: fast, no external dependencies",
+    "integration: mark a test as an integration test",
+]
+
 [tool.uv]
 package = true
 
