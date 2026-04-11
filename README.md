@@ -144,13 +144,13 @@ join our weekly sync and biweekly hackathon meetings.
 ### pipelines
 
 ```sh
-mise tcp
+mise tpipes
 ```
 
 ### civicpatch.org
 
 ```sh
-mise tapi
+mise tcp
 ```
 
 ## License

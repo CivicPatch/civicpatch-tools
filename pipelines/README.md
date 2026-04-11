@@ -75,7 +75,7 @@ docker compose run --rm pipelines uv run python -m interfaces.cli.main --jurisdi
 ## Testing
 
 ```sh
-mise run tcp        # unit tests
+mise run tpipes     # unit tests
 mise run evalsr     # relevant-page prompt evals (run after any relevant_page_prompt change)
 mise run evalsm     # municipality officials prompt evals (run after any municipality_officials_prompt change)
 ```

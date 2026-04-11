@@ -111,7 +111,7 @@ When adding a feature that changes the schema, create a new migration file:
 
 ```sh
 # Unit tests (from workspace root)
-mise tapi
+mise tcp
 ```
 
 ## GitHub webhook

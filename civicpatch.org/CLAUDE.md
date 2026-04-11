@@ -106,4 +106,4 @@ This API has a single consumer: the civicpatch frontend. Backward compatibility 
 - Tests are part of the feature — do not ship a new function or endpoint without corresponding tests unless explicitly told to skip them.
 - Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` directory to understand available builders and patterns.
 - After writing tests, run them and fix any failures before considering the task done.
-- Run tests: `mise run tapi`
+- Run tests: `mise run tcp`

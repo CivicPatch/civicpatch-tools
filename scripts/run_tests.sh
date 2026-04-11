@@ -10,7 +10,7 @@ touches_api=$(echo "$changed" | grep -q "^civicpatch\.org/\|^shared/" && echo 1 
 touches_worker=$(echo "$changed" | grep -q "^worker/\|^shared/" && echo 1 || echo 0)
 
 if [ "$touches_civicpatch" = "1" ]; then
-    mise run tcp
+    mise run tpipes
     mise run typecheck-pipelines
 fi
 
@@ -19,8 +19,8 @@ if [ "$touches_shared" = "1" ]; then
 fi
 
 if [ "$touches_api" = "1" ]; then
-    mise run tapi
-    mise run typecheck
+    mise run tcp -- -m unit
+    mise run typecheck-cp
 fi
 
 if [ "$touches_worker" = "1" ]; then

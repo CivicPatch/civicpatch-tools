@@ -76,7 +76,7 @@ run = """
 run = "uv run pytest"
 dir = "shared"
 
-[tasks.tcp]
+[tasks.tpipes]
 run = "uv run pytest tests/unit"
 dir = "pipelines"
 
@@ -96,19 +96,19 @@ dir = "pipelines"
 run = "uv run pytest -m evals tests/prompts"
 dir = "pipelines"
 
-[tasks.tapi]
+[tasks.tcp]
 run = "uv run pytest"
 dir = "civicpatch.org"
 
-[tasks.tapi-db-up]
+[tasks.tcp-db-up]
 description = "Start the integration test database and wait until healthy"
 run = "docker compose -f civicpatch.org/docker-compose.integration.yml up -d --wait"
 
-[tasks.tapi-db-down]
+[tasks.tcp-db-down]
 description = "Stop and remove the integration test database"
 run = "docker compose -f civicpatch.org/docker-compose.integration.yml down -v"
 
-[tasks.tapi-db-migrate]
+[tasks.tcp-db-migrate]
 description = "Apply all migrations to the integration test database"
 run = """
 env \
@@ -122,16 +122,16 @@ env \
 """
 dir = "civicpatch.org"
 
-[tasks.tapi-integration]
+[tasks.tcp-integration]
 description = "Start test DB, migrate, run integration tests, tear down"
 run = """
 set -e
-mise run tapi-db-up
-mise run tapi-db-migrate
-mise run tapi -- -m integration
+mise run tcp-db-up
+mise run tcp-db-migrate
+mise run tcp -- -m integration
 """
 
-[tasks.typecheck]
+[tasks.typecheck-cp]
 run = "uv run pyright"
 dir = "civicpatch.org"
 description = "Run pyright type checker on civicpatch.org"
