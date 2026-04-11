@@ -12,8 +12,6 @@ class JobStatus(StrEnum):
     ERROR = "ERROR"
     # Error was manually acknowledged and cleared by a maintainer
     RESOLVED = "RESOLVED"
-    # Pipeline exited mid-run awaiting human review; resumes on human_approval signal
-    PAUSED = "PAUSED"
     # Job was manually cancelled (e.g. GitHub Actions run interrupted); never advanced to a terminal state
     CANCELLED = "CANCELLED"
 
@@ -22,7 +20,6 @@ TERMINAL_JOB_STATUSES = (
     JobStatus.COMPLETED,
     JobStatus.ERROR,
     JobStatus.RESOLVED,
-    JobStatus.PAUSED,
     JobStatus.CANCELLED,
 )
 

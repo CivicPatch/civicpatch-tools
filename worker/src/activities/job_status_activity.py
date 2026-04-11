@@ -13,7 +13,7 @@ SERVICE_API_KEY = os.environ["SERVICE_API_KEY"]
 
 _HEADERS = {"Authorization": SERVICE_API_KEY}
 
-_TERMINAL_STATUSES = {JobStatus.COMPLETED, JobStatus.ERROR, JobStatus.PAUSED}
+_TERMINAL_STATUSES = {JobStatus.COMPLETED, JobStatus.ERROR}
 
 
 @activity.defn

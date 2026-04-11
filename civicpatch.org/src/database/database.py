@@ -1243,7 +1243,7 @@ async def count_jobs_with_errors(state_code: Optional[str] = None) -> int:
 
 
 async def get_jobs_with_errors(state_code: Optional[str] = None) -> List[dict]:
-    conditions = ["j.status IN ('ERROR', 'PAUSED')"]
+    conditions = ["j.status = 'ERROR'"]
     params: list = []
 
     if state_code:

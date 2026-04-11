@@ -4,7 +4,7 @@ import os
 from temporalio.client import Client
 from temporalio.worker import Worker
 
-from activities.github_activity import trigger_github_action, find_github_run, poll_run_status, trigger_local_job
+from activities.github_activity import trigger_github_action, trigger_local
 from activities.job_status_activity import update_job_status, poll_job_status
 from workflows.people_collector import BatchPeopleCollectorWorkflow, PeopleCollectorWorkflow, TASK_QUEUE
 
@@ -30,7 +30,7 @@ async def main() -> None:
         client,
         task_queue=TASK_QUEUE,
         workflows=[PeopleCollectorWorkflow, BatchPeopleCollectorWorkflow],
-        activities=[trigger_github_action, find_github_run, poll_run_status, trigger_local_job, poll_job_status, update_job_status],
+        activities=[trigger_github_action, trigger_local, poll_job_status, update_job_status],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
         await asyncio.Event().wait()

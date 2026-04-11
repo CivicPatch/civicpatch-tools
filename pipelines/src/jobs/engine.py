@@ -22,14 +22,6 @@ class WorkflowError(Exception):
         super().__init__(f"Workflow failed for {jurisdiction_ocdid}")
 
 
-class WorkflowPausedError(Exception):
-    """Raised when a workflow exits in PAUSED state awaiting human review."""
-    def __init__(self, jurisdiction_ocdid: str, context: WorkflowContext):
-        self.jurisdiction_ocdid = jurisdiction_ocdid
-        self.context = context
-        super().__init__(f"Workflow paused for {jurisdiction_ocdid}")
-
-
 def log_system_usage():
     process = psutil.Process()
     memory_info = process.memory_info()
@@ -51,7 +43,7 @@ async def run_workflow(
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
 
-    terminal_states = {PipelineStatus.COMPLETED, PipelineStatus.ERROR, PipelineStatus.PAUSED}
+    terminal_states = {PipelineStatus.COMPLETED, PipelineStatus.ERROR}
 
     try:
         while ctx.current_state not in terminal_states:
@@ -66,9 +58,6 @@ async def run_workflow(
 
             transition_fn = transition_map[ctx.current_state]
             ctx, next_state = await transition_fn(job_config, logger, ctx)
-            if next_state == PipelineStatus.PAUSED and ctx.data.paused_at_state is None:
-                updated_data = ctx.data.model_copy(update={"paused_at_state": ctx.current_state.value})
-                ctx = ctx.copy(update={"data": updated_data})
             ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
 
             if persist_fn:
@@ -83,17 +72,8 @@ async def run_workflow(
             )
         except Exception as e:
             logger.warning(f"Failed to update final job status (non-fatal): {e}")
-        if ctx.current_state == PipelineStatus.PAUSED:
-            try:
-                await civicpatch_api.upload_paused_context(ctx.request_id, ctx.model_dump_json())
-                logger.info(f"Uploaded paused context for {ctx.request_id}")
-            except Exception as e:
-                logger.warning(f"Failed to upload paused context (non-fatal): {e}")
 
     if ctx.current_state == PipelineStatus.ERROR:
         raise WorkflowError(jurisdiction_ocdid, ctx)
-
-    if ctx.current_state == PipelineStatus.PAUSED:
-        raise WorkflowPausedError(jurisdiction_ocdid, ctx)
 
     return ctx

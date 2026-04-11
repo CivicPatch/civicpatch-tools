@@ -104,7 +104,6 @@ class PipelineStatus(Enum):
     FINALIZE = "FINALIZE"
     ERROR = "ERROR"
     COMPLETED = "DONE"
-    PAUSED = "PAUSED"
 
 class ResearchedPerson(BaseModel):
     name: str
@@ -187,8 +186,6 @@ class PeopleCollectorData(BaseModel):
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None
     error_step: Optional[str] = None
-    pause_diagnostic: Optional[str] = None
-    paused_at_state: Optional[str] = None
 
 class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, PipelineStatus]):
     pass

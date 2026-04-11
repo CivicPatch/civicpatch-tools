@@ -7,8 +7,8 @@ from interfaces.schemas import (
     validate_people_request
 )
 from jobs.people_collector.schemas import WorkflowConfig
-from jobs.engine import WorkflowError, WorkflowPausedError
-from jobs.people_collector.main import start as start_people_collector, resume as resume_people_collector
+from jobs.engine import WorkflowError
+from jobs.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from pipelines_environment import get_env_vars
 from services.civicpatch_api import get_jurisdiction_info
@@ -31,21 +31,8 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
         )
     except WorkflowError:
         sys.exit(1)  # Already logged in people_collector.main
-    except WorkflowPausedError:
-        sys.exit(1)  # Paused — Temporal worker will handle suspension
     except Exception:
         sys.exit(1)  # Already logged in people_collector.main
-
-
-async def resume_pipeline_cli(request_id: str):
-    try:
-        await resume_people_collector(request_id=request_id)
-    except WorkflowError:
-        sys.exit(1)
-    except WorkflowPausedError:
-        sys.exit(1)
-    except Exception:
-        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -87,35 +74,28 @@ def main():
     run_pipeline_parser.add_argument(
         "--source-urls", required=False, help="JSON array of specific URLs to scrape"
     )
-    run_pipeline_parser.add_argument(
-        "--mode", required=False, default="start", choices=["start", "resume"],
-        help="Run mode: 'start' (default) or 'resume' to continue from a paused run",
-    )
 
     args = parser.parse_args()
 
     if args.command == "run_pipeline":
         request_id = args.request_id or id_utils.make_request_id()
 
-        if args.mode == "resume":
-            asyncio.run(resume_pipeline_cli(request_id))
-        else:
-            source_urls = json.loads(args.source_urls) if args.source_urls else None
-            name = args.name
-            url = args.url
-            if not name or not url:
-                info = asyncio.run(get_jurisdiction_info(args.jurisdiction_ocdid))
-                name = name or info.get("name")
-                url = url or info.get("url")
-            request = PeopleCollectorJobRequest(
-                jurisdiction_ocdid=args.jurisdiction_ocdid,
-                config=WorkflowConfig(
-                    name=name,
-                    url=url or "",
-                    source_urls=source_urls,
-                ),
-            )
-            asyncio.run(run_pipeline_cli(request_id, request))
+        source_urls = json.loads(args.source_urls) if args.source_urls else None
+        name = args.name
+        url = args.url
+        if not name or not url:
+            info = asyncio.run(get_jurisdiction_info(args.jurisdiction_ocdid))
+            name = name or info.get("name")
+            url = url or info.get("url")
+        request = PeopleCollectorJobRequest(
+            jurisdiction_ocdid=args.jurisdiction_ocdid,
+            config=WorkflowConfig(
+                name=name,
+                url=url or "",
+                source_urls=source_urls,
+            ),
+        )
+        asyncio.run(run_pipeline_cli(request_id, request))
     else:
         print(f"cli command not available: {args.command}")
 
