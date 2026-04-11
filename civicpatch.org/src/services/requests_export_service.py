@@ -126,7 +126,7 @@ def _flatten_official(
 
 def _request_to_rows(request: dict, existing_people: list[dict], include_unchanged: bool) -> list[dict]:
     review_issues = " | ".join((request["review_json"] or {}).get("issues") or [])
-    result_data = request["result_data"] or []
+    result_data = request["data_json"] or []
 
     existing_map = {p["id"]: p for p in existing_people if p.get("id")}
     pr_map = {p["id"]: p for p in result_data if p.get("id")}
@@ -180,9 +180,9 @@ async def fetch_export_data(
 ) -> tuple[list[dict], dict[str, list]]:
     requests_data = await database.database.get_requests_for_export(state, from_date, to_date)
 
-    uncached = [r for r in requests_data if not r["result_data"]]
+    uncached = [r for r in requests_data if not r["data_json"]]
     if uncached:
-        await asyncio.gather(*[_fill_result_data(r) for r in uncached])
+        await asyncio.gather(*[_fill_data_json(r) for r in uncached])
 
     unique_ocdids = list({r["jurisdiction_ocdid"] for r in requests_data})
     existing_by_ocdid: dict[str, list] = {}
@@ -218,9 +218,9 @@ async def fetch_people_export_rows(state: str) -> list[dict]:
     return rows
 
 
-async def _fill_result_data(r: dict) -> None:
+async def _fill_data_json(r: dict) -> None:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"])
     data = await github_service.get_pull_request_file_yaml(
         r["request_id"], r["jurisdiction_ocdid"], f"data/{folder}.yml"
     )
-    r["result_data"] = data or []
+    r["data_json"] = data or []
