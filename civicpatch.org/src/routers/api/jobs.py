@@ -156,8 +156,6 @@ def get_router(api_key_header):
         try:
             request_id = shared.utils.id_utils.make_request_id()
             await register_request_with_job(
-                requested_by_provider=user.provider,
-                requested_by_provider_user_id=user.provider_user_id,
                 request_id=request_id,
                 job_type="people",
                 arguments_json={
@@ -167,6 +165,7 @@ def get_router(api_key_header):
                     "source_urls": request.source_urls,
                 },
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
+                requested_by_user_id=user.user_id,
             )
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
@@ -202,8 +201,6 @@ def get_router(api_key_header):
         for candidate in candidates:
             request_id = shared.utils.id_utils.make_request_id()
             await register_request_with_job(
-                requested_by_provider=user.provider,
-                requested_by_provider_user_id=user.provider_user_id,
                 request_id=request_id,
                 job_type="people",
                 arguments_json={
@@ -213,6 +210,7 @@ def get_router(api_key_header):
                     "source_urls": None,
                 },
                 jurisdiction_ocdid=candidate.id,
+                requested_by_user_id=user.user_id,
             )
             items.append({
                 "jurisdiction_ocdid": candidate.id,

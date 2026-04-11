@@ -31,7 +31,7 @@ def _request(request_id="req-1", jurisdiction_ocdid="ocd-jurisdiction/x", create
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "created_at": created_at,
-        "result_data": result_data or [],
+        "data_json": result_data or [],
         "review_json": review_json or {},
     }
 
