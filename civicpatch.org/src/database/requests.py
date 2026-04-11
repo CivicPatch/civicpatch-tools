@@ -22,10 +22,10 @@ async def register_request_with_job(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, status, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, status, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
+            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
         )
 
         await conn.execute(
@@ -57,10 +57,10 @@ async def register_foreign_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, status, request_type, jurisdiction_ocdid, created_at, updated_at)
-            VALUES (%s, %s, 'people', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, created_at, updated_at)
+            VALUES (%s, 'people', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, JobStatus.COMPLETED, jurisdiction_ocdid),
+            (request_id, jurisdiction_ocdid),
         )
 
         # Minimal job row so the request can be looked up by its foreign request_id string

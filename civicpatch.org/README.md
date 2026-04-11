@@ -151,7 +151,6 @@ erDiagram
 
     requests {
         uuid id PK
-        text status
         text request_type
         text jurisdiction_ocdid FK
         jsonb arguments_json
