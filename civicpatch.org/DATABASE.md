@@ -20,7 +20,7 @@ erDiagram
         text state
         text status
         jsonb data "idx: (data->>'geoid'), LOWER(data->>'name')"
-        timestamp updated_at
+        timestamptz updated_at
     }
 
     requests {
