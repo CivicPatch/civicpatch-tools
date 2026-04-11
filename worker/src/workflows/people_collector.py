@@ -6,15 +6,14 @@ from temporalio import workflow
 from temporalio.common import WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
-    from activities.github_activity import trigger_github_action, find_github_run, poll_run_status, trigger_local_job
+    from activities.github_activity import trigger_github_action, trigger_local
     from activities.job_status_activity import update_job_status, poll_job_status
-    from constants import RunConclusion, RunMode
+    from constants import RunConclusion
     from shared.utils.statuses import JobStatus
 
 TASK_QUEUE = "people-collector"
 
 _DISPATCH_MODE_LOCAL = "local"
-_DISPATCH_MODE_WATCH = "watch"
 
 
 def _workflow_id(jurisdiction_ocdid: str) -> str:
@@ -37,7 +36,6 @@ class PeopleCollectorWorkflow:
         jurisdiction_ocdid: str,
         request_id: str,
         dispatch_mode: str = "remote",
-        name: Optional[str] = None,
         url: Optional[str] = None,
         source_urls: Optional[list[str]] = None,
     ) -> str:
@@ -46,46 +44,40 @@ class PeopleCollectorWorkflow:
             args=[request_id, JobStatus.RUNNING],
             start_to_close_timeout=timedelta(seconds=30),
         )
+        conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        return await self._handle_conclusion(conclusion, dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
 
-        if dispatch_mode == _DISPATCH_MODE_LOCAL:
-            await workflow.execute_activity(
-                trigger_local_job,
-                args=[jurisdiction_ocdid, request_id, name, url, source_urls],
-                start_to_close_timeout=timedelta(minutes=2),
-            )
-            conclusion = await workflow.execute_activity(
-                poll_job_status,
-                args=[request_id],
-                start_to_close_timeout=timedelta(minutes=35),
-                heartbeat_timeout=timedelta(seconds=60),
-            )
-        elif dispatch_mode == _DISPATCH_MODE_WATCH:
-            run_id = await workflow.execute_activity(
-                find_github_run,
-                args=[request_id],
-                start_to_close_timeout=timedelta(minutes=30),
-                heartbeat_timeout=timedelta(seconds=60),
-            )
-            conclusion = await workflow.execute_activity(
-                poll_run_status,
-                args=[run_id],
-                start_to_close_timeout=timedelta(minutes=35),
-                heartbeat_timeout=timedelta(seconds=60),
-            )
-        else:
-            run_id = await workflow.execute_activity(
-                trigger_github_action,
-                args=[jurisdiction_ocdid, request_id],
-                start_to_close_timeout=timedelta(minutes=2),
-                heartbeat_timeout=timedelta(seconds=30),
-            )
-            conclusion = await workflow.execute_activity(
-                poll_run_status,
-                args=[run_id],
-                start_to_close_timeout=timedelta(minutes=35),
-                heartbeat_timeout=timedelta(seconds=60),
-            )
+    async def _dispatch_and_poll(
+        self,
+        dispatch_mode: str,
+        jurisdiction_ocdid: str,
+        request_id: str,
+        url: Optional[str] = None,
+        source_urls: Optional[list[str]] = None,
+    ) -> str:
+        trigger = trigger_local if dispatch_mode == _DISPATCH_MODE_LOCAL else trigger_github_action
+        await workflow.execute_activity(
+            trigger,
+            args=[jurisdiction_ocdid, request_id, url, source_urls],
+            start_to_close_timeout=timedelta(minutes=2),
+            heartbeat_timeout=timedelta(seconds=30),
+        )
+        return await workflow.execute_activity(
+            poll_job_status,
+            args=[request_id],
+            start_to_close_timeout=timedelta(minutes=35),
+            heartbeat_timeout=timedelta(seconds=60),
+        )
 
+    async def _handle_conclusion(
+        self,
+        conclusion: str,
+        dispatch_mode: str,
+        jurisdiction_ocdid: str,
+        request_id: str,
+        url: Optional[str] = None,
+        source_urls: Optional[list[str]] = None,
+    ) -> str:
         if conclusion == RunConclusion.SUCCESS:
             await workflow.execute_activity(
                 update_job_status,
@@ -94,42 +86,20 @@ class PeopleCollectorWorkflow:
             )
             return conclusion
 
-        if conclusion == RunConclusion.FAILURE and dispatch_mode != _DISPATCH_MODE_LOCAL:
-            await workflow.execute_activity(
-                update_job_status,
-                args=[request_id, JobStatus.PAUSED],
-                start_to_close_timeout=timedelta(seconds=30),
-            )
-            workflow.logger.info(f"Job {request_id} paused — waiting for human_approval signal")
-            await workflow.wait_condition(lambda: self._approved)
-            workflow.logger.info("Received human_approval — triggering resume run")
+        # Job stays ERROR in DB. Temporal waits silently for human_approval signal.
+        # Frontend approval UI and PAUSED DB state to be added later.
+        workflow.logger.info(f"Job {request_id} failed — waiting for human_approval signal")
+        await workflow.wait_condition(lambda: self._approved)
+        workflow.logger.info("Received human_approval — restarting job")
 
-            resume_run_id = await workflow.execute_activity(
-                trigger_github_action,
-                args=[jurisdiction_ocdid, request_id, RunMode.START],
-                start_to_close_timeout=timedelta(minutes=2),
-                heartbeat_timeout=timedelta(seconds=30),
-            )
-            resume_conclusion = await workflow.execute_activity(
-                poll_run_status,
-                args=[resume_run_id],
-                start_to_close_timeout=timedelta(minutes=35),
-                heartbeat_timeout=timedelta(seconds=60),
-            )
-            final_status = JobStatus.COMPLETED if resume_conclusion == RunConclusion.SUCCESS else JobStatus.ERROR
-            await workflow.execute_activity(
-                update_job_status,
-                args=[request_id, final_status],
-                start_to_close_timeout=timedelta(seconds=30),
-            )
-            return resume_conclusion
-
+        restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        final_status = JobStatus.COMPLETED if restart_conclusion == RunConclusion.SUCCESS else JobStatus.ERROR
         await workflow.execute_activity(
             update_job_status,
-            args=[request_id, JobStatus.ERROR],
+            args=[request_id, final_status],
             start_to_close_timeout=timedelta(seconds=30),
         )
-        return conclusion
+        return restart_conclusion
 
 
 @workflow.defn
@@ -140,7 +110,7 @@ class BatchPeopleCollectorWorkflow:
         for item in items:
             handle = await workflow.start_child_workflow(
                 PeopleCollectorWorkflow.run,
-                args=[item["jurisdiction_ocdid"], item["request_id"], _DISPATCH_MODE_WATCH, item["name"], item["url"], None],
+                args=[item["jurisdiction_ocdid"], item["request_id"]],
                 id=_workflow_id(item["jurisdiction_ocdid"]),
                 id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )

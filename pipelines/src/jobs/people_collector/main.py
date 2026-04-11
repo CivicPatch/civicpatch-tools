@@ -3,7 +3,7 @@ import json
 import traceback
 import logging
 
-from jobs.engine import run_workflow, WorkflowError, WorkflowPausedError
+from jobs.engine import run_workflow, WorkflowError
 from jobs.people_collector.schemas import (
   WorkflowConfig,
   PipelineStatus,
@@ -16,7 +16,6 @@ from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
 from utils import log_utils
 from utils.log_utils import WorkflowLogger
-import services.civicpatch_api as civicpatch_api
 
 logger = logging.getLogger(__name__)
 
@@ -56,35 +55,6 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig
         raise
 
 
-async def resume(request_id: str) -> PeopleCollectorContext:
-    """Download saved context from S3 and continue from the paused step."""
-    context_json = await civicpatch_api.download_paused_context(request_id)
-    context = PeopleCollectorContext.model_validate_json(context_json)
-
-    paused_at = context.data.paused_at_state
-    if not paused_at:
-        raise ValueError(f"No paused_at_state in context for {request_id}")
-
-    resume_state = PipelineStatus(paused_at)
-    context = context.copy(update={"current_state": resume_state})
-
-    workflow_logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-
-    try:
-        result = await run_workflow(context, workflow_logger, TRANSITION_MAP, persist_context)
-        await civicpatch_api.delete_paused_context(request_id)
-        return result
-    except (WorkflowError, WorkflowPausedError) as e:
-        logger.error(f"Pipeline failed/paused again on resume for {e.jurisdiction_ocdid}: {e}")
-        raise
-    except Exception as e:
-        logger.error(
-            f"Unexpected error on resume for {request_id}: {e}\n"
-            f"{traceback.format_exc()}"
-        )
-        raise
-
-
 async def start_threaded(request_id, jurisdiction_ocdid, config):
     """For API: Run the start coroutine in a separate thread."""
     def run_start():
@@ -93,11 +63,9 @@ async def start_threaded(request_id, jurisdiction_ocdid, config):
     await asyncio.to_thread(run_start)
 
 
-
 def persist_context(context: PeopleCollectorContext):
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_ocdid)
     serialized_data = context.model_dump_json(indent=4, ensure_ascii=False)
     with open(context_file_path, "w") as f:
         f.write(serialized_data)
-

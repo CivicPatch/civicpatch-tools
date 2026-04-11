@@ -173,7 +173,6 @@ def get_router(api_key_header):
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 request_id=request_id,
                 dispatch_mode=request.dispatch_mode,
-                name=request.name,
                 url=request.url,
                 source_urls=request.source_urls,
             )
@@ -249,6 +248,17 @@ def get_router(api_key_header):
         if run_id is None:
             return JSONResponse(content={"run_id": None}, status_code=404)
         return {"run_id": run_id}
+
+    @router.get("/{request_id}/config", include_in_schema=False)
+    async def get_job_config_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        job = await get_job(request_id)
+        if not job:
+            raise HTTPException(status_code=404, detail="Job not found")
+        args = job.get("arguments_json") or {}
+        return {"name": args.get("name"), "url": args.get("url"), "source_urls": args.get("source_urls")}
 
     # ── Jobs: Status & Progress ──────────────
 
