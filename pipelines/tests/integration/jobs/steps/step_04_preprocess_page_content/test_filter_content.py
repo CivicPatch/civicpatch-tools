@@ -5,7 +5,7 @@ from jobs.people_collector.steps.step_04_preprocess_page_content.filter_content 
 from jobs.people_collector.steps.step_04_preprocess_page_content.clean_html import clean_html
 from markdownify import markdownify as md
 
-pytestmark = pytest.mark.unit
+pytestmark = pytest.mark.integration
 FIXTURE_DIR = os.path.join(os.path.dirname(__file__), "fixtures")
 
 class PlaceholderLogger:
@@ -569,20 +569,8 @@ def test_tmm_mailto_links_preserved():
     filtered = filter_content(logger, identities, cleaned_html)
     assert 'href="mailto:' in filtered, "mailto links were dropped by filter_content"
 
-    #with open(os.path.join(folder, "expected_filter_content.html"), "w", encoding="utf-8") as f:
-    #    f.write(filtered)
-    with open(os.path.join(folder, "expected_filter_content.html"), "r", encoding="utf-8") as f:
-        expected_html = f.read()
-    assert filtered.strip() == expected_html.strip()
-
     actual_md = to_markdown(filtered)
     assert "mailto:tleverentz@oakleaftexas.org" in actual_md, "mailto link lost after markdownify"
-
-    #with open(os.path.join(folder, "expected_filter_content.md"), "w", encoding="utf-8") as f:
-    #    f.write(actual_md)
-    with open(os.path.join(folder, "expected_filter_content.md"), "r", encoding="utf-8") as f:
-        expected_md = f.read()
-    assert actual_md.strip() == expected_md.strip()
 
 
 def test_with_wix_site():

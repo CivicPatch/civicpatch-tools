@@ -28,29 +28,27 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str) -> bool:
     if not text.strip():
         return False
 
-    people, dates, emails, phones, keywords = entity_extraction.extract_data(text)
-
-    # Flatten both keys & values of identities for checking
+    # Cheap check first: identity name tokens via regex (no spaCy needed)
     flattened_names = [canonical_name for canonical_name in identities.keys()]
     flattened_aliases = [item for sublist in identities.values() for item in sublist]
-
     text_lc = text.lower()
 
-    # Tokenize each identity name and match tokens as whole words in the text.
     for name in flattened_names + flattened_aliases:
         if not name:
             continue
         name_lc = name.strip().lower()
         if not name_lc:
             continue
-
-        tokens = re.split(r'\W+', name_lc)  # split on non-word chars
+        tokens = re.split(r'\W+', name_lc)
         for token in tokens:
             token = token.strip()
-            if len(token) < 3:  # require at least 3 chars to reduce false positives
+            if len(token) < 3:
                 continue
             if re.search(r'\b' + re.escape(token) + r'\b', text_lc):
                 return True
+
+    # Expensive check: spaCy entity extraction (people, dates, emails, phones, keywords)
+    people, dates, emails, phones, keywords = entity_extraction.extract_data(text)
     return any([people, dates, emails, phones, keywords])
 
 def filter_content(logger, identities: Dict[str, List[str]], input_html: str, progress_log_interval: int = 10) -> str:

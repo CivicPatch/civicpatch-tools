@@ -1,0 +1,15 @@
+services:
+  pipelines-integration-tests:
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-WARNING}
+      APP_ROOT: /app
+    init: true
+    build:
+      context: ../..
+      dockerfile: pipelines/Dockerfile
+      target: development
+    volumes:
+      - ..:/app
+      - ../../shared/src/shared:/app/src/shared:ro
+    working_dir: /app
+    command: ["pytest", "tests/integration", "-v"]

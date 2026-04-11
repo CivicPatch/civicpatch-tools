@@ -1,17 +1,19 @@
 import pytest
 from jobs.people_collector.steps.step_04_preprocess_page_content.entity_extraction import extract_data
 
+pytestmark = pytest.mark.integration
+
 def test_extract_phone_numbers():
     """Test extraction of phone numbers in various formats"""
     text = "Contact me at (123) 456-7890 or 987-654-3210."
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     assert "(123) 456-7890" in phones
     assert "987-654-3210" in phones
 
 def test_extract_emails():
     """Test extraction of email addresses"""
     text = "You can reach me at example@test.com or admin@test.org."
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     assert "example@test.com" in emails
     assert "admin@test.org" in emails
 
@@ -24,7 +26,7 @@ def test_combined_contact_info():
     Email: jane.smith@council.gov
     Start Date: January 15, 2024
     """
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     assert any("Jane Smith" in p for p in people)
     assert "(555) 123-4567" in phones
     assert "jane.smith@council.gov" in emails
@@ -64,7 +66,7 @@ def test_phone_number_validation(contact_info):
     """Test validation of different phone number formats"""
     number, expected_extracted = contact_info
     text = f"Contact at {number}"
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     
     if expected_extracted is not None:
         # Should extract the phone number
@@ -85,7 +87,7 @@ def test_email_validation(email):
     """Test validation of email addresses"""
     address, should_pass = email
     text = f"Email: {address}"
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     assert (address in emails) == should_pass
 
 def test_extract_with_keywords():
@@ -95,7 +97,7 @@ def test_extract_with_keywords():
     City Hall, Room 204
     Phone: 555-123-4567
     """
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     assert any("Bob Johnson" in p for p in people)
     assert "555-123-4567" in phones
     assert "District" in keywords
@@ -113,7 +115,7 @@ def test_multiple_phone_formats():
     International: +1 (555) 123-4567
     Invalid numbers: 123-456 or 12345 or abc-def-ghij
     """
-    people, dates, emails, phones, keywords = extract_data(text, "mayor_council")
+    people, dates, emails, phones, keywords = extract_data(text)
     
     # Manually specify exactly what should be extracted (based on your regex patterns)
     expected_phones = {

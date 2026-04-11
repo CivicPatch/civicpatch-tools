@@ -43,6 +43,16 @@ dependencies = [
     "shared"
 ]
 
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+markers = [
+    "unit: fast, no external dependencies",
+    "integration: requires spaCy, Playwright, or other installed deps",
+    "evals: mark a test related to evaluations",
+    "evals_relevant: mark a test related to relevant page evaluation",
+    "contracts: mark a test related to contracts",
+]
+
 [tool.uv]
 package = true
 

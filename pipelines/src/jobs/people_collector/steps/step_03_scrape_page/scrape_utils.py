@@ -24,6 +24,38 @@ def hash_string(s: str) -> str:
     """Returns a SHA256 hash of the input string."""
     return hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
 
+async def inline_iframes(page: Page, logger):
+    """
+    Replaces each <iframe> in the main document with the body content of its
+    corresponding child frame, so downstream processing sees the iframe text.
+
+    Uses Playwright's CDP access, which works cross-origin (e.g. Google Docs).
+    Per-frame failures are logged and skipped so one bad iframe can't abort the scrape.
+    """
+    for frame in page.frames:
+        if frame == page.main_frame:
+            continue
+        try:
+            frame_url = frame.url
+            body_html = await frame.evaluate("document.body.innerHTML")
+            await page.evaluate(
+                """([url, html]) => {
+                    for (const el of document.querySelectorAll('iframe')) {
+                        if (el.src === url) {
+                            const div = document.createElement('div');
+                            div.innerHTML = html;
+                            el.parentNode.replaceChild(div, el);
+                            break;
+                        }
+                    }
+                }""",
+                [frame_url, body_html],
+            )
+            logger.debug(f"Inlined iframe: {frame_url}")
+        except Exception as e:
+            logger.warning(f"Could not inline iframe {frame.url}: {e}")
+
+
 async def scrape(logger, website_url, options=None):
     """
     Fetches the content of a given website URL using Playwright.
@@ -91,7 +123,8 @@ async def scrape(logger, website_url, options=None):
                 # Existing processing
                 await flatten_shadow_root(page)
                 await html_relative_to_absolute_urls(page)
-                
+                await inline_iframes(page, logger)
+
                 image_directory = options.get('image_directory')
                 if image_directory:
                     await convert_background_divs_to_imgs(page)
