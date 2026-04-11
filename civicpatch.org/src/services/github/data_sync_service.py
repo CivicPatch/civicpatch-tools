@@ -100,7 +100,7 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
             inactive_ocdids.append(jurisdiction_ocdid)
             continue
         serialized_data = json.dumps(nested_jurisdiction_data)
-        jurisdictions.append((jurisdiction_ocdid, state, "can-delete", serialized_data, updated_at, "can-delete"))
+        jurisdictions.append((jurisdiction_ocdid, state, serialized_data, updated_at))
 
     logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
     if inactive_ocdids:
@@ -121,7 +121,7 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
         if not remote_data_list:
             return []
         return [
-            (person.get("id"), jurisdiction_ocdid, people_file_path, json.dumps(person), person.get("updated_at"), "dummy_git_commit_hash")
+            (person.get("id"), jurisdiction_ocdid, json.dumps(person), person.get("updated_at"))
             for person in remote_data_list
         ]
 

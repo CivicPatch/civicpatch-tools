@@ -66,7 +66,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
       created_at: now,
       updated_at: now,
       pull_request_url: null,
-      run_url: null,
       branch_name: null,
       jurisdiction_ocdid: jurisdiction_ocdid,
     };
