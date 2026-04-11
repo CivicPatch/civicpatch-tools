@@ -19,7 +19,7 @@ if [ "$touches_shared" = "1" ]; then
 fi
 
 if [ "$touches_api" = "1" ]; then
-    mise run tcp -- -m unit
+    mise run tcp
     mise run typecheck-cp
 fi
 

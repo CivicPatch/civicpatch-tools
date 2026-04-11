@@ -37,4 +37,4 @@ jobs:
         run: uv sync --all-packages
 
       - name: Run civicpatch.org unit tests
-        run: uv run pytest civicpatch.org/tests
+        run: uv run pytest -m unit civicpatch.org/tests
