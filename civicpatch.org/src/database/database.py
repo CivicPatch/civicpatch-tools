@@ -270,23 +270,6 @@ async def get_user_details(provider, provider_user_id):
         }
     return None
 
-
-async def user_is_approved(user_provider, provider_user_id) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT EXISTS (
-                SELECT 1
-                FROM users
-                WHERE provider = %s
-                  AND provider_user_id = %s
-            ) AS is_user_approved;
-            """,
-            (user_provider, provider_user_id),
-        )
-        row = await cur.fetchone()
-        return row[0] if row else False
     
 async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]:
     pool = await get_pool()
