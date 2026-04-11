@@ -38,7 +38,7 @@ async def create_or_get_review_session(
                     (user_id,),
                 )
                 row = await cur.fetchone()
-                daily_goal = row.daily_goal if row else 10
+                daily_goal = row.daily_goal if row else 10  # type: ignore[union-attr]
 
             # Clear non-resolved entries so every "start review" is a fresh slate
             await cur.execute(
@@ -67,10 +67,10 @@ async def create_or_get_review_session(
             row = await cur.fetchone()
 
     return {
-        "id": str(row.id),
-        "state_code": row.state_code,
-        "daily_goal": row.daily_goal,
-        "created_at": row.created_at.isoformat(),
+        "id": str(row.id),  # type: ignore[union-attr]
+        "state_code": row.state_code,  # type: ignore[union-attr]
+        "daily_goal": row.daily_goal,  # type: ignore[union-attr]
+        "created_at": row.created_at.isoformat(),  # type: ignore[union-attr]
     }
 
 
@@ -185,8 +185,8 @@ async def navigate_to_entry(
             existing = await cur.fetchone()
 
             if existing:
-                request_id = existing.request_id
-                jurisdiction_ocdid = existing.jurisdiction_ocdid
+                request_id = existing.request_id  # type: ignore[union-attr]
+                jurisdiction_ocdid = existing.jurisdiction_ocdid  # type: ignore[union-attr]
 
                 # has_more: next slot already exists, or new cards are available
                 await cur.execute(
@@ -198,7 +198,7 @@ async def navigate_to_entry(
                 )
                 has_more = (await cur.fetchone()) is not None
                 if not has_more:
-                    peek = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=1)
+                    peek = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=1)  # type: ignore[union-attr]
                     has_more = len(peek) > 0
             else:
                 # Frontier: check goal, then allocate the next card at this position
@@ -214,10 +214,10 @@ async def navigate_to_entry(
                     (STREAK_TIMEZONE, STREAK_TIMEZONE, review_session_id),
                 )
                 counts_row = await cur.fetchone()
-                if counts_row.resolved >= session_row.daily_goal:
+                if counts_row.resolved >= session_row.daily_goal:  # type: ignore[union-attr]
                     return {"done": AdvanceDoneReason.GOAL_REACHED}
 
-                rows = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=2)
+                rows = await _find_next_cards(cur, review_session_id, session_row.state_code, limit=2)  # type: ignore[union-attr]
                 if not rows:
                     return {"done": AdvanceDoneReason.NO_MORE_CARDS}
 
@@ -228,7 +228,7 @@ async def navigate_to_entry(
                         (review_session_id, request_id, jurisdiction_ocdid, status, entry_number)
                     VALUES (%s, %s, %s, 'claimed', %s)
                     """,
-                    (review_session_id, next_card.request_id, next_card.jurisdiction_ocdid, entry_number),
+                    (review_session_id, next_card.request_id, next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]
                 )
                 request_id = next_card.request_id
                 jurisdiction_ocdid = next_card.jurisdiction_ocdid
@@ -264,9 +264,9 @@ async def navigate_to_entry(
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
-        "resolved_count": counts.resolved_count,
+        "resolved_count": counts.resolved_count,  # type: ignore[union-attr]
         "has_more": has_more,
-        "has_prev": prev_row.has_prev,
+        "has_prev": prev_row.has_prev,  # type: ignore[union-attr]
     }
 
 
@@ -441,13 +441,13 @@ async def get_review_stats(
             avg_row = await cur.fetchone()
 
     return {
-        "today_resolved": stats.today_resolved,
-        "streak": streak_row.length if streak_row else 0,
-        "all_time_resolved": stats.all_time_resolved,
-        "available_count": available.available_count,
-        "claimed_count": claimed.claimed_count,
-        "daily_counts": [{"date": row.date, "count": row.count} for row in daily_rows],
-        "current_date": stats.current_date.isoformat(),
-        "best_streak": best_streak_row.best_streak,
-        "avg_seconds_per_review": avg_row.avg_seconds,
+        "today_resolved": stats.today_resolved,  # type: ignore[union-attr]
+        "streak": streak_row.length if streak_row else 0,  # type: ignore[union-attr]
+        "all_time_resolved": stats.all_time_resolved,  # type: ignore[union-attr]
+        "available_count": available.available_count,  # type: ignore[union-attr]
+        "claimed_count": claimed.claimed_count,  # type: ignore[union-attr]
+        "daily_counts": [{"date": row.date, "count": row.count} for row in daily_rows],  # type: ignore[union-attr]
+        "current_date": stats.current_date.isoformat(),  # type: ignore[union-attr]
+        "best_streak": best_streak_row.best_streak,  # type: ignore[union-attr]
+        "avg_seconds_per_review": avg_row.avg_seconds,  # type: ignore[union-attr]
     }

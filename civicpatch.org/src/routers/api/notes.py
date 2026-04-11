@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 import database.database as database
 from schemas.common import CreateNoteRequest, Identity, NoteResponse, Role, RouteCategory
@@ -30,6 +30,8 @@ def get_router() -> APIRouter:
         body: CreateNoteRequest,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
     ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
         note = await database.create_note(body.jurisdiction_ocdid, body.body, user.user_id)
         return {"data": NoteResponse(**note)}
 

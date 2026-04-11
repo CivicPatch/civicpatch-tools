@@ -100,6 +100,37 @@ dir = "pipelines"
 run = "uv run pytest"
 dir = "civicpatch.org"
 
+[tasks.tapi-db-up]
+description = "Start the integration test database and wait until healthy"
+run = "docker compose -f civicpatch.org/docker-compose.integration.yml up -d --wait"
+
+[tasks.tapi-db-down]
+description = "Stop and remove the integration test database"
+run = "docker compose -f civicpatch.org/docker-compose.integration.yml down -v"
+
+[tasks.tapi-db-migrate]
+description = "Apply all migrations to the integration test database"
+run = """
+env \
+  CIVICPATCH_API_DB_URL=postgres://civicpatch:test_password@127.0.0.1:6001/test_db \
+  CIVICPATCH_API_DB_PASSWORD=test_password \
+  GITHUB_APP_ID=x GITHUB_APP_CLIENT_ID=x GITHUB_APP_CLIENT_SECRET=x \
+  GITHUB_APP_PRIVATE_KEY_BASE64=x GITHUB_APP_INSTALLATION_ID=x \
+  INSTANCE_URL=x OPEN_DATA_REPO_URL=x MAINTAINER_EMAIL=x \
+  REDIS_HOST=x DATABASE_HASH_KEY=x SERVICE_API_KEY=x COOKIE_INSTANCE_URL=x \
+  uv run python database_operations/migrate.py up
+"""
+dir = "civicpatch.org"
+
+[tasks.tapi-integration]
+description = "Start test DB, migrate, run integration tests, tear down"
+run = """
+set -e
+mise run tapi-db-up
+mise run tapi-db-migrate
+mise run tapi -- -m integration
+"""
+
 [tasks.typecheck]
 run = "uv run pyright"
 dir = "civicpatch.org"

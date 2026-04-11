@@ -1,14 +1,15 @@
 import os
 import logging
-from typing import Any
+from typing import Any, LiteralString
 from database.database import get_pool
+from psycopg import sql
 import services.storage_service
 import shared.utils.data_path_utils
 import shared.utils.url_utils
 
 logger = logging.getLogger(__name__)
 
-_PEOPLE_TABLE_EXPRS = {
+_PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id":          ("'id'",          "data#>>'{id}'"),
     "name":        ("'name'",        "data#>>'{name}'"),
     "office":      ("'office'",      "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')"),
@@ -21,7 +22,7 @@ _PEOPLE_TABLE_EXPRS = {
     "image":       ("'image'",       "data#>>'{image}'"),
 }
 
-_RESULT_JSON_EXPRS = {
+_RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id":          ("'id'",          "elem->>'id'"),
     "name":        ("'name'",        "elem->>'name'"),
     "office":      ("'office'",      "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')"),
@@ -44,13 +45,14 @@ VIEWS: dict[str, frozenset[str]] = {
 DEFAULT_VIEW = "quick"
 
 
-def _build_jsonb_obj(exprs: dict, fields: frozenset[str]) -> str:
-    parts = []
+def _build_jsonb_obj(exprs: dict[str, tuple[LiteralString, LiteralString]], fields: frozenset[str]) -> sql.Composed:
+    pairs: list[sql.Composable] = []
     for field in sorted(fields):
         if field in exprs:
             key, val = exprs[field]
-            parts += [key, val]
-    return f"jsonb_build_object({', '.join(parts)})"
+            pairs.append(sql.SQL(key))
+            pairs.append(sql.SQL(val))
+    return sql.SQL("jsonb_build_object({})").format(sql.SQL(", ").join(pairs))
 
 
 async def get_people_by_jurisdiction_ocdid(
@@ -86,28 +88,28 @@ async def get_people_data_by_request_ids(
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
-                f"""
-                SELECT jurisdiction_ocdid, {people_projection} AS person
+                sql.SQL("""
+                SELECT jurisdiction_ocdid, {} AS person
                 FROM people
                 WHERE jurisdiction_ocdid = ANY(%s)
                   AND status = 'current'
-                """,
+                """).format(people_projection),
                 (jurisdiction_ocdids,)
             )
             people_rows = await cur.fetchall()
 
             await cur.execute(
-                f"""
+                sql.SQL("""
                 SELECT
                     r.id::text AS request_id,
                     (
-                        SELECT jsonb_agg({result_projection})
+                        SELECT jsonb_agg({})
                         FROM jsonb_array_elements(r.data_json) AS elem
                     ) AS people_data,
                     r.jurisdiction_ocdid
                 FROM requests r
                 WHERE r.id = ANY(%s)
-                """,
+                """).format(result_projection),
                 (request_ids,)
             )
             jobs_rows = await cur.fetchall()

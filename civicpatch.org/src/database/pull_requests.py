@@ -1,6 +1,7 @@
 import os
 from typing import List, Optional
 
+from psycopg import sql
 import services.storage_service
 import shared.utils.id_utils
 import shared.utils.url_utils
@@ -13,35 +14,36 @@ async def list_open_pull_requests(
     page: int = 1,
     per_page: int = 20,
 ) -> tuple[List[dict], int, int]:
-    conditions = ["pr.status = 'open'"]
+    conditions: list[sql.Composable] = [sql.SQL("pr.status = 'open'")]
     params: list = []
 
     if jurisdiction_ocdid:
-        conditions.append("r.jurisdiction_ocdid = %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid = %s"))
         params.append(jurisdiction_ocdid)
     elif state_code:
-        conditions.append("r.jurisdiction_ocdid LIKE %s")
+        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
 
-    where = " AND ".join(conditions)
+    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
     offset = (page - 1) * per_page
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT COUNT(*),
                    COUNT(*) FILTER (WHERE jsonb_array_length(r.review_json->'issues') > 0)
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
-            WHERE {where}
-            """,
+            {}
+            """).format(where),
             params,
         )
-        total, with_issues = await cur.fetchone()
+        count_row = await cur.fetchone()
+        total, with_issues = count_row if count_row is not None else (0, 0)
 
         await cur.execute(
-            f"""
+            sql.SQL("""
             SELECT pr.request_id::text, pr.url, pr.status,
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
@@ -51,10 +53,10 @@ async def list_open_pull_requests(
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE {where}
+            {}
             ORDER BY jsonb_array_length(r.review_json->'issues') DESC NULLS LAST, pr.created_at DESC
             LIMIT %s OFFSET %s
-            """,
+            """).format(where),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()

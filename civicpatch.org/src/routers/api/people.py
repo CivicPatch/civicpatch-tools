@@ -60,7 +60,7 @@ def get_router() -> APIRouter:
             or any(
                 shared.utils.name_utils.fuzzy_match(name, alias)
                 or shared.utils.name_utils.last_name_match(name, alias)
-                for alias in (p.other_names or [])
+                for alias in (getattr(p, "other_names", None) or [])
             )
         ]
         return {"data": matches}
@@ -111,7 +111,7 @@ def get_router() -> APIRouter:
         results = resolve_people_ids(people_to_resolve, people, identities)
 
         if request.with_data:
-            people_by_id = {p.id: p for p in people}
+            people_by_id = {getattr(p, "id", None): p for p in people}
             for result in results:
                 if result["person"] is None and result["id"]:
                     result["person"] = people_by_id.get(result["id"])

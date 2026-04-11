@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse
 
 from fastapi import APIRouter, HTTPException, Query
 

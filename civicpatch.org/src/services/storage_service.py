@@ -51,14 +51,14 @@ def get_client():
         )
     )
 
-async def upload_file_to_storage(
+async def upload_file_object_to_storage(
     bucket_name: str,
     file: UploadFile,
     key: str,
     with_presigned_url: bool = False
 ) -> str:
     """
-    Upload a file to S3-compatible storage.
+    Upload a FastAPI UploadFile object to S3-compatible storage.
     """
     storage_client = get_client()
     

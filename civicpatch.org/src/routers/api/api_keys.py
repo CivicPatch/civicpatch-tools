@@ -28,6 +28,8 @@ def get_router():
         user: Identity = Depends(get_user)
     ):
         api_key_owner = await database.get_user_by_api_key_id(api_key_id)
+        if api_key_owner is None:
+            raise HTTPException(status_code=404, detail="API key not found")
 
         if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
             raise HTTPException(status_code=401, detail="User does not own this resource")
@@ -41,6 +43,8 @@ def get_router():
         user: Identity = Depends(get_user)
     ):
         api_key_owner = await database.get_user_by_api_key_id(api_key_id)
+        if api_key_owner is None:
+            raise HTTPException(status_code=404, detail="API key not found")
 
         if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
             raise HTTPException(status_code=401, detail="User does not own this resource")
