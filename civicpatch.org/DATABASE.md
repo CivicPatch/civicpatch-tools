@@ -12,7 +12,6 @@ erDiagram
         text email
         text display_name
         text server_url
-        bool is_approved
         timestamptz created_at
     }
 
