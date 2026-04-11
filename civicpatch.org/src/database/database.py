@@ -773,10 +773,10 @@ async def get_active_job_jurisdiction_ocdids() -> set[str]:
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
-            WHERE j.status NOT IN %s
+            WHERE j.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
             """,
-            (TERMINAL_JOB_STATUSES,),
+            (list(TERMINAL_JOB_STATUSES),),
         )
         rows = await cur.fetchall()
         return {row[0] for row in rows}
@@ -791,11 +791,11 @@ async def get_active_jobs(state_code: Optional[str] = None) -> list[dict]:
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE j.status NOT IN %s
+            WHERE j.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
             AND r.request_type = 'people'
         """
-        params: list = [TERMINAL_JOB_STATUSES]
+        params: list = [list(TERMINAL_JOB_STATUSES)]
         if state_code:
             query += " AND jur.state = %s"
             params.append(state_code.upper())
