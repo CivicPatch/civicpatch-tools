@@ -53,6 +53,21 @@ run = """
 """
 
 
+[tasks.clear_dashboard_cache]
+run = """
+    curl -X POST "http://localhost:8001/api/admin/clear_dashboard_cache" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $SERVICE_API_KEY"
+"""
+
+[tasks.clear_dashboard_cache_prod]
+run = """
+    curl -X POST "https://civicpatch.org/api/admin/clear_dashboard_cache" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $PROD_SERVICE_API_KEY"
+"""
+
+
 ###################################################
 ## 🚀✨ Tests                                ✨🚀 ##
 ###################################################

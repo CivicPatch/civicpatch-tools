@@ -1,5 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, Depends
 
+import services.cache_service as cache_service
 import services.github.data_sync_service
 import services.github.pull_request_sync_service
 from schemas.common import Identity, Role, RouteCategory
@@ -26,5 +27,12 @@ def get_router() -> APIRouter:
     ):
         background_tasks.add_task(services.github.pull_request_sync_service.sync_open_pr_state)
         return {"status": "running"}
+
+    @router.post("/clear_dashboard_cache", include_in_schema=False)
+    async def clear_dashboard_cache_endpoint(
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+    ):
+        await cache_service.invalidate("dashboard_data")
+        return {"status": "ok"}
 
     return router

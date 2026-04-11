@@ -87,10 +87,10 @@ function QueuePage() {
   }, [stateCode, page, perPage, viewMode]);
 
   useEffect(() => {
-    fetchActiveJobs()
+    fetchActiveJobs(stateCode || undefined)
       .then((result) => setActiveJobs(result.data || []))
       .catch(() => setActiveJobs([]));
-  }, []);
+  }, [stateCode]);
 
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
