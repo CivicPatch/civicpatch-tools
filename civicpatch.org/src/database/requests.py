@@ -7,12 +7,11 @@ from utils.github_utils import pull_request_url_to_number
 
 
 async def register_request_with_job(
-    requested_by_provider: str,
-    requested_by_provider_user_id: str,
     request_id: str,
     job_type: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
+    requested_by_user_id: Optional[str] = None,
     status: JobStatus = JobStatus.PENDING,
     progress: int = 0,
 ):
@@ -20,23 +19,21 @@ async def register_request_with_job(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
+            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json), requested_by_user_id),
         )
 
         await conn.execute(
             """
             INSERT INTO jobs (
-                request_id, requested_by_provider, requested_by_provider_user_id,
-                status, progress,
+                request_id, status, progress,
                 created_at, updated_at
             )
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, requested_by_provider, requested_by_provider_user_id,
-             status, progress),
+            (request_id, status, progress),
         )
 
 
@@ -65,12 +62,11 @@ async def register_foreign_request(
         await conn.execute(
             """
             INSERT INTO jobs (
-                request_id, requested_by_provider, requested_by_provider_user_id,
-                status, progress, created_at, updated_at
+                request_id, status, progress, created_at, updated_at
             )
-            VALUES (%s, %s, %s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, provider, provider, JobStatus.COMPLETED),
+            (request_id, JobStatus.COMPLETED),
         )
 
         pr_number = 0

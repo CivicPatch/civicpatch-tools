@@ -905,24 +905,6 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str = N
         )
         return result.rowcount > 0
 
-async def check_user_owns_request_id(provider: str, provider_user_id: str, request_id: str) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT EXISTS (
-                SELECT 1 FROM jobs
-                WHERE request_id = %s
-                  AND requested_by_provider = %s
-                  AND requested_by_provider_user_id = %s
-            ) AS owns_request;
-            """,
-            (request_id, provider, provider_user_id),
-        )
-        row = await cur.fetchone()
-        return row[0] if row else False
-
-# API usage
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
     pool = await get_pool()
     # Queries api_usage_limits to get daily_limit
@@ -930,14 +912,13 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT 
+            SELECT
                 ul.daily_limit,
-                COUNT(j.request_id) AS usage_count
+                COUNT(r.id) AS usage_count
             FROM api_usage_limits ul
-            LEFT JOIN jobs j 
-                ON ul.provider = j.requested_by_provider 
-                AND ul.provider_user_id = j.requested_by_provider_user_id
-                AND j.created_at >= NOW() - INTERVAL '24 hours'
+            LEFT JOIN users u ON u.provider = ul.provider AND u.provider_user_id = ul.provider_user_id
+            LEFT JOIN requests r ON r.requested_by_user_id = u.id
+                AND r.created_at >= NOW() - INTERVAL '24 hours'
             WHERE ul.provider = %s AND ul.provider_user_id = %s
             GROUP BY ul.daily_limit;
             """,
