@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE requests DROP COLUMN status;
+
+COMMIT;

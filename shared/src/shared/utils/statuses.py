@@ -33,15 +33,3 @@ class PullRequestStatus(StrEnum):
     CLOSED = "closed"
     # PR was merged into the target branch
     MERGED = "merged"
-
-
-# TODO: Drop RequestStatus and the requests.status column.
-# The full request lifecycle is already derivable from jobs.status (pipeline phase)
-# and pull_requests.status (review/PR phase) via their FK relationships.
-# This enum and column are written once at creation and never updated — they add
-# maintenance burden without providing information that isn't already in the joins.
-class RequestStatus(StrEnum):
-    DEFAULT = "DEFAULT"
-    PENDING = "PENDING"
-    COMPLETED = "COMPLETED"
-    ERROR = "ERROR"
