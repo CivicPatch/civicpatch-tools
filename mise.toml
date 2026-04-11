@@ -97,7 +97,7 @@ run = "uv run pytest -m evals tests/prompts"
 dir = "pipelines"
 
 [tasks.tcp]
-run = "uv run pytest"
+run = "uv run pytest -m unit"
 dir = "civicpatch.org"
 
 [tasks.tcp-db-up]
