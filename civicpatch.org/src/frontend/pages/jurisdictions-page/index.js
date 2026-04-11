@@ -72,6 +72,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
     setHistory(prev => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
   };
 
+  const handleCancelJob = (requestId) => {
+    setHistory(prev => ({
+      ...prev,
+      data: prev.data.map(j => j.request_id === requestId ? { ...j, status: "CANCELLED" } : j),
+    }));
+  };
+
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
 
@@ -98,6 +105,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .jobStatus=${jobStatus}
             .isConnected=${isConnected}
             .sseError=${sseError}
+            .canCancel=${permissions.CANCEL_JOB}
+            .onCancel=${handleCancelJob}
           ></civ-scrape-history-list>
         </div>
 
