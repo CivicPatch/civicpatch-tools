@@ -60,7 +60,6 @@ def generate_review(
     issues.extend(_check_unique_roles(people, inputs.unique_roles))
     issues.extend(_check_division_sequence(people))
     issues.extend(_check_office_name_sequence(people))
-    issues.extend(_check_unrecognized_roles(inputs.unrecognized_roles))
     rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
 
     return {
@@ -162,13 +161,6 @@ def _check_unique_roles(people, unique_roles: List[str]) -> List[str]:
         f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(persons)}"
         for role, persons in role_to_persons.items()
         if len(persons) > 1
-    ]
-
-
-def _check_unrecognized_roles(unrecognized_roles: List[dict]) -> List[str]:
-    return [
-        f"Unrecognized role '{r['role']}' on {r['person_name']}"
-        for r in unrecognized_roles
     ]
 
 

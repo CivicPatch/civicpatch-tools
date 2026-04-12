@@ -46,3 +46,18 @@ class JurisdictionId(BaseModel):
     place: str
     jurisdiction_type: str
     output_type: str
+
+
+class JurisdictionEntry(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    id: str
+    name: str
+    url: Optional[str] = None
+    comments: List[str] = []
+
+
+class JurisdictionsFile(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    jurisdictions: List[JurisdictionEntry] = []

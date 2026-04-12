@@ -68,7 +68,6 @@ services:
     volumes:
       - ./worker/src:/app/src
       - ./shared/src/shared:/app/src/shared
-    command: watchfiles --filter python "python src/main.py" src/
     networks:
       - civicpatch_net
     restart: unless-stopped

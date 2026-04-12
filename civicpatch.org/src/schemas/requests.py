@@ -1,6 +1,6 @@
 from fastapi import UploadFile
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Literal, Optional, List
 
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
@@ -19,3 +19,13 @@ class HandleSubmitJobArtifactsRequest(BaseModel):
     jurisdiction_ocdid: str
     server_detail: ServerDetail
     job_status: Optional[str] = None
+
+
+class ResolveIssueRequest(BaseModel):
+    # unrecognized_role fields:
+    scope: Optional[Literal["global", "state", "locality"]] = None
+    state: Optional[str] = None
+    locality: Optional[str] = None
+    # dead_url fields:
+    new_url: Optional[str] = None
+    comment: Optional[str] = None

@@ -63,11 +63,20 @@ export const fetchJobIssues = async (tags, page, perPage, sort) => {
   return res.json();
 };
 
-export const resolveReviewIssue = async (issueId) => {
+export const fetchIssueDetails = async (issueId) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/details`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const resolveReviewIssue = async (issueId, body = {}) => {
   const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/resolve`, {
     credentials: "include",
     method: "POST",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

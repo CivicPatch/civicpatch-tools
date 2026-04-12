@@ -362,6 +362,32 @@ async def update_pull_request_file(
             return False
 
 
+async def upsert_github_file(
+    branch_name: str,
+    file_path: str,
+    content_str: str,
+    commit_message: str,
+) -> bool:
+    _, _, _, open_data_repo_url = _get_github_config()
+    default_headers = await get_default_headers()
+    contents_url = f"{open_data_repo_url}/contents/{file_path}?ref={branch_name}"
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        get_resp = await client.get(contents_url, headers=default_headers)
+        encoded = base64.b64encode(content_str.encode()).decode()
+        payload: dict = {"message": commit_message, "content": encoded, "branch": branch_name}
+        if get_resp.status_code == 200:
+            payload["sha"] = get_resp.json()["sha"]
+        put_resp = await client.put(
+            contents_url,
+            json=payload,
+            headers={**default_headers, "Accept": "application/vnd.github+json"},
+        )
+        if put_resp.status_code in (200, 201):
+            return True
+        logger.error(f"upsert_github_file failed ({put_resp.status_code}): {put_resp.text}")
+        return False
+
+
 async def get_teams(user_oauth_token: str):
     logger.debug("Fetching user teams from GitHub.")
     headers = {

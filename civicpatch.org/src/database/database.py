@@ -1512,6 +1512,23 @@ async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dic
         )
 
 
+def _build_jurisdictions(ocdids: list[str] | None) -> list[dict]:
+    result = []
+    for ocdid in (ocdids or []):
+        try:
+            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
+            parts = folder.split("/")
+            result.append({
+                "jurisdiction_ocdid": ocdid,
+                "folder": folder,
+                "state": parts[0] if parts else "",
+                "locality": parts[2] if len(parts) > 2 else "",
+            })
+        except Exception:
+            pass
+    return result
+
+
 async def get_review_issues_page(
     issue_types: list[str],
     page: int,
@@ -1531,10 +1548,20 @@ async def get_review_issues_page(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
+            WITH issue_jurisdictions AS (
+                SELECT ri.id AS issue_id,
+                       array_agg(DISTINCT r.jurisdiction_ocdid)
+                           FILTER (WHERE r.jurisdiction_ocdid IS NOT NULL) AS ocdids
+                FROM review_issues ri
+                LEFT JOIN requests r ON r.id::text = ANY(ri.request_ids)
+                GROUP BY ri.id
+            )
             SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.request_ids,
                    ri.data, ri.status, ri.resolved_at, ri.created_at,
+                   COALESCE(ij.ocdids, '{{}}') AS raw_jurisdiction_ocdids,
                    COUNT(*) OVER() AS total_count
             FROM review_issues ri
+            LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
             ORDER BY ri.created_at {order}
             LIMIT %s OFFSET %s
@@ -1542,9 +1569,11 @@ async def get_review_issues_page(
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
-    total = rows[0][8] if rows else 0
-    return [
-        {
+    total = rows[0][9] if rows else 0
+    result = []
+    for r in rows:
+        jurisdictions = _build_jurisdictions(r[8])
+        result.append({
             "id": r[0],
             "issue_type": r[1],
             "issue_key": r[2],
@@ -1553,9 +1582,74 @@ async def get_review_issues_page(
             "status": r[5],
             "resolved_at": r[6].isoformat() if r[6] else None,
             "created_at": r[7].isoformat() if r[7] else None,
+            "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
+            "jurisdictions": jurisdictions,
+        })
+    return result, total
+
+
+async def get_review_issue_by_id(issue_id: str) -> dict | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, issue_type, issue_key, request_ids, data, status, resolved_at, created_at
+            FROM review_issues WHERE id = %s
+            """,
+            (issue_id,),
+        )
+        row = await cur.fetchone()
+    if row is None:
+        return None
+    return {
+        "id": row[0],
+        "issue_type": row[1],
+        "issue_key": row[2],
+        "request_ids": row[3],
+        "data": row[4],
+        "status": row[5],
+        "resolved_at": row[6].isoformat() if row[6] else None,
+        "created_at": row[7].isoformat() if row[7] else None,
+    }
+
+
+async def get_request_jurisdiction(request_id: str) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT jurisdiction_ocdid FROM requests WHERE id::text = %s",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+    return row[0] if row else None
+
+
+async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT r.id::text, r.jurisdiction_ocdid, r.arguments_json,
+                   COALESCE(r.data_json, '[]'::jsonb) AS data_json,
+                   COALESCE(j.data->>'name', r.jurisdiction_ocdid) AS jurisdiction_name
+            FROM requests r
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
+            WHERE r.id::text = ANY(%s)
+            ORDER BY r.created_at
+            """,
+            (request_ids,),
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "request_id": r[0],
+            "jurisdiction_ocdid": r[1],
+            "arguments_json": r[2] or {},
+            "data_json": r[3] or [],
+            "jurisdiction_name": r[4],
         }
         for r in rows
-    ], total
+    ]
 
 
 async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset: int):

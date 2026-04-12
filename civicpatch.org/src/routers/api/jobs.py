@@ -29,6 +29,9 @@ from database.database import (
     get_job_github_run_id,
     get_jobs_with_errors,
     get_review_issues_page,
+    get_review_issue_by_id,
+    get_request_jurisdiction,
+    get_issue_request_details,
     get_active_jobs,
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
@@ -42,13 +45,89 @@ from database.database import (
 from database.requests import register_request_with_job
 from job_service.people_collector import people_collector
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
-from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
+from schemas.requests import HandleSubmitJobArtifactsRequest, ResolveIssueRequest, ServerDetail
+from shared.schemas import JurisdictionsFile
+from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
 from services import pubsub_service
 from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
+
+
+async def _resolve_role_issue(issue: dict, body: ResolveIssueRequest) -> str | None:
+    scope = body.scope or "global"
+    if scope == "state":
+        config_path = f"data/{body.state}/local/config.yml"
+    elif scope == "locality":
+        config_path = f"data/{body.state}/local/{body.locality}/config.yml"
+    else:
+        config_path = "data/local/config.yml"
+
+    raw = await github_service.get_github_file_contents(config_path)
+    existing = RoleConfig.model_validate(yaml.safe_load(raw)) if raw else RoleConfig()
+    merged = merge_role_configs(existing, RoleConfig(roles=[RoleEntry(role=issue["issue_key"])]))
+    content = yaml.dump(merged.model_dump(), sort_keys=False, allow_unicode=True)
+
+    branch_name = f"resolve-role-{issue['id'][:8]}"
+    if err := await github_service.create_branch(branch_name):
+        logger.error(f"Failed to create branch for role resolution: {err}")
+        return None
+    if not await github_service.upsert_github_file(branch_name, config_path, content, f"Add role: {issue['issue_key']}"):
+        return None
+    pr_number, pr_url = await github_service.create_pull_request(
+        branch_name,
+        title=f"Add unrecognized role: {issue['issue_key']}",
+        body=f"Adds `{issue['issue_key']}` to `{config_path}` via issue resolution.",
+    )
+    if pr_number is None:
+        logger.error(f"Failed to create PR for role resolution: {pr_url}")
+        return None
+    return pr_url
+
+
+async def _resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str | None) -> str | None:
+    jurisdiction_ocdid = await get_request_jurisdiction(issue["request_ids"][0])
+    if not jurisdiction_ocdid:
+        logger.error(f"No jurisdiction found for dead_url issue {issue['id']}")
+        return None
+
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    state = folder.split("/")[0]
+    file_path = f"data_source/{state}/jurisdictions.yml"
+
+    raw = await github_service.get_github_file_contents(file_path)
+    if not raw:
+        logger.error(f"Could not fetch {file_path}")
+        return None
+
+    data = JurisdictionsFile.model_validate(yaml.safe_load(raw))
+    entry = next((e for e in data.jurisdictions if e.id == jurisdiction_ocdid), None)
+    if not entry:
+        logger.error(f"No entry for {jurisdiction_ocdid} in {file_path}")
+        return None
+
+    entry.url = new_url
+    if comment:
+        entry.comments.append(comment)
+
+    content = yaml.dump(data.model_dump(mode="python", exclude_none=True), sort_keys=False, allow_unicode=True)
+    branch_name = f"resolve-url-{issue['id'][:8]}"
+    if err := await github_service.create_branch(branch_name):
+        logger.error(f"Failed to create branch for dead URL resolution: {err}")
+        return None
+    if not await github_service.upsert_github_file(branch_name, file_path, content, f"Fix dead URL: {jurisdiction_ocdid}"):
+        return None
+    pr_number, pr_url = await github_service.create_pull_request(
+        branch_name,
+        title=f"Fix dead URL: {jurisdiction_ocdid}",
+        body=f"Updates URL in `{file_path}` via issue resolution.",
+    )
+    if pr_number is None:
+        logger.error(f"Failed to create PR for dead URL resolution: {pr_url}")
+        return None
+    return pr_url
 
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
@@ -563,10 +642,65 @@ def get_router(api_key_header):
     )
     async def resolve_review_issue_endpoint(
         issue_id: str,
+        body: ResolveIssueRequest = ResolveIssueRequest(),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
+        issue = await get_review_issue_by_id(issue_id)
+        if issue is None:
+            raise HTTPException(status_code=404)
+
+        if issue["issue_type"] == "unrecognized_role":
+            pr_url = await _resolve_role_issue(issue, body)
+        elif issue["issue_type"] == "dead_url":
+            pr_url = await _resolve_dead_url_issue(issue, body.new_url, body.comment)
+        else:
+            await resolve_review_issue(issue_id)
+            return {"data": None}
+
         await resolve_review_issue(issue_id)
-        return {"data": None}
+        return {"data": {"pr_url": pr_url} if pr_url else None}
+
+    @router.get(
+        "/issues/{issue_id}/details",
+        summary="Per-request source context for a review issue (lazy-load for modal)",
+    )
+    async def get_review_issue_details_endpoint(
+        issue_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        issue = await get_review_issue_by_id(issue_id)
+        if issue is None:
+            raise HTTPException(status_code=404)
+
+        raw = await get_issue_request_details(issue["request_ids"])
+        issue_type = issue["issue_type"]
+        issue_key = issue["issue_key"]
+
+        result = []
+        for r in raw:
+            args = r["arguments_json"]
+            people = []
+            source_urls = []
+            if issue_type == "unrecognized_role":
+                matching = [
+                    p for p in (r["data_json"] or [])
+                    if isinstance(p, dict) and (p.get("office") or {}).get("name", "") == issue_key
+                ]
+                people = [{"name": p["name"]} for p in matching]
+                source_urls = list({u for p in matching for u in (p.get("source_urls") or [])})
+            else:
+                source_urls = [args["url"]] if args.get("url") else []
+            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"]) if r["jurisdiction_ocdid"] else None
+            result.append({
+                "request_id": r["request_id"],
+                "jurisdiction_ocdid": r["jurisdiction_ocdid"],
+                "jurisdiction_name": r["jurisdiction_name"],
+                "jurisdiction_path": folder,
+                "url": args.get("url"),
+                "source_urls": source_urls,
+                "people": people,
+            })
+        return {"data": result}
 
     @router.get(
         "/unrecognized-roles/grouped",
