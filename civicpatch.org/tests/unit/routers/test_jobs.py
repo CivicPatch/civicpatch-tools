@@ -208,13 +208,13 @@ def test_delete_context_returns_request_id(client):
 
 
 @pytest.mark.unit
-def test_get_job_events_returns_paginated_list(client):
+def test_get_review_issues_returns_paginated_list(client):
     with patch(
         "routers.api.jobs.get_review_issues_page",
         new_callable=AsyncMock,
         return_value=([], 0),
     ):
-        response = client.get("/jobs/events")
+        response = client.get("/jobs/issues")
 
     assert response.status_code == 200
     data = response.json()

@@ -32,6 +32,7 @@ from database.database import (
     get_active_jobs,
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
+    resolve_review_issue,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -541,10 +542,10 @@ def get_router(api_key_header):
         return {"data": jobs}
 
     @router.get(
-        "/events",
+        "/issues",
         summary="List review issues (unrecognized roles, dead URLs, etc.) with pagination",
     )
-    async def get_job_events_endpoint(
+    async def get_review_issues_endpoint(
         tags: Optional[str] = None,
         page: int = 1,
         per_page: int = 20,
@@ -555,6 +556,17 @@ def get_router(api_key_header):
         sort_desc = sort != "asc"
         rows, total = await get_review_issues_page(issue_types, page, per_page, sort_desc)
         return {"data": rows, "total": total}
+
+    @router.post(
+        "/issues/{issue_id}/resolve",
+        summary="Mark a review issue as resolved",
+    )
+    async def resolve_review_issue_endpoint(
+        issue_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        await resolve_review_issue(issue_id)
+        return {"data": None}
 
     @router.get(
         "/unrecognized-roles/grouped",
