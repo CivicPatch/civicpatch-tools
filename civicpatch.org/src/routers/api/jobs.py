@@ -28,8 +28,10 @@ from database.database import (
     get_job_status,
     get_job_github_run_id,
     get_jobs_with_errors,
-    get_job_events_page,
+    get_review_issues_page,
     get_active_jobs,
+    get_unrecognized_roles_grouped,
+    resolve_unrecognized_role_group,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -95,6 +97,11 @@ class UpdateJobStatusResponse(BaseModel):
 class PostJobResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
     data: Optional[Any] = None
+
+
+class ResolveUnrecognizedRoleGroupRequest(BaseModel):
+    role: str
+    request_ids: list[str]
 
 
 # ──────────────────────────────────────────────
@@ -535,7 +542,7 @@ def get_router(api_key_header):
 
     @router.get(
         "/events",
-        summary="List job events (unrecognized roles, dead URLs, etc.) with pagination",
+        summary="List review issues (unrecognized roles, dead URLs, etc.) with pagination",
     )
     async def get_job_events_endpoint(
         tags: Optional[str] = None,
@@ -544,10 +551,31 @@ def get_router(api_key_header):
         sort: str = "desc",
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
-        event_types = [t.strip() for t in tags.split(",")] if tags else []
+        issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
-        rows, total = await get_job_events_page(event_types, page, per_page, sort_desc)
+        rows, total = await get_review_issues_page(issue_types, page, per_page, sort_desc)
         return {"data": rows, "total": total}
+
+    @router.get(
+        "/unrecognized-roles/grouped",
+        summary="List unrecognized roles grouped by role text, each with affected request IDs",
+    )
+    async def get_unrecognized_roles_grouped_endpoint(
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        rows = await get_unrecognized_roles_grouped()
+        return {"data": rows}
+
+    @router.post(
+        "/unrecognized-roles/grouped/resolve",
+        summary="Bulk-resolve review session entries for a grouped unrecognized role",
+    )
+    async def resolve_unrecognized_roles_grouped_endpoint(
+        body: ResolveUnrecognizedRoleGroupRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        await resolve_unrecognized_role_group(body.request_ids)
+        return {"data": None}
 
     @router.get(
         "/{request_id}/status",

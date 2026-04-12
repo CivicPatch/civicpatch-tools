@@ -174,7 +174,7 @@ async def navigate_to_entry(
             # Try to find an existing entry at the requested position (claimed or passed)
             await cur.execute(
                 """
-                SELECT id, request_id::text, jurisdiction_ocdid
+                SELECT id, request_ids, jurisdiction_ocdid
                 FROM review_session_entries
                 WHERE review_session_id = %s
                   AND entry_number = %s
@@ -185,7 +185,7 @@ async def navigate_to_entry(
             existing = await cur.fetchone()
 
             if existing:
-                request_id = existing.request_id  # type: ignore[union-attr]
+                request_id = existing.request_ids[0]  # type: ignore[union-attr]
                 jurisdiction_ocdid = existing.jurisdiction_ocdid  # type: ignore[union-attr]
 
                 # has_more: next slot already exists, or new cards are available
@@ -225,10 +225,10 @@ async def navigate_to_entry(
                 await cur.execute(
                     """
                     INSERT INTO review_session_entries
-                        (review_session_id, request_id, jurisdiction_ocdid, status, entry_number)
+                        (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
                     VALUES (%s, %s, %s, 'claimed', %s)
                     """,
-                    (review_session_id, next_card.request_id, next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]
+                    (review_session_id, [next_card.request_id], next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]
                 )
                 request_id = next_card.request_id
                 jurisdiction_ocdid = next_card.jurisdiction_ocdid
@@ -278,7 +278,7 @@ async def resolve_review_session_entries_by_request_id(request_id: str) -> None:
                 """
                 UPDATE review_session_entries
                 SET status = 'resolved', resolved_at = NOW()
-                WHERE request_id = %s AND status != 'resolved'
+                WHERE %s = ANY(request_ids) AND status != 'resolved'
                 """,
                 (request_id,),
             )
@@ -292,11 +292,12 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
                 """
                 UPDATE review_session_entries
                 SET status = 'resolved', resolved_at = NOW()
-                WHERE request_id IN (
-                    SELECT j.request_id FROM jobs j
+                WHERE EXISTS (
+                    SELECT 1 FROM jobs j
                     JOIN requests r ON r.id = j.request_id
                     JOIN pull_requests pr ON pr.request_id = r.id
                     WHERE pr.url LIKE %s
+                      AND j.request_id::text = ANY(review_session_entries.request_ids)
                 )
                 AND status != 'resolved'
                 """,

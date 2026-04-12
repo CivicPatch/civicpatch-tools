@@ -1417,73 +1417,104 @@ async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
         )
 
 
-async def get_unrecognized_roles(state_code: Optional[str] = None) -> list[dict]:
-    conditions: list[sql.Composable] = [sql.SQL("je.event_type = 'unrecognized_role'")]
-    params = []
-    if state_code:
-        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
-        params.append(f"%state:{state_code}%")
-    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
+async def get_unrecognized_roles_grouped() -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            sql.SQL("""
-            SELECT je.id::text,
-                   je.data->>'role' AS role,
-                   je.data->>'person_name' AS person_name,
-                   'pending' AS status,
-                   je.created_at, je.request_id::text, r.jurisdiction_ocdid,
-                   j.data->>'name' AS jurisdiction_name
-            FROM job_events je
-            JOIN requests r ON r.id = je.request_id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            {}
-            ORDER BY je.created_at DESC LIMIT 500
-            """).format(where),
-            params,
+            """
+            SELECT issue_key AS role,
+                   request_ids,
+                   data->'person_names' AS person_names,
+                   array_length(request_ids, 1) AS occurrence_count
+            FROM review_issues
+            WHERE issue_type = 'unrecognized_role'
+              AND status = 'pending'
+            ORDER BY array_length(request_ids, 1) DESC
+            """
         )
         rows = await cur.fetchall()
     return [
         {
-            "id": str(r[0]),
-            "role": r[1],
-            "person_name": r[2],
-            "status": r[3],
-            "created_at": r[4].isoformat() if r[4] else None,
-            "request_id": str(r[5]),
-            "jurisdiction_ocdid": r[6],
-            "jurisdiction_name": r[7],
+            "role": r[0],
+            "request_ids": r[1],
+            "person_names": r[2] or [],
+            "occurrence_count": r[3],
         }
         for r in rows
     ]
 
 
-async def insert_job_events(request_id: str, event_type: str, events: list[dict]) -> None:
-    if not events:
+async def resolve_unrecognized_role_group(request_ids: list[str]) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE review_session_entries
+            SET status = 'resolved', resolved_at = NOW()
+            WHERE request_ids && %s::text[]
+              AND status != 'resolved'
+            """,
+            (request_ids,),
+        )
+
+
+async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
+    if not issues:
         return
+    rows = []
+    for issue in issues:
+        if issue_type == "unrecognized_role":
+            issue_key = issue["role"]
+            data = json.dumps({"person_names": [issue.get("person_name", "")]})
+        elif issue_type == "dead_url":
+            issue_key = f"{issue['url']}::{request_id}"
+            data = json.dumps(issue)
+        else:
+            issue_key = request_id
+            data = json.dumps(issue)
+        rows.append((issue_type, issue_key, [request_id], data))
+
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO job_events (request_id, event_type, data)
-            VALUES (%s, %s, %s)
+            INSERT INTO review_issues (issue_type, issue_key, request_ids, data)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (issue_type, issue_key) DO UPDATE SET
+              request_ids = (
+                SELECT array_agg(DISTINCT r)
+                FROM unnest(review_issues.request_ids || EXCLUDED.request_ids) r
+              ),
+              data = CASE
+                WHEN review_issues.issue_type = 'unrecognized_role' THEN
+                  jsonb_set(
+                    review_issues.data,
+                    '{person_names}',
+                    (SELECT jsonb_agg(DISTINCT v)
+                     FROM jsonb_array_elements_text(
+                       COALESCE(review_issues.data->'person_names', '[]'::jsonb) ||
+                       COALESCE(EXCLUDED.data->'person_names', '[]'::jsonb)
+                     ) v)
+                  )
+                ELSE review_issues.data
+              END
             """,
-            [(request_id, event_type, json.dumps(e)) for e in events],
+            rows,
         )
 
 
-async def get_job_events_page(
-    event_types: list[str],
+async def get_review_issues_page(
+    issue_types: list[str],
     page: int,
     per_page: int,
     sort_desc: bool = True,
 ) -> tuple[list[dict], int]:
     conditions = []
     params: list[Any] = []
-    if event_types:
-        placeholders = ", ".join(["%s"] * len(event_types))
-        conditions.append(f"je.event_type IN ({placeholders})")
-        params.extend(event_types)
+    if issue_types:
+        placeholders = ", ".join(["%s"] * len(issue_types))
+        conditions.append(f"ri.issue_type IN ({placeholders})")
+        params.extend(issue_types)
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
     order = "DESC" if sort_desc else "ASC"
     offset = (page - 1) * per_page
@@ -1491,71 +1522,31 @@ async def get_job_events_page(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
-            SELECT je.id::text, je.event_type, je.data, je.created_at,
-                   je.request_id::text, r.jurisdiction_ocdid,
-                   j.data->>'name' AS jurisdiction_name,
+            SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.request_ids,
+                   ri.data, ri.status, ri.resolved_at, ri.created_at,
                    COUNT(*) OVER() AS total_count
-            FROM job_events je
-            JOIN requests r ON r.id = je.request_id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
+            FROM review_issues ri
             {where}
-            ORDER BY je.created_at {order}
+            ORDER BY ri.created_at {order}
             LIMIT %s OFFSET %s
             """),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
-    total = rows[0][7] if rows else 0
+    total = rows[0][8] if rows else 0
     return [
         {
             "id": r[0],
-            "event_type": r[1],
-            "data": r[2],
-            "created_at": r[3].isoformat() if r[3] else None,
-            "request_id": r[4],
-            "jurisdiction_ocdid": r[5],
-            "jurisdiction_name": r[6],
-            "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[5]) if r[5] else None,
+            "issue_type": r[1],
+            "issue_key": r[2],
+            "request_ids": r[3],
+            "data": r[4],
+            "status": r[5],
+            "resolved_at": r[6].isoformat() if r[6] else None,
+            "created_at": r[7].isoformat() if r[7] else None,
         }
         for r in rows
     ], total
-
-
-async def get_job_events(event_type: str, state_code: Optional[str] = None) -> list[dict]:
-    conditions: list[sql.Composable] = [sql.SQL("je.event_type = %s")]
-    params: list[Any] = [event_type]
-    if state_code:
-        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
-        params.append(f"%state:{state_code}%")
-    where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            sql.SQL("""
-            SELECT je.id::text, je.event_type, je.data, je.created_at,
-                   je.request_id::text, r.jurisdiction_ocdid,
-                   j.data->>'name' AS jurisdiction_name
-            FROM job_events je
-            JOIN requests r ON r.id = je.request_id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            {}
-            ORDER BY je.created_at DESC LIMIT 500
-            """).format(where),
-            params,
-        )
-        rows = await cur.fetchall()
-    return [
-        {
-            "id": r[0],
-            "event_type": r[1],
-            "data": r[2],
-            "created_at": r[3].isoformat() if r[3] else None,
-            "request_id": r[4],
-            "jurisdiction_ocdid": r[5],
-            "jurisdiction_name": r[6],
-        }
-        for r in rows
-    ]
 
 
 async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset: int):
