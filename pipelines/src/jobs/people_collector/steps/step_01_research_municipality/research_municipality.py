@@ -41,7 +41,7 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
         logger, MAX_RETRIES,
         func=lambda: research_with_llm(context, prompt)
     )
-    role_configs = config_utils.get_role_configs()
+    role_configs = config_utils.get_role_configs(context.data.role_config)
     target_people = people_utils.filter_people_by_roles(role_configs, people)
 
     return ResearchMunicipalityStep(

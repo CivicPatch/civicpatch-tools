@@ -117,7 +117,7 @@ def normalize_remaining_text(text: str) -> str:
     return text
 
 
-def normalize_roles(roles: List[str]) -> List[str]:
+def normalize_roles(roles: List[str], role_config=None) -> List[str]:
     """
     Normalize roles using configured aliases.
     Tries progressively shorter suffixes to handle location prefixes
@@ -128,9 +128,9 @@ def normalize_roles(roles: List[str]) -> List[str]:
     if not roles:
         return []
 
-    role_aliases = config_utils.get_role_alias_map()
+    role_aliases = config_utils.get_role_alias_map(role_config)
     designation_aliases = config_utils.get_designation_alias_map()
-    excluded = config_utils.get_excluded_role_names()
+    excluded = config_utils.get_excluded_role_names(role_config)
     seen = set()
 
     expanded_roles = []
@@ -176,7 +176,7 @@ def normalize_roles(roles: List[str]) -> List[str]:
         if not matched:
             seen.add(role_lower)  # unknown — keep as-is
 
-    return [r.title() for r in sort_roles(list(seen))]
+    return [r.title() for r in sort_roles(list(seen), role_config)]
 
 
 def office_name_to_roles(office_name: str) -> List[str]:
@@ -379,12 +379,12 @@ def normalize_designations(designations: List[str]) -> List[str]:
     return sorted_designations
 
 
-def get_role_priority() -> Dict[str, int]:
+def get_role_priority(role_config=None) -> Dict[str, int]:
     """
     Returns a mapping from role name (lowercase) to its priority/order in the config.
     Aliases are ignored; only main role names are used.
     """
-    role_configs = config_utils.get_role_configs()
+    role_configs = config_utils.get_role_configs(role_config)
     priority = {}
     for idx, role_entry in enumerate(role_configs):
         role_name = role_entry["role"].lower()
@@ -437,8 +437,8 @@ def generic_sort_key(
             secondary = (1, 9999)
         return (primary, secondary)
 
-def sort_roles(roles: List[str]) -> List[str]:
-    role_priority = get_role_priority()
+def sort_roles(roles: List[str], role_config=None) -> List[str]:
+    role_priority = get_role_priority(role_config)
     designation_priority = get_designation_priority()
     return sorted(
         roles,
@@ -452,8 +452,8 @@ def sort_designations(designations: List[str]) -> List[str]:
         key=lambda d: generic_sort_key(d, designation_priority)
     )
 
-def sort_people(people: List[Person]) -> List[Person]:
-    role_priority = get_role_priority()
+def sort_people(people: List[Person], role_config=None) -> List[Person]:
+    role_priority = get_role_priority(role_config)
     designation_priority = get_designation_priority()
 
     def person_sort_key(person: Person):

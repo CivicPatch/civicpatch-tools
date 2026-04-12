@@ -2,7 +2,6 @@ import re
 import uuid
 
 from shared.schemas import JurisdictionId
-from shared.utils import config_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
@@ -28,6 +27,8 @@ def make_request_id():
 
 
 def _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid: str) -> str:
+    # avoid circular import: config_utils imports jurisdiction_ocdid_to_folder from this module
+    from shared.utils import config_utils
     data_config = config_utils.get_data_config()
     data_output_types = data_config.get("data_output_types", {})
 
