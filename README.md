@@ -117,12 +117,20 @@ join our weekly sync and biweekly hackathon meetings.
    - Reference [civicpatch.org/docker-compose.yml](./civicpatch.org/docker-compose.yml) for available variables
    - Create `../civicpatch.org.env` with the variables you need
 
-4. Run `docker compose up`
+4. Start the dev environment:
+
+   ```sh
+   mise dev
+   ```
+
+   This starts all services and watches `worker/` and `shared/` for Python changes,
+   automatically restarting the Temporal worker when code changes. Keep it running
+   in a terminal while developing.
 
    Migrations run automatically on startup. If you need to run them manually:
 
    ```sh
-   cd civicpatch.org && mise migrate_up
+   mise migrate_up
    ```
 
 ### Local services

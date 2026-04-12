@@ -77,6 +77,7 @@ Roles are assigned via GitHub team membership. The `build_permissions()` functio
 | Jobs — trigger (local, dev only) | | | ✓ | |
 | Jobs — resume (paused) | | | ✓ | |
 | Jobs — resolve / cancel | | | | ✓ |
+| Issues page (unrecognized roles, dead URLs) | | | ✓ | |
 
 ## Local setup
 

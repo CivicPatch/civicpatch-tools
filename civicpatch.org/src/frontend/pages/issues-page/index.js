@@ -6,6 +6,7 @@ import { useSummary } from "../../hooks/useSummary.js";
 import {
   fetchJobsWithErrors,
   fetchJobIssues,
+  fetchIssueDetails,
   resolveReviewIssue,
   fetchDuplicatePrJurisdictionJobs,
   fetchPullRequests,
@@ -27,7 +28,6 @@ const ISSUES_PER_PAGE_OPTIONS = [10, 20, 50, 100];
 const KNOWN_ISSUE_TYPES = [
   { value: "unrecognized_role", label: "Unrecognized role" },
   { value: "dead_url", label: "Dead URL" },
-  { value: "excluded_person", label: "Excluded person" },
 ];
 
 function getIssuesPageFromUrl() {
@@ -73,7 +73,6 @@ function getIssueDetail(issueType, issueKey, data) {
     return names ? `${issueKey} — ${names}` : issueKey;
   }
   if (issueType === "dead_url") return data.url || issueKey;
-  if (issueType === "excluded_person") return data.name || issueKey;
   return issueKey;
 }
 
@@ -103,6 +102,16 @@ function IssuesPage() {
   const [issuesSortDesc, setIssuesSortDesc] = useState(getIssuesSortDescFromUrl());
   const [issuesLoading, setIssuesLoading] = useState(false);
   const [issuesPageLoading, setIssuesPageLoading] = useState(false);
+
+  // Resolve modal state
+  const [resolveModal, setResolveModal] = useState(null);
+  const [modalScope, setModalScope] = useState("global");
+  const [modalState, setModalState] = useState("");
+  const [modalLocality, setModalLocality] = useState("");
+  const [modalNewUrl, setModalNewUrl] = useState("");
+  const [modalComment, setModalComment] = useState("");
+  const [modalDetails, setModalDetails] = useState(null); // null=not fetched, []=loading, [...]= loaded
+  const [prToast, setPrToast] = useState(null);
 
   // Duplicates section
   const [duplicateJurisdictions, setDuplicateJurisdictions] = useState([]);
@@ -149,6 +158,15 @@ function IssuesPage() {
       .catch(console.error)
       .finally(() => { setIssuesLoading(false); setIssuesPageLoading(false); });
   }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc]);
+
+  // Modal details — lazy-fetch when modal opens
+  useEffect(() => {
+    if (!resolveModal) { setModalDetails(null); return; }
+    setModalDetails([]);
+    fetchIssueDetails(resolveModal.id)
+      .then((r) => setModalDetails(r.data || []))
+      .catch(() => setModalDetails([]));
+  }, [resolveModal]);
 
   // Duplicates — lazy, only when section is open
   useEffect(() => {
@@ -207,11 +225,40 @@ function IssuesPage() {
     setIssuesParamsInUrl(1, newPerPage, issuesTagFilter, issuesSortDesc);
   };
 
-  const handleResolveIssue = async (issue) => {
+  const openResolveModal = (issue) => {
+    setResolveModal(issue);
+    setModalScope("global");
+    setModalState((issue.states || [])[0] || "");
+    setModalLocality("");
+    setModalNewUrl("");
+    setModalComment("");
+  };
+
+  const handleModalSubmit = async () => {
+    const issue = resolveModal;
+    let body = {};
+    if (issue.issue_type === "unrecognized_role") {
+      body = {
+        scope: modalScope,
+        ...(modalScope !== "global" && modalState ? { state: modalState } : {}),
+        ...(modalScope === "locality" && modalLocality ? { locality: modalLocality } : {}),
+      };
+    } else if (issue.issue_type === "dead_url") {
+      body = {
+        new_url: modalNewUrl || null,
+        ...(modalComment ? { comment: modalComment } : {}),
+      };
+    }
     try {
-      await resolveReviewIssue(issue.id);
+      const result = await resolveReviewIssue(issue.id, body);
       setIssues(issues.filter((i) => i.id !== issue.id));
       setIssuesTotal((t) => t - 1);
+      setResolveModal(null);
+      const prUrl = result?.data?.pr_url;
+      if (prUrl) {
+        setPrToast(prUrl);
+        setTimeout(() => setPrToast(null), 8000);
+      }
     } catch (err) {
       console.error("Failed to resolve issue:", err);
     }
@@ -262,6 +309,119 @@ function IssuesPage() {
 
   const issuesTotalPages = Math.ceil(issuesTotal / issuesPerPage);
 
+  // --- Source context (lazy-loaded, shared by both modals) ---
+
+  const sourceContextSection = html`
+    <div class="issues-page__modal-source">
+      <div class="issues-page__modal-source-label">Source context</div>
+      ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
+        ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
+        : modalDetails.map((d) => {
+            const urls = [d.url, ...(d.source_urls || [])].filter(Boolean);
+            return html`
+              <div class="issues-page__modal-source-entry">
+                <div class="issues-page__modal-source-header">
+                  <span class="issues-page__modal-source-name">${d.jurisdiction_name}</span>
+                  ${d.jurisdiction_path ? html`
+                    <a class="issues-page__modal-source-link" href="/${d.jurisdiction_path}" target="_blank" rel="noopener noreferrer">view page →</a>
+                  ` : null}
+                </div>
+                ${urls.map((u) => html`<a class="issues-page__modal-source-url" href=${u} target="_blank" rel="noopener noreferrer">${u}</a>`)}
+                ${d.people && d.people.length ? html`
+                  <div class="issues-page__modal-source-people">${d.people.map((p) => p.name).join(", ")}</div>
+                ` : null}
+              </div>
+            `;
+          })
+      }
+    </div>
+  `;
+
+  // --- Resolve modals ---
+
+  const deadUrlModal = resolveModal && resolveModal.issue_type === "dead_url" ? html`
+    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
+      <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
+        <h3 class="issues-page__modal-title">Resolve dead URL</h3>
+        <p class="issues-page__modal-meta">Dead URL: <code>${resolveModal.data?.url || resolveModal.issue_key}</code></p>
+        <label>
+          New URL <small>(leave blank to clear)</small>
+          <input
+            type="url"
+            .value=${modalNewUrl}
+            @input=${(e) => setModalNewUrl(e.target.value)}
+            placeholder="https://…"
+          />
+        </label>
+        <label>
+          Comment <small>(optional)</small>
+          <input
+            type="text"
+            .value=${modalComment}
+            @input=${(e) => setModalComment(e.target.value)}
+          />
+        </label>
+        ${sourceContextSection}
+        <div class="issues-page__modal-actions">
+          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Cancel</button>
+          <button class="btn btn-sm" @click=${handleModalSubmit}>Open PR →</button>
+        </div>
+      </div>
+    </div>
+  ` : null;
+
+  const localitiesForState = resolveModal
+    ? (resolveModal.jurisdictions || []).filter((j) => j.state === modalState)
+    : [];
+
+  const roleModal = resolveModal && resolveModal.issue_type === "unrecognized_role" ? html`
+    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
+      <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
+        <h3 class="issues-page__modal-title">Resolve: "${resolveModal.issue_key}"</h3>
+        ${(resolveModal.states || []).length ? html`
+          <p class="issues-page__modal-meta">
+            Seen in:
+            ${resolveModal.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
+          </p>
+        ` : null}
+        <label>
+          Scope
+          <select @change=${(e) => { setModalScope(e.target.value); setModalState((resolveModal.states || [])[0] || ""); setModalLocality(""); }}>
+            <option value="global" ?selected=${modalScope === "global"}>Global — data/local/config.yml</option>
+            <option value="state" ?selected=${modalScope === "state"}>State</option>
+            <option value="locality" ?selected=${modalScope === "locality"}>Locality</option>
+          </select>
+        </label>
+        ${modalScope === "state" || modalScope === "locality" ? html`
+          <label>
+            State
+            <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
+              ${(resolveModal.states || []).map((s) => html`
+                <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
+              `)}
+            </select>
+          </label>
+        ` : null}
+        ${modalScope === "locality" ? html`
+          <label>
+            Locality
+            <select @change=${(e) => setModalLocality(e.target.value)}>
+              <option value="">— select —</option>
+              ${localitiesForState.map((j) => html`
+                <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
+              `)}
+            </select>
+          </label>
+        ` : null}
+        ${sourceContextSection}
+        <div class="issues-page__modal-actions">
+          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Cancel</button>
+          <button class="btn btn-sm" @click=${handleModalSubmit}>Open PR →</button>
+        </div>
+      </div>
+    </div>
+  ` : null;
+
   // --- Render helpers ---
 
   const issuesPaginationControls = !issuesPageLoading ? Pagination({
@@ -303,7 +463,7 @@ function IssuesPage() {
               <tr>
                 <th>Type</th>
                 <th>Detail</th>
-                <th>Jurisdiction</th>
+                <th>States</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -315,15 +475,13 @@ function IssuesPage() {
                   <tr>
                     <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}">${formatIssueType(ev.issue_type)}</span></td>
                     <td class="issues-page__issue-detail">${getIssueDetail(ev.issue_type, ev.issue_key, ev.data)}</td>
-                    <td>
-                      ${ev.jurisdiction_ocdid
-                        ? html`<a href="/${ev.jurisdiction_path}" target="_blank">${ev.jurisdiction_name || ev.jurisdiction_ocdid}</a>`
-                        : "—"}
+                    <td class="issues-page__issue-states">
+                      ${(ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)}
                     </td>
                     <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
                     <td>
                       ${ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url"
-                        ? html`<button class="btn btn-sm" @click=${() => handleResolveIssue(ev)}>Resolve</button>`
+                        ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
                         : ""}
                     </td>
                   </tr>
@@ -427,6 +585,13 @@ function IssuesPage() {
       ${issuesSection}
       ${duplicatesSection}
     </main>
+    ${deadUrlModal}
+    ${roleModal}
+    ${prToast ? html`
+      <div class="issues-page__pr-toast">
+        PR opened: <a href=${prToast} target="_blank" rel="noopener noreferrer">${prToast}</a>
+      </div>
+    ` : null}
   `;
 }
 
