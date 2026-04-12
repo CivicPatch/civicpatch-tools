@@ -26,7 +26,7 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
 
     inputs = ReviewInputs(
         identities=research_step.identities if research_step else {},
-        unique_roles=config_utils.get_unique_roles(),
+        unique_roles=config_utils.get_unique_roles(context.data.role_config),
         unrecognized_roles=unrecognized_roles,
     )
 

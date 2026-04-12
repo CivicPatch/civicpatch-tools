@@ -34,7 +34,7 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
     }
 
     logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
-    roles_to_keep = set(config_utils.get_role_names())
+    roles_to_keep = set(config_utils.get_role_names(context.data.role_config))
     all_unrecognized: List[UnrecognizedRole] = []
     all_excluded: List[ExcludedPerson] = []
     people_by_llm: Dict[str, List[Person]] = {}

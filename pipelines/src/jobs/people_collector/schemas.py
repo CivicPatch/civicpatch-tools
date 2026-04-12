@@ -3,6 +3,7 @@ from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
 from domain.workflow_context import WorkflowContext
+from shared.utils.config_utils import RoleConfig
 
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
@@ -170,7 +171,9 @@ class PeopleCollectorData(BaseModel):
     jurisdiction_ocdid: str
 
     # Can be overridden with data source configs
-    config: WorkflowConfig 
+    config: WorkflowConfig
+
+    role_config: Optional[RoleConfig] = None 
 
     links: List[Link] = []
     dead_urls: List[DeadUrl] = []

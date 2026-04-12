@@ -13,7 +13,9 @@ from jobs.people_collector.schemas import (
 from domain.models import Official
 from domain.workflow_context import WorkflowContext
 from jobs.people_collector.transitions.main import TRANSITION_MAP
+from services.github_config_service import make_github_fetcher
 from shared.utils import data_path_utils
+from shared.utils.config_utils import load_role_config_for_jurisdiction
 from utils import log_utils
 from utils.log_utils import WorkflowLogger
 
@@ -21,12 +23,20 @@ logger = logging.getLogger(__name__)
 
 
 def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowConfig) -> tuple[PeopleCollectorContext, WorkflowLogger]:
+    fetch_remote = make_github_fetcher()
+    try:
+        role_config = load_role_config_for_jurisdiction(jurisdiction_ocdid, fetch_remote)
+    except Exception as e:
+        logger.warning("Could not load remote role config for %s, falling back to local: %s", jurisdiction_ocdid, e)
+        role_config = None
+
     context = PeopleCollectorContext(
         request_id=request_id,
         current_state=PipelineStatus.INIT,
         data=PeopleCollectorData(
           jurisdiction_ocdid=jurisdiction_ocdid,
           config=config,
+          role_config=role_config,
         ),
     )
     workflow_logger = log_utils.get_workflow_logger(jurisdiction_ocdid)

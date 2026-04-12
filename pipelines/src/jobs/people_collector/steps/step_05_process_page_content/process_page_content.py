@@ -74,7 +74,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
     assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before process_page_content"
-    setup_data = get_setup_data(context.data.research_municipality_step)
+    setup_data = get_setup_data(context.data.research_municipality_step, context.data.role_config)
     current_step = get_or_create_step(context)
     identities = get_identities(context)
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
@@ -92,7 +92,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
 
     if heuristics_passed:
-        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, config_utils.get_role_names(), updated_records)
+        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, config_utils.get_role_names(context.data.role_config), updated_records)
     else:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL)
 
@@ -135,9 +135,9 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
     )
 
 
-def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup:
+def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=None) -> ProcessingSetup:
     return ProcessingSetup(
-        roles=config_utils.get_role_names(),
+        roles=config_utils.get_role_names(role_config),
         target_role="Mayor",  # TBD hardcoded
         target_designations=municipality_research.target_designations,
     )
@@ -196,7 +196,7 @@ async def run_llm_loop(
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
-            updated_records, updated_raw_records,
+            updated_records, updated_raw_records, context.data.role_config,
         )
 
         if check_page_heuristics(logger, page_to_process.url, content, records_found):
@@ -267,7 +267,8 @@ def update_step_data(
     llm_responses: Dict[str, List[LLMPerson]],
     merged_identities: Dict[str, List[str]],
     existing_records_by_llm: RecordsByLLM,
-    existing_raw_records_by_llm: RecordsByLLM
+    existing_raw_records_by_llm: RecordsByLLM,
+    role_config=None,
 ) -> Tuple[RecordsByLLM, RecordsByLLM]:
     """Update and normalize all processed records functionally without mutations."""
     updated_raw_records = update_records_by_llm(merged_identities, existing_raw_records_by_llm, llm_responses)
@@ -277,7 +278,7 @@ def update_step_data(
 
     for llm, people_by_name in updated_raw_records.items():
         updated_normalized_records[llm] = {
-            name: [normalize_record(logger, person) for person in people]
+            name: [normalize_record(logger, person, role_config) for person in people]
             for name, people in people_by_name.items()
         }
 
@@ -311,7 +312,7 @@ def wipe_records_by_source_url(records_by_llm: RecordsByLLM, llm_name: str, sour
     return updated
 
 
-def normalize_record(logger, record: LLMPerson) -> LLMPerson:
+def normalize_record(logger, record: LLMPerson, role_config=None) -> LLMPerson:
     """Normalize roles, designations, and phone number in an LLMPerson record."""
     try:
         normalized_phone = phone_utils.normalize_phone_number(record.phone) if record.phone else None
@@ -328,7 +329,7 @@ def normalize_record(logger, record: LLMPerson) -> LLMPerson:
 
     return LLMPerson(
         name=record.name,
-        roles=people_utils.normalize_roles(record.roles),
+        roles=people_utils.normalize_roles(record.roles, role_config),
         designations=people_utils.normalize_designations(record.designations),
         phone=normalized_phone,
         email=normalized_email,

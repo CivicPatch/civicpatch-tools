@@ -30,7 +30,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     merged_people = _merge_groups(groups, jurisdiction_ocdid)
 
     return MergeRecordsAcrossLLMsStep(
-        people=people_utils.sort_people(merged_people),
+        people=people_utils.sort_people(merged_people, context.data.role_config),
     )
 
 

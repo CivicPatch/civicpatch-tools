@@ -1,8 +1,10 @@
 import os
 import yaml
-from typing import Dict, List
+from typing import Callable, Dict, List, Optional
 from decimal import Decimal, InvalidOperation
+from pydantic import BaseModel
 from shared.schemas import JobConfig
+from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 # In-memory cache for config files
 _config_cache = {}
@@ -32,14 +34,16 @@ def _load_config_file(filename: str, key: str = None, default=None):
 def get_data_config():
     return _load_config_file('data.yml', 'data', {})
 
-def get_role_configs():
+def get_role_configs(role_config_override: Optional["RoleConfig"] = None) -> List[dict]:
+    if role_config_override is not None:
+        return [entry.model_dump() for entry in role_config_override.roles]
     return _load_config_file('roles.yml', 'roles', [])
 
 def get_designations():
     return _load_config_file('designations.yml', 'designations', {})
 
-def get_role_names() -> List[str]:
-    roles_config = get_role_configs()
+def get_role_names(role_config_override: Optional["RoleConfig"] = None) -> List[str]:
+    roles_config = get_role_configs(role_config_override)
     names = []
     for role_config in roles_config:
         names.append(role_config['role'])
@@ -59,7 +63,9 @@ def get_designation_alias_map() -> Dict[str, str]:
             alias_map[alias.lower()] = canonical
     return alias_map
 
-def get_excluded_role_names() -> set:
+def get_excluded_role_names(role_config_override: Optional["RoleConfig"] = None) -> set:
+    if role_config_override is not None:
+        return {r.lower() for r in role_config_override.excluded_roles}
     excluded = _load_config_file('roles.yml', 'excluded_roles', [])
     names = []
     for entry in excluded:
@@ -67,16 +73,8 @@ def get_excluded_role_names() -> set:
         names.extend(entry.get('aliases', []))
     return {n.lower() for n in names}
 
-def get_excluded_role_names() -> set:
-    excluded = _load_config_file('roles.yml', 'excluded_roles', [])
-    names = []
-    for entry in excluded:
-        names.append(entry['role'])
-        names.extend(entry.get('aliases', []))
-    return {n.lower() for n in names}
-
-def get_unique_roles() -> List[str]:
-    role_configs = get_role_configs()
+def get_unique_roles(role_config_override: Optional["RoleConfig"] = None) -> List[str]:
+    role_configs = get_role_configs(role_config_override)
     unique_roles = [entry['role'] for entry in role_configs if entry.get('is_unique', False)]
     return unique_roles
 
@@ -108,8 +106,8 @@ def get_job_config(logger = None) -> JobConfig:
         pipeline_run_cost_limit=config.get('pipeline_run_cost_limit')
     )
 
-def get_role_alias_map() -> Dict[str, str]:
-    role_configs = get_role_configs()
+def get_role_alias_map(role_config_override: Optional["RoleConfig"] = None) -> Dict[str, str]:
+    role_configs = get_role_configs(role_config_override)
     alias_map = {}
     for entry in role_configs:
         role_entry = entry['role']
@@ -144,3 +142,45 @@ def get_states() -> List[dict]:
     """
     config = _load_config_file('states.yml')
     return config
+
+
+class RoleEntry(BaseModel):
+    role: str
+    is_unique: bool = False
+    aliases: List[str] = []
+
+
+class RoleConfig(BaseModel):
+    roles: List[RoleEntry] = []
+    excluded_roles: List[str] = []
+
+
+def merge_role_configs(*configs: RoleConfig) -> RoleConfig:
+    roles: Dict[str, RoleEntry] = {}
+    excluded: set = set()
+    for cfg in configs:
+        for entry in cfg.roles:
+            roles[entry.role.lower()] = entry
+        excluded.update(r.lower() for r in cfg.excluded_roles)
+    final = {k: v for k, v in roles.items() if k not in excluded}
+    return RoleConfig(roles=list(final.values()), excluded_roles=list(excluded))
+
+
+def load_role_config_for_jurisdiction(
+    jurisdiction_ocdid: str,
+    fetch_remote: Callable[[str], Optional[str]],
+) -> RoleConfig:
+    folder = jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    state, output_type, locality = folder.split("/")
+    paths = [
+        f"data/{output_type}/config.yml",
+        f"data/{state}/config.yml",
+        f"data/{state}/{output_type}/config.yml",
+        f"data/{state}/{output_type}/{locality}/config.yml",
+    ]
+    configs = []
+    for path in paths:
+        raw = fetch_remote(path)
+        if raw is not None:
+            configs.append(RoleConfig.model_validate(yaml.safe_load(raw)))
+    return merge_role_configs(*configs)
