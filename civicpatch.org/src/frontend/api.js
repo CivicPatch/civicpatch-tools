@@ -53,11 +53,21 @@ export const fetchJobsWithErrors = async (stateCode) => {
   return res.json();
 };
 
-export const fetchJobEvents = async (tags, page, perPage, sort) => {
+export const fetchJobIssues = async (tags, page, perPage, sort) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));
-  const res = await fetch(`${API_URL}/api/v1/jobs/events?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/jobs/issues?${params}`, {
     credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const resolveReviewIssue = async (issueId) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/resolve`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

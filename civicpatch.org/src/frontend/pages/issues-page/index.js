@@ -5,7 +5,8 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { useSummary } from "../../hooks/useSummary.js";
 import {
   fetchJobsWithErrors,
-  fetchJobEvents,
+  fetchJobIssues,
+  resolveReviewIssue,
   fetchDuplicatePrJurisdictionJobs,
   fetchPullRequests,
   closeStaleDuplicatePrs,
@@ -20,61 +21,64 @@ import "../queue-page/error-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "./issues-page.css";
 
-const DEFAULT_EVENTS_PER_PAGE = 20;
-const EVENTS_PER_PAGE_OPTIONS = [10, 20, 50, 100];
+const DEFAULT_ISSUES_PER_PAGE = 20;
+const ISSUES_PER_PAGE_OPTIONS = [10, 20, 50, 100];
 
-const KNOWN_EVENT_TYPES = [
+const KNOWN_ISSUE_TYPES = [
   { value: "unrecognized_role", label: "Unrecognized role" },
   { value: "dead_url", label: "Dead URL" },
   { value: "excluded_person", label: "Excluded person" },
 ];
 
-function getEventsPageFromUrl() {
-  const val = parseInt(new URLSearchParams(window.location.search).get("events_page"), 10);
+function getIssuesPageFromUrl() {
+  const val = parseInt(new URLSearchParams(window.location.search).get("issues_page"), 10);
   return isNaN(val) || val < 1 ? 1 : val;
 }
 
-function getEventsPerPageFromUrl() {
-  const val = parseInt(new URLSearchParams(window.location.search).get("events_per_page"), 10);
-  return EVENTS_PER_PAGE_OPTIONS.includes(val) ? val : DEFAULT_EVENTS_PER_PAGE;
+function getIssuesPerPageFromUrl() {
+  const val = parseInt(new URLSearchParams(window.location.search).get("issues_per_page"), 10);
+  return ISSUES_PER_PAGE_OPTIONS.includes(val) ? val : DEFAULT_ISSUES_PER_PAGE;
 }
 
-function getEventsTagsFromUrl() {
-  const val = new URLSearchParams(window.location.search).get("events_tags");
+function getIssuesTagsFromUrl() {
+  const val = new URLSearchParams(window.location.search).get("issues_tags");
   return val ? val.split(",").filter(Boolean) : [];
 }
 
-function getEventsSortDescFromUrl() {
-  return new URLSearchParams(window.location.search).get("events_sort") !== "asc";
+function getIssuesSortDescFromUrl() {
+  return new URLSearchParams(window.location.search).get("issues_sort") !== "asc";
 }
 
-function setEventsPageInUrl(page) {
+function setIssuesPageInUrl(page) {
   const params = new URLSearchParams(window.location.search);
-  params.set("events_page", page);
+  params.set("issues_page", page);
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
 
-function setEventsParamsInUrl(page, perPage, tags, sortDesc) {
+function setIssuesParamsInUrl(page, perPage, tags, sortDesc) {
   const params = new URLSearchParams(window.location.search);
-  params.set("events_page", page);
-  params.set("events_per_page", perPage);
-  if (tags && tags.length) params.set("events_tags", tags.join(","));
-  else params.delete("events_tags");
-  params.set("events_sort", sortDesc ? "desc" : "asc");
+  params.set("issues_page", page);
+  params.set("issues_per_page", perPage);
+  if (tags && tags.length) params.set("issues_tags", tags.join(","));
+  else params.delete("issues_tags");
+  params.set("issues_sort", sortDesc ? "desc" : "asc");
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
 
 
-function getEventDetail(eventType, data) {
-  if (!data) return "";
-  if (eventType === "unrecognized_role") return `${data.role} — ${data.person_name}`;
-  if (eventType === "dead_url") return data.url;
-  if (eventType === "excluded_person") return data.name;
-  return JSON.stringify(data);
+function getIssueDetail(issueType, issueKey, data) {
+  if (!data) return issueKey || "";
+  if (issueType === "unrecognized_role") {
+    const names = (data.person_names || []).join(", ");
+    return names ? `${issueKey} — ${names}` : issueKey;
+  }
+  if (issueType === "dead_url") return data.url || issueKey;
+  if (issueType === "excluded_person") return data.name || issueKey;
+  return issueKey;
 }
 
-function formatEventType(eventType) {
-  return KNOWN_EVENT_TYPES.find((t) => t.value === eventType)?.label ?? eventType;
+function formatIssueType(issueType) {
+  return KNOWN_ISSUE_TYPES.find((t) => t.value === issueType)?.label ?? issueType;
 }
 
 function formatDate(isoString) {
@@ -90,15 +94,15 @@ function IssuesPage() {
   const [errorJobs, setErrorJobs] = useState([]);
   const [errorsLoading, setErrorsLoading] = useState(false);
 
-  // Events section
-  const [events, setEvents] = useState([]);
-  const [eventsTotal, setEventsTotal] = useState(0);
-  const [eventsPage, setEventsPage] = useState(getEventsPageFromUrl());
-  const [eventsPerPage, setEventsPerPage] = useState(getEventsPerPageFromUrl());
-  const [eventsTagFilter, setEventsTagFilter] = useState(getEventsTagsFromUrl());
-  const [eventsSortDesc, setEventsSortDesc] = useState(getEventsSortDescFromUrl());
-  const [eventsLoading, setEventsLoading] = useState(false);
-  const [eventsPageLoading, setEventsPageLoading] = useState(false);
+  // Issues section
+  const [issues, setIssues] = useState([]);
+  const [issuesTotal, setIssuesTotal] = useState(0);
+  const [issuesPage, setIssuesPage] = useState(getIssuesPageFromUrl());
+  const [issuesPerPage, setIssuesPerPage] = useState(getIssuesPerPageFromUrl());
+  const [issuesTagFilter, setIssuesTagFilter] = useState(getIssuesTagsFromUrl());
+  const [issuesSortDesc, setIssuesSortDesc] = useState(getIssuesSortDescFromUrl());
+  const [issuesLoading, setIssuesLoading] = useState(false);
+  const [issuesPageLoading, setIssuesPageLoading] = useState(false);
 
   // Duplicates section
   const [duplicateJurisdictions, setDuplicateJurisdictions] = useState([]);
@@ -109,7 +113,7 @@ function IssuesPage() {
 
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
-    { errors: true, events: true, duplicates: true },
+    { errors: true, issues: true, duplicates: true },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -117,10 +121,10 @@ function IssuesPage() {
   // Sync URL → state on browser back/forward
   useEffect(() => {
     const onPopState = () => {
-      setEventsPage(getEventsPageFromUrl());
-      setEventsPerPage(getEventsPerPageFromUrl());
-      setEventsTagFilter(getEventsTagsFromUrl());
-      setEventsSortDesc(getEventsSortDescFromUrl());
+      setIssuesPage(getIssuesPageFromUrl());
+      setIssuesPerPage(getIssuesPerPageFromUrl());
+      setIssuesTagFilter(getIssuesTagsFromUrl());
+      setIssuesSortDesc(getIssuesSortDescFromUrl());
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -136,15 +140,15 @@ function IssuesPage() {
       .finally(() => setErrorsLoading(false));
   }, [openSections.errors]);
 
-  // Events — lazy, refetch on any filter/page/sort change
+  // Issues — lazy, refetch on any filter/page/sort change
   useEffect(() => {
-    if (!openSections.events) return;
-    setEventsLoading(true);
-    fetchJobEvents(eventsTagFilter, eventsPage, eventsPerPage, eventsSortDesc ? "desc" : "asc")
-      .then((r) => { setEvents(r.data || []); setEventsTotal(r.total || 0); })
+    if (!openSections.issues) return;
+    setIssuesLoading(true);
+    fetchJobIssues(issuesTagFilter, issuesPage, issuesPerPage, issuesSortDesc ? "desc" : "asc")
+      .then((r) => { setIssues(r.data || []); setIssuesTotal(r.total || 0); })
       .catch(console.error)
-      .finally(() => { setEventsLoading(false); setEventsPageLoading(false); });
-  }, [openSections.events, eventsPage, eventsPerPage, eventsTagFilter, eventsSortDesc]);
+      .finally(() => { setIssuesLoading(false); setIssuesPageLoading(false); });
+  }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc]);
 
   // Duplicates — lazy, only when section is open
   useEffect(() => {
@@ -175,32 +179,42 @@ function IssuesPage() {
   };
 
   const handleToggleTag = (tag) => {
-    const next = eventsTagFilter.includes(tag)
-      ? eventsTagFilter.filter((t) => t !== tag)
-      : [...eventsTagFilter, tag];
-    setEventsTagFilter(next);
-    setEventsPage(1);
-    setEventsParamsInUrl(1, eventsPerPage, next, eventsSortDesc);
+    const next = issuesTagFilter.includes(tag)
+      ? issuesTagFilter.filter((t) => t !== tag)
+      : [...issuesTagFilter, tag];
+    setIssuesTagFilter(next);
+    setIssuesPage(1);
+    setIssuesParamsInUrl(1, issuesPerPage, next, issuesSortDesc);
   };
 
   const handleToggleSort = () => {
-    const next = !eventsSortDesc;
-    setEventsSortDesc(next);
-    setEventsPage(1);
-    setEventsParamsInUrl(1, eventsPerPage, eventsTagFilter, next);
+    const next = !issuesSortDesc;
+    setIssuesSortDesc(next);
+    setIssuesPage(1);
+    setIssuesParamsInUrl(1, issuesPerPage, issuesTagFilter, next);
   };
 
-  const goToEventsPage = (newPage) => {
-    setEventsPageLoading(true);
-    setEventsPageInUrl(newPage);
-    setEventsPage(newPage);
+  const goToIssuesPage = (newPage) => {
+    setIssuesPageLoading(true);
+    setIssuesPageInUrl(newPage);
+    setIssuesPage(newPage);
   };
 
-  const handleEventsPerPageChange = (e) => {
+  const handleIssuesPerPageChange = (e) => {
     const newPerPage = parseInt(e.target.value, 10);
-    setEventsPerPage(newPerPage);
-    setEventsPage(1);
-    setEventsParamsInUrl(1, newPerPage, eventsTagFilter, eventsSortDesc);
+    setIssuesPerPage(newPerPage);
+    setIssuesPage(1);
+    setIssuesParamsInUrl(1, newPerPage, issuesTagFilter, issuesSortDesc);
+  };
+
+  const handleResolveIssue = async (issue) => {
+    try {
+      await resolveReviewIssue(issue.id);
+      setIssues(issues.filter((i) => i.id !== issue.id));
+      setIssuesTotal((t) => t - 1);
+    } catch (err) {
+      console.error("Failed to resolve issue:", err);
+    }
   };
 
   const loadJurisdictionPRs = async (ocdid) => {
@@ -246,66 +260,72 @@ function IssuesPage() {
     }
   };
 
-  const eventsTotalPages = Math.ceil(eventsTotal / eventsPerPage);
+  const issuesTotalPages = Math.ceil(issuesTotal / issuesPerPage);
 
   // --- Render helpers ---
 
-  const eventsPaginationControls = !eventsPageLoading ? Pagination({
-    page: eventsPage,
-    totalPages: eventsTotalPages,
-    onPrevious: () => goToEventsPage(eventsPage - 1),
-    onNext: () => goToEventsPage(eventsPage + 1),
-    onGoToPage: goToEventsPage,
-    hrefForPage: (n) => `?events_page=${n}`,
+  const issuesPaginationControls = !issuesPageLoading ? Pagination({
+    page: issuesPage,
+    totalPages: issuesTotalPages,
+    onPrevious: () => goToIssuesPage(issuesPage - 1),
+    onNext: () => goToIssuesPage(issuesPage + 1),
+    onGoToPage: goToIssuesPage,
+    hrefForPage: (n) => `?issues_page=${n}`,
   }) : null;
 
-  const tagChips = KNOWN_EVENT_TYPES.map(({ value, label }) => {
-    const active = eventsTagFilter.includes(value);
+  const tagChips = KNOWN_ISSUE_TYPES.map(({ value, label }) => {
+    const active = issuesTagFilter.includes(value);
     return html`
       <button
-        class="issues-page__event-tag${active ? " issues-page__event-tag--active" : ""}"
+        class="issues-page__issue-tag${active ? " issues-page__issue-tag--active" : ""}"
         @click=${() => handleToggleTag(value)}
-      >${label}${active ? html` <span class="issues-page__event-tag-x">×</span>` : ""}</button>
+      >${label}${active ? html` <span class="issues-page__issue-tag-x">×</span>` : ""}</button>
     `;
   });
 
-  const eventsSection = html`
+  const issuesSection = html`
     <section class="issues-page__section">
-      <div class="issues-page__section-header" @click=${() => toggleSection("events")}>
-        <h2 class="issues-page__section-title issues-page__section-title--info">Events <span class="issues-page__section-count">${eventsTotal || summary?.events_total || ""}</span></h2>
-        <i class="fa-solid fa-chevron-down btn-icon${openSections.events ? " btn-icon--rotated" : ""}"></i>
+      <div class="issues-page__section-header" @click=${() => toggleSection("issues")}>
+        <h2 class="issues-page__section-title issues-page__section-title--info">Issues <span class="issues-page__section-count">${issuesTotal || summary?.issues_total || ""}</span></h2>
+        <i class="fa-solid fa-chevron-down btn-icon${openSections.issues ? " btn-icon--rotated" : ""}"></i>
       </div>
-      ${openSections.events ? html`
-        <div class="issues-page__events-filters">
-          <div class="issues-page__event-tags">${tagChips}</div>
+      ${openSections.issues ? html`
+        <div class="issues-page__issues-filters">
+          <div class="issues-page__issue-tags">${tagChips}</div>
           <button
             class="btn btn-sm issues-page__sort-btn"
             @click=${handleToggleSort}
-          >${eventsSortDesc ? "Newest ↓" : "Oldest ↑"}</button>
+          >${issuesSortDesc ? "Newest ↓" : "Oldest ↑"}</button>
         </div>
-        ${eventsLoading ? html`<div>Loading…</div>` : html`
-          <table class="issues-page__events-table">
+        ${issuesLoading ? html`<div>Loading…</div>` : html`
+          <table class="issues-page__issues-table">
             <thead>
               <tr>
                 <th>Type</th>
                 <th>Detail</th>
                 <th>Jurisdiction</th>
                 <th>Date</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              ${events.length === 0
-                ? html`<tr><td colspan="4">No events found.</td></tr>`
-                : events.map((ev) => html`
+              ${issues.length === 0
+                ? html`<tr><td colspan="5">No issues found.</td></tr>`
+                : issues.map((ev) => html`
                   <tr>
-                    <td><span class="issues-page__event-type-chip issues-page__event-type-chip--${ev.event_type.replace(/_/g, "-")}">${formatEventType(ev.event_type)}</span></td>
-                    <td class="issues-page__event-detail">${getEventDetail(ev.event_type, ev.data)}</td>
+                    <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}">${formatIssueType(ev.issue_type)}</span></td>
+                    <td class="issues-page__issue-detail">${getIssueDetail(ev.issue_type, ev.issue_key, ev.data)}</td>
                     <td>
                       ${ev.jurisdiction_ocdid
                         ? html`<a href="/${ev.jurisdiction_path}" target="_blank">${ev.jurisdiction_name || ev.jurisdiction_ocdid}</a>`
                         : "—"}
                     </td>
-                    <td class="issues-page__event-date">${formatDate(ev.created_at)}</td>
+                    <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
+                    <td>
+                      ${ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url"
+                        ? html`<button class="btn btn-sm" @click=${() => handleResolveIssue(ev)}>Resolve</button>`
+                        : ""}
+                    </td>
                   </tr>
                 `)
               }
@@ -313,13 +333,13 @@ function IssuesPage() {
           </table>
           <div class="issues-page__top-controls">
             <div class="issues-page__pagination">
-              ${eventsPaginationControls}
+              ${issuesPaginationControls}
             </div>
             <label class="issues-page__per-page">
               Per page
-              <select @change=${handleEventsPerPageChange}>
-                ${EVENTS_PER_PAGE_OPTIONS.map(
-                  (n) => html`<option value=${n} ?selected=${n === eventsPerPage}>${n}</option>`
+              <select @change=${handleIssuesPerPageChange}>
+                ${ISSUES_PER_PAGE_OPTIONS.map(
+                  (n) => html`<option value=${n} ?selected=${n === issuesPerPage}>${n}</option>`
                 )}
               </select>
             </label>
@@ -404,7 +424,7 @@ function IssuesPage() {
   return html`
     <main class="issues-page page-content">
       ${errorsSection}
-      ${eventsSection}
+      ${issuesSection}
       ${duplicatesSection}
     </main>
   `;

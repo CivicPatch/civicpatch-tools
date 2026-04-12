@@ -1458,6 +1458,15 @@ async def resolve_unrecognized_role_group(request_ids: list[str]) -> None:
         )
 
 
+async def resolve_review_issue(issue_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_issues SET status = 'resolved', resolved_at = NOW() WHERE id = %s",
+            (issue_id,),
+        )
+
+
 async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return
@@ -1635,7 +1644,7 @@ async def get_summary_counts(include_issues: bool) -> dict:
             SELECT
                 (SELECT COUNT(*) FROM pull_requests WHERE status = 'open') AS open_prs,
                 (SELECT COUNT(*) FROM jobs WHERE status = 'ERROR') AS pipeline_errors,
-                (SELECT COUNT(*) FROM job_events) AS events_total,
+                (SELECT COUNT(*) FROM review_issues WHERE status = 'pending') AS issues_total,
                 (SELECT COUNT(*) FROM (
                     SELECT r.jurisdiction_ocdid
                     FROM jobs j
@@ -1653,6 +1662,6 @@ async def get_summary_counts(include_issues: bool) -> dict:
     result: dict = {"open_prs": row[0]}
     if include_issues:
         result["pipeline_errors"] = row[1]
-        result["events_total"] = row[2]
+        result["issues_total"] = row[2]
         result["duplicate_jurisdictions"] = row[3]
     return result

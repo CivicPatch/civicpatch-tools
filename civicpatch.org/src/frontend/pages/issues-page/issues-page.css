@@ -50,9 +50,9 @@
 }
 
 
-/* ── Events filters ── */
+/* ── Issues filters ── */
 
-.issues-page__events-filters {
+.issues-page__issues-filters {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -60,14 +60,14 @@
     margin-bottom: 1rem;
 }
 
-.issues-page__event-tags {
+.issues-page__issue-tags {
     display: flex;
     align-items: center;
     gap: 0.4rem;
     flex-wrap: wrap;
 }
 
-.issues-page__event-tag {
+.issues-page__issue-tag {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
@@ -87,23 +87,23 @@
     margin: 0;
 }
 
-.issues-page__event-tag:hover {
+.issues-page__issue-tag:hover {
     border-color: var(--pico-primary);
     color: var(--pico-primary);
 }
 
-.issues-page__event-tag--active {
+.issues-page__issue-tag--active {
     background: var(--pico-primary);
     border-color: var(--pico-primary);
     color: var(--pico-primary-inverse);
 }
 
-.issues-page__event-tag--active:hover {
+.issues-page__issue-tag--active:hover {
     opacity: 0.85;
     color: var(--pico-primary-inverse);
 }
 
-.issues-page__event-tag-x {
+.issues-page__issue-tag-x {
     font-size: 1em;
     line-height: 1;
     opacity: 0.8;
@@ -113,33 +113,33 @@
     margin-left: auto;
 }
 
-/* ── Events table ── */
+/* ── Issues table ── */
 
-.issues-page__events-table {
+.issues-page__issues-table {
     width: 100%;
     margin-bottom: 0;
 }
 
-.issues-page__events-table th {
+.issues-page__issues-table th {
     font-size: var(--text-sm);
     color: var(--pico-muted-color);
     font-weight: 600;
 }
 
-.issues-page__event-detail {
+.issues-page__issue-detail {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
     word-break: break-all;
     max-width: 360px;
 }
 
-.issues-page__event-date {
+.issues-page__issue-date {
     font-size: var(--text-sm);
     color: var(--pico-muted-color);
     white-space: nowrap;
 }
 
-.issues-page__event-type-chip {
+.issues-page__issue-type-chip {
     display: inline-block;
     padding: 0.15rem 0.5rem;
     border-radius: 999px;
