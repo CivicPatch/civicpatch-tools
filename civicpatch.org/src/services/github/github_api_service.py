@@ -367,6 +367,7 @@ async def upsert_github_file(
     file_path: str,
     content_str: str,
     commit_message: str,
+    author: dict | None = None,
 ) -> bool:
     _, _, _, open_data_repo_url = _get_github_config()
     default_headers = await get_default_headers()
@@ -377,6 +378,8 @@ async def upsert_github_file(
         payload: dict = {"message": commit_message, "content": encoded, "branch": branch_name}
         if get_resp.status_code == 200:
             payload["sha"] = get_resp.json()["sha"]
+        if author:
+            payload["author"] = author
         put_resp = await client.put(
             contents_url,
             json=payload,

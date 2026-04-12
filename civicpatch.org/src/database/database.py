@@ -5,7 +5,7 @@ from enum import StrEnum
 from typing import List, cast, Optional, Any
 from environment import get_env_vars
 import shared.utils.id_utils
-from shared.utils.statuses import JobStatus, PullRequestStatus, TERMINAL_JOB_STATUSES
+from shared.utils.statuses import JobStatus, PullRequestStatus, ReviewIssueStatus, TERMINAL_JOB_STATUSES
 from utils import hash_utils
 from utils.github_utils import pull_request_url_to_number
 from schemas.requests import ServerDetail
@@ -1462,8 +1462,17 @@ async def resolve_review_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE review_issues SET status = 'resolved', resolved_at = NOW() WHERE id = %s",
-            (issue_id,),
+            "UPDATE review_issues SET status = %s, resolved_at = NOW() WHERE id = %s",
+            (ReviewIssueStatus.RESOLVED, issue_id),
+        )
+
+
+async def open_review_issue_pull_request(issue_id: str, pull_request_url: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_issues SET status = %s, pull_request_url = %s WHERE id = %s",
+            (ReviewIssueStatus.PR_OPENED, pull_request_url, issue_id),
         )
 
 
@@ -1481,14 +1490,14 @@ async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dic
         else:
             issue_key = request_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, [request_id], data))
+        rows.append((issue_type, issue_key, [request_id], data, ReviewIssueStatus.PENDING))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO review_issues (issue_type, issue_key, request_ids, data)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO review_issues (issue_type, issue_key, request_ids, data, status)
+            VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (issue_type, issue_key) DO UPDATE SET
               request_ids = (
                 SELECT array_agg(DISTINCT r)
@@ -1506,7 +1515,9 @@ async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dic
                      ) v)
                   )
                 ELSE review_issues.data
-              END
+              END,
+              status = %s,
+              resolved_at = NULL
             """,
             rows,
         )
@@ -1535,19 +1546,26 @@ async def get_review_issues_page(
     per_page: int,
     sort_desc: bool = True,
 ) -> tuple[list[dict], int]:
-    conditions = []
-    params: list[Any] = []
+    conditions: list[sql.Composable] = [
+        sql.SQL("ri.status IN ({})").format(
+            sql.SQL(", ").join(sql.Placeholder() for _ in range(2))
+        )
+    ]
+    params: list[Any] = [ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED]
     if issue_types:
-        placeholders = ", ".join(["%s"] * len(issue_types))
-        conditions.append(f"ri.issue_type IN ({placeholders})")
+        conditions.append(
+            sql.SQL("ri.issue_type IN ({})").format(
+                sql.SQL(", ").join(sql.Placeholder() for _ in range(len(issue_types)))
+            )
+        )
         params.extend(issue_types)
-    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
-    order = "DESC" if sort_desc else "ASC"
+    where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
+    order_clause = sql.SQL("DESC") if sort_desc else sql.SQL("ASC")
     offset = (page - 1) * per_page
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            sql.SQL(f"""
+            sql.SQL("""
             WITH issue_jurisdictions AS (
                 SELECT ri.id AS issue_id,
                        array_agg(DISTINCT r.jurisdiction_ocdid)
@@ -1558,14 +1576,15 @@ async def get_review_issues_page(
             )
             SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.request_ids,
                    ri.data, ri.status, ri.resolved_at, ri.created_at,
-                   COALESCE(ij.ocdids, '{{}}') AS raw_jurisdiction_ocdids,
-                   COUNT(*) OVER() AS total_count
+                   COALESCE(ij.ocdids, ARRAY[]::text[]) AS raw_jurisdiction_ocdids,
+                   COUNT(*) OVER() AS total_count,
+                   ri.pull_request_url
             FROM review_issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
             ORDER BY ri.created_at {order}
             LIMIT %s OFFSET %s
-            """),
+            """).format(where=where_clause, order=order_clause),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
@@ -1582,6 +1601,7 @@ async def get_review_issues_page(
             "status": r[5],
             "resolved_at": r[6].isoformat() if r[6] else None,
             "created_at": r[7].isoformat() if r[7] else None,
+            "pull_request_url": r[10],
             "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
             "jurisdictions": jurisdictions,
         })

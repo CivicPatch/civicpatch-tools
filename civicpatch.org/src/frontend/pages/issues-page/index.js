@@ -251,13 +251,19 @@ function IssuesPage() {
     }
     try {
       const result = await resolveReviewIssue(issue.id, body);
-      setIssues(issues.filter((i) => i.id !== issue.id));
-      setIssuesTotal((t) => t - 1);
       setResolveModal(null);
-      const prUrl = result?.data?.pr_url;
-      if (prUrl) {
-        setPrToast(prUrl);
+      const pullRequestUrl = result?.data?.pull_request_url;
+      if (pullRequestUrl) {
+        setIssues(issues.map((i) =>
+          i.id === issue.id
+            ? { ...i, status: "pr_opened", pull_request_url: pullRequestUrl }
+            : i
+        ));
+        setPrToast({ url: pullRequestUrl, config_path: result?.data?.config_path || null });
         setTimeout(() => setPrToast(null), 8000);
+      } else {
+        setIssues(issues.filter((i) => i.id !== issue.id));
+        setIssuesTotal((t) => t - 1);
       }
     } catch (err) {
       console.error("Failed to resolve issue:", err);
@@ -464,13 +470,14 @@ function IssuesPage() {
                 <th>Type</th>
                 <th>Detail</th>
                 <th>States</th>
+                <th>Status</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               ${issues.length === 0
-                ? html`<tr><td colspan="5">No issues found.</td></tr>`
+                ? html`<tr><td colspan="6">No issues found.</td></tr>`
                 : issues.map((ev) => html`
                   <tr>
                     <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}">${formatIssueType(ev.issue_type)}</span></td>
@@ -478,9 +485,14 @@ function IssuesPage() {
                     <td class="issues-page__issue-states">
                       ${(ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)}
                     </td>
+                    <td class="issues-page__issue-status">
+                      ${ev.status === "pr_opened"
+                        ? html`<a class="issues-page__issue-status-link" href=${ev.pull_request_url} target="_blank" rel="noopener noreferrer">PR opened →</a>`
+                        : html`<span class="issues-page__issue-status-badge">Pending</span>`}
+                    </td>
                     <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
                     <td>
-                      ${ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url"
+                      ${ev.status === "pending" && (ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url")
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
                         : ""}
                     </td>
@@ -589,7 +601,8 @@ function IssuesPage() {
     ${roleModal}
     ${prToast ? html`
       <div class="issues-page__pr-toast">
-        PR opened: <a href=${prToast} target="_blank" rel="noopener noreferrer">${prToast}</a>
+        ${prToast.config_path ? html`<code>${prToast.config_path}</code><br>` : null}
+        <a href=${prToast.url} target="_blank" rel="noopener noreferrer">View PR →</a>
       </div>
     ` : null}
   `;

@@ -24,6 +24,13 @@ TERMINAL_JOB_STATUSES = (
 )
 
 
+class ReviewIssueStatus(StrEnum):
+    PENDING = "pending"
+    # A pull request has been opened to address this issue; awaiting merge
+    PR_OPENED = "pr_opened"
+    RESOLVED = "resolved"
+
+
 class PullRequestStatus(StrEnum):
     # No PR has been created for this job yet
     DEFAULT = "DEFAULT"
