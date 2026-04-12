@@ -9,7 +9,7 @@ import utils.file_utils as file_utils
 import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github.github_api_service as github_service
-from database.database import update_job_data, update_job_review_json, insert_job_events, update_job_status
+from database.database import update_job_data, update_job_review_json, upsert_review_issue, update_job_status
 from shared.utils.statuses import JobStatus
 import logging
 import yaml
@@ -100,14 +100,7 @@ async def _handle_submit_job_artifacts(
             .get("merge_records_within_llm_step", {})
             .get("unrecognized_roles", [])
         )
-        await insert_job_events(request.request_id, "unrecognized_role", unrecognized)
-
-        excluded_people = (
-            workflow_context.get("data", {})
-            .get("merge_records_within_llm_step", {})
-            .get("excluded_people", [])
-        )
-        await insert_job_events(request.request_id, "excluded_person", excluded_people)
+        await upsert_review_issue(request.request_id, "unrecognized_role", unrecognized)
 
     else:
         try:
@@ -115,7 +108,7 @@ async def _handle_submit_job_artifacts(
             with open(workflow_context_path, "r") as f:
                 workflow_context = json.load(f)
             dead_urls = workflow_context.get("data", {}).get("dead_urls", [])
-            await insert_job_events(request.request_id, "dead_url", dead_urls)
+            await upsert_review_issue(request.request_id, "dead_url", dead_urls)
         except FileNotFoundError:
             pass
 

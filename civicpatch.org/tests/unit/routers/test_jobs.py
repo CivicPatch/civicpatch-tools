@@ -210,7 +210,7 @@ def test_delete_context_returns_request_id(client):
 @pytest.mark.unit
 def test_get_job_events_returns_paginated_list(client):
     with patch(
-        "routers.api.jobs.get_job_events_page",
+        "routers.api.jobs.get_review_issues_page",
         new_callable=AsyncMock,
         return_value=([], 0),
     ):

@@ -118,32 +118,25 @@ async def test_get_requests_for_export_with_date_range():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_unrecognized_roles_no_filter():
-    rows = await db.get_unrecognized_roles()
+async def test_get_unrecognized_roles_grouped():
+    rows = await db.get_unrecognized_roles_grouped()
     assert isinstance(rows, list)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_unrecognized_roles_with_state():
-    rows = await db.get_unrecognized_roles(state_code="ca")
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_job_events_page_no_filter():
-    rows, total = await db.get_job_events_page(event_types=[], page=1, per_page=10)
+async def test_get_review_issues_page_no_filter():
+    rows, total = await db.get_review_issues_page(issue_types=[], page=1, per_page=10)
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_events_page_with_event_types():
+async def test_get_review_issues_page_with_issue_types():
     """Exercises the IN clause and ORDER BY direction branches."""
-    rows, total = await db.get_job_events_page(
-        event_types=["unrecognized_role"],
+    rows, total = await db.get_review_issues_page(
+        issue_types=["unrecognized_role"],
         page=1,
         per_page=5,
         sort_desc=False,

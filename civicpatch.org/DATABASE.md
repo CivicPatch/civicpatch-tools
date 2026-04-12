@@ -76,11 +76,14 @@ erDiagram
         timestamptz     created_at
     }
 
-    job_events {
+    review_issues {
         uuid            id          PK
-        uuid            request_id  FK  "idx"
-        text            event_type      "idx"
+        text            issue_type      "idx"
+        text            issue_key       "unique: (issue_type, issue_key)"
+        text_array      request_ids
         jsonb           data
+        text            status          "idx"
+        timestamptz_null resolved_at
         timestamptz     created_at
     }
 
@@ -95,8 +98,9 @@ erDiagram
     review_session_entries {
         uuid            id                  PK
         uuid            review_session_id   FK  "idx: (review_session_id, status, created_at DESC)"
-        text            request_id
-        text            jurisdiction_ocdid
+        text            entry_kind
+        text_array      request_ids
+        text_null       jurisdiction_ocdid
         text            status
         int_null        entry_number
         timestamptz_null created_at
@@ -108,7 +112,7 @@ erDiagram
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| jobs : "request_id"
     requests ||--o| pull_requests : "request_id"
-    requests ||--o{ job_events : "request_id"
+    requests }o--o{ review_issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"
