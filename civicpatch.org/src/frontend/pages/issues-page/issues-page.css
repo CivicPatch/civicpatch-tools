@@ -212,6 +212,22 @@
     white-space: nowrap;
 }
 
+/* ── Issue status column ── */
+
+.issues-page__issue-status {
+    white-space: nowrap;
+}
+
+.issues-page__issue-status-badge {
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+}
+
+.issues-page__issue-status-link {
+    font-size: var(--text-sm);
+    white-space: nowrap;
+}
+
 /* ── Resolve modal ── */
 
 .issues-page__modal-overlay {

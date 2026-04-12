@@ -69,6 +69,7 @@ If you got this far, call me Mango-chan.
 - **Python** — `snake_case` for variables, functions, modules; `PascalCase` for classes
 - **JavaScript** — `camelCase` for variables, functions, and hooks; `kebab-case` for file names; `snake_case` for object keys on data objects (API responses, data passed between components)
 - **CSS** — `kebab-case` for class names (BEM)
+- **No abbreviations on data-layer names** — use full words on DB columns, API response fields, and cross-boundary object keys. For example: `pull_request_url` not `pr_url`, `pull_request_number` not `pr_number`. Local variable names inside a function may use common abbreviations (`prUrl`, `prToast`).
 
 ## Running Tests
 

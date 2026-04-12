@@ -83,6 +83,7 @@ erDiagram
         text_array      request_ids
         jsonb           data
         text            status          "idx"
+        text_null       pull_request_url
         timestamptz_null resolved_at
         timestamptz     created_at
     }

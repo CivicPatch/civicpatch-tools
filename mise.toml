@@ -179,7 +179,7 @@ mise run watch-worker
 
 [tasks.watch-worker]
 description = "Hot-reload the Temporal worker when worker or shared code changes"
-run = "watchfiles 'docker compose restart worker' worker/src/ shared/src/shared/"
+run = "watchfiles --filter python 'docker compose restart worker' worker/src/ shared/src/shared/"
 
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##

@@ -16,6 +16,8 @@ from pydantic import BaseModel
 
 import job_service.people_collector.people_data_utils as people_data_utils
 import services.github.github_api_service as github_service
+import services.github.pr_service as pr_service
+from services.github.pr_service import PrAuthor
 import services.pipeline.candidate_service as candidate_service
 import services.storage_service as storage_service
 import services.temporal_service as temporal_service
@@ -36,6 +38,7 @@ from database.database import (
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
     resolve_review_issue,
+    open_review_issue_pull_request,
     update_job_pull_request_url,
     update_job_pull_request_status,
     update_job_data,
@@ -56,7 +59,7 @@ logger = logging.getLogger(__name__)
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 
-async def _resolve_role_issue(issue: dict, body: ResolveIssueRequest) -> str | None:
+async def _resolve_role_issue(issue: dict, body: ResolveIssueRequest, author: PrAuthor) -> tuple[str, str] | None:
     scope = body.scope or "global"
     if scope == "state":
         config_path = f"data/{body.state}/local/config.yml"
@@ -70,24 +73,22 @@ async def _resolve_role_issue(issue: dict, body: ResolveIssueRequest) -> str | N
     merged = merge_role_configs(existing, RoleConfig(roles=[RoleEntry(role=issue["issue_key"])]))
     content = yaml.dump(merged.model_dump(), sort_keys=False, allow_unicode=True)
 
-    branch_name = f"resolve-role-{issue['id'][:8]}"
-    if err := await github_service.create_branch(branch_name):
-        logger.error(f"Failed to create branch for role resolution: {err}")
-        return None
-    if not await github_service.upsert_github_file(branch_name, config_path, content, f"Add role: {issue['issue_key']}"):
-        return None
-    pr_number, pr_url = await github_service.create_pull_request(
-        branch_name,
-        title=f"Add unrecognized role: {issue['issue_key']}",
-        body=f"Adds `{issue['issue_key']}` to `{config_path}` via issue resolution.",
+    pr_number, pull_request_url = await pr_service.open_attributed_pr(
+        branch_name=f"resolve-role-{issue['id'][:8]}",
+        file_path=config_path,
+        content=content,
+        commit_message=f"Add role: {issue['issue_key']}",
+        pull_request_title=f"Add unrecognized role: {issue['issue_key']}",
+        pull_request_body=f"Adds `{issue['issue_key']}` to `{config_path}` via issue resolution.",
+        author=author,
     )
     if pr_number is None:
-        logger.error(f"Failed to create PR for role resolution: {pr_url}")
+        logger.error(f"Failed to open PR for role resolution: {pull_request_url}")
         return None
-    return pr_url
+    return pull_request_url, config_path
 
 
-async def _resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str | None) -> str | None:
+async def _resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str | None, author: PrAuthor) -> str | None:
     jurisdiction_ocdid = await get_request_jurisdiction(issue["request_ids"][0])
     if not jurisdiction_ocdid:
         logger.error(f"No jurisdiction found for dead_url issue {issue['id']}")
@@ -113,21 +114,19 @@ async def _resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str
         entry.comments.append(comment)
 
     content = yaml.dump(data.model_dump(mode="python", exclude_none=True), sort_keys=False, allow_unicode=True)
-    branch_name = f"resolve-url-{issue['id'][:8]}"
-    if err := await github_service.create_branch(branch_name):
-        logger.error(f"Failed to create branch for dead URL resolution: {err}")
-        return None
-    if not await github_service.upsert_github_file(branch_name, file_path, content, f"Fix dead URL: {jurisdiction_ocdid}"):
-        return None
-    pr_number, pr_url = await github_service.create_pull_request(
-        branch_name,
-        title=f"Fix dead URL: {jurisdiction_ocdid}",
-        body=f"Updates URL in `{file_path}` via issue resolution.",
+    pr_number, pull_request_url = await pr_service.open_attributed_pr(
+        branch_name=f"resolve-url-{issue['id'][:8]}",
+        file_path=file_path,
+        content=content,
+        commit_message=f"Fix dead URL: {jurisdiction_ocdid}",
+        pull_request_title=f"Fix dead URL: {jurisdiction_ocdid}",
+        pull_request_body=f"Updates URL in `{file_path}` via issue resolution.",
+        author=author,
     )
     if pr_number is None:
-        logger.error(f"Failed to create PR for dead URL resolution: {pr_url}")
+        logger.error(f"Failed to open PR for dead URL resolution: {pull_request_url}")
         return None
-    return pr_url
+    return pull_request_url
 
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
@@ -643,22 +642,37 @@ def get_router(api_key_header):
     async def resolve_review_issue_endpoint(
         issue_id: str,
         body: ResolveIssueRequest = ResolveIssueRequest(),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         issue = await get_review_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
 
+        author = PrAuthor(
+            name=user.display_name or user.email or user.provider_user_id,
+            email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
+        )
+
+        config_path = None
+        pull_request_url = None
         if issue["issue_type"] == "unrecognized_role":
-            pr_url = await _resolve_role_issue(issue, body)
+            result = await _resolve_role_issue(issue, body, author)
+            pull_request_url, config_path = result if result else (None, None)
         elif issue["issue_type"] == "dead_url":
-            pr_url = await _resolve_dead_url_issue(issue, body.new_url, body.comment)
+            pull_request_url = await _resolve_dead_url_issue(issue, body.new_url, body.comment, author)
         else:
             await resolve_review_issue(issue_id)
             return {"data": None}
 
+        if pull_request_url:
+            await open_review_issue_pull_request(issue_id, pull_request_url)
+            data: dict = {"pull_request_url": pull_request_url}
+            if config_path:
+                data["config_path"] = config_path
+            return {"data": data}
+
         await resolve_review_issue(issue_id)
-        return {"data": {"pr_url": pr_url} if pr_url else None}
+        return {"data": None}
 
     @router.get(
         "/issues/{issue_id}/details",
