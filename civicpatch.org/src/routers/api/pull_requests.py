@@ -1,10 +1,12 @@
 import asyncio
 import json
 import logging
+import os
 from typing import List
 from shared.schemas import Official
 import shared.utils.data_path_utils
 import shared.utils.id_utils
+import shared.utils.url_utils
 from shared.utils.statuses import PullRequestStatus
 import yaml
 from fastapi import (
@@ -25,11 +27,23 @@ import database.users
 import lib.github.api as github_service
 import core.pr_sync as pr_sync_service
 import lib.redis as redis_store
+import lib.storage as storage_service
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, Role, RouteCategory
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
+
+
+def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
+    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
+    relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
+    return storage_service.get_civicpatch_artifacts_url(relative_path)
+
+
+def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    return [{"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)} for url in source_urls]
 
 _MERGE_STATUS_TTL = 3600
 
@@ -281,7 +295,7 @@ def get_router(api_key_header):
                 **pr,
                 "existing": entry.get("existing", []),
                 "proposed": proposed,
-                "sources": pull_requests_db.build_sources(pr["request_id"], pr["jurisdiction"]["ocdid"], unique_source_urls),
+                "sources": build_sources(pr["request_id"], pr["jurisdiction"]["ocdid"], unique_source_urls),
             })
         return {
             "data": results,
