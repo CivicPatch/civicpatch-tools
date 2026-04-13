@@ -8,7 +8,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
 from routers.api import pull_requests as pull_requests_router
-from routers.api.pull_requests import do_merge
+from core.merge import do_merge
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -143,7 +143,7 @@ def test_close_pull_request_returns_500_on_github_failure(client):
 def test_save_and_merge_returns_202(client):
     with (
         patch("lib.redis.set", new_callable=AsyncMock),
-        patch("routers.api.pull_requests.do_merge", new_callable=AsyncMock),
+        patch("core.merge.do_merge", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",

@@ -10,23 +10,13 @@ import lib.csv as csv_service
 import core.export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
 from schemas.common import Identity, Role, RouteCategory
+from schemas.jobs import CreateRegisterRequest, PostResultRequest
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
 
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-
-
-class CreateRegisterRequest(BaseModel):
-    request_id: str
-    arguments: dict
-
-
-class PostResultRequest(BaseModel):
-    pull_request_url: Optional[str] = None
-    data: Optional[Any] = None
 
 
 def get_router(api_key_header):

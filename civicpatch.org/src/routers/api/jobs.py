@@ -4,19 +4,15 @@ import logging
 import math
 import os
 import time
-from typing import Any, Literal, Optional
-
+from typing import Optional
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
 from shared.utils.statuses import JobStatus, PullRequestStatus
 import yaml
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
 
-import core.people_data_utils as people_data_utils
 import lib.github.api as github_service
-import lib.github.pr as pr_service
 from lib.github.pr import PrAuthor
 import core.candidate as candidate_service
 import lib.storage as storage_service
@@ -53,10 +49,22 @@ from database.requests import (
     get_issue_request_details,
 )
 from core import people_collector
+import core.review_issue_resolution as review_issue_resolution_service
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
+from schemas.jobs import (
+    CreateJobRequest,
+    BatchJobRequest,
+    RegisterGithubRunRequest,
+    UpdateJobStatusRequest,
+    UpdateJobStatusResponse,
+    PostJobResultRequest,
+    ResolveUnrecognizedRoleGroupRequest,
+    CreateJobResponse,
+    GetJobResponse,
+    GetJobStatusResponse,
+    ErrorResponse,
+)
 from schemas.requests import HandleSubmitJobArtifactsRequest, ResolveIssueRequest, ServerDetail
-from shared.schemas import JurisdictionsFile
-from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
 import lib.pubsub as pubsub_service
 from lib.auth import require_route_access
 
@@ -64,75 +72,6 @@ logger = logging.getLogger(__name__)
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
-
-async def _resolve_role_issue(issue: dict, body: ResolveIssueRequest, author: PrAuthor) -> tuple[str, str] | None:
-    scope = body.scope or "global"
-    if scope == "state":
-        config_path = f"data/{body.state}/local/config.yml"
-    elif scope == "locality":
-        config_path = f"data/{body.state}/local/{body.locality}/config.yml"
-    else:
-        config_path = "data/local/config.yml"
-
-    raw = await github_service.get_github_file_contents(config_path)
-    existing = RoleConfig.model_validate(yaml.safe_load(raw)) if raw else RoleConfig()
-    merged = merge_role_configs(existing, RoleConfig(roles=[RoleEntry(role=issue["issue_key"])]))
-    content = yaml.dump(merged.model_dump(), sort_keys=False, allow_unicode=True)
-
-    pr_number, pull_request_url = await pr_service.open_attributed_pr(
-        branch_name=f"resolve-role-{issue['id'][:8]}",
-        file_path=config_path,
-        content=content,
-        commit_message=f"Add role: {issue['issue_key']}",
-        pull_request_title=f"Add unrecognized role: {issue['issue_key']}",
-        pull_request_body=f"Adds `{issue['issue_key']}` to `{config_path}` via issue resolution.",
-        author=author,
-    )
-    if pr_number is None:
-        logger.error(f"Failed to open PR for role resolution: {pull_request_url}")
-        return None
-    return pull_request_url, config_path
-
-
-async def _resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str | None, author: PrAuthor) -> str | None:
-    jurisdiction_ocdid = await get_request_jurisdiction(issue["request_ids"][0])
-    if not jurisdiction_ocdid:
-        logger.error(f"No jurisdiction found for dead_url issue {issue['id']}")
-        return None
-
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    state = folder.split("/")[0]
-    file_path = f"data_source/{state}/jurisdictions.yml"
-
-    raw = await github_service.get_github_file_contents(file_path)
-    if not raw:
-        logger.error(f"Could not fetch {file_path}")
-        return None
-
-    data = JurisdictionsFile.model_validate(yaml.safe_load(raw))
-    entry = next((e for e in data.jurisdictions if e.id == jurisdiction_ocdid), None)
-    if not entry:
-        logger.error(f"No entry for {jurisdiction_ocdid} in {file_path}")
-        return None
-
-    entry.url = new_url
-    if comment:
-        entry.comments.append(comment)
-
-    content = yaml.dump(data.model_dump(mode="python", exclude_none=True), sort_keys=False, allow_unicode=True)
-    pr_number, pull_request_url = await pr_service.open_attributed_pr(
-        branch_name=f"resolve-url-{issue['id'][:8]}",
-        file_path=file_path,
-        content=content,
-        commit_message=f"Fix dead URL: {jurisdiction_ocdid}",
-        pull_request_title=f"Fix dead URL: {jurisdiction_ocdid}",
-        pull_request_body=f"Updates URL in `{file_path}` via issue resolution.",
-        author=author,
-    )
-    if pr_number is None:
-        logger.error(f"Failed to open PR for dead URL resolution: {pull_request_url}")
-        return None
-    return pull_request_url
 
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
@@ -148,76 +87,6 @@ async def update_and_publish(request_id: str, status: str, progress: Optional[in
             f"job_status:{jurisdiction_ocdid}",
             json.dumps({"request_id": request_id, "status": status, "progress": progress}),
         )
-
-
-class CreateJobRequest(BaseModel):
-    jurisdiction_ocdid: str
-    dispatch_mode: Literal["local", "remote"] = "remote"
-    name: Optional[str] = None
-    url: Optional[str] = None
-    source_urls: Optional[list[str]] = None
-
-
-class BatchJobRequest(BaseModel):
-    state: str
-    num_jurisdictions: int = 10
-
-
-class RegisterGithubRunRequest(BaseModel):
-    run_id: int
-
-
-class UpdateJobStatusRequest(BaseModel):
-    status: str
-    progress: Optional[int] = None
-    jurisdiction_ocdid: Optional[str] = None
-
-
-class UpdateJobStatusResponse(BaseModel):
-    request_id: str
-    status: str
-    progress: Optional[int] = None
-
-
-class PostJobResultRequest(BaseModel):
-    pull_request_url: Optional[str] = None
-    data: Optional[Any] = None
-
-
-class ResolveUnrecognizedRoleGroupRequest(BaseModel):
-    role: str
-    request_ids: list[str]
-
-
-# ──────────────────────────────────────────────
-# Response models
-# ──────────────────────────────────────────────
-
-
-class CreateJobResponse(BaseModel):
-    request_id: str
-    status: str
-
-
-class GetJobResponse(BaseModel):
-    request_id: str
-    status: str
-    progress: int
-    arguments: dict
-    result: Optional[Any] = None
-    pull_request_url: Optional[str] = None
-    created_at: float
-    updated_at: float
-
-
-class GetJobStatusResponse(BaseModel):
-    request_id: str
-    status: str
-    progress: int
-
-
-class ErrorResponse(BaseModel):
-    error: str
 
 
 def get_router(api_key_header):
@@ -662,10 +531,10 @@ def get_router(api_key_header):
         config_path = None
         pull_request_url = None
         if issue["issue_type"] == "unrecognized_role":
-            result = await _resolve_role_issue(issue, body, author)
+            result = await review_issue_resolution_service.resolve_role_issue(issue, body, author)
             pull_request_url, config_path = result if result else (None, None)
         elif issue["issue_type"] == "dead_url":
-            pull_request_url = await _resolve_dead_url_issue(issue, body.new_url, body.comment, author)
+            pull_request_url = await review_issue_resolution_service.resolve_dead_url_issue(issue, body.new_url, body.comment, author)
         else:
             await resolve_review_issue(issue_id)
             return {"data": None}
