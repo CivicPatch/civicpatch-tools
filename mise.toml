@@ -96,6 +96,13 @@ dir = "pipelines"
 run = "uv run pytest -m evals tests/prompts"
 dir = "pipelines"
 
+[tasks.e2e]
+description = "Run Playwright e2e tests in a fully isolated Docker stack"
+run = """
+docker compose -f docker-compose.e2e.yml down -v --remove-orphans || true
+docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit 2>&1 | grep -E "^(playwright-1|ERROR|civicpatch-e2e)"
+"""
+
 [tasks.tcp]
 run = "uv run pytest -m unit"
 dir = "civicpatch.org"

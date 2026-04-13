@@ -1,0 +1,96 @@
+# Minimal stack for e2e tests — no Temporal, no pipelines.
+#
+# Usage:
+#   docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit
+#
+# The `name` field gives all containers a distinct prefix (civicpatch-e2e-*)
+# so this stack can run alongside the dev stack without container name conflicts.
+
+name: civicpatch-e2e
+# The playwright service runs the tests and exits. --exit-code-from propagates
+# the playwright exit code so CI knows if tests passed.
+
+services:
+  db-e2e:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_USER: e2e
+      POSTGRES_PASSWORD: e2e_password
+      POSTGRES_DB: e2e_db
+    volumes:
+      - civicpatch_e2e_db_data:/var/lib/postgresql/data
+    networks:
+      - civicpatch_e2e_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U e2e -d e2e_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis-e2e:
+    image: redis:alpine
+    networks:
+      - civicpatch_e2e_net
+
+  civicpatch-org-e2e:
+    build:
+      context: .
+      dockerfile: civicpatch.org/Dockerfile
+      target: production
+    environment:
+      CIVICPATCH_API_DB_URL: "postgres://e2e:e2e_password@db-e2e:5432/e2e_db"
+      CIVICPATCH_API_DB_PASSWORD: "e2e_password"
+      REDIS_HOST: "redis-e2e"
+      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      MAINTAINER_EMAIL: "e2e@civicpatch.org"
+      INSTANCE_URL: "http://civicpatch-org-e2e:80"
+      COOKIE_INSTANCE_URL: "civicpatch-org-e2e"
+      JWT_SECRET_KEY: "e2e-jwt-secret-not-for-production"
+      DATABASE_HASH_KEY: "e2e-db-hash-key-not-for-production"
+      SERVICE_API_KEY: "e2e-service-api-key"
+      # GitHub vars — required to boot; injected by CI via E2E_ prefix
+      GITHUB_APP_ID: ${E2E_GITHUB_APP_ID:-0}
+      GITHUB_APP_CLIENT_ID: ${E2E_GITHUB_APP_CLIENT_ID:-e2e-client-id}
+      GITHUB_APP_CLIENT_SECRET: ${E2E_GITHUB_APP_CLIENT_SECRET:-e2e-client-secret}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${E2E_GITHUB_APP_PRIVATE_KEY_BASE64:-}
+      GITHUB_APP_INSTALLATION_ID: ${E2E_GITHUB_APP_INSTALLATION_ID:-0}
+    depends_on:
+      db-e2e:
+        condition: service_healthy
+      redis-e2e:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:80/api/v1/me')\""]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+    networks:
+      - civicpatch_e2e_net
+
+  playwright:
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    working_dir: /e2e
+    volumes:
+      - ./e2e:/e2e
+      - /e2e/node_modules  # keeps the image's baked-in node_modules; host mount won't override
+    depends_on:
+      civicpatch-org-e2e:
+        condition: service_healthy
+    environment:
+      BASE_URL: http://civicpatch-org-e2e:80
+      E2E_DB_URL: postgres://e2e:e2e_password@db-e2e:5432/e2e_db
+      E2E_REDIS_HOST: redis-e2e
+      E2E_REDIS_PORT: "6379"
+    networks:
+      - civicpatch_e2e_net
+    command: npx playwright test
+
+networks:
+  civicpatch_e2e_net:
+    driver: bridge
+
+volumes:
+  civicpatch_e2e_db_data:
