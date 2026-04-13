@@ -14,24 +14,33 @@ src/
     api/            ← versioned API routes (one file per resource)
     frontend.py     ← page routes + permissions
     auth.py         ← auth routes
-  services/         ← business logic (one concern per file)
-  database/
-    database.py     ← all DB queries
+  lib/              ← infrastructure wrappers (external APIs, storage, cache, etc.)
+    github/         ← GitHub API client, data sync, PR helpers
+    temporal/       ← Temporal client, workflows, activities
+    redis.py        ← Redis store
+    session.py      ← session management
+    ...
+  core/             ← domain orchestration (coordinates multiple data sources)
+    pr_sync.py      ← PR state sync
+    export.py       ← requests/people export
+    people_collector.py
+    candidate.py
+  database/         ← all DB queries (one file per domain)
   schemas/          ← Pydantic request/response models
-  stores/           ← Redis store
   utils/
+  worker.py         ← Temporal worker entrypoint
   main.py           ← FastAPI app + lifespan
   frontend/         ← JS/CSS/templates (served at /frontend)
 tests/
   unit/
-  factories/
+  integration/
 ```
 
 ## Before writing code
 
 1. Read the file(s) you are about to change — understand existing patterns before adding new ones
-2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
-3. All queries go in `database/database.py` — check there before adding a new function
+2. Read existing tests in the relevant `tests/unit/` or `tests/integration/` directory before writing tests
+3. All queries go in `database/` — one file per domain, check there before adding a new function
 4. **Before touching the database, read `DATABASE.md`** — it is the authoritative reference for table structure; do not read migration files to infer schema
 
 ## Permissions
@@ -60,11 +69,11 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 
 - Env vars accessed via `environment.get_env_vars()` — never read `os.environ` directly in business logic
 
-## Services
+## Layers
 
-- One file per external concern: `github_service.py`, `auth_service.py`, etc.
-- Services are thin — they call DB or external APIs and return typed results
-- Side effects (network calls, DB writes) live here, not in routers
+- **`lib/`** — infrastructure wrappers: one file (or subpackage) per external concern. Thin — call external APIs or storage and return typed results. No domain decisions.
+- **`core/`** — domain orchestration: coordinates multiple `lib/` and `database/` calls to fulfill a domain operation. No HTTP concerns.
+- Side effects (network calls, DB writes) live in `lib/` and `database/`, not in routers or `core/`.
 
 ## Database (dev)
 

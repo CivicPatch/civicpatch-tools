@@ -6,7 +6,7 @@ import lib.storage as services_storage
 import shared.utils.id_utils
 import shared.utils.url_utils
 from database.database import get_pool, to_iso
-from utils.github_utils import pull_request_url_to_number
+from lib.github.utils import pull_request_url_to_number
 
 
 async def list_open_pull_requests(

@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch, MagicMock
 
 from schemas.common import Identity, Role
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 from routers.api import pull_requests as pull_requests_router
 from routers.api.pull_requests import do_merge
 

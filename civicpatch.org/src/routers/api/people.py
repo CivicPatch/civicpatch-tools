@@ -1,7 +1,7 @@
 import math
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 from pydantic import BaseModel
 from typing import Optional
 import uuid

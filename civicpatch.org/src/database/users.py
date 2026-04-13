@@ -4,7 +4,7 @@ from typing import List, Optional, cast
 from database.database import get_pool
 from environment import get_env_vars
 from schemas.requests import ServerDetail
-from utils import hash_utils
+import lib.hash as hash_utils
 
 
 async def create_update_user(provider, provider_user_id, email, teams: List[str], display_name: str | None = None):

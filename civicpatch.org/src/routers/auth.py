@@ -13,7 +13,7 @@ import database.users as database
 from schemas.common import Identity
 import lib.session as session_service
 import lib.github.api as github_service
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 
 
 def is_safe_redirect(url: str, allowed_hosts: list) -> bool:

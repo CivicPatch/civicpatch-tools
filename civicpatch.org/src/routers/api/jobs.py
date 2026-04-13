@@ -21,7 +21,7 @@ from lib.github.pr import PrAuthor
 import core.candidate as candidate_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
-import utils.file_utils
+import lib.files as file_utils
 import database.jobs
 from database.jobs import (
     get_job,
@@ -58,7 +58,7 @@ from schemas.requests import HandleSubmitJobArtifactsRequest, ResolveIssueReques
 from shared.schemas import JurisdictionsFile
 from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
 import lib.pubsub as pubsub_service
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
 
@@ -443,7 +443,7 @@ def get_router(api_key_header):
 
         logger.info(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
 
-        file_path, temp_dir = await utils.file_utils.save_upload_to_temp(file)
+        file_path, temp_dir = await file_utils.save_upload_to_temp(file)
 
         request_obj = HandleSubmitJobArtifactsRequest(
             request_id=request_id,

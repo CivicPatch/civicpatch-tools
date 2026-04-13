@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 

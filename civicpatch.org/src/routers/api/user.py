@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 
 import database.users as database
 from schemas.common import Identity
-from utils.auth_utils import get_user
+from lib.auth import get_user
 
 
 # TODO: rbac perms needed

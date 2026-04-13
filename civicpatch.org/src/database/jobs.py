@@ -6,7 +6,7 @@ from psycopg import sql
 
 from database.database import get_pool, to_iso
 from shared.utils.statuses import TERMINAL_JOB_STATUSES
-from utils.github_utils import pull_request_url_to_number
+from lib.github.utils import pull_request_url_to_number
 
 async def get_duplicate_jurisdiction_ocdids() -> set:
     """Return a set of jurisdiction_ocdids that appear in more than one open PR."""

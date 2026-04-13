@@ -5,7 +5,7 @@ import lib.github.data_sync as data_sync
 import core.pr_sync as pr_sync
 from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import OdSyncRequestSchema
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 def get_router() -> APIRouter:
     router = APIRouter()

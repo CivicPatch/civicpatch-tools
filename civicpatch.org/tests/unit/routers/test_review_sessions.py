@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, patch
 from psycopg.errors import UniqueViolation
 
 from schemas.common import Identity, Role
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 from routers.api import review_sessions as review_sessions_router
 
 MOCK_IDENTITY = Identity(
