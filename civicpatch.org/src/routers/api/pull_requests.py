@@ -25,8 +25,8 @@ import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import database.users
 import lib.github.api as github_service
-import core.merge as merge_service
-import core.pr_sync as pr_sync_service
+import core.pull_request_merge as merge_service
+import core.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
 import lib.storage as storage_service
 from database.people import DEFAULT_VIEW, VIEWS

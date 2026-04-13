@@ -1,8 +1,8 @@
 from fastapi import APIRouter, BackgroundTasks, Depends
 
 import lib.cache as cache_service
-import lib.github.data_sync as data_sync
-import core.pr_sync as pr_sync
+import core.open_data_sync as data_sync
+import core.pull_request_sync as pr_sync
 from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import OdSyncRequestSchema
 from lib.auth import require_route_access
