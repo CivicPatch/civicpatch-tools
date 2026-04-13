@@ -11,7 +11,7 @@ from fastapi_sso import GithubSSO
 
 import database.users as database
 from schemas.common import Identity
-import lib.session as session_service
+import lib.auth_session as session_service
 import lib.github.api as github_service
 from lib.auth import get_optional_user
 

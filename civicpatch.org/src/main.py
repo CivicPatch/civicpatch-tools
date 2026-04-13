@@ -39,7 +39,7 @@ from schemas.common import Identity, Role, RouteCategory
 import lib.pubsub as pubsub_service
 from schemas.ws import SubscribeMessage
 from lib.auth import get_optional_user, get_ws_user, require_route_access
-from utils.vite import vite_asset, vite_css
+from frontend.vite import vite_asset, vite_css
 
 # Set up logger at the top of your file
 logger = logging.getLogger(__name__)

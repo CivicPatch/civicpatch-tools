@@ -1,10 +1,7 @@
-import os
 from typing import List, Optional
 
 from psycopg import sql
-import lib.storage as services_storage
 import shared.utils.id_utils
-import shared.utils.url_utils
 from database.database import get_pool, to_iso
 from lib.github.utils import pull_request_url_to_number
 
@@ -100,22 +97,6 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
             "pr": {"url": row[0], "status": row[1], "review_state": row[2], "number": row[5]},
         }
 
-
-def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
-    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-    relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return services_storage.get_civicpatch_artifacts_url(relative_path)
-
-
-def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    return [
-        {
-            "url": url,
-            "markdown": _source_url_to_markdown_url(request_id, folder, url),
-        }
-        for url in source_urls
-    ]
 
 
 async def update_job_pull_request_url(request_id: str, pull_request_url: str | None = None):

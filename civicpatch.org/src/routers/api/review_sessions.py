@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 import time
 from typing import Optional
 
@@ -13,10 +14,23 @@ import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import lib.cache as cache_service
 import lib.github.api as github_service
+import lib.storage as storage_service
 import core.pr_sync as pr_sync_service
 import shared.utils.id_utils
+import shared.utils.url_utils
 from schemas.common import Identity, Role, RouteCategory
 from lib.auth import require_route_access
+
+
+def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
+    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
+    relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
+    return storage_service.get_civicpatch_artifacts_url(relative_path)
+
+
+def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    return [{"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)} for url in source_urls]
 
 STATS_CACHE_TTL = 300  # 5 minutes
 
@@ -141,7 +155,7 @@ async def _navigate_response(session_id: str, entry_number: int):
 
     proposed = proposed or []
     unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
-    sources = pull_requests_db.build_sources(request_id, jurisdiction_ocdid, unique_source_urls)
+    sources = build_sources(request_id, jurisdiction_ocdid, unique_source_urls)
 
     if pr_meta is None:
         raise HTTPException(status_code=404, detail="Pull request metadata not found")
