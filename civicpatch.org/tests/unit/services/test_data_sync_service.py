@@ -25,6 +25,7 @@ def _mock_github(metadata_response, entries_response):
 
 # ── get_jurisdiction_metadata ─────────────────────────────────────────────────
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_jurisdiction_in_both_files_is_merged():
     entries = _entries_yml([{"id": LACY_LAKEVIEW_OCDID, "name": "Lacy-Lakeview city"}])
@@ -38,6 +39,7 @@ async def test_jurisdiction_in_both_files_is_merged():
     assert result[LACY_LAKEVIEW_OCDID]["updated_at"] == "2026-03-28T04:34:32+00:00"
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_jurisdiction_in_entries_only_is_included():
     """Jurisdiction present in jurisdictions.yml but absent from jurisdictions_metadata.yml must still be returned."""
@@ -51,6 +53,7 @@ async def test_jurisdiction_in_entries_only_is_included():
     assert result[LACY_LAKEVIEW_OCDID]["jurisdiction"]["name"] == "Lacy-Lakeview city"
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_jurisdiction_in_metadata_only_is_excluded():
     """Jurisdiction absent from jurisdictions.yml should not appear even if it has metadata."""
@@ -63,6 +66,7 @@ async def test_jurisdiction_in_metadata_only_is_excluded():
     assert LACY_LAKEVIEW_OCDID not in result
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_entry_without_id_is_skipped():
     entries = _entries_yml([
@@ -78,6 +82,7 @@ async def test_entry_without_id_is_skipped():
     assert LACY_LAKEVIEW_OCDID in result
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_multiple_jurisdictions_mixed_metadata():
     entries = _entries_yml([
@@ -95,6 +100,7 @@ async def test_multiple_jurisdictions_mixed_metadata():
     assert "updated_at" not in result[LACY_LAKEVIEW_OCDID]
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_metadata_file_missing_still_returns_entries():
     """Missing jurisdictions_metadata.yml is non-fatal; jurisdictions are still returned without metadata."""
@@ -108,6 +114,7 @@ async def test_metadata_file_missing_still_returns_entries():
     assert "updated_at" not in result[LACY_LAKEVIEW_OCDID]
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_returns_none_when_entries_file_missing():
     with _mock_github(_metadata_yml({}), None):
@@ -125,13 +132,14 @@ def _mock_bulk_sync_deps(remote_metadata, local_jurisdictions):
     return (
         patch("lib.github.data_sync.config_utils.get_states", return_value=[{"code": "tx"}]),
         patch("lib.github.data_sync.get_jurisdiction_metadata", new=AsyncMock(return_value=remote_metadata)),
-        patch("lib.github.data_sync.database.get_jurisdiction_updates", new=AsyncMock(return_value=local_jurisdictions)),
-        patch("lib.github.data_sync.database.deactivate_jurisdictions_by_ocdids", new=AsyncMock()),
+        patch("database.jurisdictions.get_jurisdiction_updates", new=AsyncMock(return_value=local_jurisdictions)),
+        patch("database.jurisdictions.deactivate_jurisdictions_by_ocdids", new=AsyncMock()),
         patch("lib.github.data_sync.sync_jurisdictions_by_ocdids_with_metadata", new=AsyncMock()),
         patch("lib.github.data_sync.sync_people_by_ocdids", new=AsyncMock()),
     )
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_bulk_sync_skips_people_when_up_to_date_and_has_people():
     """Jurisdiction with current updated_at and existing people is not re-synced."""
@@ -145,6 +153,7 @@ async def test_bulk_sync_skips_people_when_up_to_date_and_has_people():
     mock_sync_people.assert_called_once_with([])
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_bulk_sync_syncs_people_when_no_people_in_db():
     """Jurisdiction with zero people is re-synced when remote has a valid updated_at, even if timestamps match."""
@@ -158,6 +167,7 @@ async def test_bulk_sync_syncs_people_when_no_people_in_db():
     mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_bulk_sync_skips_people_when_no_people_and_no_remote_updated_at():
     """Jurisdiction with zero people is NOT re-synced when remote has no updated_at."""
@@ -171,6 +181,7 @@ async def test_bulk_sync_skips_people_when_no_people_and_no_remote_updated_at():
     mock_sync_people.assert_called_once_with([])
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_bulk_sync_syncs_people_for_new_jurisdiction():
     """Jurisdiction not yet in DB (never synced) is synced even if remote updated_at is old."""
