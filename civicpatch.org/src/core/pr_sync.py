@@ -3,8 +3,8 @@ import logging
 import database.jobs as jobs_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
-import services.github.github_api_service as github_service
-import services.lock_service as lock_service
+import lib.github.api as github_service
+import lib.lock as lock_service
 import shared.utils.id_utils
 from shared.utils.statuses import PullRequestStatus
 from utils.github_utils import pull_request_url_to_number

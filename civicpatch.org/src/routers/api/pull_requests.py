@@ -22,9 +22,9 @@ import database.people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import database.users
-import services.github.github_api_service as github_service
-import services.github.pull_request_sync_service as pr_sync_service
-import stores.redis_store as redis_store
+import lib.github.api as github_service
+import core.pr_sync as pr_sync_service
+import lib.redis as redis_store
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access

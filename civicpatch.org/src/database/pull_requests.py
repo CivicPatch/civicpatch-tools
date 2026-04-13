@@ -2,7 +2,7 @@ import os
 from typing import List, Optional
 
 from psycopg import sql
-import services.storage_service
+import lib.storage as services_storage
 import shared.utils.id_utils
 import shared.utils.url_utils
 from database.database import get_pool, to_iso
@@ -104,7 +104,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
 def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return services.storage_service.get_civicpatch_artifacts_url(relative_path)
+    return services_storage.get_civicpatch_artifacts_url(relative_path)
 
 
 def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:

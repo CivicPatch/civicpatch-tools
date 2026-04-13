@@ -3,7 +3,7 @@ from datetime import timedelta
 from temporalio import workflow
 
 with workflow.unsafe.imports_passed_through():
-    from activities.sync_activities import sync_pr_state_activity, od_sync_activity
+    from lib.temporal.activities import sync_pr_state_activity, od_sync_activity
 
 TASK_QUEUE = "civicpatch-org-sync"
 

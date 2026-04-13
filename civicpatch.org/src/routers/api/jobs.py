@@ -14,13 +14,13 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, Up
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-import job_service.people_collector.people_data_utils as people_data_utils
-import services.github.github_api_service as github_service
-import services.github.pr_service as pr_service
-from services.github.pr_service import PrAuthor
-import services.pipeline.candidate_service as candidate_service
-import services.storage_service as storage_service
-import services.temporal_service as temporal_service
+import core.people_data_utils as people_data_utils
+import lib.github.api as github_service
+import lib.github.pr as pr_service
+from lib.github.pr import PrAuthor
+import core.candidate as candidate_service
+import lib.storage as storage_service
+import lib.temporal.client as temporal_service
 import utils.file_utils
 import database.jobs
 from database.jobs import (
@@ -52,12 +52,12 @@ from database.requests import (
     get_request_jurisdiction,
     get_issue_request_details,
 )
-from job_service.people_collector import people_collector
+from core import people_collector
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.requests import HandleSubmitJobArtifactsRequest, ResolveIssueRequest, ServerDetail
 from shared.schemas import JurisdictionsFile
 from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
-from services import pubsub_service
+import lib.pubsub as pubsub_service
 from utils.auth_utils import require_route_access
 
 logger = logging.getLogger(__name__)

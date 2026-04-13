@@ -10,7 +10,7 @@ import yaml
 
 import database.jurisdictions as jurisdictions_db
 import database.people as people_db
-import services.github.github_api_service as github_service
+import lib.github.api as github_service
 import shared
 import shared.utils.config_utils as config_utils
 import shared.utils.id_utils

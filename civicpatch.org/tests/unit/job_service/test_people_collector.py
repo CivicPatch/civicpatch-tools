@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from job_service.people_collector.people_collector import handle_submit_job_artifacts
+from core.people_collector import handle_submit_job_artifacts
 from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
 from shared.utils.statuses import JobStatus
 
@@ -24,12 +24,12 @@ async def test_handle_submit_job_artifacts_updates_status_to_error_on_failure():
     request = make_request()
     with (
         patch(
-            "job_service.people_collector.people_collector._handle_submit_job_artifacts",
+            "core.people_collector._handle_submit_job_artifacts",
             new_callable=AsyncMock,
             side_effect=Exception("storage unavailable"),
         ),
         patch(
-            "job_service.people_collector.people_collector.update_job_status",
+            "core.people_collector.update_job_status",
             new_callable=AsyncMock,
         ) as mock_update_status,
     ):
@@ -48,12 +48,12 @@ async def test_handle_submit_job_artifacts_does_not_update_status_on_success():
     mock_response = MagicMock()
     with (
         patch(
-            "job_service.people_collector.people_collector._handle_submit_job_artifacts",
+            "core.people_collector._handle_submit_job_artifacts",
             new_callable=AsyncMock,
             return_value=mock_response,
         ),
         patch(
-            "job_service.people_collector.people_collector.update_job_status",
+            "core.people_collector.update_job_status",
             new_callable=AsyncMock,
         ) as mock_update_status,
     ):

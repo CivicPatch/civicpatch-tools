@@ -124,8 +124,8 @@ async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dic
                   )
                 ELSE review_issues.data
               END,
-              status = %s,
-              resolved_at = NULL
+              status = CASE WHEN review_issues.status = 'resolved' THEN 'pending' ELSE review_issues.status END,
+              resolved_at = CASE WHEN review_issues.status = 'resolved' THEN NULL ELSE review_issues.resolved_at END
             """,
             rows,
         )

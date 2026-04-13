@@ -6,7 +6,7 @@ from typing import List, Optional
 
 from fastapi.responses import Response
 
-from stores import redis_store
+import lib.redis as redis_store
 import environment
 
 SESSION_EXPIRY_DAYS = 1

@@ -3,7 +3,7 @@ import logging
 from typing import Any, List, LiteralString
 from database.database import get_pool
 from psycopg import sql
-import services.storage_service
+import lib.storage as services_storage
 import shared.utils.data_path_utils
 import shared.utils.url_utils
 from shared.schemas import Person

@@ -2,7 +2,7 @@ import logging
 
 from pydantic import BaseModel
 
-import services.github.github_api_service as github_api_service
+import lib.github.api as github_api_service
 
 logger = logging.getLogger(__name__)
 

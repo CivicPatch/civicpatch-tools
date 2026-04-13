@@ -29,6 +29,6 @@ def patch_get_env_vars(monkeypatch):
 @pytest.fixture
 def mock_redis():
     """Mock Redis store."""
-    with patch('src.stores.redis_store.get') as mock_get, \
-         patch('src.stores.redis_store.set') as mock_set:
+    with patch('src.lib.redis.get') as mock_get, \
+         patch('src.lib.redis.set') as mock_set:
         yield {'get': mock_get, 'set': mock_set}

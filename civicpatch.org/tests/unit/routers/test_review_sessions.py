@@ -32,7 +32,7 @@ def client():
 def test_get_review_stats_returns_cached(client):
     cached_stats = {"reviewed": 10, "remaining": 5}
     with patch(
-        "services.cache_service.get_cached",
+        "lib.cache.get_cached",
         new_callable=AsyncMock,
         return_value=cached_stats,
     ):
@@ -47,9 +47,9 @@ def test_get_review_stats_returns_cached(client):
 def test_get_review_stats_fetches_from_db_on_cache_miss(client):
     db_stats = {"reviewed": 10, "remaining": 5}
     with (
-        patch("services.cache_service.get_cached", new_callable=AsyncMock, return_value=None),
+        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
         patch("database.review_sessions.get_review_stats", new_callable=AsyncMock, return_value=db_stats),
-        patch("services.cache_service.set_cached", new_callable=AsyncMock),
+        patch("lib.cache.set_cached", new_callable=AsyncMock),
     ):
         response = client.get("/review-sessions/stats", params={"state_code": "ca"})
 
