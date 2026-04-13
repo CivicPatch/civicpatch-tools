@@ -1,12 +1,7 @@
 name: 0. Run pipelines Tests
 on:
+  workflow_call:
   pull_request:
-    branches:
-      - main
-    paths:
-      - "pipelines/**"
-      - "shared/**"
-  push:
     branches:
       - main
     paths:

@@ -1,0 +1,93 @@
+name: 0. Run civicpatch.org Tests
+on:
+  workflow_call:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "civicpatch.org/**"
+      - "shared/**"
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync --all-packages
+
+      - name: Run pyright
+        run: uv run pyright
+        working-directory: civicpatch.org
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync --all-packages
+
+      - name: Run civicpatch.org unit tests
+        run: uv run pytest -m unit civicpatch.org/tests
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies
+        run: uv sync --all-packages
+
+      - name: Start integration test database
+        run: docker compose -f civicpatch.org/docker-compose.integration.yml up -d --wait
+
+      - name: Run migrations
+        working-directory: civicpatch.org
+        env:
+          CIVICPATCH_API_DB_URL: postgres://civicpatch:test_password@127.0.0.1:6001/test_db
+          CIVICPATCH_API_DB_PASSWORD: test_password
+          GITHUB_APP_ID: x
+          GITHUB_APP_CLIENT_ID: x
+          GITHUB_APP_CLIENT_SECRET: x
+          GITHUB_APP_PRIVATE_KEY_BASE64: x
+          GITHUB_APP_INSTALLATION_ID: x
+          INSTANCE_URL: x
+          OPEN_DATA_REPO_URL: x
+          MAINTAINER_EMAIL: x
+          REDIS_HOST: x
+          DATABASE_HASH_KEY: x
+          SERVICE_API_KEY: x
+          COOKIE_INSTANCE_URL: x
+        run: uv run python database_operations/migrate.py up
+
+      - name: Run civicpatch.org integration tests
+        working-directory: civicpatch.org
+        env:
+          CIVICPATCH_API_DB_URL: postgres://civicpatch:test_password@127.0.0.1:6001/test_db
+          CIVICPATCH_API_DB_PASSWORD: test_password
+          GITHUB_APP_ID: x
+          GITHUB_APP_CLIENT_ID: x
+          GITHUB_APP_CLIENT_SECRET: x
+          GITHUB_APP_PRIVATE_KEY_BASE64: x
+          GITHUB_APP_INSTALLATION_ID: x
+          INSTANCE_URL: x
+          OPEN_DATA_REPO_URL: x
+          MAINTAINER_EMAIL: x
+          REDIS_HOST: x
+          DATABASE_HASH_KEY: x
+          SERVICE_API_KEY: x
+          COOKIE_INSTANCE_URL: x
+        run: uv run pytest -m integration tests
