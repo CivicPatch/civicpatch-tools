@@ -34,7 +34,7 @@ from database.database import (
     close_pool,
     get_pool,
 )
-from routers.auth import get_router as auth_router
+from routers.sso import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
 import lib.pubsub as pubsub_service
 from schemas.ws import SubscribeMessage
