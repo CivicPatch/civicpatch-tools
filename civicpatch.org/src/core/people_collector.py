@@ -5,7 +5,7 @@ from typing import List, Dict
 import lib.sheets as google_sheets_service
 from schemas.requests import HandleSubmitJobArtifactsRequest
 from schemas.responses import SubmitJobArtifactsResponse
-import utils.file_utils as file_utils
+import lib.files as file_utils
 import shared.utils.id_utils
 import lib.storage as storage_service
 import lib.github.api as github_service

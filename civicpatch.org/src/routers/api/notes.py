@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 import database.notes as database
 from schemas.common import CreateNoteRequest, Identity, NoteResponse, Role, RouteCategory
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 
 def get_router() -> APIRouter:

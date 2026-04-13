@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, patch
 
 from routers.frontend import build_permissions, get_router
 from schemas.common import Identity, Role
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 
 
 def _identity(*roles: Role) -> Identity:

@@ -16,7 +16,7 @@ import lib.github.api as github_service
 import core.pr_sync as pr_sync_service
 import shared.utils.id_utils
 from schemas.common import Identity, Role, RouteCategory
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 STATS_CACHE_TTL = 300  # 5 minutes
 

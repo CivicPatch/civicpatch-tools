@@ -1,6 +1,6 @@
 import pytest
 from fastapi import HTTPException
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory
 
 @pytest.mark.asyncio

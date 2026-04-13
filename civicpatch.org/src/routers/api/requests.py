@@ -12,7 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from schemas.common import Identity, Role, RouteCategory
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
 

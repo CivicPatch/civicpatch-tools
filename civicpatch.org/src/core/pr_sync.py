@@ -7,7 +7,7 @@ import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
 from shared.utils.statuses import PullRequestStatus
-from utils.github_utils import pull_request_url_to_number
+from lib.github.utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
 

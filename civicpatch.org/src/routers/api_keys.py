@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 import database.users as database
-from utils.auth_utils import get_user
+from lib.auth import get_user
 
 def get_router(templates: Jinja2Templates):
     router = APIRouter()

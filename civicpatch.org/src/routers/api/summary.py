@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from database.summary import get_summary_counts
 from schemas.common import Identity, Role, RouteCategory
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 
 def get_router():

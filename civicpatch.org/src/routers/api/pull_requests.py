@@ -27,7 +27,7 @@ import core.pr_sync as pr_sync_service
 import lib.redis as redis_store
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, Role, RouteCategory
-from utils.auth_utils import require_route_access
+from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
 

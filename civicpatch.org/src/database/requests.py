@@ -5,7 +5,7 @@ from psycopg import sql
 
 from database.database import get_pool
 from shared.utils.statuses import JobStatus, PullRequestStatus
-from utils.github_utils import pull_request_url_to_number
+from lib.github.utils import pull_request_url_to_number
 
 
 async def register_request_with_job(

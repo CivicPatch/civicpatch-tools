@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, Role
-from utils.auth_utils import get_optional_user
+from lib.auth import get_optional_user
 from routers.api import people as people_router
 
 MOCK_IDENTITY = Identity(
