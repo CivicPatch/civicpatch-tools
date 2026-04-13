@@ -178,9 +178,10 @@ CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0
 ###################################################
 
 [tasks.dev]
-description = "Start all services and watch for worker code changes"
+description = "Start all services, tail logs, and watch for worker code changes"
 run = """
 docker compose up -d
+docker compose logs -f &
 mise run watch-worker
 """
 
