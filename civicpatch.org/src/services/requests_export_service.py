@@ -1,6 +1,6 @@
 import asyncio
-import database.database
 import database.people
+import database.requests
 import services.csv_service as csv_service
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
@@ -178,7 +178,7 @@ async def fetch_export_data(
     from_date: str | None,
     to_date: str | None,
 ) -> tuple[list[dict], dict[str, list]]:
-    requests_data = await database.database.get_requests_for_export(state, from_date, to_date)
+    requests_data = await database.requests.get_requests_for_export(state, from_date, to_date)
 
     uncached = [r for r in requests_data if not r["data_json"]]
     if uncached:
@@ -196,7 +196,7 @@ async def fetch_export_data(
 
 
 async def fetch_people_export_rows(state: str) -> list[dict]:
-    people = await database.database.get_people_by_state(state)
+    people = await database.people.get_people_by_state(state)
     rows = []
     for p in people:
         office = p.get("office") or {}

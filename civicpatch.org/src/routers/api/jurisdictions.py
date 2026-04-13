@@ -3,7 +3,7 @@ import urllib.parse
 from fastapi import APIRouter, HTTPException, Query
 
 
-import database.database as database
+import database.jurisdictions as database
 
 import services.pipeline.candidate_service as candidate_service
 import shared.utils.config_utils as config_utils

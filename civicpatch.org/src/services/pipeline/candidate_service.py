@@ -1,6 +1,6 @@
 import yaml
 
-import database.database as database
+import database.jobs as database
 import services.github.github_api_service as github_api_service
 from schemas.common import Jurisdiction
 

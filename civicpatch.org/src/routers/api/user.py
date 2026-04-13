@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Form, Request, status
 from fastapi.responses import RedirectResponse
 
-import database.database as database
+import database.users as database
 from schemas.common import Identity
 from utils.auth_utils import get_user
 

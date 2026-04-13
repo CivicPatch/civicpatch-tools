@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-import database.database as database
+import database.users as database
 from utils.auth_utils import get_user
 
 def get_router(templates: Jinja2Templates):

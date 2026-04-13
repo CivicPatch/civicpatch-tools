@@ -6,6 +6,7 @@ import services.storage_service
 import shared.utils.id_utils
 import shared.utils.url_utils
 from database.database import get_pool, to_iso
+from utils.github_utils import pull_request_url_to_number
 
 
 async def list_open_pull_requests(
@@ -115,3 +116,107 @@ def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[st
         }
         for url in source_urls
     ]
+
+
+async def update_job_pull_request_url(request_id: str, pull_request_url: str | None = None):
+    pool = await get_pool()
+    pr_number = 0
+    if pull_request_url:
+        num = pull_request_url_to_number(pull_request_url)
+        pr_number = int(num) if num else 0
+
+    async with pool.connection() as conn:
+        result = await conn.execute(
+            """
+            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
+            VALUES (%s, %s, 'open', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (request_id) DO UPDATE
+                SET url = EXCLUDED.url,
+                    status = CASE
+                        WHEN pull_requests.status IN ('merged', 'closed') THEN pull_requests.status
+                        ELSE 'open'
+                    END,
+                    updated_at = CURRENT_TIMESTAMP
+            """,
+            (request_id, pull_request_url, pr_number),
+        )
+        return result.rowcount > 0
+
+
+async def update_job_pull_request_status(
+    request_id: str,
+    pull_request_status: str,
+    pull_request_merged_at=None,
+    pull_request_url: Optional[str] = None,
+    resolved_by_user_id: Optional[str] = None,
+) -> bool:
+    pool = await get_pool()
+    pr_number = 0
+    if pull_request_url:
+        num = pull_request_url_to_number(pull_request_url)
+        pr_number = int(num) if num else 0
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT 1 FROM requests WHERE id = %s", (request_id,))
+        if not await cur.fetchone():
+            return False
+        await cur.execute(
+            """
+            INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, resolved_by_user_id, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (request_id) DO UPDATE
+                SET status = EXCLUDED.status,
+                    merged_at = EXCLUDED.merged_at,
+                    url = COALESCE(EXCLUDED.url, pull_requests.url),
+                    resolved_by_user_id = EXCLUDED.resolved_by_user_id,
+                    updated_at = CURRENT_TIMESTAMP
+            """,
+            (request_id, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
+        )
+        return True
+
+
+async def update_job_pull_request_review_state(request_id: str, review_state: str | None):
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE pull_requests
+            SET review_state = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (review_state, request_id),
+        )
+
+
+async def get_open_pr_request_ids() -> dict[str, str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT j.request_id, pr.url
+            FROM jobs j
+            JOIN requests r ON r.id = j.request_id
+            JOIN pull_requests pr ON pr.request_id = r.id
+            WHERE pr.status = 'open'
+            """
+        )
+        rows = await cur.fetchall()
+    return {r[0]: r[1] for r in rows}
+
+
+async def bulk_close_stale_prs(request_ids: List[str]):
+    if not request_ids:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE pull_requests pr
+            SET status = 'closed', updated_at = CURRENT_TIMESTAMP
+            FROM jobs j
+            WHERE pr.request_id = j.request_id AND j.request_id = ANY(%s)
+            """,
+            (request_ids,),
+        )

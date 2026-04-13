@@ -9,7 +9,7 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
-from database.database import update_job_pull_request_status
+from database.pull_requests import update_job_pull_request_status
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
 from services.github.pull_request_sync_service import register_and_sync_pr_job

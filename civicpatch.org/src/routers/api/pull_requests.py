@@ -17,11 +17,11 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-import database.database
 import database.jobs
 import database.people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
+import database.users
 import services.github.github_api_service as github_service
 import services.github.pull_request_sync_service as pr_sync_service
 import stores.redis_store as redis_store
@@ -84,7 +84,7 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             await redis_store.set(merge_key, json.dumps({"status": "error", "error": merge_error}), ttl=_MERGE_STATUS_TTL)
             return
 
-        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=_MERGE_STATUS_TTL)
 
     except Exception as e:
@@ -171,7 +171,7 @@ def get_router(api_key_header):
 
         existing, cached = await asyncio.gather(
             database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
-            database.database.get_job_data_json(request_id),
+            database.jobs.get_job_data_json(request_id),
         )
 
         # Fast path: serve from DB if already backfilled
@@ -198,7 +198,7 @@ def get_router(api_key_header):
 
         # Backfill DB so future requests skip the GitHub roundtrip
         background_tasks.add_task(
-            database.database.update_job_data, request_id, file_content
+            database.jobs.update_job_data, request_id, file_content
         )
 
         return {
@@ -233,7 +233,7 @@ def get_router(api_key_header):
 
         # Update the results_json in the background, too
         background_tasks.add_task(
-            database.database.update_job_data, request.request_id, normalized
+            database.jobs.update_job_data, request.request_id, normalized
         )
         if not _github_response:
             return JSONResponse(
@@ -303,7 +303,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        result = await database.database.get_job_result(request_id)
+        result = await database.jobs.get_job_result(request_id)
         return {"data": (result or {}).get("review_json") or {}}
 
     # -- Pull Requests: Close Pull Request ---
@@ -325,8 +325,8 @@ def get_router(api_key_header):
                 ).model_dump(),
                 status_code=500,
             )
-        user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Save and Merge ---
@@ -354,7 +354,7 @@ def get_router(api_key_header):
                     content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
                     status_code=500,
                 )
-            background_tasks.add_task(database.database.update_job_data, request.request_id, normalized)
+            background_tasks.add_task(database.jobs.update_job_data, request.request_id, normalized)
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=_MERGE_STATUS_TTL)
@@ -395,8 +395,8 @@ def get_router(api_key_header):
                 content=ErrorResponse(error=merge_error).model_dump(),
                 status_code=status_code,
             )
-        user_id = await database.database.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await database.database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Update Branch ---

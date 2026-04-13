@@ -3,7 +3,8 @@ import logging
 import re
 from datetime import date
 from typing import Any, Optional
-import database.database
+import database.jobs
+import database.pull_requests as pull_requests_db
 import database.requests
 import services.csv_service as csv_service
 import services.requests_export_service as requests_export_service
@@ -65,12 +66,12 @@ def get_router(api_key_header):
 
         tasks = []
         if request.data:  # Called from within civicpatch project
-            tasks.append(("result", database.database.update_job_data(request_id, request.data)))
+            tasks.append(("result", database.jobs.update_job_data(request_id, request.data)))
         if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (
                     "pull_request",
-                    database.database.update_job_pull_request_url(
+                    pull_requests_db.update_job_pull_request_url(
                         request_id, pull_request_url=request.pull_request_url
                     ),
                 )
