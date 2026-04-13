@@ -37,7 +37,7 @@ function updateTabParam(tab) {
   history.replaceState(null, '', `?${p}`);
 }
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, onSourceUrlsChange = () => {} }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
   const {
     currentPeople,
     selectedPeople,
@@ -60,7 +60,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   const [reviewData, setReviewData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedPullRequest, setSelectedPullRequest] = useState(undefined);
-  const [notice, setNotice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [prStatus, setPrStatus] = useState(null);
   const [isMobile, setIsMobile] = useState(
@@ -222,7 +221,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     try {
       await saveAndMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
       setPrStatus("merged");
-      setNotice("Pull request merged.");
+      onPublished();
     } catch {
       setPrStatus("error");
       setError("Failed to merge pull request.");
@@ -235,7 +234,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       const { data } = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
       await saveAndMerge(data.pr_number, data.request_id, jurisdiction_ocdid, null);
       setPrStatus("merged");
-      setNotice(`Published: ${data.pr_url}`);
+      onPublished();
     } catch (err) {
       setPrStatus("error");
       setError("Failed to publish.");
@@ -436,7 +435,6 @@ function handleCardKeyDown(e, idx, key) {
         .selectedPeople=${selectedPeople}
         .dirty=${dirty}
         .isLoading=${isLoading}
-        .notice=${notice}
         .hasPullRequest=${activeTab === TAB.pull_request}
         .prStatus=${prStatus}
       ></civ-people-action-buttons>
@@ -460,13 +458,7 @@ function handleCardKeyDown(e, idx, key) {
       .onTabClick=${(pr) => { setSelectedPullRequest(pr); updateTabParam(pr); }}
     ></civ-people-tabs>
 
-    ${notice
-      ? html`<div
-          style="margin-bottom:1rem; padding:0.75em; background:#e0ffe0; border-radius:6px; color:#155724;"
-        >
-          ${notice}
-        </div>`
-      : ""}
+
     ${error
       ? html`<div
           style="margin-bottom:1rem; padding:0.75em; background:#ffe0e0; border-radius:6px; color:#721c24;"

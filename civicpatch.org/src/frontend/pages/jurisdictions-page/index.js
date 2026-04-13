@@ -7,7 +7,7 @@ import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import "../../components/edit-people/edit-people.js";
 import "../../components/side-panel/side-panel.js";
-import "../../components/scrape-history/scrape-history-list.js";
+import "./history/history-list.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
@@ -61,11 +61,12 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
     const now = new Date().toISOString();
     const newEntry = {
       request_id: result.request_id,
-      status: result.status,
-      progress: 0,
+      job_status: result.status,
+      job_progress: 0,
       created_at: now,
       updated_at: now,
       pull_request_url: null,
+      pull_request_status: null,
       branch_name: null,
       jurisdiction_ocdid: jurisdiction_ocdid,
     };
@@ -75,7 +76,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const handleCancelJob = (requestId) => {
     setHistory(prev => ({
       ...prev,
-      data: prev.data.map(j => j.request_id === requestId ? { ...j, status: "CANCELLED" } : j),
+      data: prev.data.map(j => j.request_id === requestId ? { ...j, job_status: "CANCELLED" } : j),
     }));
   };
 
@@ -85,7 +86,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const mostRecentJob = history?.data?.[0];
   const effectiveStatus = (jobStatus && mostRecentJob && jobStatus.request_id === mostRecentJob.request_id)
     ? jobStatus.status
-    : mostRecentJob?.status;
+    : mostRecentJob?.job_status;
   const isJobRunning = (jobStatus && !TERMINAL_JOB_STATUSES.has(jobStatus.status))
     || (!!effectiveStatus && !TERMINAL_JOB_STATUSES.has(effectiveStatus));
 
@@ -100,14 +101,14 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
               : null}
             .height=${"20rem"}
           ></civ-map>
-          <civ-scrape-history-list
+          <civ-history-list
             .history=${history}
             .jobStatus=${jobStatus}
             .isConnected=${isConnected}
             .sseError=${sseError}
             .canCancel=${permissions.CANCEL_JOB}
             .onCancel=${handleCancelJob}
-          ></civ-scrape-history-list>
+          ></civ-history-list>
         </div>
 
         <div>
@@ -151,6 +152,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .people=${people}
             .canDeletePeople=${permissions.DIRECTORY_DELETE}
             .onSourceUrlsChange=${setSourceContentUrls}
+            .onPublished=${() => window.location.reload()}
           ></civ-editable-people-list>
           <civ-side-panel .jurisdictionOcdid=${jurisdiction_ocdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
         </div>

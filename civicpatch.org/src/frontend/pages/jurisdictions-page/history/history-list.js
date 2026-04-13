@@ -1,28 +1,28 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import { dateStringToFriendly, durationBetween } from "../../utils/date-utils.js";
-import { cancelJob } from "../../api.js";
-import { TERMINAL_JOB_STATUSES } from "../job-status.js";
-import "./scrape-history-modal.js";
-import "../status-badge.js";
+import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils.js";
+import { cancelJob } from "../../../api.js";
+import { TERMINAL_JOB_STATUSES } from "../../../components/job-status.js";
+import "./history-modal.js";
+import "../../../components/status-badge.js";
 
-function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
+function HistoryList({ history, jobStatus, canCancel, onCancel }) {
   let parsedHistory = history?.["data"] ?? [];
 
   if (jobStatus && jobStatus.request_id) {
-    parsedHistory = parsedHistory.map(job =>
-      job.request_id === jobStatus.request_id
-        ? { ...job, progress: jobStatus.progress, status: jobStatus.status }
-        : job
+    parsedHistory = parsedHistory.map(item =>
+      item.request_id === jobStatus.request_id
+        ? { ...item, job_progress: jobStatus.progress, job_status: jobStatus.status }
+        : item
     );
   }
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [cancellingIds, setCancellingIds] = useState(new Set());
 
-  const openFor = (job) => { setSelectedJob(job); setModalOpen(true); };
-  const closeModal = () => { setModalOpen(false); setSelectedJob(null); };
+  const openFor = (item) => { setSelectedItem(item); setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); setSelectedItem(null); };
 
   const handleCancel = async (requestId) => {
     setCancellingIds(prev => new Set(prev).add(requestId));
@@ -40,14 +40,15 @@ function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
     }
   };
 
-
   const statusBadgeProps = (status) => {
     const s = (status || "").toLowerCase().replace(/\s+/g, "-");
     switch (s) {
       case "done":
+      case "merged":
         return { bg: "var(--pico-ins-background)", color: "var(--pico-ins-color)" };
       case "failed":
       case "error":
+      case "closed":
         return { bg: "var(--pico-del-background)", color: "var(--pico-del-color)" };
       case "finalize":
         return { bg: "var(--pico-muted-background)", color: "var(--pico-muted-color)" };
@@ -94,6 +95,16 @@ function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
       .sh-table tr:last-child td {
         border-bottom: none;
       }
+      .status-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        white-space: nowrap;
+      }
+      .status-arrow {
+        font-size: 0.7rem;
+        color: var(--pico-muted-color);
+      }
       .date-btn {
         all: unset;
         cursor: pointer;
@@ -120,41 +131,53 @@ function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
     </style>
 
     <div class="sh-section">
-      <h4 class="sh-title">Scrape History</h4>
+      <h4 class="sh-title">History</h4>
 
       ${!parsedHistory || parsedHistory.length === 0 ? html`
-        <p class="sh-empty">No scrape history available.</p>
+        <p class="sh-empty">No history available.</p>
       ` : html`
         <div class="sh-scroll">
           <table class="sh-table" role="grid">
             <tbody>
-              ${parsedHistory.map(job => html`
+              ${parsedHistory.map(item => html`
                 <tr>
                   <td>
-                    <button class="date-btn" @click=${() => openFor(job)}>
-                      ${dateStringToFriendly(job.created_at)}
+                    <button class="date-btn" @click=${() => openFor(item)}>
+                      ${dateStringToFriendly(item.created_at)}
                     </button>
-                    ${job.progress !== undefined && job.progress !== 100 ? html`
-                      <progress value=${job.progress ?? 0} max="100"></progress>
+                    ${item.job_progress !== undefined && item.job_progress !== 100 && !item.pull_request_status ? html`
+                      <progress value=${item.job_progress ?? 0} max="100"></progress>
                     ` : null}
                   </td>
                   <td class="duration-cell">
-                    ${durationBetween(job.created_at, job.updated_at)}
+                    ${durationBetween(item.created_at, item.updated_at)}
                   </td>
                   <td>
-                    <civ-status-badge
-                      label="${job.status}"
-                      bg="${statusBadgeProps(job.status).bg}"
-                      color="${statusBadgeProps(job.status).color}"
-                    ></civ-status-badge>
+                    <div class="status-cell">
+                      <civ-status-badge
+                        label="${item.job_status}"
+                        bg="${statusBadgeProps(item.job_status).bg}"
+                        color="${statusBadgeProps(item.job_status).color}"
+                      ></civ-status-badge>
+                      ${item.pull_request_status ? html`
+                        <span class="status-arrow">→</span>
+                        <a href="${item.pull_request_url}" target="_blank" rel="noopener" style="text-decoration: none;">
+                          <civ-status-badge
+                            label="${item.pull_request_status}"
+                            bg="${statusBadgeProps(item.pull_request_status).bg}"
+                            color="${statusBadgeProps(item.pull_request_status).color}"
+                          ></civ-status-badge>
+                        </a>
+                      ` : null}
+                    </div>
                   </td>
-                  ${canCancel && !TERMINAL_JOB_STATUSES.has(job.status) ? html`
+                  ${canCancel && !TERMINAL_JOB_STATUSES.has(item.job_status) ? html`
                     <td>
                       <button
                         class="sh-cancel-btn"
-                        ?disabled=${cancellingIds.has(job.request_id)}
-                        @click=${() => handleCancel(job.request_id)}
-                      >${cancellingIds.has(job.request_id) ? "Cancelling…" : "Cancel"}</button>
+                        ?disabled=${cancellingIds.has(item.request_id)}
+                        @click=${() => handleCancel(item.request_id)}
+                      >${cancellingIds.has(item.request_id) ? "Cancelling…" : "Cancel"}</button>
                     </td>
                   ` : html`<td></td>`}
                 </tr>
@@ -165,15 +188,15 @@ function ScrapeHistoryList({ history, jobStatus, canCancel, onCancel }) {
       `}
     </div>
 
-    <civ-scrape-history-modal
+    <civ-history-modal
       .open=${modalOpen}
-      .job=${selectedJob}
+      .item=${selectedItem}
       .onClose=${closeModal}
-    ></civ-scrape-history-modal>
+    ></civ-history-modal>
   `;
 }
 
 customElements.define(
-  "civ-scrape-history-list",
-  component(ScrapeHistoryList, { useShadowDOM: false })
+  "civ-history-list",
+  component(HistoryList, { useShadowDOM: false })
 );

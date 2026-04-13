@@ -307,7 +307,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url
+            SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, pr.status
             FROM jobs j
             JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
@@ -325,9 +325,10 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
                     "request_id": row[0],
                     "created_at": to_iso(row[1]),
                     "updated_at": to_iso(row[2]),
-                    "status": row[3],
-                    "progress": row[4],
+                    "job_status": row[3],
+                    "job_progress": row[4],
                     "pull_request_url": row[5],
+                    "pull_request_status": row[6],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name
                 }
