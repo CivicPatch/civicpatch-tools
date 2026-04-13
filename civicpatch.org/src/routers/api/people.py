@@ -140,7 +140,7 @@ def get_router() -> APIRouter:
         file_path = f"data/{folder_path}.yml"
 
         request_id = shared.utils.id_utils.make_request_id()
-        branch_name = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request_id)
+        branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request_id)
 
         branch_error = await github_service.create_branch(branch_name)
         if branch_error:

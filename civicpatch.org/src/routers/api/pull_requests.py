@@ -171,7 +171,7 @@ def get_router(api_key_header):
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
             request.jurisdiction_ocdid
         )
-        branch_name = shared.utils.id_utils.make_git_branch(
+        branch_name = shared.utils.id_utils.make_job_branch(
             request.jurisdiction_ocdid, request.request_id
         )
         normalized = [official.model_dump() for official in request.data]
@@ -292,7 +292,7 @@ def get_router(api_key_header):
     ):
         if request.data:
             file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
-            branch_name = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
+            branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request.request_id)
             normalized = [official.model_dump() for official in request.data]
             success = await github_service.update_pull_request_file(
                 branch_name=branch_name,

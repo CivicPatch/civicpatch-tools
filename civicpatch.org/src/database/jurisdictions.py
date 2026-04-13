@@ -319,7 +319,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
         rows = await cur.fetchall()
         history = []
         for row in rows:
-            branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, row[0])
+            branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, row[0])
             history.append(
                 {
                     "request_id": row[0],

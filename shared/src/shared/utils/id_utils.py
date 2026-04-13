@@ -193,6 +193,11 @@ def make_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
     return f"{request_id}__{slug}".lower()
 
 
+def make_job_branch(jurisdiction_ocdid: str, request_id: str) -> str:
+    folder = jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    return f"job/{folder}/{request_id}"
+
+
 def _parse_slug_to_parts(slug: str) -> list[str]:
     """
     Helper function to parse slug components into OCD jurisdiction parts.
@@ -270,22 +275,23 @@ _REQUEST_ID_RE = re.compile(
 
 def git_branch_to_parts(branch: str) -> dict:
     """
-    Converts a git branch name back to a jurisdiction ID.
+    Extracts the request_id from a git branch name.
 
-    Example:
-        "2025-09-25-1a2b__state_wa__place_seattle__government"
-        -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-        "2025-09-25-1a2b__state_il__county_dupage__place_naperville__government"
-        -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
-        "2025-09-25-1a2b__state_ca__county_marin__special_district__marin_city_community_services_district__governing_board"
-        -> "ocd-jurisdiction/country:us/state:ca/county:marin/special_district:marin_city_community_services_district/governing_board"
+    New format: "job/wa/local/place_seattle/2025-09-25-1a2b" -> {"request_id": "2025-09-25-1a2b"}
+    Legacy format: "2025-09-25-1a2b__state_wa__place_seattle__government"
+        -> {"request_id": "...", "jurisdiction_ocdid": "..."}
     """
+    if branch.startswith("job/"):
+        request_id = branch.split("/")[-1]
+        if not _REQUEST_ID_RE.match(request_id):
+            raise ValueError(f"Branch does not end with a recognised request ID: {branch}")
+        return {"request_id": request_id}
+    # Legacy format: uuid__slug (no job/ prefix) — kept for in-flight PRs
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
     if not _REQUEST_ID_RE.match(parts[0]):
         raise ValueError(f"Branch does not begin with a recognised request ID: {branch}")
-
     return {
         "request_id": parts[0],
         "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1]),
