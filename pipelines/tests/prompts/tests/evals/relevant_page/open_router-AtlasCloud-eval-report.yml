@@ -1,0 +1,7 @@
+cost_summary:
+  model: deepseek/deepseek-chat-v3.1
+  elapsed_seconds: 175.33
+  total_input_tokens: 72903
+  total_output_tokens: 10393
+  total_cost_usd: 0.03174425
+failed_cases: []

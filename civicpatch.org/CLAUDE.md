@@ -13,24 +13,30 @@ src/
   routers/
     api/            ← versioned API routes (one file per resource)
     frontend.py     ← page routes + permissions
-    auth.py         ← auth routes
+    sso.py          ← GitHub OAuth login/logout
+    webhooks/       ← inbound webhook handlers
   lib/              ← infrastructure wrappers (external APIs, storage, cache, etc.)
-    github/         ← GitHub API client, data sync, PR helpers
+    github/         ← GitHub API calls, PR helpers, data sync, JWT auth
     temporal/       ← Temporal client, workflows, activities
-    redis.py        ← Redis store
-    session.py      ← session management
-    ...
-  core/             ← domain orchestration (coordinates multiple data sources)
-    pr_sync.py      ← PR state sync
-    export.py       ← requests/people export
-    people_collector.py
-    candidate.py
-  database/         ← all DB queries (one file per domain)
+    auth.py         ← request auth middleware + permission enforcement
+    auth_session.py ← session cookie management
+    redis.py, pubsub.py, storage.py, files.py, hash.py, cache.py, lock.py, csv.py, sheets.py
+  core/             ← domain orchestration (coordinates lib/ + database/ calls)
+    pr_sync.py               ← PR state sync
+    merge.py                 ← PR merge background task
+    export.py                ← requests/people export
+    people_collector.py      ← artifact processing pipeline
+    candidate.py             ← scrape candidate selection
+    review_issue_resolution.py ← resolve review issues via GitHub PRs
+  database/         ← pure SQL queries (one file per domain)
   schemas/          ← Pydantic request/response models
-  utils/
+    common.py       ← shared enums + models (Identity, Role, PullRequest, …)
+    jobs.py         ← job-related request/response models
+    requests.py     ← cross-layer request models (HandleSubmitJobArtifactsRequest, …)
+  frontend/
+    vite.py         ← Jinja template helpers for Vite asset paths
   worker.py         ← Temporal worker entrypoint
   main.py           ← FastAPI app + lifespan
-  frontend/         ← JS/CSS/templates (served at /frontend)
 tests/
   unit/
   integration/
@@ -60,7 +66,7 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 
 ## Database conventions
 
-- All queries live in `database/database.py` — routers and services never write SQL directly
+- All queries live in `database/` — one file per domain; routers and `core/` never write SQL directly
 - Use the async connection pool (`get_pool()`) — never open a raw connection outside of it
 - DB functions are named after what they do: `get_jurisdiction_people`, `create_update_user`, etc.
 - **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `request_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
@@ -108,7 +114,6 @@ This API has a single consumer: the civicpatch frontend. Backward compatibility 
 ## Testing
 
 - Framework: pytest
-- `tests/factories/` for test data builders — never construct raw objects in test bodies
 - **Unit test business logic functions directly** — import and call them, mock only external boundaries (GitHub API, Redis, DB). Do not test logic through the HTTP layer.
 - **Route handler tests are thin** — verify the HTTP contract only (status code, response shape). Mock the background task function itself; don't re-test its logic in route tests.
 - Mock external services (GitHub, Redis, DB) at the service-call boundary — patch the module-level function, not internal implementation details.
