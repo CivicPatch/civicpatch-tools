@@ -15,7 +15,7 @@ import database.review_sessions as review_sessions_db
 import lib.cache as cache_service
 import lib.github.api as github_service
 import lib.storage as storage_service
-import core.pr_sync as pr_sync_service
+import core.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
 from schemas.common import Identity, Role, RouteCategory

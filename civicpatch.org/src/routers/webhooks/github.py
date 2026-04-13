@@ -14,7 +14,7 @@ import database.requests as requests_db
 import database.review_issues as review_issues_db
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
-from lib.github.data_sync import sync_people_by_ocdids
+from core.open_data_sync import sync_people_by_ocdids
 
 logger = logging.getLogger(__name__)
 

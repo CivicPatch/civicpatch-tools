@@ -7,7 +7,7 @@ import database.jobs
 import database.pull_requests as pull_requests_db
 import database.requests
 import lib.csv as csv_service
-import core.export as requests_export_service
+import core.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from schemas.common import Identity, Role, RouteCategory

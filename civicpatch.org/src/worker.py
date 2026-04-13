@@ -8,7 +8,7 @@ from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, Sch
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
-from lib.temporal.activities import sync_pr_state_activity, od_sync_activity
+from routers.temporal.activities import sync_pr_state_activity, od_sync_activity
 from lib.temporal.workflows import PRSyncWorkflow, OdSyncWorkflow, TASK_QUEUE
 from database.database import get_pool, close_pool
 

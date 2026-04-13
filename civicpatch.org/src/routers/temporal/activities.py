@@ -1,7 +1,7 @@
 from temporalio import activity
 
-import core.pr_sync as pr_sync
-import lib.github.data_sync as data_sync
+import core.pull_request_sync as pr_sync
+import core.open_data_sync as data_sync
 
 
 @activity.defn
