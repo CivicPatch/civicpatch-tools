@@ -23,29 +23,35 @@ import services.storage_service as storage_service
 import services.temporal_service as temporal_service
 import utils.file_utils
 import database.jobs
-from database.database import (
+from database.jobs import (
     get_job,
     get_job_result,
     get_job_data_json,
     get_job_status,
     get_job_github_run_id,
     get_jobs_with_errors,
-    get_review_issues_page,
-    get_review_issue_by_id,
-    get_request_jurisdiction,
-    get_issue_request_details,
     get_active_jobs,
-    get_unrecognized_roles_grouped,
-    resolve_unrecognized_role_group,
-    resolve_review_issue,
-    open_review_issue_pull_request,
-    update_job_pull_request_url,
-    update_job_pull_request_status,
     update_job_data,
     update_job_status,
     set_job_github_run_id,
 )
-from database.requests import register_request_with_job
+from database.review_issues import (
+    get_review_issues_page,
+    get_review_issue_by_id,
+    get_unrecognized_roles_grouped,
+    resolve_unrecognized_role_group,
+    resolve_review_issue,
+    open_review_issue_pull_request,
+)
+from database.pull_requests import (
+    update_job_pull_request_url,
+    update_job_pull_request_status,
+)
+from database.requests import (
+    register_request_with_job,
+    get_request_jurisdiction,
+    get_issue_request_details,
+)
 from job_service.people_collector import people_collector
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.requests import HandleSubmitJobArtifactsRequest, ResolveIssueRequest, ServerDetail

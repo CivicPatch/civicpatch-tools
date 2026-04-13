@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from database.database import get_jurisdiction
+from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
 from utils.auth_utils import get_optional_user

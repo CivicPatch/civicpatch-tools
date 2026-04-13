@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-import database.database as database
+import database.notes as database
 from schemas.common import CreateNoteRequest, Identity, NoteResponse, Role, RouteCategory
 from utils.auth_utils import require_route_access
 

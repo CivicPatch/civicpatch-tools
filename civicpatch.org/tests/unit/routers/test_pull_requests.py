@@ -74,7 +74,7 @@ def test_get_pull_requests_with_data_returns_paginated(client):
 @pytest.mark.unit
 def test_get_pull_request_review_returns_review_data(client):
     with patch(
-        "database.database.get_job_result",
+        "database.jobs.get_job_result",
         new_callable=AsyncMock,
         return_value={"review_json": {"flagged": [], "notes": "ok"}},
     ):
@@ -87,7 +87,7 @@ def test_get_pull_request_review_returns_review_data(client):
 @pytest.mark.unit
 def test_get_pull_request_review_returns_empty_when_no_result(client):
     with patch(
-        "database.database.get_job_result",
+        "database.jobs.get_job_result",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -106,12 +106,12 @@ def test_close_pull_request_returns_success(client):
             return_value=True,
         ),
         patch(
-            "database.database.get_user_id_by_provider",
+            "database.users.get_user_id_by_provider",
             new_callable=AsyncMock,
             return_value="user-id-123",
         ),
         patch(
-            "database.database.update_job_pull_request_status",
+            "database.pull_requests.update_job_pull_request_status",
             new_callable=AsyncMock,
         ),
     ):
@@ -170,7 +170,7 @@ def test_do_merge_clean_pr_writes_merged():
         patch("stores.redis_store.set", redis_set),
         patch("services.github.github_api_service.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
         patch("services.github.github_api_service.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("database.database.update_job_pull_request_status", new_callable=AsyncMock),
+        patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -215,7 +215,7 @@ def test_do_merge_behind_pr_updates_branch_and_merges():
         patch("services.github.github_api_service.get_pull_request_mergeability", mergeability),
         patch("services.github.github_api_service.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
         patch("services.github.github_api_service.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("database.database.update_job_pull_request_status", new_callable=AsyncMock),
+        patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -250,7 +250,7 @@ def test_do_merge_base_branch_modified_retries_and_succeeds():
         patch("services.github.github_api_service.merge_pull_request", merge),
         patch("services.github.github_api_service.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
         patch("asyncio.sleep", new_callable=AsyncMock),
-        patch("database.database.update_job_pull_request_status", new_callable=AsyncMock),
+        patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 

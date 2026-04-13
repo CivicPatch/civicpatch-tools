@@ -1,28 +1,38 @@
 """
-Integration tests for database functions that use dynamic SQL construction.
+Integration tests for database functions.
 
-These tests execute against the real dev database. Their purpose is not to assert
+These tests execute against the real test database. Their purpose is not to assert
 specific row counts or data — it's to prove the SQL compiles and executes without
-error before and after the sql.SQL() composition refactor.
+error, and that return types are correct. They serve as a safety net for structural
+refactors that move functions between modules.
 
 Run with:
-  mise run tcp -- -m integration
+  mise run tcp-integration
 """
 import pytest
 
-import database.database as db
+import database.jurisdictions as db_jurisdictions
+import database.jobs as db_jobs
+import database.notes as db_notes
 import database.people as db_people
 import database.pull_requests as db_pull_requests
+import database.requests as db_requests
+import database.review_issues as db_review_issues
+import database.summary as db_summary
+import database.users as db_users
+
+_FAKE_UUID = "00000000-0000-0000-0000-000000000000"
+_FAKE_OCDID = "ocd-jurisdiction/country:us/state:zz/place:nowhere/government"
 
 
 # ---------------------------------------------------------------------------
-# database.database — dynamic WHERE / SET clause functions
+# database.jurisdictions — dynamic WHERE / SET clause functions
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_search_jurisdictions_no_filter():
-    total, rows = await db.search_jurisdictions(state="ca")
+    total, rows = await db_jurisdictions.search_jurisdictions(state="ca")
     assert isinstance(total, int)
     assert isinstance(rows, list)
 
@@ -31,7 +41,7 @@ async def test_search_jurisdictions_no_filter():
 @pytest.mark.integration
 async def test_search_jurisdictions_with_search_string():
     """Exercises the branch that appends a LIKE clause to the WHERE list."""
-    total, rows = await db.search_jurisdictions(state="ca", search_string="oak")
+    total, rows = await db_jurisdictions.search_jurisdictions(state="ca", search_string="oak")
     assert isinstance(total, int)
     assert isinstance(rows, list)
 
@@ -39,7 +49,7 @@ async def test_search_jurisdictions_with_search_string():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_search_jurisdictions_with_pagination():
-    total, rows = await db.search_jurisdictions(state="ca", limit=5, skip=0)
+    total, rows = await db_jurisdictions.search_jurisdictions(state="ca", limit=5, skip=0)
     assert isinstance(total, int)
     assert len(rows) <= 5
 
@@ -47,7 +57,7 @@ async def test_search_jurisdictions_with_pagination():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_count_jobs_with_errors_no_filter():
-    result = await db.count_jobs_with_errors()
+    result = await db_jobs.count_jobs_with_errors()
     assert isinstance(result, int)
 
 
@@ -55,21 +65,21 @@ async def test_count_jobs_with_errors_no_filter():
 @pytest.mark.integration
 async def test_count_jobs_with_errors_with_state():
     """Exercises the branch that appends a LIKE clause."""
-    result = await db.count_jobs_with_errors(state_code="ca")
+    result = await db_jobs.count_jobs_with_errors(state_code="ca")
     assert isinstance(result, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_jobs_with_errors_no_filter():
-    rows = await db.get_jobs_with_errors()
+    rows = await db_jobs.get_jobs_with_errors()
     assert isinstance(rows, list)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_jobs_with_errors_with_state():
-    rows = await db.get_jobs_with_errors(state_code="ca")
+    rows = await db_jobs.get_jobs_with_errors(state_code="ca")
     assert isinstance(rows, list)
 
 
@@ -80,7 +90,7 @@ async def test_update_job_status_nonexistent_request_is_noop():
     Updating a non-existent request_id must not raise — the UPDATE just
     matches zero rows. Exercises the dynamic SET clause builder.
     """
-    await db.update_job_status(
+    await db_jobs.update_job_status(
         request_id="00000000-0000-0000-0000-000000000000",
         status="pending",
         progress=0,
@@ -91,7 +101,7 @@ async def test_update_job_status_nonexistent_request_is_noop():
 @pytest.mark.integration
 async def test_update_job_status_only_progress():
     """Exercises the branch where status is None (only progress in SET clause)."""
-    await db.update_job_status(
+    await db_jobs.update_job_status(
         request_id="00000000-0000-0000-0000-000000000000",
         progress=42,
     )
@@ -100,7 +110,7 @@ async def test_update_job_status_only_progress():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_requests_for_export_no_date_filter():
-    rows = await db.get_requests_for_export(state="ca", from_date=None, to_date=None)
+    rows = await db_requests.get_requests_for_export(state="ca", from_date=None, to_date=None)
     assert isinstance(rows, list)
 
 
@@ -108,7 +118,7 @@ async def test_get_requests_for_export_no_date_filter():
 @pytest.mark.integration
 async def test_get_requests_for_export_with_date_range():
     """Exercises both from_date and to_date appended to date_clauses."""
-    rows = await db.get_requests_for_export(
+    rows = await db_requests.get_requests_for_export(
         state="ca",
         from_date="2024-01-01",
         to_date="2099-12-31",
@@ -119,14 +129,14 @@ async def test_get_requests_for_export_with_date_range():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_unrecognized_roles_grouped():
-    rows = await db.get_unrecognized_roles_grouped()
+    rows = await db_review_issues.get_unrecognized_roles_grouped()
     assert isinstance(rows, list)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_review_issues_page_no_filter():
-    rows, total = await db.get_review_issues_page(issue_types=[], page=1, per_page=10)
+    rows, total = await db_review_issues.get_review_issues_page(issue_types=[], page=1, per_page=10)
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
@@ -135,7 +145,7 @@ async def test_get_review_issues_page_no_filter():
 @pytest.mark.integration
 async def test_get_review_issues_page_with_issue_types():
     """Exercises the IN clause and ORDER BY direction branches."""
-    rows, total = await db.get_review_issues_page(
+    rows, total = await db_review_issues.get_review_issues_page(
         issue_types=["unrecognized_role"],
         page=1,
         per_page=5,
@@ -143,20 +153,6 @@ async def test_get_review_issues_page_with_issue_types():
     )
     assert isinstance(rows, list)
     assert isinstance(total, int)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_job_events_no_filter():
-    rows = await db.get_job_events(event_type="unrecognized_role")
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_job_events_with_state():
-    rows = await db.get_job_events(event_type="unrecognized_role", state_code="ca")
-    assert isinstance(rows, list)
 
 
 # ---------------------------------------------------------------------------
@@ -227,3 +223,301 @@ async def test_list_open_pull_requests_by_jurisdiction():
     )
     assert isinstance(rows, list)
     assert isinstance(total, int)
+
+
+# ---------------------------------------------------------------------------
+# database.users
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_user_not_found():
+    result = await db_users.get_user("github", "nonexistent-user-99999")
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_user_by_api_key_not_found():
+    result = await db_users.get_user_by_api_key("fake-api-key-that-does-not-exist")
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_user_by_api_key_id_not_found():
+    result = await db_users.get_user_by_api_key_id(0)  # api_key_id is an integer
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_server_detail_by_active_api_key_not_found():
+    result = await db_users.get_server_detail_by_active_api_key("fake-api-key-that-does-not-exist")
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_api_keys_for_user_not_found():
+    result = await db_users.get_api_keys_for_user("github", "nonexistent-user-99999")
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_user_details_not_found():
+    result = await db_users.get_user_details("github", "nonexistent-user-99999")
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_user_id_by_provider_not_found():
+    result = await db_users.get_user_id_by_provider("github", "nonexistent-user-99999")
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_api_usage_for_user_not_found():
+    """Returns zeros when no usage limit row exists for the user."""
+    result = await db_users.get_api_usage_for_user("github", "nonexistent-user-99999")
+    assert isinstance(result, dict)
+    assert "daily_limit" in result
+    assert "usage_count" in result
+
+
+# ---------------------------------------------------------------------------
+# database.jurisdictions — jurisdictions
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_states():
+    result = await db_jurisdictions.get_states()
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdiction_not_found():
+    result = await db_jurisdictions.get_jurisdiction(_FAKE_OCDID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdiction_geom_not_found():
+    result = await db_jurisdictions.get_jurisdiction_geom(_FAKE_OCDID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdictions_by_ocdids_empty():
+    result = await db_jurisdictions.get_jurisdictions_by_ocdids([])
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdiction_history_not_found():
+    result = await db_jurisdictions.get_jurisdiction_history(_FAKE_OCDID)
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdiction_updates():
+    result = await db_jurisdictions.get_jurisdiction_updates()
+    assert isinstance(result, dict)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_geojson_by_latlong():
+    result = await db_jurisdictions.get_geojson_by_latlong(37.8, -122.3)
+    assert isinstance(result, dict)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_people_by_geo():
+    result = await db_jurisdictions.get_people_by_geo(37.8, -122.3)
+    assert isinstance(result, dict)
+
+
+# ---------------------------------------------------------------------------
+# database.jobs — jobs
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_list_jobs():
+    result = await db_jobs.list_jobs()
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_job_not_found():
+    result = await db_jobs.get_job(_FAKE_UUID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_active_jobs():
+    rows, total = await db_jobs.get_active_jobs()
+    assert isinstance(rows, list)
+    assert isinstance(total, int)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_active_jobs_with_state():
+    rows, total = await db_jobs.get_active_jobs(state_code="ca")
+    assert isinstance(rows, list)
+    assert isinstance(total, int)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_active_job_jurisdiction_ocdids():
+    result = await db_jobs.get_active_job_jurisdiction_ocdids()
+    assert isinstance(result, set)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_job_status_not_found():
+    result = await db_jobs.get_job_status(_FAKE_UUID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_job_github_run_id_not_found():
+    result = await db_jobs.get_job_github_run_id(_FAKE_UUID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_job_data_json_not_found():
+    result = await db_jobs.get_job_data_json(_FAKE_UUID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_job_result_not_found():
+    result = await db_jobs.get_job_result(_FAKE_UUID)
+    assert result is None
+
+
+# ---------------------------------------------------------------------------
+# database.people — people
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_filter_existing_person_ids_empty():
+    result = await db_people.filter_existing_person_ids([])
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_jurisdiction_people_not_found():
+    result = await db_people.get_jurisdiction_people(_FAKE_OCDID)
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_all_people_for_jurisdiction_not_found():
+    total, rows = await db_people.get_all_people_for_jurisdiction(_FAKE_OCDID, limit=10, offset=0)
+    assert isinstance(total, int)
+    assert isinstance(rows, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_people_for_jurisdiction_not_found():
+    result = await db_people.get_people_for_jurisdiction(_FAKE_OCDID)
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_people_by_state_not_found():
+    result = await db_people.get_people_by_state("zz")
+    assert isinstance(result, list)
+
+
+# ---------------------------------------------------------------------------
+# database.requests — requests / pull requests
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_request_jurisdiction_not_found():
+    result = await db_requests.get_request_jurisdiction(_FAKE_UUID)
+    assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_issue_request_details_empty():
+    result = await db_requests.get_issue_request_details([])
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_open_pr_request_ids():
+    result = await db_pull_requests.get_open_pr_request_ids()
+    assert isinstance(result, dict)
+
+
+# ---------------------------------------------------------------------------
+# database.review_issues — review issues
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_review_issue_by_id_not_found():
+    result = await db_review_issues.get_review_issue_by_id(_FAKE_UUID)
+    assert result is None
+
+
+# ---------------------------------------------------------------------------
+# database.notes — notes
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_notes_for_jurisdiction_not_found():
+    total, notes = await db_notes.get_notes_for_jurisdiction(_FAKE_OCDID, limit=10, offset=0)
+    assert isinstance(total, int)
+    assert isinstance(notes, list)
+
+
+# ---------------------------------------------------------------------------
+# database.summary — summary
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_summary_counts():
+    result = await db_summary.get_summary_counts(include_issues=True)
+    assert isinstance(result, dict)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_summary_counts_without_issues():
+    result = await db_summary.get_summary_counts(include_issues=False)
+    assert isinstance(result, dict)

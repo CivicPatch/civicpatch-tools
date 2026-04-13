@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Depends, HTTPException
 
-import database.database as database
+import database.users as database
 from utils.auth_utils import get_user 
 from schemas.common import Identity
 

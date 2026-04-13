@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from database.database import get_summary_counts
+from database.summary import get_summary_counts
 from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access
 

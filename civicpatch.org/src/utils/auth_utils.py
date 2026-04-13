@@ -4,7 +4,7 @@ from typing import cast, List, Optional
 from fastapi import Depends, HTTPException, Request, Security, WebSocket
 from fastapi.security import APIKeyCookie, APIKeyHeader
 
-import database.database as database
+import database.users as database
 import environment
 from schemas.common import Identity, Role, RouteCategory
 from services import session_service

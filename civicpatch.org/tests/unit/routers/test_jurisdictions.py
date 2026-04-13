@@ -32,7 +32,7 @@ def test_get_jurisdiction_states_returns_list(client):
 @pytest.mark.unit
 def test_get_jurisdictions_by_ocdids_returns_data(client):
     with patch(
-        "database.database.get_jurisdictions_by_ocdids",
+        "database.jurisdictions.get_jurisdictions_by_ocdids",
         new_callable=AsyncMock,
         return_value=[{"id": "ocd-jurisdiction/country:us/state:ca/place:oakland", "name": "Oakland"}],
     ):
@@ -50,7 +50,7 @@ def test_get_jurisdictions_by_ocdids_returns_data(client):
 @pytest.mark.unit
 def test_get_jurisdiction_history_returns_data(client):
     with patch(
-        "database.database.get_jurisdiction_history",
+        "database.jurisdictions.get_jurisdiction_history",
         new_callable=AsyncMock,
         return_value=[{"request_id": "req-1", "status": "complete"}],
     ):
@@ -67,7 +67,7 @@ def test_get_jurisdiction_history_returns_data(client):
 @pytest.mark.unit
 def test_get_jurisdiction_history_returns_404_when_none(client):
     with patch(
-        "database.database.get_jurisdiction_history",
+        "database.jurisdictions.get_jurisdiction_history",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -82,7 +82,7 @@ def test_get_jurisdiction_history_returns_404_when_none(client):
 @pytest.mark.unit
 def test_get_jurisdiction_returns_data(client):
     with patch(
-        "database.database.get_jurisdiction",
+        "database.jurisdictions.get_jurisdiction",
         new_callable=AsyncMock,
         return_value={"data": {"id": "ocd-jurisdiction/country:us/state:ca/place:oakland", "name": "Oakland"}, "geo_center": None},
     ):
@@ -99,7 +99,7 @@ def test_get_jurisdiction_returns_data(client):
 @pytest.mark.unit
 def test_get_jurisdiction_returns_404_when_not_found(client):
     with patch(
-        "database.database.get_jurisdiction",
+        "database.jurisdictions.get_jurisdiction",
         new_callable=AsyncMock,
         return_value=None,
     ):

@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from fastapi_sso import GithubSSO
 
-import database.database as database
+import database.users as database
 from schemas.common import Identity
 from services import session_service
 from services.github import github_api_service as github_service

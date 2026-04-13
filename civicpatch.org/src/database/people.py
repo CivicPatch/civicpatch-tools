@@ -1,11 +1,12 @@
 import os
 import logging
-from typing import Any, LiteralString
+from typing import Any, List, LiteralString
 from database.database import get_pool
 from psycopg import sql
 import services.storage_service
 import shared.utils.data_path_utils
 import shared.utils.url_utils
+from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
 
@@ -126,3 +127,145 @@ async def get_people_data_by_request_ids(
         }
 
     return results
+
+
+async def filter_existing_person_ids(ids: list[str]) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id FROM people WHERE id = ANY(%s)",
+            (ids,),
+        )
+        rows = await cur.fetchall()
+    return [row[0] for row in rows]
+
+
+async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+                SELECT data FROM people
+                WHERE jurisdiction_ocdid = %s
+            """,
+            (jurisdiction_ocdid,),
+        )
+        rows = await cur.fetchall()
+        people = [Person(**row[0]) for row in rows]
+    return people
+
+
+async def get_all_people_for_jurisdiction(
+    jurisdiction_ocdid: str, limit: int, offset: int
+) -> tuple[int, list[dict]]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT COUNT(*) OVER(), id::text, data, status
+            FROM people
+            WHERE jurisdiction_ocdid = %s
+            ORDER BY
+                CASE WHEN status = 'current' THEN 0 ELSE 1 END,
+                (data->>'updated_at') DESC NULLS LAST
+            LIMIT %s OFFSET %s
+            """,
+            (jurisdiction_ocdid, limit, offset),
+        )
+        rows = await cur.fetchall()
+    if not rows:
+        return 0, []
+    total = rows[0][0]
+    return total, [{**row[2], "_id": row[1], "status": row[3]} for row in rows]
+
+
+async def delete_person(person_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM people WHERE id = %s",
+            (person_id,),
+        )
+
+
+async def bulk_update_people(people_records: list):
+    if not people_records:
+        return
+
+    jurisdictions: dict = {}
+    for record in people_records:
+        person_id, jurisdiction_ocdid = record[0], record[1]
+        if jurisdiction_ocdid not in jurisdictions:
+            jurisdictions[jurisdiction_ocdid] = []
+        jurisdictions[jurisdiction_ocdid].append(person_id)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        insert_query = """
+            INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
+            VALUES (%s, %s, %s, %s, 'current')
+            ON CONFLICT (id)
+            DO UPDATE SET
+                data = EXCLUDED.data,
+                updated_at = EXCLUDED.updated_at,
+                status = 'current'
+        """
+        await cur.executemany(insert_query, people_records)
+
+        for jurisdiction_ocdid, incoming_ids in jurisdictions.items():
+            await cur.execute(
+                """
+                UPDATE people
+                SET status = 'past'
+                WHERE jurisdiction_ocdid = %s
+                  AND id != ALL(%s)
+                """,
+                (jurisdiction_ocdid, incoming_ids)
+            )
+
+
+async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str | None = None) -> List[Person]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        if status is not None:
+            await cur.execute(
+                """
+                SELECT data FROM people
+                WHERE jurisdiction_ocdid = %s AND status = %s
+                """,
+                (jurisdiction_ocdid, status),
+            )
+        else:
+            await cur.execute(
+                """
+                SELECT data FROM people
+                WHERE jurisdiction_ocdid = %s
+                """,
+                (jurisdiction_ocdid,),
+            )
+        rows = await cur.fetchall()
+        people = [Person(**row[0]) for row in rows]
+    return people
+
+
+async def get_people_by_state(state: str) -> list[dict]:
+    state_prefix = f"ocd-jurisdiction/country:us/state:{state.lower()}%"
+    pool = await get_pool()
+    rows = []
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, data
+            FROM people
+            WHERE jurisdiction_ocdid LIKE %s
+              AND status = 'current'
+            ORDER BY jurisdiction_ocdid
+            """,
+            (state_prefix,),
+        )
+        while True:
+            batch = await cur.fetchmany(200)
+            if not batch:
+                break
+            rows.extend(batch)
+    return [{"jurisdiction_ocdid": r[0], **r[1]} for r in rows]

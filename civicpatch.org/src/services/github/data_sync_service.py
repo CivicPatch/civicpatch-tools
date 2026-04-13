@@ -8,7 +8,8 @@ from typing import List
 import dateutil.parser
 import yaml
 
-import database.database as database
+import database.jurisdictions as jurisdictions_db
+import database.people as people_db
 import services.github.github_api_service as github_service
 import shared
 import shared.utils.config_utils as config_utils
@@ -104,8 +105,8 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
 
     logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
     if inactive_ocdids:
-        await database.mark_jurisdictions_inactive(inactive_ocdids)
-    await database.bulk_update_jurisdictions(jurisdictions)
+        await jurisdictions_db.mark_jurisdictions_inactive(inactive_ocdids)
+    await jurisdictions_db.bulk_update_jurisdictions(jurisdictions)
 
 
 async def sync_people_by_ocdids(jurisdiction_ocdids):
@@ -128,7 +129,7 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
     results = await asyncio.gather(*[_fetch(ocdid) for ocdid in jurisdiction_ocdids])
     people_list = [row for rows in results for row in rows]
     logger.debug(f"Prepared {len(people_list)} people for bulk update.")
-    await database.bulk_update_people(people_list)
+    await people_db.bulk_update_people(people_list)
 
 
 async def od_sync():
@@ -146,7 +147,7 @@ async def od_sync():
         all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
         await asyncio.sleep(0)
 
-    local_jurisdictions = await database.get_jurisdiction_updates()
+    local_jurisdictions = await jurisdictions_db.get_jurisdiction_updates()
     logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
 
     jurisdictions_to_update_metadata = []
@@ -171,7 +172,7 @@ async def od_sync():
     ocdids_to_delete = local_ocdids - remote_ocdids
     if ocdids_to_delete:
         logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
-        await database.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
+        await jurisdictions_db.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
 
     logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
     logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")

@@ -7,7 +7,8 @@ from typing import Optional
 import uuid
 from schemas.common import Identity, Role, RouteCategory
 
-import database.database as database
+import database.people as database
+import database.jurisdictions as jurisdictions_db
 import services.github.github_api_service as github_service
 import shared.utils.id_utils
 from shared.utils.person_id_utils import resolve_people_ids
@@ -70,7 +71,7 @@ def get_router() -> APIRouter:
         lat: float,
         long: float,
     ):
-        people = await database.get_people_by_geo(lat, long)
+        people = await jurisdictions_db.get_people_by_geo(lat, long)
         return {
             "data": people
         }

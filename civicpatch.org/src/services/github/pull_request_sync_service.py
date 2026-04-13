@@ -1,6 +1,6 @@
 import logging
 
-import database.database as database
+import database.jobs as jobs_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import services.github.github_api_service as github_service
@@ -27,9 +27,9 @@ async def sync_single_pr_state(request_id: str):
     if not pr_data:
         return
     if pr_data.get("merged"):
-        await database.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
+        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
     elif pr_data.get("state") == PullRequestStatus.CLOSED:
-        await database.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
+        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
 
 
 async def sync_open_pr_state():
@@ -48,7 +48,7 @@ async def sync_open_pr_state():
 
 
 async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
-    result = await database.get_job_result(request_id)
+    result = await jobs_db.get_job_result(request_id)
     if result is None:
         return
 
@@ -60,13 +60,13 @@ async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
         if data is None:
             logger.warning("maybe_backfill_job_result: no data file found for %s", request_id)
         else:
-            await database.update_job_data(request_id, data)
+            await jobs_db.update_job_data(request_id, data)
             logger.info("maybe_backfill_job_result: data_json set for %s", request_id)
 
     if not result["review_json"]:
         workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
         review_json = _derive_review_step(workflow_context)
-        await database.update_job_review_json(request_id, review_json)
+        await jobs_db.update_job_review_json(request_id, review_json)
         logger.info("maybe_backfill_job_result: review_json set for %s", request_id)
 
 
@@ -106,7 +106,7 @@ async def _fetch_open_github_prs() -> dict[str, dict]:
 
 async def _sync_known_prs(github_prs: dict[str, dict]):
     for request_id, pr_info in github_prs.items():
-        updated = await database.update_job_pull_request_status(
+        updated = await pull_requests_db.update_job_pull_request_status(
             request_id, PullRequestStatus.OPEN, None, pull_request_url=pr_info["url"]
         )
         if not updated:
@@ -125,7 +125,7 @@ async def _close_stale_prs(github_request_ids: set[str]):
     if not github_request_ids:
         logger.warning("_close_stale_prs: skipping, github_request_ids is empty")
         return
-    db_open_jobs = await database.get_open_pr_request_ids()
+    db_open_jobs = await pull_requests_db.get_open_pr_request_ids()
     stale_ids = [rid for rid in db_open_jobs if rid not in github_request_ids]
     if not stale_ids:
         return
@@ -141,4 +141,4 @@ async def _close_stale_prs(github_request_ids: set[str]):
             elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:
                 status = PullRequestStatus.CLOSED
             if status:
-                await database.update_job_pull_request_status(request_id, status, merged_at)
+                await pull_requests_db.update_job_pull_request_status(request_id, status, merged_at)
