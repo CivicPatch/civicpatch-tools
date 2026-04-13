@@ -31,7 +31,7 @@ def get_router():
         if api_key_owner is None:
             raise HTTPException(status_code=404, detail="API key not found")
 
-        if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
+        if api_key_owner["provider"] != user.provider or api_key_owner["provider_user_id"] != user.provider_user_id:
             raise HTTPException(status_code=401, detail="User does not own this resource")
 
         await database.revoke_api_key(api_key_id)
@@ -46,7 +46,7 @@ def get_router():
         if api_key_owner is None:
             raise HTTPException(status_code=404, detail="API key not found")
 
-        if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
+        if api_key_owner["provider"] != user.provider or api_key_owner["provider_user_id"] != user.provider_user_id:
             raise HTTPException(status_code=401, detail="User does not own this resource")
 
         await database.delete_api_key(api_key_id)
