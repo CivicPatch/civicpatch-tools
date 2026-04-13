@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 
 import lib.github.api as github_service
 from lib.github.pr import PrAuthor
-import core.candidate as candidate_service
+import core.jurisdiction_scrape_candidate as candidate_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import lib.files as file_utils

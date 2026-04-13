@@ -84,6 +84,28 @@ async def open_review_issue_pull_request(issue_id: str, pull_request_url: str) -
         )
 
 
+async def get_review_issue_by_pull_request_url(pull_request_url: str) -> dict | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, status FROM review_issues WHERE pull_request_url = %s",
+            (pull_request_url,),
+        )
+        row = await cur.fetchone()
+    if row is None:
+        return None
+    return {"id": row[0], "status": row[1]}
+
+
+async def reopen_review_issue(issue_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_issues SET status = %s, pull_request_url = NULL WHERE id = %s",
+            (ReviewIssueStatus.PENDING, issue_id),
+        )
+
+
 async def upsert_review_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return

@@ -352,7 +352,7 @@ async def get_pull_request_workflow_context(
     """Fetch and parse workflow_context.json from a specific PR branch."""
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     file_path = f"data_source/{folder}/workflow_context.json"
-    branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, request_id)
+    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None
@@ -369,7 +369,7 @@ async def get_pull_request_file_yaml(
     request_id: str, jurisdiction_ocdid: str, file_path: str
 ) -> list | dict | None:
     """Fetch and parse a YAML file from a specific branch."""
-    branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, request_id)
+    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None

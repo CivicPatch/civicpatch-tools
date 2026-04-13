@@ -47,9 +47,14 @@ async def sync_open_pr_state():
         await lock_service.release_lock(_SYNC_LOCK_KEY)
 
 
-async def maybe_backfill_job_result(request_id: str, jurisdiction_ocdid: str):
+async def maybe_backfill_job_result(request_id: str):
     result = await jobs_db.get_job_result(request_id)
     if result is None:
+        return
+
+    jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+    if not jurisdiction_ocdid:
+        logger.warning("maybe_backfill_job_result: no jurisdiction found for %s", request_id)
         return
 
     if result["data"] is None:
@@ -77,15 +82,6 @@ def _derive_review_step(workflow_context) -> dict:
         .get("review_output_step", {})
 
 
-async def register_and_sync_pr_job(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    pr_url: str | None,
-    provider: str,
-):
-    await requests_db.register_foreign_request(request_id, jurisdiction_ocdid, pr_url, provider)
-    await maybe_backfill_job_result(request_id, jurisdiction_ocdid)
-
 
 async def _fetch_open_github_prs() -> dict[str, dict]:
     github_prs: dict[str, dict] = {}
@@ -95,10 +91,9 @@ async def _fetch_open_github_prs() -> dict[str, dict]:
             parts = shared.utils.id_utils.git_branch_to_parts(branch_name)
             github_prs[parts["request_id"]] = {
                 "url": pr.get("html_url"),
-                "jurisdiction_ocdid": parts["jurisdiction_ocdid"],
                 "pr_number": pr.get("number"),
             }
-        except (ValueError, KeyError):
+        except ValueError:
             pass
     logger.info("sync_open_pr_state: found %d open PRs on GitHub", len(github_prs))
     return github_prs
@@ -109,16 +104,10 @@ async def _sync_known_prs(github_prs: dict[str, dict]):
         updated = await pull_requests_db.update_job_pull_request_status(
             request_id, PullRequestStatus.OPEN, None, pull_request_url=pr_info["url"]
         )
-        if not updated:
-            logger.info("sync_open_pr_state: no job found for %s, creating", request_id)
-            await register_and_sync_pr_job(
-                request_id,
-                pr_info["jurisdiction_ocdid"],
-                pr_info["url"],
-                provider="github_sync",
-            )
+        if updated:
+            await maybe_backfill_job_result(request_id)
         else:
-            await maybe_backfill_job_result(request_id, pr_info["jurisdiction_ocdid"])
+            logger.debug("sync_open_pr_state: no job found for %s, skipping", request_id)
 
 
 async def _close_stale_prs(github_request_ids: set[str]):

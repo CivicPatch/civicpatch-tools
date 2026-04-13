@@ -3,6 +3,7 @@ from shared.utils.id_utils import (  # Replace `your_module` with the actual mod
     parse_jurisdiction_ocdid,
     jurisdiction_ocdid_to_folder,
     make_git_branch,
+    make_job_branch,
     git_branch_to_parts,
     slug_to_jurisdiction_ocdid,
 )
@@ -101,11 +102,37 @@ def test_make_git_branch_encodes_tilde():
 
 
 def test_git_branch_roundtrips_tilde():
+    # make_git_branch (file naming) encodes tilde; legacy git_branch_to_parts decodes it
     jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
     request_id = "2025-09-25-1a2b"
-    branch = make_git_branch(jurisdiction_ocdid, request_id)
-    parts = git_branch_to_parts(branch)
+    branch = make_git_branch(jurisdiction_ocdid, request_id)  # returns uuid__slug, no job/ prefix
+    parts = git_branch_to_parts(branch)  # legacy path: returns jurisdiction_ocdid
     assert parts["jurisdiction_ocdid"] == jurisdiction_ocdid
+
+
+# Tests for make_job_branch
+def test_make_job_branch():
+    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    request_id = "2025-09-25-1a2b"
+    expected = "job/wa/local/place_seattle/2025-09-25-1a2b"
+    assert make_job_branch(jurisdiction_ocdid, request_id) == expected
+
+
+def test_git_branch_to_parts_handles_job_prefix():
+    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    request_id = "2025-09-25-1a2b"
+    branch = make_job_branch(jurisdiction_ocdid, request_id)
+    parts = git_branch_to_parts(branch)
+    assert parts["request_id"] == request_id
+    assert "jurisdiction_ocdid" not in parts
+
+
+def test_git_branch_to_parts_handles_legacy_no_prefix():
+    # Old-format branches (no job/ prefix) must still parse for in-flight PRs
+    branch = "2025-09-25-1a2b__state_wa__place_seattle__government"
+    parts = git_branch_to_parts(branch)
+    assert parts["request_id"] == "2025-09-25-1a2b"
+    assert parts["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 
 
 # Tests for slug_to_jurisdiction_ocdid

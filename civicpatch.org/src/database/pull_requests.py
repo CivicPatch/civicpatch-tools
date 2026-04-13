@@ -187,6 +187,23 @@ async def get_open_pr_request_ids() -> dict[str, str]:
     return {r[0]: r[1] for r in rows}
 
 
+async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT r.jurisdiction_ocdid
+            FROM pull_requests pr
+            JOIN requests r ON r.id = pr.request_id
+            WHERE pr.status = 'open'
+              AND r.jurisdiction_ocdid LIKE %s
+            """,
+            (f"%state:{state_code}%",),
+        )
+        rows = await cur.fetchall()
+    return {row[0] for row in rows}
+
+
 async def bulk_close_stale_prs(request_ids: List[str]):
     if not request_ids:
         return

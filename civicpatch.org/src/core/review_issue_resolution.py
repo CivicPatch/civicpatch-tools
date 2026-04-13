@@ -29,7 +29,7 @@ async def resolve_role_issue(issue: dict, body: ResolveIssueRequest, author: PrA
     content = yaml.dump(merged.model_dump(), sort_keys=False, allow_unicode=True)
 
     pr_number, pull_request_url = await pr_service.open_attributed_pr(
-        branch_name=f"resolve-role-{issue['id'][:8]}",
+        branch_name=f"resolve/role/{issue['id']}",
         file_path=config_path,
         content=content,
         commit_message=f"Add role: {issue['issue_key']}",
@@ -70,7 +70,7 @@ async def resolve_dead_url_issue(issue: dict, new_url: str | None, comment: str 
 
     content = yaml.dump(data.model_dump(mode="python", exclude_none=True), sort_keys=False, allow_unicode=True)
     pr_number, pull_request_url = await pr_service.open_attributed_pr(
-        branch_name=f"resolve-url-{issue['id'][:8]}",
+        branch_name=f"resolve/url/{issue['id']}",
         file_path=file_path,
         content=content,
         commit_message=f"Fix dead URL: {jurisdiction_ocdid}",

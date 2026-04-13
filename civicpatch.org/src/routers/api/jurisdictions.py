@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 import database.jurisdictions as database
 
-import core.candidate as candidate_service
+import core.jurisdiction_scrape_candidate as candidate_service
 import shared.utils.config_utils as config_utils
 from schemas.requests import JurisdictionsByOcdidsRequest
 

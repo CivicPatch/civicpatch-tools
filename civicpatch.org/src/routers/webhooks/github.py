@@ -10,9 +10,10 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
 from database.pull_requests import update_job_pull_request_status
+import database.requests as requests_db
+import database.review_issues as review_issues_db
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
-from core.pr_sync import register_and_sync_pr_job
 from lib.github.data_sync import sync_people_by_ocdids
 
 logger = logging.getLogger(__name__)
@@ -23,8 +24,8 @@ def _verify_signature(body: bytes, secret: str, signature: str) -> bool:
     return hmac.compare_digest(expected, signature)
 
 
-def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None, str | None] | None:
-    """Returns (request_id, jurisdiction_ocdid, status, merged_at, pr_url) or None to ignore."""
+def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str | None, str | None] | None:
+    """Returns (request_id, status, merged_at, pr_url) or None to ignore."""
     action = payload.get("action")
     pr = payload.get("pull_request", {})
     branch_name = pr.get("head", {}).get("ref", "")
@@ -37,14 +38,13 @@ def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None
         return None
 
     request_id = parts["request_id"]
-    jurisdiction_ocdid = parts["jurisdiction_ocdid"]
 
     if action in ("opened", "reopened"):
-        return request_id, jurisdiction_ocdid, PullRequestStatus.OPEN, None, pr_url
+        return request_id, PullRequestStatus.OPEN, None, pr_url
     if action == "closed" and pr.get("merged"):
-        return request_id, jurisdiction_ocdid, PullRequestStatus.MERGED, pr.get("merged_at"), pr_url
+        return request_id, PullRequestStatus.MERGED, pr.get("merged_at"), pr_url
     if action == "closed":
-        return request_id, jurisdiction_ocdid, PullRequestStatus.CLOSED, None, pr_url
+        return request_id, PullRequestStatus.CLOSED, None, pr_url
 
     # assigned, labeled, synchronized, converted_to_draft, etc. — intentionally ignored
     logger.debug("Ignoring pull_request action: %s", action)
@@ -52,19 +52,49 @@ def _parse_pr_status(payload: dict[str, Any]) -> tuple[str, str, str, str | None
 
 
 
-async def _handle_pull_request_event(payload: dict[str, Any]):
+async def _handle_job_pr_event(payload: dict[str, Any]) -> None:
     result = _parse_pr_status(payload)
     if result is None:
         return
-    request_id, jurisdiction_ocdid, status, merged_at, pr_url = result
-    updated = await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
+    request_id, status, merged_at, pr_url = result
+    await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
     if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
         await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
     if status == PullRequestStatus.MERGED:
-        await sync_people_by_ocdids([jurisdiction_ocdid])
-    if not updated and status == PullRequestStatus.OPEN:
-        logger.info("Webhook: no job found for %s, creating", request_id)
-        await register_and_sync_pr_job(request_id, jurisdiction_ocdid, pr_url, provider="github_webhook")
+        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+        if jurisdiction_ocdid:
+            await sync_people_by_ocdids([jurisdiction_ocdid])
+
+
+async def _handle_review_issue_pr_event(payload: dict[str, Any]) -> None:
+    action = payload.get("action")
+    if action != "closed":
+        return
+    pr = payload.get("pull_request", {})
+    pr_url = pr.get("html_url")
+    issue = await review_issues_db.get_review_issue_by_pull_request_url(pr_url)
+    if issue is None:
+        logger.warning("Webhook: no review issue found for resolution PR %s", pr_url)
+        return
+    if pr.get("merged"):
+        await review_issues_db.resolve_review_issue(issue["id"])
+        logger.info("Webhook: resolved review issue %s (PR merged)", issue["id"])
+    else:
+        await review_issues_db.reopen_review_issue(issue["id"])
+        logger.info("Webhook: reopened review issue %s (PR closed without merge)", issue["id"])
+
+
+async def _handle_pull_request_event(payload: dict[str, Any]) -> None:
+    branch = payload.get("pull_request", {}).get("head", {}).get("ref", "")
+    branch_type = branch.split("/")[0] if "/" in branch else None
+
+    match branch_type:
+        case "job":
+            await _handle_job_pr_event(payload)
+        case "resolve":
+            await _handle_review_issue_pr_event(payload)
+        case _:
+            logger.debug("Ignoring PR on unrecognized branch: %r", branch)
 
 
 def get_router() -> APIRouter:
