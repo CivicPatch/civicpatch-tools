@@ -3,7 +3,7 @@ import logging
 import time
 from typing import AsyncGenerator
 
-from stores import redis_store
+import lib.redis as redis_store
 
 logger = logging.getLogger(__name__)
 

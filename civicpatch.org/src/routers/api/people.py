@@ -9,7 +9,7 @@ from schemas.common import Identity, Role, RouteCategory
 
 import database.people as database
 import database.jurisdictions as jurisdictions_db
-import services.github.github_api_service as github_service
+import lib.github.api as github_service
 import shared.utils.id_utils
 from shared.utils.person_id_utils import resolve_people_ids
 import shared.utils.name_utils

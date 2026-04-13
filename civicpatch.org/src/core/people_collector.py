@@ -2,13 +2,13 @@ import os
 import json
 
 from typing import List, Dict
-from services import google_sheets_service
+import lib.sheets as google_sheets_service
 from schemas.requests import HandleSubmitJobArtifactsRequest
 from schemas.responses import SubmitJobArtifactsResponse
 import utils.file_utils as file_utils
 import shared.utils.id_utils
-import services.storage_service as storage_service
-import services.github.github_api_service as github_service
+import lib.storage as storage_service
+import lib.github.api as github_service
 from database.jobs import update_job_data, update_job_review_json, update_job_status
 from database.review_issues import upsert_review_issue
 from shared.utils.statuses import JobStatus

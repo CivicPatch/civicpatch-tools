@@ -1,4 +1,4 @@
-from stores import redis_store
+import lib.redis as redis_store
 
 
 async def acquire_lock(key: str, ttl: int) -> bool:

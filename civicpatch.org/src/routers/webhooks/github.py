@@ -12,8 +12,8 @@ from shared.utils.statuses import PullRequestStatus
 from database.pull_requests import update_job_pull_request_status
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
-from services.github.pull_request_sync_service import register_and_sync_pr_job
-from services.github.data_sync_service import sync_people_by_ocdids
+from core.pr_sync import register_and_sync_pr_job
+from lib.github.data_sync import sync_people_by_ocdids
 
 logger = logging.getLogger(__name__)
 

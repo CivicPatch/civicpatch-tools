@@ -1,8 +1,8 @@
 import asyncio
 import database.people
 import database.requests
-import services.csv_service as csv_service
-import services.github.github_api_service as github_service
+import lib.csv as csv_service
+import lib.github.api as github_service
 import shared.utils.id_utils
 
 PEOPLE_CSV_FIELDNAMES = [

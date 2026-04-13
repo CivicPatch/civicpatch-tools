@@ -488,6 +488,66 @@ async def test_get_open_pr_request_ids():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_upsert_review_issue_unrecognized_role():
+    """Exercises the INSERT ... ON CONFLICT path; catches placeholder count mismatches."""
+    await db_review_issues.upsert_review_issue(
+        "test-request-id",
+        "unrecognized_role",
+        [{"role": "grand_poobah", "person_name": "Alice"}],
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_upsert_review_issue_dead_url():
+    await db_review_issues.upsert_review_issue(
+        "test-request-id",
+        "dead_url",
+        [{"url": "https://example.com/test"}],
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_upsert_review_issue_conflict_preserves_pr_opened():
+    """A new request for an issue already in pr_opened must not reset it to pending."""
+    from database.review_issues import ReviewIssueStatus
+
+    await db_review_issues.upsert_review_issue(
+        "test-request-id-1",
+        "unrecognized_role",
+        [{"role": "archduke", "person_name": "Bob"}],
+    )
+
+    # Simulate the issue having a PR opened for it
+    from database.database import get_pool
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE review_issues SET status = %s WHERE issue_type = %s AND issue_key = %s",
+            (ReviewIssueStatus.PR_OPENED, "unrecognized_role", "archduke"),
+        )
+
+    # New request for the same role — must not clobber pr_opened
+    await db_review_issues.upsert_review_issue(
+        "test-request-id-2",
+        "unrecognized_role",
+        [{"role": "archduke", "person_name": "Carol"}],
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT status FROM review_issues WHERE issue_type = %s AND issue_key = %s",
+            ("unrecognized_role", "archduke"),
+        )
+        row = await cur.fetchone()
+    assert row is not None
+    assert row[0] == ReviewIssueStatus.PR_OPENED
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_get_review_issue_by_id_not_found():
     result = await db_review_issues.get_review_issue_by_id(_FAKE_UUID)
     assert result is None

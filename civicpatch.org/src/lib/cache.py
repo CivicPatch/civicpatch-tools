@@ -2,7 +2,7 @@ import json
 import time
 from typing import Optional
 
-from stores import redis_store
+import lib.redis as redis_store
 
 EXPIRY_BUFFER_SECONDS = 300
 DEFAULT_CACHE_SECONDS = 3600

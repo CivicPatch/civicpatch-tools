@@ -7,7 +7,7 @@ from fastapi.security import APIKeyCookie, APIKeyHeader
 import database.users as database
 import environment
 from schemas.common import Identity, Role, RouteCategory
-from services import session_service
+import lib.session as session_service
 
 logger = logging.getLogger(__name__)
 

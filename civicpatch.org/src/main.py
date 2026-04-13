@@ -36,7 +36,7 @@ from database.database import (
 )
 from routers.auth import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
-from services import pubsub_service
+import lib.pubsub as pubsub_service
 from schemas.ws import SubscribeMessage
 from utils.auth_utils import get_optional_user, get_ws_user, require_route_access
 from utils.vite import vite_asset, vite_css

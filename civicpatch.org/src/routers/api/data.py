@@ -3,8 +3,8 @@ import time
 
 from fastapi import APIRouter, HTTPException
 
-from services import cache_service
-from services.github import github_api_service as github_service
+import lib.cache as cache_service
+import lib.github.api as github_service
 
 router = APIRouter()
 DASHBOARD_PATH = "scripts/track_progress/data/dashboard.json"

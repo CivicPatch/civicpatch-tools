@@ -11,9 +11,9 @@ import database.jobs as jobs_db
 import database.people as database_people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
-import services.cache_service as cache_service
-import services.github.github_api_service as github_service
-import services.github.pull_request_sync_service as pr_sync_service
+import lib.cache as cache_service
+import lib.github.api as github_service
+import core.pr_sync as pr_sync_service
 import shared.utils.id_utils
 from schemas.common import Identity, Role, RouteCategory
 from utils.auth_utils import require_route_access

@@ -1,5 +1,5 @@
 import pytest
-from services.requests_export_service import (
+from core.export import (
     _changed_field_names,
     _extract_fields,
     _flatten_official,

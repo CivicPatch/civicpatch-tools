@@ -101,7 +101,7 @@ def test_get_pull_request_review_returns_empty_when_no_result(client):
 def test_close_pull_request_returns_success(client):
     with (
         patch(
-            "services.github.github_api_service.close_pull_request",
+            "lib.github.api.close_pull_request",
             new_callable=AsyncMock,
             return_value=True,
         ),
@@ -127,7 +127,7 @@ def test_close_pull_request_returns_success(client):
 @pytest.mark.unit
 def test_close_pull_request_returns_500_on_github_failure(client):
     with patch(
-        "services.github.github_api_service.close_pull_request",
+        "lib.github.api.close_pull_request",
         new_callable=AsyncMock,
         return_value=False,
     ):
@@ -142,7 +142,7 @@ def test_close_pull_request_returns_500_on_github_failure(client):
 @pytest.mark.unit
 def test_save_and_merge_returns_202(client):
     with (
-        patch("stores.redis_store.set", new_callable=AsyncMock),
+        patch("lib.redis.set", new_callable=AsyncMock),
         patch("routers.api.pull_requests.do_merge", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -167,9 +167,9 @@ def run(coro):
 def test_do_merge_clean_pr_writes_merged():
     redis_set = AsyncMock()
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
-        patch("services.github.github_api_service.merge_pull_request", new_callable=AsyncMock, return_value=None),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
+        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
         patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
@@ -182,8 +182,8 @@ def test_do_merge_clean_pr_writes_merged():
 def test_do_merge_dirty_pr_writes_error():
     redis_set = AsyncMock()
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -196,8 +196,8 @@ def test_do_merge_dirty_pr_writes_error():
 def test_do_merge_blocked_pr_writes_error():
     redis_set = AsyncMock()
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -211,10 +211,10 @@ def test_do_merge_behind_pr_updates_branch_and_merges():
     redis_set = AsyncMock()
     mergeability = AsyncMock(side_effect=["behind", "clean"])
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", mergeability),
-        patch("services.github.github_api_service.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
-        patch("services.github.github_api_service.merge_pull_request", new_callable=AsyncMock, return_value=None),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", mergeability),
+        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
+        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
         patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
@@ -228,9 +228,9 @@ def test_do_merge_behind_pr_dirty_after_update_writes_error():
     redis_set = AsyncMock()
     mergeability = AsyncMock(side_effect=["behind", "dirty"])
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", mergeability),
-        patch("services.github.github_api_service.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", mergeability),
+        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -245,10 +245,10 @@ def test_do_merge_base_branch_modified_retries_and_succeeds():
     merge = AsyncMock(side_effect=["Base branch was modified. Review and try the merge again.", None])
     mergeability = AsyncMock(side_effect=["clean", "clean"])
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", mergeability),
-        patch("services.github.github_api_service.merge_pull_request", merge),
-        patch("services.github.github_api_service.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", mergeability),
+        patch("lib.github.api.merge_pull_request", merge),
+        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
         patch("asyncio.sleep", new_callable=AsyncMock),
         patch("database.pull_requests.update_job_pull_request_status", new_callable=AsyncMock),
     ):
@@ -262,9 +262,9 @@ def test_do_merge_base_branch_modified_retries_and_succeeds():
 def test_do_merge_github_error_writes_error():
     redis_set = AsyncMock()
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
-        patch("services.github.github_api_service.merge_pull_request", new_callable=AsyncMock, return_value="GitHub API error"),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
+        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value="GitHub API error"),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -277,8 +277,8 @@ def test_do_merge_github_error_writes_error():
 def test_do_merge_unexpected_exception_writes_error():
     redis_set = AsyncMock()
     with (
-        patch("stores.redis_store.set", redis_set),
-        patch("services.github.github_api_service.get_pull_request_mergeability", side_effect=RuntimeError("boom")),
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", side_effect=RuntimeError("boom")),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, BackgroundTasks, Depends
 
-import services.cache_service as cache_service
-import services.github.data_sync_service
-import services.github.pull_request_sync_service
+import lib.cache as cache_service
+import lib.github.data_sync as data_sync
+import core.pr_sync as pr_sync
 from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import OdSyncRequestSchema
 from utils.auth_utils import require_route_access
@@ -16,7 +16,7 @@ def get_router() -> APIRouter:
         background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
     ):
-        background_tasks.add_task(services.github.data_sync_service.sync, request)
+        background_tasks.add_task(data_sync.sync, request)
 
         return {"status": "running"}
 
@@ -25,7 +25,7 @@ def get_router() -> APIRouter:
         background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
     ):
-        background_tasks.add_task(services.github.pull_request_sync_service.sync_open_pr_state)
+        background_tasks.add_task(pr_sync.sync_open_pr_state)
         return {"status": "running"}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)

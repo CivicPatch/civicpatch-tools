@@ -6,8 +6,8 @@ from typing import Any, Optional
 import database.jobs
 import database.pull_requests as pull_requests_db
 import database.requests
-import services.csv_service as csv_service
-import services.requests_export_service as requests_export_service
+import lib.csv as csv_service
+import core.export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
