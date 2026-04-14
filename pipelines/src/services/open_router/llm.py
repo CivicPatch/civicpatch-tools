@@ -9,6 +9,10 @@ from pipelines_environment import get_env_vars
 
 MAX_RETRIES = 5
 BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Conservative limit: DeepSeek V3/V3.2 context is 128k–164k tokens.
+# We cap at 120k to leave headroom for the system prompt and response.
+_MAX_INPUT_TOKENS = 120_000
+_CHARS_PER_TOKEN = 4
 _SEMAPHORE_CACHE: dict = {}
 
 def _get_semaphore() -> asyncio.Semaphore:
@@ -40,6 +44,14 @@ async def run_prompt(
     logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
     logger.debug(f"Prompt: \n{prompt}")
+
+    estimated_tokens = (len(prompt) + len(content)) // _CHARS_PER_TOKEN
+    if estimated_tokens > _MAX_INPUT_TOKENS:
+        raise ValueError(
+            f"Content too large for LLM: ~{estimated_tokens:,} estimated tokens "
+            f"(limit: ~{_MAX_INPUT_TOKENS:,})"
+        )
+
     api_key = get_env_vars().get("OPEN_ROUTER_TOKEN")
     if not api_key:
         raise ValueError("OPEN_ROUTER_TOKEN is not set")
@@ -100,6 +112,11 @@ async def run_prompt(
 
         choices = body.get("choices")
         if not choices:
+            logger.warning(
+                f"OpenRouter response missing 'choices'. "
+                f"Body: {body} | "
+                f"Headers: {dict(resp.headers)}"
+            )
             raise ValueError(f"OpenRouter response missing 'choices'. Full body: {body}")
         response_text = choices[0]["message"]["content"]
         logger.debug(f"OpenRouter raw response: {response_text}")
