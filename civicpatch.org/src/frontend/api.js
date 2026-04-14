@@ -1,5 +1,4 @@
 import { config } from "./assets/config.js";
-import { JOB_STATUS } from "./components/job-status.js";
 
 const API_URL = config.apiUrl;
 
@@ -37,16 +36,6 @@ export const updatePullRequestData = async (
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchJobsWithErrors = async (stateCode) => {
-  const params = new URLSearchParams();
-  if (stateCode) params.set("state_code", stateCode);
-  const res = await fetch(`${API_URL}/api/v1/jobs/errors?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -205,30 +194,6 @@ export const generatePersonId = async () => {
 export const fetchReview = async (requestId) => {
   const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/review`, {
     credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const resolveJob = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/${requestId}/status`, {
-    credentials: "include",
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ status: JOB_STATUS.RESOLVED }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const resumeJob = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/${requestId}/resume`, {
-    credentials: "include",
-    method: "POST",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

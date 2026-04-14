@@ -32,6 +32,10 @@ async def test_handle_submit_job_artifacts_updates_status_to_error_on_failure():
             "core.people_collector.update_job_status",
             new_callable=AsyncMock,
         ) as mock_update_status,
+        patch(
+            "core.people_collector.upsert_pipeline_issue",
+            new_callable=AsyncMock,
+        ),
     ):
         with pytest.raises(Exception, match="storage unavailable"):
             await handle_submit_job_artifacts(request)

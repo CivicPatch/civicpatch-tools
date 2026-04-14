@@ -25,7 +25,6 @@ from database.jobs import (
     get_job_data_json,
     get_job_status,
     get_job_github_run_id,
-    get_jobs_with_errors,
     get_active_jobs,
     update_job_data,
     update_job_status,
@@ -365,67 +364,6 @@ def get_router(api_key_header):
     #        )
 
     @router.post(
-        "/{request_id}/resolve",
-        summary="Manually resolve a job that is stuck in an error state",
-    )
-    async def resolve_job_endpoint(
-        request_id: str,
-        background_tasks: BackgroundTasks,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
-    ):
-        updated = await update_job_status(request_id=request_id, status=JobStatus.RESOLVED, progress=None)
-        if not updated:
-            return JSONResponse(
-                content=ErrorResponse(error="Job not found").model_dump(),
-                status_code=404,
-            )
-
-        async def _publish():
-            job = await get_job(request_id)
-            if job is None:
-                return
-            jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
-            if jurisdiction_ocdid:
-                await pubsub_service.publish(
-                    f"job_status:{jurisdiction_ocdid}",
-                    json.dumps({"request_id": request_id, "status": JobStatus.RESOLVED, "progress": None}),
-                )
-
-        background_tasks.add_task(_publish)
-        return {"request_id": request_id, "status": JobStatus.RESOLVED}
-
-    @router.post(
-        "/{request_id}/resume",
-        summary="Resume a paused job",
-        description="Send a human_approval signal to the Temporal workflow for this job.",
-    )
-    async def resume_job_endpoint(
-        request_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])),
-    ):
-        job = await get_job(request_id)
-        if not job:
-            return JSONResponse(
-                content=ErrorResponse(error="Job not found").model_dump(),
-                status_code=404,
-            )
-        jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid")
-        if not jurisdiction_ocdid:
-            return JSONResponse(
-                content=ErrorResponse(error="No jurisdiction_ocdid for job").model_dump(),
-                status_code=422,
-            )
-        try:
-            await temporal_service.signal_human_approval(jurisdiction_ocdid)
-        except Exception as e:
-            logger.exception(f"Error signalling human_approval: {e}")
-            return JSONResponse(
-                content=ErrorResponse(error="Failed to signal workflow").model_dump(),
-                status_code=500,
-            )
-        return {"request_id": request_id, "status": "resumed"}
-
-    @router.post(
         "/{request_id}/cancel",
         summary="Cancel a running job",
         description="Cancel the Temporal workflow for this job.",
@@ -471,28 +409,6 @@ def get_router(api_key_header):
         for job in jobs:
             job["jurisdiction_path"] = shared.utils.id_utils.jurisdiction_ocdid_to_folder(job["jurisdiction_ocdid"])
         return {"data": jobs, "total": total, "page": page, "per_page": per_page, "total_pages": math.ceil(total / per_page) if total else 1}
-
-    @router.get(
-        "/errors",
-        summary="List jobs stuck in the pipeline with an error status",
-    )
-    async def get_jobs_with_errors_endpoint(
-        state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
-    ):
-        jobs = await get_jobs_with_errors(state_code=state_code)
-
-        for job in jobs:
-            ocdid = job["jurisdiction_ocdid"]
-            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
-            base = f"{ARTIFACTS_BASE_URL}/{job['request_id']}/data_source/{folder}"
-            job["workflow_log_url"] = f"{base}/workflow.log"
-            job["workflow_context_url"] = f"{base}/workflow_context.json"
-            # TODO: move Cloudflare account ID to env var
-            job["debug_url"] = f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-artifacts?prefix={job['request_id']}%2F"
-            job["jurisdiction_path"] = folder
-
-        return {"data": jobs}
 
     @router.get(
         "/issues",
@@ -578,6 +494,19 @@ def get_router(api_key_header):
         raw = await get_issue_request_details(issue["request_ids"])
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
+
+        if issue_type == "pipeline_error":
+            request_id = issue["issue_key"]
+            jurisdiction_ocdid = raw[0]["jurisdiction_ocdid"] if raw else None
+            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid) if jurisdiction_ocdid else None
+            base = f"{ARTIFACTS_BASE_URL}/{request_id}/data_source/{folder}" if folder else None
+            return {"data": [{
+                "request_id": request_id,
+                "error": (issue.get("data") or {}).get("error"),
+                "workflow_log_url": f"{base}/workflow.log" if base else None,
+                "workflow_context_url": f"{base}/workflow_context.json" if base else None,
+                "debug_url": f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-artifacts?prefix={request_id}%2F",
+            }]}
 
         result = []
         for r in raw:
