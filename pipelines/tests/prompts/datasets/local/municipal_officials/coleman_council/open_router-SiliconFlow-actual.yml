@@ -1,4 +1,14 @@
 people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: (325) 625-5114
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Tracy Rankin
   roles:
   - Council Member
@@ -42,16 +52,6 @@ people:
   designations:
   - Place 4
   - Ward South
-  phone: (325) 625-5114
-  email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Tommy Sloan
-  roles:
-  - Mayor
-  designations: []
   phone: (325) 625-5114
   email: null
   url: null

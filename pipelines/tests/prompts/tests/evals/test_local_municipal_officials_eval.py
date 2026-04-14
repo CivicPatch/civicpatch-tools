@@ -245,8 +245,7 @@ async def model_client(request):
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
-# @pytest.mark.parametrize("model_client", ["gemini", "open_router"], indirect=True)
-@pytest.mark.parametrize("model_client", ["open_router:AtlasCloud"], indirect=True)
+@pytest.mark.parametrize("model_client", PROVIDER_COMPARISON, indirect=True)
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     start_time = time.time()

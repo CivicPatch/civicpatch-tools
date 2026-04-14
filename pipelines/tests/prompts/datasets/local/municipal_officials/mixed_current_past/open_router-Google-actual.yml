@@ -2,10 +2,9 @@ people:
 - name: Michael Pye
   roles:
   - Mayor
-  designations:
-  - At Large
-  phone: null
-  email: null
+  designations: []
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null
@@ -13,10 +12,9 @@ people:
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
-  designations:
-  - At Large
-  phone: null
-  email: null
+  designations: []
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null
@@ -26,8 +24,8 @@ people:
   - Council Member
   designations:
   - At Large
-  phone: null
-  email: null
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null
@@ -37,8 +35,8 @@ people:
   - Council Member
   designations:
   - At Large
-  phone: null
-  email: null
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null
@@ -48,8 +46,8 @@ people:
   - Council Member
   designations:
   - At Large
-  phone: null
-  email: null
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null
@@ -59,8 +57,8 @@ people:
   - Council Member
   designations:
   - At Large
-  phone: null
-  email: null
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
   url: null
   start_date: null
   end_date: null

@@ -1,6 +1,5 @@
 is_relevant: false
 relevant_urls:
-- https://www.austintexas.gov/city-manager#main-content
 - https://www.austintexas.gov/
 - https://www.austintexas.gov/services
 - https://www.austintexas.gov/departments
@@ -30,11 +29,10 @@ relevant_urls:
 - https://www.austintexas.gov/planning/incentives-and-grants
 - https://www.austintexas.gov/development-services/types-permits
 - https://www.austintexas.gov/development-services/inspections
-- "https://\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51\
-  www.austintexas.gov/development-services/common-austin-code-violations"
+- https://www.austintexas.gov/development-services/common-austin-code-violations
 - https://www.austintexas.gov/development-services/commercial-plan-review
 - https://financeonline.austintexas.gov/afo/finance/
-- "\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51https://www.austintexas.gov/small-minority-business"
+- https://www.austintexas.gov/small-minority-business
 - https://www.austintexas.gov/economic-development
 - https://comptroller.texas.gov/taxes/
 - https://www.austintexas.gov/climate/green-resources
@@ -61,8 +59,7 @@ relevant_urls:
 - https://www.austintexas.gov/council/city-council-district-map
 - https://www.austintexas.gov/services/share-ideas-about-improving-austin
 - https://www.austintexas.gov/services/apply-become-board-or-commission-member
-- "https://www\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51\
-  .austintexas.gov/council/meetings"
+- https://www.austintexas.gov/council/meetings
 - https://www.austintexas.gov/communications/programs/volunteer-city-austin
 - https://www.austintexas.gov/contact
 - https://www.austintexas.gov/services/adopt-pet
@@ -81,7 +78,6 @@ relevant_urls:
 - https://www.austintexas.gov/city-manager/susana-carbajal
 - https://www.austintexas.gov/city-manager/ed-van-eenoo
 - https://www.austintexas.gov/city-manager/genesis-d-gavino
-- https://www.austintexas.org/
 - https://www.austintexas.gov/3-1-1
 - https://www.austintexas.gov/communications/feedback
 - https://services.austintexas.gov/edims/search.cfm
@@ -89,3 +85,8 @@ relevant_urls:
 - https://www.austintexas.gov/services/apply-city-job
 - https://www.austintexas.gov/legal-notice
 - https://www.austintexas.gov/privacy-notice
+- https://www.facebook.com/austintexasgov
+- https://www.instagram.com/austintexasgov/
+- https://x.com/austintexasgov
+- https://www.linkedin.com/company/city-of-austin/
+- https://www.youtube.com/user/austintexasgov

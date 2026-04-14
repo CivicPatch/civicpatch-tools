@@ -6,8 +6,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/691/Mayor
-  start_date: null
-  end_date: null
+  start_date: '2024'
+  end_date: '2027'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
 - name: Brandon Lunsford
   roles:
@@ -17,8 +17,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/692/At-Large-A
-  start_date: null
-  end_date: null
+  start_date: '2022'
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
 - name: Brent McCaulley
   roles:
@@ -28,8 +28,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/693/At-Large-B
-  start_date: null
-  end_date: null
+  start_date: '2023'
+  end_date: '2026'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
 - name: Mandi Williams
   roles:
@@ -39,8 +39,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/694/District-1
-  start_date: null
-  end_date: null
+  start_date: '2023'
+  end_date: '2026'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
 - name: Chuck Engelken
   roles:
@@ -50,8 +50,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/695/District-2
-  start_date: null
-  end_date: null
+  start_date: '2024'
+  end_date: '2027'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
 - name: Bill Bentley
   roles:
@@ -61,8 +61,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/696/District-3
-  start_date: null
-  end_date: null
+  start_date: '2024'
+  end_date: '2027'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
 - name: Robert Guerra
   roles:
@@ -72,8 +72,8 @@ people:
   phone: 281-471-5021
   email: null
   url: https://www.laportetx.gov/883/District-4
-  start_date: null
-  end_date: null
+  start_date: '2022'
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
 - name: Jay Martin
   roles:
@@ -83,8 +83,8 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/698/District-5
-  start_date: null
-  end_date: null
+  start_date: '2022'
+  end_date: '2025'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
 - name: Robbie McLarrin
   roles:
@@ -94,6 +94,6 @@ people:
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/699/District-6
-  start_date: null
-  end_date: null
+  start_date: '2023'
+  end_date: '2026'
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6491

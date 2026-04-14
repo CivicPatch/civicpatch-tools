@@ -21,9 +21,9 @@ def _get_semaphore() -> asyncio.Semaphore:
 MODELS_BY_TYPE = {
     "CHEAP": {},
     "STANDARD": {
-        "model": "deepseek/deepseek-chat-v3.1",
-        "input_cost": 0.15 / 1000000,
-        "output_cost": 0.75 / 1000000,
+        "model": "deepseek/deepseek-v3.2",
+        "input_cost": 0.26 / 1000000,
+        "output_cost": 0.38 / 1000000,
     },
 }
 
@@ -80,7 +80,7 @@ async def run_prompt(
                 "top_p": 1.0,
                 "response_format": response_format,
                 "provider": {
-                    "order": provider_order or ["AtlasCloud", "WandB", "Google"],
+                    "order": provider_order or ["AtlasCloud", "SiliconFlow", "Google"],
                     "allow_fallbacks": allow_fallbacks,
                     # require_parameters breaks with allow_fallbacks=False — no fallback
                     # available if the pinned provider fails the parameter check
@@ -111,11 +111,12 @@ async def run_prompt(
             request_id,
             jurisdiction_ocdid,
             "open_router",
-            routed_model,
+            model,
             usage.get("prompt_tokens", 0),
             usage.get("completion_tokens", 0),
             with_search=False,
             provider=provider,
+            routed_model=routed_model,
         )
 
         return response
