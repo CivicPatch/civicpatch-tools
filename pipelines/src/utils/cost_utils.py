@@ -26,19 +26,13 @@ llm_model_prices = {
             'output_cost_per_1m': Decimal('0.40')
         }
     },
-    # open_router prices are per (model, provider) — fetched 2026-04-10
+    # open_router prices are per (model, provider) — fetched 2026-04-14
+    # Key is the model alias sent in the request (not the versioned slug OpenRouter returns)
     'open_router': {
-        'deepseek/deepseek-chat-v3.1': {
-            'SambaNova':   {'input_cost_per_1m': Decimal('0.15'),  'output_cost_per_1m': Decimal('0.75')},
-            'DeepInfra':   {'input_cost_per_1m': Decimal('0.21'),  'output_cost_per_1m': Decimal('0.79')},
-            'Chutes':      {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
-            'Novita':      {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
-            'SiliconFlow': {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('1.00')},
-            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.30'),  'output_cost_per_1m': Decimal('0.95')},
-            'WandB':       {'input_cost_per_1m': Decimal('0.55'),  'output_cost_per_1m': Decimal('1.65')},
-            'Fireworks':   {'input_cost_per_1m': Decimal('0.56'),  'output_cost_per_1m': Decimal('1.68')},
-            'Google':      {'input_cost_per_1m': Decimal('0.60'),  'output_cost_per_1m': Decimal('1.70')},
-            'Together':    {'input_cost_per_1m': Decimal('0.60'),  'output_cost_per_1m': Decimal('1.70')},
+        'deepseek/deepseek-v3.2': {
+            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.26'),  'output_cost_per_1m': Decimal('0.38')},
+            'SiliconFlow': {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('0.42')},
+            'Google':      {'input_cost_per_1m': Decimal('0.56'),  'output_cost_per_1m': Decimal('1.68')},
         },
     }
 }
@@ -66,6 +60,7 @@ class LLMCost(BaseModel):
     jurisdiction_ocdid: str
     llm_name: str
     model: str
+    routed_model: str = ""
     provider: str = ""
 
     input_tokens: int
@@ -155,11 +150,13 @@ def add_llm_cost(
         output_tokens: int,
         with_search=False,
         provider: str = "",
+        routed_model: str = "",
 ):
     result = LLMCost(
         jurisdiction_ocdid=jurisdiction_ocdid,
         llm_name=llm_name,
         model=model,
+        routed_model=routed_model or model,
         provider=provider,
         input_tokens=input_tokens,
         output_tokens=output_tokens,
@@ -187,6 +184,7 @@ def add_llm_cost(
         "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "llm_name": result.llm_name,
         "model": result.model,
+        "routed_model": result.routed_model,
         "provider": result.provider,
         "model_input_price_per_1m": result.input_cost_per_1m,
         "model_output_price_per_1m": result.output_cost_per_1m,

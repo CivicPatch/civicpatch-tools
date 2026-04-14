@@ -192,8 +192,7 @@ def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds):
     return cost_summary
 
 
-@pytest.mark.parametrize("model_client", ["open_router:AtlasCloud"], indirect=True)
-#@pytest.mark.parametrize("model_client", ["google_gemini", "open_router:Together"], indirect=True)
+@pytest.mark.parametrize("model_client", PROVIDER_COMPARISON, indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
     eval_ocdid = "ocd-jurisdiction/country:us/state:tx/place:example/government"

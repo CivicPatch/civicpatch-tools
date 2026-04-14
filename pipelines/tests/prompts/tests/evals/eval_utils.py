@@ -2,17 +2,13 @@ import os
 import yaml
 from services.open_router.llm import run_prompt as run_together_prompt
 
-# Provider names match OpenRouter's provider_name field from the endpoints API.
-# Excluded: SambaNova (no response_format), Novita (no response_format)
+# Providers confirmed working for deepseek/deepseek-v3.2 via curl test 2026-04-14
+# Excluded: DeepSeek (404), DeepInfra (429/BYOK required), AkashML (429/BYOK required),
+#           Novita (no response_format), Together/WandB (model not available)
 PROVIDER_COMPARISON = [
-    "open_router:DeepInfra",    # $0.21/$0.79, fp4,  100% uptime
-    "open_router:Chutes",       # $0.27/$1.00, fp8,  99.6% uptime
-    "open_router:SiliconFlow",  # $0.27/$1.00, fp8,  97.3% uptime
-    "open_router:AtlasCloud",   # $0.30/$0.95, fp8,  100% uptime
-    "open_router:WandB",        # $0.55/$1.65, fp8,  100% uptime
-    "open_router:Fireworks",    # $0.56/$1.68,       99.3% uptime
-    "open_router:Google",       # $0.60/$1.70,       99.5% uptime
-    "open_router:Together",     # $0.60/$1.70,       84.4% uptime
+    "open_router:AtlasCloud",   # $0.26/$0.38
+    "open_router:SiliconFlow",  # $0.27/$0.42
+    "open_router:Google",       # $0.56/$1.68
 ]
 
 
@@ -22,7 +18,7 @@ def make_provider_client(param, make_prompt_fn):
         "name": f"open_router-{provider}",
         "run_prompt": run_together_prompt,
         "make_prompt": make_prompt_fn,
-        "extra_kwargs": {"model_type": "STANDARD", "provider_order": [provider], "allow_fallbacks": False},
+        "extra_kwargs": {"model_type": "STANDARD", "provider_order": [provider], "allow_fallbacks": True},
     }
 
 
