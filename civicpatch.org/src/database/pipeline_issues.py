@@ -97,6 +97,17 @@ async def get_pipeline_issue_by_pull_request_url(pull_request_url: str) -> dict 
     return {"id": row[0], "status": row[1]}
 
 
+async def get_pipeline_issues_with_open_pr() -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, pull_request_url FROM pipeline_issues WHERE status = %s",
+            (ReviewIssueStatus.PR_OPENED,),
+        )
+        rows = await cur.fetchall()
+    return [{"id": r[0], "pull_request_url": r[1]} for r in rows]
+
+
 async def reopen_pipeline_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
