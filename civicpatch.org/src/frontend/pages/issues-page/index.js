@@ -8,6 +8,7 @@ import {
   fetchJobIssues,
   fetchIssueDetails,
   resolveReviewIssue,
+  dismissIssue,
   fetchDuplicatePrJurisdictionJobs,
   fetchPullRequests,
   closeStaleDuplicatePrs,
@@ -193,6 +194,16 @@ function IssuesPage() {
       setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
     } catch (err) {
       console.error("Failed to resume job:", err);
+    }
+  };
+
+  const handleDismissIssue = async (issue) => {
+    try {
+      await dismissIssue(issue.id);
+      setIssues(issues.filter((i) => i.id !== issue.id));
+      setIssuesTotal((t) => t - 1);
+    } catch (err) {
+      console.error("Failed to dismiss issue:", err);
     }
   };
 
@@ -491,9 +502,12 @@ function IssuesPage() {
                         : html`<span class="issues-page__issue-status-badge">Pending</span>`}
                     </td>
                     <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
-                    <td>
+                    <td class="issues-page__issue-actions">
                       ${ev.status === "pending" && (ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url")
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
+                        : ""}
+                      ${ev.status === "pending"
+                        ? html`<button class="btn btn-sm" @click=${() => handleDismissIssue(ev)}>Dismiss</button>`
                         : ""}
                     </td>
                   </tr>

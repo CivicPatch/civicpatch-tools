@@ -11,7 +11,7 @@ import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
 from database.pull_requests import update_job_pull_request_status
 import database.requests as requests_db
-import database.review_issues as review_issues_db
+import database.pipeline_issues as pipeline_issues_db
 import database.review_sessions as review_sessions_db
 from environment import get_env_vars
 from core.open_data_sync import sync_people_by_ocdids
@@ -72,15 +72,15 @@ async def _handle_review_issue_pr_event(payload: dict[str, Any]) -> None:
         return
     pr = payload.get("pull_request", {})
     pr_url = pr.get("html_url")
-    issue = await review_issues_db.get_review_issue_by_pull_request_url(pr_url)
+    issue = await pipeline_issues_db.get_pipeline_issue_by_pull_request_url(pr_url)
     if issue is None:
         logger.warning("Webhook: no review issue found for resolution PR %s", pr_url)
         return
     if pr.get("merged"):
-        await review_issues_db.resolve_review_issue(issue["id"])
+        await pipeline_issues_db.resolve_pipeline_issue(issue["id"])
         logger.info("Webhook: resolved review issue %s (PR merged)", issue["id"])
     else:
-        await review_issues_db.reopen_review_issue(issue["id"])
+        await pipeline_issues_db.reopen_pipeline_issue(issue["id"])
         logger.info("Webhook: reopened review issue %s (PR closed without merge)", issue["id"])
 
 
