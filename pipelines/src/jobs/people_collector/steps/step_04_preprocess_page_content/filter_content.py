@@ -8,6 +8,25 @@ BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
     "language" # Google Translate
 ]
 
+BLACKLISTED_URL_SUFFIXES = [
+    ".pdf",
+    ".doc",
+    ".docx",
+    ".xls",
+    ".xlsx",
+    ".ppt",
+    ".pptx",
+]
+
+
+def _is_blacklisted_url(href) -> bool:
+    if not href:
+        return False
+    if isinstance(href, list):
+        href = href[0] if href else ""
+    path = href.split("?")[0].split("#")[0].lower()
+    return any(path.endswith(suffix) for suffix in BLACKLISTED_URL_SUFFIXES)
+
 def count_nodes(node: Tag):
     count = 1 if isinstance(node, Tag) else 0
     for child in getattr(node, "children", []):
@@ -76,8 +95,17 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     if node.name == "img":
         return True  # Do not remove or modify images
 
-    # Handle links - always keep
+    # Handle links — drop blacklisted URLs (e.g. PDFs), keep everything else
     if node.name == "a":
+        href = node.get("href") or ""
+        if _is_blacklisted_url(href):
+            images = node.find_all("img")
+            if images and node.parent:
+                for img in images:
+                    node.insert_before(img.extract())
+            if node.parent:
+                node.decompose()
+            return False
         return True
 
     # Skip processing if this node is inside a kept table
@@ -90,7 +118,13 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
         if table_text.strip():
             is_relevant = has_relevant_content(identities, table_text)
             if is_relevant:
-                # Mark this table to keep ALL its content (including images)
+                # Mark this table to keep ALL its content (including images),
+                # but still strip blacklisted links — the table handler returns
+                # early without recursing, so the <a> blacklist is never reached
+                # for children of kept tables.
+                for a_tag in node.find_all("a"):
+                    if _is_blacklisted_url(a_tag.get("href") or ""):
+                        a_tag.decompose()
                 node._keep_table = True  # type: ignore[attr-defined]
                 return True
 

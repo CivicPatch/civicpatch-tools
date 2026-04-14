@@ -69,6 +69,81 @@ def assert_markdown_equal(identities, actual_html, expected_md, subfolder=""):
 #     assert original, "Table test fixture is missing or empty"
 #     assert_markdown_equal({}, original, expected, subfolder="with_table")
 
+def test_filter_content_removes_pdf_links():
+    original = """
+    <html><body>
+      <a href="/docs/minutes.pdf">January Minutes</a>
+      <a href="/council">Council Members</a>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "minutes.pdf" not in result
+    assert "/council" in result
+
+
+def test_filter_content_removes_pdf_link_case_insensitive():
+    original = """
+    <html><body>
+      <a href="/docs/Report.PDF">Annual Report</a>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "Report.PDF" not in result
+
+
+def test_filter_content_removes_pdf_link_with_query_string():
+    original = """
+    <html><body>
+      <a href="/docs/agenda.pdf?v=2">Agenda</a>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "agenda.pdf" not in result
+
+
+def test_filter_content_pdf_link_with_image_keeps_image():
+    original = """
+    <html><body>
+      <a href="/files/photo.pdf"><img src="council.jpg" alt="council"></a>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "photo.pdf" not in result
+    assert "council.jpg" in result
+
+
+def test_filter_content_removes_office_doc_links():
+    original = """
+    <html><body>
+      <a href="/budget.xlsx">Budget Spreadsheet</a>
+      <a href="/proposal.docx">Proposal</a>
+      <a href="/slides.pptx">Slides</a>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "budget.xlsx" not in result
+    assert "proposal.docx" not in result
+    assert "slides.pptx" not in result
+
+
+def test_filter_content_removes_pdf_links_inside_kept_table():
+    """PDF links inside a relevant table (kept via _keep_table) must still be stripped."""
+    original = """
+    <html><body>
+      <table>
+        <tr>
+          <td>City Council Agenda – April 2026</td>
+          <td>April 8, 2026</td>
+          <td><a href="/wp-content/uploads/agenda.pdf">Open file</a></td>
+          <td><a href="/wp-content/uploads/agenda.pdf">Download</a></td>
+        </tr>
+      </table>
+    </body></html>
+    """
+    result = filter_content(logger, {}, original)
+    assert "agenda.pdf" not in result
+
+
 def test_filter_content_keeps_all_images():
     original = """
     <html>

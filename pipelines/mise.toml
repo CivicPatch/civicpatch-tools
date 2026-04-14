@@ -136,6 +136,70 @@ docker compose -f docker-compose.yml run --rm pipelines uv run \
     --url "{{ option(name="url") }}"
 """
 
+[tasks.test-openrouter]
+description = "Send a minimal OpenRouter request matching production config and dump response headers + body"
+run = """
+uv run python3 - <<'EOF'
+import json, requests
+from jobs.people_collector.schemas import PeopleArrayLLMResponseSchema
+import os
+
+api_key = os.environ.get("OPEN_ROUTER_TOKEN")
+if not api_key:
+    raise SystemExit("OPEN_ROUTER_TOKEN is not set")
+
+large = os.environ.get("LARGE_CONTENT", "").lower() in ("1", "true", "yes")
+content = "Mayor: John Smith, Council Member: Jane Doe"
+if large:
+    # Pad to ~60k tokens to force routing past low-context providers
+    content = (content + " " + ("x " * 500 + "\n") * 200).strip()
+    print(f"[large mode] content chars: {len(content)}")
+
+payload = {
+    "model": "deepseek/deepseek-v3.2",
+    "messages": [
+        {"role": "system", "content": "Extract officials from the provided content."},
+        {"role": "user", "content": content},
+    ],
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "response_format": {
+        "type": "json_schema",
+        "json_schema": {
+            "name": PeopleArrayLLMResponseSchema.__name__,
+            "strict": True,
+            "schema": PeopleArrayLLMResponseSchema.model_json_schema(),
+        },
+    },
+    "provider": {
+        "order": ["AtlasCloud", "SiliconFlow", "Google"],
+        "allow_fallbacks": True,
+        "require_parameters": True,
+        "data_collection": "deny",
+    },
+}
+
+resp = requests.post(
+    "https://openrouter.ai/api/v1/chat/completions",
+    headers={
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://civicpatch.org",
+        "X-Title": "CivicPatch",
+    },
+    data=json.dumps(payload),
+)
+
+print("=== STATUS ===")
+print(resp.status_code)
+print("=== RESPONSE HEADERS ===")
+for k, v in resp.headers.items():
+    print(f"  {k}: {v}")
+print("=== BODY ===")
+print(json.dumps(resp.json(), indent=2))
+EOF
+"""
+
 [tasks.test-pipeline-run-cicd]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv run \
