@@ -63,14 +63,14 @@ def test_data_requirement_met_overrides_max_pages():
 
 # ── cost limit ────────────────────────────────────────────────────────────────
 
-def test_cost_limit_without_data_is_failure():
+def test_cost_limit_without_data_proceeds_to_merge():
     state, error = next_process_content_state(
         processed_count=3,
         current_cost=Decimal("1.00"),  # at limit
         job_config=_job_config(cost_limit="1.00"),
         progress=_progress(),
     )
-    assert state == PipelineStatus.SEND_ERROR
+    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     assert error is not None
     assert "Cost limit" in error
 

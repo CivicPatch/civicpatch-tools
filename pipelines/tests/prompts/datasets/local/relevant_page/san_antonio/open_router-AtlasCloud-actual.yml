@@ -1,7 +1,6 @@
 is_relevant: false
 relevant_urls:
 - https://www.sa.gov/Home#main-content
-- https://www.sa.gov/Home#
 - https://www.sa.gov/Home?oc_lang=en-US
 - https://www.sa.gov/Home?oc_lang=es
 - https://www.sa.gov/Home?oc_lang=ar
@@ -56,9 +55,6 @@ relevant_urls:
 - https://www.sa.gov/Directory/Online-Payments
 - https://www.sa.gov/Directory/Services
 - https://www.sa.gov/Directory/Venues-Facilities-Reservations
-- https://www.sa.gov/Home#panel-1
-- https://www.sa.gov/Home#panel-2
-- https://www.sa.gov/Home#panel-3
 - https://www.governmentjobs.com/careers/sanantoniotx
 - https://www.sa.gov/Directory/Departments/ACS/Adopt/Pet-Search
 - https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
@@ -73,7 +69,7 @@ relevant_urls:
 - https://www.sa.gov/Directory/News-Releases
 - https://www.sa.gov/Directory/Departments/SAMHD/News-Events/Events/STI-Mobile-Clinics
 - https://www.sa.gov/Directory/Departments/ACS/About/News/Events
-- https://www.sa.gov/Directory/Events-Directory
+- https://www.sa.gov/Government/Closures
 - https://www.sa.gov/Government/Emergency-Crisis-Response/Severe-Weather/Floods
 - https://saheadstart.org/
 - https://www.sa.gov/Directory/Departments/DHS/Financial-Assistance/VITA
@@ -84,7 +80,6 @@ relevant_urls:
 - https://311.sanantonio.gov/
 - https://sanantonio.portal.us.empro.verintcloudservices.com/site/customer_portal/faq-info
 - https://www.sa.gov/Directory/Departments/311/Services/Request
-- https://www.sa.gov/Home#body-top
 - https://www.sa.gov/Site-Footer/Contact-Us
 - https://www.sa.gov/Site-Footer/Contact-Us#visit
 - https://www.facebook.com/cosagov/

@@ -98,7 +98,10 @@ async def run_prompt(
         provider = body.get("provider", "unknown")
         logger.info(f"OpenRouter routed to: {routed_model} via {provider}")
 
-        response_text = body["choices"][0]["message"]["content"]
+        choices = body.get("choices")
+        if not choices:
+            raise ValueError(f"OpenRouter response missing 'choices'. Full body: {body}")
+        response_text = choices[0]["message"]["content"]
         logger.debug(f"OpenRouter raw response: {response_text}")
         response = response_schema.model_validate_json(response_text) if response_schema else json.loads(response_text)
 
