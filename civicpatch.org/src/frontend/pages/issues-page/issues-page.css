@@ -228,6 +228,14 @@
     white-space: nowrap;
 }
 
+/* ── Issue actions column ── */
+
+.issues-page__issue-actions {
+    display: flex;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
 /* ── Resolve modal ── */
 
 .issues-page__modal-overlay {

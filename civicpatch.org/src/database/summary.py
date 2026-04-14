@@ -9,7 +9,7 @@ async def get_summary_counts(include_issues: bool) -> dict:
             SELECT
                 (SELECT COUNT(*) FROM pull_requests WHERE status = 'open') AS open_prs,
                 (SELECT COUNT(*) FROM jobs WHERE status = 'ERROR') AS pipeline_errors,
-                (SELECT COUNT(*) FROM review_issues WHERE status = 'pending') AS issues_total,
+                (SELECT COUNT(*) FROM pipeline_issues WHERE status = 'pending') AS issues_total,
                 (SELECT COUNT(*) FROM (
                     SELECT r.jurisdiction_ocdid
                     FROM jobs j

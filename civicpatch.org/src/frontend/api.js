@@ -71,6 +71,16 @@ export const fetchIssueDetails = async (issueId) => {
   return res.json();
 };
 
+export const dismissIssue = async (issueId) => {
+  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/dismiss`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const resolveReviewIssue = async (issueId, body = {}) => {
   const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/resolve`, {
     credentials: "include",

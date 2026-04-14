@@ -10,7 +10,7 @@ import shared.utils.id_utils
 import lib.storage as storage_service
 import lib.github.api as github_service
 from database.jobs import update_job_data, update_job_review_json, update_job_status
-from database.review_issues import upsert_review_issue
+from database.pipeline_issues import upsert_pipeline_issue
 from shared.utils.statuses import JobStatus
 import logging
 import yaml
@@ -101,7 +101,7 @@ async def _handle_submit_job_artifacts(
             .get("merge_records_within_llm_step", {})
             .get("unrecognized_roles", [])
         )
-        await upsert_review_issue(request.request_id, "unrecognized_role", unrecognized)
+        await upsert_pipeline_issue(request.request_id, "unrecognized_role", unrecognized)
 
     else:
         try:
@@ -109,7 +109,7 @@ async def _handle_submit_job_artifacts(
             with open(workflow_context_path, "r") as f:
                 workflow_context = json.load(f)
             dead_urls = workflow_context.get("data", {}).get("dead_urls", [])
-            await upsert_review_issue(request.request_id, "dead_url", dead_urls)
+            await upsert_pipeline_issue(request.request_id, "dead_url", dead_urls)
         except FileNotFoundError:
             pass
 
