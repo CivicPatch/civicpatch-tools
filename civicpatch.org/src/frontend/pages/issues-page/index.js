@@ -4,7 +4,6 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useSummary } from "../../hooks/useSummary.js";
 import {
-  fetchJobsWithErrors,
   fetchJobIssues,
   fetchIssueDetails,
   resolveReviewIssue,
@@ -12,14 +11,11 @@ import {
   fetchDuplicatePrJurisdictionJobs,
   fetchPullRequests,
   closeStaleDuplicatePrs,
-  resolveJob,
-  resumeJob,
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
-import "../queue-page/error-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "./issues-page.css";
 
@@ -29,6 +25,7 @@ const ISSUES_PER_PAGE_OPTIONS = [10, 20, 50, 100];
 const KNOWN_ISSUE_TYPES = [
   { value: "unrecognized_role", label: "Unrecognized role" },
   { value: "dead_url", label: "Dead URL" },
+  { value: "pipeline_error", label: "Pipeline error" },
 ];
 
 function getIssuesPageFromUrl() {
@@ -90,10 +87,6 @@ function IssuesPage() {
   const { permissions } = useAuth();
   const summary = useSummary(true);
 
-  // Errors section
-  const [errorJobs, setErrorJobs] = useState([]);
-  const [errorsLoading, setErrorsLoading] = useState(false);
-
   // Issues section
   const [issues, setIssues] = useState([]);
   const [issuesTotal, setIssuesTotal] = useState(0);
@@ -106,7 +99,7 @@ function IssuesPage() {
 
   // Resolve modal state
   const [resolveModal, setResolveModal] = useState(null);
-  const [modalScope, setModalScope] = useState("global");
+  const [modalScope, setModalScope] = useState("state");
   const [modalState, setModalState] = useState("");
   const [modalLocality, setModalLocality] = useState("");
   const [modalNewUrl, setModalNewUrl] = useState("");
@@ -123,7 +116,7 @@ function IssuesPage() {
 
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
-    { errors: true, issues: true, duplicates: true },
+    { issues: true, duplicates: true },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -139,16 +132,6 @@ function IssuesPage() {
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
-
-  // Errors — lazy, only when section is open
-  useEffect(() => {
-    if (!openSections.errors) return;
-    setErrorsLoading(true);
-    fetchJobsWithErrors()
-      .then((r) => setErrorJobs(r.data || []))
-      .catch(console.error)
-      .finally(() => setErrorsLoading(false));
-  }, [openSections.errors]);
 
   // Issues — lazy, refetch on any filter/page/sort change
   useEffect(() => {
@@ -176,26 +159,6 @@ function IssuesPage() {
       .then((r) => setDuplicateJurisdictions(r.data || []))
       .catch(console.error);
   }, [openSections.duplicates]);
-
-  const handleResolveError = async (event) => {
-    const { job } = event.detail;
-    try {
-      await resolveJob(job.request_id);
-      setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
-    } catch (err) {
-      console.error("Failed to resolve job:", err);
-    }
-  };
-
-  const handleResumeJob = async (event) => {
-    const { job } = event.detail;
-    try {
-      await resumeJob(job.request_id);
-      setErrorJobs(errorJobs.filter((j) => j.request_id !== job.request_id));
-    } catch (err) {
-      console.error("Failed to resume job:", err);
-    }
-  };
 
   const handleDismissIssue = async (issue) => {
     try {
@@ -238,7 +201,7 @@ function IssuesPage() {
 
   const openResolveModal = (issue) => {
     setResolveModal(issue);
-    setModalScope("global");
+    setModalScope("state");
     setModalState((issue.states || [])[0] || "");
     setModalLocality("");
     setModalNewUrl("");
@@ -251,7 +214,7 @@ function IssuesPage() {
     if (issue.issue_type === "unrecognized_role") {
       body = {
         scope: modalScope,
-        ...(modalScope !== "global" && modalState ? { state: modalState } : {}),
+        ...(modalState ? { state: modalState } : {}),
         ...(modalScope === "locality" && modalLocality ? { locality: modalLocality } : {}),
       };
     } else if (issue.issue_type === "dead_url") {
@@ -354,7 +317,28 @@ function IssuesPage() {
     </div>
   `;
 
-  // --- Resolve modals ---
+  // --- Modals ---
+
+  const pipelineErrorModal = resolveModal && resolveModal.issue_type === "pipeline_error" ? html`
+    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
+      <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
+        <h3 class="issues-page__modal-title">Pipeline error</h3>
+        ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
+          ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
+          : html`
+            ${modalDetails[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
+            <div class="issues-page__modal-debug-links">
+              ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
+              ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
+              ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
+            </div>
+          `}
+        <div class="issues-page__modal-actions">
+          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
+        </div>
+      </div>
+    </div>
+  ` : null;
 
   const deadUrlModal = resolveModal && resolveModal.issue_type === "dead_url" ? html`
     <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
@@ -506,6 +490,9 @@ function IssuesPage() {
                       ${ev.status === "pending" && (ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url")
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
                         : ""}
+                      ${ev.issue_type === "pipeline_error"
+                        ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
+                        : ""}
                       ${ev.status === "pending"
                         ? html`<button class="btn btn-sm" @click=${() => handleDismissIssue(ev)}>Dismiss</button>`
                         : ""}
@@ -530,26 +517,6 @@ function IssuesPage() {
           </div>
         `}
       ` : null}
-    </section>
-  `;
-
-  const errorsCount = openSections.errors ? errorJobs.length : (summary?.pipeline_errors ?? "");
-  const errorsSection = html`
-    <section class="issues-page__section">
-      ${errorsCount === 0 && !errorsLoading ? html`
-        <h2 class="issues-page__section-title issues-page__section-title--error">Pipeline errors <span class="issues-page__section-count">0</span></h2>
-      ` : html`
-        <div class="issues-page__section-header" @click=${() => toggleSection("errors")}>
-          <h2 class="issues-page__section-title issues-page__section-title--error">Pipeline errors <span class="issues-page__section-count">${errorsCount}</span></h2>
-          <i class="fa-solid fa-chevron-down btn-icon${openSections.errors ? " btn-icon--rotated" : ""}"></i>
-        </div>
-        ${openSections.errors ? html`
-          ${errorsLoading
-            ? html`<div>Loading…</div>`
-            : html`<div style="display:flex;gap:2rem;flex-direction:column;">${errorJobs.map((job) => html`<error-card .job=${job} @resolve-error=${handleResolveError} @resume-job=${handleResumeJob}></error-card>`)}</div>`
-          }
-        ` : null}
-      `}
     </section>
   `;
 
@@ -607,10 +574,10 @@ function IssuesPage() {
 
   return html`
     <main class="issues-page page-content">
-      ${errorsSection}
       ${issuesSection}
       ${duplicatesSection}
     </main>
+    ${pipelineErrorModal}
     ${deadUrlModal}
     ${roleModal}
     ${prToast ? html`

@@ -30,10 +30,6 @@
     padding-left: 0.65rem;
 }
 
-.issues-page__section-title--error {
-    border-left: 3px solid var(--pico-del-color);
-}
-
 .issues-page__section-title--warning {
     border-left: 3px solid var(--pico-warn-color);
 }
@@ -344,6 +340,14 @@
 .issues-page__modal-source-people {
     font-size: var(--text-sm);
     color: var(--pico-muted-color);
+}
+
+.issues-page__modal-debug-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: var(--text-sm);
 }
 
 .issues-page__modal-actions {

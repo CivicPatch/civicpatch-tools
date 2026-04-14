@@ -34,6 +34,7 @@ async def handle_submit_job_artifacts(
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
         await update_job_status(request.request_id, status=JobStatus.ERROR, progress=None)
+        await upsert_pipeline_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
         raise
 
 

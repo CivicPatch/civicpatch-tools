@@ -123,28 +123,6 @@ def test_post_job_result_returns_request_id(client):
     assert "errors" in data
 
 
-@pytest.mark.unit
-def test_get_jobs_with_errors_returns_list(client):
-    with (
-        patch(
-            "routers.api.jobs.get_jobs_with_errors",
-            new_callable=AsyncMock,
-            return_value=[
-                {
-                    "request_id": TEST_REQUEST_ID,
-                    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
-                    "status": "error",
-                }
-            ],
-        ),
-        patch("routers.api.jobs.shared.utils.id_utils.jurisdiction_ocdid_to_folder", return_value="us/ca/oakland"),
-    ):
-        response = client.get("/jobs/errors")
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "data" in data
-    assert isinstance(data["data"], list)
 
 
 @pytest.mark.unit
