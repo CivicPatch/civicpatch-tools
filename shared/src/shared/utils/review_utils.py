@@ -77,6 +77,22 @@ def get_data_issues(people: List[dict]) -> List[str]:
     return _check_people_count(people) + _check_division_sequence(people)
 
 
+def markdown_url_list(items: List[str]) -> str:
+    """Render a list of URLs as GitHub-flavoured markdown links separated by <br>."""
+    if not items:
+        return "N/A"
+    return "<br>".join(f"[{item}]({item})" for item in items)
+
+
+def markdown_identities(identities: Dict[str, List[str]]) -> str:
+    """Render an identities dict (canonical → aliases) as a <br>-separated list."""
+    if not identities:
+        return "N/A"
+    return "<br>".join(
+        f"{canonical}: {', '.join(aliases)}" for canonical, aliases in identities.items()
+    )
+
+
 def generate_review_table_markdown(rows: List[Dict]) -> str:
     lines = [
         "| Canonical Name | In Research | In Data |",

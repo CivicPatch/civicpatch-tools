@@ -30,10 +30,11 @@ relevant_urls:
 - https://www.austintexas.gov/planning/incentives-and-grants
 - https://www.austintexas.gov/development-services/types-permits
 - https://www.austintexas.gov/development-services/inspections
-- https://www.austintexas.gov/development-services/common-austin-code-violations
+- "https://\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51\
+  www.austintexas.gov/development-services/common-austin-code-violations"
 - https://www.austintexas.gov/development-services/commercial-plan-review
 - https://financeonline.austintexas.gov/afo/finance/
-- https://www.austintexas.gov/small-minority-business
+- "\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51https://www.austintexas.gov/small-minority-business"
 - https://www.austintexas.gov/economic-development
 - https://comptroller.texas.gov/taxes/
 - https://www.austintexas.gov/climate/green-resources
@@ -60,7 +61,8 @@ relevant_urls:
 - https://www.austintexas.gov/council/city-council-district-map
 - https://www.austintexas.gov/services/share-ideas-about-improving-austin
 - https://www.austintexas.gov/services/apply-become-board-or-commission-member
-- https://www.austintexas.gov/council/meetings
+- "https://www\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u5386\u53F2\u8BB0\u5F55\u5B98\u7F51\
+  .austintexas.gov/council/meetings"
 - https://www.austintexas.gov/communications/programs/volunteer-city-austin
 - https://www.austintexas.gov/contact
 - https://www.austintexas.gov/services/adopt-pet
@@ -85,3 +87,5 @@ relevant_urls:
 - https://services.austintexas.gov/edims/search.cfm
 - https://austincouncilforum.org/
 - https://www.austintexas.gov/services/apply-city-job
+- https://www.austintexas.gov/legal-notice
+- https://www.austintexas.gov/privacy-notice

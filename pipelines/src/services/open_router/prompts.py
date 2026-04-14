@@ -58,6 +58,9 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
        - Individual news stories, press releases, blog posts, or event pages
        - Non-municipal external domains
        - File downloads (PDFs, DOCs) that are a single document rather than a navigable page
+       - Year-indexed archive pages or collections of meeting records
+         (e.g. /city-council/2017, /agendas/2022, /minutes/2019) — these are historical
+         document archives and will never contain a current officials roster
 
     ---
 

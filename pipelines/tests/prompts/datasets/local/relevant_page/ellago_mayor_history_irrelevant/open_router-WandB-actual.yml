@@ -1,7 +1,7 @@
 is_relevant: false
 relevant_urls:
-- https://ellago-tx.gov/city-council/
 - https://ellago-tx.gov/agendas-minutes/
+- https://ellago-tx.gov/city-council/
 - https://ellago-tx.gov/board-of-adjustments/
 - https://ellago-tx.gov/building-standards-commission/
 - https://ellago-tx.gov/parks-board/
@@ -15,10 +15,12 @@ relevant_urls:
 - https://ellago-tx.gov/elections/
 - https://ellago-tx.gov/employment/
 - https://ellago-tx.gov/open-records/
+- "\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u7ED3\u679C\u8BB0\u5F55"
 - https://ellago-tx.gov/public-hearings-notices/
 - https://ellago-tx.gov/requests-for-proposals/
 - https://ellago-tx.gov/wp-content/uploads/2024/03/Zoning-Map-El-Elago.pdf
 - https://ellago-tx.gov/annual-business-registration/
+- "https://\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u7ED3\u679C\u8BB0\u5F55"
 - https://ellago.portal.finalsiteconnect.com/
 - https://ellago.portal.iworq.net/ELLAGOTX/new-case/400/752
 - https://ellago-tx.gov/report-a-complaint-problem/
@@ -31,11 +33,12 @@ relevant_urls:
 - https://ellago-tx.gov/parks/#mcnairpark
 - https://ellago-tx.gov/municipal-court/
 - https://ellago-tx.gov/municipal-court/defensive-driving/
-- "\u6781\u901F\u8D5B\u8F66\u5B98\u7F51\u5F00\u5956\u73A9\u6CD5"
 - https://ellago-tx.gov/municipal-court/deferred-disposition/
+- https://ellago-tx.gov/municipal-court/#mcpayments
 - https://ellago-tx.gov/public-safety/
+- "https://\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u7ED3\u679C\u8BB0\u5F55"
 - https://ellago-tx.gov/public-safety/animal-services/
-- "https://\u6781\u901F\u8D5B\u8F66\u5B98\u7F51\u5F00\u5956\u73A9\u6CD5"
+- https://ellago-tx.gov/public-safety/emergency-management/
 - https://ellago-tx.gov/public-safety/el-lago-mosquito-control/
 - https://ellago-tx.gov/public-safety/lakeview-police-department/
 - https://www.nassaubay.com/262/Emergency-Medical-Services-EMS
@@ -55,6 +58,7 @@ relevant_urls:
 - https://ellago-tx.gov/community-center/fitness-programs/
 - https://ellago-tx.gov/news-announcements/
 - https://ellago-tx.gov/requests-for-proposals/
+- https://ellago-tx.gov/building-department/contractor-registration/
 - https://ellago.portal.iworq.net/ELLAGOTX/new-permit/600/862
 - https://ellago.portal.iworq.net/ELLAGOTX/permits/600
 - https://ellago-tx.gov/wp-content/uploads/2024/03/Solicitor-Application-and-Affidavit.pdf
@@ -68,15 +72,17 @@ relevant_urls:
 - https://www.centerpointenergy.com/en-us/business?sa=tx
 - https://ellago-tx.gov/power-to-choose-electric/
 - https://www.wcid50.org/
+- "https://ellago-t\u6781\u901F\u8D5B\u8F66\u5F00\u5956\u7ED3\u679C\u8BB0\u5F55"
 - https://ellago-tx.gov/conflict-of-interest-questionnaires/
 - https://ellago-tx.gov/flood-fema-information/
-- "https://\u6781\u901F\u8D5B\u8F66\u5B98\u7F51\u5F00\u5956\u73A9\u6CD5"
+- https://ellago-tx.gov/hoa/
 - https://ellago-tx.gov/hurricane-preparedness/
 - https://ellago-tx.gov/directory
 - https://www.instagram.com/cityofellago/
 - https://www.facebook.com/CityofElLagoTexas
 - https://www.youtube.com/@cityofellago
 - https://www.linkedin.com/company/city-of-el-lago/?viewAsMember=true
+- https://ellago-tx.gov/
 - http://laventanadellago.org/lvweb.html
 - https://ellago-tx.gov/accessibility/
 - https://ellago-tx.gov/sitemap/

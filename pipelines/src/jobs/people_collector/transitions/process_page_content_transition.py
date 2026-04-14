@@ -19,7 +19,7 @@ def next_process_content_state(
         return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, None
 
     if should_stop_for_cost_limit(current_cost, job_config):
-        return PipelineStatus.SEND_ERROR, "Cost limit reached before data requirements were met"
+        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Cost limit reached before data requirements were met"
 
     if should_stop_for_max_pages(processed_count, job_config, progress):
         return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Max pages reached before data requirements were met"
