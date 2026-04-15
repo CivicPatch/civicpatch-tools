@@ -7,7 +7,7 @@ from psycopg import sql
 
 import shared.utils.id_utils
 from database.database import get_pool, to_iso
-from schemas.common import PeopleJobHistory
+from schemas.common import PeoplePipelineRunHistory
 from shared.schemas import Person
 
 
@@ -302,13 +302,13 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
         ]
 
 
-async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]:
+async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeoplePipelineRunHistory]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, pr.status
-            FROM jobs j
+            FROM pipeline_runs j
             JOIN requests r ON r.id = j.request_id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = %s

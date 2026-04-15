@@ -4,7 +4,7 @@ import json
 from google import genai  # type: ignore[attr-defined]
 from google.genai import types
 from utils.request_utils import with_retry
-from utils.log_utils import get_workflow_logger
+from utils.log_utils import get_pipeline_run_logger
 from utils import cost_utils
 from pipelines_environment import get_env_vars
 
@@ -30,7 +30,7 @@ async def run_prompt(
         content="",
         with_search=False
     ):
-    logger = get_workflow_logger(jurisdiction_ocdid)
+    logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info(f"Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = get_env_vars().get("GOOGLE_GEMINI_TOKEN")

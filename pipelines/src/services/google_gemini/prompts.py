@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from shared.utils import config_utils
 from shared.utils import id_utils
-from jobs.people_collector.schemas import ResearchedPerson
+from runners.people_collector.schemas import ResearchedPerson
 
 
 def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):

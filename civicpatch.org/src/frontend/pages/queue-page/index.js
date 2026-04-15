@@ -6,7 +6,7 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
-  fetchActiveJobs,
+  fetchActivePipelineRuns,
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
@@ -64,17 +64,17 @@ function QueuePage() {
   const [perPage, setPerPage] = useState(getIntParam("pr_per_page", 10, [10, 25, 50]));
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState(getViewFromUrl() || defaultView);
-  const [activeJobs, setActiveJobs] = useState([]);
-  const [activeJobsPage, setActiveJobsPage] = useState(getIntParam("aj_page", 1));
-  const [activeJobsTotalPages, setActiveJobsTotalPages] = useState(1);
-  const [activeJobsPerPage, setActiveJobsPerPage] = useState(getIntParam("aj_per_page", 25, [10, 25, 50]));
+  const [activePipelineRuns, setActivePipelineRuns] = useState([]);
+  const [activePipelineRunsPage, setActivePipelineRunsPage] = useState(getIntParam("aj_page", 1));
+  const [activePipelineRunsTotalPages, setActivePipelineRunsTotalPages] = useState(1);
+  const [activePipelineRunsPerPage, setActivePipelineRunsPerPage] = useState(getIntParam("aj_per_page", 25, [10, 25, 50]));
 
   useEffect(() => {
     const onPopState = () => {
       setPage(getIntParam("pr_page", 1));
       setPerPage(getIntParam("pr_per_page", 10, [10, 25, 50]));
-      setActiveJobsPage(getIntParam("aj_page", 1));
-      setActiveJobsPerPage(getIntParam("aj_per_page", 25, [10, 25, 50]));
+      setActivePipelineRunsPage(getIntParam("aj_page", 1));
+      setActivePipelineRunsPerPage(getIntParam("aj_per_page", 25, [10, 25, 50]));
       setViewMode(getViewFromUrl() || defaultView);
     };
     window.addEventListener("popstate", onPopState);
@@ -96,13 +96,13 @@ function QueuePage() {
   }, [stateCode, page, perPage, viewMode]);
 
   useEffect(() => {
-    fetchActiveJobs(stateCode || undefined, activeJobsPage, activeJobsPerPage)
+    fetchActivePipelineRuns(stateCode || undefined, activePipelineRunsPage, activePipelineRunsPerPage)
       .then((result) => {
-        setActiveJobs(result.data || []);
-        setActiveJobsTotalPages(result.total_pages || 1);
+        setActivePipelineRuns(result.data || []);
+        setActivePipelineRunsTotalPages(result.total_pages || 1);
       })
-      .catch(() => setActiveJobs([]));
-  }, [stateCode, activeJobsPage, activeJobsPerPage]);
+      .catch(() => setActivePipelineRuns([]));
+  }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
   const handleMerge = async (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
@@ -135,14 +135,14 @@ function QueuePage() {
   };
 
   const handleCancel = (requestId) => {
-    setActiveJobs(prev => prev.filter(j => j.request_id !== requestId));
+    setActivePipelineRuns(prev => prev.filter(j => j.request_id !== requestId));
   };
 
-  const handleActiveJobsPerPageChange = (e) => {
+  const handleActivePipelineRunsPerPageChange = (e) => {
     const n = parseInt(e.target.value, 10);
     setAjParamsInUrl(1, n);
-    setActiveJobsPerPage(n);
-    setActiveJobsPage(1);
+    setActivePipelineRunsPerPage(n);
+    setActivePipelineRunsPage(1);
   };
 
   const handleStateChange = (e) => {
@@ -203,16 +203,16 @@ function QueuePage() {
 
       ${stateCode ? html`
         ${queueSummary ? html`<queue-summary .summary=${queueSummary}></queue-summary>` : null}
-        <queue-active-jobs
-          .jobs=${activeJobs}
-          .page=${activeJobsPage}
-          .totalPages=${activeJobsTotalPages}
-          .perPage=${activeJobsPerPage}
-          .onPageChange=${(p) => { setAjParamsInUrl(p, activeJobsPerPage); setActiveJobsPage(p); }}
-          .onPerPageChange=${handleActiveJobsPerPageChange}
+        <queue-active-pipeline-runs
+          .jobs=${activePipelineRuns}
+          .page=${activePipelineRunsPage}
+          .totalPages=${activePipelineRunsTotalPages}
+          .perPage=${activePipelineRunsPerPage}
+          .onPageChange=${(p) => { setAjParamsInUrl(p, activePipelineRunsPerPage); setActivePipelineRunsPage(p); }}
+          .onPerPageChange=${handleActivePipelineRunsPerPageChange}
           .canCancel=${permissions.CANCEL_JOB}
           .onCancel=${handleCancel}
-        ></queue-active-jobs>
+        ></queue-active-pipeline-runs>
         <queue-pr-list
           .pullRequests=${pullRequests}
           .pullRequestState=${pullRequestState}

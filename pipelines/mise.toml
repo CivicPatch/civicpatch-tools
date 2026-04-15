@@ -141,7 +141,7 @@ description = "Send a minimal OpenRouter request matching production config and 
 run = """
 uv run python3 - <<'EOF'
 import json, requests
-from jobs.people_collector.schemas import PeopleArrayLLMResponseSchema
+from runners.people_collector.schemas import PeopleArrayLLMResponseSchema
 import os
 
 api_key = os.environ.get("OPEN_ROUTER_TOKEN")

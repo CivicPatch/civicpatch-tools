@@ -47,7 +47,7 @@ async def _get_installation_token() -> str:
 
 async def _poll_run_id(client: httpx.AsyncClient, request_id: str) -> Optional[int]:
     resp = await client.get(
-        f"{_CIVICPATCH_ORG_URL}/api/v1/jobs/{request_id}/run",
+        f"{_CIVICPATCH_ORG_URL}/api/v1/pipeline_runs/{request_id}/run",
         headers={"Authorization": _SERVICE_API_KEY},
     )
     if resp.status_code == 200:
@@ -103,6 +103,6 @@ async def trigger_local(
         "source_urls": source_urls,
     }
     async with httpx.AsyncClient() as client:
-        resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/jobs", json=payload, timeout=10)
+        resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs", json=payload, timeout=10)
         resp.raise_for_status()
     activity.logger.info(f"Local job triggered: {request_id}")

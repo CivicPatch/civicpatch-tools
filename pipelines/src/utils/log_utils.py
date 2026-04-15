@@ -4,15 +4,15 @@ import threading
 from datetime import datetime
 from pipelines_environment import get_env_vars
 
-_WORKFLOW_LOGGER_LOCK = threading.Lock()
-_WORKFLOW_LOG_FILES = {}
+_PIPELINE_RUN_LOGGER_LOCK = threading.Lock()
+_PIPELINE_RUN_LOG_FILES = {}
 
-class WorkflowLogger:
+class PipelineRunLogger:
     def __init__(self, jurisdiction_ocdid: str):
         self.jurisdiction_ocdid = jurisdiction_ocdid
-        self.log_path = get_workflow_log_path(jurisdiction_ocdid)
+        self.log_path = get_pipeline_run_log_path(jurisdiction_ocdid)
         self.file = open(self.log_path, "a", encoding="utf-8")
-        
+
     def _write(self, level: str, message: str):
         timestamp = datetime.now().isoformat()
         line = f"[{timestamp}] [{level.upper()}] {message}\n"
@@ -30,13 +30,13 @@ class WorkflowLogger:
 
     def warning(self, message: str):
         self._write("WARNING", message)
-    
+
     def info(self, message: str):
         self._write("INFO", message)
 
     def error(self, message: str):
         self._write("ERROR", message)
-    
+
     def clear(self):
         self.file.close()
         self.file = open(self.log_path, "w", encoding="utf-8")
@@ -45,23 +45,23 @@ class WorkflowLogger:
         self.file.close()
 
 
-def get_workflow_log_path(jurisdiction_ocdid: str) -> str:
+def get_pipeline_run_log_path(jurisdiction_ocdid: str) -> str:
     data_source_municipality_path = data_path_utils.get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     os.makedirs(data_source_municipality_path, exist_ok=True)
-    return f"{data_source_municipality_path}/workflow.log"
+    return f"{data_source_municipality_path}/pipeline_run.log"
 
 
-def get_workflow_logger(jurisdiction_ocdid: str) -> WorkflowLogger:
-    with _WORKFLOW_LOGGER_LOCK:
-        if jurisdiction_ocdid in _WORKFLOW_LOG_FILES:
-            return _WORKFLOW_LOG_FILES[jurisdiction_ocdid]
+def get_pipeline_run_logger(jurisdiction_ocdid: str) -> PipelineRunLogger:
+    with _PIPELINE_RUN_LOGGER_LOCK:
+        if jurisdiction_ocdid in _PIPELINE_RUN_LOG_FILES:
+            return _PIPELINE_RUN_LOG_FILES[jurisdiction_ocdid]
 
-        logger = WorkflowLogger(jurisdiction_ocdid)
-        _WORKFLOW_LOG_FILES[jurisdiction_ocdid] = logger
+        logger = PipelineRunLogger(jurisdiction_ocdid)
+        _PIPELINE_RUN_LOG_FILES[jurisdiction_ocdid] = logger
         return logger
 
-def cleanup_workflow_logger(jurisdiction_ocdid: str):
-    with _WORKFLOW_LOGGER_LOCK:
-        logger = _WORKFLOW_LOG_FILES.pop(jurisdiction_ocdid, None)
+def cleanup_pipeline_run_logger(jurisdiction_ocdid: str):
+    with _PIPELINE_RUN_LOGGER_LOCK:
+        logger = _PIPELINE_RUN_LOG_FILES.pop(jurisdiction_ocdid, None)
     if logger:
         logger.close()

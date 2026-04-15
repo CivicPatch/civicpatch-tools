@@ -6,7 +6,7 @@ from services.google_gemini.llm import run_prompt as run_gemini_prompt
 from services.google_gemini.prompts import relevant_page_prompt as make_gemini_prompt
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import relevant_page_prompt as make_together_prompt
-from jobs.people_collector.schemas import RelevantPageResponseSchema
+from runners.people_collector.schemas import RelevantPageResponseSchema
 from utils import cost_utils
 from typing import cast
 import pathlib

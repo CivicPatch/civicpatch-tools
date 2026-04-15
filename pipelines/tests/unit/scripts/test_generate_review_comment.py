@@ -2,7 +2,7 @@ import pytest
 from domain.models import Official
 
 from shared.utils.review_utils import get_identity_issues
-from jobs.people_collector.schemas import (
+from runners.people_collector.schemas import (
     PipelineStatus,
     MergeRecordsAcrossLLMsStep,
     FormatOutputStep,

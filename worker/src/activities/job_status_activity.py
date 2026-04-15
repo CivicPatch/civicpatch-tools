@@ -6,21 +6,21 @@ import httpx
 from temporalio import activity
 
 from constants import RunConclusion
-from shared.utils.statuses import JobStatus
+from shared.utils.statuses import PipelineRunStatus
 
 API_URL = os.environ["CIVICPATCH_ORG_URL"]
 SERVICE_API_KEY = os.environ["SERVICE_API_KEY"]
 
 _HEADERS = {"Authorization": SERVICE_API_KEY}
 
-_TERMINAL_STATUSES = {JobStatus.COMPLETED, JobStatus.ERROR}
+_TERMINAL_STATUSES = {PipelineRunStatus.COMPLETED, PipelineRunStatus.ERROR}
 
 
 @activity.defn
 async def update_job_status(request_id: str, status: str, progress: Optional[int] = None) -> None:
     async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
         resp = await client.patch(
-            f"{API_URL}/api/v1/jobs/{request_id}/status",
+            f"{API_URL}/api/v1/pipeline_runs/{request_id}/status",
             json={"status": status, "progress": progress},
         )
         resp.raise_for_status()
@@ -33,7 +33,7 @@ async def poll_job_status(request_id: str) -> str:
         status = None
         try:
             async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
-                resp = await client.get(f"{API_URL}/api/v1/jobs/{request_id}/status")
+                resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{request_id}/status")
                 resp.raise_for_status()
             status = resp.json()["status"]
         except httpx.HTTPStatusError as e:
@@ -45,7 +45,7 @@ async def poll_job_status(request_id: str) -> str:
         if status is not None:
             activity.logger.info(f"Job {request_id}: status={status}")
             if status in _TERMINAL_STATUSES:
-                return RunConclusion.SUCCESS if status == JobStatus.COMPLETED else RunConclusion.FAILURE
+                return RunConclusion.SUCCESS if status == PipelineRunStatus.COMPLETED else RunConclusion.FAILURE
         try:
             await asyncio.sleep(15)
         except asyncio.CancelledError:

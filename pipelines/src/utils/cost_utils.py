@@ -141,7 +141,7 @@ def get_cost_tracker(jurisdiction_ocdid: str):
     return _COSTS_BY_JURISDICTION[jurisdiction_ocdid]
 
 def add_llm_cost(
-        logger: log_utils.WorkflowLogger,
+        logger: log_utils.PipelineRunLogger,
         request_id: str,
         jurisdiction_ocdid: str,
         llm_name: str,

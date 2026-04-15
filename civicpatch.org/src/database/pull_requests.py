@@ -99,7 +99,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
 
 
 
-async def update_job_pull_request_url(request_id: str, pull_request_url: str | None = None):
+async def update_pipeline_run_pull_request_url(request_id: str, pull_request_url: str | None = None):
     pool = await get_pool()
     pr_number = 0
     if pull_request_url:
@@ -124,7 +124,7 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str | N
         return result.rowcount > 0
 
 
-async def update_job_pull_request_status(
+async def update_pipeline_run_pull_request_status(
     request_id: str,
     pull_request_status: str,
     pull_request_merged_at=None,
@@ -157,7 +157,7 @@ async def update_job_pull_request_status(
         return True
 
 
-async def update_job_pull_request_review_state(request_id: str, review_state: str | None):
+async def update_pipeline_run_pull_request_review_state(request_id: str, review_state: str | None):
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
@@ -177,7 +177,7 @@ async def get_open_pr_request_ids() -> dict[str, str]:
         await cur.execute(
             """
             SELECT j.request_id, pr.url
-            FROM jobs j
+            FROM pipeline_runs j
             JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
             WHERE pr.status = 'open'
@@ -213,7 +213,7 @@ async def bulk_close_stale_prs(request_ids: List[str]):
             """
             UPDATE pull_requests pr
             SET status = 'closed', updated_at = CURRENT_TIMESTAMP
-            FROM jobs j
+            FROM pipeline_runs j
             WHERE pr.request_id = j.request_id AND j.request_id = ANY(%s)
             """,
             (request_ids,),

@@ -12,7 +12,7 @@ Run with:
 import pytest
 
 import database.jurisdictions as db_jurisdictions
-import database.jobs as db_jobs
+import database.pipeline_runs as db_jobs
 import database.notes as db_notes
 import database.people as db_people
 import database.pull_requests as db_pull_requests

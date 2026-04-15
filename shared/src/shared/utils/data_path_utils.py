@@ -41,13 +41,13 @@ def get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid: str):
     folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return os.path.join(data_source_path, folder_path)
 
-def get_workflow_context_file_path(jurisdiction_ocdid: str):
+def get_pipeline_run_context_file_path(jurisdiction_ocdid: str):
     """
-    Returns the absolute path to the pipeline file.
+    Returns the absolute path to the pipeline run context file.
     """
     jurisdiction_ocdid_path = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     return os.path.join(
-        jurisdiction_ocdid_path, "workflow_context.json"
+        jurisdiction_ocdid_path, "pipeline_run_context.json"
     )
 
 def get_config_file_path(jurisdiction_ocdid: str):
@@ -75,7 +75,7 @@ def get_data_file_path(jurisdiction_ocdid):
 # Let's stop including the data path from now on
 def get_data_source_context_file_path(jurisdiction_ocdid: str):
     folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    context_file_path = os.path.join("data_source", folder_path, "workflow_context.json")
+    context_file_path = os.path.join("data_source", folder_path, "pipeline_run_context.json")
 
     return context_file_path
 

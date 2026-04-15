@@ -3,7 +3,7 @@ import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { durationBetween } from "../../../utils/date-utils.js";
 import { Pagination } from "../../../components/pagination/index.js";
-import { cancelJob } from "../../../api.js";
+import { cancelPipelineRun } from "../../../api.js";
 
 function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange, onPerPageChange, onCancel, canCancel }) {
   const [cancellingIds, setCancellingIds] = useState(new Set());
@@ -13,7 +13,7 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
   const handleCancel = async (requestId) => {
     setCancellingIds(prev => new Set(prev).add(requestId));
     try {
-      await cancelJob(requestId);
+      await cancelPipelineRun(requestId);
       if (onCancel) onCancel(requestId);
     } catch (_) {
       // noop — leave the row visible so the user can retry
@@ -27,9 +27,9 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
   };
 
   return html`
-    <div class="aj-section">
+    <div class="pipeline-run-section">
       <div class="queue-page__section-label">Active jobs</div>
-      <table class="aj-table" role="grid">
+      <table class="pipeline-run-table" role="grid">
         <thead>
           <tr>
             <th>Jurisdiction</th>
@@ -45,19 +45,19 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
           ${jobs.map(job => html`
             <tr>
               <td>
-                <a class="aj-name" href="/${job.jurisdiction_path}">
+                <a class="pipeline-run-name" href="/${job.jurisdiction_path}">
                   ${job.jurisdiction_name || job.jurisdiction_ocdid}
                 </a>
               </td>
-              <td class="aj-meta">${job.state}</td>
-              <td class="aj-meta">${job.status}</td>
-              <td class="aj-meta">${job.progress ?? 0}%</td>
-              <td class="aj-meta aj-mono aj-request-id">${job.request_id}</td>
-              <td class="aj-meta">${durationBetween(job.created_at, job.updated_at)}</td>
+              <td class="pipeline-run-meta">${job.state}</td>
+              <td class="pipeline-run-meta">${job.status}</td>
+              <td class="pipeline-run-meta">${job.progress ?? 0}%</td>
+              <td class="pipeline-run-meta pipeline-run-mono pipeline-run-request-id">${job.request_id}</td>
+              <td class="pipeline-run-meta">${durationBetween(job.created_at, job.updated_at)}</td>
               ${canCancel ? html`
                 <td>
                   <button
-                    class="aj-cancel-btn"
+                    class="pipeline-run-cancel-btn"
                     ?disabled=${cancellingIds.has(job.request_id)}
                     @click=${() => handleCancel(job.request_id)}
                   >${cancellingIds.has(job.request_id) ? "Cancelling…" : "Cancel"}</button>
@@ -72,4 +72,4 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
   `;
 }
 
-customElements.define("queue-active-jobs", component(ActiveJobs, { useShadowDOM: false }));
+customElements.define("queue-active-pipeline-runs", component(ActiveJobs, { useShadowDOM: false }));

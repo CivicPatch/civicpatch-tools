@@ -3,15 +3,15 @@ import json
 
 from typing import List, Dict
 import lib.sheets as google_sheets_service
-from schemas.requests import HandleSubmitJobArtifactsRequest
-from schemas.responses import SubmitJobArtifactsResponse
+from schemas.requests import HandleSubmitPipelineRunArtifactsRequest
+from schemas.responses import SubmitPipelineRunArtifactsResponse
 import lib.files as file_utils
 import shared.utils.id_utils
 import lib.storage as storage_service
 import lib.github.api as github_service
-from database.jobs import update_job_data, update_job_review_json, update_job_status
+from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.pipeline_issues import upsert_pipeline_issue
-from shared.utils.statuses import JobStatus
+from shared.utils.statuses import PipelineRunStatus
 import logging
 import yaml
 
@@ -26,33 +26,33 @@ INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 
 logger = logging.getLogger(__name__)
 
-async def handle_submit_job_artifacts(
-        request: HandleSubmitJobArtifactsRequest,
-) -> SubmitJobArtifactsResponse:
+async def handle_submit_pipeline_run_artifacts(
+        request: HandleSubmitPipelineRunArtifactsRequest,
+) -> SubmitPipelineRunArtifactsResponse:
     try:
-        return await _handle_submit_job_artifacts(request)
+        return await _handle_submit_pipeline_run_artifacts(request)
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
-        await update_job_status(request.request_id, status=JobStatus.ERROR, progress=None)
+        await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
         await upsert_pipeline_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
         raise
 
 
-async def _handle_submit_job_artifacts(
-        request: HandleSubmitJobArtifactsRequest,
-) -> SubmitJobArtifactsResponse:
+async def _handle_submit_pipeline_run_artifacts(
+        request: HandleSubmitPipelineRunArtifactsRequest,
+) -> SubmitPipelineRunArtifactsResponse:
     file_suffix = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
 
     artifact_file_patterns = [
         "data/*/local/*.yml",
-        "data_source/*/local/*/workflow_context.json",
+        "data_source/*/local/*/pipeline_run_context.json",
     ]
     debug_file_patterns = [
         "data_source/*/local/*/cache/*",
         "data_source/*/local/*/images/*",
         "data_source/*/local/*/costs.json",
-        "data_source/*/local/*/workflow.log",
-        "data_source/*/local/*/workflow_context.json",
+        "data_source/*/local/*/pipeline_run.log",
+        "data_source/*/local/*/pipeline_run_context.json",
     ]
 
     zip_path = request.zip_path
@@ -69,7 +69,7 @@ async def _handle_submit_job_artifacts(
     file_utils.copy_files_preserving_hierarchy(extracted_dir, artifact_file_dir, patterns=artifact_file_patterns)
     file_utils.copy_files_preserving_hierarchy(extracted_dir, debug_file_dir, patterns=debug_file_patterns)
 
-    is_success = request.job_status == "SUCCESS"
+    is_success = request.pipeline_run_status == "SUCCESS"
 
     filenames_to_urls = await _upload_debug_files(debug_file_dir, request.request_id)
 
@@ -89,13 +89,13 @@ async def _handle_submit_job_artifacts(
         updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
         with open(data_file_path, "w") as f:
             yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
-        await update_job_data(request.request_id, updated_data)
+        await update_pipeline_run_data(request.request_id, updated_data)
 
-        workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/workflow_context.json")
+        workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/pipeline_run_context.json")
         with open(workflow_context_path, "r") as f:
             workflow_context = json.load(f)
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
-        await update_job_review_json(request.request_id, review_json)
+        await update_pipeline_run_review_json(request.request_id, review_json)
 
         unrecognized = (
             workflow_context.get("data", {})
@@ -106,7 +106,7 @@ async def _handle_submit_job_artifacts(
 
     else:
         try:
-            workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/workflow_context.json")
+            workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/pipeline_run_context.json")
             with open(workflow_context_path, "r") as f:
                 workflow_context = json.load(f)
             dead_urls = workflow_context.get("data", {}).get("dead_urls", [])
@@ -135,7 +135,7 @@ async def _handle_submit_job_artifacts(
         except Exception as e:
             logger.error(f"[{request.request_id}] Failed to trigger data intake workflow: {e}", exc_info=True)
 
-    return SubmitJobArtifactsResponse(
+    return SubmitPipelineRunArtifactsResponse(
         filename=file_suffix,
         status="uploaded",
         zip_file_url=zip_file_url,

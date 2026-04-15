@@ -21,7 +21,7 @@ from routers.frontend import get_router as frontend_router
 import routers.webhooks.github as github_webhook_router
 import routers.api.api_keys as api_keys_router
 import routers.api.data as api_data_router
-import routers.api.jobs as api_jobs_router
+import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.pull_requests as api_pull_requests_router
@@ -134,9 +134,9 @@ app.include_router(
 )
 
 app.include_router(
-    api_jobs_router.get_router(api_key_header),
-    prefix="/api/v1/jobs",
-    tags=["jobs"],
+    api_pipeline_runs_router.get_router(api_key_header),
+    prefix="/api/v1/pipeline_runs",
+    tags=["pipeline_runs"],
     dependencies=[
         Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))
     ],
@@ -235,7 +235,7 @@ async def get_me(user: Identity = Depends(get_optional_user)):
     }
 
 
-@app.get("/api/v1/sse/jobs/status", include_in_schema=False)
+@app.get("/api/v1/sse/pipeline_runs/status", include_in_schema=False)
 async def sse_job_status(jurisdiction_ocdid: str, request: Request):
     key = f"job_status:{jurisdiction_ocdid}"
 

@@ -7,7 +7,7 @@ from services.google_gemini.llm import run_prompt as run_gemini_prompt
 from services.google_gemini.prompts import municipality_officials_prompt as make_gemini_prompt
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import municipality_officials_prompt as make_together_prompt
-from jobs.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
+from runners.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
 import phonenumbers
 from typing import cast, List
 import pathlib

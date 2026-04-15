@@ -8,7 +8,7 @@ from utils.merge_utils import (
   are_names_similar,
   has_name_overlap,
 )
-from jobs.people_collector.schemas import LLMPerson
+from runners.people_collector.schemas import LLMPerson
 from domain.models import Person
 
 pytestmark = pytest.mark.unit

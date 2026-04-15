@@ -2,7 +2,7 @@ import os
 import pytest
 import shutil
 from unittest.mock import MagicMock
-from jobs.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, inline_iframes
+from runners.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, inline_iframes
 
 pytestmark = pytest.mark.integration
 

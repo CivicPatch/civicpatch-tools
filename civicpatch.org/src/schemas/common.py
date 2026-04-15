@@ -73,7 +73,7 @@ class CreateNoteRequest(BaseModel):
     body: str
 
 
-class PeopleJobHistory(BaseModel):
+class PeoplePipelineRunHistory(BaseModel):
     request_id: str
     created_at: float
     updated_at: float

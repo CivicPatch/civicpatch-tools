@@ -9,7 +9,7 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
-from database.pull_requests import update_job_pull_request_status
+from database.pull_requests import update_pipeline_run_pull_request_status
 import database.requests as requests_db
 import database.pipeline_issues as pipeline_issues_db
 import database.review_sessions as review_sessions_db
@@ -57,7 +57,7 @@ async def _handle_job_pr_event(payload: dict[str, Any]) -> None:
     if result is None:
         return
     request_id, status, merged_at, pr_url = result
-    await update_job_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
+    await update_pipeline_run_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
     if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
         await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
     if status == PullRequestStatus.MERGED:

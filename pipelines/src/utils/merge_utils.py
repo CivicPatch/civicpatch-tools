@@ -1,6 +1,6 @@
 from typing import List, Dict, Tuple
 from domain.models import Person
-from jobs.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName, PeopleCollectorContext
+from runners.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName, PeopleCollectorContext
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
 import copy

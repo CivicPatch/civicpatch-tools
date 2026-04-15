@@ -37,7 +37,7 @@ erDiagram
         timestamptz     updated_at
     }
 
-    jobs {
+    pipeline_runs {
         int             id              PK
         uuid            request_id      FK  "idx"
         int_null        progress
@@ -111,7 +111,7 @@ erDiagram
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
-    requests ||--o| jobs : "request_id"
+    requests ||--o| pipeline_runs : "request_id"
     requests ||--o| pull_requests : "request_id"
     requests }o--o{ pipeline_issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
@@ -124,6 +124,6 @@ erDiagram
 **Notes:**
 - `requests.review_json` — pipeline review output (`issues`, `warnings`, etc.)
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
-- `jobs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
+- `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
