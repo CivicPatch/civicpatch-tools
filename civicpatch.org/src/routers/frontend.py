@@ -68,7 +68,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
-        return templates.TemplateResponse("pages/jobs.html", {"request": request, "user": user})
+        return templates.TemplateResponse("pages/queue.html", {"request": request, "user": user})
 
     @router.get("/review", response_class=HTMLResponse, include_in_schema=False)
     async def review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
