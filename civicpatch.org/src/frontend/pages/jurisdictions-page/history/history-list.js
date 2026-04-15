@@ -43,14 +43,14 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
   const statusBadgeProps = (status) => {
     const s = (status || "").toLowerCase().replace(/\s+/g, "-");
     switch (s) {
-      case "done":
+      case "success":
+      case "resolved":
       case "merged":
         return { bg: "var(--pico-ins-background)", color: "var(--pico-ins-color)" };
-      case "failed":
       case "error":
       case "closed":
         return { bg: "var(--pico-del-background)", color: "var(--pico-del-color)" };
-      case "finalize":
+      case "cancelled":
         return { bg: "var(--pico-muted-background)", color: "var(--pico-muted-color)" };
       default:
         return { bg: "var(--pico-info-background)", color: "var(--pico-info-color)" };
