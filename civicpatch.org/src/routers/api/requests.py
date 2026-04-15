@@ -3,7 +3,7 @@ import logging
 import re
 from datetime import date
 from typing import Any, Optional
-import database.jobs
+import database.pipeline_runs
 import database.pull_requests as pull_requests_db
 import database.requests
 import lib.csv as csv_service
@@ -11,7 +11,7 @@ import core.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from schemas.common import Identity, Role, RouteCategory
-from schemas.jobs import CreateRegisterRequest, PostResultRequest
+from schemas.pipeline_runs import CreateRegisterRequest, PostResultRequest
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ def get_router(api_key_header):
         print(
             f"Registering request: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
         )
-        _response = await database.requests.register_request_with_job(
+        _response = await database.requests.register_request_with_pipeline_run(
             requested_by_user_id=user.user_id,
             request_id=request.request_id,
             job_type="people",
@@ -56,12 +56,12 @@ def get_router(api_key_header):
 
         tasks = []
         if request.data:  # Called from within civicpatch project
-            tasks.append(("result", database.jobs.update_job_data(request_id, request.data)))
+            tasks.append(("result", database.pipeline_runs.update_pipeline_run_data(request_id, request.data)))
         if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (
                     "pull_request",
-                    pull_requests_db.update_job_pull_request_url(
+                    pull_requests_db.update_pipeline_run_pull_request_url(
                         request_id, pull_request_url=request.pull_request_url
                     ),
                 )

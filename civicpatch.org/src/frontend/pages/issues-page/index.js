@@ -8,7 +8,7 @@ import {
   fetchIssueDetails,
   resolveReviewIssue,
   dismissIssue,
-  fetchDuplicatePrJurisdictionJobs,
+  fetchDuplicatePrJurisdictionPipelineRuns,
   fetchPullRequests,
   closeStaleDuplicatePrs,
   saveAndMerge,
@@ -155,7 +155,7 @@ function IssuesPage() {
   // Duplicates — lazy, only when section is open
   useEffect(() => {
     if (!openSections.duplicates) return;
-    fetchDuplicatePrJurisdictionJobs()
+    fetchDuplicatePrJurisdictionPipelineRuns()
       .then((r) => setDuplicateJurisdictions(r.data || []))
       .catch(console.error);
   }, [openSections.duplicates]);
@@ -256,7 +256,7 @@ function IssuesPage() {
     setClosingStale(true);
     try {
       await closeStaleDuplicatePrs();
-      const result = await fetchDuplicatePrJurisdictionJobs();
+      const result = await fetchDuplicatePrJurisdictionPipelineRuns();
       setDuplicateJurisdictions(result.data || []);
       setDuplicateJurisdictionPRs({});
       setOpenJurisdictions({});

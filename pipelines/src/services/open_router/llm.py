@@ -3,7 +3,7 @@ import time
 import json
 import requests
 from utils.request_utils import with_retry
-from utils.log_utils import get_workflow_logger
+from utils.log_utils import get_pipeline_run_logger
 from utils import cost_utils
 from pipelines_environment import get_env_vars
 
@@ -41,7 +41,7 @@ async def run_prompt(
         model_type="STANDARD",
         provider_order=None,
         allow_fallbacks=True):
-    logger = get_workflow_logger(jurisdiction_ocdid)
+    logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
     logger.debug(f"Prompt: \n{prompt}")
 

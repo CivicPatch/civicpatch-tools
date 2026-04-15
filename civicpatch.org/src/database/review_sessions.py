@@ -105,7 +105,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
         )
         SELECT j.request_id::text,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
-        FROM jobs j
+        FROM pipeline_runs j
         JOIN requests r ON r.id = j.request_id
         JOIN pull_requests pr ON pr.request_id = j.request_id
         WHERE pr.status = 'open'
@@ -293,7 +293,7 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
                 UPDATE review_session_entries
                 SET status = 'resolved', resolved_at = NOW()
                 WHERE EXISTS (
-                    SELECT 1 FROM jobs j
+                    SELECT 1 FROM pipeline_runs j
                     JOIN requests r ON r.id = j.request_id
                     JOIN pull_requests pr ON pr.request_id = r.id
                     WHERE pr.url LIKE %s
@@ -361,7 +361,7 @@ async def get_review_stats(
             await cur.execute(
                 """
                 SELECT COUNT(*) AS available_count
-                FROM jobs j
+                FROM pipeline_runs j
                 JOIN requests r ON r.id = j.request_id
                 JOIN pull_requests pr ON pr.request_id = r.id
                 WHERE pr.status = 'open'

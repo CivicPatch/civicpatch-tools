@@ -19,7 +19,7 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-import database.jobs
+import database.pipeline_runs
 import database.people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
@@ -122,7 +122,7 @@ def get_router(api_key_header):
 
         existing, cached = await asyncio.gather(
             database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
-            database.jobs.get_job_data_json(request_id),
+            database.pipeline_runs.get_pipeline_run_data_json(request_id),
         )
 
         # Fast path: serve from DB if already backfilled
@@ -149,7 +149,7 @@ def get_router(api_key_header):
 
         # Backfill DB so future requests skip the GitHub roundtrip
         background_tasks.add_task(
-            database.jobs.update_job_data, request_id, file_content
+            database.pipeline_runs.update_pipeline_run_data, request_id, file_content
         )
 
         return {
@@ -184,7 +184,7 @@ def get_router(api_key_header):
 
         # Update the results_json in the background, too
         background_tasks.add_task(
-            database.jobs.update_job_data, request.request_id, normalized
+            database.pipeline_runs.update_pipeline_run_data, request.request_id, normalized
         )
         if not _github_response:
             return JSONResponse(
@@ -254,7 +254,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        result = await database.jobs.get_job_result(request_id)
+        result = await database.pipeline_runs.get_pipeline_run_result(request_id)
         return {"data": (result or {}).get("review_json") or {}}
 
     # -- Pull Requests: Close Pull Request ---
@@ -277,7 +277,7 @@ def get_router(api_key_header):
                 status_code=500,
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Save and Merge ---
@@ -305,7 +305,7 @@ def get_router(api_key_header):
                     content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
                     status_code=500,
                 )
-            background_tasks.add_task(database.jobs.update_job_data, request.request_id, normalized)
+            background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request.request_id, normalized)
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)
@@ -347,7 +347,7 @@ def get_router(api_key_header):
                 status_code=status_code,
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Update Branch ---

@@ -1,5 +1,5 @@
 
-from jobs.people_collector.schemas import RawLLMPerson
+from runners.people_collector.schemas import RawLLMPerson
 from typing import List
 from utils.merge_utils import same_name
 

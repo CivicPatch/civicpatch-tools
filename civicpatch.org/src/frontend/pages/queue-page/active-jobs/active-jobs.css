@@ -1,10 +1,10 @@
-.aj-section { margin-bottom: 2rem; }
-.aj-table { width: 100%; font-size: 0.8125rem; margin: 0; }
-.aj-table th { font-size: 0.75rem; color: var(--pico-muted-color); font-weight: 600; padding: 0.3rem 0.5rem; }
-.aj-table td { padding: 0.3rem 0.5rem; vertical-align: middle; }
-.aj-table tr:last-child td { border-bottom: none; }
-.aj-name { color: var(--pico-primary); }
-.aj-meta { color: var(--pico-muted-color); white-space: nowrap; }
-.aj-mono { font-family: var(--pico-font-family-monospace); font-size: 0.75rem; }
-.aj-request-id { white-space: normal; word-break: break-all; min-width: 8rem; }
-.aj-cancel-btn { font-size: 0.75rem; padding: 0.15rem 0.5rem; cursor: pointer; }
+.pipeline-run-section { margin-bottom: 2rem; }
+.pipeline-run-table { width: 100%; font-size: 0.8125rem; margin: 0; }
+.pipeline-run-table th { font-size: 0.75rem; color: var(--pico-muted-color); font-weight: 600; padding: 0.3rem 0.5rem; }
+.pipeline-run-table td { padding: 0.3rem 0.5rem; vertical-align: middle; }
+.pipeline-run-table tr:last-child td { border-bottom: none; }
+.pipeline-run-name { color: var(--pico-primary); }
+.pipeline-run-meta { color: var(--pico-muted-color); white-space: nowrap; }
+.pipeline-run-mono { font-family: var(--pico-font-family-monospace); font-size: 0.75rem; }
+.pipeline-run-request-id { white-space: normal; word-break: break-all; min-width: 8rem; }
+.pipeline-run-cancel-btn { font-size: 0.75rem; padding: 0.15rem 0.5rem; cursor: pointer; }

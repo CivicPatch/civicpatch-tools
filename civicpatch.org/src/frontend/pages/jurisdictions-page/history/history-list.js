@@ -1,7 +1,7 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils.js";
-import { cancelJob } from "../../../api.js";
+import { cancelPipelineRun } from "../../../api.js";
 import { TERMINAL_JOB_STATUSES } from "../../../components/job-status.js";
 import "./history-modal.js";
 import "../../../components/status-badge.js";
@@ -27,7 +27,7 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
   const handleCancel = async (requestId) => {
     setCancellingIds(prev => new Set(prev).add(requestId));
     try {
-      await cancelJob(requestId);
+      await cancelPipelineRun(requestId);
       if (onCancel) onCancel(requestId);
     } catch (_) {
       // noop — leave the row visible so the user can retry

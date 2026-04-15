@@ -1,4 +1,4 @@
-from jobs.people_collector.schemas import PipelineStatus, WorkflowConfig
+from runners.people_collector.schemas import PipelineStatus, PipelineRunConfig
 from pydantic import BaseModel
 from shared.utils import id_utils
 from typing import List, Literal, Optional
@@ -8,7 +8,7 @@ class PeopleCollectorJobRequest(BaseModel):
     jurisdiction_ocdid: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
     state: PipelineStatus = PipelineStatus.INIT
-    config: WorkflowConfig
+    config: PipelineRunConfig
     scrape_mode: Literal["remote", "local"] = "local"
 
 def validate_people_request(request: PeopleCollectorJobRequest) -> tuple[List[str], List[str]]:

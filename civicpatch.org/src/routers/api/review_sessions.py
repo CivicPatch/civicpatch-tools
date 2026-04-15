@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 
-import database.jobs as jobs_db
+import database.pipeline_runs as jobs_db
 import database.people as database_people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
@@ -140,7 +140,7 @@ async def _navigate_response(session_id: str, entry_number: int):
     pr_meta, existing, proposed = await asyncio.gather(
         pull_requests_db.get_pull_request_for_review(request_id),
         database_people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
-        jobs_db.get_job_data_json(request_id),
+        jobs_db.get_pipeline_run_data_json(request_id),
     )
 
     if proposed is None:
@@ -151,7 +151,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             file_path=f"data/{folder}.yml",
         )
         if proposed is not None:
-            asyncio.create_task(jobs_db.update_job_data(request_id, proposed))
+            asyncio.create_task(jobs_db.update_pipeline_run_data(request_id, proposed))
 
     proposed = proposed or []
     unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})

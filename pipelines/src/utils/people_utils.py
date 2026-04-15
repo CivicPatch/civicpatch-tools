@@ -2,7 +2,7 @@
 from typing import List, Dict, Tuple
 import shared.utils.config_utils as config_utils
 from domain.models import Person, Official, Office
-from jobs.people_collector.schemas import ResearchedPerson
+from runners.people_collector.schemas import ResearchedPerson
 import re
 
 WORD_TO_NUMBER = {

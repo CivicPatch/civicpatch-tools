@@ -4,17 +4,17 @@ from typing import List, Optional
 from psycopg import sql
 
 from database.database import get_pool
-from shared.utils.statuses import JobStatus, PullRequestStatus
+from shared.utils.statuses import PipelineRunStatus, PullRequestStatus
 from lib.github.utils import pull_request_url_to_number
 
 
-async def register_request_with_job(
+async def register_request_with_pipeline_run(
     request_id: str,
     job_type: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
     requested_by_user_id: Optional[str] = None,
-    status: JobStatus = JobStatus.PENDING,
+    status: PipelineRunStatus = PipelineRunStatus.PENDING,
     progress: int = 0,
 ):
     pool = await get_pool()
@@ -29,7 +29,7 @@ async def register_request_with_job(
 
         await conn.execute(
             """
-            INSERT INTO jobs (
+            INSERT INTO pipeline_runs (
                 request_id, status, progress,
                 created_at, updated_at
             )
@@ -60,15 +60,15 @@ async def register_foreign_request(
             (request_id, jurisdiction_ocdid),
         )
 
-        # Minimal job row so the request can be looked up by its foreign request_id string
+        # Minimal pipeline_run row so the request can be looked up by its foreign request_id string
         await conn.execute(
             """
-            INSERT INTO jobs (
+            INSERT INTO pipeline_runs (
                 request_id, status, progress, created_at, updated_at
             )
             VALUES (%s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, JobStatus.COMPLETED),
+            (request_id, PipelineRunStatus.COMPLETED),
         )
 
         pr_number = 0

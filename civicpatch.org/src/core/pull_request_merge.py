@@ -62,7 +62,7 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             await redis_store.set(merge_key, json.dumps({"status": "error", "error": merge_error}), ttl=MERGE_STATUS_TTL)
             return
 
-        await pull_requests_db.update_job_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=MERGE_STATUS_TTL)
 
     except Exception as e:

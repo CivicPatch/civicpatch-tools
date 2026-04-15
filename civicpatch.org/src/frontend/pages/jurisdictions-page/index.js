@@ -13,7 +13,7 @@ import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerJob, fetchJurisdictionHistory } from '../../api.js';
+import { triggerPipelineRun, fetchJurisdictionHistory } from '../../api.js';
 import { TERMINAL_JOB_STATUSES } from '../../components/job-status.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
@@ -51,7 +51,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const handleScrapeStartClick = async (details) => {
     setScrapeModalOpen(false);
     setIsTriggering(true);
-    const result = await triggerJob(
+    const result = await triggerPipelineRun(
       details.scrapeMode,
       jurisdictionData.data.id,
       jurisdictionData.data.name,

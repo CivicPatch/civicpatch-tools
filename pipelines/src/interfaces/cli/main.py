@@ -6,9 +6,9 @@ from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
-from jobs.people_collector.schemas import WorkflowConfig
-from jobs.engine import WorkflowError
-from jobs.people_collector.main import start as start_people_collector
+from runners.people_collector.schemas import PipelineRunConfig
+from runners.engine import PipelineRunError
+from runners.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from pipelines_environment import get_env_vars
 from services.civicpatch_api import get_jurisdiction_info
@@ -29,7 +29,7 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             config=request.config,
         )
-    except WorkflowError:
+    except PipelineRunError:
         sys.exit(1)  # Already logged in people_collector.main
     except Exception:
         sys.exit(1)  # Already logged in people_collector.main
@@ -89,7 +89,7 @@ def main():
             url = url or info.get("url")
         request = PeopleCollectorJobRequest(
             jurisdiction_ocdid=args.jurisdiction_ocdid,
-            config=WorkflowConfig(
+            config=PipelineRunConfig(
                 name=name,
                 url=url or "",
                 source_urls=source_urls,

@@ -45,7 +45,7 @@ export const fetchPullRequests = async (jurisdictionOcdid) => {
 export const fetchJobIssues = async (tags, page, perPage, sort) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));
-  const res = await fetch(`${API_URL}/api/v1/jobs/issues?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -53,7 +53,7 @@ export const fetchJobIssues = async (tags, page, perPage, sort) => {
 };
 
 export const fetchIssueDetails = async (issueId) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/details`, {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/details`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -61,7 +61,7 @@ export const fetchIssueDetails = async (issueId) => {
 };
 
 export const dismissIssue = async (issueId) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/dismiss`, {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/dismiss`, {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
@@ -71,7 +71,7 @@ export const dismissIssue = async (issueId) => {
 };
 
 export const resolveReviewIssue = async (issueId, body = {}) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/issues/${issueId}/resolve`, {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/resolve`, {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
@@ -269,9 +269,9 @@ export const fetchDashboard = async () => {
   return res.json();
 };
 
-/** Jobs */
-export const triggerJob = async (mode, jurisdictionOcdid, name, url, sourceUrls) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs`, {
+/** Pipeline runs */
+export const triggerPipelineRun = async (mode, jurisdictionOcdid, name, url, sourceUrls) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -290,22 +290,22 @@ export const triggerJob = async (mode, jurisdictionOcdid, name, url, sourceUrls)
   return res.json();
 };
 
-export const fetchActiveJobs = async (stateCode, page = 1, perPage = 25) => {
+export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25) => {
   const params = new URLSearchParams({ page, per_page: perPage });
   if (stateCode) params.set("state_code", stateCode);
-  const res = await fetch(`${API_URL}/api/v1/jobs/active?${params}`, { credentials: "include" });
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/active?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const fetchDuplicatePrJurisdictionJobs = async () => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/duplicates`, { credentials: "include" });
+export const fetchDuplicatePrJurisdictionPipelineRuns = async () => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/duplicates`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const cancelJob = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/${requestId}/cancel`, {
+export const cancelPipelineRun = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${requestId}/cancel`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },
@@ -315,7 +315,7 @@ export const cancelJob = async (requestId) => {
 };
 
 export const closeStaleDuplicatePrs = async () => {
-  const res = await fetch(`${API_URL}/api/v1/jobs/duplicates/close-stale`, {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/duplicates/close-stale`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },

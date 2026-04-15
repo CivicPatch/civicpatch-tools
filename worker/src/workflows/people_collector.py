@@ -7,9 +7,9 @@ from temporalio.common import WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
     from activities.github_activity import trigger_github_action, trigger_local
-    from activities.job_status_activity import update_job_status, poll_job_status
+    from activities.pipeline_run_status_activity import update_pipeline_run_status, poll_pipeline_run_status
     from constants import RunConclusion
-    from shared.utils.statuses import JobStatus
+    from shared.utils.statuses import PipelineRunStatus
 
 TASK_QUEUE = "people-collector"
 
@@ -40,8 +40,8 @@ class PeopleCollectorWorkflow:
         source_urls: Optional[list[str]] = None,
     ) -> str:
         await workflow.execute_activity(
-            update_job_status,
-            args=[request_id, JobStatus.RUNNING],
+            update_pipeline_run_status,
+            args=[request_id, PipelineRunStatus.RUNNING],
             start_to_close_timeout=timedelta(seconds=30),
         )
         conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
@@ -63,7 +63,7 @@ class PeopleCollectorWorkflow:
             heartbeat_timeout=timedelta(seconds=30),
         )
         return await workflow.execute_activity(
-            poll_job_status,
+            poll_pipeline_run_status,
             args=[request_id],
             start_to_close_timeout=timedelta(minutes=35),
             heartbeat_timeout=timedelta(seconds=60),
@@ -80,8 +80,8 @@ class PeopleCollectorWorkflow:
     ) -> str:
         if conclusion == RunConclusion.SUCCESS:
             await workflow.execute_activity(
-                update_job_status,
-                args=[request_id, JobStatus.COMPLETED],
+                update_pipeline_run_status,
+                args=[request_id, PipelineRunStatus.COMPLETED],
                 start_to_close_timeout=timedelta(seconds=30),
             )
             return conclusion
@@ -93,9 +93,9 @@ class PeopleCollectorWorkflow:
         workflow.logger.info("Received human_approval — restarting job")
 
         restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
-        final_status = JobStatus.COMPLETED if restart_conclusion == RunConclusion.SUCCESS else JobStatus.ERROR
+        final_status = PipelineRunStatus.COMPLETED if restart_conclusion == RunConclusion.SUCCESS else PipelineRunStatus.ERROR
         await workflow.execute_activity(
-            update_job_status,
+            update_pipeline_run_status,
             args=[request_id, final_status],
             start_to_close_timeout=timedelta(seconds=30),
         )

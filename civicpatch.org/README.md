@@ -72,11 +72,11 @@ Roles are assigned via GitHub team membership. The `build_permissions()` functio
 | Review sessions | ✓ | ✓ | ✓ | ✓ |
 | Notes — read | ✓ | ✓ | ✓ | ✓ |
 | Notes — create | | ✓ | ✓ | ✓ |
-| Jobs — read errors / events | | | ✓ | ✓ |
-| Jobs — trigger (remote) | | | ✓ | |
-| Jobs — trigger (local, dev only) | | | ✓ | |
-| Jobs — resume (paused) | | | ✓ | |
-| Jobs — resolve / cancel | | | | ✓ |
+| Pipeline runs — read errors / events | | | ✓ | ✓ |
+| Pipeline runs — trigger (remote) | | | ✓ | |
+| Pipeline runs — trigger (local, dev only) | | | ✓ | |
+| Pipeline runs — resume (paused) | | | ✓ | |
+| Pipeline runs — resolve / cancel | | | | ✓ |
 | Issues page (unrecognized roles, dead URLs) | | | ✓ | |
 
 ## Local setup

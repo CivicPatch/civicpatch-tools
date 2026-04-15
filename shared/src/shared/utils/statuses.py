@@ -1,8 +1,8 @@
 from enum import StrEnum
 
 
-class JobStatus(StrEnum):
-    # Workflow runner has been triggered; job has not started yet
+class PipelineRunStatus(StrEnum):
+    # Workflow runner has been triggered; pipeline run has not started yet
     PENDING = "PENDING"
     # Workflow runner is actively executing
     RUNNING = "RUNNING"
@@ -12,15 +12,15 @@ class JobStatus(StrEnum):
     ERROR = "ERROR"
     # Error was manually acknowledged and cleared by a maintainer
     RESOLVED = "RESOLVED"
-    # Job was manually cancelled (e.g. GitHub Actions run interrupted); never advanced to a terminal state
+    # Pipeline run was manually cancelled (e.g. GitHub Actions run interrupted); never advanced to a terminal state
     CANCELLED = "CANCELLED"
 
 
-TERMINAL_JOB_STATUSES = (
-    JobStatus.COMPLETED,
-    JobStatus.ERROR,
-    JobStatus.RESOLVED,
-    JobStatus.CANCELLED,
+TERMINAL_PIPELINE_RUN_STATUSES = (
+    PipelineRunStatus.COMPLETED,
+    PipelineRunStatus.ERROR,
+    PipelineRunStatus.RESOLVED,
+    PipelineRunStatus.CANCELLED,
 )
 
 
@@ -32,7 +32,7 @@ class ReviewIssueStatus(StrEnum):
 
 
 class PullRequestStatus(StrEnum):
-    # No PR has been created for this job yet
+    # No PR has been created for this pipeline run yet
     DEFAULT = "DEFAULT"
     # PR exists on GitHub and is awaiting review or merge
     OPEN = "open"
