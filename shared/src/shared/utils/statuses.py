@@ -2,22 +2,34 @@ from enum import StrEnum
 
 
 class PipelineRunStatus(StrEnum):
-    # Workflow runner has been triggered; pipeline run has not started yet
+    # Lifecycle states
     PENDING = "PENDING"
-    # Workflow runner is actively executing
     RUNNING = "RUNNING"
-    # Workflow runner finished successfully and produced output
-    COMPLETED = "DONE"
-    # Workflow runner encountered an unrecoverable error
+    SUCCESS = "SUCCESS"
     ERROR = "ERROR"
-    # Error was manually acknowledged and cleared by a maintainer
     RESOLVED = "RESOLVED"
-    # Pipeline run was manually cancelled (e.g. GitHub Actions run interrupted); never advanced to a terminal state
     CANCELLED = "CANCELLED"
+    # Step-level progress states
+    INIT = "INIT"
+    RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
+    SEARCH_LINKS = "SEARCH_LINKS"
+    SCRAPE_PAGE = "SCRAPE_PAGE"
+    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
+    PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
+    MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
+    MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
+    FORMAT_OUTPUT = "FORMAT_OUTPUT"
+    CLEANUP = "CLEANUP"
+    REVIEW_OUTPUT = "REVIEW_OUTPUT"
+    SAVE_OUTPUT = "SAVE_OUTPUT"
+    SEND_SUCCESS = "SEND_SUCCESS"
+    SEND_ERROR = "SEND_ERROR"
+    RETRY = "RETRY"
+    FINALIZE = "FINALIZE"
 
 
 TERMINAL_PIPELINE_RUN_STATUSES = (
-    PipelineRunStatus.COMPLETED,
+    PipelineRunStatus.SUCCESS,
     PipelineRunStatus.ERROR,
     PipelineRunStatus.RESOLVED,
     PipelineRunStatus.CANCELLED,

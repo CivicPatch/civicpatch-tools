@@ -69,7 +69,7 @@ async def _handle_submit_pipeline_run_artifacts(
     file_utils.copy_files_preserving_hierarchy(extracted_dir, artifact_file_dir, patterns=artifact_file_patterns)
     file_utils.copy_files_preserving_hierarchy(extracted_dir, debug_file_dir, patterns=debug_file_patterns)
 
-    is_success = request.pipeline_run_status == "SUCCESS"
+    is_success = request.pipeline_run_status == PipelineRunStatus.SUCCESS
 
     filenames_to_urls = await _upload_debug_files(debug_file_dir, request.request_id)
 

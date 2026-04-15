@@ -43,7 +43,7 @@ async def run_pipeline(
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
 
-    terminal_states = {PipelineStatus.COMPLETED, PipelineStatus.ERROR}
+    terminal_states = {PipelineStatus.SUCCESS, PipelineStatus.ERROR}
 
     try:
         while ctx.current_state not in terminal_states:
@@ -64,7 +64,7 @@ async def run_pipeline(
                 persist_fn(ctx)
     finally:
         log_system_usage()
-        final_progress = 100 if ctx.current_state == PipelineStatus.COMPLETED else ctx.progress
+        final_progress = 100 if ctx.current_state == PipelineStatus.SUCCESS else ctx.progress
         try:
             await civicpatch_api.update_job_status(
                 logger, ctx.request_id, ctx.data.jurisdiction_ocdid,

@@ -107,14 +107,14 @@ async def update_job_status(
 
 
 async def submit_job_artifacts(
-    request_id: str, jurisdiction_ocdid: str, zip_file_path: str, job_status: str
+    request_id: str, jurisdiction_ocdid: str, zip_file_path: str, pipeline_run_status: str
 ):
     env = get_env_vars()
     system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     data = {
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
-        "job_status": job_status,
+        "pipeline_run_status": pipeline_run_status,
     }
     file_name = os.path.basename(zip_file_path)
 

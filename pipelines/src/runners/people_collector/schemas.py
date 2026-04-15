@@ -4,6 +4,7 @@ from enum import Enum
 from domain.models import Person, Official
 from domain.pipeline_run_context import PipelineRunContext
 from shared.utils.config_utils import RoleConfig
+from shared.utils.statuses import PipelineRunStatus
 
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
@@ -86,25 +87,7 @@ class PipelineRunConfig(BaseModel):
     name: Optional[str] = None # Human-readable name
     source_urls: Optional[List[str]] = None
 
-class PipelineStatus(Enum):
-    INIT = "INIT"
-    RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
-    SEARCH_LINKS = "SEARCH_LINKS"
-    SCRAPE_PAGE = "SCRAPE_PAGE"
-    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
-    PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
-    MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
-    MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
-    FORMAT_OUTPUT = "FORMAT_OUTPUT"
-    CLEANUP = "CLEANUP"
-    REVIEW_OUTPUT = "REVIEW_OUTPUT"
-    SAVE_OUTPUT = "SAVE_OUTPUT"
-    SEND_SUCCESS = "SEND_SUCCESS"
-    SEND_ERROR = "SEND_ERROR"
-    RETRY = "RETRY"
-    FINALIZE = "FINALIZE"
-    ERROR = "ERROR"
-    COMPLETED = "DONE"
+PipelineStatus = PipelineRunStatus
 
 class ResearchedPerson(BaseModel):
     name: str

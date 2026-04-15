@@ -121,25 +121,51 @@ def extract_data(text):
     """Extract relevant data from the given text."""
     nlp = get_nlp()
     doc = nlp(text)
-    
+
     found_people = []
     found_dates = []
     found_emails = []
-    
+
     # PRIMARY: Extract phone numbers using regex (no spaCy interference)
     found_phones = extract_phones_with_regex(text)
-    
+
     # Extract other entities using spaCy
     for ent in doc.ents:
         if ent.label_ == "PERSON" and len(ent.text.split()) > 1:
             found_people.append(ent.text)
         elif ent.label_ == "DATE":
             found_dates.append(ent.text)
-    
+
     # Extract emails
     found_emails = [token.text for token in doc if token.like_email]
-    
+
     # Extract keywords
     keywords = extract_keywords(doc)
-    
+
     return found_people, found_dates, found_emails, found_phones, keywords
+
+
+def extract_data_batch(texts: List[str]) -> Dict[str, tuple]:
+    """Batch-process texts through spaCy using nlp.pipe() for efficiency.
+
+    Returns a dict mapping each input text to its extract_data result tuple.
+    Deduplicates inputs so each unique text is processed only once.
+    """
+    nlp = get_nlp()
+    unique_texts = list({t for t in texts if t.strip()})
+    if not unique_texts:
+        return {}
+    results = {}
+    for text, doc in zip(unique_texts, nlp.pipe(unique_texts)):
+        phones = extract_phones_with_regex(text)
+        people = []
+        dates = []
+        for ent in doc.ents:
+            if ent.label_ == "PERSON" and len(ent.text.split()) > 1:
+                people.append(ent.text)
+            elif ent.label_ == "DATE":
+                dates.append(ent.text)
+        emails = [token.text for token in doc if token.like_email]
+        keywords = extract_keywords(doc)
+        results[text] = (people, dates, emails, phones, keywords)
+    return results
