@@ -29,7 +29,6 @@ docker compose -f docker-compose.development.yml run --rm pipelines xvfb-run -a 
 run = """
 docker compose -f docker-compose.development.yml run --rm pipelines_test pytest -vvm unit tests/unit
 """
-# /jobs/steps/step_04_preprocess_page_content
 
 [tasks.integration]
 run = """
@@ -38,7 +37,7 @@ docker compose -f docker-compose.yml run --rm pipelines_test pytest -vvm integra
 
 [tasks.integration-preprocess]
 run = """
-docker compose -f docker-compose.yml run --rm pipelines_test pytest -vvm integration tests/integration/jobs/steps/step_04_preprocess_page_content
+docker compose -f docker-compose.yml run --rm pipelines_test pytest -vvm integration tests/integration/runners/steps/step_04_preprocess_page_content
 """
 
 [tasks.contracts]
@@ -55,7 +54,7 @@ run = "EVAL_CASE='{{ arg(name=\"case\") }}' uv run pytest -vvm evals_relevant te
 
 [tasks.scratchtest]
 run = """
-docker compose -f docker-compose.development.yml run --rm pipelines pytest -vvm unit tests/unit/jobs/steps/step_04_preprocess_page_content
+docker compose -f docker-compose.development.yml run --rm pipelines pytest -vvm unit tests/unit/runners/steps/step_04_preprocess_page_content
 """
 #docker compose -f docker-compose.development.yml run --rm pipelines pytest -vm unit tests/unit/scripts/test_generate_data_comment.py
 
