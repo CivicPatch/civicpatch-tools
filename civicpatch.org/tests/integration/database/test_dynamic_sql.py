@@ -56,41 +56,12 @@ async def test_search_jurisdictions_with_pagination():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_count_jobs_with_errors_no_filter():
-    result = await db_jobs.count_jobs_with_errors()
-    assert isinstance(result, int)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_count_jobs_with_errors_with_state():
-    """Exercises the branch that appends a LIKE clause."""
-    result = await db_jobs.count_jobs_with_errors(state_code="ca")
-    assert isinstance(result, int)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_jobs_with_errors_no_filter():
-    rows = await db_jobs.get_jobs_with_errors()
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_jobs_with_errors_with_state():
-    rows = await db_jobs.get_jobs_with_errors(state_code="ca")
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_update_job_status_nonexistent_request_is_noop():
+async def test_update_pipeline_run_status_nonexistent_request_is_noop():
     """
     Updating a non-existent request_id must not raise — the UPDATE just
     matches zero rows. Exercises the dynamic SET clause builder.
     """
-    await db_jobs.update_job_status(
+    await db_jobs.update_pipeline_run_status(
         request_id="00000000-0000-0000-0000-000000000000",
         status="pending",
         progress=0,
@@ -99,9 +70,9 @@ async def test_update_job_status_nonexistent_request_is_noop():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_update_job_status_only_progress():
+async def test_update_pipeline_run_status_only_progress():
     """Exercises the branch where status is None (only progress in SET clause)."""
-    await db_jobs.update_job_status(
+    await db_jobs.update_pipeline_run_status(
         request_id="00000000-0000-0000-0000-000000000000",
         progress=42,
     )
@@ -349,71 +320,71 @@ async def test_get_people_by_geo():
 
 
 # ---------------------------------------------------------------------------
-# database.jobs — jobs
+# database.pipeline_runs — pipeline runs
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_list_jobs():
-    result = await db_jobs.list_jobs()
+async def test_list_pipeline_runs():
+    result = await db_jobs.list_pipeline_runs()
     assert isinstance(result, list)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_not_found():
-    result = await db_jobs.get_job(_FAKE_UUID)
+async def test_get_pipeline_run_not_found():
+    result = await db_jobs.get_pipeline_run(_FAKE_UUID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_active_jobs():
-    rows, total = await db_jobs.get_active_jobs()
+async def test_get_active_pipeline_runs():
+    rows, total = await db_jobs.get_active_pipeline_runs()
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_active_jobs_with_state():
-    rows, total = await db_jobs.get_active_jobs(state_code="ca")
+async def test_get_active_pipeline_runs_with_state():
+    rows, total = await db_jobs.get_active_pipeline_runs(state_code="ca")
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_active_job_jurisdiction_ocdids():
-    result = await db_jobs.get_active_job_jurisdiction_ocdids()
+async def test_get_active_pipeline_run_jurisdiction_ocdids():
+    result = await db_jobs.get_active_pipeline_run_jurisdiction_ocdids()
     assert isinstance(result, set)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_status_not_found():
-    result = await db_jobs.get_job_status(_FAKE_UUID)
+async def test_get_pipeline_run_status_not_found():
+    result = await db_jobs.get_pipeline_run_status(_FAKE_UUID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_github_run_id_not_found():
-    result = await db_jobs.get_job_github_run_id(_FAKE_UUID)
+async def test_get_pipeline_run_github_run_id_not_found():
+    result = await db_jobs.get_pipeline_run_github_run_id(_FAKE_UUID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_data_json_not_found():
-    result = await db_jobs.get_job_data_json(_FAKE_UUID)
+async def test_get_pipeline_run_data_json_not_found():
+    result = await db_jobs.get_pipeline_run_data_json(_FAKE_UUID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_job_result_not_found():
-    result = await db_jobs.get_job_result(_FAKE_UUID)
+async def test_get_pipeline_run_result_not_found():
+    result = await db_jobs.get_pipeline_run_result(_FAKE_UUID)
     assert result is None
 
 
