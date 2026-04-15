@@ -2,7 +2,7 @@ import re
 import time
 from bs4 import Tag, BeautifulSoup
 from runners.people_collector.steps.step_04_preprocess_page_content import entity_extraction
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
     "language" # Google Translate
@@ -34,7 +34,7 @@ def count_nodes(node: Tag):
             count += count_nodes(child)
     return count
 
-def has_relevant_content(identities: Dict[str, List[str]], text: str) -> bool:
+def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cache: Optional[Dict[str, tuple]] = None) -> bool:
     """Check if text contains any relevant content including emails and phones.
     Match identity names by individual name tokens (word-by-word, case-insensitive).
     """
@@ -66,27 +66,48 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str) -> bool:
             if re.search(r'\b' + re.escape(token) + r'\b', text_lc):
                 return True
 
-    # Expensive check: spaCy entity extraction (people, dates, emails, phones, keywords)
-    people, dates, emails, phones, keywords = entity_extraction.extract_data(text)
+    # Expensive check: use pre-built batch cache if available, else call spaCy directly
+    if spacy_cache is not None and text in spacy_cache:
+        people, dates, emails, phones, keywords = spacy_cache[text]
+    else:
+        people, dates, emails, phones, keywords = entity_extraction.extract_data(text)
     return any([people, dates, emails, phones, keywords])
+
+def _collect_texts(soup) -> List[str]:
+    texts = []
+    for node in soup.find_all(True):
+        if node.name == "table":
+            table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
+            if table_text.strip():
+                texts.append(table_text)
+        else:
+            text = node.get_text(" ", strip=True)
+            if text.strip():
+                texts.append(text)
+    return texts
+
 
 def filter_content(logger, identities: Dict[str, List[str]], input_html: str, progress_log_interval: int = 10) -> str:
     soup = BeautifulSoup(input_html, "html.parser")
     total_nodes = count_nodes(soup)
+
+    texts = _collect_texts(soup)
+    spacy_cache = entity_extraction.extract_data_batch(texts)
+
     state = {
         "processed": 0,
         "total": total_nodes,
         "last_progress_time": time.time(),
         "progress_log_interval": progress_log_interval
     }
-    filter_node_content(logger, identities, soup, state)
+    filter_node_content(logger, identities, soup, state, spacy_cache)
 
     if not soup.find_all():  # No tags left in the tree
         return ""
     filtered_content = soup.prettify()
     return filtered_content
 
-def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state) -> bool:
+def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state, spacy_cache: Optional[Dict[str, tuple]] = None) -> bool:
     """
     Process node tree. Returns True if this node (or any descendant) should be kept,
     False if the node was removed.
@@ -116,7 +137,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     if node.name == "table":
         table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
         if table_text.strip():
-            is_relevant = has_relevant_content(identities, table_text)
+            is_relevant = has_relevant_content(identities, table_text, spacy_cache)
             if is_relevant:
                 # Mark this table to keep ALL its content (including images),
                 # but still strip blacklisted links — the table handler returns
@@ -146,7 +167,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     any_child_kept = False
     for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
         if isinstance(child, Tag):  # Ensure the child is a Tag (not a string or comment)
-            child_kept = filter_node_content(logger, identities, child, state)
+            child_kept = filter_node_content(logger, identities, child, state, spacy_cache)
             any_child_kept = any_child_kept or bool(child_kept)
 
     # Process the parent node after all its children
@@ -168,12 +189,12 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
 
     # For text nodes and other elements, check content but don't be too aggressive
     if node and node.name:
-        if has_relevant_content(identities, node.get_text(" ", strip=True)):
+        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache):
             return True  # Keep nodes with relevant content
 
     # Handle specific structural elements more carefully
     if node.name in ["p", "section", "article", "main", "header", "footer", "h1", "h2", "h3", "h4", "h5", "h6"]:
-        if has_relevant_content(identities, node.get_text(" ", strip=True)):
+        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache):
             return True  # Keep structural elements that contain relevant content (including images)
 
         # Only extract images and <a> links if we're going to remove this element

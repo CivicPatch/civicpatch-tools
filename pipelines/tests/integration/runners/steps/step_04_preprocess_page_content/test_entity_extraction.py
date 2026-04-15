@@ -1,5 +1,5 @@
 import pytest
-from runners.people_collector.steps.step_04_preprocess_page_content.entity_extraction import extract_data
+from runners.people_collector.steps.step_04_preprocess_page_content.entity_extraction import extract_data, extract_data_batch
 
 pytestmark = pytest.mark.integration
 
@@ -102,6 +102,29 @@ def test_extract_with_keywords():
     assert "555-123-4567" in phones
     assert "District" in keywords
     assert "Representative" in keywords
+
+def test_extract_data_batch_matches_extract_data():
+    texts = [
+        "Contact Jane Smith at (555) 123-4567 or jane@council.gov",
+        "District 5 Representative Bob Johnson, City Hall Room 204",
+        "Irrelevant content with no entities",
+    ]
+    batch_results = extract_data_batch(texts)
+    for text in texts:
+        people_b, dates_b, emails_b, phones_b, keywords_b = batch_results[text]
+        people_s, dates_s, emails_s, phones_s, keywords_s = extract_data(text)
+        assert set(people_b) == set(people_s)
+        assert set(emails_b) == set(emails_s)
+        assert set(phones_b) == set(phones_s)
+        assert set(keywords_b) == set(keywords_s)
+
+
+def test_extract_data_batch_deduplicates():
+    text = "Mayor Alice Brown, (555) 000-1111"
+    results = extract_data_batch([text, text, text])
+    assert len(results) == 1
+    assert text in results
+
 
 # Add a new test for multiple phone numbers in complex text
 def test_multiple_phone_formats():

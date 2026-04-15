@@ -68,7 +68,7 @@ async def register_foreign_request(
             )
             VALUES (%s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, PipelineRunStatus.COMPLETED),
+            (request_id, PipelineRunStatus.SUCCESS),
         )
 
         pr_number = 0

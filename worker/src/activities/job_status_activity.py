@@ -13,7 +13,7 @@ SERVICE_API_KEY = os.environ["SERVICE_API_KEY"]
 
 _HEADERS = {"Authorization": SERVICE_API_KEY}
 
-_TERMINAL_STATUSES = {PipelineRunStatus.COMPLETED, PipelineRunStatus.ERROR}
+_TERMINAL_STATUSES = {PipelineRunStatus.SUCCESS, PipelineRunStatus.ERROR}
 
 
 @activity.defn
@@ -45,7 +45,7 @@ async def poll_job_status(request_id: str) -> str:
         if status is not None:
             activity.logger.info(f"Job {request_id}: status={status}")
             if status in _TERMINAL_STATUSES:
-                return RunConclusion.SUCCESS if status == PipelineRunStatus.COMPLETED else RunConclusion.FAILURE
+                return RunConclusion.SUCCESS if status == PipelineRunStatus.SUCCESS else RunConclusion.FAILURE
         try:
             await asyncio.sleep(15)
         except asyncio.CancelledError:

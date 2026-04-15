@@ -316,7 +316,7 @@ async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, conte
         "data": context.data.copy(update={"send_success_step": result})
     })
 
-    return next_context, PipelineStatus.COMPLETED
+    return next_context, PipelineStatus.SUCCESS
 
 async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await send_error(context)

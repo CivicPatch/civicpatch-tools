@@ -81,7 +81,7 @@ class PeopleCollectorWorkflow:
         if conclusion == RunConclusion.SUCCESS:
             await workflow.execute_activity(
                 update_pipeline_run_status,
-                args=[request_id, PipelineRunStatus.COMPLETED],
+                args=[request_id, PipelineRunStatus.SUCCESS],
                 start_to_close_timeout=timedelta(seconds=30),
             )
             return conclusion
@@ -93,7 +93,7 @@ class PeopleCollectorWorkflow:
         workflow.logger.info("Received human_approval — restarting job")
 
         restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
-        final_status = PipelineRunStatus.COMPLETED if restart_conclusion == RunConclusion.SUCCESS else PipelineRunStatus.ERROR
+        final_status = PipelineRunStatus.SUCCESS if restart_conclusion == RunConclusion.SUCCESS else PipelineRunStatus.ERROR
         await workflow.execute_activity(
             update_pipeline_run_status,
             args=[request_id, final_status],

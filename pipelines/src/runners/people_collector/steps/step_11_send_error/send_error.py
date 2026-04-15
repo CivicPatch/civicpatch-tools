@@ -4,6 +4,7 @@ from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
 from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
+from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils, log_utils, file_utils
 
 
@@ -24,7 +25,7 @@ async def send_error(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
         cost_utils.add_storage_cost(context.request_id, context.data.jurisdiction_ocdid, file_size_bytes)
 
         response = await services.civicpatch_api.submit_job_artifacts(
-            context.request_id, context.data.jurisdiction_ocdid, zip_file_path, job_status="ERROR"
+            context.request_id, context.data.jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.ERROR
         )
         if not response:
             return MaybeSendToGitHubStep(status="failed_no_response")

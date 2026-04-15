@@ -4,6 +4,7 @@ from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
 from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
+from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils, log_utils, file_utils
 
 
@@ -31,7 +32,7 @@ async def send_success(context: PeopleCollectorContext) -> MaybeSendToGitHubStep
         cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
         response = await services.civicpatch_api.submit_job_artifacts(
-            request_id, jurisdiction_ocdid, zip_file_path, "SUCCESS"
+            request_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
         )
         if not response:
             logger.error("Failed to get a response from Crudder after retries.")
