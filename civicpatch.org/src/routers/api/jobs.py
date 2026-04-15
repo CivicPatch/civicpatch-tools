@@ -37,6 +37,7 @@ from database.pipeline_issues import (
     resolve_unrecognized_role_group,
     resolve_pipeline_issue,
     open_pipeline_issue_pull_request,
+    upsert_pipeline_issue,
 )
 from database.pull_requests import (
     update_job_pull_request_url,
@@ -78,6 +79,8 @@ PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
 
 async def update_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str]):
     await update_job_status(request_id=request_id, status=status, progress=progress)
+    if status == JobStatus.ERROR:
+        await upsert_pipeline_issue(request_id, "pipeline_error", [{"error": "workflow failure"}])
     if not jurisdiction_ocdid:
         job = await get_job(request_id)
         jurisdiction_ocdid = (job.get("arguments_json") or {}).get("jurisdiction_ocdid") if job else None
