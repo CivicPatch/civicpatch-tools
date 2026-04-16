@@ -464,7 +464,7 @@ function IssuesPage() {
               <tr>
                 <th>Type</th>
                 <th>Detail</th>
-                <th>States</th>
+                <th>Jurisdiction</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -477,8 +477,14 @@ function IssuesPage() {
                   <tr>
                     <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}">${formatIssueType(ev.issue_type)}</span></td>
                     <td class="issues-page__issue-detail">${getIssueDetail(ev.issue_type, ev.issue_key, ev.data)}</td>
-                    <td class="issues-page__issue-states">
-                      ${(ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)}
+                    <td class="issues-page__issue-jurisdictions">
+                      ${ev.jurisdictions && ev.jurisdictions.length === 1
+                        ? html`
+                          <span class="issues-page__state-badge">${ev.jurisdictions[0].state.toUpperCase()}</span>
+                          <a href="/${ev.jurisdictions[0].path}" target="_blank" rel="noopener noreferrer">${ev.jurisdictions[0].name}</a>
+                        `
+                        : (ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)
+                      }
                     </td>
                     <td class="issues-page__issue-status">
                       ${ev.status === "pr_opened"

@@ -8,7 +8,7 @@ from database.database import get_pool
 from shared.utils.statuses import ReviewIssueStatus
 
 
-def _build_jurisdictions(ocdids: list[str] | None) -> list[dict]:
+def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
     result = []
     for ocdid in (ocdids or []):
         try:
@@ -17,6 +17,8 @@ def _build_jurisdictions(ocdids: list[str] | None) -> list[dict]:
             result.append({
                 "jurisdiction_ocdid": ocdid,
                 "folder": folder,
+                "path": folder,
+                "name": (name_by_ocdid or {}).get(ocdid) or ocdid,
                 "state": parts[0] if parts else "",
                 "locality": parts[2] if len(parts) > 2 else "",
             })
@@ -202,7 +204,12 @@ async def get_pipeline_issues_page(
                    ri.data, ri.status, ri.resolved_at, ri.created_at,
                    COALESCE(ij.ocdids, ARRAY[]::text[]) AS raw_jurisdiction_ocdids,
                    COUNT(*) OVER() AS total_count,
-                   ri.pull_request_url
+                   ri.pull_request_url,
+                   (
+                       SELECT jsonb_object_agg(u.ocdid, COALESCE(j.data->>'name', u.ocdid))
+                       FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
+                       LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
+                   ) AS jurisdiction_names
             FROM pipeline_issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
@@ -215,7 +222,7 @@ async def get_pipeline_issues_page(
     total = rows[0][9] if rows else 0
     result = []
     for r in rows:
-        jurisdictions = _build_jurisdictions(r[8])
+        jurisdictions = _build_jurisdictions(r[8], name_by_ocdid=r[11])
         result.append({
             "id": r[0],
             "issue_type": r[1],

@@ -19,6 +19,7 @@ class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
     jurisdiction_ocdid: str
     server_detail: ServerDetail
     pipeline_run_status: Optional[str] = None
+    env: str = "production"
 
 
 class ResolveIssueRequest(BaseModel):
