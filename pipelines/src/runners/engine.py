@@ -4,7 +4,7 @@ from time import sleep
 from domain.pipeline_run_context import PipelineRunContext
 
 TContext = TypeVar("TContext", bound=PipelineRunContext)
-from shared.utils.config_utils import get_job_config
+from shared.utils.config_utils import load_job_config
 from utils import log_utils
 import time
 from datetime import datetime, timezone
@@ -37,7 +37,7 @@ async def run_pipeline(
     persist_fn: Optional[Callable] = None,
 ) -> TContext:
     ctx = context
-    job_config = get_job_config(logger)
+    job_config = load_job_config(logger)
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
 
     created_at = time.time()
@@ -49,7 +49,7 @@ async def run_pipeline(
         while ctx.current_state not in terminal_states:
             log_system_usage()
             try:
-                await civicpatch_api.update_job_status(
+                await civicpatch_api.update_pipeline_run_status(
                     logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                     status=ctx.current_state.value, progress=ctx.progress
                 )
@@ -66,7 +66,7 @@ async def run_pipeline(
         log_system_usage()
         final_progress = 100 if ctx.current_state == PipelineStatus.SUCCESS else ctx.progress
         try:
-            await civicpatch_api.update_job_status(
+            await civicpatch_api.update_pipeline_run_status(
                 logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                 status=ctx.current_state.value, progress=final_progress
             )

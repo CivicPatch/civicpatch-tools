@@ -1,30 +1,30 @@
 import os
+import re
 import copy
 from dataclasses import dataclass
 from runners.people_collector.schemas import (
-  PeopleCollectorContext, 
-  Link, 
-  LinkStatus, 
-  PipelineStatus, 
-  LLMPerson, 
-  PeopleArrayLLMResponseSchema, 
+  PeopleCollectorContext,
+  Link,
+  LinkStatus,
+  PipelineStatus,
+  LLMPerson,
+  PeopleArrayLLMResponseSchema,
   RecordsByLLM,
   ProcessPageContentStep,
   ResearchMunicipalityStep,
   ProgressState,
   RelevantPageResponseSchema
 )
-import re
 from shared.utils import (
-    config_utils, 
-    data_path_utils, 
+    config_utils,
+    data_path_utils,
     phone_utils,
     email_utils,
     url_utils,
     name_utils,
 )
 from utils import (
-    merge_utils, 
+    merge_utils,
     people_utils,
     log_utils
 )
@@ -33,6 +33,51 @@ import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
+
+# URL patterns that are deterministic dead ends. Matched against the full URL
+# before adding to the crawl frontier, so the LLM never wastes a scrape on them.
+# Add new patterns here rather than trying to teach the LLM to filter them.
+LINK_PATTERNS_BLACKLIST = {
+    # CivicPlus
+    ## Calendar — generic
+    r"/calendar/\d{4}\b":              "calendar: year-indexed archive",
+    r"[Cc]alendar\.aspx":              "calendar: CivicPlus calendar page",
+    r"\?.*\bEID=":                     "calendar: CivicPlus event instance",
+    r"\?.*\bview=list\b":              "calendar: CivicPlus list view",
+    r"\?.*\bCID=":                     "calendar: CivicPlus category filter",
+
+    r"DocumentCenter/View/":           "document: CivicPlus document viewer",
+}
+
+# URL keywords that strongly indicate a governance page. Links matching any of
+# these are sorted to the top of the crawl frontier, ahead of num_references.
+LINK_KEYWORDS_WHITELIST = [
+    "council",
+    "mayor",
+    "board",
+    "government",
+    "commission",
+    "aldermen",
+    "official",
+    "elected",
+    "representative",
+]
+
+
+def _blacklist_match(url: str) -> Optional[str]:
+    for pattern, comment in LINK_PATTERNS_BLACKLIST.items():
+        if re.search(pattern, url):
+            return comment
+    return None
+
+
+def _whitelist_match(url: str) -> Optional[str]:
+    url_lower = url.lower()
+    for kw in LINK_KEYWORDS_WHITELIST:
+        if kw in url_lower:
+            return kw
+    return None
+
 
 _relevance_llm = open_router_llm
 _relevance_prompt = open_router_prompt
@@ -159,7 +204,8 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
         existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
         names, designations = _extract_names_and_designations(existing_records)
         roles_hint = context.data.research_municipality_step.roles_hint if context.data.research_municipality_step else []
-        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint)
+        relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
+        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint, relevance_logger)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -476,7 +522,7 @@ def update_links(domain, context_links: List[Link], processed_page: Link, logger
 def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
     names, designations = _extract_names_and_designations(records_by_llm)
-    return add_relevant_urls(found_websites, existing_links, domain, names, designations + roles)
+    return add_relevant_urls(found_websites, existing_links, domain, names, designations + roles, logger)
 
 
 def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
@@ -538,6 +584,7 @@ def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> 
     return (
         -int(_url_contains_all_tokens(link.url, names)),
         -int(_url_contains_any_token(link.url, designations)),
+        -int(_whitelist_match(link.url) is not None),
         -link.num_references,
         len(url_utils.get_path(link.url).split("/")),
     )
@@ -554,7 +601,7 @@ def _sort_pending(links: List[Link], names: List[str], designations: List[str]) 
     return pending + non_pending
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None) -> List[Link]:
+def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None) -> List[Link]:
     """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
     names = names or []
     designations = designations or []
@@ -564,15 +611,23 @@ def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, 
             continue
         formatted_link_url = url_utils.format_url(link_url)
         existing_link = _find_link(updated_links, formatted_link_url)
-        if existing_link and existing_link.status == LinkStatus.PENDING.value:
-            existing_link.num_references += 1
-        elif not existing_link:
-            updated_links.append(Link(
-                url=formatted_link_url,
-                status=LinkStatus.PENDING.value,
-                folder_name="",
-                num_references=1,
-            ))
+        if existing_link:
+            if existing_link.status == LinkStatus.PENDING.value:
+                existing_link.num_references += 1
+            continue
+        blacklist_comment = _blacklist_match(formatted_link_url)
+        if blacklist_comment:
+            if logger:
+                logger.info(f"Dropping blacklisted URL ({blacklist_comment}): {formatted_link_url}")
+            continue
+        whitelist_comment = _whitelist_match(formatted_link_url)
+        updated_links.append(Link(
+            url=formatted_link_url,
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=1,
+            comment=f"whitelisted: {whitelist_comment}" if whitelist_comment else None,
+        ))
     return _sort_pending(updated_links, names, designations)
 
 def mark_link_as_terminating_status(link_url: str, existing_links: List[Link], status: LinkStatus) -> List[Link]:

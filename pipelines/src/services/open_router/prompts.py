@@ -40,27 +40,25 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
 
     ## Steps for selecting relevant_urls
 
-    `relevant_urls` feeds a web crawler whose goal is to eventually reach a page listing the primary
-    governing officials. Think of each URL as a breadcrumb: keep it if it could plausibly be one or
-    more hops away from an officials roster — even if it is not directly about officials itself.
-    Err heavily on the side of keeping. A false positive costs one extra scrape; a false negative
-    means the crawler never finds the officials.
+    `relevant_urls` feeds a web crawler whose goal is to reach a page listing the primary governing
+    officials. Evaluate each link primarily by its **anchor text and surrounding context** on the
+    page — not by URL structure alone, since many municipal CMS platforms use opaque numeric paths
+    (e.g. /179/Township-Board) where the slug is the only meaningful signal.
 
-    1. Extract ALL links found anywhere on the page into a complete list.
-    2. Keep a link if it could be on the path to an officials roster. This includes:
-       - Any broad navigational or directory page, even if it does not explicitly mention officials
-         (e.g. /Departments, /Government, /City-Hall, /About, /Our-City, /Services)
-       - Pages that name a governing body or official role
-         (e.g. /Council, /Mayor, /Aldermen, /Commissioners, /Board-Members)
-       - Staff or personnel directories that may list elected officials among other staff
-       - Individual pages dedicated to the Mayor or other primary officials
-    3. Discard only obvious dead ends:
-       - Individual news stories, press releases, blog posts, or event pages
-       - Non-municipal external domains
-       - File downloads (PDFs, DOCs) that are a single document rather than a navigable page
-       - Year-indexed archive pages or collections of meeting records
-         (e.g. /city-council/2017, /agendas/2022, /minutes/2019) — these are historical
-         document archives and will never contain a current officials roster
+    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you
+    are almost certainly including noise — re-evaluate and cut.
+
+    Keep a link only if its anchor text or surrounding context clearly refers to:
+    - A governing body or elected role (e.g. "Township Board", "City Council", "Mayor",
+      "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+    - A broad government directory or index page (e.g. "Government", "City Hall",
+      "Our Government", "Administration") that is likely a hub linking to governance pages
+    - A staff or personnel directory that may list elected officials (e.g. "Staff Directory",
+      "Directory", "Elected Officials")
+
+    If a link does not clearly match one of the above, discard it.
+    Do not include links to municipal services (library, parks, fire, utilities),
+    news or announcements, or non-municipal external domains.
 
     ---
 
@@ -86,8 +84,8 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
       - Historical rosters (e.g., "Past Mayors", "Mayor History") — even if the most recent entry is current
       - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee
       The test is always the page's purpose, not its content patterns.
-    - `relevant_urls` is a crawl frontier, not a relevance filter. Include any link that could be
-      one or more hops from an officials roster. When in doubt, keep it.
+    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,
+      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.
     - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
     - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
     - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.

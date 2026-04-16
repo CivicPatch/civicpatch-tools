@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
 import services.civicpatch_api as civicpatch_api
-from services.civicpatch_api import update_job_status
+from services.civicpatch_api import update_pipeline_run_status
 from shared.utils.statuses import PipelineRunStatus
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ class PipelineRunStatusResponse(BaseModel):
 
 async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], source_urls: Optional[list[str]]) -> None:
     try:
-        config_data = await civicpatch_api.get_job_config(request_id)
+        config_data = await civicpatch_api.fetch_pipeline_run_config(logger, request_id)
         config = PipelineRunConfig(
             url=url or config_data["url"],
             name=config_data.get("name"),
@@ -51,7 +51,7 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
         await start_threaded(request_id, jurisdiction_ocdid, config)
     except Exception:
         logger.exception("job %s failed", request_id)
-        await update_job_status(logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
+        await update_pipeline_run_status(logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
 
 
 @app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)

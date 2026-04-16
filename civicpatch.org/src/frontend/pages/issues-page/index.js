@@ -388,7 +388,7 @@ function IssuesPage() {
         <label>
           Scope
           <select @change=${(e) => { setModalScope(e.target.value); setModalState((resolveModal.states || [])[0] || ""); setModalLocality(""); }}>
-            <option value="global" ?selected=${modalScope === "global"}>Global — data/local/config.yml</option>
+            <option value="global" ?selected=${modalScope === "global"}>Global — data_source/local/config.yml</option>
             <option value="state" ?selected=${modalScope === "state"}>State</option>
             <option value="locality" ?selected=${modalScope === "locality"}>Locality</option>
           </select>

@@ -37,6 +37,7 @@ class Link(BaseModel):
     status: str  # LinkStatus value
     folder_name: str = ""
     num_references: int = 0
+    comment: Optional[str] = None
 
 class RawLLMPerson(BaseModel):
     name: str
