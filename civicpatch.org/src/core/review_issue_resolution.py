@@ -17,11 +17,11 @@ logger = logging.getLogger(__name__)
 async def resolve_role_issue(issue: dict, body: ResolveIssueRequest, author: PrAuthor) -> tuple[str, str] | None:
     scope = body.scope or "global"
     if scope == "state":
-        config_path = f"data/{body.state}/local/config.yml"
+        config_path = f"data_source/{body.state}/local/config.yml"
     elif scope == "locality":
-        config_path = f"data/{body.state}/local/{body.locality}/config.yml"
+        config_path = f"data_source/{body.state}/local/{body.locality}/config.yml"
     else:
-        config_path = "data/local/config.yml"
+        config_path = "data_source/local/config.yml"
 
     raw = await github_service.get_github_file_contents(config_path)
     existing = RoleConfig.model_validate(yaml.safe_load(raw)) if raw else RoleConfig()

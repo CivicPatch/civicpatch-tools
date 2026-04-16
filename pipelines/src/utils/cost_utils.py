@@ -298,10 +298,11 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
         "total_costs_storage": total_costs_storage,
     }
 
-    # Add columns for each LLM in a consistent order
-    for llm_name in sorted(grouped_llm_costs.keys()):
-        cost_data = grouped_llm_costs[llm_name]
-        total_cost_row[f"llm_{llm_name}_cost"] = cost_data['total_cost']
+    # Emit all known LLM columns in a fixed order so the sheet layout is stable
+    # regardless of which LLMs were used in a given run
+    for llm_name in sorted(llm_model_prices.keys()):
+        cost_data = grouped_llm_costs.get(llm_name)
+        total_cost_row[f"llm_{llm_name}_cost"] = cost_data['total_cost'] if cost_data else Decimal('0.0')
 
     # Add the grand total at the end
     grand_total = total_costs_llm + total_costs_search + total_costs_storage
