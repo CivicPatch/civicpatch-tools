@@ -89,7 +89,7 @@ def crawl_keywords(type = "local") -> Dict[str, List[str]]:
     config = _load_config_file('crawl.yml')
     return config.get('keywords', {})
 
-def get_job_config(logger = None) -> JobConfig:
+def load_job_config(logger = None) -> JobConfig:
     config = _load_config_file('job.yml')
     if os.getenv("PIPELINE_RUN_COST_LIMIT"):
         try:

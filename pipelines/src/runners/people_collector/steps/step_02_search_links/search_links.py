@@ -8,6 +8,7 @@ from runners.people_collector.schemas import (
     SearchEngineState,
     SearchLinksStep,
 )
+from runners.people_collector.steps.step_05_process_page_content.process_page_content import _blacklist_match
 from shared.utils.config_utils import search_keywords, crawl_keywords
 from utils import log_utils
 from utils.array_utils import interleave_arrays
@@ -166,8 +167,7 @@ async def search(logger, search_engine: str, request_id, jurisdiction_ocdid, mun
     if not results:
         raise Exception(f"No results found with {search_engine}")
 
-    results_without_pdfs = [url for url in results if not ".pdf" in url.lower()]
-    results = results_without_pdfs
+    results = [url for url in results if not _blacklist_match(url)]
 
     for result in results:
         logger.info(f"-> {result}")

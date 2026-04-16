@@ -79,7 +79,7 @@ async def get_jurisdiction_info(jurisdiction_ocdid: str) -> dict:
 
 
 
-async def update_job_status(
+async def update_pipeline_run_status(
     logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int
 ):
     MAX_RETRIES = 3
@@ -162,13 +162,18 @@ async def search_people(
         return response.json().get("data", [])
 
 
-async def get_job_config(request_id: str) -> dict:
-    env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-    async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
-        resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config")
-        resp.raise_for_status()
-        return resp.json()
+async def fetch_pipeline_run_config(logger, request_id: str) -> dict:
+    MAX_RETRIES = 5
+
+    async def _fetch():
+        env = get_env_vars()
+        system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
+        async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
+            resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config")
+            resp.raise_for_status()
+            return resp.json()
+
+    return await with_retry(logger, MAX_RETRIES, _fetch)
 
 
 async def batch_resolve_people(
