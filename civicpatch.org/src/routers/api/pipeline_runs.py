@@ -425,8 +425,6 @@ def get_router(api_key_header):
         if issue["issue_type"] == "unrecognized_role":
             result = await review_issue_resolution_service.resolve_role_issue(issue, body, author)
             pull_request_url, config_path = result if result else (None, None)
-        elif issue["issue_type"] == "dead_url":
-            pull_request_url = await review_issue_resolution_service.resolve_dead_url_issue(issue, body.new_url, body.comment, author)
         else:
             await resolve_pipeline_issue(issue_id)
             return {"data": None}
@@ -471,7 +469,7 @@ def get_router(api_key_header):
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 
-        if issue_type == "pipeline_error":
+        if issue_type in ("pipeline_error", "no_info"):
             request_id = issue["issue_key"]
             jurisdiction_ocdid = raw[0]["jurisdiction_ocdid"] if raw else None
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid) if jurisdiction_ocdid else None

@@ -23,10 +23,6 @@ class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
 
 
 class ResolveIssueRequest(BaseModel):
-    # unrecognized_role fields:
     scope: Optional[Literal["global", "state", "locality"]] = None
     state: Optional[str] = None
     locality: Optional[str] = None
-    # dead_url fields:
-    new_url: Optional[str] = None
-    comment: Optional[str] = None

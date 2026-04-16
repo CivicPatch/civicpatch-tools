@@ -70,10 +70,6 @@ class ExcludedPerson(BaseModel):
     designations: List[str] = []
     source_urls: List[str] = []
 
-class DeadUrl(BaseModel):
-    url: str
-    error: str
-
 class LLMPerson(RawLLMPerson):
     source_url: str
 
@@ -160,7 +156,6 @@ class PeopleCollectorData(BaseModel):
     role_config: Optional[RoleConfig] = None 
 
     links: List[Link] = []
-    dead_urls: List[DeadUrl] = []
 
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     search_links_step: SearchLinksStep = SearchLinksStep()
