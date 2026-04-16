@@ -7,6 +7,7 @@ from schemas.requests import HandleSubmitPipelineRunArtifactsRequest
 from schemas.responses import SubmitPipelineRunArtifactsResponse
 import lib.files as file_utils
 import shared.utils.id_utils
+import shared.utils.config_utils
 import lib.storage as storage_service
 import lib.github.api as github_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
@@ -103,6 +104,16 @@ async def _handle_submit_pipeline_run_artifacts(
             .get("unrecognized_roles", [])
         )
         await upsert_pipeline_issue(request.request_id, "unrecognized_role", unrecognized)
+
+        officials = workflow_context.get("data", {}).get("format_output_step", {}).get("officials", [])
+        hog_role = shared.utils.config_utils.get_head_of_government_role()
+        if hog_role and officials:
+            has_hog = any(
+                hog_role.lower() in [t.strip().lower() for t in ((o.get("office") or {}).get("name") or "").split(" - ")]
+                for o in officials
+            )
+            if not has_hog:
+                await upsert_pipeline_issue(request.request_id, "no_mayor", [{}])
 
     else:
         try:

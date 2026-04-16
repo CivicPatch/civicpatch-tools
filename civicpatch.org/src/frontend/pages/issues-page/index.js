@@ -26,6 +26,7 @@ const KNOWN_ISSUE_TYPES = [
   { value: "unrecognized_role", label: "Unrecognized role" },
   { value: "pipeline_error", label: "Pipeline error" },
   { value: "no_info", label: "No info" },
+  { value: "no_mayor", label: "No mayor" },
 ];
 
 function getIssuesPageFromUrl() {
@@ -330,10 +331,10 @@ function IssuesPage() {
     </div>
   ` : null;
 
-  const noInfoModal = resolveModal && resolveModal.issue_type === "no_info" ? html`
+  const debugLinksModal = resolveModal && ["no_info", "no_mayor"].includes(resolveModal.issue_type) ? html`
     <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
-        <h3 class="issues-page__modal-title">No info</h3>
+        <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
         ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
           ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
           : html`
@@ -475,7 +476,7 @@ function IssuesPage() {
                       ${ev.status === "pending" && ev.issue_type === "unrecognized_role"
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
                         : ""}
-                      ${ev.issue_type === "pipeline_error" || ev.issue_type === "no_info"
+                      ${["pipeline_error", "no_info", "no_mayor"].includes(ev.issue_type)
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
                         : ""}
                       ${ev.status === "pending"
@@ -563,7 +564,7 @@ function IssuesPage() {
       ${duplicatesSection}
     </main>
     ${pipelineErrorModal}
-    ${noInfoModal}
+    ${debugLinksModal}
     ${roleModal}
     ${prToast ? html`
       <div class="issues-page__pr-toast">
