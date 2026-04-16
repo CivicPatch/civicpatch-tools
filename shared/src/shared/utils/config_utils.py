@@ -73,6 +73,18 @@ def get_excluded_role_names(role_config_override: Optional["RoleConfig"] = None)
         names.extend(entry.get('aliases', []))
     return {n.lower() for n in names}
 
+def get_head_of_government_role(role_config_override: Optional["RoleConfig"] = None) -> Optional[str]:
+    if role_config_override is not None:
+        for entry in role_config_override.roles:
+            if entry.head_of_government:
+                return entry.role
+    roles = _load_config_file('roles.yml', 'roles', [])
+    for entry in roles:
+        if entry.get('head_of_government'):
+            return entry['role']
+    return None
+
+
 def get_unique_roles(role_config_override: Optional["RoleConfig"] = None) -> List[str]:
     role_configs = get_role_configs(role_config_override)
     unique_roles = [entry['role'] for entry in role_configs if entry.get('is_unique', False)]
@@ -147,6 +159,7 @@ def get_states() -> List[dict]:
 class RoleEntry(BaseModel):
     role: str
     is_unique: bool = False
+    head_of_government: bool = False
     aliases: List[str] = []
 
 

@@ -183,7 +183,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
 def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=None) -> ProcessingSetup:
     return ProcessingSetup(
         roles=config_utils.get_role_names(role_config),
-        target_role="Mayor",  # TBD hardcoded
+        target_role=config_utils.get_head_of_government_role(role_config) or "Mayor",
         target_designations=municipality_research.target_designations,
     )
 
