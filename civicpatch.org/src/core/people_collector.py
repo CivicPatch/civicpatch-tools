@@ -109,8 +109,9 @@ async def _handle_submit_pipeline_run_artifacts(
             workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/pipeline_run_context.json")
             with open(workflow_context_path, "r") as f:
                 workflow_context = json.load(f)
-            dead_urls = workflow_context.get("data", {}).get("dead_urls", [])
-            await upsert_pipeline_issue(request.request_id, "dead_url", dead_urls)
+            format_step = workflow_context.get("data", {}).get("format_output_step") or {}
+            if format_step and not format_step.get("officials"):
+                await upsert_pipeline_issue(request.request_id, "no_info", [{}])
         except FileNotFoundError:
             pass
 

@@ -24,8 +24,8 @@ const ISSUES_PER_PAGE_OPTIONS = [10, 20, 50, 100];
 
 const KNOWN_ISSUE_TYPES = [
   { value: "unrecognized_role", label: "Unrecognized role" },
-  { value: "dead_url", label: "Dead URL" },
   { value: "pipeline_error", label: "Pipeline error" },
+  { value: "no_info", label: "No info" },
 ];
 
 function getIssuesPageFromUrl() {
@@ -70,7 +70,6 @@ function getIssueDetail(issueType, issueKey, data) {
     const names = (data.person_names || []).join(", ");
     return names ? `${issueKey} — ${names}` : issueKey;
   }
-  if (issueType === "dead_url") return data.url || issueKey;
   return issueKey;
 }
 
@@ -102,8 +101,6 @@ function IssuesPage() {
   const [modalScope, setModalScope] = useState("state");
   const [modalState, setModalState] = useState("");
   const [modalLocality, setModalLocality] = useState("");
-  const [modalNewUrl, setModalNewUrl] = useState("");
-  const [modalComment, setModalComment] = useState("");
   const [modalDetails, setModalDetails] = useState(null); // null=not fetched, []=loading, [...]= loaded
   const [prToast, setPrToast] = useState(null);
 
@@ -204,8 +201,6 @@ function IssuesPage() {
     setModalScope("state");
     setModalState((issue.states || [])[0] || "");
     setModalLocality("");
-    setModalNewUrl("");
-    setModalComment("");
   };
 
   const handleModalSubmit = async () => {
@@ -216,11 +211,6 @@ function IssuesPage() {
         scope: modalScope,
         ...(modalState ? { state: modalState } : {}),
         ...(modalScope === "locality" && modalLocality ? { locality: modalLocality } : {}),
-      };
-    } else if (issue.issue_type === "dead_url") {
-      body = {
-        new_url: modalNewUrl || null,
-        ...(modalComment ? { comment: modalComment } : {}),
       };
     }
     try {
@@ -340,32 +330,21 @@ function IssuesPage() {
     </div>
   ` : null;
 
-  const deadUrlModal = resolveModal && resolveModal.issue_type === "dead_url" ? html`
+  const noInfoModal = resolveModal && resolveModal.issue_type === "no_info" ? html`
     <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
-        <h3 class="issues-page__modal-title">Resolve dead URL</h3>
-        <p class="issues-page__modal-meta">Dead URL: <code>${resolveModal.data?.url || resolveModal.issue_key}</code></p>
-        <label>
-          New URL <small>(leave blank to clear)</small>
-          <input
-            type="url"
-            .value=${modalNewUrl}
-            @input=${(e) => setModalNewUrl(e.target.value)}
-            placeholder="https://…"
-          />
-        </label>
-        <label>
-          Comment <small>(optional)</small>
-          <input
-            type="text"
-            .value=${modalComment}
-            @input=${(e) => setModalComment(e.target.value)}
-          />
-        </label>
-        ${sourceContextSection}
+        <h3 class="issues-page__modal-title">No info</h3>
+        ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
+          ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
+          : html`
+            <div class="issues-page__modal-debug-links">
+              ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
+              ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
+              ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
+            </div>
+          `}
         <div class="issues-page__modal-actions">
-          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Cancel</button>
-          <button class="btn btn-sm" @click=${handleModalSubmit}>Open PR →</button>
+          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
         </div>
       </div>
     </div>
@@ -493,10 +472,10 @@ function IssuesPage() {
                     </td>
                     <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
                     <td class="issues-page__issue-actions">
-                      ${ev.status === "pending" && (ev.issue_type === "unrecognized_role" || ev.issue_type === "dead_url")
+                      ${ev.status === "pending" && ev.issue_type === "unrecognized_role"
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
                         : ""}
-                      ${ev.issue_type === "pipeline_error"
+                      ${ev.issue_type === "pipeline_error" || ev.issue_type === "no_info"
                         ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
                         : ""}
                       ${ev.status === "pending"
@@ -584,7 +563,7 @@ function IssuesPage() {
       ${duplicatesSection}
     </main>
     ${pipelineErrorModal}
-    ${deadUrlModal}
+    ${noInfoModal}
     ${roleModal}
     ${prToast ? html`
       <div class="issues-page__pr-toast">

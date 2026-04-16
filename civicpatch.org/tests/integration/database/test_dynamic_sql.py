@@ -470,16 +470,6 @@ async def test_upsert_pipeline_issue_unrecognized_role():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_upsert_pipeline_issue_dead_url():
-    await db_pipeline_issues.upsert_pipeline_issue(
-        "test-request-id",
-        "dead_url",
-        [{"url": "https://example.com/test"}],
-    )
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     """A new request for an issue already in pr_opened must not reset it to pending."""
     from shared.utils.statuses import ReviewIssueStatus

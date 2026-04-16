@@ -127,9 +127,6 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[d
         if issue_type == "unrecognized_role":
             issue_key = issue["role"]
             data = json.dumps({"person_names": [issue.get("person_name", "")]})
-        elif issue_type == "dead_url":
-            issue_key = f"{issue['url']}::{request_id}"
-            data = json.dumps(issue)
         else:
             issue_key = request_id
             data = json.dumps(issue)

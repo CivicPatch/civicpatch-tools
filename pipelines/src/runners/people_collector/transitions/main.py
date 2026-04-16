@@ -31,7 +31,6 @@ from runners.people_collector.steps.step_11_send_success.send_success import sen
 from runners.people_collector.steps.step_11_send_error.send_error import send_error
 
 from runners.people_collector.transitions.process_page_content_transition import next_process_content_state
-from runners.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
 from runners.people_collector.utils.links import (
     get_next_link_with_status,
     get_link_status_by_url,
@@ -121,14 +120,12 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
         next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
-    links, dead_url = await scrape_page(context, page_to_scrape)
+    links = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
-    updated_dead_urls = context.data.dead_urls + ([dead_url] if dead_url else [])
     next_context = context.copy(update={
         "progress": progress,
         "data": context.data.copy(update={
             "links": links,
-            "dead_urls": updated_dead_urls,
         })
     })
 
@@ -227,21 +224,6 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: PipelineRunL
             "merge_records_within_llm_step": result
         })
     })
-
-    heuristics_pass, reasons = check_pipeline_heuristics(
-        result.people_by_llm
-    )
-
-    if not heuristics_pass:
-        logger.info("Pipeline heuristics failed. Failing pipeline.")
-        reasons_str = "; ".join(reasons)
-        next_context = next_context.copy(update={
-            "data": next_context.data.copy(update={
-                "error_step": f"merge_records_within_llm: heuristics failed: {reasons_str}"
-            })
-        })
-        return next_context, PipelineStatus.SEND_ERROR
-
     return next_context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
 async def merge_records_across_llms_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
@@ -268,8 +250,15 @@ async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
         })
     })
 
-    next_state = PipelineStatus.CLEANUP
-    return next_context, next_state
+    if not result.officials:
+        next_context = next_context.copy(update={
+            "data": next_context.data.copy(update={
+                "error_step": "No officials found"
+            })
+        })
+        return next_context, PipelineStatus.SEND_ERROR
+
+    return next_context, PipelineStatus.CLEANUP
 
 async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
     _result = cleanup(context)
