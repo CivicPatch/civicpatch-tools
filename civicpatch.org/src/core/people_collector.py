@@ -131,6 +131,7 @@ async def _handle_submit_pipeline_run_artifacts(
                 request_id=request.request_id,
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 zip_file_url=zip_file_url,
+                env=request.env,
             )
         except Exception as e:
             logger.error(f"[{request.request_id}] Failed to trigger data intake workflow: {e}", exc_info=True)

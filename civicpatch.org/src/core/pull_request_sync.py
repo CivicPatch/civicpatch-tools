@@ -4,13 +4,43 @@ import database.pipeline_runs as jobs_db
 import database.pipeline_issues as pipeline_issues_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
+import database.review_sessions as review_sessions_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
+from core.open_data_sync import sync_people_by_ocdids
+from environment import get_env_vars
 from shared.utils.statuses import PullRequestStatus
 from lib.github.utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
+
+_ENV_LABEL_PREFIX = "env:"
+
+
+def _get_pr_env(labels: list[dict]) -> str:
+    """Extract env from PR labels (e.g. {"name": "env:development"}). Defaults to 'production'."""
+    for label in labels:
+        name = label.get("name", "")
+        if name.startswith(_ENV_LABEL_PREFIX):
+            return name[len(_ENV_LABEL_PREFIX):]
+    return "production"
+
+
+async def handle_pr_status_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
+    """Run side effects when a job PR transitions to MERGED or CLOSED."""
+    if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
+        await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
+    if status == PullRequestStatus.MERGED:
+        pr_env = _get_pr_env(pr_labels)
+        server_env = get_env_vars().get("APP_ENVIRONMENT", "production")
+        if pr_env != server_env:
+            logger.info("Skipping people sync: PR env=%s, server env=%s", pr_env, server_env)
+            return
+        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+        if jurisdiction_ocdid:
+            await sync_people_by_ocdids([jurisdiction_ocdid])
+
 
 _SYNC_LOCK_KEY = "lock:sync_open_pr_state"
 _SYNC_LOCK_TTL = 1800  # 30 min — longer than any expected sync duration
@@ -153,3 +183,5 @@ async def _close_stale_prs(github_request_ids: set[str]):
                 status = PullRequestStatus.CLOSED
             if status:
                 await pull_requests_db.update_pipeline_run_pull_request_status(request_id, status, merged_at)
+                pr_labels = pr_data.get("labels", []) if pr_data else []
+                await handle_pr_status_side_effects(request_id, status, pr_labels)

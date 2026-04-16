@@ -86,6 +86,7 @@ async def trigger_github_data_intake_workflow(
     request_id: str,
     jurisdiction_ocdid: str,
     zip_file_url: str,
+    env: str = "production",
 ):
     logger.info(
         f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}, server_url={server_url}"
@@ -98,6 +99,7 @@ async def trigger_github_data_intake_workflow(
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
             "zip_file_url": zip_file_url,
+            "env": env,
         },
     }
 

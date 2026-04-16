@@ -10,11 +10,9 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
 from database.pull_requests import update_pipeline_run_pull_request_status
-import database.requests as requests_db
 import database.pipeline_issues as pipeline_issues_db
-import database.review_sessions as review_sessions_db
+from core.pull_request_sync import handle_pr_status_side_effects
 from environment import get_env_vars
-from core.open_data_sync import sync_people_by_ocdids
 
 logger = logging.getLogger(__name__)
 
@@ -58,12 +56,8 @@ async def _handle_job_pr_event(payload: dict[str, Any]) -> None:
         return
     request_id, status, merged_at, pr_url = result
     await update_pipeline_run_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
-    if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
-        await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
-    if status == PullRequestStatus.MERGED:
-        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
-        if jurisdiction_ocdid:
-            await sync_people_by_ocdids([jurisdiction_ocdid])
+    pr_labels = payload.get("pull_request", {}).get("labels", [])
+    await handle_pr_status_side_effects(request_id, status, pr_labels)
 
 
 async def _handle_review_issue_pr_event(payload: dict[str, Any]) -> None:

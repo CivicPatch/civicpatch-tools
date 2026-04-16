@@ -115,6 +115,7 @@ async def submit_job_artifacts(
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "pipeline_run_status": pipeline_run_status,
+        "env": env.get("APP_ENVIRONMENT") or "development",
     }
     file_name = os.path.basename(zip_file_path)
 

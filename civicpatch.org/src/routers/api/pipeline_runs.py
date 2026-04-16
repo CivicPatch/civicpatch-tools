@@ -298,6 +298,7 @@ def get_router(api_key_header):
         background_tasks: BackgroundTasks,
         jurisdiction_ocdid: str = Form(...),
         pipeline_run_status: Optional[str] = Form(None),
+        env: str = Form("production"),
         _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
     ):
         start_time = time.time()
@@ -325,6 +326,7 @@ def get_router(api_key_header):
             zip_path=file_path,
             temp_dir=temp_dir,
             pipeline_run_status=pipeline_run_status,
+            env=env,
         )
 
         background_tasks.add_task(
