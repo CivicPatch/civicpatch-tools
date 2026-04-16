@@ -65,9 +65,9 @@ OCDID = "ocd-jurisdiction/country:us/state:mi/place:detroit/government"
 
 def test_load_role_config_merges_all_levels():
     responses = {
-        "data/local/config.yml": "roles:\n  - role: mayor\n",
-        "data/mi/config.yml": "roles:\n  - role: supervisor\n",
-        "data/mi/local/config.yml": "roles:\n  - role: trustee\n",
+        "data_source/local/config.yml": "roles:\n  - role: mayor\n",
+        "data_source/mi/config.yml": "roles:\n  - role: supervisor\n",
+        "data_source/mi/local/config.yml": "roles:\n  - role: trustee\n",
     }
 
     def fetch(path):
@@ -82,7 +82,7 @@ def test_load_role_config_merges_all_levels():
 
 def test_load_role_config_skips_missing_levels():
     responses = {
-        "data/local/config.yml": "roles:\n  - role: mayor\n",
+        "data_source/local/config.yml": "roles:\n  - role: mayor\n",
         # no state, no state+type, no locality
     }
 
@@ -97,8 +97,8 @@ def test_load_role_config_skips_missing_levels():
 def test_load_role_config_locality_overrides_base():
     # OCDID mi/place:detroit → folder mi/local/place_detroit (no county)
     responses = {
-        "data/local/config.yml": "roles:\n  - role: mayor\n    is_unique: false\n",
-        "data/mi/local/place_detroit/config.yml": "roles:\n  - role: mayor\n    is_unique: true\n",
+        "data_source/local/config.yml": "roles:\n  - role: mayor\n    is_unique: false\n",
+        "data_source/mi/local/place_detroit/config.yml": "roles:\n  - role: mayor\n    is_unique: true\n",
     }
 
     def fetch(path):
@@ -117,8 +117,8 @@ def test_load_role_config_returns_empty_when_no_files_found():
 
 def test_load_role_config_applies_exclusion_from_state_level():
     responses = {
-        "data/local/config.yml": "roles:\n  - role: mayor\n  - role: city manager\n",
-        "data/mi/config.yml": "excluded_roles:\n  - city manager\n",
+        "data_source/local/config.yml": "roles:\n  - role: mayor\n  - role: city manager\n",
+        "data_source/mi/config.yml": "excluded_roles:\n  - city manager\n",
     }
 
     def fetch(path):

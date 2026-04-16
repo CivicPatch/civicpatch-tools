@@ -173,10 +173,10 @@ def load_role_config_for_jurisdiction(
     folder = jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     state, output_type, locality = folder.split("/")
     paths = [
-        f"data/{output_type}/config.yml",
-        f"data/{state}/config.yml",
-        f"data/{state}/{output_type}/config.yml",
-        f"data/{state}/{output_type}/{locality}/config.yml",
+        f"data_source/{output_type}/config.yml",
+        f"data_source/{state}/config.yml",
+        f"data_source/{state}/{output_type}/config.yml",
+        f"data_source/{state}/{output_type}/{locality}/config.yml",
     ]
     configs = []
     for path in paths:
