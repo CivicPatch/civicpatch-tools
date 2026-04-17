@@ -119,7 +119,7 @@ async def reopen_pipeline_issue(issue_id: str) -> None:
         )
 
 
-async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
+async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str, issues: list[dict]) -> None:
     if not issues:
         return
     rows = []
@@ -130,14 +130,14 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[d
         else:
             issue_key = request_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, [request_id], data, ReviewIssueStatus.PENDING))
+        rows.append((issue_type, issue_key, category, [request_id], data, ReviewIssueStatus.PENDING))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO pipeline_issues (issue_type, issue_key, request_ids, data, status)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO pipeline_issues (issue_type, issue_key, category, request_ids, data, status)
+            VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT (issue_type, issue_key) DO UPDATE SET
               request_ids = (
                 SELECT array_agg(DISTINCT r)

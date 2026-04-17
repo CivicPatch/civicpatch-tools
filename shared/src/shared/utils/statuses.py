@@ -42,6 +42,16 @@ class ReviewIssueStatus(StrEnum):
     RESOLVED = "resolved"
 
 
+class PipelineRunErrorType(StrEnum):
+    # pipeline_error is the server-side fallback; the pipeline never sets it explicitly
+    NO_INFO = "no_info"
+
+
+class PipelineIssueType(StrEnum):
+    NO_MAYOR = "no_mayor"
+    UNRECOGNIZED_ROLE = "unrecognized_role"
+
+
 class PullRequestStatus(StrEnum):
     # No PR has been created for this pipeline run yet
     DEFAULT = "DEFAULT"

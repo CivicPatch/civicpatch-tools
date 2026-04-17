@@ -80,6 +80,7 @@ erDiagram
         uuid            id          PK
         text            issue_type      "idx"
         text            issue_key       "unique: (issue_type, issue_key)"
+        text            category        "check: error|issue"
         text_array      request_ids
         jsonb           data
         text            status          "idx"
