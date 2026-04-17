@@ -2,6 +2,7 @@ import json
 import os
 from typing import List
 
+import httpx
 import services.civicpatch_api
 import utils.log_utils as log_utils
 import utils.people_utils as people_utils
@@ -15,7 +16,7 @@ from shared.utils.config_utils import get_designations
 import shared.utils.data_path_utils as data_path_utils
 
 
-async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
+async def format_output(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> FormatOutputStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
     designation_configs = get_designations()
@@ -38,6 +39,7 @@ async def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         person = _maybe_add_fallback_url(person)
 
     resolved_people = await services.civicpatch_api.batch_resolve_people(
+        api_client,
         context.data.jurisdiction_ocdid,
         filtered_people,
     )

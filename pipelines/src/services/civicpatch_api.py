@@ -63,30 +63,26 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
         return response.json()
 
 
-async def get_jurisdiction_info(jurisdiction_ocdid: str) -> dict:
+async def get_jurisdiction_info(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> dict:
     env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-    async with httpx.AsyncClient(headers=system_auth_header) as client:
-        response = await client.post(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
-            json={"ocdids": [jurisdiction_ocdid]},
-        )
-        response.raise_for_status()
-        results = response.json().get("data", [])
-        if not results:
-            raise RuntimeError(f"Jurisdiction not found: {jurisdiction_ocdid}")
-        return results[0]
-
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
+        json={"ocdids": [jurisdiction_ocdid]},
+    )
+    response.raise_for_status()
+    results = response.json().get("data", [])
+    if not results:
+        raise RuntimeError(f"Jurisdiction not found: {jurisdiction_ocdid}")
+    return results[0]
 
 
 async def update_pipeline_run_status(
-    logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int
+    client: httpx.AsyncClient, logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int
 ):
     MAX_RETRIES = 3
 
     async def _update():
         env = get_env_vars()
-        system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
         data = {
             "status": status,
             "progress": progress,
@@ -94,23 +90,21 @@ async def update_pipeline_run_status(
         }
         print("data ", data)
 
-        async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
-            response = await client.patch(
-                f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/status",
-                json=data,
-            )
-            logger.debug(f"Response: {response.status_code}, {response.text}")
-            response.raise_for_status()
-            return response
+        response = await client.patch(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/status",
+            json=data,
+        )
+        logger.debug(f"Response: {response.status_code}, {response.text}")
+        response.raise_for_status()
+        return response
 
     return await with_retry(logger, MAX_RETRIES, _update)
 
 
 async def submit_job_artifacts(
-    request_id: str, jurisdiction_ocdid: str, zip_file_path: str, pipeline_run_status: str
+    client: httpx.AsyncClient, request_id: str, jurisdiction_ocdid: str, zip_file_path: str, pipeline_run_status: str
 ):
     env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     data = {
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
@@ -119,7 +113,6 @@ async def submit_job_artifacts(
     }
     file_name = os.path.basename(zip_file_path)
 
-    # Use a context manager to ensure the file is closed after the request
     with open(zip_file_path, "rb") as file_handle:
         files = {
             "file": (
@@ -128,20 +121,20 @@ async def submit_job_artifacts(
                 "application/zip",
             )
         }
-        async with httpx.AsyncClient(headers=system_auth_header) as client:
-            response = await client.post(
-                f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/submit",
-                data=data,
-                files=files,
-            )
-        return response
+        response = await client.post(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/submit",
+            data=data,
+            files=files,
+        )
+    return response
 
 
-async def get_current_people(jurisdiction_ocdid: str) -> List[dict]:
-    return await search_people(jurisdiction_ocdid, state="current")
+async def get_current_people(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> List[dict]:
+    return await search_people(client, jurisdiction_ocdid, state="current")
 
 
 async def search_people(
+    client: httpx.AsyncClient,
     jurisdiction_ocdid: str,
     state: Optional[str] = None,
     name: Optional[str] = None,
@@ -152,36 +145,30 @@ async def search_people(
         params["state"] = state
     if name is not None:
         params["name"] = name
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search",
-            params=params,
-            headers=system_auth_header,
-        )
-        response.raise_for_status()
-        return response.json().get("data", [])
+    response = await client.get(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search",
+        params=params,
+    )
+    response.raise_for_status()
+    return response.json().get("data", [])
 
 
-async def fetch_pipeline_run_config(logger, request_id: str) -> dict:
+async def fetch_pipeline_run_config(client: httpx.AsyncClient, logger, request_id: str) -> dict:
     MAX_RETRIES = 5
 
     async def _fetch():
         env = get_env_vars()
-        system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
-        async with httpx.AsyncClient(headers=system_auth_header, timeout=15) as client:
-            resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config")
-            resp.raise_for_status()
-            return resp.json()
+        resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config")
+        resp.raise_for_status()
+        return resp.json()
 
     return await with_retry(logger, MAX_RETRIES, _fetch)
 
 
 async def batch_resolve_people(
-    jurisdiction_ocdid: str, people: List[Official]
+    client: httpx.AsyncClient, jurisdiction_ocdid: str, people: List[Official]
 ) -> List[dict]:
     env = get_env_vars()
-    system_auth_header = {"Authorization": env["SERVICE_API_KEY"]}
     people_dicts = [official.model_dump() for official in people]
     formatted_people_dicts = [
         {
@@ -193,11 +180,10 @@ async def batch_resolve_people(
     ]
 
     data = {"jurisdiction_ocdid": jurisdiction_ocdid, "people": formatted_people_dicts}
-    async with httpx.AsyncClient(headers=system_auth_header) as client:
-        response = await client.post(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/batch-resolve",
-            json=data,
-        )
-        response.raise_for_status()
-        data = response.json()
-        return data.get("data", [])
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/batch-resolve",
+        json=data,
+    )
+    response.raise_for_status()
+    data = response.json()
+    return data.get("data", [])

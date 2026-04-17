@@ -2,6 +2,9 @@ import argparse
 import asyncio
 import json
 import sys
+
+import httpx
+
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
@@ -33,6 +36,30 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
         sys.exit(1)  # Already logged in people_collector.main
     except Exception:
         sys.exit(1)  # Already logged in people_collector.main
+
+async def _run_pipeline_async(args):
+    request_id = args.request_id or id_utils.make_request_id()
+    source_urls = json.loads(args.source_urls) if args.source_urls else None
+    name = args.name
+    url = args.url
+
+    if not name or not url:
+        env = get_env_vars()
+        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}) as client:
+            info = await get_jurisdiction_info(client, args.jurisdiction_ocdid)
+        name = name or info.get("name")
+        url = url or info.get("url")
+
+    request = PeopleCollectorJobRequest(
+        jurisdiction_ocdid=args.jurisdiction_ocdid,
+        config=PipelineRunConfig(
+            name=name,
+            url=url or "",
+            source_urls=source_urls,
+        ),
+    )
+    await run_pipeline_cli(request_id, request)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -78,24 +105,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "run_pipeline":
-        request_id = args.request_id or id_utils.make_request_id()
-
-        source_urls = json.loads(args.source_urls) if args.source_urls else None
-        name = args.name
-        url = args.url
-        if not name or not url:
-            info = asyncio.run(get_jurisdiction_info(args.jurisdiction_ocdid))
-            name = name or info.get("name")
-            url = url or info.get("url")
-        request = PeopleCollectorJobRequest(
-            jurisdiction_ocdid=args.jurisdiction_ocdid,
-            config=PipelineRunConfig(
-                name=name,
-                url=url or "",
-                source_urls=source_urls,
-            ),
-        )
-        asyncio.run(run_pipeline_cli(request_id, request))
+        asyncio.run(_run_pipeline_async(args))
     else:
         print(f"cli command not available: {args.command}")
 
