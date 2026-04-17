@@ -38,7 +38,7 @@ erDiagram
 
     pipeline_runs {
         int             id              PK
-        uuid            request_id      FK  "idx"
+        uuid            request_id      FK  "unique"
         int_null        progress
         text            status              "idx"
         bigint_null     github_run_id
@@ -48,7 +48,7 @@ erDiagram
 
     pull_requests {
         uuid            id                  PK
-        uuid            request_id          FK
+        uuid            request_id          FK  "unique"
         uuid_null       resolved_by_user_id FK
         int             pr_number
         text_null       url
