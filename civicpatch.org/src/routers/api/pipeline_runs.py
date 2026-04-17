@@ -197,17 +197,24 @@ def get_router(api_key_header):
         request: RegisterPipelineRunRequest,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        await register_request_with_pipeline_run_if_not_exists(
-            request_id=request.request_id,
-            job_type="people",
-            arguments_json={
-                "jurisdiction_ocdid": request.jurisdiction_ocdid,
-                "name": request.name,
-                "url": request.url,
-                "source_urls": None,
-            },
-            jurisdiction_ocdid=request.jurisdiction_ocdid,
-        )
+        try:
+            await register_request_with_pipeline_run_if_not_exists(
+                request_id=request.request_id,
+                job_type="people",
+                arguments_json={
+                    "jurisdiction_ocdid": request.jurisdiction_ocdid,
+                    "name": request.name,
+                    "url": request.url,
+                    "source_urls": None,
+                },
+                jurisdiction_ocdid=request.jurisdiction_ocdid,
+            )
+        except Exception as e:
+            logger.exception(f"[{request.request_id}] Failed to register pipeline run: {e}")
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to register pipeline run").model_dump(),
+                status_code=500,
+            )
         return {"data": {"request_id": request.request_id}}
 
     @router.post("/{request_id}/run", include_in_schema=False)
