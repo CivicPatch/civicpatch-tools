@@ -256,7 +256,7 @@ async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
     })
     return next_context, PipelineStatus.CLEANUP
 
-async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     _result = cleanup(context)
 
     progress = calculate_progress_percentage(context.data, 9)
@@ -266,7 +266,7 @@ async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: P
     })
     return next_context, PipelineStatus.REVIEW_OUTPUT
 
-async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     assert context.data.format_output_step is not None
     officials = context.data.format_output_step.officials
     error_type, issues = _collect_pipeline_heuristics(
@@ -291,7 +291,8 @@ async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
     })
     return next_context, PipelineStatus.SAVE_OUTPUT
 
-async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
     _result = await save_output(context)
 
     progress = calculate_progress_percentage(context.data, 11)
@@ -303,8 +304,6 @@ async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, contex
     return next_context, next_state
 
 async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
-
     result = await send_success(context, api_client)
 
     progress = calculate_progress_percentage(context.data, 12)
