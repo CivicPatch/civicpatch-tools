@@ -347,9 +347,7 @@ def get_router(api_key_header):
         request_obj = HandleSubmitPipelineRunArtifactsRequest(
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
-            server_detail=ServerDetail(
-                user_email="jobs-people@civicpatch.org", server_url="civicpatch.org"
-            ),
+            server_detail=ServerDetail(user_email="jobs-people@civicpatch.org"),
             zip_path=file_path,
             temp_dir=temp_dir,
             pipeline_run_status=pipeline_run_status,

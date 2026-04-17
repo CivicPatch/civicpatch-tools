@@ -13,7 +13,6 @@ erDiagram
         text            provider_user_id
         text            email
         text_null       display_name
-        text_null       server_url
         timestamptz_null created_at
     }
 

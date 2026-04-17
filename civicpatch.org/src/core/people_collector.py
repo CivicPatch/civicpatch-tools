@@ -111,7 +111,6 @@ async def _handle_submit_pipeline_run_artifacts(
         try:
             await github_service.trigger_github_data_intake_workflow(
                 request.server_detail.user_email,
-                request.server_detail.server_url,
                 request_id=request.request_id,
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 zip_file_url=zip_file_url,
