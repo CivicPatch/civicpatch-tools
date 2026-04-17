@@ -3,7 +3,7 @@ from typing import List, Optional, cast
 
 from database.database import get_pool
 from environment import get_env_vars
-from schemas.requests import ServerDetail
+from schemas.pipeline_runs import ServerDetail
 import lib.hash as hash_utils
 
 

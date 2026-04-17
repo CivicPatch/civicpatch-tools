@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
 from core.people_collector import handle_submit_pipeline_run_artifacts
-from schemas.requests import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
+from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
 from shared.utils.statuses import PipelineRunStatus
 
 

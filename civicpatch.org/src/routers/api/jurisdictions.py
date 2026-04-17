@@ -11,7 +11,7 @@ import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access
 from lib.github.pr import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
-from schemas.requests import JurisdictionsByOcdidsRequest
+from schemas.jurisdictions import JurisdictionsByOcdidsRequest
 
 
 class PatchJurisdictionDataRequest(BaseModel):
