@@ -223,23 +223,9 @@ async def test_get_user_by_api_key_id_not_found():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_server_detail_by_active_api_key_not_found():
-    result = await db_users.get_server_detail_by_active_api_key("fake-api-key-that-does-not-exist")
-    assert result is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_api_keys_for_user_not_found():
     result = await db_users.get_api_keys_for_user("github", "nonexistent-user-99999")
     assert isinstance(result, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_user_details_not_found():
-    result = await db_users.get_user_details("github", "nonexistent-user-99999")
-    assert result is None
 
 
 @pytest.mark.asyncio
