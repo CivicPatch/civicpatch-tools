@@ -45,7 +45,7 @@ async def _run_pipeline_async(args):
 
     if not name or not url:
         env = get_env_vars()
-        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}) as client:
+        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
             info = await get_jurisdiction_info(client, args.jurisdiction_ocdid)
         name = name or info.get("name")
         url = url or info.get("url")

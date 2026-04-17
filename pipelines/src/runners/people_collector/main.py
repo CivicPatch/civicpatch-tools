@@ -52,7 +52,7 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunCon
     env = get_env_vars()
 
     try:
-        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}) as api_client:
+        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=120.0) as api_client:
             return await run_pipeline(
                 context,
                 pipeline_run_logger,

@@ -47,7 +47,7 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
     env = get_env_vars()
     headers = {"Authorization": env["SERVICE_API_KEY"]}
     try:
-        async with httpx.AsyncClient(headers=headers) as client:
+        async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
             config_data = await civicpatch_api.fetch_pipeline_run_config(client, logger, request_id)
         config = PipelineRunConfig(
             url=url or config_data["url"],
@@ -59,7 +59,7 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
         pass  # engine already sent terminal ERROR status with error_type via status update
     except Exception:
         logger.exception("job %s failed", request_id)
-        async with httpx.AsyncClient(headers=headers) as client:
+        async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
             await update_pipeline_run_status(client, logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
 
 

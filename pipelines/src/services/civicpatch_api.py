@@ -40,7 +40,7 @@ async def get_me(request: Request) -> dict:
 async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
     env = get_env_vars()
     params = {"jurisdiction_ocdid": jurisdiction_ocdid, "with_geom": "true"}
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(
             f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions",
             params=params,
@@ -53,7 +53,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
 async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> dict:
     env = get_env_vars()
     params = {"jurisdiction_ocdid": jurisdiction_ocdid}
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(
             f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/history",
             params=params,
