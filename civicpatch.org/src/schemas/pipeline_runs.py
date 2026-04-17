@@ -21,6 +21,13 @@ class BatchPipelineRunRequest(BaseModel):
     num_jurisdictions: int = 10
 
 
+class RegisterPipelineRunRequest(BaseModel):
+    request_id: str
+    jurisdiction_ocdid: str
+    name: Optional[str] = None
+    url: Optional[str] = None
+
+
 class RegisterGithubRunRequest(BaseModel):
     run_id: int
 

@@ -39,6 +39,32 @@ async def register_request_with_pipeline_run(
         )
 
 
+async def register_request_with_pipeline_run_if_not_exists(
+    request_id: str,
+    job_type: str,
+    arguments_json: dict,
+    jurisdiction_ocdid: Optional[str] = None,
+):
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (id) DO NOTHING
+            """,
+            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
+        )
+        await conn.execute(
+            """
+            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+            VALUES (%s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            ON CONFLICT (request_id) DO NOTHING
+            """,
+            (request_id, PipelineRunStatus.PENDING, 0),
+        )
+
+
 async def register_foreign_request(
     request_id: str,
     jurisdiction_ocdid: str,

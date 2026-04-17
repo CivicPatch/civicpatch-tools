@@ -14,7 +14,7 @@ from runners.engine import PipelineRunError
 from runners.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from pipelines_environment import get_env_vars
-from services.civicpatch_api import get_jurisdiction_info
+from services.civicpatch_api import get_jurisdiction_info, register_pipeline_run
 
 
 async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
@@ -43,12 +43,13 @@ async def _run_pipeline_async(args):
     name = args.name
     url = args.url
 
-    if not name or not url:
-        env = get_env_vars()
-        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
+    env = get_env_vars()
+    async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
+        if not name or not url:
             info = await get_jurisdiction_info(client, args.jurisdiction_ocdid)
-        name = name or info.get("name")
-        url = url or info.get("url")
+            name = name or info.get("name")
+            url = url or info.get("url")
+        await register_pipeline_run(client, request_id, args.jurisdiction_ocdid, name, url)
 
     request = PeopleCollectorJobRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
