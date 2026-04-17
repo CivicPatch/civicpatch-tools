@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class PrAuthor(BaseModel):
     name: str
     email: str
+    teams: list[str] = []
 
 
 async def open_attributed_pr(
@@ -58,6 +59,7 @@ async def open_attributed_pr(
     attributed_body = (
         f"{pull_request_body}\n\n---\n_Opened by {author.name} ({author.email}) via CivicPatch._"
     )
+    labels = [f"team:{t}" for t in author.teams] or None
     return await github_api_service.create_pull_request(
         branch_name,
         title=pull_request_title,
@@ -66,4 +68,5 @@ async def open_attributed_pr(
         repo_url=repo_url,
         headers=headers,
         head=pr_head,
+        labels=labels,
     )

@@ -13,7 +13,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, Up
 from fastapi.responses import JSONResponse
 
 import lib.github.api as github_service
-from lib.github.pr import PrAuthor
+from lib.github.pull_requests import PrAuthor
 import core.jurisdiction_scrape_candidate as candidate_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
@@ -450,6 +450,7 @@ def get_router(api_key_header):
         author = PrAuthor(
             name=user.display_name or user.email or user.provider_user_id,
             email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
+            teams=user.teams or [],
         )
 
         config_path = None

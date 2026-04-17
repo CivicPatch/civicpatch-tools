@@ -5,7 +5,7 @@ import pytest
 import yaml
 
 from core.jurisdiction_pull_request import _extract_state, open_jurisdiction_edit_pr
-from lib.github.pr import PrAuthor
+from lib.github.pull_requests import PrAuthor
 
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 AUTHOR = PrAuthor(name="Test User", email="test@example.com")

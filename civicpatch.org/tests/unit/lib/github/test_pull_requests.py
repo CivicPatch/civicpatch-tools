@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from lib.github.pr import PrAuthor, open_attributed_pr
+from lib.github.pull_requests import PrAuthor, open_attributed_pr
 
 BRANCH = "civicpatch/jurisdiction-edit/2025-01-01-abc"
 REPO_URL = "https://api.github.com/repos/openstates/jurisdictions"
@@ -15,17 +15,17 @@ AUTHOR = PrAuthor(name="Alice", email="alice@example.com")
 async def test_open_attributed_pr_threads_repo_url_and_headers():
     with (
         patch(
-            "lib.github.pr.github_api_service.create_branch",
+            "lib.github.pull_requests.github_api_service.create_branch",
             new_callable=AsyncMock,
             return_value=None,
         ) as mock_create_branch,
         patch(
-            "lib.github.pr.github_api_service.upsert_github_file",
+            "lib.github.pull_requests.github_api_service.upsert_github_file",
             new_callable=AsyncMock,
             return_value=True,
         ) as mock_upsert,
         patch(
-            "lib.github.pr.github_api_service.create_pull_request",
+            "lib.github.pull_requests.github_api_service.create_pull_request",
             new_callable=AsyncMock,
             return_value=(7, "https://github.com/openstates/jurisdictions/pull/7"),
         ) as mock_create_pr,
@@ -64,7 +64,7 @@ async def test_open_attributed_pr_threads_repo_url_and_headers():
 @pytest.mark.asyncio
 async def test_open_attributed_pr_returns_error_on_branch_failure():
     with patch(
-        "lib.github.pr.github_api_service.create_branch",
+        "lib.github.pull_requests.github_api_service.create_branch",
         new_callable=AsyncMock,
         return_value="branch already exists",
     ):
