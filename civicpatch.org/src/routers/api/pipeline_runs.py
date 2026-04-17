@@ -45,6 +45,7 @@ from database.pull_requests import (
 )
 from database.requests import (
     register_request_with_pipeline_run,
+    register_request_with_pipeline_run_if_not_exists,
     get_request_jurisdiction,
     get_issue_request_details,
 )
@@ -54,6 +55,7 @@ from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.pipeline_runs import (
     CreatePipelineRunRequest,
     BatchPipelineRunRequest,
+    RegisterPipelineRunRequest,
     RegisterGithubRunRequest,
     UpdatePipelineRunStatusRequest,
     UpdatePipelineRunStatusResponse,
@@ -189,6 +191,24 @@ def get_router(api_key_header):
 
         await temporal_service.start_batch_people_collector_workflow(request.state, items)
         return {"jurisdictions": items}
+
+    @router.post("/register", include_in_schema=False)
+    async def register_pipeline_run_endpoint(
+        request: RegisterPipelineRunRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        await register_request_with_pipeline_run_if_not_exists(
+            request_id=request.request_id,
+            job_type="people",
+            arguments_json={
+                "jurisdiction_ocdid": request.jurisdiction_ocdid,
+                "name": request.name,
+                "url": request.url,
+                "source_urls": None,
+            },
+            jurisdiction_ocdid=request.jurisdiction_ocdid,
+        )
+        return {"data": {"request_id": request.request_id}}
 
     @router.post("/{request_id}/run", include_in_schema=False)
     async def register_github_run_endpoint(

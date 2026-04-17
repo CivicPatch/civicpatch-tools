@@ -63,6 +63,26 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
         return response.json()
 
 
+async def register_pipeline_run(
+    client: httpx.AsyncClient,
+    request_id: str,
+    jurisdiction_ocdid: str,
+    name: str | None,
+    url: str | None,
+) -> None:
+    env = get_env_vars()
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/register",
+        json={
+            "request_id": request_id,
+            "jurisdiction_ocdid": jurisdiction_ocdid,
+            "name": name,
+            "url": url,
+        },
+    )
+    response.raise_for_status()
+
+
 async def get_jurisdiction_info(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> dict:
     env = get_env_vars()
     response = await client.post(
