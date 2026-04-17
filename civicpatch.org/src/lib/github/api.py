@@ -82,19 +82,17 @@ async def trigger_people_job_workflow(
 
 async def trigger_github_data_intake_workflow(
     user_email: str,
-    server_url: str,
     request_id: str,
     jurisdiction_ocdid: str,
     zip_file_url: str,
     env: str = "production",
 ):
     logger.info(
-        f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}, server_url={server_url}"
+        f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}"
     )
     data = {
         "ref": "main",
         "inputs": {
-            "server_url": server_url,
             "user_email": user_email,
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,

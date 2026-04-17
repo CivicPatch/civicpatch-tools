@@ -11,7 +11,6 @@ class ErrorResponse(BaseModel):
 
 class ServerDetail(BaseModel):
     user_email: str
-    server_url: str
 
 
 # ── POST /api/v1/pipeline_runs ────────────────────────────────────────────────

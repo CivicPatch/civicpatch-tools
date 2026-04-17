@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE users DROP COLUMN server_url;
+COMMIT;
