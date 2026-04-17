@@ -1,12 +1,10 @@
-import os
-
 import httpx
 from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
 from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
 from shared.utils.statuses import PipelineRunStatus
-from utils import cost_utils, log_utils, file_utils
+from utils import log_utils, file_utils
 
 
 async def send_error(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> MaybeSendToGitHubStep:
@@ -22,8 +20,6 @@ async def send_error(context: PeopleCollectorContext, api_client: httpx.AsyncCli
         zip_file_path = file_utils.zip_job_artifacts(
             context.request_id, context.data.jurisdiction_ocdid, include_data=False
         )
-        file_size_bytes = os.path.getsize(zip_file_path)
-        cost_utils.add_storage_cost(context.request_id, context.data.jurisdiction_ocdid, file_size_bytes)
 
         response = await services.civicpatch_api.submit_job_artifacts(
             api_client, context.request_id, context.data.jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.ERROR

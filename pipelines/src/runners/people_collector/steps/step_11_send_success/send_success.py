@@ -1,12 +1,10 @@
-import os
-
 import httpx
 from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
 from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
 from shared.utils.statuses import PipelineRunStatus
-from utils import cost_utils, log_utils, file_utils
+from utils import log_utils, file_utils
 
 
 async def send_success(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> MaybeSendToGitHubStep:
@@ -28,9 +26,6 @@ async def send_success(context: PeopleCollectorContext, api_client: httpx.AsyncC
             return MaybeSendToGitHubStep(status="skipped_no_token")
 
         zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
-        file_size_bytes = os.path.getsize(zip_file_path)
-        logger.info(f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes")
-        cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
         response = await services.civicpatch_api.submit_job_artifacts(
             api_client, request_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
