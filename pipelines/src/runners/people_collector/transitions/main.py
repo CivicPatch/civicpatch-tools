@@ -5,6 +5,8 @@ from runners.people_collector.schemas import (
   LinkStatus,
   PeopleCollectorData
 )
+from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
+from shared.utils.config_utils import get_head_of_government_role
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
@@ -252,15 +254,6 @@ async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
             "format_output_step": result,
         })
     })
-
-    if not result.officials:
-        next_context = next_context.copy(update={
-            "data": next_context.data.copy(update={
-                "error_step": "No officials found"
-            })
-        })
-        return next_context, PipelineStatus.SEND_ERROR
-
     return next_context, PipelineStatus.CLEANUP
 
 async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
@@ -274,16 +267,28 @@ async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: P
     return next_context, PipelineStatus.REVIEW_OUTPUT
 
 async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = review_output(context)
+    assert context.data.format_output_step is not None
+    officials = context.data.format_output_step.officials
+    error_type, issues = _collect_pipeline_heuristics(
+        officials,
+        context.data.role_config,
+        context.data.merge_records_within_llm_step,
+    )
 
+    if error_type:
+        next_context = context.copy(update={
+            "pipeline_error_type": error_type,
+            "data": context.data.copy(update={"error_step": error_type}),
+        })
+        return next_context, PipelineStatus.SEND_ERROR
+
+    result = review_output(context)
     progress = calculate_progress_percentage(context.data, 10)
     next_context = context.copy(update={
         "progress": progress,
-        "data": context.data.copy(update={
-            "review_output_step": result,
-        })
+        "pipeline_issues": issues,
+        "data": context.data.copy(update={"review_output_step": result}),
     })
-
     return next_context, PipelineStatus.SAVE_OUTPUT
 
 async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
@@ -333,6 +338,26 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
     progress_percent = int(combined_progress * 100)
     return progress_percent
+
+def _collect_pipeline_heuristics(officials, role_config, merge_step) -> tuple[str | None, list[dict]]:
+    if not officials:
+        return PipelineRunErrorType.NO_INFO, []
+
+    issues = []
+    hog_role = get_head_of_government_role(role_config)
+    if hog_role:
+        has_hog = any(
+            hog_role.lower() in [t.strip().lower() for t in (o.office.name if o.office else "").split(" - ")]
+            for o in officials
+        )
+        if not has_hog:
+            issues.append({"type": PipelineIssueType.NO_MAYOR, "data": {}})
+
+    for ur in (merge_step.unrecognized_roles if merge_step else []):
+        issues.append({"type": PipelineIssueType.UNRECOGNIZED_ROLE, "data": {"role": ur.role, "person_name": ur.person_name}})
+
+    return None, issues
+
 
 TRANSITION_MAP = {
   PipelineStatus.INIT: start_job,

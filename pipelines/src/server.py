@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from pipelines_environment import get_env_vars
+from runners.engine import PipelineRunError
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
 import services.civicpatch_api as civicpatch_api
@@ -54,6 +55,8 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
             source_urls=source_urls or config_data.get("source_urls"),
         )
         await start_threaded(request_id, jurisdiction_ocdid, config)
+    except PipelineRunError:
+        pass  # engine already sent terminal ERROR status with error_type via status update
     except Exception:
         logger.exception("job %s failed", request_id)
         async with httpx.AsyncClient(headers=headers) as client:

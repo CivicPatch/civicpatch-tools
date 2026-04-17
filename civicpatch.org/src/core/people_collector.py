@@ -35,7 +35,7 @@ async def handle_submit_pipeline_run_artifacts(
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
-        await upsert_pipeline_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
+        await upsert_pipeline_issue(request.request_id, "pipeline_error", "error", [{"error": str(e)}])
         raise
 
 
@@ -97,34 +97,6 @@ async def _handle_submit_pipeline_run_artifacts(
             workflow_context = json.load(f)
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)
-
-        unrecognized = (
-            workflow_context.get("data", {})
-            .get("merge_records_within_llm_step", {})
-            .get("unrecognized_roles", [])
-        )
-        await upsert_pipeline_issue(request.request_id, "unrecognized_role", unrecognized)
-
-        officials = workflow_context.get("data", {}).get("format_output_step", {}).get("officials", [])
-        hog_role = shared.utils.config_utils.get_head_of_government_role()
-        if hog_role and officials:
-            has_hog = any(
-                hog_role.lower() in [t.strip().lower() for t in ((o.get("office") or {}).get("name") or "").split(" - ")]
-                for o in officials
-            )
-            if not has_hog:
-                await upsert_pipeline_issue(request.request_id, "no_mayor", [{}])
-
-    else:
-        try:
-            workflow_context_path = file_utils.find_file(artifact_file_dir, "data_source/*/local/*/pipeline_run_context.json")
-            with open(workflow_context_path, "r") as f:
-                workflow_context = json.load(f)
-            format_step = workflow_context.get("data", {}).get("format_output_step") or {}
-            if format_step and not format_step.get("officials"):
-                await upsert_pipeline_issue(request.request_id, "no_info", [{}])
-        except FileNotFoundError:
-            pass
 
     artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
