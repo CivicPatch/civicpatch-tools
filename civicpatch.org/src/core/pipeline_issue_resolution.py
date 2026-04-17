@@ -5,7 +5,7 @@ import yaml
 import lib.github.api as github_service
 import lib.github.pr as pr_service
 from lib.github.pr import PrAuthor
-from schemas.requests import ResolveIssueRequest
+from schemas.pipeline_runs import ResolveIssueRequest
 from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import Mock, patch, AsyncMock
 from src.routers.api.admin import get_router
-from src.schemas.requests import OdSyncRequestSchema
+from src.schemas.open_data import OdSyncRequestSchema
 
 
 @pytest.fixture

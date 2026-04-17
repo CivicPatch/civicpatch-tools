@@ -66,7 +66,7 @@ from schemas.pipeline_runs import (
     GetPipelineRunStatusResponse,
     ErrorResponse,
 )
-from schemas.requests import HandleSubmitPipelineRunArtifactsRequest, ResolveIssueRequest, ServerDetail
+from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ResolveIssueRequest, ServerDetail
 import lib.pubsub as pubsub_service
 from lib.auth import require_route_access
 

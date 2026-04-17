@@ -3,8 +3,8 @@ import json
 
 from typing import List, Dict
 import lib.sheets as google_sheets_service
-from schemas.requests import HandleSubmitPipelineRunArtifactsRequest
-from schemas.responses import SubmitPipelineRunArtifactsResponse
+from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest
+from schemas.pipeline_runs import SubmitPipelineRunArtifactsResponse
 import lib.files as file_utils
 import shared.utils.id_utils
 import shared.utils.config_utils

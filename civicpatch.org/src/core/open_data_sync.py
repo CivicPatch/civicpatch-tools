@@ -14,7 +14,7 @@ import lib.github.api as github_service
 import shared
 import shared.utils.config_utils as config_utils
 import shared.utils.id_utils
-from schemas.requests import OdSyncRequestSchema
+from schemas.open_data import OdSyncRequestSchema
 import logging
 
 logger = logging.getLogger(__name__)
