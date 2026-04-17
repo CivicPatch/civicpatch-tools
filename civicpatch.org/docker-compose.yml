@@ -16,6 +16,11 @@ services:
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8001"
       OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
+      JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
+      JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
+      JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
+      JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
+      JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
       MAINTAINER_EMAIL: "michelle@civicpatch.org"
 
       REDIS_HOST: civicpatch-org-redis
@@ -90,6 +95,11 @@ services:
       CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
       REDIS_HOST: civicpatch-org-redis
       OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
+      JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
+      JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
+      JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
+      JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
       INSTANCE_URL: "http://localhost:8001"
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}

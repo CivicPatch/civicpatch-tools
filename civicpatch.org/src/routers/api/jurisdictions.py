@@ -1,13 +1,24 @@
 import urllib.parse
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
-
-import database.jurisdictions as database
-
+import core.jurisdiction_pull_request as jurisdiction_pr_service
 import core.jurisdiction_scrape_candidate as candidate_service
+import database.jurisdictions as database
 import shared.utils.config_utils as config_utils
+from lib.auth import require_route_access
+from lib.github.pr import PrAuthor
+from schemas.common import Identity, Role, RouteCategory
 from schemas.requests import JurisdictionsByOcdidsRequest
+
+
+class PatchJurisdictionDataRequest(BaseModel):
+    jurisdiction_ocdid: str
+    url: str | None = None
+    geoid: str | None = None
+    population: int | None = None
 
 def get_router() -> APIRouter:
     router = APIRouter()
@@ -89,6 +100,22 @@ def get_router() -> APIRouter:
     async def get_jurisdictions_by_ocdids_endpoint(body: JurisdictionsByOcdidsRequest):
         results = await database.get_jurisdictions_by_ocdids(body.ocdids)
         return {"data": results}
+
+    @router.patch("/data")
+    async def patch_jurisdiction_data_endpoint(
+        request: PatchJurisdictionDataRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+    ):
+        if not user.email:
+            return JSONResponse({"error": "User email required"}, status_code=400)
+        pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_edit_pr(
+            jurisdiction_ocdid=request.jurisdiction_ocdid,
+            fields={"url": request.url, "population": request.population, "geoid": request.geoid},
+            author=PrAuthor(name=user.display_name or user.email, email=user.email),
+        )
+        if pull_request_number is None:
+            return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
+        return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
 
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(

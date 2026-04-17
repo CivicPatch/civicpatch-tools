@@ -301,12 +301,15 @@ async def upsert_github_file(
     content_str: str,
     commit_message: str,
     author: dict | None = None,
+    repo_url: str | None = None,
+    headers: dict | None = None,
 ) -> bool:
     _, _, _, open_data_repo_url = _get_github_config()
-    default_headers = await get_default_headers()
-    contents_url = f"{open_data_repo_url}/contents/{file_path}?ref={branch_name}"
+    target_repo = repo_url or open_data_repo_url
+    auth_headers = headers if headers is not None else await get_default_headers()
+    contents_url = f"{target_repo}/contents/{file_path}?ref={branch_name}"
     async with httpx.AsyncClient(timeout=timeout) as client:
-        get_resp = await client.get(contents_url, headers=default_headers)
+        get_resp = await client.get(contents_url, headers=auth_headers)
         encoded = base64.b64encode(content_str.encode()).decode()
         payload: dict = {"message": commit_message, "content": encoded, "branch": branch_name}
         if get_resp.status_code == 200:
@@ -316,7 +319,7 @@ async def upsert_github_file(
         put_resp = await client.put(
             contents_url,
             json=payload,
-            headers={**default_headers, "Accept": "application/vnd.github+json"},
+            headers={**auth_headers, "Accept": "application/vnd.github+json"},
         )
         if put_resp.status_code in (200, 201):
             return True
@@ -496,15 +499,43 @@ async def update_pull_request_branch(pull_request_number: str) -> str | None:
         return None
 
 
-async def create_branch(branch_name: str, base_ref: str = "main") -> str | None:
-    """Creates a new branch off base_ref in the open-data repo.
+async def sync_fork_branch(
+    branch: str = "main",
+    repo_url: str | None = None,
+    headers: dict | None = None,
+) -> str | None:
+    _, _, _, open_data_repo_url = _get_github_config()
+    target_repo = repo_url or open_data_repo_url
+    auth_headers = headers if headers is not None else await get_default_headers()
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.post(
+            f"{target_repo}/merge-upstream",
+            headers=auth_headers,
+            json={"branch": branch},
+        )
+        if response.status_code not in (200, 204):
+            message = response.json().get("message", "Unknown error")
+            logger.error(f"Failed to sync fork branch {branch!r} ({response.status_code}): {message}")
+            return message
+    logger.info(f"Synced fork branch {branch!r} with upstream")
+    return None
+
+
+async def create_branch(
+    branch_name: str,
+    base_ref: str = "main",
+    repo_url: str | None = None,
+    headers: dict | None = None,
+) -> str | None:
+    """Creates a new branch off base_ref in the target repo.
     Returns None on success, or an error message string on failure."""
     _, _, _, open_data_repo_url = _get_github_config()
-    default_headers = await get_default_headers()
+    target_repo = repo_url or open_data_repo_url
+    auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:
         ref_response = await client.get(
-            f"{open_data_repo_url}/git/ref/heads/{base_ref}",
-            headers=default_headers,
+            f"{target_repo}/git/ref/heads/{base_ref}",
+            headers=auth_headers,
         )
         if ref_response.status_code != 200:
             message = ref_response.json().get("message", "Unknown error")
@@ -513,8 +544,8 @@ async def create_branch(branch_name: str, base_ref: str = "main") -> str | None:
         sha = ref_response.json()["object"]["sha"]
 
         create_response = await client.post(
-            f"{open_data_repo_url}/git/refs",
-            headers=default_headers,
+            f"{target_repo}/git/refs",
+            headers=auth_headers,
             json={"ref": f"refs/heads/{branch_name}", "sha": sha},
         )
         if create_response.status_code != 201:
@@ -530,20 +561,34 @@ async def create_pull_request(
     title: str,
     body: str = "",
     base: str = "main",
+    repo_url: str | None = None,
+    headers: dict | None = None,
+    head: str | None = None,
 ) -> tuple[int, str] | tuple[None, str]:
-    """Opens a PR in the open-data repo from branch_name into base.
-    Returns (pr_number, pr_url) on success, or (None, error_message) on failure."""
+    """Opens a PR in the target repo from branch_name into base.
+    Returns (pr_number, pr_url) on success, or (None, error_message) on failure.
+    head overrides the PR head ref — use "fork_org:branch_name" for cross-repo PRs."""
     _, _, _, open_data_repo_url = _get_github_config()
-    default_headers = await get_default_headers()
+    target_repo = repo_url or open_data_repo_url
+    auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.post(
-            f"{open_data_repo_url}/pulls",
-            headers=default_headers,
-            json={"title": title, "body": body, "head": branch_name, "base": base},
+            f"{target_repo}/pulls",
+            headers=auth_headers,
+            json={
+                "title": title,
+                "body": body,
+                "head": head or branch_name,
+                "base": base,
+                # cross-repo PRs: suppress fork_collab check — we don't need maintainers pushing to the fork
+                **( {"maintainer_can_modify": False} if head and ":" in head else {} ),
+            },
         )
         if response.status_code != 201:
-            message = response.json().get("message", "Unknown error")
-            logger.error(f"Failed to create PR from {branch_name!r} ({response.status_code}): {message}")
+            resp_body = response.json()
+            message = resp_body.get("message", "Unknown error")
+            errors = resp_body.get("errors", [])
+            logger.error(f"Failed to create PR from {branch_name!r} ({response.status_code}): {message} errors={errors}")
             return None, message
         data = response.json()
     logger.info(f"Created PR #{data['number']} from {branch_name!r}: {data['html_url']}")

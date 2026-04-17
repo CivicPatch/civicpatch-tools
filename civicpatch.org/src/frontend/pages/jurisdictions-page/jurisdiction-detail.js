@@ -4,6 +4,9 @@ import { component, useState } from 'haunted';
 function JurisdictionDetail({ data, onSave }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [prResult, setPrResult] = useState(null);
 
   const toggleEditMode = () => setIsEditMode(!isEditMode);
 
@@ -25,9 +28,19 @@ function JurisdictionDetail({ data, onSave }) {
     setFormData({ ...formData, [field]: formData[field].filter((_, i) => i !== index) });
   };
 
-  const handleSave = () => {
-    if (onSave) onSave(formData);
-    setIsEditMode(false);
+  const handleSave = async () => {
+    if (!onSave) return;
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const result = await onSave(formData);
+      setPrResult(result);
+      setIsEditMode(false);
+    } catch (e) {
+      setSaveError(e.message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return html`
@@ -256,9 +269,13 @@ function JurisdictionDetail({ data, onSave }) {
             <button type="button" class="jd-btn-add" @click=${() => handleArrayAdd('metadata', '')}>+ Add URL</button>
           </div>
 
-          <button type="submit">Save Changes</button>
+          <button type="submit" ?disabled=${isSaving}>${isSaving ? 'Opening PR…' : 'Save Changes'}</button>
+          ${saveError ? html`<p style="color:red">${saveError}</p>` : null}
         </form>
       ` : html`
+        ${prResult ? html`
+          <p>PR opened: <a href="${prResult.pull_request_url}" target="_blank">#${prResult.pull_request_number}</a></p>
+        ` : null}
         <div class="jd-section">
           <h4 class="jd-section-title">Core Fields</h4>
           <dl class="details-dl">
