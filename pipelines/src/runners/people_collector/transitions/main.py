@@ -37,10 +37,13 @@ from runners.people_collector.utils.links import (
     get_links_with_status,
     add_links,
 )
+import httpx
+
 from shared.schemas import JobConfig
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
-async def start_job(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+
+async def start_job(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     await prepare_pipeline(context)
 
     next_context = context.copy(update={
@@ -50,8 +53,8 @@ async def start_job(job_config: JobConfig, logger: PipelineRunLogger, context: P
     })
     return next_context, PipelineStatus.RESEARCH_MUNICIPALITY
 
-async def research_municipality_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = await research_municipality(context)
+async def research_municipality_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    result = await research_municipality(context, api_client)
     next_state = PipelineStatus.SEARCH_LINKS
 
     new_data = context.data.copy(update={
@@ -82,7 +85,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Pipeli
     
     return next_context, next_state
 
-async def search_links_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def search_links_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     search_links_step = context.data.search_links_step
     search_link_pointer = search_links_step.search_link_pointer
     next_state = PipelineStatus.SCRAPE_PAGE
@@ -111,7 +114,7 @@ async def search_links_transition(_: JobConfig, logger: PipelineRunLogger, conte
     
     return next_context, next_state
 
-async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_scrape = get_next_link_with_status(context.data.links, LinkStatus.PENDING)
     next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
 
@@ -138,7 +141,7 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
     
     return next_context, next_state
 
-async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_preprocess = get_next_link_with_status(context.data.links, LinkStatus.SCRAPED)
     next_state = PipelineStatus.PROCESS_PAGE_CONTENT
 
@@ -167,7 +170,7 @@ async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLo
     
     return next_context, next_state
 
-async def process_page_content_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def process_page_content_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
     if len(preprocessed_links) == 0:
         error_links = get_links_with_status(context.data.links, [LinkStatus.ERROR])
@@ -215,7 +218,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Pipelin
         logger.warning(stop_warning)
     return next_context, next_state
 
-async def merge_records_within_llm_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def merge_records_within_llm_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_within_llm(context)
     progress = calculate_progress_percentage(context.data, 6)
     next_context = context.copy(update={
@@ -226,7 +229,7 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: PipelineRunL
     })
     return next_context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
-async def merge_records_across_llms_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def merge_records_across_llms_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_across_llms(context)
 
     progress = calculate_progress_percentage(context.data, 7)
@@ -240,8 +243,8 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: PipelineRun
     next_state = PipelineStatus.FORMAT_OUTPUT
     return next_context, next_state
 
-async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = await format_output(context)
+async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    result = await format_output(context, api_client)
     progress = calculate_progress_percentage(context.data, 8)
     next_context = context.copy(update={
         "progress": progress,
@@ -294,10 +297,10 @@ async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, contex
     next_state = PipelineStatus.SEND_SUCCESS
     return next_context, next_state
 
-async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
+async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
 
-    result = await send_success(context)
+    result = await send_success(context, api_client)
 
     progress = calculate_progress_percentage(context.data, 12)
     next_context = context.copy(update={
@@ -307,8 +310,8 @@ async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, conte
 
     return next_context, PipelineStatus.SUCCESS
 
-async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = await send_error(context)
+async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    result = await send_error(context, api_client)
 
     next_context = context.copy(update={
         "data": context.data.copy(update={"send_error_step": result})

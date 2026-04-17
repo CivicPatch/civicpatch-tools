@@ -3,9 +3,11 @@ import logging
 from contextlib import asynccontextmanager
 from typing import Optional
 
+import httpx
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from pipelines_environment import get_env_vars
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
 import services.civicpatch_api as civicpatch_api
@@ -41,8 +43,11 @@ class PipelineRunStatusResponse(BaseModel):
 
 
 async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], source_urls: Optional[list[str]]) -> None:
+    env = get_env_vars()
+    headers = {"Authorization": env["SERVICE_API_KEY"]}
     try:
-        config_data = await civicpatch_api.fetch_pipeline_run_config(logger, request_id)
+        async with httpx.AsyncClient(headers=headers) as client:
+            config_data = await civicpatch_api.fetch_pipeline_run_config(client, logger, request_id)
         config = PipelineRunConfig(
             url=url or config_data["url"],
             name=config_data.get("name"),
@@ -51,7 +56,8 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
         await start_threaded(request_id, jurisdiction_ocdid, config)
     except Exception:
         logger.exception("job %s failed", request_id)
-        await update_pipeline_run_status(logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
+        async with httpx.AsyncClient(headers=headers) as client:
+            await update_pipeline_run_status(client, logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
 
 
 @app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)

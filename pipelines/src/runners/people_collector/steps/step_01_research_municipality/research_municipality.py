@@ -1,4 +1,7 @@
 from typing import List
+
+import httpx
+
 from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
@@ -18,11 +21,11 @@ from utils.request_utils import with_retry
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 MAX_RETRIES = 5 # flakyLLM call
 
-async def research_municipality(context: PeopleCollectorContext) -> ResearchMunicipalityStep:
+async def research_municipality(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> ResearchMunicipalityStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
 
-    existing = await civicpatch_api.get_current_people(context.data.jurisdiction_ocdid)
+    existing = await civicpatch_api.get_current_people(api_client, context.data.jurisdiction_ocdid)
 
     if existing:
         logger.info(f"research_municipality: using {len(existing)} existing DB people, skipping Gemini.")

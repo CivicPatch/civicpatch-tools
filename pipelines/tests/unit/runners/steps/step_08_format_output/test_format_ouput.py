@@ -1,5 +1,6 @@
 import json
 import logging
+import httpx
 import pytest
 from runners.people_collector.steps.step_08_format_output.format_output import (
     format_output,
@@ -44,7 +45,8 @@ async def test_format_output(httpx_mock):
         PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(people=people),
     })
 
-    output = await format_output(context)
+    async with httpx.AsyncClient() as api_client:
+        output = await format_output(context, api_client)
 
     assert isinstance(output, FormatOutputStep)
     assert len(output.officials) == 2

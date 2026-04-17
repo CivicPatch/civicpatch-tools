@@ -8,6 +8,7 @@ from shared.utils.config_utils import load_job_config
 from utils import log_utils
 import time
 from datetime import datetime, timezone
+import httpx
 import services.civicpatch_api as civicpatch_api
 import psutil
 
@@ -34,6 +35,7 @@ async def run_pipeline(
     context: TContext,
     logger: log_utils.PipelineRunLogger,
     transition_map: Dict[PipelineStatus, Callable[..., Any]],
+    api_client: httpx.AsyncClient,
     persist_fn: Optional[Callable] = None,
 ) -> TContext:
     ctx = context
@@ -50,14 +52,14 @@ async def run_pipeline(
             log_system_usage()
             try:
                 await civicpatch_api.update_pipeline_run_status(
-                    logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+                    api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                     status=ctx.current_state.value, progress=ctx.progress
                 )
             except Exception as e:
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
 
             transition_fn = transition_map[ctx.current_state]
-            ctx, next_state = await transition_fn(job_config, logger, ctx)
+            ctx, next_state = await transition_fn(job_config, logger, ctx, api_client)
             ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
 
             if persist_fn:
@@ -67,7 +69,7 @@ async def run_pipeline(
         final_progress = 100 if ctx.current_state == PipelineStatus.SUCCESS else ctx.progress
         try:
             await civicpatch_api.update_pipeline_run_status(
-                logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
+                api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                 status=ctx.current_state.value, progress=final_progress
             )
         except Exception as e:

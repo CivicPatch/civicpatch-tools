@@ -5,6 +5,7 @@ uv = "latest"
 postgres = "17.3"
 redis = "latest"
 node = "25.8"
+gh = "latest"
 
 [env]
 _.file = [
