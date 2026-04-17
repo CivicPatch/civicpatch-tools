@@ -10,3 +10,9 @@ repos:
         language: system
         entry: scripts/run_tests.sh
         pass_filenames: false
+      - id: run-integration-tests
+        name: Run integration tests
+        language: system
+        entry: scripts/run_integration_tests.sh
+        pass_filenames: false
+        stages: [pre-push]
