@@ -7,7 +7,8 @@ function JurisdictionSidebar({
   jurisdictionData,
   onScrapeClick,
   canStartScrape,
-  isJobRunning
+  isJobRunning,
+  onSave,
 }) {
   if (!jurisdictionData) {
     return html`<p>Loading jurisdiction data...</p>`;
@@ -15,7 +16,7 @@ function JurisdictionSidebar({
 
   return html`
     <div>
-      <civ-jurisdiction-detail .data=${jurisdictionData.data}></civ-jurisdiction-detail>
+      <civ-jurisdiction-detail .data=${jurisdictionData.data} .onSave=${onSave}></civ-jurisdiction-detail>
 
       ${canStartScrape ? html`
         <button

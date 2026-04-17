@@ -27,7 +27,7 @@ src/
     export.py                ← requests/people export
     people_collector.py      ← artifact processing pipeline
     candidate.py             ← scrape candidate selection
-    review_issue_resolution.py ← resolve review issues via GitHub PRs
+    pipeline_issue_resolution.py ← resolve pipeline issues via GitHub PRs
   database/         ← pure SQL queries (one file per domain)
   schemas/          ← Pydantic request/response models
     common.py       ← shared enums + models (Identity, Role, PullRequest, …)

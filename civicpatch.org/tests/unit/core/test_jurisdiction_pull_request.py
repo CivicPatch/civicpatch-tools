@@ -1,0 +1,234 @@
+import base64
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
+import yaml
+
+from core.jurisdiction_pull_request import _extract_state, open_jurisdiction_edit_pr
+from lib.github.pr import PrAuthor
+
+JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
+AUTHOR = PrAuthor(name="Test User", email="test@example.com")
+REPO_URL = "https://api.github.com/repos/openstates/jurisdictions"
+FORK_REPO_URL = "https://api.github.com/repos/CivicPatch/jurisdictions"
+MOCK_ENV = {"JURISDICTIONS_REPO_URL": REPO_URL, "JURISDICTIONS_FORK_REPO_URL": FORK_REPO_URL}
+
+YAML_ENTRIES = [
+    {
+        "id": JURISDICTION_OCDID,
+        "name": "Austin",
+        "url": "https://old.example.com",
+        "population": 900000,
+        "geoid": "4805000",
+    }
+]
+YAML_CONTENT = base64.b64encode(
+    yaml.dump(YAML_ENTRIES, sort_keys=False, allow_unicode=True).encode()
+).decode()
+
+
+# ── _extract_state ────────────────────────────────────────────────────────────
+
+@pytest.mark.unit
+def test_extract_state_parses_correctly():
+    assert _extract_state("ocd-jurisdiction/country:us/state:tx/place:austin/government") == "tx"
+
+
+@pytest.mark.unit
+def test_extract_state_different_state():
+    assert _extract_state("ocd-jurisdiction/country:us/state:wa/place:seattle/government") == "wa"
+
+
+@pytest.mark.unit
+def test_extract_state_raises_on_missing():
+    with pytest.raises(ValueError, match="Cannot extract state"):
+        _extract_state("ocd-jurisdiction/country:us/place:austin/government")
+
+
+# ── open_jurisdiction_edit_pr ─────────────────────────────────────────────────
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_open_jurisdiction_edit_pr_success():
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"content": YAML_CONTENT}
+
+    with (
+        patch(
+            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer sync-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.get_default_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer fork-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.environment.get_env_vars",
+            return_value=MOCK_ENV,
+        ),
+        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch(
+            "core.jurisdiction_pull_request.open_attributed_pr",
+            new_callable=AsyncMock,
+            return_value=(42, "https://github.com/openstates/jurisdictions/pull/42"),
+        ) as mock_open_pr,
+    ):
+        mock_client = AsyncMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock(return_value=False)
+        mock_client.get = AsyncMock(return_value=mock_response)
+        mock_client_cls.return_value = mock_client
+
+        pr_number, pr_url = await open_jurisdiction_edit_pr(
+            jurisdiction_ocdid=JURISDICTION_OCDID,
+            fields={"url": "https://new.example.com", "population": None, "geoid": None},
+            author=AUTHOR,
+        )
+
+    assert pr_number == 42
+    assert "pull/42" in pr_url
+
+    call_kwargs = mock_open_pr.call_args.kwargs
+    assert call_kwargs["file_path"] == "data/tx/local/jurisdictions.yml"
+    assert call_kwargs["repo_url"] == REPO_URL
+    assert call_kwargs["fork_repo_url"] == FORK_REPO_URL
+    patched_entries = yaml.safe_load(call_kwargs["content"])
+    assert patched_entries[0]["url"] == "https://new.example.com"
+    # Fields not provided stay unchanged
+    assert patched_entries[0]["population"] == 900000
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_open_jurisdiction_edit_pr_jurisdiction_not_found():
+    entries = [{"id": "different-jurisdiction", "url": "https://example.com"}]
+    content = base64.b64encode(
+        yaml.dump(entries, sort_keys=False, allow_unicode=True).encode()
+    ).decode()
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"content": content}
+
+    with (
+        patch(
+            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer sync-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.get_default_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer fork-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.environment.get_env_vars",
+            return_value=MOCK_ENV,
+        ),
+        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+    ):
+        mock_client = AsyncMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock(return_value=False)
+        mock_client.get = AsyncMock(return_value=mock_response)
+        mock_client_cls.return_value = mock_client
+
+        pr_number, error = await open_jurisdiction_edit_pr(
+            jurisdiction_ocdid=JURISDICTION_OCDID,
+            fields={"url": "https://new.example.com"},
+            author=AUTHOR,
+        )
+
+    assert pr_number is None
+    assert JURISDICTION_OCDID in error
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_open_jurisdiction_edit_pr_file_not_found_creates_new():
+    mock_response = MagicMock()
+    mock_response.status_code = 404
+    mock_response.json.return_value = {"message": "Not Found"}
+
+    with (
+        patch(
+            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer sync-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.get_default_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer fork-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.environment.get_env_vars",
+            return_value=MOCK_ENV,
+        ),
+        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch(
+            "core.jurisdiction_pull_request.open_attributed_pr",
+            new_callable=AsyncMock,
+            return_value=(99, "https://github.com/openstates/jurisdictions/pull/99"),
+        ) as mock_open_pr,
+    ):
+        mock_client = AsyncMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock(return_value=False)
+        mock_client.get = AsyncMock(return_value=mock_response)
+        mock_client_cls.return_value = mock_client
+
+        pr_number, pr_url = await open_jurisdiction_edit_pr(
+            jurisdiction_ocdid=JURISDICTION_OCDID,
+            fields={"url": "https://new.example.com"},
+            author=AUTHOR,
+        )
+
+    assert pr_number == 99
+    call_kwargs = mock_open_pr.call_args.kwargs
+    entries = yaml.safe_load(call_kwargs["content"])
+    assert len(entries) == 1
+    assert entries[0]["id"] == JURISDICTION_OCDID
+    assert entries[0]["url"] == "https://new.example.com"
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_open_jurisdiction_edit_pr_fetch_fails():
+    mock_response = MagicMock()
+    mock_response.status_code = 500
+    mock_response.json.return_value = {"message": "Internal Server Error"}
+
+    with (
+        patch(
+            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer sync-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.get_default_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer fork-token"},
+        ),
+        patch(
+            "core.jurisdiction_pull_request.environment.get_env_vars",
+            return_value=MOCK_ENV,
+        ),
+        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+    ):
+        mock_client = AsyncMock()
+        mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+        mock_client.__aexit__ = AsyncMock(return_value=False)
+        mock_client.get = AsyncMock(return_value=mock_response)
+        mock_client_cls.return_value = mock_client
+
+        pr_number, error = await open_jurisdiction_edit_pr(
+            jurisdiction_ocdid=JURISDICTION_OCDID,
+            fields={"url": "https://new.example.com"},
+            author=AUTHOR,
+        )
+
+    assert pr_number is None
+    assert "Internal Server Error" in error

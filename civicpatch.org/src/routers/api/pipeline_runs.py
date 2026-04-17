@@ -50,7 +50,7 @@ from database.requests import (
     get_issue_request_details,
 )
 from core import people_collector
-import core.review_issue_resolution as review_issue_resolution_service
+import core.pipeline_issue_resolution as review_issue_resolution_service
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.pipeline_runs import (
     CreatePipelineRunRequest,

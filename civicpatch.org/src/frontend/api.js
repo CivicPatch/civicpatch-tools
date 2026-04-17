@@ -245,6 +245,28 @@ export const patchPeopleData = async (jurisdictionOcdid, data) => {
   return res.json();
 };
 
+export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/data`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({
+      jurisdiction_ocdid: jurisdictionOcdid,
+      url: data.url ?? null,
+      geoid: data.geoid ?? null,
+      population: data.population ? Number(data.population) : null,
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || `HTTP ${res.status}`);
+  }
+  return res.json();
+};
+
 export const fetchPeople = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/v1/people?${params}`, { credentials: "include" });

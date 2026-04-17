@@ -13,7 +13,7 @@ import "./jurisdiction-sidebar.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerPipelineRun, fetchJurisdictionHistory } from '../../api.js';
+import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } from '../../api.js';
 import { TERMINAL_JOB_STATUSES } from '../../components/job-status.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
@@ -73,6 +73,11 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
     setHistory(prev => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
   };
 
+  const handleJurisdictionSave = async (formData) => {
+    const result = await patchJurisdictionData(jurisdiction_ocdid, formData);
+    return result.data;
+  };
+
   const handleCancelJob = (requestId) => {
     setHistory(prev => ({
       ...prev,
@@ -125,6 +130,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .onScrapeClick=${() => setScrapeModalOpen(true)}
             .canStartScrape=${canStartScrape}
             .isJobRunning=${isJobRunning || isTriggering}
+            .onSave=${handleJurisdictionSave}
           ></civ-jurisdiction-sidebar>
 
           ${jurisdictionData ? html`
