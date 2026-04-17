@@ -562,6 +562,7 @@ async def create_pull_request(
     repo_url: str | None = None,
     headers: dict | None = None,
     head: str | None = None,
+    labels: list[str] | None = None,
 ) -> tuple[int, str] | tuple[None, str]:
     """Opens a PR in the target repo from branch_name into base.
     Returns (pr_number, pr_url) on success, or (None, error_message) on failure.
@@ -589,5 +590,28 @@ async def create_pull_request(
             logger.error(f"Failed to create PR from {branch_name!r} ({response.status_code}): {message} errors={errors}")
             return None, message
         data = response.json()
-    logger.info(f"Created PR #{data['number']} from {branch_name!r}: {data['html_url']}")
-    return data["number"], data["html_url"]
+    pr_number = data["number"]
+    logger.info(f"Created PR #{pr_number} from {branch_name!r}: {data['html_url']}")
+    if labels:
+        await add_pr_labels(pr_number, labels, repo_url=target_repo, headers=auth_headers)
+    return pr_number, data["html_url"]
+
+
+async def add_pr_labels(pr_number: int, labels: list[str], repo_url: str, headers: dict) -> None:
+    """Upserts labels on the repo then applies them to the PR. Best-effort — logs and returns on failure."""
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        for label in labels:
+            response = await client.post(
+                f"{repo_url}/labels",
+                headers=headers,
+                json={"name": label, "color": "0075ca"},
+            )
+            if response.status_code not in (201, 422):
+                logger.warning(f"Unexpected status creating label {label!r}: {response.status_code}")
+        response = await client.post(
+            f"{repo_url}/issues/{pr_number}/labels",
+            headers=headers,
+            json={"labels": labels},
+        )
+        if response.status_code != 200:
+            logger.warning(f"Failed to apply labels {labels} to PR #{pr_number}: {response.status_code}")

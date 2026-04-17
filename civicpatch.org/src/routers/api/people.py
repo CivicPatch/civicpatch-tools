@@ -9,7 +9,10 @@ from schemas.common import Identity, Role, RouteCategory
 
 import database.people as database
 import database.jurisdictions as jurisdictions_db
+import yaml
 import lib.github.api as github_service
+import lib.github.pull_requests as github_pr_service
+from lib.github.pull_requests import PrAuthor
 import shared.utils.id_utils
 from shared.utils.person_id_utils import resolve_people_ids
 import shared.utils.name_utils
@@ -142,23 +145,20 @@ def get_router() -> APIRouter:
         request_id = shared.utils.id_utils.make_request_id()
         branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request_id)
 
-        branch_error = await github_service.create_branch(branch_name)
-        if branch_error:
-            return JSONResponse({"error": f"Failed to create branch: {branch_error}"}, status_code=500)
-
-        committed = await github_service.update_pull_request_file(
+        content = yaml.dump(request.data, sort_keys=False, allow_unicode=True)
+        author = PrAuthor(
+            name=user.display_name or user.email or user.provider_user_id,
+            email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
+            teams=user.teams or [],
+        )
+        pr_number, pr_url = await github_pr_service.open_attributed_pr(
             branch_name=branch_name,
             file_path=file_path,
-            new_data=request.data,
-            commit_message=f"Manual edit by {user.email}",
-        )
-        if not committed:
-            return JSONResponse({"error": "Failed to commit file update"}, status_code=500)
-
-        pr_number, pr_url = await github_service.create_pull_request(
-            branch_name=branch_name,
-            title=f"Manual edit: {folder_path}",
-            body=f"Manual data edit for `{file_path}`.\n\nEdited by {user.email}.",
+            content=content,
+            commit_message=f"Manual edit: {folder_path}",
+            pull_request_title=f"Manual edit: {folder_path}",
+            pull_request_body=f"Manual data edit for `{file_path}`.",
+            author=author,
         )
         if pr_number is None:
             return JSONResponse({"error": f"Failed to open PR: {pr_url}"}, status_code=500)

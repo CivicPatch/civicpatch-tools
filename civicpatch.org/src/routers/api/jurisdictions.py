@@ -9,7 +9,7 @@ import core.jurisdiction_scrape_candidate as candidate_service
 import database.jurisdictions as database
 import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access
-from lib.github.pr import PrAuthor
+from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
 from schemas.jurisdictions import JurisdictionsByOcdidsRequest
 
@@ -111,7 +111,7 @@ def get_router() -> APIRouter:
         pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_edit_pr(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             fields={"url": request.url, "population": request.population, "geoid": request.geoid},
-            author=PrAuthor(name=user.display_name or user.email, email=user.email),
+            author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=user.teams or []),
         )
         if pull_request_number is None:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
