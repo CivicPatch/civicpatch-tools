@@ -31,10 +31,6 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply
       District, Fire District, Library Board) — even if they contain a structured roster of named members.
       These are separate legal entities, not the primary governing body of the municipality.
-    - Pages about the City Manager's or City Administrator's office. The City Manager is an appointed
-      administrator who serves at the discretion of the governing body — they are NOT a member of the
-      primary governing body (Mayor, Council, etc.) and their page must be marked is_relevant: false.
-
     **Steps for selecting relevant_urls:**
     `relevant_urls` feeds a web crawler whose goal is to eventually reach a page listing the primary
     governing officials. Think of each URL as a breadcrumb: keep it if it could plausibly be one or
