@@ -3,8 +3,8 @@ people:
   roles:
   - Mayor
   designations: []
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -13,8 +13,8 @@ people:
   roles:
   - Mayor Pro Tem
   designations: []
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -22,10 +22,9 @@ people:
 - name: Bobby Hanson
   roles:
   - Council Member
-  designations:
-  - At Large
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  designations: []
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -33,10 +32,9 @@ people:
 - name: Darrell Grintz
   roles:
   - Council Member
-  designations:
-  - At Large
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  designations: []
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -44,10 +42,9 @@ people:
 - name: Billy Wayne Martin
   roles:
   - Council Member
-  designations:
-  - At Large
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  designations: []
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -55,10 +52,9 @@ people:
 - name: Charles Wrenn
   roles:
   - Council Member
-  designations:
-  - At Large
-  phone: 903-587-3334
-  email: cityadmin@cityofleonard.net
+  designations: []
+  phone: null
+  email: null
   url: null
   start_date: null
   end_date: null

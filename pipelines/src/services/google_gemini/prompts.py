@@ -96,14 +96,18 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
 
     jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     state = jurisdiction_ocdid_parts.state
+    county = jurisdiction_ocdid_parts.county
     designations = config_utils.get_designation_names()
     designations_str = ', '.join(designations)
 
+    location_parts = [municipality_name, f"{county} County" if county else None, state]
+    location_str = ", ".join(p for p in location_parts if p)
+
     return f"""
-    Provide the current elected officials for the specified city, including the Mayor (if applicable) 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable)
     and other elected members of the local government. Format the response as a JSON object.
 
-    Municipality: {municipality_name}, {state}
+    Municipality: {location_str}
 
     Instructions:
 
@@ -134,7 +138,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
     """
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(_people_hint: List[ResearchedPerson], _state: str = "", _county: str | None = None):
     """
     Generate a prompt for extracting municipality officials (Gemini Flash optimized).
     """

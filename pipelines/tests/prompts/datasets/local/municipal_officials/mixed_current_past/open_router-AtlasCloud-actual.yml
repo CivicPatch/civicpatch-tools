@@ -22,7 +22,8 @@ people:
 - name: Bobby Hanson
   roles:
   - Council Member
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: null
@@ -32,7 +33,8 @@ people:
 - name: Darrell Grintz
   roles:
   - Council Member
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: null
@@ -42,7 +44,8 @@ people:
 - name: Billy Wayne Martin
   roles:
   - Council Member
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: null
@@ -52,7 +55,8 @@ people:
 - name: Charles Wrenn
   roles:
   - Council Member
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: null
