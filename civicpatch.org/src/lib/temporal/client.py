@@ -71,4 +71,9 @@ async def signal_human_approval(jurisdiction_ocdid: str) -> None:
 async def cancel_workflow(jurisdiction_ocdid: str) -> None:
     client = await _get_client()
     handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
-    await handle.cancel()
+    try:
+        await handle.cancel()
+    except RPCError as e:
+        if e.status == RPCStatusCode.NOT_FOUND:
+            return
+        raise
