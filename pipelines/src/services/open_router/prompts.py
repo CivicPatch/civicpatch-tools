@@ -94,7 +94,7 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     return prompt
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(roles_hint: List[str]):
+def municipality_officials_prompt(roles_hint: List[str], state: str = "", county: str | None = None):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
     """
@@ -106,11 +106,15 @@ def municipality_officials_prompt(roles_hint: List[str]):
     if roles_hint:
         roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(roles_hint) + "."
 
+    jurisdiction_parts = [f"{county} County" if county else None, state]
+    jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)
+    jurisdiction_line = f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
+
     return f"""
     You are a data extraction assistant. Extract information about the currently
     serving elected officials of the target municipality from the provided content.
 
-    Current Date: {current_date}
+    Current Date: {current_date}{jurisdiction_line}
 
     STEP 1 - FIND OFFICIALS
     Only extract officials from:

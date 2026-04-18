@@ -22,6 +22,7 @@ from shared.utils import (
     email_utils,
     url_utils,
     name_utils,
+    id_utils,
 )
 from utils import (
     merge_utils,
@@ -285,7 +286,8 @@ async def process_with_llm(
     if llm.get("with_batch_api", False):
         raise NotImplementedError(f"Batch API not yet implemented for LLM: {llm['name']}")
 
-    prompt = llm["prompt"].municipality_officials_prompt(roles_hint)
+    ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    prompt = llm["prompt"].municipality_officials_prompt(roles_hint, state=ocdid_parts.state, county=ocdid_parts.county)
     response = await llm["service"].run_prompt(
         request_id,
         jurisdiction_ocdid,
