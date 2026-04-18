@@ -2,12 +2,12 @@ from urllib.parse import urlparse, urlunparse
 
 def format_url(url: str):
     """
-    Formats a URL into a canonical form for storage and comparison:
-    - Lowercases scheme, host, and path
-    - Strips www. prefix from host
-    - Strips trailing slash
+    Formats a URL into a canonical form for storage:
+    - Lowercases scheme and host
+    - Prepends https:// if no scheme present
+    - Preserves trailing slash as-is
     """
-    url = url.strip().rstrip("/")
+    url = url.strip()
     if not url.startswith("http"):
         url = "https://" + url
 
@@ -20,7 +20,7 @@ def format_url(url: str):
 
 # For the purposes of comparing
 def normalize_url(url: str):
-    parsed = urlparse(format_url(url))
+    parsed = urlparse(format_url(url).rstrip("/"))
     return urlunparse(parsed._replace(netloc=parsed.netloc.removeprefix("www."))).lower()
 
 

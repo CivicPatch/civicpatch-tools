@@ -80,6 +80,22 @@ def _whitelist_match(url: str) -> Optional[str]:
     return None
 
 
+def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
+    """Returns (display_text, url) pairs for all markdown links with http(s) URLs."""
+    return re.findall(r'\[([^\]]*)\]\((https?://[^)]+)\)', content)
+
+
+def _heuristic_backfill_comment(text: str, url: str, terms: List[str]) -> Optional[str]:
+    """Returns a comment if this link matches any heuristic signal, else None."""
+    parts = []
+    kw = _whitelist_match(url) or _whitelist_match(text)
+    if kw:
+        parts.append(f"keyword:{kw}")
+    if _url_contains_any_token(url, terms) or _url_contains_any_token(text, terms):
+        parts.append("designation")
+    return ("heuristic backfill: " + ", ".join(parts)) if parts else None
+
+
 _relevance_llm = open_router_llm
 _relevance_prompt = open_router_prompt
 
@@ -201,12 +217,23 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
     response = RelevantPageResponseSchema.model_validate(raw_response)
 
     updated_links = copy.deepcopy(context.data.links)
+    existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
+    names, designations = _extract_names_and_designations(existing_records)
+    roles_hint = context.data.research_municipality_step.roles_hint if context.data.research_municipality_step else []
+    relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     if response.relevant_urls:
-        existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
-        names, designations = _extract_names_and_designations(existing_records)
-        roles_hint = context.data.research_municipality_step.roles_hint if context.data.research_municipality_step else []
-        relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
         updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint, relevance_logger)
+    else:
+        combined_terms = designations + roles_hint
+        url_comments = {
+            url: comment
+            for text, url in _extract_links_from_markdown(content)
+            if not _blacklist_match(url)
+            and (comment := _heuristic_backfill_comment(text, url, combined_terms)) is not None
+        }
+        if url_comments:
+            relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(url_comments)} heuristic URL(s)")
+            updated_links = add_relevant_urls(list(url_comments.keys()), updated_links, page_to_process.url, names, combined_terms, relevance_logger, url_comments=url_comments)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -603,7 +630,7 @@ def _sort_pending(links: List[Link], names: List[str], designations: List[str]) 
     return pending + non_pending
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None) -> List[Link]:
+def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None, url_comments: Optional[Dict[str, str]] = None) -> List[Link]:
     """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
     names = names or []
     designations = designations or []
@@ -623,12 +650,16 @@ def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, 
                 logger.info(f"Dropping blacklisted URL ({blacklist_comment}): {formatted_link_url}")
             continue
         whitelist_comment = _whitelist_match(formatted_link_url)
+        if url_comments is not None:
+            comment = url_comments.get(formatted_link_url) or url_comments.get(link_url, "heuristic backfill")
+        else:
+            comment = f"whitelisted: {whitelist_comment}" if whitelist_comment else None
         updated_links.append(Link(
             url=formatted_link_url,
             status=LinkStatus.PENDING.value,
             folder_name="",
             num_references=1,
-            comment=f"whitelisted: {whitelist_comment}" if whitelist_comment else None,
+            comment=comment,
         ))
     return _sort_pending(updated_links, names, designations)
 

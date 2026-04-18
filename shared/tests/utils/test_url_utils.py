@@ -16,8 +16,8 @@ def test_format_url_lowercases_host():
 def test_format_url_preserves_path_case():
     assert url_utils.format_url("https://example.com/CityCouncil") == "https://example.com/CityCouncil"
 
-def test_format_url_strips_trailing_slash():
-    assert url_utils.format_url("https://example.com/path/") == "https://example.com/path"
+def test_format_url_preserves_trailing_slash():
+    assert url_utils.format_url("https://example.com/path/") == "https://example.com/path/"
 
 def test_format_url_preserves_www():
     assert url_utils.format_url("https://www.example.com/path") == "https://www.example.com/path"
@@ -27,6 +27,9 @@ def test_format_url_preserves_www():
 
 def test_normalize_url_strips_www():
     assert url_utils.normalize_url("https://www.example.com") == url_utils.normalize_url("https://example.com")
+
+def test_normalize_url_strips_trailing_slash():
+    assert url_utils.normalize_url("https://example.com/path/") == url_utils.normalize_url("https://example.com/path")
 
 def test_normalize_url_lowercases_path():
     assert url_utils.normalize_url("https://example.com/CityCouncil") == url_utils.normalize_url("https://example.com/citycouncil")
@@ -42,3 +45,6 @@ def test_same_url_path_case_insensitive():
 
 def test_same_url_different_paths():
     assert not url_utils.same_url("https://example.com/council", "https://example.com/mayor")
+
+def test_same_url_trailing_slash_vs_none():
+    assert url_utils.same_url("https://example.com/path/", "https://example.com/path")

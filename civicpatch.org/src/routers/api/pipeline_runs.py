@@ -98,6 +98,23 @@ async def update_pipeline_run_and_publish(request_id: str, status: str, progress
         )
 
 
+async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None:
+    try:
+        await register_request_with_pipeline_run_if_not_exists(
+            request_id=request.request_id,
+            job_type="people",
+            arguments_json={
+                "jurisdiction_ocdid": request.jurisdiction_ocdid,
+                "name": request.name,
+                "url": request.url,
+                "source_urls": None,
+            },
+            jurisdiction_ocdid=request.jurisdiction_ocdid,
+        )
+    except Exception:
+        logger.exception(f"[{request.request_id}] Failed to register pipeline run in background")
+
+
 def get_router(api_key_header):
     router = APIRouter()
 
@@ -195,26 +212,10 @@ def get_router(api_key_header):
     @router.post("/register", include_in_schema=False)
     async def register_pipeline_run_endpoint(
         request: RegisterPipelineRunRequest,
+        background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        try:
-            await register_request_with_pipeline_run_if_not_exists(
-                request_id=request.request_id,
-                job_type="people",
-                arguments_json={
-                    "jurisdiction_ocdid": request.jurisdiction_ocdid,
-                    "name": request.name,
-                    "url": request.url,
-                    "source_urls": None,
-                },
-                jurisdiction_ocdid=request.jurisdiction_ocdid,
-            )
-        except Exception as e:
-            logger.exception(f"[{request.request_id}] Failed to register pipeline run: {e}")
-            return JSONResponse(
-                content=ErrorResponse(error="Failed to register pipeline run").model_dump(),
-                status_code=500,
-            )
+        background_tasks.add_task(_register_pipeline_run_bg, request)
         return {"data": {"request_id": request.request_id}}
 
     @router.post("/{request_id}/run", include_in_schema=False)
