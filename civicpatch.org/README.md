@@ -38,7 +38,7 @@ tests/
 
 | Service | Purpose | Default (dev) |
 |---------|---------|---------------|
-| PostgreSQL (PostGIS) | Primary data store | `localhost:6000` |
+| PostgreSQL (PostGIS) | Primary data store | `localhost:8003` |
 | Redis | Session/cache store | `localhost:6379` |
 | GitHub App | OAuth + API access + webhooks | Contact maintainer for keys |
 
@@ -89,8 +89,8 @@ Once the env file is in place:
 # Start the API + database + Redis
 docker compose up
 
-# API is available at http://localhost:8001
-# Database is available at localhost:6000 (PostGIS)
+# API is available at http://localhost:8000
+# Database is available at localhost:8003 (PostGIS)
 ```
 
 ## Migrations

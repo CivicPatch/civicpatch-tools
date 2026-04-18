@@ -83,10 +83,10 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 
 ## Database (dev)
 
-The dev database is exposed on `127.0.0.1:6000`. Connect with:
+The dev database is exposed on `127.0.0.1:8003`. Connect with:
 
 ```sh
-psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db
+psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db
 # or via mise:
 mise run psql
 ```

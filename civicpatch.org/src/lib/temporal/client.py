@@ -4,6 +4,7 @@ from typing import Optional
 
 from temporalio.client import Client
 from temporalio.common import WorkflowIDConflictPolicy
+from temporalio.service import RPCError, RPCStatusCode
 
 _client: Client | None = None
 

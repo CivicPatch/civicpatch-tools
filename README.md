@@ -49,8 +49,8 @@ This repository contains supporting infrastructure for the CivicPatch initiative
              │ calls                         ▼
              ▼                   ┌───────────────────────┐
   ┌──────────────────────┐       │  civicpatch.org API   │◄── GitHub webhooks
-  │  pipelines           │       │  :8001 (local)        │◄── browser / frontend
-  │  :8000 (local)       │       │                       │
+  │  pipelines           │       │  :8000 (local)        │◄── browser / frontend
+  │  :8001 (local)       │       │                       │
   │                      │       │  · job registration   │
   │  · scrapes municipal │       │  · PR review UI       │
   │    websites          │       │  · data API           │
@@ -59,7 +59,7 @@ This repository contains supporting infrastructure for the CivicPatch initiative
   └──────────┬───────────┘                  ▼
              │ submits ZIP       ┌───────────────────────┐
              └──────────────────►│  PostgreSQL DB        │
-                                 │  :6000 (local)        │
+                                 │  :8003 (local)        │
                                  └───────────────────────┘
                                               │
   ┌───────────────────────────────────────────┘
@@ -138,12 +138,12 @@ join our weekly sync and biweekly hackathon meetings.
 | Port | Service |
 |------|---------|
 | 5173 | Frontend (Vite dev) |
-| 6000 | PostgreSQL (civicpatch.org DB) |
 | 6379 | Redis |
 | 7233 | Temporal (gRPC) |
-| 8000 | pipelines |
-| 8001 | civicpatch.org API |
+| 8000 | civicpatch.org API |
+| 8001 | pipelines |
 | 8002 | Temporal UI |
+| 8003 | PostgreSQL (civicpatch.org DB) |
 
 ## Testing
 

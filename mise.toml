@@ -23,7 +23,7 @@ description = "Install all workspace dependencies"
 
 [tasks.pr_sync]
 run = """
-    curl -X POST "http://localhost:8001/api/admin/pr_sync" \
+    curl -X POST "http://localhost:8000/api/admin/pr_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $SERVICE_API_KEY"
 """
@@ -37,7 +37,7 @@ run = """
 
 [tasks.od_sync]
 run = """
-    curl -X POST "http://localhost:8001/api/admin/od_sync" \
+    curl -X POST "http://localhost:8000/api/admin/od_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $SERVICE_API_KEY" \
       -d '{}'
@@ -56,7 +56,7 @@ run = """
 
 [tasks.clear_dashboard_cache]
 run = """
-    curl -X POST "http://localhost:8001/api/admin/clear_dashboard_cache" \
+    curl -X POST "http://localhost:8000/api/admin/clear_dashboard_cache" \
       -H "Content-Type: application/json" \
       -H "Authorization: $SERVICE_API_KEY"
 """
@@ -169,8 +169,8 @@ run = "uv run python scripts/{{ arg(name=\"script\") }}.py {{ args() }}"
 [tasks.regenerate-review-json]
 description = "One-off: regenerate review_json for all requests using current DB people as research baseline"
 run = """
-read -p "DB URL [postgres://civicpatch:development_password@127.0.0.1:6000/development_db]: " url
-CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0.1:6000/development_db}" \
+read -p "DB URL [postgres://civicpatch:development_password@127.0.0.1:8003/development_db]: " url
+CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0.1:8003/development_db}" \
   uv run python scripts/regenerate_review_json.py
 """
 
@@ -208,7 +208,7 @@ docker compose run --rm civicpatch-org \
 
 [tasks.psql]
 description = "Open a psql shell against the dev database"
-run = "psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db"
+run = "psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db"
 
 [tasks.jurisdictions-tsv]
 description = "Dump jurisdictions table with flattened data column as TSV. Optionally filter by state: mise run jurisdictions-tsv -- tx"
@@ -218,7 +218,7 @@ FILTER=""
 if [ -n "$STATE" ]; then
   FILTER="WHERE state = '$STATE'"
 fi
-psql postgres://civicpatch:development_password@127.0.0.1:6000/development_db \
+psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db \
   --no-align --field-separator $'\\t' --tuples-only \
   -c "
     SELECT
