@@ -1,7 +1,7 @@
 services:
   pipelines:
     environment:
-      CIVICPATCH_ORG_URL: ${CIVICPATCH_ORG_URL:-http://civicpatch-org:8001}
+      CIVICPATCH_ORG_URL: ${CIVICPATCH_ORG_URL:-http://civicpatch-org:8000}
       SERVICE_API_KEY: ${SERVICE_API_KEY:-service-api-key}
       PIPELINE_RUN_COST_LIMIT: ${PIPELINE_RUN_COST_LIMIT:-0.20}
       LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
@@ -21,7 +21,7 @@ services:
       - ../shared/src/shared:/app/src/shared:ro
       - .:/app
     ports:
-      - "8000:8000"
+      - "8001:8001"
     networks:
       - civicpatch_net
 

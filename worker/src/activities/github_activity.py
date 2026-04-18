@@ -16,7 +16,7 @@ GITHUB_ORG = os.environ.get("GITHUB_ORG", "CivicPatch")
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "server")
 
 _CIVICPATCH_ORG_URL = os.environ.get("CIVICPATCH_ORG_URL", "http://civicpatch-org:80")
-_CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://pipelines:8000")
+_CIVICPATCH_LOCAL_URL = os.environ.get("CIVICPATCH_LOCAL_URL", "http://pipelines:8001")
 _SERVICE_API_KEY = os.environ.get("SERVICE_API_KEY", "")
 
 _HEADERS = {

@@ -66,7 +66,7 @@ Environment variables are documented in [docker-compose.yml](./docker-compose.ym
 
 ## Running a scrape locally
 
-Trigger a job via the web UI (`http://localhost:8000`) or the CLI:
+Trigger a job via the web UI (`http://localhost:8001`) or the CLI:
 
 ```sh
 docker compose run --rm pipelines uv run python -m interfaces.cli.main --jurisdiction-ocdid ocd-division/country:us/state:ca/place:oakland

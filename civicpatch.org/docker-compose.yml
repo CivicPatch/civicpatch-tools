@@ -14,7 +14,7 @@ services:
       CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@civicpatch-org-db:5432/development_db}
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
-      INSTANCE_URL: "http://localhost:8001"
+      INSTANCE_URL: "http://localhost:8000"
       OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
       JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
@@ -46,7 +46,7 @@ services:
       target: development
     # restart: unless-stopped
     ports:
-      - "8001:8001"
+      - "8000:8000"
     volumes:
       - ./:/app
       - ../shared/src/shared:/app/src/shared:ro
@@ -65,7 +65,7 @@ services:
     volumes:
       - api_civicpatch_org_db_data:/var/lib/postgresql/data
     ports:
-      - "127.0.0.1:6000:5432"
+      - "127.0.0.1:8003:5432"
     networks:
       - civicpatch_net
 
@@ -100,7 +100,7 @@ services:
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
-      INSTANCE_URL: "http://localhost:8001"
+      INSTANCE_URL: "http://localhost:8000"
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}
       DATABASE_HASH_KEY: ${DATABASE_HASH_KEY:-development_hash_key}

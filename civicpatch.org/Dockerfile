@@ -74,9 +74,9 @@ RUN uv sync --package civicpatch.org --frozen --no-install-project
 
 WORKDIR /app
 USER civicpatch_user
-EXPOSE 8001
+EXPOSE 8000
 # CMD ["tail", "-f", "/dev/null"]
-CMD ["fastapi", "dev", "src/main.py", "--port", "8001", "--host", "0.0.0.0"]
+CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # PRODUCTION IMAGE
 FROM image-base AS production
