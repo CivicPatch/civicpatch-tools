@@ -3,6 +3,10 @@
 .issues-page {
 }
 
+.issues-page__filters {
+    margin-bottom: 1.5rem;
+}
+
 .issues-page__section {
     margin-bottom: 2rem;
 }
