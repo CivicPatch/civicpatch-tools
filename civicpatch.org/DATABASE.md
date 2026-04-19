@@ -19,7 +19,7 @@ erDiagram
     jurisdictions {
         text            jurisdiction_ocdid  PK
         text            status
-        text_null       state
+        text_null       state               "idx"
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
         timestamptz_null updated_at
     }

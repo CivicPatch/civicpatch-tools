@@ -7,14 +7,7 @@ import {
   fetchIssueDetails,
   resolveReviewIssue,
   dismissIssue,
-  fetchDuplicatePrJurisdictionPipelineRuns,
-  fetchPullRequests,
-  closeStaleDuplicatePrs,
-  saveAndMerge,
-  closePullRequest,
 } from "../../api.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
-import "../../components/pull-request-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import { ISSUE_TYPE, KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
@@ -110,16 +103,9 @@ function IssuesPage() {
   const [modalDetails, setModalDetails] = useState(null); // null=not fetched, []=loading, [...]= loaded
   const [prToast, setPrToast] = useState(null);
 
-  // Duplicates section
-  const [duplicateJurisdictions, setDuplicateJurisdictions] = useState([]);
-  const [duplicateJurisdictionPRs, setDuplicateJurisdictionPRs] = useState({});
-  const [openJurisdictions, setOpenJurisdictions] = useState({});
-  const [closingStale, setClosingStale] = useState(false);
-  const [prState, setPrState] = useState({});
-
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
-    { issues: true, duplicates: true },
+    { issues: true },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -155,14 +141,6 @@ function IssuesPage() {
       .then((r) => setModalDetails(r.data || []))
       .catch(() => setModalDetails([]));
   }, [resolveModal]);
-
-  // Duplicates — lazy, only when section is open
-  useEffect(() => {
-    if (!openSections.duplicates) return;
-    fetchDuplicatePrJurisdictionPipelineRuns()
-      .then((r) => setDuplicateJurisdictions(r.data || []))
-      .catch(console.error);
-  }, [openSections.duplicates]);
 
   const handleDismissIssue = async (issue) => {
     try {
@@ -250,49 +228,6 @@ function IssuesPage() {
       }
     } catch (err) {
       console.error("Failed to resolve issue:", err);
-    }
-  };
-
-  const loadJurisdictionPRs = async (ocdid) => {
-    setOpenJurisdictions((prev) => ({ ...prev, [ocdid]: !prev[ocdid] }));
-    if (!duplicateJurisdictionPRs[ocdid]) {
-      const result = await fetchPullRequests(ocdid);
-      setDuplicateJurisdictionPRs((prev) => ({ ...prev, [ocdid]: result.data || [] }));
-    }
-  };
-
-  const handleCloseStaleDuplicates = async () => {
-    setClosingStale(true);
-    try {
-      await closeStaleDuplicatePrs();
-      const result = await fetchDuplicatePrJurisdictionPipelineRuns();
-      setDuplicateJurisdictions(result.data || []);
-      setDuplicateJurisdictionPRs({});
-      setOpenJurisdictions({});
-    } finally {
-      setClosingStale(false);
-    }
-  };
-
-  const handleDuplicateMerge = async (event) => {
-    const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
-    try {
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } });
-      await saveAndMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null);
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } });
-    } catch (err) {
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } });
-    }
-  };
-
-  const handleDuplicateClose = async (event) => {
-    const { pullRequestNumber, request_id } = event.detail;
-    try {
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } });
-      await closePullRequest(request_id, pullRequestNumber);
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } });
-    } catch (err) {
-      setPrState({ ...prState, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } });
     }
   };
 
@@ -537,58 +472,6 @@ function IssuesPage() {
     </section>
   `;
 
-  const duplicatePrList = duplicateJurisdictions.map((ocdid) => {
-    const isOpen = openJurisdictions[ocdid];
-    return html`
-      <div class="issues-page__duplicate-item">
-        <button
-          class="issues-page__duplicate-item-header${isOpen ? " issues-page__duplicate-item-header--open" : ""}"
-          @click=${() => loadJurisdictionPRs(ocdid)}
-        >
-          <span>${ocdid}</span>
-          <i class="fa-solid fa-chevron-down btn-icon${isOpen ? " btn-icon--rotated" : ""}"></i>
-        </button>
-        ${isOpen ? html`
-          <div class="issues-page__duplicate-item-body">
-            ${(duplicateJurisdictionPRs[ocdid] || []).map((pr) => {
-              const pullRequestNumber = pr.pr.number;
-              return html`
-                <pr-card
-                  @onMerge=${handleDuplicateMerge}
-                  @onClose=${handleDuplicateClose}
-                  .entry=${pr}
-                  .state=${prState[pullRequestNumber]}
-                ></pr-card>
-              `;
-            })}
-          </div>
-        ` : null}
-      </div>
-    `;
-  });
-
-  const duplicatesCount = duplicateJurisdictions.length || "";
-  const duplicatesSection = html`
-    <section class="issues-page__section">
-      ${duplicatesCount === 0 ? html`
-        <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">0</span></h2>
-      ` : html`
-        <div class="issues-page__section-header" @click=${() => toggleSection("duplicates")}>
-          <h2 class="issues-page__section-title issues-page__section-title--warning">Duplicate jurisdictions <span class="issues-page__section-count">${duplicatesCount}</span></h2>
-          <i class="fa-solid fa-chevron-down btn-icon${openSections.duplicates ? " btn-icon--rotated" : ""}"></i>
-        </div>
-        ${openSections.duplicates ? html`
-          <button
-            class="btn btn-sm destructive"
-            @click=${handleCloseStaleDuplicates}
-            ?disabled=${closingStale}
-          >${closingStale ? "Closing…" : "Close stale"}</button>
-          <div class="issues-page__duplicate-list">${duplicatePrList}</div>
-        ` : null}
-      `}
-    </section>
-  `;
-
   return html`
     <main class="issues-page page-content">
       <div class="issues-page__filters">
@@ -598,7 +481,6 @@ function IssuesPage() {
         ></civ-select-state>
       </div>
       ${issuesSection}
-      ${duplicatesSection}
     </main>
     ${debugModal}
     ${roleModal}

@@ -321,12 +321,6 @@ export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25)
   return res.json();
 };
 
-export const fetchDuplicatePrJurisdictionPipelineRuns = async () => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/duplicates`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const cancelPipelineRun = async (requestId) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${requestId}/cancel`, {
     method: "POST",
@@ -337,15 +331,6 @@ export const cancelPipelineRun = async (requestId) => {
   return res.json();
 };
 
-export const closeStaleDuplicatePrs = async () => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/duplicates/close-stale`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
 
 export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   const params = new URLSearchParams({ lat, long: lng, zoom });

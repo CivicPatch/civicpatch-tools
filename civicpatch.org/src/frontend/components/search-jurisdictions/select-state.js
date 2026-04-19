@@ -22,7 +22,7 @@ function CivSelectState({ selected }) {
 
   return html`
     <select .value=${selected || ""} @change=${handleChange}>
-      <option value="" ?selected=${!selected}>Select a state</option>
+      <option value="" ?selected=${!selected}>All States</option>
       ${states.map(
         (state) =>
           html`<option value=${state.code} ?selected=${state.code === selected}>${state.name}</option>`,

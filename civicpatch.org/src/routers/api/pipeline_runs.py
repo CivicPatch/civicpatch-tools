@@ -588,39 +588,6 @@ def get_router(api_key_header):
             progress=response["progress"],
         )
 
-    # -- Pipeline Runs: List pipeline runs where the pull requests have duplicate jurisdictions ──
-    @router.get(
-        "/duplicates",
-        summary="List pipeline runs where the pull requests have duplicate jurisdictions",
-    )
-    async def list_pipeline_runs_with_duplicate_jurisdictions_endpoint(
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
-        ),
-    ):
-        jurisdiction_ocdids = await database.pipeline_runs.get_duplicate_jurisdiction_ocdids()
-        return {"data": list(jurisdiction_ocdids)}
-
-    @router.post(
-        "/duplicates/close-stale",
-        summary="Close all but the latest open PR for each duplicate jurisdiction",
-    )
-    async def close_stale_duplicate_prs_endpoint(
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])
-        ),
-    ):
-        stale = await database.pipeline_runs.get_stale_duplicate_pr_info()
-        closed, failed = [], []
-        for item in stale:
-            success = await github_service.close_pull_request(str(item["pr_number"]))
-            if success:
-                await update_pipeline_run_pull_request_status(item["request_id"], PullRequestStatus.CLOSED)
-                closed.append(item["request_id"])
-            else:
-                failed.append(item["request_id"])
-        return {"closed": closed, "failed": failed}
-
     @router.get(
         "/{request_id}/context/upload-url",
         summary="Get a presigned PUT URL for uploading paused workflow context",
