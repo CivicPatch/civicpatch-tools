@@ -61,3 +61,9 @@ class JurisdictionsFile(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     jurisdictions: List[JurisdictionEntry] = []
+
+
+class PipelineRunConfig(BaseModel):
+    url: str
+    name: Optional[str] = None
+    source_urls: Optional[List[str]] = None

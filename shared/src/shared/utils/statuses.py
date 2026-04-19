@@ -50,6 +50,7 @@ class PipelineRunErrorType(StrEnum):
 class PipelineIssueType(StrEnum):
     NO_MAYOR = "no_mayor"
     UNRECOGNIZED_ROLE = "unrecognized_role"
+    DOMAIN_REDIRECTED = "domain_redirected"
 
 
 class PullRequestStatus(StrEnum):

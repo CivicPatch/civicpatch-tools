@@ -3,6 +3,7 @@ from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
 from domain.pipeline_run_context import PipelineRunContext
+from shared.schemas import PipelineRunConfig
 from shared.utils.config_utils import RoleConfig
 from shared.utils.statuses import PipelineRunStatus
 
@@ -78,11 +79,6 @@ OtherNamesByCanonicalName: TypeAlias = Dict[
 ]  # Canonical name to other names found while scraping
 PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
 RecordsByLLM: TypeAlias = Dict[str, PeopleByName]
-
-class PipelineRunConfig(BaseModel):
-    url: str  # Municipality url. Without it we can't scrape anything.
-    name: Optional[str] = None # Human-readable name
-    source_urls: Optional[List[str]] = None
 
 PipelineStatus = PipelineRunStatus
 
