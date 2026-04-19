@@ -1,24 +1,25 @@
 import { useState, useEffect } from "haunted";
 import { fetchSummary } from "../api.js";
 
-let cachedSummary = null;
+const summaryCache = new Map();
 
-export function useSummary(enabled) {
-  const [summary, setSummary] = useState(cachedSummary);
+export function useSummary(enabled, stateCode = "") {
+  const [summary, setSummary] = useState(summaryCache.get(stateCode) ?? null);
 
   useEffect(() => {
     if (!enabled) return;
-    if (cachedSummary) {
-      setSummary(cachedSummary);
+    const cached = summaryCache.get(stateCode);
+    if (cached) {
+      setSummary(cached);
       return;
     }
-    fetchSummary()
+    fetchSummary(stateCode)
       .then((data) => {
-        cachedSummary = data;
+        summaryCache.set(stateCode, data);
         setSummary(data);
       })
       .catch(() => {});
-  }, [enabled]);
+  }, [enabled, stateCode]);
 
   return summary;
 }

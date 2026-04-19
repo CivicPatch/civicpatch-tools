@@ -27,7 +27,7 @@ erDiagram
     requests {
         uuid            id                  PK
         text            request_type
-        text_null       jurisdiction_ocdid  FK
+        text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       requested_by_user_id FK
         jsonb           arguments_json
         jsonb_null      data_json           "scraped Official objects from pipeline"
@@ -52,7 +52,7 @@ erDiagram
         uuid_null       resolved_by_user_id FK
         int             pr_number
         text_null       url
-        text            status
+        text            status              "idx"
         text_null       review_state
         timestamptz_null merged_at
         timestamptz     created_at

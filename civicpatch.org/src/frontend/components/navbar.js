@@ -2,6 +2,7 @@ import { component } from 'haunted';
 import { html } from 'lit';
 import { config } from '../assets/config.js';
 import { useSummary } from '../hooks/useSummary.js';
+import { useLocalStorage, PERSIST_FOREVER } from '../hooks/use-local-storage.js';
 const API_URL = config.apiUrl;
 
 const NAVBAR_CSS = html`
@@ -136,6 +137,18 @@ const NAVBAR_CSS = html`
     }
     .nav-link--active {
       opacity: 1;
+    }
+
+    /* Active state indicator */
+    .nav-state-badge {
+      font-size: 0.7rem;
+      font-family: var(--pico-font-family-monospace);
+      font-weight: 700;
+      color: var(--pico-muted-color);
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 4px;
+      padding: 0.15em 0.4em;
+      margin-right: 0.25rem;
     }
 
     /* Count badge on nav links */
@@ -293,7 +306,7 @@ function getTeamsTooltip(teams) {
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
-function renderAuthed(user, summary, currentPath) {
+function renderAuthed(user, summary, currentPath, stateCode) {
   const teams = user.teams || [];
   const tooltip = getTeamsTooltip(teams);
   const active = (href) => {
@@ -311,9 +324,10 @@ function renderAuthed(user, summary, currentPath) {
         : html`<span class="user-dot"></span>`}
       <span class="user-name">${user.display_name || user.email || 'User'}</span>
     </span>
+    ${stateCode ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>` : ""}
     <a href="/" class="${active('/')}">Home</a>
     <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary ? (summary.pipeline_errors ?? 0) + (summary.duplicate_jurisdictions ?? 0) : 0}</span></a>` : ""}
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.issues_total ?? 0}</span></a>` : ""}
     ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
   `;
 }
@@ -328,7 +342,8 @@ function Navbar({ user }) {
   }
   const isAuthed = userData?.authenticated;
   const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
-  const summary = useSummary(canViewQueue);
+  const [stateCode] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const summary = useSummary(canViewQueue, stateCode);
   const currentPath = window.location.pathname;
   return html`
     ${NAVBAR_CSS}
@@ -342,7 +357,7 @@ function Navbar({ user }) {
       ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout"><i class="fab fa-github"></i> Logout</a>` : ''}
       <div class="nav-links">
         ${isAuthed
-          ? renderAuthed(userData, summary, currentPath)
+          ? renderAuthed(userData, summary, currentPath, stateCode)
           : html`<a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>`}
       </div>
     </nav>

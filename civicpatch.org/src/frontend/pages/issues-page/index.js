@@ -2,7 +2,6 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { useSummary } from "../../hooks/useSummary.js";
 import {
   fetchJobIssues,
   fetchIssueDetails,
@@ -89,7 +88,6 @@ function formatDate(isoString) {
 
 function IssuesPage() {
   const { permissions } = useAuth();
-  const summary = useSummary(true);
 
   const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
   const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
@@ -489,7 +487,7 @@ function IssuesPage() {
   const issuesSection = html`
     <section class="issues-page__section">
       <div class="issues-page__section-header" @click=${() => toggleSection("issues")}>
-        <h2 class="issues-page__section-title issues-page__section-title--info">Issues <span class="issues-page__section-count">${issuesTotal || summary?.issues_total || ""}</span></h2>
+        <h2 class="issues-page__section-title issues-page__section-title--info">Issues <span class="issues-page__section-count">${issuesTotal || ""}</span></h2>
         <i class="fa-solid fa-chevron-down btn-icon${openSections.issues ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${openSections.issues ? html`
@@ -569,7 +567,7 @@ function IssuesPage() {
     `;
   });
 
-  const duplicatesCount = openSections.duplicates ? duplicateJurisdictions.length : (summary?.duplicate_jurisdictions ?? "");
+  const duplicatesCount = duplicateJurisdictions.length || "";
   const duplicatesSection = html`
     <section class="issues-page__section">
       ${duplicatesCount === 0 ? html`
