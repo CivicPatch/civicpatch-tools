@@ -171,6 +171,7 @@ async def get_pipeline_issues_page(
     page: int,
     per_page: int,
     sort_desc: bool = True,
+    state_code: str | None = None,
 ) -> tuple[list[dict], int]:
     conditions: list[sql.Composable] = [
         sql.SQL("ri.status IN ({})").format(
@@ -185,6 +186,11 @@ async def get_pipeline_issues_page(
             )
         )
         params.extend(issue_types)
+    if state_code:
+        conditions.append(sql.SQL(
+            "EXISTS (SELECT 1 FROM requests r WHERE r.id::text = ANY(ri.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+        ))
+        params.append(f"%state:{state_code.lower()}%")
     where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
     order_clause = sql.SQL("DESC") if sort_desc else sql.SQL("ASC")
     offset = (page - 1) * per_page

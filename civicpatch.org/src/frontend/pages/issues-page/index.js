@@ -17,6 +17,7 @@ import {
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
+import "../../components/search-jurisdictions/select-state.js";
 import { ISSUE_TYPE, KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import "./issues-page.css";
 
@@ -40,6 +41,11 @@ function getIssuesTagsFromUrl() {
 
 function getIssuesSortDescFromUrl() {
   return new URLSearchParams(window.location.search).get("issues_sort") !== "asc";
+}
+
+function getStateFromUrl() {
+  const val = new URLSearchParams(window.location.search).get("state");
+  return val ? val.toLowerCase() : "";
 }
 
 function setIssuesPageInUrl(page) {
@@ -85,6 +91,9 @@ function IssuesPage() {
   const { permissions } = useAuth();
   const summary = useSummary(true);
 
+  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
+
   // Issues section
   const [issues, setIssues] = useState([]);
   const [issuesTotal, setIssuesTotal] = useState(0);
@@ -124,6 +133,7 @@ function IssuesPage() {
       setIssuesPerPage(getIssuesPerPageFromUrl());
       setIssuesTagFilter(getIssuesTagsFromUrl());
       setIssuesSortDesc(getIssuesSortDescFromUrl());
+      setStateCode(getStateFromUrl());
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -133,11 +143,11 @@ function IssuesPage() {
   useEffect(() => {
     if (!openSections.issues) return;
     setIssuesLoading(true);
-    fetchJobIssues(issuesTagFilter, issuesPage, issuesPerPage, issuesSortDesc ? "desc" : "asc")
+    fetchJobIssues(issuesTagFilter, issuesPage, issuesPerPage, issuesSortDesc ? "desc" : "asc", stateCode)
       .then((r) => { setIssues(r.data || []); setIssuesTotal(r.total || 0); })
       .catch(console.error)
       .finally(() => { setIssuesLoading(false); setIssuesPageLoading(false); });
-  }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc]);
+  }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc, stateCode]);
 
   // Modal details — lazy-fetch when modal opens
   useEffect(() => {
@@ -193,6 +203,18 @@ function IssuesPage() {
     setIssuesPerPage(newPerPage);
     setIssuesPage(1);
     setIssuesParamsInUrl(1, newPerPage, issuesTagFilter, issuesSortDesc);
+  };
+
+  const handleStateChange = (e) => {
+    const newState = e.detail.state;
+    const params = new URLSearchParams(window.location.search);
+    if (newState) params.set("state", newState);
+    else params.delete("state");
+    params.set("issues_page", 1);
+    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+    setDefaultState(newState || "");
+    setStateCode(newState || "");
+    setIssuesPage(1);
   };
 
   const openResolveModal = (issue) => {
@@ -571,6 +593,12 @@ function IssuesPage() {
 
   return html`
     <main class="issues-page page-content">
+      <div class="issues-page__filters">
+        <civ-select-state
+          .selected=${stateCode}
+          @state-change=${handleStateChange}
+        ></civ-select-state>
+      </div>
       ${issuesSection}
       ${duplicatesSection}
     </main>
