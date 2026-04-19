@@ -1,0 +1,17 @@
+page_url: https://raisinchartertownship.com/clerk
+jurisdiction_name: Raisin Charter Township
+known_roles:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+page:
+  is_relevant: true
+  relevant_urls:
+  - https://raisinchartertownship.com/supervisor
+  - https://raisinchartertownship.com/treasurer
+  - https://raisinchartertownship.com/trustees
+  thoughts: This page is a dedicated contact page for the Township Clerk (Susan Bunch),
+    an elected member of the Township Board. The deputy clerk (Sarah Simpkins) also
+    appears but the page's primary purpose is to present who currently holds the
+    elected Clerk position and how to reach them.

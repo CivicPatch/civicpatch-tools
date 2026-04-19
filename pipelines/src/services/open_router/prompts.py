@@ -4,7 +4,7 @@ import shared.utils.config_utils as config_utils
 
 def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []):
     jurisdiction_line = f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
-    known_roles_line = f"    Known roles for this municipality: {', '.join(known_roles)}\n" if known_roles else ""
+    known_roles_line = f"    Known elected roles for this municipality: {', '.join(known_roles)}\n" if known_roles else ""
     prompt = f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials**
     of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
@@ -77,6 +77,9 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles
       serving primary governing officials — whether a full roster or a dedicated page for a
       single official. Ask: "Does this page exist to show who currently holds a primary
       governing role?" If the answer is no, set is_relevant to false.
+      If `known_roles` are provided and the page is dedicated to a person in one of those
+      roles (i.e., the page heading or title names that role), treat it as relevant even if
+      a non-voting deputy or assistant also appears on the same page.
       The following are NOT relevant regardless of what names appear in them:
       - News and announcements feeds — even if a post lists newly elected council members by name and ward
       - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is
@@ -104,7 +107,7 @@ def municipality_officials_prompt(known_roles: List[str], state: str = "", count
 
     roles_hint_str = ""
     if known_roles:
-        roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(known_roles) + "."
+        roles_hint_str = "- Known elected roles for this municipality: " + ", ".join(known_roles) + "."
 
     jurisdiction_parts = [f"{county} County" if county else None, state]
     jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)
@@ -120,16 +123,21 @@ def municipality_officials_prompt(known_roles: List[str], state: str = "", count
     Only extract officials from:
     - A structured table, list, or directory of officials
     - A dedicated biography, about, or contact section for an official
+    - A contact or position page for a single elected official, where the page or
+      section heading names an elected role and the content includes the person's
+      name and their contact information — even if the body primarily describes
+      the role's duties rather than the person's biography
     - A page section clearly labeled with a governing body name (e.g. "City Council
       Members", "Board of Aldermen") that lists names as headings or line items —
       even if no contact info, roles, or other details are present; infer the role
       from the section heading
     Do NOT extract officials mentioned only in news articles, event summaries,
-    meeting notes, or scattered references. If no structured listing exists,
-    return an empty array for "people".
-    Only extract from content whose primary purpose is to present who currently
-    holds office. Do not extract from content whose primary purpose is to record
-    what officials did — even if it is structured and includes roles and designations.
+    meeting notes, or scattered references.
+    Do not extract from content whose primary purpose is to record what officials
+    did (votes, minutes, ordinances, resolutions) — even if it is structured and
+    includes roles and designations.
+    If none of the above valid sources are present in the content, return an empty
+    array for "people".
     Do NOT treat a list of links whose text is only a role or position label (e.g.,
     "Mayor", "Councilmember, Place 1", "Alderman") as a structured listing —
     that is a navigation or index section pointing to pages, not a roster of people.

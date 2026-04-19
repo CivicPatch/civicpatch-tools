@@ -184,7 +184,11 @@ def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds):
     return cost_summary
 
 
-@pytest.mark.parametrize("model_client", PROVIDER_COMPARISON, indirect=True)
+def _active_providers():
+    only = os.environ.get("EVAL_PROVIDER")
+    return [p for p in PROVIDER_COMPARISON if not only or p.split(":", 1)[1] == only]
+
+@pytest.mark.parametrize("model_client", _active_providers(), indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
     eval_ocdid = "ocd-jurisdiction/country:us/state:tx/place:example/government"
