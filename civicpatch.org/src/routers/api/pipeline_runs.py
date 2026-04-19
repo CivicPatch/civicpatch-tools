@@ -504,7 +504,7 @@ def get_router(api_key_header):
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 
-        if issue_type in ("pipeline_error", "no_info", "no_mayor"):
+        if issue_type in ("pipeline_error", "no_info"):
             request_id = issue["issue_key"]
             jurisdiction_ocdid = raw[0]["jurisdiction_ocdid"] if raw else None
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid) if jurisdiction_ocdid else None

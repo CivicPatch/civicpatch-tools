@@ -6,7 +6,6 @@ from runners.people_collector.schemas import (
   PeopleCollectorData
 )
 from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
-from shared.utils.config_utils import get_head_of_government_role
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
@@ -343,15 +342,6 @@ def _collect_pipeline_heuristics(officials, role_config, merge_step) -> tuple[st
         return PipelineRunErrorType.NO_INFO, []
 
     issues = []
-    hog_role = get_head_of_government_role(role_config)
-    if hog_role:
-        has_hog = any(
-            hog_role.lower() in [t.strip().lower() for t in (o.office.name if o.office else "").split(" - ")]
-            for o in officials
-        )
-        if not has_hog:
-            issues.append({"type": PipelineIssueType.NO_MAYOR, "data": {}})
-
     for ur in (merge_step.unrecognized_roles if merge_step else []):
         issues.append({"type": PipelineIssueType.UNRECOGNIZED_ROLE, "data": {"role": ur.role, "person_name": ur.person_name}})
 
