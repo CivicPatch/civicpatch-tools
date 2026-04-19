@@ -42,10 +42,11 @@ export const fetchPullRequests = async (jurisdictionOcdid) => {
   return res.json();
 };
 
-export const fetchJobIssues = async (tags, page, perPage, sort, stateCode) => {
+export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));
   if (stateCode) params.set("state_code", stateCode);
+  if (showArchived) params.set("show_archived", "true");
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues?${params}`, {
     credentials: "include",
   });

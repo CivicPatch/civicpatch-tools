@@ -172,13 +172,18 @@ async def get_pipeline_issues_page(
     per_page: int,
     sort_desc: bool = True,
     state_code: str | None = None,
+    show_archived: bool = False,
 ) -> tuple[list[dict], int]:
+    if show_archived:
+        active_statuses = [ReviewIssueStatus.RESOLVED]
+    else:
+        active_statuses = [ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED]
     conditions: list[sql.Composable] = [
         sql.SQL("ri.status IN ({})").format(
-            sql.SQL(", ").join(sql.Placeholder() for _ in range(2))
+            sql.SQL(", ").join(sql.Placeholder() for _ in range(len(active_statuses)))
         )
     ]
-    params: list[Any] = [ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED]
+    params: list[Any] = list(active_statuses)
     if issue_types:
         conditions.append(
             sql.SQL("ri.issue_type IN ({})").format(
