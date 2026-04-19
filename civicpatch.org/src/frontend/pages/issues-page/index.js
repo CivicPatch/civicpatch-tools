@@ -7,6 +7,8 @@ import {
   fetchIssueDetails,
   resolveReviewIssue,
   dismissIssue,
+  fetchNotes,
+  createNote,
 } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "../../components/search-jurisdictions/select-state.js";
@@ -98,11 +100,19 @@ function IssuesPage() {
 
   // Resolve modal state
   const [resolveModal, setResolveModal] = useState(null);
+  const [resolveModalDetailsOnly, setResolveModalDetailsOnly] = useState(false);
   const [modalScope, setModalScope] = useState("state");
   const [modalState, setModalState] = useState("");
   const [modalLocality, setModalLocality] = useState("");
   const [modalDetails, setModalDetails] = useState(null); // null=not fetched, []=loading, [...]= loaded
   const [prToast, setPrToast] = useState(null);
+  const [showAllModalDetails, setShowAllModalDetails] = useState(false);
+
+  // Dismiss modal state
+  const [dismissModal, setDismissModal] = useState(null); // issue being dismissed
+  const [dismissNote, setDismissNote] = useState("");
+  const [dismissNotes, setDismissNotes] = useState(null); // existing notes for jurisdiction
+  const [dismissLoading, setDismissLoading] = useState(false);
 
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
@@ -143,13 +153,40 @@ function IssuesPage() {
       .catch(() => setModalDetails([]));
   }, [resolveModal]);
 
-  const handleDismissIssue = async (issue) => {
+  const openDismissModal = (issue) => {
+    setDismissModal(issue);
+    setDismissNote("");
+    setDismissNotes(null);
+    const ocdid = issue.jurisdictions?.[0]?.jurisdiction_ocdid;
+    if (ocdid) {
+      fetchNotes(ocdid, 1, 5)
+        .then((r) => setDismissNotes(r.data || []))
+        .catch(() => setDismissNotes([]));
+    } else {
+      setDismissNotes([]);
+    }
+  };
+
+  const closeDismissModal = () => { setDismissModal(null); setDismissNote(""); setDismissNotes(null); };
+
+  const handleConfirmDismiss = async () => {
+    if (!dismissModal) return;
+    setDismissLoading(true);
     try {
-      await dismissIssue(issue.id);
-      setIssues(issues.filter((i) => i.id !== issue.id));
+      const ocdid = dismissModal.jurisdictions?.[0]?.jurisdiction_ocdid;
+      const label = formatIssueType(dismissModal.issue_type);
+      const noteBody = dismissNote.trim()
+        ? `Dismissed — ${label}: ${dismissNote.trim()}`
+        : `Dismissed — ${label}`;
+      if (ocdid) await createNote(ocdid, noteBody);
+      await dismissIssue(dismissModal.id);
+      setIssues(issues.filter((i) => i.id !== dismissModal.id));
       setIssuesTotal((t) => t - 1);
+      closeDismissModal();
     } catch (err) {
       console.error("Failed to dismiss issue:", err);
+    } finally {
+      setDismissLoading(false);
     }
   };
 
@@ -194,8 +231,14 @@ function IssuesPage() {
     setIssuesPage(1);
   };
 
+  const openDetailsModal = (issue) => {
+    setResolveModal(issue);
+    setResolveModalDetailsOnly(true);
+  };
+
   const openResolveModal = (issue) => {
     setResolveModal(issue);
+    setResolveModalDetailsOnly(false);
     setModalScope("state");
     setModalState((issue.states || [])[0] || "");
     setModalLocality("");
@@ -236,73 +279,94 @@ function IssuesPage() {
 
   // --- Source context (lazy-loaded, shared by both modals) ---
 
+  const SOURCE_CONTEXT_LIMIT = 5;
   const sourceContextSection = html`
     <div class="issues-page__modal-source">
       <div class="issues-page__modal-source-label">Source context</div>
       ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
         ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
-        : modalDetails.map((d) => {
-            const urls = [d.url, ...(d.source_urls || [])].filter(Boolean);
-            return html`
-              <div class="issues-page__modal-source-entry">
-                <div class="issues-page__modal-source-header">
-                  <span class="issues-page__modal-source-name">${d.jurisdiction_name}</span>
-                  ${d.jurisdiction_path ? html`
-                    <a class="issues-page__modal-source-link" href="/${d.jurisdiction_path}" target="_blank" rel="noopener noreferrer">view page →</a>
+        : html`
+          ${(showAllModalDetails ? modalDetails : modalDetails.slice(0, SOURCE_CONTEXT_LIMIT)).map((d) => {
+              const urls = [d.url, ...(d.source_urls || [])].filter(Boolean);
+              return html`
+                <div class="issues-page__modal-source-entry">
+                  <div class="issues-page__modal-source-header">
+                    <span class="issues-page__modal-source-name">${d.jurisdiction_name}</span>
+                    ${d.jurisdiction_path ? html`
+                      <a class="issues-page__modal-source-link" href="/${d.jurisdiction_path}" target="_blank" rel="noopener noreferrer">view page →</a>
+                    ` : null}
+                  </div>
+                  ${urls.map((u) => html`<a class="issues-page__modal-source-url" href=${u} target="_blank" rel="noopener noreferrer">${u}</a>`)}
+                  ${d.people && d.people.length ? html`
+                    <div class="issues-page__modal-source-people">${d.people.map((p) => p.name).join(", ")}</div>
                   ` : null}
                 </div>
-                ${urls.map((u) => html`<a class="issues-page__modal-source-url" href=${u} target="_blank" rel="noopener noreferrer">${u}</a>`)}
-                ${d.people && d.people.length ? html`
-                  <div class="issues-page__modal-source-people">${d.people.map((p) => p.name).join(", ")}</div>
-                ` : null}
-              </div>
-            `;
-          })
+              `;
+            })}
+          ${modalDetails.length > SOURCE_CONTEXT_LIMIT ? html`
+            <button class="btn-ghost issues-page__modal-source-toggle" @click=${() => setShowAllModalDetails(!showAllModalDetails)}>
+              ${showAllModalDetails ? "Show less" : `Show all ${modalDetails.length}`}
+            </button>
+          ` : null}
+        `
       }
     </div>
   `;
 
   // --- Modals ---
 
-  const debugLinks = modalDetails?.length ? html`
-    <div class="issues-page__modal-debug-links">
-      ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
-      ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
-      ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
-    </div>
-  ` : null;
+  const debugLinks = !modalDetails
+    ? html`<div class="issues-page__modal-debug-links"><span class="issues-page__modal-source-loading">Loading…</span></div>`
+    : modalDetails.length === 1
+    ? html`
+      <div class="issues-page__modal-debug-links">
+        ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
+        ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
+        ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
+      </div>
+    `
+    : null;
 
   const modalLoading = html`<div class="issues-page__modal-source-loading">Loading…</div>`;
 
+  const closeModal = () => { setResolveModal(null); setResolveModalDetailsOnly(false); setShowAllModalDetails(false); };
+
   function renderModalContent() {
     if (!resolveModal) return null;
-    switch (getIssueTypeConfig(resolveModal.issue_type)?.modal_type) {
+    const modalType = resolveModalDetailsOnly ? "details" : getIssueTypeConfig(resolveModal.issue_type)?.modal_type;
+    switch (modalType) {
       case "pipeline_error":
         return html`
           <h3 class="issues-page__modal-title">Pipeline error</h3>
-          ${modalDetails === null || (modalDetails.length === 0 && resolveModal) ? modalLoading : html`
-            ${modalDetails[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
-            ${debugLinks}
-          `}
+          ${modalDetails?.[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
+          ${debugLinks}
           <div class="issues-page__modal-actions">
-            <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
+            <button class="btn btn-sm secondary" @click=${closeModal}>Close</button>
           </div>
         `;
       case "debug":
+      case "details": {
+        const d0 = modalDetails?.[0];
         return html`
-          <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
-          ${modalDetails === null || (modalDetails.length === 0 && resolveModal) ? modalLoading : debugLinks}
+          <div class="issues-page__modal-header">
+            <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
+            ${d0?.jurisdiction_path ? html`<a class="issues-page__modal-jurisdiction-link" href="/${d0.jurisdiction_path}" target="_blank" rel="noopener noreferrer">${d0.jurisdiction_name || d0.jurisdiction_path}</a>` : null}
+            ${d0?.url ? html`<a class="issues-page__modal-source-url" href=${d0.url} target="_blank" rel="noopener noreferrer">${d0.url}</a>` : null}
+          </div>
+          ${debugLinks}
+          ${sourceContextSection}
           <div class="issues-page__modal-actions">
-            <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
+            <button class="btn btn-sm secondary" @click=${closeModal}>Close</button>
           </div>
         `;
+      }
       default:
         return null;
     }
   }
 
-  const debugModal = resolveModal && getIssueTypeConfig(resolveModal.issue_type)?.modal_type !== "role" ? html`
-    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
+  const debugModal = resolveModal && (resolveModalDetailsOnly || getIssueTypeConfig(resolveModal.issue_type)?.modal_type !== "role") ? html`
+    <div class="issues-page__modal-overlay" @click=${closeModal}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
         ${renderModalContent()}
       </div>
@@ -313,8 +377,8 @@ function IssuesPage() {
     ? (resolveModal.jurisdictions || []).filter((j) => j.state === modalState)
     : [];
 
-  const roleModal = resolveModal && resolveModal.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE ? html`
-    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
+  const roleModal = resolveModal && !resolveModalDetailsOnly && resolveModal.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE ? html`
+    <div class="issues-page__modal-overlay" @click=${closeModal}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
         <h3 class="issues-page__modal-title">Resolve: "${resolveModal.issue_key}"</h3>
         ${(resolveModal.states || []).length ? html`
@@ -354,7 +418,7 @@ function IssuesPage() {
         ` : null}
         ${sourceContextSection}
         <div class="issues-page__modal-actions">
-          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Cancel</button>
+          <button class="btn btn-sm secondary" @click=${closeModal}>Cancel</button>
           <button class="btn btn-sm" @click=${handleModalSubmit}>Open PR →</button>
         </div>
       </div>
@@ -386,14 +450,12 @@ function IssuesPage() {
         </td>
         <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
         <td class="issues-page__issue-actions">
+          <button class="btn btn-sm secondary" @click=${() => openDetailsModal(ev)}>Details</button>
           ${config?.modal_type === "role" && ev.status === "pending"
             ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
             : ""}
-          ${config?.modal_type && config.modal_type !== "role"
-            ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
-            : ""}
           ${ev.status === "pending"
-            ? html`<button class="btn btn-sm" @click=${() => handleDismissIssue(ev)}>Dismiss</button>`
+            ? html`<button class="btn btn-sm destructive" @click=${() => openDismissModal(ev)}>Dismiss</button>`
             : ""}
         </td>
       </tr>
@@ -489,6 +551,43 @@ function IssuesPage() {
     </main>
     ${debugModal}
     ${roleModal}
+    ${dismissModal ? html`
+      <div class="issues-page__modal-overlay" @click=${closeDismissModal}>
+        <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
+          <h3 class="issues-page__modal-title">Dismiss — ${formatIssueType(dismissModal.issue_type)}</h3>
+          ${dismissModal.jurisdictions?.length === 1 ? html`
+            <div class="issues-page__modal-jurisdiction-link">${dismissModal.jurisdictions[0].name}</div>
+          ` : null}
+          ${dismissNotes === null ? html`<div class="issues-page__modal-source-loading">Loading notes…</div>` : dismissNotes.length ? html`
+            <div class="issues-page__modal-source">
+              <div class="issues-page__modal-source-label">Recent notes</div>
+              ${dismissNotes.map((n) => html`
+                <div class="issues-page__modal-source-entry">
+                  <div class="issues-page__modal-source-people">${n.created_by_display_name || "Unknown"} · ${formatDate(n.created_at)}</div>
+                  <div>${n.body}</div>
+                </div>
+              `)}
+            </div>
+          ` : null}
+          <label>
+            Note <span class="issues-page__modal-optional">(optional)</span>
+            <textarea
+              class="issues-page__dismiss-note"
+              placeholder="Reason for dismissing…"
+              rows="3"
+              .value=${dismissNote}
+              @input=${(e) => setDismissNote(e.target.value)}
+            ></textarea>
+          </label>
+          <div class="issues-page__modal-actions">
+            <button class="btn btn-sm secondary" @click=${closeDismissModal} ?disabled=${dismissLoading}>Cancel</button>
+            <button class="btn btn-sm" @click=${handleConfirmDismiss} ?disabled=${dismissLoading}>
+              ${dismissLoading ? "Dismissing…" : "Confirm"}
+            </button>
+          </div>
+        </div>
+      </div>
+    ` : null}
     ${prToast ? html`
       <div class="issues-page__pr-toast">
         ${prToast.config_path ? html`<code>${prToast.config_path}</code><br>` : null}
