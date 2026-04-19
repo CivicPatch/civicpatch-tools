@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends
 
 from database.summary import get_summary_counts
@@ -10,11 +12,12 @@ def get_router():
 
     @router.get("")
     async def get_summary_endpoint(
+        state_code: Optional[str] = None,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS, Role.MAINTAINERS])
         ),
     ):
         include_issues = "maintainers" in (user.teams or [])
-        return await get_summary_counts(include_issues=include_issues)
+        return await get_summary_counts(include_issues=include_issues, state_code=state_code)
 
     return router

@@ -394,8 +394,11 @@ export const pauseReviewSession = async (sessionId) => {
   return res.json();
 };
 
-export const fetchSummary = async () => {
-  const res = await fetch(`${API_URL}/api/v1/summary`, { credentials: "include" });
+export const fetchSummary = async (stateCode) => {
+  const params = new URLSearchParams();
+  if (stateCode) params.set("state_code", stateCode);
+  const query = params.toString() ? `?${params}` : "";
+  const res = await fetch(`${API_URL}/api/v1/summary${query}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
