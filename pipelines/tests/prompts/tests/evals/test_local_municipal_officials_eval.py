@@ -3,8 +3,6 @@ import time
 import pytest
 import pytest_asyncio
 from utils import merge_utils, cost_utils
-from services.google_gemini.llm import run_prompt as run_gemini_prompt
-from services.google_gemini.prompts import municipality_officials_prompt as make_gemini_prompt
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import municipality_officials_prompt as make_together_prompt
 from runners.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
@@ -152,7 +150,8 @@ async def _run_single_case(model_client, case, ocdid):
     make_prompt = model_client["make_prompt"]
     extra_kwargs = model_client.get("extra_kwargs", {})
 
-    prompt = make_prompt([])
+    known_roles = case["expected"].get("known_roles", [])
+    prompt = make_prompt(known_roles)
     response = await run_prompt(
         "run-eval",
         ocdid,

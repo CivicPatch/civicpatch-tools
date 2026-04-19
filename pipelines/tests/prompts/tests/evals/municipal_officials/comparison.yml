@@ -1,28 +1,28 @@
 providers:
   open_router-AtlasCloud:
-    elapsed_seconds: 29.84
-    cost_usd: 0.02729702
-    designations: 1.0
-    url: 0.71900826446281
+    elapsed_seconds: 26.51
+    cost_usd: 0.02845126
     name: 1.0
-    roles: 0.990909090909091
-    phone: 1.0
     email: 1.0
+    roles: 0.9916666666666667
+    designations: 1.0
+    url: 0.7424242424242423
+    phone: 1.0
   open_router-SiliconFlow:
-    elapsed_seconds: 54.56
-    cost_usd: 0.0270045
-    designations: 1.0
-    url: 0.71900826446281
+    elapsed_seconds: 52.05
+    cost_usd: 0.02804805
     name: 1.0
+    email: 0.9166666666666666
     roles: 1.0
-    phone: 0.9090909090909091
-    email: 0.9090909090909091
+    designations: 1.0
+    url: 0.6590909090909091
+    phone: 0.9166666666666666
   open_router-Google:
-    elapsed_seconds: 64.03
-    cost_usd: 0.061026
-    designations: 1.0
-    url: 0.8099173553719008
+    elapsed_seconds: 57.9
+    cost_usd: 0.06303864
     name: 1.0
+    email: 0.9166666666666666
     roles: 1.0
-    phone: 0.9090909090909091
-    email: 0.9090909090909091
+    designations: 1.0
+    url: 0.7424242424242423
+    phone: 0.9166666666666666

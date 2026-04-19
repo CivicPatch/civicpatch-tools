@@ -11,7 +11,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
 - name: Brandon Lunsford
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - At Large A
   phone: 281-471-5021
@@ -22,7 +22,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
 - name: Brent McCaulley
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - At Large B
   phone: 281-471-5021
@@ -33,7 +33,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
 - name: Mandi Williams
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 1
   phone: 281-471-5021
@@ -44,7 +44,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
 - name: Chuck Engelken
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 2
   phone: 281-471-5021
@@ -55,7 +55,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
 - name: Bill Bentley
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 3
   phone: 281-471-5021
@@ -66,7 +66,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
 - name: Robert Guerra
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 4
   phone: 281-471-5021
@@ -77,7 +77,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
 - name: Jay Martin
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 5
   phone: 281-471-5021
@@ -88,7 +88,7 @@ people:
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
 - name: Robbie McLarrin
   roles:
-  - Councilperson
+  - Council Member
   designations:
   - District 6
   phone: 281-471-5021

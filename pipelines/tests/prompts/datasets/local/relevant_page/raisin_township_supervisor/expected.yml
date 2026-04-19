@@ -1,0 +1,13 @@
+page_url: https://raisinchartertownship.com/supervisor
+jurisdiction_name: Raisin Charter Township
+known_roles:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+page:
+  is_relevant: true
+  relevant_urls:
+  - https://raisinchartertownship.com/clerk
+  - https://raisinchartertownship.com/treasurer
+  - https://raisinchartertownship.com/trustees

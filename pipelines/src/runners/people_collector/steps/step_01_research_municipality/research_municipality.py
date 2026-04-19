@@ -52,7 +52,7 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
         target_designations=people_utils.filter_geographic_designations(
             [d for p in target_people for d in p.designations]
         ),
-        roles_hint=_roles_hint(target_people),
+        known_roles=_known_roles(target_people),
         identities={p.name: [] for p in people},
         source_urls=_source_urls(context.data.config, []),
     )
@@ -70,7 +70,7 @@ def _step_from_db(config, jurisdiction_ocdid: str, existing: list) -> ResearchMu
                 (p.get("office") or {}).get("division_ocdid"), jurisdiction_ocdid
             )
         }),
-        roles_hint=_roles_hint(existing_people),
+        known_roles=_known_roles(existing_people),
         identities=person_list_to_identities(existing_people),
         source_urls=_source_urls(config, existing_people),
         origin_source="existing",
@@ -103,16 +103,10 @@ def format_response(people: List[dict]) -> List[ResearchedPerson]:
         formatted_people.append(ResearchedPerson.model_validate(person))
     return formatted_people
 
-def _roles_hint(people) -> List[str]:
-    # Works for both Person (office.name) and ResearchedPerson (roles list).
-    # office_name_to_roles splits by " - " and keeps only config-recognized role names.
+def _known_roles(people) -> List[str]:
     seen = []
-    for item in people:
-        office_name = (
-            (getattr(item, "office", None) or {}).get("name")
-            or " - ".join(getattr(item, "roles", None) or [])
-        )
-        for role in people_utils.office_name_to_roles(office_name):
+    for person in people:
+        for role in (getattr(person, "roles", None) or []):
             if role not in seen:
                 seen.append(role)
     return seen

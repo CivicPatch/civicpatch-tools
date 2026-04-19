@@ -2,15 +2,16 @@ from datetime import datetime
 from typing import List
 import shared.utils.config_utils as config_utils
 
-def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
+def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []):
     jurisdiction_line = f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
+    known_roles_line = f"    Known roles for this municipality: {', '.join(known_roles)}\n" if known_roles else ""
     prompt = f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials**
     of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
     Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.
 
     Page URL: {page_url}
-{jurisdiction_line}
+{jurisdiction_line}{known_roles_line}
     The URL may help you identify which links belong to the municipality's domain(s) when selecting
     relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.
     Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.
@@ -25,7 +26,7 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
 
     ## Irrelevant content
 
-    - Pages about auxiliary committees, department heads, supervisors, or other non-elected officials.
+    - Pages about auxiliary committees, department heads, or other non-elected staff.
       For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.
       This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members
       of that auxiliary body — their membership on the auxiliary board does not make the page relevant.
@@ -36,10 +37,12 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
 
     ## Steps for selecting relevant_urls
 
-    `relevant_urls` feeds a web crawler whose goal is to reach a page listing the primary governing
-    officials. Evaluate each link primarily by its **anchor text and surrounding context** on the
-    page — not by URL structure alone, since many municipal CMS platforms use opaque numeric paths
-    (e.g. /179/Township-Board) where the slug is the only meaningful signal.
+    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of
+    whether `is_relevant` is true or false — the crawler uses these links to discover further
+    officials pages even when the current page is already relevant. Evaluate each link primarily
+    by its **anchor text and surrounding context** on the page — not by URL structure alone,
+    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)
+    where the slug is the only meaningful signal.
 
     Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you
     are almost certainly including noise — re-evaluate and cut.
@@ -71,8 +74,9 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     ## Critical rules
 
     - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently
-      serving primary governing officials. Ask: "Does this page exist to show who is on the
-      governing body right now?" If the answer is no, set is_relevant to false.
+      serving primary governing officials — whether a full roster or a dedicated page for a
+      single official. Ask: "Does this page exist to show who currently holds a primary
+      governing role?" If the answer is no, set is_relevant to false.
       The following are NOT relevant regardless of what names appear in them:
       - News and announcements feeds — even if a post lists newly elected council members by name and ward
       - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is
@@ -90,7 +94,7 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = ""):
     return prompt
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(roles_hint: List[str], state: str = "", county: str | None = None):
+def municipality_officials_prompt(known_roles: List[str], state: str = "", county: str | None = None):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
     """
@@ -99,8 +103,8 @@ def municipality_officials_prompt(roles_hint: List[str], state: str = "", county
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     roles_hint_str = ""
-    if roles_hint:
-        roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(roles_hint) + "."
+    if known_roles:
+        roles_hint_str = "- An example of roles relevant to this municipality: " + ", ".join(known_roles) + "."
 
     jurisdiction_parts = [f"{county} County" if county else None, state]
     jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)

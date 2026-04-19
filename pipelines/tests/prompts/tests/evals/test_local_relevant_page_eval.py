@@ -2,8 +2,6 @@ import asyncio
 import time
 import pytest
 import pytest_asyncio
-from services.google_gemini.llm import run_prompt as run_gemini_prompt
-from services.google_gemini.prompts import relevant_page_prompt as make_gemini_prompt
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import relevant_page_prompt as make_together_prompt
 from runners.people_collector.schemas import RelevantPageResponseSchema
@@ -46,9 +44,10 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
     expected = case["expected"]
     page_url = expected.get("page_url", "")
     jurisdiction_name = expected.get("jurisdiction_name", "")
+    known_roles = expected.get("known_roles", [])
     make_prompt = model_client["make_prompt"]
 
-    prompt = make_prompt(page_url, jurisdiction_name)
+    prompt = make_prompt(page_url, jurisdiction_name, known_roles)
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         "run-eval",
@@ -119,14 +118,7 @@ def load_eval_cases():
 
 @pytest_asyncio.fixture
 async def model_client(request):
-    if request.param == "google_gemini":
-        return {
-            "name": "google_gemini",
-            "run_prompt": run_gemini_prompt,
-            "make_prompt": make_gemini_prompt,
-            "extra_kwargs": {},
-        }
-    elif request.param == "open_router":
+    if request.param == "open_router":
         return {
             "name": "open_router",
             "run_prompt": run_together_prompt,

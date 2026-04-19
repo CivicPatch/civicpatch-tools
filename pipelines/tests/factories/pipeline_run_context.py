@@ -43,7 +43,7 @@ def pipeline_run_context_factory(
             links=[],
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             research_municipality_step=research_municipality_step or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
-                expected_count=0, target_designations=[], roles_hint=[], identities={}, source_urls=[]
+                expected_count=0, target_designations=[], known_roles=[], identities={}, source_urls=[]
             ),
             search_links_step=default_steps.get(PipelineStatus.SEARCH_LINKS, SearchLinksStep()),
             preprocess_page_content_step=default_steps.get(PipelineStatus.PREPROCESS_PAGE_CONTENT),

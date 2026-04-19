@@ -1,26 +1,16 @@
 providers:
   open_router-AtlasCloud:
-    elapsed_seconds: 44.19
-    cost_usd: 0.02272404
+    elapsed_seconds: 11.67
+    cost_usd: 0.02048804
     failed_cases: 0
-    passed_cases: 14
+    passed_cases: 15
   open_router-SiliconFlow:
-    elapsed_seconds: 92.71
-    cost_usd: 0.02360745
+    elapsed_seconds: 36.71
+    cost_usd: 0.02083731
     failed_cases: 0
-    passed_cases: 14
-  open_router-Parasail:
-    elapsed_seconds: 157.88
-    cost_usd: 0.02420695
-    failed_cases: 0
-    passed_cases: 14
-  open_router-Friendli:
-    elapsed_seconds: 106.24
-    cost_usd: 0.0502905
-    failed_cases: 0
-    passed_cases: 14
+    passed_cases: 15
   open_router-Google:
-    elapsed_seconds: 145.15
-    cost_usd: 0.0591864
+    elapsed_seconds: 35.36
+    cost_usd: 0.04651248
     failed_cases: 0
-    passed_cases: 14
+    passed_cases: 15
