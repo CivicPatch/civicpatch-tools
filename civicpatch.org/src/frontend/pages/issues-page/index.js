@@ -17,17 +17,11 @@ import {
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/pull-request-card/index.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { ISSUE_TYPE, KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import "./issues-page.css";
 
 const DEFAULT_ISSUES_PER_PAGE = 20;
 const ISSUES_PER_PAGE_OPTIONS = [10, 20, 50, 100];
-
-const KNOWN_ISSUE_TYPES = [
-  { value: "unrecognized_role", label: "Unrecognized role" },
-  { value: "pipeline_error", label: "Pipeline error" },
-  { value: "no_info", label: "No info" },
-  { value: "no_mayor", label: "No mayor" },
-];
 
 function getIssuesPageFromUrl() {
   const val = parseInt(new URLSearchParams(window.location.search).get("issues_page"), 10);
@@ -65,9 +59,13 @@ function setIssuesParamsInUrl(page, perPage, tags, sortDesc) {
 }
 
 
+function getIssueTypeConfig(issueType) {
+  return KNOWN_ISSUE_TYPES.find((t) => t.value === issueType);
+}
+
 function getIssueDetail(issueType, issueKey, data) {
   if (!data) return issueKey || "";
-  if (issueType === "unrecognized_role") {
+  if (issueType === ISSUE_TYPE.UNRECOGNIZED_ROLE) {
     const names = (data.person_names || []).join(", ");
     return names ? `${issueKey} — ${names}` : issueKey;
   }
@@ -75,7 +73,7 @@ function getIssueDetail(issueType, issueKey, data) {
 }
 
 function formatIssueType(issueType) {
-  return KNOWN_ISSUE_TYPES.find((t) => t.value === issueType)?.label ?? issueType;
+  return getIssueTypeConfig(issueType)?.label ?? issueType;
 }
 
 function formatDate(isoString) {
@@ -207,7 +205,7 @@ function IssuesPage() {
   const handleModalSubmit = async () => {
     const issue = resolveModal;
     let body = {};
-    if (issue.issue_type === "unrecognized_role") {
+    if (issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE) {
       body = {
         scope: modalScope,
         ...(modalState ? { state: modalState } : {}),
@@ -310,43 +308,47 @@ function IssuesPage() {
 
   // --- Modals ---
 
-  const pipelineErrorModal = resolveModal && resolveModal.issue_type === "pipeline_error" ? html`
-    <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
-      <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
-        <h3 class="issues-page__modal-title">Pipeline error</h3>
-        ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
-          ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
-          : html`
-            ${modalDetails[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
-            <div class="issues-page__modal-debug-links">
-              ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
-              ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
-              ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
-            </div>
-          `}
-        <div class="issues-page__modal-actions">
-          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
-        </div>
-      </div>
+  const debugLinks = modalDetails?.length ? html`
+    <div class="issues-page__modal-debug-links">
+      ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
+      ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
+      ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
     </div>
   ` : null;
 
-  const debugLinksModal = resolveModal && ["no_info", "no_mayor"].includes(resolveModal.issue_type) ? html`
+  const modalLoading = html`<div class="issues-page__modal-source-loading">Loading…</div>`;
+
+  function renderModalContent() {
+    if (!resolveModal) return null;
+    switch (getIssueTypeConfig(resolveModal.issue_type)?.modal_type) {
+      case "pipeline_error":
+        return html`
+          <h3 class="issues-page__modal-title">Pipeline error</h3>
+          ${modalDetails === null || (modalDetails.length === 0 && resolveModal) ? modalLoading : html`
+            ${modalDetails[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
+            ${debugLinks}
+          `}
+          <div class="issues-page__modal-actions">
+            <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
+          </div>
+        `;
+      case "debug":
+        return html`
+          <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
+          ${modalDetails === null || (modalDetails.length === 0 && resolveModal) ? modalLoading : debugLinks}
+          <div class="issues-page__modal-actions">
+            <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
+          </div>
+        `;
+      default:
+        return null;
+    }
+  }
+
+  const debugModal = resolveModal && getIssueTypeConfig(resolveModal.issue_type)?.modal_type !== "role" ? html`
     <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
-        <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
-        ${modalDetails === null || (modalDetails.length === 0 && resolveModal)
-          ? html`<div class="issues-page__modal-source-loading">Loading…</div>`
-          : html`
-            <div class="issues-page__modal-debug-links">
-              ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
-              ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
-              ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
-            </div>
-          `}
-        <div class="issues-page__modal-actions">
-          <button class="btn btn-sm" @click=${() => setResolveModal(null)}>Close</button>
-        </div>
+        ${renderModalContent()}
       </div>
     </div>
   ` : null;
@@ -355,7 +357,7 @@ function IssuesPage() {
     ? (resolveModal.jurisdictions || []).filter((j) => j.state === modalState)
     : [];
 
-  const roleModal = resolveModal && resolveModal.issue_type === "unrecognized_role" ? html`
+  const roleModal = resolveModal && resolveModal.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE ? html`
     <div class="issues-page__modal-overlay" @click=${() => setResolveModal(null)}>
       <div class="issues-page__modal" @click=${(e) => e.stopPropagation()}>
         <h3 class="issues-page__modal-title">Resolve: "${resolveModal.issue_key}"</h3>
@@ -405,6 +407,43 @@ function IssuesPage() {
 
   // --- Render helpers ---
 
+  function renderIssueRow(ev) {
+    const config = getIssueTypeConfig(ev.issue_type);
+    const categoryClass = config?.category ? ` issues-page__issue-type-chip--${config.category}` : "";
+    return html`
+      <tr>
+        <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}${categoryClass}">${formatIssueType(ev.issue_type)}</span></td>
+        <td class="issues-page__issue-detail">${getIssueDetail(ev.issue_type, ev.issue_key, ev.data)}</td>
+        <td class="issues-page__issue-jurisdictions">
+          ${ev.jurisdictions && ev.jurisdictions.length === 1
+            ? html`
+              <span class="issues-page__state-badge">${ev.jurisdictions[0].state.toUpperCase()}</span>
+              <a href="/${ev.jurisdictions[0].path}" target="_blank" rel="noopener noreferrer">${ev.jurisdictions[0].name}</a>
+            `
+            : (ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)
+          }
+        </td>
+        <td class="issues-page__issue-status">
+          ${ev.status === "pr_opened"
+            ? html`<a class="issues-page__issue-status-link" href=${ev.pull_request_url} target="_blank" rel="noopener noreferrer">PR opened →</a>`
+            : html`<span class="issues-page__issue-status-badge">Pending</span>`}
+        </td>
+        <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
+        <td class="issues-page__issue-actions">
+          ${config?.modal_type === "role" && ev.status === "pending"
+            ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
+            : ""}
+          ${config?.modal_type && config.modal_type !== "role"
+            ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
+            : ""}
+          ${ev.status === "pending"
+            ? html`<button class="btn btn-sm" @click=${() => handleDismissIssue(ev)}>Dismiss</button>`
+            : ""}
+        </td>
+      </tr>
+    `;
+  }
+
   const issuesPaginationControls = !issuesPageLoading ? Pagination({
     page: issuesPage,
     totalPages: issuesTotalPages,
@@ -414,11 +453,12 @@ function IssuesPage() {
     hrefForPage: (n) => `?issues_page=${n}`,
   }) : null;
 
-  const tagChips = KNOWN_ISSUE_TYPES.map(({ value, label }) => {
+  const tagChips = KNOWN_ISSUE_TYPES.map(({ value, label, category }) => {
     const active = issuesTagFilter.includes(value);
+    const categoryClass = category ? ` issues-page__issue-tag--${category}` : "";
     return html`
       <button
-        class="issues-page__issue-tag${active ? " issues-page__issue-tag--active" : ""}"
+        class="issues-page__issue-tag${categoryClass}${active ? " issues-page__issue-tag--active" : ""}"
         @click=${() => handleToggleTag(value)}
       >${label}${active ? html` <span class="issues-page__issue-tag-x">×</span>` : ""}</button>
     `;
@@ -454,36 +494,7 @@ function IssuesPage() {
               ${issues.length === 0
                 ? html`<tr><td colspan="6">No issues found.</td></tr>`
                 : issues.map((ev) => html`
-                  <tr>
-                    <td><span class="issues-page__issue-type-chip issues-page__issue-type-chip--${ev.issue_type.replace(/_/g, "-")}">${formatIssueType(ev.issue_type)}</span></td>
-                    <td class="issues-page__issue-detail">${getIssueDetail(ev.issue_type, ev.issue_key, ev.data)}</td>
-                    <td class="issues-page__issue-jurisdictions">
-                      ${ev.jurisdictions && ev.jurisdictions.length === 1
-                        ? html`
-                          <span class="issues-page__state-badge">${ev.jurisdictions[0].state.toUpperCase()}</span>
-                          <a href="/${ev.jurisdictions[0].path}" target="_blank" rel="noopener noreferrer">${ev.jurisdictions[0].name}</a>
-                        `
-                        : (ev.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)
-                      }
-                    </td>
-                    <td class="issues-page__issue-status">
-                      ${ev.status === "pr_opened"
-                        ? html`<a class="issues-page__issue-status-link" href=${ev.pull_request_url} target="_blank" rel="noopener noreferrer">PR opened →</a>`
-                        : html`<span class="issues-page__issue-status-badge">Pending</span>`}
-                    </td>
-                    <td class="issues-page__issue-date">${formatDate(ev.created_at)}</td>
-                    <td class="issues-page__issue-actions">
-                      ${ev.status === "pending" && ev.issue_type === "unrecognized_role"
-                        ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Resolve</button>`
-                        : ""}
-                      ${["pipeline_error", "no_info", "no_mayor"].includes(ev.issue_type)
-                        ? html`<button class="btn btn-sm" @click=${() => openResolveModal(ev)}>Details</button>`
-                        : ""}
-                      ${ev.status === "pending"
-                        ? html`<button class="btn btn-sm" @click=${() => handleDismissIssue(ev)}>Dismiss</button>`
-                        : ""}
-                    </td>
-                  </tr>
+                  ${renderIssueRow(ev)}
                 `)
               }
             </tbody>
@@ -563,8 +574,7 @@ function IssuesPage() {
       ${issuesSection}
       ${duplicatesSection}
     </main>
-    ${pipelineErrorModal}
-    ${debugLinksModal}
+    ${debugModal}
     ${roleModal}
     ${prToast ? html`
       <div class="issues-page__pr-toast">
