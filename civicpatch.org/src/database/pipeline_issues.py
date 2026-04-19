@@ -209,7 +209,8 @@ async def get_pipeline_issues_page(
                        SELECT jsonb_object_agg(u.ocdid, COALESCE(j.data->>'name', u.ocdid))
                        FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
                        LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
-                   ) AS jurisdiction_names
+                   ) AS jurisdiction_names,
+                   ri.category
             FROM pipeline_issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
@@ -233,6 +234,7 @@ async def get_pipeline_issues_page(
             "resolved_at": r[6].isoformat() if r[6] else None,
             "created_at": r[7].isoformat() if r[7] else None,
             "pull_request_url": r[10],
+            "category": r[12],
             "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
             "jurisdictions": jurisdictions,
         })
