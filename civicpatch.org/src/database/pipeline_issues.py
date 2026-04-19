@@ -5,7 +5,7 @@ from psycopg import sql
 
 import shared.utils.id_utils
 from database.database import get_pool
-from shared.utils.statuses import ReviewIssueStatus
+from shared.utils.statuses import PipelineIssueType, ReviewIssueStatus
 
 
 def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
@@ -124,9 +124,12 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str,
         return
     rows = []
     for issue in issues:
-        if issue_type == "unrecognized_role":
+        if issue_type == PipelineIssueType.UNRECOGNIZED_ROLE:
             issue_key = issue["role"]
             data = json.dumps({"person_names": [issue.get("person_name", "")]})
+        elif issue_type == PipelineIssueType.DOMAIN_REDIRECTED:
+            issue_key = issue.get("original_url", request_id)
+            data = json.dumps(issue)
         else:
             issue_key = request_id
             data = json.dumps(issue)
