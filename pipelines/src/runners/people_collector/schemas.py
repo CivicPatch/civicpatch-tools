@@ -93,7 +93,7 @@ class ResearchMunicipalityLLMSchema(BaseModel):
 class ResearchMunicipalityStep(BaseModel):
     expected_count: int = 0         # how many officials the pipeline expects to find
     target_designations: List[str] = []  # geographic designations to look for
-    roles_hint: list[str] = []
+    known_roles: list[str] = []
     identities: dict[str, list[str]] = {}  # canonical name to list of other names/aliases
     source_urls: list[str] = []
     notes: Optional[str] = None

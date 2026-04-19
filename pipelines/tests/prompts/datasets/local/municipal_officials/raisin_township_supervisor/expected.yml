@@ -1,0 +1,16 @@
+known_roles:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+people:
+- name: Deb Brousseau
+  roles:
+  - Supervisor
+  designations: []
+  phone: 517-662-5213
+  email: supervisor@raisintownship.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null

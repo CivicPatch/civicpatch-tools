@@ -141,14 +141,14 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     identities = get_identities(context)
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
-    roles_hint = context.data.research_municipality_step.roles_hint
+    known_roles = context.data.research_municipality_step.known_roles
 
-    updated_links, is_relevant = await check_page_relevance(context, page_to_process, content)
+    updated_links, is_relevant = await check_page_relevance(context, page_to_process, content, known_roles)
     if not is_relevant:
         return updated_links, current_step.copy(update={"links": updated_links})
 
     updated_raw_records, updated_records, heuristics_passed = await run_llm_loop(
-        context, page_to_process, content, roles_hint, current_step, identities, logger
+        context, page_to_process, content, known_roles, current_step, identities, logger
     )
 
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
@@ -205,8 +205,8 @@ def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=
     )
 
 
-async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str) -> Tuple[List[Link], bool]:
-    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "")
+async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str, known_roles: list[str]) -> Tuple[List[Link], bool]:
+    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "", known_roles)
     raw_response = await _relevance_llm.run_prompt(
         context.request_id,
         context.data.jurisdiction_ocdid,
@@ -219,12 +219,11 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
     updated_links = copy.deepcopy(context.data.links)
     existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
     names, designations = _extract_names_and_designations(existing_records)
-    roles_hint = context.data.research_municipality_step.roles_hint if context.data.research_municipality_step else []
     relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     if response.relevant_urls:
-        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + roles_hint, relevance_logger)
+        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + known_roles, relevance_logger)
     else:
-        combined_terms = designations + roles_hint
+        combined_terms = designations + known_roles
         url_comments = {
             url: comment
             for text, url in _extract_links_from_markdown(content)
@@ -245,7 +244,7 @@ async def run_llm_loop(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
-    roles_hint: list[str],
+    known_roles: list[str],
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
@@ -266,7 +265,7 @@ async def run_llm_loop(
 
         llm_responses, records_found = await process_with_llm(
             page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
-            content, roles_hint, llm,
+            content, known_roles, llm,
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
@@ -303,7 +302,7 @@ async def process_with_llm(
     request_id,
     jurisdiction_ocdid: str,
     content: str,
-    roles_hint: list[str],
+    known_roles: list[str],
     llm: dict,
 ) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
     """
@@ -314,7 +313,7 @@ async def process_with_llm(
         raise NotImplementedError(f"Batch API not yet implemented for LLM: {llm['name']}")
 
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    prompt = llm["prompt"].municipality_officials_prompt(roles_hint, state=ocdid_parts.state, county=ocdid_parts.county)
+    prompt = llm["prompt"].municipality_officials_prompt(known_roles, state=ocdid_parts.state, county=ocdid_parts.county)
     response = await llm["service"].run_prompt(
         request_id,
         jurisdiction_ocdid,

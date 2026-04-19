@@ -439,7 +439,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
         "runners.people_collector.steps.step_05_process_page_content.process_page_content._relevance_llm.run_prompt",
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
-        updated_links, _ = await check_page_relevance(context, page, "some page content")
+        updated_links, _ = await check_page_relevance(context, page, "some page content", [])
 
     pending_urls = [l.url for l in updated_links if l.status == LinkStatus.PENDING.value]
     assert cross_domain_url not in pending_urls
