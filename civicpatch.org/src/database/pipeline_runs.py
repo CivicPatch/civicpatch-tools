@@ -1,5 +1,4 @@
 import json
-from collections import Counter
 from typing import Any, List, Optional
 
 from psycopg import sql
@@ -7,61 +6,6 @@ from psycopg import sql
 from database.database import get_pool, to_iso
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 from lib.github.utils import pull_request_url_to_number
-
-async def get_duplicate_jurisdiction_ocdids() -> set:
-    """Return a set of jurisdiction_ocdids that appear in more than one open PR."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT r.jurisdiction_ocdid
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
-            JOIN pull_requests pr ON pr.request_id = r.id
-            WHERE pr.status = 'open'
-            """
-        )
-        rows = await cur.fetchall()
-    ocdids = [r[0] for r in rows if r[0]]
-    counts = Counter(ocdids)
-    return {ocdid for ocdid, count in counts.items() if count > 1}
-
-async def get_stale_duplicate_pr_info() -> list[dict]:
-    """
-    For each jurisdiction with more than one open PR, return all but the latest
-    (by pipeline_run created_at). Used for bulk-closing stale duplicates.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            WITH ranked AS (
-                SELECT
-                    j.request_id,
-                    pr.pr_number,
-                    ROW_NUMBER() OVER (
-                        PARTITION BY r.jurisdiction_ocdid ORDER BY j.created_at DESC
-                    ) AS rn
-                FROM pipeline_runs j
-                JOIN requests r ON r.id = j.request_id
-                JOIN pull_requests pr ON pr.request_id = r.id
-                WHERE pr.status = 'open'
-                  AND r.jurisdiction_ocdid IN (
-                      SELECT r2.jurisdiction_ocdid
-                      FROM pipeline_runs j2
-                      JOIN requests r2 ON r2.id = j2.request_id
-                      JOIN pull_requests pr2 ON pr2.request_id = r2.id
-                      WHERE pr2.status = 'open'
-                      GROUP BY r2.jurisdiction_ocdid
-                      HAVING COUNT(*) > 1
-                  )
-            )
-            SELECT request_id, pr_number FROM ranked WHERE rn > 1
-            """
-        )
-        rows = await cur.fetchall()
-    return [{"request_id": r[0], "pr_number": r[1]} for r in rows]
-
 
 async def get_pipeline_run_for_review(request_id: str) -> dict | None:
     pool = await get_pool()
