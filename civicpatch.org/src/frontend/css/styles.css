@@ -335,17 +335,17 @@ input:not(
 }
 
 [type="submit"]:not(.profile-modal__tab),
-[type="button"]:not(.profile-modal__tab),
+[type="button"]:not(.profile-modal__tab):not(.secondary),
 [type="reset"],
-button:not(.btn-ghost):not(.profile-modal__tab) {
+button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(.destructive) {
     --pico-background-color: var(--pico-primary);
     --pico-border-color: var(--pico-primary);
     --pico-color: var(--pico-primary-inverse);
 }
 
-button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.profile-modal__tab):hover,
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.profile-modal__tab):not(.secondary):hover,
 [type="submit"]:not(.profile-modal__tab):hover,
-[type="button"]:not(.profile-modal__tab):hover {
+[type="button"]:not(.profile-modal__tab):not(.secondary):hover {
     --pico-background-color: var(--pico-primary-hover-background);
     --pico-border-color: var(--pico-primary-hover-background);
     --pico-color: var(--pico-primary-inverse);
