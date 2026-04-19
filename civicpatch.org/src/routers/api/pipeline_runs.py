@@ -429,11 +429,12 @@ def get_router(api_key_header):
         per_page: int = 20,
         sort: str = "desc",
         state_code: Optional[str] = None,
+        show_archived: bool = False,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
-        rows, total = await get_pipeline_issues_page(issue_types, page, per_page, sort_desc, state_code=state_code)
+        rows, total = await get_pipeline_issues_page(issue_types, page, per_page, sort_desc, state_code=state_code, show_archived=show_archived)
         return {"data": rows, "total": total}
 
     @router.post(

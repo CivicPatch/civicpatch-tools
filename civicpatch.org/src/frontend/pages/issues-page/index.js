@@ -94,6 +94,7 @@ function IssuesPage() {
   const [issuesSortDesc, setIssuesSortDesc] = useState(getIssuesSortDescFromUrl());
   const [issuesLoading, setIssuesLoading] = useState(false);
   const [issuesPageLoading, setIssuesPageLoading] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
 
   // Resolve modal state
   const [resolveModal, setResolveModal] = useState(null);
@@ -127,11 +128,11 @@ function IssuesPage() {
   useEffect(() => {
     if (!openSections.issues) return;
     setIssuesLoading(true);
-    fetchJobIssues(issuesTagFilter, issuesPage, issuesPerPage, issuesSortDesc ? "desc" : "asc", stateCode)
+    fetchJobIssues(issuesTagFilter, issuesPage, issuesPerPage, issuesSortDesc ? "desc" : "asc", stateCode, showArchived)
       .then((r) => { setIssues(r.data || []); setIssuesTotal(r.total || 0); })
       .catch(console.error)
       .finally(() => { setIssuesLoading(false); setIssuesPageLoading(false); });
-  }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc, stateCode]);
+  }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc, stateCode, showArchived]);
 
   // Modal details — lazy-fetch when modal opens
   useEffect(() => {
@@ -422,16 +423,20 @@ function IssuesPage() {
   const issuesSection = html`
     <section class="issues-page__section">
       <div class="issues-page__section-header" @click=${() => toggleSection("issues")}>
-        <h2 class="issues-page__section-title issues-page__section-title--info">Issues <span class="issues-page__section-count">${issuesTotal || ""}</span></h2>
+        <h2 class="issues-page__section-title issues-page__section-title--info">${showArchived ? "Archived Issues" : "Issues"} <span class="issues-page__section-count">${issuesTotal || ""}</span></h2>
         <i class="fa-solid fa-chevron-down btn-icon${openSections.issues ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${openSections.issues ? html`
         <div class="issues-page__issues-filters">
-          <div class="issues-page__issue-tags">${tagChips}</div>
+          <div class="issues-page__issue-tags">${!showArchived ? tagChips : null}</div>
           <button
             class="btn btn-sm issues-page__sort-btn"
             @click=${handleToggleSort}
           >${issuesSortDesc ? "Newest ↓" : "Oldest ↑"}</button>
+          <button
+            class="btn btn-sm"
+            @click=${() => { setShowArchived(!showArchived); setIssuesPage(1); }}
+          >${showArchived ? "← Active Issues" : "Archived"}</button>
         </div>
         ${issuesLoading ? html`<div>Loading…</div>` : html`
           <table class="issues-page__issues-table">
