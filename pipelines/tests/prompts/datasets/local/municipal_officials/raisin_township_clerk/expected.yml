@@ -1,0 +1,16 @@
+known_roles:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+people:
+- name: Susan Bunch
+  roles:
+  - Clerk
+  designations: []
+  phone: null
+  email: clerk@raisintownship.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null

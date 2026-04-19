@@ -191,9 +191,12 @@ async def run_eval(model_client, cases, ocdid="ocd-jurisdiction/country:us/state
 @pytest_asyncio.fixture
 def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials"):
     base = pathlib.Path(base_dir)
+    only_case = os.environ.get("EVAL_CASE")
     cases = []
 
     for case_dir in sorted(base.iterdir()):
+        if only_case and case_dir.name != only_case:
+            continue
         print(f"Loading case from {case_dir}")
         if not case_dir.is_dir():
             continue
@@ -244,7 +247,11 @@ async def model_client(request):
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
-@pytest.mark.parametrize("model_client", PROVIDER_COMPARISON, indirect=True)
+def _active_providers():
+    only = os.environ.get("EVAL_PROVIDER")
+    return [p for p in PROVIDER_COMPARISON if not only or p.split(":", 1)[1] == only]
+
+@pytest.mark.parametrize("model_client", _active_providers(), indirect=True)
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     start_time = time.time()

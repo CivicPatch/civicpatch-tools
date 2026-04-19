@@ -1,16 +1,16 @@
 providers:
   open_router-AtlasCloud:
-    elapsed_seconds: 11.67
-    cost_usd: 0.02048804
+    elapsed_seconds: 15.0
+    cost_usd: 0.02175292
     failed_cases: 0
-    passed_cases: 15
+    passed_cases: 16
   open_router-SiliconFlow:
-    elapsed_seconds: 36.71
-    cost_usd: 0.02083731
+    elapsed_seconds: 27.23
+    cost_usd: 0.02193564
     failed_cases: 0
-    passed_cases: 15
+    passed_cases: 16
   open_router-Google:
-    elapsed_seconds: 35.36
-    cost_usd: 0.04651248
+    elapsed_seconds: 33.06
+    cost_usd: 0.04887792
     failed_cases: 0
-    passed_cases: 15
+    passed_cases: 16

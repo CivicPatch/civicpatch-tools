@@ -93,10 +93,7 @@ async def run_prompt(
                 "response_format": response_format,
                 "provider": {
                     "order": provider_order or ["AtlasCloud", "SiliconFlow", "Google"],
-                    "allow_fallbacks": allow_fallbacks,
-                    # require_parameters breaks with allow_fallbacks=False — no fallback
-                    # available if the pinned provider fails the parameter check
-                    **({"require_parameters": True} if allow_fallbacks else {}),
+                    "allow_fallbacks": False,
                     "data_collection": "deny",
                 },
             }),

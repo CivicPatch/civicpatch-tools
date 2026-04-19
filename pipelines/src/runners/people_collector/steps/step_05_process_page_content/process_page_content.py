@@ -104,6 +104,7 @@ class ProcessingSetup:
     roles: List[str]
     target_role: str
     target_designations: List[str]
+    known_roles: List[str]
 
 LLMS = [
     {
@@ -202,6 +203,7 @@ def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=
         roles=config_utils.get_role_names(role_config),
         target_role=config_utils.get_head_of_government_role(role_config) or "Mayor",
         target_designations=municipality_research.target_designations,
+        known_roles=municipality_research.known_roles,
     )
 
 
@@ -438,11 +440,13 @@ def calculate_progress(progress: ProgressState, records_by_llm: RecordsByLLM, se
             if len(people_with_designations) >= num_target_designations:
                 target_designations_found.add(llm)
 
+    known_roles_lower = {r.strip().lower() for r in setup_data.known_roles}
+    requires_mayor = not known_roles_lower or "mayor" in known_roles_lower
     sorted_counts = sorted(llm_people_counts, reverse=True)
     return ProgressState(
         required_data=progress.required_data,
         current_data=sorted_counts[0] if sorted_counts else 0,
-        has_target_role=len(target_role_found) >= 1,
+        has_target_role=len(target_role_found) >= 1 if requires_mayor else True,
         has_target_designations=len(target_designations_found) >= 1,
     )
 
