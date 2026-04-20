@@ -43,9 +43,10 @@ def preprocess_page_content(
 
     assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before preprocess_page_content"
     identities = context.data.research_municipality_step.identities
+    known_roles = context.data.research_municipality_step.known_roles
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
-    preprocessed_html  = filter_content(logger, identities, cleaned_html)
+    preprocessed_html  = filter_content(logger, identities, cleaned_html, extra_keywords=known_roles)
     try:
         preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], escape_underscores=False)
         # Collapse consecutive duplicate lines — common artifact of sites that render

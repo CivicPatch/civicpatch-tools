@@ -34,7 +34,7 @@ def count_nodes(node: Tag):
             count += count_nodes(child)
     return count
 
-def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cache: Optional[Dict[str, tuple]] = None) -> bool:
+def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cache: Optional[Dict[str, tuple]] = None, extra_keywords: Optional[List[str]] = None) -> bool:
     """Check if text contains any relevant content including emails and phones.
     Match identity names by individual name tokens (word-by-word, case-insensitive).
     """
@@ -51,6 +51,16 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cach
     flattened_names = [canonical_name for canonical_name in identities.keys()]
     flattened_aliases = [item for sublist in identities.values() for item in sublist]
     text_lc = text.lower()
+
+    for kw in (extra_keywords or []):
+        if not kw:
+            continue
+        kw_lc = kw.strip().lower()
+        if kw_lc in text_lc:
+            return True
+        tokens = kw_lc.split()
+        if len(tokens) > 1 and "".join(tokens) in text_lc:
+            return True
 
     for name in flattened_names + flattened_aliases:
         if not name:
@@ -87,7 +97,7 @@ def _collect_texts(soup) -> List[str]:
     return texts
 
 
-def filter_content(logger, identities: Dict[str, List[str]], input_html: str, progress_log_interval: int = 10) -> str:
+def filter_content(logger, identities: Dict[str, List[str]], input_html: str, progress_log_interval: int = 10, extra_keywords: Optional[List[str]] = None) -> str:
     soup = BeautifulSoup(input_html, "html.parser")
     total_nodes = count_nodes(soup)
 
@@ -100,14 +110,14 @@ def filter_content(logger, identities: Dict[str, List[str]], input_html: str, pr
         "last_progress_time": time.time(),
         "progress_log_interval": progress_log_interval
     }
-    filter_node_content(logger, identities, soup, state, spacy_cache)
+    filter_node_content(logger, identities, soup, state, spacy_cache, extra_keywords=extra_keywords)
 
     if not soup.find_all():  # No tags left in the tree
         return ""
     filtered_content = soup.prettify()
     return filtered_content
 
-def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state, spacy_cache: Optional[Dict[str, tuple]] = None) -> bool:
+def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state, spacy_cache: Optional[Dict[str, tuple]] = None, extra_keywords: Optional[List[str]] = None) -> bool:
     """
     Process node tree. Returns True if this node (or any descendant) should be kept,
     False if the node was removed.
@@ -137,7 +147,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     if node.name == "table":
         table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
         if table_text.strip():
-            is_relevant = has_relevant_content(identities, table_text, spacy_cache)
+            is_relevant = has_relevant_content(identities, table_text, spacy_cache, extra_keywords=extra_keywords)
             if is_relevant:
                 # Mark this table to keep ALL its content (including images),
                 # but still strip blacklisted links — the table handler returns
@@ -167,7 +177,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     any_child_kept = False
     for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
         if isinstance(child, Tag):  # Ensure the child is a Tag (not a string or comment)
-            child_kept = filter_node_content(logger, identities, child, state, spacy_cache)
+            child_kept = filter_node_content(logger, identities, child, state, spacy_cache, extra_keywords=extra_keywords)
             any_child_kept = any_child_kept or bool(child_kept)
 
     # Process the parent node after all its children
@@ -189,12 +199,12 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
 
     # For text nodes and other elements, check content but don't be too aggressive
     if node and node.name:
-        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache):
+        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache, extra_keywords=extra_keywords):
             return True  # Keep nodes with relevant content
 
     # Handle specific structural elements more carefully
     if node.name in ["p", "section", "article", "main", "header", "footer", "h1", "h2", "h3", "h4", "h5", "h6"]:
-        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache):
+        if has_relevant_content(identities, node.get_text(" ", strip=True), spacy_cache, extra_keywords=extra_keywords):
             return True  # Keep structural elements that contain relevant content (including images)
 
         # Only extract images and <a> links if we're going to remove this element
