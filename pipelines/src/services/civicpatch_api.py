@@ -176,6 +176,15 @@ async def search_people(
     return response.json().get("data", [])
 
 
+async def fetch_pipeline_run_status(client: httpx.AsyncClient, request_id: str) -> Optional[str]:
+    env = get_env_vars()
+    resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/status")
+    if resp.status_code == 404:
+        return None
+    resp.raise_for_status()
+    return resp.json().get("status")
+
+
 async def fetch_pipeline_run_config(client: httpx.AsyncClient, logger, request_id: str) -> dict:
     MAX_RETRIES = 5
 
