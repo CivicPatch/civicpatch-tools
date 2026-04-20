@@ -7,6 +7,13 @@ def clean_html(logger, input_html: str) -> str:
     """
     soup = BeautifulSoup(input_html, "html.parser")
 
+    # Strip data: URI attributes — large blobs with no scraping value
+    for tag in soup.find_all(True):
+        for attr in list(tag.attrs):
+            val = tag[attr]
+            if isinstance(val, str) and val.startswith("data:"):
+                del tag[attr]
+
     # Remove all span tags but keep their content
     for span in soup.find_all("span"):
         span.unwrap()
