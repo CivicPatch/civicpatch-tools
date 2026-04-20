@@ -141,9 +141,14 @@ def get_keywords() -> List[str]:
     crawl = crawl_keywords()
     extra_keywords = [
         "title", "email", "phone", "contact", "address",
+
+        # dates
         "start date", "elected at", "end date", "term expires",
         "current term", 
-        "committee", "planning", "board", "zoning"
+
+        "committee", "board",
+
+        "township", "village", "city"
     ]
     keywords = list(role_keywords | designation_keywords | set(crawl) | set(extra_keywords))
     return keywords

@@ -103,6 +103,6 @@ async def trigger_local(
         "source_urls": source_urls,
     }
     async with httpx.AsyncClient() as client:
-        resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs", json=payload, timeout=10)
+        resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs", json=payload, timeout=30)
         resp.raise_for_status()
     activity.logger.info(f"Local job triggered: {request_id}")
