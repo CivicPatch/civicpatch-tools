@@ -8,8 +8,8 @@ from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, Sch
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
-from routers.temporal.activities import sync_pr_state_activity, od_sync_activity
-from lib.temporal.workflows import PRSyncWorkflow, OdSyncWorkflow, TASK_QUEUE
+from routers.temporal.activities import sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity
+from lib.temporal.workflows import PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow, ScheduleId, WorkflowInstanceId, TASK_QUEUE
 from database.database import get_pool, close_pool
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
@@ -27,13 +27,13 @@ async def _schedule_exists(client: Client, schedule_id: str) -> bool:
 
 
 async def _register_schedules(client: Client) -> None:
-    if not await _schedule_exists(client, "pr-sync"):
+    if not await _schedule_exists(client, ScheduleId.PR_SYNC):
         await client.create_schedule(
-            "pr-sync",
+            ScheduleId.PR_SYNC,
             Schedule(
                 action=ScheduleActionStartWorkflow(
                     PRSyncWorkflow.run,
-                    id="pr-sync-workflow",
+                    id=WorkflowInstanceId.PR_SYNC,
                     task_queue=TASK_QUEUE,
                 ),
                 spec=ScheduleSpec(cron_expressions=["0 * * * *"]),
@@ -41,13 +41,13 @@ async def _register_schedules(client: Client) -> None:
             ),
         )
 
-    if not await _schedule_exists(client, "od-sync"):
+    if not await _schedule_exists(client, ScheduleId.OD_SYNC):
         handle = await client.create_schedule(
-            "od-sync",
+            ScheduleId.OD_SYNC,
             Schedule(
                 action=ScheduleActionStartWorkflow(
                     OdSyncWorkflow.run,
-                    id="od-sync-workflow",
+                    id=WorkflowInstanceId.OD_SYNC,
                     task_queue=TASK_QUEUE,
                 ),
                 spec=ScheduleSpec(cron_expressions=["0 0 * * *"]),
@@ -55,6 +55,20 @@ async def _register_schedules(client: Client) -> None:
             ),
         )
         await handle.trigger()
+
+    if not await _schedule_exists(client, ScheduleId.PIPELINE_RUN_CLEANUP):
+        await client.create_schedule(
+            ScheduleId.PIPELINE_RUN_CLEANUP,
+            Schedule(
+                action=ScheduleActionStartWorkflow(
+                    PipelineRunCleanupWorkflow.run,
+                    id=WorkflowInstanceId.PIPELINE_RUN_CLEANUP,
+                    task_queue=TASK_QUEUE,
+                ),
+                spec=ScheduleSpec(cron_expressions=["*/15 * * * *"]),
+                policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+            ),
+        )
 
 
 async def main() -> None:
@@ -64,8 +78,8 @@ async def main() -> None:
     async with Worker(
         client,
         task_queue=TASK_QUEUE,
-        workflows=[PRSyncWorkflow, OdSyncWorkflow],
-        activities=[sync_pr_state_activity, od_sync_activity],
+        workflows=[PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow],
+        activities=[sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
         await asyncio.Event().wait()

@@ -6,6 +6,8 @@ from temporalio.client import Client
 from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
+from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+
 _client: Client | None = None
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
@@ -46,6 +48,7 @@ async def start_people_collector_workflow(
         id=workflow_id,
         task_queue=TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+        execution_timeout=PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     )
     return handle.id
 

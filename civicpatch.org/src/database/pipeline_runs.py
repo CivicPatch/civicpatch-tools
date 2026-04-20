@@ -1,4 +1,5 @@
 import json
+from datetime import timedelta
 from typing import Any, List, Optional
 
 from psycopg import sql
@@ -214,6 +215,24 @@ async def update_pipeline_run_status(request_id: str, status: str | None = None,
             """),
             params,
         )
+
+
+async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
+    """Mark RUNNING pipeline runs not updated within `older_than` as ERROR. Returns affected request_ids."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            UPDATE pipeline_runs
+            SET status = 'ERROR', updated_at = CURRENT_TIMESTAMP
+            WHERE status = 'RUNNING'
+            AND updated_at < NOW() - %s::interval
+            RETURNING request_id::text
+            """,
+            (older_than,),
+        )
+        rows = await cur.fetchall()
+    return [row[0] for row in rows]
 
 
 async def update_pipeline_run_data(request_id: str, data_json: Any):
