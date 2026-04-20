@@ -346,7 +346,7 @@ function IssuesPage() {
         `;
       case "debug":
       case "details": {
-        const d0 = modalDetails?.[0];
+        const d0 = modalDetails?.length === 1 ? modalDetails[0] : null;
         return html`
           <div class="issues-page__modal-header">
             <h3 class="issues-page__modal-title">${formatIssueType(resolveModal.issue_type)}</h3>
