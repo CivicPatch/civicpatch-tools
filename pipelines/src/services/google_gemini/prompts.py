@@ -10,11 +10,12 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
     county = jurisdiction_ocdid_parts.county
     state = id_utils.state_name(jurisdiction_ocdid)
 
-    location_parts = [municipality_name, f"{county} County" if county else None, state]
+    county_str = county.replace("_", " ").title() if county else None
+    location_parts = [municipality_name, f"{county_str} County" if county_str else None, state]
     location_str = ", ".join(p for p in location_parts if p)
 
     stale_url_hint = (
-        f"\n    We scraped {stale_url} but found no government officials listed. The site may be a parked domain or no longer the official government website. Search for the current official government URL."
+        f"\n    The domain {stale_url} appears to be inactive or parked and no longer serves the official government website. Search for where the official government website is currently hosted."
         if stale_url else ""
     )
 

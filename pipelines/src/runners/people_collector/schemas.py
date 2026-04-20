@@ -142,6 +142,9 @@ class ReviewOutputStep(BaseModel):
 class FindJurisdictionUrlStep(BaseModel):
     discovered_url: Optional[str] = None
 
+class OfficialJurisdictionUrlResponseSchema(BaseModel):
+    is_official_jurisdiction_url: bool
+
 class MaybeSendToGitHubStep(BaseModel):
     status: str
     response_status_code: Optional[int] = None

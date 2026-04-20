@@ -224,3 +224,19 @@ def municipality_officials_prompt(known_roles: List[str], state: str = "", count
     Return a JSON object with exactly this field:
     - people: array of official objects as described above
     """
+
+
+def is_official_jurisdiction_url_prompt() -> str:
+    return """
+    Determine whether the provided web page content is from the official website of a local government jurisdiction
+    (city, township, village, borough, county, etc.).
+
+    Return {"is_official_jurisdiction_url": true} if the page belongs to a real local government entity and contains
+    substantive government content — such as elected officials, meeting agendas, services, ordinances, or contact
+    information for a governing body.
+
+    Return {"is_official_jurisdiction_url": false} if the page is a parked domain (e.g. "This domain is for sale"),
+    a GoDaddy or registrar placeholder, spam, advertisements, or otherwise has no substantive government content.
+
+    IMPORTANT: Return only valid JSON. Do not include any other text.
+    """
