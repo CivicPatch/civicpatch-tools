@@ -1,0 +1,4 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/county:clare/place:harrison/government
+municipality_name: Harrison city
+stale_url: https://cityofharrisonmi.org
+expected_url: https://www.cityofharrison-mi.gov

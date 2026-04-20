@@ -90,7 +90,7 @@ def make_request_with_search(logger, model, api_key, prompt):
         "generationConfig": {
             "temperature": 0,
         },
-        "tools": {"googleSearch": {}}
+        "tools": [{"googleSearch": {}}]
     }
     headers = {
         "x-goog-api-key": api_key,

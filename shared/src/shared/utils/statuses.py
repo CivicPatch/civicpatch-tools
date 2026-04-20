@@ -25,6 +25,7 @@ class PipelineRunStatus(StrEnum):
     SEND_SUCCESS = "SEND_SUCCESS"
     SEND_ERROR = "SEND_ERROR"
     RETRY = "RETRY"
+    FIND_JURISDICTION_URL = "FIND_JURISDICTION_URL"
 
 
 TERMINAL_PIPELINE_RUN_STATUSES = (
@@ -48,6 +49,7 @@ TERMINAL_REVIEW_ISSUE_STATUSES = (ReviewIssueStatus.RESOLVED,)
 class PipelineRunErrorType(StrEnum):
     # pipeline_error is the server-side fallback; the pipeline never sets it explicitly
     NO_INFO = "no_info"
+    DOMAIN_INACTIVE = "domain_inactive"
 
 
 class PipelineIssueCategory(StrEnum):
@@ -58,6 +60,7 @@ class PipelineIssueCategory(StrEnum):
 class PipelineIssueType(StrEnum):
     UNRECOGNIZED_ROLE = "unrecognized_role"
     DOMAIN_REDIRECTED = "domain_redirected"
+    DOMAIN_INACTIVE_FIXED = "domain_inactive_fixed"
 
 
 class PullRequestStatus(StrEnum):
