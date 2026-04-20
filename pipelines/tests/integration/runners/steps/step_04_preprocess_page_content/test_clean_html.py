@@ -157,6 +157,25 @@ def test_markdownify_preserves_mailto_on_image_only_anchor():
     assert "mailto:tleverentz@oakleaftexas.org" in result
 
 
+def test_clean_html_strips_data_uri_from_img_src():
+    html = '<html><body><img src="data:image/png;base64,abc123==" alt="photo"></body></html>'
+    result = clean_html(None, html)
+    assert 'data:' not in result
+    assert 'alt="photo"' in result
+
+
+def test_clean_html_strips_data_uri_from_non_img_tag():
+    html = '<html><body><source srcset="data:image/webp;base64,xyz"></body></html>'
+    result = clean_html(None, html)
+    assert 'data:' not in result
+
+
+def test_clean_html_preserves_normal_src():
+    html = '<html><body><img src="https://example.com/photo.jpg" alt="photo"></body></html>'
+    result = clean_html(None, html)
+    assert 'https://example.com/photo.jpg' in result
+
+
 def test_tmm_email_links_survive_clean_html_to_markdown():
     """Full clean_html → markdownify chain: mailto hrefs must appear in the final .md output."""
     with open(os.path.join(FIXTURE_DIR, "tmm_email_links", "input.html"), "r", encoding="utf-8") as f:

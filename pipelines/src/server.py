@@ -54,13 +54,25 @@ async def _run(request_id: str, jurisdiction_ocdid: str, url: Optional[str], sou
             name=config_data.get("name"),
             source_urls=source_urls or config_data.get("source_urls"),
         )
-        await start_threaded(request_id, jurisdiction_ocdid, config)
-    except PipelineRunError:
-        pass  # engine already sent terminal ERROR status with error_type via status update
     except Exception:
-        logger.exception("job %s failed", request_id)
+        logger.exception("job %s failed during config fetch", request_id)
         async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
             await update_pipeline_run_status(client, logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
+        return
+
+    async def _run_pipeline():
+        try:
+            await start_threaded(request_id, jurisdiction_ocdid, config)
+        except PipelineRunError:
+            pass
+        except Exception:
+            logger.exception("job %s failed", request_id)
+            async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
+                await update_pipeline_run_status(client, logger, request_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
+
+    task = asyncio.create_task(_run_pipeline())
+    _running_tasks.add(task)
+    task.add_done_callback(_running_tasks.discard)
 
 
 @app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)

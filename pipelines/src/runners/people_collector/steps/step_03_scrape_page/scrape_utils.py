@@ -370,7 +370,8 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
             try:
                 src = await img.get_attribute("src")
                 if not is_valid_image(src):
-                    logger.debug(f"Skipping blacklisted or invalid image: {src}")
+                    log_src = src[:80] + "..." if src and len(src) > 80 else src
+                    logger.debug(f"Skipping blacklisted or invalid image: {log_src}")
                     return
                 src = urljoin(page.url, src)
                 image_hash = hash_string(src)
