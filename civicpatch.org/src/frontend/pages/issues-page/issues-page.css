@@ -1,8 +1,5 @@
 /* ── Issues page ── */
 
-.issues-page {
-}
-
 .issues-page__filters {
     margin-bottom: 1.5rem;
 }
@@ -137,12 +134,12 @@
 .issues-page__issue-tag--issue.issues-page__issue-tag--active {
     background: var(--pico-warn-color);
     border-color: var(--pico-warn-color);
-    color: #000;
+    color: #fff;
 }
 
 .issues-page__issue-tag--issue.issues-page__issue-tag--active:hover {
     opacity: 0.85;
-    color: #000;
+    color: #fff;
 }
 
 .issues-page__issue-tag-x {

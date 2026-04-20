@@ -1,12 +1,12 @@
 import base64
 
 import httpx
-import yaml
 
 import environment
 import shared.utils.id_utils as id_utils
 from lib.github.auth import get_default_headers, get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
+from lib.yaml_utils import yaml_dump, yaml_load
 
 
 def _get_jurisdictions_repo_url() -> str:
@@ -48,14 +48,13 @@ async def open_jurisdiction_edit_pr(
             headers=auth_headers,
         )
     if response.status_code == 404:
-        new_entry = {"id": jurisdiction_ocdid}
-        _apply_fields(new_entry, fields)
-        entries = [new_entry]
+        entries = [{"id": jurisdiction_ocdid}]
+        _apply_fields(entries[0], fields)
     elif response.status_code != 200:
         return None, f"Failed to fetch {file_path}: {response.json().get('message', 'unknown')}"
     else:
         raw = base64.b64decode(response.json()["content"]).decode("utf-8")
-        entries = yaml.safe_load(raw)
+        entries = yaml_load(raw)
 
         updated = False
         for entry in entries:
@@ -67,7 +66,7 @@ async def open_jurisdiction_edit_pr(
         if not updated:
             return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
 
-    content_str = yaml.dump(entries, sort_keys=False, allow_unicode=True)
+    content_str = yaml_dump(entries)
     branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_request_id()}"
 
     return await open_attributed_pr(

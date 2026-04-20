@@ -26,6 +26,7 @@ dependencies = [
     "shared",
     "githubkit>=0.15.1",
     "temporalio>=1.10.0",
+    "ruamel-yaml>=0.19.1,<0.20.0",
 ]
 
 [dependency-groups]
