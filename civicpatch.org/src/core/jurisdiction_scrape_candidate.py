@@ -1,5 +1,6 @@
 import yaml
 
+import database.pipeline_issues as pipeline_issues_db
 import database.pipeline_runs as database
 import database.pull_requests as pull_requests_db
 import lib.github.api as github_api_service
@@ -16,10 +17,17 @@ async def get_scrape_candidates(state: str, num_jurisdictions: int) -> list[Juri
     metadata_by_id = yaml.safe_load(metadata_content).get("jurisdictions_by_id", {}) if metadata_content else {}
     open_pr_ocdids = await pull_requests_db.get_open_pr_ocdids_by_state(state)
     active_job_ocdids = await database.get_active_pipeline_run_jurisdiction_ocdids()
+    pending_error_ocdids = await pipeline_issues_db.get_pending_error_issue_ocdids()
 
     def is_eligible(entry: dict) -> bool:
         ocdid = entry.get("id")
-        return bool(ocdid and entry.get("url") and ocdid not in open_pr_ocdids and ocdid not in active_job_ocdids)
+        return bool(
+            ocdid
+            and entry.get("url")
+            and ocdid not in open_pr_ocdids
+            and ocdid not in active_job_ocdids
+            and ocdid not in pending_error_ocdids
+        )
 
     def to_jurisdiction(entry: dict) -> Jurisdiction:
         return Jurisdiction(id=entry["id"], name=entry["name"], url=entry["url"])

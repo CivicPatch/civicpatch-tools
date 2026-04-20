@@ -5,7 +5,7 @@ from psycopg import sql
 
 import shared.utils.id_utils
 from database.database import get_pool
-from shared.utils.statuses import PipelineIssueType, ReviewIssueStatus
+from shared.utils.statuses import PipelineIssueCategory, PipelineIssueType, ReviewIssueStatus
 
 
 def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
@@ -25,6 +25,24 @@ def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str]
         except Exception:
             pass
     return result
+
+
+async def get_pending_error_issue_ocdids() -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT r.jurisdiction_ocdid
+            FROM pipeline_issues pi
+            JOIN requests r ON r.id::text = ANY(pi.request_ids)
+            WHERE pi.category = %s
+              AND pi.status IN (%s, %s)
+              AND r.jurisdiction_ocdid IS NOT NULL
+            """,
+            (PipelineIssueCategory.ERROR, ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED),
+        )
+        rows = await cur.fetchall()
+    return {row[0] for row in rows}
 
 
 async def get_unrecognized_roles_grouped() -> list[dict]:

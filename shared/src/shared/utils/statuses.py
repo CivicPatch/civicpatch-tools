@@ -42,9 +42,17 @@ class ReviewIssueStatus(StrEnum):
     RESOLVED = "resolved"
 
 
+TERMINAL_REVIEW_ISSUE_STATUSES = (ReviewIssueStatus.RESOLVED,)
+
+
 class PipelineRunErrorType(StrEnum):
     # pipeline_error is the server-side fallback; the pipeline never sets it explicitly
     NO_INFO = "no_info"
+
+
+class PipelineIssueCategory(StrEnum):
+    ERROR = "error"
+    ISSUE = "issue"
 
 
 class PipelineIssueType(StrEnum):
