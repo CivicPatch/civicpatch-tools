@@ -98,6 +98,10 @@ dir = "pipelines"
 run = "uv run pytest -m evals tests/prompts"
 dir = "pipelines"
 
+[tasks.evalsd]
+run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
+dir = "pipelines"
+
 [tasks.e2e]
 description = "Run Playwright e2e tests in a fully isolated Docker stack"
 run = """

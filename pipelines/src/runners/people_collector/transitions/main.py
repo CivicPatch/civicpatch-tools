@@ -6,6 +6,7 @@ from runners.people_collector.schemas import (
   PeopleCollectorData
 )
 from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
+from shared.utils.url_utils import same_domain
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
@@ -30,6 +31,7 @@ from runners.people_collector.steps.step_10_review_output.review_output import r
 from runners.people_collector.steps.step_10_save_output.save_output import save_output
 from runners.people_collector.steps.step_11_send_success.send_success import send_success
 from runners.people_collector.steps.step_11_send_error.send_error import send_error
+from runners.people_collector.steps.find_jurisdiction_url.find_jurisdiction_url import find_jurisdiction_url
 
 from runners.people_collector.transitions.process_page_content_transition import next_process_content_state
 from runners.people_collector.utils.links import (
@@ -268,6 +270,10 @@ async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: P
 async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     assert context.data.format_output_step is not None
     officials = context.data.format_output_step.officials
+
+    if not officials and not context.data.find_jurisdiction_url_attempted:
+        return context, PipelineStatus.FIND_JURISDICTION_URL
+
     error_type, issues = _collect_pipeline_heuristics(
         officials,
         context.data.role_config,
@@ -322,6 +328,38 @@ async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context
 
     return next_context, PipelineStatus.ERROR
 
+async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    result = await find_jurisdiction_url(context)
+    next_context = context.copy(update={
+        "data": context.data.copy(update={
+            "find_jurisdiction_url_step": result,
+            "find_jurisdiction_url_attempted": True,
+        })
+    })
+
+    discovered = result.discovered_url
+    if discovered is None:
+        return next_context.copy(update={
+            "pipeline_error_type": PipelineRunErrorType.DOMAIN_INACTIVE,
+            "data": next_context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
+        }), PipelineStatus.SEND_ERROR
+
+    if same_domain(discovered, context.data.config.url):
+        return next_context, PipelineStatus.REVIEW_OUTPUT
+
+    new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})
+    return next_context.copy(update={
+        "pipeline_issues": context.pipeline_issues + [{
+            "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
+            "data": {"original_url": context.data.config.url, "discovered_url": discovered},
+        }],
+        "data": next_context.data.copy(update={
+            "config": new_config,
+            "links": add_links([], [discovered]),
+        }),
+    }), PipelineStatus.SCRAPE_PAGE
+
+
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
@@ -363,4 +401,5 @@ TRANSITION_MAP = {
   PipelineStatus.SAVE_OUTPUT: save_output_transition,
   PipelineStatus.SEND_SUCCESS: send_success_transition,
   PipelineStatus.SEND_ERROR: send_error_transition,
+  PipelineStatus.FIND_JURISDICTION_URL: find_jurisdiction_url_transition,
 }

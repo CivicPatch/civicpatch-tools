@@ -139,6 +139,9 @@ class ReviewOutputStep(BaseModel):
     people_by_source: List[dict]
     origin_source: str = "google_gemini"
 
+class FindJurisdictionUrlStep(BaseModel):
+    discovered_url: Optional[str] = None
+
 class MaybeSendToGitHubStep(BaseModel):
     status: str
     response_status_code: Optional[int] = None
@@ -162,6 +165,8 @@ class PeopleCollectorData(BaseModel):
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     format_output_step: Optional[FormatOutputStep] = None
     review_output_step: Optional[ReviewOutputStep] = None
+    find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None
+    find_jurisdiction_url_attempted: bool = False
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None
     error_step: Optional[str] = None
