@@ -10,6 +10,7 @@ import time
 from datetime import datetime, timezone
 import httpx
 import services.civicpatch_api as civicpatch_api
+from shared.utils.statuses import PipelineRunStatus
 import psutil
 
 from runners.people_collector.schemas import PipelineStatus
@@ -50,6 +51,13 @@ async def run_pipeline(
     try:
         while ctx.current_state not in terminal_states:
             log_system_usage()
+            try:
+                current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.request_id)
+                if current_status == PipelineRunStatus.CANCELLED:
+                    logger.info(f"Pipeline run {ctx.request_id} cancelled — stopping.")
+                    return ctx
+            except Exception as e:
+                logger.warning(f"Failed to check cancellation status (non-fatal): {e}")
             try:
                 await civicpatch_api.update_pipeline_run_status(
                     api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,

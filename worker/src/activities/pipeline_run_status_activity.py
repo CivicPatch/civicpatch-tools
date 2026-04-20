@@ -13,7 +13,7 @@ SERVICE_API_KEY = os.environ["SERVICE_API_KEY"]
 
 _HEADERS = {"Authorization": SERVICE_API_KEY}
 
-_TERMINAL_STATUSES = {PipelineRunStatus.SUCCESS, PipelineRunStatus.ERROR}
+_TERMINAL_STATUSES = {PipelineRunStatus.SUCCESS, PipelineRunStatus.ERROR, PipelineRunStatus.CANCELLED}
 
 
 @activity.defn

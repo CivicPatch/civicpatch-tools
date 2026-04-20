@@ -52,6 +52,7 @@ LINK_PATTERNS_BLACKLIST = {
 
 # URL keywords that strongly indicate a governance page. Links matching any of
 # these are sorted to the top of the crawl frontier, ahead of num_references.
+# TODO: should probably move this into config
 LINK_KEYWORDS_WHITELIST = [
     "council",
     "mayor",
@@ -62,6 +63,10 @@ LINK_KEYWORDS_WHITELIST = [
     "official",
     "elected",
     "representative",
+    "township", # TODO: just use lsad (config name)
+    "village",
+    "selectmen",
+    "directory"
 ]
 
 
@@ -72,9 +77,9 @@ def _blacklist_match(url: str) -> Optional[str]:
     return None
 
 
-def _whitelist_match(url: str) -> Optional[str]:
+def _whitelist_match(url: str, extra: Optional[List[str]] = None) -> Optional[str]:
     url_lower = url.lower()
-    for kw in LINK_KEYWORDS_WHITELIST:
+    for kw in LINK_KEYWORDS_WHITELIST + (extra or []):
         if kw in url_lower:
             return kw
     return None
@@ -85,10 +90,24 @@ def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
     return re.findall(r'\[([^\]]*)\]\((https?://[^)]+)\)', content)
 
 
-def _heuristic_backfill_comment(text: str, url: str, terms: List[str]) -> Optional[str]:
+def _config_name_suffix(name: Optional[str]) -> List[str]:
+    name = (name or "").strip()
+    return [name.split()[-1].lower()] if name else []
+
+
+def _heuristic_url_comments(content: str, terms: List[str], extra_whitelist: Optional[List[str]] = None) -> Dict[str, str]:
+    return {
+        url: comment
+        for text, url in _extract_links_from_markdown(content)
+        if not _blacklist_match(url)
+        and (comment := _heuristic_backfill_comment(text, url, terms, extra_whitelist=extra_whitelist)) is not None
+    }
+
+
+def _heuristic_backfill_comment(text: str, url: str, terms: List[str], extra_whitelist: Optional[List[str]] = None) -> Optional[str]:
     """Returns a comment if this link matches any heuristic signal, else None."""
     parts = []
-    kw = _whitelist_match(url) or _whitelist_match(text)
+    kw = _whitelist_match(url, extra_whitelist) or _whitelist_match(text, extra_whitelist)
     if kw:
         parts.append(f"keyword:{kw}")
     if _url_contains_any_token(url, terms) or _url_contains_any_token(text, terms):
@@ -226,15 +245,11 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
         updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + known_roles, relevance_logger)
     else:
         combined_terms = designations + known_roles
-        url_comments = {
-            url: comment
-            for text, url in _extract_links_from_markdown(content)
-            if not _blacklist_match(url)
-            and (comment := _heuristic_backfill_comment(text, url, combined_terms)) is not None
-        }
-        if url_comments:
-            relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(url_comments)} heuristic URL(s)")
-            updated_links = add_relevant_urls(list(url_comments.keys()), updated_links, page_to_process.url, names, combined_terms, relevance_logger, url_comments=url_comments)
+        name_lsad_suffix = _config_name_suffix(context.data.config.name)
+        heuristic_urls = _heuristic_url_comments(content, combined_terms, name_lsad_suffix)
+        if heuristic_urls:
+            relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)")
+            updated_links = add_relevant_urls(list(heuristic_urls.keys()), updated_links, page_to_process.url, names, combined_terms, relevance_logger, url_comments=heuristic_urls)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
