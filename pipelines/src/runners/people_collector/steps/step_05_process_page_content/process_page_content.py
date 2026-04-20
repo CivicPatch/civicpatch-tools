@@ -29,7 +29,7 @@ from utils import (
     people_utils,
     log_utils
 )
-from typing import List, Dict, Optional, Tuple, cast
+from typing import List, Dict, Optional, Set, Tuple, cast
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.open_router.llm as open_router_llm
@@ -63,8 +63,6 @@ LINK_KEYWORDS_WHITELIST = [
     "official",
     "elected",
     "representative",
-    "township", # TODO: just use lsad (config name)
-    "village",
     "selectmen",
     "directory"
 ]
@@ -77,16 +75,56 @@ def _blacklist_match(url: str) -> Optional[str]:
     return None
 
 
-def _whitelist_match(url: str, extra: Optional[List[str]] = None) -> Optional[str]:
-    url_lower = url.lower()
-    for kw in LINK_KEYWORDS_WHITELIST + (extra or []):
-        if kw in url_lower:
+@dataclass
+class LinkSignals:
+    keyword: Optional[str]     # matched keyword from LINK_KEYWORDS_WHITELIST
+    role: Optional[str]        # matched role from known_roles or name_lsad_suffix
+    designation: Optional[str] # matched designation token from url or text
+    name: Optional[str]        # matched person name token from url
+
+
+def _compute_link_signals(
+    url: str,
+    text: str,
+    designations: List[str],
+    names: Optional[List[str]] = None,
+    roles: Optional[List[str]] = None,
+) -> LinkSignals:
+    path = url_utils.get_path(url)
+    return LinkSignals(
+        # substring match: keywords are stems ("council") that embed in longer words ("councilmember")
+        keyword=_keyword_match(path, LINK_KEYWORDS_WHITELIST) or _keyword_match(text, LINK_KEYWORDS_WHITELIST),
+        role=_keyword_match(path, roles) or _keyword_match(text, roles),
+        # token match: avoids mid-word false positives (e.g. "ward" should not match "/edward/")
+        designation=_match_any_token(url, designations) or _match_any_token(text, designations),
+        # token match on last name alone is meaningful — url may be "/mayor-smith/" with no first name
+        name=_match_any_token(url, names or []) or _match_any_token(text, names or []),
+    )
+
+
+def _signals_to_comment(signals: LinkSignals) -> Optional[str]:
+    parts = []
+    if signals.keyword:
+        parts.append(f"keyword:{signals.keyword}")
+    if signals.role:
+        parts.append(f"role:{signals.role}")
+    if signals.designation:
+        parts.append(f"designation:{signals.designation}")
+    return ("heuristic backfill: " + ", ".join(parts)) if parts else None
+
+
+def _keyword_match(text: str, keywords: Optional[List[str]] = None) -> Optional[str]:
+    if not keywords:
+        return None
+    text_lower = text.lower()
+    for kw in keywords:
+        if kw in text_lower:
             return kw
     return None
 
 
 def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
-    """Returns (display_text, url) pairs for all markdown links with http(s) URLs."""
+    """Returns (text, url) pairs for all markdown links with http(s) URLs."""
     return re.findall(r'\[([^\]]*)\]\((https?://[^)]+)\)', content)
 
 
@@ -95,24 +133,17 @@ def _config_name_suffix(name: Optional[str]) -> List[str]:
     return [name.split()[-1].lower()] if name else []
 
 
-def _heuristic_url_comments(content: str, terms: List[str], extra_whitelist: Optional[List[str]] = None) -> Dict[str, str]:
-    return {
-        url: comment
-        for text, url in _extract_links_from_markdown(content)
-        if not _blacklist_match(url)
-        and (comment := _heuristic_backfill_comment(text, url, terms, extra_whitelist=extra_whitelist)) is not None
-    }
-
-
-def _heuristic_backfill_comment(text: str, url: str, terms: List[str], extra_whitelist: Optional[List[str]] = None) -> Optional[str]:
-    """Returns a comment if this link matches any heuristic signal, else None."""
-    parts = []
-    kw = _whitelist_match(url, extra_whitelist) or _whitelist_match(text, extra_whitelist)
-    if kw:
-        parts.append(f"keyword:{kw}")
-    if _url_contains_any_token(url, terms) or _url_contains_any_token(text, terms):
-        parts.append("designation")
-    return ("heuristic backfill: " + ", ".join(parts)) if parts else None
+def _heuristic_url_comments(content: str, designations: List[str], roles: Optional[List[str]] = None) -> Dict[str, Tuple[str, str]]:
+    """Returns url → (comment, link text) for links that pass heuristic signals."""
+    result = {}
+    for text, url in _extract_links_from_markdown(content):
+        if _blacklist_match(url):
+            continue
+        signals = _compute_link_signals(url, text, designations, roles=roles)
+        comment = _signals_to_comment(signals)
+        if comment:
+            result[url] = (comment, text)
+    return result
 
 
 _relevance_llm = open_router_llm
@@ -244,12 +275,12 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
     if response.relevant_urls:
         updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + known_roles, relevance_logger)
     else:
-        combined_terms = designations + known_roles
-        name_lsad_suffix = _config_name_suffix(context.data.config.name)
-        heuristic_urls = _heuristic_url_comments(content, combined_terms, name_lsad_suffix)
+        combined_designations = designations + known_roles
+        roles = known_roles + _config_name_suffix(context.data.config.name)
+        heuristic_urls = _heuristic_url_comments(content, combined_designations, roles=roles)
         if heuristic_urls:
             relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)")
-            updated_links = add_relevant_urls(list(heuristic_urls.keys()), updated_links, page_to_process.url, names, combined_terms, relevance_logger, url_comments=heuristic_urls)
+            updated_links = add_relevant_urls(list(heuristic_urls.keys()), updated_links, page_to_process.url, names, combined_designations, relevance_logger, url_comments=heuristic_urls)
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
@@ -591,24 +622,20 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
     return found_websites
 
 
-def _url_contains_all_tokens(url: str, terms: List[str]) -> bool:
-    """Returns True if any term's complete token set is a subset of the URL's tokens."""
-    url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
-    for term in terms:
-        term_tokens = {t for t in re.split(r'[^a-z0-9]', name_utils.normalize_text_for_search(term)) if t}
-        if term_tokens and term_tokens.issubset(url_tokens):
-            return True
-    return False
+def _tokenize(text: str) -> Set[str]:
+    return set(re.split(r'[^a-z0-9]', text.lower()))
 
 
-def _url_contains_any_token(url: str, terms: List[str], min_len: int = 4) -> bool:
-    """Returns True if any significant token (len >= min_len) from any term appears in the URL."""
-    url_tokens = set(re.split(r'[^a-z0-9]', url.lower()))
+
+def _match_any_token(text: str, terms: List[str], min_len: int = 4) -> Optional[str]:
+    """Returns the first matched token if any significant token (len >= min_len) from any term appears in text."""
+    text_tokens = _tokenize(text)
     for term in terms:
-        significant = {t for t in re.split(r'[^a-z0-9]', name_utils.normalize_text_for_search(term)) if len(t) >= min_len}
-        if significant & url_tokens:
-            return True
-    return False
+        significant = {t for t in _tokenize(name_utils.normalize_text_for_search(term)) if len(t) >= min_len}
+        matched = significant & text_tokens
+        if matched:
+            return next(iter(matched))
+    return None
 
 
 def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[str], List[str]]:
@@ -631,10 +658,12 @@ def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[
 
 
 def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> tuple:
+    signals = _compute_link_signals(link.url, link.text or "", designations, names=names)
     return (
-        -int(_url_contains_all_tokens(link.url, names)),
-        -int(_url_contains_any_token(link.url, designations)),
-        -int(_whitelist_match(link.url) is not None),
+        -int(signals.name is not None),
+        -int(signals.designation is not None),
+        -int(signals.keyword is not None),
+        -int(signals.role is not None),
         -link.num_references,
         len(url_utils.get_path(link.url).split("/")),
     )
@@ -670,17 +699,23 @@ def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, 
             if logger:
                 logger.info(f"Dropping blacklisted URL ({blacklist_comment}): {formatted_link_url}")
             continue
-        whitelist_comment = _whitelist_match(formatted_link_url)
+        link_text = None
         if url_comments is not None:
-            comment = url_comments.get(formatted_link_url) or url_comments.get(link_url, "heuristic backfill")
+            entry = url_comments.get(formatted_link_url) or url_comments.get(link_url)
+            if isinstance(entry, tuple):
+                comment, link_text = entry
+            else:
+                comment = entry or "heuristic backfill"
         else:
-            comment = f"whitelisted: {whitelist_comment}" if whitelist_comment else None
+            kw = _keyword_match(url_utils.get_path(formatted_link_url))
+            comment = f"whitelisted: {kw}" if kw else None
         updated_links.append(Link(
             url=formatted_link_url,
             status=LinkStatus.PENDING.value,
             folder_name="",
             num_references=1,
             comment=comment,
+            text=link_text,
         ))
     return _sort_pending(updated_links, names, designations)
 
