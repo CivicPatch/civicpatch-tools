@@ -680,7 +680,7 @@ def _sort_pending(links: List[Link], names: List[str], designations: List[str]) 
     return pending + non_pending
 
 
-def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None, url_comments: Optional[Dict[str, str]] = None) -> List[Link]:
+def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None, url_comments: Optional[Dict[str, Tuple[str, str]]] = None) -> List[Link]:
     """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
     names = names or []
     designations = designations or []
