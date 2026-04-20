@@ -1,0 +1,4 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/county:antrim/place:milton/government
+municipality_name: Milton township
+stale_url: https://miltontownship.org/
+expected_url: https://miltontownshipmi.gov/
