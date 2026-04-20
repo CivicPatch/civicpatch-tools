@@ -40,7 +40,8 @@ async def run_prompt(
         content="",
         model_type="STANDARD",
         provider_order=None,
-        allow_fallbacks=True):
+        allow_fallbacks=True,
+        seed=None):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
     logger.debug(f"Prompt: \n{prompt}")
@@ -91,6 +92,7 @@ async def run_prompt(
                 "temperature": 0.2,
                 "top_p": 1.0,
                 "response_format": response_format,
+                **({"seed": seed} if seed is not None else {}),
                 "provider": {
                     "order": provider_order or ["AtlasCloud", "SiliconFlow", "Google"],
                     "allow_fallbacks": False,

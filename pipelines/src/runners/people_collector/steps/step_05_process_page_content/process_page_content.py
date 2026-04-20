@@ -268,6 +268,7 @@ async def run_llm_loop(
         llm_responses, records_found = await process_with_llm(
             page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
             content, known_roles, llm,
+            seed=retry_count if retry_count > 0 else None,
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
@@ -306,6 +307,7 @@ async def process_with_llm(
     content: str,
     known_roles: list[str],
     llm: dict,
+    seed: Optional[int] = None,
 ) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
     """
     Run a single LLM's prompt to process page content.
@@ -321,7 +323,8 @@ async def process_with_llm(
         jurisdiction_ocdid,
         prompt,
         response_schema=PeopleArrayLLMResponseSchema,
-        content=content
+        content=content,
+        seed=seed,
     )
 
     formatted_response = cast(PeopleArrayLLMResponseSchema, response)
