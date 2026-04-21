@@ -48,6 +48,7 @@ addopts = "--import-mode=importlib"
 markers = [
     "unit: fast, no external dependencies",
     "integration: requires spaCy, Playwright, or other installed deps",
+    "live: hits real external URLs; never run in CI",
     "evals: mark a test related to evaluations",
     "evals_relevant: mark a test related to relevant page evaluation",
     "contracts: mark a test related to contracts",

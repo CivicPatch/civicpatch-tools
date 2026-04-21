@@ -76,6 +76,10 @@ docker compose run --rm pipelines uv run python -m interfaces.cli.main --jurisdi
 
 ```sh
 mise run tpipes     # unit tests
+mise run tcpi       # integration tests (Docker — requires Playwright + spaCy)
+mise run tlive      # live scrape tests: hit real external URLs to verify scraper behaviour
+                    # runs locally (not Docker) so the browser window is visible for debugging
+                    # never run in CI; run manually when changing scrape_utils.py
 mise run evalsr     # relevant-page prompt evals (run after any relevant_page_prompt change)
 mise run evalsm     # municipality officials prompt evals (run after any municipality_officials_prompt change)
 ```

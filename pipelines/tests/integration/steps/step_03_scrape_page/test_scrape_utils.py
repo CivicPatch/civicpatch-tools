@@ -2,7 +2,8 @@ import os
 import pytest
 import shutil
 from unittest.mock import MagicMock
-from runners.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, inline_iframes
+from patchright.async_api import async_playwright
+from runners.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, inline_iframes, convert_background_divs_to_imgs
 
 pytestmark = pytest.mark.integration
 
@@ -18,6 +19,33 @@ def clean_fixtures_dir():
     if os.path.exists(FIXTURES_DIR):
         shutil.rmtree(FIXTURES_DIR)  # Remove existing fixtures directory
     os.makedirs(FIXTURES_DIR, exist_ok=True)
+
+@pytest.mark.asyncio
+async def test_convert_background_divs_to_imgs_preserves_children():
+    """
+    Regression test: convert_background_divs_to_imgs must inject an <img> for the
+    background-image URL without destroying the div's child elements.
+
+    Previously used div.replaceWith(img) which wiped child content (e.g. board member
+    names rendered by Avada/Fusion Builder inside background-image divs).
+    """
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(headless=True)
+        page = await browser.new_page()
+        await page.set_content("""
+            <div style="background-image: url('https://example.com/hero.jpg')">
+                <span class="member-name">Jerry Adams</span>
+            </div>
+        """)
+        await convert_background_divs_to_imgs(page)
+        img = await page.query_selector("div > img")
+        span = await page.query_selector("div > span.member-name")
+        assert img is not None, "<img> was not injected"
+        assert await img.get_attribute("src") == "https://example.com/hero.jpg"
+        assert span is not None, "child <span> was destroyed by convert_background_divs_to_imgs"
+        assert await span.inner_text() == "Jerry Adams"
+        await browser.close()
+
 
 @pytest.mark.asyncio
 async def test_scrape_with_direct_download():
