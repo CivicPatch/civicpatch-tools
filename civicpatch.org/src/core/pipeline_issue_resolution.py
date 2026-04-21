@@ -1,5 +1,5 @@
 import logging
-from lib.yaml_utils import yaml_dump, yaml_load
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import lib.github.api as github_service
 import lib.github.pull_requests as pr_service

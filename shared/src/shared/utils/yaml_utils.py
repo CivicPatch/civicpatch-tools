@@ -12,6 +12,7 @@ def yaml_load(raw: str):
 def yaml_dump(data) -> str:
     ryaml = YAML()
     ryaml.preserve_quotes = True
+    ryaml.width = 2**16
     stream = StringIO()
     ryaml.dump(data, stream)
     return stream.getvalue()

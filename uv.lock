@@ -2798,6 +2798,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pytest" },
     { name = "pyyaml" },
+    { name = "ruamel-yaml" },
 ]
 
 [package.dev-dependencies]
@@ -2812,6 +2813,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.12.5,<3.0.0" },
     { name = "pytest", specifier = ">=9.0.2,<10.0.0" },
     { name = "pyyaml", specifier = ">=6.0.3,<7.0.0" },
+    { name = "ruamel-yaml", specifier = ">=0.19.1,<0.20.0" },
 ]
 
 [package.metadata.requires-dev]

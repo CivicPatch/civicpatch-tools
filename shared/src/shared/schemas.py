@@ -64,6 +64,8 @@ class JurisdictionsFile(BaseModel):
 
 
 class PipelineRunConfig(BaseModel):
+    # open-data reads this field from pipeline_run_context.json to detect domain drift
+    # and update jurisdictions.yml (scripts/github_actions/update_jurisdiction_url.py)
     url: str
     name: Optional[str] = None
     source_urls: Optional[List[str]] = None
