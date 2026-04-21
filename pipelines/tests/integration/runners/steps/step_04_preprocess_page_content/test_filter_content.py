@@ -132,7 +132,7 @@ def test_filter_content_removes_pdf_links_inside_kept_table():
     <html><body>
       <table>
         <tr>
-          <td>City Council Agenda – April 2026</td>
+          <td>Jane Smith</td>
           <td>April 8, 2026</td>
           <td><a href="/wp-content/uploads/agenda.pdf">Open file</a></td>
           <td><a href="/wp-content/uploads/agenda.pdf">Download</a></td>
@@ -142,6 +142,7 @@ def test_filter_content_removes_pdf_links_inside_kept_table():
     """
     result = filter_content(logger, {}, original)
     assert "agenda.pdf" not in result
+    assert "Jane Smith" in result
 
 
 def test_filter_content_keeps_all_images():

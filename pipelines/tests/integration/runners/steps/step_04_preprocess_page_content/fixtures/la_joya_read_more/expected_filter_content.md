@@ -13,8 +13,6 @@ top of page
   Mitigation Phase](https://www.lajoyatx.gov/emergency-operations)
 * [Outdoor Burn Ban:
   Active](https://www.lajoyatx.gov/fire-ems-department)
-* [Water Conservation:
-  Stage 2 (Moderate)](https://www.lajoyatx.gov/_files/ugd/3c0551_048de282712a4d0a8886a0e94368a3c3.docx?dn=PUD-WCC2309.docx)
 
 * [Home](https://www.lajoyatx.gov)
 * About
@@ -183,4 +181,4 @@ bottom of page
 The City of La Joya use cookies on our website to see how you interact with it. By accepting, you agree to our use of such cookies. :-)
 [Privacy Policy](https://www.lajoyatx.gov/privacy-policy)
 Settings
-![Close](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Zz48Zz48Zz48cGF0aCBmaWxsPSIiIGlkPSJjbG9zZS1zdmctcGF0aCIgZD0iTTE3LjI5NCA2bC43MDYuNzA2TDEyLjcwNSAxMiAxOCAxNy4yOTRsLS43MDYuNzA2TDEyIDEyLjcwNSA2LjcwNiAxOCA2IDE3LjI5NCAxMS4yOTUgMTIgNiA2LjcwNiA2LjcwNiA2IDEyIDExLjI5NSAxNy4yOTQgNnoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00NzEuMDAwMDAwLCAtNjQ2LjAwMDAwMCkgdHJhbnNsYXRlKDQ3MS4wMDAwMDAsIDY0Ni4wMDAwMDApIi8+PC9nPjwvZz48L2c+PC9zdmc+)
+![Close]()

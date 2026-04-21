@@ -34,9 +34,14 @@ def count_nodes(node: Tag):
             count += count_nodes(child)
     return count
 
-def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cache: Optional[Dict[str, tuple]] = None, extra_keywords: Optional[List[str]] = None) -> bool:
+def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cache: Optional[Dict[str, tuple]] = None, extra_keywords: Optional[List[str]] = None, people_only: bool = False) -> bool:
     """Check if text contains any relevant content including emails and phones.
     Match identity names by individual name tokens (word-by-word, case-insensitive).
+
+    If people_only=True, only identity name matches and spaCy PERSON/email/phone
+    signals count — dates, generic keywords, and role names are ignored. Use this
+    for tables, where "Board of Trustees" or meeting dates would otherwise cause
+    false positives.
     """
     # Normalize input: accept a bs4.Tag or any value and coerce to a plain string
     if isinstance(text, Tag):
@@ -52,15 +57,16 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cach
     flattened_aliases = [item for sublist in identities.values() for item in sublist]
     text_lc = text.lower()
 
-    for kw in (extra_keywords or []):
-        if not kw:
-            continue
-        kw_lc = kw.strip().lower()
-        if kw_lc in text_lc:
-            return True
-        tokens = kw_lc.split()
-        if len(tokens) > 1 and "".join(tokens) in text_lc:
-            return True
+    if not people_only:
+        for kw in (extra_keywords or []):
+            if not kw:
+                continue
+            kw_lc = kw.strip().lower()
+            if kw_lc in text_lc:
+                return True
+            tokens = kw_lc.split()
+            if len(tokens) > 1 and "".join(tokens) in text_lc:
+                return True
 
     for name in flattened_names + flattened_aliases:
         if not name:
@@ -81,6 +87,9 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cach
         people, dates, emails, phones, keywords = spacy_cache[text]
     else:
         people, dates, emails, phones, keywords = entity_extraction.extract_data(text)
+
+    if people_only:
+        return any([people, emails, phones])
     return any([people, dates, emails, phones, keywords])
 
 def _collect_texts(soup) -> List[str]:
@@ -147,7 +156,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     if node.name == "table":
         table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
         if table_text.strip():
-            is_relevant = has_relevant_content(identities, table_text, spacy_cache, extra_keywords=extra_keywords)
+            is_relevant = has_relevant_content(identities, table_text, spacy_cache, people_only=True)
             if is_relevant:
                 # Mark this table to keep ALL its content (including images),
                 # but still strip blacklisted links — the table handler returns
