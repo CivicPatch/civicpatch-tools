@@ -9,6 +9,17 @@ import aiohttp
 import base64
 from urllib.parse import urljoin
 from runners.people_collector.steps.step_03_scrape_page.scrape.wix import wait_for_wix_content
+from runners.people_collector.steps.step_03_scrape_page.scrape_constants import (
+    PAGE_DEFAULT_TIMEOUT_MS,
+    PAGE_NAVIGATION_TIMEOUT_MS,
+    DOM_READY_TIMEOUT_MS,
+    LAZY_RENDER_SETTLE_MS,
+    POST_LAZY_NETWORKIDLE_TIMEOUT_MS,
+    SPA_HYDRATION_TIMEOUT_MS,
+    SPA_SETTLE_MS,
+    SPA_NETWORKIDLE_TIMEOUT_MS,
+    IMAGE_DOWNLOAD_TIMEOUT_S,
+)
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -73,7 +84,7 @@ async def scrape(logger, website_url, options=None):
         str: The HTML content of the website.
     """
     options = options or {}
-    timeout = options.get('timeout', 30000)
+    timeout = options.get('timeout', PAGE_DEFAULT_TIMEOUT_MS)
     
     browser = None
     try:
@@ -93,7 +104,7 @@ async def scrape(logger, website_url, options=None):
                 response = None
                 for wait_until in ["networkidle", "load", "domcontentloaded"]:
                     try:
-                        response = await page.goto(website_url, wait_until=wait_until, timeout=15000)  # type: ignore[arg-type]
+                        response = await page.goto(website_url, wait_until=wait_until, timeout=PAGE_NAVIGATION_TIMEOUT_MS)  # type: ignore[arg-type]
                         break
                     except Exception as e:
                         logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
@@ -210,15 +221,13 @@ async def wait_for_spa_content(page, logger):
                 return document.readyState === 'complete' &&
                        (!window.React || document.querySelector('[data-reactroot], #__next, #root'));
             }""",
-            timeout=10000
+            timeout=SPA_HYDRATION_TIMEOUT_MS
         )
-        
-        # Additional wait for content
-        await page.wait_for_timeout(2000)
-        
-        # Wait for network idle
+
+        await page.wait_for_timeout(SPA_SETTLE_MS)
+
         try:
-            await page.wait_for_load_state('networkidle', timeout=8000)
+            await page.wait_for_load_state('networkidle', timeout=SPA_NETWORKIDLE_TIMEOUT_MS)
         except:
             pass
         
@@ -233,17 +242,23 @@ async def wait_for_basic_content(page, logger):
     Basic waiting for standard websites.
     """
     try:
-        # Wait for DOM to be ready
         await page.wait_for_function(
             "document.readyState === 'complete'",
-            timeout=5000
+            timeout=DOM_READY_TIMEOUT_MS
         )
-        
-        # Small wait for any final scripts
-        await page.wait_for_timeout(1000)
-        
+
+        # Scroll to bottom to trigger intersection-observer-based lazy rendering
+        # (e.g. Avada/Fusion Builder defers section HTML until viewport entry)
+        await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        await page.wait_for_timeout(LAZY_RENDER_SETTLE_MS)
+
+        try:
+            await page.wait_for_load_state('networkidle', timeout=POST_LAZY_NETWORKIDLE_TIMEOUT_MS)
+        except Exception:
+            pass
+
         logger.debug("✓ Basic content loaded")
-        
+
     except Exception as e:
         logger.warning(f"Error in basic waiting: {e}")
 
@@ -348,7 +363,7 @@ def is_valid_image(src: str | None) -> bool:
         return False
     return True
 
-async def download_images(browser, logger, page: Page, image_dir: str, timeout_s: int = 5):
+async def download_images(browser, logger, page: Page, image_dir: str, timeout_s: int = IMAGE_DOWNLOAD_TIMEOUT_S):
     """
     Downloads images from the current page using a fallback strategy.
     If processing any image takes longer than `timeout` seconds, skip to the next image.
