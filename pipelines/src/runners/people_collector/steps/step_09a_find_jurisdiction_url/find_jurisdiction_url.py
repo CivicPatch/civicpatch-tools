@@ -1,6 +1,7 @@
 import pathlib
 
 import services.google_gemini.llm as google_gemini_llm
+from services.google_gemini.llm import FIND_JURISDICTION_URL_MODEL_FALLBACKS
 import services.google_gemini.prompts as google_gemini_prompts
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
@@ -49,6 +50,7 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
         context.data.jurisdiction_ocdid,
         prompt,
         with_search=True,
+        model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     discovered_url = (response or {}).get("url")
     logger.info(f"find_jurisdiction_url: discovered_url={discovered_url!r}")

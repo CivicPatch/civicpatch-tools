@@ -1,0 +1,4 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/county:monroe/township:london/government
+municipality_name: London Township
+stale_url: http://londontwp.org
+expected_url: https://londontwpmi.gov

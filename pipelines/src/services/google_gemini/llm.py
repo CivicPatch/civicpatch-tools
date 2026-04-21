@@ -16,6 +16,10 @@ MODEL_FALLBACKS = [
     # "gemini-2.5-flash-preview-09-2025",
     # "gemini-2.5-flash-lite",
 ]
+FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
+    "gemini-3.1-flash-lite-preview",
+    "gemini-2.5-flash",
+]
 # gemini-2.5-flash
 # gemini-2.5-flash-preview-05-20
 # gemini-2.5-flash-preview-04-17 broken as of 06/10
@@ -28,7 +32,8 @@ async def run_prompt(
         prompt,
         response_schema=None,
         content="",
-        with_search=False
+        with_search=False,
+        model_fallbacks=None,
     ):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info(f"Running Gemini prompt")
@@ -71,7 +76,7 @@ async def run_prompt(
 
         return response
 
-    for model in MODEL_FALLBACKS:
+    for model in (model_fallbacks or MODEL_FALLBACKS):
         try:
             start_time = time.time()
             result = await with_retry(logger, MAX_RETRIES, lambda: execute(model))
