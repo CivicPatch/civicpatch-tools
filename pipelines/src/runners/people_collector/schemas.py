@@ -7,16 +7,6 @@ from shared.schemas import PipelineRunConfig
 from shared.utils.config_utils import RoleConfig
 from shared.utils.statuses import PipelineRunStatus
 
-class SearchEngineStatus(Enum):
-    NOT_STARTED = "not_started"
-    PROCESSING = "processing"
-    DONE = "done"
-    ERROR = "error"
-
-class SearchEngineState(BaseModel):
-    links: List[str]
-    status: str  # SearchEngineStatus value
-
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
@@ -100,16 +90,6 @@ class ResearchMunicipalityStep(BaseModel):
     notes: Optional[str] = None
     origin_source: str = "google_gemini"
 
-class SearchLinksStep(BaseModel):
-    search_link_pointer: int = 0  # Index of the next search engine to use
-    search_engines: Dict[str, SearchEngineState] = {
-        "google": SearchEngineState(links=[], status=SearchEngineStatus.NOT_STARTED.value),
-        # "serpapi": SearchEngineState(links=[], status="not_started"),
-        # "brave": SearchEngineState(links=[], status="not_started"),
-        "crawl": SearchEngineState(links=[], status=SearchEngineStatus.NOT_STARTED.value),
-    }  # e.g., "google": SearchEngineState
-    error: Optional[str] = None
-
 class PreprocessPageContentStep(BaseModel):
     elapsed_times: List[int] = []
     total_elapsed_time_seconds: int = 0
@@ -161,7 +141,6 @@ class PeopleCollectorData(BaseModel):
     links: List[Link] = []
 
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
-    search_links_step: SearchLinksStep = SearchLinksStep()
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
     process_page_content_step: Optional[ProcessPageContentStep] = None
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
