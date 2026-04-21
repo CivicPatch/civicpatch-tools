@@ -6,7 +6,7 @@ import environment
 import shared.utils.id_utils as id_utils
 from lib.github.auth import get_default_headers, get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
-from lib.yaml_utils import yaml_dump, yaml_load
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 
 def _get_jurisdictions_repo_url() -> str:
