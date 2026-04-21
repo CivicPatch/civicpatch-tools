@@ -6,7 +6,7 @@ from runners.people_collector.schemas import (
   PeopleCollectorData
 )
 from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
-from shared.utils.url_utils import same_domain
+from shared.utils.url_utils import same_domain, same_url
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
@@ -126,7 +126,7 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
         next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
-    links = await scrape_page(context, page_to_scrape)
+    links, final_url = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
     next_context = context.copy(update={
         "progress": progress,
@@ -135,13 +135,23 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
         })
     })
 
-    link_status = get_link_status_by_url(context.data.links, page_to_scrape.url)
+    is_root_link = page_to_scrape.url == context.data.config.url
+    if is_root_link and not same_domain(final_url, page_to_scrape.url):
+        new_config = context.data.config.model_copy(update={"url": final_url})
+        next_context = next_context.copy(update={
+            "pipeline_issues": next_context.pipeline_issues + [{
+                "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
+                "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
+            }],
+            "data": next_context.data.copy(update={"config": new_config}),
+        })
+
+    link_status = get_link_status_by_url(links, final_url)
     if link_status == LinkStatus.SCRAPED:
         next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
     else:
         next_state = PipelineStatus.SCRAPE_PAGE
 
-    
     return next_context, next_state
 
 async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
@@ -344,7 +354,7 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
             "data": next_context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
         }), PipelineStatus.SEND_ERROR
 
-    if same_domain(discovered, context.data.config.url):
+    if same_url(discovered, context.data.config.url):
         return next_context, PipelineStatus.REVIEW_OUTPUT
 
     new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})

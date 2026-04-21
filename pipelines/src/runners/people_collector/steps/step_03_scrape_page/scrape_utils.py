@@ -131,7 +131,7 @@ async def scrape(logger, website_url, options=None):
                     await download_images(browser, logger, page, image_directory)
                 
                 content = await page.content()
-                return content
+                return content, page.url
 
             finally:
                 try:

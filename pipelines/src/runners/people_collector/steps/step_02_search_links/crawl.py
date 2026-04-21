@@ -38,7 +38,7 @@ async def crawl(logger, keywords, site_search):
 
         visited.add(current_url)
         try:
-            response_html = await scrape(logger, current_url)
+            response_html, _ = await scrape(logger, current_url)
             if response_html is None:
                 logger.warning(f"Failed to scrape {current_url}")
                 continue

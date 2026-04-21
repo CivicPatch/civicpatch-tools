@@ -7,7 +7,7 @@ from runners.people_collector.schemas import (
 )
 from utils import log_utils
 
-async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> List[Link]:
+async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> tuple[List[Link], str]:
     """
     Scrape pages based on the links found in the previous search step.
     """
@@ -17,14 +17,14 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
 
     try:
         image_directory = data_path_utils.get_images_path(jurisdiction_ocdid)
-        html_content = await scrape_utils.scrape(logger, link_to_scrape.url, { "image_directory": image_directory })
+        html_content, final_url = await scrape_utils.scrape(logger, link_to_scrape.url, { "image_directory": image_directory })
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")
 
         # Save html_content to file under data_source
         cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
-        folder_name = url_utils.format_url_to_folder(link_to_scrape.url)
+        folder_name = url_utils.format_url_to_folder(final_url)
 
         page_path = os.path.join(cache_path, f"{folder_name}")
         os.makedirs(page_path, exist_ok=True)
@@ -37,10 +37,11 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
         updated_links = []
         for link in context.data.links:
             if link.url == link_to_scrape.url:
+                link.url = final_url
                 link.status = LinkStatus.SCRAPED.value
                 link.folder_name = folder_name
             updated_links.append(link)
-        return updated_links
+        return updated_links, final_url
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
         updated_links = []
@@ -48,4 +49,4 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
             if link.url == link_to_scrape.url:
                 link.status = LinkStatus.ERROR.value
             updated_links.append(link)
-        return updated_links
+        return updated_links, link_to_scrape.url
