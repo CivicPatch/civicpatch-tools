@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from shared.utils import config_utils
 from shared.utils import id_utils
 
@@ -14,9 +16,10 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
     location_parts = [municipality_name, f"{county_str} County" if county_str else None, state]
     location_str = ", ".join(p for p in location_parts if p)
 
+    stale_domain = urlparse(stale_url).netloc.removeprefix("www.") if stale_url else None
     stale_url_hint = (
-        f"\n    The domain {stale_url} appears to be inactive or parked and no longer serves the official government website. Search for where the official government website is currently hosted."
-        if stale_url else ""
+        f"\n    The domain {stale_domain} no longer serves the official government website — do not return any URL on this domain. Find where the official government website is currently hosted."
+        if stale_domain else ""
     )
 
     return f"""
