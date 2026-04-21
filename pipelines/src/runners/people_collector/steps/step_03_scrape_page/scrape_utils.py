@@ -9,6 +9,7 @@ import aiohttp
 import base64
 from urllib.parse import urljoin
 from runners.people_collector.steps.step_03_scrape_page.scrape.wix import wait_for_wix_content
+from runners.people_collector.steps.step_03_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
 from runners.people_collector.steps.step_03_scrape_page.scrape_constants import (
     PAGE_DEFAULT_TIMEOUT_MS,
     PAGE_NAVIGATION_TIMEOUT_MS,
@@ -102,15 +103,26 @@ async def scrape(logger, website_url, options=None):
                 
                 # Navigate with fallback strategy
                 response = None
+                last_errors: list[str] = []
                 for wait_until in ["networkidle", "load", "domcontentloaded"]:
                     try:
                         response = await page.goto(website_url, wait_until=wait_until, timeout=PAGE_NAVIGATION_TIMEOUT_MS)  # type: ignore[arg-type]
                         break
                     except Exception as e:
+                        last_errors.append(str(e))
                         logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
-                
+
                 if response is None:
-                    raise Exception("Failed to load page with all wait strategies")
+                    last_error = last_errors[-1] if last_errors else ""
+                    if "net::ERR_NAME_NOT_RESOLVED" in last_error:
+                        reason = NavigationFailureReason.DNS_FAILURE
+                    elif "net::ERR_CONNECTION_REFUSED" in last_error:
+                        reason = NavigationFailureReason.CONNECTION_REFUSED
+                    elif "Timeout" in last_error and "net::" not in last_error:
+                        reason = NavigationFailureReason.NAVIGATION_TIMEOUT
+                    else:
+                        reason = NavigationFailureReason.UNKNOWN
+                    raise NavigationError(website_url, reason, source=last_error)
                 
                 # Check if, after redirect, we have already scraped this URL
                 scraped_urls = options.get('scraped_urls')
