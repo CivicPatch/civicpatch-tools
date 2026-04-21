@@ -7,7 +7,7 @@ import time
 from typing import Optional
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
-from shared.utils.statuses import PipelineRunStatus, PullRequestStatus
+from shared.utils.statuses import PipelineRunStatus, PullRequestStatus, TERMINAL_PIPELINE_RUN_STATUSES
 import yaml
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
@@ -38,6 +38,7 @@ from database.pipeline_issues import (
     resolve_pipeline_issue,
     open_pipeline_issue_pull_request,
     upsert_pipeline_issue,
+    supersede_prior_jurisdiction_error_issues,
 )
 from database.pull_requests import (
     update_pipeline_run_pull_request_url,
@@ -92,6 +93,8 @@ async def update_pipeline_run_and_publish(request_id: str, status: str, progress
         pipeline_run = await get_pipeline_run(request_id)
         jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid") if pipeline_run else None
     if jurisdiction_ocdid:
+        if status in TERMINAL_PIPELINE_RUN_STATUSES:
+            await supersede_prior_jurisdiction_error_issues(jurisdiction_ocdid, request_id)
         await pubsub_service.publish(
             f"job_status:{jurisdiction_ocdid}",
             json.dumps({"request_id": request_id, "status": status, "progress": progress}),

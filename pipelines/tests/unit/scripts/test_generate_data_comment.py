@@ -9,7 +9,7 @@ def test_generate_table_with_full_data():
         name="Jane Doe",
         office=Office(name="Mayor", division_ocdid="ocd-division/country:us"),
         emails=["jane@example.com"],
-        phones=["555-1234"],
+        phones=["(555) 123-4567"],
         urls=["https://example.com"],
         start_date="2020-01-01",
         end_date="2024-01-01",
@@ -17,7 +17,7 @@ def test_generate_table_with_full_data():
         cdn_image="https://cdn.example.com/jane.jpg",
         jurisdiction_ocdid="ocd-division/country:us",
         source_urls=["https://source.com"],
-        updated_at="2024-01-01",
+        updated_at="2024-01-01T00:00:00+00:00",
         id=""
     )
     table = generate_data_comment([official])
@@ -37,7 +37,7 @@ def test_generate_table_with_missing_data():
         cdn_image=None,
         jurisdiction_ocdid="ocd-division/country:us",
         source_urls=[],
-        updated_at="2024-01-01",
+        updated_at="2024-01-01T00:00:00+00:00",
         id=""
     )
     table = generate_data_comment([official])

@@ -8,7 +8,9 @@ def format_url(url: str):
     - Preserves trailing slash as-is
     """
     url = url.strip()
-    if not url.startswith("http"):
+    if url.startswith("//"):
+        url = "https:" + url
+    elif not url.startswith("http"):
         url = "https://" + url
 
     parsed = urlparse(url)

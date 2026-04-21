@@ -5,7 +5,7 @@ from psycopg import sql
 
 import shared.utils.id_utils
 from database.database import get_pool
-from shared.utils.statuses import PipelineIssueCategory, PipelineIssueType, ReviewIssueStatus
+from shared.utils.statuses import PipelineIssueCategory, PipelineIssueStatus, PipelineIssueType
 
 
 def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
@@ -39,7 +39,7 @@ async def get_pending_error_issue_ocdids() -> set[str]:
               AND pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid IS NOT NULL
             """,
-            (PipelineIssueCategory.ERROR, ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED),
+            (PipelineIssueCategory.ERROR, PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -91,7 +91,7 @@ async def resolve_pipeline_issue(issue_id: str) -> None:
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE pipeline_issues SET status = %s, resolved_at = NOW() WHERE id = %s",
-            (ReviewIssueStatus.RESOLVED, issue_id),
+            (PipelineIssueStatus.RESOLVED, issue_id),
         )
 
 
@@ -100,7 +100,7 @@ async def open_pipeline_issue_pull_request(issue_id: str, pull_request_url: str)
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE pipeline_issues SET status = %s, pull_request_url = %s WHERE id = %s",
-            (ReviewIssueStatus.PR_OPENED, pull_request_url, issue_id),
+            (PipelineIssueStatus.PR_OPENED, pull_request_url, issue_id),
         )
 
 
@@ -122,7 +122,7 @@ async def get_pipeline_issues_with_open_pr() -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT id::text, pull_request_url FROM pipeline_issues WHERE status = %s",
-            (ReviewIssueStatus.PR_OPENED,),
+            (PipelineIssueStatus.PR_OPENED,),
         )
         rows = await cur.fetchall()
     return [{"id": r[0], "pull_request_url": r[1]} for r in rows]
@@ -133,7 +133,33 @@ async def reopen_pipeline_issue(issue_id: str) -> None:
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE pipeline_issues SET status = %s, pull_request_url = NULL WHERE id = %s",
-            (ReviewIssueStatus.PENDING, issue_id),
+            (PipelineIssueStatus.PENDING, issue_id),
+        )
+
+
+async def supersede_prior_jurisdiction_error_issues(jurisdiction_ocdid: str, current_request_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE pipeline_issues
+            SET status = %s, resolved_at = NOW()
+            WHERE category = %s
+              AND status = %s
+              AND NOT (%s = ANY(request_ids))
+              AND EXISTS (
+                SELECT 1 FROM requests r
+                WHERE r.id::text = ANY(pipeline_issues.request_ids)
+                  AND r.jurisdiction_ocdid = %s
+              )
+            """,
+            (
+                PipelineIssueStatus.SUPERSEDED,
+                PipelineIssueCategory.ERROR,
+                PipelineIssueStatus.PENDING,
+                current_request_id,
+                jurisdiction_ocdid,
+            ),
         )
 
 
@@ -151,7 +177,7 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str,
         else:
             issue_key = request_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, category, [request_id], data, ReviewIssueStatus.PENDING))
+        rows.append((issue_type, issue_key, category, [request_id], data, PipelineIssueStatus.PENDING))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -177,8 +203,14 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str,
                   )
                 ELSE pipeline_issues.data
               END,
-              status = CASE WHEN pipeline_issues.status = 'resolved' THEN 'pending' ELSE pipeline_issues.status END,
-              resolved_at = CASE WHEN pipeline_issues.status = 'resolved' THEN NULL ELSE pipeline_issues.resolved_at END
+              status = CASE
+                WHEN pipeline_issues.status IN ('resolved', 'superseded') THEN 'pending'
+                ELSE pipeline_issues.status
+              END,
+              resolved_at = CASE
+                WHEN pipeline_issues.status IN ('resolved', 'superseded') THEN NULL
+                ELSE pipeline_issues.resolved_at
+              END
             """,
             rows,
         )
@@ -193,9 +225,9 @@ async def get_pipeline_issues_page(
     show_archived: bool = False,
 ) -> tuple[list[dict], int]:
     if show_archived:
-        active_statuses = [ReviewIssueStatus.RESOLVED]
+        active_statuses = [PipelineIssueStatus.RESOLVED]
     else:
-        active_statuses = [ReviewIssueStatus.PENDING, ReviewIssueStatus.PR_OPENED]
+        active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
     conditions: list[sql.Composable] = [
         sql.SQL("ri.status IN ({})").format(
             sql.SQL(", ").join(sql.Placeholder() for _ in range(len(active_statuses)))

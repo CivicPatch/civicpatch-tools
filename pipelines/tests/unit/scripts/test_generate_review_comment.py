@@ -1,5 +1,5 @@
 import pytest
-from domain.models import Official
+from domain.models import Official, Office
 
 from shared.utils.review_utils import get_identity_issues
 from runners.people_collector.schemas import (
@@ -15,18 +15,17 @@ pytestmark = pytest.mark.unit
 def make_official(name):
     return Official(
         name=name,
-        roles=["mayor"],
-        divisions=[],
+        office=Office(name="Mayor", division_ocdid=None),
         emails=[],
         phones=[],
         urls=[],
-        start_date="",
-        end_date="",
-        image="",
-        cdn_image="",
-        source_urls=[],
-        jurisdiction_ocdid="",
-        updated_at="",
+        start_date=None,
+        end_date=None,
+        image=None,
+        cdn_image=None,
+        source_urls=["https://example.gov"],
+        jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+        updated_at="2024-01-01T00:00:00+00:00",
         id=""
     )
 
