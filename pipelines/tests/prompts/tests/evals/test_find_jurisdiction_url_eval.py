@@ -7,6 +7,7 @@ import os
 import pytest
 
 import services.google_gemini.llm as gemini_llm
+from services.google_gemini.llm import FIND_JURISDICTION_URL_MODEL_FALLBACKS
 import services.google_gemini.prompts as gemini_prompts
 from shared.utils.url_utils import same_domain
 from utils import cost_utils
@@ -60,6 +61,7 @@ async def run_eval(case):
         jurisdiction_ocdid=jurisdiction_ocdid,
         prompt=prompt,
         with_search=True,
+        model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     actual = {"url": (response or {}).get("url")}
     with open(f"{case['case_path']}/{MODEL_NAME}-actual.yml", "w", encoding="utf-8") as f:

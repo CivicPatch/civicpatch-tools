@@ -24,6 +24,10 @@ llm_model_prices = {
         'gemini-2.5-flash-lite': {
             'input_cost_per_1m': Decimal('0.10'),
             'output_cost_per_1m': Decimal('0.40')
+        },
+        'gemini-3.1-flash-lite-preview': {
+            'input_cost_per_1m': Decimal('0.25'),
+            'output_cost_per_1m': Decimal('1.50')
         }
     },
     # open_router prices are per (model, provider) — fetched 2026-04-14

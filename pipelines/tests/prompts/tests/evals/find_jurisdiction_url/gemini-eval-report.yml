@@ -1,7 +1,7 @@
 cost_summary:
-  model: gemini-2.5-flash
-  elapsed_seconds: 11.36
-  total_input_tokens: 344
-  total_output_tokens: 1490
-  total_cost_usd: 0.0038282
+  model: gemini-3.1-flash-lite-preview
+  elapsed_seconds: 8.07
+  total_input_tokens: 509
+  total_output_tokens: 65
+  total_cost_usd: 0.00022475
 failed_cases: []
