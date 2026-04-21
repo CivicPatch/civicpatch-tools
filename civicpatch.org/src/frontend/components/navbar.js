@@ -80,6 +80,20 @@ const NAVBAR_CSS = html`
       font-size: 0.8rem;
       flex-shrink: 0;
     }
+    .nav-beta-badge {
+      font-size: 0.6rem;
+      font-family: var(--pico-font-family-monospace);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--pico-primary);
+      border: 1px solid var(--pico-primary);
+      border-radius: 4px;
+      padding: 0.2em 0.35em;
+      opacity: 0.7;
+      position: relative;
+      bottom: 0.35em;
+    }
 
     /* Right side */
     .nav-links {
@@ -353,6 +367,7 @@ function Navbar({ user }) {
           <i class="fa-solid fa-landmark"></i>
         </span>
         CivicPatch
+        <span class="nav-beta-badge">BETA</span>
       </a>
       ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout"><i class="fab fa-github"></i> Logout</a>` : ''}
       <div class="nav-links">
