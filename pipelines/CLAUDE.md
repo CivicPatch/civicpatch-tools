@@ -31,6 +31,10 @@ tests/
 2. Read `tests/factories/` and existing tests in the relevant `tests/unit/` directory before writing tests
 3. Check `shared/` before implementing a utility — it may already exist
 
+## State machine
+
+The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md) — keep it in sync with `transitions/main.py` whenever you add, remove, or rewire states.
+
 ## Pipeline conventions
 
 - `PeopleCollectorContext` is the shared state object threaded through every step; it carries the job config, logger, env vars, and accumulated step results — read it, never mutate it
