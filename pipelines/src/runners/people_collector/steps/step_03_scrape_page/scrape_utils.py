@@ -93,7 +93,7 @@ async def scrape(logger, website_url, options=None):
                 user_data_dir="",
                 channel="chrome",
                 headless=False,
-                no_viewport=True
+                no_viewport=True,
             )
             
             try:
@@ -263,7 +263,7 @@ async def wait_for_basic_content(page, logger):
         logger.warning(f"Error in basic waiting: {e}")
 
 async def convert_background_divs_to_imgs(page):
-    """Convert divs with background images to img tags in the page"""
+    """Inject an <img> for each div's CSS background-image, preserving the div and its children."""
     try:
         await page.evaluate("""
             () => {
@@ -274,7 +274,7 @@ async def convert_background_divs_to_imgs(page):
                     if (match) {
                         const img = document.createElement('img');
                         img.src = match[1];
-                        div.replaceWith(img);
+                        div.insertBefore(img, div.firstChild);
                     }
                 });
             }

@@ -82,6 +82,11 @@ dir = "shared"
 run = "uv run pytest tests/unit"
 dir = "pipelines"
 
+[tasks.tlive]
+description = "Run live scrape tests locally (hits real external URLs, never run in CI — runs headless=False so the browser is visible)"
+run = "uv run pytest tests/integration -m live -s -v"
+dir = "pipelines"
+
 [tasks.tcpi]
 description = "Run pipelines integration tests inside Docker (requires spaCy, Playwright)"
 run = "docker compose -f pipelines/docker-compose-files/docker-compose.integration-tests.yml run --rm pipelines-integration-tests"
