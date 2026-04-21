@@ -311,10 +311,12 @@ async def run_llm_loop(
             retry_count = 0
             continue
 
+        seed = retry_count if retry_count > 0 else None
+        logger.info(f"Running LLM: {llm['name']} seed={seed}")
         llm_responses, records_found = await process_with_llm(
             page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
             content, known_roles, llm,
-            seed=retry_count if retry_count > 0 else None,
+            seed=seed,
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
