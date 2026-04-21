@@ -459,7 +459,7 @@ async def test_upsert_pipeline_issue_unrecognized_role():
 @pytest.mark.integration
 async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     """A new request for an issue already in pr_opened must not reset it to pending."""
-    from shared.utils.statuses import ReviewIssueStatus
+    from shared.utils.statuses import PipelineIssueStatus
 
     await db_pipeline_issues.upsert_pipeline_issue(
         "test-request-id-1",
@@ -474,7 +474,7 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "UPDATE pipeline_issues SET status = %s WHERE issue_type = %s AND issue_key = %s",
-            (ReviewIssueStatus.PR_OPENED, "unrecognized_role", "archduke"),
+            (PipelineIssueStatus.PR_OPENED, "unrecognized_role", "archduke"),
         )
 
     # New request for the same role — must not clobber pr_opened
@@ -493,7 +493,7 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
         )
         row = await cur.fetchone()
     assert row is not None
-    assert row[0] == ReviewIssueStatus.PR_OPENED
+    assert row[0] == PipelineIssueStatus.PR_OPENED
 
 
 @pytest.mark.asyncio

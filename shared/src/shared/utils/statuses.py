@@ -36,14 +36,16 @@ TERMINAL_PIPELINE_RUN_STATUSES = (
 )
 
 
-class ReviewIssueStatus(StrEnum):
+class PipelineIssueStatus(StrEnum):
     PENDING = "pending"
     # A pull request has been opened to address this issue; awaiting merge
     PR_OPENED = "pr_opened"
     RESOLVED = "resolved"
+    # Automatically set on error-category issues when a newer run for the same jurisdiction reaches a terminal state
+    SUPERSEDED = "superseded"
 
 
-TERMINAL_REVIEW_ISSUE_STATUSES = (ReviewIssueStatus.RESOLVED,)
+TERMINAL_PIPELINE_ISSUE_STATUSES = (PipelineIssueStatus.RESOLVED, PipelineIssueStatus.SUPERSEDED)
 
 
 class PipelineRunErrorType(StrEnum):

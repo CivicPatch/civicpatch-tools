@@ -82,7 +82,7 @@ erDiagram
         text            category        "check: error|issue"
         text_array      request_ids
         jsonb           data
-        text            status          "idx"
+        text            status          "idx, check: pending|pr_opened|resolved|superseded"
         text_null       pull_request_url
         timestamptz_null resolved_at
         timestamptz     created_at
