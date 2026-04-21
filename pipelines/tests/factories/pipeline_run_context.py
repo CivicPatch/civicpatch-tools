@@ -6,7 +6,6 @@ from runners.people_collector.schemas import (
     PipelineStatus,
     PipelineRunConfig,
     ResearchMunicipalityStep,
-    SearchLinksStep,
     PreprocessPageContentStep,
     ProcessPageContentStep,
     MergeRecordsWithinLLMStep,
@@ -21,7 +20,6 @@ def pipeline_run_context_factory(
 ) -> PeopleCollectorContext:
     default_steps: Dict[PipelineStatus, Union[
         ResearchMunicipalityStep,
-        SearchLinksStep,
         PreprocessPageContentStep,
         ProcessPageContentStep,
         MergeRecordsWithinLLMStep,
@@ -45,7 +43,6 @@ def pipeline_run_context_factory(
             research_municipality_step=research_municipality_step or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
                 expected_count=0, target_designations=[], known_roles=[], identities={}, source_urls=[]
             ),
-            search_links_step=default_steps.get(PipelineStatus.SEARCH_LINKS, SearchLinksStep()),
             preprocess_page_content_step=default_steps.get(PipelineStatus.PREPROCESS_PAGE_CONTENT),
             process_page_content_step=default_steps.get(PipelineStatus.PROCESS_PAGE_CONTENT),
             merge_records_within_llm_step=default_steps.get(PipelineStatus.MERGE_RECORDS_WITHIN_LLM),

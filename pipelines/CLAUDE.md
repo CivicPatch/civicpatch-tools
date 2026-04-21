@@ -11,7 +11,7 @@ A pipeline that scrapes and processes municipal government officials data, then 
 ```
 src/
   jobs/people_collector/
-    steps/          ← pipeline steps step_00 through step_11
+    steps/          ← pipeline steps step_00–step_11, plus step_09a (find_jurisdiction_url fallback)
     main.py         ← orchestrator
   services/         ← external integrations (LLMs, civicpatch API, search)
   domain/           ← core models
@@ -33,7 +33,10 @@ tests/
 
 ## State machine
 
-The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md) — keep it in sync with `transitions/main.py` whenever you add, remove, or rewire states.
+The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md) — **keep it in sync whenever you:**
+- Add, remove, or rewire states in `transitions/main.py`
+- Add or remove a step directory under `steps/`
+- Rename a step directory
 
 ## Pipeline conventions
 

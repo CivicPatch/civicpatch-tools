@@ -12,26 +12,24 @@ from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline im
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
     research_municipality,
 )
-from runners.people_collector.steps.step_02_search_links.search_links import search_links
-from runners.people_collector.steps.step_02_search_links.search_links import SearchEngineNames
-from runners.people_collector.steps.step_03_scrape_page.scrape_page import scrape_page
-from runners.people_collector.steps.step_04_preprocess_page_content.preprocess_page_content import (
+from runners.people_collector.steps.step_02_scrape_page.scrape_page import scrape_page
+from runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content import (
     preprocess_page_content,
 )
-from runners.people_collector.steps.step_05_process_page_content.process_page_content import process_page_content
-from runners.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
+from runners.people_collector.steps.step_04_process_page_content.process_page_content import process_page_content
+from runners.people_collector.steps.step_05_merge_records_within_llm.merge_records_within_llm import (
     merge_records_within_llm,
 )
-from runners.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
+from runners.people_collector.steps.step_06_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
 )
-from runners.people_collector.steps.step_08_format_output.format_output import format_output
-from runners.people_collector.steps.step_09_cleanup.cleanup import cleanup
-from runners.people_collector.steps.step_10_review_output.review_output import review_output
-from runners.people_collector.steps.step_11_save_output.save_output import save_output
-from runners.people_collector.steps.step_12_send_success.send_success import send_success
-from runners.people_collector.steps.step_12_send_error.send_error import send_error
-from runners.people_collector.steps.step_10a_find_jurisdiction_url.find_jurisdiction_url import find_jurisdiction_url
+from runners.people_collector.steps.step_07_format_output.format_output import format_output
+from runners.people_collector.steps.step_08_cleanup.cleanup import cleanup
+from runners.people_collector.steps.step_09_review_output.review_output import review_output
+from runners.people_collector.steps.step_10_save_output.save_output import save_output
+from runners.people_collector.steps.step_11_send_success.send_success import send_success
+from runners.people_collector.steps.step_11_send_error.send_error import send_error
+from runners.people_collector.steps.step_09a_find_jurisdiction_url.find_jurisdiction_url import find_jurisdiction_url
 
 from runners.people_collector.transitions.process_page_content_transition import next_process_content_state
 from runners.people_collector.utils.links import (
@@ -58,8 +56,6 @@ async def start_job(job_config: JobConfig, logger: PipelineRunLogger, context: P
 
 async def research_municipality_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await research_municipality(context, api_client)
-    next_state = PipelineStatus.SEARCH_LINKS
-
     new_data = context.data.copy(update={
         "research_municipality_step": result
     })
@@ -73,49 +69,14 @@ async def research_municipality_transition(job_config: JobConfig, logger: Pipeli
     assert next_context.data.research_municipality_step is not None, "should never happen — research_municipality_step must be set after research_municipality"
     source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
-        logger.info("Source URLs provided, skipping link search.")
+        logger.info("Source URLs provided.")
         next_context = next_context.copy(update={
             "data": next_context.data.copy(update={
                 "links": add_links(next_context.data.links, source_urls)
             })
         })
 
-        next_state = PipelineStatus.SCRAPE_PAGE
-    else:
-        logger.info("Source URLs not found, using search engine for links.")
-        next_state = PipelineStatus.SEARCH_LINKS
-
-    
-    return next_context, next_state
-
-async def search_links_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    search_links_step = context.data.search_links_step
-    search_link_pointer = search_links_step.search_link_pointer
-    next_state = PipelineStatus.SCRAPE_PAGE
-    next_context = context
-
-    if search_link_pointer >= len(SearchEngineNames):
-        logger.info("All search engines have been processed.")
-
-        next_state = PipelineStatus.SCRAPE_PAGE
-    else:
-        links, result = await search_links(context)
-        progress = calculate_progress_percentage(context.data, 2)
-        next_context = context.copy(update={
-            "progress": progress,
-            "data": context.data.copy(update={
-                "links": links,
-                "search_links_step": result
-            })
-        })
-        if len(links) == 0:
-            logger.info("No links found, re-running step to try next search engine.")
-            next_state = PipelineStatus.SEARCH_LINKS
-        else:
-            next_state = PipelineStatus.SCRAPE_PAGE
-
-    
-    return next_context, next_state
+    return next_context, PipelineStatus.SCRAPE_PAGE
 
 async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_scrape = get_next_link_with_status(context.data.links, LinkStatus.PENDING)
@@ -123,8 +84,8 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
 
     if not page_to_scrape:
         logger.info("No pending links left to scrape.")
-        error_links = get_links_with_status(context.data.links, [LinkStatus.ERROR])
-        all_failed = bool(context.data.links) and len(error_links) == len(context.data.links)
+        unprocessable_links = get_links_with_status(context.data.links, [LinkStatus.ERROR, LinkStatus.PREPROCESSED_NO_CONTENT])
+        all_failed = bool(context.data.links) and len(unprocessable_links) == len(context.data.links)
         if all_failed:
             if not context.data.find_jurisdiction_url_attempted:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
@@ -211,7 +172,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Pipelin
                 "data": context.data.copy(update={"error_step": "All pages were unreachable"})
             })
             return next_context, PipelineStatus.SEND_ERROR
-        return context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
+        return context, PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
     page_to_process = preprocessed_links[0]
     try:
@@ -373,7 +334,7 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
             "data": next_context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
         }), PipelineStatus.SEND_ERROR
 
-    if same_url(discovered, context.data.config.url):
+    if same_domain(discovered, context.data.config.url):
         return next_context, PipelineStatus.REVIEW_OUTPUT
 
     new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})
@@ -418,7 +379,6 @@ def _collect_pipeline_heuristics(officials, role_config, merge_step) -> tuple[st
 TRANSITION_MAP = {
   PipelineStatus.INIT: start_job,
   PipelineStatus.RESEARCH_MUNICIPALITY: research_municipality_transition,
-  PipelineStatus.SEARCH_LINKS: search_links_transition,
   PipelineStatus.SCRAPE_PAGE: scrape_page_transition,
   PipelineStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
   PipelineStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
