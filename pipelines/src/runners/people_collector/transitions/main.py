@@ -140,7 +140,7 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
         new_config = context.data.config.model_copy(update={"url": final_url})
         next_context = next_context.copy(update={
             "pipeline_issues": next_context.pipeline_issues + [{
-                "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
+                "type": PipelineIssueType.DOMAIN_REDIRECTED,
                 "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
             }],
             "data": next_context.data.copy(update={"config": new_config}),
