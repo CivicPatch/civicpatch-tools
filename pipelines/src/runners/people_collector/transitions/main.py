@@ -123,6 +123,16 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
 
     if not page_to_scrape:
         logger.info("No pending links left to scrape.")
+        error_links = get_links_with_status(context.data.links, [LinkStatus.ERROR])
+        all_failed = bool(context.data.links) and len(error_links) == len(context.data.links)
+        if all_failed:
+            if not context.data.find_jurisdiction_url_attempted:
+                return context, PipelineStatus.FIND_JURISDICTION_URL
+            next_context = context.copy(update={
+                "pipeline_error_type": PipelineRunErrorType.DOMAIN_INACTIVE,
+                "data": context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
+            })
+            return next_context, PipelineStatus.SEND_ERROR
         next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
         return context, next_state
 
@@ -160,7 +170,16 @@ async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLo
 
     if not page_to_preprocess:
         logger.info("No scraped links left to preprocess.")
-        next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+        preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
+        if not preprocessed_links:
+            if not context.data.find_jurisdiction_url_attempted:
+                return context, PipelineStatus.FIND_JURISDICTION_URL
+            next_context = context.copy(update={
+                "pipeline_error_type": PipelineRunErrorType.DOMAIN_INACTIVE,
+                "data": context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
+            })
+            return next_context, PipelineStatus.SEND_ERROR
+        next_state = PipelineStatus.PROCESS_PAGE_CONTENT
         return context, next_state
 
     links, result = preprocess_page_content(context, page_to_preprocess)
