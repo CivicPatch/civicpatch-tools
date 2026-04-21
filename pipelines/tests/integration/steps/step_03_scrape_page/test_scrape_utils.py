@@ -3,7 +3,7 @@ import pytest
 import shutil
 from unittest.mock import MagicMock
 from patchright.async_api import async_playwright
-from runners.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, inline_iframes, convert_background_divs_to_imgs
+from runners.people_collector.steps.step_03_scrape_page.scrape_utils import scrape, convert_background_divs_to_imgs
 
 pytestmark = pytest.mark.integration
 
@@ -30,8 +30,13 @@ async def test_convert_background_divs_to_imgs_preserves_children():
     names rendered by Avada/Fusion Builder inside background-image divs).
     """
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=True)
-        page = await browser.new_page()
+        context = await playwright.chromium.launch_persistent_context(
+            user_data_dir="",
+            channel="chrome",
+            headless=True,
+            no_viewport=True,
+        )
+        page = await context.new_page()
         await page.set_content("""
             <div style="background-image: url('https://example.com/hero.jpg')">
                 <span class="member-name">Jerry Adams</span>
@@ -44,7 +49,7 @@ async def test_convert_background_divs_to_imgs_preserves_children():
         assert await img.get_attribute("src") == "https://example.com/hero.jpg"
         assert span is not None, "child <span> was destroyed by convert_background_divs_to_imgs"
         assert await span.inner_text() == "Jerry Adams"
-        await browser.close()
+        await context.close()
 
 
 @pytest.mark.asyncio
@@ -85,7 +90,7 @@ async def test_scrape_inlines_iframe_content():
     website_url = "https://alconatownship.com/officials/"
     options = {"scraped_urls": []}
 
-    html_output = await scrape(logger, website_url, options)
+    html_output, _ = await scrape(logger, website_url, options)
 
     assert "<iframe" not in html_output, "iframe tag should have been replaced by inline_iframes"
     # The Google Doc contains text about township officials — spot-check a word that

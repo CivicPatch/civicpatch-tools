@@ -397,10 +397,9 @@ or on the image below for our interactive map. (Use the magnifying glass icon on
 
 
 
-|  |
-| --- |
-| **MEETING INFORMATION**  City Council and City Plan Commission meetings are held in the Council Chambers in the City Hall facility.   * **City Hall Address** * [**2360 Campbell Creek Blvd. Suite 525**](https://www.google.com/maps/place/2360+Campbell+Creek+Blvd,+Richardson,+TX+75082/@32.9811586,-96.7030933,17z/data=!3m1!4b1!4m6!3m5!1s0x864c1ed128f803d7:0xbe2944bf555d6ef4!8m2!3d32.9811586!4d-96.7005184!16s%2Fg%2F11bw3y9dyd?entry=ttu)   City Council meetings are generally held every Monday, unless otherwise scheduled, and will begin at 6 p.m.  All regular and work session meeting dates and locations are published on the City’s website at [www.cor.net/council](https://www.cor.net/government/boards-commissions-meetings/city-council/city-council) .  Meetings will be streamed live on the City's website at [www.cor.net/CITV](https://www.cor.net/departments/communications/citizens-information-television) and on U-Verse Channel 99, with on-demand viewing available within 24 hours of the meeting. |
-
+[**2360 Campbell Creek Blvd. Suite 525**](https://www.google.com/maps/place/2360+Campbell+Creek+Blvd,+Richardson,+TX+75082/@32.9811586,-96.7030933,17z/data=!3m1!4b1!4m6!3m5!1s0x864c1ed128f803d7:0xbe2944bf555d6ef4!8m2!3d32.9811586!4d-96.7005184!16s%2Fg%2F11bw3y9dyd?entry=ttu)
+[www.cor.net/council](https://www.cor.net/government/boards-commissions-meetings/city-council/city-council)
+[www.cor.net/CITV](https://www.cor.net/departments/communications/citizens-information-television)
 The City Council typically holds business meetings on the second and fourth Monday of each month in the Council Chambers and work sessions are typically held every Monday. Meeting times and locations are subject to change and are posted and available to find online
 [here](https://www.cor.net/government/boards-commissions-meetings/city-council/city-council-regular-meeting-documents)
 . If you would like to speak to the Council, please
