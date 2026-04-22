@@ -1,7 +1,7 @@
 import logging
 
 import lib.github.api as github_service
-from schemas.jurisdictions import MergedRoleConfigResponse, RoleEntryData, RoleEntryWithSource, SetScopeRolesRequest
+from schemas.jurisdictions import MergedRoleConfigResponse, RoleEntryWithSource, SetScopeRolesRequest
 from shared.utils.config_utils import RoleConfig, RoleEntry
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 from shared.utils.yaml_utils import yaml_dump, yaml_load
@@ -45,16 +45,7 @@ def build_merged_response(per_level: dict[str, RoleConfig]) -> MergedRoleConfigR
     return MergedRoleConfigResponse(roles=list(seen.values()))
 
 
-async def _write_once(path: str, config: RoleConfig, commit_message: str) -> bool:
-    return await github_service.upsert_github_file(
-        branch_name="main",
-        file_path=path,
-        content_str=yaml_dump(config.model_dump()),
-        commit_message=commit_message,
-    )
-
-
-async def set_scope_roles(req: SetScopeRolesRequest) -> None:
+async def build_updated_config(req: SetScopeRolesRequest) -> tuple[str, str]:
     folder = jurisdiction_ocdid_to_folder(req.ocdid)
     path = _scope_path(req.scope, folder)
     raw = await github_service.get_github_file_contents(path)
@@ -63,8 +54,23 @@ async def set_scope_roles(req: SetScopeRolesRequest) -> None:
         roles=[RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in req.roles],
         excluded_roles=existing.excluded_roles,
     )
+    return path, yaml_dump(updated.model_dump())
+
+
+async def _write_once(path: str, content: str, commit_message: str) -> bool:
+    return await github_service.upsert_github_file(
+        branch_name="main",
+        file_path=path,
+        content_str=content,
+        commit_message=commit_message,
+    )
+
+
+async def set_scope_roles(req: SetScopeRolesRequest) -> None:
+    folder = jurisdiction_ocdid_to_folder(req.ocdid)
+    path, content = await build_updated_config(req)
     commit_message = f"Update {req.scope} roles for {folder}"
-    if await _write_once(path, updated, commit_message):
+    if await _write_once(path, content, commit_message):
         return
-    if not await _write_once(path, updated, commit_message):
+    if not await _write_once(path, content, commit_message):
         raise RuntimeError("Failed to write role config after retry (SHA conflict)")

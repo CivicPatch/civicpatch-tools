@@ -1,10 +1,9 @@
 import { html } from "lit-html";
 import { getIssueTypeConfig, formatIssueType, formatDate, getIssueDetail } from "./utils.js";
 
-export function IssueRow(issue, { onResolve, onDetails, onDismiss, onConfig }) {
+export function IssueRow(issue, { onDetails, onDismiss, onConfig }) {
   const config = getIssueTypeConfig(issue.issue_type);
   const categoryClass = config?.category ? ` issues-page__issue-type-chip--${config.category}` : "";
-  const resolveableTypes = ["role"];
 
   return html`
     <tr>
@@ -31,11 +30,8 @@ export function IssueRow(issue, { onResolve, onDetails, onDismiss, onConfig }) {
       <td class="issues-page__issue-date">${formatDate(issue.created_at)}</td>
       <td class="issues-page__issue-actions">
         <button class="btn btn-sm secondary" @click=${() => onDetails(issue)}>Details</button>
-        ${issue.jurisdictions?.length === 1
-          ? html`<button class="btn btn-sm secondary" @click=${() => onConfig(issue.jurisdictions[0])}>Config</button>`
-          : ""}
-        ${resolveableTypes.includes(config?.modal_type) && issue.status === "pending"
-          ? html`<button class="btn btn-sm" @click=${() => onResolve(issue)}>Resolve</button>`
+        ${issue.issue_type === "unrecognized_role" && issue.jurisdictions?.length
+          ? html`<button class="btn btn-sm" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
           : ""}
         ${issue.status === "pending"
           ? html`<button class="btn btn-sm destructive" @click=${() => onDismiss(issue)}>Dismiss</button>`

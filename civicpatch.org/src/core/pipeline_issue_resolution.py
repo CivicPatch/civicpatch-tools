@@ -1,43 +1,29 @@
 import logging
-from shared.utils.yaml_utils import yaml_dump, yaml_load
 
-import lib.github.api as github_service
+import core.role_config as role_config_service
 import lib.github.pull_requests as pr_service
+from database.pipeline_issues import open_pipeline_issue_pull_request
 from lib.github.pull_requests import PrAuthor
-from schemas.pipeline_runs import ResolveIssueRequest
-from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs
+from schemas.jurisdictions import SetScopeRolesRequest
+from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 logger = logging.getLogger(__name__)
 
 
-async def resolve_role_issue(issue: dict, body: ResolveIssueRequest, author: PrAuthor) -> tuple[str, str] | None:
-    scope = body.scope or "global"
-    if scope == "state":
-        config_path = f"data_source/{body.state}/local/config.yml"
-    elif scope == "locality":
-        config_path = f"data_source/{body.state}/local/{body.locality}/config.yml"
-    else:
-        config_path = "data_source/local/config.yml"
-
-    raw = await github_service.get_github_file_contents(config_path)
-    existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
-    merged = merge_role_configs(existing, RoleConfig(roles=[RoleEntry(role=issue["issue_key"])]))
-    content = yaml_dump(merged.model_dump())
-
+async def resolve_via_config_pr(req: SetScopeRolesRequest, author: PrAuthor, issue_id: str) -> str:
+    folder = jurisdiction_ocdid_to_folder(req.ocdid)
+    path, content = await role_config_service.build_updated_config(req)
+    branch_name = f"config/{req.scope}/{req.ocdid.replace('/', '-')}"
     pr_number, pull_request_url = await pr_service.open_attributed_pr(
-        branch_name=f"resolve/role/{issue['id']}",
-        file_path=config_path,
+        branch_name=branch_name,
+        file_path=path,
         content=content,
-        commit_message=f"Add role: {issue['issue_key']}",
-        pull_request_title=f"Add unrecognized role: {issue['issue_key']}",
-        pull_request_body=f"Adds `{issue['issue_key']}` to `{config_path}` via issue resolution.",
+        commit_message=f"Update {req.scope} roles for {folder}",
+        pull_request_title=f"Update {req.scope} role config: {folder}",
+        pull_request_body=f"Updates role config at `{path}`.",
         author=author,
     )
     if pr_number is None:
-        logger.error(f"Failed to open PR for role resolution: {pull_request_url}")
-        return None
-    return pull_request_url, config_path
-
-
-
-
+        raise RuntimeError(f"Failed to open config PR: {pull_request_url}")
+    await open_pipeline_issue_pull_request(issue_id, pull_request_url)
+    return pull_request_url

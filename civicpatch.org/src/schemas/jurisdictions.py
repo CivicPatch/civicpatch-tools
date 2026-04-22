@@ -1,4 +1,4 @@
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -28,3 +28,4 @@ class SetScopeRolesRequest(BaseModel):
     ocdid: str
     scope: Literal["state", "locality"]
     roles: List[RoleEntryData]
+    issue_id: Optional[str] = None

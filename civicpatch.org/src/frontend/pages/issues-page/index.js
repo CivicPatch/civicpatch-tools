@@ -72,7 +72,6 @@ function IssuesPage() {
   const [showArchived, setShowArchived] = useState(false);
 
   const [resolveModal, setResolveModal] = useState(null);
-  const [resolveModalDetailsOnly, setResolveModalDetailsOnly] = useState(false);
   const [dismissModal, setDismissModal] = useState(null);
   const [configModal, setConfigModal] = useState(null);
   const [prToast, setPrToast] = useState(null);
@@ -105,8 +104,7 @@ function IssuesPage() {
       .finally(() => { setIssuesLoading(false); setIssuesPageLoading(false); });
   }, [openSections.issues, issuesPage, issuesPerPage, issuesTagFilter, issuesSortDesc, stateCode, showArchived]);
 
-  const openDetailsModal = (issue) => { setResolveModal(issue); setResolveModalDetailsOnly(true); };
-  const openResolveModal = (issue) => { setResolveModal(issue); setResolveModalDetailsOnly(false); };
+  const openDetailsModal = (issue) => setResolveModal(issue);
   const closeModal = () => setResolveModal(null);
   const closeDismissModal = () => setDismissModal(null);
 
@@ -220,10 +218,9 @@ function IssuesPage() {
               ${issues.length === 0
                 ? html`<tr><td colspan="6">No issues found.</td></tr>`
                 : issues.map((ev) => IssueRow(ev, {
-                    onResolve: openResolveModal,
                     onDetails: openDetailsModal,
                     onDismiss: (issue) => setDismissModal(issue),
-                    onConfig: (jurisdiction) => setConfigModal(jurisdiction),
+                    onConfig: (jurisdictions) => setConfigModal(jurisdictions),
                   }))
               }
             </tbody>
@@ -253,7 +250,7 @@ function IssuesPage() {
     ${resolveModal ? html`
       <issues-resolve-modal
         .issue=${resolveModal}
-        ?details-only=${resolveModalDetailsOnly}
+        ?details-only=${true}
         @modal-close=${closeModal}
         @issue-resolved=${handleIssueResolved}
       ></issues-resolve-modal>
@@ -269,8 +266,7 @@ function IssuesPage() {
 
     ${configModal ? html`
       <issues-config-editor
-        .ocdid=${configModal.jurisdiction_ocdid}
-        .jurisdictionName=${configModal.name}
+        .jurisdictions=${configModal}
         @modal-close=${() => setConfigModal(null)}
       ></issues-config-editor>
     ` : null}
