@@ -305,6 +305,57 @@ async def resolve_review_session_entries_by_pr_number(pr_number: str) -> None:
             )
 
 
+async def get_leaderboard() -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
+            await cur.execute(
+                """
+                WITH counts AS (
+                    SELECT
+                        rs.state_code,
+                        COALESCE(u.display_name, 'Anonymous') AS display_name,
+                        u.provider,
+                        u.provider_user_id,
+                        COUNT(*) AS resolved_count
+                    FROM review_session_entries rse
+                    JOIN review_sessions rs ON rs.id = rse.review_session_id
+                    JOIN users u ON u.id = rs.user_id
+                    WHERE rse.status = 'resolved'
+                    GROUP BY rs.state_code, u.id, u.display_name, u.provider, u.provider_user_id
+                ),
+                ranked AS (
+                    SELECT
+                        state_code,
+                        display_name,
+                        provider,
+                        provider_user_id,
+                        resolved_count,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY state_code
+                            ORDER BY resolved_count DESC
+                        ) AS rn
+                    FROM counts
+                )
+                SELECT state_code, display_name, provider, provider_user_id, resolved_count
+                FROM ranked
+                WHERE rn = 1
+                ORDER BY state_code
+                """
+            )
+            rows = await cur.fetchall()
+    return [
+        {
+            "state_code": row.state_code,  # type: ignore[union-attr]
+            "display_name": row.display_name,  # type: ignore[union-attr]
+            "provider": row.provider,  # type: ignore[union-attr]
+            "provider_user_id": row.provider_user_id,  # type: ignore[union-attr]
+            "resolved_count": row.resolved_count,  # type: ignore[union-attr]
+        }
+        for row in rows
+    ]
+
+
 async def get_review_stats(
     user_id: str,
     state_code: str,

@@ -6,6 +6,7 @@ import { fetchPeople, fetchDashboard } from "../../api.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
+import "../../components/leaderboard/index.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
@@ -113,6 +114,8 @@ function SearchJurisdictions() {
           <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
         </section>
       ` : ''}
+
+      <civ-leaderboard></civ-leaderboard>
 
       <div class="below-grid">
         <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>

@@ -28,6 +28,7 @@ import routers.api.pull_requests as api_pull_requests_router
 import routers.api.requests as api_requests_router
 import routers.api.notes as api_notes_router
 import routers.api.review_sessions as api_review_sessions_router
+import routers.api.leaderboard as api_leaderboard_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 from database.database import (
@@ -177,6 +178,13 @@ app.include_router(
     api_notes_router.get_router(),
     prefix="/api/v1/notes",
     tags=["notes"],
+)
+
+app.include_router(
+    api_leaderboard_router.get_router(),
+    prefix="/api/v1/leaderboard",
+    tags=["leaderboard"],
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 app.include_router(
