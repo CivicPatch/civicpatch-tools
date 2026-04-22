@@ -3,9 +3,6 @@ services:
     environment:
       - PIPELINE_RUN_COST_LIMIT
 
-      - GOOGLE_SEARCH_TOKEN
-      - GOOGLE_SEARCH_ENGINE_ID
-
       - GOOGLE_GEMINI_TOKEN
       - TOGETHER_AI_TOKEN
 
