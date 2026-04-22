@@ -1,6 +1,5 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
@@ -8,7 +7,7 @@ import "../../components/side-panel/side-panel.js";
 
 function ReviewSession({
   progress, jurisdiction, pr,
-  mergeState, error, isDirty,
+  error, isDirty,
   prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
   resolvedMatches,
   onMerge, onAdvance, onBack, onNavigateTo, onPause,
@@ -20,8 +19,6 @@ function ReviewSession({
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const isTerminal = mergeState?.status === PULL_REQUEST_STATUS.MERGED;
-  const isMerging = mergeState?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
   const displayMax = hasNext ? goal : entryNumber;
 
   function getDotStatus(n) {
@@ -54,14 +51,13 @@ function ReviewSession({
             <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
           </div>
           <div class="review-page__nav-right">
-            <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge} ?disabled=${isTerminal || isMerging}>
-              ${isMerging ? "Publishing…" : isTerminal ? "Published" : isDirty ? "Save and Publish" : "Publish"}
+            <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
+              ${isDirty ? "Save and Publish" : "Publish"}
             </button>
           </div>
         </div>
         ${collapsed ? "" : html`
           ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          ${mergeState?.status === PULL_REQUEST_STATUS.ERROR ? html`<p class="review-page__error">${mergeState.error}</p>` : ""}
           <div class="review-page__info-row">
             <div class="review-page__pr-meta">
               ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}

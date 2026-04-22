@@ -1,7 +1,7 @@
 import "../review-page/review-page.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import { useWS } from "../../hooks/useSse.js";
+import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
@@ -44,7 +44,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const wsTopic = jurisdiction_ocdid ? `job_status:${jurisdiction_ocdid}` : null;
 
-  const { data: jobStatus, isConnected, error: sseError } = useWS(wsTopic, {
+  const { data: jobStatus, isConnected, error: sseError } = useWebSocket(wsTopic, {
     autoConnect: !!wsTopic,
   });
 
