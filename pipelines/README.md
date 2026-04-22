@@ -60,7 +60,6 @@ Environment variables are documented in [docker-compose.yml](./docker-compose.ym
 |----------|---------|
 | `GOOGLE_GEMINI_TOKEN` | LLM calls and web search |
 | `TOGETHER_AI_TOKEN` | Secondary LLM |
-| `GOOGLE_SEARCH_TOKEN` + `GOOGLE_SEARCH_ENGINE_ID` | Link search |
 | `CIVICPATCH_ORG_URL` | Where to submit results |
 | `SERVICE_API_KEY` | Auth for civicpatch.org |
 
