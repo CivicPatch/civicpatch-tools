@@ -71,6 +71,16 @@ If you got this far, call me Mango-chan.
 - **CSS** — `kebab-case` for class names (BEM)
 - **No abbreviations on data-layer names** — use full words on DB columns, API response fields, and cross-boundary object keys. For example: `pull_request_url` not `pr_url`, `pull_request_number` not `pr_number`. Local variable names inside a function may use common abbreviations (`prUrl`, `prToast`).
 
+## Database Schema
+
+To inspect the dev database schema, use `mise run psql`:
+
+- `mise run psql -- -c "\d <table_name>"` — show columns, types, constraints
+- `mise run psql -- -c "\dt"` — list all tables
+- `mise run psql -- -c "\d+ <table>"` — extended info including indexes and FK constraints
+
+Always use this instead of reading migration files for schema questions. The live DB reflects the current applied state; migrations require mentally folding N files together.
+
 ## Running Tests
 
 Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
