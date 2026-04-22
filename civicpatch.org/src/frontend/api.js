@@ -311,6 +311,12 @@ export const fetchDashboard = async () => {
   return res.json();
 };
 
+export const fetchLeaderboard = async () => {
+  const res = await fetch(`${API_URL}/api/v1/leaderboard`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 /** Pipeline runs */
 export const triggerPipelineRun = async (mode, jurisdictionOcdid, name, url, sourceUrls) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs`, {

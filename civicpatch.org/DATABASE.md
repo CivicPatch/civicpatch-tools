@@ -91,7 +91,7 @@ erDiagram
     review_sessions {
         uuid            id          PK
         uuid            user_id     FK
-        text            state_code
+        text            state_code      "idx"
         int             daily_goal
         timestamptz_null created_at
     }
@@ -101,7 +101,7 @@ erDiagram
         uuid            review_session_id   FK  "idx: (review_session_id, status, created_at DESC)"
         text            entry_kind
         text_array      request_ids
-        text_null       jurisdiction_ocdid
+        text            jurisdiction_ocdid
         text            status
         int_null        entry_number
         timestamptz_null created_at
