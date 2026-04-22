@@ -101,6 +101,21 @@
     gap: 2rem;
 }
 
+.not-scraped {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.not-scraped__heading {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pico-muted-color);
+    margin: 0;
+}
+
 @media (max-width: 900px) {
     .page-grid {
         grid-template-columns: 1fr;
