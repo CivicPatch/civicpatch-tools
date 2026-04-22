@@ -8,6 +8,7 @@ from runners.people_collector.schemas import (
   LinkStatus
 )
 from shared.schemas import JobConfig
+from shared.utils import url_utils
 
 def next_process_content_state(
     processed_count: int,
@@ -35,7 +36,7 @@ def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | N
 
 def get_link_status_by_url(links: List[Link], url: str) -> LinkStatus | None:
     for link in links:
-        if link.url == url:
+        if url_utils.same_url(link.url, url):
             return LinkStatus(link.status)
     return None
 
