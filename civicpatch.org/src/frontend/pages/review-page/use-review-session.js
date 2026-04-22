@@ -4,11 +4,13 @@ import {
   fetchReview,
   pauseReviewSession,
   navigateToEntry,
-  saveAndMerge,
+  kickOffMerge,
 } from "../../api.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { useWebSocket } from "../../hooks/use-websocket.js";
 
 const NO_MORE_CARDS = "no_more_cards";
+const MERGE_TOPIC_PREFIX = "merge:";
+const MERGE_EVENT_ERROR = "merge_error";
 
 export function updateParams(updates) {
   const p = new URLSearchParams(window.location.search);
@@ -19,7 +21,7 @@ export function updateParams(updates) {
   history.replaceState(null, "", `?${p}`);
 }
 
-export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
+export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userId }) {
   const [session, setSession] = useState(null);
   const [requestId, setRequestId] = useState(null);
   const [jurisdiction, setJurisdiction] = useState({ ocdid: null, name: null });
@@ -31,7 +33,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   const [isNavigating, setIsNavigating] = useState(false);
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
-  const [mergeState, setMergeState] = useState(null);
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0, claimed_count: 0, best_streak: 0, avg_seconds_per_review: null });
   const [sourceContentUrls, setSourceContentUrls] = useState([]);
@@ -40,6 +41,12 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
   }, [stateCode]);
+
+  const { data: wsMessage } = useWebSocket(userId ? `${MERGE_TOPIC_PREFIX}${userId}` : null, { autoConnect: !!userId });
+
+  useEffect(() => {
+    if (wsMessage?.type === MERGE_EVENT_ERROR) setError(wsMessage.error);
+  }, [wsMessage]);
 
   const applyEntry = async (sessionData) => {
     const review = await fetchReview(sessionData.request_id).catch(() => null);
@@ -71,7 +78,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
 
   const advance = async (sessionId) => {
     const sid = sessionId ?? session?.id;
-    setMergeState(null);
     setIsNavigating(true);
     try {
       const target = entryNumber + 1;
@@ -89,7 +95,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   };
 
   const back = async () => {
-    setMergeState(null);
     setIsNavigating(true);
     try {
       const res = await navigateToEntry(session?.id, entryNumber - 1);
@@ -104,20 +109,17 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
   };
 
   const merge = async (people) => {
-    const pullRequestNumber = pr.number;
-    setMergeState({ status: PULL_REQUEST_STATUS.LOADING_MERGE });
     try {
-      await saveAndMerge(pullRequestNumber, requestId, jurisdiction.ocdid, people ?? null);
-      setMergeState({ status: PULL_REQUEST_STATUS.MERGED });
-      setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
-      await advance();
+      await kickOffMerge(pr.number, requestId, jurisdiction.ocdid, people ?? null);
     } catch (err) {
-      setMergeState({ status: PULL_REQUEST_STATUS.ERROR, error: err.message });
+      setError(err.message);
+      return;
     }
+    setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
+    await advance();
   };
 
   const navigateTo = async (n) => {
-    setMergeState(null);
     setIsNavigating(true);
     try {
       const res = await navigateToEntry(session?.id, n);
@@ -146,7 +148,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle }) {
     pr,
     progress: { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, isNavigating },
     prPeople,
-    mergeState, error, setError,
+    error, setError,
     stats,
     advance, back, pause, merge, navigateTo,
     sourceContentUrls, reviewData,

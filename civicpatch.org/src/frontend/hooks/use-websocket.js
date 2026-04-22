@@ -4,12 +4,12 @@ import { config } from "../assets/config.js";
 const WS_URL = config.apiUrl.replace(/^http/, "ws") + "/ws";
 
 /**
- * useWS - WebSocket hook, subscribes to a single pub/sub topic
- * @param {string|null} topic - e.g. "people:ocd-division/..."
+ * useWebSocket - subscribes to a single pub/sub topic over WebSocket
+ * @param {string|null} topic - e.g. "merge:{userId}"
  * @param {object} [options] - { autoConnect: bool }
  * @returns {{ data, isConnected, error, connect, disconnect }}
  */
-export function useWS(topic, options = {}) {
+export function useWebSocket(topic, options = {}) {
   const [data, setData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState(null);

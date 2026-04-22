@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { createReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
@@ -20,6 +21,7 @@ const PAGE_STATE = {
 };
 
 function ReviewPage() {
+  const { user } = useAuth();
   const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
   const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, () => {
     const p = new URLSearchParams(window.location.search);
@@ -31,7 +33,7 @@ function ReviewPage() {
     session, setSession,
     jurisdiction, pr, progress,
     prPeople,
-    mergeState, error, setError,
+    error, setError,
     stats,
     advance, back, pause, merge, navigateTo,
     sourceContentUrls, reviewData,
@@ -39,6 +41,7 @@ function ReviewPage() {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
     onDone: () => setPageState(PAGE_STATE.IDLE),
     onIdle: () => setPageState(PAGE_STATE.IDLE),
+    userId: user?.user_id,
   });
 
   const [resolvedMatches, setResolvedMatches] = useState({});
@@ -176,7 +179,6 @@ function ReviewPage() {
     .progress=${{ ...progress, goal: session.daily_goal - (stats.today_resolved ?? 0) }}
     .jurisdiction=${jurisdiction}
     .pr=${pr}
-    .mergeState=${mergeState}
     .error=${error}
     .isDirty=${dirty}
     .prPeople=${prPeople}

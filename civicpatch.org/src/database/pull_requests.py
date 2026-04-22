@@ -93,7 +93,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
             return None
         return {
             "request_id": request_id,
-            "jurisdiction": {"ocdid": row[3], "name": row[4]},
+            "jurisdiction": {"ocdid": row[3], "name": row[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[3])},
             "pr": {"url": row[0], "status": row[1], "review_state": row[2], "number": row[5]},
         }
 

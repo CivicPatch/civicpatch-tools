@@ -20,6 +20,7 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
     return {
         "authenticated": True,
         "email": identity.email,
+        "user_id": identity.user_id,
         "teams": identity.teams or [],
         "permissions": build_permissions(identity),
         "display_name": identity.display_name,
