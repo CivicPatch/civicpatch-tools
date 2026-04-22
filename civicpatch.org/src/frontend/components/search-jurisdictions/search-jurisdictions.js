@@ -19,7 +19,6 @@ function SearchJurisdictions() {
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
 
-  const [gapsOpen, setGapsOpen] = useLocalStorage("search_page_gaps_open", true, { ttl: PERSIST_FOREVER });
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -120,10 +119,10 @@ function SearchJurisdictions() {
       <div class="below-grid">
         <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>
         ${permissions.JURISDICTION_PAGE && dashboardData && selectedState && dashboardData.states?.[selectedState]?.locality_gaps?.not_yet_scraped?.length ? html`
-          <details ?open=${gapsOpen} @toggle=${e => setGapsOpen(e.target.open)}>
-            <summary>Not scraped</summary>
+          <section class="not-scraped">
+            <h5 class="not-scraped__heading">Not scraped</h5>
             <locality-gaps .stats=${dashboardData} .state=${selectedState}></locality-gaps>
-          </details>
+          </section>
         ` : ''}
       </div>
     </div>
