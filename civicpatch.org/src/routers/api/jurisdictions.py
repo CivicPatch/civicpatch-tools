@@ -6,12 +6,13 @@ from pydantic import BaseModel
 
 import core.jurisdiction_pull_request as jurisdiction_pr_service
 import core.jurisdiction_scrape_candidate as candidate_service
+import core.role_config as role_config_service
 import database.jurisdictions as database
 import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access
 from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
-from schemas.jurisdictions import JurisdictionsByOcdidsRequest
+from schemas.jurisdictions import JurisdictionsByOcdidsRequest, SetScopeRolesRequest
 
 
 class PatchJurisdictionDataRequest(BaseModel):
@@ -116,6 +117,30 @@ def get_router() -> APIRouter:
         if pull_request_number is None:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
+
+    @router.get("/config")
+    async def get_jurisdiction_config_endpoint(
+        ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+    ):
+        try:
+            per_level = await role_config_service.load_role_config_per_level(ocdid)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
+        return {"data": role_config_service.build_merged_response(per_level).model_dump()}
+
+    @router.put("/config")
+    async def put_jurisdiction_config_endpoint(
+        body: SetScopeRolesRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+    ):
+        try:
+            await role_config_service.set_scope_roles(body)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
+        except RuntimeError as e:
+            return JSONResponse({"error": str(e)}, status_code=409)
+        return {"data": {"ok": True}}
 
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(

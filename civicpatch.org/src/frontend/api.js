@@ -170,6 +170,24 @@ export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
   return res.json();
 };
 
+export const fetchJurisdictionConfig = async (ocdid) => {
+  const params = new URLSearchParams({ ocdid });
+  const res = await fetch(`/api/v1/jurisdictions/config?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const putJurisdictionConfig = async (body) => {
+  const res = await fetch(`/api/v1/jurisdictions/config`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchJurisdictionHistory = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/v1/jurisdictions/history?${params}`, {

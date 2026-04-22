@@ -7,6 +7,7 @@ import { Pagination } from "../../components/pagination/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import { IssueRow } from "./issue-row.js";
+import "./config-editor.js";
 import "./dismiss-modal.js";
 import "./resolve-modal.js";
 import "./issues-page.css";
@@ -73,6 +74,7 @@ function IssuesPage() {
   const [resolveModal, setResolveModal] = useState(null);
   const [resolveModalDetailsOnly, setResolveModalDetailsOnly] = useState(false);
   const [dismissModal, setDismissModal] = useState(null);
+  const [configModal, setConfigModal] = useState(null);
   const [prToast, setPrToast] = useState(null);
 
   const [openSections, setOpenSections] = useLocalStorage(
@@ -221,6 +223,7 @@ function IssuesPage() {
                     onResolve: openResolveModal,
                     onDetails: openDetailsModal,
                     onDismiss: (issue) => setDismissModal(issue),
+                    onConfig: (jurisdiction) => setConfigModal(jurisdiction),
                   }))
               }
             </tbody>
@@ -262,6 +265,14 @@ function IssuesPage() {
         @modal-close=${closeDismissModal}
         @issue-dismissed=${handleIssueDismissed}
       ></issues-dismiss-modal>
+    ` : null}
+
+    ${configModal ? html`
+      <issues-config-editor
+        .ocdid=${configModal.jurisdiction_ocdid}
+        .jurisdictionName=${configModal.name}
+        @modal-close=${() => setConfigModal(null)}
+      ></issues-config-editor>
     ` : null}
 
     ${prToast ? html`
