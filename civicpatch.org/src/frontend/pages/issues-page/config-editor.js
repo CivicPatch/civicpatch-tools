@@ -14,11 +14,12 @@ function aliasLabel(aliases) {
 }
 
 function ConfigEditor(host) {
-  const ocdid = host.ocdid;
-  const jurisdictionName = host.jurisdictionName;
+  const jurisdictions = host.jurisdictions || [];
+  const firstOcdid = jurisdictions[0]?.jurisdiction_ocdid;
 
   // "merged" | "state" | "locality"
   const [view, setView] = useState("merged");
+  const [localityOcdid, setLocalityOcdid] = useState(firstOcdid);
   // per-level role lists fetched from server
   const [rolesPerLevel, setRolesPerLevel] = useState(null);
   const [loadError, setLoadError] = useState(null);
@@ -38,10 +39,12 @@ function ConfigEditor(host) {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
+  const activeOcdid = (view === "locality" || view === "merged") ? localityOcdid : firstOcdid;
+
   const dispatch = (name, detail) =>
     host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
 
-  const loadConfig = () => {
+  const loadConfig = (ocdid) => {
     setRolesPerLevel(null);
     setLoadError(null);
     fetchJurisdictionConfig(ocdid)
@@ -56,9 +59,21 @@ function ConfigEditor(host) {
       .catch((e) => setLoadError(e.message));
   };
 
-  useEffect(() => { if (ocdid) loadConfig(); }, []);
+  useEffect(() => { if (firstOcdid) loadConfig(firstOcdid); }, []);
+
+  useEffect(() => {
+    if (view === "locality" && localityOcdid) loadConfig(localityOcdid);
+  }, [localityOcdid]);
 
   const handleClose = () => dispatch("modal-close", {});
+
+  const changeView = (v) => {
+    setView(v);
+    setEditingRole(null);
+    setAddingRole(false);
+    setSaveError(null);
+    if (v === "state") loadConfig(firstOcdid);
+  };
 
   const openEdit = (role) => {
     setEditingRole(role.role);
@@ -82,10 +97,10 @@ function ConfigEditor(host) {
     setSaving(true);
     setSaveError(null);
     try {
-      await putJurisdictionConfig({ ocdid, scope, roles: updatedRoles });
+      await putJurisdictionConfig({ ocdid: activeOcdid, scope, roles: updatedRoles });
       setEditingRole(null);
       setAddingRole(false);
-      loadConfig();
+      loadConfig(activeOcdid);
     } catch (e) {
       setSaveError(e.message);
     } finally {
@@ -164,7 +179,7 @@ function ConfigEditor(host) {
             <td>${r.role}</td>
             <td><span class="issues-page__config-source issues-page__config-source--${r.source}">${r.source}</span></td>
             <td>${r.is_unique ? "Yes" : "No"}</td>
-            <td>${aliasLabel(r.aliases)}</td>
+            <td title=${r.aliases?.length > 1 ? r.aliases.join(", ") : ""}>${aliasLabel(r.aliases)}</td>
             <td></td>
           </tr>
         `)}
@@ -196,15 +211,39 @@ function ConfigEditor(host) {
     <button class="btn btn-sm" @click=${openAdd}>+ Add role</button>
   `;
 
+  const localityPicker = jurisdictions.length > 1 ? html`
+    <div class="issues-page__config-locality-picker">
+      <label>
+        Locality
+        <select @change=${(e) => { setLocalityOcdid(e.target.value); setEditingRole(null); setAddingRole(false); setSaveError(null); }}>
+          ${jurisdictions.map((j) => html`
+            <option value=${j.jurisdiction_ocdid} ?selected=${j.jurisdiction_ocdid === localityOcdid}>${j.name}</option>
+          `)}
+        </select>
+      </label>
+    </div>
+  ` : null;
+
+  const title = jurisdictions.length === 1
+    ? "Config: " + jurisdictions[0].name
+    : "Config: " + (jurisdictions[0]?.state?.toUpperCase() || "");
+
   const content = html`
     <div class="issues-page__config-view-toggle">
       ${["merged", "state", "locality"].map((v) => html`
-        <button
-          class="issues-page__config-toggle-btn${view === v ? " issues-page__config-toggle-btn--active" : ""}"
-          @click=${() => { setView(v); setEditingRole(null); setAddingRole(false); setSaveError(null); }}
-        >${v === "merged" ? "Merged" : v.charAt(0).toUpperCase() + v.slice(1)}</button>
+        <label>
+          <input
+            type="radio"
+            name="config-view-${firstOcdid}"
+            value=${v}
+            ?checked=${view === v}
+            @change=${() => changeView(v)}
+          />
+          ${v === "merged" ? "Merged" : v.charAt(0).toUpperCase() + v.slice(1)}
+        </label>
       `)}
     </div>
+    ${view === "locality" || view === "merged" ? localityPicker : null}
     ${loadError ? html`<p class="issues-page__config-error">${loadError}</p>` : null}
     ${rolesPerLevel === null && !loadError ? html`<div>Loading…</div>` : null}
     ${rolesPerLevel ? html`
@@ -216,7 +255,7 @@ function ConfigEditor(host) {
 
   return html`
     <civ-modal
-      .title=${"Config: " + (jurisdictionName || ocdid)}
+      .title=${title}
       .content=${content}
       .footer=${html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`}
       .modalProps=${{ open: true, onClose: handleClose }}

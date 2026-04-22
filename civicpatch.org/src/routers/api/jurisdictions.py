@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 import core.jurisdiction_pull_request as jurisdiction_pr_service
 import core.jurisdiction_scrape_candidate as candidate_service
+import core.pipeline_issue_resolution as pipeline_issue_resolution_service
 import core.role_config as role_config_service
 import database.jurisdictions as database
 import shared.utils.config_utils as config_utils
@@ -135,6 +136,14 @@ def get_router() -> APIRouter:
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
     ):
         try:
+            if body.issue_id:
+                author = PrAuthor(
+                    name=user.display_name or user.email or user.provider_user_id,
+                    email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
+                    teams=user.teams or [],
+                )
+                pull_request_url = await pipeline_issue_resolution_service.resolve_via_config_pr(body, author, body.issue_id)
+                return {"data": {"pull_request_url": pull_request_url}}
             await role_config_service.set_scope_roles(body)
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")

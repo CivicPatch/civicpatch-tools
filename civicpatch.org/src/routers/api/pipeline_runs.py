@@ -13,7 +13,6 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, Up
 from fastapi.responses import JSONResponse
 
 import lib.github.api as github_service
-from lib.github.pull_requests import PrAuthor
 import core.jurisdiction_scrape_candidate as candidate_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
@@ -36,7 +35,6 @@ from database.pipeline_issues import (
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
     resolve_pipeline_issue,
-    open_pipeline_issue_pull_request,
     upsert_pipeline_issue,
     supersede_prior_jurisdiction_error_issues,
 )
@@ -51,7 +49,6 @@ from database.requests import (
     get_issue_request_details,
 )
 from core import people_collector
-import core.pipeline_issue_resolution as review_issue_resolution_service
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory
 from schemas.pipeline_runs import (
     CreatePipelineRunRequest,
@@ -67,7 +64,7 @@ from schemas.pipeline_runs import (
     GetPipelineRunStatusResponse,
     ErrorResponse,
 )
-from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ResolveIssueRequest, ServerDetail
+from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
 import lib.pubsub as pubsub_service
 from lib.auth import require_route_access
 
@@ -446,35 +443,11 @@ def get_router(api_key_header):
     )
     async def resolve_review_issue_endpoint(
         issue_id: str,
-        body: ResolveIssueRequest = ResolveIssueRequest(),
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
-
-        author = PrAuthor(
-            name=user.display_name or user.email or user.provider_user_id,
-            email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
-            teams=user.teams or [],
-        )
-
-        config_path = None
-        pull_request_url = None
-        if issue["issue_type"] == "unrecognized_role":
-            result = await review_issue_resolution_service.resolve_role_issue(issue, body, author)
-            pull_request_url, config_path = result if result else (None, None)
-        else:
-            await resolve_pipeline_issue(issue_id)
-            return {"data": None}
-
-        if pull_request_url:
-            await open_pipeline_issue_pull_request(issue_id, pull_request_url)
-            data: dict = {"pull_request_url": pull_request_url}
-            if config_path:
-                data["config_path"] = config_path
-            return {"data": data}
-
         await resolve_pipeline_issue(issue_id)
         return {"data": None}
 
