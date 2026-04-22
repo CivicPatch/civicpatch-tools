@@ -26,8 +26,8 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
     Find the official government website for this jurisdiction: {location_str}{stale_url_hint}
 
     Return the homepage URL of the official local government website
-    (city hall, township, village, borough, etc.). Do not return news sites,
-    Wikipedia, county portals, or unofficial directories.
+    (city hall, township, village, borough, etc.) specifically for {location_str}.
+    Do not return news sites, Wikipedia, county portals, or unofficial directories.
 
     Return a JSON object:
     ```json

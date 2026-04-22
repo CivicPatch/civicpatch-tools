@@ -11,5 +11,5 @@ def normalize_phone_number(phone: str) -> str:
         if not phonenumbers.is_valid_number(parsed):
             return None  # Return None if not valid
         return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.NATIONAL)
-    except phonenumbers.NumberParseException:
-        return phone
+    except phonenumbers.NumberParseException as e:
+        raise ValueError(f"Could not parse phone number: {phone!r}") from e
