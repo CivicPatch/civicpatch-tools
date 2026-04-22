@@ -30,6 +30,7 @@ class Link(BaseModel):
     num_references: int = 0
     comment: Optional[str] = None
     text: Optional[str] = None
+    failure_reason: Optional[str] = None  # NavigationFailureReason value, set when status=ERROR
 
 class RawLLMPerson(BaseModel):
     name: str

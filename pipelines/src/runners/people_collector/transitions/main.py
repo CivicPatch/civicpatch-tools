@@ -6,6 +6,7 @@ from runners.people_collector.schemas import (
   PeopleCollectorData
 )
 from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
+from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationFailureReason
 from shared.utils.url_utils import same_domain, same_url
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
@@ -328,6 +329,17 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
     })
 
     discovered = result.discovered_url
+    root_link = next((l for l in context.data.links if l.url == context.data.config.url), None)
+    root_failure_reason = root_link.failure_reason if root_link else None
+
+    if root_failure_reason == NavigationFailureReason.NAVIGATION_TIMEOUT and (
+        discovered is None or same_domain(discovered, context.data.config.url)
+    ):
+        return next_context.copy(update={
+            "pipeline_error_type": PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT,
+            "data": next_context.data.copy(update={"error_step": PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT}),
+        }), PipelineStatus.SEND_ERROR
+
     if discovered is None:
         return next_context.copy(update={
             "pipeline_error_type": PipelineRunErrorType.DOMAIN_INACTIVE,
