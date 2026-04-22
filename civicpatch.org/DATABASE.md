@@ -61,7 +61,7 @@ erDiagram
 
     people {
         uuid            id                  PK
-        text            jurisdiction_ocdid  FK
+        text            jurisdiction_ocdid  FK  "idx"
         jsonb           data                "canonical Official JSONB blob"
         text_null       status
         timestamptz_null updated_at
