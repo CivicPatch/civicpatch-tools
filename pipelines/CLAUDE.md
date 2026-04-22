@@ -33,8 +33,10 @@ tests/
 
 ## State machine
 
-The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md) — **keep it in sync whenever you:**
-- Add, remove, or rewire states in `transitions/main.py`
+The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md).
+
+**Update the diagram in the same set of edits — never leave it for a follow-up.** It must be updated whenever you:
+- Add, remove, or rewire states or edges in `transitions/main.py`
 - Add or remove a step directory under `steps/`
 - Rename a step directory
 

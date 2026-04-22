@@ -24,9 +24,8 @@ stateDiagram-v2
     state "step_10: SAVE_OUTPUT" as SAVE_OUTPUT
     state "step_11: SEND_SUCCESS" as SEND_SUCCESS
     state "step_11: SEND_ERROR (DOMAIN_INACTIVE)" as ERR_DOMAIN_INACTIVE
+    state "step_11: SEND_ERROR (DOMAIN_NAVIGATION_TIMEOUT)" as ERR_DOMAIN_NAVIGATION_TIMEOUT
     state "step_11: SEND_ERROR (NO_INFO)" as ERR_NO_INFO
-    state "step_11: SEND_ERROR (all pages unreachable)" as ERR_ALL_UNREACHABLE
-    state "step_11: SEND_ERROR (cost / page limit)" as ERR_LIMIT
 
     [*] --> INIT
 
@@ -40,19 +39,19 @@ stateDiagram-v2
     SCRAPE_PAGE --> MERGE_RECORDS_WITHIN_LLM : no pending links, some pages scraped
 
     all_scrapes_failed --> FIND_JURISDICTION_URL : url_recovery_attempted = false
-    all_scrapes_failed --> ERR_DOMAIN_INACTIVE : url_recovery_attempted = true
+    all_scrapes_failed --> ERR_DOMAIN_NAVIGATION_TIMEOUT : url_recovery_attempted = true, all timeouts
+    all_scrapes_failed --> ERR_DOMAIN_INACTIVE : url_recovery_attempted = true, other
 
     PREPROCESS_PAGE_CONTENT --> PROCESS_PAGE_CONTENT : link has content / preprocessed links exist
     PREPROCESS_PAGE_CONTENT --> SCRAPE_PAGE : link has no content
     PREPROCESS_PAGE_CONTENT --> no_content_found : no scraped or preprocessed links
 
     no_content_found --> FIND_JURISDICTION_URL : url_recovery_attempted = false
-    no_content_found --> ERR_DOMAIN_INACTIVE : url_recovery_attempted = true
+    no_content_found --> ERR_DOMAIN_NAVIGATION_TIMEOUT : url_recovery_attempted = true, all timeouts
+    no_content_found --> ERR_DOMAIN_INACTIVE : url_recovery_attempted = true, other
 
     PROCESS_PAGE_CONTENT --> SCRAPE_PAGE : more pages needed
-    PROCESS_PAGE_CONTENT --> MERGE_RECORDS_WITHIN_LLM : done processing pages
-    PROCESS_PAGE_CONTENT --> ERR_ALL_UNREACHABLE : all pages error
-    PROCESS_PAGE_CONTENT --> ERR_LIMIT : cost or page limit exceeded
+    PROCESS_PAGE_CONTENT --> MERGE_RECORDS_WITHIN_LLM : done processing pages / cost or page limit reached
 
     MERGE_RECORDS_WITHIN_LLM --> MERGE_RECORDS_ACROSS_LLMS
 
@@ -69,6 +68,7 @@ stateDiagram-v2
     no_officials_found --> FIND_JURISDICTION_URL : url_recovery_attempted = false
     no_officials_found --> ERR_NO_INFO : url_recovery_attempted = true
 
+    FIND_JURISDICTION_URL --> ERR_DOMAIN_NAVIGATION_TIMEOUT : root link timed out, no new domain found
     FIND_JURISDICTION_URL --> ERR_DOMAIN_INACTIVE : no URL discovered
     FIND_JURISDICTION_URL --> REVIEW_OUTPUT : discovered URL same as current
     FIND_JURISDICTION_URL --> SCRAPE_PAGE : new URL discovered
@@ -77,12 +77,10 @@ stateDiagram-v2
 
     SEND_SUCCESS --> [*]
     ERR_DOMAIN_INACTIVE --> [*]
+    ERR_DOMAIN_NAVIGATION_TIMEOUT --> [*]
     ERR_NO_INFO --> [*]
-    ERR_ALL_UNREACHABLE --> [*]
-    ERR_LIMIT --> [*]
 
     class ERR_DOMAIN_INACTIVE errorState
+    class ERR_DOMAIN_NAVIGATION_TIMEOUT errorState
     class ERR_NO_INFO errorState
-    class ERR_ALL_UNREACHABLE errorState
-    class ERR_LIMIT errorState
 ```
