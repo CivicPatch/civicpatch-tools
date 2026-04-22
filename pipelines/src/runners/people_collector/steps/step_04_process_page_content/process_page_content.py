@@ -729,7 +729,7 @@ def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, 
 
 def mark_link_as_terminating_status(link_url: str, existing_links: List[Link], status: LinkStatus) -> List[Link]:
     updated_links = copy.deepcopy(existing_links)
-    existing_link = next((link for link in updated_links if link.url == link_url), None)
+    existing_link = next((link for link in updated_links if url_utils.same_url(link.url, link_url)), None)
     if existing_link:
         existing_link.status = status.value
         updated_links.append(updated_links.pop(updated_links.index(existing_link)))
