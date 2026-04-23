@@ -67,7 +67,7 @@ function renderContact(person: Person): TemplateResult {
 function renderRow(person: Person): TemplateResult {
     return html`
         <div class="people-directory__row">
-            <person-image .person=${person}></person-image>
+            <person-image .person=${person} .size=${"4.5rem"}></person-image>
             <div class="people-directory__info">
                 <p class="people-directory__name">${person.name}</p>
                 <p class="people-directory__office">${person.office?.name ?? ""}</p>

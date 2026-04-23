@@ -1,7 +1,7 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 
-function PersonImage({ person, onClick }) {
+function PersonImage({ person, onClick, size = "2rem" }) {
   const [imgError, setImgError] = useState(false);
 
   let initials = "?";
@@ -19,9 +19,9 @@ function PersonImage({ person, onClick }) {
   const avatar = showInitials
     ? html`<div
         style="
-        width: 2rem; height: 2rem; border-radius: 50%;
+        width: ${size}; height: ${size}; border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
-        font-size: 0.7rem; font-weight: 600;
+        font-size: calc(${size} * 0.3); font-weight: 600;
         background: var(--pico-muted-background);
         color: var(--pico-muted-color);
       "
@@ -32,7 +32,7 @@ function PersonImage({ person, onClick }) {
         src="${value}"
         alt="Profile image"
         style="
-        width: 2rem; height: 2rem; border-radius: 50%;
+        width: ${size}; height: ${size}; border-radius: 50%;
         object-fit: cover; object-position: center;
         display: block; flex-shrink: 0;
       "
