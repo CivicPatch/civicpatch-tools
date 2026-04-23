@@ -10,7 +10,7 @@ import "../../components/leaderboard/index.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
-import "../../components/people-directory/people-directory.js";
+import "../../components/people-directory/people-directory.ts";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();

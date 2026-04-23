@@ -114,6 +114,7 @@ This API has a single consumer: the civicpatch frontend. Backward compatibility 
 ## Frontend components
 
 - New frontend components must be written in TypeScript (`.ts`) — do not create new `.js` component files
+- When importing a `.ts` component from a `.js` file, use the `.ts` extension explicitly (e.g. `import "../foo/foo.ts"`). Rollup does not resolve `.js` → `.ts` for plain JS importers; the `.js` → `.ts` remapping only works within TypeScript files.
 - After any change to a frontend component, run `mise run typecheck-fe` and fix all errors before considering the task done
 
 ## Testing
