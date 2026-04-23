@@ -111,6 +111,11 @@ mise run psql
 
 This API has a single consumer: the civicpatch frontend. Backward compatibility is not required — endpoints can be renamed, removed, or changed freely as long as the frontend is updated in the same changeset.
 
+## Frontend components
+
+- New frontend components must be written in TypeScript (`.ts`) — do not create new `.js` component files
+- After any change to a frontend component, run `mise run typecheck-fe` and fix all errors before considering the task done
+
 ## Testing
 
 - Framework: pytest
