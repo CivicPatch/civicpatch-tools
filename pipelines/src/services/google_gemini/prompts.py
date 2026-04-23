@@ -44,7 +44,7 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
 
 def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str):
     jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    state = jurisdiction_ocdid_parts.state
+    state = id_utils.state_name(jurisdiction_ocdid)
     county = jurisdiction_ocdid_parts.county
     designations = config_utils.get_designation_names()
     designations_str = ', '.join(designations)
