@@ -10,6 +10,7 @@ from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
+from lib.blog import get_all_posts, get_post
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
@@ -95,6 +96,23 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     ):
         user = _build_user_dict(identity)
         return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+
+    @router.get("/blog", response_class=HTMLResponse, include_in_schema=False)
+    async def blog_list(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        return templates.TemplateResponse(
+            "pages/blog-list.html", {"request": request, "user": user, "posts": get_all_posts()}
+        )
+
+    @router.get("/blog/{slug}", response_class=HTMLResponse, include_in_schema=False)
+    async def blog_post(request: Request, slug: str, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        post = get_post(slug)
+        if not post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        return templates.TemplateResponse(
+            "pages/blog-post.html", {"request": request, "user": user, "post": post}
+        )
 
     @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)
     async def jurisdiction_page(

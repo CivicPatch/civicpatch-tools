@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% block title %}{{ post.title }} — CivicPatch{% endblock %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/index.js') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/index.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+<div class="blog-post">
+    <header class="blog-header">
+        <h1 class="blog-post__title">{{ post.title }}</h1>
+        <p class="blog-meta blog-post__meta">
+            <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
+            {% if post.author %} · {{ post.author }}{% endif %}
+        </p>
+    </header>
+    {% if post.description %}
+    <p class="blog-lead blog-post__lead">{{ post.description }}</p>
+    {% endif %}
+    <div class="blog-post__body">
+        {{ post.content_html | safe }}
+    </div>
+    <footer class="blog-post__footer">
+        <a href="/blog">← All posts</a>
+    </footer>
+</div>
+{% endblock %}
