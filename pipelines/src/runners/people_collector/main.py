@@ -46,6 +46,9 @@ def initialize_pipeline_run(request_id, jurisdiction_ocdid: str, config: Pipelin
         ),
     )
     pipeline_run_logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
+    role_names = [r.role for r in role_config.roles] if role_config else []
+    excluded = role_config.excluded_roles if role_config else []
+    pipeline_run_logger.info(f"Role config: roles={role_names}, excluded={excluded}")
     return context, pipeline_run_logger
 
 

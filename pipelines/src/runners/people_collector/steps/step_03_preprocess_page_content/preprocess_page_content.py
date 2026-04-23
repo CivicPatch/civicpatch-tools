@@ -8,7 +8,7 @@ from runners.people_collector.schemas import (
     PipelineStatus, 
     PreprocessPageContentStep, 
 )
-from shared.utils import data_path_utils
+from shared.utils import data_path_utils, config_utils
 from runners.people_collector.steps.step_03_preprocess_page_content.filter_content import filter_content
 from runners.people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
 from utils import log_utils
@@ -44,9 +44,11 @@ def preprocess_page_content(
     assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before preprocess_page_content"
     identities = context.data.research_municipality_step.identities
     known_roles = context.data.research_municipality_step.known_roles
+    role_config_names = config_utils.get_role_names(context.data.role_config)
+    extra_keywords = list(dict.fromkeys(known_roles + role_config_names))
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
-    preprocessed_html  = filter_content(logger, identities, cleaned_html, extra_keywords=known_roles)
+    preprocessed_html  = filter_content(logger, identities, cleaned_html, extra_keywords=extra_keywords)
     try:
         preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'], escape_underscores=False)
         # Collapse consecutive duplicate lines — common artifact of sites that render

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
@@ -137,7 +137,7 @@ class PeopleCollectorData(BaseModel):
     # Can be overridden with data source configs
     config: PipelineRunConfig
 
-    role_config: Optional[RoleConfig] = None 
+    role_config: Optional[RoleConfig] = Field(default=None, exclude=True)
 
     links: List[Link] = []
 
