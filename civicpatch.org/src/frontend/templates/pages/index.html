@@ -8,6 +8,31 @@
 
 <civ-search-jurisdictions></civ-search-jurisdictions>
 
+{% if posts %}
+<section class="blog-preview">
+    <div class="blog-preview__header">
+        <h2>From the Blog</h2>
+        <a href="/blog">View all posts →</a>
+    </div>
+    {% for post in posts %}
+    <article class="blog-list__item">
+        <header class="blog-header">
+            <h3 class="blog-post__title">
+                <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
+            </h3>
+            <p class="blog-meta">
+                <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
+                {% if post.author %} · {{ post.author }}{% endif %}
+            </p>
+        </header>
+        {% if post.description %}
+        <p class="blog-post__lead">{{ post.description }}</p>
+        {% endif %}
+    </article>
+    {% endfor %}
+</section>
+{% endif %}
+
 {% endif %}
 {% if missing_env %}
 <article class="card">
@@ -54,6 +79,12 @@
                 <ul>
                     <li>Funding and support for ongoing operations: <a href="https://ko-fi.com/civicpatch">Ko-fi</a></li>
                     <li>Project Maintainer: <a href="mailto:michelle@civicpatch.org">michelle@civicpatch.org</a></li>
+                </ul>
+            </div>
+            <div class="about-footer__block">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="/blog">Blog</a></li>
                 </ul>
             </div>
         </div>

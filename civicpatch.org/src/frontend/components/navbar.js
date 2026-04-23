@@ -86,8 +86,8 @@ const NAVBAR_CSS = html`
       font-weight: 700;
       letter-spacing: 0.05em;
       line-height: 1;
-      color: var(--pico-primary);
-      border: 1px solid var(--pico-primary);
+      color: rgb(var(--catppuccin-yellow));
+      border: 1px solid rgb(var(--catppuccin-yellow));
       border-radius: 4px;
       padding: 0.2em 0.35em;
       opacity: 0.7;
@@ -340,6 +340,7 @@ function renderAuthed(user, summary, currentPath, stateCode) {
     </span>
     ${stateCode ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>` : ""}
     <a href="/" class="${active('/')}">Home</a>
+    <a href="/blog" class="${active('/blog')}">Blog</a>
     <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>
     ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.issues_total ?? 0}</span></a>` : ""}
     ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
