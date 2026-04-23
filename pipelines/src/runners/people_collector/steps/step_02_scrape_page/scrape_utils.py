@@ -5,7 +5,7 @@ from patchright.async_api import async_playwright, Page
 from typing import TypedDict
 import aiofiles
 import asyncio
-import aiohttp
+import httpx
 import base64
 from urllib.parse import urljoin
 from runners.people_collector.steps.step_02_scrape_page.scrape.wix import wait_for_wix_content
@@ -502,8 +502,6 @@ async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, 
     Returns:
         str: The file path of the saved image, or None if the image could not be saved.
     """
-    from urllib.parse import urljoin
-
     os.makedirs(image_dir, exist_ok=True)
 
     try:
@@ -512,19 +510,18 @@ async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, 
         logger.debug(f"Loading image from URL: {full_url}")
 
         # Fetch the image data
-        async with aiohttp.ClientSession() as session:
-            async with session.get(full_url) as response:
-                if response.status == 200:
-                    file_path = os.path.join(image_dir, file_name)
+        async with httpx.AsyncClient() as client:
+            response = await client.get(full_url)
+            if response.status_code == 200:
+                file_path = os.path.join(image_dir, file_name)
 
-                    # Save the image data to disk
-                    async with aiofiles.open(file_path, "wb") as f:
-                        await f.write(await response.read())
+                async with aiofiles.open(file_path, "wb") as f:
+                    await f.write(response.content)
 
-                    logger.info(f"Image saved: {file_path}")
-                    return file_path
-                else:
-                    logger.warning(f"Failed to load image {full_url}: HTTP {response.status}")
+                logger.info(f"Image saved: {file_path}")
+                return file_path
+            else:
+                logger.warning(f"Failed to load image {full_url}: HTTP {response.status_code}")
     except Exception as e:
         logger.warning(f"Error loading image {img_url}: {e}")
 
