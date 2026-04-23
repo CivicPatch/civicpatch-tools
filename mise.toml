@@ -149,6 +149,11 @@ mise run tcp-db-migrate
 mise run tcp -- -m integration
 """
 
+[tasks.typecheck-fe]
+run = "npm run typecheck"
+dir = "civicpatch.org/src/frontend"
+description = "Run TypeScript typecheck on civicpatch.org frontend"
+
 [tasks.typecheck-cp]
 run = "uv run pyright"
 dir = "civicpatch.org"
