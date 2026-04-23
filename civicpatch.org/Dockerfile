@@ -14,6 +14,7 @@ WORKDIR /app
 COPY civicpatch.org/src/frontend/package*.json /app/
 RUN npm install
 COPY civicpatch.org/src/frontend/ /app/
+RUN npm run typecheck
 RUN npm run build
 
 FROM python:3.12.11-slim-trixie AS image-base

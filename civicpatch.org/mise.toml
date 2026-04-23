@@ -3,6 +3,9 @@
 _.file = "../../civicpatch.org.env"
 PYTHONPATH = "./src"
 
+[tasks.typecheck]
+run = "cd src/frontend && npm run typecheck"
+
 [tasks.unit]
 run = """
 docker compose -f docker-compose.yml run --rm civicpatch-org-test pytest -vvm unit tests/unit

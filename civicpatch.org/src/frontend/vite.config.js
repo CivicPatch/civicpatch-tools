@@ -9,7 +9,7 @@ export default defineConfig(({ command }) => ({
     rollupOptions: {
       input: {
         index: "./assets/index.js",
-        review: "./assets/review.js",
+        review: "./assets/review.ts",
         queue: "./assets/queue.js",
         issues: "./assets/issues.js",
         jurisdiction: "./assets/jurisdiction.js",
