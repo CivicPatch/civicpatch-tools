@@ -5,6 +5,40 @@ import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
 import "../../components/side-panel/side-panel.js";
 
+interface Progress {
+  entryNumber: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+  resolvedEntryNumbers: Set<number>;
+  frontierEntry: number;
+  goal: number;
+}
+
+interface ReviewSessionProps {
+  progress: Progress;
+  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null } | null;
+  pr: { url: string | null; status: string | null; reviewState: string | null } | null;
+  error: string | null;
+  isDirty: boolean;
+  prPeople: { existing: any[]; proposed: any[] } | null;
+  currentPeople: any[];
+  selectedPeople: any[];
+  reviewData: unknown;
+  sourceContentUrls: any[];
+  resolvedMatches: Record<string, any>;
+  onMerge: () => void;
+  onAdvance: () => void;
+  onBack: () => void;
+  onNavigateTo: (n: number) => void;
+  onPause: () => void;
+  onTableDataChange: EventListener;
+  onTableReorder: EventListener;
+  onPeopleMerge: (...args: any[]) => unknown;
+  onBulkDelete: () => void;
+  onReset: () => void;
+  onAdd: () => void;
+}
+
 function ReviewSession({
   progress, jurisdiction, pr,
   error, isDirty,
@@ -12,7 +46,7 @@ function ReviewSession({
   resolvedMatches,
   onMerge, onAdvance, onBack, onNavigateTo, onPause,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
-}) {
+}: ReviewSessionProps) {
   const { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus, reviewState } = pr ?? {};
@@ -79,7 +113,6 @@ function ReviewSession({
           .existing=${prPeople?.existing ?? []}
           .selectedPeople=${selectedPeople ?? []}
           .isDirty=${isDirty}
-          .isTerminal=${isTerminal}
           .resolvedMatches=${resolvedMatches ?? {}}
           .jurisdictionOcdid=${jurisdictionOcdid}
           .sourceContentUrls=${sourceContentUrls}

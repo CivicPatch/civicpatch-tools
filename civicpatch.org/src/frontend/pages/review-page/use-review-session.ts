@@ -12,7 +12,7 @@ const NO_MORE_CARDS = "no_more_cards";
 const MERGE_TOPIC_PREFIX = "merge:";
 const MERGE_EVENT_ERROR = "merge_error";
 
-export function updateParams(updates) {
+export function updateParams(updates: Record<string, string | null | undefined>) {
   const p = new URLSearchParams(window.location.search);
   for (const [k, v] of Object.entries(updates)) {
     if (v == null) p.delete(k);
@@ -22,11 +22,11 @@ export function updateParams(updates) {
 }
 
 export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userId }) {
-  const [session, setSession] = useState(null);
-  const [requestId, setRequestId] = useState(null);
+  const [session, setSession] = useState<{ id: string; daily_goal: number } | null>(null);
+  const [requestId, setRequestId] = useState<string | null>(null);
   const [jurisdiction, setJurisdiction] = useState({ ocdid: null, name: null });
-  const [pr, setPr] = useState({ url: null, status: null, reviewState: null });
-  const [prPeople, setPrPeople] = useState(null);
+  const [pr, setPr] = useState<{ url: string | null; status: string | null; reviewState: string | null; number?: number | null }>({ url: null, status: null, reviewState: null });
+  const [prPeople, setPrPeople] = useState<{ existing: any[]; proposed: any[] } | null>(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const [hasPrev, setHasPrev] = useState(false);
@@ -76,7 +76,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     return data;
   };
 
-  const advance = async (sessionId) => {
+  const advance = async (sessionId?: string) => {
     const sid = sessionId ?? session?.id;
     setIsNavigating(true);
     try {

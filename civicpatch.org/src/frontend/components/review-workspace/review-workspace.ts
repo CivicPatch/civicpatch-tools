@@ -7,7 +7,22 @@ import "../edit-people/people-table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
 
-function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false }) {
+interface ReviewWorkspaceProps {
+  pullRequest: any[];
+  existing: any[];
+  selectedPeople: any[];
+  isDirty: boolean;
+  isTerminal?: boolean;
+  resolvedMatches: Record<string, any>;
+  jurisdictionOcdid: string | null;
+  sourceContentUrls: any[];
+  onMerge: (...args: any[]) => unknown;
+  onBulkDelete: () => void;
+  onReset: () => void;
+  onAdd: () => void;
+}
+
+function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false }: ReviewWorkspaceProps) {
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
   const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
