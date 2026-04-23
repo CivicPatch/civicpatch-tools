@@ -1,0 +1,52 @@
+.people-directory {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.people-directory__group-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pico-muted-color);
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.people-directory__row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.people-directory__row:last-child {
+    border-bottom: none;
+}
+
+.people-directory__info {
+    min-width: 0;
+}
+
+.people-directory__name {
+    font-weight: 600;
+    font-size: var(--text-md);
+    margin: 0;
+}
+
+.people-directory__office {
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    margin: 0;
+}
+
+.people-directory__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: var(--text-sm);
+    margin-top: 0.25rem;
+}

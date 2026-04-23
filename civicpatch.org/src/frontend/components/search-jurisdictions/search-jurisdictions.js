@@ -10,6 +10,7 @@ import "../../components/leaderboard/index.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
+import "../../components/people-directory/people-directory.js";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
@@ -117,7 +118,7 @@ function SearchJurisdictions() {
       <civ-leaderboard></civ-leaderboard>
 
       <div class="below-grid">
-        <civ-people-list .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-list>
+        <civ-people-directory .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-directory>
         ${permissions.JURISDICTION_PAGE && dashboardData && selectedState && dashboardData.states?.[selectedState]?.locality_gaps?.not_yet_scraped?.length ? html`
           <section class="not-scraped">
             <h5 class="not-scraped__heading">Not scraped</h5>
