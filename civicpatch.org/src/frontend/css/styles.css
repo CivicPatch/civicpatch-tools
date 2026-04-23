@@ -31,7 +31,7 @@
 :root,
 :host {
     font-size: 14px;
-    --pico-font-family: "Noto Sans", sans-serif;
+    --pico-font-family: "Figtree", sans-serif;
     --pico-form-element-spacing-vertical: 0.5rem;
     --pico-form-element-spacing-horizontal: 0.5rem;
     --pico-border-radius: 0.4rem;
