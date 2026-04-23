@@ -63,7 +63,9 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/", response_class=HTMLResponse, include_in_schema=False)
     async def index(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
-        return templates.TemplateResponse("pages/index.html", {"request": request, "user": user})
+        return templates.TemplateResponse(
+            "pages/index.html", {"request": request, "user": user, "posts": get_all_posts()[:3]}
+        )
 
     @router.get("/queue", response_class=HTMLResponse, include_in_schema=False)
     async def queue_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):

@@ -793,6 +793,25 @@ dialog[open] {
     font-size: var(--text-sm);
 }
 
+/* ── Blog preview (homepage) ─────────────────────────────────────────────────*/
+
+.blog-preview {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 2rem 0;
+}
+
+.blog-preview__header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.blog-preview__header h2 {
+    margin: 0;
+}
+
 /* ── About footer ────────────────────────────────────────────────────────────*/
 
 .about-footer {
@@ -819,7 +838,7 @@ dialog[open] {
 
 .about-footer__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
 }
 

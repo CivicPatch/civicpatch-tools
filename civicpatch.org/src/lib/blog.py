@@ -29,6 +29,7 @@ def _parse_post(path: Path) -> dict | None:
         "date": _date(path.name),
         "description": post.get("description", ""),
         "author": post.get("author", "The CivicPatch Team"),
+        "draft": bool(post.get("draft", False)),
         "content_html": md_lib.markdown(post.content, extensions=["tables"]),
     }
 
@@ -37,7 +38,7 @@ def get_all_posts() -> list[dict]:
     posts = []
     for path in sorted(_BLOG_DIR.glob("*.md"), reverse=True):
         post = _parse_post(path)
-        if post:
+        if post and not post["draft"]:
             posts.append(post)
     return posts
 

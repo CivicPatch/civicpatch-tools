@@ -1,6 +1,7 @@
 ---
 title: "CivicPatch: Building a directory of local representatives"
 date: 2026-01-01
+draft: true
 description: |
     CivicPatch is a set of civic data collection tools that combines automated web scraping and community-driven review to build and maintain a directory of representatives across US municipalities.
 author: "shelltr"
