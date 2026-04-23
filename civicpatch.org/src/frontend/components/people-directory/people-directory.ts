@@ -1,6 +1,7 @@
 import "./people-directory.css";
 import { component } from "haunted";
-import { html, TemplateResult } from "lit-html";
+import { html } from "lit-html";
+import type { TemplateResult } from "lit-html";
 import "../person-image.js";
 
 interface Office {
