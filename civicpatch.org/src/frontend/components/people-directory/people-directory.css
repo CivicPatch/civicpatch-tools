@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
     border-bottom: 1px solid var(--pico-muted-border-color);
 }
 
@@ -33,12 +33,12 @@
 
 .people-directory__name {
     font-weight: 600;
-    font-size: var(--text-md);
+    font-size: var(--text-base);
     margin: 0;
 }
 
 .people-directory__office {
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
     color: var(--pico-muted-color);
     margin: 0;
 }
