@@ -6,9 +6,9 @@ description: |
 author: "shelltr"
 ---
 
-## Problem Statement
+## The Problem
 
-No single authoritative source exists for who holds elected office at the municipal level. Local government contact information — mayors, council members, aldermen — is scattered across thousands of municipal websites in inconsistent formats.
+No single authoritative source exists for who holds elected office at the municipal level. Local government contact information for mayors, council members, and the like are scattered across thousands of municipal websites in inconsistent formats.
 
 Where directories do exist, the data is frequently paywalled, stale, or scoped only to the largest cities.
 
@@ -77,7 +77,7 @@ Pipeline output is reviewed by community maintainers before publishing, so these
 
 ### Guardrails
 
-CivicPatch only collects information that municipal governments have published on their public websites, consistent with their role as public officials. The data collected — names, roles, and official contact information — is the same information local governments are expected to publish for constituent access. Term start and end dates are collected where available but are a known limitation — accuracy is not currently guaranteed.
+CivicPatch collects information that municipal governments have published on their public websites, consistent with their role as public officials. The data collected (names, roles, and contact information) is the same information local governments are expected to publish for constituent access. Term start and end dates are collected where available but are a known limitation — accuracy is not currently guaranteed.
 
 A human review step is built into the pipeline before data is published. Community maintainers verify AI-extracted results before they are merged into the open-data repository.
 
