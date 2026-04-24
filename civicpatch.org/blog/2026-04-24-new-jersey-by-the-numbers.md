@@ -1,5 +1,5 @@
 ---
-title: "Scraping New Jersey: [TODO]"
+title: "New Jersey by the numbers: cost, coverage, and review time across 500+ municipalities"
 date: 2026-04-24
 draft: true
 description: "[TODO]"
