@@ -78,6 +78,8 @@ Roles are assigned via GitHub team membership. The `build_permissions()` functio
 | Pipeline runs — resume (paused) | | | ✓ | |
 | Pipeline runs — resolve / cancel | | | | ✓ |
 | Issues page (unrecognized roles, dead URLs) | | | ✓ | |
+| Role configs — read / edit (state & locality) | | | ✓ | ✓ |
+| Role configs — edit (global) | | | | ✓ |
 
 ## Local setup
 

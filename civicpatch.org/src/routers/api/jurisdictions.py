@@ -121,7 +121,7 @@ def get_router() -> APIRouter:
 
     @router.get("/config/global")
     async def get_global_config_endpoint(
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         config = await role_config_service.load_global_config()
         roles = [{"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases} for r in config.roles]

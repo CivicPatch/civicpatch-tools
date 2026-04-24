@@ -66,6 +66,7 @@ function useRoleEditor() {
 }
 
 function RoleTable({ roles, scope, editable, editor, onSave }) {
+  const [aliasModal, setAliasModal] = useState(null);
   const {
     editingRole, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
     addingRole, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
@@ -138,7 +139,10 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
           <tr>
             <td>${r.role}</td>
             <td>${r.is_unique ? "Yes" : "No"}</td>
-            <td title=${r.aliases?.length > 1 ? r.aliases.join(", ") : ""}>${aliasLabel(r.aliases)}</td>
+            <td
+              class=${r.aliases?.length > 1 ? "issues-page__alias-clickable" : ""}
+              @click=${() => r.aliases?.length > 1 && setAliasModal(r)}
+            >${aliasLabel(r.aliases)}</td>
             ${editable ? html`
               <td class="issues-page__config-actions">
                 <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
@@ -156,6 +160,15 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
         .content=${formContent}
         .footer=${formFooter}
         .modalProps=${{ open: true, onClose: reset }}
+      ></civ-modal>
+    ` : null}
+
+    ${aliasModal ? html`
+      <civ-modal
+        .title=${"Aliases: " + aliasModal.role}
+        .content=${html`<ul>${aliasModal.aliases.map((a) => html`<li>${a}</li>`)}</ul>`}
+        .footer=${html`<button class="btn btn-sm secondary" @click=${() => setAliasModal(null)}>Close</button>`}
+        .modalProps=${{ open: true, onClose: () => setAliasModal(null) }}
       ></civ-modal>
     ` : null}
   `;
@@ -256,8 +269,8 @@ function ConfigEditor(host) {
   }, []);
 
   useEffect(() => {
-    if (permissions.CONFIG_GLOBAL_WRITE && globalRoles === null && !globalError) loadGlobal();
-  }, [permissions.CONFIG_GLOBAL_WRITE]);
+    if (permissions.CONFIG_WRITE && globalRoles === null && !globalError) loadGlobal();
+  }, [permissions.CONFIG_WRITE]);
 
   useEffect(() => {
     if (!stateCode) { setStateRoles(null); setStateOcdid(null); return; }
@@ -318,7 +331,7 @@ function ConfigEditor(host) {
   const handleClose = () => dispatch("modal-close", {});
 
   const content = html`
-    ${permissions.CONFIG_GLOBAL_WRITE ? html`
+    ${permissions.CONFIG_WRITE ? html`
       <div class="issues-page__config-section">
         <h4 class="issues-page__config-section-title">
           <civ-badge .label=${"global"} .variant=${"global"}></civ-badge>
@@ -328,7 +341,7 @@ function ConfigEditor(host) {
         ${globalRoles !== null ? html`<civ-role-table
           .roles=${globalRoles}
           .scope=${SCOPE_GLOBAL}
-          .editable=${true}
+          .editable=${permissions.CONFIG_GLOBAL_WRITE}
           .editor=${globalEditor}
           .onSave=${makeSave(SCOPE_GLOBAL, null, null, globalEditor)}
         ></civ-role-table>` : null}
