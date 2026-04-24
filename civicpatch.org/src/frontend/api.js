@@ -431,6 +431,36 @@ export const fetchSummary = async (stateCode) => {
   return res.json();
 };
 
+export const fetchGlobalConfig = async () => {
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/config/global`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const putGlobalConfig = async (roles) => {
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/config/global`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ roles }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchJurisdictionForState = async (stateCode) => {
+  const params = new URLSearchParams({ limit: 1 });
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/${stateCode}/search?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchAllJurisdictionsForState = async (stateCode) => {
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/${stateCode}/search`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchNotes = async (jurisdictionOcdid, page = 1, perPage = 10) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
   const res = await fetch(`${API_URL}/api/v1/notes?${params}`, { credentials: "include" });

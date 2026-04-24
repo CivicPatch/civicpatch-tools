@@ -29,3 +29,7 @@ class SetScopeRolesRequest(BaseModel):
     scope: Literal["state", "locality"]
     roles: List[RoleEntryData]
     issue_id: Optional[str] = None
+
+
+class SetGlobalRolesRequest(BaseModel):
+    roles: List[RoleEntryData]

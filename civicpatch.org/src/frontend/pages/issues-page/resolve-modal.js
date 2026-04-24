@@ -3,6 +3,7 @@ import { component, useState, useEffect } from "haunted";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import { fetchIssueDetails, resolveReviewIssue } from "../../api.js";
 import { formatIssueType } from "./utils.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 
 const SOURCE_CONTEXT_LIMIT = 5;
@@ -19,6 +20,7 @@ function getModalTitle(modalType, issue) {
 function ResolveModal(host) {
   const issue = host.issue;
   const detailsOnly = host.hasAttribute("details-only");
+  const { permissions } = useAuth();
 
   const [modalScope, setModalScope] = useState("state");
   const [modalState, setModalState] = useState((issue?.states || [])[0] || "");
@@ -146,50 +148,69 @@ function ResolveModal(host) {
       footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
       break;
     }
-    case "role":
+    case "role": {
+      const scopes = ["global", "state", "locality"];
       content = html`
-        ${(issue.states || []).length ? html`
-          <p class="issues-page__modal-meta">
-            Seen in:
-            ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
-          </p>
-        ` : null}
-        <label>
-          Scope
-          <select @change=${(e) => { setModalScope(e.target.value); setModalState((issue.states || [])[0] || ""); setModalLocality(""); }}>
-            <option value="global" ?selected=${modalScope === "global"}>Global — data_source/local/config.yml</option>
-            <option value="state" ?selected=${modalScope === "state"}>State</option>
-            <option value="locality" ?selected=${modalScope === "locality"}>Locality</option>
-          </select>
-        </label>
-        ${modalScope === "state" || modalScope === "locality" ? html`
-          <label>
-            State
-            <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
-              ${(issue.states || []).map((s) => html`
-                <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
-              `)}
-            </select>
-          </label>
-        ` : null}
-        ${modalScope === "locality" ? html`
-          <label>
-            Locality
-            <select @change=${(e) => setModalLocality(e.target.value)}>
-              <option value="">— select —</option>
-              ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
-                <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
-              `)}
-            </select>
-          </label>
-        ` : null}
-        ${sourceSection}
+        <div class="issues-page__resolve-role-content">
+          ${(issue.states || []).length ? html`
+            <p class="issues-page__modal-meta">
+              Seen in:
+              ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
+            </p>
+          ` : null}
+
+          <div class="issues-page__resolve-tabs">
+            ${scopes.map((scope) => {
+              const disabled = scope === "global" && !permissions.CONFIG_GLOBAL_WRITE;
+              return html`
+                <button
+                  class="issues-page__resolve-tab${modalScope === scope ? " issues-page__resolve-tab--active" : ""}${disabled ? " issues-page__resolve-tab--disabled" : ""}"
+                  ?disabled=${disabled}
+                  @click=${() => { setModalScope(scope); setModalState((issue.states || [])[0] || ""); setModalLocality(""); }}
+                >
+                  ${scope.charAt(0).toUpperCase() + scope.slice(1)}
+                  ${disabled ? html`<span class="issues-page__resolve-scope-hint">(admin only)</span>` : null}
+                </button>
+              `;
+            })}
+          </div>
+
+          <div class="issues-page__resolve-tab-content">
+            ${modalScope === "global" ? html`
+              <p class="issues-page__modal-meta">Applies the fix to the global config — affects all jurisdictions.</p>
+            ` : null}
+            ${modalScope === "state" || modalScope === "locality" ? html`
+              <label>
+                State
+                <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
+                  ${(issue.states || []).map((s) => html`
+                    <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
+                  `)}
+                </select>
+              </label>
+            ` : null}
+            ${modalScope === "locality" ? html`
+              <label>
+                Locality
+                <select @change=${(e) => setModalLocality(e.target.value)}>
+                  <option value="">— select —</option>
+                  ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
+                    <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
+                  `)}
+                </select>
+              </label>
+            ` : null}
+          </div>
+
+          ${sourceSection}
+        </div>
       `;
       footer = html`
         <button class="btn btn-sm secondary" @click=${handleClose}>Cancel</button>
         <button class="btn btn-sm" @click=${handleSubmit}>Open PR →</button>
       `;
       break;
+    }
     default:
       return null;
   }

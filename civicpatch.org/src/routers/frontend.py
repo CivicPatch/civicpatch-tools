@@ -45,6 +45,8 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_issues_page": Role.MAINTAINERS in teams,
         "can_delete_directory_person": Role.CONTRIBUTORS in teams,
         "can_cancel_job": Role.ADMINS in teams,
+        "can_write_config": Role.MAINTAINERS in teams,
+        "can_write_global_config": Role.ADMINS in teams,
     }
 
 

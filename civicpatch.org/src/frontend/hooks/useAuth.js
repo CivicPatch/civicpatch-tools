@@ -6,6 +6,8 @@ const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE_SCRAPE_LOCAL: false,
   DIRECTORY_DELETE: false,
   CANCEL_JOB: false,
+  CONFIG_WRITE: false,
+  CONFIG_GLOBAL_WRITE: false,
 };
 
 // Module-level cache
@@ -22,6 +24,8 @@ function toPermissions(permissions) {
     JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"],
     DIRECTORY_DELETE: permissions["can_delete_directory_person"],
     CANCEL_JOB: permissions["can_cancel_job"],
+    CONFIG_WRITE: permissions["can_write_config"],
+    CONFIG_GLOBAL_WRITE: permissions["can_write_global_config"],
   }
 }
 
