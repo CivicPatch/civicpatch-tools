@@ -28,7 +28,7 @@ def get_router() -> APIRouter:
     @router.post("")
     async def create_note_endpoint(
         body: CreateNoteRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS])),
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
