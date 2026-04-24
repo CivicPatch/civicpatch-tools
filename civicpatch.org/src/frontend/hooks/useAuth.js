@@ -42,7 +42,7 @@ async function fetchAuth() {
             user: data.data,
             permissions: {
               ...DEFAULT_PERMISSIONS,
-              ...toPermissions(data.permissions)
+              ...toPermissions(data.data.permissions)
             }
           };
         } else {

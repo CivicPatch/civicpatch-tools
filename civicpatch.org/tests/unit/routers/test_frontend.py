@@ -62,7 +62,7 @@ def test_permissions_contributor_role():
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is False
     assert p["can_scrape_remote"] is False
-    assert p["can_view_reviews_page"] is False
+    assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is True
 
@@ -74,7 +74,7 @@ def test_permissions_maintainer_role():
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is False
     assert p["can_scrape_remote"] is True
-    assert p["can_view_reviews_page"] is False
+    assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is True
     assert p["can_delete_directory_person"] is False
 
@@ -147,8 +147,8 @@ def test_permissions_endpoint_unauthenticated(permissions_client):
     assert response.status_code == 200
     data = response.json()
     assert data["authenticated"] is False
-    assert data["permissions"]["can_view_queue_page"] is False
-    assert data["permissions"]["can_scrape_remote"] is False
+    assert data["data"]["permissions"]["can_view_queue_page"] is False
+    assert data["data"]["permissions"]["can_scrape_remote"] is False
 
 
 @pytest.mark.unit
@@ -159,10 +159,10 @@ def test_permissions_endpoint_maintainer(permissions_client):
     assert response.status_code == 200
     data = response.json()
     assert data["authenticated"] is True
-    assert data["permissions"]["can_view_queue_page"] is True
-    assert data["permissions"]["can_scrape_remote"] is True
-    assert data["permissions"]["can_view_issues_page"] is True
-    assert data["permissions"]["can_view_queue_page_errors"] is False
+    assert data["data"]["permissions"]["can_view_queue_page"] is True
+    assert data["data"]["permissions"]["can_scrape_remote"] is True
+    assert data["data"]["permissions"]["can_view_issues_page"] is True
+    assert data["data"]["permissions"]["can_view_queue_page_errors"] is False
 
 
 @pytest.mark.unit
@@ -173,5 +173,5 @@ def test_permissions_endpoint_admin(permissions_client):
     assert response.status_code == 200
     data = response.json()
     assert data["authenticated"] is True
-    assert data["permissions"]["can_view_queue_page_errors"] is True
-    assert data["permissions"]["can_scrape_remote"] is False
+    assert data["data"]["permissions"]["can_view_queue_page_errors"] is True
+    assert data["data"]["permissions"]["can_scrape_remote"] is False
