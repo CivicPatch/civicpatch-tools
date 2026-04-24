@@ -302,6 +302,32 @@ async def get_pipeline_issues_page(
     return result, total
 
 
+async def get_pipeline_issue_counts(state_code: str | None = None) -> dict[str, int]:
+    pool = await get_pool()
+    active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
+    params: list[Any] = list(active_statuses)
+    state_filter = sql.SQL("")
+    if state_code:
+        state_filter = sql.SQL(
+            "AND EXISTS (SELECT 1 FROM requests r WHERE r.id::text = ANY(pi.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+        )
+        params.append(f"%state:{state_code.lower()}%")
+    query = sql.SQL("""
+        SELECT pi.issue_type, COUNT(*) AS cnt
+        FROM pipeline_issues pi
+        WHERE pi.status IN ({statuses})
+        {state_filter}
+        GROUP BY pi.issue_type
+    """).format(
+        statuses=sql.SQL(", ").join(sql.Placeholder() for _ in active_statuses),
+        state_filter=state_filter,
+    )
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(query, params)
+        rows = await cur.fetchall()
+    return {row[0]: row[1] for row in rows}
+
+
 async def get_pipeline_issue_by_id(issue_id: str) -> dict | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

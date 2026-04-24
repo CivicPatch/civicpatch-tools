@@ -169,6 +169,12 @@ const NAVBAR_CSS = html`
     .nav-count--hidden {
       visibility: hidden;
     }
+    .nav-count--error {
+      background: var(--pico-del-color);
+      color: #fff;
+      font-size: 0.85rem;
+      min-width: 1.6em;
+    }
     .nav-count {
       display: inline-flex;
       align-items: center;
@@ -342,7 +348,7 @@ function renderAuthed(user, summary, currentPath, stateCode) {
     <a href="/" class="${active('/')}">Home</a>
     <a href="/blog" class="${active('/blog')}">Blog</a>
     <a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.issues_total ?? 0}</span></a>` : ""}
+    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues ${summary?.issues_errors ? html`<span class="nav-count nav-count--error">${summary.issues_errors}</span>` : ""}</a>` : ""}
     ${(user.permissions?.can_view_queue_page) ? html`<a href="/review" class="${active('/review')}">Review</a>` : ""}
   `;
 }

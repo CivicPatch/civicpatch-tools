@@ -32,6 +32,7 @@ from database.pipeline_runs import (
 from database.pipeline_issues import (
     get_pipeline_issues_page,
     get_pipeline_issue_by_id,
+    get_pipeline_issue_counts,
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
     resolve_pipeline_issue,
@@ -418,6 +419,14 @@ def get_router(api_key_header):
         for run in pipeline_runs:
             run["jurisdiction_path"] = shared.utils.id_utils.jurisdiction_ocdid_to_folder(run["jurisdiction_ocdid"])
         return {"data": pipeline_runs, "total": total, "page": page, "per_page": per_page, "total_pages": math.ceil(total / per_page) if total else 1}
+
+    @router.get("/issues/counts", summary="Count pending issues grouped by issue_type")
+    async def get_issue_counts_endpoint(
+        state_code: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        counts = await get_pipeline_issue_counts(state_code=state_code)
+        return {"data": counts}
 
     @router.get(
         "/issues",
