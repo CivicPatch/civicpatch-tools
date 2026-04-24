@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { fetchJobIssues } from "../../api.js";
+import { fetchJobIssues, fetchIssueCounts } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
@@ -71,6 +71,8 @@ function IssuesPage() {
   const [issuesPageLoading, setIssuesPageLoading] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
 
+  const [issueCounts, setIssueCounts] = useState({});
+
   const [resolveModal, setResolveModal] = useState(null);
   const [dismissModal, setDismissModal] = useState(null);
   const [configModal, setConfigModal] = useState(null);
@@ -94,6 +96,10 @@ function IssuesPage() {
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
+
+  useEffect(() => {
+    fetchIssueCounts(stateCode).then((r) => setIssueCounts(r.data || {})).catch(() => {});
+  }, [stateCode]);
 
   useEffect(() => {
     if (!openSections.issues) return;
@@ -186,7 +192,7 @@ function IssuesPage() {
       <button
         class="issues-page__issue-tag${categoryClass}${active ? " issues-page__issue-tag--active" : ""}"
         @click=${() => handleToggleTag(value)}
-      >${label}${active ? html` <span class="issues-page__issue-tag-x">×</span>` : ""}</button>
+      >${label}${issueCounts[value] ? html` <span class="issues-page__issue-tag-count">${issueCounts[value]}</span>` : ""}${active ? html` <span class="issues-page__issue-tag-x">×</span>` : ""}</button>
     `;
   });
 

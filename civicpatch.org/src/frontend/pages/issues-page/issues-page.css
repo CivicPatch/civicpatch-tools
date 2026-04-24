@@ -564,10 +564,14 @@
 .issues-page__config-section {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.25rem;
     padding: 1rem;
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius);
+}
+
+.issues-page__config-section button {
+    font-weight: 400;
 }
 
 .issues-page__config-section-title {
@@ -680,10 +684,29 @@ civ-role-table {
 }
 
 .issues-page__config-locality-autocomplete {
-    flex: 1;
-    max-width: 14rem;
+    width: 16rem;
+    font-weight: 400;
+}
+
+.issues-page__config-locality-autocomplete .autocomplete-option,
+.issues-page__config-locality-autocomplete .autocomplete-selected,
+.issues-page__config-locality-autocomplete .autocomplete-pagination-info {
     font-weight: 400;
     font-size: var(--text-sm);
+}
+
+.issues-page__config-locality-autocomplete input.autocomplete-input {
+    font-weight: 400 !important;
+    font-size: var(--text-sm) !important;
+    padding-block: 0.25em !important;
+    min-height: unset !important;
+    margin-bottom: 0;
+}
+
+.issues-page__config-locality-autocomplete button.autocomplete-toggle {
+    padding-block: 0.25em;
+    min-height: unset;
+    margin-bottom: 0;
 }
 
 .issues-page__resolve-tabs {
@@ -724,4 +747,9 @@ civ-role-table {
     flex-direction: column;
     gap: 0.75rem;
     min-height: 4rem;
+}
+
+.issues-page__issue-tag-count {
+    font-size: 0.75em;
+    opacity: 0.75;
 }

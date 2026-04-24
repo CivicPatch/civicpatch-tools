@@ -42,6 +42,15 @@ export const fetchPullRequests = async (jurisdictionOcdid) => {
   return res.json();
 };
 
+export const fetchIssueCounts = async (stateCode) => {
+  const params = new URLSearchParams();
+  if (stateCode) params.set("state_code", stateCode);
+  const query = params.toString() ? `?${params}` : "";
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/counts${query}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));

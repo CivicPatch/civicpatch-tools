@@ -6,6 +6,8 @@ from shared.utils.config_utils import RoleConfig, RoleEntry
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
+_GLOBAL_CONFIG_PATH = "data_source/local/config.yml"
+
 logger = logging.getLogger(__name__)
 
 
@@ -89,10 +91,6 @@ async def _write_once(path: str, content: str, commit_message: str, author: dict
         commit_message=commit_message,
         author=author,
     )
-
-
-_GLOBAL_CONFIG_PATH = "data_source/local/config.yml"
-
 
 async def load_global_config() -> RoleConfig:
     raw = await github_service.get_github_file_contents(_GLOBAL_CONFIG_PATH)
