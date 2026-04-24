@@ -30,6 +30,7 @@ def _parse_post(path: Path) -> dict | None:
         "description": post.get("description", ""),
         "author": post.get("author", "The CivicPatch Team"),
         "draft": bool(post.get("draft", False)),
+        "updated_at": post.get("updated_at"),
         "content_html": md_lib.markdown(post.content, extensions=["tables"]),
     }
 
