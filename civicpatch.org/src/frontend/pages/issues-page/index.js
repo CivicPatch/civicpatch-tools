@@ -78,7 +78,7 @@ function IssuesPage() {
 
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
-    { issues: true },
+    { issues: true, roleConfigs: false },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -220,7 +220,7 @@ function IssuesPage() {
                 : issues.map((ev) => IssueRow(ev, {
                     onDetails: openDetailsModal,
                     onDismiss: (issue) => setDismissModal(issue),
-                    onConfig: (jurisdictions) => setConfigModal(jurisdictions),
+                    onConfig: (jurisdictions) => setConfigModal({ jurisdictions, initialView: "merged" }),
                   }))
               }
             </tbody>
@@ -239,11 +239,24 @@ function IssuesPage() {
     </section>
   `;
 
+  const roleConfigsSection = html`
+    <section class="issues-page__section">
+      <div class="issues-page__section-header" @click=${() => toggleSection("roleConfigs")}>
+        <h2 class="issues-page__section-title issues-page__section-title--warning">Role Configs</h2>
+        <i class="fa-solid fa-chevron-down btn-icon${openSections.roleConfigs ? " btn-icon--rotated" : ""}"></i>
+      </div>
+      ${openSections.roleConfigs ? html`
+        <issues-config-editor .inline=${true} .stateCode=${stateCode}></issues-config-editor>
+      ` : null}
+    </section>
+  `;
+
   return html`
     <main class="issues-page page-content">
       <div class="issues-page__filters">
         <civ-select-state .selected=${stateCode} @state-change=${handleStateChange}></civ-select-state>
       </div>
+      ${roleConfigsSection}
       ${issuesSection}
     </main>
 
@@ -266,7 +279,8 @@ function IssuesPage() {
 
     ${configModal ? html`
       <issues-config-editor
-        .jurisdictions=${configModal}
+        .jurisdictions=${configModal.jurisdictions}
+        .initialView=${configModal.initialView}
         @modal-close=${() => setConfigModal(null)}
       ></issues-config-editor>
     ` : null}

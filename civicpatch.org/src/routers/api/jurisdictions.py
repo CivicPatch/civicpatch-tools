@@ -13,7 +13,7 @@ import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access
 from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
-from schemas.jurisdictions import JurisdictionsByOcdidsRequest, SetScopeRolesRequest
+from schemas.jurisdictions import JurisdictionsByOcdidsRequest, SetGlobalRolesRequest, SetScopeRolesRequest
 
 
 class PatchJurisdictionDataRequest(BaseModel):
@@ -119,6 +119,26 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
 
+    @router.get("/config/global")
+    async def get_global_config_endpoint(
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+    ):
+        config = await role_config_service.load_global_config()
+        roles = [{"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases} for r in config.roles]
+        return {"data": {"roles": roles}}
+
+    @router.put("/config/global")
+    async def put_global_config_endpoint(
+        body: SetGlobalRolesRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+    ):
+        author = {"name": user.email or user.provider_user_id, "email": user.email or f"{user.provider_user_id}@users.noreply.github.com"}
+        try:
+            await role_config_service.set_global_roles(body.roles, author=author)
+        except RuntimeError as e:
+            return JSONResponse({"error": str(e)}, status_code=409)
+        return {"data": {"ok": True}}
+
     @router.get("/config")
     async def get_jurisdiction_config_endpoint(
         ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
@@ -144,7 +164,8 @@ def get_router() -> APIRouter:
                 )
                 pull_request_url = await pipeline_issue_resolution_service.resolve_via_config_pr(body, author, body.issue_id)
                 return {"data": {"pull_request_url": pull_request_url}}
-            await role_config_service.set_scope_roles(body)
+            commit_author = {"name": user.email or user.provider_user_id, "email": user.email or f"{user.provider_user_id}@users.noreply.github.com"}
+            await role_config_service.set_scope_roles(body, author=commit_author)
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         except RuntimeError as e:

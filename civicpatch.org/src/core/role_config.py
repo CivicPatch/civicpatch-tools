@@ -57,20 +57,78 @@ async def build_updated_config(req: SetScopeRolesRequest) -> tuple[str, str]:
     return path, yaml_dump(updated.model_dump())
 
 
-async def _write_once(path: str, content: str, commit_message: str) -> bool:
+def _describe_role_changes(old: RoleConfig, new_roles: list, scope_label: str) -> str:
+    old_by_name = {r.role.lower(): r for r in old.roles}
+    new_by_name = {r.role.lower(): r for r in new_roles}
+    added = [r for k, r in new_by_name.items() if k not in old_by_name]
+    removed = [r for k, r in old_by_name.items() if k not in new_by_name]
+    updated = [r for k, r in new_by_name.items() if k in old_by_name and (
+        r.is_unique != old_by_name[k].is_unique or r.aliases != old_by_name[k].aliases or r.role != old_by_name[k].role
+    )]
+    parts = []
+    if len(added) == 1 and not removed and not updated:
+        return f"Add {scope_label} role '{added[0].role}'"
+    if len(removed) == 1 and not added and not updated:
+        return f"Remove {scope_label} role '{removed[0].role}'"
+    if len(updated) == 1 and not added and not removed:
+        return f"Update {scope_label} role '{updated[0].role}'"
+    if added:
+        parts.append("add " + ", ".join(f"'{r.role}'" for r in added))
+    if removed:
+        parts.append("remove " + ", ".join(f"'{r.role}'" for r in removed))
+    if updated:
+        parts.append("update " + ", ".join(f"'{r.role}'" for r in updated))
+    return f"Update {scope_label} config: {'; '.join(parts)}" if parts else f"Update {scope_label} config"
+
+
+async def _write_once(path: str, content: str, commit_message: str, author: dict | None = None) -> bool:
     return await github_service.upsert_github_file(
         branch_name="main",
         file_path=path,
         content_str=content,
         commit_message=commit_message,
+        author=author,
     )
 
 
-async def set_scope_roles(req: SetScopeRolesRequest) -> None:
+_GLOBAL_CONFIG_PATH = "data_source/local/config.yml"
+
+
+async def load_global_config() -> RoleConfig:
+    raw = await github_service.get_github_file_contents(_GLOBAL_CONFIG_PATH)
+    return RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
+
+
+async def set_global_roles(roles: list, author: dict | None = None) -> None:
+    raw = await github_service.get_github_file_contents(_GLOBAL_CONFIG_PATH)
+    existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
+    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in roles]
+    updated = RoleConfig(roles=new_entries, excluded_roles=existing.excluded_roles)
+    commit_message = _describe_role_changes(existing, new_entries, "global")
+    content = yaml_dump(updated.model_dump())
+    if not await _write_once(_GLOBAL_CONFIG_PATH, content, commit_message, author):
+        if not await _write_once(_GLOBAL_CONFIG_PATH, content, commit_message, author):
+            raise RuntimeError("Failed to write global role config after retry (SHA conflict)")
+
+
+async def set_scope_roles(req: SetScopeRolesRequest, author: dict | None = None) -> None:
     folder = jurisdiction_ocdid_to_folder(req.ocdid)
-    path, content = await build_updated_config(req)
-    commit_message = f"Update {req.scope} roles for {folder}"
-    if await _write_once(path, content, commit_message):
+    parts = folder.split("/")
+    state = parts[0].upper() if parts else ""
+    if req.scope == "state":
+        scope_label = f"{state} state"
+    elif req.scope == "locality" and len(parts) >= 3:
+        scope_label = f"{state} locality"
+    else:
+        scope_label = req.scope
+    path = _scope_path(req.scope, folder)
+    raw = await github_service.get_github_file_contents(path)
+    existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
+    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in req.roles]
+    updated = RoleConfig(roles=new_entries, excluded_roles=existing.excluded_roles)
+    commit_message = _describe_role_changes(existing, new_entries, scope_label)
+    content = yaml_dump(updated.model_dump())
+    if await _write_once(path, content, commit_message, author):
         return
-    if not await _write_once(path, content, commit_message):
+    if not await _write_once(path, content, commit_message, author):
         raise RuntimeError("Failed to write role config after retry (SHA conflict)")

@@ -1,7 +1,14 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { fetchJurisdictionConfig, putJurisdictionConfig } from "../../api.js";
+import { fetchJurisdictionConfig, putJurisdictionConfig, fetchGlobalConfig, putGlobalConfig, fetchJurisdictionForState } from "../../api.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
+import "../../components/badge/badge.js";
+import "../../components/inputs/auto-complete-select.js";
+
+const SCOPE_GLOBAL = "global";
+const SCOPE_STATE = "state";
+const SCOPE_LOCALITY = "locality";
 
 function parseAliases(text) {
   return text.split("\n").map((s) => s.trim()).filter(Boolean);
@@ -13,67 +20,22 @@ function aliasLabel(aliases) {
   return `${aliases.length} aliases`;
 }
 
-function ConfigEditor(host) {
-  const jurisdictions = host.jurisdictions || [];
-  const firstOcdid = jurisdictions[0]?.jurisdiction_ocdid;
+function seedState(jurisdictions) {
+  const j = jurisdictions[0];
+  return j?.state || j?.jurisdiction_path?.split("/")[0] || "";
+}
 
-  // "merged" | "state" | "locality"
-  const [view, setView] = useState("merged");
-  const [localityOcdid, setLocalityOcdid] = useState(firstOcdid);
-  // per-level role lists fetched from server
-  const [rolesPerLevel, setRolesPerLevel] = useState(null);
-  const [loadError, setLoadError] = useState(null);
-
-  // which row is open for editing (role name string), or null
+function useRoleEditor() {
   const [editingRole, setEditingRole] = useState(null);
   const [editName, setEditName] = useState("");
   const [editUnique, setEditUnique] = useState(false);
   const [editAliases, setEditAliases] = useState("");
-
-  // add-role form
   const [addingRole, setAddingRole] = useState(false);
   const [addName, setAddName] = useState("");
   const [addUnique, setAddUnique] = useState(false);
   const [addAliases, setAddAliases] = useState("");
-
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
-
-  const activeOcdid = (view === "locality" || view === "merged") ? localityOcdid : firstOcdid;
-
-  const dispatch = (name, detail) =>
-    host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
-
-  const loadConfig = (ocdid) => {
-    setRolesPerLevel(null);
-    setLoadError(null);
-    fetchJurisdictionConfig(ocdid)
-      .then((r) => {
-        const roles = r.data?.roles || [];
-        setRolesPerLevel({
-          global: roles.filter((r) => r.source === "global"),
-          state: roles.filter((r) => r.source === "state"),
-          locality: roles.filter((r) => r.source === "locality"),
-        });
-      })
-      .catch((e) => setLoadError(e.message));
-  };
-
-  useEffect(() => { if (firstOcdid) loadConfig(firstOcdid); }, []);
-
-  useEffect(() => {
-    if (view === "locality" && localityOcdid) loadConfig(localityOcdid);
-  }, [localityOcdid]);
-
-  const handleClose = () => dispatch("modal-close", {});
-
-  const changeView = (v) => {
-    setView(v);
-    setEditingRole(null);
-    setAddingRole(false);
-    setSaveError(null);
-    if (v === "state") loadConfig(firstOcdid);
-  };
 
   const openEdit = (role) => {
     setEditingRole(role.role);
@@ -93,165 +55,338 @@ function ConfigEditor(host) {
     setSaveError(null);
   };
 
-  const saveRoles = async (scope, updatedRoles) => {
-    setSaving(true);
-    setSaveError(null);
-    try {
-      await putJurisdictionConfig({ ocdid: activeOcdid, scope, roles: updatedRoles });
-      setEditingRole(null);
-      setAddingRole(false);
-      loadConfig(activeOcdid);
-    } catch (e) {
-      setSaveError(e.message);
-    } finally {
-      setSaving(false);
-    }
-  };
+  const reset = () => { setEditingRole(null); setAddingRole(false); setSaveError(null); };
 
-  const handleSaveEdit = (scope, currentRoles) => {
-    const updated = currentRoles.map((r) =>
+  return {
+    editingRole, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
+    addingRole, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
+    saving, setSaving, saveError, setSaveError,
+    openEdit, openAdd, reset,
+  };
+}
+
+function RoleTable({ roles, scope, editable, editor, onSave }) {
+  const {
+    editingRole, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
+    addingRole, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
+    saving, saveError, setSaveError,
+    openEdit, openAdd, reset,
+  } = editor;
+
+  const handleSaveEdit = () => {
+    const updated = roles.map((r) =>
       r.role === editingRole
         ? { role: editName.trim(), is_unique: editUnique, aliases: parseAliases(editAliases) }
         : { role: r.role, is_unique: r.is_unique, aliases: r.aliases }
     );
-    saveRoles(scope, updated);
+    onSave(updated, reset, setSaveError, saving);
   };
 
-  const handleSaveAdd = (scope, currentRoles) => {
+  const handleSaveAdd = () => {
     if (!addName.trim()) return;
     const updated = [
-      ...currentRoles.map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases })),
+      ...roles.map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases })),
       { role: addName.trim(), is_unique: addUnique, aliases: parseAliases(addAliases) },
     ];
-    saveRoles(scope, updated);
+    onSave(updated, reset, setSaveError, saving);
   };
 
-  const handleDelete = (scope, currentRoles, roleName) => {
+  const handleDelete = (roleName) => {
     if (!confirm(`Delete role "${roleName}" from ${scope}?`)) return;
-    const updated = currentRoles
+    const updated = roles
       .filter((r) => r.role !== roleName)
       .map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases }));
-    saveRoles(scope, updated);
+    onSave(updated, reset, setSaveError, saving);
   };
 
-  const editForm = (scope, currentRoles) => html`
-    <tr>
-      <td colspan="99">
-        <div class="issues-page__config-edit-form">
-          <label>Role name <input type="text" .value=${editName} @input=${(e) => setEditName(e.target.value)} /></label>
-          <label><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>
-          <label>Aliases (one per line)<br /><textarea rows="4" .value=${editAliases} @input=${(e) => setEditAliases(e.target.value)}></textarea></label>
-          ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
-          <div class="issues-page__config-edit-actions">
-            <button class="btn btn-sm" @click=${() => handleSaveEdit(scope, currentRoles)} ?disabled=${saving}>Save</button>
-            <button class="btn btn-sm secondary" @click=${() => setEditingRole(null)}>Cancel</button>
-          </div>
-        </div>
-      </td>
-    </tr>
-  `;
+  const formContent = editingRole !== null ? html`
+    <div class="issues-page__config-edit-form">
+      <label>Role name <input type="text" .value=${editName} @input=${(e) => setEditName(e.target.value)} /></label>
+      <label class="issues-page__config-checkbox-label"><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>
+      <label>Aliases (one per line)<br /><textarea rows="5" .value=${editAliases} @input=${(e) => setEditAliases(e.target.value)}></textarea></label>
+      ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
+    </div>
+  ` : addingRole ? html`
+    <div class="issues-page__config-edit-form">
+      <label>Role name <input type="text" .value=${addName} @input=${(e) => setAddName(e.target.value)} /></label>
+      <label class="issues-page__config-checkbox-label"><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>
+      <label>Aliases (one per line)<br /><textarea rows="5" .value=${addAliases} @input=${(e) => setAddAliases(e.target.value)}></textarea></label>
+      ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
+    </div>
+  ` : null;
 
-  const addForm = (scope, currentRoles) => html`
-    <tr>
-      <td colspan="99">
-        <div class="issues-page__config-edit-form">
-          <label>Role name <input type="text" .value=${addName} @input=${(e) => setAddName(e.target.value)} /></label>
-          <label><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>
-          <label>Aliases (one per line)<br /><textarea rows="4" .value=${addAliases} @input=${(e) => setAddAliases(e.target.value)}></textarea></label>
-          ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
-          <div class="issues-page__config-edit-actions">
-            <button class="btn btn-sm" @click=${() => handleSaveAdd(scope, currentRoles)} ?disabled=${saving || !addName.trim()}>Add</button>
-            <button class="btn btn-sm secondary" @click=${() => setAddingRole(false)}>Cancel</button>
-          </div>
-        </div>
-      </td>
-    </tr>
-  `;
+  const formFooter = editingRole !== null ? html`
+    <button class="btn btn-sm" @click=${handleSaveEdit} ?disabled=${saving}>Save</button>
+    <button class="btn btn-sm secondary" @click=${reset}>Cancel</button>
+  ` : addingRole ? html`
+    <button class="btn btn-sm" @click=${handleSaveAdd} ?disabled=${saving || !addName.trim()}>Add</button>
+    <button class="btn btn-sm secondary" @click=${reset}>Cancel</button>
+  ` : null;
 
-  const mergedTable = (allRoles) => html`
+  const formTitle = editingRole !== null ? `Edit: ${editingRole}` : "Add role";
+
+  return html`
     <table class="issues-page__config-table">
       <thead>
-        <tr><th>Role</th><th>Source</th><th>Unique</th><th>Aliases</th><th></th></tr>
-      </thead>
-      <tbody>
-        ${allRoles.map((r) => html`
-          <tr>
-            <td>${r.role}</td>
-            <td><span class="issues-page__config-source issues-page__config-source--${r.source}">${r.source}</span></td>
-            <td>${r.is_unique ? "Yes" : "No"}</td>
-            <td title=${r.aliases?.length > 1 ? r.aliases.join(", ") : ""}>${aliasLabel(r.aliases)}</td>
-            <td></td>
-          </tr>
-        `)}
-      </tbody>
-    </table>
-  `;
-
-  const scopeTable = (scope, roles) => html`
-    <table class="issues-page__config-table">
-      <thead>
-        <tr><th>Role</th><th>Unique</th><th>Aliases</th><th></th></tr>
+        <tr>
+          <th>Role</th><th>Unique</th><th>Aliases</th>
+          ${editable ? html`<th></th>` : null}
+        </tr>
       </thead>
       <tbody>
         ${roles.map((r) => html`
           <tr>
             <td>${r.role}</td>
             <td>${r.is_unique ? "Yes" : "No"}</td>
-            <td>${aliasLabel(r.aliases)}</td>
-            <td class="issues-page__config-actions">
-              <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
-              <button class="btn btn-sm destructive" @click=${() => handleDelete(scope, roles, r.role)}>Del</button>
-            </td>
+            <td title=${r.aliases?.length > 1 ? r.aliases.join(", ") : ""}>${aliasLabel(r.aliases)}</td>
+            ${editable ? html`
+              <td class="issues-page__config-actions">
+                <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
+                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Del</button>
+              </td>
+            ` : null}
           </tr>
-          ${editingRole === r.role ? editForm(scope, roles) : null}
         `)}
-        ${addingRole ? addForm(scope, roles) : null}
       </tbody>
     </table>
-    <button class="btn btn-sm" @click=${openAdd}>+ Add role</button>
-  `;
-
-  const localityPicker = jurisdictions.length > 1 ? html`
-    <div class="issues-page__config-locality-picker">
-      <label>
-        Locality
-        <select @change=${(e) => { setLocalityOcdid(e.target.value); setEditingRole(null); setAddingRole(false); setSaveError(null); }}>
-          ${jurisdictions.map((j) => html`
-            <option value=${j.jurisdiction_ocdid} ?selected=${j.jurisdiction_ocdid === localityOcdid}>${j.name}</option>
-          `)}
-        </select>
-      </label>
-    </div>
-  ` : null;
-
-  const title = jurisdictions.length === 1
-    ? "Config: " + jurisdictions[0].name
-    : "Config: " + (jurisdictions[0]?.state?.toUpperCase() || "");
-
-  const content = html`
-    <div class="issues-page__config-view-toggle">
-      ${["merged", "state", "locality"].map((v) => html`
-        <label>
-          <input
-            type="radio"
-            name="config-view-${firstOcdid}"
-            value=${v}
-            ?checked=${view === v}
-            @change=${() => changeView(v)}
-          />
-          ${v === "merged" ? "Merged" : v.charAt(0).toUpperCase() + v.slice(1)}
-        </label>
-      `)}
-    </div>
-    ${view === "locality" || view === "merged" ? localityPicker : null}
-    ${loadError ? html`<p class="issues-page__config-error">${loadError}</p>` : null}
-    ${rolesPerLevel === null && !loadError ? html`<div>Loading…</div>` : null}
-    ${rolesPerLevel ? html`
-      ${view === "merged"
-        ? mergedTable([...rolesPerLevel.global, ...rolesPerLevel.state, ...rolesPerLevel.locality])
-        : scopeTable(view, rolesPerLevel[view] || [])}
+    ${editable ? html`<button class="btn btn-sm" @click=${openAdd}>+ Add role</button>` : null}
+    ${formContent ? html`
+      <civ-modal
+        .title=${formTitle}
+        .content=${formContent}
+        .footer=${formFooter}
+        .modalProps=${{ open: true, onClose: reset }}
+      ></civ-modal>
     ` : null}
   `;
+}
+
+customElements.define("civ-role-table", component(RoleTable, { useShadowDOM: false }));
+
+function ConfigSection({ title, badge, roles, loading, error, editable, onSave }) {
+  return html`
+    <div class="issues-page__config-section">
+      <h4 class="issues-page__config-section-title">
+        ${title}
+        <civ-badge .label=${badge} .variant=${badge}></civ-badge>
+        ${!editable ? html`<span class="issues-page__config-readonly">read-only</span>` : null}
+      </h4>
+      ${error ? html`<p class="issues-page__config-error">${error}</p>` : null}
+      ${loading ? html`<div>Loading…</div>` : null}
+      ${roles !== null && !loading
+        ? html`<civ-role-table
+            .roles=${roles}
+            .scope=${badge}
+            .editable=${editable}
+            .editor=${onSave.__editor}
+            .onSave=${onSave}
+          ></civ-role-table>`
+        : null}
+    </div>
+  `;
+}
+
+customElements.define("civ-config-section", component(ConfigSection, { useShadowDOM: false }));
+
+function ConfigEditor(host) {
+  const jurisdictions = host.jurisdictions || [];
+  const firstOcdid = jurisdictions[0]?.jurisdiction_ocdid;
+  const inline = Boolean(host.inline);
+  const { permissions } = useAuth();
+
+  const stateCode = inline ? (host.stateCode || "") : seedState(jurisdictions);
+
+  // Global config
+  const [globalRoles, setGlobalRoles] = useState(null);
+  const [globalError, setGlobalError] = useState(null);
+  const globalEditor = useRoleEditor();
+
+  // State config
+  const [stateOcdid, setStateOcdid] = useState(firstOcdid || null);
+  const [stateRoles, setStateRoles] = useState(null);
+  const [stateError, setStateError] = useState(null);
+  const stateEditor = useRoleEditor();
+
+  // Locality config
+  const [localityOcdid, setLocalityOcdid] = useState(firstOcdid || null);
+  const [localityRoles, setLocalityRoles] = useState(null);
+  const [localityError, setLocalityError] = useState(null);
+  const [localityOptions, setLocalityOptions] = useState([]);
+  const [localityOptionsMetadata, setLocalityOptionsMetadata] = useState({});
+  const [localityInputValue, setLocalityInputValue] = useState("");
+  const localityEditor = useRoleEditor();
+
+  const dispatch = (name, detail) =>
+    host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
+
+  const loadGlobal = () => {
+    setGlobalRoles(null);
+    setGlobalError(null);
+    fetchGlobalConfig()
+      .then((r) => setGlobalRoles(r.data?.roles || []))
+      .catch((e) => setGlobalError(e.message));
+  };
+
+  const loadStateConfig = (ocdid) => {
+    if (!ocdid) return;
+    setStateRoles(null);
+    setStateError(null);
+    fetchJurisdictionConfig(ocdid)
+      .then((r) => {
+        const roles = r.data?.roles || [];
+        setStateRoles(roles.filter((r) => r.source === SCOPE_STATE));
+      })
+      .catch((e) => setStateError(e.message));
+  };
+
+  const loadLocalityConfig = (ocdid) => {
+    if (!ocdid) return;
+    setLocalityRoles(null);
+    setLocalityError(null);
+    fetchJurisdictionConfig(ocdid)
+      .then((r) => {
+        const roles = r.data?.roles || [];
+        setLocalityRoles(roles.filter((r) => r.source === SCOPE_LOCALITY));
+      })
+      .catch((e) => setLocalityError(e.message));
+  };
+
+  useEffect(() => {
+    if (firstOcdid) { loadStateConfig(firstOcdid); loadLocalityConfig(firstOcdid); }
+  }, []);
+
+  useEffect(() => {
+    if (permissions.CONFIG_GLOBAL_WRITE && globalRoles === null && !globalError) loadGlobal();
+  }, [permissions.CONFIG_GLOBAL_WRITE]);
+
+  useEffect(() => {
+    if (!stateCode) { setStateRoles(null); setStateOcdid(null); return; }
+    fetchJurisdictionForState(stateCode)
+      .then((r) => {
+        const ocdid = r?.data?.[0]?.jurisdiction_ocdid;
+        setStateOcdid(ocdid || null);
+        if (ocdid) loadStateConfig(ocdid);
+        else setStateError(`No jurisdictions found for ${stateCode.toUpperCase()}`);
+      })
+      .catch((e) => setStateError(e.message));
+  }, [stateCode]);
+
+  useEffect(() => {
+    if (!stateCode) { setLocalityOptions([]); setLocalityRoles(null); setLocalityInputValue(""); return; }
+    fetchLocalitySuggestions("");
+  }, [stateCode]);
+
+  const fetchLocalitySuggestions = ({ query = "", page = 1, pageSize = 25 } = {}) => {
+    if (!stateCode) return;
+    const params = new URLSearchParams({ search_string: query, limit: pageSize, page });
+    fetch(`/api/v1/jurisdictions/${stateCode}/search?${params}`, { credentials: "include" })
+      .then((r) => r.json())
+      .then((data) => {
+        setLocalityOptions((data.data || []).map((j) => ({ label: j.name, value: j.jurisdiction_ocdid || j.id })));
+        setLocalityOptionsMetadata({ total_items: data.total_items, total_pages: data.total_pages, page: data.page, limit: data.limit, links: data.links });
+      })
+      .catch(() => {});
+  };
+
+  useEffect(() => {
+    if (localityOcdid) loadLocalityConfig(localityOcdid);
+  }, [localityOcdid]);
+
+  const makeSave = (scope, ocdid, reload, editor) => {
+    const fn = async (updatedRoles, reset, setSaveError) => {
+      editor.setSaving(true);
+      setSaveError(null);
+      try {
+        if (scope === SCOPE_GLOBAL) {
+          await putGlobalConfig(updatedRoles);
+          loadGlobal();
+        } else {
+          await putJurisdictionConfig({ ocdid, scope, roles: updatedRoles });
+          reload(ocdid);
+        }
+        reset();
+      } catch (e) {
+        setSaveError(e.message);
+      } finally {
+        editor.setSaving(false);
+      }
+    };
+    fn.__editor = editor;
+    return fn;
+  };
+
+  const handleClose = () => dispatch("modal-close", {});
+
+  const content = html`
+    ${permissions.CONFIG_GLOBAL_WRITE ? html`
+      <div class="issues-page__config-section">
+        <h4 class="issues-page__config-section-title">
+          <civ-badge .label=${"global"} .variant=${"global"}></civ-badge>
+        </h4>
+        ${globalError ? html`<p class="issues-page__config-error">${globalError}</p>` : null}
+        ${globalRoles === null && !globalError ? html`<div>Loading…</div>` : null}
+        ${globalRoles !== null ? html`<civ-role-table
+          .roles=${globalRoles}
+          .scope=${SCOPE_GLOBAL}
+          .editable=${true}
+          .editor=${globalEditor}
+          .onSave=${makeSave(SCOPE_GLOBAL, null, null, globalEditor)}
+        ></civ-role-table>` : null}
+      </div>
+    ` : null}
+
+    ${permissions.CONFIG_WRITE && stateCode ? html`
+      <div class="issues-page__config-section">
+        <h4 class="issues-page__config-section-title">
+          <civ-badge .label=${"state"} .variant=${"state"}></civ-badge>
+          ${stateCode ? html`<span class="issues-page__config-section-label">${stateCode.toUpperCase()}</span>` : null}
+        </h4>
+        ${stateError ? html`<p class="issues-page__config-error">${stateError}</p>` : null}
+        ${stateRoles === null && !stateError && stateCode ? html`<div>Loading…</div>` : null}
+        ${stateRoles !== null ? html`<civ-role-table
+          .roles=${stateRoles}
+          .scope=${SCOPE_STATE}
+          .editable=${true}
+          .editor=${stateEditor}
+          .onSave=${makeSave(SCOPE_STATE, stateOcdid, loadStateConfig, stateEditor)}
+        ></civ-role-table>` : null}
+      </div>
+    ` : null}
+
+    ${permissions.CONFIG_WRITE && stateCode ? html`
+      <div class="issues-page__config-section">
+        <h4 class="issues-page__config-section-title">
+          <civ-badge .label=${"locality"} .variant=${"locality"}></civ-badge>
+          <div class="issues-page__config-locality-autocomplete">
+            <civ-autocomplete-select
+              .options=${localityOptions}
+              .optionsMetadata=${localityOptionsMetadata}
+              .inputValue=${localityInputValue}
+              .pageSize=${25}
+              @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
+              @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
+              @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
+            ></civ-autocomplete-select>
+          </div>
+        </h4>
+        ${localityError ? html`<p class="issues-page__config-error">${localityError}</p>` : null}
+        ${localityRoles === null && !localityError && localityOcdid ? html`<div>Loading…</div>` : null}
+        ${localityRoles !== null ? html`<civ-role-table
+          .roles=${localityRoles}
+          .scope=${SCOPE_LOCALITY}
+          .editable=${true}
+          .editor=${localityEditor}
+          .onSave=${makeSave(SCOPE_LOCALITY, localityOcdid, loadLocalityConfig, localityEditor)}
+        ></civ-role-table>` : null}
+      </div>
+    ` : null}
+  `;
+
+  if (inline) return html`<div class="issues-page__config-inline">${content}</div>`;
+
+  const title = jurisdictions.length === 1
+    ? "Config: " + (jurisdictions[0].name || jurisdictions[0].jurisdiction_ocdid)
+    : "Config: " + (seedState(jurisdictions).toUpperCase() || "");
 
   return html`
     <civ-modal

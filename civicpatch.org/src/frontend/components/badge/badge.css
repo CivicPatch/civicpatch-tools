@@ -50,6 +50,21 @@ civ-badge {
 }
 
 
+.civ-badge--global {
+    color: rgb(var(--catppuccin-mauve));
+    border: 1px solid rgba(var(--catppuccin-mauve), 0.4);
+}
+
+.civ-badge--state {
+    color: rgb(var(--catppuccin-sapphire));
+    border: 1px solid rgba(var(--catppuccin-sapphire), 0.4);
+}
+
+.civ-badge--locality {
+    color: rgb(var(--catppuccin-teal));
+    border: 1px solid rgba(var(--catppuccin-teal), 0.4);
+}
+
 .civ-badge__popover {
     font-size: var(--text-md);
     padding: 0.6rem 0.9rem;
