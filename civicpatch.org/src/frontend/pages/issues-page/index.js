@@ -204,7 +204,7 @@ function IssuesPage() {
       </div>
       ${openSections.issues ? html`
         <div class="issues-page__issues-filters">
-          <div class="issues-page__issue-tags">${!showArchived ? tagChips : null}</div>
+          <div class="issues-page__issue-tags">${tagChips}</div>
           <button class="btn btn-sm issues-page__sort-btn" @click=${handleToggleSort}>${issuesSortDesc ? "Newest ↓" : "Oldest ↑"}</button>
           <button class="btn btn-sm" @click=${() => { setShowArchived(!showArchived); setIssuesPage(1); }}>${showArchived ? "← Active Issues" : "Archived"}</button>
         </div>
