@@ -121,6 +121,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .name=${jurisdictionData?.data?.name}
             .scrapeStatus=${scrapeStatus}
             .details=${jurisdictionData}
+            .ocdid=${jurisdiction_ocdid}
           ></civ-jurisdiction-header>
 
           <hr />

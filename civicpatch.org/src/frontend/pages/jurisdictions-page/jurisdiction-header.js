@@ -2,7 +2,15 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import "../../components/badge/badge.js";
 
-function JurisdictionHeader({ name, scrapeStatus, details }) {
+function buildIssueUrl(name, ocdid) {
+  const title = encodeURIComponent(`[Jurisdiction issue] ${name}`);
+  const body = encodeURIComponent(
+    `**Jurisdiction:** ${name}\n**OCD ID:** ${ocdid}\n\n**Issue type** (check all that apply):\n- [ ] Wrong website\n- [ ] Stale or incorrect data\n- [ ] Other\n\n**Description:**\n`
+  );
+  return `https://github.com/CivicPatch/open-data/issues/new?template=jurisdiction_issue.md&title=${title}&body=${body}&labels=data-quality`;
+}
+
+function JurisdictionHeader({ name, scrapeStatus, details, ocdid }) {
   const isScraped = scrapeStatus === "Scraped";
 
   return html`
@@ -59,10 +67,13 @@ function JurisdictionHeader({ name, scrapeStatus, details }) {
         <div style="display: flex; align-items: center; gap: 0.6rem;">
           <h2 class="jh-name">${name}</h2>
         </div>
-        <span class="jh-status">
-          <span class="jh-status-dot"></span>
-          ${scrapeStatus}
-        </span>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span class="jh-status">
+            <span class="jh-status-dot"></span>
+            ${scrapeStatus}
+          </span>
+          ${name && ocdid ? html`<a href=${buildIssueUrl(name, ocdid)} target="_blank" rel="noopener noreferrer" style="font-size: 0.8125rem; white-space: nowrap;"><i class="fa-regular fa-flag"></i> Report an issue</a>` : null}
+        </div>
       </div>
     </header>
   `;
