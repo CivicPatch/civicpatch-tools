@@ -22,6 +22,7 @@ class RoleEntryData(BaseModel):
     role: str
     is_unique: bool = False
     aliases: List[str] = []
+    include: bool = True
 
 
 class SetScopeRolesRequest(BaseModel):

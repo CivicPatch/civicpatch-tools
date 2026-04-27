@@ -36,8 +36,8 @@ def get_data_config():
 
 def get_role_configs(role_config_override: Optional["RoleConfig"] = None) -> List[dict]:
     if role_config_override is not None:
-        return [entry.model_dump() for entry in role_config_override.roles]
-    return _load_config_file('roles.yml', 'roles', [])
+        return [entry.model_dump() for entry in role_config_override.roles if entry.include]
+    return []
 
 def get_designations():
     return _load_config_file('designations.yml', 'designations', {})
@@ -64,25 +64,14 @@ def get_designation_alias_map() -> Dict[str, str]:
     return alias_map
 
 def get_excluded_role_names(role_config_override: Optional["RoleConfig"] = None) -> set:
-    if role_config_override is not None:
-        return {r.lower() for r in role_config_override.excluded_roles}
-    excluded = _load_config_file('roles.yml', 'excluded_roles', [])
-    names = []
-    for entry in excluded:
-        names.append(entry['role'])
-        names.extend(entry.get('aliases', []))
-    return {n.lower() for n in names}
-
-def get_head_of_government_role(role_config_override: Optional["RoleConfig"] = None) -> Optional[str]:
-    if role_config_override is not None:
-        for entry in role_config_override.roles:
-            if entry.head_of_government:
-                return entry.role
-    roles = _load_config_file('roles.yml', 'roles', [])
-    for entry in roles:
-        if entry.get('head_of_government'):
-            return entry['role']
-    return None
+    if role_config_override is None:
+        return set()
+    names = set()
+    for entry in role_config_override.roles:
+        if not entry.include:
+            names.add(entry.role.lower())
+            names.update(a.lower() for a in entry.aliases)
+    return names
 
 
 def get_unique_roles(role_config_override: Optional["RoleConfig"] = None) -> List[str]:
@@ -164,24 +153,20 @@ def get_states() -> List[dict]:
 class RoleEntry(BaseModel):
     role: str
     is_unique: bool = False
-    head_of_government: bool = False
     aliases: List[str] = []
+    include: bool = True
 
 
 class RoleConfig(BaseModel):
     roles: List[RoleEntry] = []
-    excluded_roles: List[str] = []
 
 
 def merge_role_configs(*configs: RoleConfig) -> RoleConfig:
     roles: Dict[str, RoleEntry] = {}
-    excluded: set = set()
     for cfg in configs:
         for entry in cfg.roles:
             roles[entry.role.lower()] = entry
-        excluded.update(r.lower() for r in cfg.excluded_roles)
-    final = {k: v for k, v in roles.items() if k not in excluded}
-    return RoleConfig(roles=list(final.values()), excluded_roles=list(excluded))
+    return RoleConfig(roles=list(roles.values()))
 
 
 def load_role_config_for_jurisdiction(

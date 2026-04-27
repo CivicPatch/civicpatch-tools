@@ -108,7 +108,19 @@ class Person(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     name: str
+    other_names: List[str] = []
+    roles: List[str] = []
+    designations: List[str] = []
+    phones: List[str] = []
+    emails: List[str] = []
+    urls: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    image: Optional[str] = None
     jurisdiction_ocdid: str
+    cdn_image: Optional[str] = None
+    source_urls: List[str] = []
+    updated_at: Optional[str] = None
 
 
 class JobConfig(BaseModel):

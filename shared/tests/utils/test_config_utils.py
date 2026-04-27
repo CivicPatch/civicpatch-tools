@@ -2,11 +2,8 @@ import pytest
 from shared.utils.config_utils import RoleConfig, RoleEntry, merge_role_configs, load_role_config_for_jurisdiction
 
 
-def _make_config(roles=None, excluded_roles=None) -> RoleConfig:
-    return RoleConfig(
-        roles=[RoleEntry(**r) for r in (roles or [])],
-        excluded_roles=excluded_roles or [],
-    )
+def _make_config(roles=None) -> RoleConfig:
+    return RoleConfig(roles=[RoleEntry(**r) for r in (roles or [])])
 
 
 # --- merge_role_configs ---
@@ -28,33 +25,32 @@ def test_merge_role_configs_more_specific_wins():
     assert mayor.aliases == ["the mayor"]
 
 
-def test_merge_role_configs_excluded_roles_removes_role():
+def test_merge_role_configs_include_false_removes_role_from_active():
     base = _make_config(roles=[{"role": "city manager"}, {"role": "mayor"}])
-    override = _make_config(excluded_roles=["city manager"])
+    override = _make_config(roles=[{"role": "city manager", "include": False}])
     result = merge_role_configs(base, override)
-    role_names = {e.role.lower() for e in result.roles}
-    assert "city manager" not in role_names
-    assert "mayor" in role_names
+    active_names = {e.role.lower() for e in result.roles if e.include}
+    assert "city manager" not in active_names
+    assert "mayor" in active_names
 
 
-def test_merge_role_configs_excluded_roles_accumulate():
-    base = _make_config(excluded_roles=["city manager"])
-    state = _make_config(excluded_roles=["city attorney"])
-    result = merge_role_configs(base, state)
-    assert "city manager" in result.excluded_roles
-    assert "city attorney" in result.excluded_roles
+def test_merge_role_configs_lower_layer_can_reenable():
+    base = _make_config(roles=[{"role": "city manager", "include": False}])
+    locality = _make_config(roles=[{"role": "city manager", "include": True}])
+    result = merge_role_configs(base, locality)
+    city_manager = next(e for e in result.roles if e.role == "city manager")
+    assert city_manager.include is True
 
 
 def test_merge_role_configs_empty_configs():
     result = merge_role_configs()
     assert result.roles == []
-    assert result.excluded_roles == []
 
 
 def test_merge_role_configs_single_config():
-    cfg = _make_config(roles=[{"role": "mayor"}], excluded_roles=["city manager"])
+    cfg = _make_config(roles=[{"role": "mayor"}, {"role": "city manager", "include": False}])
     result = merge_role_configs(cfg)
-    assert len(result.roles) == 1
+    assert len(result.roles) == 2
     assert result.roles[0].role == "mayor"
 
 
@@ -83,7 +79,6 @@ def test_load_role_config_merges_all_levels():
 def test_load_role_config_skips_missing_levels():
     responses = {
         "data_source/local/config.yml": "roles:\n  - role: mayor\n",
-        # no state, no state+type, no locality
     }
 
     def fetch(path):
@@ -95,7 +90,6 @@ def test_load_role_config_skips_missing_levels():
 
 
 def test_load_role_config_locality_overrides_base():
-    # OCDID mi/place:detroit → folder mi/local/place_detroit (no county)
     responses = {
         "data_source/local/config.yml": "roles:\n  - role: mayor\n    is_unique: false\n",
         "data_source/mi/local/place_detroit/config.yml": "roles:\n  - role: mayor\n    is_unique: true\n",
@@ -112,19 +106,18 @@ def test_load_role_config_locality_overrides_base():
 def test_load_role_config_returns_empty_when_no_files_found():
     result = load_role_config_for_jurisdiction(OCDID, lambda path: None)
     assert result.roles == []
-    assert result.excluded_roles == []
 
 
-def test_load_role_config_applies_exclusion_from_state_level():
+def test_load_role_config_applies_include_false_from_state_level():
     responses = {
         "data_source/local/config.yml": "roles:\n  - role: mayor\n  - role: city manager\n",
-        "data_source/mi/config.yml": "excluded_roles:\n  - city manager\n",
+        "data_source/mi/config.yml": "roles:\n  - role: city manager\n    include: false\n",
     }
 
     def fetch(path):
         return responses.get(path)
 
     result = load_role_config_for_jurisdiction(OCDID, fetch)
-    role_names = {e.role.lower() for e in result.roles}
-    assert "city manager" not in role_names
-    assert "mayor" in role_names
+    active_names = {e.role.lower() for e in result.roles if e.include}
+    assert "city manager" not in active_names
+    assert "mayor" in active_names
