@@ -4,6 +4,7 @@ import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import { fetchIssueDetails, resolveReviewIssue } from "../../api.js";
 import { formatIssueType } from "./utils.js";
 import "../../components/basic/modal.js";
+import "../../components/civ-tab-bar/civ-tab-bar.js";
 
 const SOURCE_CONTEXT_LIMIT = 5;
 
@@ -23,6 +24,9 @@ function ResolveModal(host) {
   const [modalLocality, setModalLocality] = useState("");
   const [modalDetails, setModalDetails] = useState(null);
   const [showAllDetails, setShowAllDetails] = useState(false);
+  const [debugTab, setDebugTab] = useState(0);
+  const [logContent, setLogContent] = useState(null);
+  const [contextContent, setContextContent] = useState(null);
 
   useEffect(() => {
     if (!issue) return;
@@ -31,6 +35,38 @@ function ResolveModal(host) {
       .then((r) => setModalDetails(r.data || []))
       .catch(() => setModalDetails([]));
   }, []);
+
+  const detail = modalDetails?.length === 1 ? modalDetails[0] : null;
+
+  useEffect(() => {
+    setDebugTab(0);
+    setLogContent(null);
+    setContextContent(null);
+  }, [detail?.request_id]);
+
+  useEffect(() => {
+    if (!detail) return;
+    const tabKeys = [
+      detail.pipeline_run_log_url && "log",
+      detail.pipeline_run_context_url && "context",
+      detail.debug_url && "cache",
+    ].filter(Boolean);
+    const tabKey = tabKeys[debugTab];
+    if (tabKey === "log" && logContent === null) {
+      setLogContent(undefined);
+      fetch(detail.pipeline_run_log_url)
+        .then((r) => r.text())
+        .then((t) => setLogContent(t))
+        .catch(() => setLogContent("Failed to load log."));
+    }
+    if (tabKey === "context" && contextContent === null) {
+      setContextContent(undefined);
+      fetch(detail.pipeline_run_context_url)
+        .then((r) => r.json())
+        .then((j) => setContextContent(JSON.stringify(j, null, 2)))
+        .catch(() => setContextContent("Failed to load context."));
+    }
+  }, [debugTab, detail?.request_id]);
 
   const dispatch = (name, detail) =>
     host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
@@ -64,17 +100,46 @@ function ResolveModal(host) {
     ? "details"
     : KNOWN_ISSUE_TYPES.find((t) => t.value === issue.issue_type)?.modal_type;
 
-  const debugLinks = !modalDetails
-    ? html`<div class="issues-page__modal-debug-links"><span class="issues-page__modal-source-loading">Loading…</span></div>`
-    : modalDetails.length === 1
-    ? html`
-      <div class="issues-page__modal-debug-links">
-        ${modalDetails[0]?.workflow_log_url ? html`<a href=${modalDetails[0].workflow_log_url} target="_blank" rel="noopener noreferrer">Workflow log →</a>` : null}
-        ${modalDetails[0]?.workflow_context_url ? html`<a href=${modalDetails[0].workflow_context_url} target="_blank" rel="noopener noreferrer">Workflow context →</a>` : null}
-        ${modalDetails[0]?.debug_url ? html`<a href=${modalDetails[0].debug_url} target="_blank" rel="noopener noreferrer">Cloudflare R2 →</a>` : null}
+  const debugTabs = detail ? [
+    detail.pipeline_run_log_url && { label: "Logs" },
+    detail.pipeline_run_context_url && { label: "Context" },
+    detail.debug_url && { label: "Cache" },
+  ].filter(Boolean) : [];
+
+  const activeTabKeys = detail ? [
+    detail.pipeline_run_log_url && "log",
+    detail.pipeline_run_context_url && "context",
+    detail.debug_url && "cache",
+  ].filter(Boolean) : [];
+
+  const activeTabKey = activeTabKeys[Math.min(debugTab, activeTabKeys.length - 1)];
+
+  const debugSection = !detail || debugTabs.length === 0 ? null : html`
+    <div class="issues-page__modal-debug">
+      <civ-tab-bar
+        .tabs=${debugTabs}
+        .selectedIndex=${Math.min(debugTab, debugTabs.length - 1)}
+        .onTabClick=${(idx) => setDebugTab(idx)}
+      ></civ-tab-bar>
+      <div class="issues-page__modal-debug-content">
+        ${activeTabKey === "log" ? html`
+          ${logContent == null
+            ? html`<span class="issues-page__modal-source-loading">Loading…</span>`
+            : html`<pre class="issues-page__modal-debug-pre">${logContent}</pre>`}
+        ` : null}
+        ${activeTabKey === "context" ? html`
+          ${contextContent == null
+            ? html`<span class="issues-page__modal-source-loading">Loading…</span>`
+            : html`<pre class="issues-page__modal-debug-pre">${contextContent}</pre>`}
+        ` : null}
+        ${activeTabKey === "cache" ? html`
+          <div class="issues-page__modal-debug-cache">
+            <a href=${detail.debug_url} target="_blank" rel="noopener noreferrer">Open in Cloudflare R2 →</a>
+          </div>
+        ` : null}
       </div>
-    `
-    : null;
+    </div>
+  `;
 
   const sourceSection = html`
     <div class="issues-page__modal-source">
@@ -116,13 +181,13 @@ function ResolveModal(host) {
     case "pipeline_error":
       content = html`
         ${modalDetails?.[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
-        ${debugLinks}
+        ${debugSection}
+        ${sourceSection}
       `;
       footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
       break;
     case "debug":
     case "details": {
-      const d0 = modalDetails?.length === 1 ? modalDetails[0] : null;
       const data = issue.data || {};
       const newUrl = data.discovered_url || data.resolved_url;
       content = html`
@@ -136,9 +201,7 @@ function ResolveModal(host) {
             To: <a href=${newUrl} target="_blank" rel="noopener noreferrer">${newUrl}</a>
           </p>
         ` : null}
-        ${d0?.jurisdiction_path ? html`<a class="issues-page__modal-jurisdiction-link" href="/${d0.jurisdiction_path}" target="_blank" rel="noopener noreferrer">${d0.jurisdiction_name || d0.jurisdiction_path}</a>` : null}
-        ${d0?.url ? html`<a class="issues-page__modal-source-url" href=${d0.url} target="_blank" rel="noopener noreferrer">${d0.url}</a>` : null}
-        ${debugLinks}
+        ${debugSection}
         ${sourceSection}
       `;
       footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;

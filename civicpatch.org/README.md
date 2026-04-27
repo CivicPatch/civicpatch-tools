@@ -73,6 +73,8 @@ Roles are assigned via GitHub team membership. The `build_permissions()` functio
 | Notes — read | ✓ | ✓ | ✓ | ✓ |
 | Notes — create | | ✓ | ✓ | ✓ |
 | Pipeline runs — read errors / events | | | ✓ | ✓ |
+| Pipeline runs — view run context | | | ✓ | ✓ |
+| Pipeline runs — view run logs | | | | ✓ |
 | Pipeline runs — trigger (remote) | | | ✓ | |
 | Pipeline runs — trigger (local, dev only) | | | ✓ | |
 | Pipeline runs — resume (paused) | | | ✓ | |

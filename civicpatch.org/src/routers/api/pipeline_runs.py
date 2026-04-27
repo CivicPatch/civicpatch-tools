@@ -78,6 +78,31 @@ ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
 
 
+def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
+    args = r.get("arguments_json") or {}
+    url = args.get("url")
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"]) if r.get("jurisdiction_ocdid") else None
+    if issue_type == "unrecognized_role":
+        matching = [
+            p for p in (r.get("data_json") or [])
+            if isinstance(p, dict) and (p.get("office") or {}).get("name", "") == issue_key
+        ]
+        people = [{"name": p["name"]} for p in matching]
+        source_urls = list({u for p in matching for u in (p.get("source_urls") or [])})
+    else:
+        people = []
+        source_urls = [url] if url else []
+    return {
+        "request_id": r.get("request_id"),
+        "jurisdiction_ocdid": r.get("jurisdiction_ocdid"),
+        "jurisdiction_name": r.get("jurisdiction_name"),
+        "jurisdiction_path": folder,
+        "url": url,
+        "source_urls": source_urls,
+        "people": people,
+    }
+
+
 async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None):
     await update_pipeline_run_status(request_id=request_id, status=status, progress=progress)
     if status == PipelineRunStatus.ERROR:
@@ -477,7 +502,7 @@ def get_router(api_key_header):
     )
     async def get_review_issue_details_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -487,44 +512,22 @@ def get_router(api_key_header):
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 
+        is_admin = Role.ADMINS in (identity.teams or [])
+
         if issue_type in ("pipeline_error", "no_info", "domain_inactive"):
             request_id = issue["issue_key"]
-            jurisdiction_ocdid = raw[0]["jurisdiction_ocdid"] if raw else None
-            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid) if jurisdiction_ocdid else None
+            base = _build_request_row(raw[0], issue_type, issue_key) if raw else {"request_id": request_id}
+            folder = base.get("jurisdiction_path")
             debug_key_base = f"{request_id}/data_source/{folder}" if folder else None
             return {"data": [{
-                "request_id": request_id,
+                **base,
                 "error": (issue.get("data") or {}).get("error"),
-                "workflow_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if debug_key_base else None,
-                "workflow_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
-                "debug_url": f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-debug?prefix={request_id}%2F",
+                "pipeline_run_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if (debug_key_base and is_admin) else None,
+                "pipeline_run_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
+                "debug_url": storage_service.get_bucket_url("civicpatch-debug", request_id) if is_admin else None,
             }]}
 
-        result = []
-        for r in raw:
-            args = r["arguments_json"]
-            people = []
-            source_urls = []
-            if issue_type == "unrecognized_role":
-                matching = [
-                    p for p in (r["data_json"] or [])
-                    if isinstance(p, dict) and (p.get("office") or {}).get("name", "") == issue_key
-                ]
-                people = [{"name": p["name"]} for p in matching]
-                source_urls = list({u for p in matching for u in (p.get("source_urls") or [])})
-            else:
-                source_urls = [args["url"]] if args.get("url") else []
-            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"]) if r["jurisdiction_ocdid"] else None
-            result.append({
-                "request_id": r["request_id"],
-                "jurisdiction_ocdid": r["jurisdiction_ocdid"],
-                "jurisdiction_name": r["jurisdiction_name"],
-                "jurisdiction_path": folder,
-                "url": args.get("url"),
-                "source_urls": source_urls,
-                "people": people,
-            })
-        return {"data": result}
+        return {"data": [_build_request_row(r, issue_type, issue_key) for r in raw]}
 
     @router.get(
         "/unrecognized-roles/grouped",

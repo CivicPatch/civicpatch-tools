@@ -219,6 +219,13 @@ def get_civicpatch_artifacts_url(key: str) -> str:
     return f"{url}/{key}"
 
 
+def get_bucket_url(bucket: str, prefix: str) -> str:
+    env = environment.get_env_vars()
+    # STORAGE_ENDPOINT = https://{account_id}.r2.cloudflarestorage.com
+    account_id = env["STORAGE_ENDPOINT"].split("//")[1].split(".")[0]
+    return f"https://dash.cloudflare.com/{account_id}/r2/default/buckets/{bucket}?prefix={prefix}%2F"
+
+
 def get_presigned_put_url(bucket_name: str, key: str, expiration: int = 3600) -> str:
     return get_client().generate_presigned_url(
         ClientMethod="put_object",
