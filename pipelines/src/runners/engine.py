@@ -1,3 +1,5 @@
+import traceback
+import traceback
 from typing import Callable, Optional, Dict, Any, TypeVar
 from dataclasses import replace
 from time import sleep
@@ -69,8 +71,15 @@ async def run_pipeline(
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
 
             transition_fn = transition_map[ctx.current_state]
-            ctx, next_state = await transition_fn(job_config, logger, ctx, api_client)
-            ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
+            try:
+                ctx, next_state = await transition_fn(job_config, logger, ctx, api_client)
+                ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
+            except Exception as e:
+                logger.error(
+                    f"Unhandled exception in {ctx.current_state} transition: {e}\n"
+                    f"{traceback.format_exc()}"
+                )
+                ctx = ctx.copy(update={"current_state": PipelineStatus.SEND_ERROR, "updated_at": time.time()})
 
             if persist_fn:
                 persist_fn(ctx)

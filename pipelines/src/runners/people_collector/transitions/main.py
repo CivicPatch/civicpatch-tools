@@ -1,3 +1,4 @@
+import traceback
 from runners.people_collector.schemas import (
   PipelineStatus,
   PeopleCollectorContext,
@@ -312,11 +313,14 @@ async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, conte
     return next_context, PipelineStatus.SUCCESS
 
 async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = await send_error(context, api_client)
-
-    next_context = context.model_copy(update={
-        "data": context.data.model_copy(update={"send_error_step": result})
-    })
+    try:
+        result = await send_error(context, api_client)
+        next_context = context.model_copy(update={
+            "data": context.data.model_copy(update={"send_error_step": result})
+        })
+    except Exception as e:
+        logger.error(f"send_error_transition failed: {e}\n{traceback.format_exc()}")
+        next_context = context
 
     return next_context, PipelineStatus.ERROR
 
