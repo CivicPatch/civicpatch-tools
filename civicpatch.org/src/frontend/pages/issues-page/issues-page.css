@@ -443,6 +443,35 @@
     font-size: var(--text-sm);
 }
 
+.issues-page__modal-debug {
+    margin-bottom: 1rem;
+}
+
+.issues-page__modal-debug-content {
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    padding: 0.75rem;
+    font-size: var(--text-sm);
+}
+
+.issues-page__modal-debug-pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+}
+
+.issues-page__modal-debug-cache {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .issues-page__modal-actions {
     display: flex;
     justify-content: flex-end;

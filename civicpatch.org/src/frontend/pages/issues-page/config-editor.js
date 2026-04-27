@@ -146,7 +146,7 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
             ${editable ? html`
               <td class="issues-page__config-actions">
                 <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
-                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Del</button>
+                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Delete</button>
               </td>
             ` : null}
           </tr>
