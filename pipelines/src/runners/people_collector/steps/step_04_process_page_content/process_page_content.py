@@ -27,6 +27,7 @@ from shared.utils import (
 from utils import (
     merge_utils,
     people_utils,
+    designation_utils,
     log_utils
 )
 from typing import List, Dict, Optional, Set, Tuple, cast
@@ -457,7 +458,7 @@ def normalize_record(logger, record: LLMPerson, role_config=None) -> LLMPerson:
     return LLMPerson(
         name=record.name,
         roles=people_utils.normalize_roles(record.roles, role_config),
-        designations=people_utils.normalize_designations(record.designations),
+        designations=designation_utils.normalize_designations(record.designations),
         phone=normalized_phone,
         email=normalized_email,
         url=record.url,

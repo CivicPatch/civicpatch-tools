@@ -16,6 +16,7 @@ from shared.utils import config_utils
 from shared.utils.name_utils import person_list_to_identities
 from shared.schemas import Person
 from utils import people_utils, log_utils
+from utils import designation_utils
 from utils.request_utils import with_retry
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
@@ -49,7 +50,7 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
 
     return ResearchMunicipalityStep(
         expected_count=len(target_people),
-        target_designations=people_utils.filter_geographic_designations(
+        target_designations=designation_utils.filter_geographic_designations(
             [d for p in target_people for d in p.designations + p.roles]
         ),
         known_roles=_known_roles(target_people),
@@ -66,7 +67,7 @@ def _step_from_db(config, jurisdiction_ocdid: str, existing: list, role_config=N
         target_designations=list({
             d
             for p in existing
-            for d in people_utils.division_ocdid_to_designation(
+            for d in designation_utils.division_ocdid_to_designation(
                 (p.get("office") or {}).get("division_ocdid"), jurisdiction_ocdid
             )
         }),
