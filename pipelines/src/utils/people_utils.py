@@ -3,6 +3,7 @@ from typing import List, Dict, Tuple
 import shared.utils.config_utils as config_utils
 from domain.models import Person, Official, Office
 from runners.people_collector.schemas import ResearchedPerson
+from utils.role_utils import fuzzy_match_role
 import re
 
 WORD_TO_NUMBER = {
@@ -143,7 +144,7 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
                 expanded_roles.append(part)
 
     for role in expanded_roles:
-        role_lower = role.lower()
+        role_lower = role.lower().replace('-', ' ')
 
         # Drop anything that matches a known designation
         if designation_aliases.get(role_lower):
@@ -174,17 +175,21 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
                 break
 
         if not matched:
-            seen.add(role_lower)  # unknown — keep as-is
+            fuzzy = fuzzy_match_role(role_lower, role_aliases)
+            if fuzzy and fuzzy.lower() not in excluded:
+                seen.add(fuzzy)
+            else:
+                seen.add(role_lower)
 
     return [r.title() for r in sort_roles(list(seen), role_config)]
 
 
-def office_name_to_roles(office_name: str) -> List[str]:
+def office_name_to_roles(office_name: str, role_config=None) -> List[str]:
     # office.name from the DB is already normalized — no alias resolution needed.
     # Split on " - " and keep only parts that are recognized role names.
     if not office_name or office_name == "Unknown Office":
         return []
-    role_alias_map = config_utils.get_role_alias_map()
+    role_alias_map = config_utils.get_role_alias_map(role_config)
     return [
         part for part in (p.strip() for p in office_name.split(" - "))
         if part and role_alias_map.get(part.lower())
@@ -594,5 +599,23 @@ def person_to_official(designation_configs, person: Person) -> Official:
         jurisdiction_ocdid=person.jurisdiction_ocdid,
         cdn_image=person.cdn_image or None,
         source_urls=person.source_urls,
-        updated_at=person.updated_at,
+        updated_at=person.updated_at or "",
+    )
+
+def official_to_person(official: Official) -> Person:
+    return Person(
+        name=official.name,
+        other_names=official.other_names,
+        roles=office_name_to_roles(official.office.name),
+        designations=division_ocdid_to_designation(official.office.division_ocdid, official.jurisdiction_ocdid),
+        phones=official.phones,
+        emails=official.emails,
+        urls=official.urls,
+        start_date=official.start_date,
+        end_date=official.end_date,
+        image=official.image,
+        jurisdiction_ocdid=official.jurisdiction_ocdid,
+        cdn_image=official.cdn_image,
+        source_urls=official.source_urls,
+        updated_at=official.updated_at,
     )

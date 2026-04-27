@@ -21,6 +21,7 @@ dependencies = [
     "google-genai (>=1.29.0,<2.0.0)",
     "jsonref (>=1.1.0,<2.0.0)",
     "python-levenshtein (>=0.27.1,<0.28.0)",
+    "rapidfuzz (>=3.14.0,<4.0.0)",
     "together (>=1.5.25,<2.0.0)",
     "uvicorn (>=0.35.0,<0.36.0)",
     "fastapi[standard] (>=0.116.1,<0.117.0)",

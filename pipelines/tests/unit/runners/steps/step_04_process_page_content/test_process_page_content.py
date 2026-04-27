@@ -377,29 +377,32 @@ def test_add_relevant_urls_does_not_increment_non_pending():
     assert result[0].num_references == 1  # unchanged
 
 
-def test_add_relevant_urls_name_match_beats_more_references():
+def test_add_relevant_urls_keyword_beats_name_match():
+    # Governance keyword pages (council, mayor, etc.) rank ahead of name-specific pages
+    # regardless of num_references, to ensure breadth-first discovery of new officials.
     existing_links = [
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
         Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
     ]
     result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", names=["Susan Reardon"])
     pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/655/Susan-Reardon"
+    assert pending[0].url == "https://cityofbaycity.org/council"
 
 
-def test_add_relevant_urls_designation_match_beats_more_references():
+def test_add_relevant_urls_keyword_beats_designation_match():
     existing_links = [
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
         Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
     ]
     result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", designations=["Position 4"])
     pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/position-4/seat"
+    assert pending[0].url == "https://cityofbaycity.org/council"
 
 
 def test_add_relevant_urls_name_match_beats_designation_match():
+    # At equal num_references and no keyword, name match ranks above designation match.
     existing_links = [
-        Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=3),
+        Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
         Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
     ]
     result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", names=["Susan Reardon"], designations=["Position 4"])

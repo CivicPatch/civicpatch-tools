@@ -251,7 +251,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
 def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=None) -> ProcessingSetup:
     return ProcessingSetup(
         roles=config_utils.get_role_names(role_config),
-        target_role=config_utils.get_head_of_government_role(role_config) or "Mayor",
+        target_role="Mayor",
         target_designations=municipality_research.target_designations,
         known_roles=municipality_research.known_roles,
     )
@@ -668,11 +668,11 @@ def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[
 def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> tuple:
     signals = _compute_link_signals(link.url, link.text or "", designations, names=names)
     return (
+        -int(signals.keyword is not None),
+        -link.num_references,
         -int(signals.name is not None),
         -int(signals.designation is not None),
-        -int(signals.keyword is not None),
         -int(signals.role is not None),
-        -link.num_references,
         len(url_utils.get_path(link.url).split("/")),
     )
 

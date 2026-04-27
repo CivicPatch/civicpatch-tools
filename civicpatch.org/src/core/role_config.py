@@ -53,8 +53,7 @@ async def build_updated_config(req: SetScopeRolesRequest) -> tuple[str, str]:
     raw = await github_service.get_github_file_contents(path)
     existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
     updated = RoleConfig(
-        roles=[RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in req.roles],
-        excluded_roles=existing.excluded_roles,
+        roles=[RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases, include=r.include) for r in req.roles],
     )
     return path, yaml_dump(updated.model_dump())
 
@@ -100,8 +99,8 @@ async def load_global_config() -> RoleConfig:
 async def set_global_roles(roles: list, author: dict | None = None) -> None:
     raw = await github_service.get_github_file_contents(_GLOBAL_CONFIG_PATH)
     existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
-    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in roles]
-    updated = RoleConfig(roles=new_entries, excluded_roles=existing.excluded_roles)
+    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases, include=r.include) for r in roles]
+    updated = RoleConfig(roles=new_entries)
     commit_message = _describe_role_changes(existing, new_entries, "global")
     content = yaml_dump(updated.model_dump())
     if not await _write_once(_GLOBAL_CONFIG_PATH, content, commit_message, author):
@@ -122,8 +121,8 @@ async def set_scope_roles(req: SetScopeRolesRequest, author: dict | None = None)
     path = _scope_path(req.scope, folder)
     raw = await github_service.get_github_file_contents(path)
     existing = RoleConfig.model_validate(yaml_load(raw)) if raw else RoleConfig()
-    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases) for r in req.roles]
-    updated = RoleConfig(roles=new_entries, excluded_roles=existing.excluded_roles)
+    new_entries = [RoleEntry(role=r.role, is_unique=r.is_unique, aliases=r.aliases, include=r.include) for r in req.roles]
+    updated = RoleConfig(roles=new_entries)
     commit_message = _describe_role_changes(existing, new_entries, scope_label)
     content = yaml_dump(updated.model_dump())
     if await _write_once(path, content, commit_message, author):

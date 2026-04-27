@@ -29,7 +29,7 @@ async def research_municipality(context: PeopleCollectorContext, api_client: htt
 
     if existing:
         logger.info(f"research_municipality: using {len(existing)} existing DB people, skipping Gemini.")
-        return _step_from_db(context.data.config, context.data.jurisdiction_ocdid, existing)
+        return _step_from_db(context.data.config, context.data.jurisdiction_ocdid, existing, context.data.role_config)
     else:
         return await _step_from_gemini(context, logger)
 
@@ -50,7 +50,7 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
     return ResearchMunicipalityStep(
         expected_count=len(target_people),
         target_designations=people_utils.filter_geographic_designations(
-            [d for p in target_people for d in p.designations]
+            [d for p in target_people for d in p.designations + p.roles]
         ),
         known_roles=_known_roles(target_people),
         identities={p.name: [] for p in people},
@@ -58,7 +58,7 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
     )
 
 
-def _step_from_db(config, jurisdiction_ocdid: str, existing: list) -> ResearchMunicipalityStep:
+def _step_from_db(config, jurisdiction_ocdid: str, existing: list, role_config=None) -> ResearchMunicipalityStep:
     existing_people = [Person(**p) for p in existing]
 
     return ResearchMunicipalityStep(
@@ -70,11 +70,21 @@ def _step_from_db(config, jurisdiction_ocdid: str, existing: list) -> ResearchMu
                 (p.get("office") or {}).get("division_ocdid"), jurisdiction_ocdid
             )
         }),
-        known_roles=_known_roles(existing_people),
+        known_roles=_known_roles_from_db(existing, role_config),
         identities=person_list_to_identities(existing_people),
         source_urls=_source_urls(config, existing_people),
         origin_source="existing",
     )
+
+
+def _known_roles_from_db(existing: list, role_config=None) -> List[str]:
+    seen = []
+    for p in existing:
+        office_name = (p.get("office") or {}).get("name") or ""
+        for role in people_utils.office_name_to_roles(office_name, role_config):
+            if role not in seen:
+                seen.append(role)
+    return seen
 
 
 async def research_with_llm(context: PeopleCollectorContext, prompt: str) -> List[ResearchedPerson]:
