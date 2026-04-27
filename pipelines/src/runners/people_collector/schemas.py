@@ -149,9 +149,9 @@ class PeopleCollectorData(BaseModel):
     format_output_step: Optional[FormatOutputStep] = None
     review_output_step: Optional[ReviewOutputStep] = None
     find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None
-    find_jurisdiction_url_attempted: bool = False
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None
+    issues: list[dict] = []
     error_step: Optional[str] = None
 
 class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PipelineStatus]):

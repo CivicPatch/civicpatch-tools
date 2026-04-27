@@ -153,8 +153,8 @@ def person_to_official(person: Person) -> Official:
         phones=person.phones,
         emails=person.emails,
         urls=person.urls,
-        start_date=person.start_date,
-        end_date=person.end_date,
+        start_date=person.start_date or None,
+        end_date=person.end_date or None,
         office=Office(
             name=office_name.title(),
             division_ocdid=resolve_division(person.jurisdiction_ocdid, person.designations),
