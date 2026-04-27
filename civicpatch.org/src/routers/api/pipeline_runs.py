@@ -494,13 +494,13 @@ def get_router(api_key_header):
             request_id = issue["issue_key"]
             jurisdiction_ocdid = raw[0]["jurisdiction_ocdid"] if raw else None
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid) if jurisdiction_ocdid else None
-            base = f"{ARTIFACTS_BASE_URL}/{request_id}/data_source/{folder}" if folder else None
+            debug_key_base = f"{request_id}/data_source/{folder}" if folder else None
             return {"data": [{
                 "request_id": request_id,
                 "error": (issue.get("data") or {}).get("error"),
-                "workflow_log_url": f"{base}/pipeline_run.log" if base else None,
-                "workflow_context_url": f"{base}/pipeline_run_context.json" if base else None,
-                "debug_url": f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-artifacts?prefix={request_id}%2F",
+                "workflow_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if debug_key_base else None,
+                "workflow_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
+                "debug_url": f"https://dash.cloudflare.com/c9ae2b352766fe3e6f7dbee61bcd4c7c/r2/default/buckets/civicpatch-debug?prefix={request_id}%2F",
             }]}
 
         result = []
