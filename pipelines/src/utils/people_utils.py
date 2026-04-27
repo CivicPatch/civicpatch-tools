@@ -7,7 +7,8 @@ from utils.designation_utils import (
     generic_sort_key,
     get_designation_priority,
     extract_designation_value,
-    extract_role_names_and_division_from_designations,
+    designations_without_division,
+    resolve_division,
     division_ocdid_to_designation,
 )
 
@@ -142,16 +143,9 @@ def sort_people(people: List[Person], role_config=None) -> List[Person]:
     return sorted(people, key=person_sort_key)
 
 
-def person_to_official(designation_configs, person: Person) -> Official:
-    role_designations, division_ocdid = extract_role_names_and_division_from_designations(
-        designation_configs=designation_configs,
-        jurisdiction_ocdid=person.jurisdiction_ocdid,
-        office_designations=person.designations
-    )
-
-    office_names = person.roles + role_designations
-    unique_office_names = list(dict.fromkeys(office_names))
-    office_name = " - ".join(unique_office_names) if unique_office_names else "Unknown Office"
+def person_to_official(person: Person) -> Official:
+    office_names = list(dict.fromkeys(person.roles + designations_without_division(person.designations)))
+    office_name = " - ".join(office_names) if office_names else "Unknown Office"
     return Official(
         id="", # to be filled in later after resolving with API
         name=person.name,
@@ -163,7 +157,7 @@ def person_to_official(designation_configs, person: Person) -> Official:
         end_date=person.end_date,
         office=Office(
             name=office_name.title(),
-            division_ocdid=division_ocdid
+            division_ocdid=resolve_division(person.jurisdiction_ocdid, person.designations),
         ),
         image=person.image,
         jurisdiction_ocdid=person.jurisdiction_ocdid,

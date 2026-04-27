@@ -58,7 +58,8 @@ def generic_sort_key(
     if primary is not None:
         secondary = (1, secondary_priority.get(value_lower, 9999) if secondary_priority else 9999)
         return (primary, secondary)
-    first_word = value_lower.split()[0] if value_lower.split() else value_lower
+    words = value_lower.split()
+    first_word = words[0] if words else value_lower
     primary = primary_priority.get(first_word, 9999)
     number = extract_designation_value(value)
     if number is not None:
@@ -75,127 +76,88 @@ def sort_designations(designations: List[str]) -> List[str]:
     return sorted(designations, key=lambda d: generic_sort_key(d, designation_priority))
 
 
+def _clean_to_words(designation: str) -> List[str]:
+    if not designation:
+        return []
+    s = str(designation).strip()
+    s = s.split("(")[0].strip()
+    s = s.replace("#", "").replace("  ", " ").strip()
+    return s.split()
+
+
+def _find_keyword_matches(words: List[str], aliases: dict) -> List[dict]:
+    matches = []
+    i = 0
+    while i < len(words):
+        if i + 1 < len(words):
+            two_word = f"{words[i].lower()} {words[i + 1].lower()}"
+            if two_word in aliases:
+                matches.append({"start": i, "end": i + 2, "type": aliases[two_word]})
+                i += 2
+                continue
+        if words[i].lower() in aliases:
+            matches.append({"start": i, "end": i + 1, "type": aliases[words[i].lower()]})
+            i += 1
+            continue
+        i += 1
+    return matches
+
+
+def _format_type_content(designation_type: str, text: str) -> str:
+    text = text.strip(" .,;:-")
+    normalized = normalize_remaining_text(text)
+    suffix = text.title() if normalized.lower() == text.lower() else normalized
+    return f"{designation_type.title()} {suffix}"
+
+
+def _normalize_word(word: str) -> str:
+    """Normalize a single word if it's an ordinal or roman numeral, otherwise return as-is."""
+    w = word.lower()
+    if w.endswith(("st", "nd", "rd", "th")) or w in _ROMAN_MAP:
+        normalized = normalize_remaining_text(word)
+        if normalized != word:
+            return normalized
+    return word
+
+
+def _apply_matches(words: List[str], matches: List[dict], aliases: dict) -> List[str]:
+    if not matches:
+        # ordinal before keyword: "1st Ward" → "Ward 1"
+        if len(words) >= 2:
+            first_normalized = normalize_remaining_text(words[0])
+            if first_normalized.isdigit() and first_normalized != words[0] and words[1].lower() in aliases:
+                return [f"{aliases[words[1].lower()].title()} {first_normalized}"]
+        # fallback: normalize ordinals/romans in place, keep everything else as-is
+        return [" ".join(_normalize_word(w) for w in words)]
+
+    # single keyword at end with prefix: "North Ward" → "Ward North", "Council District 3" → "District 3"
+    if len(matches) == 1 and matches[0]["start"] > 0 and matches[0]["end"] == len(words):
+        prefix = " ".join(words[:matches[0]["start"]])
+        return [_format_type_content(matches[0]["type"], prefix)]
+
+    # keyword(s) with content after: "District 1", "At-Large Position 8" → ["At-Large", "Position 8"]
+    parts = []
+    for j, match in enumerate(matches):
+        content_end = matches[j + 1]["start"] if j + 1 < len(matches) else len(words)
+        content_words = words[match["end"]:content_end]
+        if content_words:
+            parts.append(_format_type_content(match["type"], " ".join(content_words)))
+        else:
+            parts.append(match["type"].title())
+    return parts
+
+
 def normalize_designations(designations: List[str]) -> List[str]:
     if not designations:
         return []
-
-    designation_aliases = config_utils.get_designation_alias_map()
+    aliases = config_utils.get_designation_alias_map()
     normalized = []
-
     for designation in designations:
-        if designation is None or designation == "":
-            continue
-
-        designation = str(designation).strip()
-        if not designation:
-            continue
-
-        clean_designation = (
-            designation.split("(")[0].strip() if "(" in designation else designation.strip()
-        )
-        clean_designation = clean_designation.replace("#", "").replace("  ", " ").strip()
-
-        words = clean_designation.split()
-        if not words:
-            continue
-
-        parts = []
-        designation_matches = []
-        i = 0
-        while i < len(words):
-            if i + 1 < len(words):
-                two_word = f"{words[i].lower()} {words[i + 1].lower()}"
-                if two_word in designation_aliases:
-                    designation_matches.append({
-                        "start": i, "end": i + 2,
-                        "type": designation_aliases[two_word],
-                        "original": f"{words[i]} {words[i + 1]}",
-                    })
-                    i += 2
-                    continue
-            if words[i].lower() in designation_aliases:
-                designation_matches.append({
-                    "start": i, "end": i + 1,
-                    "type": designation_aliases[words[i].lower()],
-                    "original": words[i],
-                })
-                i += 1
-                continue
-            i += 1
-
-        if not designation_matches:
-            if len(words) >= 2:
-                first_normalized = normalize_remaining_text(words[0])
-                if (
-                    first_normalized.isdigit()
-                    and first_normalized != words[0]
-                    and words[1].lower() in designation_aliases
-                ):
-                    designation_type = designation_aliases[words[1].lower()]
-                    parts.append(f"{designation_type.title()} {first_normalized}")
-
-            elif len(words) >= 2:
-                last_word_lower = words[-1].lower()
-                if last_word_lower in designation_aliases:
-                    designation_type = designation_aliases[last_word_lower]
-                    prefix_text = " ".join(words[:-1]).strip(" .,;:-")
-                    normalized_prefix = normalize_remaining_text(prefix_text)
-                    if normalized_prefix.lower() == prefix_text.lower():
-                        parts.append(f"{designation_type.title()} {prefix_text.title()}")
-                    else:
-                        parts.append(f"{designation_type.title()} {normalized_prefix}")
-
-            if not parts:
-                result_words = []
-                for word in words:
-                    normalized_word = normalize_remaining_text(word)
-                    if normalized_word != word and (
-                        word.lower().endswith(("st", "nd", "rd", "th"))
-                        or word.lower() in _ROMAN_MAP
-                    ):
-                        result_words.append(normalized_word)
-                    else:
-                        result_words.append(word)
-                parts.append(" ".join(result_words))
-
-        else:
-            if (
-                len(designation_matches) == 1
-                and designation_matches[0]["start"] > 0
-                and designation_matches[0]["end"] == len(words)
-            ):
-                match = designation_matches[0]
-                prefix_text = " ".join(words[: match["start"]]).strip(" .,;:-")
-                normalized_prefix = normalize_remaining_text(prefix_text)
-                if normalized_prefix.lower() == prefix_text.lower():
-                    parts.append(f"{match['type'].title()} {prefix_text.title()}")
-                else:
-                    parts.append(f"{match['type'].title()} {normalized_prefix}")
-
-            else:
-                for j, match in enumerate(designation_matches):
-                    content_start = match["end"]
-                    content_end = designation_matches[j + 1]["start"] if j + 1 < len(designation_matches) else len(words)
-                    content_words = words[content_start:content_end]
-                    if content_words:
-                        content_text = " ".join(content_words).strip(" .,;:-")
-                        normalized_content = normalize_remaining_text(content_text)
-                        if normalized_content.lower() == content_text.lower():
-                            parts.append(f"{match['type'].title()} {content_text.title()}")
-                        else:
-                            parts.append(f"{match['type'].title()} {normalized_content}")
-                    else:
-                        parts.append(match["type"].title())
-
-        normalized.extend(parts)
-
-    seen = set()
-    result = []
-    for item in normalized:
-        if item not in seen:
-            seen.add(item)
-            result.append(item)
-    return sort_designations(result)
+        words = _clean_to_words(designation)
+        if words:
+            matches = _find_keyword_matches(words, aliases)
+            normalized.extend(_apply_matches(words, matches, aliases))
+    return sort_designations(list(dict.fromkeys(normalized)))
 
 
 def jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid: str) -> str:
@@ -208,24 +170,24 @@ def division_ocdid_to_designation(division_ocdid: str | None, jurisdiction_ocdid
     division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
     if division_ocdid == division_base:
         return []
-    match = re.search(r"/([^/:]+):(\d+)$", division_ocdid)
+    match = re.search(r"/([^/:]+):([^/]+)$", division_ocdid)
     if not match:
         return []
     ocd_slug, value = match.group(1), match.group(2)
     # council_district is the OCD-ID slug for "district" per format_division
     canonical = "district" if ocd_slug == "council_district" else ocd_slug
-    return [f"{canonical.title()} {value}"]
+    return [f"{canonical.title()} {value.upper() if len(value) == 1 else value}"]
 
 
 def filter_geographic_designations(designations: List[str]) -> List[str]:
     designation_configs = config_utils.get_designations()
     result = []
     for d in designations:
-        if not d or not d.strip():
+        cleaned = d.strip().lower() if d else ""
+        if not cleaned:
             continue
-        key = d.strip().lower().split()[0]
-        if designation_configs.get(key, {}).get("has_geographic_area", False):
-            result.append(d.strip().lower())
+        if designation_configs.get(cleaned.split()[0], {}).get("has_geographic_area", False):
+            result.append(cleaned)
     return result
 
 
@@ -234,27 +196,22 @@ def format_division(division_base: str, designation_key: str, designation_value:
     return f"{division_base}/{key}:{designation_value}"
 
 
-def extract_role_names_and_division_from_designations(
-    designation_configs, jurisdiction_ocdid: str, office_designations: List[str]
-) -> Tuple[List[str], str]:
-    role_names = []
-    division = None
+def _is_division(designation: str, configs: dict) -> bool:
+    key, _, value = designation.lower().partition(' ')
+    return configs.get(key, {}).get("has_geographic_area", False) and bool(value)
+
+
+def designations_without_division(designations: List[str]) -> List[str]:
+    configs = config_utils.get_designations()
+    return [d for d in designations if not _is_division(d, configs)]
+
+
+def resolve_division(jurisdiction_ocdid: str, designations: List[str]) -> str:
+    # Only ward and district are division types; officials have at most one.
+    configs = config_utils.get_designations()
     division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
-
-    for designation_string in office_designations:
-        parts = designation_string.lower().split(' ')
-        designation_key = parts[0]
-        designation_value = ' '.join(parts[1:]).strip()
-        if designation_key in designation_configs:
-            config = designation_configs[designation_key]
-            if config.get("has_geographic_area", False) and designation_value:
-                division = format_division(division_base, designation_key, designation_value)
-            else:
-                role_names.append(designation_string)
-        else:
-            role_names.append(designation_string)
-
-    if division is None:
-        division = division_base
-
-    return role_names, division
+    for d in designations:
+        if _is_division(d, configs):
+            key, _, value = d.lower().partition(' ')
+            return format_division(division_base, key, value)
+    return division_base

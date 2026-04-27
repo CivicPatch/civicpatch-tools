@@ -15,7 +15,7 @@ designations:
       - district council
   precinct:
     is_unique: false
-    has_geographic_area: false
+    has_geographic_area: true
     aliases: []
   position:
     is_unique: false
