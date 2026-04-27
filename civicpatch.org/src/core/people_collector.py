@@ -20,8 +20,6 @@ import environment
 
 COST_BY_REQUEST_SHEET_NAME = "Cost By Request"
 LLMS_SHEET_NAME = "Cost LLMs"
-SEARCH_ENGINES_SHEET_NAME = "Cost Search Engines"
-STORAGE_SHEET_NAME = "Cost Storage"
 
 PUBLIC_BUCKET = "civicpatch-artifacts"
 PRIVATE_BUCKET = "civicpatch-debug"
@@ -179,11 +177,7 @@ async def _send_costs(debug_file_dir: str):
 
     total_cost_by_request = [list(costs_data.get("total_cost_by_request", {}).values())]
     llm_costs_flattened = [list(item.values()) for item in costs_data.get("llm_costs", [])]
-    search_engine_costs_flattened = [list(item.values()) for item in costs_data.get("search_engine_costs", [])]
-    storage_costs_flattened = [list(item.values()) for item in costs_data.get("storage_costs", [])]
 
     google_sheets_service.update_spreadsheet(COST_BY_REQUEST_SHEET_NAME, total_cost_by_request)
     google_sheets_service.update_spreadsheet(LLMS_SHEET_NAME, llm_costs_flattened)
-    google_sheets_service.update_spreadsheet(SEARCH_ENGINES_SHEET_NAME, search_engine_costs_flattened)
-    google_sheets_service.update_spreadsheet(STORAGE_SHEET_NAME, storage_costs_flattened)
 

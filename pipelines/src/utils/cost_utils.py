@@ -41,17 +41,6 @@ llm_model_prices = {
     }
 }
 
-# https://developers.cloudflare.com/r2/pricing/
-storage_prices = {
-    'by_monthly_gb': Decimal('0.015'),  # $0.015 per GB per month
-    'by_traffic_requests_per_million': Decimal('0.36')  # $0.36 per million requests
-}
-
-# https://developers.google.com/custom-search/v1/overview
-# Limit 10k queries/day
-search_engine_prices = {
-    'google': Decimal('5.00')  # $5.00 per 1000 requests
-}
 
 def get_timestamp():
     return datetime.now(timezone.utc).strftime('%Y-%m-%d')
@@ -99,48 +88,11 @@ class LLMCost(BaseModel):
     def total_cost(self) -> Decimal:
         return self.input_cost + self.output_cost
 
-class SearchEngineCost(BaseModel):
-    @property
-    def timestamp(self) -> str:
-        return get_timestamp()
-
-    @property
-    def cost_per_1000_requests(self) -> Decimal:
-        return search_engine_prices.get(self.search_engine_name, Decimal('0.0'))
-
-    jurisdiction_ocdid: str
-    search_engine_name: str
-
-    @property
-    def total_cost(self) -> Decimal:
-        cost_per_thousand = search_engine_prices.get(self.search_engine_name, Decimal('0.0'))
-        return (cost_per_thousand / Decimal(1000))
-
-
-# For images/zip files
-class StorageCost(BaseModel):
-    @property
-    def timestamp(self) -> str:
-        return get_timestamp()
-    
-    @property
-    def price_per_gb(self) -> Decimal:
-        return storage_prices['by_monthly_gb']
-
-    jurisdiction_ocdid: str
-    file_size_bytes: int
-
-    @property
-    def total_cost(self) -> Decimal:
-        size_in_gb = bytes_to_gb(self.file_size_bytes)
-        return size_in_gb * storage_prices['by_monthly_gb']
 
 def get_cost_tracker(jurisdiction_ocdid: str):
     if jurisdiction_ocdid not in _COSTS_BY_JURISDICTION:
         _COSTS_BY_JURISDICTION[jurisdiction_ocdid] = {
             'llm_costs': [],
-            'search_engine_costs': [],
-            'storage_costs': []
         }
     return _COSTS_BY_JURISDICTION[jurisdiction_ocdid]
 
@@ -201,73 +153,10 @@ def add_llm_cost(
     })
     logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.6f}")
 
-def add_search_engine_cost(
-        request_id: str,
-        jurisdiction_ocdid: str, 
-        search_engine_name: str, 
-):
-    # HEADERS = [
-    #     "timestamp", 
-    #     "jurisdiction_ocdid", 
-    #     "search_engine_name", 
-    #     "per_1000_requests_price",
-    #     "total_cost"
-    # ]
-    result = SearchEngineCost(
-        jurisdiction_ocdid=jurisdiction_ocdid,
-        search_engine_name=search_engine_name,
-    )
-
-    cost_per_1000_requests = search_engine_prices.get(search_engine_name, Decimal('0.0'))
-    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
-    cost_tracker['search_engine_costs'].append({
-        "timestamp": result.timestamp,
-        "request_id": request_id,
-        "jurisdiction_ocdid": result.jurisdiction_ocdid,
-        "search_engine_name": result.search_engine_name,
-        "per_1000_requests_price": cost_per_1000_requests,
-        "total_cost": result.total_cost
-    })
-
-def bytes_to_gb(size_bytes: int) -> Decimal:
-    return Decimal(size_bytes) / Decimal(1024 ** 3)
-
-def add_storage_cost(
-        request_id: str,
-        jurisdiction_ocdid: str, 
-        file_size_bytes: int
-):
-    
-    # HEADERS = [
-    #     "timestamp", 
-    #     "jurisdiction_ocdid", 
-    #     "monthly_storage_gb_price"
-    #     "storage_gb", 
-    #     "image_size_bytes",
-    #     "storage_cost"
-    # ]
-    result = StorageCost(
-        jurisdiction_ocdid=jurisdiction_ocdid,
-        file_size_bytes=file_size_bytes
-    )
-
-    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
-    cost_tracker['storage_costs'].append({
-        "timestamp": result.timestamp,
-        "request_id": request_id,
-        "jurisdiction_ocdid": result.jurisdiction_ocdid,
-        "monthly_storage_gb_price": storage_prices['by_monthly_gb'],
-        "file_size_bytes": result.file_size_bytes,
-        "total_cost": result.total_cost,
-    })
 
 def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Decimal]:
     cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
-    search_engine_costs = cost_tracker['search_engine_costs']
-    storage_costs = cost_tracker['storage_costs']
-    total_costs_search = sum([item['total_cost'] for item in search_engine_costs])
-    total_costs_storage = sum([item['total_cost'] for item in storage_costs])
     total_costs_llm = sum([item['total_cost'] for item in llm_costs])
 
     # Group LLM costs by llm_name only
@@ -298,8 +187,6 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
         "request_id": request_id,
         "jurisdiction_ocdid" : jurisdiction_ocdid,
         "total_costs_llm": total_costs_llm,
-        "total_costs_search": total_costs_search,
-        "total_costs_storage": total_costs_storage,
     }
 
     # Emit all known LLM columns in a fixed order so the sheet layout is stable
@@ -308,16 +195,12 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
         cost_data = grouped_llm_costs.get(llm_name)
         total_cost_row[f"llm_{llm_name}_cost"] = cost_data['total_cost'] if cost_data else Decimal('0.0')
 
-    # Add the grand total at the end
-    grand_total = total_costs_llm + total_costs_search + total_costs_storage
-    total_cost_row["total_cost"] = grand_total
+    total_cost_row["total_cost"] = total_costs_llm
     return total_cost_row
 
 def log_costs(request_id, jurisdiction_ocdid):
     cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
-    search_engine_costs = cost_tracker['search_engine_costs']
-    storage_costs = cost_tracker['storage_costs']
 
     data_path = data_path_utils.get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     costs_file_path = os.path.join(data_path, "costs.json")
@@ -327,8 +210,6 @@ def log_costs(request_id, jurisdiction_ocdid):
     with open(costs_file_path, mode='w') as file:
         json_object = json.dumps({
             "llm_costs": llm_costs,
-            "search_engine_costs": search_engine_costs,
-            "storage_costs": storage_costs,
             "total_cost_by_request": total_cost_row
         }, indent=4, default=str)
         file.write(json_object)
