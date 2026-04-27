@@ -98,11 +98,10 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
         unprocessable_links = get_links_with_status(context.data.links, [LinkStatus.ERROR, LinkStatus.PREPROCESSED_NO_CONTENT])
         all_failed = bool(context.data.links) and len(unprocessable_links) == len(context.data.links)
         if all_failed:
-            if not context.data.find_jurisdiction_url_attempted:
+            if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
             next_context = context.model_copy(update={
-                "pipeline_error_type": error_type,
                 "data": context.data.model_copy(update={"error_step": error_type}),
             })
             return next_context, PipelineStatus.SEND_ERROR
@@ -122,11 +121,13 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
     if is_root_link and not same_domain(final_url, page_to_scrape.url):
         new_config = context.data.config.model_copy(update={"url": final_url})
         next_context = next_context.model_copy(update={
-            "pipeline_issues": next_context.pipeline_issues + [{
-                "type": PipelineIssueType.DOMAIN_REDIRECTED,
-                "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
-            }],
-            "data": next_context.data.model_copy(update={"config": new_config}),
+            "data": next_context.data.model_copy(update={
+                "config": new_config,
+                "issues": next_context.data.issues + [{
+                    "type": PipelineIssueType.DOMAIN_REDIRECTED,
+                    "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
+                }],
+            }),
         })
 
     link_status = get_link_status_by_url(links, final_url)
@@ -145,11 +146,10 @@ async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLo
         logger.info("No scraped links left to preprocess.")
         preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
         if not preprocessed_links:
-            if not context.data.find_jurisdiction_url_attempted:
+            if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
             next_context = context.model_copy(update={
-                "pipeline_error_type": error_type,
                 "data": context.data.model_copy(update={"error_step": error_type}),
             })
             return next_context, PipelineStatus.SEND_ERROR
@@ -264,7 +264,7 @@ async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
     assert context.data.format_output_step is not None
     officials = context.data.format_output_step.officials
 
-    if not officials and not context.data.find_jurisdiction_url_attempted:
+    if not officials and context.data.find_jurisdiction_url_step is None:
         return context, PipelineStatus.FIND_JURISDICTION_URL
 
     error_type, issues = _collect_pipeline_heuristics(
@@ -275,7 +275,6 @@ async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
 
     if error_type:
         next_context = context.model_copy(update={
-            "pipeline_error_type": error_type,
             "data": context.data.model_copy(update={"error_step": error_type}),
         })
         return next_context, PipelineStatus.SEND_ERROR
@@ -284,8 +283,7 @@ async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
     progress = calculate_progress_percentage(context.data, 10)
     next_context = context.model_copy(update={
         "progress": progress,
-        "pipeline_issues": issues,
-        "data": context.data.model_copy(update={"review_output_step": result}),
+        "data": context.data.model_copy(update={"review_output_step": result, "issues": issues}),
     })
     return next_context, PipelineStatus.SAVE_OUTPUT
 
@@ -329,7 +327,6 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
     next_context = context.model_copy(update={
         "data": context.data.model_copy(update={
             "find_jurisdiction_url_step": result,
-            "find_jurisdiction_url_attempted": True,
         })
     })
 
@@ -341,13 +338,11 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
         discovered is None or same_domain(discovered, context.data.config.url)
     ):
         return next_context.model_copy(update={
-            "pipeline_error_type": PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT,
             "data": next_context.data.model_copy(update={"error_step": PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT}),
         }), PipelineStatus.SEND_ERROR
 
     if discovered is None:
         return next_context.model_copy(update={
-            "pipeline_error_type": PipelineRunErrorType.DOMAIN_INACTIVE,
             "data": next_context.data.model_copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
         }), PipelineStatus.SEND_ERROR
 
@@ -356,13 +351,13 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
 
     new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})
     return next_context.model_copy(update={
-        "pipeline_issues": context.pipeline_issues + [{
-            "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
-            "data": {"original_url": context.data.config.url, "discovered_url": discovered},
-        }],
         "data": next_context.data.model_copy(update={
             "config": new_config,
             "links": add_links([], [discovered]),
+            "issues": context.data.issues + [{
+                "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
+                "data": {"original_url": context.data.config.url, "discovered_url": discovered},
+            }],
         }),
     }), PipelineStatus.SCRAPE_PAGE
 

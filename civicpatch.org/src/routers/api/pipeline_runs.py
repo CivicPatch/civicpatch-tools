@@ -78,15 +78,13 @@ ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
 PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
 
 
-async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None, issues: Optional[list[dict]] = None):
+async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None):
     await update_pipeline_run_status(request_id=request_id, status=status, progress=progress)
     if status == PipelineRunStatus.ERROR:
         if error_type:
             await upsert_pipeline_issue(request_id, error_type, "error", [{}])
         else:
             await upsert_pipeline_issue(request_id, "pipeline_error", "error", [{"error": "workflow failure"}])
-    for issue in (issues or []):
-        await upsert_pipeline_issue(request_id, issue["type"], "issue", [issue.get("data") or {}])
     if not jurisdiction_ocdid:
         pipeline_run = await get_pipeline_run(request_id)
         jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid") if pipeline_run else None
@@ -277,7 +275,6 @@ def get_router(api_key_header):
             request.progress,
             request.jurisdiction_ocdid,
             request.error_type,
-            request.issues,
         )
 
         return UpdatePipelineRunStatusResponse(

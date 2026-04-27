@@ -13,5 +13,3 @@ class PipelineRunContext(BaseModel, Generic[TData, TState]):
     created_at: float = 0
     updated_at: float = 0
     progress: int = 0
-    pipeline_error_type: Optional[str] = None
-    pipeline_issues: list[dict] = []

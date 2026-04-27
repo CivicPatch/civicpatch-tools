@@ -66,7 +66,7 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunCon
 
     context, pipeline_run_logger = initialize_pipeline_run(request_id, jurisdiction_ocdid, config)
     if initial_issues:
-        context = context.copy(update={"pipeline_issues": initial_issues})
+        context = context.copy(update={"data": context.data.model_copy(update={"issues": initial_issues})})
     env = get_env_vars()
 
     try:

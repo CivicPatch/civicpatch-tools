@@ -64,8 +64,7 @@ async def run_pipeline(
                 await civicpatch_api.update_pipeline_run_status(
                     api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                     status=ctx.current_state.value, progress=ctx.progress,
-                    error_type=ctx.pipeline_error_type,
-                    issues=ctx.pipeline_issues,
+                    error_type=getattr(ctx.data, 'error_step', None),
                 )
             except Exception as e:
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
@@ -90,8 +89,7 @@ async def run_pipeline(
             await civicpatch_api.update_pipeline_run_status(
                 api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                 status=ctx.current_state.value, progress=final_progress,
-                error_type=ctx.pipeline_error_type,
-                issues=ctx.pipeline_issues,
+                error_type=getattr(ctx.data, 'error_step', None),
             )
         except Exception as e:
             logger.warning(f"Failed to update final job status (non-fatal): {e}")

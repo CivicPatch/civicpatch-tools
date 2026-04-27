@@ -108,6 +108,14 @@ async def _handle_submit_pipeline_run_artifacts(
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)
 
+        for issue in workflow_context.get("data", {}).get("issues", []):
+            await upsert_pipeline_issue(
+                request.request_id,
+                issue["type"],
+                "issue",
+                [issue.get("data") or {}],
+            )
+
     artifact_zip_path = await file_utils.zip_directory(pull_request_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
     zip_file_url = await storage_service.upload_file_to_storage(
