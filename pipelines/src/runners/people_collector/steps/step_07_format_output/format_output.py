@@ -12,21 +12,17 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
 )
-from shared.utils.config_utils import get_designations
 import shared.utils.data_path_utils as data_path_utils
 
 
 async def format_output(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> FormatOutputStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
-    designation_configs = get_designations()
 
     assert context.data.merge_records_across_llms_step is not None, "should never happen — merge_records_across_llms_step is required before format_output"
     data = context.data.merge_records_across_llms_step.people
 
-    people = [
-        people_utils.person_to_official(designation_configs, person) for person in data
-    ]
+    people = [people_utils.person_to_official(person) for person in data]
 
     filtered_people = [
         person for person in people

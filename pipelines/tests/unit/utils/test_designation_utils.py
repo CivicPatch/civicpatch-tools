@@ -1,5 +1,5 @@
 import pytest
-from utils.designation_utils import sort_designations, extract_role_names_and_division_from_designations
+from utils.designation_utils import sort_designations, designations_without_division, resolve_division, division_ocdid_to_designation
 from utils import designation_utils
 
 pytestmark = pytest.mark.unit
@@ -49,70 +49,66 @@ def test_sort_designations_no_priority(monkeypatch):
     assert sort_designations(designations) == ["Ward 1", "Ward 2", "Ward 10"]
 
 
-@pytest.mark.parametrize(
-    "designation_configs,jurisdiction_ocdid,office_designations,expected_role_names,expected_division",
-    [
-        (
-            {"district": {"has_geographic_area": True}},
-            "ocd-jurisdiction/country:us/state:xy/place:alpha/government",
-            [], [],
-            "ocd-division/country:us/state:xy/place:alpha"
-        ),
-        (
-            {"district": {"has_geographic_area": True}},
-            "ocd-jurisdiction/country:us/state:xy/place:bravo/government",
-            ["district 1"], [],
-            "ocd-division/country:us/state:xy/place:bravo/council_district:1"
-        ),
-        (
-            {"district": {"has_geographic_area": True}},
-            "ocd-jurisdiction/country:us/state:xy/place:charlie/government",
-            ["district"], ["district"],
-            "ocd-division/country:us/state:xy/place:charlie"
-        ),
-        (
-            {"at-large": {"has_geographic_area": False}},
-            "ocd-jurisdiction/country:us/state:xy/place:delta/government",
-            ["at-large"], ["at-large"],
-            "ocd-division/country:us/state:xy/place:delta"
-        ),
-        (
-            {"district": {"has_geographic_area": True}, "at-large": {"has_geographic_area": False}},
-            "ocd-jurisdiction/country:us/state:xy/place:echo/government",
-            ["at-large", "district 2"], ["at-large"],
-            "ocd-division/country:us/state:xy/place:echo/council_district:2"
-        ),
-        (
-            {"at-large": {"has_geographic_area": False}, "seat": {"has_geographic_area": False}},
-            "ocd-jurisdiction/country:us/state:xy/place:foxtrot/government",
-            ["at-large", "seat 1"], ["at-large", "seat 1"],
-            "ocd-division/country:us/state:xy/place:foxtrot"
-        ),
-        (
-            {"district": {"has_geographic_area": True}},
-            "ocd-jurisdiction/country:us/state:xy/place:golf/government",
-            ["unknown 5"], ["unknown 5"],
-            "ocd-division/country:us/state:xy/place:golf"
-        ),
-        (
-            {"district": {"has_geographic_area": True}},
-            "ocd-jurisdiction/country:us/state:xy/place:hotel/government",
-            ["District 3"], [],
-            "ocd-division/country:us/state:xy/place:hotel/council_district:3"
-        ),
-        (
-            {},
-            "ocd-jurisdiction/country:us/state:xy/place:india/government",
-            ["1"], ["1"],
-            "ocd-division/country:us/state:xy/place:india"
-        ),
-    ]
-)
-def test_extract_role_names_and_division_from_designations(
-    designation_configs, jurisdiction_ocdid, office_designations, expected_role_names, expected_division
-):
-    role_names, division = extract_role_names_and_division_from_designations(
-        designation_configs, jurisdiction_ocdid, office_designations
-    )
-    assert role_names == expected_role_names
-    assert division == expected_division
+_MIXED_CONFIGS = {"district": {"has_geographic_area": True}, "at-large": {"has_geographic_area": False}}
+
+
+@pytest.mark.parametrize("designations, expected", [
+    (["district 1"],            []),
+    (["District 3"],            []),
+    (["at-large", "district 2"], ["at-large"]),
+    (["at-large", "seat 1"],    ["at-large", "seat 1"]),
+    (["district"],              ["district"]),   # no value → not geographic
+    (["unknown 5"],             ["unknown 5"]),
+    ([],                        []),
+])
+def test_designations_without_division(monkeypatch, designations, expected):
+    monkeypatch.setattr("utils.designation_utils.config_utils.get_designations", lambda: _MIXED_CONFIGS)
+    assert designations_without_division(designations) == expected
+
+
+@pytest.mark.parametrize("jurisdiction_ocdid, designations, expected_division", [
+    (
+        "ocd-jurisdiction/country:us/state:xy/place:alpha/government",
+        [],
+        "ocd-division/country:us/state:xy/place:alpha",
+    ),
+    (
+        "ocd-jurisdiction/country:us/state:xy/place:bravo/government",
+        ["district 1"],
+        "ocd-division/country:us/state:xy/place:bravo/council_district:1",
+    ),
+    (
+        "ocd-jurisdiction/country:us/state:xy/place:echo/government",
+        ["at-large", "district 2"],
+        "ocd-division/country:us/state:xy/place:echo/council_district:2",
+    ),
+    (
+        "ocd-jurisdiction/country:us/state:xy/place:charlie/government",
+        ["district"],   # no value → falls back to base
+        "ocd-division/country:us/state:xy/place:charlie",
+    ),
+])
+def test_resolve_division(monkeypatch, jurisdiction_ocdid, designations, expected_division):
+    monkeypatch.setattr("utils.designation_utils.config_utils.get_designations", lambda: _MIXED_CONFIGS)
+    assert resolve_division(jurisdiction_ocdid, designations) == expected_division
+
+
+_OCDID = "ocd-jurisdiction/country:us/state:tx/place:katy/government"
+_DIVISION_BASE = "ocd-division/country:us/state:tx/place:katy"
+
+
+@pytest.mark.parametrize("division_ocdid, expected", [
+    # numeric ward
+    (f"{_DIVISION_BASE}/ward:3",            ["Ward 3"]),
+    # alphabetic ward (e.g. Katy TX)
+    (f"{_DIVISION_BASE}/ward:a",            ["Ward A"]),
+    (f"{_DIVISION_BASE}/ward:b",            ["Ward B"]),
+    # council_district slug maps back to "district"
+    (f"{_DIVISION_BASE}/council_district:5", ["District 5"]),
+    # base division (at-large) → no designation
+    (_DIVISION_BASE,                         []),
+    # no division
+    (None,                                   []),
+])
+def test_division_ocdid_to_designation(division_ocdid, expected):
+    assert division_ocdid_to_designation(division_ocdid, _OCDID) == expected
