@@ -1,55 +1,38 @@
-import unittest
+import pytest
 from unittest.mock import patch
-from shared.utils.config_utils import get_role_alias_map
+from shared.utils.config_utils import get_role_alias_map, RoleEntry
 
-class TestGetRoleAliasMap(unittest.TestCase):
+pytestmark = pytest.mark.unit
 
-    @patch('shared.utils.config_utils.get_role_configs')
-    def test_basic_functionality(self, mock_get_role_configs):
-        mock_get_role_configs.return_value = [
-            {"role": ["Mayor"], "aliases": ["Head of City", "City Leader"]},
-            {"role": ["Council Member"], "aliases": ["CM", "Board Member"]}
-        ]
 
-        result = get_role_alias_map()
-        expected = {
-            "mayor": "Mayor",
-            "head of city": "Mayor",
-            "city leader": "Mayor",
-            "council member": "Council Member",
-            "cm": "Council Member",
-            "board member": "Council Member"
-        }
-        self.assertEqual(result, expected)
+@patch('shared.utils.config_utils.get_role_configs')
+def test_get_role_alias_map_basic(mock_get_role_configs):
+    mock_get_role_configs.return_value = [
+        RoleEntry(role="Mayor", aliases=["Head of City", "City Leader"]),
+        RoleEntry(role="Council Member", aliases=["CM", "Board Member"]),
+    ]
+    result = get_role_alias_map()
+    assert result == {
+        "mayor": "Mayor",
+        "head of city": "Mayor",
+        "city leader": "Mayor",
+        "council member": "Council Member",
+        "cm": "Council Member",
+        "board member": "Council Member",
+    }
 
-    @patch('shared.utils.config_utils.get_role_configs')
-    def test_empty_configuration(self, mock_get_role_configs):
-        mock_get_role_configs.return_value = []
 
-        result = get_role_alias_map()
-        self.assertEqual(result, {})
+@patch('shared.utils.config_utils.get_role_configs')
+def test_get_role_alias_map_empty(mock_get_role_configs):
+    mock_get_role_configs.return_value = []
+    assert get_role_alias_map() == {}
 
-    @patch('shared.utils.config_utils.get_role_configs')
-    def test_case_insensitivity(self, mock_get_role_configs):
-        mock_get_role_configs.return_value = [
-            {"role": ["Mayor"], "aliases": ["Head of City"]}
-        ]
 
-        result = get_role_alias_map()
-        self.assertEqual(result["mayor"], "Mayor")
-        self.assertEqual(result["head of city"], "Mayor")
-        self.assertEqual(result["HEAD OF CITY".lower()], "Mayor")
-
-    @patch('shared.utils.config_utils.get_role_configs')
-    def test_multiple_aliases(self, mock_get_role_configs):
-        mock_get_role_configs.return_value = [
-            {"role": ["Mayor"], "aliases": ["Head of City", "City Leader", "Chief"]}
-        ]
-
-        result = get_role_alias_map()
-        self.assertEqual(result["head of city"], "Mayor")
-        self.assertEqual(result["city leader"], "Mayor")
-        self.assertEqual(result["chief"], "Mayor")
-
-if __name__ == "__main__":
-    unittest.main()
+@patch('shared.utils.config_utils.get_role_configs')
+def test_get_role_alias_map_case_insensitive(mock_get_role_configs):
+    mock_get_role_configs.return_value = [
+        RoleEntry(role="Mayor", aliases=["Head of City"]),
+    ]
+    result = get_role_alias_map()
+    assert result["mayor"] == "Mayor"
+    assert result["head of city"] == "Mayor"
