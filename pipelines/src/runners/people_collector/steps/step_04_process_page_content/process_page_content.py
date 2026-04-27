@@ -442,11 +442,9 @@ def wipe_records_by_source_url(records_by_llm: RecordsByLLM, llm_name: str, sour
 
 def normalize_record(logger, record: LLMPerson, role_config=None) -> LLMPerson:
     """Normalize roles, designations, and phone number in an LLMPerson record."""
-    try:
-        normalized_phone = phone_utils.normalize_phone_number(record.phone) if record.phone else None
-    except Exception:
+    normalized_phone = phone_utils.normalize_first_phone(record.phone) if record.phone else None
+    if record.phone and normalized_phone is None:
         logger.warning(f"Failed to parse phone number: {record.phone}")
-        normalized_phone = None
 
     normalized_email = email_utils.normalize_email(record.email)
     if normalized_email and not email_utils.is_valid_email(normalized_email):
@@ -543,9 +541,10 @@ def check_page_heuristics(logger, source_url: str, input_text: str, records_foun
                 return False
             try:
                 phone_utils.normalize_phone_number(person.phone)
-            except Exception:
-                logger.warning(f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}")
-                return False
+            except ValueError:
+                if phone_utils.normalize_first_phone(person.phone) is None:
+                    logger.warning(f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}")
+                    return False
         if person.url and not url_utils.url_in_text(person.url, input_text):
             if not url_utils.same_url(person.url, source_url):
                 logger.warning(f"URL not found in input text: {person.url} under source url: {source_url}")

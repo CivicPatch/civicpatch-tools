@@ -306,6 +306,38 @@ def test_normalize_record_clears_url_from_email_when_url_already_set():
     assert result.url == "https://example.com/bio"
 
 
+def test_check_page_heuristics_passes_with_compound_phone_in_text():
+    records = [
+        LLMPerson(
+            name="Alice Boroughman",
+            other_names=[],
+            roles=["mayor"],
+            phone="856-358-2509 or 856-358-4010 Ext. 112",
+            email=None,
+            url=None,
+            designations=[],
+            source_url="http://example.com"
+        )
+    ]
+    input_text = "Alice Boroughman, Mayor. Phone: 856-358-2509 or 856-358-4010 Ext. 112"
+    assert check_page_heuristics(dummy_logger(), "http://example.com", input_text, records) is True
+
+
+def test_normalize_record_with_compound_phone_takes_first():
+    record = LLMPerson(
+        name="Alice Boroughman",
+        other_names=[],
+        roles=["mayor"],
+        phone="856-358-2509 or 856-358-4010 Ext. 112",
+        email=None,
+        url=None,
+        designations=[],
+        source_url="http://example.com"
+    )
+    result = normalize_record(dummy_logger(), record)
+    assert result.phone == "(856) 358-2509"
+
+
 def test_add_relevant_urls_includes_same_domain():
     """Relevant URLs on the same domain should be added."""
     existing_links = [
