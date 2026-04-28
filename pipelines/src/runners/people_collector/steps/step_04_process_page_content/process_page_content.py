@@ -566,6 +566,10 @@ def _name_in_text(name: str, text_lower: str) -> bool:
     if name_norm in text_norm:
         return True
 
+    # Handle line-break artifacts where a name is split mid-word across lines
+    if re.sub(r"\s+", "", name_norm) in re.sub(r"\s+", "", text_norm):
+        return True
+
     parsed = name_utils.parse_name(name)
     parts = [name_utils.normalize_text_for_search(p) for p in [parsed.first, parsed.last] if p]
     return bool(parts) and all(part in text_norm for part in parts)
