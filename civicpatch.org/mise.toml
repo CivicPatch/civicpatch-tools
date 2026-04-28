@@ -92,10 +92,12 @@ run = """
 """
 
 [tasks.query_jurisdictions]
+# Usage: STATE=nj LIMIT=600 mise run query_jurisdictions
 run = """
-    curl -X GET "https://civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=10&state=tx" \
+    curl -s -X GET "https://civicpatch.org/api/v1/jurisdictions/available?num_jurisdictions=${LIMIT:-100}&state=${STATE:-nj}" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $PROD_SERVICE_API_KEY"
+      -H "Authorization: $PROD_SERVICE_API_KEY" \
+      | jq '{count: (.jurisdictions | length), jurisdictions: .jurisdictions}'
 """
 
 
