@@ -46,39 +46,42 @@ from shared.schemas import JobConfig
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
 
+
+def _next_context(context: PeopleCollectorContext, progress=None, **data_updates) -> PeopleCollectorContext:
+    updates = {"data": context.data.model_copy(update=data_updates)} if data_updates else {}
+    if progress is not None:
+        updates["progress"] = progress
+    return context.model_copy(update=updates)
+
+
 async def start_job(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     await prepare_pipeline(context)
+    return _next_context(
+        context,
+        links=add_links([], [context.data.config.url]),
+    ), PipelineStatus.RESEARCH_MUNICIPALITY
 
-    next_context = context.model_copy(update={
-        "data": context.data.model_copy(update={
-            "links": add_links([], [context.data.config.url]),
-        })
-    })
-    return next_context, PipelineStatus.RESEARCH_MUNICIPALITY
 
 async def research_municipality_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await research_municipality(context, api_client)
-    new_data = context.data.model_copy(update={
-        "research_municipality_step": result
-    })
-
     progress = calculate_progress_percentage(context.data, 1)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": new_data
-    })
+    next_context = _next_context(
+        context,
+        progress=progress,
+        research_municipality_step=result,
+    )
 
     assert next_context.data.research_municipality_step is not None, "should never happen — research_municipality_step must be set after research_municipality"
     source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
         logger.info("Source URLs provided.")
-        next_context = next_context.model_copy(update={
-            "data": next_context.data.model_copy(update={
-                "links": add_links(next_context.data.links, source_urls)
-            })
-        })
+        next_context = _next_context(
+            next_context,
+            links=add_links(next_context.data.links, source_urls),
+        )
 
     return next_context, PipelineStatus.SCRAPE_PAGE
+
 
 def _classify_all_failed_error(links: list) -> PipelineRunErrorType:
     error_links = get_links_with_status(links, [LinkStatus.ERROR])
@@ -91,90 +94,80 @@ def _classify_all_failed_error(links: list) -> PipelineRunErrorType:
 
 async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_scrape = get_next_link_with_status(context.data.links, LinkStatus.PENDING)
-    next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
 
     if not page_to_scrape:
         logger.info("No pending links left to scrape.")
         unprocessable_links = get_links_with_status(context.data.links, [LinkStatus.ERROR, LinkStatus.PREPROCESSED_NO_CONTENT])
         all_failed = bool(context.data.links) and len(unprocessable_links) == len(context.data.links)
         if all_failed:
+            # All pages failed — try to discover the jurisdiction URL before giving up
             if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
-            next_context = context.model_copy(update={
-                "data": context.data.model_copy(update={"error_step": error_type}),
-            })
-            return next_context, PipelineStatus.SEND_ERROR
-        next_state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-        return context, next_state
+            return _next_context(
+                context,
+                error_step=error_type,
+            ), PipelineStatus.SEND_ERROR
+        return context, PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
     links, final_url = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "links": links,
-        })
-    })
+    next_context = _next_context(
+        context,
+        progress=progress,
+        links=links,
+    )
 
     is_root_link = page_to_scrape.url == context.data.config.url
     if is_root_link and not same_domain(final_url, page_to_scrape.url):
+        # Root domain redirected to a different domain — record the issue and update config
         new_config = context.data.config.model_copy(update={"url": final_url})
-        next_context = next_context.model_copy(update={
-            "data": next_context.data.model_copy(update={
-                "config": new_config,
-                "issues": next_context.data.issues + [{
-                    "type": PipelineIssueType.DOMAIN_REDIRECTED,
-                    "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
-                }],
-            }),
-        })
+        next_context = _next_context(
+            next_context,
+            config=new_config,
+            issues=next_context.data.issues + [{
+                "type": PipelineIssueType.DOMAIN_REDIRECTED,
+                "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
+            }],
+        )
 
     link_status = get_link_status_by_url(links, final_url)
-    if link_status == LinkStatus.SCRAPED:
-        next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT
-    else:
-        next_state = PipelineStatus.SCRAPE_PAGE
-
+    # Loop back to SCRAPE_PAGE if the scrape failed (e.g. error status); otherwise preprocess
+    next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT if link_status == LinkStatus.SCRAPED else PipelineStatus.SCRAPE_PAGE
     return next_context, next_state
+
 
 async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     page_to_preprocess = get_next_link_with_status(context.data.links, LinkStatus.SCRAPED)
-    next_state = PipelineStatus.PROCESS_PAGE_CONTENT
 
     if not page_to_preprocess:
         logger.info("No scraped links left to preprocess.")
         preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
         if not preprocessed_links:
+            # Nothing usable — try to discover the jurisdiction URL before giving up
             if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
-            next_context = context.model_copy(update={
-                "data": context.data.model_copy(update={"error_step": error_type}),
-            })
-            return next_context, PipelineStatus.SEND_ERROR
-        next_state = PipelineStatus.PROCESS_PAGE_CONTENT
-        return context, next_state
+            return _next_context(
+                context,
+                error_step=error_type,
+            ), PipelineStatus.SEND_ERROR
+        return context, PipelineStatus.PROCESS_PAGE_CONTENT
 
     links, result = preprocess_page_content(context, page_to_preprocess)
     progress = calculate_progress_percentage(context.data, 4)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "links": links,
-            "preprocess_page_content_step": result
-        })
-    })
+    next_context = _next_context(
+        context,
+        progress=progress,
+        links=links,
+        preprocess_page_content_step=result,
+    )
 
     link_status = get_link_status_by_url(context.data.links, page_to_preprocess.url)
-
-    if link_status == LinkStatus.PREPROCESSED:
-        next_state = PipelineStatus.PROCESS_PAGE_CONTENT
-    else:  # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
-        next_state = PipelineStatus.SCRAPE_PAGE
-    
-    
+    # Loop back to SCRAPE_PAGE if the page had no usable content after preprocessing
+    next_state = PipelineStatus.PROCESS_PAGE_CONTENT if link_status == LinkStatus.PREPROCESSED else PipelineStatus.SCRAPE_PAGE
     return next_context, next_state
+
 
 async def process_page_content_transition(job_config: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
@@ -186,19 +179,18 @@ async def process_page_content_transition(job_config: JobConfig, logger: Pipelin
         links, result = await process_page_content(context, page_to_process)
     except Exception as e:
         logger.error(f"process_page_content failed: {e}")
-        next_context = context.model_copy(update={
-            "data": context.data.model_copy(update={"error_step": str(e)})
-        })
-        return next_context, PipelineStatus.SEND_ERROR
+        return _next_context(
+            context,
+            error_step=str(e),
+        ), PipelineStatus.SEND_ERROR
+
     progress = calculate_progress_percentage(context.data, 5)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "links": links,
-            "process_page_content_step": result
-        },
-        )
-    })
+    next_context = _next_context(
+        context,
+        progress=progress,
+        links=links,
+        process_page_content_step=result,
+    )
 
     links_processed = get_links_with_status(next_context.data.links, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE])
     current_cost = cost_utils.total_cost_by_request(
@@ -214,51 +206,45 @@ async def process_page_content_transition(job_config: JobConfig, logger: Pipelin
         logger.warning(stop_warning)
     return next_context, next_state
 
+
 async def merge_records_within_llm_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_within_llm(context)
     progress = calculate_progress_percentage(context.data, 6)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "merge_records_within_llm_step": result
-        })
-    })
-    return next_context, PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
+    return _next_context(
+        context,
+        progress=progress,
+        merge_records_within_llm_step=result,
+    ), PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
+
 
 async def merge_records_across_llms_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = merge_records_across_llms(context)
-
     progress = calculate_progress_percentage(context.data, 7)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "merge_records_across_llms_step": result
-        })
-    })
+    return _next_context(
+        context,
+        progress=progress,
+        merge_records_across_llms_step=result,
+    ), PipelineStatus.FORMAT_OUTPUT
 
-    next_state = PipelineStatus.FORMAT_OUTPUT
-    return next_context, next_state
 
 async def format_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await format_output(context, api_client)
     progress = calculate_progress_percentage(context.data, 8)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={
-            "format_output_step": result,
-        })
-    })
-    return next_context, PipelineStatus.CLEANUP
+    return _next_context(
+        context,
+        progress=progress,
+        format_output_step=result,
+    ), PipelineStatus.CLEANUP
+
 
 async def cleanup_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     _result = cleanup(context)
-
     progress = calculate_progress_percentage(context.data, 9)
+    return _next_context(
+        context,
+        progress=progress,
+    ), PipelineStatus.REVIEW_OUTPUT
 
-    next_context = context.model_copy(update={
-        "progress": progress
-    })
-    return next_context, PipelineStatus.REVIEW_OUTPUT
 
 async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     assert context.data.format_output_step is not None
@@ -274,96 +260,99 @@ async def review_output_transition(_: JobConfig, logger: PipelineRunLogger, cont
     )
 
     if error_type:
-        next_context = context.model_copy(update={
-            "data": context.data.model_copy(update={"error_step": error_type}),
-        })
-        return next_context, PipelineStatus.SEND_ERROR
+        return _next_context(
+            context,
+            error_step=error_type,
+        ), PipelineStatus.SEND_ERROR
 
     result = review_output(context)
     progress = calculate_progress_percentage(context.data, 10)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={"review_output_step": result, "issues": issues}),
-    })
-    return next_context, PipelineStatus.SAVE_OUTPUT
+    return _next_context(
+        context,
+        progress=progress,
+        review_output_step=result,
+        issues=issues,
+    ), PipelineStatus.SAVE_OUTPUT
+
 
 async def save_output_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     cost_utils.log_costs(context.request_id, context.data.jurisdiction_ocdid)
     _result = await save_output(context)
-
     progress = calculate_progress_percentage(context.data, 11)
-    next_context = context.model_copy(update={
-        "progress": progress
-    })
+    return _next_context(
+        context,
+        progress=progress,
+    ), PipelineStatus.SEND_SUCCESS
 
-    next_state = PipelineStatus.SEND_SUCCESS
-    return next_context, next_state
 
 async def send_success_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await send_success(context, api_client)
-
     progress = calculate_progress_percentage(context.data, 12)
-    next_context = context.model_copy(update={
-        "progress": progress,
-        "data": context.data.model_copy(update={"send_success_step": result})
-    })
+    return _next_context(
+        context,
+        progress=progress,
+        send_success_step=result,
+    ), PipelineStatus.SUCCESS
 
-    return next_context, PipelineStatus.SUCCESS
 
 async def send_error_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     try:
         result = await send_error(context, api_client)
-        next_context = context.model_copy(update={
-            "data": context.data.model_copy(update={"send_error_step": result})
-        })
+        next_context = _next_context(
+            context,
+            send_error_step=result,
+        )
     except Exception as e:
         logger.error(f"send_error_transition failed: {e}\n{traceback.format_exc()}")
         next_context = context
-
     return next_context, PipelineStatus.ERROR
+
 
 async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
     result = await find_jurisdiction_url(context)
-    next_context = context.model_copy(update={
-        "data": context.data.model_copy(update={
-            "find_jurisdiction_url_step": result,
-        })
-    })
+    next_context = _next_context(
+        context,
+        find_jurisdiction_url_step=result,
+    )
 
     discovered = result.discovered_url
     root_link = next((l for l in context.data.links if l.url == context.data.config.url), None)
     root_failure_reason = root_link.failure_reason if root_link else None
 
+    # Timed out and search found nothing new — report timeout
     if root_failure_reason == NavigationFailureReason.NAVIGATION_TIMEOUT and (
         discovered is None or same_domain(discovered, context.data.config.url)
     ):
-        return next_context.model_copy(update={
-            "data": next_context.data.model_copy(update={"error_step": PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT}),
-        }), PipelineStatus.SEND_ERROR
+        return _next_context(
+            next_context,
+            error_step=PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT,
+        ), PipelineStatus.SEND_ERROR
 
+    # No URL found at all — domain is inactive
     if discovered is None:
-        return next_context.model_copy(update={
-            "data": next_context.data.model_copy(update={"error_step": PipelineRunErrorType.DOMAIN_INACTIVE}),
-        }), PipelineStatus.SEND_ERROR
+        return _next_context(
+            next_context,
+            error_step=PipelineRunErrorType.DOMAIN_INACTIVE,
+        ), PipelineStatus.SEND_ERROR
 
+    # Found a URL on the same domain — retry review with what we have
     if same_domain(discovered, context.data.config.url):
         return next_context, PipelineStatus.REVIEW_OUTPUT
 
+    # Found a new domain — restart scraping from scratch
     new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})
-    return next_context.model_copy(update={
-        "data": next_context.data.model_copy(update={
-            "config": new_config,
-            "links": add_links([], [discovered]),
-            "issues": context.data.issues + [{
-                "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
-                "data": {"original_url": context.data.config.url, "discovered_url": discovered},
-            }],
-        }),
-    }), PipelineStatus.SCRAPE_PAGE
+    return _next_context(
+        next_context,
+        config=new_config,
+        links=add_links([], [discovered]),
+        issues=context.data.issues + [{
+            "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
+            "data": {"original_url": context.data.config.url, "discovered_url": discovered},
+        }],
+    ), PipelineStatus.SCRAPE_PAGE
 
 
-# TODO: issue with this is that steps can go backwards, so progress
-# might decrease at certain points. Should fix.
+# TODO: steps can go backwards, so progress may decrease at certain points
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
     total_steps = 13
     if context_data.process_page_content_step is None:
@@ -374,8 +363,8 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
             if context_data.process_page_content_step.progress.required_data > 0 else 0
     steps_progress = (current_step + 1) / total_steps
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
-    progress_percent = int(combined_progress * 100)
-    return progress_percent
+    return int(combined_progress * 100)
+
 
 def _collect_pipeline_heuristics(officials, role_config, merge_step) -> tuple[str | None, list[dict]]:
     if not officials:
