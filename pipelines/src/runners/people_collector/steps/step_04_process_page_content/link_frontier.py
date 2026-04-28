@@ -111,12 +111,12 @@ def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
     return re.findall(r'\[([^\]]*)\]\((https?://[^)]+)\)', content)
 
 
-def _config_name_suffix(name: Optional[str]) -> List[str]:
+def jurisdiction_name_suffix(name: Optional[str]) -> List[str]:
     name = (name or "").strip()
     return [name.split()[-1].lower()] if name else []
 
 
-def _heuristic_url_comments(content: str, designations: List[str], roles: Optional[List[str]] = None) -> Dict[str, Tuple[str, str]]:
+def find_heuristic_urls(content: str, designations: List[str], roles: Optional[List[str]] = None) -> Dict[str, Tuple[str, str]]:
     """Returns url → (comment, link text) for links that pass heuristic signals."""
     result = {}
     for text, url in _extract_links_from_markdown(content):
@@ -144,7 +144,7 @@ def _match_any_token(text: str, terms: List[str], min_len: int = 4) -> Optional[
     return None
 
 
-def _extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[str], List[str]]:
+def extract_names_and_designations(records_by_llm: RecordsByLLM) -> Tuple[List[str], List[str]]:
     names = []
     seen_names = set()
     designations = []
@@ -274,7 +274,7 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
 
 def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
-    names, designations = _extract_names_and_designations(records_by_llm)
+    names, designations = extract_names_and_designations(records_by_llm)
     return add_relevant_urls(found_websites, existing_links, domain, names, designations + roles, logger)
 
 
