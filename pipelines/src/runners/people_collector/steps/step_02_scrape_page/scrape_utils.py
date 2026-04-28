@@ -146,8 +146,17 @@ async def scrape(logger, website_url, options=None):
                 logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
                 raise ValueError("Already scraped this URL after redirect")
 
-            # ... [Rest of your existing logic: content-type checks, auto_detect_and_wait, etc.]
-            
+            accordion_keywords = options.get('accordion_keywords')
+            await auto_detect_and_wait(page, logger, response)
+            await expand_accordions(page, logger, accordion_keywords)
+            await flatten_shadow_root(page)
+            await html_relative_to_absolute_urls(page)
+            await inline_iframes(page, logger)
+
+            image_directory = options.get('image_directory')
+            if image_directory:
+                await download_images(browser, logger, page, image_directory)
+
             content = await page.content()
             return content, page.url
 
@@ -155,9 +164,11 @@ async def scrape(logger, website_url, options=None):
             try:
                 await browser.close()
             except Exception:
-                pass
+                pass  # Already closed
 
-async def auto_detect_and_wait(page, logger, response, accordion_keywords=None):
+
+
+async def auto_detect_and_wait(page, logger, response):
     """
     Auto-detect site type and apply appropriate waiting strategies.
     Currently detects: Wix, React/SPA, static sites
@@ -203,8 +214,6 @@ async def auto_detect_and_wait(page, logger, response, accordion_keywords=None):
         else:
             logger.debug("Standard site - using basic waiting strategy")
             await wait_for_basic_content(page, logger)
-
-        await expand_accordions(page, logger, accordion_keywords)
 
     except Exception as e:
         logger.warning(f"Error in auto-detection: {e}")

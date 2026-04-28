@@ -35,23 +35,19 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
             f.write(html_content)
 
         # If successful, update the link status to "scraped"
-        updated_links = []
-        for link in context.data.links:
-            if link.url == link_to_scrape.url:
-                link.url = final_url
-                link.status = LinkStatus.SCRAPED.value
-                link.folder_name = folder_name
-            updated_links.append(link)
+        updated_links = [
+            link.model_copy(update={"url": final_url, "status": LinkStatus.SCRAPED.value, "folder_name": folder_name})
+            if link.url == link_to_scrape.url else link
+            for link in context.data.links
+        ]
         return updated_links, final_url
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
         failure_reason = e.reason.value if isinstance(e, NavigationError) else None
         failure_source = e.source if isinstance(e, NavigationError) else None
-        updated_links = []
-        for link in context.data.links:
-            if link.url == link_to_scrape.url:
-                link.status = LinkStatus.ERROR.value
-                link.failure_reason = failure_reason
-                link.failure_source = failure_source
-            updated_links.append(link)
+        updated_links = [
+            link.model_copy(update={"status": LinkStatus.ERROR.value, "failure_reason": failure_reason, "failure_source": failure_source})
+            if link.url == link_to_scrape.url else link
+            for link in context.data.links
+        ]
         return updated_links, link_to_scrape.url
