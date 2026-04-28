@@ -516,18 +516,25 @@ def get_router(api_key_header):
 
         if issue_type in ("pipeline_error", "no_info", "domain_inactive"):
             request_id = issue["issue_key"]
-            base = _build_request_row(raw[0], issue_type, issue_key) if raw else {"request_id": request_id}
-            folder = base.get("jurisdiction_path")
-            debug_key_base = f"{request_id}/data_source/{folder}" if folder else None
-            return {"data": [{
-                **base,
-                "error": (issue.get("data") or {}).get("error"),
+            base_rows = [_build_request_row(raw[0], issue_type, issue_key) if raw else {"request_id": request_id}]
+            error = (issue.get("data") or {}).get("error")
+        else:
+            base_rows = [_build_request_row(r, issue_type, issue_key) for r in raw]
+            error = None
+
+        rows = []
+        for row in base_rows:
+            req_id = row.get("request_id")
+            folder = row.get("jurisdiction_path")
+            debug_key_base = f"{req_id}/data_source/{folder}" if (req_id and folder) else None
+            rows.append({
+                **row,
+                **({"error": error} if error is not None else {}),
                 "pipeline_run_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if (debug_key_base and is_admin) else None,
                 "pipeline_run_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
-                "debug_url": storage_service.get_bucket_url("civicpatch-debug", request_id) if is_admin else None,
-            }]}
-
-        return {"data": [_build_request_row(r, issue_type, issue_key) for r in raw]}
+                "debug_url": storage_service.get_bucket_url("civicpatch-debug", req_id) if (is_admin and req_id) else None,
+            })
+        return {"data": rows}
 
     @router.get(
         "/unrecognized-roles/grouped",

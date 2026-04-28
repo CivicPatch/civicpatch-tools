@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
+import { KNOWN_ISSUE_TYPES, ISSUE_TYPE } from "../../utils/issue-types.js";
 import { fetchIssueDetails, resolveReviewIssue } from "../../api.js";
 import { formatIssueType } from "./utils.js";
 import "../../components/basic/modal.js";
@@ -8,13 +8,11 @@ import "../../components/civ-tab-bar/civ-tab-bar.js";
 
 const SOURCE_CONTEXT_LIMIT = 5;
 
-function getModalTitle(modalType, issue) {
-  switch (modalType) {
-    case "pipeline_error": return "Pipeline error";
-    case "domain_inactive_fixed": return "Resolve: Inactive domain";
-    case "role": return `Resolve: "${issue.issue_key}"`;
-    default: return formatIssueType(issue.issue_type);
-  }
+function getModalTitle(issue, detailsOnly) {
+  if (detailsOnly) return formatIssueType(issue.issue_type);
+  if (issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE) return `Resolve: "${issue.issue_key}"`;
+  if (issue.issue_type === ISSUE_TYPE.PIPELINE_ERROR) return "Pipeline error";
+  return formatIssueType(issue.issue_type);
 }
 
 function ResolveModal(host) {
@@ -36,7 +34,7 @@ function ResolveModal(host) {
       .catch(() => setModalDetails([]));
   }, []);
 
-  const detail = modalDetails?.length === 1 ? modalDetails[0] : null;
+  const detail = modalDetails?.[0] ?? null;
 
   useEffect(() => {
     setDebugTab(0);
@@ -74,8 +72,7 @@ function ResolveModal(host) {
   const handleClose = () => dispatch("modal-close", {});
 
   const handleSubmit = async () => {
-    const modalType = KNOWN_ISSUE_TYPES.find((t) => t.value === issue.issue_type)?.modal_type;
-    const body = modalType === "role"
+    const body = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE
       ? {
           scope: "locality",
           ...(modalState ? { state: modalState } : {}),
@@ -96,9 +93,57 @@ function ResolveModal(host) {
 
   if (!issue) return null;
 
-  const modalType = detailsOnly
-    ? "details"
-    : KNOWN_ISSUE_TYPES.find((t) => t.value === issue.issue_type)?.modal_type;
+  const issueConfig = KNOWN_ISSUE_TYPES.find((t) => t.value === issue.issue_type);
+  if (!issueConfig && !detailsOnly) return null;
+
+  const data = issue.data || {};
+  const newUrl = data.discovered_url || data.resolved_url;
+
+  // Type-specific content — one branch per issue type that has unique UI
+  const typeExtras =
+    issue.issue_type === ISSUE_TYPE.PIPELINE_ERROR
+      ? (detail?.error ? html`<p class="issues-page__modal-meta"><code>${detail.error}</code></p>` : null)
+    : issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE
+      ? html`
+        <div class="issues-page__resolve-role-form">
+          ${(issue.states || []).length ? html`
+            <p class="issues-page__modal-meta">
+              Seen in:
+              ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
+            </p>
+          ` : null}
+          <label>
+            State
+            <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
+              ${(issue.states || []).map((s) => html`
+                <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
+              `)}
+            </select>
+          </label>
+          <label>
+            Locality
+            <select @change=${(e) => setModalLocality(e.target.value)}>
+              <option value="">— select —</option>
+              ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
+                <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
+              `)}
+            </select>
+          </label>
+        </div>
+      `
+    : null;
+
+  // Domain change info — shown when the issue data carries a URL change
+  const domainChangeExtras = data.original_url ? html`
+    <p class="issues-page__modal-meta">
+      Configured URL: <a href=${data.original_url} target="_blank" rel="noopener noreferrer">${data.original_url}</a>
+    </p>
+    ${newUrl ? html`
+      <p class="issues-page__modal-meta">
+        New URL: <a href=${newUrl} target="_blank" rel="noopener noreferrer">${newUrl}</a>
+      </p>
+    ` : null}
+  ` : null;
 
   const debugTabs = detail ? [
     detail.pipeline_run_log_url && { label: "Logs" },
@@ -174,84 +219,25 @@ function ResolveModal(host) {
     </div>
   `;
 
-  let content = null;
-  let footer = null;
+  const isResolvable = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE;
 
-  switch (modalType) {
-    case "pipeline_error":
-      content = html`
-        ${modalDetails?.[0]?.error ? html`<p class="issues-page__modal-meta"><code>${modalDetails[0].error}</code></p>` : null}
-        ${debugSection}
-        ${sourceSection}
-      `;
-      footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
-      break;
-    case "debug":
-    case "details": {
-      const data = issue.data || {};
-      const newUrl = data.discovered_url || data.resolved_url;
-      content = html`
-        ${data.original_url ? html`
-          <p class="issues-page__modal-meta">
-            From: <a href=${data.original_url} target="_blank" rel="noopener noreferrer">${data.original_url}</a>
-          </p>
-        ` : null}
-        ${newUrl ? html`
-          <p class="issues-page__modal-meta">
-            To: <a href=${newUrl} target="_blank" rel="noopener noreferrer">${newUrl}</a>
-          </p>
-        ` : null}
-        ${debugSection}
-        ${sourceSection}
-      `;
-      footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
-      break;
-    }
-    case "role": {
-      content = html`
-        <div class="issues-page__resolve-role-content">
-          ${(issue.states || []).length ? html`
-            <p class="issues-page__modal-meta">
-              Seen in:
-              ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
-            </p>
-          ` : null}
+  const content = html`
+    ${typeExtras}
+    ${domainChangeExtras}
+    ${debugSection}
+    ${sourceSection}
+  `;
 
-          <label>
-            State
-            <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
-              ${(issue.states || []).map((s) => html`
-                <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
-              `)}
-            </select>
-          </label>
-
-          <label>
-            Locality
-            <select @change=${(e) => setModalLocality(e.target.value)}>
-              <option value="">— select —</option>
-              ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
-                <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
-              `)}
-            </select>
-          </label>
-
-          ${sourceSection}
-        </div>
-      `;
-      footer = html`
-        <button class="btn btn-sm secondary" @click=${handleClose}>Cancel</button>
-        <button class="btn btn-sm" @click=${handleSubmit}>Open PR →</button>
-      `;
-      break;
-    }
-    default:
-      return null;
-  }
+  const footer = isResolvable
+    ? html`
+      <button class="btn btn-sm secondary" @click=${handleClose}>Cancel</button>
+      <button class="btn btn-sm" @click=${handleSubmit}>Open PR →</button>
+    `
+    : html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
 
   return html`
     <civ-modal
-      .title=${getModalTitle(modalType, issue)}
+      .title=${getModalTitle(issue, detailsOnly)}
       .content=${content}
       .footer=${footer}
       .modalProps=${{ open: true, onClose: handleClose }}
