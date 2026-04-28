@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return storage_service.get_civicpatch_artifacts_url(relative_path)
+    return storage_service.get_presigned_url_cached("civicpatch-debug", relative_path)
 
 
 def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
