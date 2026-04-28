@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock, AsyncMock, patch
-from runners.people_collector.steps.step_02_scrape_page.scrape_utils import inline_iframes
+from runners.people_collector.steps.step_02_scrape_page.scrape_dom import inline_iframes
 
 pytestmark = pytest.mark.unit
 
