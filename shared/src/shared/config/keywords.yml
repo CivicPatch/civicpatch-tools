@@ -1,0 +1,62 @@
+---
+# Governance keywords used across the pipeline:
+# - accordion button expansion (scrape step)
+# - crawl frontier prioritization (link_frontier)
+# - spaCy phrase matching (entity_extraction)
+keywords:
+  # Officials / governance labels
+  - elected officials
+  - government officials
+  - government
+  - official
+  - elected
+  - representative
+
+  # Mayor
+  - mayor
+  - about the mayor
+  - about mayor
+  - meet the mayor
+  - mayor and city council
+
+  # Council
+  - council
+  - city council
+  - city council members
+  - council members
+  - councilmembers
+  - council bios
+  - meet the council
+  - council president
+  - council manager
+
+  # Boards
+  - board
+  - board of trustees
+  - board of aldermen
+  - board of selectmen
+  - select board
+
+  # Commissioners / aldermen / selectmen
+  - commission
+  - commissioners
+  - aldermen
+  - selectmen
+
+  # Administration
+  - city administration
+  - departments
+  - directory
+
+  # Place names (used for page-level relevance)
+  - city
+  - town
+  - village
+  - town hall
+  - city hall
+
+  # Generic page labels
+  - bios
+  - meet
+  - about
+  - index

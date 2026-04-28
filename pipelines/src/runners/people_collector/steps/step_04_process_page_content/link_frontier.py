@@ -3,7 +3,7 @@ import copy
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Set, Tuple
 from runners.people_collector.schemas import Link, LinkStatus, LLMPerson, RecordsByLLM
-from shared.utils import url_utils, name_utils
+from shared.utils import url_utils, name_utils, config_utils
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -25,23 +25,6 @@ LINK_PATTERNS_BLACKLIST = {
     r"\.pptx?\b":                      "document: PowerPoint presentation",
 }
 
-# URL keywords that strongly indicate a governance page. Links matching any of
-# these are sorted to the top of the crawl frontier, ahead of num_references.
-# TODO: should probably move this into config
-LINK_KEYWORDS_WHITELIST = [
-    "council",
-    "mayor",
-    "board",
-    "government",
-    "commission",
-    "aldermen",
-    "official",
-    "elected",
-    "representative",
-    "selectmen",
-    "directory"
-]
-
 IGNORE_WEBSITES = [
     "facebook.com",
     "twitter.com",
@@ -60,7 +43,7 @@ def _blacklist_match(url: str) -> Optional[str]:
 
 @dataclass
 class LinkSignals:
-    keyword: Optional[str]     # matched keyword from LINK_KEYWORDS_WHITELIST
+    keyword: Optional[str]     # matched keyword from governance_keywords()
     role: Optional[str]        # matched role from known_roles or name_lsad_suffix
     designation: Optional[str] # matched designation token from url or text
     name: Optional[str]        # matched person name token from url
@@ -76,7 +59,7 @@ def _compute_link_signals(
     path = url_utils.get_path(url)
     return LinkSignals(
         # substring match: keywords are stems ("council") that embed in longer words ("councilmember")
-        keyword=_keyword_match(path, LINK_KEYWORDS_WHITELIST) or _keyword_match(text, LINK_KEYWORDS_WHITELIST),
+        keyword=_keyword_match(path, config_utils.governance_keywords()) or _keyword_match(text, config_utils.governance_keywords()),
         role=_keyword_match(path, roles) or _keyword_match(text, roles),
         # token match: avoids mid-word false positives (e.g. "ward" should not match "/edward/")
         designation=_match_any_token(url, designations) or _match_any_token(text, designations),

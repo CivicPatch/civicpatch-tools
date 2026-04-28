@@ -90,20 +90,16 @@ def get_unique_roles(role_config_override: Optional[RoleConfig] = None) -> List[
     return [entry.role for entry in get_role_configs(role_config_override) if entry.is_unique]
 
 
-def get_crawl():
-    return _load_config_file('crawl.yml')
-
-
 def search_keywords(type="local") -> Dict[str, List[str]]:
     return _load_config_file('search.yml').get('keywords', {})
 
 
-def crawl_keywords(type="local") -> Dict[str, List[str]]:
-    return _load_config_file('crawl.yml').get('keywords', {})
+def governance_keywords() -> List[str]:
+    return _load_config_file('keywords.yml', 'keywords', [])
 
 
 def load_job_config(logger=None) -> JobConfig:
-    config = _load_config_file('job.yml')
+    config = _load_config_file('pipeline.yml')
     if os.getenv("PIPELINE_RUN_COST_LIMIT"):
         try:
             pipeline_run_cost_limit_string = os.getenv("PIPELINE_RUN_COST_LIMIT")
@@ -139,7 +135,7 @@ def get_keywords() -> List[str]:
         "committee", "board",
         "township", "village", "city"
     ]
-    return list(role_keywords | designation_keywords | set(crawl_keywords()) | set(extra_keywords))
+    return list(role_keywords | designation_keywords | set(governance_keywords()) | set(extra_keywords))
 
 
 def get_states() -> List[dict]:
