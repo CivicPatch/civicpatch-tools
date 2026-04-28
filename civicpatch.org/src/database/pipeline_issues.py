@@ -137,15 +137,14 @@ async def reopen_pipeline_issue(issue_id: str) -> None:
         )
 
 
-async def supersede_prior_jurisdiction_error_issues(jurisdiction_ocdid: str, current_request_id: str) -> None:
+async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_request_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
             UPDATE pipeline_issues
             SET status = %s, resolved_at = NOW()
-            WHERE category = %s
-              AND status = %s
+            WHERE status = %s
               AND NOT (%s = ANY(request_ids))
               AND EXISTS (
                 SELECT 1 FROM requests r
@@ -155,7 +154,6 @@ async def supersede_prior_jurisdiction_error_issues(jurisdiction_ocdid: str, cur
             """,
             (
                 PipelineIssueStatus.SUPERSEDED,
-                PipelineIssueCategory.ERROR,
                 PipelineIssueStatus.PENDING,
                 current_request_id,
                 jurisdiction_ocdid,

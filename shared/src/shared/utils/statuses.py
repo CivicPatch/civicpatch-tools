@@ -40,7 +40,7 @@ class PipelineIssueStatus(StrEnum):
     # A pull request has been opened to address this issue; awaiting merge
     PR_OPENED = "pr_opened"
     RESOLVED = "resolved"
-    # Automatically set on error-category issues when a newer run for the same jurisdiction reaches a terminal state
+    # Automatically set on all pending issues when a newer run for the same jurisdiction reaches a terminal state
     SUPERSEDED = "superseded"
 
 
