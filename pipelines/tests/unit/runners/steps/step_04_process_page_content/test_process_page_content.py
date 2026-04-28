@@ -492,7 +492,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     llm_response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[cross_domain_url, same_domain_url])
 
     with patch(
-        "runners.people_collector.steps.step_04_process_page_content.process_page_content._relevance_llm.run_prompt",
+        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
         updated_links, _ = await check_page_relevance(context, page, "some page content", [])
