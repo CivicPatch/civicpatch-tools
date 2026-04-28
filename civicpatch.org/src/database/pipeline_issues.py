@@ -269,7 +269,8 @@ async def get_pipeline_issues_page(
                        FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
                        LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
                    ) AS jurisdiction_names,
-                   ri.category
+                   ri.category,
+                   ri.is_flagged
             FROM pipeline_issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
@@ -294,6 +295,7 @@ async def get_pipeline_issues_page(
             "created_at": r[7].isoformat() if r[7] else None,
             "pull_request_url": r[10],
             "category": r[12],
+            "is_flagged": r[13],
             "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
             "jurisdictions": jurisdictions,
         })
@@ -324,6 +326,15 @@ async def get_pipeline_issue_counts(state_code: str | None = None) -> dict[str, 
         await cur.execute(query, params)
         rows = await cur.fetchall()
     return {row[0]: row[1] for row in rows}
+
+
+async def set_pipeline_issue_flagged(issue_id: str, is_flagged: bool) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE pipeline_issues SET is_flagged = %s WHERE id = %s",
+            (is_flagged, issue_id),
+        )
 
 
 async def get_pipeline_issue_by_id(issue_id: str) -> dict | None:

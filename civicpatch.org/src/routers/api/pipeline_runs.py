@@ -36,6 +36,7 @@ from database.pipeline_issues import (
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
     resolve_pipeline_issue,
+    set_pipeline_issue_flagged,
     upsert_pipeline_issue,
     supersede_prior_jurisdiction_issues,
 )
@@ -60,6 +61,7 @@ from schemas.pipeline_runs import (
     UpdatePipelineRunStatusResponse,
     PostPipelineRunResultRequest,
     ResolveUnrecognizedRoleGroupRequest,
+    FlagPipelineIssueRequest,
     CreatePipelineRunResponse,
     GetPipelineRunResponse,
     GetPipelineRunStatusResponse,
@@ -494,6 +496,21 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
         await resolve_pipeline_issue(issue_id)
+        return {"data": None}
+
+    @router.patch(
+        "/issues/{issue_id}/flag",
+        summary="Set or clear the in-progress flag on a review issue",
+    )
+    async def flag_review_issue_endpoint(
+        issue_id: str,
+        request: FlagPipelineIssueRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+    ):
+        issue = await get_pipeline_issue_by_id(issue_id)
+        if issue is None:
+            raise HTTPException(status_code=404)
+        await set_pipeline_issue_flagged(issue_id, request.is_flagged)
         return {"data": None}
 
     @router.get(

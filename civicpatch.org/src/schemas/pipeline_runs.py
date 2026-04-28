@@ -107,6 +107,12 @@ class ResolveUnrecognizedRoleGroupRequest(BaseModel):
     request_ids: list[str]
 
 
+# ── PATCH /api/v1/pipeline_runs/issues/{issue_id}/flag ───────────────────────
+
+class FlagPipelineIssueRequest(BaseModel):
+    is_flagged: bool
+
+
 # ── GET /api/v1/pipeline_runs/{request_id} ───────────────────────────────────
 
 class GetPipelineRunResponse(BaseModel):

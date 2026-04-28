@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { fetchJobIssues, fetchIssueCounts } from "../../api.js";
+import { fetchJobIssues, fetchIssueCounts, flagIssue } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import "../../components/search-jurisdictions/select-state.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
@@ -127,6 +127,13 @@ function IssuesPage() {
     }
   };
 
+  const handleIssueFlag = (issue, is_flagged) => {
+    setIssues(issues.map((i) => i.id === issue.id ? { ...i, is_flagged } : i));
+    flagIssue(issue.id, is_flagged).catch(() => {
+      setIssues(issues.map((i) => i.id === issue.id ? { ...i, is_flagged: !is_flagged } : i));
+    });
+  };
+
   const handleIssueDismissed = (e) => {
     setDismissModal(null);
     setIssues(issues.filter((i) => i.id !== e.detail.issue_id));
@@ -216,6 +223,7 @@ function IssuesPage() {
                 <th>Detail</th>
                 <th>Jurisdiction</th>
                 <th>Status</th>
+                <th class="issues-page__issue-flag">Flagged</th>
                 <th>Date</th>
                 <th>Actions</th>
               </tr>
@@ -227,6 +235,7 @@ function IssuesPage() {
                     onDetails: openDetailsModal,
                     onDismiss: (issue) => setDismissModal(issue),
                     onConfig: (jurisdictions) => setConfigModal({ jurisdictions, initialView: "merged" }),
+                    onFlag: handleIssueFlag,
                   }))
               }
             </tbody>

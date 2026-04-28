@@ -71,6 +71,17 @@ export const fetchIssueDetails = async (issueId) => {
   return res.json();
 };
 
+export const flagIssue = async (issueId, is_flagged) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/flag`, {
+    credentials: "include",
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ is_flagged }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const dismissIssue = async (issueId) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/dismiss`, {
     credentials: "include",
