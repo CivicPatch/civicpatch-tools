@@ -6,12 +6,34 @@ from runners.people_collector.schemas import (
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     check_page_relevance, normalize_record, _split_content_into_chunks
 )
-from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
+from runners.people_collector.schemas import LinkFrontier
+from runners.people_collector.utils.link_discovery import (
     has_role_and_contact_info, add_relevant_urls
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import check_page_heuristics
 from runners.people_collector.schemas import LLMPerson
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
+from shared.utils.url_utils import canonical_url
+
+
+def make_frontier(*links: Link) -> LinkFrontier:
+    from shared.utils.url_utils import canonical_url as _can
+    lmap = {_can(l.url): l for l in links}
+    queue = [k for k, l in lmap.items() if l.status == LinkStatus.PENDING.value]
+    return LinkFrontier(links=lmap, queue=queue)
+
+
+def pending_urls(frontier: LinkFrontier) -> list[str]:
+    return [l.url for l in frontier.links.values() if l.status == LinkStatus.PENDING.value]
+
+
+def pending_in_queue_order(frontier: LinkFrontier) -> list[Link]:
+    """Returns pending links in scrape priority order (queue order)."""
+    return [frontier.links[k] for k in frontier.queue if k in frontier.links]
+
+
+# keep old name as alias for backward compat within this file
+make_links = make_frontier
 
 pytestmark = pytest.mark.unit
 
@@ -360,118 +382,89 @@ def test_normalize_record_with_compound_phone_takes_first():
 
 
 def test_add_relevant_urls_includes_same_domain():
-    """Relevant URLs on the same domain should be added."""
-    existing_links = [
-        Link(url="https://cityofbaycity.org/city-council", status=LinkStatus.DONE.value, folder_name="council"),
-    ]
-    mayor_url = "https://www.cityofbaycity.org/296/Office-of-the-Mayor"
-    result = add_relevant_urls([mayor_url], existing_links, domain="https://cityofbaycity.org")
-    pending_urls = [l.url for l in result if l.status == LinkStatus.PENDING.value]
-    assert "https://www.cityofbaycity.org/296/Office-of-the-Mayor" in pending_urls
+    frontier = make_frontier(Link(url="https://cityofbaycity.org/city-council", status=LinkStatus.DONE.value, folder_name="council"))
+    result = add_relevant_urls(["https://www.cityofbaycity.org/296/Office-of-the-Mayor"], frontier, domain="https://cityofbaycity.org")
+    assert "https://www.cityofbaycity.org/296/Office-of-the-Mayor" in pending_urls(result)
 
 
 def test_add_relevant_urls_filters_cross_domain():
-    """Relevant URLs on a different domain should be excluded."""
-    existing_links = []
-    result = add_relevant_urls(
-        ["https://www.baycitytx.gov/296/Office-of-the-Mayor"],
-        existing_links,
-        domain="https://cityofbaycity.org",
-    )
+    result = add_relevant_urls(["https://www.baycitytx.gov/296/Office-of-the-Mayor"], LinkFrontier(), domain="https://cityofbaycity.org")
     assert len(result) == 0
 
 
 def test_add_relevant_urls_skips_already_present():
-    existing_links = [
-        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor"),
-    ]
-    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links, domain="https://cityofbaycity.org")
+    frontier = make_frontier(Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor"))
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], frontier, domain="https://cityofbaycity.org")
     assert len(result) == 1
 
 
 def test_add_relevant_urls_increments_existing_pending():
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=0),
-    ]
-    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links, domain="https://cityofbaycity.org")
-    mayor = next(l for l in result if "mayor" in l.url)
-    assert mayor.num_references == 2
+    )
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], frontier, domain="https://cityofbaycity.org")
+    assert result.get("https://cityofbaycity.org/mayor").num_references == 2
 
 
 def test_add_relevant_urls_sorts_by_num_references():
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=3),
         Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
-    ]
-    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links, domain="https://cityofbaycity.org")
-    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    # mayor now has 2 references, council has 3 — council should still be first
-    assert pending[0].url == "https://cityofbaycity.org/council"
-    assert pending[1].url == "https://cityofbaycity.org/mayor"
+    )
+    r1 = add_relevant_urls(["https://cityofbaycity.org/mayor"], frontier, domain="https://cityofbaycity.org")
+    p = pending_in_queue_order(r1)
+    assert p[0].url == "https://cityofbaycity.org/council"
+    assert p[1].url == "https://cityofbaycity.org/mayor"
 
-    result2 = add_relevant_urls(["https://cityofbaycity.org/mayor"], result, domain="https://cityofbaycity.org")
-    pending2 = [l for l in result2 if l.status == LinkStatus.PENDING.value]
-    # mayor now has 3 references, tied with council — path depth tiebreak (same), stable order
-    assert pending2[0].url == "https://cityofbaycity.org/council"
+    r2 = add_relevant_urls(["https://cityofbaycity.org/mayor"], r1, domain="https://cityofbaycity.org")
+    assert pending_in_queue_order(r2)[0].url == "https://cityofbaycity.org/council"
 
-    result3 = add_relevant_urls(["https://cityofbaycity.org/mayor"], result2, domain="https://cityofbaycity.org")
-    pending3 = [l for l in result3 if l.status == LinkStatus.PENDING.value]
-    # mayor now has 4 references, beats council's 3 — mayor should be first
-    assert pending3[0].url == "https://cityofbaycity.org/mayor"
+    r3 = add_relevant_urls(["https://cityofbaycity.org/mayor"], r2, domain="https://cityofbaycity.org")
+    assert pending_in_queue_order(r3)[0].url == "https://cityofbaycity.org/mayor"
 
 
 def test_add_relevant_urls_does_not_increment_non_pending():
-    existing_links = [
-        Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor", num_references=1),
-    ]
-    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], existing_links, domain="https://cityofbaycity.org")
+    frontier = make_frontier(Link(url="https://cityofbaycity.org/mayor", status=LinkStatus.DONE.value, folder_name="mayor", num_references=1))
+    result = add_relevant_urls(["https://cityofbaycity.org/mayor"], frontier, domain="https://cityofbaycity.org")
     assert len(result) == 1
-    assert result[0].num_references == 1  # unchanged
+    assert result.get("https://cityofbaycity.org/mayor").num_references == 1
 
 
 def test_add_relevant_urls_keyword_beats_name_match():
-    # Governance keyword pages (council, mayor, etc.) rank ahead of name-specific pages
-    # regardless of num_references, to ensure breadth-first discovery of new officials.
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
         Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
-    ]
-    result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", names=["Susan Reardon"])
-    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/council"
+    )
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", names=["Susan Reardon"])
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council"
 
 
 def test_add_relevant_urls_keyword_beats_designation_match():
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/council", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
         Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
-    ]
-    result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", designations=["Position 4"])
-    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/council"
+    )
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", designations=["Position 4"])
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council"
 
 
 def test_add_relevant_urls_name_match_beats_designation_match():
-    # At equal num_references and no keyword, name match ranks above designation match.
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/position-4/seat", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
         Link(url="https://cityofbaycity.org/655/Susan-Reardon", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
-    ]
-    result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", names=["Susan Reardon"], designations=["Position 4"])
-    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/655/Susan-Reardon"
+    )
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", names=["Susan Reardon"], designations=["Position 4"])
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/655/Susan-Reardon"
 
 
 def test_add_relevant_urls_role_hint_in_url_beats_more_references():
-    # "city-council" contains "council" which is a significant token of "Council Member"
-    existing_links = [
+    frontier = make_frontier(
         Link(url="https://cityofbaycity.org/general-info", status=LinkStatus.PENDING.value, folder_name="", num_references=5),
         Link(url="https://cityofbaycity.org/283/city-council", status=LinkStatus.PENDING.value, folder_name="", num_references=1),
-    ]
-    result = add_relevant_urls([], existing_links, domain="https://cityofbaycity.org", designations=["Council Member"])
-    pending = [l for l in result if l.status == LinkStatus.PENDING.value]
-    assert pending[0].url == "https://cityofbaycity.org/283/city-council"
+    )
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", designations=["Council Member"])
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/283/city-council"
 
 
 @pytest.mark.asyncio
@@ -481,13 +474,8 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     # page is on seattle.gov; this URL is on a different domain
     cross_domain_url = "https://seattle-mayor.gov/mayor"
     same_domain_url = "https://seattle.gov/city-council"
-    context = context.copy(update={
-        "data": context.data.copy(update={
-            "links": [
-                Link(url="https://seattle.gov/council", status=LinkStatus.DONE.value, folder_name="council"),
-            ]
-        })
-    })
+    frontier = make_frontier(Link(url="https://seattle.gov/council", status=LinkStatus.DONE.value, folder_name="council"))
+    context = context.model_copy(update={"data": context.data.model_copy(update={"frontier": frontier})})
     page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value, folder_name="council")
     llm_response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[cross_domain_url, same_domain_url])
 
@@ -495,11 +483,11 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
         "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
-        updated_links, _ = await check_page_relevance(context, page, "some page content", [])
+        result_frontier, _ = await check_page_relevance(context, page, "some page content", [])
 
-    pending_urls = [l.url for l in updated_links if l.status == LinkStatus.PENDING.value]
-    assert cross_domain_url not in pending_urls
-    assert "https://seattle.gov/city-council" in pending_urls
+    result_pending_urls = pending_urls(result_frontier)
+    assert cross_domain_url not in result_pending_urls
+    assert "https://seattle.gov/city-council" in result_pending_urls
 
 
 def test_split_content_into_chunks_no_split_when_fits():

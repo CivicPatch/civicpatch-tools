@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from runners.people_collector.schemas import (
     PeopleCollectorContext,
     Link,
+    LinkFrontier,
     LinkStatus,
     PipelineStatus,
     LLMPerson,
@@ -26,7 +27,7 @@ from typing import List, Dict, Optional, Tuple, cast
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
 from semantic_text_splitter import MarkdownSplitter
-from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
+from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
     mark_link_as_terminating_status,
     update_links,
@@ -103,7 +104,7 @@ def _collect_all_roles(people_by_name: Dict) -> set[str]:
 async def process_page_content(
     context: PeopleCollectorContext,
     page_to_process: Link,
-) -> Tuple[List[Link], ProcessPageContentStep]:
+) -> Tuple[LinkFrontier, ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
@@ -123,9 +124,9 @@ async def process_page_content(
     identities = research.identities
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
-    updated_links, is_relevant = await check_page_relevance(context, page_to_process, content, known_roles)
+    frontier, is_relevant = await check_page_relevance(context, page_to_process, content, known_roles)
     if not is_relevant:
-        return updated_links, current_step.copy(update={"links": updated_links})
+        return frontier, current_step
 
     updated_raw_records, updated_records, heuristics_passed = await run_llm_loop(
         context, page_to_process, content, known_roles, current_step, identities, logger
@@ -134,15 +135,11 @@ async def process_page_content(
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
 
     if heuristics_passed:
-        updated_links = update_links(
-            context.data.config.url, updated_links, page_to_process, logger, role_names, updated_records
-        )
+        frontier = update_links(context.data.config.url, frontier, page_to_process, logger, role_names, updated_records)
     else:
-        updated_links = mark_link_as_terminating_status(
-            page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL
-        )
+        frontier = frontier.mark_status(page_to_process.url, LinkStatus.PROCESSED_HEURISTICS_FAIL)
 
-    return updated_links, ProcessPageContentStep(
+    return frontier, ProcessPageContentStep(
         progress=updated_progress,
         raw_records_by_llm=updated_raw_records,
         records_by_llm=updated_records,
@@ -195,7 +192,7 @@ async def check_page_relevance(
     page_to_process: Link,
     content: str,
     known_roles: list[str],
-) -> Tuple[List[Link], bool]:
+) -> Tuple[LinkFrontier, bool]:
     prompt = open_router_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "", known_roles)
     raw_response = await open_router_llm.run_prompt(
         context.request_id,
@@ -206,7 +203,7 @@ async def check_page_relevance(
     )
     response = RelevantPageResponseSchema.model_validate(raw_response)
 
-    updated_links = copy.deepcopy(context.data.links)
+    frontier = context.data.frontier
     existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
     names, designations = extract_names_and_designations(existing_records)
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
@@ -215,17 +212,15 @@ async def check_page_relevance(
         response, content, known_roles, context.data.config.name, designations, logger
     )
     if candidate_urls:
-        updated_links = add_relevant_urls(
-            candidate_urls, updated_links, page_to_process.url,
+        frontier = add_relevant_urls(
+            candidate_urls, frontier, page_to_process.url,
             names, designations + known_roles, logger, url_comments=url_comments,
         )
 
     if not response.is_relevant:
-        updated_links = mark_link_as_terminating_status(
-            page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT
-        )
+        frontier = frontier.mark_status(page_to_process.url, LinkStatus.PROCESSED_IRRELEVANT)
 
-    return updated_links, response.is_relevant
+    return frontier, response.is_relevant
 
 
 async def run_llm_loop(

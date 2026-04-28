@@ -5,6 +5,7 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
     PipelineRunConfig,
+    LinkFrontier,
     ResearchMunicipalityStep,
     PreprocessPageContentStep,
     ProcessPageContentStep,
@@ -38,7 +39,7 @@ def pipeline_run_context_factory(
                 name="Seattle",
                 url="https://seattle.gov",
             ),
-            links=[],
+            frontier=LinkFrontier(),
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             research_municipality_step=research_municipality_step or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY) or ResearchMunicipalityStep(
                 expected_count=0, target_designations=[], known_roles=[], identities={}, source_urls=[]

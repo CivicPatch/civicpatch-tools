@@ -18,7 +18,7 @@ from utils import log_utils
 async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdictionUrlStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
 
-    root_link = next((l for l in context.data.links if l.url == context.data.config.url), None)
+    root_link = context.data.frontier.get(context.data.config.url)
     if root_link and root_link.status not in (LinkStatus.ERROR.value, LinkStatus.PREPROCESSED_NO_CONTENT.value):
         content_path = (
             pathlib.Path(data_path_utils.get_cache_path(context.data.jurisdiction_ocdid))

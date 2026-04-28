@@ -8,7 +8,8 @@ from runners.people_collector.schemas import (
     PipelineStatus, 
     PreprocessPageContentStep, 
 )
-from shared.utils import data_path_utils, config_utils
+from shared.utils import data_path_utils, config_utils, url_utils
+from runners.people_collector.schemas import LinkFrontier
 from runners.people_collector.steps.step_03_preprocess_page_content.filter_content import filter_content
 from runners.people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
 from utils import log_utils
@@ -25,7 +26,7 @@ DEFAULT_PREPROCESS_PAGE_CONTENT_STEP = PreprocessPageContentStep(
 
 def preprocess_page_content(
     context: PeopleCollectorContext, page_to_preprocess: Link
-    ) -> tuple[List[Link], PreprocessPageContentStep]:
+    ) -> tuple[LinkFrontier, PreprocessPageContentStep]:
     """
     Preprocess the scraped HTML content of a page.
     """
@@ -83,14 +84,7 @@ def preprocess_page_content(
     else:
         new_status = LinkStatus.PREPROCESSED_NO_CONTENT.value
 
-    updated_links: List[Link] = []
-    for link in context.data.links:
-        if link.url == page_to_preprocess.url:
-            # Update the status/content for this link
-            link.status = new_status
-            updated_links.append(link)
-        else:
-            updated_links.append(link)
+    updated_frontier = context.data.frontier.mark_status(page_to_preprocess.url, LinkStatus(new_status))
     
     time_end = time.time()
     elapsed_time = time_end - time_start
@@ -111,7 +105,7 @@ def preprocess_page_content(
     logger.info(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
     logger.info(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")
 
-    return updated_links, PreprocessPageContentStep(
+    return updated_frontier, PreprocessPageContentStep(
         elapsed_times=elapsed_times,
         total_elapsed_time_seconds=int(total_elapsed_time_seconds),
         average_elapsed_time_seconds=int(average_elapsed_time_seconds)

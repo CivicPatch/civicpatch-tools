@@ -1,26 +1,18 @@
 from typing import List
-from runners.people_collector.schemas import Link, LinkStatus
-from shared.utils import url_utils
+from runners.people_collector.schemas import Link, LinkStatus, LinkFrontier
 
-def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | None:
-    for link in links:
-        if link.status == status.value:
-            return link
-    return None
 
-def get_link_status_by_url(links: List[Link], url: str) -> LinkStatus | None:
-    for link in links:
-        if link.url == url:
-            return LinkStatus(link.status)
-    return None
+def get_next_link_with_status(frontier: LinkFrontier, status: LinkStatus) -> Link | None:
+    return frontier.next_with_status(status)
 
-def get_links_with_status(links: List[Link], statuses: List[LinkStatus]) -> List[Link]:
-    return [link for link in links if link.status in [status.value for status in statuses]]
 
-def add_links(existing: List[Link], urls: List[str]) -> List[Link]:
-    new_links = [
-        Link(url=url, status=LinkStatus.PENDING.value)
-        for url in urls
-        if not any(url_utils.same_url(l.url, url) for l in existing)
-    ]
-    return existing + new_links
+def get_link_status_by_url(frontier: LinkFrontier, url: str) -> LinkStatus | None:
+    return frontier.status_of(url)
+
+
+def get_links_with_status(frontier: LinkFrontier, statuses: List[LinkStatus]) -> List[Link]:
+    return frontier.all_with_status(statuses)
+
+
+def add_links(frontier: LinkFrontier, urls: List[str]) -> LinkFrontier:
+    return frontier.add(urls)

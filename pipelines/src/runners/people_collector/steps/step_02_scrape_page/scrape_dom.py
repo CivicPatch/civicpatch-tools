@@ -37,7 +37,7 @@ async def inline_iframes(page: Page, logger):
 
 async def expand_accordions(page: Page, logger, keywords: List[str] | None = None):
     try:
-        collapsed = await page.query_selector_all('[aria-expanded="false"]')
+        collapsed = await page.query_selector_all('button[aria-expanded="false"]')
         expanded = 0
         for el in collapsed:
             try:

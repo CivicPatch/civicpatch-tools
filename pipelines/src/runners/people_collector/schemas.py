@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
@@ -32,6 +32,90 @@ class Link(BaseModel):
     text: Optional[str] = None
     failure_reason: Optional[str] = None  # NavigationFailureReason value, set when status=ERROR
     failure_source: Optional[str] = None  # raw Playwright/Chromium detail string
+    visit_order: Optional[int] = None     # 1 = first page scraped, 2 = second, etc.
+
+class LinkFrontier(BaseModel):
+    """Encapsulates the link dict and pending queue so they always stay in sync."""
+    model_config = ConfigDict(frozen=True)
+
+    links: Dict[str, "Link"] = {}   # canonical_url(link.url) → Link
+    queue: List[str] = []            # canonical URLs of PENDING links, priority-sorted
+
+    @classmethod
+    def from_urls(cls, urls: List[str]) -> "LinkFrontier":
+        from shared.utils.url_utils import canonical_url, format_url
+        links = {}
+        queue = []
+        for url in urls:
+            key = canonical_url(url)
+            if key not in links:
+                links[key] = Link(url=format_url(url), status=LinkStatus.PENDING.value)
+                queue.append(key)
+        return cls(links=links, queue=queue)
+
+    # ── Queries ────────────────────────────────────────────────────────────────
+
+    def get(self, url: str) -> Optional["Link"]:
+        from shared.utils.url_utils import canonical_url
+        return self.links.get(canonical_url(url))
+
+    def status_of(self, url: str) -> Optional["LinkStatus"]:
+        link = self.get(url)
+        return LinkStatus(link.status) if link else None
+
+    def next_pending(self) -> Optional["Link"]:
+        return self.links[self.queue[0]] if self.queue else None
+
+    def next_with_status(self, status: "LinkStatus") -> Optional["Link"]:
+        if status == LinkStatus.PENDING:
+            return self.next_pending()
+        return next((l for l in self.links.values() if l.status == status.value), None)
+
+    def all_with_status(self, statuses: List["LinkStatus"]) -> List["Link"]:
+        vals = {s.value for s in statuses}
+        return [l for l in self.links.values() if l.status in vals]
+
+    def __len__(self) -> int:
+        return len(self.links)
+
+    def __bool__(self) -> bool:
+        return bool(self.links)
+
+    # ── Mutations (return new LinkFrontier) ────────────────────────────────────
+
+    def add(self, urls: List[str]) -> "LinkFrontier":
+        from shared.utils.url_utils import canonical_url, format_url
+        new_links = dict(self.links)
+        new_queue = list(self.queue)
+        for url in urls:
+            key = canonical_url(url)
+            if key not in new_links:
+                new_links[key] = Link(url=format_url(url), status=LinkStatus.PENDING.value)
+                new_queue.append(key)
+        return self.model_copy(update={"links": new_links, "queue": new_queue})
+
+    def dequeue(self, url: str) -> "LinkFrontier":
+        from shared.utils.url_utils import canonical_url
+        key = canonical_url(url)
+        return self.model_copy(update={"queue": [k for k in self.queue if k != key]})
+
+    def update_link(self, lookup_url: str, **updates) -> "LinkFrontier":
+        from shared.utils.url_utils import canonical_url
+        key = canonical_url(lookup_url)
+        if key not in self.links:
+            return self
+        return self.model_copy(update={"links": {**self.links, key: self.links[key].model_copy(update=updates)}})
+
+    def mark_status(self, url: str, status: "LinkStatus", **extra) -> "LinkFrontier":
+        from shared.utils.url_utils import canonical_url
+        key = canonical_url(url)
+        if key not in self.links:
+            return self
+        new_link = self.links[key].model_copy(update={"status": status.value, **extra})
+        new_links = {**self.links, key: new_link}
+        new_queue = [k for k in self.queue if k != key] if status != LinkStatus.PENDING else self.queue
+        return self.model_copy(update={"links": new_links, "queue": new_queue})
+
 
 class RawLLMPerson(BaseModel):
     name: str
@@ -140,7 +224,7 @@ class PeopleCollectorData(BaseModel):
 
     role_config: Optional[RoleConfig] = Field(default=None, exclude=True)
 
-    links: List[Link] = []
+    frontier: LinkFrontier = Field(default_factory=LinkFrontier)
 
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
