@@ -4,7 +4,7 @@ from runners.people_collector.schemas import (
     LLMPerson, LinkStatus, Link, RelevantPageResponseSchema
 )
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
-    check_page_relevance, normalize_record
+    check_page_relevance, normalize_record, _split_content_into_chunks
 )
 from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
     has_role_and_contact_info, add_relevant_urls
@@ -500,3 +500,31 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     pending_urls = [l.url for l in updated_links if l.status == LinkStatus.PENDING.value]
     assert cross_domain_url not in pending_urls
     assert "https://seattle.gov/city-council" in pending_urls
+
+
+def test_split_content_into_chunks_no_split_when_fits():
+    content = "## Section\n\nSome content here."
+    chunks = _split_content_into_chunks(content, max_chars=10_000)
+    assert chunks == [content]
+
+
+def test_split_content_into_chunks_splits_large_content():
+    # Each section is ~300 chars; max_chars = 2000 keeps the overlap (500) well within capacity
+    section = "## Councilmember Jane Smith\n\n" + "Contact: 555-1234, jane@city.gov. " * 8 + "\n\n"
+    content = section * 20          # ~6000 chars total
+    max_chars = 2_000
+    chunks = _split_content_into_chunks(content, max_chars=max_chars)
+    assert len(chunks) > 1
+    for chunk in chunks:
+        assert len(chunk) <= max_chars + 500  # tolerance for overlap
+
+
+def test_split_content_into_chunks_overlap_carries_context():
+    # Each section is ~300 chars; max_chars fits ~3 sections, overlap carries context across boundaries
+    sections = [f"## Member {i}\n\n" + f"Email: member{i}@city.gov. " * 10 + "\n\n" for i in range(10)]
+    content = "".join(sections)
+    max_chars = 2_000
+    chunks = _split_content_into_chunks(content, max_chars=max_chars)
+    assert len(chunks) > 1
+    # The tail of chunk 0 should appear somewhere in chunk 1 (overlap)
+    assert chunks[0][-100:].strip() in chunks[1]
