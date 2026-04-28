@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 
 pytestmark = pytest.mark.unit
 
-MODULE = "runners.people_collector.steps.step_02_scrape_page.scrape_utils"
+MODULE = "runners.people_collector.steps.step_02_scrape_page.browser"
 
 
 def _make_playwright_stack(page_url="https://example.com"):
@@ -43,7 +43,7 @@ def _make_playwright_stack(page_url="https://example.com"):
 
 @pytest.mark.asyncio
 async def test_scrape_calls_all_helpers_in_order():
-    from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+    from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
     playwright_cm, _, browser, page, _ = _make_playwright_stack()
     call_order = []
@@ -70,7 +70,7 @@ async def test_scrape_calls_all_helpers_in_order():
 
 @pytest.mark.asyncio
 async def test_scrape_passes_accordion_keywords_to_expand_accordions():
-    from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+    from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
     playwright_cm, _, browser, page, _ = _make_playwright_stack()
     keywords = ["council", "mayor"]
@@ -92,7 +92,7 @@ async def test_scrape_passes_accordion_keywords_to_expand_accordions():
 
 @pytest.mark.asyncio
 async def test_scrape_calls_expand_accordions_with_none_when_no_keywords():
-    from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+    from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
     playwright_cm, _, browser, page, _ = _make_playwright_stack()
 
@@ -113,7 +113,7 @@ async def test_scrape_calls_expand_accordions_with_none_when_no_keywords():
 
 @pytest.mark.asyncio
 async def test_scrape_calls_download_images_when_image_directory_provided():
-    from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+    from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
     playwright_cm, _, browser, page, _ = _make_playwright_stack()
 
@@ -135,7 +135,7 @@ async def test_scrape_calls_download_images_when_image_directory_provided():
 
 @pytest.mark.asyncio
 async def test_scrape_skips_download_images_when_no_image_directory():
-    from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+    from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
     playwright_cm, _, browser, page, _ = _make_playwright_stack()
 

@@ -3,7 +3,8 @@ import pytest
 import shutil
 from unittest.mock import MagicMock
 from patchright.async_api import async_playwright
-from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape, convert_background_divs_to_imgs
+from runners.people_collector.steps.step_02_scrape_page.browser import scrape
+from runners.people_collector.steps.step_02_scrape_page.scrape_images import convert_background_divs_to_imgs
 
 pytestmark = pytest.mark.integration
 

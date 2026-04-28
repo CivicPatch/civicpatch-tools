@@ -4,7 +4,7 @@ import tempfile
 import pytest
 from unittest.mock import MagicMock
 from bs4 import BeautifulSoup
-from runners.people_collector.steps.step_02_scrape_page.scrape_utils import scrape
+from runners.people_collector.steps.step_02_scrape_page.browser import scrape
 
 pytestmark = [pytest.mark.live, pytest.mark.asyncio]
 
