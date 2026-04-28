@@ -37,7 +37,7 @@ from database.pipeline_issues import (
     resolve_unrecognized_role_group,
     resolve_pipeline_issue,
     upsert_pipeline_issue,
-    supersede_prior_jurisdiction_error_issues,
+    supersede_prior_jurisdiction_issues,
 )
 from database.pull_requests import (
     update_pipeline_run_pull_request_url,
@@ -115,7 +115,7 @@ async def update_pipeline_run_and_publish(request_id: str, status: str, progress
         jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid") if pipeline_run else None
     if jurisdiction_ocdid:
         if status in TERMINAL_PIPELINE_RUN_STATUSES:
-            await supersede_prior_jurisdiction_error_issues(jurisdiction_ocdid, request_id)
+            await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, request_id)
         await pubsub_service.publish(
             f"job_status:{jurisdiction_ocdid}",
             json.dumps({"request_id": request_id, "status": status, "progress": progress}),
