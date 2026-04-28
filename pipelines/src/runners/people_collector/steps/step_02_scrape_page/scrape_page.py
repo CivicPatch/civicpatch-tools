@@ -33,7 +33,6 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
 
         frontier = frontier.update_link(
             link_to_scrape.url,
-            url=final_url,
             status=LinkStatus.SCRAPED.value,
             folder_name=folder_name,
             visit_order=visit_order,
