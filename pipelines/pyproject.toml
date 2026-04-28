@@ -41,7 +41,8 @@ dependencies = [
     "pytest-httpx (>=0.36.0,<0.37.0)",
     "aiofiles>=25.1.0,<26.0.0",
     "pip>=26.0.1",
-    "shared"
+    "shared",
+    "semantic-text-splitter>=0.20.0,<1.0.0",
 ]
 
 [tool.pytest.ini_options]

@@ -15,6 +15,13 @@ _MAX_INPUT_TOKENS = 120_000
 _CHARS_PER_TOKEN = 4
 _SEMAPHORE_CACHE: dict = {}
 
+
+def max_content_chars(prompt: str) -> int:
+    """Return how many content characters fit under the token limit for the given prompt."""
+    prompt_tokens = len(prompt) // _CHARS_PER_TOKEN
+    return (_MAX_INPUT_TOKENS - prompt_tokens) * _CHARS_PER_TOKEN
+
+
 def _get_semaphore() -> asyncio.Semaphore:
     loop = asyncio.get_running_loop()
     loop_id = id(loop)

@@ -25,6 +25,7 @@ from utils import merge_utils, people_utils, designation_utils, log_utils
 from typing import List, Dict, Optional, Tuple, cast
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
+from semantic_text_splitter import MarkdownSplitter
 from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
     add_relevant_urls,
     mark_link_as_terminating_status,
@@ -51,10 +52,23 @@ LLMS = [
         "service": open_router_llm,
         "prompt": open_router_prompt,
         "with_batch_api": False,
+        "max_content_chars": open_router_llm.max_content_chars,
     },
 ]
 
 MINIMUM_NUM_PEOPLE = 5
+_CHUNK_OVERLAP_CHARS = 500
+
+
+def _build_prompt(llm: dict, known_roles: list[str], jurisdiction_ocdid: str) -> str:
+    ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    return llm["prompt"].municipality_officials_prompt(known_roles, state=ocdid_parts.state, county=ocdid_parts.county)
+
+
+def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
+    if len(content) <= max_chars:
+        return [content]
+    return MarkdownSplitter(max_chars, overlap=_CHUNK_OVERLAP_CHARS).chunks(content)
 
 
 async def process_page_content(
@@ -199,16 +213,28 @@ async def run_llm_loop(
         seed = retry_count if retry_count > 0 else None
         logger.info(f"Running LLM: {llm['name']} seed={seed}")
 
-        llm_responses, records_found = await process_with_llm(
-            page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
-            content, known_roles, llm, seed=seed,
-        )
+        prompt = _build_prompt(llm, known_roles, context.data.jurisdiction_ocdid)
+        chunks = _split_content_into_chunks(content, llm["max_content_chars"](prompt))
+        if len(chunks) > 1:
+            logger.info(f"Content split into {len(chunks)} chunks for LLM: {llm['name']}")
+
+        all_llm_responses: Dict[str, List[LLMPerson]] = {}
+        all_records_found: List[LLMPerson] = []
+        for chunk in chunks:
+            llm_responses, records_found = await process_with_llm(
+                page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
+                chunk, prompt, llm, seed=seed,
+            )
+            for name, people in llm_responses.items():
+                all_llm_responses.setdefault(name, []).extend(people)
+            all_records_found.extend(records_found)
+
         updated_raw_records, updated_records = update_step_data(
-            context.data.jurisdiction_ocdid, llm_responses, identities,
+            context.data.jurisdiction_ocdid, all_llm_responses, identities,
             updated_records, updated_raw_records, context.data.role_config,
         )
 
-        if check_page_heuristics(logger, page_to_process.url, content, records_found):
+        if check_page_heuristics(logger, page_to_process.url, content, all_records_found):
             logger.info(f"Heuristics passed for LLM: {llm['name']}")
             for prev_llm in LLMS[:llm_index]:
                 if not prev_llm.get("with_batch_api", False):
@@ -238,15 +264,13 @@ async def process_with_llm(
     request_id,
     jurisdiction_ocdid: str,
     content: str,
-    known_roles: list[str],
+    prompt: str,
     llm: dict,
     seed: Optional[int] = None,
 ) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
     if llm.get("with_batch_api", False):
         raise NotImplementedError(f"Batch API not yet implemented for LLM: {llm['name']}")
 
-    ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    prompt = llm["prompt"].municipality_officials_prompt(known_roles, state=ocdid_parts.state, county=ocdid_parts.county)
     response = await llm["service"].run_prompt(
         request_id, jurisdiction_ocdid, prompt,
         response_schema=PeopleArrayLLMResponseSchema,
