@@ -1,12 +1,12 @@
 import { html } from "lit-html";
 import { getIssueTypeConfig, formatIssueType, formatDate, getIssueDetail } from "./utils.js";
 
-export function IssueRow(issue, { onDetails, onDismiss, onConfig }) {
+export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
   const config = getIssueTypeConfig(issue.issue_type);
   const categoryClass = config?.category ? ` issues-page__issue-type-chip--${config.category}` : "";
 
   return html`
-    <tr>
+    <tr class=${issue.is_flagged ? "issues-page__issue-row--flagged" : ""}>
       <td>
         <span class="issues-page__issue-type-chip issues-page__issue-type-chip--${issue.issue_type.replace(/_/g, "-")}${categoryClass}">
           ${formatIssueType(issue.issue_type)}
@@ -27,15 +27,20 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig }) {
           ? html`<a class="issues-page__issue-status-link" href=${issue.pull_request_url} target="_blank" rel="noopener noreferrer">PR opened →</a>`
           : html`<span class="issues-page__issue-status-badge">Pending</span>`}
       </td>
+      <td class="issues-page__issue-flag">
+        <input type="checkbox" .checked=${!!issue.is_flagged} @change=${(e) => onFlag(issue, e.target.checked)} title="Flagged" />
+      </td>
       <td class="issues-page__issue-date">${formatDate(issue.created_at)}</td>
-      <td class="issues-page__issue-actions">
-        <button class="btn btn-sm secondary" @click=${() => onDetails(issue)}>Details</button>
-        ${issue.issue_type === "unrecognized_role" && issue.jurisdictions?.length
-          ? html`<button class="btn btn-sm" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
-          : ""}
-        ${issue.status === "pending"
-          ? html`<button class="btn btn-sm destructive" @click=${() => onDismiss(issue)}>Dismiss</button>`
-          : ""}
+      <td>
+        <div class="issues-page__issue-actions">
+          <button class="btn btn-sm secondary" @click=${() => onDetails(issue)}>Details</button>
+          ${issue.issue_type === "unrecognized_role" && issue.jurisdictions?.length
+            ? html`<button class="btn btn-sm" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
+            : ""}
+          ${issue.status === "pending"
+            ? html`<button class="btn btn-sm destructive" @click=${() => onDismiss(issue)}>Dismiss</button>`
+            : ""}
+        </div>
       </td>
     </tr>
   `;

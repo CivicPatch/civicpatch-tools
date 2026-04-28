@@ -180,8 +180,21 @@
 .issues-page__issue-detail {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
+    white-space: normal;
     word-break: break-all;
-    max-width: 360px;
+    overflow-wrap: anywhere;
+    min-width: 120px;
+}
+
+.issues-page__issue-flag {
+    text-align: center;
+    white-space: nowrap;
+    width: auto;
+}
+
+.issues-page__issue-flag input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
 }
 
 .issues-page__issue-date {
@@ -199,7 +212,8 @@
     font-weight: 500;
     background: var(--pico-card-sectioning-background-color);
     color: var(--pico-muted-color);
-    white-space: nowrap;
+    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 .issues-page__issue-type-chip--error {
@@ -289,6 +303,12 @@
     white-space: nowrap;
 }
 
+/* ── Flagged row ── */
+
+.issues-page__issue-row--flagged > td {
+    background-color: color-mix(in srgb, var(--pico-warn-color) 8%, transparent);
+}
+
 /* ── Issue actions column ── */
 
 .issues-page__issue-actions {
@@ -296,6 +316,8 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     white-space: nowrap;
+    align-items: center;
+    height: 100%;
 }
 
 /* ── Resolve modal ── */

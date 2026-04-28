@@ -86,6 +86,7 @@ erDiagram
         text_null       pull_request_url
         timestamptz_null resolved_at
         timestamptz     created_at
+        boolean         is_flagged      "default: false"
     }
 
     review_sessions {
