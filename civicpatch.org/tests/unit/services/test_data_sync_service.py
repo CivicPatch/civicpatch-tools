@@ -136,6 +136,8 @@ def _mock_bulk_sync_deps(remote_metadata, local_jurisdictions):
         patch("database.jurisdictions.deactivate_jurisdictions_by_ocdids", new=AsyncMock()),
         patch("core.open_data_sync.sync_jurisdictions_by_ocdids_with_metadata", new=AsyncMock()),
         patch("core.open_data_sync.sync_people_by_ocdids", new=AsyncMock()),
+        patch("core.open_data_sync.lock_service.acquire_lock", new=AsyncMock(return_value=True)),
+        patch("core.open_data_sync.lock_service.release_lock", new=AsyncMock()),
     )
 
 
@@ -147,7 +149,7 @@ async def test_bulk_sync_skips_people_when_up_to_date_and_has_people():
     local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 3}}
 
     patches = _mock_bulk_sync_deps(remote, local)
-    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people, patches[6], patches[7]:
         await bulk_sync()
 
     mock_sync_people.assert_called_once_with([])
@@ -161,7 +163,7 @@ async def test_bulk_sync_syncs_people_when_no_people_in_db():
     local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 0}}
 
     patches = _mock_bulk_sync_deps(remote, local)
-    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people, patches[6], patches[7]:
         await bulk_sync()
 
     mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])
@@ -175,7 +177,7 @@ async def test_bulk_sync_skips_people_when_no_people_and_no_remote_updated_at():
     local = {MOUNTAIN_CITY_OCDID: {"updated_at": "2026-02-12T18:46:34+00:00", "people_count": 0}}
 
     patches = _mock_bulk_sync_deps(remote, local)
-    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people, patches[6], patches[7]:
         await bulk_sync()
 
     mock_sync_people.assert_called_once_with([])
@@ -189,7 +191,7 @@ async def test_bulk_sync_syncs_people_for_new_jurisdiction():
     local = {}
 
     patches = _mock_bulk_sync_deps(remote, local)
-    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people:
+    with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5] as mock_sync_people, patches[6], patches[7]:
         await bulk_sync()
 
     mock_sync_people.assert_called_once_with([MOUNTAIN_CITY_OCDID])

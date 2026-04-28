@@ -11,6 +11,7 @@ import yaml
 import database.jurisdictions as jurisdictions_db
 import database.people as people_db
 import lib.github.api as github_service
+import lib.lock as lock_service
 import shared
 import shared.utils.config_utils as config_utils
 import shared.utils.id_utils
@@ -132,54 +133,65 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
     await people_db.bulk_update_people(people_list)
 
 
+_OD_SYNC_LOCK_KEY = "lock:od_sync"
+_OD_SYNC_LOCK_TTL = 1800  # 30 min
+
+
 async def od_sync():
-    logger.info("Starting bulk sync")
-    states_config = config_utils.get_states()
-    states = [state["code"] for state in states_config]
-    all_jurisdiction_metadata = {}
+    acquired = await lock_service.acquire_lock(_OD_SYNC_LOCK_KEY, _OD_SYNC_LOCK_TTL)
+    if not acquired:
+        logger.info("od_sync: skipping, lock held by another worker")
+        return
+    try:
+        logger.info("Starting bulk sync")
+        states_config = config_utils.get_states()
+        states = [state["code"] for state in states_config]
+        all_jurisdiction_metadata = {}
 
-    for state in states:
-        logger.debug(f"Fetching remote metadata for state: {state}")
-        remote_metadata_file = await get_jurisdiction_metadata(state)
-        logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
-        if remote_metadata_file is None:
-            continue
-        all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
-        await asyncio.sleep(0)
+        for state in states:
+            logger.debug(f"Fetching remote metadata for state: {state}")
+            remote_metadata_file = await get_jurisdiction_metadata(state)
+            logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
+            if remote_metadata_file is None:
+                continue
+            all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
+            await asyncio.sleep(0)
 
-    local_jurisdictions = await jurisdictions_db.get_jurisdiction_updates()
-    logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
+        local_jurisdictions = await jurisdictions_db.get_jurisdiction_updates()
+        logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
 
-    jurisdictions_to_update_metadata = []
-    jurisdictions_to_update_data = []
+        jurisdictions_to_update_metadata = []
+        jurisdictions_to_update_data = []
 
-    for jurisdiction_ocdid in all_jurisdiction_metadata:
-        remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
-        jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
-        local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
-        local_updated_at = local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None
-        needs_people_sync = remote_updated_at and (
-            is_newer(remote_updated_at, local_updated_at)
-            or (local_jurisdiction_data is not None and local_jurisdiction_data.get("people_count") == 0)
-        )
-        if needs_people_sync:
-            jurisdictions_to_update_data.append(jurisdiction_ocdid)
-        await asyncio.sleep(0)
+        for jurisdiction_ocdid in all_jurisdiction_metadata:
+            remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
+            jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
+            local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
+            local_updated_at = local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None
+            needs_people_sync = remote_updated_at and (
+                is_newer(remote_updated_at, local_updated_at)
+                or (local_jurisdiction_data is not None and local_jurisdiction_data.get("people_count") == 0)
+            )
+            if needs_people_sync:
+                jurisdictions_to_update_data.append(jurisdiction_ocdid)
+            await asyncio.sleep(0)
 
-    remote_ocdids = set(all_jurisdiction_metadata.keys())
-    local_ocdids = set(local_jurisdictions.keys())
+        remote_ocdids = set(all_jurisdiction_metadata.keys())
+        local_ocdids = set(local_jurisdictions.keys())
 
-    ocdids_to_delete = local_ocdids - remote_ocdids
-    if ocdids_to_delete:
-        logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
-        await jurisdictions_db.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
+        ocdids_to_delete = local_ocdids - remote_ocdids
+        if ocdids_to_delete:
+            logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
+            await jurisdictions_db.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
 
-    logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
-    logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")
-    await sync_jurisdictions_by_ocdids_with_metadata(all_jurisdiction_metadata, jurisdictions_to_update_metadata)
+        logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
+        logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")
+        await sync_jurisdictions_by_ocdids_with_metadata(all_jurisdiction_metadata, jurisdictions_to_update_metadata)
 
-    logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
-    await sync_people_by_ocdids(jurisdictions_to_update_data)
+        logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
+        await sync_people_by_ocdids(jurisdictions_to_update_data)
+    finally:
+        await lock_service.release_lock(_OD_SYNC_LOCK_KEY)
 
 
 async def sync(request: OdSyncRequestSchema):

@@ -210,36 +210,6 @@ async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
     return results
 
 
-async def get_open_pull_requests(
-    jurisdiction_ocddid=None, state_code: str | None = None, per_page: int = 100
-) -> List[PullRequest]:
-    _, _, _, open_data_repo_url = _get_github_config()
-    headers = await get_default_headers()
-    all_prs = []
-    page = 1
-    while True:
-        params = f"state=open&per_page={per_page}&page={page}&sort=created&direction=desc"
-        url = f"{open_data_repo_url}/pulls?{params}"
-        async with httpx.AsyncClient(timeout=timeout) as client:
-            response = await client.get(url, headers=headers)
-        if response.status_code != 200:
-            break
-        batch = response.json()
-        all_prs.extend(batch)
-        if len(batch) < per_page:
-            break
-        page += 1
-    valid_pull_requests = [
-        PullRequest(branch_name=pr["head"]["ref"], url=pr["html_url"])
-        for pr in all_prs
-    ]
-    if jurisdiction_ocddid:
-        valid_pull_requests = [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid == jurisdiction_ocddid]
-    elif state_code:
-        valid_pull_requests = [pr for pr in valid_pull_requests if f"state:{state_code}" in pr.jurisdiction_ocdid]
-    return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
-
-
 async def update_pull_request_file(
     branch_name: str,
     file_path: str,
