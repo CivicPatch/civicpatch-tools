@@ -31,9 +31,9 @@ from runners.people_collector.steps.step_04_process_page_content.link_frontier i
     mark_link_as_terminating_status,
     update_links,
     has_role_and_contact_info,
-    _extract_names_and_designations,
-    _heuristic_url_comments,
-    _config_name_suffix,
+    extract_names_and_designations,
+    find_heuristic_urls,
+    jurisdiction_name_suffix,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import check_page_heuristics
 
@@ -69,6 +69,35 @@ def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
     if len(content) <= max_chars:
         return [content]
     return MarkdownSplitter(max_chars, overlap=_CHUNK_OVERLAP_CHARS).chunks(content)
+
+
+async def _process_chunks(
+    llm: dict,
+    source_url: str,
+    request_id,
+    jurisdiction_ocdid: str,
+    content: str,
+    prompt: str,
+    seed: Optional[int],
+    logger,
+) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
+    chunks = _split_content_into_chunks(content, llm["max_content_chars"](prompt))
+    if len(chunks) > 1:
+        logger.info(f"Content split into {len(chunks)} chunks for LLM: {llm['name']}")
+    all_responses: Dict[str, List[LLMPerson]] = {}
+    all_found: List[LLMPerson] = []
+    for chunk in chunks:
+        responses, found = await process_with_llm(
+            source_url, request_id, jurisdiction_ocdid, chunk, prompt, llm, seed=seed,
+        )
+        for name, people in responses.items():
+            all_responses.setdefault(name, []).extend(people)
+        all_found.extend(found)
+    return all_responses, all_found
+
+
+def _collect_all_roles(people_by_name: Dict) -> set[str]:
+    return {r.strip().lower() for p_list in people_by_name.values() for p in p_list for r in p.roles}
 
 
 async def process_page_content(
@@ -142,6 +171,25 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
     )
 
 
+def _resolve_candidate_urls(
+    response: RelevantPageResponseSchema,
+    content: str,
+    known_roles: list[str],
+    config_name: Optional[str],
+    designations: list[str],
+    logger,
+) -> Tuple[list[str], Optional[dict]]:
+    if response.relevant_urls:
+        return response.relevant_urls, None
+    combined_designations = designations + known_roles  # token-exact matching
+    roles = known_roles + jurisdiction_name_suffix(config_name)  # substring matching
+    heuristic_urls = find_heuristic_urls(content, combined_designations, roles=roles)
+    if heuristic_urls:
+        logger.info(f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)")
+        return list(heuristic_urls.keys()), heuristic_urls
+    return [], None
+
+
 async def check_page_relevance(
     context: PeopleCollectorContext,
     page_to_process: Link,
@@ -160,24 +208,17 @@ async def check_page_relevance(
 
     updated_links = copy.deepcopy(context.data.links)
     existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
-    names, designations = _extract_names_and_designations(existing_records)
-    relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
+    names, designations = extract_names_and_designations(existing_records)
+    logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
 
-    if response.relevant_urls:
+    candidate_urls, url_comments = _resolve_candidate_urls(
+        response, content, known_roles, context.data.config.name, designations, logger
+    )
+    if candidate_urls:
         updated_links = add_relevant_urls(
-            response.relevant_urls, updated_links, page_to_process.url,
-            names, designations + known_roles, relevance_logger,
+            candidate_urls, updated_links, page_to_process.url,
+            names, designations + known_roles, logger, url_comments=url_comments,
         )
-    else:
-        combined_designations = designations + known_roles
-        roles = known_roles + _config_name_suffix(context.data.config.name)
-        heuristic_urls = _heuristic_url_comments(content, combined_designations, roles=roles)
-        if heuristic_urls:
-            relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)")
-            updated_links = add_relevant_urls(
-                list(heuristic_urls.keys()), updated_links, page_to_process.url,
-                names, combined_designations, relevance_logger, url_comments=heuristic_urls,
-            )
 
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(
@@ -198,65 +239,41 @@ async def run_llm_loop(
 ) -> Tuple[RecordsByLLM, RecordsByLLM, bool]:
     updated_raw_records = current_step.raw_records_by_llm
     updated_records = current_step.records_by_llm
-    llm_index = 0
-    retry_count = 0
-    heuristics_passed = False
 
-    while llm_index < len(LLMS):
-        llm = LLMS[llm_index]
-
+    for llm_idx, llm in enumerate(LLMS):
         if llm.get("with_batch_api", False):
-            llm_index += 1
-            retry_count = 0
             continue
-
-        seed = retry_count if retry_count > 0 else None
-        logger.info(f"Running LLM: {llm['name']} seed={seed}")
 
         prompt = _build_prompt(llm, known_roles, context.data.jurisdiction_ocdid)
-        chunks = _split_content_into_chunks(content, llm["max_content_chars"](prompt))
-        if len(chunks) > 1:
-            logger.info(f"Content split into {len(chunks)} chunks for LLM: {llm['name']}")
 
-        all_llm_responses: Dict[str, List[LLMPerson]] = {}
-        all_records_found: List[LLMPerson] = []
-        for chunk in chunks:
-            llm_responses, records_found = await process_with_llm(
-                page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
-                chunk, prompt, llm, seed=seed,
+        for attempt in range(2):
+            seed = attempt or None
+            logger.info(f"Running LLM: {llm['name']} seed={seed}")
+            llm_responses, all_records_found = await _process_chunks(
+                llm, page_to_process.url, context.request_id,
+                context.data.jurisdiction_ocdid, content, prompt, seed, logger,
             )
-            for name, people in llm_responses.items():
-                all_llm_responses.setdefault(name, []).extend(people)
-            all_records_found.extend(records_found)
+            updated_raw_records, updated_records = update_step_data(
+                context.data.jurisdiction_ocdid, llm_responses, identities,
+                updated_records, updated_raw_records, context.data.role_config,
+            )
+            if check_page_heuristics(logger, page_to_process.url, content, all_records_found):
+                logger.info(f"Heuristics passed for LLM: {llm['name']}")
+                for prev_llm in LLMS[:llm_idx]:
+                    if not prev_llm.get("with_batch_api", False):
+                        updated_raw_records = wipe_records_by_source_url(updated_raw_records, prev_llm["name"], page_to_process.url)
+                        updated_records = wipe_records_by_source_url(updated_records, prev_llm["name"], page_to_process.url)
+                return updated_raw_records, updated_records, True
 
-        updated_raw_records, updated_records = update_step_data(
-            context.data.jurisdiction_ocdid, all_llm_responses, identities,
-            updated_records, updated_raw_records, context.data.role_config,
-        )
-
-        if check_page_heuristics(logger, page_to_process.url, content, all_records_found):
-            logger.info(f"Heuristics passed for LLM: {llm['name']}")
-            for prev_llm in LLMS[:llm_index]:
-                if not prev_llm.get("with_batch_api", False):
-                    updated_raw_records = wipe_records_by_source_url(updated_raw_records, prev_llm["name"], page_to_process.url)
-                    updated_records = wipe_records_by_source_url(updated_records, prev_llm["name"], page_to_process.url)
-            heuristics_passed = True
-            break
-
-        if retry_count < 1:
-            logger.info(f"Heuristics failed for LLM: {llm['name']}, retrying.")
-            retry_count += 1
-            continue
+            if attempt == 0:
+                logger.info(f"Heuristics failed for LLM: {llm['name']}, retrying.")
 
         logger.info(f"Heuristics failed after retry for LLM: {llm['name']}, advancing.")
         updated_raw_records = wipe_records_by_source_url(updated_raw_records, llm["name"], page_to_process.url)
         updated_records = wipe_records_by_source_url(updated_records, llm["name"], page_to_process.url)
-        llm_index += 1
-        retry_count = 0
-    else:
-        logger.warning(f"All LLMs failed heuristics for page: {page_to_process.url}")
 
-    return updated_raw_records, updated_records, heuristics_passed
+    logger.warning(f"All LLMs failed heuristics for page: {page_to_process.url}")
+    return updated_raw_records, updated_records, False
 
 
 async def process_with_llm(
@@ -357,37 +374,36 @@ def calculate_progress(
     records_by_llm: RecordsByLLM,
     setup_data: ProcessingSetup,
 ) -> ProgressState:
-    llm_people_counts = []
-    target_role_found = set()
-    target_designations_found = set()
+    max_people_count = 0
+    has_target_role = False
+    has_target_designations = False
     num_target_designations = len(setup_data.target_designations)
 
     for llm, people_by_name in records_by_llm.items():
         valid_people = [p for p in people_by_name.values() if has_role_and_contact_info(setup_data.roles, p)]
-        llm_people_counts.append(len(valid_people))
+        max_people_count = max(max_people_count, len(valid_people))
 
-        all_roles = {r.strip().lower() for p_list in people_by_name.values() for p in p_list for r in p.roles}
-        if setup_data.target_role and setup_data.target_role.strip().lower() in all_roles:
-            target_role_found.add(llm)
+        if setup_data.target_role and setup_data.target_role.strip().lower() in _collect_all_roles(people_by_name):
+            has_target_role = True
 
         if num_target_designations == 0:
-            target_designations_found.add(llm)
+            has_target_designations = True
         else:
             people_with_designations = [
                 p_list for p_list in valid_people
                 if any(p.designations and any(d.strip() for d in p.designations) for p in p_list)
             ]
             if len(people_with_designations) >= num_target_designations:
-                target_designations_found.add(llm)
+                has_target_designations = True
 
     known_roles_lower = {r.strip().lower() for r in setup_data.known_roles}
     requires_mayor = not known_roles_lower or "mayor" in known_roles_lower
 
     return ProgressState(
         required_data=progress.required_data,
-        current_data=max(llm_people_counts, default=0),
-        has_target_role=bool(target_role_found) if requires_mayor else True,
-        has_target_designations=bool(target_designations_found),
+        current_data=max_people_count,
+        has_target_role=has_target_role if requires_mayor else True,
+        has_target_designations=has_target_designations,
     )
 
 
