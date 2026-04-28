@@ -10,21 +10,27 @@ def _error_link(failure_reason=None):
 
 
 @pytest.mark.unit
-def test_all_navigation_timeouts_returns_domain_navigation_timeout():
+def test_all_navigation_errors_returns_domain_navigation_error():
     links = [
-        _error_link(NavigationFailureReason.NAVIGATION_TIMEOUT),
-        _error_link(NavigationFailureReason.NAVIGATION_TIMEOUT),
+        _error_link(NavigationFailureReason.NET_TIMEOUT),
+        _error_link(NavigationFailureReason.NET_TIMEOUT),
     ]
-    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT
+    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
 
 
 @pytest.mark.unit
-def test_mixed_failure_reasons_returns_domain_inactive():
+def test_mixed_navigation_reasons_returns_domain_navigation_error():
     links = [
-        _error_link(NavigationFailureReason.NAVIGATION_TIMEOUT),
-        _error_link(NavigationFailureReason.DNS_FAILURE),
+        _error_link(NavigationFailureReason.NET_TIMEOUT),
+        _error_link(NavigationFailureReason.NET_DNS_FAILURE),
     ]
-    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_INACTIVE
+    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
+
+
+@pytest.mark.unit
+def test_http_403_returns_domain_navigation_error():
+    links = [_error_link(NavigationFailureReason.HTTP_403)]
+    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
 
 
 @pytest.mark.unit
@@ -40,6 +46,6 @@ def test_no_error_links_returns_domain_inactive():
 
 
 @pytest.mark.unit
-def test_single_timeout_returns_domain_navigation_timeout():
-    links = [_error_link(NavigationFailureReason.NAVIGATION_TIMEOUT)]
-    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT
+def test_single_navigation_error_returns_domain_navigation_error():
+    links = [_error_link(NavigationFailureReason.NET_TIMEOUT)]
+    assert _classify_all_failed_error(links) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR

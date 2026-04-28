@@ -223,7 +223,7 @@ async def get_pipeline_issues_page(
     show_archived: bool = False,
 ) -> tuple[list[dict], int]:
     if show_archived:
-        active_statuses = [PipelineIssueStatus.RESOLVED]
+        active_statuses = [PipelineIssueStatus.RESOLVED, PipelineIssueStatus.SUPERSEDED]
     else:
         active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
     conditions: list[sql.Composable] = [

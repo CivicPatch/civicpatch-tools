@@ -65,6 +65,7 @@ async def run_pipeline(
                     api_client, logger, ctx.request_id, ctx.data.jurisdiction_ocdid,
                     status=ctx.current_state.value, progress=ctx.progress,
                     error_type=getattr(ctx.data, 'error_step', None),
+                    error_detail=getattr(ctx.data, 'error_detail', None),
                 )
             except Exception as e:
                 logger.warning(f"Failed to update job status (non-fatal): {e}")

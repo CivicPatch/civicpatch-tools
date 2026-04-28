@@ -105,13 +105,9 @@ def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
     }
 
 
-async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None):
+async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None, error_detail: Optional[dict] = None):
     await update_pipeline_run_status(request_id=request_id, status=status, progress=progress)
-    if status == PipelineRunStatus.ERROR:
-        if error_type:
-            await upsert_pipeline_issue(request_id, error_type, "error", [{}])
-        else:
-            await upsert_pipeline_issue(request_id, "pipeline_error", "error", [{"error": "workflow failure"}])
+    
     if not jurisdiction_ocdid:
         pipeline_run = await get_pipeline_run(request_id)
         jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid") if pipeline_run else None
@@ -302,6 +298,7 @@ def get_router(api_key_header):
             request.progress,
             request.jurisdiction_ocdid,
             request.error_type,
+            request.error_detail,
         )
 
         return UpdatePipelineRunStatusResponse(
@@ -531,13 +528,18 @@ def get_router(api_key_header):
 
         is_admin = Role.ADMINS in (identity.teams or [])
 
-        if issue_type in ("pipeline_error", "no_info", "domain_inactive"):
+        if issue_type in ("pipeline_error", "no_info", "domain_inactive", "domain_navigation_error"):
             request_id = issue["issue_key"]
             base_rows = [_build_request_row(raw[0], issue_type, issue_key) if raw else {"request_id": request_id}]
-            error = (issue.get("data") or {}).get("error")
+            issue_data = issue.get("data") or {}
+            error = issue_data.get("error")
+            failure_reason = issue_data.get("failure_reason")
+            failure_source = issue_data.get("failure_source")
         else:
             base_rows = [_build_request_row(r, issue_type, issue_key) for r in raw]
             error = None
+            failure_reason = None
+            failure_source = None
 
         rows = []
         for row in base_rows:
@@ -547,6 +549,8 @@ def get_router(api_key_header):
             rows.append({
                 **row,
                 **({"error": error} if error is not None else {}),
+                **({"failure_reason": failure_reason} if failure_reason is not None else {}),
+                **({"failure_source": failure_source} if failure_source is not None else {}),
                 "pipeline_run_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if (debug_key_base and is_admin) else None,
                 "pipeline_run_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
                 "debug_url": storage_service.get_bucket_url("civicpatch-debug", req_id) if (is_admin and req_id) else None,

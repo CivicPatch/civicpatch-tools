@@ -99,6 +99,7 @@ async def get_jurisdiction_info(client: httpx.AsyncClient, jurisdiction_ocdid: s
 async def update_pipeline_run_status(
     client: httpx.AsyncClient, logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int,
     error_type: Optional[str] = None,
+    error_detail: Optional[dict] = None,
 ):
     MAX_RETRIES = 3
 
@@ -109,6 +110,7 @@ async def update_pipeline_run_status(
             "progress": progress,
             "jurisdiction_ocdid": jurisdiction_ocdid,
             "error_type": error_type,
+            "error_detail": error_detail,
         }
 
         response = await client.patch(
