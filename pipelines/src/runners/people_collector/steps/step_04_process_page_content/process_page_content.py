@@ -1,19 +1,17 @@
 import os
-import re
 import copy
 from dataclasses import dataclass
 from runners.people_collector.schemas import (
-  PeopleCollectorContext,
-  Link,
-  LinkStatus,
-  PipelineStatus,
-  LLMPerson,
-  PeopleArrayLLMResponseSchema,
-  RecordsByLLM,
-  ProcessPageContentStep,
-  ResearchMunicipalityStep,
-  ProgressState,
-  RelevantPageResponseSchema
+    PeopleCollectorContext,
+    Link,
+    LinkStatus,
+    PipelineStatus,
+    LLMPerson,
+    PeopleArrayLLMResponseSchema,
+    RecordsByLLM,
+    ProcessPageContentStep,
+    ProgressState,
+    RelevantPageResponseSchema,
 )
 from shared.utils import (
     config_utils,
@@ -21,18 +19,10 @@ from shared.utils import (
     phone_utils,
     email_utils,
     url_utils,
-    name_utils,
     id_utils,
 )
-from utils import (
-    merge_utils,
-    people_utils,
-    designation_utils,
-    log_utils
-)
-from typing import List, Dict, Optional, Set, Tuple, cast
-import services.google_gemini.llm as google_gemini_llm
-import services.google_gemini.prompts as google_gemini_prompt
+from utils import merge_utils, people_utils, designation_utils, log_utils
+from typing import List, Dict, Optional, Tuple, cast
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
 from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
@@ -46,8 +36,6 @@ from runners.people_collector.steps.step_04_process_page_content.link_frontier i
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import check_page_heuristics
 
-_relevance_llm = open_router_llm
-_relevance_prompt = open_router_prompt
 
 @dataclass
 class ProcessingSetup:
@@ -56,6 +44,7 @@ class ProcessingSetup:
     target_designations: List[str]
     known_roles: List[str]
 
+
 LLMS = [
     {
         "name": "open_router",
@@ -63,28 +52,33 @@ LLMS = [
         "prompt": open_router_prompt,
         "with_batch_api": False,
     },
-    #{
-    #    "name": "google_gemini",
-    #    "service": google_gemini_llm,
-    #    "prompt": google_gemini_prompt,
-    #    "with_batch_api": False,
-    #}
 ]
 
 MINIMUM_NUM_PEOPLE = 5
 
 
-async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> Tuple[List[Link], ProcessPageContentStep]:
+async def process_page_content(
+    context: PeopleCollectorContext,
+    page_to_process: Link,
+) -> Tuple[List[Link], ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
-    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before process_page_content"
-    setup_data = get_setup_data(context.data.research_municipality_step, context.data.role_config)
-    current_step = get_or_create_step(context)
-    identities = get_identities(context)
-    content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
+    assert context.data.research_municipality_step is not None, \
+        "should never happen — research_municipality_step is required before process_page_content"
 
-    known_roles = context.data.research_municipality_step.known_roles
+    research = context.data.research_municipality_step
+    known_roles = research.known_roles
+    role_names = config_utils.get_role_names(context.data.role_config)
+    setup_data = ProcessingSetup(
+        roles=role_names,
+        target_role="Mayor",
+        target_designations=research.target_designations,
+        known_roles=known_roles,
+    )
+    current_step = get_or_create_step(context)
+    identities = research.identities
+    content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
     updated_links, is_relevant = await check_page_relevance(context, page_to_process, content, known_roles)
     if not is_relevant:
@@ -97,9 +91,13 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     updated_progress = calculate_progress(current_step.progress, updated_records, setup_data)
 
     if heuristics_passed:
-        updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, config_utils.get_role_names(context.data.role_config), updated_records)
+        updated_links = update_links(
+            context.data.config.url, updated_links, page_to_process, logger, role_names, updated_records
+        )
     else:
-        updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL)
+        updated_links = mark_link_as_terminating_status(
+            page_to_process.url, updated_links, LinkStatus.PROCESSED_HEURISTICS_FAIL
+        )
 
     return updated_links, ProcessPageContentStep(
         progress=updated_progress,
@@ -109,54 +107,40 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
 
 
 def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentStep:
-    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before get_or_create_step"
+    assert context.data.research_municipality_step is not None, \
+        "should never happen — research_municipality_step is required before get_or_create_step"
     expected_count = context.data.research_municipality_step.expected_count
     return context.data.process_page_content_step or create_process_page_content_step(
         required_data=max(MINIMUM_NUM_PEOPLE, expected_count)
     )
 
 
-def get_identities(context: PeopleCollectorContext) -> Dict:
-    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before get_identities"
-    return context.data.research_municipality_step.identities
-
-
 def create_process_page_content_step(required_data: int) -> ProcessPageContentStep:
     return ProcessPageContentStep(
-        records_by_llm={
-            "google_gemini": {},
-            "open_router": {},
-        },
-        raw_records_by_llm={
-            "google_gemini": {},
-            "open_router": {},
-        },
+        records_by_llm={"open_router": {}},
+        raw_records_by_llm={"open_router": {}},
         progress=ProgressState(
             required_data=required_data,
             current_data=0,
             has_target_role=False,
-            has_target_designations=False
+            has_target_designations=False,
         ),
     )
 
 
-def get_setup_data(municipality_research: ResearchMunicipalityStep, role_config=None) -> ProcessingSetup:
-    return ProcessingSetup(
-        roles=config_utils.get_role_names(role_config),
-        target_role="Mayor",
-        target_designations=municipality_research.target_designations,
-        known_roles=municipality_research.known_roles,
-    )
-
-
-async def check_page_relevance(context: PeopleCollectorContext, page_to_process: Link, content: str, known_roles: list[str]) -> Tuple[List[Link], bool]:
-    prompt = _relevance_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "", known_roles)
-    raw_response = await _relevance_llm.run_prompt(
+async def check_page_relevance(
+    context: PeopleCollectorContext,
+    page_to_process: Link,
+    content: str,
+    known_roles: list[str],
+) -> Tuple[List[Link], bool]:
+    prompt = open_router_prompt.relevant_page_prompt(page_to_process.url, context.data.config.name or "", known_roles)
+    raw_response = await open_router_llm.run_prompt(
         context.request_id,
         context.data.jurisdiction_ocdid,
         prompt,
         response_schema=RelevantPageResponseSchema,
-        content=content
+        content=content,
     )
     response = RelevantPageResponseSchema.model_validate(raw_response)
 
@@ -164,18 +148,27 @@ async def check_page_relevance(context: PeopleCollectorContext, page_to_process:
     existing_records = context.data.process_page_content_step.records_by_llm if context.data.process_page_content_step else {}
     names, designations = _extract_names_and_designations(existing_records)
     relevance_logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
+
     if response.relevant_urls:
-        updated_links = add_relevant_urls(response.relevant_urls, updated_links, page_to_process.url, names, designations + known_roles, relevance_logger)
+        updated_links = add_relevant_urls(
+            response.relevant_urls, updated_links, page_to_process.url,
+            names, designations + known_roles, relevance_logger,
+        )
     else:
         combined_designations = designations + known_roles
         roles = known_roles + _config_name_suffix(context.data.config.name)
         heuristic_urls = _heuristic_url_comments(content, combined_designations, roles=roles)
         if heuristic_urls:
             relevance_logger.info(f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)")
-            updated_links = add_relevant_urls(list(heuristic_urls.keys()), updated_links, page_to_process.url, names, combined_designations, relevance_logger, url_comments=heuristic_urls)
+            updated_links = add_relevant_urls(
+                list(heuristic_urls.keys()), updated_links, page_to_process.url,
+                names, combined_designations, relevance_logger, url_comments=heuristic_urls,
+            )
 
     if not response.is_relevant:
-        updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
+        updated_links = mark_link_as_terminating_status(
+            page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT
+        )
 
     return updated_links, response.is_relevant
 
@@ -205,10 +198,10 @@ async def run_llm_loop(
 
         seed = retry_count if retry_count > 0 else None
         logger.info(f"Running LLM: {llm['name']} seed={seed}")
+
         llm_responses, records_found = await process_with_llm(
             page_to_process.url, context.request_id, context.data.jurisdiction_ocdid,
-            content, known_roles, llm,
-            seed=seed,
+            content, known_roles, llm, seed=seed,
         )
         updated_raw_records, updated_records = update_step_data(
             context.data.jurisdiction_ocdid, llm_responses, identities,
@@ -249,27 +242,20 @@ async def process_with_llm(
     llm: dict,
     seed: Optional[int] = None,
 ) -> Tuple[Dict[str, List[LLMPerson]], List[LLMPerson]]:
-    """
-    Run a single LLM's prompt to process page content.
-    Checks with_batch_api flag — batch mode is a stub for now.
-    """
     if llm.get("with_batch_api", False):
         raise NotImplementedError(f"Batch API not yet implemented for LLM: {llm['name']}")
 
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     prompt = llm["prompt"].municipality_officials_prompt(known_roles, state=ocdid_parts.state, county=ocdid_parts.county)
     response = await llm["service"].run_prompt(
-        request_id,
-        jurisdiction_ocdid,
-        prompt,
+        request_id, jurisdiction_ocdid, prompt,
         response_schema=PeopleArrayLLMResponseSchema,
         content=content,
         seed=seed,
     )
 
-    formatted_response = cast(PeopleArrayLLMResponseSchema, response)
     processed_people = []
-    for p in formatted_response.people:
+    for p in cast(PeopleArrayLLMResponseSchema, response).people:
         p = p.model_dump()
         if not p.get("name") or not p["name"].strip():
             continue
@@ -289,50 +275,34 @@ def update_step_data(
     existing_raw_records_by_llm: RecordsByLLM,
     role_config=None,
 ) -> Tuple[RecordsByLLM, RecordsByLLM]:
-    """Update and normalize all processed records functionally without mutations."""
-    updated_raw_records = update_records_by_llm(merged_identities, existing_raw_records_by_llm, llm_responses)
+    updated_raw = copy.deepcopy(existing_raw_records_by_llm)
+    for llm_name, llm_people_list in llm_responses.items():
+        people_by_name = updated_raw.get(llm_name, {})
+        updated_raw[llm_name] = merge_utils.group_people_by_name(merged_identities, people_by_name, llm_people_list)
 
-    updated_normalized_records = copy.deepcopy(existing_records_by_llm)
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
-
-    for llm, people_by_name in updated_raw_records.items():
-        updated_normalized_records[llm] = {
+    updated_normalized = copy.deepcopy(existing_records_by_llm)
+    for llm, people_by_name in updated_raw.items():
+        updated_normalized[llm] = {
             name: [normalize_record(logger, person, role_config) for person in people]
             for name, people in people_by_name.items()
         }
 
-    return updated_raw_records, updated_normalized_records
-
-
-def update_records_by_llm(
-    identities: Dict[str, List[str]],
-    records_by_llm: RecordsByLLM,
-    current_responses: Dict[str, List[LLMPerson]]
-) -> RecordsByLLM:
-    updated_records_by_llm = copy.deepcopy(records_by_llm)
-
-    for llm_name, llm_people_list in current_responses.items():
-        people_by_name = updated_records_by_llm.get(llm_name, {})
-        updated_records_by_llm[llm_name] = merge_utils.group_people_by_name(
-            identities, people_by_name, llm_people_list
-        )
-
-    return updated_records_by_llm
+    return updated_raw, updated_normalized
 
 
 def wipe_records_by_source_url(records_by_llm: RecordsByLLM, llm_name: str, source_url: str) -> RecordsByLLM:
     updated = copy.deepcopy(records_by_llm)
     people_by_name = updated.get(llm_name, {})
-    filtered = {
+    updated[llm_name] = {
         name: [p for p in people if p.source_url != source_url]
         for name, people in people_by_name.items()
+        if any(p.source_url != source_url for p in people)
     }
-    updated[llm_name] = {k: v for k, v in filtered.items() if v}
     return updated
 
 
 def normalize_record(logger, record: LLMPerson, role_config=None) -> LLMPerson:
-    """Normalize roles, designations, and phone number in an LLMPerson record."""
     normalized_phone = phone_utils.normalize_first_phone(record.phone) if record.phone else None
     if record.phone and normalized_phone is None:
         logger.warning(f"Failed to parse phone number: {record.phone}")
@@ -354,11 +324,15 @@ def normalize_record(logger, record: LLMPerson, role_config=None) -> LLMPerson:
         start_date=record.start_date,
         end_date=record.end_date,
         image=record.image,
-        source_url=record.source_url
+        source_url=record.source_url,
     )
 
 
-def calculate_progress(progress: ProgressState, records_by_llm: RecordsByLLM, setup_data: ProcessingSetup) -> ProgressState:
+def calculate_progress(
+    progress: ProgressState,
+    records_by_llm: RecordsByLLM,
+    setup_data: ProcessingSetup,
+) -> ProgressState:
     llm_people_counts = []
     target_role_found = set()
     target_designations_found = set()
@@ -384,17 +358,16 @@ def calculate_progress(progress: ProgressState, records_by_llm: RecordsByLLM, se
 
     known_roles_lower = {r.strip().lower() for r in setup_data.known_roles}
     requires_mayor = not known_roles_lower or "mayor" in known_roles_lower
-    sorted_counts = sorted(llm_people_counts, reverse=True)
+
     return ProgressState(
         required_data=progress.required_data,
-        current_data=sorted_counts[0] if sorted_counts else 0,
-        has_target_role=len(target_role_found) >= 1 if requires_mayor else True,
-        has_target_designations=len(target_designations_found) >= 1,
+        current_data=max(llm_people_counts, default=0),
+        has_target_role=bool(target_role_found) if requires_mayor else True,
+        has_target_designations=bool(target_designations_found),
     )
 
 
 def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) -> str:
-    """Read the preprocessed markdown content."""
     cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
     content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
     with open(content_file_path, "r", encoding="utf-8") as f:
