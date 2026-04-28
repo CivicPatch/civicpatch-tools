@@ -1,6 +1,6 @@
 import os
 from typing import List
-from shared.utils import data_path_utils, url_utils
+from shared.utils import data_path_utils, url_utils, config_utils
 import runners.people_collector.steps.step_02_scrape_page.scrape_utils as scrape_utils
 from runners.people_collector.schemas import (
     PeopleCollectorContext, Link, LinkStatus, PipelineStatus
@@ -18,7 +18,7 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
 
     try:
         image_directory = data_path_utils.get_images_path(jurisdiction_ocdid)
-        html_content, final_url = await scrape_utils.scrape(logger, link_to_scrape.url, { "image_directory": image_directory })
+        html_content, final_url = await scrape_utils.scrape(logger, link_to_scrape.url, { "image_directory": image_directory, "accordion_keywords": config_utils.governance_keywords() })
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")

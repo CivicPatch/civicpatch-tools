@@ -27,7 +27,8 @@ IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
 
 class ScrapeOptions(TypedDict):
     image_dir: str  # Directory to save images
-    scraped_urls: list[str] # List of URLs that have already been scraped
+    scraped_urls: list[str]  # List of URLs that have already been scraped
+    accordion_keywords: list[str]  # Only expand accordion sections whose text matches one of these keywords
 
 class ImageError(Exception):
     pass
@@ -137,7 +138,8 @@ async def scrape(logger, website_url, options=None):
             except Exception:
                 pass  # Continue if we can't check content type
 
-            await auto_detect_and_wait(page, logger, response)
+            accordion_keywords = options.get('accordion_keywords')
+            await auto_detect_and_wait(page, logger, response, accordion_keywords=accordion_keywords)
 
             await flatten_shadow_root(page)
             await html_relative_to_absolute_urls(page)
@@ -157,7 +159,7 @@ async def scrape(logger, website_url, options=None):
                 pass  # Already closed
 
 
-async def auto_detect_and_wait(page, logger, response):
+async def auto_detect_and_wait(page, logger, response, accordion_keywords=None):
     """
     Auto-detect site type and apply appropriate waiting strategies.
     Currently detects: Wix, React/SPA, static sites
@@ -203,6 +205,8 @@ async def auto_detect_and_wait(page, logger, response):
         else:
             logger.debug("Standard site - using basic waiting strategy")
             await wait_for_basic_content(page, logger)
+
+        await expand_accordions(page, logger, accordion_keywords)
 
     except Exception as e:
         logger.warning(f"Error in auto-detection: {e}")
@@ -254,6 +258,27 @@ async def wait_for_basic_content(page, logger):
 
     except Exception as e:
         logger.warning(f"Error in basic waiting: {e}")
+
+async def expand_accordions(page: Page, logger, keywords: list[str] | None = None):
+    try:
+        collapsed = await page.query_selector_all('[aria-expanded="false"]')
+        expanded = 0
+        for el in collapsed:
+            try:
+                if keywords:
+                    text = (await el.inner_text()).lower()
+                    if not any(kw.lower() in text for kw in keywords):
+                        continue
+                await el.click()
+                await page.wait_for_timeout(300)
+                expanded += 1
+            except Exception:
+                pass
+        if expanded:
+            logger.debug(f"Expanded {expanded} accordion sections")
+    except Exception as e:
+        logger.warning(f"Error expanding accordions: {e}")
+
 
 async def convert_background_divs_to_imgs(page):
     """Inject an <img> for each div's CSS background-image, preserving the div and its children."""
