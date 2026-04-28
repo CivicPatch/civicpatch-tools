@@ -4,8 +4,12 @@ from runners.people_collector.schemas import (
     LLMPerson, LinkStatus, Link, RelevantPageResponseSchema
 )
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
-    has_role_and_contact_info, check_page_heuristics, check_page_relevance, add_relevant_urls, normalize_record
+    check_page_relevance, normalize_record
 )
+from runners.people_collector.steps.step_04_process_page_content.link_frontier import (
+    has_role_and_contact_info, add_relevant_urls
+)
+from runners.people_collector.steps.step_04_process_page_content.heuristics import check_page_heuristics
 from runners.people_collector.schemas import LLMPerson
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
