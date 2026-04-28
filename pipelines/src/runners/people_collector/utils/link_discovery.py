@@ -1,9 +1,9 @@
 import re
-import copy
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Set, Tuple
-from runners.people_collector.schemas import Link, LinkStatus, LLMPerson, RecordsByLLM
+from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus, LLMPerson, RecordsByLLM
 from shared.utils import url_utils, name_utils, config_utils
+from shared.utils.url_utils import canonical_url
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -158,30 +158,31 @@ def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> 
     )
 
 
-def _find_link(links: List[Link], url: str):
-    return next((link for link in links if url_utils.same_url(link.url, url)), None)
+def add_relevant_urls(
+    urls: List[str],
+    frontier: LinkFrontier,
+    domain: str,
+    names: Optional[List[str]] = None,
+    designations: Optional[List[str]] = None,
+    logger=None,
+    url_comments: Optional[Dict[str, Tuple[str, str]]] = None,
+) -> LinkFrontier:
+    """Add LLM-identified relevant URLs as pending links, restricted to the same domain.
 
-
-def _sort_pending(links: List[Link], names: List[str], designations: List[str]) -> List[Link]:
-    pending = [l for l in links if l.status == LinkStatus.PENDING.value]
-    non_pending = [l for l in links if l.status != LinkStatus.PENDING.value]
-    pending.sort(key=lambda l: _pending_sort_key(l, names, designations))
-    return pending + non_pending
-
-
-def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, names: Optional[List[str]] = None, designations: Optional[List[str]] = None, logger=None, url_comments: Optional[Dict[str, Tuple[str, str]]] = None) -> List[Link]:
-    """Add LLM-identified relevant URLs as pending links, restricted to the same domain."""
+    The queue is re-sorted by priority after insertion.
+    """
     names = names or []
     designations = designations or []
-    updated_links = copy.deepcopy(existing_links)
+    new_links = dict(frontier.links)
+    new_keys: List[str] = []
     for link_url in urls:
         if not url_utils.same_domain(domain, link_url):
             continue
         formatted_link_url = url_utils.format_url(link_url)
-        existing_link = _find_link(updated_links, formatted_link_url)
-        if existing_link:
-            if existing_link.status == LinkStatus.PENDING.value:
-                existing_link.num_references += 1
+        key = canonical_url(formatted_link_url)
+        if key in new_links:
+            if new_links[key].status == LinkStatus.PENDING.value:
+                new_links[key] = new_links[key].model_copy(update={"num_references": new_links[key].num_references + 1})
             continue
         blacklist_comment = _blacklist_match(formatted_link_url)
         if blacklist_comment:
@@ -198,24 +199,23 @@ def add_relevant_urls(urls: List[str], existing_links: List[Link], domain: str, 
         else:
             kw = _keyword_match(url_utils.get_path(formatted_link_url))
             comment = f"whitelisted: {kw}" if kw else None
-        updated_links.append(Link(
+        new_links[key] = Link(
             url=formatted_link_url,
             status=LinkStatus.PENDING.value,
             folder_name="",
             num_references=1,
             comment=comment,
             text=link_text,
-        ))
-    return _sort_pending(updated_links, names, designations)
+        )
+        new_keys.append(key)
+
+    all_pending = list(frontier.queue) + new_keys
+    all_pending.sort(key=lambda k: _pending_sort_key(new_links[k], names, designations))
+    return frontier.model_copy(update={"links": new_links, "queue": all_pending})
 
 
-def mark_link_as_terminating_status(link_url: str, existing_links: List[Link], status: LinkStatus) -> List[Link]:
-    updated_links = copy.deepcopy(existing_links)
-    existing_link = next((link for link in updated_links if url_utils.same_url(link.url, link_url)), None)
-    if existing_link:
-        existing_link.status = status.value
-        updated_links.append(updated_links.pop(updated_links.index(existing_link)))
-    return updated_links
+def mark_link_as_terminating_status(link_url: str, frontier: LinkFrontier, status: LinkStatus) -> LinkFrontier:
+    return frontier.mark_status(link_url, status)
 
 
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
@@ -255,13 +255,13 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
     return found_websites
 
 
-def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
+def update_website_links(logger, domain, roles, frontier: LinkFrontier, records_by_llm: RecordsByLLM) -> LinkFrontier:
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
     names, designations = extract_names_and_designations(records_by_llm)
-    return add_relevant_urls(found_websites, existing_links, domain, names, designations + roles, logger)
+    return add_relevant_urls(found_websites, frontier, domain, names, designations + roles, logger)
 
 
-def update_links(domain, context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
-    """Update processed page status and add new website links."""
-    updated_links = mark_link_as_terminating_status(processed_page.url, context_links, LinkStatus.DONE)
-    return update_website_links(logger, domain, roles, updated_links, records_by_llm)
+def update_links(domain, frontier: LinkFrontier, processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> LinkFrontier:
+    """Mark processed page as DONE and add new website links from LLM records."""
+    frontier = frontier.mark_status(processed_page.url, LinkStatus.DONE)
+    return update_website_links(logger, domain, roles, frontier, records_by_llm)

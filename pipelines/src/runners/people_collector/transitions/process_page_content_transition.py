@@ -28,17 +28,6 @@ def next_process_content_state(
     return PipelineStatus.SCRAPE_PAGE, None
 
 
-def get_next_link_with_status(links: List[Link], status: LinkStatus) -> Link | None:
-    for link in links:
-        if link.status == status.value:
-            return link
-    return None
-
-def get_link_status_by_url(links: List[Link], url: str) -> LinkStatus | None:
-    for link in links:
-        if url_utils.same_url(link.url, url):
-            return LinkStatus(link.status)
-    return None
 
 def should_stop_for_cost_limit(current_cost: Decimal, job_config: JobConfig) -> bool:
     return current_cost >= job_config.pipeline_run_cost_limit

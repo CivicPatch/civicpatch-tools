@@ -20,15 +20,21 @@ def format_url(url: str):
     )
     return urlunparse(normalized)
 
+def canonical_url(url: str) -> str:
+    """
+    Returns the canonical form of a URL for use as a dict key.
+    Lowercases everything, strips www, strips trailing slash, normalizes to https.
+    Two URLs are equivalent iff their canonical forms are equal.
+    """
+    parsed = urlparse(format_url(url).rstrip("/"))
+    return urlunparse(parsed._replace(scheme="https", netloc=parsed.netloc.removeprefix("www."))).lower()
+
 def same_url(url1: str, url2: str) -> bool:
     """
     Check if two URLs are the same after normalization.
     Treats http/https and www/non-www as equivalent.
     """
-    def _normalize(url: str) -> str:
-        parsed = urlparse(format_url(url).rstrip("/"))
-        return urlunparse(parsed._replace(scheme="https", netloc=parsed.netloc.removeprefix("www."))).lower()
-    return _normalize(url1) == _normalize(url2)
+    return canonical_url(url1) == canonical_url(url2)
 
 def url_in_text(url: str, text: str) -> bool:
     """

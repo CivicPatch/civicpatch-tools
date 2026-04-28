@@ -2,6 +2,7 @@ import pytest
 from runners.people_collector.schemas import (
     LLMPerson, Person,
     PeopleCollectorContext, PeopleCollectorData,
+    LinkFrontier,
     ProcessPageContentStep, ResearchMunicipalityStep,
     PreprocessPageContentStep,
     PipelineRunConfig
@@ -62,7 +63,7 @@ def _build_context(records_by_llm: dict, elected_officials: list, identities=Non
     data = PeopleCollectorData(
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:tx/place:port_isabel/government",
         config=PipelineRunConfig(url="https://myportisabel.com/", name="Port Isabel city"),
-        links=[],
+        frontier=LinkFrontier(),
         research_municipality_step=research_step,
         preprocess_page_content_step=PreprocessPageContentStep(elapsed_times=[], total_elapsed_time_seconds=0, average_elapsed_time_seconds=0),
         process_page_content_step=process_step,
