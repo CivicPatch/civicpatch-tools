@@ -31,6 +31,7 @@ class Link(BaseModel):
     comment: Optional[str] = None
     text: Optional[str] = None
     failure_reason: Optional[str] = None  # NavigationFailureReason value, set when status=ERROR
+    failure_source: Optional[str] = None  # raw Playwright/Chromium detail string
 
 class RawLLMPerson(BaseModel):
     name: str
@@ -153,6 +154,7 @@ class PeopleCollectorData(BaseModel):
     send_error_step: Optional[MaybeSendToGitHubStep] = None
     issues: list[dict] = []
     error_step: Optional[str] = None
+    error_detail: Optional[dict] = None
 
 class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PipelineStatus]):
     pass

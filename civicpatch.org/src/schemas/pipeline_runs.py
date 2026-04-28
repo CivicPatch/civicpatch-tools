@@ -57,6 +57,7 @@ class UpdatePipelineRunStatusRequest(BaseModel):
     progress: Optional[int] = None
     jurisdiction_ocdid: Optional[str] = None
     error_type: Optional[str] = None
+    error_detail: Optional[dict] = None
 
 
 class UpdatePipelineRunStatusResponse(BaseModel):

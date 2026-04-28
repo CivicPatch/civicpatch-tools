@@ -89,6 +89,13 @@ async def _handle_submit_pipeline_run_artifacts(
     except Exception as e:
         logger.error(f"Failed to send costs for {request.request_id}: {e}", exc_info=True)
 
+    try:
+        context_path = file_utils.find_file(debug_file_dir, "data_source/*/local/*/pipeline_run_context.json")
+        with open(context_path, "r") as f:
+            workflow_context = json.load(f)
+    except FileNotFoundError:
+        workflow_context = {}
+
     if is_success:
         is_valid = await file_utils.validate_file_patterns(pull_request_file_dir, artifact_file_patterns)
         if not is_valid:
@@ -102,9 +109,6 @@ async def _handle_submit_pipeline_run_artifacts(
             yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
         await update_pipeline_run_data(request.request_id, updated_data)
 
-        workflow_context_path = file_utils.find_file(pull_request_file_dir, "data_source/*/local/*/pipeline_run_context.json")
-        with open(workflow_context_path, "r") as f:
-            workflow_context = json.load(f)
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)
 
@@ -115,6 +119,12 @@ async def _handle_submit_pipeline_run_artifacts(
                 "issue",
                 [issue.get("data") or {}],
             )
+    else:
+        context_data = workflow_context.get("data", {})
+        error_step = context_data.get("error_step") or "pipeline_error"
+        error_detail = context_data.get("error_detail") or {}
+        await upsert_pipeline_issue(request.request_id, error_step, "error", [error_detail])
+
 
     artifact_zip_path = await file_utils.zip_directory(pull_request_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"

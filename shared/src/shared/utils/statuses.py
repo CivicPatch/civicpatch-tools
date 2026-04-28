@@ -51,8 +51,8 @@ class PipelineRunErrorType(StrEnum):
     # pipeline_error is the server-side fallback; the pipeline never sets it explicitly
     NO_INFO = "no_info"
     DOMAIN_INACTIVE = "domain_inactive"
-    # Domain resolves and server exists but didn't respond within the timeout
-    DOMAIN_NAVIGATION_TIMEOUT = "domain_navigation_timeout"
+    # Domain resolved but navigation failed (timeout, DNS failure, HTTP error, etc.)
+    DOMAIN_NAVIGATION_ERROR = "domain_navigation_error"
 
 
 class PipelineIssueCategory(StrEnum):

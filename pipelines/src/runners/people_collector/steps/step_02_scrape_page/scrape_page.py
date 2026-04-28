@@ -46,10 +46,12 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
         failure_reason = e.reason.value if isinstance(e, NavigationError) else None
+        failure_source = e.source if isinstance(e, NavigationError) else None
         updated_links = []
         for link in context.data.links:
             if link.url == link_to_scrape.url:
                 link.status = LinkStatus.ERROR.value
                 link.failure_reason = failure_reason
+                link.failure_source = failure_source
             updated_links.append(link)
         return updated_links, link_to_scrape.url

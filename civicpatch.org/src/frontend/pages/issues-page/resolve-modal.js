@@ -103,6 +103,13 @@ function ResolveModal(host) {
   const typeExtras =
     issue.issue_type === ISSUE_TYPE.PIPELINE_ERROR
       ? (detail?.error ? html`<p class="issues-page__modal-meta"><code>${detail.error}</code></p>` : null)
+    : issue.issue_type === ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR
+      ? (data.failure_reason || data.failure_source ? html`
+          <div class="issues-page__modal-meta">
+            ${data.failure_reason ? html`<p><code>${data.failure_reason}</code></p>` : null}
+            ${data.failure_source ? html`<p><code>${data.failure_source}</code></p>` : null}
+          </div>
+        ` : null)
     : issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE
       ? html`
         <div class="issues-page__resolve-role-form">

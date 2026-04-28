@@ -7,7 +7,6 @@ from runners.people_collector.schemas import (
   PeopleCollectorData
 )
 from shared.utils.statuses import PipelineRunErrorType, PipelineIssueType
-from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationFailureReason
 from shared.utils.url_utils import same_domain, same_url
 
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
@@ -85,11 +84,17 @@ async def research_municipality_transition(job_config: JobConfig, logger: Pipeli
 
 def _classify_all_failed_error(links: list) -> PipelineRunErrorType:
     error_links = get_links_with_status(links, [LinkStatus.ERROR])
-    if error_links and all(
-        l.failure_reason == NavigationFailureReason.NAVIGATION_TIMEOUT for l in error_links
-    ):
-        return PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT
+    if error_links and all(l.failure_reason is not None for l in error_links):
+        return PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
     return PipelineRunErrorType.DOMAIN_INACTIVE
+
+
+def _navigation_error_detail(links: list) -> dict:
+    error_links = get_links_with_status(links, [LinkStatus.ERROR])
+    if not error_links:
+        return {}
+    first = error_links[0]
+    return {"failure_reason": first.failure_reason, "failure_source": first.failure_source}
 
 
 async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, context: PeopleCollectorContext, _api_client: httpx.AsyncClient) -> tuple[PeopleCollectorContext, PipelineStatus]:
@@ -104,9 +109,11 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
             if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
+            detail = _navigation_error_detail(context.data.links) if error_type == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR else None
             return _next_context(
                 context,
                 error_step=error_type,
+                error_detail=detail,
             ), PipelineStatus.SEND_ERROR
         return context, PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
@@ -148,9 +155,11 @@ async def preprocess_page_content_transition(_: JobConfig, logger: PipelineRunLo
             if context.data.find_jurisdiction_url_step is None:
                 return context, PipelineStatus.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.links)
+            detail = _navigation_error_detail(context.data.links) if error_type == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR else None
             return _next_context(
                 context,
                 error_step=error_type,
+                error_detail=detail,
             ), PipelineStatus.SEND_ERROR
         return context, PipelineStatus.PROCESS_PAGE_CONTENT
 
@@ -319,13 +328,14 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
     root_link = next((l for l in context.data.links if l.url == context.data.config.url), None)
     root_failure_reason = root_link.failure_reason if root_link else None
 
-    # Timed out and search found nothing new — report timeout
-    if root_failure_reason == NavigationFailureReason.NAVIGATION_TIMEOUT and (
+    # Navigation failed and search found nothing new — report navigation error
+    if root_link is not None and root_link.failure_reason is not None and (
         discovered is None or same_domain(discovered, context.data.config.url)
     ):
         return _next_context(
             next_context,
-            error_step=PipelineRunErrorType.DOMAIN_NAVIGATION_TIMEOUT,
+            error_step=PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR,
+            error_detail={"failure_reason": root_link.failure_reason, "failure_source": root_link.failure_source},
         ), PipelineStatus.SEND_ERROR
 
     # No URL found at all — domain is inactive
