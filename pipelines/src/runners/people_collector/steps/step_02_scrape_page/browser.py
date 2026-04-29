@@ -35,8 +35,8 @@ async def scrape(logger, website_url, options=None):
             def handle_request_failed(request):
                 nonlocal network_failure_reason
                 if request.url == website_url or request.url == website_url + "/":
-                    if request.failure():
-                        network_failure_reason = request.failure().error_text
+                    if request.failure:
+                        network_failure_reason = request.failure
 
             page.on("requestfailed", handle_request_failed)
 
