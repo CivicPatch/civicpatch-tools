@@ -3,6 +3,7 @@ import { html } from 'lit';
 import { config } from '../assets/config.js';
 import { useSummary } from '../hooks/useSummary.js';
 import { useLocalStorage, PERSIST_FOREVER } from '../hooks/use-local-storage.js';
+import { STORAGE_KEYS } from '../utils/storage-keys.js';
 const API_URL = config.apiUrl;
 
 const NAVBAR_CSS = html`
@@ -267,6 +268,21 @@ const NAVBAR_CSS = html`
       100% { background-position: -200% 0; }
     }
 
+    /* Theme toggle */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--pico-muted-color);
+      font-size: 0.9rem;
+      padding: 0.25rem;
+      display: inline-flex;
+      align-items: center;
+      opacity: 0.6;
+      transition: opacity 0.15s ease;
+    }
+    .theme-toggle:hover { opacity: 1; }
+
     /* Rounded focus outlines */
     .nav-brand:focus-visible,
     .nav-link:focus-visible,
@@ -364,6 +380,10 @@ function Navbar({ user }) {
   const isAuthed = userData?.authenticated;
   const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
   const [stateCode] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, '', { ttl: PERSIST_FOREVER });
+  const resolvedTheme = theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = resolvedTheme;
+  const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   const summary = useSummary(canViewQueue, stateCode);
   const currentPath = window.location.pathname;
   return html`
@@ -378,6 +398,9 @@ function Navbar({ user }) {
       </a>
       ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout"><i class="fab fa-github"></i> Logout</a>` : ''}
       <div class="nav-links">
+        <button class="theme-toggle" @click=${toggleTheme} aria-label="Toggle theme" title="${resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}">
+          <i class="fa-solid ${resolvedTheme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>
+        </button>
         ${isAuthed
           ? renderAuthed(userData, summary, currentPath, stateCode)
           : html`<a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>`}
