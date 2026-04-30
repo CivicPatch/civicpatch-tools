@@ -35,6 +35,30 @@
             crossorigin="anonymous"
             async>
         </script>
+        <script>
+        (function () {
+            function giscusTheme(t) {
+                return t === 'dark' ? 'catppuccin_mocha' : 'catppuccin_latte';
+            }
+            function sendTheme(t) {
+                var iframe = document.querySelector('iframe.giscus-frame');
+                if (!iframe) return;
+                iframe.contentWindow.postMessage(
+                    { giscus: { setConfig: { theme: giscusTheme(t) } } },
+                    'https://giscus.app'
+                );
+            }
+            // Apply theme once Giscus signals it's ready
+            window.addEventListener('message', function (e) {
+                if (e.origin !== 'https://giscus.app') return;
+                sendTheme(document.documentElement.dataset.theme || 'light');
+            }, { once: true });
+            // Keep in sync when the toggle changes data-theme
+            new MutationObserver(function () {
+                sendTheme(document.documentElement.dataset.theme || 'light');
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        })();
+        </script>
     </div>
     <footer class="blog-post__footer">
         <a href="/blog">← All posts</a>

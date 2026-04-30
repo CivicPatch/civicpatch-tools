@@ -9,18 +9,18 @@ author: "shelltr"
 
 ## The Problem
 
-No single authoritative source exists for who holds elected office at the municipal level. Local government contact information for mayors, council members, and the like are scattered across thousands of municipal websites in inconsistent formats.
+Local government contact information for mayors, council members, and the like are scattered across thousands of municipal websites in inconsistent formats. It's not programmatically accessible to civic app developers and journalists, unless they do the upfront work of scraping everything themselves.
 
 Where directories do exist, the data is frequently paywalled, stale, or scoped only to the largest cities.
 
-None of the steps required to achieve a clean data set scales without automation:
+There are a couple of challenges to solving this problem:
 
 - Identifying the right pages on a given municipal site
 - Extracting structured records out of unstructured content
 - Resolving duplicates
 - Mapping roles and districts to canonical identifiers
 
-While building a one-off LLM scraper is straightforward for any single organization, the value of CivicPatch lies in centralization. CivicPatch makes the scrape once per jurisdiction a couple of times a year (to keep the data up to date) and publishes the results openly. This has a few benefits:
+In 2026, a lot of this can be solved with a carefully worded prompt to an LLM API and a Playwright browser. That's actually exactly what the pipelines behind CivicPatch do. CivicPatch makes the scrape once per jurisdiction a couple of times a year (to keep the data up to date) and publishes the results to a public [repository](https://github.com/CivicPatch/open-data). This has a few benefits, assuming downstream consumers are able to use CivicPatch-derived data:
 
 - Reduced load on municipal websites
 - No duplicated engineering effort across organizations
@@ -31,7 +31,7 @@ While building a one-off LLM scraper is straightforward for any single organizat
 
 - **Civic technology developers** building local government applications (platforms, voter tools, advocacy apps) need reliable, structured data
 - **Journalists and researchers** studying local government representation, turnover, and accountability
-- **Advocacy organisations** tracking which officials hold which roles across jurisdictions to target outreach need up-to-date, standardised records
+- **Advocacy organisations** tracking which officials hold which roles across jurisdictions to target outreach
 - **Civic data platforms** like OpenStates need accurate upstream data to power their own transparency tools
 
 ## Project
@@ -44,7 +44,7 @@ CivicPatch uses a multi-step pipeline to collect official records for each juris
 
 **DeepSeek-V3** is used as a structured extraction model: given rendered page content, it produces typed JSON records for each official found, including name, role, geographic designation (ward, district, at-large), email, phone, and profile URL.
 - Runs on every scrape
-- Swappable — the evaluation framework exists specifically to validate alternative models as candidates
+- Swappable as needed
 
 Results are submitted as pull requests to a public [repository](https://github.com/CivicPatch/open-data). A web-based review interface allows community maintainers to inspect, approve, or correct results before merging. A rule-based review step automatically flags discrepancies: missing officials the research step expected to find, unexpected extras, or role mismatches.
 
@@ -54,16 +54,16 @@ Results are submitted as pull requests to a public [repository](https://github.c
 
 - Reviewing and publishing pipeline output is faster than manually researching and entering the same data:
 
-| Method | Time per record | Sample size |
-|---|---|---|
-| CivicPatch review | 1m36s | 65 records |
-| Manual research & entry | [TODO] | — |
+| Method | Records per hour |
+|---|---|
+| CivicPatch review | 70 |
+| Manual research & entry | 4–6 |
 
 #### Coverage
 
-- **90%** of jurisdictions covered across **10 states**
-- (Stretch) **90%** of jurisdictions covered across all **50 states**
-- Each jurisdiction costs approximately **$[TODO]** to scrape
+- **80%** of jurisdictions covered across **10 states**
+- (Stretch) **80%** of jurisdictions covered across all **50 states**
+- Each jurisdiction costs approximately **$0.08** to scrape
 
 > Note: Extraction coverage is constrained by the identification of official municipal domains. Currently, the project has mapped and indexed official websites for 78% of Texas jurisdictions. Expanding this index is handled by the jurisdictions repository; completing that mapping is a prerequisite for automated extraction.
 
@@ -88,14 +88,14 @@ Cost limits per pipeline run prevent runaway LLM spend.
 
 ## What we're not doing
 
-The aim of this project is to automate the discovery and extraction of *publicly published* official contact information. As such, the project does not:
+The aim of this project is to automate the discovery and extraction of *publicly published* official contact information. 
+
+The project does not:
 
 - Collect any information officials have not published in their official capacity
 - Attempt to find personal contact details (personal email, home address, personal phone)
 - Scrape pages that require authentication to access
 - Replace the human review step with fully autonomous publishing
-- (Stretch) Allow verified community contributors to submit data for jurisdictions without accessible websites
+- Allow verified community contributors to submit data for jurisdictions without accessible websites
 
-If the pipeline reaches sufficient quality and coverage across US municipalities, future work will expand to all municipalities enumerated in the CivicPatch jurisdictions repository.
-
-[^1]: As enumerated by the [jurisdictions](https://github.com/openstates/jurisdictions) repo
+If the pipeline reaches sufficient quality and coverage across US municipalities, future work will expand to all municipalities enumerated in the CivicPatch jurisdictions repository (or the OpenStates' jurisdictions repo).

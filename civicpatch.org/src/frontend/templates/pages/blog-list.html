@@ -20,7 +20,6 @@
         {% if post.description %}
         <p class="blog-lead blog-post__lead">{{ post.description }}</p>
         {% endif %}
-        <div class="blog-post__body">{{ post.content_html | safe }}</div>
     </article>
     {% endfor %}
 {% else %}
