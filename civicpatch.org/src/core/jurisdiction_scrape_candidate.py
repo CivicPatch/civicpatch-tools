@@ -8,8 +8,8 @@ from schemas.common import Jurisdiction
 
 
 async def get_scrape_candidates(state: str, num_jurisdictions: int) -> list[Jurisdiction]:
-    jurisdictions_content = await github_api_service.get_github_file_contents(f"data_source/{state}/jurisdictions.yml")
-    metadata_content = await github_api_service.get_github_file_contents(f"data_source/{state}/jurisdictions_metadata.yml")
+    jurisdictions_content = await github_api_service.get_github_file_contents(f"data_source/{state}/local/jurisdictions.yml")
+    metadata_content = await github_api_service.get_github_file_contents(f"data_source/{state}/local/jurisdictions_metadata.yml")
     if jurisdictions_content is None:
         raise ValueError(f"Could not find jurisdictions file for state {state!r}")
 
