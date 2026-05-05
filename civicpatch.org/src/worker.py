@@ -16,59 +16,65 @@ TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 
-async def _schedule_exists(client: Client, schedule_id: str) -> bool:
+def _is_duplicate_schedule_error(e: RPCError) -> bool:
+    return e.status == RPCStatusCode.ALREADY_EXISTS or "duplicate key" in str(e)
+
+
+async def _create_schedule(client: Client, schedule_id: str, schedule: Schedule) -> bool:
+    """Returns True if the schedule was newly created, False if it already existed."""
     try:
-        await client.get_schedule_handle(schedule_id).describe()
+        await client.create_schedule(schedule_id, schedule)
         return True
     except RPCError as e:
-        if e.status == RPCStatusCode.NOT_FOUND:
+        if _is_duplicate_schedule_error(e):
             return False
         raise
 
 
 async def _register_schedules(client: Client) -> None:
-    if not await _schedule_exists(client, ScheduleId.PR_SYNC):
-        await client.create_schedule(
-            ScheduleId.PR_SYNC,
-            Schedule(
-                action=ScheduleActionStartWorkflow(
-                    PRSyncWorkflow.run,
-                    id=WorkflowInstanceId.PR_SYNC,
-                    task_queue=TASK_QUEUE,
-                ),
-                spec=ScheduleSpec(cron_expressions=["0 * * * *"]),
-                policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+    await _create_schedule(
+        client,
+        ScheduleId.PR_SYNC,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                PRSyncWorkflow.run,
+                id=WorkflowInstanceId.PR_SYNC,
+                task_queue=TASK_QUEUE,
             ),
-        )
+            spec=ScheduleSpec(cron_expressions=["0 * * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
 
-    if not await _schedule_exists(client, ScheduleId.OD_SYNC):
-        handle = await client.create_schedule(
-            ScheduleId.OD_SYNC,
-            Schedule(
-                action=ScheduleActionStartWorkflow(
-                    OdSyncWorkflow.run,
-                    id=WorkflowInstanceId.OD_SYNC,
-                    task_queue=TASK_QUEUE,
-                ),
-                spec=ScheduleSpec(cron_expressions=["0 0 * * *"]),
-                policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+    created = await _create_schedule(
+        client,
+        ScheduleId.OD_SYNC,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                OdSyncWorkflow.run,
+                id=WorkflowInstanceId.OD_SYNC,
+                task_queue=TASK_QUEUE,
             ),
-        )
-        await handle.trigger()
+            spec=ScheduleSpec(cron_expressions=["0 0 * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
+    if created:
+        await client.get_schedule_handle(ScheduleId.OD_SYNC).trigger()
 
-    if not await _schedule_exists(client, ScheduleId.PIPELINE_RUN_CLEANUP):
-        await client.create_schedule(
-            ScheduleId.PIPELINE_RUN_CLEANUP,
-            Schedule(
-                action=ScheduleActionStartWorkflow(
-                    PipelineRunCleanupWorkflow.run,
-                    id=WorkflowInstanceId.PIPELINE_RUN_CLEANUP,
-                    task_queue=TASK_QUEUE,
-                ),
-                spec=ScheduleSpec(cron_expressions=["*/15 * * * *"]),
-                policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+    await _create_schedule(
+        client,
+        ScheduleId.PIPELINE_RUN_CLEANUP,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                PipelineRunCleanupWorkflow.run,
+                id=WorkflowInstanceId.PIPELINE_RUN_CLEANUP,
+                task_queue=TASK_QUEUE,
             ),
-        )
+            spec=ScheduleSpec(cron_expressions=["*/15 * * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
 
 
 async def main() -> None:
