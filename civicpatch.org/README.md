@@ -68,6 +68,7 @@ Roles are assigned via GitHub team membership. The `build_permissions()` functio
 | People — read | ✓ | ✓ | ✓ | ✓ |
 | People — create / update | | ✓ | | |
 | People — delete | | ✓ | | |
+| Queue page | | ✓ | ✓ | ✓ |
 | Pull requests — read / merge | ✓ | ✓ | ✓ | ✓ |
 | Review sessions | ✓ | ✓ | ✓ | ✓ |
 | Notes — read | ✓ | ✓ | ✓ | ✓ |
