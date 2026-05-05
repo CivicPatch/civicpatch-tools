@@ -27,13 +27,13 @@ DATA_FILES_PATTERNS = [
     "data/*/local/*.yml",
     "data/*/counties/*.yml",
 ]
-JURISDICTION_FILES_PATTERN = "data_source/**/jurisdictions_metadata.yml"
+JURISDICTION_FILES_PATTERN = "data_source/**/local/jurisdictions_metadata.yml"
 MAP_FILES_PATTERN = "data/**/.maps/*.geojson"
 
 
 async def get_jurisdiction_metadata(state: str):
-    jurisdictions_file_path = os.path.join("data_source", state, "jurisdictions.yml")
-    jurisdictions_metadata_file_path = os.path.join("data_source", state, "jurisdictions_metadata.yml")
+    jurisdictions_file_path = os.path.join("data_source", state, "local", "jurisdictions.yml")
+    jurisdictions_metadata_file_path = os.path.join("data_source", state, "local", "jurisdictions_metadata.yml")
     logger.debug(f"Fetching jurisdictions_metadata from: {jurisdictions_metadata_file_path}")
     jurisdictions_metadata_response = await github_service.get_github_file_contents(jurisdictions_metadata_file_path)
     logger.debug(f"Fetching jurisdiction_entries from: {jurisdictions_file_path}")
