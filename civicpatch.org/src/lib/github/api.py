@@ -310,6 +310,8 @@ async def get_teams(user_oauth_token: str):
             team for team in teams if team["organization"]["login"] == "CivicPatch"
         ]
         team_names = [team["name"] for team in our_teams]
+        if team_names and "default" not in team_names:
+            team_names.append("default")
         logger.info(
             f"User is a member of {len(team_names)} CivicPatch teams: {team_names}"
         )

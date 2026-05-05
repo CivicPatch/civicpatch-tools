@@ -1,7 +1,7 @@
 ---
 title: "Onboarding: maintainer"
 date: 2026-05-05
-draft: false
+draft: true
 description: |
     Maintainers keep the CivicPatch pipeline running — triaging failed runs, managing issues, and configuring role mappings. Here's what the role involves and how to get access.
 author: "shelltr"
