@@ -21,10 +21,9 @@ def _identity(*roles: Role) -> Identity:
 
 UNAUTHENTICATED = None
 DEFAULT = _identity(Role.DEFAULT)
-CONTRIBUTOR = _identity(Role.CONTRIBUTORS)
-MAINTAINER = _identity(Role.MAINTAINERS)
-ADMIN = _identity(Role.ADMINS)
-MAINTAINER_DEFAULT = _identity(Role.MAINTAINERS, Role.DEFAULT)
+CONTRIBUTOR = _identity(Role.CONTRIBUTORS, Role.DEFAULT)
+MAINTAINER = _identity(Role.MAINTAINERS, Role.DEFAULT)
+ADMIN = _identity(Role.ADMINS, Role.DEFAULT)
 
 
 # ── build_permissions ─────────────────────────────────────────────────────────
@@ -43,9 +42,21 @@ def test_permissions_unauthenticated():
 
 
 @pytest.mark.unit
+def test_permissions_logged_in_no_teams():
+    """GitHub user who authenticated but is not a member of any CivicPatch team."""
+    p = build_permissions(_identity())
+    assert p["can_view_queue_page"] is False
+    assert p["can_view_queue_page_errors"] is False
+    assert p["can_view_jurisdiction_page"] is False
+    assert p["can_view_reviews_page"] is False
+    assert p["can_view_issues_page"] is False
+    assert p["can_delete_directory_person"] is False
+
+
+@pytest.mark.unit
 def test_permissions_default_role():
     p = build_permissions(DEFAULT)
-    assert p["can_view_queue_page"] is False
+    assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_local"] is False
@@ -60,7 +71,7 @@ def test_permissions_contributor_role():
     p = build_permissions(CONTRIBUTOR)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is False
+    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is False
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
@@ -72,7 +83,7 @@ def test_permissions_maintainer_role():
     p = build_permissions(MAINTAINER)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is False
+    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is True
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is True
@@ -82,23 +93,12 @@ def test_permissions_maintainer_role():
 @pytest.mark.unit
 def test_permissions_admin_role():
     p = build_permissions(ADMIN)
-    assert p["can_view_queue_page"] is False
+    assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is True
     assert p["can_scrape_remote"] is False
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is False
 
-
-@pytest.mark.unit
-def test_permissions_maintainer_with_default():
-    """Maintainers typically also have the default role."""
-    p = build_permissions(MAINTAINER_DEFAULT)
-    assert p["can_view_queue_page"] is True
-    assert p["can_view_jurisdiction_page"] is True
-    assert p["can_scrape_remote"] is True
-    assert p["can_view_reviews_page"] is True
-    assert p["can_view_issues_page"] is True
-    assert p["can_delete_directory_person"] is False
 
 
 @pytest.mark.unit
