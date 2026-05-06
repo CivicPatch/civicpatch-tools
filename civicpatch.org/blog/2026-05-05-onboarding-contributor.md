@@ -3,17 +3,13 @@ title: "Onboarding: contributor"
 date: 2026-05-05
 draft: false
 description: |
-    Anyone with a GitHub account can review and verify AI-extracted official records on CivicPatch. Here's how.
+    Verifying elected official records as a contributor.
 author: "shelltr"
 ---
 
 ## What is a contributor?
 
-CivicPatch scrapes elected official data from municipal websites across the US.
-Before that data is published, a human reviews it. That's you.
-
 Contributors verify scraped records, correct errors, and help keep the directory accurate.
-Anyone can do it — all it takes is a GitHub account and an eye for detail.
 
 ## What you'll be reviewing
 
@@ -26,8 +22,6 @@ Anyone can do it — all it takes is a GitHub account and an eye for detail.
 
 ✦ These fields are copied verbatim from the page, so what you see is exactly what the municipality published.
 
-Role and geographic designation involve some interpretation and are worth a closer look. That said, reviewing a jurisdiction is mostly a sanity check: does the data look right at a glance, and were the correct number of people picked up? The review UI flags the most common issues automatically — missing officials, unexpected extras, role mismatches — so you're confirming those flags rather than auditing every field from scratch.
-
 ## Getting started
 
 To get contributor access:
@@ -39,19 +33,32 @@ To get contributor access:
 
 Once you've been added, **[sign in with GitHub](/api/v1/auth/github/login?redirect=/blog/onboarding-contributor)** and you'll have access to the queue and review pages.
 
-## Your first review
+## The review
+
+The review page shows the scraped data and a diff from what was previously scraped for the jurisdiction. 
+
+Check that the right people were picked up, their roles look correct, and nothing looks obviously off. 
+
+The UI flags common issues — missing officials, unexpected extras, role mismatches — so you're mostly confirming rather than auditing from scratch. Edit any field directly in the UI if something needs fixing, then approve to merge.
+
+<zoom-image src="/blog/images/onboarding_review_page.webp" alt="The CivicPatch review page showing a list of scraped officials alongside the existing directory entries"></zoom-image>
+
+## The queue
+
+The queue lists jurisdictions with pending scraped data waiting for review. Pick any one to open the page for that jurisdiction, or close/publish the pull request if you want to do bulk reviews.
+
+<zoom-image src="/blog/images/onboarding_queue_page.webp" alt="The CivicPatch queue page listing jurisdictions with pending scraped data"></zoom-image>
+
+## Walkthrough
 
 The video below walks through a full review from start to finish.
 
-<!-- Replace VIDEO_ID with the YouTube video ID once uploaded -->
 <div class="video-embed">
 <iframe
   width="100%"
   style="aspect-ratio: 16/9; border: none;"
-  src="https://www.youtube.com/embed/VIDEO_ID"
-  title="CivicPatch reviewer walkthrough"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen>
+  src="https://drive.google.com/file/d/1WVNhRTLN7LTeJPjNfOFJWCDwiyexlePD/preview"
+  allow="autoplay">
 </iframe>
 </div>
 
