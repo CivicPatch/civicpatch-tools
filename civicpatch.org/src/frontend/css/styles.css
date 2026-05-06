@@ -713,6 +713,44 @@ dialog[open] {
     font-size: var(--text-sm);
 }
 
+/* ── Blog screenshot ─────────────────────────────────────────────────────────*/
+
+.zoom-image {
+    max-width: 100%;
+    max-height: 900px;
+    width: auto;
+    display: block;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    cursor: zoom-in;
+    margin-block: 1.5rem;
+    margin-inline: auto;
+}
+
+.zoom-image-lightbox {
+    background: transparent;
+    border: none;
+    padding: 2rem;
+    box-sizing: border-box;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    cursor: zoom-out;
+}
+
+.zoom-image-lightbox::backdrop {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.zoom-image-lightbox img {
+    display: block;
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+}
+
 /* ── Blog preview (homepage) ─────────────────────────────────────────────────*/
 
 .blog-preview {

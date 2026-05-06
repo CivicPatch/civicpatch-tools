@@ -159,4 +159,19 @@ run = """
     -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
+[tasks.webp]
+description = "Convert a blog image to WebP. Usage: mise run webp <filename>"
+run = """
+    set -e
+    INPUT="{{arg(i=0, name='file')}}"
+    FILE="blog/images/$INPUT"
+    if [ ! -f "$FILE" ]; then
+        echo "File not found: $FILE"
+        exit 1
+    fi
+    OUT="blog/images/${INPUT%.*}.webp"
+    magick "$FILE" -define webp:lossless=true "$OUT"
+    echo "→ $OUT"
+"""
+
 

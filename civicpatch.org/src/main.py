@@ -81,6 +81,7 @@ app = FastAPI(
 )
 
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
+app.mount("/blog/images", StaticFiles(directory="blog/images"), name="blog-images")
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 
