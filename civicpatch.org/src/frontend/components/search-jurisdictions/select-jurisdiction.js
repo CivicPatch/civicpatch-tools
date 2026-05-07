@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import "./select-state.js";
 
-function CivSelectJurisdiction({ selected }) {
+function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
   const { permissions } = useAuth();
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
@@ -20,6 +20,13 @@ function CivSelectJurisdiction({ selected }) {
   }, [selected]);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
+
+  // Sync dropdown when selection comes from outside (e.g. map click)
+  useEffect(() => {
+    if (!selectedOcdid || selectedOcdid === selectedJurisdiction) return;
+    setSelectedJurisdiction(selectedOcdid);
+    if (selectedName) setJurisdictionInputValue(selectedName);
+  }, [selectedOcdid]);
 
   const isInitialMount = useRef(true);
 

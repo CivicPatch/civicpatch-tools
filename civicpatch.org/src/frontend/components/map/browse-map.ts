@@ -6,6 +6,7 @@ import maplibregl from 'maplibre-gl';
 import {
   SOURCE_ID,
   DEFAULT_LAYERS,
+  STATE_BOUNDS,
   createMap,
   loadStateSource,
   addJurisdictionLayers,
@@ -42,8 +43,9 @@ function BrowseMap(this: HTMLElement, {
     if (!features.length) return;
     const ocdid = features[0].properties?.jurisdiction_ocdid as string | undefined;
     if (!ocdid) return;
+    const name = features[0].properties?.name as string | undefined;
     this.dispatchEvent(new CustomEvent('on-jurisdiction-change', {
-      detail: { jurisdiction_ocdid: ocdid },
+      detail: { jurisdiction_ocdid: ocdid, name },
       bubbles: true,
       composed: true,
     }));
@@ -74,20 +76,29 @@ function BrowseMap(this: HTMLElement, {
     );
   };
 
-  // Load state source + layers once the map is ready
+  // Load state source + layers once the map is ready; re-apply coverage when tiles arrive
   useEffect(() => {
     if (!mapRef.current || !state) return;
     const map = mapRef.current;
+    const onSourceData = (e: any) => {
+      if (e.sourceId === SOURCE_ID && e.isSourceLoaded) {
+        applyCoverage(map, coverageMap);
+      }
+    };
     const load = () => {
       loadStateSource(map, state);
       if (!map.getLayer('jurisdictions')) addJurisdictionLayers(map, DEFAULT_LAYERS);
       applyCoverage(map, coverageMap);
+      map.on('sourcedata', onSourceData);
+      const bounds = STATE_BOUNDS[state];
+      if (bounds) map.fitBounds(bounds, { padding: 40, duration: 600 });
     };
     if (map.isStyleLoaded()) {
       load();
     } else {
       map.once('load', load);
     }
+    return () => map.off('sourcedata', onSourceData);
   }, [state]);
 
   // Apply coverage when coverageMap changes
@@ -114,6 +125,36 @@ function BrowseMap(this: HTMLElement, {
     }
     prevSelectedOcdidRef.current = selectedOcdid;
   }, [selectedOcdid]);
+
+  // Auto-switch state when user pans to a different state
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const map = mapRef.current;
+    let debounce: ReturnType<typeof setTimeout>;
+    const onMoveEnd = () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(async () => {
+        const { lat, lng } = map.getCenter();
+        try {
+          const resp = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=5`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const data = await resp.json();
+          const code = data?.address?.['ISO3166-2-lvl4']?.split('-')[1]?.toLowerCase();
+          if (code && code !== state) {
+            (this as HTMLElement).dispatchEvent(new CustomEvent('on-state-change', {
+              detail: { state: code },
+              bubbles: true,
+              composed: true,
+            }));
+          }
+        } catch { /* silently ignore network errors */ }
+      }, 800);
+    };
+    map.on('moveend', onMoveEnd);
+    return () => { clearTimeout(debounce); map.off('moveend', onMoveEnd); };
+  }, [state]);
 
   // Cleanup map on disconnect
   useEffect(() => {
