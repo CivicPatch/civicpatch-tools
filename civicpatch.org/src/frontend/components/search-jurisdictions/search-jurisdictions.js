@@ -119,12 +119,6 @@ function SearchJurisdictions() {
 
       <div class="below-grid">
         <civ-people-directory .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-directory>
-        ${permissions.JURISDICTION_PAGE && dashboardData && selectedState && dashboardData.states?.[selectedState]?.locality_gaps?.not_yet_scraped?.length ? html`
-          <section class="not-scraped">
-            <h5 class="not-scraped__heading">Not scraped</h5>
-            <locality-gaps .stats=${dashboardData} .state=${selectedState}></locality-gaps>
-          </section>
-        ` : ''}
       </div>
     </div>
   `;

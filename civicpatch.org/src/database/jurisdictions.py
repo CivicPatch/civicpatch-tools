@@ -404,6 +404,24 @@ async def get_jurisdiction_updates() -> dict[str, dict]:
     return jurisdictions
 
 
+async def get_jurisdictions_by_geoid(state: str) -> dict[str, dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, data->>'geoid', data->>'name'
+            FROM jurisdictions
+            WHERE state = %s AND data->>'geoid' IS NOT NULL AND status = 'current'
+            """,
+            (state,),
+        )
+        rows = await cur.fetchall()
+    return {
+        row[1]: {"jurisdiction_ocdid": row[0], "name": row[2]}
+        for row in rows
+    }
+
+
 async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
     pool = await get_pool()
     async with pool.connection() as conn:
