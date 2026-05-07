@@ -35,6 +35,7 @@ OPTIONAL_ENV_VARS = [
     "STORAGE_ENDPOINT",
     "STORAGE_ACCESS_KEY_ID",
     "STORAGE_SECRET_ACCESS_KEY",
+    "FRIENDLY_STORAGE_HOST",
     "TEMPORAL_HOST",
     "TEMPORAL_NAMESPACE",
 
@@ -59,8 +60,11 @@ def get_env_vars():
         if value is None:
             missing.append(var)
         env[var] = value
+    _optional_defaults = {
+        "FRIENDLY_STORAGE_HOST": "https://cdn.civicpatch.org",
+    }
     for var in OPTIONAL_ENV_VARS:
-        value = os.getenv(var)
+        value = os.getenv(var, _optional_defaults.get(var))
         env[var] = value
     if missing:
         raise ValueError(f"Missing required environment variables: {', '.join(missing)}")
