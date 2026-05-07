@@ -31,6 +31,7 @@ function BrowseMap(this: HTMLElement, {
     if (!el || mapRef.current) return;
     mapRef.current = createMap(el as HTMLElement);
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
+    mapRef.current.on('load', () => mapRef.current?.resize());
     mapRef.current.on('click', handleClick);
   };
 
