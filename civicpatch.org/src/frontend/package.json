@@ -6,12 +6,11 @@
     "dompurify": "^3.3.3",
     "haunted": "^6.1.0",
     "js-yaml": "^4.1.1",
-    "leaflet": "^1.9.4",
-    "leaflet-control-geocoder": "^3.3.1",
-    "leaflet.locatecontrol": "^0.85.1",
     "lit": "^3.0.0",
     "lit-html": "^3.3.1",
-    "marked": "^17.0.5"
+    "maplibre-gl": "^5.0.0",
+    "marked": "^17.0.5",
+    "pmtiles": "^4.0.0"
   },
   "devDependencies": {
     "vite": "^5.0.0",

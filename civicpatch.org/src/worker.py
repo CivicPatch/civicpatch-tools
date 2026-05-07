@@ -4,12 +4,14 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
+from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
 from routers.temporal.activities import sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity
+from routers.temporal.map_activities import sync_jurisdiction_map_activity
 from lib.temporal.workflows import PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow, ScheduleId, WorkflowInstanceId, TASK_QUEUE
+from lib.temporal.map_workflows import SyncJurisdictionMapWorkflow
 from database.database import get_pool, close_pool
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
@@ -25,6 +27,8 @@ async def _create_schedule(client: Client, schedule_id: str, schedule: Schedule)
     try:
         await client.create_schedule(schedule_id, schedule)
         return True
+    except ScheduleAlreadyRunningError:
+        return False
     except RPCError as e:
         if _is_duplicate_schedule_error(e):
             return False
@@ -84,8 +88,8 @@ async def main() -> None:
     async with Worker(
         client,
         task_queue=TASK_QUEUE,
-        workflows=[PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow],
-        activities=[sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity],
+        workflows=[PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow, SyncJurisdictionMapWorkflow],
+        activities=[sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity, sync_jurisdiction_map_activity],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
         await asyncio.Event().wait()

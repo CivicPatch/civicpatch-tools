@@ -33,7 +33,6 @@
     align-items: start;
 }
 
-/* .map-col — map temporarily disabled */
 .about-col {
     order: 1;
 }
@@ -126,4 +125,8 @@
     .select-col {
         order: 1;
     }
+}
+
+.map-col {
+    grid-column: 1 / -1;
 }

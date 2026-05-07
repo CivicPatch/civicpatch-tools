@@ -1,8 +1,7 @@
 import "./search-jurisdictions.css";
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useMemo } from "haunted";
 import { html } from "lit-html";
 import { fetchPeople, fetchDashboard } from "../../api.js";
-// import { fetchJurisdictionsGeojson } from "../../api.js"; // map temporarily disabled
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
@@ -11,6 +10,7 @@ import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
 import "../../components/people-directory/people-directory.ts";
+import "../../components/map/browse-map.ts";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
@@ -39,6 +39,18 @@ function SearchJurisdictions() {
     return () => document.removeEventListener('state-select', handler);
   }, []);
 
+  const coverageMap = useMemo(() => {
+    if (!dashboardData || !selectedState) return {};
+    const notScraped = new Set(
+      dashboardData?.states?.[selectedState]?.locality_gaps?.not_yet_scraped ?? []
+    );
+    const result = {};
+    for (const ocdid of notScraped) {
+      result[ocdid] = 0;
+    }
+    return result;
+  }, [dashboardData, selectedState]);
+
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || '').toLowerCase());
   };
@@ -48,12 +60,6 @@ function SearchJurisdictions() {
     setSelectedJurisdictionOcdid(jurisdiction_ocdid);
   };
 
-  // const handleMapChange = (event) => { // map temporarily disabled
-  //   const { latlng, zoom } = event.detail;
-  //   if (!latlng || !zoom) return;
-  //   fetchJurisdictionsGeojson(latlng.lat, latlng.lng, zoom).then(data => setGeojson(data));
-  // };
-
   return html`
     <div class="search-page">
       <hgroup>
@@ -61,7 +67,7 @@ function SearchJurisdictions() {
 
         <p>Find contact information for local government officials across the U.S.</p>
 
-        <p>Select a jurisdiction below to get started.</p>
+        <p>Select a jurisdiction below or click the map to get started.</p>
       </hgroup>
       <div class="page-grid">
 
@@ -100,6 +106,15 @@ function SearchJurisdictions() {
             @state-change=${handleStateChange}
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
+        </div>
+
+        <div class="map-col">
+          <browse-map
+            state=${selectedState || ''}
+            selected-ocdid=${selectedJurisdictionOcdid || ''}
+            .coverageMap=${coverageMap}
+            @on-jurisdiction-change=${handleSelectJurisdictionChange}
+          ></browse-map>
         </div>
 
       </div>

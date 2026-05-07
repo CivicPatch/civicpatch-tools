@@ -17,7 +17,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import routers.api.admin as api_admin_router
-import routers.api.maps as api_maps_router
 from routers.frontend import get_router as frontend_router
 import routers.webhooks.github as github_webhook_router
 import routers.api.api_keys as api_keys_router
@@ -209,11 +208,6 @@ app.include_router(
     prefix="/api/internal/user",
     tags=["user"],
     dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))],
-)
-
-app.include_router(
-    api_maps_router.get_router(),
-    prefix="/api/v1/maps",
 )
 
 app.include_router(
