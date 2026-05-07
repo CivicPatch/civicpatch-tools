@@ -17,6 +17,7 @@ function SearchJurisdictions() {
   const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
   const [selectedState, setSelectedState] = useState((defaultState || '').toLowerCase());
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] = useState(null);
+  const [selectedJurisdictionName, setSelectedJurisdictionName] = useState('');
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
 
@@ -56,8 +57,9 @@ function SearchJurisdictions() {
   };
 
   const handleSelectJurisdictionChange = (event) => {
-    const { jurisdiction_ocdid } = event.detail;
+    const { jurisdiction_ocdid, name } = event.detail;
     setSelectedJurisdictionOcdid(jurisdiction_ocdid);
+    if (name) setSelectedJurisdictionName(name);
   };
 
   return html`
@@ -103,6 +105,8 @@ function SearchJurisdictions() {
         <div class="select-col">
           <civ-select-jurisdiction
             .selected=${selectedState}
+            .selectedOcdid=${selectedJurisdictionOcdid}
+            .selectedName=${selectedJurisdictionName}
             @state-change=${handleStateChange}
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
@@ -114,6 +118,7 @@ function SearchJurisdictions() {
             selected-ocdid=${selectedJurisdictionOcdid || ''}
             .coverageMap=${coverageMap}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
+            @on-state-change=${handleStateChange}
           ></browse-map>
         </div>
 
