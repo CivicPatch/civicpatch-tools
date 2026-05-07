@@ -49,8 +49,15 @@ export function createMap(container: HTMLElement): maplibregl.Map {
     container,
     style: {
       version: 8,
-      sources: {},
-      layers: [],
+      sources: {
+        osm: {
+          type: 'raster',
+          tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+          tileSize: 256,
+          attribution: '© OpenStreetMap contributors',
+        },
+      },
+      layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
       glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
     },
     center: [-98.5, 39.5],

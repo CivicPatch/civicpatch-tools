@@ -1,5 +1,6 @@
 .map-container {
   position: relative;
+  width: 100%;
   border-radius: var(--pico-border-radius);
   overflow: hidden;
   border: 1px solid var(--pico-muted-border-color);
