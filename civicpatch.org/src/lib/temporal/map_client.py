@@ -4,7 +4,9 @@ from typing import Optional
 from temporalio.client import Client
 from temporalio.common import WorkflowIDConflictPolicy
 
-from lib.temporal.map_workflows import SyncJurisdictionMapWorkflow, TASK_QUEUE
+from lib.temporal.map_workflows import SyncJurisdictionMapWorkflow
+from lib.temporal.workflows import TASK_QUEUE
+from shared.utils.config_utils import get_states
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
@@ -21,10 +23,11 @@ async def _get_client() -> Client:
 
 async def start_sync_jurisdiction_map_workflow(state: Optional[str] = None) -> str:
     client = await _get_client()
+    states = [state] if state else [s["code"] for s in get_states()]
     workflow_id = f"sync-jurisdiction-map-{state or 'all'}"
     handle = await client.start_workflow(
         SyncJurisdictionMapWorkflow.run,
-        args=[state],
+        args=[states],
         id=workflow_id,
         task_queue=TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,

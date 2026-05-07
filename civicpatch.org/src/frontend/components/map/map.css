@@ -1,0 +1,38 @@
+.map-container {
+  position: relative;
+  border-radius: var(--pico-border-radius);
+  overflow: hidden;
+  border: 1px solid var(--pico-muted-border-color);
+}
+
+.map-container .maplibregl-map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-locate-btn {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  background: var(--pico-card-background-color, #fff);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.map-locate-btn:hover {
+  background: var(--pico-primary-background, #e0e7ff);
+}
+
+.map-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--pico-muted-color);
+  font-size: var(--text-sm, 0.875rem);
+}

@@ -205,10 +205,16 @@ mise run watch-worker
 description = "Hot-reload the Temporal worker when worker or shared code changes"
 run = "watchfiles --filter python 'docker compose restart worker' worker/src/ shared/src/shared/"
 
-[tasks.map-worker]
-description = "Run the open-data-map-sync Temporal worker locally"
-run = "uv run python src/map_worker.py"
-dir = "civicpatch.org"
+[tasks.sync-maps]
+description = "Rebuild jurisdiction PMTiles. Optional: mise run sync-maps state=nj"
+run = '''
+BASE="${INSTANCE_URL:-http://localhost:8000}"
+BODY=$([ -n "${state:-}" ] && echo "{\"state\":\"${state}\"}" || echo "{}")
+curl -v "${BASE}/api/admin/map_sync" \
+  -H "Authorization: ${SERVICE_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d "$BODY"
+'''
 
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
