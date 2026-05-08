@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
+import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople, closePullRequest } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
@@ -29,10 +29,10 @@ function ReviewPage() {
   const {
     session, setSession,
     jurisdiction, pr, progress,
-    prPeople,
+    prPeople, requestId,
     error, setError,
     stats,
-    advance, back, pause, merge, navigateTo, loadDirectPr,
+    advance, back, endSession, merge, navigateTo, loadDirectPr, initSession,
     isReadOnly,
     sourceContentUrls, reviewData,
   } = useReviewSession(stateCode, {
@@ -48,10 +48,20 @@ function ReviewPage() {
     if (prNumber) {
       setPageState(PAGE_STATE.LOADING);
       setError(null);
-      loadDirectPr(parseInt(prNumber, 10)).catch((err) => {
-        setError(err.message);
-        setPageState(PAGE_STATE.IDLE);
-      });
+      loadDirectPr(parseInt(prNumber, 10))
+        .then((jurisdictionOcdid) => {
+          if (!jurisdictionOcdid) return;
+          const match = jurisdictionOcdid.match(/state:([a-z]+)/);
+          const state = match?.[1];
+          if (!state) return;
+          return fetchActiveReviewSession(state).then((res) => {
+            const active = res?.data;
+            if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
+              initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
+            }
+          });
+        })
+        .catch(() => {});
       return;
     }
     if (!stateCode) return;
@@ -59,7 +69,7 @@ function ReviewPage() {
       .then((res) => {
         const active = res?.data;
         if (!active) return;
-        setSession({ id: active.session_id, daily_goal: active.daily_goal });
+        initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
         return advance(active.session_id, active.current_entry_number);
       })
       .catch(() => {});
@@ -178,6 +188,20 @@ function ReviewPage() {
 
   const handleMerge = () => merge(dirty ? peopleToSubmit : null);
 
+  const [isClosingPr, setIsClosingPr] = useState(false);
+  const handleClosePr = async () => {
+    if (!pr?.number || !requestId) return;
+    setIsClosingPr(true);
+    try {
+      await closePullRequest(requestId, pr.number);
+      await advance();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsClosingPr(false);
+    }
+  };
+
   if (pageState === PAGE_STATE.LOADING) {
     return html`<main class="review-page"><p>Loading...</p></main>`;
   }
@@ -197,6 +221,7 @@ function ReviewPage() {
 
   return html`<review-session
     .isReadOnly=${isReadOnly}
+    .hasSession=${!!session}
     .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
     .jurisdiction=${jurisdiction}
     .pr=${pr}
@@ -209,10 +234,12 @@ function ReviewPage() {
     .sourceContentUrls=${sourceContentUrls}
 
     .onMerge=${handleMerge}
+    .onClosePr=${handleClosePr}
+    .isClosingPr=${isClosingPr}
     .onAdvance=${advance}
     .onBack=${back}
     .onNavigateTo=${navigateTo}
-    .onPause=${pause}
+    .onEndSession=${endSession}
     .onTableDataChange=${handleTableDataChange}
     .onTableReorder=${handleTableDataReorder}
     .onPeopleMerge=${handlePeopleMerge}

@@ -9,7 +9,6 @@ import {
 } from "../../api.js";
 import { useWebSocket } from "../../hooks/use-websocket.js";
 
-const NO_MORE_CARDS = "no_more_cards";
 const MERGE_TOPIC_PREFIX = "merge:";
 const MERGE_EVENT_ERROR = "merge_error";
 
@@ -29,7 +28,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
   const [pr, setPr] = useState<{ url: string | null; status: string | null; reviewState: string | null; number?: number | null }>({ url: null, status: null, reviewState: null });
   const [prPeople, setPrPeople] = useState<{ existing: any[]; proposed: any[] } | null>(null);
   const [entryNumber, setEntryNumber] = useState(0);
-  const [hasNext, setHasNext] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
@@ -58,20 +56,9 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
     setReviewData(review?.data ?? null);
     setSourceContentUrls(sessionData.sources);
+    const status = sessionData.pr?.status;
+    setIsReadOnly(status === "merged" || status === "closed");
     updateParams({ pull_request_number: sessionData.pr?.number != null ? String(sessionData.pr.number) : null });
-  };
-
-  const handleAdvanceResult = (res) => {
-    const data = res?.data;
-    if (!data) {
-      if (res?.reason === NO_MORE_CARDS) {
-        setHasNext(false);
-      } else {
-        onDone();
-      }
-      return null;
-    }
-    return data;
   };
 
   const advance = async (sessionId?: string, targetEntry?: number) => {
@@ -80,9 +67,11 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     try {
       const target = targetEntry ?? entryNumber + 1;
       const res = await navigateToEntry(sid, target);
-      const data = handleAdvanceResult(res);
-      if (!data) return;
-      setHasNext(data.has_next !== false);
+      const data = res?.data;
+      if (!data) {
+        onDone();
+        return;
+      }
       await applyEntry(data);
       onReviewing();
     } catch (err) {
@@ -98,7 +87,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
       const res = await navigateToEntry(session?.id, entryNumber - 1);
       const data = res?.data;
       if (!data) return;
-      setHasNext(true);
       await applyEntry(data);
     } catch (err) {
       setError(err.message);
@@ -124,7 +112,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
       const res = await navigateToEntry(session?.id, n);
       const data = res?.data;
       if (!data) return;
-      setHasNext(data.has_next !== false);
       await applyEntry(data);
       onReviewing();
     } catch (err) {
@@ -134,27 +121,39 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     }
   };
 
-  const pause = async () => {
+  const initSession = (sessionId: string, dailyGoal: number, resolvedNumbers: number[], currentEntry: number) => {
+    setSession({ id: sessionId, daily_goal: dailyGoal });
+    setResolvedEntryNumbers(new Set(resolvedNumbers));
+    setFrontierEntry(currentEntry);
+  };
+
+  const endSession = async () => {
     const sid = session?.id;
     if (sid) await endReviewSession(sid);
+    setSession(null);
+    setEntryNumber(0);
+    setResolvedEntryNumbers(new Set());
+    setFrontierEntry(0);
+    updateParams({ pull_request_number: null });
     onIdle();
   };
 
   const [isReadOnly, setIsReadOnly] = useState(false);
 
-  const loadDirectPr = async (prNumber: number) => {
+  const loadDirectPr = async (prNumber: number): Promise<string | null> => {
     setIsNavigating(true);
     try {
       const res = await fetchPullRequestByNumber(prNumber);
       const data = res?.data;
-      if (!data) return;
+      if (!data) return null;
       await applyEntry(data);
-      setHasNext(false);
       const terminal = data.pr?.status === "merged" || data.pr?.status === "closed";
       setIsReadOnly(terminal);
       onReviewing();
+      return data.jurisdiction?.ocdid ?? null;
     } catch (err) {
       setError(err.message);
+      return null;
     } finally {
       setIsNavigating(false);
     }
@@ -163,12 +162,12 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
   return {
     session, setSession,
     jurisdiction,
-    pr,
-    progress: { entryNumber, hasNext, hasPrev: entryNumber > 1, resolvedEntryNumbers, frontierEntry, isNavigating },
+    pr, requestId,
+    progress: { entryNumber, hasPrev: entryNumber > 1, resolvedEntryNumbers, frontierEntry, isNavigating },
     prPeople,
     error, setError,
     stats,
-    advance, back, pause, merge, navigateTo, loadDirectPr,
+    advance, back, endSession, merge, navigateTo, loadDirectPr, initSession,
     isReadOnly,
     sourceContentUrls, reviewData,
   };

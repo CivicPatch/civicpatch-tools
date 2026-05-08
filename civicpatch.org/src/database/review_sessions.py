@@ -34,7 +34,19 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                 """
                 SELECT rs.id AS session_id,
                        rs.daily_goal,
-                       COALESCE(MAX(rse.entry_number), 1) AS current_entry_number
+                       COALESCE(
+                           MAX(rse.entry_number) FILTER (WHERE rse.status = 'claimed'),
+                           MAX(rse.entry_number) + 1,
+                           1
+                       ) AS current_entry_number,
+                       ARRAY_AGG(rse.entry_number ORDER BY rse.entry_number)
+                           FILTER (WHERE rse.status = 'resolved') AS resolved_entry_numbers,
+                       ARRAY(
+                           SELECT pr.pr_number
+                           FROM review_session_entries rse2
+                           JOIN pull_requests pr ON pr.request_id = rse2.request_ids[1]
+                           WHERE rse2.review_session_id = rs.id
+                       ) AS session_pull_request_numbers
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
@@ -42,6 +54,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                   AND EXISTS (
                       SELECT 1 FROM review_session_entries
                       WHERE review_session_id = rs.id
+                        AND status = 'claimed'
                         AND created_at > NOW() - %s
                   )
                 GROUP BY rs.id, rs.daily_goal
@@ -56,6 +69,8 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
         "session_id": str(row.session_id),  # type: ignore[union-attr]
         "daily_goal": row.daily_goal,  # type: ignore[union-attr]
         "current_entry_number": row.current_entry_number,  # type: ignore[union-attr]
+        "resolved_entry_numbers": row.resolved_entry_numbers or [],  # type: ignore[union-attr]
+        "session_pull_request_numbers": row.session_pull_request_numbers or [],  # type: ignore[union-attr]
     }
 
 
@@ -99,6 +114,7 @@ async def create_or_get_review_session(
                     JOIN review_sessions rs ON rs.id = rse.review_session_id
                     WHERE rs.user_id = %s
                       AND rs.state_code = %s
+                      AND rse.status = 'claimed'
                       AND rse.created_at > NOW() - %s
                 ) AS is_active
                 """,
@@ -206,9 +222,13 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
         FROM review_session_entries
         WHERE review_session_id = %s
           AND entry_number = %s
-          AND status IN ('claimed', 'passed')
+          AND status = ANY(%s)
         """,
-        (review_session_id, entry_number),
+        (review_session_id, entry_number, [
+            ReviewSessionEntryStatus.CLAIMED,
+            ReviewSessionEntryStatus.PASSED,
+            ReviewSessionEntryStatus.RESOLVED,
+        ]),
     )
     existing = await cur.fetchone()
     if not existing:

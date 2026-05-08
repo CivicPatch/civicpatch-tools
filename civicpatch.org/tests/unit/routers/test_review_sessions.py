@@ -77,12 +77,12 @@ def test_create_review_session_returns_session(client):
 
 
 @pytest.mark.unit
-def test_pause_session_returns_200(client):
+def test_end_session_returns_200(client):
     with patch(
         "database.review_sessions.end_review_session",
         new_callable=AsyncMock,
     ):
-        response = client.post(f"/review-sessions/{TEST_SESSION_ID}/pause")
+        response = client.post(f"/review-sessions/{TEST_SESSION_ID}/end")
 
     assert response.status_code == 200
     assert response.json()["data"] is None

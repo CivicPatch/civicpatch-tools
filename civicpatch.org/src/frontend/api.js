@@ -440,7 +440,7 @@ export const navigateToEntry = async (sessionId, entryNumber) => {
 
 
 export const endReviewSession = async (sessionId) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pause`, {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/end`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },
