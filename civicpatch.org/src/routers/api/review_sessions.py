@@ -118,8 +118,8 @@ def get_router() -> APIRouter:
         session = await review_sessions_db.get_active_review_session(user.user_id, state_code)
         return {"data": session}
 
-    @router.post("/{session_id}/pause")
-    async def pause_session(
+    @router.post("/{session_id}/end")
+    async def end_session(
         session_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])

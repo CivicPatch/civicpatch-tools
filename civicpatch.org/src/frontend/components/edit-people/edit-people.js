@@ -62,6 +62,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   const [selectedPullRequest, setSelectedPullRequest] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [prStatus, setPrStatus] = useState(null);
+
+  useEffect(() => {
+    const status = selectedPullRequest?.pr?.status;
+    if (status === "merged" || status === "closed") setPrStatus(status);
+    else setPrStatus(null);
+  }, [selectedPullRequest]);
   const [isMobile, setIsMobile] = useState(
     window.matchMedia("(max-width: 700px)").matches,
   );

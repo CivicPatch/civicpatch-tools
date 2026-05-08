@@ -470,3 +470,22 @@
         padding: 0.5rem 1rem;
     }
 }
+
+.review-page__status-banner {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.review-page__status-banner--merged {
+    background: var(--pico-ins-color);
+    color: #fff;
+}
+
+.review-page__status-banner--closed {
+    background: var(--pico-del-color);
+    color: #fff;
+}

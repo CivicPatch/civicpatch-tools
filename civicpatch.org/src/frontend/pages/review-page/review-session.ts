@@ -7,7 +7,6 @@ import "../../components/side-panel/side-panel.js";
 
 interface Progress {
   entryNumber: number;
-  hasNext: boolean;
   hasPrev: boolean;
   resolvedEntryNumbers: Set<number>;
   frontierEntry: number;
@@ -17,6 +16,7 @@ interface Progress {
 interface ReviewSessionProps {
   progress: Progress;
   isReadOnly: boolean;
+  hasSession: boolean;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null } | null;
   pr: { url: string | null; status: string | null; reviewState: string | null } | null;
   error: string | null;
@@ -31,7 +31,9 @@ interface ReviewSessionProps {
   onAdvance: () => void;
   onBack: () => void;
   onNavigateTo: (n: number) => void;
-  onPause: () => void;
+  onEndSession: () => void;
+  onClosePr: () => void;
+  isClosingPr: boolean;
   onTableDataChange: EventListener;
   onTableReorder: EventListener;
   onPeopleMerge: (...args: any[]) => unknown;
@@ -41,20 +43,20 @@ interface ReviewSessionProps {
 }
 
 function ReviewSession({
-  progress, isReadOnly, jurisdiction, pr,
-  error, isDirty,
+  progress, isReadOnly, hasSession, jurisdiction, pr,
+  error, isDirty, isClosingPr,
   prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
   resolvedMatches,
-  onMerge, onAdvance, onBack, onNavigateTo, onPause,
+  onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }: ReviewSessionProps) {
-  const { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
+  const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
-  const { url: pullRequestUrl, status: pullRequestStatus } = pr ?? {};
+  const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const displayMax = hasNext ? goal : entryNumber;
+  const displayMax = hasSession ? goal : entryNumber;
 
   function getDotStatus(n) {
     if (n === entryNumber) return "current";
@@ -68,9 +70,9 @@ function ReviewSession({
       <div class="review-page__sticky-header">
         <div class="review-page__nav">
           <div class="review-page__nav-left">
-            <button class="btn-sm review-page__end-btn" @click=${onPause}>${isReadOnly ? "Close" : "End session"}</button>
+            <button class="btn-sm review-page__end-btn" @click=${onEndSession}>${hasSession ? "End session" : "Exit"}</button>
           </div>
-          ${isReadOnly ? html`<div class="review-page__nav-center"></div>` : html`
+          ${!hasSession ? html`<div class="review-page__nav-center"></div>` : html`
           <div class="review-page__nav-center">
             <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
             <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
@@ -84,13 +86,18 @@ function ReviewSession({
                 ></button>`;
               })}
             </div>
-            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext || entryNumber >= goal}>Next <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()}>Next <i class="fa-solid fa-arrow-right"></i></button>
           </div>
+          ${isReadOnly ? html`<div class="review-page__nav-right"></div>` : html`
           <div class="review-page__nav-right">
+            <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
+              ${isClosingPr ? "Closing..." : "Close PR"}
+            </button>
             <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
               ${isDirty ? "Save and Publish" : "Publish"}
             </button>
           </div>
+          `}
           `}
         </div>
         ${collapsed ? "" : html`
@@ -99,7 +106,6 @@ function ReviewSession({
             <div class="review-page__pr-meta">
               ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
               ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
-              ${isReadOnly ? html`<span class="review-page__merged-badge">${pullRequestStatus}</span>` : ""}
             </div>
             <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
           </div>
@@ -108,6 +114,7 @@ function ReviewSession({
           <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
         </button>
       </div>
+      ${isReadOnly ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
       <civ-diff-panel
         .data=${prPeople ?? { existing: [], proposed: [] }}
       ></civ-diff-panel>
@@ -117,6 +124,7 @@ function ReviewSession({
           .existing=${prPeople?.existing ?? []}
           .selectedPeople=${selectedPeople ?? []}
           .isDirty=${isDirty}
+          .isTerminal=${isReadOnly}
           .resolvedMatches=${resolvedMatches ?? {}}
           .jurisdictionOcdid=${jurisdictionOcdid}
           .sourceContentUrls=${sourceContentUrls}
