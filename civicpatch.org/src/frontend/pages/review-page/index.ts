@@ -35,7 +35,8 @@ function ReviewPage() {
     prPeople,
     error, setError,
     stats,
-    advance, back, pause, merge, navigateTo,
+    advance, back, pause, merge, navigateTo, loadDirectPr,
+    isReadOnly,
     sourceContentUrls, reviewData,
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
@@ -43,6 +44,18 @@ function ReviewPage() {
     onIdle: () => setPageState(PAGE_STATE.IDLE),
     userId: user?.user_id,
   });
+
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    const prNumber = p.get("pull_request_number");
+    if (!prNumber) return;
+    setPageState(PAGE_STATE.LOADING);
+    setError(null);
+    loadDirectPr(parseInt(prNumber, 10)).catch((err) => {
+      setError(err.message);
+      setPageState(PAGE_STATE.IDLE);
+    });
+  }, []);
 
   const [resolvedMatches, setResolvedMatches] = useState({});
 
@@ -148,7 +161,7 @@ function ReviewPage() {
       const sessionRes = await createReviewSession(stateCode, effectiveGoal);
       const newSession = sessionRes.data;
       setSession(newSession);
-      updateParams({ state: stateCode });
+      updateParams({ state: stateCode, pull_request_number: null });
       await advance(newSession.id);
     } catch (err) {
       setError(err.message);
@@ -176,7 +189,8 @@ function ReviewPage() {
   }
 
   return html`<review-session
-    .progress=${{ ...progress, goal: session.daily_goal - (stats.today_resolved ?? 0) }}
+    .isReadOnly=${isReadOnly}
+    .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
     .jurisdiction=${jurisdiction}
     .pr=${pr}
     .error=${error}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "haunted";
 import {
   fetchReviewStats,
   fetchReview,
+  fetchPullRequestByNumber,
   pauseReviewSession,
   navigateToEntry,
   kickOffMerge,
@@ -142,6 +143,26 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     onIdle();
   };
 
+  const [isReadOnly, setIsReadOnly] = useState(false);
+
+  const loadDirectPr = async (prNumber: number) => {
+    setIsNavigating(true);
+    try {
+      const res = await fetchPullRequestByNumber(prNumber);
+      const data = res?.data;
+      if (!data) return;
+      await applyEntry({ ...data, has_prev: false });
+      setHasNext(false);
+      const terminal = data.pr?.status === "merged" || data.pr?.status === "closed";
+      setIsReadOnly(terminal);
+      onReviewing();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsNavigating(false);
+    }
+  };
+
   return {
     session, setSession,
     jurisdiction,
@@ -150,7 +171,8 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     prPeople,
     error, setError,
     stats,
-    advance, back, pause, merge, navigateTo,
+    advance, back, pause, merge, navigateTo, loadDirectPr,
+    isReadOnly,
     sourceContentUrls, reviewData,
   };
 }

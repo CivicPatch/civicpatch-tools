@@ -16,6 +16,7 @@ interface Progress {
 
 interface ReviewSessionProps {
   progress: Progress;
+  isReadOnly: boolean;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null } | null;
   pr: { url: string | null; status: string | null; reviewState: string | null } | null;
   error: string | null;
@@ -40,7 +41,7 @@ interface ReviewSessionProps {
 }
 
 function ReviewSession({
-  progress, jurisdiction, pr,
+  progress, isReadOnly, jurisdiction, pr,
   error, isDirty,
   prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
   resolvedMatches,
@@ -49,7 +50,7 @@ function ReviewSession({
 }: ReviewSessionProps) {
   const { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
-  const { url: pullRequestUrl, status: pullRequestStatus, reviewState } = pr ?? {};
+  const { url: pullRequestUrl, status: pullRequestStatus } = pr ?? {};
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -67,8 +68,9 @@ function ReviewSession({
       <div class="review-page__sticky-header">
         <div class="review-page__nav">
           <div class="review-page__nav-left">
-            <button class="btn-sm review-page__end-btn" @click=${onPause}>End session</button>
+            <button class="btn-sm review-page__end-btn" @click=${onPause}>${isReadOnly ? "Close" : "End session"}</button>
           </div>
+          ${isReadOnly ? html`<div class="review-page__nav-center"></div>` : html`
           <div class="review-page__nav-center">
             <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
             <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
@@ -89,6 +91,7 @@ function ReviewSession({
               ${isDirty ? "Save and Publish" : "Publish"}
             </button>
           </div>
+          `}
         </div>
         ${collapsed ? "" : html`
           ${error ? html`<p class="review-page__error">${error}</p>` : ""}
@@ -96,6 +99,7 @@ function ReviewSession({
             <div class="review-page__pr-meta">
               ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
               ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+              ${isReadOnly ? html`<span class="review-page__merged-badge">${pullRequestStatus}</span>` : ""}
             </div>
             <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
           </div>

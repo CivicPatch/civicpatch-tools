@@ -154,6 +154,78 @@ def test_save_and_merge_returns_202(client):
     assert response.json()["status"] == "pending"
 
 
+# ── get_pull_request_by_number tests ──────────────────────────────────────
+
+OPEN_PR_DB_RESULT = {
+    "request_id": TEST_REQUEST_ID,
+    "jurisdiction_ocdid": TEST_OCDID,
+    "jurisdiction_name": "Oakland",
+    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "review_state": None, "number": 42},
+    "proposed": [{"name": "Jane Doe"}],
+}
+
+MERGED_PR_DB_RESULT = {
+    **OPEN_PR_DB_RESULT,
+    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "merged", "review_state": None, "number": 42},
+}
+
+
+@pytest.mark.unit
+def test_get_by_number_404_when_not_found(client):
+    with patch(
+        "database.pull_requests.get_pull_request_data_by_pr_number",
+        new_callable=AsyncMock,
+        return_value=None,
+    ):
+        response = client.get("/pull_requests/by-number/999")
+
+    assert response.status_code == 404
+
+
+@pytest.mark.unit
+def test_get_by_number_200_for_open_pr(client):
+    with (
+        patch(
+            "database.pull_requests.get_pull_request_data_by_pr_number",
+            new_callable=AsyncMock,
+            return_value=OPEN_PR_DB_RESULT,
+        ),
+        patch(
+            "database.people.get_people_by_jurisdiction_ocdid",
+            new_callable=AsyncMock,
+            return_value=[],
+        ),
+    ):
+        response = client.get("/pull_requests/by-number/42")
+
+    assert response.status_code == 200
+    data = response.json()["data"]
+    assert data["request_id"] == TEST_REQUEST_ID
+    assert data["pr"]["status"] == "open"
+    assert data["has_next"] is False
+    assert data["has_prev"] is False
+
+
+@pytest.mark.unit
+def test_get_by_number_200_for_merged_pr(client):
+    with (
+        patch(
+            "database.pull_requests.get_pull_request_data_by_pr_number",
+            new_callable=AsyncMock,
+            return_value=MERGED_PR_DB_RESULT,
+        ),
+        patch(
+            "database.people.get_people_by_jurisdiction_ocdid",
+            new_callable=AsyncMock,
+            return_value=[],
+        ),
+    ):
+        response = client.get("/pull_requests/by-number/42")
+
+    assert response.status_code == 200
+    assert response.json()["data"]["pr"]["status"] == "merged"
+
+
 # ── do_merge unit tests ────────────────────────────────────────────────────
 
 MERGE_KEY = f"merge_status:{TEST_PR_NUMBER}"
