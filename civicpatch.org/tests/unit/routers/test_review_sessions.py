@@ -79,10 +79,38 @@ def test_create_review_session_returns_session(client):
 @pytest.mark.unit
 def test_pause_session_returns_200(client):
     with patch(
-        "database.review_sessions.pause_review_session",
+        "database.review_sessions.end_review_session",
         new_callable=AsyncMock,
     ):
         response = client.post(f"/review-sessions/{TEST_SESSION_ID}/pause")
 
     assert response.status_code == 200
     assert response.json()["data"] is None
+
+
+@pytest.mark.unit
+def test_get_active_session_returns_null_when_none(client):
+    with patch(
+        "database.review_sessions.get_active_review_session",
+        new_callable=AsyncMock,
+        return_value=None,
+    ):
+        response = client.get("/review-sessions/active", params={"state_code": "tx"})
+
+    assert response.status_code == 200
+    assert response.json()["data"] is None
+
+
+@pytest.mark.unit
+def test_get_active_session_returns_session_when_active(client):
+    active = {"session_id": TEST_SESSION_ID, "daily_goal": 10, "current_entry_number": 3}
+    with patch(
+        "database.review_sessions.get_active_review_session",
+        new_callable=AsyncMock,
+        return_value=active,
+    ):
+        response = client.get("/review-sessions/active", params={"state_code": "tx"})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["session_id"] == TEST_SESSION_ID
+    assert response.json()["data"]["current_entry_number"] == 3

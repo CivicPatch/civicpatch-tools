@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { createReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
+import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
@@ -23,10 +23,7 @@ const PAGE_STATE = {
 function ReviewPage() {
   const { user } = useAuth();
   const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
-  const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, () => {
-    const p = new URLSearchParams(window.location.search);
-    return p.get("state") || "";
-  });
+  const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, "");
   const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL, { ttl: PERSIST_FOREVER });
 
   const {
@@ -48,13 +45,24 @@ function ReviewPage() {
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     const prNumber = p.get("pull_request_number");
-    if (!prNumber) return;
-    setPageState(PAGE_STATE.LOADING);
-    setError(null);
-    loadDirectPr(parseInt(prNumber, 10)).catch((err) => {
-      setError(err.message);
-      setPageState(PAGE_STATE.IDLE);
-    });
+    if (prNumber) {
+      setPageState(PAGE_STATE.LOADING);
+      setError(null);
+      loadDirectPr(parseInt(prNumber, 10)).catch((err) => {
+        setError(err.message);
+        setPageState(PAGE_STATE.IDLE);
+      });
+      return;
+    }
+    if (!stateCode) return;
+    fetchActiveReviewSession(stateCode)
+      .then((res) => {
+        const active = res?.data;
+        if (!active) return;
+        setSession({ id: active.session_id, daily_goal: active.daily_goal });
+        return advance(active.session_id, active.current_entry_number);
+      })
+      .catch(() => {});
   }, []);
 
   const [resolvedMatches, setResolvedMatches] = useState({});
@@ -146,7 +154,6 @@ function ReviewPage() {
   const handleStateChange = (e) => {
     const newState = e.detail.state;
     setStateCode(newState);
-    updateParams({ state: newState });
   };
 
   const handleGoalChange = (n) => {
@@ -161,7 +168,7 @@ function ReviewPage() {
       const sessionRes = await createReviewSession(stateCode, effectiveGoal);
       const newSession = sessionRes.data;
       setSession(newSession);
-      updateParams({ state: stateCode, pull_request_number: null });
+      updateParams({ pull_request_number: null });
       await advance(newSession.id);
     } catch (err) {
       setError(err.message);

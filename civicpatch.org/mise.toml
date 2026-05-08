@@ -16,6 +16,11 @@ run = """
 docker compose run --rm civicpatch-org
 """
 
+[tasks.seed-dev-prs]
+description = "Seed dev database with open PRs from GitHub"
+usage = 'flag "--limit <limit>" help="Maximum number of PRs to seed" default="10"'
+run = "docker exec -w /app civicpatch-org python src/scripts/seed_dev_prs.py --limit ${usage_limit}"
+
 [tasks.containsh]
 run = "docker compose exec civicpatch-org bash"
 

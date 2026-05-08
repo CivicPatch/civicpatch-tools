@@ -106,6 +106,18 @@ def get_router() -> APIRouter:
         await review_sessions_db.pass_current_entry(session_id, body.entry_number)
         return await _navigate_response(session_id, body.entry_number)
 
+    @router.get("/active")
+    async def get_active_session(
+        state_code: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
+        session = await review_sessions_db.get_active_review_session(user.user_id, state_code)
+        return {"data": session}
+
     @router.post("/{session_id}/pause")
     async def pause_session(
         session_id: str,
@@ -113,7 +125,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        await review_sessions_db.pause_review_session(session_id)
+        await review_sessions_db.end_review_session(session_id)
         return {"data": None}
 
     return router
@@ -164,7 +176,6 @@ async def _navigate_response(session_id: str, entry_number: int):
             "request_id": request_id,
             "entry_number": result["entry_number"],
             "has_next": result.get("has_more", False),
-            "has_prev": result.get("has_prev", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],
             "existing": existing,

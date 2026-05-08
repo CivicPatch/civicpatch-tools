@@ -121,7 +121,7 @@ async def maybe_backfill_job_result(request_id: str):
             logger.info("maybe_backfill_job_result: data_json set for %s", request_id)
 
     if not result["review_json"]:
-        workflow_context = await github_service.get_pull_request_workflow_context(request_id, jurisdiction_ocdid)
+        workflow_context = await github_service.get_pull_request_context(request_id, jurisdiction_ocdid)
         review_json = _derive_review_step(workflow_context)
         await jobs_db.update_pipeline_run_review_json(request_id, review_json)
         logger.info("maybe_backfill_job_result: review_json set for %s", request_id)
