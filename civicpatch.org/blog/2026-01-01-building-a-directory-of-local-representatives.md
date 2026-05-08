@@ -20,7 +20,7 @@ There are a couple of challenges to solving this problem:
 - Resolving duplicates
 - Mapping roles and districts to canonical identifiers
 
-In 2026, a lot of this can be solved with a carefully worded prompt to an LLM API and a Playwright browser. That's actually exactly what the pipelines behind CivicPatch do. CivicPatch makes the scrape once per jurisdiction a couple of times a year (to keep the data up to date) and publishes the results to a public [repository](https://github.com/CivicPatch/open-data). This has a few benefits, assuming downstream consumers are able to use CivicPatch-derived data:
+In 2026, a lot of this can be solved with a carefully worded prompt to an LLM API and a Playwright browser. Using this method, CivicPatch makes the scrape once per jurisdiction a couple of times a year (to keep the data up to date) and publishes the results to a public [repository](https://github.com/CivicPatch/open-data). This has a few benefits, assuming downstream consumers are able to use CivicPatch-derived data:
 
 - Reduced load on municipal websites
 - No duplicated engineering effort across organizations
@@ -33,6 +33,21 @@ In 2026, a lot of this can be solved with a carefully worded prompt to an LLM AP
 - **Journalists and researchers** studying local government representation, turnover, and accountability
 - **Advocacy organisations** tracking which officials hold which roles across jurisdictions to target outreach
 - **Civic data platforms** like OpenStates need accurate upstream data to power their own transparency tools
+- **Residents of under-resourced communities** whose local representativess are less likely to appear in any structured dataset; and for whom the absence of a data standard means the tools that could reach them are never built.
+
+> "It might require resources to maintain, which may not be feasible in rural areas with limited resources."
+>
+> — Martinez-Gil et al., [An Overview of Civic Engagement Tools for Rural Communities](https://pmc.ncbi.nlm.nih.gov/articles/PMC11886549/), PMC (2025), Table 5: Risks/Limitations and Mitigations in Civic Engagement Platforms for Rural Communities [civic engagement platforms, rural communities]
+
+### Local Representatives Data and Data Standards: Some References
+
+Civic tech has been working on this problem for over a decade — standards remain fragmented, and sustaining open, free access to representative data has been an ongoing challenge.
+
+- In 2014, the Sunlight Foundation [launched the Open Civic Data project](https://sunlightfoundation.com/2014/11/24/help-liberate-your-towns-info-with-the-open-civic-data-project/) — a shared specification for elected official data designed to make representative information interoperable across civic tools. The Foundation [closed in 2020](https://thefulcrum.us/governance-legislation/sunlight-foundation), but the standard survived and is [still maintained today](https://open-civic-data.readthedocs.io).
+- For a decade, Google's Civic Information API offered a free, structured endpoint for representative data. In April 2025, Google [shut it down](https://groups.google.com/g/google-civicinfo-api/c/9fwFn-dhktA), pointing developers toward BallotReady, Ballotpedia, and Cicero — all commercial.
+- When open data infrastructure disappears and is replaced by paywalled alternatives, the tools that get built are the ones that can afford the data. As [mySociety's research found](https://research.mysociety.org/html/who-benefits/#:~:text=Those%20with%20dominant%20characteristics%20in%20affluent%20areas%20potentially%20have%20one%20aspect%20of%20their%20dominance%20reinforced), those in less affluent and more diverse communities risk having their disadvantage locked in — in part through disproportionately low engagement with civic technology tools.
+
+**Related discussions:** [openstates/jurisdictions#54 — Develop Shared Standards for Demonstration/Review](https://github.com/openstates/jurisdictions/issues/54)
 
 ## Project
 
