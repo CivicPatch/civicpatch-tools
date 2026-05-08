@@ -99,6 +99,34 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
 
 
 
+async def get_pull_request_data_by_pr_number(pr_number: int) -> Optional[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT pr.request_id::text, pr.url, pr.status, pr.review_state, pr.pr_number,
+                   r.jurisdiction_ocdid,
+                   jur.data->>'name' AS jurisdiction_name,
+                   COALESCE(r.data_json, '[]'::jsonb) AS data_json
+            FROM pull_requests pr
+            JOIN requests r ON r.id = pr.request_id
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
+            WHERE pr.pr_number = %s
+            """,
+            (pr_number,),
+        )
+        row = await cur.fetchone()
+        if not row:
+            return None
+        return {
+            "request_id": row[0],
+            "jurisdiction_ocdid": row[5],
+            "jurisdiction_name": row[6],
+            "pr": {"url": row[1], "status": row[2], "review_state": row[3], "number": row[4]},
+            "proposed": row[7] if row[7] is not None else [],
+        }
+
+
 async def update_pipeline_run_pull_request_url(request_id: str, pull_request_url: str | None = None):
     pool = await get_pool()
     pr_number = 0

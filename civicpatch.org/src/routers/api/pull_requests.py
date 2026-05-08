@@ -246,6 +246,43 @@ def get_router(api_key_header):
             },
         }
 
+    # -- Pull Requests: Get by PR number ---
+    @router.get("/by-number/{pr_number}")
+    async def get_pull_request_by_number_endpoint(
+        pr_number: int,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+        ),
+    ):
+        result = await pull_requests_db.get_pull_request_data_by_pr_number(pr_number)
+        if not result:
+            raise HTTPException(status_code=404, detail="Pull request not found")
+
+        request_id = result["request_id"]
+        jurisdiction_ocdid = result["jurisdiction_ocdid"]
+        proposed = result["proposed"] or []
+
+        existing = await database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid)
+        unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
+
+        return {
+            "data": {
+                "request_id": request_id,
+                "entry_number": 1,
+                "has_next": False,
+                "has_prev": False,
+                "jurisdiction": {
+                    "ocdid": jurisdiction_ocdid,
+                    "name": result["jurisdiction_name"],
+                    "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid),
+                },
+                "pr": result["pr"],
+                "existing": existing,
+                "proposed": proposed,
+                "sources": build_sources(request_id, jurisdiction_ocdid, unique_source_urls),
+            }
+        }
+
     # -- Pull Requests: Issues for a job ---
     @router.get("/{request_id}/review")
     async def get_pull_request_review_endpoint(

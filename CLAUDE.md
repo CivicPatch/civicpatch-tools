@@ -89,12 +89,11 @@ Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
 - `mise run tcp` — civicpatch.org tests
 - `mise run evals` — LLM evals
 
-## Research & Plans
+## Research
 
 - Save research output to `.docs/YYYY-MM-DD-research-subject-here.md`
-- Save implementation plans to `.docs/YYYY-MM-DD-plan-subject-feature-here.md`
 - Use today's date in the filename
-- For research: quote only the relevant snippet from each source, not the full page. Link to the specific section using a named anchor (`#section-id`) or text fragment (`#:~:text=quoted+text`) where possible
+- Quote only the relevant snippet from each source, not the full page. Link to the specific section using a named anchor (`#section-id`) or text fragment (`#:~:text=quoted+text`) where possible
 
 ## General
 
