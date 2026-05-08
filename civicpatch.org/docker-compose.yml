@@ -54,6 +54,12 @@ services:
       - civicpatch_net
     depends_on:
       - civicpatch-org-db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost', 8000), timeout=2); s.close()"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 10s
 
   civicpatch-org-db:
     image: postgis/postgis:17-3.5
@@ -85,6 +91,9 @@ services:
       dockerfile: civicpatch.org/Dockerfile
       target: development
     entrypoint: ["python", "src/worker.py"]
+    depends_on:
+      civicpatch-org:
+        condition: service_healthy
     environment:
       GITHUB_APP_ID: ${GITHUB_APP_ID}
       GITHUB_APP_CLIENT_ID: ${GITHUB_APP_CLIENT_ID}

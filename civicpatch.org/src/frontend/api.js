@@ -409,6 +409,13 @@ export const fetchReviewStats = async (stateCode) => {
   return res.json();
 };
 
+export const fetchActiveReviewSession = async (stateCode) => {
+  const params = new URLSearchParams({ state_code: stateCode });
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/active?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const createReviewSession = async (stateCode, dailyGoal) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions`, {
     method: "POST",
@@ -432,7 +439,7 @@ export const navigateToEntry = async (sessionId, entryNumber) => {
 };
 
 
-export const pauseReviewSession = async (sessionId) => {
+export const endReviewSession = async (sessionId) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/pause`, {
     method: "POST",
     credentials: "include",

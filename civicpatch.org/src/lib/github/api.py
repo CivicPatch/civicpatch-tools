@@ -321,12 +321,12 @@ async def get_teams(user_oauth_token: str):
         return []
 
 
-async def get_pull_request_workflow_context(
+async def get_pull_request_context(
     request_id: str, jurisdiction_ocdid: str
 ) -> dict | None:
-    """Fetch and parse workflow_context.json from a specific PR branch."""
+    """Fetch and parse pipeline_run_context.json from a specific PR branch."""
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    file_path = f"data_source/{folder}/workflow_context.json"
+    file_path = f"data_source/{folder}/pipeline_run_context.json"
     branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
@@ -335,7 +335,7 @@ async def get_pull_request_workflow_context(
         return json.loads(content)
     except Exception as e:
         logger.error(
-            f"Failed to parse workflow_context.json on branch {branch_name}: {e}"
+            f"Failed to parse pipeline_run_context.json on branch {branch_name}: {e}"
         )
         return None
 

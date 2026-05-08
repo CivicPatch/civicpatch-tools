@@ -317,7 +317,7 @@
     --pico-color: var(--pico-muted-color);
     --pico-background-color: transparent;
     --pico-border-color: transparent;
-    padding-left: 0;
+    padding-left: 0.5rem;
 }
 
 .review-page__next-btn {

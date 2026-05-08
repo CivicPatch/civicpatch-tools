@@ -3,7 +3,7 @@ import {
   fetchReviewStats,
   fetchReview,
   fetchPullRequestByNumber,
-  pauseReviewSession,
+  endReviewSession,
   navigateToEntry,
   kickOffMerge,
 } from "../../api.js";
@@ -30,7 +30,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
   const [prPeople, setPrPeople] = useState<{ existing: any[]; proposed: any[] } | null>(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [hasNext, setHasNext] = useState(true);
-  const [hasPrev, setHasPrev] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
@@ -57,10 +56,9 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     setPrPeople({ existing: sessionData.existing, proposed: sessionData.proposed });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
-    setHasPrev(sessionData.has_prev ?? false);
     setReviewData(review?.data ?? null);
     setSourceContentUrls(sessionData.sources);
-    updateParams({ state: stateCode });
+    updateParams({ pull_request_number: sessionData.pr?.number != null ? String(sessionData.pr.number) : null });
   };
 
   const handleAdvanceResult = (res) => {
@@ -69,7 +67,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
       if (res?.reason === NO_MORE_CARDS) {
         setHasNext(false);
       } else {
-        updateParams({ state: stateCode });
         onDone();
       }
       return null;
@@ -77,11 +74,11 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     return data;
   };
 
-  const advance = async (sessionId?: string) => {
+  const advance = async (sessionId?: string, targetEntry?: number) => {
     const sid = sessionId ?? session?.id;
     setIsNavigating(true);
     try {
-      const target = entryNumber + 1;
+      const target = targetEntry ?? entryNumber + 1;
       const res = await navigateToEntry(sid, target);
       const data = handleAdvanceResult(res);
       if (!data) return;
@@ -101,6 +98,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
       const res = await navigateToEntry(session?.id, entryNumber - 1);
       const data = res?.data;
       if (!data) return;
+      setHasNext(true);
       await applyEntry(data);
     } catch (err) {
       setError(err.message);
@@ -138,8 +136,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
 
   const pause = async () => {
     const sid = session?.id;
-    if (!sid) return;
-    await pauseReviewSession(sid);
+    if (sid) await endReviewSession(sid);
     onIdle();
   };
 
@@ -151,7 +148,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
       const res = await fetchPullRequestByNumber(prNumber);
       const data = res?.data;
       if (!data) return;
-      await applyEntry({ ...data, has_prev: false });
+      await applyEntry(data);
       setHasNext(false);
       const terminal = data.pr?.status === "merged" || data.pr?.status === "closed";
       setIsReadOnly(terminal);
@@ -167,7 +164,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     session, setSession,
     jurisdiction,
     pr,
-    progress: { entryNumber, hasNext, hasPrev, resolvedEntryNumbers, frontierEntry, isNavigating },
+    progress: { entryNumber, hasNext, hasPrev: entryNumber > 1, resolvedEntryNumbers, frontierEntry, isNavigating },
     prPeople,
     error, setError,
     stats,

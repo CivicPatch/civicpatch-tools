@@ -2,7 +2,7 @@ import pytest
 import yaml
 from unittest.mock import AsyncMock, patch, call
 
-from core.open_data_sync import get_jurisdiction_metadata, od_sync as bulk_sync
+from core.open_data_sync import get_jurisdiction_metadata, od_sync as bulk_sync, sync_jurisdictions_by_ocdids
 
 LACY_LAKEVIEW_OCDID = "ocd-jurisdiction/country:us/state:tx/place:lacy-lakeview/government"
 AUSTIN_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
@@ -121,6 +121,102 @@ async def test_returns_none_when_entries_file_missing():
         result = await get_jurisdiction_metadata("tx")
 
     assert result is None
+
+
+# ── sync_jurisdictions_by_ocdids ──────────────────────────────────────────────
+
+NJ_HANOVER_OCDID = "ocd-jurisdiction/country:us/state:nj/county:morris/place:hanover/government"
+WA_SEATTLE_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+
+
+def _mock_github_for_state(state_entries: dict):
+    """Return a side_effect list for get_github_file_contents keyed by state."""
+    def side_effect(path):
+        for state, (metadata_yml, entries_yml) in state_entries.items():
+            if f"/{state}/" in path:
+                if "jurisdictions_metadata" in path:
+                    return metadata_yml
+                if "jurisdictions.yml" in path:
+                    return entries_yml
+        return None
+    return patch(
+        "core.open_data_sync.github_service.get_github_file_contents",
+        new=AsyncMock(side_effect=side_effect),
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_sync_jurisdictions_by_ocdids_syncs_known_jurisdiction():
+    """Jurisdiction present in the metadata file must be written, not marked inactive."""
+    entries = _entries_yml([{"id": NJ_HANOVER_OCDID, "name": "Hanover township"}])
+    metadata = _metadata_yml({})
+
+    bulk_update = AsyncMock()
+    mark_inactive = AsyncMock()
+
+    with (
+        _mock_github_for_state({"nj": (metadata, entries)}),
+        patch("database.jurisdictions.bulk_update_jurisdictions", bulk_update),
+        patch("database.jurisdictions.mark_jurisdictions_inactive", mark_inactive),
+    ):
+        await sync_jurisdictions_by_ocdids([NJ_HANOVER_OCDID])
+
+    bulk_update.assert_awaited_once()
+    written = bulk_update.call_args[0][0]
+    assert len(written) == 1
+    assert written[0][0] == NJ_HANOVER_OCDID
+    mark_inactive.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_sync_jurisdictions_by_ocdids_cross_state():
+    """Jurisdictions from two different states are both synced correctly."""
+    nj_entries = _entries_yml([{"id": NJ_HANOVER_OCDID, "name": "Hanover township"}])
+    wa_entries = _entries_yml([{"id": WA_SEATTLE_OCDID, "name": "Seattle city"}])
+    empty_metadata = _metadata_yml({})
+
+    bulk_update = AsyncMock()
+    mark_inactive = AsyncMock()
+
+    with (
+        _mock_github_for_state({
+            "nj": (empty_metadata, nj_entries),
+            "wa": (empty_metadata, wa_entries),
+        }),
+        patch("database.jurisdictions.bulk_update_jurisdictions", bulk_update),
+        patch("database.jurisdictions.mark_jurisdictions_inactive", mark_inactive),
+    ):
+        await sync_jurisdictions_by_ocdids([NJ_HANOVER_OCDID, WA_SEATTLE_OCDID])
+
+    bulk_update.assert_awaited_once()
+    written = bulk_update.call_args[0][0]
+    written_ocdids = {row[0] for row in written}
+    assert written_ocdids == {NJ_HANOVER_OCDID, WA_SEATTLE_OCDID}
+    mark_inactive.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_sync_jurisdictions_by_ocdids_marks_inactive_when_missing_from_file():
+    """Jurisdiction absent from jurisdictions.yml is marked inactive."""
+    entries = _entries_yml([])
+    metadata = _metadata_yml({})
+
+    bulk_update = AsyncMock()
+    mark_inactive = AsyncMock()
+
+    with (
+        _mock_github_for_state({"nj": (metadata, entries)}),
+        patch("database.jurisdictions.bulk_update_jurisdictions", bulk_update),
+        patch("database.jurisdictions.mark_jurisdictions_inactive", mark_inactive),
+    ):
+        await sync_jurisdictions_by_ocdids([NJ_HANOVER_OCDID])
+
+    mark_inactive.assert_awaited_once_with([NJ_HANOVER_OCDID])
+    written = bulk_update.call_args[0][0]
+    assert written == []
 
 
 # ── bulk_sync: people_count=0 forces people sync ─────────────────────────────
