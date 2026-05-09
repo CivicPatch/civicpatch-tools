@@ -3,7 +3,7 @@ import time
 from fastapi import APIRouter
 
 import lib.cache as cache_service
-import database.review_sessions as review_sessions_db
+import database.review_session_stats as review_session_stats_db
 
 LEADERBOARD_CACHE_KEY = "leaderboard_data"
 LEADERBOARD_CACHE_TTL = 3600  # 1 hour
@@ -18,7 +18,7 @@ def get_router():
         if cached:
             return {"data": cached}
 
-        rows = await review_sessions_db.get_leaderboard()
+        rows = await review_session_stats_db.get_leaderboard()
         data = {"entries": rows}
         await cache_service.set_cached(
             LEADERBOARD_CACHE_KEY, data, time.time() + LEADERBOARD_CACHE_TTL

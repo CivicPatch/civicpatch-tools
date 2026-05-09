@@ -12,6 +12,7 @@ import database.pipeline_runs as jobs_db
 import database.people as database_people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
+import database.review_session_stats as review_session_stats_db
 import lib.cache as cache_service
 import lib.github.api as github_service
 import lib.storage as storage_service
@@ -63,7 +64,7 @@ def get_router() -> APIRouter:
             return {"data": cached}
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
-        stats = await review_sessions_db.get_review_stats(
+        stats = await review_session_stats_db.get_review_stats(
             user.user_id, state_code
         )
         await cache_service.set_cached(cache_key, stats, expires_at=time.time() + STATS_CACHE_TTL)

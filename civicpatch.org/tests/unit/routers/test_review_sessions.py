@@ -48,7 +48,7 @@ def test_get_review_stats_fetches_from_db_on_cache_miss(client):
     db_stats = {"reviewed": 10, "remaining": 5}
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.review_sessions.get_review_stats", new_callable=AsyncMock, return_value=db_stats),
+        patch("database.review_session_stats.get_review_stats", new_callable=AsyncMock, return_value=db_stats),
         patch("lib.cache.set_cached", new_callable=AsyncMock),
     ):
         response = client.get("/review-sessions/stats", params={"state_code": "ca"})

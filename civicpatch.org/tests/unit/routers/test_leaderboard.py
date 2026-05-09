@@ -46,7 +46,7 @@ def test_get_leaderboard_fetches_from_db_on_cache_miss(client):
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
         patch(
-            "database.review_sessions.get_leaderboard",
+            "database.review_session_stats.get_leaderboard",
             new_callable=AsyncMock,
             return_value=MOCK_ENTRIES,
         ),
@@ -64,7 +64,7 @@ def test_get_leaderboard_writes_cache_on_db_fetch(client):
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
         patch(
-            "database.review_sessions.get_leaderboard",
+            "database.review_session_stats.get_leaderboard",
             new_callable=AsyncMock,
             return_value=MOCK_ENTRIES,
         ),
