@@ -62,6 +62,8 @@ async def test_create_or_get_does_not_wipe_entries_when_session_is_active():
     ActiveRow = namedtuple("ActiveRow", ["is_active"])
     SessionRow = namedtuple("SessionRow", ["id", "state_code", "daily_goal", "created_at"])
     from datetime import datetime, timezone
+    from collections import namedtuple as nt
+    NextEntryRow = nt("NextEntryRow", ["next_entry_number"])
     session_row = SessionRow(
         id=SESSION_ID, state_code=STATE_CODE, daily_goal=10,
         created_at=datetime.now(timezone.utc),
@@ -70,6 +72,7 @@ async def test_create_or_get_does_not_wipe_entries_when_session_is_active():
     cur = _make_cursor(fetchone_side_effect=[
         ActiveRow(is_active=True),         # idle check: session IS active
         session_row,                       # INSERT ON CONFLICT RETURNING
+        NextEntryRow(next_entry_number=1), # next entry number query
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
@@ -90,9 +93,13 @@ async def test_create_or_get_wipes_entries_when_session_is_idle():
         created_at=datetime.now(timezone.utc),
     )
 
+    from collections import namedtuple as nt
+    NextEntryRow = nt("NextEntryRow", ["next_entry_number"])
+
     cur = _make_cursor(fetchone_side_effect=[
         ActiveRow(is_active=False),        # idle check: session is idle
         session_row,                       # INSERT ON CONFLICT RETURNING
+        NextEntryRow(next_entry_number=1), # next entry number query
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)

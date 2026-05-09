@@ -14,8 +14,8 @@ test.describe("Review navigation", () => {
   test("reviewer can start a session and navigate to first card", async ({
     authenticatedPage: page,
   }) => {
-    // ?state=ca pre-populates the state selector without interacting with the web component
-    await page.goto("/review?state=ca");
+    // State is pre-set to 'ca' via localStorage in the authenticatedPage fixture
+    await page.goto("/review");
 
     // Wait for the review landing to render with available cards
     const startButton = page.locator(".review-page__start-btn");
@@ -32,11 +32,34 @@ test.describe("Review navigation", () => {
   test("reviewer sees proposed people on first card", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto("/review?state=ca");
+    await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
     await expect(page.getByText("E2E Test City")).toBeVisible();
 
     // The seeded proposed person should appear in the diff panel
     await expect(page.locator("civ-diff-panel").getByText("Jane Smith")).toBeVisible();
+  });
+
+  test("next advances to second card", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    await page.locator(".review-page__next-btn").click();
+
+    await expect(page.locator(".review-page__progress")).toContainText("2");
+  });
+
+  test("back returns to previous card after next", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    await page.locator(".review-page__next-btn").click();
+    await expect(page.locator(".review-page__progress")).toContainText("2");
+
+    await page.locator(".review-page__back-btn").click();
+    await expect(page.locator(".review-page__progress")).toContainText("1");
+    await expect(page.getByText("E2E Test City")).toBeVisible();
   });
 });

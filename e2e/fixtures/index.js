@@ -31,6 +31,12 @@ export const test = base.extend({
     );
     await injectSessionCookies(context, token, csrfNonce, baseUrl);
 
+    // Pre-set the state selector in localStorage so the review queue
+    // filters to the seeded state without requiring URL params.
+    await page.addInitScript(() => {
+      localStorage.setItem("app:default-state", JSON.stringify({ __value: "ca", __expiresAt: null }));
+    });
+
     // Expose csrfNonce so tests can include it in POST request headers
     page.csrfNonce = csrfNonce;
     await use(page);

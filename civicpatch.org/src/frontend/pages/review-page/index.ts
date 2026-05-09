@@ -179,7 +179,7 @@ function ReviewPage() {
       const newSession = sessionRes.data;
       setSession(newSession);
       updateParams({ pull_request_number: null });
-      await advance(newSession.id);
+      await advance(newSession.id, newSession.next_entry_number);
     } catch (err) {
       setError(err.message);
       setPageState(PAGE_STATE.IDLE);

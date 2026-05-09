@@ -10,11 +10,21 @@ export const TEST_JURISDICTION_OCDID =
 export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 const TEST_PR_ID = "00000000-0000-0000-eeee-000000000002";
 
+export const TEST_JURISDICTION_OCDID_2 =
+  "ocd-jurisdiction/country:us/state:ca/place:e2e_test_2/government";
+export const TEST_REQUEST_ID_2 = "00000000-0000-0000-eeee-000000000003";
+const TEST_PR_ID_2 = "00000000-0000-0000-eeee-000000000004";
+
+export const TEST_JURISDICTION_OCDID_3 =
+  "ocd-jurisdiction/country:us/state:ca/place:e2e_test_3/government";
+export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
+const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
+
 function makeClient() {
   return new Client({
     connectionString:
       process.env.E2E_DB_URL ??
-      "postgres://civicpatch:development_password@localhost:6000/development_db",
+      "postgres://e2e:e2e_password@localhost:8101/e2e_db",
   });
 }
 
@@ -60,10 +70,10 @@ export async function seedE2eFixtures() {
       [TEST_REQUEST_ID, TEST_JURISDICTION_OCDID]
     );
 
-    // Job — required for get_job_data_json join
+    // pipeline_runs row required for get_pipeline_run_data_json
     await client.query(
-      `INSERT INTO jobs (request_id, status, created_at, updated_at)
-       VALUES ($1, 'complete', NOW(), NOW())
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
       [TEST_REQUEST_ID]
     );
@@ -76,6 +86,37 @@ export async function seedE2eFixtures() {
        ON CONFLICT (request_id) DO NOTHING`,
       [TEST_PR_ID, TEST_REQUEST_ID]
     );
+
+    // Second card
+    for (const [jOcdid, jName, reqId, prId, prNum] of [
+      [TEST_JURISDICTION_OCDID_2, "E2E Test City 2", TEST_REQUEST_ID_2, TEST_PR_ID_2, 2],
+      [TEST_JURISDICTION_OCDID_3, "E2E Test City 3", TEST_REQUEST_ID_3, TEST_PR_ID_3, 3],
+    ]) {
+      await client.query(
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, status, data)
+         VALUES ($1, 'active', $2)
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET data = EXCLUDED.data`,
+        [jOcdid, JSON.stringify({ name: jName, geoid: `060000${prNum}` })]
+      );
+      await client.query(
+        `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+         VALUES ($1, 'people_collection', $2, '{}', '[]', '{}', NOW(), NOW())
+         ON CONFLICT (id) DO NOTHING`,
+        [reqId, jOcdid]
+      );
+      await client.query(
+        `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+         VALUES ($1, 'success', 100, NOW(), NOW())
+         ON CONFLICT DO NOTHING`,
+        [reqId]
+      );
+      await client.query(
+        `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+         VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+         ON CONFLICT (request_id) DO NOTHING`,
+        [prId, reqId, prNum]
+      );
+    }
   } finally {
     await client.end();
   }
@@ -101,16 +142,16 @@ export async function teardownE2eFixtures() {
        )`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
     );
-    await client.query(
-      `DELETE FROM pull_requests WHERE id = $1`,
-      [TEST_PR_ID]
-    );
-    await client.query(`DELETE FROM jobs WHERE request_id = $1`, [TEST_REQUEST_ID]);
-    await client.query(`DELETE FROM requests WHERE id = $1`, [TEST_REQUEST_ID]);
-    await client.query(
-      `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
-      [TEST_JURISDICTION_OCDID]
-    );
+    for (const [prId, reqId, jOcdid] of [
+      [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
+      [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
+      [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
+    ]) {
+      await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
+      await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);
+      await client.query(`DELETE FROM requests WHERE id = $1`, [reqId]);
+      await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [jOcdid]);
+    }
     await client.query(
       `DELETE FROM user_roles WHERE provider = $1 AND provider_user_id = $2`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
