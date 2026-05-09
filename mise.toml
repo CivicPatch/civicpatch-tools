@@ -107,12 +107,33 @@ dir = "pipelines"
 run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
+[tasks.e2e-install]
+description = "Install e2e dependencies and Playwright browsers (run once)"
+run = "npm install && npx playwright install chromium"
+dir = "e2e"
+
 [tasks.e2e]
-description = "Run Playwright e2e tests in a fully isolated Docker stack"
+description = "Build frontend, start e2e stack, open Playwright UI — tears down on exit"
+run = """
+set -e
+npm install
+npx playwright install chromium
+cd ../civicpatch.org/src/frontend && npm run build
+cd - > /dev/null
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml up db-e2e redis-e2e civicpatch-org-e2e -d --wait
+npx playwright test --ui || true
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml down -v --remove-orphans
+"""
+dir = "e2e"
+env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
+
+[tasks.e2e-ci]
+description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
 run = """
 docker compose -f docker-compose.e2e.yml down -v --remove-orphans || true
 docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit 2>&1 | grep -E "^(playwright-1|ERROR|civicpatch-e2e)"
 """
+
 
 [tasks.tcp]
 run = "uv run pytest -m unit"

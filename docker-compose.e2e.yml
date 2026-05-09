@@ -19,16 +19,21 @@ services:
       POSTGRES_DB: e2e_db
     volumes:
       - civicpatch_e2e_db_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:8101:5432"
     networks:
       - civicpatch_e2e_net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U e2e -d e2e_db"]
-      interval: 5s
+      interval: 2s
       timeout: 5s
       retries: 30
+      start_period: 10s
 
   redis-e2e:
     image: redis:alpine
+    ports:
+      - "127.0.0.1:8102:6379"
     networks:
       - civicpatch_e2e_net
 
@@ -48,12 +53,15 @@ services:
       JWT_SECRET_KEY: "e2e-jwt-secret-not-for-production"
       DATABASE_HASH_KEY: "e2e-db-hash-key-not-for-production"
       SERVICE_API_KEY: "e2e-service-api-key"
+      APP_ENVIRONMENT: "production"
       # GitHub vars — required to boot; injected by CI via E2E_ prefix
       GITHUB_APP_ID: ${E2E_GITHUB_APP_ID:-0}
       GITHUB_APP_CLIENT_ID: ${E2E_GITHUB_APP_CLIENT_ID:-e2e-client-id}
       GITHUB_APP_CLIENT_SECRET: ${E2E_GITHUB_APP_CLIENT_SECRET:-e2e-client-secret}
       GITHUB_APP_PRIVATE_KEY_BASE64: ${E2E_GITHUB_APP_PRIVATE_KEY_BASE64:-}
       GITHUB_APP_INSTALLATION_ID: ${E2E_GITHUB_APP_INSTALLATION_ID:-0}
+    ports:
+      - "127.0.0.1:8100:80"
     depends_on:
       db-e2e:
         condition: service_healthy

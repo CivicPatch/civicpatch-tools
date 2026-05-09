@@ -1,0 +1,101 @@
+/**
+ * User story: reviewer session lifecycle
+ *
+ * These tests verify observable browser behavior — what the user sees and
+ * can do — without caring about internal DB state or SQL.
+ */
+
+import { test, expect } from "../fixtures/index.js";
+import { test as base } from "@playwright/test";
+
+test.describe("Review session lifecycle", () => {
+  test("end session returns to landing page", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    await page.locator(".review-page__end-btn").click();
+
+    // Should return to landing with the Review button available
+    await expect(page.locator(".review-page__start-btn")).toBeVisible();
+  });
+
+  test("restarting a session after ending shows a card", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    // End the session
+    await page.locator(".review-page__end-btn").click();
+    await expect(page.locator(".review-page__start-btn")).toBeVisible();
+
+    // Start again — should show a card (session is fresh)
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+  });
+
+  test("session progress dots are visible during review", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    // At least one dot should be rendered
+    await expect(page.locator(".review-page__dot").first()).toBeVisible();
+
+    // The current dot should be present
+    await expect(page.locator(".review-page__dot--current")).toBeVisible();
+  });
+
+  test("direct link shows Exit button, not End session", async ({ authenticatedPage: page }) => {
+    // The seeded PR has pr_number=0
+    await page.goto("/review?pull_request_number=0");
+
+    const endBtn = page.locator(".review-page__end-btn");
+    await expect(endBtn).toBeVisible();
+    await expect(endBtn).toHaveText("Exit");
+  });
+
+  test("direct link Exit button returns to landing", async ({ authenticatedPage: page }) => {
+    await page.goto("/review?pull_request_number=0");
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    await page.locator(".review-page__end-btn").click();
+
+    // Should show landing page (start review button or some landing indicator)
+    await expect(page.locator(".review-page__start-btn")).toBeVisible();
+  });
+
+  test("refreshing mid-session resumes on the same card", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    // Reload — session should resume automatically
+    await page.reload();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    // Session dots should still be present (not reset to landing)
+    await expect(page.locator(".review-page__dot--current")).toBeVisible();
+  });
+
+  test("back button is disabled on first card", async ({ authenticatedPage: page }) => {
+    await page.goto("/review");
+    await page.locator(".review-page__start-btn").click();
+    await expect(page.getByText("E2E Test City")).toBeVisible();
+
+    // First card has no previous entry — Back must be disabled
+    await expect(page.locator(".review-page__back-btn")).toBeDisabled();
+  });
+
+});
+
+base.describe("Unauthenticated access", () => {
+  test("review page does not crash without login", async ({ page }) => {
+    const baseUrl = process.env.BASE_URL ?? "http://localhost:8100";
+    await page.goto(`${baseUrl}/review`);
+
+    // Renders a page (not a 500) and does not show the review start button
+    await expect(page).not.toHaveURL(/error/);
+    await expect(page.locator(".review-page__start-btn")).not.toBeVisible();
+  });
+});

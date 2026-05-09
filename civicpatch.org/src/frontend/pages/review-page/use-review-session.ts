@@ -129,7 +129,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
 
   const endSession = async () => {
     const sid = session?.id;
-    if (sid) await endReviewSession(sid);
+    if (sid) await endReviewSession(sid).catch(() => {});
     setSession(null);
     setEntryNumber(0);
     setResolvedEntryNumbers(new Set());

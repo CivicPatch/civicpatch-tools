@@ -44,7 +44,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                        ARRAY(
                            SELECT pr.pr_number
                            FROM review_session_entries rse2
-                           JOIN pull_requests pr ON pr.request_id = rse2.request_ids[1]
+                           JOIN pull_requests pr ON pr.request_id::text = rse2.request_ids[1]
                            WHERE rse2.review_session_id = rs.id
                        ) AS session_pull_request_numbers
                 FROM review_sessions rs
@@ -139,11 +139,22 @@ async def create_or_get_review_session(
             if not is_active:
                 await _purge_session_queue(cur, str(row.id))  # type: ignore[union-attr]
 
+            await cur.execute(
+                """
+                SELECT COALESCE(MAX(entry_number), 0) + 1 AS next_entry_number
+                FROM review_session_entries
+                WHERE review_session_id = %s
+                """,
+                (str(row.id),),  # type: ignore[union-attr]
+            )
+            next_entry_row = await cur.fetchone()
+
     return {
         "id": str(row.id),  # type: ignore[union-attr]
         "state_code": row.state_code,  # type: ignore[union-attr]
         "daily_goal": row.daily_goal,  # type: ignore[union-attr]
         "created_at": row.created_at.isoformat(),  # type: ignore[union-attr]
+        "next_entry_number": next_entry_row.next_entry_number if next_entry_row else 1,  # type: ignore[union-attr]
     }
 
 
@@ -215,7 +226,7 @@ async def _find_next_cards(cur, review_session_id: str, state_code: str, limit: 
 
 
 async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str):
-    """Re-navigate to an already-claimed or passed entry. Returns (request_id, jurisdiction_ocdid, has_more) or None."""
+    """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_more) or None."""
     await cur.execute(
         """
         SELECT id, request_ids, jurisdiction_ocdid

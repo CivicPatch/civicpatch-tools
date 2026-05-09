@@ -38,3 +38,9 @@ todo.md
 open-data
 server
 infrastructure
+
+# e2e
+e2e/test-results/
+e2e/playwright-report/
+e2e/.auth/
+e2e/node_modules/
