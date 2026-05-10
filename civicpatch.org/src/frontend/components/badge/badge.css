@@ -12,16 +12,16 @@ civ-badge {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 0.15em 0.55em;
-    border-radius: calc(var(--pico-border-radius) * 0.5);
+    border-radius: 2px;
     white-space: nowrap;
     line-height: 1;
     background: none;
 }
 
 .civ-badge--primary {
-    color: var(--pico-primary-inverse);
-    background: var(--pico-primary-background);
-    border: 1px solid var(--pico-primary-border);
+    color: var(--civ-accent-text, #111);
+    background: var(--civ-accent, #ffe066);
+    border: 1px solid var(--civ-accent-border, #e0cc00);
 }
 
 .civ-badge--secondary {
