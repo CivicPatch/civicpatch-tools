@@ -49,23 +49,17 @@ function ReviewPage() {
       setPageState(PAGE_STATE.LOADING);
       setError(null);
       loadDirectPr(parseInt(prNumber, 10))
-        .then((jurisdictionOcdid) => {
-          if (!jurisdictionOcdid) return;
-          const match = jurisdictionOcdid.match(/state:([a-z]+)/);
-          const state = match?.[1];
-          if (!state) return;
-          return fetchActiveReviewSession(state).then((res) => {
-            const active = res?.data;
-            if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
-              initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
-            }
-          });
+        .then(() => fetchActiveReviewSession())
+        .then((res) => {
+          const active = res?.data;
+          if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
+            initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
+          }
         })
         .catch(() => {});
       return;
     }
-    if (!stateCode) return;
-    fetchActiveReviewSession(stateCode)
+    fetchActiveReviewSession()
       .then((res) => {
         const active = res?.data;
         if (!active) return;

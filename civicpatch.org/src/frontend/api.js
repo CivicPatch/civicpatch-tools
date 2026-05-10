@@ -409,9 +409,8 @@ export const fetchReviewStats = async (stateCode) => {
   return res.json();
 };
 
-export const fetchActiveReviewSession = async (stateCode) => {
-  const params = new URLSearchParams({ state_code: stateCode });
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/active?${params}`, { credentials: "include" });
+export const fetchActiveReviewSession = async () => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/active`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

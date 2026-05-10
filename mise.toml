@@ -131,6 +131,7 @@ env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_pas
 description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
 run = """
 docker compose -f docker-compose.e2e.yml down -v --remove-orphans || true
+docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
 docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit 2>&1 | grep -E "^(playwright-1|ERROR|civicpatch-e2e)"
 """
 
