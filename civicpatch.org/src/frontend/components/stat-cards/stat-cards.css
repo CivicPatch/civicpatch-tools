@@ -7,7 +7,7 @@
 
 .stat-cards__card {
     background: var(--pico-card-background-color);
-    border-radius: 0.75rem;
+    border-radius: 3px;
     padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
@@ -17,6 +17,7 @@
     transition: border-color 0.15s ease;
     width: 100%;
     position: relative;
+    border-top: 2px solid var(--civ-border-strong);
 }
 
 button.stat-cards__card {
@@ -28,15 +29,20 @@ button.stat-cards__card:hover {
 }
 
 .stat-cards__label {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--civ-text-muted);
+    letter-spacing: 0;
 }
 
 .stat-cards__value {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: var(--text-2xl);
     font-weight: 700;
-    color: var(--pico-primary);
+    color: var(--civ-text);
     line-height: 1.1;
+    letter-spacing: -0.03em;
 }
 
 .stat-cards__sub {

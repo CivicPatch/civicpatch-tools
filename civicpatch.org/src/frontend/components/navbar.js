@@ -19,7 +19,7 @@ const NAVBAR_CSS = html`
       gap: 1.25rem;
       padding: 0.875rem 0;
       background: transparent;
-      border-bottom: 1px solid var(--pico-muted-border-color);
+      border-bottom: 3px solid var(--civ-border-strong, #111);
       user-select: none;
       max-width: 1200px;
       margin-inline: auto;
@@ -54,6 +54,7 @@ const NAVBAR_CSS = html`
 
     /* Brand */
     .nav-brand {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       font-size: 1.125rem;
       text-decoration: none;
