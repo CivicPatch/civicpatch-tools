@@ -4,6 +4,8 @@
   name: "Michigan"
 - code: "nj"
   name: "New Jersey"
+- code: "sc"
+  name: "South Carolina"
 - code: "tx"
   name: "Texas"
 - code: "wa"

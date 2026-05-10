@@ -3,12 +3,8 @@ from collections import namedtuple
 from datetime import datetime, timedelta, timezone
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from database.review_sessions import (
-    ReviewSessionStatus,
-    create_or_get_review_session,
-    end_review_session,
-    get_active_review_session,
-)
+from database.review_sessions import ReviewSessionStatus, create_or_get_review_session, get_active_review_session
+from database.review_sessions import end_review_session
 
 USER_ID = "user-123"
 STATE_CODE = "tx"
@@ -61,18 +57,18 @@ def _next_entry_row(n=1):
 async def test_get_active_review_session_returns_none_when_no_session():
     cur = _make_cursor(fetchone_side_effect=[None])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_active_review_session(USER_ID, STATE_CODE)
+        result = await get_active_review_session(USER_ID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_get_active_review_session_returns_session_when_active():
-    Row = namedtuple("Row", ["session_id", "daily_goal", "current_entry_number", "resolved_entry_numbers", "session_pull_request_numbers"])
-    row = Row(session_id=SESSION_ID, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_pull_request_numbers=[101, 102])
+    Row = namedtuple("Row", ["session_id", "state_code", "daily_goal", "current_entry_number", "resolved_entry_numbers", "session_pull_request_numbers"])
+    row = Row(session_id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_pull_request_numbers=[101, 102])
     cur = _make_cursor(fetchone_side_effect=[row])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_active_review_session(USER_ID, STATE_CODE)
+        result = await get_active_review_session(USER_ID)
     assert result is not None
     assert result["session_id"] == SESSION_ID
     assert result["current_entry_number"] == 3

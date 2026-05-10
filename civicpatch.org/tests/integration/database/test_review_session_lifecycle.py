@@ -11,11 +11,9 @@ import uuid
 import pytest
 import pytest_asyncio
 from database.database import get_pool
-from database.review_sessions import (
-    create_or_get_review_session,
-    end_review_session,
-    get_active_review_session,
-)
+from database.review_sessions import create_or_get_review_session, get_active_review_session
+from database.review_sessions import end_review_session
+from database.review_session_entries import resolve_review_session_entries_by_request_id
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -112,7 +110,7 @@ async def test_get_active_session_returns_none_when_only_resolved_entries(test_u
     await _insert_entry(session_id, entry_number=1, status="resolved")
     await _insert_entry(session_id, entry_number=2, status="resolved")
 
-    result = await get_active_review_session(str(test_user), _STATE_CODE)
+    result = await get_active_review_session(str(test_user))
     assert result is None, "Session with only resolved entries must not appear active"
 
 
@@ -122,7 +120,7 @@ async def test_get_active_session_returns_none_when_no_entries(test_user):
     """Fresh session with no entries must not appear active."""
     await _create_session(test_user)
 
-    result = await get_active_review_session(str(test_user), _STATE_CODE)
+    result = await get_active_review_session(str(test_user))
     assert result is None
 
 
@@ -177,3 +175,27 @@ async def test_fresh_session_with_no_history_starts_at_entry_1(test_user):
     result = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
 
     assert result["next_entry_number"] == 1
+
+
+# ── reviewed_ocdids ───────────────────────────────────────────────────────────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_end_session_resets_reviewed_ocdids(test_user):
+    """end_review_session must clear reviewed_ocdids so the next session starts fresh."""
+    pool = await get_pool()
+    session_id = await _create_session(test_user)
+
+    # Manually set some reviewed ocdids
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_sessions SET reviewed_ocdids = %s WHERE id = %s",
+            (["ocd-jurisdiction/country:us/state:zz/place:test_1/government"], str(session_id)),
+        )
+
+    await end_review_session(str(session_id))
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT reviewed_ocdids FROM review_sessions WHERE id = %s", (str(session_id),))
+        row = await cur.fetchone()
+    assert row[0] == [], f"reviewed_ocdids must be empty after end_session, got {row[0]}"

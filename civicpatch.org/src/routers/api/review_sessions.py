@@ -12,6 +12,8 @@ import database.pipeline_runs as jobs_db
 import database.people as database_people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
+import database.review_session_navigation as review_session_navigation_db
+import database.review_session_entries as review_session_entries_db
 import database.review_session_stats as review_session_stats_db
 import lib.cache as cache_service
 import lib.github.api as github_service
@@ -104,19 +106,18 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
-        await review_sessions_db.pass_current_entry(session_id, body.entry_number)
+        await review_session_entries_db.pass_current_entry(session_id, body.entry_number)
         return await _navigate_response(session_id, body.entry_number)
 
     @router.get("/active")
     async def get_active_session(
-        state_code: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
         ),
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
-        session = await review_sessions_db.get_active_review_session(user.user_id, state_code)
+        session = await review_sessions_db.get_active_review_session(user.user_id)
         return {"data": session}
 
     @router.post("/{session_id}/end")
@@ -134,10 +135,10 @@ def get_router() -> APIRouter:
 
 async def _navigate_response(session_id: str, entry_number: int):
     try:
-        result = await review_sessions_db.navigate_to_entry(session_id, entry_number)
+        result = await review_session_navigation_db.navigate_to_entry(session_id, entry_number)
     except UniqueViolation:
         try:
-            result = await review_sessions_db.navigate_to_entry(session_id, entry_number)
+            result = await review_session_navigation_db.navigate_to_entry(session_id, entry_number)
         except UniqueViolation:
             raise HTTPException(status_code=409, detail="Could not claim a jurisdiction; please try again")
     if result is None:

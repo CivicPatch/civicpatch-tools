@@ -42,7 +42,7 @@ async def test_merged_matching_env_syncs_people():
     labels = [{"name": "env:production"}]
     with (
         patch(
-            "core.pull_request_sync.review_sessions_db.resolve_review_session_entries_by_request_id",
+            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
@@ -70,7 +70,7 @@ async def test_merged_mismatched_env_skips_sync():
     labels = [{"name": "env:development"}]
     with (
         patch(
-            "core.pull_request_sync.review_sessions_db.resolve_review_session_entries_by_request_id",
+            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
@@ -98,7 +98,7 @@ async def test_merged_no_env_label_defaults_to_production_and_syncs():
     labels = []
     with (
         patch(
-            "core.pull_request_sync.review_sessions_db.resolve_review_session_entries_by_request_id",
+            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
             new_callable=AsyncMock,
         ),
         patch(
@@ -125,7 +125,7 @@ async def test_closed_resolves_review_sessions_no_sync():
     labels = [{"name": "env:production"}]
     with (
         patch(
-            "core.pull_request_sync.review_sessions_db.resolve_review_session_entries_by_request_id",
+            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
@@ -148,7 +148,7 @@ async def test_open_status_no_side_effects():
     labels = [{"name": "env:production"}]
     with (
         patch(
-            "core.pull_request_sync.review_sessions_db.resolve_review_session_entries_by_request_id",
+            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(

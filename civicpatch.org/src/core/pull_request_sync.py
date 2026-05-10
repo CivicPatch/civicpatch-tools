@@ -5,6 +5,7 @@ import database.pipeline_issues as pipeline_issues_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import database.review_sessions as review_sessions_db
+import database.review_session_entries as review_session_entries_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
@@ -30,7 +31,7 @@ def _get_pr_env(labels: list[dict]) -> str:
 async def handle_pr_status_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
     """Run side effects when a job PR transitions to MERGED or CLOSED."""
     if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
-        await review_sessions_db.resolve_review_session_entries_by_request_id(request_id)
+        await review_session_entries_db.resolve_review_session_entries_by_request_id(request_id)
     if status == PullRequestStatus.MERGED:
         pr_env = _get_pr_env(pr_labels)
         server_env = get_env_vars().get("APP_ENVIRONMENT", "production")

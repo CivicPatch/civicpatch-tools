@@ -95,7 +95,7 @@ def test_get_active_session_returns_null_when_none(client):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = client.get("/review-sessions/active", params={"state_code": "tx"})
+        response = client.get("/review-sessions/active", )
 
     assert response.status_code == 200
     assert response.json()["data"] is None
@@ -109,7 +109,7 @@ def test_get_active_session_returns_session_when_active(client):
         new_callable=AsyncMock,
         return_value=active,
     ):
-        response = client.get("/review-sessions/active", params={"state_code": "tx"})
+        response = client.get("/review-sessions/active", )
 
     assert response.status_code == 200
     assert response.json()["data"]["session_id"] == TEST_SESSION_ID

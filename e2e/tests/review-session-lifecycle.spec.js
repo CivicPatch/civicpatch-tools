@@ -65,16 +65,18 @@ test.describe("Review session lifecycle", () => {
     await expect(page.locator(".review-page__start-btn")).toBeVisible();
   });
 
-  test("refreshing mid-session resumes on the same card", async ({ authenticatedPage: page }) => {
+  test("refreshing mid-session resumes at the correct position", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
     await expect(page.getByText("E2E Test City")).toBeVisible();
 
-    // Reload — session should resume automatically
-    await page.reload();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    // Advance to card 2 so the resume has a non-trivial position to restore
+    await page.locator(".review-page__next-btn").click();
+    await expect(page.locator(".review-page__progress")).toContainText("2");
 
-    // Session dots should still be present (not reset to landing)
+    // Reload — session should resume at card 2, not restart at card 1
+    await page.reload();
+    await expect(page.locator(".review-page__progress")).toContainText("2");
     await expect(page.locator(".review-page__dot--current")).toBeVisible();
   });
 

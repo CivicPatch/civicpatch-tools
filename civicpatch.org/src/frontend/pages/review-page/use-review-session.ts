@@ -125,6 +125,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
     setSession({ id: sessionId, daily_goal: dailyGoal });
     setResolvedEntryNumbers(new Set(resolvedNumbers));
     setFrontierEntry(currentEntry);
+    setEntryNumber(currentEntry);
   };
 
   const endSession = async () => {
