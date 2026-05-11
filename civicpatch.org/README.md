@@ -132,3 +132,7 @@ To register the webhook in GitHub, set the payload URL to `https://civicpatch.or
 
 See [DATABASE.md](DATABASE.md) for the full Mermaid ER diagram and column notes.
 
+## Links
+
+- [Democracy Club — Volunteer](https://candidates.democracyclub.org.uk/volunteer/) — a similar volunteer-driven project in the UK that verifies candidate data for elections
+

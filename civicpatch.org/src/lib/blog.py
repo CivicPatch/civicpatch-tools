@@ -23,6 +23,9 @@ def _parse_post(path: Path) -> dict | None:
         post = frontmatter.load(str(path))
     except Exception:
         return None
+    _md = md_lib.Markdown(extensions=["tables", "toc"], extension_configs={"toc": {"toc_depth": 2}})
+    _content_html = _md.convert(post.content)
+    _toc = getattr(_md, "toc", "")
     return {
         "slug": _slug(path.name),
         "title": post.get("title", path.stem),
@@ -31,7 +34,8 @@ def _parse_post(path: Path) -> dict | None:
         "author": post.get("author", "The CivicPatch Team"),
         "draft": bool(post.get("draft", False)),
         "updated_at": post.get("updated_at"),
-        "content_html": md_lib.markdown(post.content, extensions=["tables"]),
+        "content_html": _content_html,
+        "toc_html": _toc if "<li>" in _toc else "",
     }
 
 
