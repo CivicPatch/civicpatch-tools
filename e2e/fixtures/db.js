@@ -6,17 +6,17 @@ const { Client } = pg;
 const TEST_USER_PROVIDER = "github";
 const TEST_USER_PROVIDER_ID = "test-user-e2e";
 export const TEST_JURISDICTION_OCDID =
-  "ocd-jurisdiction/country:us/state:ca/place:e2e_test/government";
+  "ocd-jurisdiction/country:us/state:nj/place:e2e_test/government";
 export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 const TEST_PR_ID = "00000000-0000-0000-eeee-000000000002";
 
 export const TEST_JURISDICTION_OCDID_2 =
-  "ocd-jurisdiction/country:us/state:ca/place:e2e_test_2/government";
+  "ocd-jurisdiction/country:us/state:nj/place:e2e_test_2/government";
 export const TEST_REQUEST_ID_2 = "00000000-0000-0000-eeee-000000000003";
 const TEST_PR_ID_2 = "00000000-0000-0000-eeee-000000000004";
 
 export const TEST_JURISDICTION_OCDID_3 =
-  "ocd-jurisdiction/country:us/state:ca/place:e2e_test_3/government";
+  "ocd-jurisdiction/country:us/state:nj/place:e2e_test_3/government";
 export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
@@ -51,10 +51,10 @@ export async function seedE2eFixtures() {
 
     // Jurisdiction
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, status, data)
-       VALUES ($1, 'active', '{"name":"E2E Test City","geoid":"0600001"}')
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'nj', 'active', '{"name":"E2E Test City","geoid":"0600001"}')
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET data = EXCLUDED.data`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [TEST_JURISDICTION_OCDID]
     );
 
@@ -93,9 +93,9 @@ export async function seedE2eFixtures() {
       [TEST_JURISDICTION_OCDID_3, "E2E Test City 3", TEST_REQUEST_ID_3, TEST_PR_ID_3, 3],
     ]) {
       await client.query(
-        `INSERT INTO jurisdictions (jurisdiction_ocdid, status, data)
-         VALUES ($1, 'active', $2)
-         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET data = EXCLUDED.data`,
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+         VALUES ($1, 'nj', 'active', $2)
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
         [jOcdid, JSON.stringify({ name: jName, geoid: `060000${prNum}` })]
       );
       await client.query(

@@ -7,6 +7,7 @@ redis = "latest"
 node = "25.8"
 gh = "latest"
 gcloud = "latest"
+jq = "latest"
 
 [env]
 _.file = [
@@ -225,7 +226,7 @@ mise run watch-worker
 
 [tasks.watch-worker]
 description = "Hot-reload the Temporal worker when worker or shared code changes"
-run = "watchfiles --filter python 'docker compose restart worker' worker/src/ shared/src/shared/"
+run = "watchfiles --filter python 'docker compose restart worker civicpatch-org-worker' worker/src/ civicpatch.org/src/ shared/src/shared/"
 
 [tasks.sync-maps]
 description = "Rebuild jurisdiction PMTiles. Optional: mise run sync-maps state=nj"

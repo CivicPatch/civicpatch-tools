@@ -5,7 +5,6 @@ from database.database import get_pool
 from database.review_sessions import (
     AdvanceDoneReason,
     ReviewSessionEntryStatus,
-    ReviewSessionStatus,
     SESSION_IDLE_TIMEOUT_MINUTES,
 )
 from psycopg.rows import namedtuple_row
@@ -13,20 +12,23 @@ from shared.utils.date_utils import STREAK_TIMEZONE
 
 
 async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
-    """Delete claimed/passed entries from other sessions idle past the timeout."""
+    """Delete claimed entries from any other session that have been idle past the timeout.
+
+    The timeout check is on the entry's created_at, not the session's — an entry
+    older than SESSION_IDLE_TIMEOUT_MINUTES is considered abandoned regardless of
+    when its parent session was created.
+    """
     await cur.execute(
         """
         DELETE FROM review_session_entries
         WHERE review_session_id IN (
             SELECT id FROM review_sessions
-            WHERE created_at >= CURRENT_DATE AND created_at < CURRENT_DATE + %s
-              AND id != %s
+            WHERE id != %s
         )
         AND status NOT IN ('resolved')
         AND created_at < NOW() - %s
         """,
         (
-            timedelta(days=1),
             exclude_session_id,
             timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
         ),
@@ -167,27 +169,17 @@ async def navigate_to_entry(
                 result = await _allocate_next_entry(cur, review_session_id, entry_number, session_row)
 
             if isinstance(result, dict):
-                # Session is done (goal reached or no more cards) → COMPLETE
-                await cur.execute(
-                    """
-                    UPDATE review_sessions
-                    SET status = %s, status_updated_at = NOW()
-                    WHERE id = %s
-                    """,
-                    (ReviewSessionStatus.COMPLETE, review_session_id),
-                )
                 return result
 
             request_id, jurisdiction_ocdid, has_more = result
 
-            # A card was claimed → session is ACTIVE, record current position
             await cur.execute(
                 """
                 UPDATE review_sessions
-                SET status = %s, status_updated_at = NOW(), current_entry_number = %s
+                SET current_entry_number = %s, updated_at = NOW()
                 WHERE id = %s
                 """,
-                (ReviewSessionStatus.ACTIVE, entry_number, review_session_id),
+                (entry_number, review_session_id),
             )
 
             await cur.execute(
@@ -210,3 +202,32 @@ async def navigate_to_entry(
         "resolved_count": counts.resolved_count,  # type: ignore[union-attr]
         "has_more": has_more,
     }
+
+
+async def cleanup_stale_review_session_entries() -> dict:
+    """
+    Periodic cleanup for the Temporal scheduler.
+
+    Deletes non-resolved entries from sessions whose updated_at is past the idle
+    timeout. The trigger on review_sessions keeps updated_at current on every write,
+    so only genuinely abandoned sessions are affected.
+
+    Returns the number of entries deleted.
+    """
+    timeout = timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                DELETE FROM review_session_entries
+                USING review_sessions
+                WHERE review_session_entries.review_session_id = review_sessions.id
+                  AND review_session_entries.status NOT IN ('resolved')
+                  AND review_sessions.updated_at < NOW() - %s
+                """,
+                (timeout,),
+            )
+            entries_deleted = cur.rowcount
+
+    return {"entries_deleted": entries_deleted}
