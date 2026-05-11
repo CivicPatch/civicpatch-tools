@@ -30,7 +30,7 @@
 
 :root,
 :host {
-    font-size: 14px;
+    font-size: 16px;
     --pico-font-family: "Figtree", sans-serif;
     --pico-form-element-spacing-vertical: 0.5rem;
     --pico-form-element-spacing-horizontal: 0.5rem;
@@ -64,8 +64,8 @@
     --civ-text-muted:       #767676;   /* WCAG AA minimum on white */
     --civ-border:           #e0e0e0;
     --civ-border-strong:    #111111;
-    --civ-accent:           #ffe066;
-    --civ-accent-border:    #e0cc00;
+    --civ-accent:           #f0c840;
+    --civ-accent-border:    #d4a800;
     --civ-accent-text:      #111111;   /* text on top of accent bg */
 
     --catppuccin-base: 239, 241, 245;
@@ -97,14 +97,14 @@
     --pico-h3-color:                      var(--civ-text);
     --pico-text-selection-color:          rgba(255, 224, 102, 0.35);
 
-    --pico-primary:                       var(--civ-accent);
-    --pico-primary-background:            var(--civ-accent);
-    --pico-primary-underline:             var(--civ-accent-border);
-    --pico-primary-hover:                 #f0d040;
-    --pico-primary-hover-background:      #f0d040;
-    --pico-primary-border:                var(--civ-accent-border);
-    --pico-primary-focus:                 rgba(255, 224, 102, 0.45);
-    --pico-primary-inverse:               var(--civ-accent-text);
+    --pico-primary:                       #111111;
+    --pico-primary-background:            #111111;
+    --pico-primary-underline:             #111111;
+    --pico-primary-hover:                 #333333;
+    --pico-primary-hover-background:      #333333;
+    --pico-primary-border:                #111111;
+    --pico-primary-focus:                 rgba(17, 17, 17, 0.25);
+    --pico-primary-inverse:               #fafafa;
 
     --pico-secondary-background:          #555555;
     --pico-secondary-inverse:             #ffffff;
@@ -144,7 +144,7 @@
     --pico-card-sectioning-background-color: var(--civ-surface-2);
     --pico-card-box-shadow:               none;
 
-    --civ-gradient-to:                    var(--civ-accent);
+    --civ-gradient-to:                    #333333;
 }
 
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
@@ -159,8 +159,8 @@
     --civ-text-muted:       #aaaaaa;   /* WCAG AA on #242424: 7.5:1 */
     --civ-border:           #333333;
     --civ-border-strong:    #eeeeee;
-    --civ-accent:           #ffe066;   /* same as light */
-    --civ-accent-border:    #e0cc00;
+    --civ-accent:           #f0c840;   /* same as light */
+    --civ-accent-border:    #d4a800;
     --civ-accent-text:      #111111;
 
     --catppuccin-base: 30, 30, 46;
@@ -192,14 +192,14 @@
     --pico-h3-color:                      var(--civ-text);
     --pico-text-selection-color:          rgba(255, 224, 102, 0.3);
 
-    --pico-primary:                       var(--civ-accent);
-    --pico-primary-background:            var(--civ-accent);
-    --pico-primary-underline:             var(--civ-accent-border);
-    --pico-primary-hover:                 #f0d040;
-    --pico-primary-hover-background:      #f0d040;
-    --pico-primary-border:                var(--civ-accent-border);
-    --pico-primary-focus:                 rgba(255, 224, 102, 0.35);
-    --pico-primary-inverse:               var(--civ-accent-text);
+    --pico-primary:                       #eeeeee;
+    --pico-primary-background:            #eeeeee;
+    --pico-primary-underline:             #eeeeee;
+    --pico-primary-hover:                 #cccccc;
+    --pico-primary-hover-background:      #cccccc;
+    --pico-primary-border:                #eeeeee;
+    --pico-primary-focus:                 rgba(238, 238, 238, 0.25);
+    --pico-primary-inverse:               #111111;
 
     --pico-secondary-background:          #555555;
     --pico-secondary-inverse:             #111111;
@@ -239,7 +239,7 @@
     --pico-card-sectioning-background-color: var(--civ-surface-2);
     --pico-card-box-shadow:               none;
 
-    --civ-gradient-to:                    var(--civ-accent);
+    --civ-gradient-to:                    #333333;
 }
 
 
@@ -815,25 +815,190 @@ dialog[open] {
 .blog-preview {
     max-width: 1200px;
     margin-inline: auto;
-    padding: 2rem 0;
+    margin-top: 1.5rem;
 }
 
-.blog-preview__header {
-    display: flex;
-    align-items: baseline;
+.blog-preview__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    align-items: start;
 }
 
-.blog-preview__header h2 {
+.blog-preview__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.625rem;
+    font-family: 'Space Grotesk', var(--pico-font-family);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--civ-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--civ-text);
+    padding-bottom: 0.1rem;
+}
+
+.blog-preview__view-all:hover {
+    color: var(--civ-text-secondary);
+    border-bottom-color: var(--civ-text-secondary);
+}
+
+.blog-preview__get-involved {
+    border-left: 1px solid var(--civ-border);
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Section heading inside get-involved: flex gap already gives separation */
+.blog-preview__get-involved .civ-section-label {
+    margin-bottom: 0;
+}
+
+/* Each group: tight internal spacing */
+.blog-preview__get-involved > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+/* When there are no posts, the get-involved spans the full grid */
+.blog-preview__get-involved--full {
+    border-left: none;
+    padding-left: 0;
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.blog-preview__get-involved--full > div {
+    flex: 1;
+    min-width: 180px;
+}
+
+.blog-preview__gi-section {
+    font-family: 'Space Grotesk', var(--pico-font-family);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: var(--civ-text-muted);
+    margin: 0 0 0.25rem;  /* reset Pico's 1rem p margin-bottom */
+}
+
+.blog-preview__gi-links {
+    list-style: none !important;
+    padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.blog-preview__gi-links li {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--civ-text-secondary);
+    line-height: 1.5;
+}
+
+.blog-preview__gi-links li::marker {
+    content: none;
+}
+
+.blog-preview__gi-links a {
+    font-size: var(--text-sm);
+    color: var(--civ-text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.blog-preview__gi-links a:hover {
+    text-decoration: underline;
+}
+
+.blog-preview__gi-links i {
+    font-size: var(--text-xs);
+    color: var(--civ-text-muted);
+}
+
+.blog-preview__gi-note {
+    font-size: var(--text-xs);
+    color: var(--civ-text-muted);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .blog-preview__grid {
+        grid-template-columns: 1fr;
+    }
+    .blog-preview__get-involved {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--civ-border);
+        padding-top: 1rem;
+    }
+}
+
+.blog-preview__item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--civ-border);
+    align-items: baseline;
+    /* Reset Pico article card styles */
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.blog-preview__item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.blog-preview__date {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    color: var(--civ-text-muted);
+    white-space: nowrap;
+}
+
+.blog-preview__title {
+    font-family: 'Space Grotesk', var(--pico-font-family);
+    font-size: var(--text-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--civ-text);
+    text-decoration: none;
+    display: block;
+}
+
+.blog-preview__title:hover {
+    text-decoration: underline;
+}
+
+.blog-preview__lead {
+    font-size: var(--text-sm);
+    color: var(--civ-text-secondary);
+    margin: 0.2rem 0 0;
+    line-height: 1.55;
 }
 
 /* ── About footer ────────────────────────────────────────────────────────────*/
 
 .about-footer {
-    background: rgb(var(--catppuccin-base));
-    border-top: 1px solid var(--pico-form-element-border-color);
+    background: var(--civ-surface-2);
+    border-top: 2px solid var(--civ-border-strong);
     padding: 2rem 2rem;
     margin-top: auto;
     margin-inline: 0;

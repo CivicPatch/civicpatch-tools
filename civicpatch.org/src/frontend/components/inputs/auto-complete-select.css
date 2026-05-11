@@ -8,10 +8,23 @@
   gap: 0;
 }
 
+/* Focus ring on the whole input+button group, not just the input */
+.autocomplete-wrapper fieldset.grid:focus-within {
+  outline: var(--pico-outline-width) solid var(--pico-form-element-focus-color);
+  outline-offset: 0;
+  border-radius: var(--pico-border-radius);
+}
+
 .autocomplete-input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   margin-bottom: 0;
+}
+
+/* Suppress individual focus ring — the fieldset:focus-within handles it */
+.autocomplete-input:focus {
+  box-shadow: none;
+  outline: none;
 }
 
 .autocomplete-toggle {
@@ -23,6 +36,10 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
+  /* Neutral form-element style — not a primary-coloured button */
+  --pico-background-color: var(--pico-form-element-background-color);
+  --pico-border-color: var(--pico-form-element-border-color);
+  --pico-color: var(--pico-form-element-color);
 }
 
 .autocomplete-toggle__icon {
@@ -38,13 +55,13 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--pico-background-color);
-  border: var(--pico-border-width) solid var(--pico-muted-border-color);
+  background: var(--civ-surface, #ffffff);
+  border: 1px solid var(--civ-border, #e0e0e0);
   border-radius: var(--pico-border-radius);
   margin-top: 0.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   max-height: 400px;
   z-index: 99;
-  box-shadow: var(--pico-box-shadow);
   display: flex;
   flex-direction: column;
 }
