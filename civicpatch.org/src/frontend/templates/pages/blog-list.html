@@ -5,25 +5,21 @@
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 <div class="blog-list">
-{% if posts %}
-    {% for post in posts %}
-    <article class="blog-post blog-list__item">
-        <header class="blog-header">
-            <h2 class="blog-post__title">
-                <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
-            </h2>
-            <p class="blog-meta blog-post__meta">
-                <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
-                {% if post.author %} · {{ post.author }}{% endif %}
-            </p>
-        </header>
-        {% if post.description %}
-        <p class="blog-lead blog-post__lead">{{ post.description }}</p>
-        {% endif %}
-    </article>
-    {% endfor %}
-{% else %}
-    <p>No posts yet.</p>
-{% endif %}
+    <div class="civ-section-label">Updates</div>
+    {% if posts %}
+        {% for post in posts %}
+        <article class="blog-list__item">
+            <time class="blog-list__date">{{ post.date.strftime('%b %-d, %Y') }}</time>
+            <div class="blog-list__body">
+                <a href="/blog/{{ post.slug }}" class="blog-list__title">{{ post.title }}</a>
+                {% if post.description %}
+                <p class="blog-list__lead">{{ post.description }}</p>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>No posts yet.</p>
+    {% endif %}
 </div>
 {% endblock %}
