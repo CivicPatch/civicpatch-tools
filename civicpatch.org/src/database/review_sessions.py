@@ -1,38 +1,31 @@
 import logging
-from datetime import datetime, timedelta, timezone
-from enum import StrEnum
 from typing import Any
 from database.database import get_pool
 from psycopg.rows import namedtuple_row
-from shared.utils.date_utils import STREAK_TIMEZONE
-
 logger = logging.getLogger(__name__)
 
 SESSION_IDLE_TIMEOUT_MINUTES = 30
 
 
-class ReviewSessionStatus(StrEnum):
-    IDLE = "idle"
-    ACTIVE = "active"
-    COMPLETE = "complete"
-
-
-class ReviewSessionEntryStatus(StrEnum):
+class ReviewSessionEntryStatus(str):
     CLAIMED = "claimed"
     PASSED = "passed"
     RESOLVED = "resolved"
 
 
-class AdvanceDoneReason(StrEnum):
+class AdvanceDoneReason(str):
     GOAL_REACHED = "goal_reached"
     NO_MORE_CARDS = "no_more_cards"
 
 
 async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
     """
-    Returns the most recently active session for this user if it is ACTIVE
-    and was updated within the idle timeout window. Returns None otherwise.
+    Returns the session for this user if it has been written to within the idle
+    timeout window. updated_at is bumped automatically on every write via trigger,
+    so any navigation activity (forward or back) keeps the session alive.
+    Returns None if the session is stale or does not exist.
     """
+    from datetime import timedelta
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
@@ -53,13 +46,17 @@ async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
-                  AND rs.status = %s
-                  AND rs.status_updated_at > NOW() - %s
+                  AND rs.updated_at > NOW() - %s
+                  AND EXISTS (
+                      SELECT 1 FROM review_session_entries rse2
+                      WHERE rse2.review_session_id = rs.id
+                        AND rse2.status = 'claimed'
+                  )
                 GROUP BY rs.id, rs.state_code, rs.daily_goal, rs.current_entry_number
-                ORDER BY rs.status_updated_at DESC
+                ORDER BY rs.updated_at DESC
                 LIMIT 1
                 """,
-                (user_id, ReviewSessionStatus.ACTIVE, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
+                (user_id, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
             )
             row = await cur.fetchone()
 
@@ -90,6 +87,7 @@ async def create_or_get_review_session(
     state_code: str,
     daily_goal: int | None = None,
 ) -> dict[str, Any]:
+    from datetime import timedelta
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
@@ -106,24 +104,16 @@ async def create_or_get_review_session(
                 row = await cur.fetchone()
                 daily_goal = row.daily_goal if row else 10  # type: ignore[union-attr]
 
-            # Read the current session status directly — no subquery needed.
-            # ACTIVE + recent → resume; anything else → purge and start fresh.
+            # Resume if the session was active recently; purge and restart if stale.
             await cur.execute(
                 """
-                SELECT status, status_updated_at
-                FROM review_sessions
+                SELECT 1 FROM review_sessions
                 WHERE user_id = %s AND state_code = %s
+                  AND updated_at > NOW() - %s
                 """,
-                (user_id, state_code),
+                (user_id, state_code, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
             )
-            existing = await cur.fetchone()
-            idle_cutoff = datetime.now(timezone.utc) - timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)
-            is_active = (
-                existing is not None
-                and existing.status == ReviewSessionStatus.ACTIVE  # type: ignore[union-attr]
-                and existing.status_updated_at is not None  # type: ignore[union-attr]
-                and existing.status_updated_at > idle_cutoff  # type: ignore[union-attr]
-            )
+            is_active = await cur.fetchone() is not None
 
             await cur.execute(
                 """
@@ -140,13 +130,6 @@ async def create_or_get_review_session(
 
             if not is_active:
                 await _purge_session_queue(cur, str(row.id))  # type: ignore[union-attr]
-                await cur.execute(
-                    """
-                    UPDATE review_sessions SET status = %s, status_updated_at = NOW()
-                    WHERE id = %s
-                    """,
-                    (ReviewSessionStatus.IDLE, str(row.id)),  # type: ignore[union-attr]
-                )
 
             await cur.execute(
                 """
@@ -167,7 +150,6 @@ async def create_or_get_review_session(
     }
 
 
-
 async def end_review_session(review_session_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -176,9 +158,8 @@ async def end_review_session(review_session_id: str) -> None:
             await cur.execute(
                 """
                 UPDATE review_sessions
-                SET status = %s, status_updated_at = NOW(), current_entry_number = 1,
-                    reviewed_ocdids = '{}'
+                SET current_entry_number = 1, reviewed_ocdids = '{}'
                 WHERE id = %s
                 """,
-                (ReviewSessionStatus.IDLE, review_session_id),
+                (review_session_id,),
             )

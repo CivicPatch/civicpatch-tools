@@ -90,19 +90,21 @@ erDiagram
     }
 
     review_sessions {
-        uuid            id          PK
-        uuid            user_id     FK
-        text            state_code      "idx"
+        uuid            id                      PK
+        uuid            user_id                 FK
+        text            state_code              "idx"
         int             daily_goal
+        int             current_entry_number    "default: 1"
+        text_array      reviewed_ocdids         "default: {}"
+        timestamptz     updated_at              "default: NOW()"
         timestamptz_null created_at
     }
 
     review_session_entries {
         uuid            id                  PK
         uuid            review_session_id   FK  "idx: (review_session_id, status, created_at DESC)"
-        text            entry_kind
         text_array      request_ids
-        text            jurisdiction_ocdid
+        text            jurisdiction_ocdid      "idx: unique WHERE status = 'claimed'"
         text            status
         int_null        entry_number
         timestamptz_null created_at

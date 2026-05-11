@@ -97,7 +97,7 @@ mise run psql
 - Every migration must be wrapped in `BEGIN` / `COMMIT`
 - Down migrations must exactly reverse the up migration — test that the round-trip is clean
 - Create a new migration file whenever you add, rename, or drop a column, table, or index — never edit an existing migration
-- **After every migration, update the Mermaid schema diagram in `DATABASE.md`** — the diagram must always reflect the current state of the database, including index annotations (`"idx"` or `"idx: expression"`) on any affected fields
+- **A migration is not complete until the Mermaid schema diagram in `DATABASE.md` is updated** — the diagram must always reflect the current state of the database, including index annotations (`"idx"` or `"idx: expression"`) on any affected fields
 
 ## Background tasks
 
@@ -127,3 +127,5 @@ This API has a single consumer: the civicpatch frontend. Backward compatibility 
 - Before writing tests, read `tests/factories/` and existing tests in the relevant `tests/unit/` directory to understand available builders and patterns.
 - After writing tests, run them and fix any failures before considering the task done.
 - Run tests: `mise run tcp`
+- **Integration tests must not be modified unless the behavior they test has genuinely changed.** If an integration test fails during a refactor, stop and flag it before proceeding — do not edit the test to make it pass. Integration tests describe observable behavior; a failing integration test means the refactor changed behavior, which requires explicit sign-off.
+- **When tests must change alongside a refactor:** enumerate each test to be changed, the behavior it previously described, and the behavior it now describes. A test is not fixed by removing assertions — that is a regression. Every test change requires a one-sentence justification: "This test verified [old claim]. It now verifies [new claim] because [reason]." If that sentence cannot be completed, the test does not change.

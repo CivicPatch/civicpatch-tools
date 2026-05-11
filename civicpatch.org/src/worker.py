@@ -8,9 +8,22 @@ from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, Sch
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
-from routers.temporal.activities import sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity
+from routers.temporal.activities import (
+    sync_pr_state_activity,
+    od_sync_activity,
+    expire_stale_pipeline_runs_activity,
+    cleanup_stale_review_entries_activity,
+)
 from routers.temporal.map_activities import sync_jurisdiction_map_activity
-from lib.temporal.workflows import PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow, ScheduleId, WorkflowInstanceId, TASK_QUEUE
+from lib.temporal.workflows import (
+    PRSyncWorkflow,
+    OdSyncWorkflow,
+    PipelineRunCleanupWorkflow,
+    ReviewSessionCleanupWorkflow,
+    ScheduleId,
+    WorkflowInstanceId,
+    TASK_QUEUE,
+)
 from lib.temporal.map_workflows import SyncJurisdictionMapWorkflow
 from database.database import get_pool, close_pool
 
@@ -80,6 +93,20 @@ async def _register_schedules(client: Client) -> None:
         ),
     )
 
+    await _create_schedule(
+        client,
+        ScheduleId.REVIEW_SESSION_CLEANUP,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                ReviewSessionCleanupWorkflow.run,
+                id=WorkflowInstanceId.REVIEW_SESSION_CLEANUP,
+                task_queue=TASK_QUEUE,
+            ),
+            spec=ScheduleSpec(cron_expressions=["*/10 * * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
+
 
 async def main() -> None:
     await get_pool()
@@ -88,8 +115,20 @@ async def main() -> None:
     async with Worker(
         client,
         task_queue=TASK_QUEUE,
-        workflows=[PRSyncWorkflow, OdSyncWorkflow, PipelineRunCleanupWorkflow, SyncJurisdictionMapWorkflow],
-        activities=[sync_pr_state_activity, od_sync_activity, expire_stale_pipeline_runs_activity, sync_jurisdiction_map_activity],
+        workflows=[
+            PRSyncWorkflow,
+            OdSyncWorkflow,
+            PipelineRunCleanupWorkflow,
+            ReviewSessionCleanupWorkflow,
+            SyncJurisdictionMapWorkflow,
+        ],
+        activities=[
+            sync_pr_state_activity,
+            od_sync_activity,
+            expire_stale_pipeline_runs_activity,
+            cleanup_stale_review_entries_activity,
+            sync_jurisdiction_map_activity,
+        ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
         await asyncio.Event().wait()

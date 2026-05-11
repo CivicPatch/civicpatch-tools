@@ -199,3 +199,157 @@ async def test_end_session_resets_reviewed_ocdids(test_user):
         await cur.execute("SELECT reviewed_ocdids FROM review_sessions WHERE id = %s", (str(session_id),))
         row = await cur.fetchone()
     assert row[0] == [], f"reviewed_ocdids must be empty after end_session, got {row[0]}"
+
+
+# ── updated_at threshold (new behaviour after status removal) ─────────────────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_resumes_when_session_updated_at_is_recent(test_user):
+    """
+    A session whose updated_at is within the idle window must not be purged
+    when create_or_get_review_session is called again.
+    """
+    pool = await get_pool()
+    session_id = await _create_session(test_user)
+    await _insert_entry(session_id, entry_number=1, status="claimed")
+
+    # Simulate a session that was active 20 minutes ago
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_sessions SET updated_at = NOW() - INTERVAL '20 minutes' WHERE id = %s",
+            (session_id,),
+        )
+
+    await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+
+    assert await _count_entries(session_id, "claimed") == 1, (
+        "Claimed entry must survive when session updated_at is within idle window"
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_purges_when_session_updated_at_is_stale(test_user):
+    """
+    A session whose updated_at is outside the idle window must be purged
+    (claimed entries deleted) when create_or_get_review_session is called again.
+    """
+    pool = await get_pool()
+    session_id = await _create_session(test_user)
+    await _insert_entry(session_id, entry_number=1, status="claimed")
+
+    # Simulate an abandoned session from 40 minutes ago
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_sessions SET updated_at = NOW() - INTERVAL '40 minutes' WHERE id = %s",
+            (session_id,),
+        )
+
+    await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+
+    assert await _count_entries(session_id, "claimed") == 0, (
+        "Claimed entry must be purged when session updated_at is past idle window"
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_cleanup_releases_stale_claimed_entry(test_user):
+    """
+    cleanup_stale_review_session_entries must delete claimed entries from sessions
+    whose updated_at is past the idle window, unblocking that jurisdiction.
+    """
+    from database.review_session_navigation import cleanup_stale_review_session_entries
+
+    pool = await get_pool()
+    session_id = await _create_session(test_user)
+    await _insert_entry(session_id, entry_number=1, status="claimed")
+
+    # Mark the session as stale
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_sessions SET updated_at = NOW() - INTERVAL '40 minutes' WHERE id = %s",
+            (session_id,),
+        )
+
+    result = await cleanup_stale_review_session_entries()
+
+    assert result["entries_deleted"] >= 1, "Cleanup must delete at least the stale claimed entry"
+    assert await _count_entries(session_id, "claimed") == 0, (
+        "Claimed entry must be gone after cleanup so the jurisdiction is unblocked"
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_concurrent_sessions_cannot_claim_same_jurisdiction(test_user):
+    """
+    The unique partial index on active claims must prevent two sessions from
+    claiming the same jurisdiction simultaneously. The second INSERT must raise
+    UniqueViolation (which the router retries with a different card).
+    """
+    import uuid
+    from psycopg.errors import UniqueViolation
+
+    pool = await get_pool()
+    session_a = await _create_session(test_user)
+    ocdid = f"ocd-jurisdiction/country:us/state:zz/place:contested/government"
+
+    # Session A claims the jurisdiction
+    await _insert_entry(session_a, entry_number=1, status="claimed")
+
+    # Overwrite with the shared ocdid for a deterministic collision
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE review_session_entries SET jurisdiction_ocdid = %s WHERE review_session_id = %s",
+            (ocdid, session_a),
+        )
+
+    # Session B from a second user tries to claim the same jurisdiction
+    provider_id = f"concurrent-{uuid.uuid4().hex[:8]}"
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (provider, provider_user_id, email) VALUES ('test', %s, %s) RETURNING id",
+            (provider_id, f"{provider_id}@test.com"),
+        )
+        user_b = (await cur.fetchone())[0]
+
+    try:
+        session_b = await _create_session(user_b)
+        async with pool.connection() as conn:
+            with pytest.raises(UniqueViolation):
+                await conn.execute(
+                    """
+                    INSERT INTO review_session_entries
+                        (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
+                    VALUES (%s, %s, %s, 'claimed', 1)
+                    """,
+                    (session_b, ["00000000-0000-0000-cccc-000000000099"], ocdid),
+                )
+    finally:
+        async with pool.connection() as conn:
+            await conn.execute(
+                "DELETE FROM review_session_entries WHERE review_session_id IN (SELECT id FROM review_sessions WHERE user_id = %s)",
+                (user_b,),
+            )
+            await conn.execute("DELETE FROM review_sessions WHERE user_id = %s", (user_b,))
+            await conn.execute("DELETE FROM users WHERE provider = 'test' AND provider_user_id = %s", (provider_id,))
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_active_session_returns_none_after_end_session(test_user):
+    """
+    After end_review_session purges claimed entries, get_active_review_session
+    must return None — the session is no longer resumable.
+    """
+    session_id = await _create_session(test_user)
+    await _insert_entry(session_id, entry_number=1, status="claimed")
+
+    await end_review_session(str(session_id))
+
+    result = await get_active_review_session(str(test_user))
+    assert result is None, (
+        "Session must not appear active after end_review_session — claimed entries were purged"
+    )
