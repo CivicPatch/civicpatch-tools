@@ -6,8 +6,16 @@ import { Protocol } from 'pmtiles';
 const protocol = new Protocol();
 maplibregl.addProtocol('pmtiles', protocol.tile);
 
-export const PMTILES_BASE = 'https://cdn.civicpatch.org/maps';
+export const PMTILES_BASE = 'cdn.civicpatch.org/maps';
 export const SOURCE_ID = 'jurisdictions';
+
+export type DrillLevel = 'national' | 'counties' | 'local';
+
+export function getVisibleLayers(level: DrillLevel): string[] {
+  if (level === 'national') return ['states'];
+  if (level === 'counties') return ['states', 'counties'];
+  return ['local'];
+}
 
 
 export interface LayerConfig {
