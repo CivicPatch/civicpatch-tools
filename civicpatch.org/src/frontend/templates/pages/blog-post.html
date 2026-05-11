@@ -5,20 +5,41 @@
 {% block styles %}{% for href in vite_css('assets/index.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
-<div class="blog-post">
-    <header class="blog-header">
+<article class="blog-post">
+    <header class="blog-post__header">
+        <nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
+            <ol>
+                <li><a href="/blog">Blog</a></li>
+                <li aria-current="page">{{ post.title }}</li>
+            </ol>
+        </nav>
         <h1 class="blog-post__title">{{ post.title }}</h1>
-        <p class="blog-meta blog-post__meta">
+        {% if post.description %}
+        <p class="blog-post__lead">{{ post.description }}</p>
+        {% endif %}
+        <p class="blog-post__meta" aria-label="Published">
             <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
             {% if post.author %} · {{ post.author }}{% endif %}
         </p>
     </header>
-    {% if post.description %}
-    <p class="blog-lead blog-post__lead">{{ post.description }}</p>
-    {% endif %}
-    <div class="blog-post__body">
-        {{ post.content_html | safe }}
+
+    <div class="blog-post__layout">
+        {% if post.toc_html %}
+        <aside class="blog-post__toc">
+            <details class="blog-post__toc-mobile" open>
+                <summary class="blog-post__toc-label">On this page</summary>
+                <nav aria-label="On this page">
+                    {{ post.toc_html | safe }}
+                </nav>
+            </details>
+        </aside>
+        {% endif %}
+
+        <div class="blog-post__body">
+            {{ post.content_html | safe }}
+        </div>
     </div>
+
     <div class="blog-post__comments">
         <script src="https://giscus.app/client.js"
             data-repo="CivicPatch/civicpatch"
@@ -48,20 +69,19 @@
                     'https://giscus.app'
                 );
             }
-            // Apply theme once Giscus signals it's ready
             window.addEventListener('message', function (e) {
                 if (e.origin !== 'https://giscus.app') return;
                 sendTheme(document.documentElement.dataset.theme || 'light');
             }, { once: true });
-            // Keep in sync when the toggle changes data-theme
             new MutationObserver(function () {
                 sendTheme(document.documentElement.dataset.theme || 'light');
             }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         })();
         </script>
     </div>
+
     <footer class="blog-post__footer">
-        <a href="/blog">← All posts</a>
+        <a href="/blog">← Back to all posts</a>
     </footer>
-</div>
+</article>
 {% endblock %}

@@ -3,7 +3,7 @@ title: "How to Contribute"
 date: 2026-05-05
 draft: false
 description: |
-    Verifying elected official records.
+    Verify your elected officials.
 author: "shelltr"
 ---
 
