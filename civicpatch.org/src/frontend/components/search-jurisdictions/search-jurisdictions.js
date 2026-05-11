@@ -11,6 +11,7 @@ import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
+import { buildCoverageMap } from "./coverage-map.ts";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
@@ -40,17 +41,10 @@ function SearchJurisdictions() {
     return () => document.removeEventListener('state-select', handler);
   }, []);
 
-  const coverageMap = useMemo(() => {
-    if (!dashboardData || !selectedState) return {};
-    const notScraped = new Set(
-      dashboardData?.states?.[selectedState]?.locality_gaps?.not_yet_scraped ?? []
-    );
-    const result = {};
-    for (const ocdid of notScraped) {
-      result[ocdid] = 0;
-    }
-    return result;
-  }, [dashboardData, selectedState]);
+  const coverageMap = useMemo(
+    () => buildCoverageMap(dashboardData, selectedState),
+    [dashboardData, selectedState],
+  );
 
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || '').toLowerCase());
