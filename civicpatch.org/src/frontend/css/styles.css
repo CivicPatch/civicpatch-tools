@@ -746,16 +746,55 @@ dialog[open] {
 /* ── Blog post page ──────────────────────────────────────────────────────── */
 
 .blog-post {
-    max-width: 720px;
+    max-width: 900px;
     margin-inline: auto;
     padding-block: 1.5rem;
+    /* Reset Pico article card styles */
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding-inline: 0;
+    margin-block: 0;
 }
 
-.blog-header {
+.blog-post__header {
     background: none;
     margin: 0 0 1.5rem;
     padding: 0 0 1rem;
     border-bottom: 2px solid var(--civ-border-strong);
+}
+
+.blog-post__breadcrumb {
+    margin-bottom: 0.75rem;
+}
+
+.blog-post__breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    color: var(--civ-text-muted);
+}
+
+.blog-post__breadcrumb li + li::before {
+    content: '/';
+    margin-right: 0.4rem;
+    opacity: 0.5;
+}
+
+.blog-post__breadcrumb a {
+    color: var(--civ-text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.blog-post__breadcrumb a:hover {
+    color: var(--civ-text);
+    border-bottom-color: var(--civ-border);
 }
 
 .blog-post__title {
@@ -774,14 +813,18 @@ dialog[open] {
     margin: 0;
 }
 
+.blog-post__meta {
+    font-family: var(--pico-font-family-monospace);
+    color: var(--civ-text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+}
+
 .blog-lead {
     font-size: var(--text-md);
     color: var(--civ-text-secondary);
-    font-style: italic;
-    border-left: 3px solid var(--civ-accent);
-    padding-left: 1rem;
-    margin-bottom: 2rem;
     line-height: 1.65;
+    margin-bottom: 1.5rem;
 }
 
 .blog-post__lead {
@@ -789,7 +832,7 @@ dialog[open] {
 }
 
 .blog-post__body {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     line-height: 1.75;
 }
 
@@ -810,6 +853,86 @@ dialog[open] {
     padding-top: 1rem;
     border-top: 1px solid var(--pico-muted-border-color);
     font-size: var(--text-sm);
+}
+
+/* ── Blog post layout ────────────────────────────────────────────────────────*/
+
+.blog-post__layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.blog-post__toc {
+    width: 160px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1.5rem;
+}
+
+.blog-post__toc-label {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--civ-text-muted);
+    margin-bottom: 0.5rem;
+    cursor: default;
+    list-style: none;
+}
+
+/* Hide the disclosure triangle — the aside is always visible on desktop */
+.blog-post__toc-label::-webkit-details-marker { display: none; }
+
+.blog-post__toc nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.blog-post__toc nav li {
+    margin: 0;
+}
+
+.blog-post__toc nav a {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--civ-text-secondary);
+    padding: 0.25rem 0;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.1s;
+}
+
+.blog-post__toc nav a:hover {
+    color: var(--civ-text);
+}
+
+@media (max-width: 768px) {
+    .blog-post__layout {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .blog-post__toc {
+        width: 100%;
+        position: static;
+    }
+
+    .blog-post__toc-mobile {
+        border: 1px solid var(--civ-border);
+        border-radius: var(--pico-border-radius);
+        padding: 0.5rem 0.75rem;
+    }
+
+    .blog-post__toc-mobile[open] .blog-post__toc-label {
+        margin-bottom: 0.5rem;
+    }
+
+    .blog-post__toc nav a {
+        padding-block: 0.35rem;
+    }
 }
 
 /* ── Blog screenshot ─────────────────────────────────────────────────────────*/
