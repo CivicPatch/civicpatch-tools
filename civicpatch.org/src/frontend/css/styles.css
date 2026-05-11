@@ -214,7 +214,7 @@
     --pico-form-element-active-background-color: var(--civ-surface-2);
     --pico-form-element-active-border-color: var(--civ-border-strong);
     --pico-form-element-focus-color:      var(--civ-border-strong);
-    --pico-form-element-border-color:     var(--civ-border);
+    --pico-form-element-border-color:     var(--civ-text-muted);
 
     --pico-link-color:                    var(--civ-text);
     --pico-link-hover-color:              var(--civ-text-secondary);

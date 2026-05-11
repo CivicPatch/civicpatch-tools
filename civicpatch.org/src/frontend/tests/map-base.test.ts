@@ -3,7 +3,7 @@ import { pmtilesUrl, stateFromOcdid, getVisibleLayers } from '../components/map/
 
 describe('pmtilesUrl', () => {
   it('returns pmtiles URL for a state', () => {
-    expect(pmtilesUrl('co')).toBe('pmtiles://cdn.civicpatch.org/maps/co.pmtiles');
+    expect(pmtilesUrl('co')).toBe('pmtiles://https://cdn.civicpatch.org/maps/co.pmtiles');
   });
 });
 

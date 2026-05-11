@@ -29,6 +29,28 @@
   background: var(--pico-primary-background, #e0e7ff);
 }
 
+.map-reset-btn {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  background: var(--civ-surface) !important;
+  color: var(--civ-text) !important;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.map-reset-btn:hover {
+  background: var(--civ-surface-2) !important;
+  color: var(--civ-text) !important;
+}
+
 .map-empty {
   display: flex;
   align-items: center;
