@@ -1,0 +1,43 @@
+name: E2E civicpatch.org
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "civicpatch.org/**"
+      - "e2e/**"
+      - "shared/**"
+      - "docker-compose.e2e.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build app image
+        run: docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
+
+      - name: Run e2e tests
+        run: |
+          docker compose -f docker-compose.e2e.yml up \
+            --exit-code-from playwright \
+            --abort-on-container-exit
+
+      - name: Tear down
+        if: always()
+        run: docker compose -f docker-compose.e2e.yml down -v --remove-orphans
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            e2e/test-results/
+            e2e/playwright-report/
+          retention-days: 7
