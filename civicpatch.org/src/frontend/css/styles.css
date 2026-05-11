@@ -402,33 +402,25 @@ button.destructive:active,
 }
 
 .btn-gradient {
-    background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
-    border-color: transparent;
-    color: rgb(var(--catppuccin-base));
     font-weight: 700;
     letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    transition: opacity 0.15s, box-shadow 0.15s;
-}
-
-.btn-gradient:hover:not(:disabled),
-.btn-gradient:focus:not(:disabled) {
-    background: linear-gradient(135deg, var(--pico-primary), var(--civ-gradient-to));
-    border-color: transparent;
-    color: rgb(var(--catppuccin-base));
-    opacity: 0.88;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
-}
-
-.btn-gradient:focus-visible:not(:disabled) {
-    outline: var(--pico-outline-width) solid var(--pico-primary);
-    outline-offset: 3px;
 }
 
 .btn-gradient:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    box-shadow: none;
+}
+
+/* Review start button — yellow when enabled, the one place yellow earns its spot */
+.review-page__start-btn:not(:disabled) {
+    --pico-background-color: var(--civ-accent);
+    --pico-border-color: var(--civ-accent-border);
+    --pico-color: var(--civ-accent-text);
+}
+
+.review-page__start-btn:not(:disabled):hover {
+    --pico-background-color: var(--civ-accent-border);
+    --pico-border-color: var(--civ-accent-border);
 }
 
 .btn-sm {
@@ -696,56 +688,104 @@ dialog[open] {
 
 /* ── Blog ────────────────────────────────────────────────────────────────────*/
 
-.blog-list,
-.blog-post {
-    max-width: 1200px;
+/* ── Blog list page ──────────────────────────────────────────────────────── */
+
+.blog-list {
+    max-width: 760px;
     margin-inline: auto;
     padding-block: 1.5rem;
 }
 
 .blog-list__item {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0.75rem;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid var(--civ-border);
+    align-items: baseline;
+    /* Reset Pico article card styles */
     background: none;
     box-shadow: none;
-    border: none;
-    border-bottom: 1px solid var(--pico-muted-border-color);
     border-radius: 0;
-    padding: 0 0 3rem 0;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .blog-list__item:last-child {
     border-bottom: none;
-    margin-bottom: 0;
+}
+
+.blog-list__date {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-sm);
+    color: var(--civ-text-muted);
+    white-space: nowrap;
+}
+
+.blog-list__title {
+    font-family: 'Space Grotesk', var(--pico-font-family);
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--civ-text);
+    text-decoration: none;
+    display: block;
+    line-height: 1.2;
+}
+
+.blog-list__title:hover {
+    text-decoration: underline;
+}
+
+.blog-list__lead {
+    font-size: var(--text-sm);
+    color: var(--civ-text-secondary);
+    margin: 0.2rem 0 0;
+    line-height: 1.55;
+}
+
+/* ── Blog post page ──────────────────────────────────────────────────────── */
+
+.blog-post {
+    max-width: 720px;
+    margin-inline: auto;
+    padding-block: 1.5rem;
 }
 
 .blog-header {
     background: none;
-    margin: 0 0 2rem 0;
-    padding: 0 0 1rem 0;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    margin: 0 0 1.5rem;
+    padding: 0 0 1rem;
+    border-bottom: 2px solid var(--civ-border-strong);
 }
 
 .blog-post__title {
-    font-size: var(--text-2xl);
+    font-family: 'Space Grotesk', var(--pico-font-family);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
 }
 
 .blog-meta {
-    color: var(--pico-muted-color);
+    font-family: var(--pico-font-family-monospace);
+    color: var(--civ-text-muted);
     font-size: var(--text-sm);
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .blog-lead {
-    font-size: var(--text-xl);
-    color: var(--pico-muted-color);
+    font-size: var(--text-md);
+    color: var(--civ-text-secondary);
     font-style: italic;
-    border-left: 3px solid var(--pico-muted-border-color);
+    border-left: 3px solid var(--civ-accent);
     padding-left: 1rem;
     margin-bottom: 2rem;
+    line-height: 1.65;
 }
 
 .blog-post__lead {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .blog-post__body {

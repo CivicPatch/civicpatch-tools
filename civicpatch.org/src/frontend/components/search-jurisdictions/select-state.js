@@ -4,19 +4,29 @@ import { html } from "lit-html";
 function CivSelectState({ selected }) {
   const [states, setStates] = useState([]);
 
-  const emitStateChange = (code) => {
+  // Used only for the validation path — we don't have a direct e.target there.
+  const emitResetViaHost = () => {
     const selectEl = this.querySelector('select');
     if (!selectEl) return;
     selectEl.dispatchEvent(
       new CustomEvent("state-change", {
-        detail: { state: code },
+        detail: { state: "" },
         bubbles: true,
         composed: true,
       }),
     );
   };
 
-  const handleChange = (e) => emitStateChange(e.target.value);
+  // Normal user interaction — dispatch directly from e.target, same as original.
+  const handleChange = (e) => {
+    e.target.dispatchEvent(
+      new CustomEvent("state-change", {
+        detail: { state: e.target.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  };
 
   useEffect(() => {
     fetch("/api/v1/jurisdictions/states")
@@ -24,10 +34,9 @@ function CivSelectState({ selected }) {
       .then((data) => {
         const loaded = data.data || [];
         setStates(loaded);
-        // Reset immediately if the stored state isn't in the valid list.
         const validCodes = new Set(loaded.map((s) => s.code));
         if (selected && !validCodes.has(selected)) {
-          emitStateChange("");
+          emitResetViaHost();
         }
       });
   }, []);
