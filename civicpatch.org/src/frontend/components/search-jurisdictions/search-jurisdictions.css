@@ -3,81 +3,59 @@
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 
+/* ── Masthead ──────────────────────────────────────────────────────────────── */
+
 .search-page hgroup {
-    padding-block: 2rem 1rem;
-    border-left: 3px solid var(--pico-primary);
-    padding-left: 1.25rem;
+    padding-block: 1.5rem 1rem;
+    border-bottom: 2px solid var(--civ-border-strong);
+}
+
+.search-page hgroup::before {
+    content: "Civic data \2014 United States";
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    color: var(--civ-text-muted);
+    margin-bottom: 0.3rem;
 }
 
 .search-page hgroup h1 {
-    color: var(--pico-primary);
+    color: var(--civ-text);
+    font-family: 'Space Grotesk', sans-serif;
     font-size: var(--text-2xl);
     font-weight: 700;
-    margin-bottom: 0.4rem;
-    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.03em;
 }
 
 .search-page hgroup p {
-    color: var(--pico-muted-color);
-    font-size: var(--text-base);
+    color: var(--civ-text-secondary);
+    font-size: var(--text-md);
     margin: 0;
 }
+
+/* ── Grid: selector left, map right ───────────────────────────────────────── */
 
 .page-grid {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
     align-items: start;
 }
 
-.about-col {
-    order: 1;
-}
-
-.about-blurb {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.about-blurb h2 {
-    font-size: var(--text-lg);
-    font-weight: 700;
-    margin: 0 0 0.25rem;
-}
-
-.about-blurb h3 {
-    font-size: var(--text-md);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--pico-muted-color);
-    margin: 1rem 0 0.25rem;
-}
-
-.about-blurb p,
-.about-blurb ul {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
-    margin: 0;
-}
-
-.about-blurb ul {
-    padding-left: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
 .select-col {
-    order: 2;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
 }
+
+/* ── State progress ────────────────────────────────────────────────────────── */
 
 .state-progress {
     display: flex;
@@ -87,17 +65,19 @@
 
 .state-progress h3 {
     margin: 0;
-    font-size: var(--text-md);
+    font-size: var(--text-sm);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--pico-muted-color);
+    color: var(--civ-text-muted);
 }
+
+/* ── Below grid ────────────────────────────────────────────────────────────── */
 
 .below-grid {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .not-scraped {
@@ -111,22 +91,14 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--pico-muted-color);
+    color: var(--civ-text-muted);
     margin: 0;
 }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
     .page-grid {
         grid-template-columns: 1fr;
     }
-    .about-col {
-        order: 2;
-    }
-    .select-col {
-        order: 1;
-    }
-}
-
-.map-col {
-    grid-column: 1 / -1;
 }

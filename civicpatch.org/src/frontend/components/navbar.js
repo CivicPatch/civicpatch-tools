@@ -385,6 +385,7 @@ function Navbar({ user }) {
   const resolvedTheme = theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.dataset.theme = resolvedTheme;
   const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  const onLogoutClick = () => localStorage.removeItem('app:default-state');
   const summary = useSummary(canViewQueue, stateCode);
   const currentPath = window.location.pathname;
   return html`
@@ -397,7 +398,7 @@ function Navbar({ user }) {
         CivicPatch
         <span class="nav-beta-badge">BETA</span>
       </a>
-      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout"><i class="fab fa-github"></i> Logout</a>` : ''}
+      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout" @click=${onLogoutClick}><i class="fab fa-github"></i> Logout</a>` : ''}
       <div class="nav-links">
         <button class="theme-toggle" @click=${toggleTheme} aria-label="Toggle theme" title="${resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}">
           <i class="fa-solid ${resolvedTheme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>

@@ -19,9 +19,9 @@ civ-badge {
 }
 
 .civ-badge--primary {
-    color: var(--civ-accent-text, #111);
-    background: var(--civ-accent, #ffe066);
-    border: 1px solid var(--civ-accent-border, #e0cc00);
+    color: var(--civ-bg, #fafafa);
+    background: var(--civ-text, #111111);
+    border: 1px solid var(--civ-text, #111111);
 }
 
 .civ-badge--secondary {

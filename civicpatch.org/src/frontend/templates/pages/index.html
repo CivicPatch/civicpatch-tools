@@ -8,30 +8,51 @@
 
 <civ-search-jurisdictions></civ-search-jurisdictions>
 
-{% if posts %}
 <section class="blog-preview">
-    <div class="blog-preview__header">
-        <h2>From the Blog</h2>
-        <a href="/blog">View all posts →</a>
-    </div>
-    {% for post in posts %}
-    <article class="blog-list__item">
-        <header class="blog-header">
-            <h3 class="blog-post__title">
-                <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
-            </h3>
-            <p class="blog-meta">
-                <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
-                {% if post.author %} · {{ post.author }}{% endif %}
-            </p>
-        </header>
-        {% if post.description %}
-        <p class="blog-post__lead">{{ post.description }}</p>
+    <div class="blog-preview__grid">
+        {% if posts %}
+        <div class="blog-preview__posts">
+            <div class="civ-section-label">Updates</div>
+            {% for post in posts %}
+            <article class="blog-preview__item">
+                <time class="blog-preview__date">{{ post.date.strftime('%b %-d, %Y') }}</time>
+                <div class="blog-preview__body">
+                    <a href="/blog/{{ post.slug }}" class="blog-preview__title">{{ post.title }}</a>
+                    {% if post.description %}
+                    <p class="blog-preview__lead">{{ post.description }}</p>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+            <a href="/blog" class="blog-preview__view-all">All updates <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
         {% endif %}
-    </article>
-    {% endfor %}
+        <div class="blog-preview__get-involved {% if not posts %}blog-preview__get-involved--full{% endif %}">
+            <div class="civ-section-label">How can I help?</div>
+            <div>
+                <p class="blog-preview__gi-section">Share &amp; research</p>
+                <ul class="blog-preview__gi-links">
+                    <li><a href="https://github.com/civicpatch/civicpatch-tools/discussions" target="_blank" rel="noopener noreferrer">Share ideas or feedback <i class="fa-brands fa-github"></i></a></li>
+                    <li><a href="https://github.com/civicpatch/civicpatch-tools/issues" target="_blank" rel="noopener noreferrer">Report a bug <i class="fa-brands fa-github"></i></a></li>
+                    <li><a href="mailto:michelle@civicpatch.org">michelle@civicpatch.org <i class="fa-solid fa-envelope"></i></a> <span class="blog-preview__gi-note">research &amp; data validation</span></li>
+                </ul>
+            </div>
+            <div>
+                <p class="blog-preview__gi-section">Data</p>
+                <ul class="blog-preview__gi-links">
+                    <li><a href="https://github.com/civicpatch/open-data" target="_blank" rel="noopener noreferrer">civicpatch/open-data <i class="fa-solid fa-up-right-from-square"></i></a></li>
+                    <li><a href="https://github.com/openstates/people" target="_blank" rel="noopener noreferrer">openstates/people <i class="fa-solid fa-up-right-from-square"></i></a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="blog-preview__gi-section">Support</p>
+                <ul class="blog-preview__gi-links">
+                    <li><a href="https://ko-fi.com/civicpatch" target="_blank" rel="noopener noreferrer">Support on Ko-fi <i class="fa-solid fa-mug-hot"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </section>
-{% endif %}
 
 {% endif %}
 {% if missing_env %}

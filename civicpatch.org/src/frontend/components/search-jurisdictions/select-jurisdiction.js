@@ -9,7 +9,26 @@ function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
   const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [selectedState, setSelectedState] = useState(defaultState);
+  // Start empty — only restore the stored state after confirming it's in the valid list.
+  const [selectedState, setSelectedState] = useState("");
+
+  useEffect(() => {
+    if (!defaultState) return;
+    fetch("/api/v1/jurisdictions/states")
+      .then((r) => r.json())
+      .then((data) => {
+        const validCodes = new Set((data.data || []).map((s) => s.code));
+        if (validCodes.has(defaultState)) {
+          setSelectedState(defaultState);
+        } else {
+          setDefaultState("");
+        }
+      })
+      .catch(() => {
+        // API unavailable — restore optimistically rather than losing the selection
+        setSelectedState(defaultState);
+      });
+  }, []);
 
   useEffect(() => {
     const normalized = (selected || '').toLowerCase();

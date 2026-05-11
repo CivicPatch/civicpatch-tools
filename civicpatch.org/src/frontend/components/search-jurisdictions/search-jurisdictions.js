@@ -66,41 +66,9 @@ function SearchJurisdictions() {
     <div class="search-page">
       <hgroup>
         <h1>Find your representatives</h1>
-
         <p>Find contact information for local government officials across the U.S.</p>
-
-        <p>Select a jurisdiction below or click the map to get started.</p>
       </hgroup>
       <div class="page-grid">
-
-        <div class="about-col">
-          <div class="about-blurb">
-            <h2>What is CivicPatch?</h2>
-            <p>
-              CivicPatch is a project that collects and maintains contact
-              information for local government officials across the United States.
-            </p>
-
-            <h3>Where does the data go?</h3>
-            <p>
-              Collected data is published to
-              <a href="https://github.com/civicpatch/open-data">civicpatch/open-data</a>,
-              a public repository of U.S. local government contact information.
-            </p>
-
-            <h3>How can I help?</h3>
-            <ul>
-              <li><a href="https://github.com/civicpatch/civicpatch-tools/discussions">Share ideas or feedback</a></li>
-              <li><a href="https://github.com/civicpatch/civicpatch-tools/issues">Report a bug</a></li>
-              <li>Research and data validation:
-                Reach out to <a href="mailto:michelle@civicpatch.org"><civ-badge .label=${"michelle@civicpatch.org"} .variant=${"primary"}></civ-badge></a>
-                or
-                <a href="https://unified.me/chat/!NcnsrToWrvzzzoLHWn" target="_blank" rel="noopener noreferrer"><civ-badge .label=${"community chat"} .variant=${"secondary"}></civ-badge></a>
-              </li>
-              <li>Funding and support for ongoing operations: <a href="https://ko-fi.com/civicpatch" target="_blank" rel="noopener noreferrer"><civ-badge .label=${"Ko-fi"} .variant=${"primary"}></civ-badge></a></li>
-            </ul>
-          </div>
-        </div>
 
         <div class="select-col">
           <civ-select-jurisdiction
