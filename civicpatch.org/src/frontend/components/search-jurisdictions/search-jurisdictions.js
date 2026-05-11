@@ -19,6 +19,7 @@ function SearchJurisdictions() {
   const [selectedState, setSelectedState] = useState((defaultState || '').toLowerCase());
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] = useState(null);
   const [selectedJurisdictionName, setSelectedJurisdictionName] = useState('');
+  const [selectedCountyOcdid, setSelectedCountyOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
 
@@ -48,6 +49,15 @@ function SearchJurisdictions() {
 
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || '').toLowerCase());
+    setSelectedCountyOcdid(null);
+    setSelectedJurisdictionOcdid(null);
+    setSelectedJurisdictionName('');
+  };
+
+  const handleCountyChange = (event) => {
+    setSelectedCountyOcdid(event.detail.jurisdiction_ocdid);
+    setSelectedJurisdictionOcdid(null);
+    setSelectedJurisdictionName('');
   };
 
   const handleSelectJurisdictionChange = (event) => {
@@ -81,6 +91,7 @@ function SearchJurisdictions() {
             .coverageMap=${coverageMap}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
             @on-state-change=${handleStateChange}
+            @on-county-change=${handleCountyChange}
           ></browse-map>
         </div>
 

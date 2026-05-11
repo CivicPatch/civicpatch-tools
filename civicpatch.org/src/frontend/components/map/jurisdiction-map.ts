@@ -4,11 +4,11 @@ import { html } from 'lit-html';
 import { ref } from 'lit-html/directives/ref.js';
 import maplibregl from 'maplibre-gl';
 import {
-  SOURCE_ID,
-  DEFAULT_LAYERS,
+  STATE_SOURCE_ID,
   createMap,
   loadStateSource,
-  addJurisdictionLayers,
+  addAllLayers,
+  applyLevelVisibility,
   stateFromOcdid,
   featureBounds,
 } from './map-base.js';
@@ -27,7 +27,6 @@ function JurisdictionMap(this: HTMLElement, {
     mapRef.current = createMap(el as HTMLElement);
   };
 
-  // Load state source + layers, highlight and zoom to target jurisdiction
   useEffect(() => {
     if (!mapRef.current || !jurisdictionOcdid) return;
     const map = mapRef.current;
@@ -35,8 +34,8 @@ function JurisdictionMap(this: HTMLElement, {
     if (!state) return;
 
     const tryFit = () => {
-      const features = map.querySourceFeatures(SOURCE_ID, {
-        sourceLayer: 'jurisdictions',
+      const features = map.querySourceFeatures(STATE_SOURCE_ID, {
+        sourceLayer: 'local',
         filter: ['==', ['get', 'jurisdiction_ocdid'], jurisdictionOcdid],
       });
       if (!features.length) return;
@@ -48,10 +47,11 @@ function JurisdictionMap(this: HTMLElement, {
 
     const load = () => {
       loadStateSource(map, state);
-      if (!map.getLayer('jurisdictions')) addJurisdictionLayers(map, DEFAULT_LAYERS);
+      addAllLayers(map);
+      applyLevelVisibility(map, 'local');
 
       map.setFeatureState(
-        { source: SOURCE_ID, sourceLayer: 'jurisdictions', id: jurisdictionOcdid },
+        { source: STATE_SOURCE_ID, sourceLayer: 'local', id: jurisdictionOcdid },
         { selected: true }
       );
 
@@ -67,7 +67,6 @@ function JurisdictionMap(this: HTMLElement, {
     return () => map.off('sourcedata', tryFit);
   }, [jurisdictionOcdid, mapRef.current]);
 
-  // Cleanup map on disconnect
   useEffect(() => {
     return () => {
       mapRef.current?.remove();
