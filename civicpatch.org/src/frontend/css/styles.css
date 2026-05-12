@@ -759,8 +759,8 @@ dialog[open] {
 
 .blog-post__header {
     background: none;
-    margin: 0 0 1.5rem;
-    padding: 0 0 1rem;
+    margin: 0 0 0.75rem;
+    padding: 0 0 0.3rem;
     border-bottom: 2px solid var(--civ-border-strong);
 }
 
