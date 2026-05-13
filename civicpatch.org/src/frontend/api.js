@@ -349,6 +349,18 @@ export const fetchDashboard = async () => {
   return res.json();
 };
 
+export const fetchMapsCoverage = async () => {
+  const res = await fetch(`${API_URL}/api/v1/coverage`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchLocalStatus = async (state) => {
+  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/local`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchLeaderboard = async () => {
   const res = await fetch(`${API_URL}/api/v1/leaderboard`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -95,6 +95,10 @@ Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
 - Use today's date in the filename
 - Quote only the relevant snippet from each source, not the full page. Link to the specific section using a named anchor (`#section-id`) or text fragment (`#:~:text=quoted+text`) where possible
 
+## TODOs
+
+At the start of each session, check `.scratch/TODOs.md` and surface any unchecked items to the user before getting into other work.
+
 ## General
 
 These rules exist to keep diffs small and focused so human reviewers can reason about one thing at a time.

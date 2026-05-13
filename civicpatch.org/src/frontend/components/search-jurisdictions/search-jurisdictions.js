@@ -1,7 +1,7 @@
 import "./search-jurisdictions.css";
-import { component, useState, useEffect, useMemo } from "haunted";
+import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import { fetchPeople, fetchDashboard } from "../../api.js";
+import { fetchPeople, fetchDashboard, fetchMapsCoverage, fetchLocalStatus } from "../../api.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
@@ -11,7 +11,6 @@ import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/progress-dashboard/states-overview.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
-import { buildCoverageMap } from "./coverage-map.ts";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
@@ -22,6 +21,8 @@ function SearchJurisdictions() {
   const [selectedCountyOcdid, setSelectedCountyOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
+  const [coverageSummary, setCoverageSummary] = useState({});
+  const [localStatus, setLocalStatus] = useState({});
 
 
   useEffect(() => {
@@ -37,15 +38,19 @@ function SearchJurisdictions() {
   }, []);
 
   useEffect(() => {
+    fetchMapsCoverage().then(data => setCoverageSummary(data.data ?? {})).catch(() => {});
+  }, []);
+
+  useEffect(() => {
     const handler = (e) => setSelectedState((e.detail.state || '').toLowerCase());
     document.addEventListener('state-select', handler);
     return () => document.removeEventListener('state-select', handler);
   }, []);
 
-  const coverageMap = useMemo(
-    () => buildCoverageMap(dashboardData, selectedState),
-    [dashboardData, selectedState],
-  );
+  useEffect(() => {
+    if (!selectedState) { setLocalStatus({}); return; }
+    fetchLocalStatus(selectedState).then(d => setLocalStatus(d.data ?? {})).catch(() => {});
+  }, [selectedState]);
 
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || '').toLowerCase());
@@ -88,7 +93,8 @@ function SearchJurisdictions() {
           <browse-map
             state=${selectedState || ''}
             selected-ocdid=${selectedJurisdictionOcdid || ''}
-            .coverageMap=${coverageMap}
+            .localStatus=${localStatus}
+            .coverageSummary=${coverageSummary}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
             @on-state-change=${handleStateChange}
             @on-county-change=${handleCountyChange}

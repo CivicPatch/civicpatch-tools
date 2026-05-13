@@ -20,8 +20,6 @@ import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css?r
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
-const DEFAULT_LOCATION = { lat: 47.60813, lng: -122.335167 }; // Seattle, WA
-
 // Use accessible colors for map
 const MAP_COLORS = {
   color1: "#1b9e77",
@@ -40,7 +38,7 @@ function CivMap({ latlng, canmove = true, geojson = null, height = "25rem" }) {
   const canMove = canmove === "true" || canmove === true;
 
   const [mapInstance, setMapInstance] = useState(null);
-  const [homeLatlng, setHomeLatlng] = useState(latlng || DEFAULT_LOCATION);
+  const [homeLatlng, setHomeLatlng] = useState(latlng);
   const [currentLatlng, setCurrentLatlng] = useState(latlng);
   const [marker, setMarker] = useState(null);
   const [controls, setControls] = useState({ gc: null });
