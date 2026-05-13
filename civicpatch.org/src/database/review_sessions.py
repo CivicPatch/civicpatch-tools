@@ -46,6 +46,7 @@ async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
+                  AND rs.ended_at IS NULL
                   AND rs.updated_at > NOW() - %s
                   AND EXISTS (
                       SELECT 1 FROM review_session_entries rse2
@@ -104,32 +105,50 @@ async def create_or_get_review_session(
                 row = await cur.fetchone()
                 daily_goal = row.daily_goal if row else 10  # type: ignore[union-attr]
 
-            # Resume if the session was active recently; purge and restart if stale.
             await cur.execute(
                 """
-                SELECT 1 FROM review_sessions
+                SELECT id,
+                       (updated_at > NOW() - %s) AS is_active
+                FROM review_sessions
                 WHERE user_id = %s AND state_code = %s
-                  AND updated_at > NOW() - %s
+                  AND ended_at IS NULL
                 """,
-                (user_id, state_code, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
+                (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES), user_id, state_code),
             )
-            is_active = await cur.fetchone() is not None
+            existing = await cur.fetchone()
 
-            await cur.execute(
-                """
-                INSERT INTO review_sessions
-                    (user_id, state_code, daily_goal)
-                VALUES (%s, %s, %s)
-                ON CONFLICT (user_id, state_code)
-                    DO UPDATE SET daily_goal = EXCLUDED.daily_goal
-                RETURNING id, state_code, daily_goal, created_at
-                """,
-                (user_id, state_code, daily_goal),
-            )
-            row = await cur.fetchone()
+            if existing and existing.is_active:  # type: ignore[union-attr]
+                await cur.execute(
+                    """
+                    UPDATE review_sessions
+                    SET daily_goal = %s
+                    WHERE id = %s
+                    RETURNING id, state_code, daily_goal, created_at
+                    """,
+                    (daily_goal, str(existing.id)),  # type: ignore[union-attr]
+                )
+                row = await cur.fetchone()
+            else:
+                if existing:
+                    await _purge_session_queue(cur, str(existing.id))  # type: ignore[union-attr]
+                    await cur.execute(
+                        """
+                        UPDATE review_sessions
+                        SET ended_at = NOW()
+                        WHERE id = %s
+                        """,
+                        (str(existing.id),),  # type: ignore[union-attr]
+                    )
 
-            if not is_active:
-                await _purge_session_queue(cur, str(row.id))  # type: ignore[union-attr]
+                await cur.execute(
+                    """
+                    INSERT INTO review_sessions (user_id, state_code, daily_goal)
+                    VALUES (%s, %s, %s)
+                    RETURNING id, state_code, daily_goal, created_at
+                    """,
+                    (user_id, state_code, daily_goal),
+                )
+                row = await cur.fetchone()
 
             await cur.execute(
                 """
@@ -158,8 +177,8 @@ async def end_review_session(review_session_id: str) -> None:
             await cur.execute(
                 """
                 UPDATE review_sessions
-                SET current_entry_number = 1, reviewed_ocdids = '{}'
-                WHERE id = %s
+                SET ended_at = NOW()
+                WHERE id = %s AND ended_at IS NULL
                 """,
                 (review_session_id,),
             )

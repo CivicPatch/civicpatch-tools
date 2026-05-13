@@ -58,6 +58,18 @@ async def test_get_active_review_session_returns_none_when_no_session():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
+async def test_get_active_review_session_filters_by_ended_at():
+    # Active resume must only return sessions that have not been ended.
+    cur = _make_cursor(fetchone_side_effect=[None])
+    with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await get_active_review_session(USER_ID)
+
+    executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
+    assert any("ended_at IS NULL" in sql for sql in executed_sql)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
 async def test_get_active_review_session_returns_session_when_active():
     # Was: returns session when status == ACTIVE and timestamp is recent.
     # Now: returns session when updated_at is within the idle window. Same outcome.
@@ -76,12 +88,14 @@ async def test_get_active_review_session_returns_session_when_active():
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_create_or_get_resumes_when_session_is_recent():
-    # Was: ACTIVE + recent status_updated_at → no DELETE.
-    # Now: updated_at within idle window (fetchone returns a row) → no DELETE.
-    # Same behavior: recent session preserved without purging the queue.
+    # Was: ACTIVE + recent → no DELETE; the same row was returned via ON CONFLICT DO UPDATE.
+    # Now: existing non-ended session with is_active=True → UPDATE daily_goal on the same row,
+    # no DELETE and no INSERT. Same behavioral guarantee: a recent session is preserved
+    # without purging the in-flight queue.
+    Existing = namedtuple("Existing", ["id", "is_active"])
     cur = _make_cursor(fetchone_side_effect=[
-        object(),       # active-check query returns a row → is_active = True
-        _upsert_row(),
+        Existing(id=SESSION_ID, is_active=True),  # existing non-ended, active
+        _upsert_row(),                             # UPDATE ... RETURNING
         _next_entry_row(),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -89,60 +103,68 @@ async def test_create_or_get_resumes_when_session_is_recent():
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
     assert not any("DELETE" in sql for sql in executed_sql)
+    assert not any("INSERT INTO review_sessions" in sql for sql in executed_sql)
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_create_or_get_purges_when_session_is_stale():
-    # Was: ACTIVE but status_updated_at is stale → DELETE + set IDLE.
-    # Now: updated_at outside idle window (fetchone returns None) → DELETE.
-    # Status column gone; purge behavior unchanged.
+async def test_create_or_get_auto_ends_and_inserts_when_session_is_stale():
+    # Was: ACTIVE-but-stale → DELETE entries + UPDATE same row (set IDLE).
+    # Now: stale non-ended session → purge entries, set ended_at on the old row, then
+    # INSERT a brand-new session row. The user gets a fresh session id with entry_number
+    # sequence starting at 1 — this is the core fix for the End-session bug.
+    Existing = namedtuple("Existing", ["id", "is_active"])
     cur = _make_cursor(fetchone_side_effect=[
-        None,           # active-check query returns nothing → is_active = False
-        _upsert_row(),
+        Existing(id=SESSION_ID, is_active=False),  # existing non-ended, stale
+        _upsert_row(),                              # INSERT ... RETURNING
         _next_entry_row(),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
-    assert any("DELETE" in sql for sql in executed_sql)
+    assert any("DELETE FROM review_session_entries" in sql for sql in executed_sql)
+    assert any("ended_at = NOW()" in sql for sql in executed_sql)
+    assert any("INSERT INTO review_sessions" in sql for sql in executed_sql)
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_create_or_get_purges_when_no_prior_session():
-    # Was: no existing session → purge (no-op) + set IDLE.
-    # Now: no active session found → purge (no-op). No status to set.
+async def test_create_or_get_inserts_new_row_when_no_prior_session():
+    # Was: no existing session → DELETE (no-op) + UPSERT.
+    # Now: no non-ended session found → directly INSERT a new row. No purge, no auto-end.
+    # Returned next_entry_number must be 1 for a fresh session row.
     cur = _make_cursor(fetchone_side_effect=[
-        None,           # active-check returns nothing
-        _upsert_row(),
-        _next_entry_row(),
+        None,                  # no existing non-ended session
+        _upsert_row(),         # INSERT ... RETURNING
+        _next_entry_row(1),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
+        result = await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
-    assert any("DELETE" in sql for sql in executed_sql)
+    assert not any("DELETE" in sql for sql in executed_sql)
+    assert not any("ended_at = NOW()" in sql for sql in executed_sql)
+    assert any("INSERT INTO review_sessions" in sql for sql in executed_sql)
+    assert result["next_entry_number"] == 1
 
 
 # ── end_review_session ────────────────────────────────────────────────────────
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_end_review_session_purges_entries_and_resets_session():
-    # Was: end_session purges entries AND sets status = 'idle'.
-    # Now: end_session purges entries AND resets current_entry_number + reviewed_ocdids.
-    #      Status column removed; reset behavior unchanged.
+async def test_end_review_session_sets_ended_at_and_purges_queue():
+    # Was: end_session purges entries AND resets current_entry_number + reviewed_ocdids
+    # on the same row. Now: end_session purges entries AND sets ended_at = NOW(), so
+    # the next create_or_get inserts a fresh row with a fresh entry_number sequence.
+    # The soft-reset of current_entry_number is gone — that was the source of the
+    # "End then Start lands back at page 71" bug.
     cur = _make_cursor()
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         await end_review_session(SESSION_ID)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
-    all_params = [str(c.args[1]) if len(c.args) > 1 else "" for c in cur.execute.call_args_list]
 
-    assert any("DELETE" in sql for sql in executed_sql)
-    assert any("reviewed_ocdids" in sql for sql in executed_sql)
-    assert not any("idle" in p for p in all_params), (
-        "end_review_session must not write a status value — status column was removed"
-    )
+    assert any("DELETE FROM review_session_entries" in sql for sql in executed_sql)
+    assert any("ended_at = NOW()" in sql for sql in executed_sql)
+    assert not any("current_entry_number = 1" in sql for sql in executed_sql)

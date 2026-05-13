@@ -177,28 +177,54 @@ async def test_fresh_session_with_no_history_starts_at_entry_1(test_user):
     assert result["next_entry_number"] == 1
 
 
-# ── reviewed_ocdids ───────────────────────────────────────────────────────────
+# ── end → start gives a fresh session ─────────────────────────────────────────
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_end_session_resets_reviewed_ocdids(test_user):
-    """end_review_session must clear reviewed_ocdids so the next session starts fresh."""
+async def test_end_session_then_create_starts_fresh_session(test_user):
+    # Previously this file asserted "end_session clears reviewed_ocdids on the same row."
+    # The fix replaces that soft-reset with a hard end: end_review_session marks the
+    # old row with ended_at, and the next create_or_get inserts a brand-new row that
+    # is empty by default. The behavioral guarantee is the same from the user's
+    # perspective (next session starts fresh) but the mechanism is row-replacement.
     pool = await get_pool()
-    session_id = await _create_session(test_user)
+    session_a_id = await _create_session(test_user)
 
-    # Manually set some reviewed ocdids
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE review_sessions SET reviewed_ocdids = %s WHERE id = %s",
-            (["ocd-jurisdiction/country:us/state:zz/place:test_1/government"], str(session_id)),
+            (["ocd-jurisdiction/country:us/state:zz/place:test_1/government"], str(session_a_id)),
         )
+    await _insert_entry(session_a_id, entry_number=1, status="resolved")
+    await _insert_entry(session_a_id, entry_number=2, status="claimed")
 
-    await end_review_session(str(session_id))
+    await end_review_session(str(session_a_id))
+
+    session_b = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    assert session_b["id"] != str(session_a_id), "End must force a brand-new session row"
+    assert session_b["next_entry_number"] == 1, "Fresh session must start at entry 1"
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT reviewed_ocdids FROM review_sessions WHERE id = %s", (str(session_id),))
-        row = await cur.fetchone()
-    assert row[0] == [], f"reviewed_ocdids must be empty after end_session, got {row[0]}"
+        await cur.execute(
+            "SELECT ended_at, reviewed_ocdids FROM review_sessions WHERE id = %s",
+            (str(session_a_id),),
+        )
+        old = await cur.fetchone()
+        assert old[0] is not None, "Old session must be marked ended"
+
+        await cur.execute(
+            "SELECT reviewed_ocdids FROM review_sessions WHERE id = %s",
+            (session_b["id"],),
+        )
+        new = await cur.fetchone()
+        assert new[0] == [], "New session row must have empty reviewed_ocdids"
+
+        await cur.execute(
+            "SELECT status FROM review_session_entries WHERE review_session_id = %s ORDER BY entry_number",
+            (str(session_a_id),),
+        )
+        statuses = [r[0] for r in await cur.fetchall()]
+        assert statuses == ["resolved"], "Only resolved entries should remain on the ended session"
 
 
 # ── updated_at threshold (new behaviour after status removal) ─────────────────
