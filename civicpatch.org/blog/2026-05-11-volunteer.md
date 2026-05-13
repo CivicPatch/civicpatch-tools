@@ -1,7 +1,7 @@
 ---
 title: "How to Contribute"
 date: 2026-05-05
-draft: false
+draft: true 
 description: |
     Help us verify records.
 author: "shelltr"
