@@ -86,7 +86,6 @@ function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [],
   }, [open]);
 
   useEffect(() => {
-    console.log("[profile-modal] dir effect", { activeTab, jurisdictionOcdid, directoryPage });
     if (activeTab !== "directory" || !jurisdictionOcdid) return;
     let isMounted = true;
     setDirectoryLoading(true);

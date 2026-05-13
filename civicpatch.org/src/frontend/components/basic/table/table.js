@@ -172,7 +172,6 @@ function BasicTable(props) {
         return;
       case KEYCODES.ENTER:
         if (editing) {
-          console.log("Submitting stop edit for cell", { row, col });
           setEditingCell({ row: null, col: null });
         } else {
           if (!editable) return;
