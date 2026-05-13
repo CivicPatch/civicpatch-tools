@@ -11,6 +11,29 @@ export const STATE_SOURCE_ID = 'state';
 
 export type DrillLevel = 'national' | 'counties' | 'local';
 
+export const LOCAL_STATUS = {
+  FRESH: 'fresh',
+  STALE: 'stale',
+  GAP: 'gap',
+  UNTRACKED: 'untracked',
+} as const;
+export type LocalStatus = typeof LOCAL_STATUS[keyof typeof LOCAL_STATUS];
+
+function cssVar(name: string): string {
+  if (typeof document === 'undefined') return '';
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// Read once at module load; theme toggles mid-session won't update paint expressions
+// since they're baked when the layer is added. A reload re-reads the values.
+const STATUS_COLORS = {
+  fresh:     cssVar('--civ-status-fresh'),
+  stale:     cssVar('--civ-status-stale'),
+  gap:       cssVar('--civ-status-gap'),
+  untracked: cssVar('--civ-status-untracked'),
+  selected:  cssVar('--civ-status-selected'),
+};
+
 export function getVisibleLayers(level: DrillLevel): string[] {
   if (level === 'national') return ['states'];
   if (level === 'counties') return ['states', 'counties'];
@@ -104,14 +127,51 @@ export function loadStateSource(map: maplibregl.Map, state: string): void {
   }
 }
 
+const GRADIENT_PAINT = {
+  'fill-color': [
+    'interpolate', ['linear'],
+    ['coalesce', ['feature-state', 'coverage'], 0],
+    0,   STATUS_COLORS.gap,
+    0.5, STATUS_COLORS.stale,
+    1,   STATUS_COLORS.fresh,
+  ] as any,
+  'fill-opacity': 0.35,
+};
+
+const LOCAL_PAINT = {
+  'fill-color': [
+    'match', ['feature-state', 'status'],
+    LOCAL_STATUS.FRESH, STATUS_COLORS.fresh,
+    LOCAL_STATUS.STALE, STATUS_COLORS.stale,
+    LOCAL_STATUS.GAP,   STATUS_COLORS.gap,
+    STATUS_COLORS.untracked,
+  ] as any,
+  'fill-opacity': 0.35,
+};
+
+const LOCAL_STROKE_PAINT = {
+  'line-color': [
+    'case',
+    ['boolean', ['feature-state', 'selected'], false], STATUS_COLORS.selected,
+    '#6b7280',
+  ] as any,
+  'line-width': [
+    'case',
+    ['boolean', ['feature-state', 'selected'], false], 2.5,
+    0.8,
+  ] as any,
+};
+
+const DEFAULT_STROKE_PAINT = { 'line-color': '#6b7280', 'line-width': 0.8 };
+
 export function addAllLayers(map: maplibregl.Map): void {
   const layers = [
-    { id: 'states', source: NATIONAL_SOURCE_ID, sourceLayer: 'states' },
-    { id: 'counties', source: STATE_SOURCE_ID, sourceLayer: 'counties' },
-    { id: 'local', source: STATE_SOURCE_ID, sourceLayer: 'local' },
+    { id: 'states',   source: NATIONAL_SOURCE_ID, sourceLayer: 'states',   paint: GRADIENT_PAINT, strokePaint: DEFAULT_STROKE_PAINT },
+    { id: 'counties', source: STATE_SOURCE_ID,    sourceLayer: 'counties', paint: GRADIENT_PAINT, strokePaint: DEFAULT_STROKE_PAINT },
+    { id: 'local',    source: STATE_SOURCE_ID,    sourceLayer: 'local',    paint: LOCAL_PAINT,    strokePaint: LOCAL_STROKE_PAINT },
   ];
 
-  for (const { id, source, sourceLayer } of layers) {
+  for (const { id, source, sourceLayer, paint, strokePaint } of layers) {
     if (!map.getLayer(id)) {
       map.addLayer({
         id,
@@ -119,15 +179,7 @@ export function addAllLayers(map: maplibregl.Map): void {
         source,
         'source-layer': sourceLayer,
         layout: { visibility: 'none' },
-        paint: {
-          'fill-color': [
-            'case',
-            ['boolean', ['feature-state', 'selected'], false], '#6366f1',
-            ['==', ['feature-state', 'scraped'], false], '#ef4444',
-            '#10b981',
-          ],
-          'fill-opacity': 0.3,
-        },
+        paint,
       });
     }
     if (!map.getLayer(`${id}-stroke`)) {
@@ -137,7 +189,7 @@ export function addAllLayers(map: maplibregl.Map): void {
         source,
         'source-layer': sourceLayer,
         layout: { visibility: 'none' },
-        paint: { 'line-color': '#6b7280', 'line-width': 0.8 },
+        paint: strokePaint,
       });
     }
   }
@@ -152,14 +204,56 @@ export function applyLevelVisibility(map: maplibregl.Map, level: DrillLevel): vo
   }
 }
 
-export function applyCoverage(
+export function applyLocalStatus(
   map: maplibregl.Map,
-  coverageMap: Record<string, number>,
+  localStatus: Record<string, string>,
 ): void {
-  for (const [ocdid, coverage] of Object.entries(coverageMap)) {
+  for (const [ocdid, status] of Object.entries(localStatus)) {
     map.setFeatureState(
       { source: STATE_SOURCE_ID, sourceLayer: 'local', id: ocdid },
-      { scraped: coverage > 0 },
+      { status },
+    );
+  }
+}
+
+export interface CoverageEntry {
+  ocdid?: string;
+  total: number;
+  scraped: number;
+}
+
+export interface CoverageSummary {
+  [state: string]: {
+    state: CoverageEntry | null;
+    counties: Record<string, CoverageEntry>;
+  };
+}
+
+export function applyCountyCoverage(
+  map: maplibregl.Map,
+  counties: Record<string, CoverageEntry>,
+): void {
+  for (const [ocdid, { total, scraped }] of Object.entries(counties)) {
+    map.setFeatureState(
+      { source: STATE_SOURCE_ID, sourceLayer: 'counties', id: ocdid },
+      { coverage: total > 0 ? scraped / total : 0 },
+    );
+  }
+}
+
+export function applyStateCoverage(
+  map: maplibregl.Map,
+  coverageSummary: CoverageSummary,
+): void {
+  for (const summary of Object.values(coverageSummary)) {
+    if (!summary.state?.ocdid) {
+      continue;
+    }
+    const { ocdid, total, scraped } = summary.state;
+    const coverage = total > 0 ? scraped / total : 0;
+    map.setFeatureState(
+      { source: NATIONAL_SOURCE_ID, sourceLayer: 'states', id: ocdid },
+      { coverage },
     );
   }
 }

@@ -145,6 +145,12 @@
     --pico-card-box-shadow:               none;
 
     --civ-gradient-to:                    #333333;
+
+    --civ-status-fresh:     var(--pico-success-color);
+    --civ-status-stale:     var(--pico-warning-color);
+    --civ-status-gap:       var(--pico-error-color);
+    --civ-status-untracked: var(--civ-text-muted);
+    --civ-status-selected:  var(--civ-accent);
 }
 
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
@@ -240,6 +246,12 @@
     --pico-card-box-shadow:               none;
 
     --civ-gradient-to:                    #333333;
+
+    --civ-status-fresh:     var(--pico-success-color);
+    --civ-status-stale:     var(--pico-warning-color);
+    --civ-status-gap:       var(--pico-error-color);
+    --civ-status-untracked: var(--civ-text-muted);
+    --civ-status-selected:  var(--civ-accent);
 }
 
 
@@ -901,12 +913,14 @@ dialog[open] {
     color: var(--civ-text-secondary);
     padding: 0.25rem 0;
     text-decoration: none;
+    border-bottom: 1px solid transparent;
     line-height: 1.4;
-    transition: color 0.1s;
+    transition: color 0.1s, border-bottom-color 0.1s;
 }
 
 .blog-post__toc nav a:hover {
     color: var(--civ-text);
+    border-bottom-color: var(--civ-border);
 }
 
 @media (max-width: 768px) {

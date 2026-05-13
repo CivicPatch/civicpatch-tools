@@ -31,6 +31,7 @@ import routers.api.review_sessions as api_review_sessions_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
+import routers.api.coverage as api_coverage_router
 from database.database import (
     close_pool,
     get_pool,
@@ -192,6 +193,13 @@ app.include_router(
     api_summary_router.get_router(),
     prefix="/api/v1/summary",
     tags=["summary"],
+)
+
+app.include_router(
+    api_coverage_router.get_router(),
+    prefix="/api/v1/coverage",
+    tags=["coverage"],
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
 app.include_router(

@@ -5,28 +5,34 @@ import { ref } from 'lit-html/directives/ref.js';
 import maplibregl from 'maplibre-gl';
 import {
   DrillLevel,
+  NATIONAL_SOURCE_ID,
   STATE_SOURCE_ID,
   STATE_BOUNDS,
+  CoverageSummary,
   createMap,
   loadNationalSource,
   loadStateSource,
   addAllLayers,
   applyLevelVisibility,
-  applyCoverage,
+  applyLocalStatus,
+  applyCountyCoverage,
+  applyStateCoverage,
   featureBounds,
 } from './map-base.js';
 
 interface BrowseMapProps {
   state?: string;
   selectedOcdid?: string | null;
-  coverageMap?: Record<string, number>;
+  localStatus?: Record<string, string>;
+  coverageSummary?: CoverageSummary;
   height?: string;
 }
 
 function BrowseMap(this: HTMLElement, {
   state,
   selectedOcdid = null,
-  coverageMap = {},
+  localStatus = {},
+  coverageSummary = {},
   height = '25rem',
 }: BrowseMapProps) {
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -36,13 +42,16 @@ function BrowseMap(this: HTMLElement, {
   // and would otherwise capture a stale closure value of `level`.
   const levelRef = useRef<DrillLevel>(state ? 'counties' : 'national');
   const setLevelBoth = (l: DrillLevel) => { levelRef.current = l; setLevel(l); };
-  // coverageMapRef keeps the click handler in sync with the latest coverageMap prop.
-  const coverageMapRef = useRef<Record<string, number>>(coverageMap);
-  coverageMapRef.current = coverageMap;
+  // localStatusRef / coverageSummaryRef keep the click handler in sync — registered once.
+  const localStatusRef = useRef<Record<string, string>>(localStatus);
+  localStatusRef.current = localStatus;
+  const coverageSummaryRef = useRef<CoverageSummary>(coverageSummary);
+  coverageSummaryRef.current = coverageSummary;
 
   const setupContainer = (el: Element | undefined) => {
     if (!el || mapRef.current) return;
     mapRef.current = createMap(el as HTMLElement);
+    (window as any)._map = mapRef.current; // DEBUG: remove after diagnosis
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
     mapRef.current.on('load', () => mapRef.current?.resize());
     mapRef.current.on('click', handleClick);
@@ -53,7 +62,12 @@ function BrowseMap(this: HTMLElement, {
     if (!map) return;
 
     if (levelRef.current === 'national') {
-      const features = map.queryRenderedFeatures(e.point, { layers: ['states'] });
+      const pad = 6;
+      const bbox: [maplibregl.PointLike, maplibregl.PointLike] = [
+        [e.point.x - pad, e.point.y - pad],
+        [e.point.x + pad, e.point.y + pad],
+      ];
+      const features = map.queryRenderedFeatures(bbox, { layers: ['states'] });
       if (!features.length) return;
       const code = features[0].properties?.code as string | undefined;
       if (!code) return;
@@ -66,20 +80,32 @@ function BrowseMap(this: HTMLElement, {
     }
 
     if (levelRef.current === 'counties') {
-      const features = map.queryRenderedFeatures(e.point, { layers: ['counties'] });
-      if (!features.length) return;
-      const ocdid = features[0].properties?.jurisdiction_ocdid as string | undefined;
+      const countyFeatures = map.queryRenderedFeatures(e.point, { layers: ['counties'] });
+      if (!countyFeatures.length) {
+        // Clicked outside any county — check if it's another state to switch to
+        const stateFeatures = map.queryRenderedFeatures(e.point, { layers: ['states'] });
+        const clickedStateCode = stateFeatures[0]?.properties?.code as string | undefined;
+        if (clickedStateCode && clickedStateCode !== state) {
+          this.dispatchEvent(new CustomEvent('on-state-change', {
+            detail: { state: clickedStateCode },
+            bubbles: true,
+            composed: true,
+          }));
+        }
+        return;
+      }
+      const ocdid = countyFeatures[0].properties?.jurisdiction_ocdid as string | undefined;
       if (!ocdid) return;
       setLevelBoth('local');
       applyLevelVisibility(map, 'local');
-      applyCoverage(map, coverageMapRef.current);
+      applyLocalStatus(map, localStatusRef.current);
       this.dispatchEvent(new CustomEvent('on-county-change', {
         detail: { jurisdiction_ocdid: ocdid },
         bubbles: true,
         composed: true,
       }));
-      if (features[0].geometry) {
-        const bounds = featureBounds(features[0].geometry as GeoJSON.Geometry);
+      if (countyFeatures[0].geometry) {
+        const bounds = featureBounds(countyFeatures[0].geometry as GeoJSON.Geometry);
         if (bounds) map.fitBounds(bounds, { padding: 40, duration: 600 });
       }
       return;
@@ -103,24 +129,38 @@ function BrowseMap(this: HTMLElement, {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || state) return;
+    const onSourceData = (e: any) => {
+      if (e.sourceId === NATIONAL_SOURCE_ID && e.isSourceLoaded) {
+        applyStateCoverage(map, coverageSummaryRef.current);
+        map.off('sourcedata', onSourceData);
+      }
+    };
     const load = () => {
       loadNationalSource(map);
       addAllLayers(map);
       setLevelBoth('national');
       applyLevelVisibility(map, 'national');
+      map.on('sourcedata', onSourceData);
     };
     if (map.isStyleLoaded()) load();
     else map.once('load', load);
+    return () => map.off('sourcedata', onSourceData);
   }, []);
 
-  // Load state source when state changes
+  // Load state source when state changes; reset to national when state is cleared
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !state) return;
+    if (!map) return;
+    if (!state) {
+      setLevelBoth('national');
+      if (map.isStyleLoaded()) applyLevelVisibility(map, 'national');
+      return;
+    }
     const newLevel: DrillLevel = 'counties';
     const onSourceData = (e: any) => {
       if (e.sourceId === STATE_SOURCE_ID && e.isSourceLoaded) {
-        applyCoverage(map, coverageMap);
+        applyLocalStatus(map, localStatusRef.current);
+        applyCountyCoverage(map, coverageSummaryRef.current[state]?.counties ?? {});
         map.off('sourcedata', onSourceData);
       }
     };
@@ -139,11 +179,26 @@ function BrowseMap(this: HTMLElement, {
     return () => map.off('sourcedata', onSourceData);
   }, [state]);
 
-  // Re-apply coverage when coverageMap changes
+  // Re-apply local status when localStatus changes; wait for style if needed.
   useEffect(() => {
-    if (!mapRef.current?.isStyleLoaded()) return;
-    applyCoverage(mapRef.current, coverageMap);
-  }, [coverageMap]);
+    const map = mapRef.current;
+    if (!map) return;
+    const apply = () => applyLocalStatus(map, localStatus);
+    if (map.isStyleLoaded()) apply();
+    else map.once('load', apply);
+  }, [localStatus]);
+
+  // Re-apply state/county coverage when coverageSummary changes; wait for style if needed.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const apply = () => {
+      applyStateCoverage(map, coverageSummary);
+      if (state) applyCountyCoverage(map, coverageSummary[state]?.counties ?? {});
+    };
+    if (map.isStyleLoaded()) apply();
+    else map.once('load', apply);
+  }, [coverageSummary]);
 
   // Apply level visibility when level changes
   useEffect(() => {
@@ -154,7 +209,7 @@ function BrowseMap(this: HTMLElement, {
   // Highlight and zoom to selected jurisdiction
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    if (!map?.isStyleLoaded()) return;
     if (prevSelectedOcdidRef.current) {
       map.setFeatureState(
         { source: STATE_SOURCE_ID, sourceLayer: 'local', id: prevSelectedOcdidRef.current },
@@ -162,6 +217,9 @@ function BrowseMap(this: HTMLElement, {
       );
     }
     if (selectedOcdid) {
+      setLevelBoth('local');
+      applyLevelVisibility(map, 'local');
+      applyLocalStatus(map, localStatusRef.current);
       map.setFeatureState(
         { source: STATE_SOURCE_ID, sourceLayer: 'local', id: selectedOcdid },
         { selected: true }

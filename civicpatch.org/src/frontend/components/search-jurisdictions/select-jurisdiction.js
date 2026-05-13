@@ -32,10 +32,9 @@ function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
 
   useEffect(() => {
     const normalized = (selected || '').toLowerCase();
-    if (normalized && normalized !== selectedState) {
-      setSelectedState(normalized);
-      setDefaultState(normalized);
-    }
+    if (normalized === selectedState) return;
+    setSelectedState(normalized);
+    if (normalized) setDefaultState(normalized);
   }, [selected]);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");

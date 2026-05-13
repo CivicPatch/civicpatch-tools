@@ -364,6 +364,7 @@ function renderAuthed(user, summary, currentPath, stateCode) {
     ${stateCode ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>` : ""}
     <a href="/" class="${active('/')}">Home</a>
     <a href="/blog" class="${active('/blog')}">Blog</a>
+    <a href="/blog/volunteer" class="${active('/blog/volunteer')}">Volunteer</a>
     ${user.permissions?.can_view_queue_page ? html`<a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>` : ""}
     ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues ${summary?.issues_errors ? html`<span class="nav-count nav-count--error">${summary.issues_errors}</span>` : ""}</a>` : ""}
     ${user.permissions?.can_view_reviews_page ? html`<a href="/review" class="${active('/review')}">Reviews</a>` : ""}
