@@ -53,7 +53,8 @@ services:
     networks:
       - civicpatch_net
     depends_on:
-      - civicpatch-org-db
+      civicpatch-org-db:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost', 8000), timeout=2); s.close()"]
       interval: 5s
@@ -74,6 +75,12 @@ services:
       - "127.0.0.1:8003:5432"
     networks:
       - civicpatch_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U civicpatch -d development_db"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
 
   civicpatch-org-redis:
     image: redis:alpine

@@ -39,7 +39,7 @@ run = """
 run = """
     curl -X POST "http://localhost:8000/api/admin/od_sync" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $SERVICE_API_KEY" \
+      -H "Authorization: service-api-key" \
       -d '{}'
 """
       #\
