@@ -59,7 +59,7 @@ def test_get_review_stats_fetches_from_db_on_cache_miss(client):
 
 @pytest.mark.unit
 def test_create_review_session_returns_session(client):
-    session = {"id": TEST_SESSION_ID, "state_code": "ca", "status": "active"}
+    session = {"id": TEST_SESSION_ID, "state_code": "ca"}
     with patch(
         "database.review_sessions.create_or_get_review_session",
         new_callable=AsyncMock,

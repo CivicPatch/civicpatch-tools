@@ -20,6 +20,15 @@ export const TEST_JURISDICTION_OCDID_3 =
 export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
+// Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
+// fresh/stale/gap/untracked colors deterministically against known OCD IDs.
+export const MAP_FIXTURES = {
+  fresh:     "ocd-jurisdiction/country:us/state:nj/place:e2e_map_fresh/government",
+  stale:     "ocd-jurisdiction/country:us/state:nj/place:e2e_map_stale/government",
+  gap:       "ocd-jurisdiction/country:us/state:nj/place:e2e_map_gap/government",
+  untracked: "ocd-jurisdiction/country:us/state:nj/place:e2e_map_untracked/government",
+};
+
 function makeClient() {
   return new Client({
     connectionString:
@@ -52,7 +61,7 @@ export async function seedE2eFixtures() {
     // Jurisdiction
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-       VALUES ($1, 'nj', 'active', '{"name":"E2E Test City","geoid":"0600001"}')
+       VALUES ($1, 'nj', 'current', '{"name":"E2E Test City","geoid":"0600001"}')
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [TEST_JURISDICTION_OCDID]
@@ -94,7 +103,7 @@ export async function seedE2eFixtures() {
     ]) {
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-         VALUES ($1, 'nj', 'active', $2)
+         VALUES ($1, 'nj', 'current', $2)
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
         [jOcdid, JSON.stringify({ name: jName, geoid: `060000${prNum}` })]
       );
@@ -116,6 +125,33 @@ export async function seedE2eFixtures() {
          ON CONFLICT (request_id) DO NOTHING`,
         [prId, reqId, prNum]
       );
+    }
+
+    // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
+    // The presence of a `url` and a `people` row drives the status the map paints.
+    const STALE_DAYS = 200;  // > FRESH_THRESHOLD_DAYS (90)
+    for (const [ocdid, name, hasUrl, peopleAgeDays] of [
+      [MAP_FIXTURES.fresh,     "E2E Map Fresh",     true,  0],
+      [MAP_FIXTURES.stale,     "E2E Map Stale",     true,  STALE_DAYS],
+      [MAP_FIXTURES.gap,       "E2E Map Gap",       true,  null],
+      [MAP_FIXTURES.untracked, "E2E Map Untracked", false, null],
+    ]) {
+      const data = hasUrl
+        ? { name, url: `https://example.test/${name.replace(/\s+/g, "-").toLowerCase()}` }
+        : { name };
+      await client.query(
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+         VALUES ($1, 'nj', 'current', $2)
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+        [ocdid, JSON.stringify(data)]
+      );
+      if (peopleAgeDays !== null) {
+        await client.query(
+          `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
+           VALUES ($1, '{"name":"E2E Person"}', 'current', NOW() - ($2 || ' days')::interval)`,
+          [ocdid, peopleAgeDays]
+        );
+      }
     }
   } finally {
     await client.end();
@@ -151,6 +187,10 @@ export async function teardownE2eFixtures() {
       await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);
       await client.query(`DELETE FROM requests WHERE id = $1`, [reqId]);
       await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [jOcdid]);
+    }
+    for (const ocdid of Object.values(MAP_FIXTURES)) {
+      await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [ocdid]);
+      await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [ocdid]);
     }
     await client.query(
       `DELETE FROM user_roles WHERE provider = $1 AND provider_user_id = $2`,

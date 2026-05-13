@@ -92,11 +92,12 @@ erDiagram
     review_sessions {
         uuid            id                      PK
         uuid            user_id                 FK
-        text            state_code              "idx"
+        text            state_code              "idx: unique (user_id, state_code) WHERE ended_at IS NULL"
         int             daily_goal
         int             current_entry_number    "default: 1"
         text_array      reviewed_ocdids         "default: {}"
         timestamptz     updated_at              "default: NOW()"
+        timestamptz_null ended_at
         timestamptz_null created_at
     }
 

@@ -51,7 +51,6 @@ function BrowseMap(this: HTMLElement, {
   const setupContainer = (el: Element | undefined) => {
     if (!el || mapRef.current) return;
     mapRef.current = createMap(el as HTMLElement);
-    (window as any)._map = mapRef.current; // DEBUG: remove after diagnosis
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
     mapRef.current.on('load', () => mapRef.current?.resize());
     mapRef.current.on('click', handleClick);
