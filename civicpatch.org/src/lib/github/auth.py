@@ -12,6 +12,10 @@ import lib.cache as cache_service
 
 logger = logging.getLogger(__name__)
 
+# Refresh cached installation tokens before GitHub actually expires them so a
+# token can't die mid-request.
+TOKEN_REFRESH_MARGIN_SECONDS = 300
+
 
 def _get_github_config():
     env = environment.get_env_vars()
@@ -65,7 +69,8 @@ async def get_github_token():
         return token
     logger.info("GitHub token not found in cache, fetching new token.")
     token, expires_at = await _fetch_github_token()
-    await cache_service.set_cached(cache_key, {"token": token}, expires_at)
+    ttl = max(1, int(expires_at - time.time()) - TOKEN_REFRESH_MARGIN_SECONDS)
+    await cache_service.set_cached(cache_key, {"token": token}, ttl)
     return token
 
 
@@ -124,7 +129,8 @@ async def get_jurisdictions_sync_token() -> str:
     if cached_token and "token" in cached_token:
         return cached_token["token"]
     token, expires_at = await _fetch_jurisdictions_sync_token()
-    await cache_service.set_cached(cache_key, {"token": token}, expires_at)
+    ttl = max(1, int(expires_at - time.time()) - TOKEN_REFRESH_MARGIN_SECONDS)
+    await cache_service.set_cached(cache_key, {"token": token}, ttl)
     return token
 
 

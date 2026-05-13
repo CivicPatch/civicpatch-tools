@@ -1,5 +1,4 @@
 import json
-import time
 
 from fastapi import APIRouter, HTTPException
 
@@ -35,9 +34,7 @@ def get_router():
                 status_code=500, detail=f"Error parsing dashboard.json: {e}"
             )
 
-        await cache_service.set_cached(
-            DASHBOARD_CACHE_KEY, data, time.time() + DASHBOARD_CACHE_TTL
-        )
+        await cache_service.set_cached(DASHBOARD_CACHE_KEY, data, DASHBOARD_CACHE_TTL)
         return {"data": data}
 
     return router

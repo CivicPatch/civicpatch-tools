@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import os
-import time
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -62,14 +61,13 @@ def get_router() -> APIRouter:
         cache_key = f"review_stats:{user.user_id}:{state_code}"
         cached = await cache_service.get_cached(cache_key)
         if cached:
-            cached.pop("expires_at", None)
             return {"data": cached}
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
         stats = await review_session_stats_db.get_review_stats(
             user.user_id, state_code
         )
-        await cache_service.set_cached(cache_key, stats, expires_at=time.time() + STATS_CACHE_TTL)
+        await cache_service.set_cached(cache_key, stats, ttl_seconds=STATS_CACHE_TTL)
         return {"data": stats}
 
     @router.post("")
