@@ -83,13 +83,13 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 
 ## Database (dev)
 
-The dev database is exposed on `127.0.0.1:8003`. Connect with:
+The dev database runs in the `civicpatch-org-db` Docker container (exposed on `127.0.0.1:8003`). Connect with:
 
 ```sh
-psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db
-# or via mise:
 mise run psql
 ```
+
+This execs `psql` inside the container, so no host postgres client is required — the container just needs to be running (`mise run dev` or `docker compose up -d civicpatch-org-db`).
 
 ## Migrations
 
