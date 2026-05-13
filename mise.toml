@@ -2,8 +2,6 @@
 pre-commit = "latest"
 python = "3.12"
 uv = "latest"
-postgres = "17.3"
-redis = "latest"
 node = "25.8"
 gh = "latest"
 gcloud = "latest"
@@ -257,7 +255,7 @@ docker compose run --rm civicpatch-org \
 
 [tasks.psql]
 description = "Open a psql shell against the dev database"
-run = "psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db"
+run = "docker compose exec civicpatch-org-db psql -U civicpatch -d development_db"
 
 [tasks.jurisdictions-tsv]
 description = "Dump jurisdictions table with flattened data column as TSV. Optionally filter by state: mise run jurisdictions-tsv -- tx"
@@ -267,7 +265,7 @@ FILTER=""
 if [ -n "$STATE" ]; then
   FILTER="WHERE state = '$STATE'"
 fi
-psql postgres://civicpatch:development_password@127.0.0.1:8003/development_db \
+docker compose exec -T civicpatch-org-db psql -U civicpatch -d development_db \
   --no-align --field-separator $'\\t' --tuples-only \
   -c "
     SELECT
