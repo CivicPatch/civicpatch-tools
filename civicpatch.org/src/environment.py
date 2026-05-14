@@ -27,6 +27,8 @@ OPTIONAL_ENV_VARS = [
     "APP_ENVIRONMENT",
     # Optional - needed for GitHub webhook verification
     "GITHUB_WEBHOOK_SECRET",
+    # Optional - needed for the blog-sync webhook (HMAC verification)
+    "BLOG_SYNC_WEBHOOK_SECRET",
     # Optional - needed for scraping
     "GOOGLE_SHEETS_SPREADSHEET_ID",
     "GOOGLE_SHEETS_PRIVATE_KEY_BASE64",
