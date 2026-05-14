@@ -41,12 +41,14 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onSt
           </div>
           <span class="review-page__ready-count">${Math.max(0, Math.min(stats.available_count ?? 0, dailyGoal) - (stats.today_resolved ?? 0))}</span>
           <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
-          <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
-          ${stats.today_resolved >= effectiveGoal ? html`
+          <span class="review-page__ready-sub">${stateCode ? html`to review · ${stats.available_count} available in ${stateCode.toUpperCase()}` : ""}</span>
+          ${!stateCode ? html`
+            <p class="review-page__goal-met">Select a state to start reviewing.</p>
+          ` : stats.today_resolved >= effectiveGoal ? html`
             <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
           ` : ""}
 ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!stateCode || stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </div>
       <stat-cards class="review-page__stat-cards" .stats=${[
