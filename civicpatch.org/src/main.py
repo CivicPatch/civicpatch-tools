@@ -3,6 +3,26 @@ import logging
 import os
 from contextlib import asynccontextmanager
 
+import lib.pubsub as pubsub_service
+import routers.api.admin as api_admin_router
+import routers.api.api_keys as api_keys_router
+import routers.api.coverage as api_coverage_router
+import routers.api.data as api_data_router
+import routers.api.jurisdictions as api_jurisdictions_router
+import routers.api.leaderboard as api_leaderboard_router
+import routers.api.notes as api_notes_router
+import routers.api.people as api_people_router
+import routers.api.pipeline_runs as api_pipeline_runs_router
+import routers.api.pull_requests as api_pull_requests_router
+import routers.api.requests as api_requests_router
+import routers.api.review_sessions as api_review_sessions_router
+import routers.api.summary as api_summary_router
+import routers.api.user as api_user_router
+import routers.webhooks.github as github_webhook_router
+from database.database import (
+    close_pool,
+    get_pool,
+)
 from fastapi import (
     Depends,
     FastAPI,
@@ -15,33 +35,12 @@ from fastapi.responses import StreamingResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
-import routers.api.admin as api_admin_router
+from frontend.vite import vite_asset, vite_css
+from lib.auth import get_optional_user, get_ws_user, require_route_access
 from routers.frontend import get_router as frontend_router
-import routers.webhooks.github as github_webhook_router
-import routers.api.api_keys as api_keys_router
-import routers.api.data as api_data_router
-import routers.api.pipeline_runs as api_pipeline_runs_router
-import routers.api.jurisdictions as api_jurisdictions_router
-import routers.api.people as api_people_router
-import routers.api.pull_requests as api_pull_requests_router
-import routers.api.requests as api_requests_router
-import routers.api.notes as api_notes_router
-import routers.api.review_sessions as api_review_sessions_router
-import routers.api.leaderboard as api_leaderboard_router
-import routers.api.summary as api_summary_router
-import routers.api.user as api_user_router
-import routers.api.coverage as api_coverage_router
-from database.database import (
-    close_pool,
-    get_pool,
-)
 from routers.sso import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
-import lib.pubsub as pubsub_service
 from schemas.ws import SubscribeMessage
-from lib.auth import get_optional_user, get_ws_user, require_route_access
-from frontend.vite import vite_asset, vite_css
 
 # Set up logger at the top of your file
 logger = logging.getLogger(__name__)
@@ -49,8 +48,6 @@ logging.basicConfig(level=logging.INFO)
 
 from fastapi import Request as FastAPIRequest
 from starlette.datastructures import URL
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.requests import Request as StarletteRequest
 
 
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
@@ -66,6 +63,7 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
+
 
 @asynccontextmanager
 async def lifespan(app):
@@ -230,6 +228,7 @@ app.include_router(
     prefix="/webhooks/github",
     tags=["webhooks"],
 )
+
 
 @app.get("/api/v1/me", tags=["auth"])
 async def get_me(user: Identity = Depends(get_optional_user)):
