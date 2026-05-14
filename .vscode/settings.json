@@ -13,4 +13,13 @@
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
 
   "terminal.integrated.gpuAcceleration": "off",
+  "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "editor.parameterHints.enabled": true,
+  "editor.hover.delay": 200,
+  "python.testing.pytestEnabled": true
 }
