@@ -24,7 +24,7 @@ from schemas.common import Identity, Role, RouteCategory
 from lib.auth import require_route_access
 
 
-def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
+def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> Optional[str]:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
     return storage_service.get_presigned_url_cached("civicpatch-debug", relative_path)

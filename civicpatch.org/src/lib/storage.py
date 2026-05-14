@@ -1,5 +1,6 @@
 import boto3
-from typing import BinaryIO
+import logging
+from typing import BinaryIO, Optional
 from botocore.client import Config
 from fastapi import UploadFile
 import zipfile
@@ -15,11 +16,14 @@ from datetime import datetime, timedelta
 from urllib.parse import urlparse
 import environment
 
+logger = logging.getLogger(__name__)
+
 EXPIRATION_ONE_DAY_IN_SECONDS = 86400
 
 # TODO: Move to redis
 _url_cache: dict[str, tuple[str, datetime]] = {}
 CACHE_TTL_SECONDS = 3600 * 12  # 12 hours (regenerate before expiry)
+_logged_storage_missing = False
 
 def get_client():
     env = environment.get_env_vars()
@@ -150,44 +154,44 @@ def get_presigned_url_cached(
     bucket_name: str,
     key: str,
     expiration: int = EXPIRATION_ONE_DAY_IN_SECONDS
-) -> str:
+) -> Optional[str]:
     """
     Get a presigned URL, using cache if available and not expired.
-    
-    Args:
-        bucket_name: The S3 bucket name
-        key: The object key
-        expiration: URL expiration time in seconds
-    
-    Returns:
-        Presigned URL for the object
+
+    Returns None when the storage client is not configured (e.g. local dev
+    without STORAGE_* env vars). Callers must tolerate None.
     """
     cache_key = f"{bucket_name}/{key}"
-    
-    # Check cache
+
     if cache_key in _url_cache:
         url, created_at = _url_cache[cache_key]
         if datetime.now() - created_at < timedelta(seconds=CACHE_TTL_SECONDS):
             return url
-    
-    # Generate new URL
-    storage_client = get_client()
+
+    try:
+        storage_client = get_client()
+    except ValueError as e:
+        global _logged_storage_missing
+        if not _logged_storage_missing:
+            logger.warning("Storage client unavailable, presigned URLs will be None: %s", e)
+            _logged_storage_missing = True
+        return None
+
     presigned_url = storage_client.generate_presigned_url(
         ClientMethod='get_object',
         Params={'Bucket': bucket_name, 'Key': key},
         ExpiresIn=expiration
     )
-    
-    # Cache it
+
     _url_cache[cache_key] = (presigned_url, datetime.now())
-    
+
     return presigned_url
 
 
 def get_presigned_url_from_object_url(
     object_url: str,
     expiration: int = EXPIRATION_ONE_DAY_IN_SECONDS
-) -> str:
+) -> Optional[str]:
     """
     Generate a presigned URL from a full storage object URL.
     

@@ -96,8 +96,7 @@ function StatesOverview({ stats }) {
       <div class="states-overview__heading">Coverage by state</div>
       <div role="listbox" aria-label="Select a state">
       ${states.map((stateData) => {
-        const { coverage, coverage_since_coverage_reference_date, scrapeable } = stateData.civicpatch.localities;
-        const scraped = coverage_since_coverage_reference_date || coverage;
+        const { coverage, scrapeable } = stateData.civicpatch.localities;
         return html`
           <div
             class="state-row"
@@ -109,10 +108,10 @@ function StatesOverview({ stats }) {
           >
             <span class="state-row__code">${stateData.state}</span>
             <div class="state-row__bar">
-              <div class="state-row__bar-fill" style="width: ${scrapeable ? ((scraped / scrapeable) * 100).toFixed(1) : 0}%"></div>
+              <div class="state-row__bar-fill" style="width: ${scrapeable ? ((coverage / scrapeable) * 100).toFixed(1) : 0}%"></div>
             </div>
-            <span class="state-row__pct">${percentLabel(scraped, scrapeable)}</span>
-            <span class="state-row__sub">${scraped} / ${scrapeable}</span>
+            <span class="state-row__pct">${percentLabel(coverage, scrapeable)}</span>
+            <span class="state-row__sub">${coverage} / ${scrapeable}</span>
           </div>
         `;
       })}

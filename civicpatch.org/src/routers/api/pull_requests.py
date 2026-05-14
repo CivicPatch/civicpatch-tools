@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 import os
-from typing import List
+from typing import List, Optional
 from shared.schemas import Official
 import shared.utils.data_path_utils
 import shared.utils.id_utils
@@ -36,7 +36,7 @@ from lib.auth import require_route_access
 logger = logging.getLogger(__name__)
 
 
-def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> str:
+def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> Optional[str]:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
     return storage_service.get_presigned_url_cached("civicpatch-debug", relative_path)
