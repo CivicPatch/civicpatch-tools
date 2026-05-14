@@ -106,7 +106,7 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
             inactive_ocdids.append(jurisdiction_ocdid)
             continue
         serialized_data = json.dumps(nested_jurisdiction_data)
-        jurisdictions.append((jurisdiction_ocdid, state, serialized_data, updated_at))
+        jurisdictions.append((jurisdiction_ocdid, state, "local", serialized_data, updated_at))
 
     logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
     if inactive_ocdids:

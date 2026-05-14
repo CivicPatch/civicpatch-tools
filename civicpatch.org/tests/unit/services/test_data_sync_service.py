@@ -166,6 +166,7 @@ async def test_sync_jurisdictions_by_ocdids_syncs_known_jurisdiction():
     written = bulk_update.call_args[0][0]
     assert len(written) == 1
     assert written[0][0] == NJ_HANOVER_OCDID
+    assert written[0][2] == "local"
     mark_inactive.assert_not_awaited()
 
 

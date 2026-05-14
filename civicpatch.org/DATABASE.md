@@ -20,6 +20,7 @@ erDiagram
         text            jurisdiction_ocdid  PK
         text            status
         text_null       state               "idx"
+        text            level               "idx, default: 'local'"
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
         timestamptz_null updated_at
     }

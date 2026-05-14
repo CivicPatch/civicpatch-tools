@@ -368,10 +368,11 @@ async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
 
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
-        INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, updated_at)
+        VALUES (%s, %s, %s, %s, %s)
         ON CONFLICT (jurisdiction_ocdid)
         DO UPDATE SET
+            level = EXCLUDED.level,
             data = EXCLUDED.data,
             updated_at = EXCLUDED.updated_at,
             status = 'current'
