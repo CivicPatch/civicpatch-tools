@@ -5,6 +5,8 @@ from pathlib import Path
 import frontmatter
 import markdown as md_lib
 
+from schemas.blog import BlogIndexEntry, BlogPost
+
 _BLOG_DIR = Path(__file__).parent.parent.parent / "blog"
 
 
@@ -18,37 +20,49 @@ def _date(filename: str) -> date:
     return date.fromisoformat(m.group(1))
 
 
-def _parse_post(path: Path) -> dict | None:
+def _parse_post(path: Path) -> BlogPost | None:
     try:
         post = frontmatter.load(str(path))
     except Exception:
         return None
     _md = md_lib.Markdown(extensions=["tables", "toc"], extension_configs={"toc": {"toc_depth": 2}})
-    _content_html = _md.convert(post.content)
-    _toc = getattr(_md, "toc", "")
-    return {
-        "slug": _slug(path.name),
-        "title": post.get("title", path.stem),
-        "date": _date(path.name),
-        "description": post.get("description", ""),
-        "author": post.get("author", "The CivicPatch Team"),
-        "draft": bool(post.get("draft", False)),
-        "updated_at": post.get("updated_at"),
-        "content_html": _content_html,
-        "toc_html": _toc if "<li>" in _toc else "",
-    }
+    content_html = _md.convert(post.content)
+    toc = getattr(_md, "toc", "")
+    return BlogPost.model_validate(
+        {
+            "slug": _slug(path.name),
+            "title": post.metadata.get("title", path.stem),
+            "date": _date(path.name),
+            "description": post.metadata.get("description", ""),
+            "author": post.metadata.get("author", "The CivicPatch Team"),
+            "draft": bool(post.metadata.get("draft", False)),
+            "updated_at": post.metadata.get("updated_at"),
+            "content_html": content_html,
+            "toc_html": toc if "<li>" in toc else "",
+        }
+    )
 
 
-def get_all_posts() -> list[dict]:
-    posts = []
+def _to_index_entry(post: BlogPost) -> BlogIndexEntry:
+    return BlogIndexEntry(
+        slug=post.slug,
+        title=post.title,
+        date=post.date,
+        description=post.description,
+        author=post.author,
+    )
+
+
+def get_all_posts() -> list[BlogIndexEntry]:
+    entries: list[BlogIndexEntry] = []
     for path in sorted(_BLOG_DIR.glob("*.md"), reverse=True):
         post = _parse_post(path)
-        if post and not post["draft"]:
-            posts.append(post)
-    return posts
+        if post and not post.draft:
+            entries.append(_to_index_entry(post))
+    return entries
 
 
-def get_post(slug: str) -> dict | None:
+def get_post(slug: str) -> BlogPost | None:
     for path in _BLOG_DIR.glob("*.md"):
         if _slug(path.name) == slug:
             return _parse_post(path)

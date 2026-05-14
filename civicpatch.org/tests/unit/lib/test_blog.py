@@ -1,5 +1,4 @@
 import pytest
-from pathlib import Path
 
 from lib.blog import _parse_post
 
@@ -14,9 +13,8 @@ def test_parse_post_includes_toc_html_for_post_with_headings(tmp_path):
     )
     result = _parse_post(post_file)
     assert result is not None
-    assert "toc_html" in result
-    assert "Section One" in result["toc_html"]
-    assert "Section Two" in result["toc_html"]
+    assert "Section One" in result.toc_html
+    assert "Section Two" in result.toc_html
 
 
 @pytest.mark.unit
@@ -28,7 +26,7 @@ def test_parse_post_toc_html_empty_when_no_headings(tmp_path):
     )
     result = _parse_post(post_file)
     assert result is not None
-    assert result["toc_html"] == ""
+    assert result.toc_html == ""
 
 
 @pytest.mark.unit
@@ -40,4 +38,4 @@ def test_parse_post_content_html_still_rendered(tmp_path):
     )
     result = _parse_post(post_file)
     assert result is not None
-    assert "<strong>world</strong>" in result["content_html"]
+    assert "<strong>world</strong>" in result.content_html
