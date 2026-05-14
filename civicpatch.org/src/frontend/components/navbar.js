@@ -343,13 +343,22 @@ function getTeamsTooltip(teams) {
   return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
 }
 
+function activeClass(currentPath, href) {
+  const isActive = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+  return isActive ? 'nav-link nav-link--active' : 'nav-link';
+}
+
+function renderPublicLinks(currentPath) {
+  return html`
+    <a href="/blog" class="${activeClass(currentPath, '/blog')}">Blog</a>
+    <a href="/blog/volunteer" class="${activeClass(currentPath, '/blog/volunteer')}">Volunteer</a>
+  `;
+}
+
 function renderAuthed(user, summary, currentPath, stateCode) {
   const teams = user.teams || [];
   const tooltip = getTeamsTooltip(teams);
-  const active = (href) => {
-    const isActive = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
-    return isActive ? 'nav-link nav-link--active' : 'nav-link';
-  };
+  const active = (href) => activeClass(currentPath, href);
   return html`
     <span
       class="user-info"
@@ -364,7 +373,6 @@ function renderAuthed(user, summary, currentPath, stateCode) {
     ${stateCode ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>` : ""}
     <a href="/" class="${active('/')}">Home</a>
     <a href="/blog" class="${active('/blog')}">Blog</a>
-    <a href="/blog/volunteer" class="${active('/blog/volunteer')}">Volunteer</a>
     ${user.permissions?.can_view_queue_page ? html`<a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>` : ""}
     ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues ${summary?.issues_errors ? html`<span class="nav-count nav-count--error">${summary.issues_errors}</span>` : ""}</a>` : ""}
     ${user.permissions?.can_view_reviews_page ? html`<a href="/review" class="${active('/review')}">Reviews</a>` : ""}
@@ -406,7 +414,10 @@ function Navbar({ user }) {
         </button>
         ${isAuthed
           ? renderAuthed(userData, summary, currentPath, stateCode)
-          : html`<a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>`}
+          : html`
+              ${renderPublicLinks(currentPath)}
+              <a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>
+            `}
       </div>
     </nav>
   `;

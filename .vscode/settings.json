@@ -10,5 +10,7 @@
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc][css][html][markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+
+  "terminal.integrated.gpuAcceleration": "off",
 }
