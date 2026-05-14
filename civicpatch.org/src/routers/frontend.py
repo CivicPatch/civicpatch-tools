@@ -65,7 +65,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     async def index(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         return templates.TemplateResponse(
-            "pages/index.html", {"request": request, "user": user, "posts": get_all_posts()[:3]}
+            "pages/index.html", {"request": request, "user": user, "posts": (await get_all_posts())[:3]}
         )
 
     @router.get("/queue", response_class=HTMLResponse, include_in_schema=False)
@@ -104,17 +104,21 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     async def blog_list(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         return templates.TemplateResponse(
-            "pages/blog-list.html", {"request": request, "user": user, "posts": get_all_posts()}
+            "pages/blog-list.html",
+            {"request": request, "user": user, "posts": await get_all_posts()},
+            headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=86400"},
         )
 
     @router.get("/blog/{slug}", response_class=HTMLResponse, include_in_schema=False)
     async def blog_post(request: Request, slug: str, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
-        post = get_post(slug)
+        post = await get_post(slug)
         if not post:
             raise HTTPException(status_code=404, detail="Post not found")
         return templates.TemplateResponse(
-            "pages/blog-post.html", {"request": request, "user": user, "post": post}
+            "pages/blog-post.html",
+            {"request": request, "user": user, "post": post},
+            headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=86400"},
         )
 
     @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)
