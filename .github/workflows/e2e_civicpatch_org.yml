@@ -9,6 +9,14 @@ on:
       - "e2e/**"
       - "shared/**"
       - "docker-compose.e2e.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "civicpatch.org/**"
+      - "e2e/**"
+      - "shared/**"
+      - "docker-compose.e2e.yml"
 
 permissions:
   contents: read
