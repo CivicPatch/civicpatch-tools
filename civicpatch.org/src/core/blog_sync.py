@@ -1,12 +1,20 @@
+import json
+import logging
 import re
 
 import bleach
 import frontmatter
 import markdown as md_lib
-from pydantic import ValidationError
+from pydantic import BaseModel, ValidationError
 
-from schemas.blog import BlogPost, BodyFrontmatter
-from schemas.webhooks.blog_sync import DiscussionPayload
+import lib.redis as redis_store
+from schemas.blog import BlogIndexEntry, BlogPost, BodyFrontmatter
+from schemas.webhooks.blog_sync import BlogSyncPayload, DiscussionPayload
+
+logger = logging.getLogger(__name__)
+
+INDEX_KEY = "blog:index"
+POST_KEY_PREFIX = "blog:post:"
 
 _ALLOWED_TAGS = [
     "p", "h1", "h2", "h3", "h4", "h5", "h6",
@@ -99,3 +107,72 @@ def discussion_to_post(discussion: DiscussionPayload) -> BlogPost | None:
         toc_html=toc_html,
         discussion_url=discussion.url,
     )
+
+
+class SyncResult(BaseModel):
+    synced: list[str]
+    skipped: list[tuple[int, str]] = []
+
+
+class SyncCollisionError(Exception):
+    def __init__(self, slug: str, numbers: list[int]):
+        super().__init__(f"slug '{slug}' claimed by discussions {numbers}")
+        self.slug = slug
+        self.numbers = numbers
+
+
+def _to_index_entry(post: BlogPost) -> BlogIndexEntry:
+    return BlogIndexEntry(
+        slug=post.slug,
+        title=post.title,
+        date=post.date,
+        description=post.description,
+        author=post.author,
+    )
+
+
+async def _existing_post_slugs() -> set[str]:
+    slugs: set[str] = set()
+    async for key in redis_store.redis_client.scan_iter(match=f"{POST_KEY_PREFIX}*"):
+        slugs.add(key.removeprefix(POST_KEY_PREFIX))
+    return slugs
+
+
+def _build_posts(payload: BlogSyncPayload) -> tuple[dict[str, BlogPost], list[tuple[int, str]]]:
+    posts: dict[str, BlogPost] = {}
+    skipped: list[tuple[int, str]] = []
+    slug_owner: dict[str, int] = {}
+    for d in payload.discussions:
+        if is_draft(d):
+            continue
+        post = discussion_to_post(d)
+        if post is None:
+            logger.info("blog sync: skipping discussion #%d (no frontmatter)", d.number)
+            skipped.append((d.number, "no frontmatter"))
+            continue
+        if post.slug in slug_owner:
+            raise SyncCollisionError(post.slug, [slug_owner[post.slug], d.number])
+        slug_owner[post.slug] = d.number
+        posts[post.slug] = post
+    return posts, skipped
+
+
+def _serialize_index(posts: dict[str, BlogPost]) -> str:
+    entries = sorted(
+        [_to_index_entry(p) for p in posts.values()],
+        key=lambda e: e.date,
+        reverse=True,
+    )
+    return json.dumps([e.model_dump(mode="json") for e in entries])
+
+
+async def sync_blog_posts(payload: BlogSyncPayload) -> SyncResult:
+    posts, skipped = _build_posts(payload)
+    new_slugs = set(posts.keys())
+    old_slugs = await _existing_post_slugs()
+    for slug, post in posts.items():
+        await redis_store.set(f"{POST_KEY_PREFIX}{slug}", post.model_dump_json())
+    for orphan in old_slugs - new_slugs:
+        await redis_store.delete(f"{POST_KEY_PREFIX}{orphan}")
+    await redis_store.set(INDEX_KEY, _serialize_index(posts))
+    return SyncResult(synced=sorted(posts.keys()), skipped=skipped)

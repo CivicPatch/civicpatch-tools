@@ -18,6 +18,7 @@ import routers.api.requests as api_requests_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
+import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
 from database.database import (
     close_pool,
@@ -226,6 +227,12 @@ app.include_router(
 app.include_router(
     github_webhook_router.get_router(),
     prefix="/webhooks/github",
+    tags=["webhooks"],
+)
+
+app.include_router(
+    blog_sync_webhook_router.get_router(),
+    prefix="/webhooks/blog-sync",
     tags=["webhooks"],
 )
 
