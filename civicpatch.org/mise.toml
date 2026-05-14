@@ -164,6 +164,68 @@ run = """
     -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
+[tasks.blog_sync]
+description = "Manually trigger the blog-sync webhook against local server (fetches Announcements from CivicPatch/civicpatch via gh)"
+run = """
+    set -e
+    gh api graphql -f query='
+        query {
+          repository(owner: "CivicPatch", name: "civicpatch") {
+            discussions(first: 100, categoryId: "DIC_kwDOR3Vpqs4C7eBa") {
+              nodes {
+                number title body createdAt updatedAt url
+                author { login }
+                labels(first: 10) { nodes { name } }
+              }
+            }
+          }
+        }' | jq '{
+            discussions: [.data.repository.discussions.nodes[] | {
+                number, title, body,
+                created_at: .createdAt, updated_at: .updatedAt,
+                author_login: .author.login,
+                labels: [.labels.nodes[].name],
+                url
+            }]
+        }' > /tmp/blog_sync_payload.json
+    SIG=$(openssl dgst -sha256 -hmac "blog-sync-webhook-secret" /tmp/blog_sync_payload.json | awk '{print $2}')
+    curl -fsS -X POST "http://localhost:8000/webhooks/blog-sync" \
+        -H "X-Signature-SHA256: sha256=$SIG" \
+        -H "Content-Type: application/json" \
+        --data @/tmp/blog_sync_payload.json
+"""
+
+[tasks.blog_sync_prod]
+description = "Trigger the blog-sync webhook against production (uses $BLOG_SYNC_WEBHOOK_SECRET from env)"
+run = """
+    set -e
+    gh api graphql -f query='
+        query {
+          repository(owner: "CivicPatch", name: "civicpatch") {
+            discussions(first: 100, categoryId: "DIC_kwDOR3Vpqs4C7eBa") {
+              nodes {
+                number title body createdAt updatedAt url
+                author { login }
+                labels(first: 10) { nodes { name } }
+              }
+            }
+          }
+        }' | jq '{
+            discussions: [.data.repository.discussions.nodes[] | {
+                number, title, body,
+                created_at: .createdAt, updated_at: .updatedAt,
+                author_login: .author.login,
+                labels: [.labels.nodes[].name],
+                url
+            }]
+        }' > /tmp/blog_sync_payload.json
+    SIG=$(openssl dgst -sha256 -hmac "$BLOG_SYNC_WEBHOOK_SECRET" /tmp/blog_sync_payload.json | awk '{print $2}')
+    curl -fsS -X POST "https://civicpatch.org/webhooks/blog-sync" \
+        -H "X-Signature-SHA256: sha256=$SIG" \
+        -H "Content-Type: application/json" \
+        --data @/tmp/blog_sync_payload.json
+"""
+
 [tasks.webp]
 description = "Convert a blog image to WebP. Usage: mise run webp <filename>"
 run = """
