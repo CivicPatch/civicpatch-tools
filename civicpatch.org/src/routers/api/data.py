@@ -1,12 +1,8 @@
-import json
+from fastapi import APIRouter
 
-from fastapi import APIRouter, HTTPException
-
+import database.dashboard as dashboard_db
 import lib.cache as cache_service
-import lib.github.api as github_service
 
-router = APIRouter()
-DASHBOARD_PATH = "scripts/track_progress/data/dashboard.json"
 DASHBOARD_CACHE_KEY = "dashboard_data"
 DASHBOARD_CACHE_TTL = 86400  # 1 day
 
@@ -16,25 +12,13 @@ def get_router():
 
     @router.get("/dashboard")
     async def get_dashboard_data():
-        # Try cache first
         cached = await cache_service.get_cached(DASHBOARD_CACHE_KEY)
         if cached:
             return {"data": cached}
 
-        # Fetch from GitHub if not cached
-        file_content = await github_service.get_github_file_contents(
-            DASHBOARD_PATH, ref="main"
-        )
-        if not file_content:
-            raise HTTPException(status_code=404, detail="Dashboard data not found")
-        try:
-            data = json.loads(file_content)
-        except Exception as e:
-            raise HTTPException(
-                status_code=500, detail=f"Error parsing dashboard.json: {e}"
-            )
-
-        await cache_service.set_cached(DASHBOARD_CACHE_KEY, data, DASHBOARD_CACHE_TTL)
+        data = await dashboard_db.get_dashboard()
+        if data and data.get("states"):
+            await cache_service.set_cached(DASHBOARD_CACHE_KEY, data, DASHBOARD_CACHE_TTL)
         return {"data": data}
 
     return router

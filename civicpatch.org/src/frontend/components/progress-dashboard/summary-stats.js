@@ -15,42 +15,39 @@ function percentLabel(n, d) {
 function SummaryStats({ stats, state = 'TX' }) {
   if (!stats || !stats.states || !stats.states[state]) return html``;
   const stateStats = stats.states[state];
-  const { coverage = 0, known = 1, scrapeable = 1, coverage_since_coverage_reference_date = 0 } = stateStats.civicpatch.localities;
-
-  const actualCoverage = coverage_since_coverage_reference_date || coverage;
+  const { coverage = 0, known = 1, scrapeable = 1 } = stateStats.civicpatch.localities;
 
   const statsList = [
     {
       key: 'coverage',
       label: 'Coverage',
-      value: percentLabel(actualCoverage, scrapeable),
-      sub: `${actualCoverage} of ${scrapeable} jurisdictions`,
-      copyText: `[coverage] ${percentLabel(actualCoverage, scrapeable)} (${actualCoverage} of ${scrapeable} jurisdictions)`,
+      value: percentLabel(coverage, scrapeable),
+      sub: `${coverage} of ${scrapeable} jurisdictions`,
+      copyText: `[coverage] ${percentLabel(coverage, scrapeable)} (${coverage} of ${scrapeable} jurisdictions)`,
       description: 'Percentage of scrapeable jurisdictions covered by CivicPatch. A jurisdiction is scrapeable if it has a website we can crawl.',
     },
     {
       key: 'total-coverage',
       label: 'Total Coverage',
-      value: percentLabel(actualCoverage, known),
-      sub: `${actualCoverage} of ${known} jurisdictions`,
-      copyText: `[total coverage] ${percentLabel(actualCoverage, known)} (${actualCoverage} of ${known} jurisdictions)`,
+      value: percentLabel(coverage, known),
+      sub: `${coverage} of ${known} jurisdictions`,
+      copyText: `[total coverage] ${percentLabel(coverage, known)} (${coverage} of ${known} jurisdictions)`,
       description: 'Percentage of all known jurisdictions covered, including those without scrapeable websites.',
     },
     {
       key: 'officials',
       label: 'Officials',
       value: stateStats.civicpatch.officials,
-      sub: `External: ${stateStats.external.officials}`,
-      copyText: `[officials] CivicPatch: ${stateStats.civicpatch.officials} / External: ${stateStats.external.officials}`,
-      description: 'Elected officials collected by CivicPatch for this state. External count comes from other datasets.',
+      copyText: `[officials] ${stateStats.civicpatch.officials}`,
+      description: 'Elected officials collected by CivicPatch for this state.',
     },
     {
       key: 'localities',
       label: 'Localities (all)',
       value: known,
-      sub: `${scrapeable} scrapeable · ${stateStats.external.localities} external`,
-      copyText: `[localities] ${known} total (${scrapeable} scrapeable, ${stateStats.external.localities} external)`,
-      description: 'Total known jurisdictions in the state. Scrapeable = those with websites we can target. External = tracked by other datasets.',
+      sub: `${scrapeable} scrapeable`,
+      copyText: `[localities] ${known} total (${scrapeable} scrapeable)`,
+      description: 'Total known jurisdictions in the state. Scrapeable = those with websites we can target.',
     },
   ];
 
@@ -71,9 +68,9 @@ function SummaryStats({ stats, state = 'TX' }) {
       }
     </style>
     <section>
-      <div class="progress-bar-container" title="Total Coverage: ${actualCoverage} of ${known} known localities">
-        <progress value="${actualCoverage}" max="${scrapeable}"></progress>
-        <small>${percentLabel(actualCoverage, scrapeable)} covered</small>
+      <div class="progress-bar-container" title="Total Coverage: ${coverage} of ${known} known localities">
+        <progress value="${coverage}" max="${scrapeable}"></progress>
+        <small>${percentLabel(coverage, scrapeable)} covered</small>
       </div>
       <stat-cards .stats=${statsList}></stat-cards>
     </section>
