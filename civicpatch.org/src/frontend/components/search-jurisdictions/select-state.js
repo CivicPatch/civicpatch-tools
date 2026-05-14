@@ -46,6 +46,7 @@ function CivSelectState({ selected }) {
 
   return html`
     <select .value=${effectiveSelected} @change=${handleChange}>
+      <option value="" ?selected=${effectiveSelected === ""}>— Select a state —</option>
       ${states.map(
         (state) =>
           html`<option value=${state.code} ?selected=${state.code === effectiveSelected}>${state.name}</option>`,

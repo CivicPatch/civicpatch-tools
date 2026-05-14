@@ -37,10 +37,10 @@ function BrowseMap(this: HTMLElement, {
 }: BrowseMapProps) {
   const mapRef = useRef<maplibregl.Map | null>(null);
   const prevSelectedOcdidRef = useRef<string | null>(null);
-  const [level, setLevel] = useState<DrillLevel>(state ? 'counties' : 'national');
+  const [level, setLevel] = useState<DrillLevel>('national');
   // levelRef keeps the click handler in sync — handleClick is registered once
   // and would otherwise capture a stale closure value of `level`.
-  const levelRef = useRef<DrillLevel>(state ? 'counties' : 'national');
+  const levelRef = useRef<DrillLevel>('national');
   const setLevelBoth = (l: DrillLevel) => { levelRef.current = l; setLevel(l); };
   // localStatusRef / coverageSummaryRef keep the click handler in sync — registered once.
   const localStatusRef = useRef<Record<string, string>>(localStatus);
@@ -259,7 +259,7 @@ function BrowseMap(this: HTMLElement, {
   return html`
     <div class="map-container" style="height:${height}">
       <div class="map-inner" style="height:100%" ${ref(setupContainer)}></div>
-      ${state ? html`<button class="map-reset-btn" title="Reset to national view" @click=${handleReset}>↩ Reset</button>` : ''}
+      ${level !== 'national' ? html`<button class="map-reset-btn" title="Reset to national view" @click=${handleReset}>↩ Reset</button>` : ''}
     </div>
   `;
 }
