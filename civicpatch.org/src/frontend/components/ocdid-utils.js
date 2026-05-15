@@ -41,3 +41,27 @@ export const jurisdictionOcdidToFriendly = jurisdiction_ocdid => {
 
   return toTitleCaseMap(placeValue) || jurisdiction_ocdid;
 };
+
+// Inverse of backend folder_to_jurisdiction_ocdid (shared/utils/id_utils.py).
+// Assumes /government output_type → "local" (only other entry in data.yml
+// is "meetings", which doesn't reach the homepage flow).
+export const jurisdictionOcdidToPath = jurisdiction_ocdid => {
+  if (!jurisdiction_ocdid) return "";
+  const parts = jurisdiction_ocdid.split("/");
+  if (parts.length < 5) return "";
+
+  const state = parts[2]?.split(":")[1];
+  if (!state) return "";
+
+  const middle = parts.slice(3, -1);
+  if (middle.length === 0) return "";
+
+  const segments = [];
+  for (const seg of middle) {
+    const [label, name] = seg.split(":");
+    if (!label || !name) return "";
+    segments.push(label === "county" ? `county_${name}` : `${label}_${name}`);
+  }
+
+  return `${state}/local/${segments.join("__")}`;
+};
