@@ -106,7 +106,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         return templates.TemplateResponse(
             "pages/blog-list.html",
             {"request": request, "user": user, "posts": await get_all_posts()},
-            headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=86400"},
         )
 
     @router.get("/blog/{slug}", response_class=HTMLResponse, include_in_schema=False)
@@ -118,7 +117,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         return templates.TemplateResponse(
             "pages/blog-post.html",
             {"request": request, "user": user, "post": post},
-            headers={"Cache-Control": "public, max-age=300, stale-while-revalidate=86400"},
         )
 
     @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)

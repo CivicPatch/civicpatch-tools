@@ -122,7 +122,6 @@ services:
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}
       DATABASE_HASH_KEY: ${DATABASE_HASH_KEY:-development_hash_key}
       SERVICE_API_KEY: "service-api-key"
-      BLOG_SYNC_WEBHOOK_SECRET: "blog-sync-webhook-secret"
       STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
       STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
