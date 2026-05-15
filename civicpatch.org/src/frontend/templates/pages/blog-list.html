@@ -5,7 +5,15 @@
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 <div class="blog-list">
-    <div class="civ-section-label">Updates</div>
+    <header class="blog-header">
+        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li aria-current="page">Blog</li>
+            </ol>
+        </nav>
+        <h1 class="blog-page-title">Blog</h1>
+    </header>
     {% if posts %}
         {% for post in posts %}
         <article class="blog-list__item">
