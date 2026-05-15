@@ -1,0 +1,18 @@
+[
+  {
+    "ocdid": "ocd-jurisdiction/country:us/state:co/place:trinidad/government",
+    "path": "co/local/place_trinidad"
+  },
+  {
+    "ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+    "path": "wa/local/place_seattle"
+  },
+  {
+    "ocdid": "ocd-jurisdiction/country:us/state:co/place:black_hawk/government",
+    "path": "co/local/place_black_hawk"
+  },
+  {
+    "ocdid": "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government",
+    "path": "il/local/county_dupage__place_naperville"
+  }
+]

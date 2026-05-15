@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import pytest
 from shared.utils.id_utils import (  # Replace `your_module` with the actual module name
     parse_jurisdiction_ocdid,
@@ -9,6 +12,10 @@ from shared.utils.id_utils import (  # Replace `your_module` with the actual mod
 )
 
 pytestmark = pytest.mark.unit
+
+_FIXTURE_PATH = (
+    Path(__file__).resolve().parents[4] / "shared" / "tests" / "fixtures" / "ocdid_paths.json"
+)
 
 
 # Mock class for JurisdictionId
@@ -83,6 +90,14 @@ def test_jurisdiction_ocdid_to_folder():
     )
     expected = "il/local/county_dupage__place_naperville"
     assert jurisdiction_ocdid_to_folder(jurisdiction_ocdid) == expected
+
+
+# Shared fixture also consumed by the frontend vitest suite
+# (civicpatch.org/src/frontend/tests/ocdid-utils.test.ts) — keeps the JS
+# jurisdictionOcdidToPath helper in sync with the Python implementation.
+@pytest.mark.parametrize("case", json.loads(_FIXTURE_PATH.read_text()))
+def test_jurisdiction_ocdid_to_folder_shared_fixture(case):
+    assert jurisdiction_ocdid_to_folder(case["ocdid"]) == case["path"]
 
 
 # Tests for make_git_branch

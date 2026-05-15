@@ -2,6 +2,7 @@ import { component, useEffect, useState, useRef } from "haunted";
 import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { jurisdictionOcdidToPath } from "../ocdid-utils.js";
 import "./select-state.js";
 
 function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
@@ -105,9 +106,8 @@ function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
   };
 
   const jurisdictionLink = () => {
-    if (!selectedJurisdiction || !jurisdictions.length) return "";
-    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
-    const path = jurisdiction_data?.jurisdiction_path;
+    if (!selectedJurisdiction) return "";
+    const path = jurisdictionOcdidToPath(selectedJurisdiction);
     return path ? `/${path}` : "";
   };
 
