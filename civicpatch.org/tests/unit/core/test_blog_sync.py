@@ -99,6 +99,14 @@ def test_sanitize_html_preserves_code_class_for_highlighting():
 
 
 @pytest.mark.unit
+def test_sanitize_html_preserves_heading_ids_for_toc_anchors():
+    html = '<h2 id="section-one">Section</h2><h3 id="sub">Sub</h3>'
+    result = sanitize_html(html)
+    assert 'id="section-one"' in result
+    assert 'id="sub"' in result
+
+
+@pytest.mark.unit
 def test_compute_slug_uses_frontmatter_when_set():
     fm = BodyFrontmatter(slug="volunteer")
     d = _make_discussion(number=42, title="How to Contribute")

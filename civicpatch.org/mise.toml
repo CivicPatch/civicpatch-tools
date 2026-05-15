@@ -192,7 +192,7 @@ run = """
     curl -fsS -X POST "http://localhost:8000/webhooks/blog-sync" \
         -H "X-Signature-SHA256: sha256=$SIG" \
         -H "Content-Type: application/json" \
-        --data @/tmp/blog_sync_payload.json
+        --data-binary @/tmp/blog_sync_payload.json
 """
 
 [tasks.blog_sync_prod]
@@ -223,7 +223,7 @@ run = """
     curl -fsS -X POST "https://civicpatch.org/webhooks/blog-sync" \
         -H "X-Signature-SHA256: sha256=$SIG" \
         -H "Content-Type: application/json" \
-        --data @/tmp/blog_sync_payload.json
+        --data-binary @/tmp/blog_sync_payload.json
 """
 
 [tasks.webp]
