@@ -878,6 +878,11 @@ dialog[open] {
 }
 
 .blog-post__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
   font-family: var(--pico-font-family-monospace);
   color: var(--civ-text-muted);
   font-size: var(--text-sm);
@@ -892,7 +897,7 @@ dialog[open] {
 }
 
 .blog-post__lead {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .blog-post__body {
@@ -925,6 +930,20 @@ dialog[open] {
   flex-shrink: 0;
   position: sticky;
   top: 1.5rem;
+}
+
+.blog-post__discuss {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--pico-font-family-monospace);
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+  text-decoration: none;
+}
+
+.blog-post__discuss:hover {
+  color: var(--civ-text);
 }
 
 .blog-post__toc-label {
