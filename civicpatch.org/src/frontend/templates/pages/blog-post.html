@@ -20,10 +20,25 @@ content %}
     {% if post.description %}
     <p class="blog-post__lead">{{ post.description }}</p>
     {% endif %}
-    <p class="blog-post__meta" aria-label="Published">
-      <time>{{ post.date.strftime('%B %-d, %Y') }}</time>
-      {% if post.author %} · {{ post.author }}{% endif %}
-    </p>
+    <div class="blog-post__meta">
+      <span>
+        <time datetime="{{ post.date.isoformat() }}" aria-label="Published">{{ post.date.strftime('%B %-d, %Y') }}</time>
+        {% if post.updated_at and post.updated_at != post.date %}
+          · Updated <time datetime="{{ post.updated_at.isoformat() }}">{{ post.updated_at.strftime('%B %-d, %Y') }}</time>
+        {% endif %}
+        {% if post.author %} · {{ post.author }}{% endif %}
+      </span>
+      {% if post.discussion_url %}
+      <a
+        href="{{ post.discussion_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="blog-post__discuss"
+      >
+        Discuss on GitHub <i class="fa-brands fa-github"></i>
+      </a>
+      {% endif %}
+    </div>
   </header>
 
   <div class="blog-post__layout">
@@ -38,17 +53,5 @@ content %}
 
     <div class="blog-post__body">{{ post.content_html | safe }}</div>
   </div>
-
-  {% if post.discussion_url %}
-  <div class="blog-post__comments">
-    <a
-      href="{{ post.discussion_url }}"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Discuss on GitHub <i class="fa-brands fa-github"></i>
-    </a>
-  </div>
-  {% endif %}
 </article>
 {% endblock %}
