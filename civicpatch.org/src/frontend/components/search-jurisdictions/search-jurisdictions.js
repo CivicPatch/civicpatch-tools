@@ -91,8 +91,8 @@ function SearchJurisdictions() {
 
         <div class="map-col">
           <browse-map
-            state=${selectedState || ''}
-            selected-ocdid=${selectedJurisdictionOcdid || ''}
+            .state=${selectedState || ''}
+            .selectedOcdid=${selectedJurisdictionOcdid || ''}
             .localStatus=${localStatus}
             .coverageSummary=${coverageSummary}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
