@@ -266,5 +266,5 @@ function BrowseMap(this: HTMLElement, {
 
 customElements.define(
   'browse-map',
-  component(BrowseMap as any, { useShadowDOM: false, observedAttributes: ['state', 'selected-ocdid'] })
+  component(BrowseMap as any, { useShadowDOM: false, observedAttributes: [] })
 );
