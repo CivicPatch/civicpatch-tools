@@ -47,6 +47,11 @@ OPTIONAL_ENV_VARS = [
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",
+
+    # Optional - needed for Supabase auth provider
+    "SUPABASE_URL",
+    "SUPABASE_SECRET_KEY",
+    "SUPABASE_PUBLISHABLE_KEY",
 ]
 
 def get_env_vars():

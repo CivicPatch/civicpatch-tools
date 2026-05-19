@@ -41,6 +41,11 @@ services:
       STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
       STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
+
+      # Optional; only needed for Supabase auth provider
+      SUPABASE_URL: "https://vclvvgolzzebiojevjsx.supabase.co"
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY}
     build:
       context: ..
       dockerfile: civicpatch.org/Dockerfile

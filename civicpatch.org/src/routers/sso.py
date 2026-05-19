@@ -6,13 +6,14 @@ from urllib.parse import unquote, urlparse
 
 import environment
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi_sso import GithubSSO
 
 import database.users as database
-from schemas.common import Identity
+from schemas.common import Identity, SupabaseCallbackRequest
 import lib.auth_session as session_service
 import lib.github.api as github_service
+import lib.supabase_auth as supabase_auth_service
 from lib.auth import get_optional_user
 
 
@@ -133,6 +134,27 @@ def get_router(is_production: bool) -> APIRouter:
 
         response = RedirectResponse(url=redirect_url, status_code=302)
         await session_service.create_session_cookies(response, openid, teams)
+        return response
+
+    @router.post("/supabase/callback", include_in_schema=False)
+    async def supabase_callback(body: SupabaseCallbackRequest):
+        try:
+            client = supabase_auth_service.get_supabase_client()
+        except ValueError as exc:
+            raise HTTPException(status_code=503, detail=str(exc))
+
+        try:
+            user = await supabase_auth_service.verify_jwt(client, body.access_token)
+        except ValueError as exc:
+            raise HTTPException(status_code=401, detail=str(exc))
+
+        teams: list[str] = []
+        await database.create_update_user(
+            user.provider, user.id, user.email, teams, user.display_name
+        )
+
+        response = JSONResponse(content={"data": {"authenticated": True}})
+        await session_service.create_session_cookies(response, user, teams)
         return response
 
     return router
