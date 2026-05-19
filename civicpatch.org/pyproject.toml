@@ -33,6 +33,7 @@ dependencies = [
     "markdown>=3.7,<4.0",
     "bleach>=6.3.0",
     "pymdown-extensions>=10.21.3",
+    "supabase (>=2.30.0,<3.0.0)",
 ]
 
 [dependency-groups]

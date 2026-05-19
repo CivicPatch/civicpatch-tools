@@ -57,6 +57,10 @@ class Identity(BaseModel):
     display_name: str | None = None
 
 
+class SupabaseCallbackRequest(BaseModel):
+    access_token: str
+
+
 class NoteResponse(BaseModel):
     id: str
     jurisdiction_ocdid: str
