@@ -113,6 +113,26 @@ erDiagram
         timestamptz_null resolved_at
     }
 
+    user_roles {
+        uuid            user_id     PK,FK
+        varchar         role        PK
+    }
+
+    api_keys {
+        int             id              PK
+        uuid            user_id         FK  "idx"
+        text            api_key_suffix
+        text            api_key_hash        "idx"
+        timestamptz_null created_at      "default: now()"
+        timestamptz_null revoked_at      "idx"
+    }
+
+    api_usage_limits {
+        int             id          PK
+        uuid            user_id     FK  "unique"
+        int             daily_limit
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
@@ -123,6 +143,9 @@ erDiagram
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"
     users ||--o{ notes : "user_id"
+    users ||--o{ user_roles : "user_id (ON DELETE CASCADE)"
+    users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
+    users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     review_sessions ||--o{ review_session_entries : "review_session_id"
 ```
 
@@ -132,3 +155,4 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
+- `user_roles`, `api_keys`, `api_usage_limits` all use `user_id` (UUID FK to `users.id`); the deprecated composite `(provider, provider_user_id)` shape was migrated out in migration 086
