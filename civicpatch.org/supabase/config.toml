@@ -1,0 +1,32 @@
+# Supabase project configuration for civicpatch.org.
+# Applied to the live project with:
+#   cd civicpatch.org && mise run supabase-push    (local, tags sender as "civicpatch [local]")
+#   or via .github/workflows/deploy_supabase.yml   (CI, tags as "civicpatch [test]" or "civicpatch")
+
+project_id = "civicpatch-org"
+
+# Send auth emails via Resend's SMTP relay. RESEND_API_KEY is injected at
+# push time by `infisical run` (see deploy_supabase.yml). EMAIL_SENDER_NAME
+# is set per environment: mise task default = "civicpatch [local]",
+# Infisical test = "civicpatch [test]", Infisical prod = "civicpatch".
+[auth.email.smtp]
+enabled = true
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(RESEND_API_KEY)"
+admin_email = "noreply@mail.civicpatch.org"
+sender_name = "env(EMAIL_SENDER_NAME)"
+
+# Magic Link template — fires for existing users on signInWithOtp.
+# Contains only {{ .Token }} so the email delivers the 6-digit code
+# (no magic-link URL), matching the FE's OTP-code flow.
+[auth.email.template.magic_link]
+subject = "Your civicpatch sign-in code"
+content_path = "./supabase/templates/magic_link.html"
+
+# Confirmation template — fires for brand-new emails on signInWithOtp
+# when shouldCreateUser is true.
+[auth.email.template.confirmation]
+subject = "Your civicpatch sign-in code"
+content_path = "./supabase/templates/confirmation.html"

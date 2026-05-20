@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% block title %}Sign in — civicpatch{% endblock %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/login.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/login.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<section class="login-page">
+  <h1>Sign in</h1>
+
+  <article>
+    <h3>Sign in with email</h3>
+    <civ-supabase-login
+      data-supabase-url="{{ supabase_url }}"
+      data-publishable-key="{{ supabase_publishable_key }}">
+    </civ-supabase-login>
+  </article>
+
+  <article>
+    <h3>Or sign in with GitHub</h3>
+    <a class="login-link" href="/api/v1/auth/github/login"><i class="fab fa-github"></i> Continue with GitHub</a>
+  </article>
+</section>
+{% endblock %}

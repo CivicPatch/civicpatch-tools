@@ -1,0 +1,111 @@
+name: Deploy Supabase config
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'civicpatch.org/supabase/**'
+  release:
+    types: [published]
+
+# Infisical project ID matches the one used by the infrastructure repo
+# (layer-3-deployments/scripts/deploy.sh). The following secrets must be
+# defined per env (test, prod) inside that project:
+#   - SUPABASE_ACCESS_TOKEN  — CLI auth for `supabase config push`
+#   - SUPABASE_PROJECT_REF   — project the config is pushed to
+#   - RESEND_API_KEY         — interpolated into config.toml at push time
+#                              (resolves `pass = "env(RESEND_API_KEY)"` in
+#                              [auth.email.smtp])
+env:
+  INFISICAL_PROJECT_ID: e1e3d235-5dd4-4dbd-af04-18b10bcd75b7
+
+jobs:
+  deploy-test:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: civicpatch.org
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Install Infisical CLI
+        run: |
+          curl -1sLf 'https://artifacts-cli.infisical.com/setup.deb.sh' | sudo -E bash
+          sudo apt-get install -y infisical
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}
+          tags: tag:ci
+
+      - name: Authenticate with Infisical
+        env:
+          INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
+          INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
+          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
+        run: |
+          INFISICAL_TOKEN=$(infisical login --method=universal-auth \
+            --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
+            --client-secret="$INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET" \
+            --domain="$INFISICAL_API_URL" \
+            --silent --plain)
+          echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Push to Supabase (test env)
+        env:
+          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
+        run: |
+          infisical run --projectId="$INFISICAL_PROJECT_ID" --env=test -- \
+            supabase config push --project-ref "$SUPABASE_PROJECT_REF"
+
+  deploy-prod:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: civicpatch.org
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Install Infisical CLI
+        run: |
+          curl -1sLf 'https://artifacts-cli.infisical.com/setup.deb.sh' | sudo -E bash
+          sudo apt-get install -y infisical
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}
+          tags: tag:ci
+
+      - name: Authenticate with Infisical
+        env:
+          INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
+          INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
+          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
+        run: |
+          INFISICAL_TOKEN=$(infisical login --method=universal-auth \
+            --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
+            --client-secret="$INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET" \
+            --domain="$INFISICAL_API_URL" \
+            --silent --plain)
+          echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Push to Supabase (prod env)
+        env:
+          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
+        run: |
+          infisical run --projectId="$INFISICAL_PROJECT_ID" --env=prod -- \
+            supabase config push --project-ref "$SUPABASE_PROJECT_REF"

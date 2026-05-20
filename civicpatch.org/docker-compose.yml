@@ -43,7 +43,7 @@ services:
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
 
       # Optional; only needed for Supabase auth provider
-      SUPABASE_URL: "https://vclvvgolzzebiojevjsx.supabase.co"
+      SUPABASE_URL: "https://fcrzkckicxxmicrcbxed.supabase.co"
       SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY}
     build:
@@ -62,7 +62,13 @@ services:
       civicpatch-org-db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('localhost', 8000), timeout=2); s.close()"]
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import socket; s=socket.create_connection(('localhost', 8000), timeout=2); s.close()",
+        ]
       interval: 5s
       timeout: 5s
       retries: 15
@@ -93,7 +99,7 @@ services:
     #expose:
     #  - "6379"
     ports:
-      - '6379:6379'
+      - "6379:6379"
     networks:
       - civicpatch_net
 

@@ -1,0 +1,132 @@
+{
+  "title": "Supabase auth integration",
+  "description": "Walkthrough of the email-OTP sign-in flow added alongside GitHub OAuth. Covers the front-end OTP form, the backend trust boundary, env/config wiring, and the supabase/ config-as-code surface that controls templates and SMTP. Built from commit 54406d880 (`Add supabase backend POC`) plus the supabase/ + workflow scaffolding work that followed.",
+  "steps": [
+    {
+      "title": "1. Where the user enters the flow",
+      "description": "The navbar grew a second login link next to GitHub. This is the only entry point — the rest of the tour is what happens after the user clicks here.\n\nThe two links coexist on purpose: GitHub OAuth and Supabase OTP are *sibling* auth providers, not a migration. The `(provider, provider_user_id)` key on the `users` table means a single human can have one row per provider.",
+      "file": "civicpatch.org/src/frontend/components/navbar.js",
+      "line": 420
+    },
+    {
+      "title": "2. The /login page route",
+      "description": "Click → browser hits `GET /login`. Server-side, we read the **publishable** key (safe to ship to a browser) and the project URL, then hand them to the template as Jinja variables.\n\nWhy server-render and not hardcode in JS? Because the keys differ per environment (test vs prod), and we don't want the frontend bundle to know — it just reads whatever the server injects.",
+      "file": "civicpatch.org/src/routers/frontend.py",
+      "line": 84
+    },
+    {
+      "title": "3. Config crosses to the client",
+      "description": "The template passes Supabase config as **data attributes on the component itself**, not as a global. This is the cleanest cross-boundary shape for two strings:\n\n- Colocated — config lives on the element that uses it; no `<script>` blob elsewhere in the template.\n- No globals — no `window.__SUPABASE__` pollution.\n- Declarative — reading the HTML tells you exactly what the component receives.\n- No editor false-positives — the JS parser never tries to parse Jinja inside a `<script>` block.\n\nWe considered a `<script type=\"application/json\">` block earlier; for two strings, data attributes are simpler and more idiomatic. JSON-script would only win if config grew into nested data.",
+      "file": "civicpatch.org/src/frontend/templates/pages/login.html",
+      "line": 13
+    },
+    {
+      "title": "4. Frontend asset entry",
+      "description": "Each page that needs its own JS bundle gets an entry in Vite's rollup config. `assets/login.ts` is the entry; Vite builds it into a hashed `.js` bundle and `vite_asset()` in the template resolves the hashed path at render time.",
+      "file": "civicpatch.org/src/frontend/vite.config.js",
+      "line": 17
+    },
+    {
+      "title": "5. Component reads its own config",
+      "description": "haunted passes the host element as the first argument to the renderer (see `haunted/lib/component.d.ts`). The component reads `host.dataset.supabaseUrl` and `host.dataset.publishableKey` — the data attributes set in step 3 — and constructs the Supabase client once via `useMemo`.\n\nTwo notable choices:\n\n1. **`useMemo` with `[]` deps.** The component function re-runs on every render (state change); we don't want a new client every keystroke. `useMemo` constructs once at mount, reuses thereafter.\n\n2. **Throw on missing attributes — loud failure.** If the template forgets to pass an attribute, the client construction throws at mount and the page crashes with a clear stack trace. The alternative (silently rendering a 'not configured' message) hides developer errors. We don't want that.",
+      "file": "civicpatch.org/src/frontend/components/supabase-login/supabase-login.ts",
+      "line": 10
+    },
+    {
+      "title": "6. Step 1 — request OTP",
+      "description": "Two-stage form built with `haunted` + `lit-html` (project convention — no raw DOM). `step` is `\"enter-email\"` initially; submitting calls `signInWithOtp`, which makes Supabase send the 6-digit code via the SMTP relay (see later steps for SMTP wiring). On success we flip `step` to `\"enter-code\"`.\n\nThe `shouldCreateUser: true` here means brand-new emails trigger Supabase's `confirmation` template; existing users trigger `magic_link`. We render both with `{{ .Token }}` only — no link, just the code.\n\nNote the handler reuses `client` from closure — constructed once at step 5, used many times here.",
+      "file": "civicpatch.org/src/frontend/components/supabase-login/supabase-login.ts",
+      "line": 33
+    },
+    {
+      "title": "7. Step 2 — verify OTP, POST to backend",
+      "description": "After the user enters the code, `verifyOtp` returns a session containing a JWT access token. The component then POSTs that token to our own backend at `/api/v1/auth/supabase/callback`.\n\nWhy hand the token to our own backend instead of letting Supabase's session live in the browser? Because authorization (roles, teams) lives in *our* DB, not Supabase. The JWT is the proof-of-identity; we then mint our own session cookie.\n\n`persistSession: false` on the client (step 5) ensures the Supabase SDK never writes to localStorage — only our own cookie holds the session.",
+      "file": "civicpatch.org/src/frontend/components/supabase-login/supabase-login.ts",
+      "line": 53
+    },
+    {
+      "title": "8. Request schema",
+      "description": "Every cross-boundary payload is a Pydantic model — no raw dicts. This one just carries the access_token; FastAPI binds the JSON body to it automatically via the parameter type annotation in the route.",
+      "file": "civicpatch.org/src/schemas/common.py",
+      "line": 60
+    },
+    {
+      "title": "9. The callback endpoint (the trust boundary)",
+      "description": "This is where the OTP flow joins the existing GitHub-OAuth path:\n\n1. Build a Supabase client (uses `SUPABASE_SECRET_KEY` — server-only, bypasses RLS, **never** sent to the browser)\n2. Verify the JWT — if it's bad, 401\n3. Upsert the user with `provider='supabase'` (sibling to `provider='github'`)\n4. Mint our own session cookie via the same `session_service` GitHub uses\n5. Return `{data: {authenticated: true}}` — the FE redirects on this\n\nThe authorization model is unchanged: Supabase says *who* you are, our DB says *what* you can do.",
+      "file": "civicpatch.org/src/routers/sso.py",
+      "line": 139
+    },
+    {
+      "title": "10. JWT verification (the `lib/` boundary)",
+      "description": "Wraps Supabase's blocking `get_user()` call in `asyncio.to_thread` so it doesn't stall the event loop. Returns a typed `SupabaseUser` — never a raw response object.\n\nThe `@property provider` returns the literal `\"supabase\"` so the callback can pass it to `create_update_user` without the caller having to know what string to use. Type contract owned by the lib, per the project's layering rule.",
+      "file": "civicpatch.org/src/lib/supabase_auth.py",
+      "line": 29
+    },
+    {
+      "title": "11. Supabase client factory",
+      "description": "Reads env via `environment.get_env_vars()` — not `os.environ` — per project convention. Raises `ValueError` if either var is missing, which the route handler catches and turns into a 503. This means: if you boot the app without configuring Supabase, you don't crash at startup; you just get a clean error on the one endpoint that needs it.",
+      "file": "civicpatch.org/src/lib/supabase_auth.py",
+      "line": 20
+    },
+    {
+      "title": "12. Three new optional env vars",
+      "description": "All three are **optional** — civicpatch boots fine without them, just with no Supabase login option. This matters because the GitHub-only deployment path should keep working unchanged.\n\n- `SUPABASE_URL` — public, hardcoded per-env in compose\n- `SUPABASE_PUBLISHABLE_KEY` — public (shipped to the browser via `window.__SUPABASE__`)\n- `SUPABASE_SECRET_KEY` — server-only (never logged, never sent to the FE)",
+      "file": "civicpatch.org/src/environment.py",
+      "line": 52
+    },
+    {
+      "title": "13. Dev wiring in docker-compose",
+      "description": "Dev compose hardcodes the test-project URL (it's not a secret — it gets shipped to every browser anyway) and pulls the two keys from your local `.env` via `${VAR}` interpolation.\n\nThe prod equivalent lives in the `infrastructure` repo at `layer-3-deployments/civicpatch-org/docker-compose.yml` — same pattern, prod project URL hardcoded there, keys pass through from `/etc/environment` (populated by Infisical).",
+      "file": "civicpatch.org/docker-compose.yml",
+      "line": 46
+    },
+    {
+      "title": "14. Python dependency",
+      "description": "`supabase-py` 2.30.0 — pinned at major version 2 because the API changed enough between 1.x and 2.x that an unintentional upgrade could break us. `uv lock` resolved the exact version.",
+      "file": "civicpatch.org/pyproject.toml",
+      "pattern": "supabase"
+    },
+    {
+      "title": "15. Tests — JWT verification",
+      "description": "Unit tests for the lib/ layer. Mocks the Supabase client at the boundary (`client.auth.get_user`) — not the underlying HTTP call. Covers: happy path, missing user in response, exception propagation, display-name fallback chain (`full_name` → `name` → `display_name`).",
+      "file": "civicpatch.org/tests/unit/lib/test_supabase_auth.py",
+      "line": 1
+    },
+    {
+      "title": "16. Tests — callback endpoint",
+      "description": "Route handler tests are thin per project convention — they verify the HTTP contract, not the JWT verification logic. The lib function is mocked at the import boundary; we just check that a 401 comes back on bad tokens and a 200 with the expected body shape comes back on good ones.",
+      "file": "civicpatch.org/tests/unit/routers/test_sso_supabase.py",
+      "line": 1
+    },
+    {
+      "title": "17. Config-as-code: Supabase project settings",
+      "description": "Everything below this file is *configuration of the Supabase project itself* — not application code. `config.toml` is the source of truth for: which email templates are used, what SMTP relay sends them, etc. Pushed to the live project via `supabase config push`.\n\nThe `[auth.email.smtp]` block routes auth emails through Resend's SMTP endpoint. `pass = \"env(RESEND_API_KEY)\"` is Supabase's native env-interpolation — the literal string gets committed; the real key is injected by `infisical run` at push time.",
+      "file": "civicpatch.org/supabase/config.toml",
+      "line": 1
+    },
+    {
+      "title": "18. Email templates",
+      "description": "Both templates render `{{ .Token }}` and nothing else, so users see only the 6-digit code — no magic-link URL. We chose code-only because the FE flow is two-stage (email → code input), and supporting both code-and-link would require handling the deep-link redirect.",
+      "file": "civicpatch.org/supabase/templates/magic_link.html",
+      "line": 1
+    },
+    {
+      "title": "19. Local push task",
+      "description": "`mise run supabase-push` is the human escape hatch for pushing config to a project from your laptop. Requires `supabase login` + `supabase link --project-ref <ref>` once.\n\nIn normal operation you don't run this — the GHA workflow (next step) handles it. The mise task exists for emergencies and one-off testing.",
+      "file": "civicpatch.org/mise.toml",
+      "pattern": "supabase-push"
+    },
+    {
+      "title": "20. Deploy workflow",
+      "description": "Two jobs: `deploy-test` on push to main when `civicpatch.org/supabase/**` changes; `deploy-prod` on a published release.\n\nThe Tailscale step is required — Infisical's universal-auth endpoint lives on your private tailnet. The Infisical step then injects `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, and `RESEND_API_KEY` into the `supabase config push` process. The literal `env(RESEND_API_KEY)` in `config.toml` resolves at that moment.",
+      "file": ".github/workflows/deploy_supabase.yml",
+      "line": 1
+    },
+    {
+      "title": "21. Pre-commit reminder",
+      "description": "Local-only nag. When you stage anything under `civicpatch.org/supabase/`, this hook prints a reminder that you're about to touch Supabase config — i.e. \"go check that the test project still works after this lands.\" It doesn't block; it just prints.\n\nThe shell script lives at `scripts/supabase_staged_reminder.sh`. The pre-commit framework runs it; we never wrote a raw `.git/hooks/pre-commit` (would conflict with `pre-commit install`).",
+      "file": ".pre-commit-config.yaml",
+      "pattern": "supabase-staged-reminder"
+    }
+  ]
+}

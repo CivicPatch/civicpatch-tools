@@ -226,6 +226,11 @@ run = """
         --data-binary @/tmp/blog_sync_payload.json
 """
 
+[tasks.supabase-push]
+description = "Push local supabase/ config to the linked Supabase project"
+env = { EMAIL_SENDER_NAME = "civicpatch [local]" }
+run = "supabase config push"
+
 [tasks.webp]
 description = "Convert a blog image to WebP. Usage: mise run webp <filename>"
 run = """

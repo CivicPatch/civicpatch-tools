@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@supabase/supabase-js": "^2.106.0",
     "ag-grid-community": "^35.1.0",
     "diff": "^8.0.3",
     "dompurify": "^3.3.3",

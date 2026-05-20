@@ -417,6 +417,7 @@ function Navbar({ user }) {
           : html`
               ${renderPublicLinks(currentPath)}
               <a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>
+              <a class="login-link" href="/login"><i class="fa-solid fa-envelope"></i> Sign in with email</a>
             `}
       </div>
     </nav>
