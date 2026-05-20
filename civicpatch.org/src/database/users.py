@@ -1,12 +1,12 @@
 import secrets
-from typing import List, cast
+from typing import cast
 
 from database.database import get_pool
 from environment import get_env_vars
 import lib.hash as hash_utils
 
 
-async def create_update_user(provider, provider_user_id, email, teams: List[str], display_name: str | None = None):
+async def upsert_user(provider, provider_user_id, email, display_name: str | None = None) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -15,25 +15,12 @@ async def create_update_user(provider, provider_user_id, email, teams: List[str]
             VALUES (%s, %s, %s, %s)
             ON CONFLICT (provider, provider_user_id)
             DO UPDATE SET email = EXCLUDED.email, display_name = EXCLUDED.display_name
+            RETURNING id::text
             """,
             (provider, provider_user_id, email, display_name),
         )
-        await cur.execute(
-            """
-            DELETE FROM user_roles
-            WHERE provider = %s AND provider_user_id = %s
-            """,
-            (provider, provider_user_id),
-        )
-        await cur.executemany(
-            """
-            INSERT INTO user_roles (provider, provider_user_id, role)
-            VALUES (%s, %s, %s)
-            ON CONFLICT (provider, provider_user_id, role)
-            DO NOTHING
-            """,
-            [(provider, provider_user_id, team) for team in teams],
-        )
+        row = await cur.fetchone()
+    return cast(str, row[0]) if row else ""
 
 
 async def create_api_key(provider, provider_user_id):

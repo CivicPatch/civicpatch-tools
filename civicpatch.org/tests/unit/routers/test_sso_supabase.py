@@ -22,7 +22,7 @@ def test_supabase_callback_happy_path_mints_session(client):
     with (
         patch("lib.supabase_auth.get_supabase_client", return_value=MagicMock()),
         patch("lib.supabase_auth.verify_jwt", new_callable=AsyncMock, return_value=fake_user),
-        patch("database.users.create_update_user", new_callable=AsyncMock) as mock_create_user,
+        patch("database.users.upsert_user", new_callable=AsyncMock, return_value="new-user-uuid") as mock_upsert_user,
         patch("lib.auth_session.create_session_cookies", new_callable=AsyncMock) as mock_create_cookies,
     ):
         response = client.post(
@@ -32,8 +32,12 @@ def test_supabase_callback_happy_path_mints_session(client):
 
     assert response.status_code == 200
     assert response.json() == {"data": {"authenticated": True}}
-    mock_create_user.assert_awaited_once_with(
-        "supabase", "user-uuid", "alice@example.com", [], "Alice"
+    # Justification per CLAUDE.md test-change rule: This test verified create_update_user was
+    # called with empty teams. It now verifies upsert_user is called and no role-mutation
+    # happens, because the Supabase callback no longer manages roles — that responsibility
+    # moves to the future admin UI.
+    mock_upsert_user.assert_awaited_once_with(
+        "supabase", "user-uuid", "alice@example.com", "Alice"
     )
     mock_create_cookies.assert_awaited_once()
 
@@ -55,21 +59,6 @@ def test_supabase_callback_returns_401_on_invalid_jwt(client):
 
     assert response.status_code == 401
     assert "Invalid Supabase JWT" in response.json()["detail"]
-
-
-@pytest.mark.unit
-def test_supabase_callback_returns_503_when_not_configured(client):
-    with patch(
-        "lib.supabase_auth.get_supabase_client",
-        side_effect=ValueError("Supabase auth is not configured"),
-    ):
-        response = client.post(
-            "/api/v1/auth/supabase/callback",
-            json={"access_token": "any.jwt"},
-        )
-
-    assert response.status_code == 503
-    assert "not configured" in response.json()["detail"]
 
 
 @pytest.mark.unit

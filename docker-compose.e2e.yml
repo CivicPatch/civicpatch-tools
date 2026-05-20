@@ -56,8 +56,6 @@ services:
       APP_ENVIRONMENT: "production"
       # GitHub vars — required to boot; injected by CI via E2E_ prefix
       GITHUB_APP_ID: ${E2E_GITHUB_APP_ID:-0}
-      GITHUB_APP_CLIENT_ID: ${E2E_GITHUB_APP_CLIENT_ID:-e2e-client-id}
-      GITHUB_APP_CLIENT_SECRET: ${E2E_GITHUB_APP_CLIENT_SECRET:-e2e-client-secret}
       GITHUB_APP_PRIVATE_KEY_BASE64: ${E2E_GITHUB_APP_PRIVATE_KEY_BASE64:-}
       GITHUB_APP_INSTALLATION_ID: ${E2E_GITHUB_APP_INSTALLATION_ID:-0}
     ports:

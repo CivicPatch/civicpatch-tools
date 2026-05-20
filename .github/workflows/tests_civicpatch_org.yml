@@ -60,10 +60,11 @@ jobs:
           CIVICPATCH_API_DB_URL: postgres://civicpatch:test_password@127.0.0.1:6001/test_db
           CIVICPATCH_API_DB_PASSWORD: test_password
           GITHUB_APP_ID: x
-          GITHUB_APP_CLIENT_ID: x
-          GITHUB_APP_CLIENT_SECRET: x
           GITHUB_APP_PRIVATE_KEY_BASE64: x
           GITHUB_APP_INSTALLATION_ID: x
+          SUPABASE_URL: x
+          SUPABASE_SECRET_KEY: x
+          SUPABASE_PUBLISHABLE_KEY: x
           INSTANCE_URL: x
           OPEN_DATA_REPO_URL: x
           MAINTAINER_EMAIL: x
@@ -79,10 +80,11 @@ jobs:
           CIVICPATCH_API_DB_URL: postgres://civicpatch:test_password@127.0.0.1:6001/test_db
           CIVICPATCH_API_DB_PASSWORD: test_password
           GITHUB_APP_ID: x
-          GITHUB_APP_CLIENT_ID: x
-          GITHUB_APP_CLIENT_SECRET: x
           GITHUB_APP_PRIVATE_KEY_BASE64: x
           GITHUB_APP_INSTALLATION_ID: x
+          SUPABASE_URL: x
+          SUPABASE_SECRET_KEY: x
+          SUPABASE_PUBLISHABLE_KEY: x
           INSTANCE_URL: x
           OPEN_DATA_REPO_URL: x
           MAINTAINER_EMAIL: x
