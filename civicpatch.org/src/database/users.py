@@ -32,10 +32,10 @@ async def create_api_key(provider, provider_user_id):
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO api_keys (provider, provider_user_id, api_key_hash, api_key_suffix)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO api_keys (user_id, api_key_hash, api_key_suffix)
+            SELECT id, %s, %s FROM users WHERE provider = %s AND provider_user_id = %s
             """,
-            (provider, provider_user_id, api_key_hash, api_key_suffix),
+            (api_key_hash, api_key_suffix, provider, provider_user_id),
         )
     return api_key
 
@@ -63,10 +63,12 @@ async def get_api_keys_for_user(provider, provider_user_id):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id, api_key_suffix, created_at, revoked_at FROM api_keys
-            WHERE provider_user_id = %s AND provider = %s
+            SELECT k.id, k.api_key_suffix, k.created_at, k.revoked_at
+            FROM api_keys k
+            JOIN users u ON u.id = k.user_id
+            WHERE u.provider = %s AND u.provider_user_id = %s
             """,
-            (provider_user_id, provider),
+            (provider, provider_user_id),
         )
         rows = await cur.fetchall()
     return [
@@ -81,14 +83,13 @@ async def get_user(provider, provider_user_id):
         await cur.execute(
             """
             SELECT
-                u.id,
+                u.id::text,
                 u.email,
                 u.created_at,
                 ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles,
                 u.display_name
             FROM users u
-            LEFT JOIN user_roles r
-                ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            LEFT JOIN user_roles r ON r.user_id = u.id
             WHERE u.provider_user_id = %s AND u.provider = %s
             GROUP BY u.id, u.email, u.created_at, u.display_name
             """,
@@ -98,7 +99,7 @@ async def get_user(provider, provider_user_id):
     if not row:
         return None
     return {
-        "id": str(row[0]),
+        "id": row[0],
         "email": row[1],
         "created_at": row[2],
         "teams": row[3],
@@ -113,10 +114,8 @@ async def get_user_by_api_key_id(api_key_id):
             """
             SELECT u.provider, u.provider_user_id
             FROM users u
-            JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
-            LEFT JOIN user_roles r ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            JOIN api_keys k ON u.id = k.user_id
             WHERE k.id = %s AND k.revoked_at IS NULL
-            GROUP BY u.provider, u.provider_user_id, u.email, u.created_at
             """,
             (api_key_id,),
         )
@@ -134,15 +133,15 @@ async def get_user_by_api_key(api_key):
         await cur.execute(
             """
             SELECT
-                u.id,
+                u.id::text,
                 u.provider,
                 u.provider_user_id,
                 u.email,
                 u.created_at,
                 ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
             FROM users u
-            JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
-            LEFT JOIN user_roles r ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            JOIN api_keys k ON u.id = k.user_id
+            LEFT JOIN user_roles r ON r.user_id = u.id
             WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
             GROUP BY u.id, u.provider, u.provider_user_id, u.email, u.created_at
             """,
@@ -152,7 +151,7 @@ async def get_user_by_api_key(api_key):
     if not row:
         return None
     return {
-        "id": str(row[0]),
+        "id": row[0],
         "provider": row[1],
         "provider_user_id": row[2],
         "email": row[3],
@@ -166,11 +165,11 @@ async def get_user_id_by_provider(provider: str, provider_user_id: str) -> str |
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id FROM users WHERE provider = %s AND provider_user_id = %s",
+            "SELECT id::text FROM users WHERE provider = %s AND provider_user_id = %s",
             (provider, provider_user_id),
         )
         row = await cur.fetchone()
-    return str(row[0]) if row else None
+    return cast(str, row[0]) if row else None
 
 
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
@@ -182,10 +181,10 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
                 ul.daily_limit,
                 COUNT(r.id) AS usage_count
             FROM api_usage_limits ul
-            LEFT JOIN users u ON u.provider = ul.provider AND u.provider_user_id = ul.provider_user_id
+            JOIN users u ON u.id = ul.user_id
             LEFT JOIN requests r ON r.requested_by_user_id = u.id
                 AND r.created_at >= NOW() - INTERVAL '24 hours'
-            WHERE ul.provider = %s AND ul.provider_user_id = %s
+            WHERE u.provider = %s AND u.provider_user_id = %s
             GROUP BY ul.daily_limit;
             """,
             (provider, provider_user_id),
@@ -201,10 +200,10 @@ async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_l
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO api_usage_limits (provider, provider_user_id, daily_limit)
-            VALUES (%s, %s, %s)
-            ON CONFLICT (provider, provider_user_id)
+            INSERT INTO api_usage_limits (user_id, daily_limit)
+            SELECT id, %s FROM users WHERE provider = %s AND provider_user_id = %s
+            ON CONFLICT (user_id)
             DO UPDATE SET daily_limit = EXCLUDED.daily_limit;
             """,
-            (provider, provider_user_id, daily_limit),
+            (daily_limit, provider, provider_user_id),
         )
