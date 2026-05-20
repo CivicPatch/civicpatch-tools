@@ -295,32 +295,6 @@ async def upsert_github_file(
         return False
 
 
-async def get_teams(user_oauth_token: str):
-    logger.debug("Fetching user teams from GitHub.")
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {user_oauth_token}",
-    }
-    teams_url = "https://api.github.com/user/teams"
-    async with httpx.AsyncClient() as client:
-        response = await client.get(teams_url, headers=headers)
-    if response.status_code == 200:
-        teams = response.json()
-        our_teams = [
-            team for team in teams if team["organization"]["login"] == "CivicPatch"
-        ]
-        team_names = [team["name"] for team in our_teams]
-        if team_names and "default" not in team_names:
-            team_names.append("default")
-        logger.info(
-            f"User is a member of {len(team_names)} CivicPatch teams: {team_names}"
-        )
-        return team_names
-    else:
-        logger.error(f"Error fetching teams: {response.status_code} {response.text}")
-        return []
-
-
 async def get_pull_request_context(
     request_id: str, jurisdiction_ocdid: str
 ) -> dict | None:

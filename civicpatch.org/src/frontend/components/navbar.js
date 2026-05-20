@@ -407,7 +407,7 @@ function Navbar({ user }) {
         CivicPatch
         <span class="nav-beta-badge">BETA</span>
       </a>
-      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout" @click=${onLogoutClick}><i class="fab fa-github"></i> Logout</a>` : ''}
+      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout" @click=${onLogoutClick}><i class="fa-solid fa-right-from-bracket"></i> Logout</a>` : ''}
       <div class="nav-links">
         <button class="theme-toggle" @click=${toggleTheme} aria-label="Toggle theme" title="${resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}">
           <i class="fa-solid ${resolvedTheme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>
@@ -416,8 +416,7 @@ function Navbar({ user }) {
           ? renderAuthed(userData, summary, currentPath, stateCode)
           : html`
               ${renderPublicLinks(currentPath)}
-              <a class="login-link" href="${API_URL}/api/v1/auth/github/login?redirect=${encodeURIComponent(window.location.href)}"><i class="fab fa-github"></i> Log in</a>
-              <a class="login-link" href="/login"><i class="fa-solid fa-envelope"></i> Sign in with email</a>
+              <a class="login-link" href="/login"><i class="fa-solid fa-envelope"></i> Sign in</a>
             `}
       </div>
     </nav>

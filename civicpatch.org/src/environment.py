@@ -7,8 +7,6 @@ import os
 REQUIRED_ENV_VARS = [
     # Required
     "GITHUB_APP_ID",
-    "GITHUB_APP_CLIENT_ID",
-    "GITHUB_APP_CLIENT_SECRET",
     "GITHUB_APP_PRIVATE_KEY_BASE64",
     "GITHUB_APP_INSTALLATION_ID",
     "CIVICPATCH_API_DB_URL",
@@ -21,6 +19,9 @@ REQUIRED_ENV_VARS = [
     "CIVICPATCH_API_DB_PASSWORD",
     "CIVICPATCH_API_DB_URL",
     "COOKIE_INSTANCE_URL",  # Only required in production, but we can just set it to .civicpatch.org in dev too for simplicity
+    "SUPABASE_URL",
+    "SUPABASE_SECRET_KEY",
+    "SUPABASE_PUBLISHABLE_KEY",
 ]
 
 OPTIONAL_ENV_VARS = [
@@ -47,11 +48,6 @@ OPTIONAL_ENV_VARS = [
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",
-
-    # Optional - needed for Supabase auth provider
-    "SUPABASE_URL",
-    "SUPABASE_SECRET_KEY",
-    "SUPABASE_PUBLISHABLE_KEY",
 ]
 
 def get_env_vars():

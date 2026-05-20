@@ -1,18 +1,12 @@
-import datetime
-import os
-import time
-from typing import Optional, cast
+from typing import Optional
 from urllib.parse import unquote, urlparse
 
-import environment
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
-from fastapi_sso import GithubSSO
 
 import database.users as database
 from schemas.common import Identity, SupabaseCallbackRequest
 import lib.auth_session as session_service
-import lib.github.api as github_service
 import lib.supabase_auth as supabase_auth_service
 from lib.auth import get_optional_user
 
@@ -42,7 +36,6 @@ def is_safe_redirect(url: str, allowed_hosts: list) -> bool:
         return False
 
     hostname = parsed.hostname or ""
-    # Use parsed.netloc-aware port check to avoid example.com:evil matching.
     if hostname in allowed_hosts:
         return True
     return any(
@@ -51,49 +44,13 @@ def is_safe_redirect(url: str, allowed_hosts: list) -> bool:
     )
 
 
-# https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 def get_router(is_production: bool) -> APIRouter:
-    env = environment.get_env_vars()
-    instance_url = env.get("INSTANCE_URL", "http://127.0.0.1:8000")
-    github_callback_url = f"{instance_url}/api/v1/auth/github/callback"
-
     if is_production:
         allowed_hosts = ["civicpatch.org", "*.civicpatch.org"]
     else:
         allowed_hosts = ["localhost"]
 
-    github_sso = GithubSSO(
-        client_id=env["GITHUB_APP_CLIENT_ID"],
-        client_secret=env["GITHUB_APP_CLIENT_SECRET"],
-        redirect_uri=github_callback_url,
-        scope=[
-            "read:user",
-            "user:email",
-            "read:org",
-        ],
-    )
-
     router = APIRouter()
-
-    @router.get("/{provider}/login", include_in_schema=False)
-    async def login(provider: str, request: Request, redirect: str = "/"):
-        match provider:
-            case "github":
-                sso = github_sso
-            case _:
-                raise HTTPException(
-                    status_code=400, detail=f"Unsupported provider: {provider}"
-                )
-
-        if is_safe_redirect(redirect, allowed_hosts):
-            redirect_url = redirect
-        else:
-            redirect_url = "/"
-
-        # Store redirect in session or pass via state parameter
-        async with sso:
-            # Pass redirect URL via OAuth state parameter
-            return await sso.get_login_redirect(state=redirect_url)
 
     @router.get("/logout", include_in_schema=False)
     async def logout(
@@ -109,52 +66,18 @@ def get_router(is_production: bool) -> APIRouter:
         )
         return response
 
-    @router.get("/{provider}/callback", include_in_schema=False)
-    async def login_callback(request: Request, provider: str, state: str = "/"):
-        match provider:
-            case "github":
-                sso = github_sso
-            case _:
-                raise HTTPException(status_code=400, detail="Unsupported provider")
-
-        async with sso:
-            openid = await sso.verify_and_process(request)
-            if not openid:
-                raise HTTPException(status_code=401, detail="Authentication failed")
-            access_token = sso.access_token
-
-        redirect_url = state if is_safe_redirect(state, allowed_hosts) else "/"
-        if access_token:
-            teams = await github_service.get_teams(access_token)
-        else:
-            teams = []
-        await database.create_update_user(
-            openid.provider, openid.id, openid.email, teams, openid.display_name
-        )
-
-        response = RedirectResponse(url=redirect_url, status_code=302)
-        await session_service.create_session_cookies(response, openid, teams)
-        return response
-
     @router.post("/supabase/callback", include_in_schema=False)
     async def supabase_callback(body: SupabaseCallbackRequest):
-        try:
-            client = supabase_auth_service.get_supabase_client()
-        except ValueError as exc:
-            raise HTTPException(status_code=503, detail=str(exc))
-
+        client = supabase_auth_service.get_supabase_client()
         try:
             user = await supabase_auth_service.verify_jwt(client, body.access_token)
         except ValueError as exc:
             raise HTTPException(status_code=401, detail=str(exc))
 
-        teams: list[str] = []
-        await database.create_update_user(
-            user.provider, user.id, user.email, teams, user.display_name
-        )
+        await database.upsert_user(user.provider, user.id, user.email, user.display_name)
 
         response = JSONResponse(content={"data": {"authenticated": True}})
-        await session_service.create_session_cookies(response, user, teams)
+        await session_service.create_session_cookies(response, user, teams=[])
         return response
 
     return router
