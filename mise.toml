@@ -6,12 +6,10 @@ node = "25.8"
 gh = "latest"
 gcloud = "latest"
 jq = "latest"
+supabase = "2.98.0"
 
 [env]
-_.file = [
-    "../civicpatch.env",
-    "../civicpatch.org.env"
-]
+_.file = ["../civicpatch.env", "../civicpatch.org.env"]
 
 [tasks.setup]
 run = "mise install && pre-commit install && pre-commit install --hook-type pre-push && uv sync --all-packages"
@@ -42,8 +40,8 @@ run = """
       -H "Authorization: service-api-key" \
       -d '{}'
 """
-      #\
-      # -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
+#\
+# -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
 
 [tasks.od_sync_prod]
 run = """

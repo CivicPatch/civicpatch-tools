@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+import environment
 from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
@@ -66,6 +67,22 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         user = _build_user_dict(identity)
         return templates.TemplateResponse(
             "pages/index.html", {"request": request, "user": user, "posts": (await get_all_posts())[:3]}
+        )
+
+    @router.get("/login", response_class=HTMLResponse, include_in_schema=False)
+    async def login_page(
+        request: Request, identity: Optional[Identity] = Depends(get_optional_user)
+    ):
+        user = _build_user_dict(identity)
+        env = environment.get_env_vars()
+        return templates.TemplateResponse(
+            "pages/login.html",
+            {
+                "request": request,
+                "user": user,
+                "supabase_url": env.get("SUPABASE_URL") or "",
+                "supabase_publishable_key": env.get("SUPABASE_PUBLISHABLE_KEY") or "",
+            },
         )
 
     @router.get("/queue", response_class=HTMLResponse, include_in_schema=False)

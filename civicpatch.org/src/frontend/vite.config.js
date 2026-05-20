@@ -14,6 +14,7 @@ export default defineConfig(({ command }) => ({
         issues: "./assets/issues.js",
         jurisdiction: "./assets/jurisdiction.js",
         progress: "./assets/progress.js",
+        login: "./assets/login.ts",
       },
     },
   },
