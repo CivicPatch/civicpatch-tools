@@ -1,0 +1,17 @@
+{
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "basic",
+  "reportMissingTypeStubs": false,
+  "reportCallInDefaultInitializer": "none",
+  "reportUnusedFunction": "none",
+  "reportUnusedCallResult": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownLambdaType": "none",
+  "reportAny": "none",
+  "reportExplicitAny": "none",
+  "reportImplicitOverride": "none",
+  "reportMissingParameterType": "none"
+}

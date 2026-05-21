@@ -1,7 +1,5 @@
 {
+  "extends": "../pyrightconfig.base.json",
   "extraPaths": ["src"],
-  "include": ["src"],
-  "pythonVersion": "3.12",
-  "typeCheckingMode": "basic",
-  "reportMissingTypeStubs": false
+  "include": ["src"]
 }
