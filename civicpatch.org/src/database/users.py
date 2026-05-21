@@ -20,7 +20,8 @@ async def upsert_user(provider, provider_user_id, email, display_name: str | Non
             (provider, provider_user_id, email, display_name),
         )
         row = await cur.fetchone()
-    return cast(str, row[0]) if row else ""
+    assert row, "upsert_user RETURNING returned no row"
+    return cast(str, row[0])
 
 
 async def create_api_key(provider, provider_user_id):

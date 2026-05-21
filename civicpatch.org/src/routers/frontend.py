@@ -26,11 +26,7 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
         "teams": identity.teams or [],
         "permissions": build_permissions(identity),
         "display_name": identity.display_name,
-        "avatar_url": (
-            f"https://avatars.githubusercontent.com/u/{identity.provider_user_id}"
-            if identity.provider == "github" and identity.provider_user_id
-            else None
-        ),
+        "avatar_url": None,
     }
 
 

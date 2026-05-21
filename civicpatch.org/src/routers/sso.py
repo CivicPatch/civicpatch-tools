@@ -3,6 +3,7 @@ from urllib.parse import unquote, urlparse
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
+from supabase import AsyncClient
 
 import database.users as database
 from schemas.common import Identity, SupabaseCallbackRequest
@@ -67,8 +68,10 @@ def get_router(is_production: bool) -> APIRouter:
         return response
 
     @router.post("/supabase/callback", include_in_schema=False)
-    async def supabase_callback(body: SupabaseCallbackRequest):
-        client = supabase_auth_service.get_supabase_client()
+    async def supabase_callback(
+        body: SupabaseCallbackRequest,
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+    ):
         try:
             user = await supabase_auth_service.verify_jwt(client, body.access_token)
         except ValueError as exc:

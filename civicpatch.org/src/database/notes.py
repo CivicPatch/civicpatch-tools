@@ -21,15 +21,9 @@ async def get_notes_for_jurisdiction(jurisdiction_ocdid: str, limit: int, offset
                 n.body,
                 n.user_id::text,
                 n.created_at,
-                CASE WHEN u.provider = 'github'
-                    THEN 'https://avatars.githubusercontent.com/u/' || u.provider_user_id
-                    ELSE NULL
-                END AS avatar_url,
+                NULL AS avatar_url,
                 u.display_name,
-                CASE WHEN u.provider = 'github'
-                    THEN 'https://github.com/' || u.display_name
-                    ELSE NULL
-                END AS profile_url
+                NULL AS profile_url
             FROM notes n
             LEFT JOIN users u ON u.id = n.user_id
             WHERE n.jurisdiction_ocdid = %s

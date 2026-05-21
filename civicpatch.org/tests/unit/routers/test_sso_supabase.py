@@ -4,7 +4,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from lib.supabase_auth import SupabaseUser
+from lib.supabase_auth import SupabaseUser, get_supabase_client
 from routers import sso as sso_router
 
 
@@ -12,6 +12,9 @@ from routers import sso as sso_router
 def client():
     app = FastAPI()
     app.include_router(sso_router.get_router(is_production=False), prefix="/api/v1/auth")
+    # Override the Supabase client dependency with a mock; the real client is
+    # only constructed in main.py's lifespan, which isn't used in these tests.
+    app.dependency_overrides[get_supabase_client] = lambda: MagicMock()
     return TestClient(app)
 
 
@@ -20,7 +23,6 @@ def test_supabase_callback_happy_path_mints_session(client):
     fake_user = SupabaseUser(id="user-uuid", email="alice@example.com", display_name="Alice")
 
     with (
-        patch("lib.supabase_auth.get_supabase_client", return_value=MagicMock()),
         patch("lib.supabase_auth.verify_jwt", new_callable=AsyncMock, return_value=fake_user),
         patch("database.users.upsert_user", new_callable=AsyncMock, return_value="new-user-uuid") as mock_upsert_user,
         patch("lib.auth_session.create_session_cookies", new_callable=AsyncMock) as mock_create_cookies,
@@ -44,13 +46,10 @@ def test_supabase_callback_happy_path_mints_session(client):
 
 @pytest.mark.unit
 def test_supabase_callback_returns_401_on_invalid_jwt(client):
-    with (
-        patch("lib.supabase_auth.get_supabase_client", return_value=MagicMock()),
-        patch(
-            "lib.supabase_auth.verify_jwt",
-            new_callable=AsyncMock,
-            side_effect=ValueError("Invalid Supabase JWT"),
-        ),
+    with patch(
+        "lib.supabase_auth.verify_jwt",
+        new_callable=AsyncMock,
+        side_effect=ValueError("Invalid Supabase JWT"),
     ):
         response = client.post(
             "/api/v1/auth/supabase/callback",
