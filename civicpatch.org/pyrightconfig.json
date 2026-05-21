@@ -1,8 +1,6 @@
 {
+  "extends": "../pyrightconfig.base.json",
   "extraPaths": ["src"],
   "include": ["src"],
-  "exclude": ["src/frontend"],
-  "pythonVersion": "3.12",
-  "typeCheckingMode": "basic",
-  "reportMissingTypeStubs": false
+  "exclude": ["src/frontend"]
 }
