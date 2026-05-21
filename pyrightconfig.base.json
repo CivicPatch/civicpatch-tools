@@ -1,6 +1,6 @@
 {
   "pythonVersion": "3.12",
-  "typeCheckingMode": "basic",
+  "typeCheckingMode": "standard",
   "reportMissingTypeStubs": false,
   "reportCallInDefaultInitializer": "none",
   "reportUnusedFunction": "none",
