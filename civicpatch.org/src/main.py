@@ -24,6 +24,7 @@ from database.database import (
     close_pool,
     get_pool,
 )
+from lib.supabase_auth import create_supabase_client
 from fastapi import (
     Depends,
     FastAPI,
@@ -69,6 +70,7 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
+    app.state.supabase = await create_supabase_client()
     yield
     await close_pool()
 
@@ -244,9 +246,6 @@ async def get_me(user: Identity = Depends(get_optional_user)):
     """
     if not user:
         return {"authenticated": False}
-    avatar_url = None
-    if user.provider == "github" and user.provider_user_id:
-        avatar_url = f"https://avatars.githubusercontent.com/u/{user.provider_user_id}"
     return {
         "authenticated": True,
         "provider": user.provider,
@@ -254,7 +253,7 @@ async def get_me(user: Identity = Depends(get_optional_user)):
         "email": user.email,
         "teams": getattr(user, "teams", None),
         "display_name": user.display_name,
-        "avatar_url": avatar_url,
+        "avatar_url": None,
     }
 
 

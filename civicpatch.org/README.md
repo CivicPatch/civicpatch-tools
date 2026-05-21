@@ -6,7 +6,7 @@ The backend API for civicpatch.org. Receives scrape results from `civicpatch`, c
 
 - Accepts ZIP payloads from `civicpatch` pipeline jobs and opens GitHub PRs to `open-data`
 - Manages jurisdiction and people data in a PostGIS/PostgreSQL database
-- Authenticates users via GitHub OAuth (GitHub App)
+- Authenticates users via Supabase email OTP
 - Exposes REST endpoints consumed by the `civicpatch` web UI
 - Receives GitHub webhook events to keep PR state in sync without polling
 
@@ -16,7 +16,7 @@ The backend API for civicpatch.org. Receives scrape results from `civicpatch`, c
 src/
   routers/
     api/            ← versioned API routes (one file per resource)
-    auth.py         ← GitHub OAuth routes
+    sso.py          ← Supabase email-OTP callback + logout
   webhooks/
     github.py       ← GitHub webhook receiver (pull_request events)
   services/         ← business logic (github_service, auth_service, etc.)
@@ -40,7 +40,8 @@ tests/
 |---------|---------|---------------|
 | PostgreSQL (PostGIS) | Primary data store | `localhost:8003` |
 | Redis | Session/cache store | `localhost:6379` |
-| GitHub App | OAuth + API access + webhooks | Contact maintainer for keys |
+| Supabase | Auth (email-OTP, JWT issuance, email delivery via Resend SMTP) | Cloud Supabase project |
+| GitHub App | Open-data PR creation, file reads, webhooks | Contact maintainer for keys |
 
 ## Environment variables
 
@@ -49,10 +50,11 @@ Most values have safe development defaults in `docker-compose.yml`. The only one
 | Variable | Required | Notes |
 |----------|----------|-------|
 | `GITHUB_APP_ID` | Yes | Contact maintainer |
-| `GITHUB_APP_CLIENT_ID` | Yes | Contact maintainer |
-| `GITHUB_APP_CLIENT_SECRET` | Yes | Contact maintainer |
 | `GITHUB_APP_PRIVATE_KEY_BASE64` | Yes | Contact maintainer |
 | `GITHUB_APP_INSTALLATION_ID` | Yes | Contact maintainer |
+| `SUPABASE_URL` | Yes | Your Supabase project URL (`https://<ref>.supabase.co`) |
+| `SUPABASE_PUBLISHABLE_KEY` | Yes | Safe to ship to browser (anon key) |
+| `SUPABASE_SECRET_KEY` | Yes | Server-only; never expose to FE |
 | `GITHUB_WEBHOOK_SECRET` | Optional | Required to receive webhook events |
 | `STORAGE_ENDPOINT` / `STORAGE_ACCESS_KEY_ID` / `STORAGE_SECRET_ACCESS_KEY` | Optional | Cloudflare R2, only for zip storage |
 
@@ -60,7 +62,21 @@ Create `../civicpatch.org.env` with these values. Everything else in `docker-com
 
 ## Permissions
 
-Roles are assigned via GitHub team membership. The `build_permissions()` function in `routers/frontend.py` maps roles to frontend capabilities; backend routes enforce the same boundaries via `require_route_access`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+Roles are granted manually by an admin after a user signs up via email OTP. The `build_permissions()` function in `routers/frontend.py` maps roles to frontend capabilities; backend routes enforce the same boundaries via `require_route_access`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+
+### Bootstrapping an admin
+
+There's no admin UI yet. To grant a role, run SQL directly against the DB:
+
+```sql
+INSERT INTO user_roles (user_id, role)
+SELECT id, 'admins' FROM users
+WHERE provider='supabase' AND email='<user-email>';
+```
+
+Valid roles: `default`, `contributors`, `maintainers`, `admins`. The user must have signed in via Supabase OTP at least once for the `users` row to exist. The session DB-fallback at `lib/auth.py` picks up the new role on the next request — no logout required.
+
+An admin CRUD UI is planned as a follow-up.
 
 | Feature | default | contributors | maintainers | admins |
 |---|:---:|:---:|:---:|:---:|
