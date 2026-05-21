@@ -1,2 +1,2 @@
 import "../components/navbar.js";
-import "../components/supabase-login/supabase-login.js";
+import "../components/email-login/email-login.js";

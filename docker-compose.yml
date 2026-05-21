@@ -17,6 +17,7 @@ services:
       service: civicpatch-org-redis
     networks:
       - civicpatch_net
+
   api-frontend:
     build:
       context: .
@@ -71,6 +72,12 @@ services:
     networks:
       - civicpatch_net
     restart: unless-stopped
+    develop:
+      watch:
+        - path: ./worker/src
+          action: restart
+        - path: ./shared/src/shared
+          action: restart
 
   # ── Temporal ───────────────────────────────────────────────────────────────
   temporal-postgres:

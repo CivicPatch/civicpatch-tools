@@ -1,0 +1,57 @@
+/* Co-located styles for <civ-email-login>. Uses Pico CSS custom properties
+ * so the form matches the rest of the site's theme (light/dark variants). */
+
+civ-email-login {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+}
+
+.email-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pico-spacing, 1rem);
+}
+
+.email-login__form label {
+  font-weight: 500;
+  margin-bottom: calc(var(--pico-spacing, 1rem) * -0.5);
+  text-align: left;
+}
+
+.email-login__form input {
+  font-family: var(--pico-font-family);
+}
+
+.email-login__form input:disabled {
+  background-color: var(--pico-muted-background-color);
+  color: var(--pico-muted-color);
+  cursor: not-allowed;
+}
+
+.email-login__form button[type="submit"] {
+  margin-top: 0.25rem;
+}
+
+/* Layered on top of .btn-ghost (in styles.css) — only overrides the bits
+ * btn-ghost leaves alone: positioning, font size, and the muted→default
+ * color hover that matches the navbar's .login-link pattern. */
+button.email-login__reset {
+  align-self: flex-start;
+  margin: 0 0 0.25rem;
+  font-size: 0.85rem;
+  color: var(--pico-muted-color);
+  transition: color 0.15s ease;
+}
+button.email-login__reset:hover:not(:disabled) {
+  color: var(--pico-color);
+}
+
+.email-login__error {
+  color: var(--pico-del-color, #c0392b);
+  background-color: var(--pico-muted-background-color);
+  border-left: 3px solid currentColor;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--pico-border-radius);
+  font-size: var(--text-sm);
+}

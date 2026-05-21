@@ -1,18 +1,17 @@
-from typing import Optional
 from urllib.parse import unquote, urlparse
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse, RedirectResponse
-from supabase import AsyncClient
-
 import database.users as database
-from schemas.common import Identity, SupabaseCallbackRequest
 import lib.auth_session as session_service
 import lib.supabase_auth as supabase_auth_service
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import JSONResponse, RedirectResponse
 from lib.auth import get_optional_user
+from schemas.common import Identity, SupabaseCallbackRequest
+
+from supabase import AsyncClient
 
 
-def is_safe_redirect(url: str, allowed_hosts: list) -> bool:
+def is_safe_redirect(url: str, allowed_hosts: list[str]) -> bool:
     """Check if the redirect URL is safe (relative URL or allowed host)."""
     if not url or "\x00" in url:
         return False
@@ -56,7 +55,7 @@ def get_router(is_production: bool) -> APIRouter:
     @router.get("/logout", include_in_schema=False)
     async def logout(
         redirect: str = "/",
-        user: Optional[Identity] = Depends(get_optional_user),
+        user: Identity | None = Depends(get_optional_user),
     ):
         redirect_url = redirect if is_safe_redirect(redirect, allowed_hosts) else "/"
         response = RedirectResponse(url=redirect_url)
@@ -77,7 +76,9 @@ def get_router(is_production: bool) -> APIRouter:
         except ValueError as exc:
             raise HTTPException(status_code=401, detail=str(exc))
 
-        await database.upsert_user(user.provider, user.id, user.email, user.display_name)
+        await database.upsert_user(
+            user.provider, user.id, user.email, user.display_name
+        )
 
         response = JSONResponse(content={"data": {"authenticated": True}})
         await session_service.create_session_cookies(response, user, teams=[])
