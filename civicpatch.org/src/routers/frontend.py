@@ -43,6 +43,7 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_cancel_job": Role.ADMINS in teams,
         "can_write_config": Role.MAINTAINERS in teams,
         "can_write_global_config": Role.ADMINS in teams,
+        "can_manage_roles": Role.ADMINS in teams,
     }
 
 
@@ -97,6 +98,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_view_issues_page"]:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
+
+    @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
+    async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
+            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+        return templates.TemplateResponse("pages/admin.html", {"request": request, "user": user})
 
     @router.get("/progress", response_class=HTMLResponse, include_in_schema=False)
     async def progress_page(request: Request):

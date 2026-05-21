@@ -1,0 +1,104 @@
+.admin-page {
+  padding: 1rem 1.25rem;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.admin-page__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.admin-page__status {
+  font-size: 0.9rem;
+  color: var(--pico-muted-color);
+  margin: 0.5rem 0;
+}
+
+.admin-page__error {
+  color: var(--pico-del-color);
+}
+
+.admin-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-users-table th,
+.admin-users-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.admin-users-table th {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--pico-muted-color);
+}
+
+.admin-users-table__self-tag {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+  font-family: var(--pico-font-family-monospace);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--pico-muted-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  vertical-align: middle;
+}
+
+.admin-users-table__role-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.admin-users-table__role-cell input[type="checkbox"] {
+  margin: 0;
+}
+
+.admin-users-table__row-status {
+  font-size: 0.8rem;
+  color: var(--pico-muted-color);
+  margin-left: 0.5rem;
+}
+
+.admin-users-table__row-status--error {
+  color: var(--pico-del-color);
+}
+
+.admin-users-table__row-status--saved {
+  color: var(--pico-ins-color, #4caf50);
+}
+
+.admin-users-table__save-btn {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.85rem;
+  border: 1.5px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: transparent;
+  color: var(--pico-color);
+  cursor: pointer;
+}
+
+.admin-users-table__save-btn:hover:not(:disabled) {
+  border-color: var(--pico-color);
+}
+
+.admin-users-table__save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
