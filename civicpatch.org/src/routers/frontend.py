@@ -6,7 +6,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-import environment
 from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
 from schemas.common import Identity, Role
@@ -70,16 +69,11 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, identity: Optional[Identity] = Depends(get_optional_user)
     ):
         user = _build_user_dict(identity)
-        env = environment.get_env_vars()
         return templates.TemplateResponse(
             "pages/login.html",
             {
                 "request": request,
                 "user": user,
-                # PUBLIC overrides URL when set (local-dev separates browser vs
-                # in-container hostnames); in prod only SUPABASE_URL is set.
-                "supabase_url": env.get("SUPABASE_URL_PUBLIC") or env.get("SUPABASE_URL") or "",
-                "supabase_publishable_key": env.get("SUPABASE_PUBLISHABLE_KEY") or "",
             },
         )
 

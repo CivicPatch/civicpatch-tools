@@ -21,7 +21,6 @@ REQUIRED_ENV_VARS = [
     "COOKIE_INSTANCE_URL",  # Only required in production, but we can just set it to .civicpatch.org in dev too for simplicity
     "SUPABASE_URL",
     "SUPABASE_SECRET_KEY",
-    "SUPABASE_PUBLISHABLE_KEY",
 ]
 
 OPTIONAL_ENV_VARS = [
@@ -48,11 +47,6 @@ OPTIONAL_ENV_VARS = [
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",
-
-    # Browser-perspective Supabase URL. Only set in local dev (where browser and
-    # in-container backend have different views of the same Supabase instance);
-    # in prod the FE falls back to SUPABASE_URL.
-    "SUPABASE_URL_PUBLIC",
 ]
 
 def get_env_vars():

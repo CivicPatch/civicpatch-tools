@@ -57,8 +57,13 @@ class Identity(BaseModel):
     display_name: str | None = None
 
 
-class SupabaseCallbackRequest(BaseModel):
-    access_token: str
+class RequestOtpRequest(BaseModel):
+    email: str
+
+
+class VerifyOtpRequest(BaseModel):
+    email: str
+    code: str
 
 
 class NoteResponse(BaseModel):

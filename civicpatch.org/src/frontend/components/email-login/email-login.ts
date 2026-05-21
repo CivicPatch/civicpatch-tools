@@ -1,24 +1,31 @@
-import { component, useMemo, useState } from "haunted";
+import { component, useState } from "haunted";
 import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
-import { createClient } from "@supabase/supabase-js";
 import { config } from "../../assets/config.js";
 import "./email-login.css";
 
 type Step = "enter-email" | "enter-code";
 
-function EmailLogin(host: HTMLElement): TemplateResult {
-  const client = useMemo(() => {
-    const url = host.dataset.supabaseUrl;
-    const publishableKey = host.dataset.publishableKey;
-    if (!url || !publishableKey) {
-      throw new Error("civ-email-login: missing required data attributes");
-    }
-    return createClient(url, publishableKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-  }, []);
+async function postJson(path: string, body: unknown): Promise<Response> {
+  return fetch(`${config.apiUrl}${path}`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
 
+async function errorDetail(response: Response, fallback: string): Promise<string> {
+  try {
+    const data = await response.json();
+    if (typeof data?.detail === "string") return data.detail;
+  } catch {
+    /* response wasn't JSON; fall through */
+  }
+  return fallback;
+}
+
+function EmailLogin(): TemplateResult {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [step, setStep] = useState<Step>("enter-email");
@@ -31,12 +38,11 @@ function EmailLogin(host: HTMLElement): TemplateResult {
     if (!email) return;
     setBusy(true);
     try {
-      const { error } = await client.auth.signInWithOtp({
-        email,
-        options: { shouldCreateUser: true },
-      });
-      if (error) {
-        setErrorMessage(error.message);
+      const response = await postJson("/api/v1/auth/supabase/request-otp", { email });
+      if (!response.ok) {
+        setErrorMessage(
+          await errorDetail(response, `Could not send code (${response.status})`)
+        );
         return;
       }
       setStep("enter-code");
@@ -51,31 +57,11 @@ function EmailLogin(host: HTMLElement): TemplateResult {
     if (!code) return;
     setBusy(true);
     try {
-      const { data, error } = await client.auth.verifyOtp({
-        email,
-        token: code,
-        type: "email",
-      });
-      if (error) {
-        setErrorMessage(error.message);
-        return;
-      }
-      const accessToken = data.session?.access_token;
-      if (!accessToken) {
-        setErrorMessage("Verification returned no access token");
-        return;
-      }
-      const response = await fetch(
-        `${config.apiUrl}/api/v1/auth/supabase/callback`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ access_token: accessToken }),
-        }
-      );
+      const response = await postJson("/api/v1/auth/supabase/verify-otp", { email, code });
       if (!response.ok) {
-        setErrorMessage(`Server rejected the sign-in (${response.status})`);
+        setErrorMessage(
+          await errorDetail(response, `Verification failed (${response.status})`)
+        );
         return;
       }
       window.location.href = "/";

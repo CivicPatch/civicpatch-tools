@@ -10,132 +10,126 @@
     },
     {
       "title": "2. The /login page route",
-      "description": "Click → browser hits `GET /login`. Server-side, we read the **publishable** key (safe to ship to a browser) and the project URL, then hand them to the template as Jinja variables.\n\nWhy server-render and not hardcode in JS? Because the keys differ per environment (test vs prod), and we don't want the frontend bundle to know — it just reads whatever the server injects.",
+      "description": "Click → browser hits `GET /login`. Server-side, the route just renders the template — no Supabase config gets passed in. The page itself is static; all the auth work happens via `fetch()` calls from the rendered component to the backend.\n\n(Earlier versions of this codebase passed `supabase_url` / `supabase_publishable_key` to the template so the FE could call Supabase directly. That changed when auth moved fully behind the backend.)",
       "file": "civicpatch.org/src/routers/frontend.py",
-      "line": 84
+      "line": 68
     },
     {
-      "title": "3. Config crosses to the client",
-      "description": "The template passes Supabase config as **data attributes on the component itself**, not as a global. This is the cleanest cross-boundary shape for two strings:\n\n- Colocated — config lives on the element that uses it; no `<script>` blob elsewhere in the template.\n- No globals — no `window.__SUPABASE__` pollution.\n- Declarative — reading the HTML tells you exactly what the component receives.\n- No editor false-positives — the JS parser never tries to parse Jinja inside a `<script>` block.\n\nWe considered a `<script type=\"application/json\">` block earlier; for two strings, data attributes are simpler and more idiomatic. JSON-script would only win if config grew into nested data.",
-      "file": "civicpatch.org/src/frontend/templates/pages/login.html",
-      "line": 13
-    },
-    {
-      "title": "4. Frontend asset entry",
+      "title": "3. Frontend asset entry",
       "description": "Each page that needs its own JS bundle gets an entry in Vite's rollup config. `assets/login.ts` is the entry; Vite builds it into a hashed `.js` bundle and `vite_asset()` in the template resolves the hashed path at render time.",
       "file": "civicpatch.org/src/frontend/vite.config.js",
       "line": 17
     },
     {
-      "title": "5. Component reads its own config",
-      "description": "haunted passes the host element as the first argument to the renderer (see `haunted/lib/component.d.ts`). The component reads `host.dataset.supabaseUrl` and `host.dataset.publishableKey` — the data attributes set in step 3 — and constructs the Supabase client once via `useMemo`.\n\nTwo notable choices:\n\n1. **`useMemo` with `[]` deps.** The component function re-runs on every render (state change); we don't want a new client every keystroke. `useMemo` constructs once at mount, reuses thereafter.\n\n2. **Throw on missing attributes — loud failure.** If the template forgets to pass an attribute, the client construction throws at mount and the page crashes with a clear stack trace. The alternative (silently rendering a 'not configured' message) hides developer errors. We don't want that.",
+      "title": "4. Step 1 — request OTP (FE → backend)",
+      "description": "Two-stage form built with `haunted` + `lit-html` (project convention — no raw DOM). `step` is `\"enter-email\"` initially. Submitting POSTs `{email}` to **our own backend** at `/api/v1/auth/supabase/request-otp`. On success, flip `step` to `\"enter-code\"`.\n\nThe frontend NEVER talks to Supabase directly. No `supabase-js` import, no Supabase keys in the bundle, no `data-supabase-url` attrs on the element. The backend is the auth proxy — it's the only thing that ever touches Supabase. That keeps the dev-environment topology trivial: the FE only needs a working backend at `localhost:8000`.",
       "file": "civicpatch.org/src/frontend/components/email-login/email-login.ts",
-      "line": 10
+      "line": 41
     },
     {
-      "title": "6. Step 1 — request OTP",
-      "description": "Two-stage form built with `haunted` + `lit-html` (project convention — no raw DOM). `step` is `\"enter-email\"` initially; submitting calls `signInWithOtp`, which makes Supabase send the 6-digit code via the SMTP relay (see later steps for SMTP wiring). On success we flip `step` to `\"enter-code\"`.\n\nThe `shouldCreateUser: true` here means brand-new emails trigger Supabase's `confirmation` template; existing users trigger `magic_link`. We render both with `{{ .Token }}` only — no link, just the code.\n\nNote the handler reuses `client` from closure — constructed once at step 5, used many times here.",
+      "title": "5. Step 2 — verify OTP (FE → backend)",
+      "description": "After the user enters the code, POST `{email, code}` to `/api/v1/auth/supabase/verify-otp`. The backend handles everything from here: verifies the OTP with Supabase, upserts the user row, mints our own session cookie, and returns `{data: {authenticated: true}}`. FE just redirects to `/`.\n\nNo JWT ever passes through the browser. No Supabase response objects parsed in JS. The whole flow is `fetch → JSON → done`.",
       "file": "civicpatch.org/src/frontend/components/email-login/email-login.ts",
-      "line": 33
+      "line": 60
     },
     {
-      "title": "7. Step 2 — verify OTP, POST to backend",
-      "description": "After the user enters the code, `verifyOtp` returns a session containing a JWT access token. The component then POSTs that token to our own backend at `/api/v1/auth/supabase/callback`.\n\nWhy hand the token to our own backend instead of letting Supabase's session live in the browser? Because authorization (roles, teams) lives in *our* DB, not Supabase. The JWT is the proof-of-identity; we then mint our own session cookie.\n\n`persistSession: false` on the client (step 5) ensures the Supabase SDK never writes to localStorage — only our own cookie holds the session.",
-      "file": "civicpatch.org/src/frontend/components/email-login/email-login.ts",
-      "line": 53
-    },
-    {
-      "title": "8. Request schema",
-      "description": "Every cross-boundary payload is a Pydantic model — no raw dicts. This one just carries the access_token; FastAPI binds the JSON body to it automatically via the parameter type annotation in the route.",
+      "title": "6. Request schemas",
+      "description": "Every cross-boundary payload is a Pydantic model — no raw dicts. Two trivial schemas: `RequestOtpRequest(email)` for step 1, `VerifyOtpRequest(email, code)` for step 2. FastAPI binds the JSON body to each via the route's parameter type annotation.",
       "file": "civicpatch.org/src/schemas/common.py",
       "line": 60
     },
     {
-      "title": "9. The callback endpoint (the trust boundary)",
-      "description": "The full backend handler for the POST from step 7:\n\n1. The Supabase client is injected via `Depends(get_supabase_client)` — the app-scoped `AsyncClient` constructed once at startup in main.py's lifespan. No per-request construction. No `SUPABASE_SECRET_KEY` ever crosses the request boundary.\n2. Verify the JWT — if it's bad, 401\n3. `upsert_user` — INSERT or UPDATE the user row, return its UUID. Doesn't touch `user_roles` (that's an admin-grant concern; a freshly-signed-up user has zero roles)\n4. Mint our own session cookie via `session_service` with `teams=[]`. The lib/auth fallback reads fresh role values from the DB on the next request, so admin role grants are visible immediately without re-login\n5. Return `{data: {authenticated: true}}` — the FE redirects on this\n\nThe authorization model: Supabase says *who* you are, our DB says *what* you can do.",
+      "title": "7. Backend: request-otp (FE step 1 lands here)",
+      "description": "Trivial proxy: take the email, call Supabase's `sign_in_with_otp`, return success. `should_create_user: true` means brand-new emails trigger Supabase's `confirmation` template; existing users trigger `magic_link`. We render both with `{{ .Token }}` only — no link, just the code.\n\nThe Supabase client is injected via `Depends(get_supabase_client)` — the app-scoped `AsyncClient` constructed once at startup in main.py's lifespan. No per-request construction. `SUPABASE_SECRET_KEY` is server-only and never crosses the response boundary.",
       "file": "civicpatch.org/src/routers/sso.py",
-      "line": 70
+      "line": 73
     },
     {
-      "title": "10. JWT verification (the `lib/` boundary)",
-      "description": "Native `await client.auth.get_user(access_token)` — the project uses supabase-py's async `AsyncClient`, so no `asyncio.to_thread` wrap is needed. Returns a typed `SupabaseUser`, never a raw SDK response object.\n\nThe `@property provider` returns the literal `\"supabase\"` so callers can pass it to `upsert_user` without knowing the string. Type contract owned by the lib, per the project's layering rule.\n\nDisplay-name fallback chain (`full_name` → `name` → `display_name`) covers different shapes from `user_metadata`. Pure email-OTP signups don't fill any of them; the user row ends up with `NULL` display_name (a known gap; see TODOs.md).",
+      "title": "8. Backend: verify-otp (FE step 2 lands here — the trust boundary)",
+      "description": "This is where everything happens in one shot:\n\n1. Call Supabase `verify_otp` with `{email, token, type: 'email'}` — Supabase validates the code and returns a user object on success.\n2. If invalid, return 401.\n3. Extract a typed `SupabaseUser` via `to_supabase_user` (next step in the tour).\n4. `upsert_user` — INSERT or UPDATE the user row, return its UUID. Doesn't touch `user_roles` (that's an admin-grant concern; a freshly-signed-up user has zero roles).\n5. Mint our own session cookie via `session_service` with `teams=[]`. The lib/auth fallback reads fresh role values from the DB on the next request, so admin role grants are visible immediately without re-login.\n6. Return `{data: {authenticated: true}}` — the FE redirects on this.\n\nThe authorization model: Supabase says *who* you are, our DB says *what* you can do.",
+      "file": "civicpatch.org/src/routers/sso.py",
+      "line": 86
+    },
+    {
+      "title": "9. SupabaseUser typed shape (the `lib/` boundary)",
+      "description": "`to_supabase_user(user_obj)` converts a raw supabase-py user object into our typed `SupabaseUser` (Pydantic). Callers never see SDK shapes — they get a `SupabaseUser` with an `id`, `email`, optional `display_name`, and a `provider` property that always returns `\"supabase\"`. Type contract owned by the lib, per the project's layering rule.\n\nDisplay-name fallback chain (`full_name` → `name` → `display_name`) covers different shapes from `user_metadata`. Pure email-OTP signups don't fill any of them; the user row ends up with `NULL` display_name (a known gap; see TODOs.md).",
       "file": "civicpatch.org/src/lib/supabase_auth.py",
       "line": 31
     },
     {
-      "title": "11. Two helpers: lifespan constructor + request dependency",
-      "description": "The lib provides two complementary functions:\n\n- `create_supabase_client()` — async constructor. Called **once** from `main.py`'s `lifespan` at app startup. The resulting `AsyncClient` is attached to `app.state.supabase` (see `main.py:73`).\n- `get_supabase_client(request: Request)` — FastAPI dependency. Reads `request.app.state.supabase` and returns it. Used in routes via `Depends(get_supabase_client)`.\n\nWhy this shape:\n\n1. **No lazy-init race.** The client exists before any request can possibly enter. The earlier `if _client is None` pattern had a window between assignment and `await open()` where a second request could see a half-initialized object.\n2. **No mutable module state.** No `global _client`. Construction happens at a known, controlled moment.\n3. **Testable via dependency override.** Tests do `app.dependency_overrides[get_supabase_client] = lambda: mock_client` instead of patching a module attribute — idiomatic FastAPI.\n4. **Fail-fast on misconfiguration.** Missing `SUPABASE_URL`/`SUPABASE_SECRET_KEY` kills the app at boot (via `get_env_vars()` validation), not at the first login.\n\nThis pattern diverges from `database/database.py:get_pool()`, which still uses the older module-singleton-with-lazy-init shape. That inconsistency is a known follow-up (see TODOs.md); migrating `get_pool` would touch every database query function, so it's a separate plan.",
+      "title": "10. Two helpers: lifespan constructor + request dependency",
+      "description": "The lib provides two complementary functions:\n\n- `create_supabase_client()` — async constructor. Called **once** from `main.py`'s `lifespan` at app startup. The resulting `AsyncClient` is attached to `app.state.supabase`.\n- `get_supabase_client(request: Request)` — FastAPI dependency. Reads `request.app.state.supabase` and returns it. Used in both backend routes via `Depends(get_supabase_client)`.\n\nWhy this shape:\n\n1. **No lazy-init race.** The client exists before any request can possibly enter.\n2. **No mutable module state.** No `global _client`. Construction happens at a known moment.\n3. **Testable via dependency override.** Tests do `app.dependency_overrides[get_supabase_client] = lambda: mock_client` — idiomatic FastAPI.\n4. **Fail-fast on misconfiguration.** Missing `SUPABASE_URL`/`SUPABASE_SECRET_KEY` kills the app at boot.\n\nThis pattern diverges from `database/database.py:get_pool()`, which still uses the older module-singleton-with-lazy-init shape. Known follow-up.",
       "file": "civicpatch.org/src/lib/supabase_auth.py",
       "line": 20
     },
     {
-      "title": "12. Three required env vars",
-      "description": "All three are **REQUIRED** — the app refuses to boot if any is missing. Auth-broken is operationally indistinguishable from app-down, so we fail fast at startup rather than 503-ing per-request.\n\n- `SUPABASE_URL` — public, hardcoded per-env in compose (test/prod use different Supabase projects)\n- `SUPABASE_PUBLISHABLE_KEY` — public (shipped to the browser via the `<civ-email-login>` data attributes)\n- `SUPABASE_SECRET_KEY` — server-only (never logged, never sent to the FE)",
+      "title": "11. Two required env vars",
+      "description": "Both **REQUIRED** — the app refuses to boot if either is missing. Auth-broken is operationally indistinguishable from app-down, so we fail fast at startup.\n\n- `SUPABASE_URL` — the Supabase project's URL (cloud: `https://<ref>.supabase.co`; local dev: `http://host.docker.internal:54321` because the backend reaches the host-mapped CLI port through Docker's gateway).\n- `SUPABASE_SECRET_KEY` — server-only (never logged, never sent to the FE).\n\nNo publishable/anon key is needed — the FE never talks to Supabase directly. Auth flows through the backend only.",
       "file": "civicpatch.org/src/environment.py",
       "line": 22
     },
     {
-      "title": "13. Dev wiring in docker-compose",
-      "description": "Dev compose hardcodes the test-project URL (it's not a secret — it gets shipped to every browser anyway) and pulls the two keys from your local `.env` via `${VAR}` interpolation.\n\nThe prod equivalent lives in the `infrastructure` repo at `layer-3-deployments/civicpatch-org/docker-compose.yml` — same pattern, prod project URL hardcoded there, keys pass through from `/etc/environment` (populated by Infisical).",
+      "title": "12. Dev wiring in docker-compose",
+      "description": "Dev compose hardcodes `SUPABASE_URL=http://host.docker.internal:54321` (the local Supabase CLI's API gateway, reached from inside the container via the docker host gateway). `SUPABASE_SECRET_KEY` defaults to a placeholder; `mise run dev` overrides it with the real CLI-generated key.\n\nThe prod equivalent lives in the `infrastructure` repo at `layer-3-deployments/civicpatch-org/docker-compose.yml` — same pattern, prod project URL hardcoded there, secret key passed through from `/etc/environment` (populated by Infisical).",
       "file": "civicpatch.org/docker-compose.yml",
-      "line": 44
+      "line": 43
     },
     {
-      "title": "14. Python dependency",
+      "title": "13. Python dependency",
       "description": "`supabase-py` 2.30.0 — pinned at major version 2 because the API changed enough between 1.x and 2.x that an unintentional upgrade could break us. `uv lock` resolved the exact version.",
       "file": "civicpatch.org/pyproject.toml",
       "pattern": "supabase"
     },
     {
-      "title": "15. Tests — JWT verification",
-      "description": "Unit tests for the lib/ layer. Mocks the Supabase client at the boundary (`client.auth.get_user`) — not the underlying HTTP call. Covers: happy path, missing user in response, exception propagation, display-name fallback chain (`full_name` → `name` → `display_name`).",
+      "title": "14. Tests — lib layer",
+      "description": "Unit tests for the `to_supabase_user` helper. Covers: full_name extraction, fallback chain through user_metadata keys (`full_name` → `name` → `display_name`), and the null case when metadata is empty (the email-OTP signup reality — see TODOs.md for the display-name follow-up).\n\nThere's also a test for `create_supabase_client` that patches `acreate_client` — proves the lifespan-time construction wires URL + secret key through correctly.",
       "file": "civicpatch.org/tests/unit/lib/test_supabase_auth.py",
       "line": 1
     },
     {
-      "title": "16. Tests — callback endpoint",
-      "description": "Route handler tests are thin per project convention — they verify the HTTP contract, not the JWT verification logic. Tests check that a 401 comes back on bad tokens and a 200 (with expected body shape) on good ones.\n\nClient injection is mocked via `app.dependency_overrides[get_supabase_client] = lambda: MagicMock()` in the fixture — the FastAPI-idiomatic way to swap a `Depends` target without patching module attributes.\n\nThe happy-path test asserts `upsert_user` is called with `(provider, id, email, display_name)` — no `teams=[]` argument, because the Supabase callback no longer manages roles. That's a future admin-UI concern.",
+      "title": "15. Tests — request-otp + verify-otp routes",
+      "description": "Route handler tests verify the HTTP contract, not Supabase's internals. Coverage:\n\n- `/request-otp`: happy path (200 + correct sign_in_with_otp args), Supabase error → 400, missing email → 422\n- `/verify-otp`: happy path (mocks `verify_otp` + `upsert_user` + `create_session_cookies`), Supabase error → 401, missing user in response → 401, missing fields → 422\n\nThe Supabase client is mocked via `app.dependency_overrides[get_supabase_client] = lambda: MagicMock()` in the fixture — the FastAPI-idiomatic way to swap a `Depends` target without patching module attributes. Per-test specifics (return values, side effects) are set on the mock client's `auth.sign_in_with_otp` / `auth.verify_otp` as `AsyncMock`s.",
       "file": "civicpatch.org/tests/unit/routers/test_sso_supabase.py",
       "line": 1
     },
     {
-      "title": "17. Config-as-code: Supabase project settings",
+      "title": "16. Config-as-code: Supabase project settings",
       "description": "Everything below this file is *configuration of the Supabase project itself* — not application code. `config.toml` is the source of truth for: which email templates are used, what SMTP relay sends them, etc. Pushed to the live project via `supabase config push`.\n\nThe `[auth.email.smtp]` block routes auth emails through Resend's SMTP endpoint. `pass = \"env(RESEND_API_KEY)\"` is Supabase's native env-interpolation — the literal string gets committed; the real key is injected by `infisical run` at push time.",
       "file": "civicpatch.org/supabase/config.toml",
       "line": 1
     },
     {
-      "title": "18. Email templates",
+      "title": "17. Email templates",
       "description": "Both templates render `{{ .Token }}` and nothing else, so users see only the 6-digit code — no magic-link URL. We chose code-only because the FE flow is two-stage (email → code input), and supporting both code-and-link would require handling the deep-link redirect.",
       "file": "civicpatch.org/supabase/templates/magic_link.html",
       "line": 1
     },
     {
-      "title": "19. Local push task",
+      "title": "18. Local push task",
       "description": "`mise run supabase-push` is the human escape hatch for pushing config to a project from your laptop. Requires `supabase login` + `supabase link --project-ref <ref>` once.\n\nIn normal operation you don't run this — the GHA workflow (next step) handles it. The mise task exists for emergencies and one-off testing.",
       "file": "civicpatch.org/mise.toml",
       "pattern": "supabase-push"
     },
     {
-      "title": "20. Deploy workflow",
+      "title": "19. Deploy workflow",
       "description": "Two jobs: `deploy-test` on push to main when `civicpatch.org/supabase/**` changes; `deploy-prod` on a published release.\n\nThe Tailscale step is required — Infisical's universal-auth endpoint lives on your private tailnet. The Infisical step then injects `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, and `RESEND_API_KEY` into the `supabase config push` process. The literal `env(RESEND_API_KEY)` in `config.toml` resolves at that moment.",
       "file": ".github/workflows/deploy_supabase.yml",
       "line": 1
     },
     {
-      "title": "21. Pre-commit reminder",
+      "title": "20. Pre-commit reminder",
       "description": "Local-only nag. When you stage anything under `civicpatch.org/supabase/`, this hook prints a reminder that you're about to touch Supabase config — i.e. \"go check that the test project still works after this lands.\" It doesn't block; it just prints.\n\nThe shell script lives at `scripts/supabase_staged_reminder.sh`. The pre-commit framework runs it; we never wrote a raw `.git/hooks/pre-commit` (would conflict with `pre-commit install`).",
       "file": ".pre-commit-config.yaml",
       "pattern": "supabase-staged-reminder"
     },
     {
-      "title": "22. Schema cleanup — user_id FK shape",
+      "title": "21. Schema cleanup — user_id FK shape",
       "description": "Migration 086 consolidated three tables (`user_roles`, `api_keys`, `api_usage_limits`) onto a single `user_id UUID` foreign key to `users.id`, replacing the older composite `(provider, provider_user_id)` shape. Why it matters for this tour:\n\n- **`user_roles.user_id` with `ON DELETE CASCADE`** — when a user row is deleted, their roles vanish atomically. Previously the FK had been silently cascade-dropped by an earlier migration, leaving role-table integrity un-enforced.\n- **Orphan pre-flight check** at the top of the up migration — aborts cleanly with a clear error if any row in the three tables references a nonexistent user. Defensive in case prod ever had orphans from the un-enforced-FK era.\n- **Adjacent fixes**: added a btree index on `api_keys.api_key_hash` (every API-key auth was previously a table scan); dropped a redundant index on `api_usage_limits.user_id` that duplicated the unique constraint's btree.\n\nThe `users.id` UUID is `gen_random_uuid()` — UUIDv4, properly random, safe to expose in API responses or use as an avatar seed.",
       "file": "civicpatch.org/database_operations/migrations/086_replace_provider_user_id_with_user_id_in_role_tables.up.sql",
       "line": 1
     },
     {
-      "title": "23. Schema diagram",
+      "title": "22. Schema diagram",
       "description": "DATABASE.md was updated alongside migration 086 to (a) reflect the new `user_id` FK shape and (b) finally include `user_roles`, `api_keys`, and `api_usage_limits` — they'd been missing from the diagram pre-086.\n\nWhen you change schema, the diagram update is part of the migration, not a follow-up. The `mise run psql -- -c \"\\d <table>\"` output is the source of truth at any moment; this file is the human-readable summary that mirrors it.",
       "file": "civicpatch.org/DATABASE.md",
       "pattern": "user_roles"

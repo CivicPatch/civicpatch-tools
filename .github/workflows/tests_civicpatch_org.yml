@@ -64,7 +64,6 @@ jobs:
           GITHUB_APP_INSTALLATION_ID: x
           SUPABASE_URL: x
           SUPABASE_SECRET_KEY: x
-          SUPABASE_PUBLISHABLE_KEY: x
           INSTANCE_URL: x
           OPEN_DATA_REPO_URL: x
           MAINTAINER_EMAIL: x
@@ -84,7 +83,6 @@ jobs:
           GITHUB_APP_INSTALLATION_ID: x
           SUPABASE_URL: x
           SUPABASE_SECRET_KEY: x
-          SUPABASE_PUBLISHABLE_KEY: x
           INSTANCE_URL: x
           OPEN_DATA_REPO_URL: x
           MAINTAINER_EMAIL: x

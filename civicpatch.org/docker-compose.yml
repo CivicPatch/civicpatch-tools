@@ -41,15 +41,10 @@ services:
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
 
       # Local Supabase stack is managed by the Supabase CLI (`supabase start`,
-      # invoked by `mise run dev`). It exposes ports on the host:
-      #   - SUPABASE_URL — backend perspective (this container reaches host via host.docker.internal)
-      #   - SUPABASE_URL_PUBLIC — browser perspective
-      # In prod, SUPABASE_URL_PUBLIC is unset; the FE falls back to SUPABASE_URL
-      # (cloud Supabase has one URL that works from both perspectives).
+      # invoked by `mise run dev`). The backend reaches it via the host gateway;
+      # the FE never talks to Supabase directly (auth proxies through this backend).
       SUPABASE_URL: "http://host.docker.internal:54321"
-      SUPABASE_URL_PUBLIC: "http://localhost:54321"
-      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-local-dev-anon-key}
-      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-local-dev-service-role-key}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-local-dev-secret-key}
     build:
       context: ..
       dockerfile: civicpatch.org/Dockerfile
@@ -123,8 +118,6 @@ services:
       # Required by environment.get_env_vars() even though the worker
       # doesn't call Supabase. Values mirror the civicpatch-org service.
       SUPABASE_URL: "http://host.docker.internal:54321"
-      SUPABASE_URL_PUBLIC: "http://localhost:54321"
-      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-local-dev-anon-key}
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-local-dev-secret-key}
       GITHUB_APP_ID: ${GITHUB_APP_ID}
       GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}

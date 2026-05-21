@@ -152,7 +152,7 @@ env \
   CIVICPATCH_API_DB_URL=postgres://civicpatch:test_password@127.0.0.1:6001/test_db \
   CIVICPATCH_API_DB_PASSWORD=test_password \
   GITHUB_APP_ID=x GITHUB_APP_PRIVATE_KEY_BASE64=x GITHUB_APP_INSTALLATION_ID=x \
-  SUPABASE_URL=x SUPABASE_SECRET_KEY=x SUPABASE_PUBLISHABLE_KEY=x \
+  SUPABASE_URL=x SUPABASE_SECRET_KEY=x \
   INSTANCE_URL=x OPEN_DATA_REPO_URL=x MAINTAINER_EMAIL=x \
   REDIS_HOST=x DATABASE_HASH_KEY=x SERVICE_API_KEY=x COOKIE_INSTANCE_URL=x \
   uv run python database_operations/migrate.py up
@@ -230,11 +230,10 @@ cleanup() {
 trap cleanup INT TERM EXIT
 printf '━━━ Starting Supabase (local) ━━━\\n'
 (cd civicpatch.org && supabase start)
-# Pick up CLI-generated PUBLISHABLE_KEY + SECRET_KEY so the app uses the real
-# local keys (not the docker-compose fallback strings). These are Supabase's
-# local-dev shared defaults — not secret, but they can change between CLI versions.
-eval "$(cd civicpatch.org && supabase status -o env 2>/dev/null | grep -E '^(PUBLISHABLE_KEY|SECRET_KEY)=')"
-export SUPABASE_PUBLISHABLE_KEY="$PUBLISHABLE_KEY"
+# Pick up the CLI-generated SECRET_KEY so the backend uses the real local key
+# (not the docker-compose fallback string). It's a shared default — not secret,
+# but it can change between CLI versions. The browser never sees this key.
+eval "$(cd civicpatch.org && supabase status -o env 2>/dev/null | grep -E '^SECRET_KEY=')"
 export SUPABASE_SECRET_KEY="$SECRET_KEY"
 printf '\\n━━━ Starting civicpatch stack ━━━\\n'
 printf 'Inbucket UI:  http://localhost:54324  (captured OTP emails)\\n'
@@ -246,6 +245,13 @@ docker compose up --watch
 [tasks.watch-worker]
 description = "Hot-reload the Temporal worker when worker or shared code changes"
 run = "watchfiles --filter python 'docker compose restart worker civicpatch-org-worker' worker/src/ civicpatch.org/src/ shared/src/shared/"
+
+[tasks.otp]
+description = "Print the most recent OTP code captured by local Supabase's Mailpit (port 54324). Useful when the Mailpit UI isn't reachable in the browser."
+run = """
+curl -sf http://localhost:54324/api/v1/message/latest \\
+  | python3 -c "import sys, json, re; body = json.load(sys.stdin).get('Text', ''); match = re.search(r'\\\\b(\\\\d{6})\\\\b', body); print(match.group(1) if match else 'no 6-digit code found in latest message')"
+"""
 
 [tasks.sync-maps]
 description = "Rebuild jurisdiction PMTiles. Optional: mise run sync-maps state=nj"
