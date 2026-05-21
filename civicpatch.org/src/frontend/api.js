@@ -525,4 +525,29 @@ export const fetchPullRequestByNumber = async (prNumber) => {
   return res.json();
 };
 
+export const fetchAdminUsers = async () => {
+  const res = await fetch(`${API_URL}/api/admin/users`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const setUserRoles = async (userId, roles) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/roles`, {
+    credentials: "include",
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ roles }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`HTTP ${res.status}: ${body}`);
+  }
+  return res.json();
+};
+
 
