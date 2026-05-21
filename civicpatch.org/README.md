@@ -53,8 +53,7 @@ Most values have safe development defaults in `docker-compose.yml`. The only one
 | `GITHUB_APP_PRIVATE_KEY_BASE64` | Yes | Contact maintainer |
 | `GITHUB_APP_INSTALLATION_ID` | Yes | Contact maintainer |
 | `SUPABASE_URL` | Yes | Your Supabase project URL (`https://<ref>.supabase.co`) |
-| `SUPABASE_PUBLISHABLE_KEY` | Yes | Safe to ship to browser (anon key) |
-| `SUPABASE_SECRET_KEY` | Yes | Server-only; never expose to FE |
+| `SUPABASE_SECRET_KEY` | Yes | Server-only. The backend is the only thing that talks to Supabase. |
 | `GITHUB_WEBHOOK_SECRET` | Optional | Required to receive webhook events |
 | `STORAGE_ENDPOINT` / `STORAGE_ACCESS_KEY_ID` / `STORAGE_SECRET_ACCESS_KEY` | Optional | Cloudflare R2, only for zip storage |
 

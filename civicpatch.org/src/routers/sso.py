@@ -6,7 +6,11 @@ import lib.supabase_auth as supabase_auth_service
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
 from lib.auth import get_optional_user
-from schemas.common import Identity, SupabaseCallbackRequest
+from schemas.common import (
+    Identity,
+    RequestOtpRequest,
+    VerifyOtpRequest,
+)
 
 from supabase import AsyncClient
 
@@ -66,22 +70,41 @@ def get_router(is_production: bool) -> APIRouter:
         )
         return response
 
-    @router.post("/supabase/callback", include_in_schema=False)
-    async def supabase_callback(
-        body: SupabaseCallbackRequest,
+    @router.post("/supabase/request-otp", include_in_schema=False)
+    async def request_otp(
+        body: RequestOtpRequest,
         client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
     ):
         try:
-            user = await supabase_auth_service.verify_jwt(client, body.access_token)
-        except ValueError as exc:
+            await client.auth.sign_in_with_otp(
+                {"email": body.email, "options": {"should_create_user": True}}
+            )
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        return {"data": {"sent": True}}
+
+    @router.post("/supabase/verify-otp", include_in_schema=False)
+    async def verify_otp(
+        body: VerifyOtpRequest,
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+    ):
+        try:
+            auth_response = await client.auth.verify_otp(
+                {"email": body.email, "token": body.code, "type": "email"}
+            )
+        except Exception as exc:
             raise HTTPException(status_code=401, detail=str(exc))
 
+        if auth_response.user is None:
+            raise HTTPException(status_code=401, detail="No user in verify response")
+
+        identity = supabase_auth_service.to_supabase_user(auth_response.user)
         await database.upsert_user(
-            user.provider, user.id, user.email, user.display_name
+            identity.provider, identity.id, identity.email, identity.display_name
         )
 
         response = JSONResponse(content={"data": {"authenticated": True}})
-        await session_service.create_session_cookies(response, user, teams=[])
+        await session_service.create_session_cookies(response, identity, teams=[])
         return response
 
     return router

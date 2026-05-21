@@ -28,20 +28,23 @@ def get_supabase_client(request: Request) -> AsyncClient:
     return request.app.state.supabase
 
 
-async def verify_jwt(client: AsyncClient, access_token: str) -> SupabaseUser:
-    response = await client.auth.get_user(access_token)
-    user = getattr(response, "user", None)
-    if user is None:
-        raise ValueError("Invalid Supabase JWT")
+def to_supabase_user(user_obj) -> SupabaseUser:
+    """Build a typed SupabaseUser from a supabase-py user object.
 
-    user_metadata = getattr(user, "user_metadata", {}) or {}
+    Display name falls back through user_metadata keys that different OAuth
+    providers populate; email-OTP signups have none of them so the user row
+    ends up with NULL display_name (see TODOs.md).
+    """
+    user_metadata = getattr(user_obj, "user_metadata", {}) or {}
     display_name = (
         user_metadata.get("full_name")
         or user_metadata.get("name")
         or user_metadata.get("display_name")
     )
     return SupabaseUser(
-        id=str(user.id),
-        email=getattr(user, "email", None),
+        id=str(user_obj.id),
+        email=getattr(user_obj, "email", None),
         display_name=display_name,
     )
+
+

@@ -13,7 +13,7 @@ src/
   routers/
     api/            ← versioned API routes (one file per resource)
     frontend.py     ← page routes + permissions
-    sso.py          ← Supabase email-OTP callback + logout
+    sso.py          ← Supabase email-OTP request/verify proxy + logout
     webhooks/       ← inbound webhook handlers
   lib/              ← infrastructure wrappers (external APIs, storage, cache, etc.)
     github/         ← GitHub API calls, PR helpers, data sync, JWT auth
