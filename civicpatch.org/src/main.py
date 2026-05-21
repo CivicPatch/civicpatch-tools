@@ -24,7 +24,6 @@ from database.database import (
     close_pool,
     get_pool,
 )
-from lib.supabase_auth import create_supabase_client
 from fastapi import (
     Depends,
     FastAPI,
@@ -39,6 +38,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from frontend.vite import vite_asset, vite_css
 from lib.auth import get_optional_user, get_ws_user, require_route_access
+from lib.supabase_auth import create_supabase_client
 from routers.frontend import get_router as frontend_router
 from routers.sso import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
@@ -93,14 +93,11 @@ templates.env.globals["is_production"] = is_production
 if is_production:
     allowed_origins = [
         "https://civicpatch.org",
-        "https://app.civicpatch.org",
-        "https://test.civicpatch.org",
-        "https://components.civicpatch.org",
+        "https://staging.civicpatch.org",
     ]
 else:
     allowed_origins = [
         "http://localhost:8000",
-        "http://localhost:8001",
     ]
 
 app.add_middleware(

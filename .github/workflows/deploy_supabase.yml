@@ -10,7 +10,7 @@ on:
 
 # Infisical project ID matches the one used by the infrastructure repo
 # (layer-3-deployments/scripts/deploy.sh). The following secrets must be
-# defined per env (test, prod) inside that project:
+# defined per env (staging, prod) inside that project:
 #   - SUPABASE_ACCESS_TOKEN  — CLI auth for `supabase config push`
 #   - SUPABASE_PROJECT_REF   — project the config is pushed to
 #   - RESEND_API_KEY         — interpolated into config.toml at push time
@@ -20,7 +20,7 @@ env:
   INFISICAL_PROJECT_ID: e1e3d235-5dd4-4dbd-af04-18b10bcd75b7
 
 jobs:
-  deploy-test:
+  deploy-staging:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     defaults:
@@ -58,11 +58,11 @@ jobs:
             --silent --plain)
           echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
 
-      - name: Push to Supabase (test env)
+      - name: Push to Supabase (staging env)
         env:
           INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
         run: |
-          infisical run --projectId="$INFISICAL_PROJECT_ID" --env=test -- \
+          infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
             supabase config push --project-ref "$SUPABASE_PROJECT_REF"
 
   deploy-prod:

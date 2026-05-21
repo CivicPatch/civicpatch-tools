@@ -27,14 +27,6 @@ enabled = false
 [analytics]
 enabled = false
 
-# ── Auth settings (CORS origins for OTP and auth API calls) ──────────────────
-# `site_url` and `additional_redirect_urls` tell Supabase Auth which origins
-# are allowed to call the auth API (signInWithOtp, verifyOtp, etc.).
-# Without these, the local GoTrue service rejects cross-origin requests.
-[auth]
-site_url = "http://localhost:8000"
-additional_redirect_urls = ["http://localhost:5173"]
-
 # ── Email templates (apply to both local and cloud) ──────────────────────────
 # Magic Link template — fires for existing users on signInWithOtp.
 [auth.email.template.magic_link]
@@ -52,14 +44,10 @@ content_path = "./supabase/templates/confirmation.html"
 # and EMAIL_SENDER_NAME are injected by `infisical run` (see
 # .github/workflows/deploy_supabase.yml).
 
-[remotes.test]
+[remotes.staging]
 project_id = "fcrzkckicxxmicrcbxed"
 
-[remotes.test.auth]
-site_url = "https://test.civicpatch.org"
-additional_redirect_urls = ["https://app.civicpatch.org", "https://components.civicpatch.org"]
-
-[remotes.test.auth.email.smtp]
+[remotes.staging.auth.email.smtp]
 enabled = true
 host = "smtp.resend.com"
 port = 465
@@ -70,10 +58,6 @@ sender_name = "env(EMAIL_SENDER_NAME)"
 
 [remotes.prod]
 project_id = "vclvvgolzzebiojevjsx"
-
-[remotes.prod.auth]
-site_url = "https://civicpatch.org"
-additional_redirect_urls = ["https://app.civicpatch.org", "https://components.civicpatch.org"]
 
 [remotes.prod.auth.email.smtp]
 enabled = true
