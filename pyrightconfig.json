@@ -1,0 +1,25 @@
+{
+  "extends": "./pyrightconfig.base.json",
+  "include": [
+    "civicpatch.org/src",
+    "worker/src",
+    "pipelines/src",
+    "shared/src"
+  ],
+  "exclude": [
+    "**/.venv",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.pytest_cache",
+    "civicpatch.org/src/frontend",
+    "civicpatch",
+    "infrastructure",
+    "open-data"
+  ],
+  "executionEnvironments": [
+    {"root": "civicpatch.org", "extraPaths": ["civicpatch.org/src"]},
+    {"root": "worker", "extraPaths": ["worker/src"]},
+    {"root": "pipelines", "extraPaths": ["pipelines/src"]},
+    {"root": "shared", "extraPaths": ["shared/src"]}
+  ]
+}
