@@ -404,6 +404,7 @@ async def merge_pull_request(pull_request_number: str, approved_by: str | None =
     _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
+        github_message = "Unknown error"
         for attempt in range(2):
             response = await client.put(
                 f"{open_data_repo_url}/pulls/{pull_request_number}/merge",

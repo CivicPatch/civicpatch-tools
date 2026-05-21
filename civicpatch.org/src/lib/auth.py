@@ -58,6 +58,10 @@ async def get_user(
             identity = await get_user_by_cookie(request, token)
         elif token_source == "header":
             identity = await get_user_by_api_key(token)
+        else:
+            raise HTTPException(
+                status_code=401, detail=f"Unknown token source: {token_source}"
+            )
     except Exception as e:
         raise HTTPException(
             status_code=401, detail=f"Failed to construct identity object: {e}"
