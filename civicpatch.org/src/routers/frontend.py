@@ -76,7 +76,9 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             {
                 "request": request,
                 "user": user,
-                "supabase_url": env.get("SUPABASE_URL") or "",
+                # PUBLIC overrides URL when set (local-dev separates browser vs
+                # in-container hostnames); in prod only SUPABASE_URL is set.
+                "supabase_url": env.get("SUPABASE_URL_PUBLIC") or env.get("SUPABASE_URL") or "",
                 "supabase_publishable_key": env.get("SUPABASE_PUBLISHABLE_KEY") or "",
             },
         )

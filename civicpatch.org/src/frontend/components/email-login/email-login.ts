@@ -3,15 +3,16 @@ import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
 import { createClient } from "@supabase/supabase-js";
 import { config } from "../../assets/config.js";
+import "./email-login.css";
 
 type Step = "enter-email" | "enter-code";
 
-function SupabaseLogin(host: HTMLElement): TemplateResult {
+function EmailLogin(host: HTMLElement): TemplateResult {
   const client = useMemo(() => {
     const url = host.dataset.supabaseUrl;
     const publishableKey = host.dataset.publishableKey;
     if (!url || !publishableKey) {
-      throw new Error("civ-supabase-login: missing required data attributes");
+      throw new Error("civ-email-login: missing required data attributes");
     }
     return createClient(url, publishableKey, {
       auth: { persistSession: false, autoRefreshToken: false },
@@ -83,49 +84,64 @@ function SupabaseLogin(host: HTMLElement): TemplateResult {
     }
   }
 
+  const codeRequested = step === "enter-code";
+  const onSubmit = codeRequested ? verifyCode : sendCode;
+
+  function clearForm() {
+    setStep("enter-email");
+    setEmail("");
+    setCode("");
+    setErrorMessage(null);
+  }
+
   return html`
     ${errorMessage
-      ? html`<p role="alert" class="supabase-login__error">${errorMessage}</p>`
+      ? html`<p role="alert" class="email-login__error">${errorMessage}</p>`
       : ""}
-    ${step === "enter-email"
-      ? html`
-          <form @submit=${sendCode}>
-            <label for="supabase-email">Email</label>
+    <form @submit=${onSubmit} class="email-login__form">
+      <label for="email-login-email">Email</label>
+      <input
+        id="email-login-email"
+        type="email"
+        autocomplete="email"
+        required
+        ?disabled=${codeRequested}
+        .value=${email}
+        @input=${(e: InputEvent) =>
+          setEmail((e.target as HTMLInputElement).value)}
+      />
+      ${codeRequested
+        ? html`
+            <button
+              type="button"
+              class="btn-ghost email-login__reset"
+              ?disabled=${busy}
+              @click=${clearForm}
+            >
+              Wrong email?
+            </button>
+            <label for="email-login-code">6-digit code</label>
             <input
-              id="supabase-email"
-              type="email"
-              autocomplete="email"
-              required
-              .value=${email}
-              @input=${(e: InputEvent) =>
-                setEmail((e.target as HTMLInputElement).value)}
-            />
-            <button type="submit" ?disabled=${busy}>Send code</button>
-          </form>
-        `
-      : html`
-          <p>
-            We sent a 6-digit code to <strong>${email}</strong>. Enter it below.
-          </p>
-          <form @submit=${verifyCode}>
-            <label for="supabase-code">Code</label>
-            <input
-              id="supabase-code"
+              id="email-login-code"
               inputmode="numeric"
               autocomplete="one-time-code"
               pattern="[0-9]*"
               required
+              autofocus
               .value=${code}
               @input=${(e: InputEvent) =>
                 setCode((e.target as HTMLInputElement).value)}
             />
-            <button type="submit" ?disabled=${busy}>Verify</button>
-          </form>
-        `}
+          `
+        : ""}
+      <button type="submit" ?disabled=${busy}>
+        ${codeRequested ? "Verify" : "Send code"}
+      </button>
+    </form>
   `;
 }
 
 customElements.define(
-  "civ-supabase-login",
-  component(SupabaseLogin, { useShadowDOM: false })
+  "civ-email-login",
+  component(EmailLogin, { useShadowDOM: false })
 );

@@ -213,11 +213,34 @@ CIVICPATCH_API_DB_URL="${url:-postgres://civicpatch:development_password@127.0.0
 ###################################################
 
 [tasks.dev]
-description = "Start all services, tail logs, and watch for worker code changes"
+description = "Start the full local stack: Supabase CLI (auth + inbucket + minimal services per civicpatch.org/supabase/config.toml) + docker compose with worker hot-reload. Ctrl+C tears both layers down."
 run = """
-docker compose up -d
-docker compose logs -f &
-mise run watch-worker
+set -e
+cleanup_ran=0
+cleanup() {
+  [ "$cleanup_ran" = 1 ] && return
+  cleanup_ran=1
+  printf '\\n━━━ Tearing down dev stack ━━━\\n'
+  printf '→ supabase stop\\n'
+  (cd civicpatch.org && supabase stop) >/dev/null 2>&1 || true
+  printf '→ docker compose down\\n'
+  docker compose down >/dev/null 2>&1 || true
+  printf '✓ All stopped\\n'
+}
+trap cleanup INT TERM EXIT
+printf '━━━ Starting Supabase (local) ━━━\\n'
+(cd civicpatch.org && supabase start)
+# Pick up CLI-generated PUBLISHABLE_KEY + SECRET_KEY so the app uses the real
+# local keys (not the docker-compose fallback strings). These are Supabase's
+# local-dev shared defaults — not secret, but they can change between CLI versions.
+eval "$(cd civicpatch.org && supabase status -o env 2>/dev/null | grep -E '^(PUBLISHABLE_KEY|SECRET_KEY)=')"
+export SUPABASE_PUBLISHABLE_KEY="$PUBLISHABLE_KEY"
+export SUPABASE_SECRET_KEY="$SECRET_KEY"
+printf '\\n━━━ Starting civicpatch stack ━━━\\n'
+printf 'Inbucket UI:  http://localhost:54324  (captured OTP emails)\\n'
+printf 'Supabase:     http://localhost:54321\\n'
+printf 'civicpatch:   http://localhost:8000\\n\\n'
+docker compose up --watch
 """
 
 [tasks.watch-worker]
