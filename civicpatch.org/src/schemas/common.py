@@ -57,6 +57,19 @@ class Identity(BaseModel):
     display_name: str | None = None
 
 
+class UserWithRoles(BaseModel):
+    id: str
+    email: str | None
+    display_name: str | None
+    provider: str
+    provider_user_id: str
+    roles: list[str]
+
+
+class SetRolesRequest(BaseModel):
+    roles: list[Role]
+
+
 class RequestOtpRequest(BaseModel):
     email: str
 

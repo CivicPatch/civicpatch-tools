@@ -24,6 +24,23 @@ async def upsert_user(provider, provider_user_id, email, display_name: str | Non
     return cast(str, row[0])
 
 
+async def set_user_roles(user_id: str, roles: list[str]) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "DELETE FROM user_roles WHERE user_id = %s",
+            (user_id,),
+        )
+        if roles:
+            await conn.execute(
+                """
+                INSERT INTO user_roles (user_id, role)
+                SELECT %s::uuid, UNNEST(%s::text[])
+                """,
+                (user_id, roles),
+            )
+
+
 async def create_api_key(provider, provider_user_id):
     pool = await get_pool()
     env = get_env_vars()
@@ -74,6 +91,40 @@ async def get_api_keys_for_user(provider, provider_user_id):
         rows = await cur.fetchall()
     return [
         {"id": r[0], "suffix": r[1], "created_at": r[2], "revoked_at": r[3]}
+        for r in rows
+    ]
+
+
+async def list_users_with_roles(limit: int = 100, offset: int = 0) -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT
+                u.id::text,
+                u.email,
+                u.display_name,
+                u.provider,
+                u.provider_user_id,
+                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
+            FROM users u
+            LEFT JOIN user_roles r ON r.user_id = u.id
+            GROUP BY u.id, u.email, u.display_name, u.provider, u.provider_user_id, u.created_at
+            ORDER BY u.created_at ASC
+            LIMIT %s OFFSET %s
+            """,
+            (limit, offset),
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "id": r[0],
+            "email": r[1],
+            "display_name": r[2],
+            "provider": r[3],
+            "provider_user_id": r[4],
+            "roles": r[5],
+        }
         for r in rows
     ]
 
@@ -171,6 +222,29 @@ async def get_user_id_by_provider(provider: str, provider_user_id: str) -> str |
         )
         row = await cur.fetchone()
     return cast(str, row[0]) if row else None
+
+
+async def get_user_by_id(user_id: str) -> dict | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, provider, provider_user_id, email, display_name
+            FROM users
+            WHERE id = %s
+            """,
+            (user_id,),
+        )
+        row = await cur.fetchone()
+    if not row:
+        return None
+    return {
+        "id": row[0],
+        "provider": row[1],
+        "provider_user_id": row[2],
+        "email": row[3],
+        "display_name": row[4],
+    }
 
 
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
