@@ -108,7 +108,7 @@ def get_router() -> APIRouter:
     @router.post("/users/invite", include_in_schema=False)
     async def invite_user_endpoint(
         payload: InviteUserRequest,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         try:
@@ -122,7 +122,7 @@ def get_router() -> APIRouter:
 
     @router.get("/users/pending", include_in_schema=False)
     async def list_pending_invites_endpoint(
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         # per_page=100 fits our scale (small team); revisit if total users grows past that.
@@ -145,7 +145,7 @@ def get_router() -> APIRouter:
     @router.post("/users/{user_id}/resend-invite", include_in_schema=False)
     async def resend_invite_endpoint(
         user_id: UUID,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         try:
@@ -165,7 +165,7 @@ def get_router() -> APIRouter:
     @router.delete("/users/{user_id}/invite", include_in_schema=False)
     async def revoke_invite_endpoint(
         user_id: UUID,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         try:
