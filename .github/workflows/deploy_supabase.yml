@@ -8,6 +8,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 # Infisical project ID matches the one used by the infrastructure repo
 # (layer-3-deployments/scripts/deploy.sh). The following secrets must be
 # defined per env (staging, prod) inside that project:
