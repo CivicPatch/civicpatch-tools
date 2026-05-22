@@ -5,12 +5,7 @@ import {
   fetchPullRequestByNumber,
   endReviewSession,
   navigateToEntry,
-  kickOffMerge,
 } from "../../api.js";
-import { useWebSocket } from "../../hooks/use-websocket.js";
-
-const MERGE_TOPIC_PREFIX = "merge:";
-const MERGE_EVENT_ERROR = "merge_error";
 
 export function updateParams(updates: Record<string, string | null | undefined>) {
   const p = new URLSearchParams(window.location.search);
@@ -21,7 +16,20 @@ export function updateParams(updates: Record<string, string | null | undefined>)
   history.replaceState(null, "", `?${p}`);
 }
 
-export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userId }) {
+type OnMerge = (
+  pullRequestNumber: number,
+  requestId: string,
+  jurisdictionOcdid: string,
+  people: any[] | null,
+  jurisdictionName: string,
+) => Promise<void>;
+
+export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMerge }: {
+  onReviewing: () => void;
+  onDone: () => void;
+  onIdle: () => void;
+  onMerge: OnMerge;
+}) {
   const [session, setSession] = useState<{ id: string; daily_goal: number } | null>(null);
   const [requestId, setRequestId] = useState<string | null>(null);
   const [jurisdiction, setJurisdiction] = useState({ ocdid: null, name: null });
@@ -39,12 +47,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
   }, [stateCode]);
-
-  const { data: wsMessage } = useWebSocket(userId ? `${MERGE_TOPIC_PREFIX}${userId}` : null, { autoConnect: !!userId });
-
-  useEffect(() => {
-    if (wsMessage?.type === MERGE_EVENT_ERROR) setError(wsMessage.error);
-  }, [wsMessage]);
 
   const applyEntry = async (sessionData) => {
     const review = await fetchReview(sessionData.request_id).catch(() => null);
@@ -96,12 +98,8 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, userI
   };
 
   const merge = async (people) => {
-    try {
-      await kickOffMerge(pr.number, requestId, jurisdiction.ocdid, people ?? null);
-    } catch (err) {
-      setError(err.message);
-      return;
-    }
+    if (!pr.number || !requestId) return;
+    onMerge(pr.number, requestId, jurisdiction.ocdid, people ?? null, jurisdiction.name ?? `#${pr.number}`);
     setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
     await advance();
   };

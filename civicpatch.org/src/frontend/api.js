@@ -151,24 +151,6 @@ export const saveAndMerge = async (pullRequestNumber, request_id, jurisdiction_o
   throw new Error("Merge timed out");
 };
 
-export const kickOffMerge = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save-and-merge`, {
-    credentials: "include",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ request_id, jurisdiction_ocdid, ...(people ? { data: people } : {}) }),
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    const err = new Error(body.error || `HTTP ${res.status}`);
-    err.status = res.status;
-    throw err;
-  }
-};
-
 export const searchPeople = async (jurisdictionOcdid, name) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, name });
   const res = await fetch(`${API_URL}/api/v1/people/search?${params}`, {

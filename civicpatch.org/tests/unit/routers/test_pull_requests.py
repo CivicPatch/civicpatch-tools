@@ -279,7 +279,6 @@ def test_do_merge_dirty_pr_writes_error():
     redis_set = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", new_callable=AsyncMock),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
@@ -294,7 +293,6 @@ def test_do_merge_blocked_pr_writes_error():
     redis_set = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", new_callable=AsyncMock),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
@@ -327,7 +325,6 @@ def test_do_merge_behind_pr_dirty_after_update_writes_error():
     mergeability = AsyncMock(side_effect=["behind", "dirty"])
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", new_callable=AsyncMock),
         patch("lib.github.api.get_pull_request_mergeability", mergeability),
         patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
     ):
@@ -343,7 +340,6 @@ def test_do_merge_github_error_writes_error():
     redis_set = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", new_callable=AsyncMock),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
         patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value="GitHub API error"),
     ):
@@ -357,11 +353,9 @@ def test_do_merge_github_error_writes_error():
 @pytest.mark.unit
 def test_do_merge_behind_pr_update_branch_error_writes_error():
     redis_set = AsyncMock()
-    pubsub_publish = AsyncMock()
     mergeability = AsyncMock(return_value="behind")
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", pubsub_publish),
         patch("lib.github.api.get_pull_request_mergeability", mergeability),
         patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value="branch update failed"),
     ):
@@ -370,23 +364,6 @@ def test_do_merge_behind_pr_update_branch_error_writes_error():
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "error"
     assert last_call_value["error"] == "branch update failed"
-    pubsub_publish.assert_awaited_once()
-
-
-@pytest.mark.unit
-def test_do_merge_error_publishes_to_ws_topic():
-    pubsub_publish = AsyncMock()
-    with (
-        patch("lib.redis.set", new_callable=AsyncMock),
-        patch("lib.pubsub.publish", pubsub_publish),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    pubsub_publish.assert_awaited_once()
-    topic, payload = pubsub_publish.call_args[0]
-    assert topic == "merge:user-id-123"
-    assert json.loads(payload)["type"] == "merge_error"
 
 
 @pytest.mark.unit
@@ -394,7 +371,6 @@ def test_do_merge_unexpected_exception_writes_error():
     redis_set = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
-        patch("lib.pubsub.publish", new_callable=AsyncMock),
         patch("lib.github.api.get_pull_request_mergeability", side_effect=RuntimeError("boom")),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))

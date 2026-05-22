@@ -1,13 +1,15 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople, closePullRequest } from "../../api.js";
-import { useAuth } from "../../hooks/useAuth.js";
+import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { useReviewSession, updateParams } from "./use-review-session.js";
+import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
+import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import "./review-landing.js";
 import "./review-session.js";
+import "../../components/publish-log/index.js";
 import "./review-page.css";
 
 const DEFAULT_STATE_KEY = "app:default-state";
@@ -21,10 +23,11 @@ const PAGE_STATE = {
 };
 
 function ReviewPage() {
-  const { user } = useAuth();
   const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
   const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, "");
   const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL, { ttl: PERSIST_FOREVER });
+
+  const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
 
   const {
     session, setSession,
@@ -39,7 +42,7 @@ function ReviewPage() {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
     onDone: () => setPageState(PAGE_STATE.IDLE),
     onIdle: () => setPageState(PAGE_STATE.IDLE),
-    userId: user?.user_id,
+    onMerge: trackMerge,
   });
 
   useEffect(() => {
@@ -182,67 +185,66 @@ function ReviewPage() {
 
   const handleMerge = () => merge(dirty ? peopleToSubmit : null);
 
-  const [isClosingPr, setIsClosingPr] = useState(false);
   const handleClosePr = async () => {
     if (!pr?.number || !requestId) return;
-    setIsClosingPr(true);
-    try {
-      await closePullRequest(requestId, pr.number);
-      await advance();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsClosingPr(false);
-    }
+    trackClose(pr.number, requestId, jurisdiction?.name ?? `#${pr.number}`);
+    await advance();
   };
 
-  if (pageState === PAGE_STATE.LOADING) {
-    return html`<main class="review-page"><p>Loading...</p></main>`;
-  }
+  const isClosingPr = pr?.number != null && actionState[pr.number]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
 
-  if (pageState === PAGE_STATE.IDLE) {
-    return html`<review-landing
-      .stateCode=${stateCode}
-      .stats=${stats}
+  const renderBody = () => {
+    if (pageState === PAGE_STATE.LOADING) {
+      return html`<main class="review-page"><p>Loading...</p></main>`;
+    }
+    if (pageState === PAGE_STATE.IDLE) {
+      return html`<review-landing
+        .stateCode=${stateCode}
+        .stats=${stats}
+        .error=${error}
+        .dailyGoal=${dailyGoal}
+        .effectiveGoal=${effectiveGoal}
+        .onStateChange=${handleStateChange}
+        .onGoalChange=${handleGoalChange}
+        .onStartReview=${handleStartReview}
+      ></review-landing>`;
+    }
+    return html`<review-session
+      .isReadOnly=${isReadOnly}
+      .hasSession=${!!session}
+      .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
+      .jurisdiction=${jurisdiction}
+      .pr=${pr}
       .error=${error}
-      .dailyGoal=${dailyGoal}
-      .effectiveGoal=${effectiveGoal}
-      .onStateChange=${handleStateChange}
-      .onGoalChange=${handleGoalChange}
-      .onStartReview=${handleStartReview}
-    ></review-landing>`;
-  }
+      .isDirty=${dirty}
+      .prPeople=${prPeople}
+      .currentPeople=${currentPeople}
+      .selectedPeople=${selectedPeople}
+      .reviewData=${reviewData}
+      .sourceContentUrls=${sourceContentUrls}
 
-  return html`<review-session
-    .isReadOnly=${isReadOnly}
-    .hasSession=${!!session}
-    .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
-    .jurisdiction=${jurisdiction}
-    .pr=${pr}
-    .error=${error}
-    .isDirty=${dirty}
-    .prPeople=${prPeople}
-    .currentPeople=${currentPeople}
-    .selectedPeople=${selectedPeople}
-    .reviewData=${reviewData}
-    .sourceContentUrls=${sourceContentUrls}
+      .onMerge=${handleMerge}
+      .onClosePr=${handleClosePr}
+      .isClosingPr=${isClosingPr}
+      .onAdvance=${advance}
+      .onBack=${back}
+      .onNavigateTo=${navigateTo}
+      .onEndSession=${endSession}
+      .onTableDataChange=${handleTableDataChange}
+      .onTableReorder=${handleTableDataReorder}
+      .onPeopleMerge=${handlePeopleMerge}
+      .onBulkDelete=${handleBulkDelete}
+      .onReset=${handleResetAll}
+      .onAdd=${handleAdd}
+      @link-person=${handleLinkPerson}
+      .resolvedMatches=${resolvedMatches}
+    ></review-session>`;
+  };
 
-    .onMerge=${handleMerge}
-    .onClosePr=${handleClosePr}
-    .isClosingPr=${isClosingPr}
-    .onAdvance=${advance}
-    .onBack=${back}
-    .onNavigateTo=${navigateTo}
-    .onEndSession=${endSession}
-    .onTableDataChange=${handleTableDataChange}
-    .onTableReorder=${handleTableDataReorder}
-    .onPeopleMerge=${handlePeopleMerge}
-    .onBulkDelete=${handleBulkDelete}
-    .onReset=${handleResetAll}
-    .onAdd=${handleAdd}
-    @link-person=${handleLinkPerson}
-    .resolvedMatches=${resolvedMatches}
-  ></review-session>`;
+  return html`
+    ${renderBody()}
+    <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
+  `;
 }
 
 customElements.define("review-page", component(ReviewPage, { useShadowDOM: false }));
