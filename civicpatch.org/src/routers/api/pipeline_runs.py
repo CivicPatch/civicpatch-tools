@@ -51,7 +51,7 @@ from database.requests import (
     get_issue_request_details,
 )
 from core import people_collector
-from schemas.common import Identity, Jurisdiction, Role, RouteCategory
+from schemas.common import Identity, Jurisdiction, Role, RouteCategory, has_at_least
 from schemas.pipeline_runs import (
     CreatePipelineRunRequest,
     BatchPipelineRunRequest,
@@ -153,7 +153,7 @@ def get_router(api_key_header):
     async def create_people_pipeline_run_endpoint(
         request: CreatePipelineRunRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)
         ),
     ):
         if _is_production and request.dispatch_mode == "local":
@@ -198,7 +198,7 @@ def get_router(api_key_header):
     async def create_batch_pipeline_runs_endpoint(
         request: BatchPipelineRunRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, ["maintainers"])
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)
         ),
     ):
         try:
@@ -288,7 +288,7 @@ def get_router(api_key_header):
         request: UpdatePipelineRunStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)
         ),
     ):
         background_tasks.add_task(
@@ -356,7 +356,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid: str = Form(...),
         pipeline_run_status: Optional[str] = Form(None),
         env: str = Form("production"),
-        _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+        _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         start_time = time.time()
 
@@ -401,7 +401,7 @@ def get_router(api_key_header):
     )
     async def cancel_pipeline_run_endpoint(
         request_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["admins"])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         pipeline_run = await get_pipeline_run(request_id)
         if not pipeline_run:
@@ -434,7 +434,7 @@ def get_router(api_key_header):
         state_code: Optional[str] = None,
         page: int = 1,
         per_page: int = 25,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.CONTRIBUTORS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
     ):
         pipeline_runs, total = await get_active_pipeline_runs(state_code=state_code, page=page, per_page=per_page)
         for run in pipeline_runs:
@@ -444,7 +444,7 @@ def get_router(api_key_header):
     @router.get("/issues/counts", summary="Count pending issues grouped by issue_type")
     async def get_issue_counts_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         counts = await get_pipeline_issue_counts(state_code=state_code)
         return {"data": counts}
@@ -460,7 +460,7 @@ def get_router(api_key_header):
         sort: str = "desc",
         state_code: Optional[str] = None,
         show_archived: bool = False,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
@@ -473,7 +473,7 @@ def get_router(api_key_header):
     )
     async def resolve_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -487,7 +487,7 @@ def get_router(api_key_header):
     )
     async def dismiss_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -502,7 +502,7 @@ def get_router(api_key_header):
     async def flag_review_issue_endpoint(
         issue_id: str,
         request: FlagPipelineIssueRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -516,7 +516,7 @@ def get_router(api_key_header):
     )
     async def get_review_issue_details_endpoint(
         issue_id: str,
-        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -526,7 +526,7 @@ def get_router(api_key_header):
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 
-        is_admin = Role.ADMINS in (identity.teams or [])
+        is_admin = has_at_least(identity.role, Role.ADMINS)
 
         if issue_type in ("pipeline_error", "no_info", "domain_inactive", "domain_navigation_error"):
             request_id = issue["issue_key"]
@@ -562,7 +562,7 @@ def get_router(api_key_header):
         summary="List unrecognized roles grouped by role text, each with affected request IDs",
     )
     async def get_unrecognized_roles_grouped_endpoint(
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         rows = await get_unrecognized_roles_grouped()
         return {"data": rows}
@@ -573,7 +573,7 @@ def get_router(api_key_header):
     )
     async def resolve_unrecognized_roles_grouped_endpoint(
         body: ResolveUnrecognizedRoleGroupRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         await resolve_unrecognized_role_group(body.request_ids)
         return {"data": None}

@@ -114,7 +114,7 @@ app.include_router(
     prefix="/api/admin",
     tags=["admin"],
     dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS]))
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS))
     ],
 )
 app.include_router(
@@ -138,7 +138,7 @@ app.include_router(
     prefix="/api/v1/pipeline_runs",
     tags=["pipeline_runs"],
     dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))
+        Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ],
 )
 
@@ -156,7 +156,7 @@ app.include_router(
     prefix="/api/internal/api_keys",
     tags=["api_keys"],
     dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, ["default"]))
+        Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ],
 )
 
@@ -204,7 +204,7 @@ app.include_router(
     prefix="/api/v1/review-sessions",
     tags=["review-sessions"],
     dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT]))
+        Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ],
 )
 
@@ -281,7 +281,7 @@ async def sse_job_status(jurisdiction_ocdid: str, request: Request):
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     user = await get_ws_user(websocket)
-    if not user or not user.teams:
+    if not user:
         await websocket.close(code=1008)
         return
 

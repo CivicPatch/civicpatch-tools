@@ -49,7 +49,7 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str,
         state: Optional[str] = Query(None, description="Filter by state"),
         name: Optional[str] = Query(None, description="Filter by name"),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         people = await database.get_people_for_jurisdiction(jurisdiction_ocdid, status=state)
 
@@ -82,7 +82,7 @@ def get_router() -> APIRouter:
     @router.delete("/{person_id}")
     async def delete_person_endpoint(
         person_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
     ):
         await database.delete_person(person_id)
         return {"data": None}
@@ -92,7 +92,7 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str,
         page: int = Query(1, ge=1),
         per_page: int = Query(20, ge=1, le=100),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         offset = (page - 1) * per_page
         total, people = await database.get_all_people_for_jurisdiction(jurisdiction_ocdid, per_page, offset)
@@ -106,7 +106,7 @@ def get_router() -> APIRouter:
     @router.post("/batch-resolve")
     async def batch_resolve_people_endpoint(
         request: PeopleBatchResolveRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT]))
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         people = await database.get_people_for_jurisdiction(request.jurisdiction_ocdid)
         identities = shared.utils.name_utils.person_list_to_identities(people)
@@ -126,7 +126,7 @@ def get_router() -> APIRouter:
 
     @router.post("/generate-id")
     async def generate_person_id(
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT]))
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         return {
             "data": {
@@ -137,7 +137,7 @@ def get_router() -> APIRouter:
     @router.patch("/data")
     async def patch_people_data_endpoint(
         request: OpenPrRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
     ):
         folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
         file_path = f"data/{folder_path}.yml"
@@ -149,7 +149,7 @@ def get_router() -> APIRouter:
         author = PrAuthor(
             name=user.display_name or user.email or user.provider_user_id,
             email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
-            teams=user.teams or [],
+            teams=[user.role] if user.role else [],
         )
         pr_number, pr_url = await github_pr_service.open_attributed_pr(
             branch_name=branch_name,

@@ -65,7 +65,22 @@ Roles are granted manually by an admin after a user signs up via email OTP. The 
 
 ### Bootstrapping an admin
 
-There's no admin UI yet. To grant a role, run SQL directly against the DB:
+Two ways to grant a role. The user must have signed in via Supabase OTP at least once so a `users` row exists.
+
+**Preferred — `mise run grant_role`:**
+
+```sh
+mise run grant_role -- <user-email> admins         # local dev
+mise run grant_role_prod -- <user-email> admins    # against civicpatch.org
+```
+
+Authenticates via `SERVICE_API_KEY` (local) or `$PROD_SERVICE_API_KEY` (prod). Hits the same `PUT /api/admin/users/{id}/roles` endpoint the admin UI uses, additive (preserves any existing roles). Valid role args: `contributors`, `maintainers`, `admins`. If multiple `users` rows share an email (rare; legacy pre-Supabase rows), the task grants to all matches.
+
+**After bootstrap — admin UI:**
+
+Once your account has `admins`, visit `/admin` to manage other users' roles via clickable chips. Contributor toggles instantly; Maintainer and Admin open a confirm modal. Your own row is locked at both layers — to change your own roles, use `mise run grant_role`.
+
+**Fallback — direct SQL:**
 
 ```sql
 INSERT INTO user_roles (user_id, role)
@@ -73,9 +88,7 @@ SELECT id, 'admins' FROM users
 WHERE provider='supabase' AND email='<user-email>';
 ```
 
-Valid roles: `default`, `contributors`, `maintainers`, `admins`. The user must have signed in via Supabase OTP at least once for the `users` row to exist. The session DB-fallback at `lib/auth.py` picks up the new role on the next request — no logout required.
-
-An admin CRUD UI is planned as a follow-up.
+The session picks up the new role on the next request — no logout required.
 
 | Feature | default | contributors | maintainers | admins |
 |---|:---:|:---:|:---:|:---:|

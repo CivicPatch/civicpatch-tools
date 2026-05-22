@@ -1,12 +1,12 @@
 import logging
-from typing import cast, List, Optional
+from typing import cast, Optional
 
 from fastapi import Depends, HTTPException, Request, Security, WebSocket
 from fastapi.security import APIKeyCookie, APIKeyHeader
 
 import database.users as database
 import environment
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, Role, RouteCategory, has_at_least
 import lib.auth_session as session_service
 
 logger = logging.getLogger(__name__)
@@ -43,14 +43,14 @@ async def get_user(
     else:
         raise HTTPException(status_code=401, detail="Missing authentication token")
 
-    # 3. Handle service API key
+    # 3. Handle service API key — distinct from human identities; no role.
+    # The type-based bypass in `require_route_access` is what gates its access.
     if token_source == "service_api_key":
         return Identity(
             type="service_api_key",
             provider="system",
             provider_user_id="service_api_key",
             email="service@civicpatch.org",
-            teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS],
         )
 
     try:
@@ -82,7 +82,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         provider=cast(str, user.get("provider")),
         provider_user_id=cast(str, user.get("provider_user_id")),
         email=user.get("email"),
-        teams=user.get("teams", []),
+        role=user.get("role", Role.DEFAULT.value),
         user_id=user.get("id"),
     )
 
@@ -111,14 +111,15 @@ async def get_user_by_cookie(request, token: str) -> Identity:
     provider = session["provider"]
     provider_user_id = session["provider_user_id"]
     user_row = await database.get_user(provider, provider_user_id)
-    teams = session.get("teams") or (user_row.get("teams") if user_row else []) or []
+    # Trust the DB role over the session-cached role — session can be stale after a grant.
+    role = (user_row.get("role") if user_row else None) or session.get("role") or Role.DEFAULT.value
 
     return Identity(
         type="cookie",
         provider=provider,
         provider_user_id=provider_user_id,
         email=session.get("email"),
-        teams=teams,
+        role=role,
         user_id=user_row.get("id") if user_row else None,
         display_name=user_row.get("display_name") if user_row else None,
     )
@@ -137,17 +138,18 @@ async def get_optional_user(
 
 
 def require_route_access(
-    category: RouteCategory, teams_required: Optional[List[str]] = None
+    category: RouteCategory, required_role: Optional[Role] = None
 ):
     async def _dependency(
-        identity: Identity = Depends(get_optional_user),
+        identity: Optional[Identity] = Depends(get_optional_user),
     ):
-        # Service API key always allowed for SERVICE routes, and optionally for others
+        # Service API key bypasses every check — its access is gated by holding
+        # the key, not by holding a role.
         if identity and identity.type == "service_api_key":
             logger.debug(f"Service key access granted for category={category}")
             return identity
 
-        # Explicitly deny non-service identities for SERVICE category
+        # SERVICE category: only service_api_key allowed (handled above).
         if category == RouteCategory.SERVICE:
             logger.debug(
                 f"Non-service identity denied for SERVICE category: {getattr(identity, 'email', None)}"
@@ -160,56 +162,27 @@ def require_route_access(
         if category == RouteCategory.PUBLIC:
             return identity
 
-        # Authenticated
-        if category == RouteCategory.AUTHENTICATED and identity is not None:
-            logger.debug(
-                f"Authenticated access granted for category={category}, email={identity.email}"
-            )
+        # Authenticated — any signed-in identity.
+        if category == RouteCategory.AUTHENTICATED:
+            if identity is None:
+                raise HTTPException(status_code=403, detail="Authentication required")
             return identity
 
-        # Team required
-        user_teams = identity.teams if identity else []
-        user_teams = [] if not user_teams else user_teams
-        logger.debug(f"user_teams={user_teams}")
-
-        if category == RouteCategory.TEAM_REQUIRED and len(user_teams) == 0:
-            logger.debug(
-                f"Team required access denied for category={category}, user email={getattr(identity, 'email', None)}, no teams found, but at least one team is required"
-            )
-            raise HTTPException(
-                status_code=403,
-                detail="User does not have required team membership on team required route",
-            )
-
-        if (
-            user_teams
-            and teams_required
-            and not any(team in user_teams for team in teams_required)
-        ):
-            logger.debug(
-                f"Team required access denied for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}"
-            )
-            raise HTTPException(
-                status_code=403, detail="User does not have required team membership"
-            )
-
-        if (
-            user_teams
-            and teams_required
-            and any(team in user_teams for team in teams_required)
-        ):
-            logger.debug(
-                f"Team required access granted for category={category}, user email={identity.email}, user teams={user_teams}, required teams={teams_required}"
-            )
+        # Team-required (now: minimum trust level on the ladder).
+        if category == RouteCategory.TEAM_REQUIRED:
+            if identity is None:
+                raise HTTPException(status_code=403, detail="Authentication required")
+            if required_role is None:
+                # No level specified — equivalent to AUTHENTICATED.
+                return identity
+            if not has_at_least(identity.role, required_role):
+                logger.debug(
+                    f"Trust ladder denied: user role={identity.role}, required >= {required_role}"
+                )
+                raise HTTPException(
+                    status_code=403, detail="User does not have required trust level"
+                )
             return identity
-
-        # Unknown category fallback
-        logger.debug(
-            f"Unknown route: Access denied for category={category}, user email={getattr(identity, 'email', None)}, teams={getattr(identity, 'teams', None)}"
-        )
-        raise HTTPException(
-            status_code=403, detail="User does not have access to this resource"
-        )
 
     return _dependency
 
@@ -221,19 +194,16 @@ async def get_ws_user(websocket: WebSocket) -> Optional[Identity]:
     session = await session_service.get_session(token)
     if not session:
         return None
-    teams = session.get("teams") or []
-    if not teams:
-        provider = session["provider"]
-        provider_user_id = session["provider_user_id"]
-        user_row = await database.get_user(provider, provider_user_id)
-        if user_row and user_row.get("teams"):
-            teams = user_row["teams"]
+    provider = session["provider"]
+    provider_user_id = session["provider_user_id"]
+    user_row = await database.get_user(provider, provider_user_id)
+    role = (user_row.get("role") if user_row else None) or session.get("role") or Role.DEFAULT.value
     return Identity(
         type="cookie",
-        provider=session["provider"],
-        provider_user_id=session["provider_user_id"],
+        provider=provider,
+        provider_user_id=provider_user_id,
         email=session.get("email"),
-        teams=teams,
+        role=role,
     )
 
 

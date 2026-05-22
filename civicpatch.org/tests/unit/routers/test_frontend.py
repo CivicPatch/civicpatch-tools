@@ -2,24 +2,36 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
-from unittest.mock import AsyncMock, patch
 
 from routers.frontend import build_permissions, get_router
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
 
 
+_LADDER_ORDER = [Role.DEFAULT, Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS]
+
+
 def _identity(*roles: Role) -> Identity:
+    """Build an Identity at the highest level in `roles`.
+
+    The vararg signature preserves call-site compatibility from the pre-ladder
+    days — callers used to pass `(Role.CONTRIBUTORS, Role.DEFAULT)` for a flat
+    set; now the highest of those collapses to a single role.
+    """
+    if roles:
+        highest = max(roles, key=_LADDER_ORDER.index)
+        role_value = highest.value
+    else:
+        role_value = Role.DEFAULT.value
     return Identity(
         type="session",
         provider="github",
         provider_user_id="123",
         email="user@example.com",
-        teams=list(roles),
+        role=role_value,
     )
 
 
-UNAUTHENTICATED = None
 DEFAULT = _identity(Role.DEFAULT)
 CONTRIBUTOR = _identity(Role.CONTRIBUTORS, Role.DEFAULT)
 MAINTAINER = _identity(Role.MAINTAINERS, Role.DEFAULT)
@@ -36,18 +48,6 @@ def test_permissions_unauthenticated():
     assert p["can_view_jurisdiction_page"] is False
     assert p["can_scrape_local"] is False
     assert p["can_scrape_remote"] is False
-    assert p["can_view_reviews_page"] is False
-    assert p["can_view_issues_page"] is False
-    assert p["can_delete_directory_person"] is False
-
-
-@pytest.mark.unit
-def test_permissions_logged_in_no_teams():
-    """GitHub user who authenticated but is not a member of any CivicPatch team."""
-    p = build_permissions(_identity())
-    assert p["can_view_queue_page"] is False
-    assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is False
     assert p["can_view_reviews_page"] is False
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is False
@@ -80,6 +80,7 @@ def test_permissions_contributor_role():
 
 @pytest.mark.unit
 def test_permissions_maintainer_role():
+    """Maintainer inherits Contributor's powers under the ladder."""
     p = build_permissions(MAINTAINER)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
@@ -87,18 +88,19 @@ def test_permissions_maintainer_role():
     assert p["can_scrape_remote"] is True
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is True
-    assert p["can_delete_directory_person"] is False
+    assert p["can_delete_directory_person"] is True
 
 
 @pytest.mark.unit
 def test_permissions_admin_role():
+    """Admin inherits Maintainer + Contributor powers under the ladder."""
     p = build_permissions(ADMIN)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is True
-    assert p["can_scrape_remote"] is False
-    assert p["can_view_issues_page"] is False
-    assert p["can_delete_directory_person"] is False
-
+    assert p["can_scrape_remote"] is True
+    assert p["can_view_issues_page"] is True
+    assert p["can_delete_directory_person"] is True
+    assert p["can_manage_roles"] is True
 
 
 @pytest.mark.unit
@@ -116,14 +118,15 @@ def test_scrape_local_false_in_production():
 
 @pytest.mark.unit
 def test_scrape_local_true_for_maintainers_in_dev():
-    """can_scrape_local is True for maintainers outside production."""
+    """can_scrape_local is True for maintainers and admins outside production."""
     import routers.frontend as frontend_module
     original = frontend_module._is_production
     try:
         frontend_module._is_production = False
         assert build_permissions(MAINTAINER)["can_scrape_local"] is True
-        assert build_permissions(DEFAULT)["can_scrape_local"] is False
+        assert build_permissions(ADMIN)["can_scrape_local"] is True
         assert build_permissions(CONTRIBUTOR)["can_scrape_local"] is False
+        assert build_permissions(DEFAULT)["can_scrape_local"] is False
         assert build_permissions(None)["can_scrape_local"] is False
     finally:
         frontend_module._is_production = original
@@ -174,4 +177,5 @@ def test_permissions_endpoint_admin(permissions_client):
     data = response.json()
     assert data["authenticated"] is True
     assert data["data"]["permissions"]["can_view_queue_page_errors"] is True
-    assert data["data"]["permissions"]["can_scrape_remote"] is False
+    # Under the ladder, admin >= maintainer, so scrape_remote is now True.
+    assert data["data"]["permissions"]["can_scrape_remote"] is True

@@ -58,16 +58,10 @@
   vertical-align: middle;
 }
 
-.admin-users-table__role-cell {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-right: 0.75rem;
-  font-size: 0.85rem;
-}
-
-.admin-users-table__role-cell input[type="checkbox"] {
-  margin: 0;
+.admin-users-table__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .admin-users-table__row-status {
@@ -84,21 +78,123 @@
   color: var(--pico-ins-color, #4caf50);
 }
 
-.admin-users-table__save-btn {
-  font-size: 0.85rem;
-  padding: 0.3rem 0.85rem;
-  border: 1.5px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: transparent;
-  color: var(--pico-color);
-  cursor: pointer;
+/* ── Role chips ─────────────────────────────────────────────────────────── */
+
+role-chip {
+  display: inline-block;
 }
 
-.admin-users-table__save-btn:hover:not(:disabled) {
+.role-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--pico-font-family-monospace);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  white-space: nowrap;
+}
+
+.role-chip--unassigned {
+  background: transparent;
+  color: var(--pico-muted-color);
+  border: 1.5px dashed var(--pico-muted-border-color);
+}
+
+.role-chip--unassigned:hover:not(:disabled) {
+  color: var(--pico-color);
   border-color: var(--pico-color);
 }
 
-.admin-users-table__save-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.role-chip--assigned {
+  background: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+  border: 1.5px solid var(--pico-primary);
 }
+
+.role-chip--assigned:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.role-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.role-chip__glyph {
+  font-size: 0.9em;
+}
+
+/* ── Confirm role modal content ─────────────────────────────────────────── */
+
+.confirm-role-modal__blurb {
+  margin: 0 0 0.85rem;
+  color: var(--pico-color);
+}
+
+.confirm-role-modal__powers-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pico-muted-color);
+  margin-bottom: 0.3rem;
+}
+
+.confirm-role-modal__powers {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--pico-color);
+}
+
+.confirm-role-modal__powers li {
+  margin-bottom: 0.25rem;
+}
+
+/* ── Status toast ───────────────────────────────────────────────────────── */
+
+status-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+}
+
+.status-toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 0.85rem 0.6rem 1rem;
+  background: var(--pico-color);
+  color: var(--pico-background-color);
+  border-radius: var(--pico-border-radius);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  font-size: 0.9rem;
+}
+
+.status-toast__message {
+  white-space: nowrap;
+}
+
+.status-toast__close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.1rem 0.35rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.status-toast__close:hover {
+  opacity: 1;
+}
+

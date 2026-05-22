@@ -30,7 +30,7 @@ import core.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
 import lib.storage as storage_service
 from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, RouteCategory
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -95,7 +95,7 @@ def get_router(api_key_header):
     async def list_pull_requests_endpoint(
         jurisdiction_ocdid: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         pull_requests, _, _ = await pull_requests_db.list_open_pull_requests(
@@ -113,7 +113,7 @@ def get_router(api_key_header):
         request_id: str,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
@@ -165,7 +165,7 @@ def get_router(api_key_header):
     async def post_job_pull_request_data_endpoint(
         request: PostJobPullRequestDataRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         user_name = user.email
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
@@ -207,7 +207,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid: str | None = None,
         view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         paged_pull_requests, total, with_issues = await pull_requests_db.list_open_pull_requests(
@@ -251,7 +251,7 @@ def get_router(api_key_header):
     async def get_pull_request_by_number_endpoint(
         pr_number: int,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         result = await pull_requests_db.get_pull_request_data_by_pr_number(pr_number)
@@ -288,7 +288,7 @@ def get_router(api_key_header):
     async def get_pull_request_review_endpoint(
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         result = await database.pipeline_runs.get_pipeline_run_result(request_id)
@@ -300,7 +300,7 @@ def get_router(api_key_header):
         pull_request_number: str,
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         success = await github_service.close_pull_request(
@@ -324,7 +324,7 @@ def get_router(api_key_header):
         request: SaveAndMergeRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         if request.data:
@@ -356,7 +356,7 @@ def get_router(api_key_header):
     async def merge_status_endpoint(
         pull_request_number: str,
         _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         raw = await redis_store.get(f"merge_status:{pull_request_number}")
@@ -370,7 +370,7 @@ def get_router(api_key_header):
         pull_request_number: str,
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         merge_error = await github_service.merge_pull_request(
@@ -392,7 +392,7 @@ def get_router(api_key_header):
     async def update_pull_request_branch_endpoint(
         pull_request_number: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         error = await github_service.update_pull_request_branch(

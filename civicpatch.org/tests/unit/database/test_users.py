@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 from database.users import (
     upsert_user,
-    set_user_roles,
-    list_users_with_roles,
+    set_user_role,
+    list_users,
     get_user_by_id,
 )
 
@@ -61,7 +61,7 @@ async def test_upsert_user_does_not_touch_user_roles():
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
         await upsert_user("supabase", "id", "x@example.com", None)
 
-    # Only one execute call — no DELETE/INSERT on user_roles
+    # Only one execute call — no role mutation
     assert cur.execute.await_count == 1
     args, _ = cur.execute.await_args
     assert "user_roles" not in args[0]
@@ -69,52 +69,49 @@ async def test_upsert_user_does_not_touch_user_roles():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_set_user_roles_deletes_then_inserts():
+async def test_set_user_role_updates_users_table():
     pool, conn = _make_conn_pool()
     with patch("database.users.get_pool", AsyncMock(return_value=pool)):
-        await set_user_roles("user-uuid", ["admins", "maintainers"])
-
-    assert conn.execute.await_count == 2
-    delete_args, _ = conn.execute.await_args_list[0]
-    insert_args, _ = conn.execute.await_args_list[1]
-    assert "DELETE FROM user_roles" in delete_args[0]
-    assert delete_args[1] == ("user-uuid",)
-    assert "INSERT INTO user_roles" in insert_args[0]
-    assert insert_args[1] == ("user-uuid", ["admins", "maintainers"])
-
-
-@pytest.mark.asyncio
-@pytest.mark.unit
-async def test_set_user_roles_empty_skips_insert():
-    pool, conn = _make_conn_pool()
-    with patch("database.users.get_pool", AsyncMock(return_value=pool)):
-        await set_user_roles("user-uuid", [])
+        await set_user_role("user-uuid", "admins")
 
     assert conn.execute.await_count == 1
     args, _ = conn.execute.await_args_list[0]
-    assert "DELETE FROM user_roles" in args[0]
+    assert "UPDATE users SET role" in args[0]
+    assert args[1] == ("admins", "user-uuid")
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_list_users_with_roles_empty():
+async def test_set_user_role_with_default_resets_level():
+    pool, conn = _make_conn_pool()
+    with patch("database.users.get_pool", AsyncMock(return_value=pool)):
+        await set_user_role("user-uuid", "default")
+
+    assert conn.execute.await_count == 1
+    args, _ = conn.execute.await_args_list[0]
+    assert args[1] == ("default", "user-uuid")
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_list_users_empty():
     cur = _make_cursor(returning_rows=[])
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await list_users_with_roles()
+        result = await list_users()
 
     assert result == []
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_list_users_with_roles_populated():
+async def test_list_users_populated():
     rows = [
-        ("uuid-1", "alice@example.com", "Alice", "supabase", "sb-1", ["admins"]),
-        ("uuid-2", "bob@example.com", None, "supabase", "sb-2", []),
+        ("uuid-1", "alice@example.com", "Alice", "supabase", "sb-1", "admins"),
+        ("uuid-2", "bob@example.com", None, "supabase", "sb-2", "default"),
     ]
     cur = _make_cursor(returning_rows=rows)
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await list_users_with_roles()
+        result = await list_users()
 
     assert result == [
         {
@@ -123,7 +120,7 @@ async def test_list_users_with_roles_populated():
             "display_name": "Alice",
             "provider": "supabase",
             "provider_user_id": "sb-1",
-            "roles": ["admins"],
+            "role": "admins",
         },
         {
             "id": "uuid-2",
@@ -131,7 +128,7 @@ async def test_list_users_with_roles_populated():
             "display_name": None,
             "provider": "supabase",
             "provider_user_id": "sb-2",
-            "roles": [],
+            "role": "default",
         },
     ]
 
