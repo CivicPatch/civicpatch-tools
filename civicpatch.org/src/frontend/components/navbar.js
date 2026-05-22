@@ -1,9 +1,12 @@
-import { component } from 'haunted';
-import { html } from 'lit';
-import { config } from '../assets/config.js';
-import { useSummary } from '../hooks/useSummary.js';
-import { useLocalStorage, PERSIST_FOREVER } from '../hooks/use-local-storage.js';
-import { STORAGE_KEYS } from '../utils/storage-keys.js';
+import { component } from "haunted";
+import { html } from "lit";
+import { config } from "../assets/config.js";
+import { useSummary } from "../hooks/useSummary.js";
+import {
+  useLocalStorage,
+  PERSIST_FOREVER,
+} from "../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../utils/storage-keys.js";
 const API_URL = config.apiUrl;
 
 const NAVBAR_CSS = html`
@@ -54,7 +57,7 @@ const NAVBAR_CSS = html`
 
     /* Brand */
     .nav-brand {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
       font-size: 1.125rem;
       text-decoration: none;
@@ -209,7 +212,9 @@ const NAVBAR_CSS = html`
       padding: 0.4rem 1.1rem;
       cursor: pointer;
       text-decoration: none;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      transition:
+        border-color 0.15s ease,
+        background 0.15s ease;
       white-space: nowrap;
     }
     .btn-outline:hover {
@@ -265,8 +270,12 @@ const NAVBAR_CSS = html`
       animation: skeleton-shimmer 1.4s infinite ease-in-out;
     }
     @keyframes skeleton-shimmer {
-      0%   { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
     }
 
     /* Theme toggle */
@@ -282,7 +291,9 @@ const NAVBAR_CSS = html`
       opacity: 0.6;
       transition: opacity 0.15s ease;
     }
-    .theme-toggle:hover { opacity: 1; }
+    .theme-toggle:hover {
+      opacity: 1;
+    }
 
     /* Rounded focus outlines */
     .nav-brand:focus-visible,
@@ -309,7 +320,9 @@ const NAVBAR_CSS = html`
     }
 
     @media (max-width: 640px) {
-      .user-info { display: none; }
+      .user-info {
+        display: none;
+      }
       nav {
         flex-wrap: wrap;
         gap: 0.75rem;
@@ -339,19 +352,24 @@ const NAVBAR_CSS = html`
 `;
 
 function getRoleTooltip(role) {
-  if (!role) return 'No role assigned';
+  if (!role) return "No role assigned";
   return `Role: ${role}`;
 }
 
 function activeClass(currentPath, href) {
-  const isActive = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
-  return isActive ? 'nav-link nav-link--active' : 'nav-link';
+  const isActive =
+    href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+  return isActive ? "nav-link nav-link--active" : "nav-link";
 }
 
 function renderPublicLinks(currentPath) {
   return html`
-    <a href="/blog" class="${activeClass(currentPath, '/blog')}">Blog</a>
-    <a href="/blog/volunteer" class="${activeClass(currentPath, '/blog/volunteer')}">Volunteer</a>
+    <a href="/blog" class="${activeClass(currentPath, "/blog")}">Blog</a>
+    <a
+      href="/blog/volunteer"
+      class="${activeClass(currentPath, "/blog/volunteer")}"
+      >Volunteer</a
+    >
   `;
 }
 
@@ -359,26 +377,45 @@ function renderAuthed(user, summary, currentPath, stateCode) {
   const tooltip = getRoleTooltip(user.role);
   const active = (href) => activeClass(currentPath, href);
   return html`
-    <span
-      class="user-info"
-      data-tooltip="${tooltip}"
-      data-placement="bottom"
-    >
+    <span class="user-info" data-tooltip="${tooltip}" data-placement="bottom">
       ${user.avatar_url
         ? html`<img class="user-avatar" src="${user.avatar_url}" alt="" />`
         : html`<span class="user-dot"></span>`}
-      <span class="user-name">${user.display_name || user.email || 'User'}</span>
+      <span class="user-name"
+        >${user.display_name || user.email || "User"}</span
+      >
     </span>
-    ${stateCode ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>` : ""}
-    <a href="/" class="${active('/')}">Home</a>
-    <a href="/blog" class="${active('/blog')}">Blog</a>
-    ${user.permissions?.can_view_queue_page ? html`<a href="/queue" class="${active('/queue')}">Queue <span class="nav-count ${summary == null ? 'nav-count--hidden' : ''}">${summary?.open_prs ?? 0}</span></a>` : ""}
-    ${user.permissions?.can_view_issues_page ? html`<a href="/issues" class="${active('/issues')}">Issues ${summary?.issues_errors ? html`<span class="nav-count nav-count--error">${summary.issues_errors}</span>` : ""}</a>` : ""}
-    ${user.permissions?.can_view_reviews_page ? html`<a href="/review" class="${active('/review')}">Reviews</a>` : ""}
-    ${user.permissions?.can_manage_roles ? html`<a href="/admin" class="${active('/admin')}">Admin</a>` : ""}
+    ${stateCode
+      ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>`
+      : ""}
+    <a href="/" class="${active("/")}">Home</a>
+    <a href="/blog" class="${active("/blog")}">Blog</a>
+    ${user.permissions?.can_view_issues_page
+      ? html`<a href="/issues" class="${active("/issues")}"
+          >Issues
+          ${summary?.issues_errors
+            ? html`<span class="nav-count nav-count--error"
+                >${summary.issues_errors}</span
+              >`
+            : ""}</a
+        >`
+      : ""}
+    ${user.permissions?.can_view_queue_page
+      ? html`<a href="/queue" class="${active("/queue")}"
+          >Bulk review
+          <span class="nav-count ${summary == null ? "nav-count--hidden" : ""}"
+            >${summary?.open_prs ?? 0}</span
+          ></a
+        >`
+      : ""}
+    ${user.permissions?.can_view_reviews_page
+      ? html`<a href="/review" class="${active("/review")}">Reviews</a>`
+      : ""}
+    ${user.permissions?.can_manage_roles
+      ? html`<a href="/admin" class="${active("/admin")}">Admin</a>`
+      : ""}
   `;
 }
-
 
 function Navbar({ user }) {
   let userData = null;
@@ -389,17 +426,26 @@ function Navbar({ user }) {
   }
   const isAuthed = userData?.authenticated;
   const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
-  const [stateCode] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, '', { ttl: PERSIST_FOREVER });
-  const resolvedTheme = theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const [stateCode] = useLocalStorage("app:default-state", "", {
+    ttl: PERSIST_FOREVER,
+  });
+  const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, "", {
+    ttl: PERSIST_FOREVER,
+  });
+  const resolvedTheme =
+    theme ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light");
   document.documentElement.dataset.theme = resolvedTheme;
-  const toggleTheme = () => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
-  const onLogoutClick = () => localStorage.removeItem('app:default-state');
+  const toggleTheme = () =>
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  const onLogoutClick = () => localStorage.removeItem("app:default-state");
   const summary = useSummary(canViewQueue, stateCode);
   const currentPath = window.location.pathname;
   return html`
     ${NAVBAR_CSS}
-    <nav class="${!isAuthed ? 'nav--logged-out' : ''}">
+    <nav class="${!isAuthed ? "nav--logged-out" : ""}">
       <a href="/" class="nav-brand">
         <span class="nav-brand-icon">
           <i class="fa-solid fa-landmark"></i>
@@ -407,16 +453,36 @@ function Navbar({ user }) {
         CivicPatch
         <span class="nav-beta-badge">BETA</span>
       </a>
-      ${isAuthed ? html`<a href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(window.location.href)}" class="nav-logout" @click=${onLogoutClick}><i class="fa-solid fa-right-from-bracket"></i> Logout</a>` : ''}
+      ${isAuthed
+        ? html`<a
+            href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(
+              window.location.href,
+            )}"
+            class="nav-logout"
+            @click=${onLogoutClick}
+            ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+          >`
+        : ""}
       <div class="nav-links">
-        <button class="theme-toggle" @click=${toggleTheme} aria-label="Toggle theme" title="${resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}">
-          <i class="fa-solid ${resolvedTheme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>
+        <button
+          class="theme-toggle"
+          @click=${toggleTheme}
+          aria-label="Toggle theme"
+          title="${resolvedTheme === "dark"
+            ? "Switch to light mode"
+            : "Switch to dark mode"}"
+        >
+          <i
+            class="fa-solid ${resolvedTheme === "dark" ? "fa-sun" : "fa-moon"}"
+          ></i>
         </button>
         ${isAuthed
           ? renderAuthed(userData, summary, currentPath, stateCode)
           : html`
               ${renderPublicLinks(currentPath)}
-              <a class="login-link" href="/login"><i class="fa-solid fa-envelope"></i> Sign in</a>
+              <a class="login-link" href="/login"
+                ><i class="fa-solid fa-envelope"></i> Sign in</a
+              >
             `}
       </div>
     </nav>
@@ -424,6 +490,6 @@ function Navbar({ user }) {
 }
 
 customElements.define(
-  'civ-navbar',
-  component(Navbar, { useShadowDOM: false, observedAttributes: ['user'] })
+  "civ-navbar",
+  component(Navbar, { useShadowDOM: false, observedAttributes: ["user"] }),
 );
