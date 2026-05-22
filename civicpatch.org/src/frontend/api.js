@@ -533,15 +533,15 @@ export const fetchAdminUsers = async () => {
   return res.json();
 };
 
-export const setUserRoles = async (userId, roles) => {
-  const res = await fetch(`${API_URL}/api/admin/users/${userId}/roles`, {
+export const setUserRole = async (userId, role) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/role`, {
     credentials: "include",
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ roles }),
+    body: JSON.stringify({ role }),
   });
   if (!res.ok) {
     const body = await res.text();

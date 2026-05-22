@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect, useRef } from "haunted";
-import { fetchAdminUsers, setUserRoles } from "../../api.js";
+import { fetchAdminUsers, setUserRole } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { ROLES_META, getRoleMeta, type RoleKey, type RoleMeta } from "./roles-meta.js";
 import type { ConfirmRoleContext } from "./confirm-role-modal.js";
@@ -9,8 +9,13 @@ import "./status-toast.js";
 import "./confirm-role-modal.js";
 import "./admin-page.css";
 
-const SELF_LOCK_TOOLTIP = "To change your own roles, use `mise run grant_role`.";
+const SELF_LOCK_TOOLTIP = "To change your own role, use `mise run grant_role`.";
 const TOAST_TIMEOUT_MS = 10_000;
+
+const DEFAULT_ROLE = "default";
+// Ladder order for "what's filled" + "what's the level just below" logic.
+// Mirrors schemas/common.py:_ROLE_RANK.
+const LADDER: readonly RoleKey[] = ROLES_META.map((m) => m.key);
 
 type AdminUser = {
   id: string;
@@ -18,32 +23,42 @@ type AdminUser = {
   display_name: string | null;
   provider: string;
   provider_user_id: string;
-  roles: string[];
+  role: string;
 };
 
-function isManagedRole(role: string): role is RoleKey {
-  return ROLES_META.some((m) => m.key === role);
+// Rank of a role on the ladder. default=0, contributors=1, ..., admins=3.
+function rolePos(role: string): number {
+  if (role === DEFAULT_ROLE) return 0;
+  const idx = LADDER.indexOf(role as RoleKey);
+  return idx === -1 ? 0 : idx + 1;
 }
 
-// Non-managed roles (e.g. legacy "default") are preserved verbatim on every
-// PUT so chip toggles don't accidentally strip them from user_roles.
-function preservedRolesOf(user: AdminUser): string[] {
-  return user.roles.filter((r) => !isManagedRole(r));
+// Only the chip matching the user's exact current role is filled.
+// Users at `default` have no chips filled.
+function isChipFilled(userRole: string, chipKey: RoleKey): boolean {
+  return userRole === chipKey;
 }
 
-function composeNewRoles(user: AdminUser, role: RoleKey, action: "add" | "remove"): string[] {
-  const preserved = preservedRolesOf(user);
-  const managed = new Set(user.roles.filter(isManagedRole) as RoleKey[]);
-  if (action === "add") managed.add(role);
-  else managed.delete(role);
-  return [...preserved, ...managed];
+// Click a chip → compute the user's new role.
+//   - Click outlined → set role to that chip's level (promote or demote)
+//   - Click filled (i.e. the user's current level) → revoke fully back to default
+function computeTargetRole(chipKey: RoleKey, wasAssigned: boolean): string {
+  return wasAssigned ? DEFAULT_ROLE : chipKey;
 }
 
-function changedMessage(user: AdminUser, meta: RoleMeta, action: "add" | "remove"): string {
+function isHighPower(role: string): boolean {
+  const meta = getRoleMeta(role);
+  return meta?.power === "high";
+}
+
+function changedMessage(user: AdminUser, fromRole: string, toRole: string): string {
   const who = user.email ?? user.display_name ?? "user";
-  const verb = action === "add" ? "Granted" : "Removed";
-  const prep = action === "add" ? "to" : "from";
-  return `${verb} ${meta.label} ${prep} ${who}`;
+  const fromLabel = getRoleMeta(fromRole)?.label ?? "default";
+  const toLabel = getRoleMeta(toRole)?.label ?? "default";
+  if (rolePos(toRole) > rolePos(fromRole)) {
+    return `Promoted ${who} to ${toLabel}`;
+  }
+  return `Demoted ${who} from ${fromLabel} to ${toLabel}`;
 }
 
 function AdminPage() {
@@ -91,11 +106,12 @@ function AdminPage() {
     }, TOAST_TIMEOUT_MS);
   };
 
-  // Persist the new role set and update the local row on success.
-  const commitRoles = async (userId: string, newRoles: string[]): Promise<boolean> => {
+  // Persist the new role and update the local row on success.
+  const commitRole = async (user: AdminUser, fromRole: string, toRole: string): Promise<boolean> => {
     try {
-      await setUserRoles(userId, newRoles);
-      setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, roles: newRoles } : u)));
+      await setUserRole(user.id, toRole);
+      setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, role: toRole } : u)));
+      showToast(changedMessage(user, fromRole, toRole));
       return true;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
@@ -104,31 +120,22 @@ function AdminPage() {
     }
   };
 
-  const toggleLowFriction = async (user: AdminUser, meta: RoleMeta, assigned: boolean) => {
-    const action = assigned ? "remove" : "add";
-    const newRoles = composeNewRoles(user, meta.key, action);
-    const ok = await commitRoles(user.id, newRoles);
-    if (!ok) return;
-    showToast(changedMessage(user, meta, action));
-  };
-
-  const openHighFrictionModal = (user: AdminUser, meta: RoleMeta, assigned: boolean) => {
-    setPendingConfirm({
-      userId: user.id,
-      userLabel: user.email ?? user.display_name ?? "user",
-      role: meta.key,
-      action: assigned ? "remove" : "add",
-    });
-  };
-
   const handleChipClick = (user: AdminUser, ev: CustomEvent) => {
-    const { role, assigned } = ev.detail as { role: RoleKey; assigned: boolean };
-    const meta = getRoleMeta(role);
-    if (!meta) return;
-    if (meta.power === "low") {
-      void toggleLowFriction(user, meta, assigned);
+    const { role: chipKey, assigned } = ev.detail as { role: RoleKey; assigned: boolean };
+    const fromRole = user.role;
+    const toRole = computeTargetRole(chipKey, assigned);
+    if (fromRole === toRole) return;
+
+    const isHigh = isHighPower(fromRole) || isHighPower(toRole);
+    if (isHigh) {
+      setPendingConfirm({
+        userId: user.id,
+        userLabel: user.email ?? user.display_name ?? "user",
+        fromRole,
+        toRole,
+      });
     } else {
-      openHighFrictionModal(user, meta, assigned);
+      void commitRole(user, fromRole, toRole);
     }
   };
 
@@ -139,9 +146,7 @@ function AdminPage() {
     setPendingConfirm(null);
     const user = users.find((u) => u.id === ctx.userId);
     if (!user) return;
-    const newRoles = composeNewRoles(user, ctx.role as RoleKey, ctx.action);
-    await commitRoles(user.id, newRoles);
-    // No toast for high-friction — the modal was the confirmation.
+    await commitRole(user, ctx.fromRole, ctx.toRole);
   };
 
   return html`
@@ -159,7 +164,7 @@ function AdminPage() {
                 <tr>
                   <th>Email</th>
                   <th>Display name</th>
-                  <th>Roles</th>
+                  <th>Role</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,8 +181,8 @@ function AdminPage() {
                       <td>${user.display_name ?? "—"}</td>
                       <td>
                         <div class="admin-users-table__roles">
-                          ${ROLES_META.map((meta) => {
-                            const assigned = user.roles.includes(meta.key);
+                          ${ROLES_META.map((meta: RoleMeta) => {
+                            const assigned = isChipFilled(user.role, meta.key);
                             return html`
                               <role-chip
                                 .role=${meta.key}

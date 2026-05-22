@@ -338,9 +338,9 @@ const NAVBAR_CSS = html`
   </style>
 `;
 
-function getTeamsTooltip(teams) {
-  if (!teams || teams.length === 0) return 'No teams assigned';
-  return `Teams: ${teams.map((t) => t.name || t).join(', ')}`;
+function getRoleTooltip(role) {
+  if (!role) return 'No role assigned';
+  return `Role: ${role}`;
 }
 
 function activeClass(currentPath, href) {
@@ -356,8 +356,7 @@ function renderPublicLinks(currentPath) {
 }
 
 function renderAuthed(user, summary, currentPath, stateCode) {
-  const teams = user.teams || [];
-  const tooltip = getTeamsTooltip(teams);
+  const tooltip = getRoleTooltip(user.role);
   const active = (href) => activeClass(currentPath, href);
   return html`
     <span
