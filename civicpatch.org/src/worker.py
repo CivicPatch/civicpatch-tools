@@ -13,12 +13,14 @@ from routers.temporal.activities import (
     od_sync_activity,
     expire_stale_pipeline_runs_activity,
     cleanup_stale_review_entries_activity,
+    merge_pr_activity,
 )
 from routers.temporal.map_activities import sync_jurisdiction_map_activity
 from lib.temporal.workflows import (
     PRSyncWorkflow,
     OdSyncWorkflow,
     PipelineRunCleanupWorkflow,
+    RepoMergeQueueWorkflow,
     ReviewSessionCleanupWorkflow,
     ScheduleId,
     WorkflowInstanceId,
@@ -119,6 +121,7 @@ async def main() -> None:
             PRSyncWorkflow,
             OdSyncWorkflow,
             PipelineRunCleanupWorkflow,
+            RepoMergeQueueWorkflow,
             ReviewSessionCleanupWorkflow,
             SyncJurisdictionMapWorkflow,
         ],
@@ -127,6 +130,7 @@ async def main() -> None:
             od_sync_activity,
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
+            merge_pr_activity,
             sync_jurisdiction_map_activity,
         ],
     ):

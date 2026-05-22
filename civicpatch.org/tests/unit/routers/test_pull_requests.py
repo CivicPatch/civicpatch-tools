@@ -161,7 +161,7 @@ def test_close_pull_request_returns_500_on_github_failure(client):
 def test_save_and_merge_returns_202(client):
     with (
         patch("lib.redis.set", new_callable=AsyncMock),
-        patch("core.pull_request_merge.do_merge", new_callable=AsyncMock),
+        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
@@ -170,6 +170,12 @@ def test_save_and_merge_returns_202(client):
 
     assert response.status_code == 202
     assert response.json()["status"] == "pending"
+    mock_enqueue.assert_awaited_once()
+    assert mock_enqueue.await_args is not None
+    sent_request = mock_enqueue.await_args.args[0]
+    assert sent_request.pull_request_number == TEST_PR_NUMBER
+    assert sent_request.request_id == TEST_REQUEST_ID
+    assert sent_request.merge_key == f"merge_status:{TEST_PR_NUMBER}"
 
 
 # ── get_pull_request_by_number tests ──────────────────────────────────────
@@ -330,25 +336,6 @@ def test_do_merge_behind_pr_dirty_after_update_writes_error():
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "error"
     assert "conflicts" in last_call_value["error"]
-
-
-@pytest.mark.unit
-def test_do_merge_base_branch_modified_retries_and_succeeds():
-    redis_set = AsyncMock()
-    merge = AsyncMock(side_effect=["Base branch was modified. Review and try the merge again.", None])
-    mergeability = AsyncMock(side_effect=["clean", "clean"])
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", mergeability),
-        patch("lib.github.api.merge_pull_request", merge),
-        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
-        patch("asyncio.sleep", new_callable=AsyncMock),
-        patch("database.pull_requests.update_pipeline_run_pull_request_status", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "merged"
 
 
 @pytest.mark.unit
