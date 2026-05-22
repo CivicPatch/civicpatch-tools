@@ -32,13 +32,13 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
 def build_permissions(identity: Optional[Identity]) -> dict:
     role = identity.role if identity else None
     return {
-        "can_view_queue_page": has_at_least(role, Role.DEFAULT),
+        "can_view_queue_page": has_at_least(role, Role.CONTRIBUTORS),
         "can_view_queue_page_errors": has_at_least(role, Role.ADMINS),
         "can_view_jurisdiction_page": has_at_least(role, Role.DEFAULT),
         "can_scrape_local": not _is_production and has_at_least(role, Role.MAINTAINERS),
         "can_scrape_remote": has_at_least(role, Role.MAINTAINERS),
         "can_view_reviews_page": has_at_least(role, Role.DEFAULT),
-        "can_view_issues_page": has_at_least(role, Role.MAINTAINERS),
+        "can_view_issues_page": has_at_least(role, Role.ADMINS),
         "can_delete_directory_person": has_at_least(role, Role.CONTRIBUTORS),
         "can_cancel_job": has_at_least(role, Role.ADMINS),
         "can_write_config": has_at_least(role, Role.MAINTAINERS),

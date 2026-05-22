@@ -12,13 +12,13 @@ function makeRedis() {
   });
 }
 
-export async function createTestSession(provider, providerUserId, email, teams) {
+export async function createTestSession(provider, providerUserId, email, role) {
   const redis = makeRedis();
   const token = randomBytes(32).toString("hex");
   const csrfNonce = randomBytes(24).toString("hex");
   const expiresAt = Date.now() / 1000 + SESSION_TTL;
 
-  const entry = JSON.stringify({ provider, provider_user_id: providerUserId, email, teams, expires_at: expiresAt });
+  const entry = JSON.stringify({ provider, provider_user_id: providerUserId, email, role, expires_at: expiresAt });
 
   await redis.set(`${TOKEN_PREFIX}${token}`, entry, "EX", SESSION_TTL);
   await redis.set(`${USER_PREFIX}${provider}:${providerUserId}`, token, "EX", SESSION_TTL);

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from schemas.common import Identity, Role
+from schemas.common import Identity
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
 from routers.api.pipeline_runs import update_pipeline_run_and_publish
@@ -13,7 +13,6 @@ MOCK_IDENTITY = Identity(
     provider="system",
     provider_user_id="test-user",
     email="test@civicpatch.org",
-    teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS, Role.DEFAULT],
 )
 
 TEST_REQUEST_ID = "test-request-id-123"

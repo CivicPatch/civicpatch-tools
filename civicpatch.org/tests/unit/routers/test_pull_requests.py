@@ -15,9 +15,27 @@ MOCK_IDENTITY = Identity(
     provider="system",
     provider_user_id="test-user",
     email="test@civicpatch.org",
-    teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS, Role.DEFAULT],
     user_id="user-id-123",
 )
+
+
+def _user_at(role: Role) -> Identity:
+    """Cookie-style identity at a specific trust level, for gate tests."""
+    return Identity(
+        type="cookie",
+        provider="supabase",
+        provider_user_id="sb-test",
+        email="test@example.com",
+        role=role.value,
+        user_id="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    )
+
+
+def _client_as(identity: Identity) -> TestClient:
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: identity
+    app.include_router(pull_requests_router.get_router(None), prefix="/pull_requests")
+    return TestClient(app)
 
 TEST_REQUEST_ID = "test-request-id-123"
 TEST_PR_NUMBER = "42"
@@ -397,3 +415,31 @@ def test_do_merge_unexpected_exception_writes_error():
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "error"
     assert "unexpected" in last_call_value["error"]
+
+
+# ── Auth gates on write routes ──────────────────────────────────────────────
+#
+# These routes were bumped from RouteCategory.AUTHENTICATED to
+# (TEAM_REQUIRED, Role.CONTRIBUTORS). The default-level (signed-in but no
+# elevation) user must be rejected with 403; the auth-ladder cascade is
+# proven separately in test_auth.py, so here we just pin the gate floor.
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "method,url",
+    [
+        ("put", "/pull_requests/data"),
+        ("delete", f"/pull_requests/{TEST_PR_NUMBER}?request_id={TEST_REQUEST_ID}"),
+        ("post", f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge"),
+        ("post", f"/pull_requests/{TEST_PR_NUMBER}/merge?request_id={TEST_REQUEST_ID}"),
+        ("post", f"/pull_requests/{TEST_PR_NUMBER}/update-branch"),
+    ],
+)
+def test_pull_request_writes_reject_default_role(method, url):
+    """Default-level users (just-signed-in, no elevation) must be 403'd from
+    every write route that mutates PR state."""
+    client = _client_as(_user_at(Role.DEFAULT))
+    kwargs = {} if method == "delete" else {"json": {}}
+    response = getattr(client, method)(url, **kwargs)
+    assert response.status_code == 403

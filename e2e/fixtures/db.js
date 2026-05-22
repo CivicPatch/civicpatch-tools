@@ -41,21 +41,15 @@ export async function seedE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
-    // User
+    // User. Seeded at the `contributors` level so the existing review-session
+    // and PR-merge e2e tests still work — those write routes were bumped to
+    // a Contributor floor when the trust ladder landed (migration 087).
     await client.query(
-      `INSERT INTO users (provider, provider_user_id, email, display_name)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO users (provider, provider_user_id, email, display_name, role)
+       VALUES ($1, $2, $3, $4, 'contributors')
        ON CONFLICT (provider, provider_user_id)
-       DO UPDATE SET email = EXCLUDED.email`,
+       DO UPDATE SET email = EXCLUDED.email, role = EXCLUDED.role`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID, "e2e@civicpatch.org", "E2E Test User"]
-    );
-
-    // Role — required for TEAM_REQUIRED routes with Role.DEFAULT
-    await client.query(
-      `INSERT INTO user_roles (provider, provider_user_id, role)
-       VALUES ($1, $2, 'default')
-       ON CONFLICT (provider, provider_user_id, role) DO NOTHING`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
     );
 
     // Jurisdiction
@@ -192,10 +186,6 @@ export async function teardownE2eFixtures() {
       await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [ocdid]);
       await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [ocdid]);
     }
-    await client.query(
-      `DELETE FROM user_roles WHERE provider = $1 AND provider_user_id = $2`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
-    );
     await client.query(
       `DELETE FROM users WHERE provider = $1 AND provider_user_id = $2`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
