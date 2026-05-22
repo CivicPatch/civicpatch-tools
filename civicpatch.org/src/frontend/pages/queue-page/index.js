@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { usePullRequestActions } from "../../hooks/use-pull-request-actions.ts";
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
@@ -10,7 +11,6 @@ import {
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import "../../components/search-jurisdictions/select-state.js";
 import "../../components/publish-log/index.js";
 import "./queue-summary/index.js";
@@ -57,7 +57,7 @@ function QueuePage() {
   const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
   const [queueSummary, setQueueSummary] = useState(null);
   const [pullRequests, setPullRequests] = useState([]);
-  const [pullRequestState, setPullRequestState] = useState({});
+  const { actionState, entries: publishLogEntries, perform } = usePullRequestActions();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(getIntParam("pr_page", 1));
@@ -104,26 +104,16 @@ function QueuePage() {
       .catch(() => setActivePipelineRuns([]));
   }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
-  const handleMerge = async (event) => {
+  const handleMerge = (event) => {
     const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
-    try {
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE } }));
-      await saveAndMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null);
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED } }));
-    } catch (err) {
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } }));
-    }
+    const pr = pullRequests.find(p => p.pr.number === pullRequestNumber);
+    trackMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? `#${pullRequestNumber}`);
   };
 
-  const handleClose = async (event) => {
+  const handleClose = (event) => {
     const { pullRequestNumber, request_id } = event.detail;
-    try {
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE } }));
-      await closePullRequest(request_id, pullRequestNumber);
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED } }));
-    } catch (err) {
-      setPullRequestState(prev => ({ ...prev, [pullRequestNumber]: { status: PULL_REQUEST_STATUS.ERROR, error: err } }));
-    }
+    const pr = pullRequests.find(p => p.pr.number === pullRequestNumber);
+    trackClose(pullRequestNumber, request_id, pr?.jurisdiction?.name ?? `#${pullRequestNumber}`);
   };
 
   const handleViewChange = (newView) => {
@@ -173,17 +163,6 @@ function QueuePage() {
     setPage(1);
   };
 
-  const publishLogEntries = Object.entries(pullRequestState)
-    .filter(([, s]) => [PULL_REQUEST_STATUS.LOADING_MERGE, PULL_REQUEST_STATUS.MERGED, PULL_REQUEST_STATUS.ERROR].includes(s.status))
-    .map(([prNumber, s]) => {
-      const pr = pullRequests.find(p => p.pr.number === parseInt(prNumber, 10));
-      return {
-        pullRequestNumber: parseInt(prNumber, 10),
-        jurisdictionName: pr?.jurisdiction?.name || `#${prNumber}`,
-        status: s.status,
-      };
-    });
-
   return html`
     <main class="queue-page page-content">
       <div class="queue-page__filters">
@@ -215,7 +194,7 @@ function QueuePage() {
         ></queue-active-pipeline-runs>
         <queue-pr-list
           .pullRequests=${pullRequests}
-          .pullRequestState=${pullRequestState}
+          .pullRequestState=${actionState}
           .loading=${loading}
           .error=${error}
           .page=${page}

@@ -33,8 +33,8 @@ function PublishLog({ entries = [] }) {
             }
             return html`
               <li class="publish-log__item ${modifierClass}">
-                <span class="publish-log__name">${e.jurisdictionName}</span>
-                <span class="publish-log__pr">#${e.pullRequestNumber}</span>
+                <span class="publish-log__name">${e.jurisdiction_name}</span>
+                <span class="publish-log__pr">#${e.pull_request_number}</span>
                 ${statusEl}
               </li>
             `;
