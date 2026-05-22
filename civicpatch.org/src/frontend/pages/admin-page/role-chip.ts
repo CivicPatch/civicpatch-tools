@@ -47,7 +47,9 @@ function RoleChip(host: RoleChipHost) {
       title=${tooltip}
       @click=${onClick}
     >
-      <span class="role-chip__glyph" aria-hidden="true">${assigned ? meta.glyph : "+"}</span>
+      ${assigned
+        ? null
+        : html`<span class="role-chip__glyph" aria-hidden="true">+</span>`}
       <span class="role-chip__label">${meta.label}</span>
     </button>
   `;

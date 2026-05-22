@@ -61,11 +61,26 @@ Create `../civicpatch.org.env` with these values. Everything else in `docker-com
 
 ## Permissions
 
-Roles are granted manually by an admin after a user signs up via email OTP. The `build_permissions()` function in `routers/frontend.py` maps roles to frontend capabilities; backend routes enforce the same boundaries via `require_route_access`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+Roles are a **trust ladder** — each level inherits everything below it.
 
-### Bootstrapping an admin
+```
+default  <  contributors  <  maintainers  <  admins
+```
 
-Two ways to grant a role. The user must have signed in via Supabase OTP at least once so a `users` row exists.
+Stored as a single `users.role` column. The `build_permissions()` function in `routers/frontend.py` maps the ladder to frontend capabilities; backend routes enforce the same boundaries via `require_route_access(category, required_role)`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+
+### What each level adds
+
+| Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |
+|---|---|
+| **default** (any signed-in user) | Read jurisdictions, people, pull requests, notes. View the queue page and review sessions. Read pull requests; merge if owner. |
+| **contributors** | Create / update / delete people. Create notes. |
+| **maintainers** | Read pipeline run errors and events; view run context. Issues page. Read and edit role configs (state and locality scope). Trigger pipeline runs (remote and local-dev). Resume paused runs. |
+| **admins** | View pipeline run logs. Resolve / cancel pipeline runs. Edit global role configs. Manage other users' roles (via `/admin`). View queue page errors. Cancel jobs. |
+
+### Bootstrapping the first admin
+
+The user must have signed in via Supabase OTP at least once so a `users` row exists.
 
 **Preferred — `mise run grant_role`:**
 
@@ -74,43 +89,20 @@ mise run grant_role -- <user-email> admins         # local dev
 mise run grant_role_prod -- <user-email> admins    # against civicpatch.org
 ```
 
-Authenticates via `SERVICE_API_KEY` (local) or `$PROD_SERVICE_API_KEY` (prod). Hits the same `PUT /api/admin/users/{id}/roles` endpoint the admin UI uses, additive (preserves any existing roles). Valid role args: `contributors`, `maintainers`, `admins`. If multiple `users` rows share an email (rare; legacy pre-Supabase rows), the task grants to all matches.
+Authenticates via `SERVICE_API_KEY` (local) or `$PROD_SERVICE_API_KEY` (prod). Hits the same `PUT /api/admin/users/{id}/role` endpoint the admin UI uses. **Sets the level unconditionally** — passing `default` demotes back to the baseline. Valid role args: `default`, `contributors`, `maintainers`, `admins`. If multiple `users` rows share an email (rare; legacy pre-Supabase rows), the task sets the role on all matches.
 
 **After bootstrap — admin UI:**
 
-Once your account has `admins`, visit `/admin` to manage other users' roles via clickable chips. Contributor toggles instantly; Maintainer and Admin open a confirm modal. Your own row is locked at both layers — to change your own roles, use `mise run grant_role`.
+Once your account is at `admins`, visit `/admin` to manage other users' roles via clickable chips. Each user shows the chip for their current level filled in; click an outlined chip to promote/demote to that level, or click the currently-filled chip to revoke back to default. Contributor changes toggle instantly with a status toast; Maintainer and Admin changes open a confirm modal. Your own row is locked at both layers — to change your own role, use `mise run grant_role`.
 
 **Fallback — direct SQL:**
 
 ```sql
-INSERT INTO user_roles (user_id, role)
-SELECT id, 'admins' FROM users
+UPDATE users SET role = 'admins'
 WHERE provider='supabase' AND email='<user-email>';
 ```
 
 The session picks up the new role on the next request — no logout required.
-
-| Feature | default | contributors | maintainers | admins |
-|---|:---:|:---:|:---:|:---:|
-| Jurisdictions — read | ✓ | ✓ | ✓ | ✓ |
-| People — read | ✓ | ✓ | ✓ | ✓ |
-| People — create / update | | ✓ | | |
-| People — delete | | ✓ | | |
-| Queue page | ✓ | ✓ | ✓ | ✓ |
-| Pull requests — read / merge | ✓ | ✓ | ✓ | ✓ |
-| Review sessions | ✓ | ✓ | ✓ | ✓ |
-| Notes — read | ✓ | ✓ | ✓ | ✓ |
-| Notes — create | | ✓ | ✓ | ✓ |
-| Pipeline runs — read errors / events | | | ✓ | ✓ |
-| Pipeline runs — view run context | | | ✓ | ✓ |
-| Pipeline runs — view run logs | | | | ✓ |
-| Pipeline runs — trigger (remote) | | | ✓ | |
-| Pipeline runs — trigger (local, dev only) | | | ✓ | |
-| Pipeline runs — resume (paused) | | | ✓ | |
-| Pipeline runs — resolve / cancel | | | | ✓ |
-| Issues page (unrecognized roles, dead URLs) | | | ✓ | |
-| Role configs — read / edit (state & locality) | | | ✓ | ✓ |
-| Role configs — edit (global) | | | | ✓ |
 
 ## Local setup
 

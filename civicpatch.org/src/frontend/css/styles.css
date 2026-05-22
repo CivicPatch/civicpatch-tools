@@ -741,12 +741,33 @@ a:focus-visible {
 dialog[open] {
   z-index: 9999 !important;
   position: fixed !important;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   margin: auto;
-  background: var(--pico-background-color, rgba(0, 0, 0, 0.5));
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: min(90vw, 32rem);
+  max-height: 90vh;
+  width: max-content;
+}
+
+dialog[open]::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+dialog[open] > article {
+  margin: 0;
+  width: 100%;
+  border: 2px solid var(--civ-border-strong, var(--pico-color));
+  box-shadow: 6px 6px 0 var(--civ-border-strong, var(--pico-color));
+  border-radius: 0;
+}
+
+dialog[open] > article > footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* ── Blog ────────────────────────────────────────────────────────────────────*/

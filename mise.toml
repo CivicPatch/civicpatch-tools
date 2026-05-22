@@ -10,6 +10,10 @@ supabase = "2.98.0"
 
 [env]
 _.file = ["../civicpatch.env", "../civicpatch.org.env"]
+# Local-dev value. Matches what the FastAPI app expects when not overridden
+# by docker-compose / .env. Production uses $PROD_SERVICE_API_KEY (from secrets).
+SERVICE_API_KEY = "service-api-key"
+
 
 [tasks.setup]
 run = "mise install && pre-commit install && pre-commit install --hook-type pre-push && uv sync --all-packages"
@@ -64,6 +68,74 @@ run = """
     curl -X POST "https://civicpatch.org/api/admin/clear_dashboard_cache" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_SERVICE_API_KEY"
+"""
+
+[tasks.grant_role]
+description = "Set a user's trust level by email (local). Usage: mise run grant_role <email> <role>"
+usage = '''
+arg "<email>"
+arg "<role>"
+'''
+run = """
+    set -eu
+    AUTH="$SERVICE_API_KEY"
+    EMAIL="$usage_email"
+    ROLE=$(echo "$usage_role" | tr '[:upper:]' '[:lower:]')
+
+    USERS=$(curl -fsS "http://localhost:8000/api/admin/users" -H "Authorization: $AUTH")
+    MATCHES=$(echo "$USERS" | jq -c --arg email "$EMAIL" '[.data[] | select(.email == $email)]')
+    COUNT=$(echo "$MATCHES" | jq 'length')
+    if [ "$COUNT" = "0" ]; then
+      echo "User not found: $EMAIL" >&2
+      exit 1
+    fi
+    if [ "$COUNT" != "1" ]; then
+      echo "Note: $EMAIL has $COUNT rows; setting role on all." >&2
+    fi
+
+    BODY=$(jq -nc --arg role "$ROLE" '{role: $role}')
+    echo "$MATCHES" | jq -r '.[].id' | while read -r USER_ID; do
+      curl --fail-with-body -sS -X PUT "http://localhost:8000/api/admin/users/$USER_ID/role" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: $AUTH" \
+        -d "$BODY" || { echo "Failed: user_id=$USER_ID" >&2; exit 1; }
+      echo
+      echo "Set $EMAIL to role '$ROLE' (user_id=$USER_ID)"
+    done
+"""
+
+[tasks.grant_role_prod]
+description = "Set a user's trust level by email (prod). Usage: mise run grant_role_prod <email> <role>"
+usage = '''
+arg "<email>"
+arg "<role>"
+'''
+run = """
+    set -eu
+    AUTH="$PROD_SERVICE_API_KEY"
+    EMAIL="$usage_email"
+    ROLE=$(echo "$usage_role" | tr '[:upper:]' '[:lower:]')
+
+    USERS=$(curl -fsS "https://civicpatch.org/api/admin/users" -H "Authorization: $AUTH")
+    MATCHES=$(echo "$USERS" | jq -c --arg email "$EMAIL" '[.data[] | select(.email == $email)]')
+    COUNT=$(echo "$MATCHES" | jq 'length')
+    if [ "$COUNT" = "0" ]; then
+      echo "User not found: $EMAIL" >&2
+      exit 1
+    fi
+    if [ "$COUNT" != "1" ]; then
+      echo "Note: $EMAIL has $COUNT rows; setting role on all." >&2
+    fi
+
+    BODY=$(jq -nc --arg role "$ROLE" '{role: $role}')
+    echo "$MATCHES" | jq -r '.[].id' | while read -r USER_ID; do
+      curl --fail-with-body -sS -X PUT "https://civicpatch.org/api/admin/users/$USER_ID/role" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: $AUTH" \
+        -d "$BODY" || { echo "Failed: user_id=$USER_ID" >&2; exit 1; }
+      echo
+      echo "Set $EMAIL to role '$ROLE' (user_id=$USER_ID)"
+    done
 """
 
 
