@@ -559,9 +559,6 @@ thead th {
 
 tbody td {
   padding: 0.28rem 0.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   vertical-align: middle;
   color: var(--pico-muted-color);
   border-bottom: 1px solid var(--pico-muted-border-color);

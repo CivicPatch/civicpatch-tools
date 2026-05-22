@@ -13,7 +13,7 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str = Query(...),
         page: int = Query(1, ge=1),
         per_page: int = Query(20, ge=1, le=100),
-        _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])),
+        _user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         offset = (page - 1) * per_page
         total, notes = await database.get_notes_for_jurisdiction(jurisdiction_ocdid, per_page, offset)
@@ -28,7 +28,7 @@ def get_router() -> APIRouter:
     @router.post("")
     async def create_note_endpoint(
         body: CreateNoteRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")

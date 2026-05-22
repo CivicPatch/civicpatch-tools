@@ -106,14 +106,14 @@ def get_router() -> APIRouter:
     @router.patch("/data")
     async def patch_jurisdiction_data_endpoint(
         request: PatchJurisdictionDataRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.CONTRIBUTORS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
         pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_edit_pr(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             fields={"url": request.url, "population": request.population, "geoid": request.geoid},
-            author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=user.teams or []),
+            author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=[user.role] if user.role else []),
         )
         if pull_request_number is None:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
@@ -121,7 +121,7 @@ def get_router() -> APIRouter:
 
     @router.get("/config/global")
     async def get_global_config_endpoint(
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS, Role.ADMINS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         config = await role_config_service.load_global_config()
         roles = [{"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases} for r in config.roles]
@@ -130,7 +130,7 @@ def get_router() -> APIRouter:
     @router.put("/config/global")
     async def put_global_config_endpoint(
         body: SetGlobalRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         author = {"name": user.email or user.provider_user_id, "email": user.email or f"{user.provider_user_id}@users.noreply.github.com"}
         try:
@@ -142,7 +142,7 @@ def get_router() -> APIRouter:
     @router.get("/config")
     async def get_jurisdiction_config_endpoint(
         ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         try:
             per_level = await role_config_service.load_role_config_per_level(ocdid)
@@ -153,14 +153,14 @@ def get_router() -> APIRouter:
     @router.put("/config")
     async def put_jurisdiction_config_endpoint(
         body: SetScopeRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.MAINTAINERS])),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         try:
             if body.issue_id:
                 author = PrAuthor(
                     name=user.display_name or user.email or user.provider_user_id,
                     email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
-                    teams=user.teams or [],
+                    teams=[user.role] if user.role else [],
                 )
                 pull_request_url = await pipeline_issue_resolution_service.resolve_via_config_pr(body, author, body.issue_id)
                 return {"data": {"pull_request_url": pull_request_url}}

@@ -22,6 +22,26 @@ class Role(str, Enum):
     ADMINS = "admins"
 
 
+# Trust ladder: a user holds one level; permissions cascade downward.
+# admins > maintainers > contributors > default. Higher rank = more powers.
+_ROLE_RANK: dict[str, int] = {
+    Role.DEFAULT.value: 0,
+    Role.CONTRIBUTORS.value: 1,
+    Role.MAINTAINERS.value: 2,
+    Role.ADMINS.value: 3,
+}
+
+
+def role_rank(role: str | None) -> int:
+    if role is None:
+        return -1  # unauthenticated: below default
+    return _ROLE_RANK.get(role, 0)
+
+
+def has_at_least(user_role: str | None, required: Role) -> bool:
+    return role_rank(user_role) >= role_rank(required.value)
+
+
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
@@ -52,22 +72,25 @@ class Identity(BaseModel):
     provider: str
     provider_user_id: str
     email: str | None
-    teams: list[str] | None
+    # role is the trust level for human user identities (cookie/user_key).
+    # `service_api_key` identities have role=None — they bypass the team check
+    # via `require_route_access`'s type-based short-circuit, not via the ladder.
+    role: str | None = None
     user_id: str | None = None
     display_name: str | None = None
 
 
-class UserWithRoles(BaseModel):
+class UserWithRole(BaseModel):
     id: str
     email: str | None
     display_name: str | None
     provider: str
     provider_user_id: str
-    roles: list[str]
+    role: str
 
 
-class SetRolesRequest(BaseModel):
-    roles: list[Role]
+class SetRoleRequest(BaseModel):
+    role: Role
 
 
 class RequestOtpRequest(BaseModel):

@@ -13,6 +13,7 @@ erDiagram
         text            provider_user_id
         text            email
         text_null       display_name
+        text            role            "default: 'default', CHECK IN ('default','contributors','maintainers','admins')"
         timestamptz_null created_at
     }
 
@@ -113,11 +114,6 @@ erDiagram
         timestamptz_null resolved_at
     }
 
-    user_roles {
-        uuid            user_id     PK,FK
-        varchar         role        PK
-    }
-
     api_keys {
         int             id              PK
         uuid            user_id         FK  "idx"
@@ -143,7 +139,6 @@ erDiagram
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"
     users ||--o{ notes : "user_id"
-    users ||--o{ user_roles : "user_id (ON DELETE CASCADE)"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     review_sessions ||--o{ review_session_entries : "review_session_id"
@@ -155,4 +150,5 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
-- `user_roles`, `api_keys`, `api_usage_limits` all use `user_id` (UUID FK to `users.id`); the deprecated composite `(provider, provider_user_id)` shape was migrated out in migration 086
+- `users.role` is a single trust level per user (one of `default`, `contributors`, `maintainers`, `admins`); permissions cascade downward (admin implies maintainer implies contributor implies default). The `user_roles` join table was dropped in migration 087.
+- `api_keys`, `api_usage_limits` use `user_id` (UUID FK to `users.id`); the deprecated composite `(provider, provider_user_id)` shape was migrated out in migration 086.

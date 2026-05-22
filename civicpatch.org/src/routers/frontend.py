@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 
 from database.jurisdictions import get_jurisdiction
 from shared.utils.id_utils import folder_to_jurisdiction_ocdid
-from schemas.common import Identity, Role
+from schemas.common import Identity, Role, has_at_least
 from lib.auth import get_optional_user
 from lib.blog import get_all_posts, get_post
 
@@ -22,7 +22,7 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
         "authenticated": True,
         "email": identity.email,
         "user_id": identity.user_id,
-        "teams": identity.teams or [],
+        "role": identity.role,
         "permissions": build_permissions(identity),
         "display_name": identity.display_name,
         "avatar_url": None,
@@ -30,20 +30,20 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
 
 
 def build_permissions(identity: Optional[Identity]) -> dict:
-    teams = identity.teams or [] if identity else []
+    role = identity.role if identity else None
     return {
-        "can_view_queue_page": Role.DEFAULT in teams,
-        "can_view_queue_page_errors": Role.ADMINS in teams,
-        "can_view_jurisdiction_page": Role.DEFAULT in teams,
-        "can_scrape_local": not _is_production and Role.MAINTAINERS in teams,
-        "can_scrape_remote": Role.MAINTAINERS in teams,
-        "can_view_reviews_page": Role.DEFAULT in teams,
-        "can_view_issues_page": Role.MAINTAINERS in teams,
-        "can_delete_directory_person": Role.CONTRIBUTORS in teams,
-        "can_cancel_job": Role.ADMINS in teams,
-        "can_write_config": Role.MAINTAINERS in teams,
-        "can_write_global_config": Role.ADMINS in teams,
-        "can_manage_roles": Role.ADMINS in teams,
+        "can_view_queue_page": has_at_least(role, Role.DEFAULT),
+        "can_view_queue_page_errors": has_at_least(role, Role.ADMINS),
+        "can_view_jurisdiction_page": has_at_least(role, Role.DEFAULT),
+        "can_scrape_local": not _is_production and has_at_least(role, Role.MAINTAINERS),
+        "can_scrape_remote": has_at_least(role, Role.MAINTAINERS),
+        "can_view_reviews_page": has_at_least(role, Role.DEFAULT),
+        "can_view_issues_page": has_at_least(role, Role.MAINTAINERS),
+        "can_delete_directory_person": has_at_least(role, Role.CONTRIBUTORS),
+        "can_cancel_job": has_at_least(role, Role.ADMINS),
+        "can_write_config": has_at_least(role, Role.MAINTAINERS),
+        "can_write_global_config": has_at_least(role, Role.ADMINS),
+        "can_manage_roles": has_at_least(role, Role.ADMINS),
     }
 
 

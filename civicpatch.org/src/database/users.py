@@ -24,21 +24,13 @@ async def upsert_user(provider, provider_user_id, email, display_name: str | Non
     return cast(str, row[0])
 
 
-async def set_user_roles(user_id: str, roles: list[str]) -> None:
+async def set_user_role(user_id: str, role: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "DELETE FROM user_roles WHERE user_id = %s",
-            (user_id,),
+            "UPDATE users SET role = %s WHERE id = %s",
+            (role, user_id),
         )
-        if roles:
-            await conn.execute(
-                """
-                INSERT INTO user_roles (user_id, role)
-                SELECT %s::uuid, UNNEST(%s::text[])
-                """,
-                (user_id, roles),
-            )
 
 
 async def create_api_key(provider, provider_user_id):
@@ -95,22 +87,14 @@ async def get_api_keys_for_user(provider, provider_user_id):
     ]
 
 
-async def list_users_with_roles(limit: int = 100, offset: int = 0) -> list[dict]:
+async def list_users(limit: int = 100, offset: int = 0) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT
-                u.id::text,
-                u.email,
-                u.display_name,
-                u.provider,
-                u.provider_user_id,
-                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
-            FROM users u
-            LEFT JOIN user_roles r ON r.user_id = u.id
-            GROUP BY u.id, u.email, u.display_name, u.provider, u.provider_user_id, u.created_at
-            ORDER BY u.created_at ASC
+            SELECT id::text, email, display_name, provider, provider_user_id, role
+            FROM users
+            ORDER BY created_at ASC
             LIMIT %s OFFSET %s
             """,
             (limit, offset),
@@ -123,7 +107,7 @@ async def list_users_with_roles(limit: int = 100, offset: int = 0) -> list[dict]
             "display_name": r[2],
             "provider": r[3],
             "provider_user_id": r[4],
-            "roles": r[5],
+            "role": r[5],
         }
         for r in rows
     ]
@@ -134,16 +118,9 @@ async def get_user(provider, provider_user_id):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT
-                u.id::text,
-                u.email,
-                u.created_at,
-                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles,
-                u.display_name
-            FROM users u
-            LEFT JOIN user_roles r ON r.user_id = u.id
-            WHERE u.provider_user_id = %s AND u.provider = %s
-            GROUP BY u.id, u.email, u.created_at, u.display_name
+            SELECT id::text, email, created_at, role, display_name
+            FROM users
+            WHERE provider_user_id = %s AND provider = %s
             """,
             (provider_user_id, provider),
         )
@@ -154,7 +131,7 @@ async def get_user(provider, provider_user_id):
         "id": row[0],
         "email": row[1],
         "created_at": row[2],
-        "teams": row[3],
+        "role": row[3],
         "display_name": row[4],
     }
 
@@ -184,18 +161,10 @@ async def get_user_by_api_key(api_key):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT
-                u.id::text,
-                u.provider,
-                u.provider_user_id,
-                u.email,
-                u.created_at,
-                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
+            SELECT u.id::text, u.provider, u.provider_user_id, u.email, u.created_at, u.role
             FROM users u
             JOIN api_keys k ON u.id = k.user_id
-            LEFT JOIN user_roles r ON r.user_id = u.id
             WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
-            GROUP BY u.id, u.provider, u.provider_user_id, u.email, u.created_at
             """,
             (candidate_api_key_hash,),
         )
@@ -208,7 +177,7 @@ async def get_user_by_api_key(api_key):
         "provider_user_id": row[2],
         "email": row[3],
         "created_at": row[4],
-        "teams": row[5],
+        "role": row[5],
     }
 
 

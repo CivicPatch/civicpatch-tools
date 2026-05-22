@@ -20,7 +20,7 @@ import lib.storage as storage_service
 import core.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, RouteCategory
 from lib.auth import require_route_access
 
 
@@ -55,7 +55,7 @@ def get_router() -> APIRouter:
     async def get_review_stats(
         state_code: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         cache_key = f"review_stats:{user.user_id}:{state_code}"
@@ -74,7 +74,7 @@ def get_router() -> APIRouter:
     async def create_review_session(
         body: CreateReviewSessionRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         if not user.user_id:
@@ -91,7 +91,7 @@ def get_router() -> APIRouter:
         session_id: str,
         body: NavigateToEntryRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         return await _navigate_response(session_id, body.entry_number)
@@ -101,7 +101,7 @@ def get_router() -> APIRouter:
         session_id: str,
         body: NavigateToEntryRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         await review_session_entries_db.pass_current_entry(session_id, body.entry_number)
@@ -110,7 +110,7 @@ def get_router() -> APIRouter:
     @router.get("/active")
     async def get_active_session(
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         if not user.user_id:
@@ -122,7 +122,7 @@ def get_router() -> APIRouter:
     async def end_session(
         session_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, [Role.DEFAULT])
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         await review_sessions_db.end_review_session(session_id)

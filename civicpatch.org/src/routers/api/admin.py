@@ -14,8 +14,8 @@ from schemas.common import (
     Identity,
     Role,
     RouteCategory,
-    SetRolesRequest,
-    UserWithRoles,
+    SetRoleRequest,
+    UserWithRole,
 )
 from schemas.open_data import OdSyncRequestSchema
 from lib.auth import require_route_access
@@ -42,7 +42,7 @@ def get_router() -> APIRouter:
     async def od_sync_endpoint(
         request: OdSyncRequestSchema,
         background_tasks: BackgroundTasks,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         background_tasks.add_task(data_sync.sync, request)
 
@@ -51,14 +51,14 @@ def get_router() -> APIRouter:
     @router.post("/pr_sync", include_in_schema=False)
     async def pr_sync_endpoint(
         background_tasks: BackgroundTasks,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         background_tasks.add_task(pr_sync.sync_open_pr_state)
         return {"status": "running"}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)
     async def clear_dashboard_cache_endpoint(
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         await cache_service.invalidate("dashboard_data")
         return {"status": "ok"}
@@ -66,7 +66,7 @@ def get_router() -> APIRouter:
     @router.post("/map_sync", include_in_schema=False)
     async def map_sync_endpoint(
         request: MapSyncRequest = MapSyncRequest(),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         try:
             workflow_id = await map_client.start_sync_jurisdiction_map_workflow(request.state)
@@ -78,28 +78,27 @@ def get_router() -> APIRouter:
     async def list_users_endpoint(
         limit: int = 100,
         offset: int = 0,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        rows = await users_db.list_users_with_roles(limit=limit, offset=offset)
-        return {"data": [UserWithRoles(**row) for row in rows]}
+        rows = await users_db.list_users(limit=limit, offset=offset)
+        return {"data": [UserWithRole(**row) for row in rows]}
 
-    @router.put("/users/{user_id}/roles", include_in_schema=False)
-    async def set_user_roles_endpoint(
+    @router.put("/users/{user_id}/role", include_in_schema=False)
+    async def set_user_role_endpoint(
         user_id: UUID,
-        payload: SetRolesRequest,
-        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, [Role.ADMINS])),
+        payload: SetRoleRequest,
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         user_id_str = str(user_id)
         # Reject self-edits from session/user-key callers. SERVICE_API_KEY carries
         # no user_id, so the comparison can never match — the bootstrap path is exempt.
         if identity.user_id and identity.user_id == user_id_str:
-            raise HTTPException(status_code=403, detail="Cannot modify your own roles")
+            raise HTTPException(status_code=403, detail="Cannot modify your own role")
         user = await users_db.get_user_by_id(user_id_str)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
-        role_values = [r.value for r in payload.roles]
-        await users_db.set_user_roles(user_id_str, role_values)
+        await users_db.set_user_role(user_id_str, payload.role.value)
         await auth_session.invalidate_session(user["provider"], user["provider_user_id"])
-        return {"data": {"id": user_id_str, "roles": role_values}}
+        return {"data": {"id": user_id_str, "role": payload.role.value}}
 
     return router
