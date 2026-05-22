@@ -444,7 +444,7 @@ def get_router(api_key_header):
     @router.get("/issues/counts", summary="Count pending issues grouped by issue_type")
     async def get_issue_counts_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         counts = await get_pipeline_issue_counts(state_code=state_code)
         return {"data": counts}
@@ -460,7 +460,7 @@ def get_router(api_key_header):
         sort: str = "desc",
         state_code: Optional[str] = None,
         show_archived: bool = False,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
@@ -473,7 +473,7 @@ def get_router(api_key_header):
     )
     async def resolve_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -487,7 +487,7 @@ def get_router(api_key_header):
     )
     async def dismiss_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -502,7 +502,7 @@ def get_router(api_key_header):
     async def flag_review_issue_endpoint(
         issue_id: str,
         request: FlagPipelineIssueRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:
@@ -516,7 +516,7 @@ def get_router(api_key_header):
     )
     async def get_review_issue_details_endpoint(
         issue_id: str,
-        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
         issue = await get_pipeline_issue_by_id(issue_id)
         if issue is None:

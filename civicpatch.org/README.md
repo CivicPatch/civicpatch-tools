@@ -73,10 +73,10 @@ Stored as a single `users.role` column. The `build_permissions()` function in `r
 
 | Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |
 |---|---|
-| **default** (any signed-in user) | Read jurisdictions, people, pull requests, notes. View the queue page and review sessions. Read pull requests; merge if owner. |
-| **contributors** | Create / update / delete people. Create notes. |
-| **maintainers** | Read pipeline run errors and events; view run context. Issues page. Read and edit role configs (state and locality scope). Trigger pipeline runs (remote and local-dev). Resume paused runs. |
-| **admins** | View pipeline run logs. Resolve / cancel pipeline runs. Edit global role configs. Manage other users' roles (via `/admin`). View queue page errors. Cancel jobs. |
+| **default** (any signed-in user) | Read-only API access: list jurisdictions, people, pull requests, notes. Read review session stats and active session. (No editor pages — Queue / Reviews / Issues all require Contributor+.) |
+| **contributors** | View the Queue page. Edit jurisdiction details via PRs. Create / update / delete directory people. Create notes. Create / navigate / pass / end review sessions. Close / merge / update pull requests. |
+| **maintainers** | Trigger pipeline runs (single + batch). Read & edit role configs (state and locality scope). Read pipeline run details. Resume paused runs. |
+| **admins** | View and moderate the Issues page (flag, dismiss, resolve). Manage other users' trust levels (via `/admin`). Cancel pipeline runs. Edit global role config. View queue page errors. All admin-bus endpoints (od_sync, pr_sync, etc.). |
 
 ### Bootstrapping the first admin
 

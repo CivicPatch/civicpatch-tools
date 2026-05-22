@@ -20,7 +20,7 @@ import lib.storage as storage_service
 import core.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, Role, RouteCategory
 from lib.auth import require_route_access
 
 
@@ -74,7 +74,7 @@ def get_router() -> APIRouter:
     async def create_review_session(
         body: CreateReviewSessionRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
         ),
     ):
         if not user.user_id:
@@ -91,7 +91,7 @@ def get_router() -> APIRouter:
         session_id: str,
         body: NavigateToEntryRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
         ),
     ):
         return await _navigate_response(session_id, body.entry_number)
@@ -101,7 +101,7 @@ def get_router() -> APIRouter:
         session_id: str,
         body: NavigateToEntryRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
         ),
     ):
         await review_session_entries_db.pass_current_entry(session_id, body.entry_number)
@@ -122,7 +122,7 @@ def get_router() -> APIRouter:
     async def end_session(
         session_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
+            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
         ),
     ):
         await review_sessions_db.end_review_session(session_id)

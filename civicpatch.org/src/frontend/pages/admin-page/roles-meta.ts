@@ -11,31 +11,42 @@ export type RoleMeta = {
   powers: string[];
 };
 
+// Powers listed here are cross-checked against `build_permissions()` in
+// routers/frontend.py and the `require_route_access` gates across routers/api/*.
+// Anything described here must correspond to a real, enforced backend route.
 export const ROLES_META: ReadonlyArray<RoleMeta> = [
   {
     key: "contributors",
     label: "Contributor",
     power: "low",
-    blurb: "Can submit edits and file PRs.",
-    powers: ["Submit edits and file PRs", "Comment on existing reviews"],
+    blurb: "Can submit data edits via PRs and manage directory people.",
+    powers: [
+      "Edit jurisdiction details via PRs",
+      "Add, update, or delete directory people",
+      "Create jurisdiction notes",
+    ],
   },
   {
     key: "maintainers",
     label: "Maintainer",
     power: "high",
-    blurb: "Can publish reviewed data and moderate the queue.",
+    blurb: "Can trigger the pipeline and edit role configs.",
     powers: [
-      "Publish reviewed data to production",
-      "Lock or close PRs and issues",
-      "Pin policy notices to the queue",
+      "Trigger pipeline runs (single and batch)",
+      "Edit role configs for states and localities",
+      "Read pipeline run errors and events",
     ],
   },
   {
     key: "admins",
     label: "Admin",
     power: "high",
-    blurb: "Can manage people and roles.",
-    powers: ["Invite and remove people", "Assign and revoke roles", "Access the audit log"],
+    blurb: "Can manage users, moderate issues, and edit global config.",
+    powers: [
+      "Manage other users' trust levels",
+      "View and moderate the Issues page (flag, dismiss, resolve)",
+      "Cancel pipeline runs and edit global role config",
+    ],
   },
 ];
 

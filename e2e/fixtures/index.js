@@ -6,7 +6,8 @@ const TEST_USER = {
   provider: "github",
   provider_user_id: "test-user-e2e",
   email: "e2e@civicpatch.org",
-  teams: ["default"],
+  // Must match db.js's seeded role on this user.
+  role: "contributors",
 };
 
 export const test = base.extend({
@@ -27,7 +28,7 @@ export const test = base.extend({
       TEST_USER.provider,
       TEST_USER.provider_user_id,
       TEST_USER.email,
-      TEST_USER.teams
+      TEST_USER.role
     );
     await injectSessionCookies(context, token, csrfNonce, baseUrl);
 

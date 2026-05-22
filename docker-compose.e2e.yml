@@ -58,6 +58,11 @@ services:
       GITHUB_APP_ID: ${E2E_GITHUB_APP_ID:-0}
       GITHUB_APP_PRIVATE_KEY_BASE64: ${E2E_GITHUB_APP_PRIVATE_KEY_BASE64:-}
       GITHUB_APP_INSTALLATION_ID: ${E2E_GITHUB_APP_INSTALLATION_ID:-0}
+      # Supabase vars — required for boot; e2e bypasses the OTP flow via
+      # session-cookie injection (see e2e/fixtures/auth.js), so these never
+      # need to talk to a real Supabase project.
+      SUPABASE_URL: "http://supabase-stub.local"
+      SUPABASE_SECRET_KEY: "e2e-supabase-secret-not-for-production"
     ports:
       - "127.0.0.1:8100:80"
     depends_on:

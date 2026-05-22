@@ -56,7 +56,7 @@ def test_permissions_unauthenticated():
 @pytest.mark.unit
 def test_permissions_default_role():
     p = build_permissions(DEFAULT)
-    assert p["can_view_queue_page"] is True
+    assert p["can_view_queue_page"] is False  # Contributors+ only
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_local"] is False
@@ -69,7 +69,7 @@ def test_permissions_default_role():
 @pytest.mark.unit
 def test_permissions_contributor_role():
     p = build_permissions(CONTRIBUTOR)
-    assert p["can_view_queue_page"] is True
+    assert p["can_view_queue_page"] is True  # introduced at Contributor
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is False
@@ -80,20 +80,22 @@ def test_permissions_contributor_role():
 
 @pytest.mark.unit
 def test_permissions_maintainer_role():
-    """Maintainer inherits Contributor's powers under the ladder."""
+    """Maintainer inherits Contributor's powers under the ladder.
+    Issues page is now Admin-only — Maintainer does not see it."""
     p = build_permissions(MAINTAINER)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
     assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is True
     assert p["can_view_reviews_page"] is True
-    assert p["can_view_issues_page"] is True
+    assert p["can_view_issues_page"] is False  # Admin-only
     assert p["can_delete_directory_person"] is True
 
 
 @pytest.mark.unit
 def test_permissions_admin_role():
-    """Admin inherits Maintainer + Contributor powers under the ladder."""
+    """Admin inherits Maintainer + Contributor powers under the ladder, and
+    gains the Issues page + queue-error visibility on top."""
     p = build_permissions(ADMIN)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is True
@@ -164,7 +166,7 @@ def test_permissions_endpoint_maintainer(permissions_client):
     assert data["authenticated"] is True
     assert data["data"]["permissions"]["can_view_queue_page"] is True
     assert data["data"]["permissions"]["can_scrape_remote"] is True
-    assert data["data"]["permissions"]["can_view_issues_page"] is True
+    assert data["data"]["permissions"]["can_view_issues_page"] is False  # Admin-only
     assert data["data"]["permissions"]["can_view_queue_page_errors"] is False
 
 

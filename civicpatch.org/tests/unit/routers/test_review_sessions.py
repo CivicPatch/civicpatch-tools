@@ -13,9 +13,28 @@ MOCK_IDENTITY = Identity(
     provider="system",
     provider_user_id="test-user",
     email="test@civicpatch.org",
-    teams=[Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS, Role.DEFAULT],
     user_id="user-id-123",
 )
+
+
+def _user_at(role: Role) -> Identity:
+    """Cookie-style identity at a specific trust level, for gate tests."""
+    return Identity(
+        type="cookie",
+        provider="supabase",
+        provider_user_id="sb-test",
+        email="test@example.com",
+        role=role.value,
+        user_id="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    )
+
+
+def _client_as(identity: Identity) -> TestClient:
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: identity
+    app.include_router(review_sessions_router.get_router(), prefix="/review-sessions")
+    return TestClient(app)
+
 
 TEST_SESSION_ID = "session-id-456"
 
@@ -114,3 +133,29 @@ def test_get_active_session_returns_session_when_active(client):
     assert response.status_code == 200
     assert response.json()["data"]["session_id"] == TEST_SESSION_ID
     assert response.json()["data"]["current_entry_number"] == 3
+
+
+# ── Auth gates on write routes ──────────────────────────────────────────────
+#
+# These routes were bumped from RouteCategory.AUTHENTICATED to
+# (TEAM_REQUIRED, Role.CONTRIBUTORS). Default-level users (signed-in but no
+# elevation) must be rejected with 403. The auth-ladder cascade above the
+# floor is proven separately in test_auth.py.
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "method,url,body",
+    [
+        ("post", "/review-sessions", {"state_code": "ca", "daily_goal": 5}),
+        ("post", f"/review-sessions/{TEST_SESSION_ID}/navigate", {"entry_number": 1}),
+        ("post", f"/review-sessions/{TEST_SESSION_ID}/pass", {"entry_number": 1}),
+        ("post", f"/review-sessions/{TEST_SESSION_ID}/end", None),
+    ],
+)
+def test_review_session_writes_reject_default_role(method, url, body):
+    """Default-level users must be 403'd from every write that mutates session state."""
+    client = _client_as(_user_at(Role.DEFAULT))
+    kwargs = {"json": body} if body is not None else {}
+    response = getattr(client, method)(url, **kwargs)
+    assert response.status_code == 403
