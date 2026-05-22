@@ -1,4 +1,3 @@
-import asyncio
 import json
 import logging
 
@@ -21,10 +20,6 @@ async def _record_failure(merge_key: str, user_id: str, error: str) -> None:
 
 
 async def do_merge(pull_request_number: str, request_id: str, approved_by: str | None, user_id: str, merge_key: str) -> None:
-    """
-    Runs the full merge flow for a pull request and writes the result to Redis.
-    Intended to be called as a background task after the HTTP response is sent.
-    """
     try:
         mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number)
         logger.info(f"PR {pull_request_number} mergeable_state={mergeable_state!r}")
@@ -53,18 +48,6 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             return
 
         merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=approved_by)
-
-        if merge_error and "base branch was modified" in merge_error.lower():
-            # Race condition: base branch updated between mergeability check and merge.
-            # PRs touch non-overlapping file paths so updating and retrying almost always succeeds.
-            # update-branch returns 202 Accepted (async on GitHub's side), so we sleep before
-            # polling mergeability — safe here since this runs in a background task.
-            logger.info(f"PR {pull_request_number} base branch modified race condition — updating branch and retrying")
-            update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
-            if not update_error:
-                await asyncio.sleep(5)
-                await github_service.get_pull_request_mergeability(pull_request_number, wait_for_change_from="behind")
-                merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=approved_by)
 
         if merge_error:
             await _record_failure(merge_key, user_id, merge_error)

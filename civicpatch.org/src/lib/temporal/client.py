@@ -6,13 +6,19 @@ from temporalio.client import Client
 from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
+from lib.temporal.types import MergeRequest
+from lib.temporal.workflows import (
+    RepoMergeQueueWorkflow,
+    TASK_QUEUE,
+    WorkflowInstanceId,
+)
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 
 _client: Client | None = None
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
-TASK_QUEUE = "people-collector"
+PEOPLE_COLLECTOR_TASK_QUEUE = "people-collector"
 WORKFLOW_CLASS_NAME = "PeopleCollectorWorkflow"
 
 
@@ -46,7 +52,7 @@ async def start_people_collector_workflow(
         WORKFLOW_CLASS_NAME,
         args=[jurisdiction_ocdid, request_id, dispatch_mode, url, source_urls],
         id=workflow_id,
-        task_queue=TASK_QUEUE,
+        task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
         execution_timeout=PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     )
@@ -59,10 +65,27 @@ async def start_batch_people_collector_workflow(state: str, items: list[dict]) -
         "BatchPeopleCollectorWorkflow",
         args=[items],
         id=f"batch-people-collector-{state}-{uuid.uuid4().hex[:8]}",
-        task_queue=TASK_QUEUE,
+        task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
     )
     return handle.id
+
+
+async def enqueue_merge(request: MergeRequest) -> None:
+    """Send a PR merge request to the singleton RepoMergeQueueWorkflow.
+
+    Uses signal-with-start: if the queue workflow is already running, the signal
+    is appended to its FIFO; if not, it starts the workflow and delivers the
+    signal as the first item."""
+    client = await _get_client()
+    await client.start_workflow(
+        RepoMergeQueueWorkflow.run,
+        id=WorkflowInstanceId.REPO_MERGE_QUEUE,
+        task_queue=TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
+        start_signal="enqueue",
+        start_signal_args=[request],
+    )
 
 
 async def signal_human_approval(jurisdiction_ocdid: str) -> None:

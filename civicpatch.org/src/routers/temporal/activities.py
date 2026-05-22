@@ -2,8 +2,10 @@ from temporalio import activity
 
 import core.pull_request_sync as pr_sync
 import core.open_data_sync as data_sync
+import core.pull_request_merge as pull_request_merge
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_navigation as review_session_nav_db
+from lib.temporal.types import MergeRequest
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 
 
@@ -32,3 +34,14 @@ async def cleanup_stale_review_entries_activity() -> None:
             "Review session cleanup: %d entries deleted",
             result["entries_deleted"],
         )
+
+
+@activity.defn
+async def merge_pr_activity(request: MergeRequest) -> None:
+    await pull_request_merge.do_merge(
+        pull_request_number=request.pull_request_number,
+        request_id=request.request_id,
+        approved_by=request.approved_by,
+        user_id=request.user_id,
+        merge_key=request.merge_key,
+    )

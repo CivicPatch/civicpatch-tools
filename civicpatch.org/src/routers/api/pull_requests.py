@@ -29,6 +29,8 @@ import core.pull_request_merge as merge_service
 import core.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
 import lib.storage as storage_service
+import lib.temporal.client as temporal_client
+from lib.temporal.types import MergeRequest
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, Role, RouteCategory
 from lib.auth import require_route_access
@@ -348,7 +350,13 @@ def get_router(api_key_header):
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
-        background_tasks.add_task(merge_service.do_merge, pull_request_number, request.request_id, user.email, user.user_id, merge_key)
+        await temporal_client.enqueue_merge(MergeRequest(
+            pull_request_number=pull_request_number,
+            request_id=request.request_id,
+            approved_by=user.email,
+            user_id=user.user_id,
+            merge_key=merge_key,
+        ))
         return JSONResponse(content={"status": "pending"}, status_code=202)
 
     # -- Pull Requests: Merge Status ---
