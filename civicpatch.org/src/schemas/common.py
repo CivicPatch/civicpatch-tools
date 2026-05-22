@@ -87,6 +87,7 @@ class UserWithRole(BaseModel):
     provider: str
     provider_user_id: str
     role: str
+    last_login_at: str | None = None
 
 
 class SetRoleRequest(BaseModel):
