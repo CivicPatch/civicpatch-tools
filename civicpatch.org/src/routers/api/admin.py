@@ -3,15 +3,19 @@ from uuid import UUID
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from pydantic import BaseModel, model_validator
+from supabase import AsyncClient
 
 import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
+import lib.supabase_auth as supabase_auth_service
 import core.open_data_sync as data_sync
 import core.pull_request_sync as pr_sync
 import lib.temporal.map_client as map_client
 from schemas.common import (
     Identity,
+    InviteUserRequest,
+    PendingInvite,
     Role,
     RouteCategory,
     SetRoleRequest,
@@ -100,5 +104,74 @@ def get_router() -> APIRouter:
         await users_db.set_user_role(user_id_str, payload.role.value)
         await auth_session.invalidate_session(user["provider"], user["provider_user_id"])
         return {"data": {"id": user_id_str, "role": payload.role.value}}
+
+    @router.post("/users/invite", include_in_schema=False)
+    async def invite_user_endpoint(
+        payload: InviteUserRequest,
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+    ):
+        try:
+            await client.auth.admin.invite_user_by_email(payload.email)
+        except Exception as exc:
+            message = str(exc)
+            if "already" in message.lower():
+                raise HTTPException(status_code=409, detail="User already exists")
+            raise HTTPException(status_code=400, detail=message)
+        return {"data": {"sent": True}}
+
+    @router.get("/users/pending", include_in_schema=False)
+    async def list_pending_invites_endpoint(
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+    ):
+        # per_page=100 fits our scale (small team); revisit if total users grows past that.
+        try:
+            users = await client.auth.admin.list_users(per_page=100)
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc))
+
+        pending = [
+            PendingInvite(
+                id=str(user.id),
+                email=getattr(user, "email", None),
+                invited_at=user.invited_at.isoformat() if user.invited_at else None,
+            )
+            for user in users
+            if user.invited_at and not user.last_sign_in_at
+        ]
+        return {"data": pending}
+
+    @router.post("/users/{user_id}/resend-invite", include_in_schema=False)
+    async def resend_invite_endpoint(
+        user_id: UUID,
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+    ):
+        try:
+            user_response = await client.auth.admin.get_user_by_id(str(user_id))
+        except Exception:
+            raise HTTPException(status_code=404, detail="User not found")
+        user_obj = getattr(user_response, "user", user_response)
+        email = getattr(user_obj, "email", None)
+        if not email:
+            raise HTTPException(status_code=404, detail="User has no email on file")
+        try:
+            await client.auth.admin.invite_user_by_email(email)
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        return {"data": {"sent": True}}
+
+    @router.delete("/users/{user_id}/invite", include_in_schema=False)
+    async def revoke_invite_endpoint(
+        user_id: UUID,
+        client: AsyncClient = Depends(supabase_auth_service.get_supabase_client),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+    ):
+        try:
+            await client.auth.admin.delete_user(str(user_id))
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        return {"data": {"revoked": True}}
 
     return router

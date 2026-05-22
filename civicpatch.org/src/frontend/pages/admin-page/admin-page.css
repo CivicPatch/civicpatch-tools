@@ -11,6 +11,44 @@
   margin: 0.5rem 0 1rem;
 }
 
+.admin-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.admin-page__header .admin-page__title {
+  margin: 0;
+}
+
+.admin-page__invite-button {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.admin-page__pending {
+  margin: 0 0 1.5rem;
+}
+
+.admin-page__subtitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.admin-page__pending-actions {
+  display: flex;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.admin-page__pending-actions .btn {
+  margin: 0;
+}
+
 .admin-page__status {
   font-size: 0.9rem;
   color: var(--pico-muted-color);

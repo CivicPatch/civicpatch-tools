@@ -93,6 +93,16 @@ class SetRoleRequest(BaseModel):
     role: Role
 
 
+class InviteUserRequest(BaseModel):
+    email: str
+
+
+class PendingInvite(BaseModel):
+    id: str
+    email: str | None
+    invited_at: str | None
+
+
 class RequestOtpRequest(BaseModel):
     email: str
 

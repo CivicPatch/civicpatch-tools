@@ -532,4 +532,57 @@ export const setUserRole = async (userId, role) => {
   return res.json();
 };
 
+export const inviteUser = async (email) => {
+  const res = await fetch(`${API_URL}/api/admin/users/invite`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ email }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(body.detail || `HTTP ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+};
+
+export const fetchPendingInvites = async () => {
+  const res = await fetch(`${API_URL}/api/admin/users/pending`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const resendInvite = async (userId) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/resend-invite`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail || `HTTP ${res.status}`);
+  }
+  return res.json();
+};
+
+export const revokeInvite = async (userId) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/invite`, {
+    credentials: "include",
+    method: "DELETE",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail || `HTTP ${res.status}`);
+  }
+  return res.json();
+};
+
 
