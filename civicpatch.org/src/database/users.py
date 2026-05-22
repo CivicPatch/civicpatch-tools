@@ -11,10 +11,13 @@ async def upsert_user(provider, provider_user_id, email, display_name: str | Non
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email, display_name)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO users (provider, provider_user_id, email, display_name, last_login_at)
+            VALUES (%s, %s, %s, %s, NOW())
             ON CONFLICT (provider, provider_user_id)
-            DO UPDATE SET email = EXCLUDED.email, display_name = EXCLUDED.display_name
+            DO UPDATE SET
+                email = EXCLUDED.email,
+                display_name = EXCLUDED.display_name,
+                last_login_at = NOW()
             RETURNING id::text
             """,
             (provider, provider_user_id, email, display_name),
@@ -92,7 +95,7 @@ async def list_users(limit: int = 100, offset: int = 0) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, email, display_name, provider, provider_user_id, role
+            SELECT id::text, email, display_name, provider, provider_user_id, role, last_login_at
             FROM users
             ORDER BY created_at ASC
             LIMIT %s OFFSET %s
@@ -108,6 +111,7 @@ async def list_users(limit: int = 100, offset: int = 0) -> list[dict]:
             "provider": r[3],
             "provider_user_id": r[4],
             "role": r[5],
+            "last_login_at": r[6].isoformat() if r[6] else None,
         }
         for r in rows
     ]

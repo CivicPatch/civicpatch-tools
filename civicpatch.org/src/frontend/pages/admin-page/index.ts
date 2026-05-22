@@ -32,6 +32,7 @@ type AdminUser = {
   provider: string;
   provider_user_id: string;
   role: string;
+  last_login_at: string | null;
 };
 
 type PendingInvite = {
@@ -275,6 +276,8 @@ function AdminPage() {
                 <tr>
                   <th>Email</th>
                   <th>Display name</th>
+                  <th>Provider</th>
+                  <th>Last login</th>
                   <th>Role</th>
                 </tr>
               </thead>
@@ -290,6 +293,8 @@ function AdminPage() {
                           : null}
                       </td>
                       <td>${user.display_name ?? "—"}</td>
+                      <td>${user.provider}</td>
+                      <td>${user.last_login_at ? new Date(user.last_login_at).toLocaleString() : "—"}</td>
                       <td>
                         <div class="admin-users-table__roles">
                           ${ROLES_META.map((meta: RoleMeta) => {

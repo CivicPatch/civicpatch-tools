@@ -14,6 +14,7 @@ erDiagram
         text            email
         text_null       display_name
         text            role            "default: 'default', CHECK IN ('default','contributors','maintainers','admins')"
+        timestamptz_null last_login_at  "set by upsert_user on every successful sign-in"
         timestamptz_null created_at
     }
 

@@ -47,6 +47,7 @@ def test_list_users_happy_path():
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
+            "last_login_at": "2024-06-01T12:00:00+00:00",
         },
     ]
     with patch(
@@ -65,6 +66,7 @@ def test_list_users_happy_path():
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
+            "last_login_at": "2024-06-01T12:00:00+00:00",
         },
     ]
 

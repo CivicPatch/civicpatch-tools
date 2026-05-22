@@ -105,9 +105,11 @@ async def test_list_users_empty():
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_list_users_populated():
+    from datetime import datetime, timezone
+    login_ts = datetime(2024, 6, 1, 12, 0, tzinfo=timezone.utc)
     rows = [
-        ("uuid-1", "alice@example.com", "Alice", "supabase", "sb-1", "admins"),
-        ("uuid-2", "bob@example.com", None, "supabase", "sb-2", "default"),
+        ("uuid-1", "alice@example.com", "Alice", "supabase", "sb-1", "admins", login_ts),
+        ("uuid-2", "bob@example.com", None, "supabase", "sb-2", "default", None),
     ]
     cur = _make_cursor(returning_rows=rows)
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -121,6 +123,7 @@ async def test_list_users_populated():
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
+            "last_login_at": login_ts.isoformat(),
         },
         {
             "id": "uuid-2",
@@ -129,6 +132,7 @@ async def test_list_users_populated():
             "provider": "supabase",
             "provider_user_id": "sb-2",
             "role": "default",
+            "last_login_at": None,
         },
     ]
 
