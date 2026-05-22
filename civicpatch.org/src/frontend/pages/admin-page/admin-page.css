@@ -1,6 +1,5 @@
 .admin-page {
-  padding: 1rem 1.25rem;
-  max-width: 1100px;
+  max-width: 1200px;
   margin-inline: auto;
 }
 
@@ -60,17 +59,37 @@
 }
 
 .admin-users-table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
 
 .admin-users-table th,
 .admin-users-table td {
-  padding: 0.5rem 0.75rem;
+  padding: 0.35rem 0.75rem;
   border-bottom: 1px solid var(--pico-muted-border-color);
   text-align: left;
   vertical-align: middle;
+}
+
+/* Email + Display name (columns 1-2): hard-wrap long values so they don't hog
+   horizontal space; capped at a reasonable width. */
+.admin-users-table th:nth-child(1),
+.admin-users-table th:nth-child(2),
+.admin-users-table td:nth-child(1),
+.admin-users-table td:nth-child(2) {
+  max-width: 18rem;
+  white-space: normal;
+  word-break: break-all;
+}
+
+/* Provider, Last login, Role (columns 3+): shrink-to-fit; no trailing
+   whitespace inside the cell. The width:1px trick + nowrap makes each column
+   exactly as wide as its content needs, no more. */
+.admin-users-table th:nth-child(n+3),
+.admin-users-table td:nth-child(n+3) {
+  width: 1px;
+  white-space: nowrap;
 }
 
 .admin-users-table th {
@@ -98,7 +117,7 @@
 
 .admin-users-table__roles {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
 }
 
@@ -202,7 +221,7 @@ status-toast {
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 200;
+  z-index: 1000; /* sits above Pico's dialog (z-index: 999) */
 }
 
 .status-toast {

@@ -239,7 +239,7 @@ def _client_with_supabase(
     )
     fake_supabase = SimpleNamespace(auth=SimpleNamespace(admin=fake_admin))
     app.dependency_overrides[get_optional_user] = lambda: identity
-    app.dependency_overrides[supabase_auth_service.get_supabase_client] = lambda: fake_supabase
+    app.dependency_overrides[supabase_auth_service.get_supabase_admin_client] = lambda: fake_supabase
     app.include_router(admin_router.get_router(), prefix="/api/admin")
     return TestClient(app)
 

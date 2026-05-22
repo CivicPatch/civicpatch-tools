@@ -10,7 +10,7 @@
         "stdio",
         "--readonly",
         "--dsn",
-        "postgres://civicpatch:development_password@localhost:6000/development_db"
+        "postgres://civicpatch:development_password@localhost:8003/development_db"
       ],
       "env": {}
     }

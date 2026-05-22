@@ -38,7 +38,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from frontend.vite import vite_asset, vite_css
 from lib.auth import get_optional_user, get_ws_user, require_route_access
-from lib.supabase_auth import create_supabase_client
+from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
 from routers.frontend import get_router as frontend_router
 from routers.sso import get_router as auth_router
 from schemas.common import Identity, Role, RouteCategory
@@ -71,7 +71,15 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 async def lifespan(app):
     await get_pool()
     app.state.supabase = await create_supabase_client()
+    # Held separately from app.state.supabase to keep auth.admin.* calls isolated
+    # from user sign-in flows. See supabase-py issue #1143.
+    app.state.supabase_admin = await create_supabase_admin_client()
     yield
+    for client in (app.state.supabase, app.state.supabase_admin):
+        try:
+            await client.auth.close()
+        except Exception:
+            pass
     await close_pool()
 
 
