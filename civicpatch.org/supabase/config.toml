@@ -39,6 +39,12 @@ content_path = "./supabase/templates/magic_link.html"
 subject = "Your civicpatch sign-in code"
 content_path = "./supabase/templates/confirmation.html"
 
+# Invite template — fires for admin-triggered invite_user_by_email calls
+# (POST /api/admin/users/invite).
+[auth.email.template.invite]
+subject = "You've been invited to civicpatch"
+content_path = "./supabase/templates/invite.html"
+
 # ── Cloud-only SMTP overrides ────────────────────────────────────────────────
 # Resend SMTP is pushed to cloud projects on `supabase config push`. RESEND_API_KEY
 # and EMAIL_SENDER_NAME are injected by `infisical run` (see
