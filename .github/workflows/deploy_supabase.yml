@@ -21,6 +21,7 @@ permissions:
 #                              [auth.email.smtp])
 env:
   INFISICAL_PROJECT_ID: e1e3d235-5dd4-4dbd-af04-18b10bcd75b7
+  INFISICAL_API_URL: https://infisical.wizards.cafe
 
 jobs:
   deploy-staging:
@@ -52,7 +53,6 @@ jobs:
         env:
           INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
           INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
-          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
         run: |
           INFISICAL_TOKEN=$(infisical login --method=universal-auth \
             --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
@@ -62,8 +62,6 @@ jobs:
           echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
 
       - name: Push to Supabase (staging env)
-        env:
-          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
             supabase config push --project-ref "$SUPABASE_PROJECT_REF"
@@ -97,7 +95,6 @@ jobs:
         env:
           INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
           INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
-          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
         run: |
           INFISICAL_TOKEN=$(infisical login --method=universal-auth \
             --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
@@ -107,8 +104,6 @@ jobs:
           echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
 
       - name: Push to Supabase (prod env)
-        env:
-          INFISICAL_API_URL: ${{ secrets.INFISICAL_API_URL }}
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=prod -- \
             supabase config push --project-ref "$SUPABASE_PROJECT_REF"

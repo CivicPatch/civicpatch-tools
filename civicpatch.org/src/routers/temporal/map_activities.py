@@ -10,8 +10,6 @@ from temporalio import activity
 import database.jurisdictions as jurisdictions_db
 from environment import get_env_vars
 
-OPEN_DATA_RAW_BASE = "https://raw.githubusercontent.com/CivicPatch/open-data/refs/heads/main"
-
 
 def _enrich_geojson(geojson: dict, geoid_map: dict[str, dict]) -> dict:
     enriched = []
@@ -39,7 +37,7 @@ async def sync_jurisdiction_map_activity(state: str) -> str:
     geoid_map = await jurisdictions_db.get_jurisdictions_by_geoid(state)
 
     async with httpx.AsyncClient(timeout=120) as client:
-        resp = await client.get(f"{OPEN_DATA_RAW_BASE}/data/{state}/.maps/local.geojson")
+        resp = await client.get(f"{env['FRIENDLY_STORAGE_HOST']}/maps/{state}/local.geojson")
         resp.raise_for_status()
 
     enriched = _enrich_geojson(json.loads(resp.text), geoid_map)

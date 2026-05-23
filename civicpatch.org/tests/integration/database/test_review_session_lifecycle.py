@@ -110,7 +110,7 @@ async def test_get_active_session_returns_none_when_only_resolved_entries(test_u
     await _insert_entry(session_id, entry_number=1, status="resolved")
     await _insert_entry(session_id, entry_number=2, status="resolved")
 
-    result = await get_active_review_session(str(test_user))
+    result = await get_active_review_session(str(test_user), _STATE_CODE)
     assert result is None, "Session with only resolved entries must not appear active"
 
 
@@ -120,7 +120,7 @@ async def test_get_active_session_returns_none_when_no_entries(test_user):
     """Fresh session with no entries must not appear active."""
     await _create_session(test_user)
 
-    result = await get_active_review_session(str(test_user))
+    result = await get_active_review_session(str(test_user), _STATE_CODE)
     assert result is None
 
 
@@ -375,7 +375,7 @@ async def test_get_active_session_returns_none_after_end_session(test_user):
 
     await end_review_session(str(session_id))
 
-    result = await get_active_review_session(str(test_user))
+    result = await get_active_review_session(str(test_user), _STATE_CODE)
     assert result is None, (
         "Session must not appear active after end_review_session — claimed entries were purged"
     )

@@ -49,35 +49,49 @@ function ReviewPage() {
   });
 
   // The deep-link branch (loading a PR by ?pull_request_number=) is one-shot:
-  // we only honor the URL param on the first mount. Subsequent stateCode changes
-  // (navbar switches) take the standard reset + fetch-active path.
-  const didInitialLoad = useRef(false);
+  // we only honor the URL param on the *very first* effect run. Subsequent
+  // stateCode changes (navbar switches) take the standard reset + fetch path.
+  const isFirstEffectRun = useRef(true);
 
   useEffect(() => {
-    if (!stateCode) {
-      resetLocalSession();
-      return;
-    }
+    const firstRun = isFirstEffectRun.current;
+    isFirstEffectRun.current = false;
 
     const p = new URLSearchParams(window.location.search);
     const prNumber = p.get("pull_request_number");
 
-    if (!didInitialLoad.current && prNumber) {
-      didInitialLoad.current = true;
+    // Deep-link must work regardless of stateCode — a shared PR URL has to
+    // resolve to the PR view even for a user who has no state set yet (and
+    // therefore can't have an active session that includes the PR).
+    if (firstRun && prNumber) {
       setPageState(PAGE_STATE.LOADING);
       setError(null);
       loadDirectPr(parseInt(prNumber, 10))
-        .then(() => fetchActiveReviewSession(stateCode))
-        .then((res) => {
-          const active = res?.data;
-          if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
-            initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
+        .then((ok) => {
+          if (!ok) {
+            // PR not found or load errored — drop the bad param and fall back
+            // to the idle landing so the page is not stuck on LOADING.
+            resetLocalSession();
+            return;
           }
+          if (!stateCode) return;
+          return fetchActiveReviewSession(stateCode).then((res) => {
+            const active = res?.data;
+            if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
+              initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
+            }
+          });
         })
-        .catch(() => {});
+        .catch(() => {
+          resetLocalSession();
+        });
       return;
     }
-    didInitialLoad.current = true;
+
+    if (!stateCode) {
+      resetLocalSession();
+      return;
+    }
 
     resetLocalSession();
     fetchActiveReviewSession(stateCode)

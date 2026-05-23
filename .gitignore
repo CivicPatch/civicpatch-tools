@@ -39,6 +39,7 @@ open-data
 server
 infrastructure
 civicpatch
+test-open-data
 
 # e2e
 e2e/test-results/

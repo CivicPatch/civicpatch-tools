@@ -3,6 +3,7 @@ services:
     environment:
       CIVICPATCH_ORG_URL: ${CIVICPATCH_ORG_URL:-http://civicpatch-org:8000}
       SERVICE_API_KEY: ${SERVICE_API_KEY:-service-api-key}
+      OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       PIPELINE_RUN_COST_LIMIT: ${PIPELINE_RUN_COST_LIMIT:-0.20}
       LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
       GOOGLE_GEMINI_TOKEN: ${GOOGLE_GEMINI_TOKEN}

@@ -55,6 +55,33 @@ run = """
       -d '{}'
 """
 
+[tasks.refresh_test_open_data]
+description = "Reset CivicPatch/test-open-data to match CivicPatch/open-data main: fetches from open-data, updates the local ./test-open-data clone, and force-pushes to test-open-data on GitHub. Destructive: any uncommitted changes in the local clone are discarded; open dev PR feature branches on test-open-data are preserved."
+run = """
+set -eu
+TEST_DIR="${TEST_OPEN_DATA_DIR:-./test-open-data}"
+SOURCE_URL="${OPEN_DATA_SOURCE_URL:-https://github.com/CivicPatch/open-data.git}"
+TARGET_URL="${OPEN_DATA_TARGET_URL:-https://github.com/CivicPatch/test-open-data.git}"
+
+if [ ! -d "$TEST_DIR/.git" ]; then
+  echo "→ First-time clone of $SOURCE_URL into $TEST_DIR"
+  git clone "$SOURCE_URL" "$TEST_DIR"
+else
+  echo "→ Fetching main from $SOURCE_URL"
+  git -C "$TEST_DIR" fetch "$SOURCE_URL" main
+  git -C "$TEST_DIR" checkout -f -B main FETCH_HEAD
+fi
+
+if ! git -C "$TEST_DIR" remote get-url test-open-data >/dev/null 2>&1; then
+  echo "→ Adding 'test-open-data' remote pointing at $TARGET_URL"
+  git -C "$TEST_DIR" remote add test-open-data "$TARGET_URL"
+fi
+
+echo "→ Force-pushing main to $TARGET_URL"
+git -C "$TEST_DIR" push --force test-open-data main
+echo "✓ test-open-data updated locally at $TEST_DIR and on GitHub ($(git -C "$TEST_DIR" rev-parse --short HEAD))"
+"""
+
 
 [tasks.clear_dashboard_cache]
 run = """

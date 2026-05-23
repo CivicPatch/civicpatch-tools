@@ -80,7 +80,7 @@ export function stateFromOcdid(ocdid: string): string | null {
 }
 
 export function createMap(container: HTMLElement): maplibregl.Map {
-  return new maplibregl.Map({
+  const m = new maplibregl.Map({
     container,
     style: {
       version: 8,
@@ -99,6 +99,7 @@ export function createMap(container: HTMLElement): maplibregl.Map {
     center: [-98.5, 39.5],
     zoom: 3.5,
   });
+  return m;
 }
 
 export function loadNationalSource(map: maplibregl.Map): void {
@@ -172,6 +173,7 @@ export function addAllLayers(map: maplibregl.Map): void {
   ];
 
   for (const { id, source, sourceLayer, paint, strokePaint } of layers) {
+    if (!map.getSource(source)) continue;
     if (!map.getLayer(id)) {
       map.addLayer({
         id,
