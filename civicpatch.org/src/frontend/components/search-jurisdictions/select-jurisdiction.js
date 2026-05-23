@@ -1,7 +1,6 @@
 import { component, useEffect, useState, useRef } from "haunted";
 import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
-import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { jurisdictionOcdidToPath } from "../ocdid-utils.js";
 import "./select-state.js";
 
@@ -9,33 +8,13 @@ function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
   const { permissions } = useAuth();
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
-  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  // Start empty — only restore the stored state after confirming it's in the valid list.
+  // Fully decoupled from app:default-state. The navbar owns the global state.
   const [selectedState, setSelectedState] = useState("");
-
-  useEffect(() => {
-    if (!defaultState) return;
-    fetch("/api/v1/jurisdictions/states")
-      .then((r) => r.json())
-      .then((data) => {
-        const validCodes = new Set((data.data || []).map((s) => s.code));
-        if (validCodes.has(defaultState)) {
-          setSelectedState(defaultState);
-        } else {
-          setDefaultState("");
-        }
-      })
-      .catch(() => {
-        // API unavailable — restore optimistically rather than losing the selection
-        setSelectedState(defaultState);
-      });
-  }, []);
 
   useEffect(() => {
     const normalized = (selected || '').toLowerCase();
     if (normalized === selectedState) return;
     setSelectedState(normalized);
-    if (normalized) setDefaultState(normalized);
   }, [selected]);
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
@@ -119,7 +98,7 @@ function CivSelectJurisdiction({ selected, selectedOcdid, selectedName }) {
     >
       <civ-select-state
         .selected=${selectedState}
-        @state-change=${(e) => { setSelectedState(e.detail.state); setDefaultState(e.detail.state || ""); }}
+        @state-change=${(e) => setSelectedState(e.detail.state)}
       ></civ-select-state>
       <civ-autocomplete-select
         id="jurisdiction-autocomplete"

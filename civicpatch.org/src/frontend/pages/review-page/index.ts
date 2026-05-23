@@ -22,9 +22,14 @@ const PAGE_STATE = {
   REVIEWING: "reviewing",
 };
 
+function getStateFromUrl() {
+  return (new URLSearchParams(window.location.search).get("state") || "").toLowerCase();
+}
+
 function ReviewPage() {
   const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
-  const [stateCode, setStateCode] = useLocalStorage(DEFAULT_STATE_KEY, "");
+  const [defaultState] = useLocalStorage(DEFAULT_STATE_KEY, "");
+  const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL, { ttl: PERSIST_FOREVER });
 
   const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
@@ -158,11 +163,6 @@ function ReviewPage() {
     stats.claimed_count ?? 0
   );
 
-  const handleStateChange = (e) => {
-    const newState = e.detail.state;
-    setStateCode(newState);
-  };
-
   const handleGoalChange = (n) => {
     const clamped = maxReviewable > 0 ? Math.min(n, maxReviewable) : n;
     setDailyGoal(clamped);
@@ -204,7 +204,6 @@ function ReviewPage() {
         .error=${error}
         .dailyGoal=${dailyGoal}
         .effectiveGoal=${effectiveGoal}
-        .onStateChange=${handleStateChange}
         .onGoalChange=${handleGoalChange}
         .onStartReview=${handleStartReview}
       ></review-landing>`;

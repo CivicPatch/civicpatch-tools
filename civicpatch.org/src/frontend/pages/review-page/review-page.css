@@ -18,12 +18,6 @@
     margin-bottom: 0;
 }
 
-.review-page__state-bar {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 .review-page__main-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;

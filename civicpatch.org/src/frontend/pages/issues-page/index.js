@@ -4,7 +4,6 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { fetchJobIssues, fetchIssueCounts, flagIssue } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
-import "../../components/search-jurisdictions/select-state.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import { IssueRow } from "./issue-row.js";
 import "./config-editor.js";
@@ -58,8 +57,8 @@ function setIssuesParamsInUrl(page, perPage, tags, sortDesc) {
 function IssuesPage() {
   const { permissions } = useAuth();
 
-  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
+  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const [issues, setIssues] = useState([]);
   const [issuesTotal, setIssuesTotal] = useState(0);
@@ -91,7 +90,6 @@ function IssuesPage() {
       setIssuesPerPage(getIssuesPerPageFromUrl());
       setIssuesTagFilter(getIssuesTagsFromUrl());
       setIssuesSortDesc(getIssuesSortDescFromUrl());
-      setStateCode(getStateFromUrl());
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
@@ -167,18 +165,6 @@ function IssuesPage() {
     setIssuesPerPage(newPerPage);
     setIssuesPage(1);
     setIssuesParamsInUrl(1, newPerPage, issuesTagFilter, issuesSortDesc);
-  };
-
-  const handleStateChange = (e) => {
-    const newState = e.detail.state;
-    const params = new URLSearchParams(window.location.search);
-    if (newState) params.set("state", newState);
-    else params.delete("state");
-    params.set("issues_page", 1);
-    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
-    setDefaultState(newState || "");
-    setStateCode(newState || "");
-    setIssuesPage(1);
   };
 
   const issuesTotalPages = Math.ceil(issuesTotal / issuesPerPage);
@@ -268,9 +254,6 @@ function IssuesPage() {
 
   return html`
     <main class="issues-page page-content">
-      <div class="issues-page__filters">
-        <civ-select-state .selected=${stateCode} @state-change=${handleStateChange}></civ-select-state>
-      </div>
       ${roleConfigsSection}
       ${issuesSection}
     </main>

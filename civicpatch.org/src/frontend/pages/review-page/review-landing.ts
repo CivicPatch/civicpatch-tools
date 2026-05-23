@@ -1,6 +1,5 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import "../../components/search-jurisdictions/select-state.js";
 import "../../components/stat-cards/index.js";
 import "../../components/streak-graph/streak-graph.js";
 import "../../components/goal-ring/goal-ring.js";
@@ -13,15 +12,12 @@ function formatDuration(seconds) {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
-function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onStateChange, onGoalChange, onStartReview }) {
+function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onGoalChange, onStartReview }) {
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [pendingGoal, setPendingGoal] = useState(dailyGoal);
 
   return html`
     <main class="review-page">
-      <div class="review-page__state-bar">
-        <civ-select-state .selected=${stateCode} @state-change=${onStateChange}></civ-select-state>
-      </div>
       <div class="review-page__main-grid">
         <div class="review-page__streak-card">
           <civ-streak-graph .dailyCounts=${stats.daily_counts ?? []} .streak=${stats.streak} .currentDate=${stats.current_date ?? null}></civ-streak-graph>
