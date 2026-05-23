@@ -1,6 +1,7 @@
-import { useState } from "haunted";
+import { useState, useEffect } from "haunted";
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const CHANGE_EVENT = "civicpatch:localstorage-change";
 
 export const PERSIST_FOREVER = null;
 
@@ -29,6 +30,8 @@ function writeStored(key, value, ttl) {
     __expiresAt: ttl === null ? null : Date.now() + ttl,
   };
   localStorage.setItem(key, JSON.stringify(entry));
+  // Same-tab cross-component sync. The native `storage` event only fires in *other* tabs.
+  window.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: { key, value } }));
 }
 
 export function useLocalStorage(key, defaultValue, { ttl = ONE_DAY_MS } = {}) {
@@ -37,6 +40,14 @@ export function useLocalStorage(key, defaultValue, { ttl = ONE_DAY_MS } = {}) {
     if (stored.found) return stored.value;
     return typeof defaultValue === "function" ? defaultValue() : defaultValue;
   });
+
+  useEffect(() => {
+    const onChange = (e) => {
+      if (e.detail?.key === key) setValueState(e.detail.value);
+    };
+    window.addEventListener(CHANGE_EVENT, onChange);
+    return () => window.removeEventListener(CHANGE_EVENT, onChange);
+  }, [key]);
 
   const setValue = (newValue) => {
     setValueState(newValue);

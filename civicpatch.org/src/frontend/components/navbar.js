@@ -7,6 +7,7 @@ import {
   PERSIST_FOREVER,
 } from "../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
+import "./search-jurisdictions/select-state.js";
 const API_URL = config.apiUrl;
 
 const NAVBAR_CSS = html`
@@ -168,6 +169,24 @@ const NAVBAR_CSS = html`
       border-radius: 4px;
       padding: 0.15em 0.4em;
       margin-right: 0.25rem;
+    }
+
+    .nav-state-selector select {
+      font-size: 0.8rem;
+      font-family: var(--pico-font-family-monospace);
+      color: var(--pico-muted-color);
+      background-color: transparent;
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: 4px;
+      padding-block: 0.15em;
+      padding-inline: 0.45em;
+      padding-inline-end: 1.5em;
+      margin: 0;
+      width: auto;
+      height: auto;
+      line-height: 1.2;
+      background-size: 0.6em;
+      background-position: right 0.4em center;
     }
 
     /* Count badge on nav links */
@@ -373,7 +392,7 @@ function renderPublicLinks(currentPath) {
   `;
 }
 
-function renderAuthed(user, summary, currentPath, stateCode) {
+function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
   const tooltip = getRoleTooltip(user.role);
   const active = (href) => activeClass(currentPath, href);
   return html`
@@ -385,9 +404,11 @@ function renderAuthed(user, summary, currentPath, stateCode) {
         >${user.display_name || user.email || "User"}</span
       >
     </span>
-    ${stateCode
-      ? html`<span class="nav-state-badge">${stateCode.toUpperCase()}</span>`
-      : ""}
+    <civ-select-state
+      class="nav-state-selector"
+      .selected=${stateCode}
+      @state-change=${onStateChange}
+    ></civ-select-state>
     <a href="/" class="${active("/")}">Home</a>
     <a href="/blog" class="${active("/blog")}">Blog</a>
     ${user.permissions?.can_view_issues_page
@@ -426,9 +447,23 @@ function Navbar({ user }) {
   }
   const isAuthed = userData?.authenticated;
   const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
-  const [stateCode] = useLocalStorage("app:default-state", "", {
+  const [stateCode, setStateCode] = useLocalStorage("app:default-state", "", {
     ttl: PERSIST_FOREVER,
   });
+
+  const handleNavStateChange = (e) => {
+    const newState = (e.detail.state || "").toLowerCase();
+    setStateCode(newState);
+    const params = new URLSearchParams(window.location.search);
+    if (newState) params.set("state", newState);
+    else params.delete("state");
+    const qs = params.toString();
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}${qs ? "?" + qs : ""}`,
+    );
+  };
   const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, "", {
     ttl: PERSIST_FOREVER,
   });
@@ -477,7 +512,7 @@ function Navbar({ user }) {
           ></i>
         </button>
         ${isAuthed
-          ? renderAuthed(userData, summary, currentPath, stateCode)
+          ? renderAuthed(userData, summary, currentPath, stateCode, handleNavStateChange)
           : html`
               ${renderPublicLinks(currentPath)}
               <a class="login-link" href="/login"

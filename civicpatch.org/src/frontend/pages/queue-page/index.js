@@ -11,7 +11,6 @@ import {
   saveAndMerge,
   closePullRequest,
 } from "../../api.js";
-import "../../components/search-jurisdictions/select-state.js";
 import "../../components/publish-log/index.js";
 import "./queue-summary/index.js";
 import "./active-jobs/index.js";
@@ -52,9 +51,9 @@ function setAjParamsInUrl(page, perPage) {
 
 function QueuePage() {
   const { permissions } = useAuth();
-  const [defaultState, setDefaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
   const [defaultView, setDefaultView] = useLocalStorage("app:queue-view", "quick", { ttl: PERSIST_FOREVER });
-  const [stateCode, setStateCode] = useState(getStateFromUrl() || defaultState);
+  const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [queueSummary, setQueueSummary] = useState(null);
   const [pullRequests, setPullRequests] = useState([]);
   const { actionState, entries: publishLogEntries, perform } = usePullRequestActions();
@@ -135,22 +134,6 @@ function QueuePage() {
     setActivePipelineRunsPage(1);
   };
 
-  const handleStateChange = (e) => {
-    const newState = e.detail.state;
-    const params = new URLSearchParams(window.location.search);
-    params.set("state", newState);
-    params.set("pr_page", 1);
-    params.set("pr_per_page", perPage);
-    params.set("aj_page", 1);
-    params.set("aj_per_page", 25);
-    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
-    setDefaultState(newState || "");
-    setStateCode(newState);
-    setPage(1);
-    setActiveJobsPage(1);
-    setActiveJobsPerPage(25);
-  };
-
   const handlePageChange = (newPage) => {
     setPrParamsInUrl(newPage, perPage);
     setPage(newPage);
@@ -165,18 +148,14 @@ function QueuePage() {
 
   return html`
     <main class="queue-page page-content">
-      <div class="queue-page__filters">
-        <civ-select-state
-          .selected=${stateCode}
-          @state-change=${handleStateChange}
-        ></civ-select-state>
-        ${permissions.QUEUE_PAGE_ERRORS ? html`
+      ${permissions.QUEUE_PAGE_ERRORS ? html`
+        <div class="queue-page__filters">
           <div class="queue-page__filters-right">
             <a class="btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>
             <a class="btn btn-sm" href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}" download>Export queue</a>
           </div>
-        ` : null}
-      </div>
+        </div>
+      ` : null}
 
       ${!stateCode ? html`<p class="queue-page__select-state-prompt">Select a state to get started.</p>` : null}
 
