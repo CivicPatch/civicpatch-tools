@@ -13,19 +13,24 @@ interface Progress {
   goal: number;
 }
 
+type CurrentEntry = {
+  request_id: string;
+  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null };
+  pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
+  pr_people: { existing: any[]; proposed: any[] };
+  review_data: any;
+  source_content_urls: any[];
+  is_read_only: boolean;
+};
+
 interface ReviewSessionProps {
   progress: Progress;
-  isReadOnly: boolean;
   hasSession: boolean;
-  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null } | null;
-  pr: { url: string | null; status: string | null; reviewState: string | null } | null;
+  currentEntry: CurrentEntry | null;
   error: string | null;
   isDirty: boolean;
-  prPeople: { existing: any[]; proposed: any[] } | null;
   currentPeople: any[];
   selectedPeople: any[];
-  reviewData: unknown;
-  sourceContentUrls: any[];
   resolvedMatches: Record<string, any>;
   onMerge: () => void;
   onAdvance: () => void;
@@ -43,14 +48,15 @@ interface ReviewSessionProps {
 }
 
 function ReviewSession({
-  progress, isReadOnly, hasSession, jurisdiction, pr,
+  progress, hasSession, currentEntry,
   error, isDirty, isClosingPr,
-  prPeople, currentPeople, selectedPeople, reviewData, sourceContentUrls,
+  currentPeople, selectedPeople,
   resolvedMatches,
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }: ReviewSessionProps) {
   const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
+  const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
 
@@ -88,7 +94,7 @@ function ReviewSession({
             </div>
             <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()}>Next <i class="fa-solid fa-arrow-right"></i></button>
           </div>
-          ${isReadOnly ? html`<div class="review-page__nav-right"></div>` : html`
+          ${is_read_only ? html`<div class="review-page__nav-right"></div>` : html`
           <div class="review-page__nav-right">
             <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
               ${isClosingPr ? "Closing..." : "Close PR"}
@@ -107,27 +113,27 @@ function ReviewSession({
               ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
               ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
             </div>
-            <civ-review-checklist .reviewData=${reviewData}></civ-review-checklist>
+            <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
           </div>
         `}
         <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)} aria-label=${collapsed ? "Show controls" : "Hide controls"}>
           <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
         </button>
       </div>
-      ${isReadOnly ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
+      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
       <civ-diff-panel
-        .data=${prPeople ?? { existing: [], proposed: [] }}
+        .data=${pr_people ?? { existing: [], proposed: [] }}
       ></civ-diff-panel>
       <div class="review-page__content">
         <civ-review-workspace
           .pullRequest=${currentPeople ?? []}
-          .existing=${prPeople?.existing ?? []}
+          .existing=${pr_people?.existing ?? []}
           .selectedPeople=${selectedPeople ?? []}
           .isDirty=${isDirty}
-          .isTerminal=${isReadOnly}
+          .isTerminal=${is_read_only}
           .resolvedMatches=${resolvedMatches ?? {}}
           .jurisdictionOcdid=${jurisdictionOcdid}
-          .sourceContentUrls=${sourceContentUrls}
+          .sourceContentUrls=${source_content_urls}
           .onMerge=${onPeopleMerge}
           .onBulkDelete=${onBulkDelete}
           .onReset=${onReset}
@@ -135,7 +141,7 @@ function ReviewSession({
           @data-change=${onTableDataChange}
           @reorder=${onTableReorder}
         ></civ-review-workspace>
-        <civ-side-panel .jurisdictionOcdid=${jurisdictionOcdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
+        <civ-side-panel .jurisdictionOcdid=${jurisdictionOcdid} .sourceContentUrls=${source_content_urls}></civ-side-panel>
       </div>
     </main>
   `;

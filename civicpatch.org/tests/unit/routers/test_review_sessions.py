@@ -114,7 +114,7 @@ def test_get_active_session_returns_null_when_none(client):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = client.get("/review-sessions/active", )
+        response = client.get("/review-sessions/active?state_code=tx")
 
     assert response.status_code == 200
     assert response.json()["data"] is None
@@ -128,11 +128,34 @@ def test_get_active_session_returns_session_when_active(client):
         new_callable=AsyncMock,
         return_value=active,
     ):
-        response = client.get("/review-sessions/active", )
+        response = client.get("/review-sessions/active?state_code=tx")
 
     assert response.status_code == 200
     assert response.json()["data"]["session_id"] == TEST_SESSION_ID
     assert response.json()["data"]["current_entry_number"] == 3
+
+
+@pytest.mark.unit
+def test_get_active_session_passes_state_code_to_db(client):
+    # The state_code query param must be forwarded to the DB layer so that
+    # state-scoped lookups actually scope by state.
+    with patch(
+        "database.review_sessions.get_active_review_session",
+        new_callable=AsyncMock,
+        return_value=None,
+    ) as db_mock:
+        response = client.get("/review-sessions/active?state_code=nj")
+
+    assert response.status_code == 200
+    args, _ = db_mock.call_args
+    assert args[1] == "nj"
+
+
+@pytest.mark.unit
+def test_get_active_session_requires_state_code(client):
+    # Missing state_code => FastAPI returns 422 (missing required query param).
+    response = client.get("/review-sessions/active")
+    assert response.status_code == 422
 
 
 # ── Auth gates on write routes ──────────────────────────────────────────────

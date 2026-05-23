@@ -52,7 +52,7 @@ async def test_get_active_review_session_returns_none_when_no_session():
     # Now: returns None when updated_at filter finds nothing. Same observable outcome.
     cur = _make_cursor(fetchone_side_effect=[None])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_active_review_session(USER_ID)
+        result = await get_active_review_session(USER_ID, STATE_CODE)
     assert result is None
 
 
@@ -62,10 +62,25 @@ async def test_get_active_review_session_filters_by_ended_at():
     # Active resume must only return sessions that have not been ended.
     cur = _make_cursor(fetchone_side_effect=[None])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await get_active_review_session(USER_ID)
+        await get_active_review_session(USER_ID, STATE_CODE)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
     assert any("ended_at IS NULL" in sql for sql in executed_sql)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_get_active_review_session_filters_by_state_code():
+    # State scoping is the whole point: switching to a different state must
+    # not surface another state's active session for this user.
+    cur = _make_cursor(fetchone_side_effect=[None])
+    with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await get_active_review_session(USER_ID, STATE_CODE)
+
+    call = cur.execute.call_args_list[0]
+    sql, params = str(call.args[0]), call.args[1]
+    assert "rs.state_code = %s" in sql
+    assert STATE_CODE in params
 
 
 @pytest.mark.asyncio
@@ -77,7 +92,7 @@ async def test_get_active_review_session_returns_session_when_active():
     row = Row(session_id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_pull_request_numbers=[101, 102])
     cur = _make_cursor(fetchone_side_effect=[row])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_active_review_session(USER_ID)
+        result = await get_active_review_session(USER_ID, STATE_CODE)
     assert result is not None
     assert result["session_id"] == SESSION_ID
     assert result["current_entry_number"] == 3
