@@ -322,7 +322,7 @@ input:not(
 }
 
 [type="submit"]:not(.profile-modal__tab),
-[type="button"]:not(.profile-modal__tab):not(.secondary),
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost),
 [type="reset"],
 button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(
     .destructive
@@ -336,7 +336,7 @@ button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(
     .profile-modal__tab
   ):not(.secondary):hover,
 [type="submit"]:not(.profile-modal__tab):hover,
-[type="button"]:not(.profile-modal__tab):not(.secondary):hover {
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):hover {
   --pico-background-color: var(--pico-primary-hover-background);
   --pico-border-color: var(--pico-primary-hover-background);
   --pico-color: var(--pico-primary-inverse);
@@ -344,12 +344,24 @@ button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(
 
 button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):active,
 [type="submit"]:active,
-[type="button"]:active {
+[type="button"]:not(.btn-ghost):active {
   --pico-background-color: var(--pico-primary-hover-background);
   --pico-border-color: var(--pico-primary-hover-background);
   --pico-color: var(--pico-primary-inverse);
 }
 
+/* Pico sets --pico-color to the on-primary inverse on every button (and
+ * keeps it on :hover/:active/:focus via a [type=button]:is(...) selector
+ * with specificity (0,2,0)). Ghost buttons live on the page background,
+ * so any rule that reads var(--pico-color) would render invisible. We
+ * reset it back to inherit, repeating the override across pseudo-class
+ * states to match Pico's specificity. */
+button.btn-ghost,
+button.btn-ghost:hover,
+button.btn-ghost:focus,
+button.btn-ghost:active {
+  --pico-color: inherit;
+}
 button.btn-ghost {
   background: none;
   border: none;

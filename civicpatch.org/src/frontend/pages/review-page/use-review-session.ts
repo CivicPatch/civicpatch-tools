@@ -126,15 +126,22 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
     setEntryNumber(currentEntry);
   };
 
-  const endSession = async () => {
-    const sid = session?.id;
-    if (sid) await endReviewSession(sid).catch(() => {});
+  // Drops in-memory session/card state and returns to idle. Does NOT touch the
+  // DB session — used when the user switches navbar state so the old state's
+  // DB session stays alive and is resumable.
+  const resetLocalSession = () => {
     setSession(null);
     setEntryNumber(0);
     setResolvedEntryNumbers(new Set());
     setFrontierEntry(0);
     updateParams({ pull_request_number: null });
     onIdle();
+  };
+
+  const endSession = async () => {
+    const sid = session?.id;
+    if (sid) await endReviewSession(sid).catch(() => {});
+    resetLocalSession();
   };
 
   const [isReadOnly, setIsReadOnly] = useState(false);
@@ -166,7 +173,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
     prPeople,
     error, setError,
     stats,
-    advance, back, endSession, merge, navigateTo, loadDirectPr, initSession,
+    advance, back, endSession, resetLocalSession, merge, navigateTo, loadDirectPr, initSession,
     isReadOnly,
     sourceContentUrls, reviewData,
   };

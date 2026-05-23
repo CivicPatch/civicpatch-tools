@@ -18,12 +18,13 @@ class AdvanceDoneReason(str):
     NO_MORE_CARDS = "no_more_cards"
 
 
-async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
+async def get_active_review_session(user_id: str, state_code: str) -> dict[str, Any] | None:
     """
-    Returns the session for this user if it has been written to within the idle
+    Returns the (user, state) session if it has been written to within the idle
     timeout window. updated_at is bumped automatically on every write via trigger,
     so any navigation activity (forward or back) keeps the session alive.
-    Returns None if the session is stale or does not exist.
+    Returns None if the session is stale or does not exist for this state.
+    The schema enforces at most one active session per (user_id, state_code).
     """
     from datetime import timedelta
     pool = await get_pool()
@@ -46,6 +47,7 @@ async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
+                  AND rs.state_code = %s
                   AND rs.ended_at IS NULL
                   AND rs.updated_at > NOW() - %s
                   AND EXISTS (
@@ -54,10 +56,8 @@ async def get_active_review_session(user_id: str) -> dict[str, Any] | None:
                         AND rse2.status = 'claimed'
                   )
                 GROUP BY rs.id, rs.state_code, rs.daily_goal, rs.current_entry_number
-                ORDER BY rs.updated_at DESC
-                LIMIT 1
                 """,
-                (user_id, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
+                (user_id, state_code, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
             )
             row = await cur.fetchone()
 

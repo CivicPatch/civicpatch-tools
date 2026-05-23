@@ -1,53 +1,60 @@
-import { html } from 'lit-html';
-import { component } from 'haunted';
-import '../stat-cards/index.js';
+import { html } from "lit-html";
+import { component } from "haunted";
+import "../stat-cards/index.js";
 
 function percent(n, d) {
   if (!d || d === 0) return 0;
-  return ((n / d) * 100);
+  return (n / d) * 100;
 }
 
 function percentLabel(n, d) {
-  if (!d || d === 0) return '0%';
+  if (!d || d === 0) return "0%";
   return `${((n / d) * 100).toFixed(1)}%`;
 }
 
-function SummaryStats({ stats, state = 'TX' }) {
+function SummaryStats({ stats, state = "TX" }) {
   if (!stats || !stats.states || !stats.states[state]) return html``;
   const stateStats = stats.states[state];
-  const { coverage = 0, known = 1, scrapeable = 1 } = stateStats.civicpatch.localities;
+  const {
+    coverage = 0,
+    known = 1,
+    scrapeable = 1,
+  } = stateStats.civicpatch.localities;
 
   const statsList = [
     {
-      key: 'coverage',
-      label: 'Coverage',
+      key: "reach",
+      label: "Reach",
       value: percentLabel(coverage, scrapeable),
       sub: `${coverage} of ${scrapeable} jurisdictions`,
       copyText: `[coverage] ${percentLabel(coverage, scrapeable)} (${coverage} of ${scrapeable} jurisdictions)`,
-      description: 'Percentage of scrapeable jurisdictions covered by CivicPatch. A jurisdiction is scrapeable if it has a website we can crawl.',
+      description:
+        "Percentage of scrapeable jurisdictions covered by CivicPatch. A jurisdiction is scrapeable if it has a website we can crawl.",
     },
     {
-      key: 'total-coverage',
-      label: 'Total Coverage',
+      key: "total-coverage",
+      label: "Total Coverage",
       value: percentLabel(coverage, known),
       sub: `${coverage} of ${known} jurisdictions`,
       copyText: `[total coverage] ${percentLabel(coverage, known)} (${coverage} of ${known} jurisdictions)`,
-      description: 'Percentage of all known jurisdictions covered, including those without scrapeable websites.',
+      description:
+        "Percentage of all known jurisdictions covered, including those without scrapeable websites.",
     },
     {
-      key: 'officials',
-      label: 'Officials',
+      key: "officials",
+      label: "Officials",
       value: stateStats.civicpatch.officials,
       copyText: `[officials] ${stateStats.civicpatch.officials}`,
-      description: 'Elected officials collected by CivicPatch for this state.',
+      description: "Elected officials collected by CivicPatch for this state.",
     },
     {
-      key: 'localities',
-      label: 'Localities (all)',
+      key: "localities",
+      label: "Localities (all)",
       value: known,
       sub: `${scrapeable} scrapeable`,
       copyText: `[localities] ${known} total (${scrapeable} scrapeable)`,
-      description: 'Total known jurisdictions in the state. Scrapeable = those with websites we can target.',
+      description:
+        "Total known jurisdictions in the state. Scrapeable = those with websites we can target.",
     },
   ];
 
@@ -68,7 +75,10 @@ function SummaryStats({ stats, state = 'TX' }) {
       }
     </style>
     <section>
-      <div class="progress-bar-container" title="Total Coverage: ${coverage} of ${known} known localities">
+      <div
+        class="progress-bar-container"
+        title="Total Coverage: ${coverage} of ${known} known localities"
+      >
         <progress value="${coverage}" max="${scrapeable}"></progress>
         <small>${percentLabel(coverage, scrapeable)} covered</small>
       </div>
@@ -77,5 +87,8 @@ function SummaryStats({ stats, state = 'TX' }) {
   `;
 }
 
-customElements.define('summary-stats', component(SummaryStats, { useShadowDOM: false }));
+customElements.define(
+  "summary-stats",
+  component(SummaryStats, { useShadowDOM: false }),
+);
 export default SummaryStats;

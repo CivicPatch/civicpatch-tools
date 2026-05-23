@@ -109,13 +109,14 @@ def get_router() -> APIRouter:
 
     @router.get("/active")
     async def get_active_session(
+        state_code: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
-        session = await review_sessions_db.get_active_review_session(user.user_id)
+        session = await review_sessions_db.get_active_review_session(user.user_id, state_code)
         return {"data": session}
 
     @router.post("/{session_id}/end")
