@@ -13,7 +13,7 @@ services:
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8000"
-      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data" # Todo: use test data & server
+      OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
       JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
@@ -125,7 +125,7 @@ services:
       CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@civicpatch-org-db:5432/development_db}
       CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
       REDIS_HOST: civicpatch-org-redis
-      OPEN_DATA_REPO_URL: "https://api.github.com/repos/CivicPatch/open-data"
+      OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
       JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}

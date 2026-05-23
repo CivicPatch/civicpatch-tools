@@ -14,7 +14,6 @@ import database.review_sessions as review_sessions_db
 import database.review_session_navigation as review_session_navigation_db
 import database.review_session_entries as review_session_entries_db
 import database.review_session_stats as review_session_stats_db
-import lib.cache as cache_service
 import lib.github.api as github_service
 import lib.storage as storage_service
 import core.pull_request_sync as pr_sync_service
@@ -33,8 +32,6 @@ def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str,
 def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return [{"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)} for url in source_urls]
-
-STATS_CACHE_TTL = 300  # 5 minutes
 
 logger = logging.getLogger(__name__)
 
@@ -58,16 +55,11 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        cache_key = f"review_stats:{user.user_id}:{state_code}"
-        cached = await cache_service.get_cached(cache_key)
-        if cached:
-            return {"data": cached}
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
         stats = await review_session_stats_db.get_review_stats(
             user.user_id, state_code
         )
-        await cache_service.set_cached(cache_key, stats, ttl_seconds=STATS_CACHE_TTL)
         return {"data": stats}
 
     @router.post("")

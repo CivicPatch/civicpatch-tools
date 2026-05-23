@@ -21,6 +21,7 @@ type CurrentEntry = {
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;
+  has_next: boolean;
 };
 
 interface ReviewSessionProps {
@@ -56,7 +57,7 @@ function ReviewSession({
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }: ReviewSessionProps) {
   const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
-  const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only } = currentEntry ?? {} as Partial<CurrentEntry>;
+  const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
 
@@ -92,7 +93,7 @@ function ReviewSession({
                 ></button>`;
               })}
             </div>
-            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()}>Next <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!has_next}>Next <i class="fa-solid fa-arrow-right"></i></button>
           </div>
           ${is_read_only ? html`<div class="review-page__nav-right"></div>` : html`
           <div class="review-page__nav-right">

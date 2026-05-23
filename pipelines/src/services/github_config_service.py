@@ -3,18 +3,16 @@ from typing import Optional
 
 import httpx
 
-OPEN_DATA_RAW_BASE = "https://raw.githubusercontent.com/CivicPatch/open-data/refs/heads/main"
-
 logger = logging.getLogger(__name__)
 
 
-def make_github_fetcher(token: Optional[str] = None):
+def make_github_fetcher(raw_base: str, token: Optional[str] = None):
     headers = {}
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
     def fetch(path: str) -> Optional[str]:
-        url = f"{OPEN_DATA_RAW_BASE}/{path}"
+        url = f"{raw_base}/{path}"
         try:
             with httpx.Client(headers=headers, timeout=10) as client:
                 response = client.get(url)

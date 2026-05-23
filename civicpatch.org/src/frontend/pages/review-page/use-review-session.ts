@@ -35,6 +35,7 @@ export type CurrentEntry = {
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;
+  has_next: boolean;
 };
 
 export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMerge }: {
@@ -67,6 +68,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
       review_data: review?.data ?? null,
       source_content_urls: sessionData.sources,
       is_read_only: status === "merged" || status === "closed",
+      has_next: sessionData.has_next ?? false,
     });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
@@ -156,18 +158,18 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
     resetLocalSession();
   };
 
-  const loadDirectPr = async (prNumber: number): Promise<string | null> => {
+  const loadDirectPr = async (prNumber: number): Promise<boolean> => {
     setIsNavigating(true);
     try {
       const res = await fetchPullRequestByNumber(prNumber);
       const data = res?.data;
-      if (!data) return null;
+      if (!data) return false;
       await applyEntry(data);
       onReviewing();
-      return data.jurisdiction?.ocdid ?? null;
+      return true;
     } catch (err) {
       setError(err.message);
-      return null;
+      return false;
     } finally {
       setIsNavigating(false);
     }

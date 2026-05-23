@@ -2,7 +2,6 @@ import asyncio
 import json
 import os
 from datetime import timezone
-from pathlib import Path
 from typing import List
 
 import dateutil.parser
@@ -19,16 +18,6 @@ from schemas.open_data import OdSyncRequestSchema
 import logging
 
 logger = logging.getLogger(__name__)
-
-# Configuration
-REPO_URL = "https://github.com/CivicPatch/open-data.git"
-REPO_PATH = Path("/app/git_data")
-DATA_FILES_PATTERNS = [
-    "data/*/local/*.yml",
-    "data/*/counties/*.yml",
-]
-JURISDICTION_FILES_PATTERN = "data_source/**/local/jurisdictions_metadata.yml"
-MAP_FILES_PATTERN = "data/**/.maps/*.geojson"
 
 
 async def get_jurisdiction_metadata(state: str):

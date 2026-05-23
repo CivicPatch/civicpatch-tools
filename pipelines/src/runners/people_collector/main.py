@@ -18,6 +18,7 @@ from runners.people_collector.transitions.main import TRANSITION_MAP
 from services.github_config_service import make_github_fetcher
 from shared.utils import data_path_utils
 from shared.utils.config_utils import load_role_config_for_jurisdiction
+from shared.utils.github_urls import derive_raw_base_url
 from shared.utils.statuses import PipelineIssueType
 from shared.utils.url_utils import same_domain, same_url
 from pipelines_environment import get_env_vars
@@ -29,7 +30,9 @@ logger = logging.getLogger(__name__)
 
 
 def initialize_pipeline_run(request_id, jurisdiction_ocdid: str, config: PipelineRunConfig) -> tuple[PeopleCollectorContext, PipelineRunLogger]:
-    fetch_remote = make_github_fetcher()
+    env = get_env_vars()
+    raw_base = derive_raw_base_url(env["OPEN_DATA_REPO_URL"])
+    fetch_remote = make_github_fetcher(raw_base)
     try:
         role_config = load_role_config_for_jurisdiction(jurisdiction_ocdid, fetch_remote)
     except Exception as e:

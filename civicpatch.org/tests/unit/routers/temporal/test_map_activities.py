@@ -83,3 +83,6 @@ async def test_sync_jurisdiction_map_activity_returns_url():
 
     assert result == "https://cdn.civicpatch.org/maps/nj.pmtiles"
     mock_s3.upload_file.assert_called_once()
+    mock_client.get.assert_called_once_with(
+        "https://cdn.civicpatch.org/maps/nj/local.geojson"
+    )

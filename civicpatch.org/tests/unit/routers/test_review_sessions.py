@@ -48,32 +48,21 @@ def client():
 
 
 @pytest.mark.unit
-def test_get_review_stats_returns_cached(client):
-    cached_stats = {"reviewed": 10, "remaining": 5}
-    with patch(
-        "lib.cache.get_cached",
-        new_callable=AsyncMock,
-        return_value=cached_stats,
-    ):
-        response = client.get("/review-sessions/stats", params={"state_code": "ca"})
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "data" in data
-
-
-@pytest.mark.unit
-def test_get_review_stats_fetches_from_db_on_cache_miss(client):
+def test_get_review_stats_does_not_consult_cache(client):
+    # available_count is read from a live pool and changes quickly. A cached
+    # response previously masked new PRs (and stale-released claims) for up to
+    # five minutes, surfacing as "1 available" when two were actually claimable.
     db_stats = {"reviewed": 10, "remaining": 5}
     with (
-        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
+        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None) as cache_get_mock,
+        patch("lib.cache.set_cached", new_callable=AsyncMock) as cache_set_mock,
         patch("database.review_session_stats.get_review_stats", new_callable=AsyncMock, return_value=db_stats),
-        patch("lib.cache.set_cached", new_callable=AsyncMock),
     ):
         response = client.get("/review-sessions/stats", params={"state_code": "ca"})
 
     assert response.status_code == 200
-    assert response.json()["data"] == db_stats
+    cache_get_mock.assert_not_called()
+    cache_set_mock.assert_not_called()
 
 
 @pytest.mark.unit
