@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useRef } from "haunted";
 import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
@@ -36,13 +36,11 @@ function ReviewPage() {
 
   const {
     session, setSession,
-    jurisdiction, pr, progress,
-    prPeople, requestId,
+    currentEntry,
+    progress,
     error, setError,
     stats,
-    advance, back, endSession, merge, navigateTo, loadDirectPr, initSession,
-    isReadOnly,
-    sourceContentUrls, reviewData,
+    advance, back, endSession, resetLocalSession, merge, navigateTo, loadDirectPr, initSession,
   } = useReviewSession(stateCode, {
     onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
     onDone: () => setPageState(PAGE_STATE.IDLE),
@@ -50,14 +48,26 @@ function ReviewPage() {
     onMerge: trackMerge,
   });
 
+  // The deep-link branch (loading a PR by ?pull_request_number=) is one-shot:
+  // we only honor the URL param on the first mount. Subsequent stateCode changes
+  // (navbar switches) take the standard reset + fetch-active path.
+  const didInitialLoad = useRef(false);
+
   useEffect(() => {
+    if (!stateCode) {
+      resetLocalSession();
+      return;
+    }
+
     const p = new URLSearchParams(window.location.search);
     const prNumber = p.get("pull_request_number");
-    if (prNumber) {
+
+    if (!didInitialLoad.current && prNumber) {
+      didInitialLoad.current = true;
       setPageState(PAGE_STATE.LOADING);
       setError(null);
       loadDirectPr(parseInt(prNumber, 10))
-        .then(() => fetchActiveReviewSession())
+        .then(() => fetchActiveReviewSession(stateCode))
         .then((res) => {
           const active = res?.data;
           if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
@@ -67,7 +77,10 @@ function ReviewPage() {
         .catch(() => {});
       return;
     }
-    fetchActiveReviewSession()
+    didInitialLoad.current = true;
+
+    resetLocalSession();
+    fetchActiveReviewSession(stateCode)
       .then((res) => {
         const active = res?.data;
         if (!active) return;
@@ -75,7 +88,7 @@ function ReviewPage() {
         return advance(active.session_id, active.current_entry_number);
       })
       .catch(() => {});
-  }, []);
+  }, [stateCode]);
 
   const [resolvedMatches, setResolvedMatches] = useState({});
 
@@ -92,11 +105,11 @@ function ReviewPage() {
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
     handleResetAll,
-  } = usePeopleState({ people: prPeople?.proposed ?? [] });
+  } = usePeopleState({ people: currentEntry?.pr_people?.proposed ?? [] });
 
   async function handleAdd() {
     const person_id = await generatePersonId();
-    const people = prPeople?.proposed ?? [];
+    const people = currentEntry?.pr_people?.proposed ?? [];
     const last = people[people.length - 1] ?? null;
     addPerson({
       id: person_id,
@@ -117,7 +130,7 @@ function ReviewPage() {
       },
       image: null,
       cdn_image: null,
-      jurisdiction_ocdid: jurisdiction.ocdid,
+      jurisdiction_ocdid: currentEntry?.jurisdiction?.ocdid,
       source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
       updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
     });
@@ -131,14 +144,15 @@ function ReviewPage() {
   }
 
   useEffect(() => {
-    const people = prPeople?.proposed ?? [];
-    if (!people.length) {
+    const people = currentEntry?.pr_people?.proposed ?? [];
+    const jurisdictionOcdid = currentEntry?.jurisdiction?.ocdid;
+    if (!people.length || !jurisdictionOcdid) {
       assignPeople([]);
       setResolvedMatches({});
       return;
     }
     const cleanPeople = people.map(({ _isNew, _dirty, _changes, _selected, _deleted, ...p }) => p);
-    batchResolvePeople(jurisdiction.ocdid, cleanPeople)
+    batchResolvePeople(jurisdictionOcdid, cleanPeople)
       .then((resolved) => {
         const matchMap = {};
         const tagged = people.map((p, i) => {
@@ -153,7 +167,7 @@ function ReviewPage() {
         assignPeople(people);
         setResolvedMatches({});
       });
-  }, [prPeople]);
+  }, [currentEntry?.pr_people]);
 
   // Cap at total reviewable today (already-resolved + still-available), not just remaining.
   // today_resolved can exceed available_count as merged PRs drop out of the pool.
@@ -186,12 +200,15 @@ function ReviewPage() {
   const handleMerge = () => merge(dirty ? peopleToSubmit : null);
 
   const handleClosePr = async () => {
+    const pr = currentEntry?.pr;
+    const requestId = currentEntry?.request_id;
     if (!pr?.number || !requestId) return;
-    trackClose(pr.number, requestId, jurisdiction?.name ?? `#${pr.number}`);
+    trackClose(pr.number, requestId, currentEntry?.jurisdiction?.name ?? `#${pr.number}`);
     await advance();
   };
 
-  const isClosingPr = pr?.number != null && actionState[pr.number]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+  const prNumber = currentEntry?.pr?.number;
+  const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
 
   const renderBody = () => {
     if (pageState === PAGE_STATE.LOADING) {
@@ -209,18 +226,13 @@ function ReviewPage() {
       ></review-landing>`;
     }
     return html`<review-session
-      .isReadOnly=${isReadOnly}
+      .currentEntry=${currentEntry}
       .hasSession=${!!session}
       .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
-      .jurisdiction=${jurisdiction}
-      .pr=${pr}
       .error=${error}
       .isDirty=${dirty}
-      .prPeople=${prPeople}
       .currentPeople=${currentPeople}
       .selectedPeople=${selectedPeople}
-      .reviewData=${reviewData}
-      .sourceContentUrls=${sourceContentUrls}
 
       .onMerge=${handleMerge}
       .onClosePr=${handleClosePr}

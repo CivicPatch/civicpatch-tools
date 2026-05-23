@@ -24,6 +24,19 @@ type OnMerge = (
   jurisdictionName: string,
 ) => Promise<void>;
 
+// The data for the entry currently displayed in the review card. Keys are
+// snake_case because this object crosses module boundaries (hook → page →
+// review-session component), matching the API contract — see CLAUDE.md.
+export type CurrentEntry = {
+  request_id: string;
+  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null };
+  pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
+  pr_people: { existing: any[]; proposed: any[] };
+  review_data: any;
+  source_content_urls: any[];
+  is_read_only: boolean;
+};
+
 export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMerge }: {
   onReviewing: () => void;
   onDone: () => void;
@@ -31,18 +44,13 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
   onMerge: OnMerge;
 }) {
   const [session, setSession] = useState<{ id: string; daily_goal: number } | null>(null);
-  const [requestId, setRequestId] = useState<string | null>(null);
-  const [jurisdiction, setJurisdiction] = useState({ ocdid: null, name: null });
-  const [pr, setPr] = useState<{ url: string | null; status: string | null; reviewState: string | null; number?: number | null }>({ url: null, status: null, reviewState: null });
-  const [prPeople, setPrPeople] = useState<{ existing: any[]; proposed: any[] } | null>(null);
+  const [currentEntry, setCurrentEntry] = useState<CurrentEntry | null>(null);
   const [entryNumber, setEntryNumber] = useState(0);
   const [isNavigating, setIsNavigating] = useState(false);
   const [resolvedEntryNumbers, setResolvedEntryNumbers] = useState(new Set());
   const [frontierEntry, setFrontierEntry] = useState(0);
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ today_resolved: 0, streak: 0, all_time_resolved: 0, available_count: 0, claimed_count: 0, best_streak: 0, avg_seconds_per_review: null });
-  const [sourceContentUrls, setSourceContentUrls] = useState([]);
-  const [reviewData, setReviewData] = useState(null);
 
   useEffect(() => {
     fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
@@ -50,16 +58,18 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
 
   const applyEntry = async (sessionData) => {
     const review = await fetchReview(sessionData.request_id).catch(() => null);
-    setRequestId(sessionData.request_id);
-    setJurisdiction(sessionData.jurisdiction);
-    setPr(sessionData.pr);
-    setPrPeople({ existing: sessionData.existing, proposed: sessionData.proposed });
+    const status = sessionData.pr?.status;
+    setCurrentEntry({
+      request_id: sessionData.request_id,
+      jurisdiction: sessionData.jurisdiction,
+      pr: sessionData.pr,
+      pr_people: { existing: sessionData.existing, proposed: sessionData.proposed },
+      review_data: review?.data ?? null,
+      source_content_urls: sessionData.sources,
+      is_read_only: status === "merged" || status === "closed",
+    });
     setEntryNumber(sessionData.entry_number);
     setFrontierEntry((prev) => Math.max(prev, sessionData.entry_number));
-    setReviewData(review?.data ?? null);
-    setSourceContentUrls(sessionData.sources);
-    const status = sessionData.pr?.status;
-    setIsReadOnly(status === "merged" || status === "closed");
     updateParams({ pull_request_number: sessionData.pr?.number != null ? String(sessionData.pr.number) : null });
   };
 
@@ -98,8 +108,9 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
   };
 
   const merge = async (people) => {
-    if (!pr.number || !requestId) return;
-    onMerge(pr.number, requestId, jurisdiction.ocdid, people ?? null, jurisdiction.name ?? `#${pr.number}`);
+    if (!currentEntry?.pr?.number || !currentEntry?.request_id) return;
+    const { pr, request_id, jurisdiction } = currentEntry;
+    onMerge(pr.number!, request_id, jurisdiction.ocdid!, people ?? null, jurisdiction.name ?? `#${pr.number}`);
     setResolvedEntryNumbers((prev) => new Set([...prev, entryNumber]));
     await advance();
   };
@@ -119,11 +130,11 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
     }
   };
 
-  const initSession = (sessionId: string, dailyGoal: number, resolvedNumbers: number[], currentEntry: number) => {
+  const initSession = (sessionId: string, dailyGoal: number, resolvedNumbers: number[], currentEntryNumber: number) => {
     setSession({ id: sessionId, daily_goal: dailyGoal });
     setResolvedEntryNumbers(new Set(resolvedNumbers));
-    setFrontierEntry(currentEntry);
-    setEntryNumber(currentEntry);
+    setFrontierEntry(currentEntryNumber);
+    setEntryNumber(currentEntryNumber);
   };
 
   // Drops in-memory session/card state and returns to idle. Does NOT touch the
@@ -131,6 +142,7 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
   // DB session stays alive and is resumable.
   const resetLocalSession = () => {
     setSession(null);
+    setCurrentEntry(null);
     setEntryNumber(0);
     setResolvedEntryNumbers(new Set());
     setFrontierEntry(0);
@@ -144,8 +156,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
     resetLocalSession();
   };
 
-  const [isReadOnly, setIsReadOnly] = useState(false);
-
   const loadDirectPr = async (prNumber: number): Promise<string | null> => {
     setIsNavigating(true);
     try {
@@ -153,8 +163,6 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
       const data = res?.data;
       if (!data) return null;
       await applyEntry(data);
-      const terminal = data.pr?.status === "merged" || data.pr?.status === "closed";
-      setIsReadOnly(terminal);
       onReviewing();
       return data.jurisdiction?.ocdid ?? null;
     } catch (err) {
@@ -167,14 +175,10 @@ export function useReviewSession(stateCode, { onReviewing, onDone, onIdle, onMer
 
   return {
     session, setSession,
-    jurisdiction,
-    pr, requestId,
+    currentEntry,
     progress: { entryNumber, hasPrev: entryNumber > 1, resolvedEntryNumbers, frontierEntry, isNavigating },
-    prPeople,
     error, setError,
     stats,
     advance, back, endSession, resetLocalSession, merge, navigateTo, loadDirectPr, initSession,
-    isReadOnly,
-    sourceContentUrls, reviewData,
   };
 }

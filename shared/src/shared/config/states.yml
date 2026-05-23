@@ -6,6 +6,8 @@
   name: "New Jersey"
 - code: "sc"
   name: "South Carolina"
+- code: "tn"
+  name: "Tennessee"
 - code: "tx"
   name: "Texas"
 - code: "wa"
