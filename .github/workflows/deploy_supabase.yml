@@ -7,6 +7,15 @@ on:
       - 'civicpatch.org/supabase/**'
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Environment to push config to
+        required: true
+        type: choice
+        options:
+          - staging
+          - prod
 
 permissions:
   contents: read
@@ -19,13 +28,16 @@ permissions:
 #   - RESEND_API_KEY         — interpolated into config.toml at push time
 #                              (resolves `pass = "env(RESEND_API_KEY)"` in
 #                              [auth.email.smtp])
+#   - EMAIL_SENDER_NAME      — interpolated into config.toml at push time
+#                              (resolves `sender_name = "env(EMAIL_SENDER_NAME)"`
+#                              in [auth.email.smtp])
 env:
   INFISICAL_PROJECT_ID: e1e3d235-5dd4-4dbd-af04-18b10bcd75b7
   INFISICAL_API_URL: https://infisical.wizards.cafe
 
 jobs:
   deploy-staging:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.target == 'staging')
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -64,10 +76,10 @@ jobs:
       - name: Push to Supabase (staging env)
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
-            supabase config push --project-ref "$SUPABASE_PROJECT_REF"
+            sh -c 'supabase config push --project-ref "$SUPABASE_PROJECT_REF"'
 
   deploy-prod:
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'prod')
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -106,4 +118,4 @@ jobs:
       - name: Push to Supabase (prod env)
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=prod -- \
-            supabase config push --project-ref "$SUPABASE_PROJECT_REF"
+            sh -c 'supabase config push --project-ref "$SUPABASE_PROJECT_REF"'
