@@ -106,7 +106,10 @@ function EmailLogin(): TemplateResult {
             >
               Wrong email?
             </button>
-            <label for="email-login-code">6-digit code</label>
+            <p class="email-login__hint">
+              We sent a 6-digit code to <strong>${email}</strong>.
+            </p>
+            <label for="email-login-code">Code</label>
             <input
               id="email-login-code"
               inputmode="numeric"

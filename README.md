@@ -74,7 +74,7 @@ This repository contains supporting infrastructure for the CivicPatch initiative
 
 ## Contributing
 
-Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and 
+Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and
 join our weekly sync and biweekly hackathon meetings.
 
 - Weekly Sync — Introductions and Updates
@@ -88,34 +88,35 @@ join our weekly sync and biweekly hackathon meetings.
 
 - Docker (required for running services; tested on OSX)
 - [mise](https://mise.jdx.dev/getting-started.html) (for managing environments and scripts)
-
   - `brew install openssl readline` (for postgres tool)
 
 - A [github](https://github.com/) account
-
   - Poke a maintainer [michelle@civicpatch.org], or see [Contributing](#contributing) guide for onboarding
-    for additional setup as needed. This project integrates heavily with the [open-data](https://github.com/CivicPatch/open-data) 
-    repo and multiple other services so you'll either want to set up your own mirror repos and corresponding 
+    for additional setup as needed. This project integrates heavily with the [open-data](https://github.com/CivicPatch/open-data)
+    repo and multiple other services so you'll either want to set up your own mirror repos and corresponding
     github apps, or you can use keys provided for you during onboarding.
 
 ### Setup
 
-1. Run the following:
+1. Install workspace dependencies (mise tools, pre-commit hooks, uv packages):
 
    ```sh
-   mise install
    mise setup
    ```
 
 2. Set up environment variables for **civicpatch** (optional — skip if you don't need to run scrapes):
-
    - Reference [pipelines/docker-compose.yml](./pipelines/docker-compose.yml) for available variables
-   - Create `../civicpatch.env` with the variables you need
+   - Create `../pipelines.env` with the variables you need
 
-3. Set up environment variables for **civicpatch.org** (contact the maintainer for GitHub App keys):
-
-   - Reference [civicpatch.org/docker-compose.yml](./civicpatch.org/docker-compose.yml) for available variables
-   - Create `../civicpatch.org.env` with the variables you need
+3. Set up environment variables for **civicpatch.org**:
+   - Create `../civicpatch.org.env` (reference [civicpatch.org/docker-compose.yml](./civicpatch.org/docker-compose.yml) for the full list)
+   - The app boots without any of these, but specific features won't work until you set them:
+     - GitHub PR / open-data sync — needs `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY_BASE64`, `GITHUB_APP_INSTALLATION_ID`
+     - Jurisdiction edits — needs `JURISDICTIONS_SYNC_APP_ID`, `JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64`, `JURISDICTIONS_SYNC_APP_INSTALLATION_ID`
+     - File uploads / CDN — needs `STORAGE_ENDPOINT`, `STORAGE_ACCESS_KEY_ID`, `STORAGE_SECRET_ACCESS_KEY`
+     - Google Sheets sync — needs `GOOGLE_SHEETS_*`
+     - GitHub webhook verification — needs `GITHUB_WEBHOOK_SECRET`
+   - Contact a maintainer for GitHub App keys, or set up your own mirror apps
 
 4. Start the dev environment:
 
@@ -123,27 +124,55 @@ join our weekly sync and biweekly hackathon meetings.
    mise dev
    ```
 
-   This starts all services and watches `worker/` and `shared/` for Python changes,
-   automatically restarting the Temporal worker when code changes. Keep it running
-   in a terminal while developing.
+   This brings up two layers:
+   - **Local Supabase stack** (via the Supabase CLI) — handles auth and captures all outbound email in Mailpit at http://localhost:54324. The CLI-generated `SUPABASE_SECRET_KEY` is auto-injected into docker compose.
+   - **Docker compose stack** — civicpatch.org API, pipelines, Temporal, Redis, Postgres, FE dev server.
 
-   Migrations run automatically on startup. If you need to run them manually:
+   The Temporal worker hot-reloads when files under `worker/` or `shared/` change. Migrations run automatically on startup; to run them manually:
 
    ```sh
    mise migrate_up
    ```
 
+   Ctrl+C tears both layers down.
+
+### Logging in (local)
+
+civicpatch.org uses Supabase email-OTP. Locally, no real email is sent — Mailpit captures everything.
+
+1. Open http://localhost:8000 and start the sign-in flow
+2. Enter any email address (it doesn't need to exist; Mailpit catches it locally)
+3. Grab the 6-digit code one of these ways:
+
+   ```sh
+   mise otp
+   ```
+
+   …or open Mailpit in a browser: http://localhost:54324
+
+4. Enter the code on the verify screen
+
+To grant your local user a role (e.g. for `/admin` access):
+
+```sh
+mise run grant_role you@example.com admins
+```
+
+Roles, lowest → highest: `default`, `contributors`, `maintainers`, `admins`.
+
 ### Local services
 
-| Port | Service |
-|------|---------|
-| 5173 | Frontend (Vite dev) |
-| 6379 | Redis |
-| 7233 | Temporal (gRPC) |
-| 8000 | civicpatch.org API |
-| 8001 | pipelines |
-| 8002 | Temporal UI |
-| 8003 | PostgreSQL (civicpatch.org DB) |
+| Port  | Service                                   |
+| ----- | ----------------------------------------- |
+| 5173  | Frontend (Vite dev)                       |
+| 6379  | Redis                                     |
+| 7233  | Temporal (gRPC)                           |
+| 8000  | civicpatch.org API                        |
+| 8001  | pipelines                                 |
+| 8002  | Temporal UI                               |
+| 8003  | PostgreSQL (civicpatch.org DB)            |
+| 54321 | Supabase (local, managed by Supabase CLI) |
+| 54324 | Mailpit (captures local OTP emails)       |
 
 ## Testing
 

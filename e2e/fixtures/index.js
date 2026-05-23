@@ -34,8 +34,12 @@ export const test = base.extend({
 
     // Pre-set the state selector in localStorage so the review queue
     // filters to the seeded state without requiring URL params.
+    // Only set if absent — tests that mutate app:default-state via the
+    // navbar selector must not be clobbered on subsequent navigations.
     await page.addInitScript(() => {
-      localStorage.setItem("app:default-state", JSON.stringify({ __value: "nj", __expiresAt: null }));
+      if (localStorage.getItem("app:default-state") === null) {
+        localStorage.setItem("app:default-state", JSON.stringify({ __value: "nj", __expiresAt: null }));
+      }
     });
 
     // Expose csrfNonce so tests can include it in POST request headers

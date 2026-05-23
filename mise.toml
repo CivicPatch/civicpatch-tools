@@ -9,7 +9,7 @@ jq = "latest"
 supabase = "2.98.0"
 
 [env]
-_.file = ["../civicpatch.env", "../civicpatch.org.env"]
+_.file = ["../pipelines.env", "../civicpatch.org.env"]
 # Local-dev value. Matches what the FastAPI app expects when not overridden
 # by docker-compose / .env. Production uses $PROD_SERVICE_API_KEY (from secrets).
 SERVICE_API_KEY = "service-api-key"

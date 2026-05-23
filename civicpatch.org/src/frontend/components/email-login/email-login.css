@@ -47,6 +47,12 @@ button.email-login__reset:hover:not(:disabled) {
   color: var(--pico-color);
 }
 
+.email-login__hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--pico-muted-color);
+}
+
 .email-login__error {
   color: var(--pico-del-color, #c0392b);
   background-color: var(--pico-muted-background-color);

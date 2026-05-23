@@ -20,6 +20,13 @@ export const TEST_JURISDICTION_OCDID_3 =
 export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
+// TX fixture — minimal data so cross-state isolation tests can positively
+// assert TX content (not just the absence of NJ content).
+export const TX_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:tx/place:e2e_tx/government";
+export const TX_REQUEST_ID = "00000000-0000-0000-eeee-000000000010";
+const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
+
 // Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
 // fresh/stale/gap/untracked colors deterministically against known OCD IDs.
 export const MAP_FIXTURES = {
@@ -91,15 +98,16 @@ export async function seedE2eFixtures() {
     );
 
     // Second card
-    for (const [jOcdid, jName, reqId, prId, prNum] of [
-      [TEST_JURISDICTION_OCDID_2, "E2E Test City 2", TEST_REQUEST_ID_2, TEST_PR_ID_2, 2],
-      [TEST_JURISDICTION_OCDID_3, "E2E Test City 3", TEST_REQUEST_ID_3, TEST_PR_ID_3, 3],
+    for (const [jOcdid, jName, reqId, prId, prNum, stateCode, geoidPrefix] of [
+      [TEST_JURISDICTION_OCDID_2, "E2E Test City 2", TEST_REQUEST_ID_2, TEST_PR_ID_2, 2, 'nj', '060000'],
+      [TEST_JURISDICTION_OCDID_3, "E2E Test City 3", TEST_REQUEST_ID_3, TEST_PR_ID_3, 3, 'nj', '060000'],
+      [TX_JURISDICTION_OCDID,     "E2E TX City",    TX_REQUEST_ID,      TX_PR_ID,      10, 'tx', '480000'],
     ]) {
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-         VALUES ($1, 'nj', 'current', $2)
+         VALUES ($1, $3, 'current', $2)
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
-        [jOcdid, JSON.stringify({ name: jName, geoid: `060000${prNum}` })]
+        [jOcdid, JSON.stringify({ name: jName, geoid: `${geoidPrefix}${prNum}` }), stateCode]
       );
       await client.query(
         `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
@@ -176,6 +184,7 @@ export async function teardownE2eFixtures() {
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
       [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
+      [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
       await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);

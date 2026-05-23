@@ -1,5 +1,5 @@
 [env]
-_.file = "../../civicpatch.env"
+_.file = "../../pipelines.env"
 PYTHONPATH = "./src"
 
 #[tasks.unit]
