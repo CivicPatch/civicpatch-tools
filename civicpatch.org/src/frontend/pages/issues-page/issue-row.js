@@ -1,14 +1,11 @@
 import { html } from "lit-html";
-import { getIssueTypeConfig, formatIssueType, formatDate, getIssueDetail } from "./utils.js";
+import { formatIssueType, formatDate, getIssueDetail } from "./utils.js";
 
 export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
-  const config = getIssueTypeConfig(issue.issue_type);
-  const categoryClass = config?.category ? ` issues-page__issue-type-chip--${config.category}` : "";
-
   return html`
     <tr class=${issue.is_flagged ? "issues-page__issue-row--flagged" : ""}>
       <td>
-        <span class="issues-page__issue-type-chip issues-page__issue-type-chip--${issue.issue_type.replace(/_/g, "-")}${categoryClass}">
+        <span class="issues-page__issue-type-chip issues-page__issue-type-chip--${issue.issue_type.replace(/_/g, "-")}">
           ${formatIssueType(issue.issue_type)}
         </span>
       </td>

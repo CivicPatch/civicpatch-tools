@@ -7,9 +7,9 @@ export const ISSUE_TYPE = {
 };
 
 export const KNOWN_ISSUE_TYPES = [
-  { value: ISSUE_TYPE.PIPELINE_ERROR,          label: "Pipeline error",     category: "error" },
-  { value: ISSUE_TYPE.NO_INFO,                 label: "No info",            category: "error" },
-  { value: ISSUE_TYPE.DOMAIN_INACTIVE,         label: "Domain inactive",    category: "error" },
-  { value: ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR, label: "Navigation error",   category: "error" },
-  { value: ISSUE_TYPE.UNRECOGNIZED_ROLE,       label: "Unrecognized role",  category: "issue" },
+  { value: ISSUE_TYPE.PIPELINE_ERROR,          label: "Pipeline error" },
+  { value: ISSUE_TYPE.NO_INFO,                 label: "No info" },
+  { value: ISSUE_TYPE.DOMAIN_INACTIVE,         label: "Domain inactive" },
+  { value: ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR, label: "Navigation error" },
+  { value: ISSUE_TYPE.UNRECOGNIZED_ROLE,       label: "Unrecognized role" },
 ];

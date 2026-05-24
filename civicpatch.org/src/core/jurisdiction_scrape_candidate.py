@@ -17,7 +17,7 @@ async def get_scrape_candidates(state: str, num_jurisdictions: int) -> list[Juri
     metadata_by_id = yaml.safe_load(metadata_content).get("jurisdictions_by_id", {}) if metadata_content else {}
     open_pr_ocdids = await pull_requests_db.get_open_pr_ocdids_by_state(state)
     active_job_ocdids = await database.get_active_pipeline_run_jurisdiction_ocdids()
-    pending_error_ocdids = await pipeline_issues_db.get_pending_error_issue_ocdids()
+    pending_issue_ocdids = await pipeline_issues_db.get_pending_issue_ocdids()
 
     def is_eligible(entry: dict) -> bool:
         ocdid = entry.get("id")
@@ -26,7 +26,7 @@ async def get_scrape_candidates(state: str, num_jurisdictions: int) -> list[Juri
             and entry.get("url")
             and ocdid not in open_pr_ocdids
             and ocdid not in active_job_ocdids
-            and ocdid not in pending_error_ocdids
+            and ocdid not in pending_issue_ocdids
         )
 
     def to_jurisdiction(entry: dict) -> Jurisdiction:

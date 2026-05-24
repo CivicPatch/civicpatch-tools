@@ -420,9 +420,9 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
     ${user.permissions?.can_view_issues_page
       ? html`<a href="/issues" class="${active("/issues")}"
           >Issues
-          ${summary?.issues_errors
+          ${summary?.issues_total
             ? html`<span class="nav-count nav-count--error"
-                >${summary.issues_errors}</span
+                >${summary.issues_total}</span
               >`
             : ""}</a
         >`
