@@ -2,6 +2,7 @@ from datetime import timedelta
 from typing import Any
 
 from database.database import get_pool
+from database.pull_requests import AVAILABLE_FOR_REVIEW
 from database.review_sessions import (
     AdvanceDoneReason,
     ReviewSessionEntryStatus,
@@ -53,13 +54,13 @@ async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, lim
     the router's UniqueViolation retry handles the rare collision.
     """
     await cur.execute(
-        """
+        f"""
         SELECT j.request_id::text,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM pipeline_runs j
         JOIN requests r ON r.id = j.request_id
         JOIN pull_requests pr ON pr.request_id = j.request_id
-        WHERE pr.status = 'open'
+        WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
           AND r.jurisdiction_ocdid != ALL(%s::text[])
         ORDER BY

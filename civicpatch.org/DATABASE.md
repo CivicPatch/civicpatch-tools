@@ -58,6 +58,7 @@ erDiagram
         text            status              "idx"
         text_null       review_state
         timestamptz_null merged_at
+        timestamptz_null merge_enqueued_at   "set at merge enqueue; cleared on settle"
         timestamptz     created_at
         timestamptz     updated_at
     }
