@@ -35,6 +35,15 @@ async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
     )
 
 
+async def _session_in_progress_jurisdictions(cur, review_session_id: str) -> list[str]:
+    """Jurisdictions currently claimed (in progress) in this session."""
+    await cur.execute(
+        "SELECT jurisdiction_ocdid FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
+        (review_session_id,),
+    )
+    return [r[0] for r in await cur.fetchall()]
+
+
 async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, limit: int = 1):
     """
     Returns the next available open review(s) for this session.
@@ -68,7 +77,7 @@ async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, lim
 
 
 async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str, reviewed_ocdids: list):
-    """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_more) or None."""
+    """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_next) or None."""
     await cur.execute(
         """
         SELECT id, request_ids, jurisdiction_ocdid
@@ -97,16 +106,18 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
         """,
         (review_session_id, entry_number + 1),
     )
-    has_more = (await cur.fetchone()) is not None
-    if not has_more:
-        peek = await _allocate_next_review(cur, state_code, reviewed_ocdids, limit=1)
-        has_more = len(peek) > 0
+    has_next = (await cur.fetchone()) is not None
+    if not has_next:
+        in_progress = await _session_in_progress_jurisdictions(cur, review_session_id)
+        excluded = list(reviewed_ocdids or []) + in_progress
+        peek = await _allocate_next_review(cur, state_code, excluded, limit=1)
+        has_next = len(peek) > 0
 
-    return request_id, jurisdiction_ocdid, has_more
+    return request_id, jurisdiction_ocdid, has_next
 
 
 async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, session_row):
-    """Allocate the next available card at the frontier. Returns (request_id, jurisdiction_ocdid, has_more) or a done dict."""
+    """Allocate the next available card at the frontier. Returns (request_id, jurisdiction_ocdid, has_next) or a done dict."""
     await cur.execute(
         """
         SELECT COUNT(*) FILTER (
@@ -124,11 +135,7 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
 
     # Exclude both resolved jurisdictions and any currently claimed in this session,
     # to avoid re-offering a card that's already in progress.
-    await cur.execute(
-        "SELECT jurisdiction_ocdid FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
-        (review_session_id,),
-    )
-    in_progress = [r[0] for r in await cur.fetchall()]
+    in_progress = await _session_in_progress_jurisdictions(cur, review_session_id)
     excluded = list(session_row.reviewed_ocdids or []) + in_progress  # type: ignore[union-attr]
 
     rows = await _allocate_next_review(cur, session_row.state_code, excluded, limit=2)  # type: ignore[union-attr]
@@ -171,7 +178,7 @@ async def navigate_to_entry(
             if isinstance(result, dict):
                 return result
 
-            request_id, jurisdiction_ocdid, has_more = result
+            request_id, jurisdiction_ocdid, has_next = result
 
             await cur.execute(
                 """
@@ -200,7 +207,7 @@ async def navigate_to_entry(
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
         "resolved_count": counts.resolved_count,  # type: ignore[union-attr]
-        "has_more": has_more,
+        "has_next": has_next,
     }
 
 

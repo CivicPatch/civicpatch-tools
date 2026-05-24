@@ -10,6 +10,7 @@ export default defineConfig(({ command }) => ({
       input: {
         index: "./assets/index.js",
         review: "./assets/review.ts",
+        "review-session": "./assets/review-session.ts",
         queue: "./assets/queue.js",
         issues: "./assets/issues.js",
         jurisdiction: "./assets/jurisdiction.js",

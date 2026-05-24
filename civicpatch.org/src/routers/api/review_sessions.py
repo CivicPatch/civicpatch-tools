@@ -135,6 +135,9 @@ async def _navigate_response(session_id: str, entry_number: int):
     if result is None:
         raise HTTPException(status_code=404)
     if "done" in result:
+        # Exhausted session: end it now so a later /active lookup can't resurrect
+        # it as resumable once the user has navigated past every entry.
+        await review_sessions_db.end_review_session(session_id)
         return {"data": None, "reason": result["done"]}
 
     request_id = result["request_id"]
@@ -168,7 +171,7 @@ async def _navigate_response(session_id: str, entry_number: int):
         "data": {
             "request_id": request_id,
             "entry_number": result["entry_number"],
-            "has_next": result.get("has_more", False),
+            "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],
             "existing": existing,

@@ -97,6 +97,32 @@ def test_end_session_returns_200(client):
 
 
 @pytest.mark.unit
+def test_navigate_to_done_auto_ends_session(client):
+    # When navigation reports the session is exhausted ("done"), the route must
+    # end the session so a later /active lookup can't resurrect it as resumable.
+    with (
+        patch(
+            "database.review_session_navigation.navigate_to_entry",
+            new_callable=AsyncMock,
+            return_value={"done": "no_more_cards"},
+        ),
+        patch(
+            "database.review_sessions.end_review_session",
+            new_callable=AsyncMock,
+        ) as end_mock,
+    ):
+        response = client.post(
+            f"/review-sessions/{TEST_SESSION_ID}/navigate",
+            json={"entry_number": 5},
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body == {"data": None, "reason": "no_more_cards"}
+    end_mock.assert_awaited_once_with(TEST_SESSION_ID)
+
+
+@pytest.mark.unit
 def test_get_active_session_returns_null_when_none(client):
     with patch(
         "database.review_sessions.get_active_review_session",
