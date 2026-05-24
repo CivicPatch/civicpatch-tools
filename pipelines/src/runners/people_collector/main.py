@@ -19,7 +19,6 @@ from services.github_config_service import make_github_fetcher
 from shared.utils import data_path_utils
 from shared.utils.config_utils import load_role_config_for_jurisdiction
 from shared.utils.github_urls import derive_raw_base_url
-from shared.utils.statuses import PipelineIssueType
 from shared.utils.url_utils import same_domain, same_url
 from pipelines_environment import get_env_vars
 from utils import log_utils
@@ -57,19 +56,13 @@ def initialize_pipeline_run(request_id, jurisdiction_ocdid: str, config: Pipelin
 async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunConfig) -> PeopleCollectorContext:
     """Entry point for people collector. Logs errors and re-raises."""
     resolved_url = await resolve_redirect(config.url)
-    initial_issues = []
     if not same_url(config.url, resolved_url):
         logger.info("Canonical URL redirected: %s -> %s", config.url, resolved_url)
         if not same_domain(config.url, resolved_url):
-            initial_issues.append({
-                "type": PipelineIssueType.DOMAIN_REDIRECTED,
-                "data": {"original_url": config.url, "resolved_url": resolved_url},
-            })
+            logger.info("Domain redirected: %s -> %s", config.url, resolved_url)
         config = config.model_copy(update={"url": resolved_url})
 
     context, pipeline_run_logger = initialize_pipeline_run(request_id, jurisdiction_ocdid, config)
-    if initial_issues:
-        context = context.copy(update={"data": context.data.model_copy(update={"issues": initial_issues})})
     env = get_env_vars()
 
     try:

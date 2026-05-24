@@ -169,9 +169,6 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str,
         if issue_type == PipelineIssueType.UNRECOGNIZED_ROLE:
             issue_key = issue["role"]
             data = json.dumps({"person_names": [issue.get("person_name", "")]})
-        elif issue_type == PipelineIssueType.DOMAIN_REDIRECTED:
-            issue_key = issue.get("original_url", request_id)
-            data = json.dumps(issue)
         else:
             issue_key = request_id
             data = json.dumps(issue)

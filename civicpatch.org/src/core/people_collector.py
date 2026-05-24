@@ -28,6 +28,7 @@ INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 
 logger = logging.getLogger(__name__)
 
+
 async def handle_submit_pipeline_run_artifacts(
         request: HandleSubmitPipelineRunArtifactsRequest,
 ) -> SubmitPipelineRunArtifactsResponse:
