@@ -37,7 +37,7 @@ async def handle_submit_pipeline_run_artifacts(
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
-        await upsert_pipeline_issue(request.request_id, "pipeline_error", "error", [{"error": str(e)}])
+        await upsert_pipeline_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
         raise
 
 
@@ -117,14 +117,13 @@ async def _handle_submit_pipeline_run_artifacts(
             await upsert_pipeline_issue(
                 request.request_id,
                 issue["type"],
-                "issue",
                 [issue.get("data") or {}],
             )
     else:
         context_data = workflow_context.get("data", {})
         error_step = context_data.get("error_step") or "pipeline_error"
         error_detail = context_data.get("error_detail") or {}
-        await upsert_pipeline_issue(request.request_id, error_step, "error", [error_detail])
+        await upsert_pipeline_issue(request.request_id, error_step, [error_detail])
 
 
     artifact_zip_path = await file_utils.zip_directory(pull_request_file_dir, f"artifact_{file_suffix}.zip")

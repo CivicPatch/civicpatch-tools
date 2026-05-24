@@ -55,11 +55,6 @@ class PipelineRunErrorType(StrEnum):
     DOMAIN_NAVIGATION_ERROR = "domain_navigation_error"
 
 
-class PipelineIssueCategory(StrEnum):
-    ERROR = "error"
-    ISSUE = "issue"
-
-
 class PipelineIssueType(StrEnum):
     UNRECOGNIZED_ROLE = "unrecognized_role"
 

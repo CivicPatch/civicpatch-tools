@@ -178,12 +178,11 @@ function IssuesPage() {
     hrefForPage: (n) => `?issues_page=${n}`,
   }) : null;
 
-  const tagChips = KNOWN_ISSUE_TYPES.map(({ value, label, category }) => {
+  const tagChips = KNOWN_ISSUE_TYPES.map(({ value, label }) => {
     const active = issuesTagFilter.includes(value);
-    const categoryClass = category ? ` issues-page__issue-tag--${category}` : "";
     return html`
       <button
-        class="issues-page__issue-tag${categoryClass}${active ? " issues-page__issue-tag--active" : ""}"
+        class="issues-page__issue-tag${active ? " issues-page__issue-tag--active" : ""}"
         @click=${() => handleToggleTag(value)}
       >${label}${issueCounts[value] ? html` <span class="issues-page__issue-tag-count">${issueCounts[value]}</span>` : ""}${active ? html` <span class="issues-page__issue-tag-x">×</span>` : ""}</button>
     `;

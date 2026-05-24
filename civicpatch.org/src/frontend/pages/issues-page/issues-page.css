@@ -74,26 +74,6 @@
     color: var(--pico-primary);
 }
 
-.issues-page__issue-tag--error {
-    border-color: color-mix(in srgb, var(--pico-del-color, oklch(57% 0.2 27)) 50%, var(--pico-muted-border-color));
-    color: var(--pico-del-color, oklch(50% 0.2 27));
-}
-
-.issues-page__issue-tag--error:hover {
-    border-color: var(--pico-del-color, oklch(57% 0.2 27));
-    color: var(--pico-del-color, oklch(50% 0.2 27));
-}
-
-.issues-page__issue-tag--issue {
-    border-color: color-mix(in srgb, var(--pico-warn-color) 50%, var(--pico-muted-border-color));
-    color: var(--pico-warn-color);
-}
-
-.issues-page__issue-tag--issue:hover {
-    border-color: var(--pico-warn-color);
-    color: var(--pico-warn-color);
-}
-
 .issues-page__issue-tag--active {
     background: var(--pico-primary);
     border-color: var(--pico-primary);
@@ -103,28 +83,6 @@
 .issues-page__issue-tag--active:hover {
     opacity: 0.85;
     color: var(--pico-primary-inverse);
-}
-
-.issues-page__issue-tag--error.issues-page__issue-tag--active {
-    background: var(--pico-del-color, oklch(57% 0.2 27));
-    border-color: var(--pico-del-color, oklch(57% 0.2 27));
-    color: #fff;
-}
-
-.issues-page__issue-tag--error.issues-page__issue-tag--active:hover {
-    opacity: 0.85;
-    color: #fff;
-}
-
-.issues-page__issue-tag--issue.issues-page__issue-tag--active {
-    background: var(--pico-warn-color);
-    border-color: var(--pico-warn-color);
-    color: #fff;
-}
-
-.issues-page__issue-tag--issue.issues-page__issue-tag--active:hover {
-    opacity: 0.85;
-    color: #fff;
 }
 
 .issues-page__issue-tag-x {
@@ -189,15 +147,6 @@
     overflow-wrap: anywhere;
 }
 
-.issues-page__issue-type-chip--error {
-    background: color-mix(in srgb, var(--pico-del-color, oklch(57% 0.2 27)) 12%, transparent);
-    color: var(--pico-del-color, oklch(50% 0.2 27));
-}
-
-.issues-page__issue-type-chip--issue {
-    background: color-mix(in srgb, var(--pico-warn-color) 15%, transparent);
-    color: var(--pico-warn-color);
-}
 
 /* ── Pagination ── */
 

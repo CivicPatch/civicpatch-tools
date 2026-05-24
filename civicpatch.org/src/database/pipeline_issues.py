@@ -5,7 +5,7 @@ from psycopg import sql
 
 import shared.utils.id_utils
 from database.database import get_pool
-from shared.utils.statuses import PipelineIssueCategory, PipelineIssueStatus, PipelineIssueType
+from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 
 
 def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
@@ -27,7 +27,7 @@ def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str]
     return result
 
 
-async def get_pending_error_issue_ocdids() -> set[str]:
+async def get_pending_issue_ocdids() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -35,11 +35,10 @@ async def get_pending_error_issue_ocdids() -> set[str]:
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM pipeline_issues pi
             JOIN requests r ON r.id::text = ANY(pi.request_ids)
-            WHERE pi.category = %s
-              AND pi.status IN (%s, %s)
+            WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid IS NOT NULL
             """,
-            (PipelineIssueCategory.ERROR, PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED),
+            (PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -161,7 +160,7 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
         )
 
 
-async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str, issues: list[dict]) -> None:
+async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return
     rows = []
@@ -172,14 +171,14 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, category: str,
         else:
             issue_key = request_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, category, [request_id], data, PipelineIssueStatus.PENDING))
+        rows.append((issue_type, issue_key, [request_id], data, PipelineIssueStatus.PENDING))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO pipeline_issues (issue_type, issue_key, category, request_ids, data, status)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO pipeline_issues (issue_type, issue_key, request_ids, data, status)
+            VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (issue_type, issue_key) DO UPDATE SET
               request_ids = (
                 SELECT array_agg(DISTINCT r)
@@ -266,7 +265,6 @@ async def get_pipeline_issues_page(
                        FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
                        LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
                    ) AS jurisdiction_names,
-                   ri.category,
                    ri.is_flagged
             FROM pipeline_issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
@@ -291,8 +289,7 @@ async def get_pipeline_issues_page(
             "resolved_at": r[6].isoformat() if r[6] else None,
             "created_at": r[7].isoformat() if r[7] else None,
             "pull_request_url": r[10],
-            "category": r[12],
-            "is_flagged": r[13],
+            "is_flagged": r[12],
             "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
             "jurisdictions": jurisdictions,
         })

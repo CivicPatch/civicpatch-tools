@@ -450,7 +450,6 @@ async def test_upsert_pipeline_issue_unrecognized_role():
     await db_pipeline_issues.upsert_pipeline_issue(
         "test-request-id",
         "unrecognized_role",
-        "issue",
         [{"role": "grand_poobah", "person_name": "Alice"}],
     )
 
@@ -464,7 +463,6 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     await db_pipeline_issues.upsert_pipeline_issue(
         "test-request-id-1",
         "unrecognized_role",
-        "issue",
         [{"role": "archduke", "person_name": "Bob"}],
     )
 
@@ -481,7 +479,6 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     await db_pipeline_issues.upsert_pipeline_issue(
         "test-request-id-2",
         "unrecognized_role",
-        "issue",
         [{"role": "archduke", "person_name": "Carol"}],
     )
 
