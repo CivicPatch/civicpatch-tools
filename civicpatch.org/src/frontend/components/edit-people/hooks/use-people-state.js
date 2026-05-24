@@ -94,8 +94,11 @@ export function usePeopleState({ people }) {
   function handleTableDataReorder(e) {
     const { newOrder } = e.detail;
     setCurrentPeople(current => {
+      // newOrder is the person ids (uuids) in their new position. Rebuild the
+      // array in that order; filter(Boolean) drops any id with no current row
+      // (defensive — every id comes from `current`, so nothing is dropped).
       const byId = current.reduce((acc, p) => ({ ...acc, [p.id]: { ...p, _dirty: true } }), {});
-      return newOrder.map(id => byId[id] ?? byId[parseInt(id)]).filter(Boolean);
+      return newOrder.map(id => byId[id]).filter(Boolean);
     });
   }
 

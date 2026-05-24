@@ -107,6 +107,28 @@
     color: var(--pico-muted-color);
 }
 
+.review-page__ready-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    padding: 1.75rem 0.5rem;
+    color: var(--pico-muted-color);
+}
+
+.review-page__ready-empty i {
+    font-size: var(--text-2xl);
+    opacity: 0.4;
+    margin-bottom: 0.25rem;
+}
+
+.review-page__ready-empty-title {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--pico-color);
+}
+
 .review-page__setup-card {
     width: 100%;
     max-width: 600px;

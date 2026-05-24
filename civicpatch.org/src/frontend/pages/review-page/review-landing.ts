@@ -16,6 +16,9 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [pendingGoal, setPendingGoal] = useState(dailyGoal);
 
+  // Resume is always available; a fresh review needs a state, an unmet goal, and something to review.
+  const canStart = resumable || (stateCode && stats.today_resolved < effectiveGoal && stats.available_count > 0);
+
   return html`
     <main class="review-page">
       <div class="review-page__main-grid">
@@ -25,6 +28,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
         <div class="review-page__ready-card">
           <div class="review-page__ready-header">
             <span class="review-page__ready-title">Ready for Review</span>
+            ${stateCode ? html`
             <div class="review-page__goal-control">
               <button class="review-page__gear-btn btn-icon" @click=${() => {
                 setPendingGoal(dailyGoal);
@@ -34,17 +38,24 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
               </button>
               <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
             </div>
+            ` : ""}
           </div>
-          <span class="review-page__ready-count">${Math.max(0, Math.min(stats.available_count ?? 0, dailyGoal) - (stats.today_resolved ?? 0))}</span>
-          <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
-          <span class="review-page__ready-sub">${stateCode ? html`to review · ${stats.available_count} available in ${stateCode.toUpperCase()}` : ""}</span>
           ${!stateCode ? html`
-            <p class="review-page__goal-met">Select a state to start reviewing.</p>
-          ` : stats.today_resolved >= effectiveGoal ? html`
-            <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
-          ` : ""}
-${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!resumable && (!stateCode || stats.today_resolved >= effectiveGoal || stats.available_count === 0)}>${resumable ? "Resume" : "Review"} <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="review-page__ready-empty">
+              <i class="fa-solid fa-location-dot"></i>
+              <span class="review-page__ready-empty-title">Pick a state to begin</span>
+              <span>Use the state selector in the top nav to load reviews.</span>
+            </div>
+          ` : html`
+            <span class="review-page__ready-count">${Math.max(0, Math.min(stats.available_count ?? 0, dailyGoal) - (stats.today_resolved ?? 0))}</span>
+            <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
+            <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
+            ${stats.today_resolved >= effectiveGoal ? html`
+              <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
+            ` : ""}
+            ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+            <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!canStart}>${resumable ? "Resume" : "Review"} <i class="fa-solid fa-arrow-right"></i></button>
+          `}
         </div>
       </div>
       <stat-cards class="review-page__stat-cards" .stats=${[

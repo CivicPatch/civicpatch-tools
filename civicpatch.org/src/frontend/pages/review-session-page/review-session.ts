@@ -4,14 +4,8 @@ import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
 import "../../components/side-panel/side-panel.js";
-
-interface Progress {
-  entryNumber: number;
-  hasPrev: boolean;
-  resolvedEntryNumbers: Set<number>;
-  frontierEntry: number;
-  goal: number;
-}
+import { type Progress } from "./review-session-controls.js";
+import "./review-session-controls.js";
 
 type CurrentEntry = {
   request_id: string;
@@ -56,57 +50,29 @@ function ReviewSession({
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
 }: ReviewSessionProps) {
-  const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
   const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const displayMax = hasSession ? goal : entryNumber;
-
-  function getDotStatus(n) {
-    if (n === entryNumber) return "current";
-    if (resolvedEntryNumbers.has(n)) return "resolved";
-    if (n <= frontierEntry) return "deferred";
-    return "future";
-  }
-
   return html`
     <main class="review-page">
       <div class="review-page__sticky-header">
-        <div class="review-page__nav">
-          <div class="review-page__nav-left">
-            <button class="btn-sm review-page__end-btn" @click=${onEndSession}>${hasSession ? "End session" : "Exit"}</button>
-          </div>
-          ${!hasSession ? html`<div class="review-page__nav-center"></div>` : html`
-          <div class="review-page__nav-center">
-            <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
-            <div class="review-page__dots">
-              ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
-                const status = getDotStatus(n);
-                return html`<button
-                  class="review-page__dot review-page__dot--${status}"
-                  ?disabled=${status === "future" || status === "current"}
-                  @click=${() => onNavigateTo(n)}
-                ></button>`;
-              })}
-            </div>
-            <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!has_next}>Next <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
-          ${is_read_only ? html`<div class="review-page__nav-right"></div>` : html`
-          <div class="review-page__nav-right">
-            <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
-              ${isClosingPr ? "Closing..." : "Close PR"}
-            </button>
-            <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
-              ${isDirty ? "Save and Publish" : "Publish"}
-            </button>
-          </div>
-          `}
-          `}
-        </div>
+        <review-session-controls
+          .progress=${progress}
+          .hasSession=${hasSession}
+          .hasNext=${has_next}
+          .isReadOnly=${is_read_only}
+          .isClosingPr=${isClosingPr}
+          .isDirty=${isDirty}
+          .onEndSession=${onEndSession}
+          .onBack=${onBack}
+          .onNavigateTo=${onNavigateTo}
+          .onAdvance=${onAdvance}
+          .onClosePr=${onClosePr}
+          .onMerge=${onMerge}
+        ></review-session-controls>
         ${collapsed ? "" : html`
           ${error ? html`<p class="review-page__error">${error}</p>` : ""}
           <div class="review-page__info-row">

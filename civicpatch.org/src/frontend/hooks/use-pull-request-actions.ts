@@ -23,61 +23,57 @@ const PUBLISH_LOG_STATUSES = [
 export function usePullRequestActions() {
   const [actionState, setActionState] = useState<Record<number, ActionState>>({});
 
-  const trackMerge = async (
+  const setStatus = (pullRequestNumber: number, jurisdictionName: string, status: string, error?: string) =>
+    setActionState((prev) => ({
+      ...prev,
+      [pullRequestNumber]: { status, jurisdiction_name: jurisdictionName, ...(error ? { error } : {}) },
+    }));
+
+  // Run a PR action, recording its lifecycle (loading -> done, or error) for the publish log.
+  const track = async (opts: {
+    pullRequestNumber: number;
+    jurisdictionName: string;
+    loading: string;
+    done: string;
+    run: () => Promise<unknown>;
+  }): Promise<void> => {
+    const { pullRequestNumber, jurisdictionName, loading, done, run } = opts;
+    setStatus(pullRequestNumber, jurisdictionName, loading);
+    try {
+      await run();
+      setStatus(pullRequestNumber, jurisdictionName, done);
+    } catch (err: any) {
+      setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err));
+    }
+  };
+
+  const trackMerge = (
     pullRequestNumber: number,
     requestId: string,
     jurisdictionOcdid: string,
     people: any[] | null,
     jurisdictionName: string,
-  ): Promise<void> => {
-    setActionState((prev) => ({
-      ...prev,
-      [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_MERGE, jurisdiction_name: jurisdictionName },
-    }));
-    try {
-      await saveAndMerge(pullRequestNumber, requestId, jurisdictionOcdid, people);
-      setActionState((prev) => ({
-        ...prev,
-        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.MERGED, jurisdiction_name: jurisdictionName },
-      }));
-    } catch (err: any) {
-      setActionState((prev) => ({
-        ...prev,
-        [pullRequestNumber]: {
-          status: PULL_REQUEST_STATUS.ERROR,
-          jurisdiction_name: jurisdictionName,
-          error: err?.message ?? String(err),
-        },
-      }));
-    }
-  };
+  ): Promise<void> =>
+    track({
+      pullRequestNumber,
+      jurisdictionName,
+      loading: PULL_REQUEST_STATUS.LOADING_MERGE,
+      done: PULL_REQUEST_STATUS.MERGED,
+      run: () => saveAndMerge(pullRequestNumber, requestId, jurisdictionOcdid, people),
+    });
 
-  const trackClose = async (
+  const trackClose = (
     pullRequestNumber: number,
     requestId: string,
     jurisdictionName: string,
-  ): Promise<void> => {
-    setActionState((prev) => ({
-      ...prev,
-      [pullRequestNumber]: { status: PULL_REQUEST_STATUS.LOADING_CLOSE, jurisdiction_name: jurisdictionName },
-    }));
-    try {
-      await closePullRequest(requestId, pullRequestNumber);
-      setActionState((prev) => ({
-        ...prev,
-        [pullRequestNumber]: { status: PULL_REQUEST_STATUS.CLOSED, jurisdiction_name: jurisdictionName },
-      }));
-    } catch (err: any) {
-      setActionState((prev) => ({
-        ...prev,
-        [pullRequestNumber]: {
-          status: PULL_REQUEST_STATUS.ERROR,
-          jurisdiction_name: jurisdictionName,
-          error: err?.message ?? String(err),
-        },
-      }));
-    }
-  };
+  ): Promise<void> =>
+    track({
+      pullRequestNumber,
+      jurisdictionName,
+      loading: PULL_REQUEST_STATUS.LOADING_CLOSE,
+      done: PULL_REQUEST_STATUS.CLOSED,
+      run: () => closePullRequest(requestId, pullRequestNumber),
+    });
 
   const entries: PublishLogEntry[] = Object.entries(actionState)
     .filter(([, s]) => PUBLISH_LOG_STATUSES.includes(s.status))
