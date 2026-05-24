@@ -1,8 +1,6 @@
-from typing import Optional
 from uuid import UUID
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
-from pydantic import BaseModel, model_validator
 from supabase import AsyncClient
 
 import database.users as users_db
@@ -11,7 +9,6 @@ import lib.cache as cache_service
 import lib.supabase_auth as supabase_auth_service
 import core.open_data_sync as data_sync
 import core.pull_request_sync as pr_sync
-import lib.temporal.map_client as map_client
 from schemas.common import (
     Identity,
     InviteUserRequest,
@@ -23,21 +20,7 @@ from schemas.common import (
 )
 from schemas.open_data import OdSyncRequestSchema
 from lib.auth import require_route_access
-from shared.utils.config_utils import get_states
 
-
-def _valid_state_codes() -> set[str]:
-    return {s["code"] for s in get_states()}
-
-
-class MapSyncRequest(BaseModel):
-    state: Optional[str] = None
-
-    @model_validator(mode="after")
-    def validate_state(self) -> "MapSyncRequest":
-        if self.state is not None and self.state not in _valid_state_codes():
-            raise ValueError(f"state must be one of: {sorted(_valid_state_codes())}")
-        return self
 
 def get_router() -> APIRouter:
     router = APIRouter()
@@ -66,17 +49,6 @@ def get_router() -> APIRouter:
     ):
         await cache_service.invalidate("dashboard_data")
         return {"status": "ok"}
-
-    @router.post("/map_sync", include_in_schema=False)
-    async def map_sync_endpoint(
-        request: MapSyncRequest = MapSyncRequest(),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
-    ):
-        try:
-            workflow_id = await map_client.start_sync_jurisdiction_map_workflow(request.state)
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
-        return {"workflow_id": workflow_id, "state": request.state}
 
     @router.get("/users", include_in_schema=False)
     async def list_users_endpoint(
