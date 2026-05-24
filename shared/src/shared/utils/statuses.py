@@ -62,8 +62,6 @@ class PipelineIssueCategory(StrEnum):
 
 class PipelineIssueType(StrEnum):
     UNRECOGNIZED_ROLE = "unrecognized_role"
-    DOMAIN_REDIRECTED = "domain_redirected"
-    DOMAIN_INACTIVE_FIXED = "domain_inactive_fixed"
 
 
 class PullRequestStatus(StrEnum):

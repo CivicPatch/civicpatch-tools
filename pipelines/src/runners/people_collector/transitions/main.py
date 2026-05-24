@@ -111,15 +111,9 @@ async def scrape_page_transition(_: JobConfig, logger: PipelineRunLogger, contex
 
     is_root_link = page_to_scrape.url == context.data.config.url
     if is_root_link and not same_domain(final_url, page_to_scrape.url):
+        logger.info(f"Domain redirected: {page_to_scrape.url} -> {final_url}")
         new_config = context.data.config.model_copy(update={"url": final_url})
-        next_context = _next_context(
-            next_context,
-            config=new_config,
-            issues=next_context.data.issues + [{
-                "type": PipelineIssueType.DOMAIN_REDIRECTED,
-                "data": {"original_url": page_to_scrape.url, "discovered_url": final_url},
-            }],
-        )
+        next_context = _next_context(next_context, config=new_config)
 
     link_status = get_link_status_by_url(frontier, page_to_scrape.url)
     next_state = PipelineStatus.PREPROCESS_PAGE_CONTENT if link_status == LinkStatus.SCRAPED else PipelineStatus.SCRAPE_PAGE
@@ -307,15 +301,12 @@ async def find_jurisdiction_url_transition(_: JobConfig, logger: PipelineRunLogg
         return next_context, PipelineStatus.REVIEW_OUTPUT
 
     # Found a new domain — restart scraping from scratch
+    logger.info(f"Inactive domain fixed: {context.data.config.url} -> {discovered}")
     new_config = context.data.config.model_copy(update={"url": discovered, "source_urls": []})
     return _next_context(
         next_context,
         config=new_config,
         frontier=LinkFrontier.from_urls([discovered]),
-        issues=context.data.issues + [{
-            "type": PipelineIssueType.DOMAIN_INACTIVE_FIXED,
-            "data": {"original_url": context.data.config.url, "discovered_url": discovered},
-        }],
     ), PipelineStatus.SCRAPE_PAGE
 
 
