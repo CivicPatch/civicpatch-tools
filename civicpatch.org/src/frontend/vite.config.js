@@ -17,6 +17,7 @@ export default defineConfig(({ command }) => ({
         progress: "./assets/progress.js",
         login: "./assets/login.ts",
         admin: "./assets/admin.ts",
+        activity: "./assets/activity.ts",
       },
     },
   },

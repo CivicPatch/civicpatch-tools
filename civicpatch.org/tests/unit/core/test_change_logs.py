@@ -10,33 +10,17 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 USER_ID = "user-123"
 
 
-# ── record_merge_review ─────────────────────────────────────────────────────
+# ── record_merge_review / record_close_review (event-only) ───────────────────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 @patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_people_data_by_request_ids", new_callable=AsyncMock)
 @patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_merge_review_logs_event_then_person_rows(mock_jurisdiction, mock_people, mock_create):
+async def test_record_merge_review_logs_event(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
-    mock_people.return_value = {
-        REQUEST_ID: {"existing": [], "proposed": [{"id": "p1", "name": "New Person", "office": {"name": "Mayor"}}]}
-    }
     await change_logs.record_merge_review(REQUEST_ID, USER_ID)
-    logged_types = [call.args[0] for call in mock_create.call_args_list]
-    assert logged_types == [ChangeLogType.MERGE_REVIEW, ChangeLogType.ADD_PERSON]
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_people_data_by_request_ids", new_callable=AsyncMock)
-@patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_merge_review_skips_when_no_jurisdiction(mock_jurisdiction, mock_people, mock_create):
-    mock_jurisdiction.return_value = None
-    await change_logs.record_merge_review(REQUEST_ID, USER_ID)
-    mock_people.assert_not_called()
-    mock_create.assert_not_called()
+    mock_create.assert_awaited_once()
+    assert mock_create.call_args.args == (ChangeLogType.MERGE_REVIEW, USER_ID, JURISDICTION_OCDID, REQUEST_ID)
 
 
 @pytest.mark.unit
@@ -47,8 +31,6 @@ async def test_record_merge_review_swallows_errors(mock_jurisdiction, mock_creat
     mock_jurisdiction.side_effect = RuntimeError("db down")
     await change_logs.record_merge_review(REQUEST_ID, USER_ID)  # best-effort: must not raise
 
-
-# ── record_close_review ──────────────────────────────────────────────────────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
@@ -69,3 +51,37 @@ async def test_record_close_review_swallows_errors(mock_jurisdiction, mock_creat
     mock_jurisdiction.return_value = JURISDICTION_OCDID
     mock_create.side_effect = RuntimeError("db down")
     await change_logs.record_close_review(REQUEST_ID, USER_ID)  # best-effort: must not raise
+
+
+# ── record_manual_edits (the publish-time diff) ──────────────────────────────
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+async def test_record_manual_edits_logs_diff_rows(mock_create):
+    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
+    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
+    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, before, after)
+    mock_create.assert_awaited_once()
+    args = mock_create.call_args.args
+    assert args[0] == ChangeLogType.EDIT_PERSON
+    assert args[1:4] == (USER_ID, JURISDICTION_OCDID, REQUEST_ID)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+async def test_record_manual_edits_no_diff_logs_nothing(mock_create):
+    people = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
+    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, people, people)
+    mock_create.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+async def test_record_manual_edits_swallows_errors(mock_create):
+    mock_create.side_effect = RuntimeError("db down")
+    before = []
+    after = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
+    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, before, after)  # must not raise

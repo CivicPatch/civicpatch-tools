@@ -5,6 +5,53 @@ from schemas.change_logs import PersonChangePayload
 from shared.utils.statuses import ChangeLogType
 
 
+async def get_change_logs_for_roles(roles: list[str], limit: int, offset: int) -> tuple[int, list[dict]]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT COUNT(*)
+            FROM change_logs cl
+            JOIN users u ON u.id = cl.user_id
+            WHERE u.role = ANY(%s)
+            """,
+            (roles,),
+        )
+        count_row = await cur.fetchone()
+        total = count_row[0] if count_row is not None else 0
+
+        await cur.execute(
+            """
+            SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.request_id,
+                   cl.changes, cl.created_at,
+                   COALESCE(u.display_name, u.email) AS author_name, u.role AS author_role,
+                   COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name
+            FROM change_logs cl
+            JOIN users u ON u.id = cl.user_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
+            WHERE u.role = ANY(%s)
+            ORDER BY cl.created_at DESC
+            LIMIT %s OFFSET %s
+            """,
+            (roles, limit, offset),
+        )
+        rows = await cur.fetchall()
+    return total, [
+        {
+            "id": r[0],
+            "type": r[1],
+            "jurisdiction_ocdid": r[2],
+            "request_id": r[3],
+            "changes": r[4],
+            "created_at": r[5],
+            "author_name": r[6],
+            "author_role": r[7],
+            "jurisdiction_name": r[8],
+        }
+        for r in rows
+    ]
+
+
 async def create_change_log(
     change_type: ChangeLogType,
     user_id: str | None,

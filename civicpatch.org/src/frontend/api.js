@@ -51,6 +51,13 @@ export const fetchIssueCounts = async (stateCode) => {
   return res.json();
 };
 
+export const fetchChangeLogs = async (bucket, page = 1, perPage = 20) => {
+  const params = new URLSearchParams({ bucket, page, per_page: perPage });
+  const res = await fetch(`${API_URL}/api/v1/change_logs?${params}`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));

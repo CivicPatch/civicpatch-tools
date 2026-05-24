@@ -1356,3 +1356,37 @@ dialog[open] > article > footer {
     padding: 2rem 4rem;
   }
 }
+
+/* ── Section headers (shared by issues + activity pages) ── */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.section-title {
+  padding-left: 0.65rem;
+  font-family: "Space Grotesk", var(--pico-font-family);
+  font-weight: 700;
+}
+
+.section-title--warning {
+  border-left: 3px solid var(--pico-warn-color);
+}
+
+.section-title--info {
+  border-left: 3px solid rgb(var(--color-1));
+}
+
+.section-count {
+  font-size: 0.75em;
+  font-weight: 400;
+  color: var(--pico-muted-color);
+  font-family: var(--pico-font-family-monospace);
+}
