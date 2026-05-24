@@ -12,7 +12,7 @@ function formatDuration(seconds) {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
-function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onGoalChange, onStartReview }) {
+function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resumable, onGoalChange, onStartReview }) {
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [pendingGoal, setPendingGoal] = useState(dailyGoal);
 
@@ -44,7 +44,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, onGo
             <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
           ` : ""}
 ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!stateCode || stats.today_resolved >= effectiveGoal || stats.available_count === 0}>Review <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!resumable && (!stateCode || stats.today_resolved >= effectiveGoal || stats.available_count === 0)}>${resumable ? "Resume" : "Review"} <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </div>
       <stat-cards class="review-page__stat-cards" .stats=${[

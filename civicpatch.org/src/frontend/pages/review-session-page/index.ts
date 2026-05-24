@@ -6,9 +6,10 @@ import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
-import { useReviewSession, landingUrl, STATE_PARAM } from "./use-review-session.js";
+import { useReviewSession } from "./use-review-session.js";
+import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
-import "../review-page/review-session.js";
+import "./review-session.js";
 import "../../components/publish-log/index.js";
 import "../review-page/review-page.css";
 

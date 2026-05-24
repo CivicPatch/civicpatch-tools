@@ -1,194 +1,41 @@
 import { html } from "lit-html";
-import { component, useState, useEffect, useRef } from "haunted";
-import { createReviewSession, fetchActiveReviewSession, generatePersonId, batchResolvePeople } from "../../api.js";
-import { buildOtherNames } from "../../utils/name-utils.js";
+import { component, useState, useEffect } from "haunted";
+import { createReviewSession, navigateToEntry, fetchReviewStats, fetchActiveReviewSession } from "../../api.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { useReviewSession, updateParams } from "./use-review-session.js";
-import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
-import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
+import { sessionUrl, STATE_PARAM } from "../review-routes.js";
+import { DEFAULT_STATS } from "../review-session-page/review-state.js";
 import "./review-landing.js";
-import "./review-session.js";
-import "../../components/publish-log/index.js";
 import "./review-page.css";
 
 const DEFAULT_STATE_KEY = "app:default-state";
 const DEFAULT_GOAL_KEY = "review_daily_goal";
 const DEFAULT_GOAL = 10;
 
-const PAGE_STATE = {
-  LOADING: "loading",
-  IDLE: "idle",
-  REVIEWING: "reviewing",
-};
-
 function getStateFromUrl() {
-  return (new URLSearchParams(window.location.search).get("state") || "").toLowerCase();
+  return (new URLSearchParams(window.location.search).get(STATE_PARAM) || "").toLowerCase();
 }
 
 function ReviewPage() {
-  const [pageState, setPageState] = useState(PAGE_STATE.IDLE);
   const [defaultState] = useLocalStorage(DEFAULT_STATE_KEY, "");
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [dailyGoal, setDailyGoal] = useLocalStorage(DEFAULT_GOAL_KEY, DEFAULT_GOAL, { ttl: PERSIST_FOREVER });
 
-  const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
-
-  const {
-    session, setSession,
-    currentEntry,
-    progress,
-    error, setError,
-    stats,
-    advance, back, endSession, resetLocalSession, merge, navigateTo, loadDirectPr, initSession,
-  } = useReviewSession(stateCode, {
-    onReviewing: () => setPageState(PAGE_STATE.REVIEWING),
-    onDone: () => setPageState(PAGE_STATE.IDLE),
-    onIdle: () => setPageState(PAGE_STATE.IDLE),
-    onMerge: trackMerge,
-  });
-
-  // The deep-link branch (loading a PR by ?pull_request_number=) is one-shot:
-  // we only honor the URL param on the *very first* effect run. Subsequent
-  // stateCode changes (navbar switches) take the standard reset + fetch path.
-  const isFirstEffectRun = useRef(true);
+  const [stats, setStats] = useState(DEFAULT_STATS);
+  const [error, setError] = useState(null);
+  const [activeSession, setActiveSession] = useState(null);
+  const resumable = activeSession != null;
 
   useEffect(() => {
-    const firstRun = isFirstEffectRun.current;
-    isFirstEffectRun.current = false;
-
-    const p = new URLSearchParams(window.location.search);
-    const prNumber = p.get("pull_request_number");
-
-    // Deep-link must work regardless of stateCode — a shared PR URL has to
-    // resolve to the PR view even for a user who has no state set yet (and
-    // therefore can't have an active session that includes the PR).
-    if (firstRun && prNumber) {
-      setPageState(PAGE_STATE.LOADING);
-      setError(null);
-      loadDirectPr(parseInt(prNumber, 10))
-        .then((ok) => {
-          if (!ok) {
-            // PR not found or load errored — drop the bad param and fall back
-            // to the idle landing so the page is not stuck on LOADING.
-            resetLocalSession();
-            return;
-          }
-          if (!stateCode) return;
-          return fetchActiveReviewSession(stateCode).then((res) => {
-            const active = res?.data;
-            if (active && active.session_pull_request_numbers?.includes(parseInt(prNumber))) {
-              initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
-            }
-          });
-        })
-        .catch(() => {
-          resetLocalSession();
-        });
-      return;
-    }
-
-    if (!stateCode) {
-      resetLocalSession();
-      return;
-    }
-
-    resetLocalSession();
-    fetchActiveReviewSession(stateCode)
-      .then((res) => {
-        const active = res?.data;
-        if (!active) return;
-        initSession(active.session_id, active.daily_goal, active.resolved_entry_numbers ?? [], active.current_entry_number);
-        return advance(active.session_id, active.current_entry_number);
-      })
-      .catch(() => {});
+    fetchReviewStats(stateCode).then((res) => setStats(res.data)).catch(() => {});
+    fetchActiveReviewSession(stateCode).then((res) => setActiveSession(res.data)).catch(() => {});
   }, [stateCode]);
 
-  const [resolvedMatches, setResolvedMatches] = useState({});
-
-  const {
-    currentPeople,
-    dirty,
-    peopleToSubmit,
-    selectedPeople,
-    assignPeople,
-    addPerson,
-    updatePerson,
-    handleTableDataChange,
-    handleTableDataReorder,
-    handleBulkDelete,
-    handleMerge: handlePeopleMerge,
-    handleResetAll,
-  } = usePeopleState({ people: currentEntry?.pr_people?.proposed ?? [] });
-
-  async function handleAdd() {
-    const person_id = await generatePersonId();
-    const people = currentEntry?.pr_people?.proposed ?? [];
-    const last = people[people.length - 1] ?? null;
-    addPerson({
-      id: person_id,
-      _changes: [],
-      _selected: false,
-      _deleted: false,
-      _isNew: true,
-      name: "",
-      other_names: [],
-      phones: [],
-      emails: [],
-      urls: last?.urls?.[0] ? [last.urls[0]] : [],
-      start_date: null,
-      end_date: null,
-      office: {
-        name: "Council Member",
-        division_ocdid: people[0]?.office?.division_ocdid ?? null,
-      },
-      image: null,
-      cdn_image: null,
-      jurisdiction_ocdid: currentEntry?.jurisdiction?.ocdid,
-      source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
-      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
-    });
-  }
-
-  function handleLinkPerson(e) {
-    const { personId, proposedPerson, existingPeople } = e.detail;
-    const existingPerson = existingPeople.find(p => p.id === personId);
-    const other_names = buildOtherNames(proposedPerson, existingPerson);
-    updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
-  }
-
-  useEffect(() => {
-    const people = currentEntry?.pr_people?.proposed ?? [];
-    const jurisdictionOcdid = currentEntry?.jurisdiction?.ocdid;
-    if (!people.length || !jurisdictionOcdid) {
-      assignPeople([]);
-      setResolvedMatches({});
-      return;
-    }
-    const cleanPeople = people.map(({ _isNew, _dirty, _changes, _selected, _deleted, ...p }) => p);
-    batchResolvePeople(jurisdictionOcdid, cleanPeople)
-      .then((resolved) => {
-        const matchMap = {};
-        const tagged = people.map((p, i) => {
-          const r = resolved.data[i];
-          matchMap[p.id] = r;
-          return { ...p, _isNew: !r?.person };
-        });
-        assignPeople(tagged);
-        setResolvedMatches(matchMap);
-      })
-      .catch(() => {
-        assignPeople(people);
-        setResolvedMatches({});
-      });
-  }, [currentEntry?.pr_people]);
-
-  // Cap at total reviewable today (already-resolved + still-available), not just remaining.
-  // today_resolved can exceed available_count as merged PRs drop out of the pool.
+  // Cap at total reviewable today (already-resolved + still-available), not just remaining;
+  // never below what's already claimed.
   const maxReviewable = (stats.today_resolved ?? 0) + (stats.available_count ?? 0);
   const effectiveGoal = Math.max(
     maxReviewable > 0 ? Math.min(dailyGoal, maxReviewable) : dailyGoal,
-    stats.claimed_count ?? 0
+    stats.claimed_count ?? 0,
   );
 
   const handleGoalChange = (n) => {
@@ -196,80 +43,33 @@ function ReviewPage() {
     setDailyGoal(clamped);
   };
 
+  // With an active session, just hand off to the session route, which resumes
+  // it. Otherwise create the session, claim its first entry, then hand off.
   const handleStartReview = async () => {
-    setPageState(PAGE_STATE.LOADING);
+    if (resumable) {
+      window.location.href = sessionUrl(stateCode);
+      return;
+    }
     setError(null);
     try {
-      const sessionRes = await createReviewSession(stateCode, effectiveGoal);
-      const newSession = sessionRes.data;
-      setSession(newSession);
-      updateParams({ pull_request_number: null });
-      await advance(newSession.id, newSession.next_entry_number);
+      const session = (await createReviewSession(stateCode, effectiveGoal)).data;
+      await navigateToEntry(session.id, session.next_entry_number);
+      window.location.href = sessionUrl(stateCode);
     } catch (err) {
       setError(err.message);
-      setPageState(PAGE_STATE.IDLE);
     }
   };
 
-  const handleMerge = () => merge(dirty ? peopleToSubmit : null);
-
-  const handleClosePr = async () => {
-    const pr = currentEntry?.pr;
-    const requestId = currentEntry?.request_id;
-    if (!pr?.number || !requestId) return;
-    trackClose(pr.number, requestId, currentEntry?.jurisdiction?.name ?? `#${pr.number}`);
-    await advance();
-  };
-
-  const prNumber = currentEntry?.pr?.number;
-  const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
-
-  const renderBody = () => {
-    if (pageState === PAGE_STATE.LOADING) {
-      return html`<main class="review-page"><p>Loading...</p></main>`;
-    }
-    if (pageState === PAGE_STATE.IDLE) {
-      return html`<review-landing
-        .stateCode=${stateCode}
-        .stats=${stats}
-        .error=${error}
-        .dailyGoal=${dailyGoal}
-        .effectiveGoal=${effectiveGoal}
-        .onGoalChange=${handleGoalChange}
-        .onStartReview=${handleStartReview}
-      ></review-landing>`;
-    }
-    return html`<review-session
-      .currentEntry=${currentEntry}
-      .hasSession=${!!session}
-      .progress=${{ ...progress, goal: session?.daily_goal ? session.daily_goal - (stats.today_resolved ?? 0) : 1 }}
-      .error=${error}
-      .isDirty=${dirty}
-      .currentPeople=${currentPeople}
-      .selectedPeople=${selectedPeople}
-
-      .onMerge=${handleMerge}
-      .onClosePr=${handleClosePr}
-      .isClosingPr=${isClosingPr}
-      .onAdvance=${advance}
-      .onBack=${back}
-      .onNavigateTo=${navigateTo}
-      .onEndSession=${endSession}
-      .onTableDataChange=${handleTableDataChange}
-      .onTableReorder=${handleTableDataReorder}
-      .onPeopleMerge=${handlePeopleMerge}
-      .onBulkDelete=${handleBulkDelete}
-      .onReset=${handleResetAll}
-      .onAdd=${handleAdd}
-      @link-person=${handleLinkPerson}
-      .resolvedMatches=${resolvedMatches}
-    ></review-session>`;
-  };
-
-  return html`
-    ${renderBody()}
-    <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
-  `;
+  return html`<review-landing
+    .stateCode=${stateCode}
+    .stats=${stats}
+    .error=${error}
+    .dailyGoal=${dailyGoal}
+    .effectiveGoal=${effectiveGoal}
+    .resumable=${resumable}
+    .onGoalChange=${handleGoalChange}
+    .onStartReview=${handleStartReview}
+  ></review-landing>`;
 }
 
 customElements.define("review-page", component(ReviewPage, { useShadowDOM: false }));

@@ -7,6 +7,12 @@ import {
   PERSIST_FOREVER,
 } from "../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
+import {
+  STATE_PARAM,
+  REVIEW_PATH,
+  REVIEW_SESSION_PATH,
+  landingUrl,
+} from "../pages/review-routes.ts";
 import "./search-jurisdictions/select-state.js";
 const API_URL = config.apiUrl;
 
@@ -454,9 +460,18 @@ function Navbar({ user }) {
   const handleNavStateChange = (e) => {
     const newState = (e.detail.state || "").toLowerCase();
     setStateCode(newState);
+    const path = window.location.pathname;
+    // On the review routes, switch state with a full navigation back to the new
+    // state's landing — an in-place URL change would leave the previous state's
+    // in-memory session showing. The landing's Review/Resume button takes it from
+    // there.
+    if (path === REVIEW_PATH || path === REVIEW_SESSION_PATH) {
+      window.location.href = landingUrl(newState);
+      return;
+    }
     const params = new URLSearchParams(window.location.search);
-    if (newState) params.set("state", newState);
-    else params.delete("state");
+    if (newState) params.set(STATE_PARAM, newState);
+    else params.delete(STATE_PARAM);
     const qs = params.toString();
     window.history.replaceState(
       {},
