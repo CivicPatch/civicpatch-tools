@@ -1,12 +1,13 @@
 from database.database import get_pool
+from database.pull_requests import AVAILABLE_FOR_REVIEW
 
-_OPEN_PRS_GLOBAL = "(SELECT COUNT(*) FROM pull_requests WHERE status = 'open')"
+_OPEN_PRS_GLOBAL = f"(SELECT COUNT(*) FROM pull_requests pr WHERE {AVAILABLE_FOR_REVIEW})"
 
-_OPEN_PRS_STATE = """
-    (SELECT COUNT(*) FROM pull_requests pr2
-     JOIN requests r2 ON r2.id = pr2.request_id
+_OPEN_PRS_STATE = f"""
+    (SELECT COUNT(*) FROM pull_requests pr
+     JOIN requests r2 ON r2.id = pr.request_id
      JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r2.jurisdiction_ocdid
-     WHERE pr2.status = 'open' AND jur.state = %s)
+     WHERE {AVAILABLE_FOR_REVIEW} AND jur.state = %s)
 """
 
 _ISSUES_SUBQUERIES_GLOBAL = """

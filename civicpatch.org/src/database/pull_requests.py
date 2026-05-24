@@ -5,6 +5,16 @@ import shared.utils.id_utils
 from database.database import get_pool, to_iso
 from lib.github.utils import pull_request_url_to_number
 
+# SQL predicate for "a PR available for human review": open on GitHub and not currently
+# mid-merge. The GitHub sync owns `status`; the in-flight exclusion uses merge_enqueued_at
+# (set at enqueue, cleared on settle) so the two never fight. The time window self-heals a
+# stuck/lost merge back into the pool. Callers share this one definition instead of
+# re-spelling it; requires the pull_requests table to be aliased `pr`.
+AVAILABLE_FOR_REVIEW = (
+    "pr.status = 'open' "
+    "AND (pr.merge_enqueued_at IS NULL OR pr.merge_enqueued_at < now() - interval '10 minutes')"
+)
+
 
 async def list_open_pull_requests(
     state_code: Optional[str] = None,
@@ -12,7 +22,7 @@ async def list_open_pull_requests(
     page: int = 1,
     per_page: int = 20,
 ) -> tuple[List[dict], int, int]:
-    conditions: list[sql.Composable] = [sql.SQL("pr.status = 'open'")]
+    conditions: list[sql.Composable] = [sql.SQL(AVAILABLE_FOR_REVIEW)]
     params: list = []
 
     if jurisdiction_ocdid:
@@ -183,6 +193,34 @@ async def update_pipeline_run_pull_request_status(
             (request_id, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
         )
         return True
+
+
+async def set_merge_enqueued(request_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE pull_requests
+            SET merge_enqueued_at = now(),
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id::text = %s;
+            """,
+            (request_id,),
+        )
+
+
+async def clear_merge_enqueued(request_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE pull_requests
+            SET merge_enqueued_at = NULL,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id::text = %s;
+            """,
+            (request_id,),
+        )
 
 
 async def update_pipeline_run_pull_request_review_state(request_id: str, review_state: str | None):

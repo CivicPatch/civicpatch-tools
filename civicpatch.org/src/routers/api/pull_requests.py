@@ -358,6 +358,9 @@ def get_router(api_key_header):
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
+        # Mark the PR in-flight before the async merge so it leaves the available queue
+        # immediately; do_merge clears it once the merge settles.
+        await pull_requests_db.set_merge_enqueued(request.request_id)
         await temporal_client.enqueue_merge(MergeRequest(
             pull_request_number=pull_request_number,
             request_id=request.request_id,
