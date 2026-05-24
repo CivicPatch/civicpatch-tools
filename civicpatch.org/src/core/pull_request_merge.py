@@ -1,6 +1,7 @@
 import json
 import logging
 
+import core.change_logs as change_logs
 import database.pull_requests as pull_requests_db
 import lib.github.api as github_service
 import lib.redis as redis_store
@@ -51,6 +52,7 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
 
         await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=MERGE_STATUS_TTL)
+        await change_logs.record_merge_review(request_id, user_id)
 
     except Exception as e:
         logger.error(f"Background merge task failed for PR {pull_request_number}: {e}")

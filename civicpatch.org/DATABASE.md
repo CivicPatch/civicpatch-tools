@@ -130,6 +130,16 @@ erDiagram
         int             daily_limit
     }
 
+    change_logs {
+        uuid            id                  PK
+        text            type                "check: merge_review|close_review|add_person|edit_person|delete_person|edit_jurisdiction"
+        text_null       jurisdiction_ocdid  "idx"
+        text_null       request_id          "the request the change belongs to; NULL for non-review changes"
+        jsonb_null      changes             "type-specific payload; {field,from,to} diff for edit_person"
+        uuid_null       user_id             FK
+        timestamptz     created_at          "idx: created_at DESC, default: now()"
+    }
+
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
@@ -142,6 +152,8 @@ erDiagram
     users ||--o{ notes : "user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
+    users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
+    jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
 ```
 

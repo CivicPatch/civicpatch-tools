@@ -40,6 +40,10 @@ def resolve_people_ids(
     return results
 
 
+def ensure_person_ids(people: List[dict]) -> List[dict]:
+    return [{**person, "id": person.get("id") or str(uuid.uuid4())} for person in people]
+
+
 def resolve_person_id(
     name: str | None,
     email: str | None,

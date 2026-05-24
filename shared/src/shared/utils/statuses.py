@@ -75,3 +75,12 @@ class PullRequestStatus(StrEnum):
     CLOSED = "closed"
     # PR was merged into the target branch
     MERGED = "merged"
+
+
+class ChangeLogType(StrEnum):
+    MERGE_REVIEW = "merge_review"
+    CLOSE_REVIEW = "close_review"
+    ADD_PERSON = "add_person"
+    EDIT_PERSON = "edit_person"
+    DELETE_PERSON = "delete_person"
+    EDIT_JURISDICTION = "edit_jurisdiction"
