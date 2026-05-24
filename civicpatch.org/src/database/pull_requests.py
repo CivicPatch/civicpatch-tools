@@ -99,7 +99,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
 
 
 
-async def get_pull_request_data_by_pr_number(pr_number: int) -> Optional[dict]:
+async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -111,9 +111,9 @@ async def get_pull_request_data_by_pr_number(pr_number: int) -> Optional[dict]:
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE pr.pr_number = %s
+            WHERE pr.request_id::text = %s
             """,
-            (pr_number,),
+            (request_id,),
         )
         row = await cur.fetchone()
         if not row:

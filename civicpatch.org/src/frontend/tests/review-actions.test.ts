@@ -20,7 +20,7 @@ function fakeApi(overrides: Partial<ReviewApi> = {}): ReviewApi {
     navigateToEntry: vi.fn(async () => ({ data: null })),
     fetchReview: vi.fn(async () => ({ data: { issues: [] } })),
     endReviewSession: vi.fn(async () => ({ data: null })),
-    fetchPullRequestByNumber: vi.fn(async () => ({ data: null })),
+    fetchPullRequestByRequestId: vi.fn(async () => ({ data: null })),
     ...overrides,
   };
 }
@@ -30,7 +30,7 @@ function fakeEffects(api: ReviewApi): Effects {
     api,
     dispatch: vi.fn(),
     navigate: vi.fn(),
-    setPrParam: vi.fn(),
+    setRequestIdParam: vi.fn(),
     trackMerge: vi.fn(),
     trackClose: vi.fn(),
   };
@@ -56,7 +56,7 @@ function activeSession(overrides = {}) {
     daily_goal: 10,
     current_entry_number: 2,
     resolved_entry_numbers: [1],
-    session_pull_request_numbers: [123],
+    session_request_ids: ["req-1"],
     ...overrides,
   };
 }
@@ -79,7 +79,7 @@ describe("boot", () => {
     expect(action.type).toBe(ActionType.SESSION_LOADED);
     expect(action.payload.session).toEqual({ id: "s1", daily_goal: 10 });
     expect(action.payload.entry_number).toBe(2);
-    expect(e.setPrParam).toHaveBeenCalledWith(123);
+    expect(e.setRequestIdParam).toHaveBeenCalledWith("req-1");
   });
 
   it("stays in session mode for a deeplink to one of the session's own PRs (refresh)", async () => {
@@ -88,30 +88,30 @@ describe("boot", () => {
       navigateToEntry: vi.fn(async () => ({ data: cardData() })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, 123, e);
+    await boot(STATE, "req-1", e);
 
-    expect(api.fetchPullRequestByNumber).not.toHaveBeenCalled();
+    expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
     expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
   });
 
   it("shows a standalone PR when the deeplink is not part of the active session", async () => {
     const api = fakeApi({
       fetchActiveReviewSession: vi.fn(async () => ({ data: activeSession() })),
-      fetchPullRequestByNumber: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
+      fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, 999, e);
+    await boot(STATE, "req-999", e);
 
-    expect(api.fetchPullRequestByNumber).toHaveBeenCalledWith(999);
+    expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-999");
     expect(lastAction(e).payload.session).toBeNull();
   });
 
   it("shows a standalone PR when there is no active session", async () => {
     const api = fakeApi({
-      fetchPullRequestByNumber: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
+      fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, 999, e);
+    await boot(STATE, "req-999", e);
 
     expect(lastAction(e).payload.session).toBeNull();
     expect(e.navigate).not.toHaveBeenCalled();
@@ -125,9 +125,9 @@ describe("boot", () => {
   });
 
   it("falls back to the landing when a standalone deeplink PR is stale (404)", async () => {
-    const api = fakeApi({ fetchPullRequestByNumber: vi.fn(async () => { throw new Error("HTTP 404"); }) });
+    const api = fakeApi({ fetchPullRequestByRequestId: vi.fn(async () => { throw new Error("HTTP 404"); }) });
     const e = fakeEffects(api);
-    await boot(STATE, 99999999, e);
+    await boot(STATE, "req-stale", e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -150,7 +150,7 @@ describe("goToEntry", () => {
 
     expect(dispatchedTypes(e)).toEqual([ActionType.NAV_STARTED, ActionType.ENTRY_LOADED]);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
-    expect(e.setPrParam).toHaveBeenCalledWith(123);
+    expect(e.setRequestIdParam).toHaveBeenCalledWith("req-1");
   });
 
   it("ends the session and exits when navigation returns no data", async () => {

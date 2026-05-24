@@ -195,22 +195,22 @@ MERGED_PR_DB_RESULT = {
 
 
 @pytest.mark.unit
-def test_get_by_number_404_when_not_found(client):
+def test_get_by_request_404_when_not_found(client):
     with patch(
-        "database.pull_requests.get_pull_request_data_by_pr_number",
+        "database.pull_requests.get_pull_request_data_by_request_id",
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = client.get("/pull_requests/by-number/999")
+        response = client.get("/pull_requests/by-request/req-missing")
 
     assert response.status_code == 404
 
 
 @pytest.mark.unit
-def test_get_by_number_200_for_open_pr(client):
+def test_get_by_request_200_for_open_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_pr_number",
+            "database.pull_requests.get_pull_request_data_by_request_id",
             new_callable=AsyncMock,
             return_value=OPEN_PR_DB_RESULT,
         ),
@@ -220,7 +220,7 @@ def test_get_by_number_200_for_open_pr(client):
             return_value=[],
         ),
     ):
-        response = client.get("/pull_requests/by-number/42")
+        response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
 
     assert response.status_code == 200
     data = response.json()["data"]
@@ -231,10 +231,10 @@ def test_get_by_number_200_for_open_pr(client):
 
 
 @pytest.mark.unit
-def test_get_by_number_200_for_merged_pr(client):
+def test_get_by_request_200_for_merged_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_pr_number",
+            "database.pull_requests.get_pull_request_data_by_request_id",
             new_callable=AsyncMock,
             return_value=MERGED_PR_DB_RESULT,
         ),
@@ -244,7 +244,7 @@ def test_get_by_number_200_for_merged_pr(client):
             return_value=[],
         ),
     ):
-        response = client.get("/pull_requests/by-number/42")
+        response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
 
     assert response.status_code == 200
     assert response.json()["data"]["pr"]["status"] == "merged"

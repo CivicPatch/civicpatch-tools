@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from database.pull_requests import get_pull_request_data_by_pr_number
+from database.pull_requests import get_pull_request_data_by_request_id
 
 
 def _make_cursor(fetchone_return):
@@ -27,7 +27,7 @@ def _make_pool(cursor):
 async def test_returns_none_when_not_found():
     cur = _make_cursor(None)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_pr_number(999)
+        result = await get_pull_request_data_by_request_id("req-missing")
     assert result is None
 
 
@@ -46,7 +46,7 @@ async def test_returns_row_for_open_pr():
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_pr_number(42)
+        result = await get_pull_request_data_by_request_id("req-abc")
 
     assert result is not None
     assert result["request_id"] == "req-abc"
@@ -72,7 +72,7 @@ async def test_returns_row_for_merged_pr():
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_pr_number(99)
+        result = await get_pull_request_data_by_request_id("req-xyz")
 
     assert result is not None
     assert result["pr"]["status"] == "merged"

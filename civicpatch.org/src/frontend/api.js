@@ -509,8 +509,8 @@ export const createNote = async (jurisdictionOcdid, body) => {
   return res.json();
 };
 
-export const fetchPullRequestByNumber = async (prNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/by-number/${prNumber}`, {
+export const fetchPullRequestByRequestId = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/by-request/${requestId}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

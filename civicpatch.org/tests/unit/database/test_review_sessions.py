@@ -88,8 +88,8 @@ async def test_get_active_review_session_filters_by_state_code():
 async def test_get_active_review_session_returns_session_when_active():
     # Was: returns session when status == ACTIVE and timestamp is recent.
     # Now: returns session when updated_at is within the idle window. Same outcome.
-    Row = namedtuple("Row", ["session_id", "state_code", "daily_goal", "current_entry_number", "resolved_entry_numbers", "session_pull_request_numbers"])
-    row = Row(session_id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_pull_request_numbers=[101, 102])
+    Row = namedtuple("Row", ["session_id", "state_code", "daily_goal", "current_entry_number", "resolved_entry_numbers", "session_request_ids"])
+    row = Row(session_id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_request_ids=["req-1", "req-2"])
     cur = _make_cursor(fetchone_side_effect=[row])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         result = await get_active_review_session(USER_ID, STATE_CODE)

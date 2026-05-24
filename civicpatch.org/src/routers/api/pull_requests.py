@@ -251,14 +251,14 @@ def get_router(api_key_header):
         }
 
     # -- Pull Requests: Get by PR number ---
-    @router.get("/by-number/{pr_number}")
-    async def get_pull_request_by_number_endpoint(
-        pr_number: int,
+    @router.get("/by-request/{request_id}")
+    async def get_pull_request_by_request_id_endpoint(
+        request_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        result = await pull_requests_db.get_pull_request_data_by_pr_number(pr_number)
+        result = await pull_requests_db.get_pull_request_data_by_request_id(request_id)
         if not result:
             raise HTTPException(status_code=404, detail="Pull request not found")
 
