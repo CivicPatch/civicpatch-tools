@@ -12,9 +12,10 @@ import "./profile-modal.js";
 import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, batchResolvePeople, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
 import { buildOtherNames } from "../../utils/name-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
+import { blankPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
 
 const TAB = {
@@ -174,14 +175,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       const scrapedPeople = data?.data ?? [];
       setReviewData(review?.data || null);
 
-      const resolved = await batchResolvePeople(jurisdiction_ocdid, scrapedPeople);
-      const matchMap = {};
-      const updatedPeople = scrapedPeople.map((p, i) => {
-        const r = resolved.data[i];
-        matchMap[p.id] = r;
-        return { ...p, _isNew: !r?.person };
-      });
-      if (updatedPeople.length) assignPeople(updatedPeople);
+      const { tagged, matchMap } = await resolvePeopleMatches(jurisdiction_ocdid, scrapedPeople);
+      if (tagged.length) assignPeople(tagged);
       setResolvedMatches(matchMap);
     } catch (err) {
       setError("Failed to load pull request data.");
@@ -193,30 +188,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
 
   async function handleAdd() {
     const person_id = await generatePersonId();
-    const last = people[people.length - 1] ?? null;
-    addPerson({
-      id: person_id,
-      _changes: [],
-      _selected: false,
-      _deleted: false,
-      _isNew: true,
-      name: "",
-      other_names: [],
-      phones: [],
-      emails: [],
-      urls: last?.urls?.[0] ? [last.urls[0]] : [],
-      start_date: null,
-      end_date: null,
-      office: {
-        name: "Council Member",
-        division_ocdid: people[0]?.office?.division_ocdid ?? null,
-      },
-      image: null,
-      cdn_image: null,
-      jurisdiction_ocdid,
-      source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
-      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
-    });
+    addPerson(blankPerson(person_id, jurisdiction_ocdid, people));
   }
 
   async function handlePublish() {

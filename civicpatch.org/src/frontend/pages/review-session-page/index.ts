@@ -1,12 +1,10 @@
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
-import { generatePersonId, batchResolvePeople } from "../../api.js";
-import { buildOtherNames } from "../../utils/name-utils.js";
+import { component } from "haunted";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
-import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { useReviewSession } from "./use-review-session.js";
+import { useReviewPeople } from "./use-review-people.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
 import "./review-session.js";
@@ -33,84 +31,20 @@ function ReviewSessionPage() {
   const currentEntry = reviewing?.current_entry ?? null;
   const session = reviewing?.session ?? null;
 
-  const [resolvedMatches, setResolvedMatches] = useState({});
-
   const {
     currentPeople,
     dirty,
     peopleToSubmit,
     selectedPeople,
-    assignPeople,
-    addPerson,
-    updatePerson,
+    resolvedMatches,
+    handleAdd,
+    handleLinkPerson,
     handleTableDataChange,
     handleTableDataReorder,
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
     handleResetAll,
-  } = usePeopleState({ people: currentEntry?.pr_people?.proposed ?? [] });
-
-  async function handleAdd() {
-    const person_id = await generatePersonId();
-    const people = currentEntry?.pr_people?.proposed ?? [];
-    const last = people[people.length - 1] ?? null;
-    addPerson({
-      id: person_id,
-      _changes: [],
-      _selected: false,
-      _deleted: false,
-      _isNew: true,
-      name: "",
-      other_names: [],
-      phones: [],
-      emails: [],
-      urls: last?.urls?.[0] ? [last.urls[0]] : [],
-      start_date: null,
-      end_date: null,
-      office: {
-        name: "Council Member",
-        division_ocdid: people[0]?.office?.division_ocdid ?? null,
-      },
-      image: null,
-      cdn_image: null,
-      jurisdiction_ocdid: currentEntry?.jurisdiction?.ocdid,
-      source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
-      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
-    });
-  }
-
-  function handleLinkPerson(e) {
-    const { personId, proposedPerson, existingPeople } = e.detail;
-    const existingPerson = existingPeople.find((p) => p.id === personId);
-    const other_names = buildOtherNames(proposedPerson, existingPerson);
-    updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
-  }
-
-  useEffect(() => {
-    const people = currentEntry?.pr_people?.proposed ?? [];
-    const jurisdictionOcdid = currentEntry?.jurisdiction?.ocdid;
-    if (!people.length || !jurisdictionOcdid) {
-      assignPeople([]);
-      setResolvedMatches({});
-      return;
-    }
-    const cleanPeople = people.map(({ _isNew, _dirty, _changes, _selected, _deleted, ...p }) => p);
-    batchResolvePeople(jurisdictionOcdid, cleanPeople)
-      .then((resolved) => {
-        const matchMap = {};
-        const tagged = people.map((p, i) => {
-          const r = resolved.data[i];
-          matchMap[p.id] = r;
-          return { ...p, _isNew: !r?.person };
-        });
-        assignPeople(tagged);
-        setResolvedMatches(matchMap);
-      })
-      .catch(() => {
-        assignPeople(people);
-        setResolvedMatches({});
-      });
-  }, [currentEntry?.pr_people]);
+  } = useReviewPeople(currentEntry);
 
   const handleMerge = () => merge(dirty ? peopleToSubmit : null);
 
