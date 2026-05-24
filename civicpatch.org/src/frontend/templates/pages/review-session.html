@@ -1,0 +1,9 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/review-session.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/review-session.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Review{% endblock %}
+{% block main_class %}container-fluid--wide{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<review-session-page></review-session-page>
+{% endblock %}
