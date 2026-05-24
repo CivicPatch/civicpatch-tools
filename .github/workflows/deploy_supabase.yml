@@ -76,7 +76,7 @@ jobs:
       - name: Push to Supabase (staging env)
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
-            sh -c 'supabase config push --project-ref "$SUPABASE_PROJECT_REF"'
+            sh -c 'supabase config push --yes --project-ref "$SUPABASE_PROJECT_REF"'
 
   deploy-prod:
     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'prod')
@@ -118,4 +118,4 @@ jobs:
       - name: Push to Supabase (prod env)
         run: |
           infisical run --projectId="$INFISICAL_PROJECT_ID" --env=prod -- \
-            sh -c 'supabase config push --project-ref "$SUPABASE_PROJECT_REF"'
+            sh -c 'supabase config push --yes --project-ref "$SUPABASE_PROJECT_REF"'

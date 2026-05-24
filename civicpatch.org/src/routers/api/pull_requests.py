@@ -8,6 +8,7 @@ import shared.utils.data_path_utils
 import shared.utils.id_utils
 import shared.utils.url_utils
 from shared.utils.statuses import PullRequestStatus
+from shared.utils.person_id_utils import ensure_person_ids
 import yaml
 from fastapi import (
     APIRouter,
@@ -25,6 +26,7 @@ import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import database.users
 import lib.github.api as github_service
+import core.change_logs as change_logs
 import core.pull_request_merge as merge_service
 import core.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
@@ -317,6 +319,7 @@ def get_router(api_key_header):
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
         await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        await change_logs.record_close_review(request_id, user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Save and Merge ---
@@ -332,7 +335,7 @@ def get_router(api_key_header):
         if request.data:
             file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
             branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request.request_id)
-            normalized = [official.model_dump() for official in request.data]
+            normalized = ensure_person_ids([official.model_dump() for official in request.data])
             success = await github_service.update_pull_request_file(
                 branch_name=branch_name,
                 file_path=f"data/{file_path}.yml",
