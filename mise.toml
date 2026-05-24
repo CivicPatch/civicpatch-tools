@@ -352,17 +352,6 @@ curl -sf http://localhost:54324/api/v1/message/latest \\
   | python3 -c "import sys, json, re; body = json.load(sys.stdin).get('Text', ''); match = re.search(r'\\\\b(\\\\d{6})\\\\b', body); print(match.group(1) if match else 'no 6-digit code found in latest message')"
 """
 
-[tasks.sync-maps]
-description = "Rebuild jurisdiction PMTiles. Optional: mise run sync-maps state=nj"
-run = '''
-BASE="${INSTANCE_URL:-http://localhost:8000}"
-BODY=$([ -n "${state:-}" ] && echo "{\"state\":\"${state}\"}" || echo "{}")
-curl -v "${BASE}/api/admin/map_sync" \
-  -H "Authorization: ${SERVICE_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d "$BODY"
-'''
-
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
 ###################################################

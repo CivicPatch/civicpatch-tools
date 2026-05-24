@@ -15,7 +15,6 @@ from routers.temporal.activities import (
     cleanup_stale_review_entries_activity,
     merge_pr_activity,
 )
-from routers.temporal.map_activities import sync_jurisdiction_map_activity
 from lib.temporal.workflows import (
     PRSyncWorkflow,
     OdSyncWorkflow,
@@ -26,7 +25,6 @@ from lib.temporal.workflows import (
     WorkflowInstanceId,
     TASK_QUEUE,
 )
-from lib.temporal.map_workflows import SyncJurisdictionMapWorkflow
 from database.database import get_pool, close_pool
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
@@ -123,7 +121,6 @@ async def main() -> None:
             PipelineRunCleanupWorkflow,
             RepoMergeQueueWorkflow,
             ReviewSessionCleanupWorkflow,
-            SyncJurisdictionMapWorkflow,
         ],
         activities=[
             sync_pr_state_activity,
@@ -131,7 +128,6 @@ async def main() -> None:
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
             merge_pr_activity,
-            sync_jurisdiction_map_activity,
         ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
