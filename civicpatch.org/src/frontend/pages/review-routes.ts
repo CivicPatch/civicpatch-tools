@@ -3,7 +3,7 @@
 // URLs are built in exactly one place.
 
 export const STATE_PARAM = "state";
-export const PR_NUMBER_PARAM = "pull_request_number";
+export const REQUEST_ID_PARAM = "request_id";
 
 export const REVIEW_PATH = "/review";
 export const REVIEW_SESSION_PATH = "/review/session";

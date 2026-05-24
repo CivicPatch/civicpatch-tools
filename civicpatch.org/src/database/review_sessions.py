@@ -39,11 +39,10 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                        ARRAY_AGG(rse.entry_number ORDER BY rse.entry_number)
                            FILTER (WHERE rse.status = 'resolved') AS resolved_entry_numbers,
                        ARRAY(
-                           SELECT pr.pr_number
+                           SELECT rse2.request_ids[1]
                            FROM review_session_entries rse2
-                           JOIN pull_requests pr ON pr.request_id::text = rse2.request_ids[1]
                            WHERE rse2.review_session_id = rs.id
-                       ) AS session_pull_request_numbers
+                       ) AS session_request_ids
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
@@ -69,7 +68,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
         "daily_goal": row.daily_goal,  # type: ignore[union-attr]
         "current_entry_number": row.current_entry_number,  # type: ignore[union-attr]
         "resolved_entry_numbers": row.resolved_entry_numbers or [],  # type: ignore[union-attr]
-        "session_pull_request_numbers": row.session_pull_request_numbers or [],  # type: ignore[union-attr]
+        "session_request_ids": row.session_request_ids or [],  # type: ignore[union-attr]
     }
 
 

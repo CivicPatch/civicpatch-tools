@@ -4,12 +4,12 @@ import {
   navigateToEntry,
   fetchReview,
   endReviewSession,
-  fetchPullRequestByNumber,
+  fetchPullRequestByRequestId,
   fetchReviewStats,
 } from "../../api.js";
 import { reduceReview, initialPageState, ActionType, StateKind } from "./review-state.js";
 import { boot, goToEntry, endSessionAndExit, mergeCurrent, closeCurrent, type Effects } from "./review-actions.js";
-import { PR_NUMBER_PARAM } from "../review-routes.js";
+import { REQUEST_ID_PARAM } from "../review-routes.js";
 
 export function updateParams(updates: Record<string, string | null | undefined>) {
   const p = new URLSearchParams(window.location.search);
@@ -27,18 +27,18 @@ export function useReviewSession(
   const [state, dispatch] = useReducer(reduceReview, initialPageState(stateCode));
 
   const effects: Effects = {
-    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByNumber },
+    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByRequestId },
     dispatch,
     navigate: deps.navigate ?? ((url) => { window.location.href = url; }),
-    setPrParam: (prNumber) => updateParams({ [PR_NUMBER_PARAM]: prNumber != null ? String(prNumber) : null }),
+    setRequestIdParam: (requestId) => updateParams({ [REQUEST_ID_PARAM]: requestId }),
     trackMerge: deps.trackMerge,
     trackClose: deps.trackClose,
   };
 
   // Load the first card once on mount; stats load in parallel.
   useEffect(() => {
-    const prParam = new URLSearchParams(window.location.search).get(PR_NUMBER_PARAM);
-    boot(stateCode, prParam ? parseInt(prParam, 10) : null, effects);
+    const requestIdParam = new URLSearchParams(window.location.search).get(REQUEST_ID_PARAM);
+    boot(stateCode, requestIdParam, effects);
     fetchReviewStats(stateCode)
       .then((res) => dispatch({ type: ActionType.STATS_LOADED, payload: { stats: res.data } }))
       .catch(() => {});

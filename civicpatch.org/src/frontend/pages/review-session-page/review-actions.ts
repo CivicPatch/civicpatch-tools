@@ -12,8 +12,8 @@ const errMessage = (err: any) => err?.message ?? String(err);
 const isTerminalStatus = (status: string | null | undefined) =>
   status === PULL_REQUEST_STATUS.MERGED || status === PULL_REQUEST_STATUS.CLOSED;
 
-const belongsToSession = (active: any, prNumber: number | null) =>
-  prNumber != null && (active?.session_pull_request_numbers ?? []).includes(prNumber);
+const belongsToSession = (active: any, requestId: string | null) =>
+  requestId != null && (active?.session_request_ids ?? []).includes(requestId);
 
 // The injected boundary: everything the action functions touch that isn't pure.
 // The hook fills this with the real api/DOM; tests pass fakes.
@@ -22,19 +22,19 @@ export type ReviewApi = {
   navigateToEntry: (sessionId: string, entryNumber: number) => Promise<any>;
   fetchReview: (requestId: string) => Promise<any>;
   endReviewSession: (sessionId: string) => Promise<any>;
-  fetchPullRequestByNumber: (prNumber: number) => Promise<any>;
+  fetchPullRequestByRequestId: (requestId: string) => Promise<any>;
 };
 
 export type Effects = {
   api: ReviewApi;
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
-  setPrParam: (prNumber: number | null) => void;
+  setRequestIdParam: (requestId: string | null) => void;
   trackMerge: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => void;
   trackClose: (prNumber: number, requestId: string, jurisdictionName: string) => void;
 };
 
-// Assemble a CurrentEntry from a navigate/by-number response plus its review json.
+// Assemble a CurrentEntry from a navigate/by-request response plus its review json.
 export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntry> {
   const review = await api.fetchReview(data.request_id).catch(() => null);
   return {
@@ -50,14 +50,14 @@ export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntr
 }
 
 // The first card of the page is always a SESSION_LOADED — session is null for a
-// standalone deeplink. setPrParam reflects the card into the URL for shareability.
+// standalone deeplink. setRequestIdParam reflects the card into the URL for shareability.
 async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEntryNumbers: number[], e: Effects): Promise<void> {
   const entry = await buildEntry(data, e.api);
   e.dispatch({
     type: ActionType.SESSION_LOADED,
     payload: { current_entry: entry, entry_number: data.entry_number ?? 1, session, resolved_entry_numbers: resolvedEntryNumbers },
   });
-  e.setPrParam(entry.pr.number ?? null);
+  e.setRequestIdParam(entry.request_id ?? null);
 }
 
 async function resumeSession(active: any, stateCode: string, e: Effects): Promise<void> {
@@ -67,16 +67,16 @@ async function resumeSession(active: any, stateCode: string, e: Effects): Promis
 }
 
 // A standalone deeplink may point at a stale/missing PR; treat a 404 as "no PR".
-async function fetchPrOrNull(prNumber: number, api: ReviewApi): Promise<any> {
+async function fetchPrOrNull(requestId: string, api: ReviewApi): Promise<any> {
   try {
-    return (await api.fetchPullRequestByNumber(prNumber))?.data ?? null;
+    return (await api.fetchPullRequestByRequestId(requestId))?.data ?? null;
   } catch {
     return null;
   }
 }
 
-async function showStandalonePr(prNumber: number, stateCode: string, e: Effects): Promise<void> {
-  const data = await fetchPrOrNull(prNumber, e.api);
+async function showStandalonePr(requestId: string, stateCode: string, e: Effects): Promise<void> {
+  const data = await fetchPrOrNull(requestId, e.api);
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, null, [], e);
 }
@@ -84,11 +84,11 @@ async function showStandalonePr(prNumber: number, stateCode: string, e: Effects)
 // A deeplink to one of the session's own PRs (e.g. a refresh) stays in session
 // mode; a deeplink to any other PR wins and shows it standalone. With no PR in
 // the URL we resume the active session, falling back to the landing page.
-export async function boot(stateCode: string, prNumber: number | null, e: Effects): Promise<void> {
+export async function boot(stateCode: string, requestId: string | null, e: Effects): Promise<void> {
   try {
     const active = (await e.api.fetchActiveReviewSession(stateCode))?.data;
-    if (active && (prNumber == null || belongsToSession(active, prNumber))) return resumeSession(active, stateCode, e);
-    if (prNumber != null) return showStandalonePr(prNumber, stateCode, e);
+    if (active && (requestId == null || belongsToSession(active, requestId))) return resumeSession(active, stateCode, e);
+    if (requestId != null) return showStandalonePr(requestId, stateCode, e);
     e.navigate(landingUrl(stateCode));
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
@@ -102,7 +102,7 @@ export async function goToEntry(sessionId: string, targetEntry: number, stateCod
     if (!data) return endSessionAndExit(sessionId, stateCode, e); // exhausted: server already ended it
     const entry = await buildEntry(data, e.api);
     e.dispatch({ type: ActionType.ENTRY_LOADED, payload: { current_entry: entry, entry_number: data.entry_number } });
-    e.setPrParam(entry.pr.number ?? null);
+    e.setRequestIdParam(entry.request_id ?? null);
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
   }
