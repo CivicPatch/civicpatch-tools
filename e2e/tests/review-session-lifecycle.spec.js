@@ -47,8 +47,9 @@ test.describe("Review session lifecycle", () => {
   });
 
   test("direct link shows Exit button, not End session", async ({ authenticatedPage: page }) => {
-    // The seeded PR has pr_number=0
-    await page.goto("/review?pull_request_number=0");
+    // Verified a deeplink on /review before; now verifies it on /review/session
+    // because the route split moved deeplinks there. Seeded PR has pr_number=0.
+    await page.goto("/review/session?pull_request_number=0");
 
     const endBtn = page.locator(".review-page__end-btn");
     await expect(endBtn).toBeVisible();
@@ -56,7 +57,8 @@ test.describe("Review session lifecycle", () => {
   });
 
   test("direct link Exit button returns to landing", async ({ authenticatedPage: page }) => {
-    await page.goto("/review?pull_request_number=0");
+    // Deeplink moved to /review/session; Exit still returns to the /review landing.
+    await page.goto("/review/session?pull_request_number=0");
     await expect(page.getByText("E2E Test City")).toBeVisible();
 
     await page.locator(".review-page__end-btn").click();

@@ -48,9 +48,12 @@ test.describe("Review session — state switching", () => {
     await page.goto("/review");
     await expect(page.locator(".review-page__start-btn")).toBeVisible();
 
-    // Switch back to NJ and return — NJ's session resumes at card 2
+    // Switch back to NJ. This previously asserted /review itself resumed the
+    // session; it now asserts the NJ landing offers Resume (session still active)
+    // and resuming restores card 2, because resume is an explicit step post-split.
     await page.locator(".nav-state-selector select").selectOption("nj");
-    await page.goto("/review");
+    await expect(page.locator(".review-page__start-btn")).toHaveText(/Resume/);
+    await page.locator(".review-page__start-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
     // Card is one of the seeded NJ jurisdictions (all start with "E2E Test City")
     await expect(page.getByText(/E2E Test City/)).toBeVisible();
