@@ -438,6 +438,9 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
     ${user.permissions?.can_view_reviews_page
       ? html`<a href="/review" class="${active("/review")}">Reviews</a>`
       : ""}
+    ${user.permissions?.can_view_activity_page
+      ? html`<a href="/activity" class="${active("/activity")}">Activity</a>`
+      : ""}
     ${user.permissions?.can_manage_roles
       ? html`<a href="/admin" class="${active("/admin")}">Admin</a>`
       : ""}

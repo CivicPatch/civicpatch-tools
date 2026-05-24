@@ -20,42 +20,15 @@
     margin-bottom: 2rem;
 }
 
-.issues-page__section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+.issues-page .section-header {
     cursor: pointer;
     user-select: none;
-}
-
-.issues-page__section-header h2 {
-    margin: 0;
 }
 
 .issues-page__section-header-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.issues-page__section-title {
-    padding-left: 0.65rem;
-}
-
-.issues-page__section-title--warning {
-    border-left: 3px solid var(--pico-warn-color);
-}
-
-.issues-page__section-title--info {
-    border-left: 3px solid rgb(var(--color-1));
-}
-
-.issues-page__section-count {
-    font-size: 0.75em;
-    font-weight: 400;
-    color: var(--pico-muted-color);
-    font-family: var(--pico-font-family-monospace);
 }
 
 

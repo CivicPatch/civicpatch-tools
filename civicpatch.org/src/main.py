@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 import lib.pubsub as pubsub_service
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
+import routers.api.change_logs as api_change_logs_router
 import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
 import routers.api.jurisdictions as api_jurisdictions_router
@@ -173,6 +174,15 @@ app.include_router(
     prefix="/api/v1/data",
     tags=["data"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
+)
+
+app.include_router(
+    api_change_logs_router.get_router(),
+    prefix="/api/v1/change_logs",
+    tags=["change_logs"],
+    dependencies=[
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS))
+    ],
 )
 
 app.include_router(

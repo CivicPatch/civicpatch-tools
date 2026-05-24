@@ -1,5 +1,24 @@
 {
+  "permissions": {
+    "deny": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git ci:*)"
+    ]
+  },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // \"\"' | grep -Eq '(^|[^[:alnum:]_])git[[:space:]]+(commit|push|ci)([^[:alnum:]_]|$)' && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked by project policy: this session must never run git commit or git push. Mango-chan handles commits and pushes manually.\"}}' || true",
+            "statusMessage": "Checking for blocked git commands..."
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit",

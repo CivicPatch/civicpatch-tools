@@ -335,6 +335,7 @@ def get_router(api_key_header):
         if request.data:
             file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
             branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request.request_id)
+            before = await database.pipeline_runs.get_pipeline_run_data_json(request.request_id) or []
             normalized = ensure_person_ids([official.model_dump() for official in request.data])
             success = await github_service.update_pull_request_file(
                 branch_name=branch_name,
@@ -348,6 +349,10 @@ def get_router(api_key_header):
                     status_code=500,
                 )
             background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request.request_id, normalized)
+            if user.user_id:
+                await change_logs.record_manual_edits(
+                    request.request_id, request.jurisdiction_ocdid, user.user_id, before, normalized
+                )
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)

@@ -39,6 +39,7 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_scrape_remote": has_at_least(role, Role.MAINTAINERS),
         "can_view_reviews_page": has_at_least(role, Role.DEFAULT),
         "can_view_issues_page": has_at_least(role, Role.ADMINS),
+        "can_view_activity_page": has_at_least(role, Role.MAINTAINERS),
         "can_delete_directory_person": has_at_least(role, Role.CONTRIBUTORS),
         "can_cancel_job": has_at_least(role, Role.ADMINS),
         "can_write_config": has_at_least(role, Role.MAINTAINERS),
@@ -105,6 +106,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_view_issues_page"]:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
+
+    @router.get("/activity", response_class=HTMLResponse, include_in_schema=False)
+    async def activity_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
+            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+        return templates.TemplateResponse("pages/activity.html", {"request": request, "user": user})
 
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):

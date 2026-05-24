@@ -191,8 +191,8 @@ function IssuesPage() {
 
   const issuesSection = html`
     <section class="issues-page__section">
-      <div class="issues-page__section-header" @click=${() => toggleSection("issues")}>
-        <h2 class="issues-page__section-title issues-page__section-title--info">${showArchived ? "Archived Issues" : "Issues"} <span class="issues-page__section-count">${issuesTotal || ""}</span></h2>
+      <div class="section-header" @click=${() => toggleSection("issues")}>
+        <h2 class="section-title section-title--info">${showArchived ? "Archived Issues" : "Issues"} <span class="section-count">${issuesTotal || ""}</span></h2>
         <i class="fa-solid fa-chevron-down btn-icon${openSections.issues ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${openSections.issues ? html`
@@ -242,8 +242,8 @@ function IssuesPage() {
 
   const roleConfigsSection = html`
     <section class="issues-page__section">
-      <div class="issues-page__section-header" @click=${() => toggleSection("roleConfigs")}>
-        <h2 class="issues-page__section-title issues-page__section-title--warning">Role Configs</h2>
+      <div class="section-header" @click=${() => toggleSection("roleConfigs")}>
+        <h2 class="section-title section-title--warning">Role Configs</h2>
         <i class="fa-solid fa-chevron-down btn-icon${openSections.roleConfigs ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${openSections.roleConfigs ? html`
