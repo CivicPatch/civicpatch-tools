@@ -59,7 +59,7 @@ async def create_change_log(
     request_id: str | None = None,
     changes: PersonChangePayload | None = None,
 ) -> None:
-    payload = json.dumps(changes.model_dump(by_alias=True)) if changes else None
+    payload = json.dumps(changes.model_dump()) if changes else None
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

@@ -52,11 +52,11 @@
   font-size: 0.75rem;
 }
 
-.activity-page__from {
+.activity-page__before {
   color: var(--pico-del-color);
 }
 
-.activity-page__to {
+.activity-page__after {
   color: var(--pico-ins-color, var(--pico-primary));
 }
 

@@ -2,19 +2,15 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Any
 
-from pydantic import AliasChoices, BaseModel, Field
+from pydantic import BaseModel
 
 from shared.utils.statuses import ChangeLogType
 
 
 class FieldChange(BaseModel):
     field: str
-    from_: Any | None = Field(
-        default=None,
-        validation_alias=AliasChoices("from_", "from"),
-        serialization_alias="from",
-    )
-    to: Any | None = None
+    before: Any | None = None
+    after: Any | None = None
 
 
 class PersonChangePayload(BaseModel):

@@ -165,6 +165,40 @@ const NAVBAR_CSS = html`
       opacity: 1;
     }
 
+    /* Admin hover menu */
+    .nav-dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-dropdown-caret {
+      font-size: 0.6em;
+      opacity: 0.6;
+    }
+    .nav-dropdown__menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      flex-direction: column;
+      min-width: 9rem;
+      padding: 0.35rem 0;
+      background: var(--pico-background-color);
+      border: 1px solid var(--pico-muted-border-color);
+      border-radius: var(--pico-border-radius);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      z-index: 200;
+    }
+    .nav-dropdown:hover .nav-dropdown__menu,
+    .nav-dropdown:focus-within .nav-dropdown__menu {
+      display: flex;
+    }
+    .nav-dropdown__menu .nav-link {
+      padding: 0.4rem 0.9rem;
+      white-space: nowrap;
+      opacity: 0.8;
+    }
+
     /* Active state indicator */
     .nav-state-badge {
       font-size: 0.7rem;
@@ -417,16 +451,6 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
     ></civ-select-state>
     <a href="/" class="${active("/")}">Home</a>
     <a href="/blog" class="${active("/blog")}">Blog</a>
-    ${user.permissions?.can_view_issues_page
-      ? html`<a href="/issues" class="${active("/issues")}"
-          >Issues
-          ${summary?.issues_total
-            ? html`<span class="nav-count nav-count--error"
-                >${summary.issues_total}</span
-              >`
-            : ""}</a
-        >`
-      : ""}
     ${user.permissions?.can_view_queue_page
       ? html`<a href="/queue" class="${active("/queue")}"
           >Bulk review
@@ -442,7 +466,15 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
       ? html`<a href="/activity" class="${active("/activity")}">Activity</a>`
       : ""}
     ${user.permissions?.can_manage_roles
-      ? html`<a href="/admin" class="${active("/admin")}">Admin</a>`
+      ? html`<span class="nav-dropdown">
+          <a href="/admin" class="${active("/admin")} nav-dropdown-trigger">Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i></a>
+          <span class="nav-dropdown__menu">
+            <a href="/admin" class="${active("/admin")}">User roles</a>
+            ${user.permissions?.can_view_issues_page
+              ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
+              : ""}
+          </span>
+        </span>`
       : ""}
   `;
 }

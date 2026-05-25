@@ -14,7 +14,7 @@ ROW = {
     "changes": {
         "person_id": "p1",
         "person_name": "Jane Doe",
-        "fields": [{"field": "name", "from": "Jane", "to": "Jane Doe"}],
+        "fields": [{"field": "name", "before": "Jane", "after": "Jane Doe"}],
     },
     "created_at": "2026-05-24T13:27:00+00:00",
     "author_name": "michelle@civicpatch.org",
@@ -68,7 +68,7 @@ def test_unknown_bucket_rejected(client):
 
 
 @pytest.mark.unit
-def test_row_maps_to_entry_preserving_from_key(client):
+def test_row_maps_to_entry(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"bucket": "activity"})
 
@@ -76,4 +76,4 @@ def test_row_maps_to_entry_preserving_from_key(client):
     entry = response.json()["data"][0]
     assert entry["author_role"] == "admins"
     assert entry["jurisdiction_name"] == "Seattle city"
-    assert entry["changes"]["fields"][0] == {"field": "name", "from": "Jane", "to": "Jane Doe"}
+    assert entry["changes"]["fields"][0] == {"field": "name", "before": "Jane", "after": "Jane Doe"}
