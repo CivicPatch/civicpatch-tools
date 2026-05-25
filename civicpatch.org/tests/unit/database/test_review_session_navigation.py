@@ -37,7 +37,7 @@ async def test_has_next_false_when_only_in_progress_jurisdictions_remain():
         fetchall=[[(JURIS_A,), (JURIS_B,)], []],
     )
 
-    result = await _navigate_to_existing_entry(cur, SESSION_ID, 2, STATE_CODE, [])
+    result = await _navigate_to_existing_entry(cur, SESSION_ID, 2, STATE_CODE)
 
     assert result is not None
     _, _, has_next = result
@@ -46,23 +46,22 @@ async def test_has_next_false_when_only_in_progress_jurisdictions_remain():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_has_next_peek_excludes_both_resolved_and_in_progress():
-    # The peek's exclusion list must combine reviewed_ocdids (resolved) AND
-    # the session's in-progress jurisdictions.
-    juris_resolved = "ocd-jurisdiction/country:us/state:tx/place:resolved"
+async def test_has_next_peek_excludes_in_progress():
+    # The peek's exclusion list is the session's in-progress (claimed) request_ids.
+    # Resolved/published PRs are already filtered out by AVAILABLE_FOR_REVIEW upstream.
     cur = _cursor(
         fetchone=[_entry_row(JURIS_B), None],
         fetchall=[[(JURIS_A,), (JURIS_B,)], []],
     )
 
-    await _navigate_to_existing_entry(cur, SESSION_ID, 2, STATE_CODE, [juris_resolved])
+    await _navigate_to_existing_entry(cur, SESSION_ID, 2, STATE_CODE)
 
     # Call order: existing-entry SELECT, next-entry SELECT, in-progress SELECT,
     # then _allocate_next_review's SELECT — index 3.
     peek_params = cur.execute.call_args_list[3].args[1]
     excluded = peek_params[1]
 
-    assert {juris_resolved, JURIS_A, JURIS_B} <= set(excluded)
+    assert {JURIS_A, JURIS_B} <= set(excluded)
 
 
 @pytest.mark.asyncio
@@ -72,7 +71,7 @@ async def test_has_next_true_short_circuits_when_next_entry_claimed():
     # without invoking the peek path.
     cur = _cursor(fetchone=[_entry_row(JURIS_A), (1,)])
 
-    result = await _navigate_to_existing_entry(cur, SESSION_ID, 1, STATE_CODE, [])
+    result = await _navigate_to_existing_entry(cur, SESSION_ID, 1, STATE_CODE)
 
     assert result is not None
     _, _, has_next = result
@@ -84,6 +83,6 @@ async def test_has_next_true_short_circuits_when_next_entry_claimed():
 async def test_returns_none_when_entry_does_not_exist():
     cur = _cursor(fetchone=[None])
 
-    result = await _navigate_to_existing_entry(cur, SESSION_ID, 99, STATE_CODE, [])
+    result = await _navigate_to_existing_entry(cur, SESSION_ID, 99, STATE_CODE)
 
     assert result is None

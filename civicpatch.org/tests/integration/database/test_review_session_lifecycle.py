@@ -212,19 +212,12 @@ async def test_fresh_session_with_no_history_starts_at_entry_1(test_user):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_end_session_then_create_starts_fresh_session(test_user):
-    # Previously this file asserted "end_session clears reviewed_ocdids on the same row."
-    # The fix replaces that soft-reset with a hard end: end_review_session marks the
-    # old row with ended_at, and the next create_or_get inserts a brand-new row that
-    # is empty by default. The behavioral guarantee is the same from the user's
-    # perspective (next session starts fresh) but the mechanism is row-replacement.
+    # end_review_session marks the old row with ended_at and purges its non-resolved
+    # entries; the next create_or_get inserts a brand-new row starting at entry 1. The
+    # user-facing guarantee is "next session starts fresh."
     pool = await get_pool()
     session_a_id = await _create_session(test_user)
 
-    async with pool.connection() as conn:
-        await conn.execute(
-            "UPDATE review_sessions SET reviewed_request_ids = %s WHERE id = %s",
-            (["00000000-0000-0000-cccc-000000000001"], str(session_a_id)),
-        )
     await _insert_entry(session_a_id, entry_number=1, status="resolved")
     await _insert_entry(session_a_id, entry_number=2, status="claimed")
 
@@ -236,18 +229,11 @@ async def test_end_session_then_create_starts_fresh_session(test_user):
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT ended_at, reviewed_request_ids FROM review_sessions WHERE id = %s",
+            "SELECT ended_at FROM review_sessions WHERE id = %s",
             (str(session_a_id),),
         )
         old = await cur.fetchone()
         assert old[0] is not None, "Old session must be marked ended"
-
-        await cur.execute(
-            "SELECT reviewed_request_ids FROM review_sessions WHERE id = %s",
-            (session_b["id"],),
-        )
-        new = await cur.fetchone()
-        assert new[0] == [], "New session row must have empty reviewed_request_ids"
 
         await cur.execute(
             "SELECT status FROM review_session_entries WHERE review_session_id = %s ORDER BY entry_number",
