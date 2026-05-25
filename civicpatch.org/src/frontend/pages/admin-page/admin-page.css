@@ -163,21 +163,33 @@ role-chip {
   white-space: nowrap;
 }
 
+/* Per-role palettes — teal / indigo / purple, distinct from the status (green/red/blue)
+   and brand (yellow) colors so a role chip never reads as a status. */
+.role-chip--contributors { --role-bg: #ccfbf1; --role-text: #0f766e; --role-border: #5eead4; }
+.role-chip--maintainers  { --role-bg: #e0e7ff; --role-text: #4338ca; --role-border: #a5b4fc; }
+.role-chip--admins       { --role-bg: #fae8ff; --role-text: #a21caf; --role-border: #f0abfc; }
+
+[data-theme="dark"] .role-chip--contributors { --role-bg: #134e4a; --role-text: #5eead4; --role-border: #0f766e; }
+[data-theme="dark"] .role-chip--maintainers  { --role-bg: #312e81; --role-text: #a5b4fc; --role-border: #4338ca; }
+[data-theme="dark"] .role-chip--admins       { --role-bg: #701a75; --role-text: #f0abfc; --role-border: #a21caf; }
+
+/* Unassigned: outline + "+" glyph — the role color, ghosted, reads as "click to add". */
 .role-chip--unassigned {
   background: transparent;
-  color: var(--civ-text-muted);
-  border: 1.5px dashed var(--pico-muted-border-color);
+  color: var(--role-text);
+  border: 1.5px solid var(--role-border);
+  opacity: 0.7;
 }
 
 .role-chip--unassigned:hover:not(:disabled) {
-  color: var(--civ-text);
-  border-color: var(--civ-text);
+  opacity: 1;
 }
 
+/* Assigned: filled tinted pill — same treatment as the status badges. */
 .role-chip--assigned {
-  background: var(--pico-primary);
-  color: var(--pico-primary-inverse);
-  border: 1.5px solid var(--pico-primary);
+  background: var(--role-bg);
+  color: var(--role-text);
+  border: 1.5px solid transparent;
 }
 
 .role-chip--assigned:hover:not(:disabled) {

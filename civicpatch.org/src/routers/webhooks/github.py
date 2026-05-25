@@ -9,9 +9,8 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
-from database.pull_requests import update_pipeline_run_pull_request_status
 import database.issues as issues_db
-from core.pull_request_sync import handle_pr_status_side_effects
+from core.pull_request_sync import apply_pull_request_status
 from environment import get_env_vars
 
 logger = logging.getLogger(__name__)
@@ -55,9 +54,8 @@ async def _handle_job_pr_event(payload: dict[str, Any]) -> None:
     if result is None:
         return
     request_id, status, merged_at, pr_url = result
-    await update_pipeline_run_pull_request_status(request_id, status, merged_at, pull_request_url=pr_url)
     pr_labels = payload.get("pull_request", {}).get("labels", [])
-    await handle_pr_status_side_effects(request_id, status, pr_labels)
+    await apply_pull_request_status(request_id, status, merged_at=merged_at, pull_request_url=pr_url, pr_labels=pr_labels)
 
 
 async def _handle_review_issue_pr_event(payload: dict[str, Any]) -> None:

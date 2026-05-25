@@ -66,12 +66,12 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
       }
       .sh-title {
         margin: 0;
-        font-size: 0.8125rem;
+        font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.07em;
         color: var(--pico-muted-color);
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.4rem;
         border-bottom: 1px solid var(--pico-muted-border-color);
       }
       .sh-empty {
@@ -85,21 +85,31 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
       }
       .sh-table {
         margin: 0;
-        font-size: inherit;
+        width: auto;
+        font-size: 0.75rem;
         font-family: inherit;
       }
       .sh-table td {
         vertical-align: middle;
-        padding: 0.4rem 0.5rem;
+        padding: 0.3rem 0.6rem;
+      }
+      .sh-table td:first-child {
+        white-space: nowrap;
       }
       .sh-table tr:last-child td {
         border-bottom: none;
       }
       .status-cell {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        gap: 0.3rem;
-        white-space: nowrap;
+        gap: 0.25rem;
+        --badge-font-size: 0.68rem;
+        --badge-padding: 0.15rem 0.5rem;
+      }
+      .status-cell .badge {
+        white-space: normal;
+        overflow-wrap: anywhere;
       }
       .status-arrow {
         font-size: 0.7rem;
@@ -109,18 +119,18 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
         all: unset;
         cursor: pointer;
         color: var(--pico-primary);
-        font-size: 0.875rem;
+        font-size: 0.75rem;
       }
       .date-btn:hover { opacity: 0.75; }
       .duration-cell {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         color: var(--pico-muted-color);
         text-align: right;
         white-space: nowrap;
       }
       .sh-cancel-btn {
-        font-size: 0.75rem;
-        padding: 0.15rem 0.5rem;
+        font-size: 0.68rem;
+        padding: 0.12rem 0.45rem;
         cursor: pointer;
       }
       progress {

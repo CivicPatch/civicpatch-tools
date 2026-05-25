@@ -129,7 +129,11 @@ def test_close_pull_request_returns_success(client):
             return_value="user-id-123",
         ),
         patch(
-            "database.pull_requests.update_pipeline_run_pull_request_status",
+            "core.pull_request_sync.apply_pull_request_status",
+            new_callable=AsyncMock,
+        ),
+        patch(
+            "core.change_logs.record_close",
             new_callable=AsyncMock,
         ),
     ):
@@ -268,13 +272,17 @@ def test_do_merge_clean_pr_writes_merged():
         patch("lib.redis.set", redis_set),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
         patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("database.pull_requests.update_pipeline_run_pull_request_status", new_callable=AsyncMock),
+        patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
+        patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("core.change_logs.record_publish", new_callable=AsyncMock),
+        patch("core.pull_request_sync.publish_side_effects", new_callable=AsyncMock) as mock_side_effects,
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "merged"
+    mock_side_effects.assert_awaited_once()
 
 
 @pytest.mark.unit
@@ -318,8 +326,11 @@ def test_do_merge_behind_pr_updates_branch_and_merges():
         patch("lib.github.api.get_pull_request_mergeability", mergeability),
         patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
         patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("database.pull_requests.update_pipeline_run_pull_request_status", new_callable=AsyncMock),
+        patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
+        patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("core.change_logs.record_publish", new_callable=AsyncMock),
+        patch("core.pull_request_sync.publish_side_effects", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 

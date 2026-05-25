@@ -87,6 +87,11 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
+  // Date of the currently-published data: the most recent successful run
+  // (covers merged runs too — they're SUCCESS). Same date shown in the history rows.
+  const publishedAt = history?.data?.find(
+    j => (j.job_status || "").toUpperCase() === "SUCCESS"
+  )?.created_at;
 
   const mostRecentJob = history?.data?.[0];
   const effectiveStatus = (jobStatus && mostRecentJob && jobStatus.request_id === mostRecentJob.request_id)
@@ -120,6 +125,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
           <civ-jurisdiction-header
             .name=${jurisdictionData?.data?.name}
             .scrapeStatus=${scrapeStatus}
+            .publishedAt=${publishedAt}
             .details=${jurisdictionData}
             .ocdid=${jurisdiction_ocdid}
           ></civ-jurisdiction-header>

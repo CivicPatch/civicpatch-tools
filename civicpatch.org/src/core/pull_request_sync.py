@@ -28,7 +28,7 @@ def _get_pr_env(labels: list[dict]) -> str:
     return "production"
 
 
-async def handle_pr_status_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
+async def publish_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
     """Run side effects when a job PR transitions to MERGED or CLOSED."""
     if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
         await review_session_entries_db.resolve_review_session_entries_by_request_id(request_id)
@@ -41,6 +41,28 @@ async def handle_pr_status_side_effects(request_id: str, status: str, pr_labels:
         jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
         if jurisdiction_ocdid:
             await sync_people_by_ocdids([jurisdiction_ocdid])
+
+
+async def apply_pull_request_status(
+    request_id: str,
+    status: str,
+    *,
+    merged_at=None,
+    pull_request_url: str | None = None,
+    resolved_by_user_id: str | None = None,
+    pr_labels: list[dict] | None = None,
+) -> bool:
+    """Write a PR's status and, only if it actually transitioned, run the publish side
+    effects once. Every status-change path funnels through here so a PR is credited and
+    synced exactly once, no matter which path (publish, webhook, reconciliation) sees it first."""
+    previous_status = await pull_requests_db.get_pull_request_status(request_id)
+    written = await pull_requests_db.update_pull_request_status(
+        request_id, status, merged_at, pull_request_url, resolved_by_user_id
+    )
+    changed = written and previous_status != status
+    if changed:
+        await publish_side_effects(request_id, status, pr_labels or [])
+    return changed
 
 
 _SYNC_LOCK_KEY = "lock:sync_open_pr_state"
@@ -58,10 +80,11 @@ async def sync_single_pr_state(request_id: str):
     pr_data = await github_service.get_pull_request(pr_number)
     if not pr_data:
         return
+    pr_labels = pr_data.get("labels", [])
     if pr_data.get("merged"):
-        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, pr_data.get("merged_at"))
+        await apply_pull_request_status(request_id, PullRequestStatus.MERGED, merged_at=pr_data.get("merged_at"), pr_labels=pr_labels)
     elif pr_data.get("state") == PullRequestStatus.CLOSED:
-        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.CLOSED, None)
+        await apply_pull_request_status(request_id, PullRequestStatus.CLOSED, pr_labels=pr_labels)
 
 
 async def sync_open_pr_state():
@@ -154,7 +177,7 @@ async def _fetch_open_github_prs() -> dict[str, dict]:
 
 async def _sync_known_prs(github_prs: dict[str, dict]):
     for request_id, pr_info in github_prs.items():
-        updated = await pull_requests_db.update_pipeline_run_pull_request_status(
+        updated = await pull_requests_db.update_pull_request_status(
             request_id, PullRequestStatus.OPEN, None, pull_request_url=pr_info["url"]
         )
         if updated:
@@ -183,6 +206,5 @@ async def _close_stale_prs(github_request_ids: set[str]):
             elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:
                 status = PullRequestStatus.CLOSED
             if status:
-                await pull_requests_db.update_pipeline_run_pull_request_status(request_id, status, merged_at)
                 pr_labels = pr_data.get("labels", []) if pr_data else []
-                await handle_pr_status_side_effects(request_id, status, pr_labels)
+                await apply_pull_request_status(request_id, status, merged_at=merged_at, pr_labels=pr_labels)

@@ -318,8 +318,8 @@ def get_router(api_key_header):
                 status_code=500,
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
-        await change_logs.record_close_review(request_id, user_id)
+        await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        await change_logs.record_close(request_id, user_id)
         return {"status": "success"}
 
     # -- Pull Requests: Save and Merge ---
@@ -403,7 +403,9 @@ def get_router(api_key_header):
                 status_code=status_code,
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        pr_data = await github_service.get_pull_request(pull_request_number)
+        pr_labels = pr_data.get("labels", []) if pr_data else []
+        await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id, pr_labels=pr_labels)
         return {"status": "success"}
 
     # -- Pull Requests: Update Branch ---

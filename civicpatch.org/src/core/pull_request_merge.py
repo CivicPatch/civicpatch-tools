@@ -2,6 +2,7 @@ import json
 import logging
 
 import core.change_logs as change_logs
+import core.pull_request_sync as pull_request_sync
 import database.pull_requests as pull_requests_db
 import lib.github.api as github_service
 import lib.redis as redis_store
@@ -53,10 +54,20 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             await _handle_failure(merge_key, request_id, merge_error)
             return
 
-        await pull_requests_db.update_pipeline_run_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        await pull_requests_db.update_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         await pull_requests_db.clear_merge_enqueued(request_id)
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=MERGE_STATUS_TTL)
-        await change_logs.record_merge_review(request_id, user_id)
+        await change_logs.record_publish(request_id, user_id)
+
+        # Resolve the review entry + sync open data. Best-effort and isolated so a failure
+        # here can't turn a successful merge into a reported error. Idempotent, so a webhook
+        # racing in for the same PR is harmless.
+        try:
+            pr = await github_service.get_pull_request(pull_request_number)
+            pr_labels = pr.get("labels", []) if pr else []
+            await pull_request_sync.publish_side_effects(request_id, PullRequestStatus.MERGED, pr_labels)
+        except Exception:
+            logger.exception(f"Publish side effects failed after merging PR {pull_request_number}")
 
     except Exception as e:
         logger.error(f"Background merge task failed for PR {pull_request_number}: {e}")

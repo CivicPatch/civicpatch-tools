@@ -77,3 +77,21 @@ def test_mixed_add_edit_delete():
         ChangeLogType.ADD_PERSON,
         ChangeLogType.DELETE_PERSON,
     }
+
+
+# ── re-link (id changes, content identical) ───────────────────────────────────
+
+@pytest.mark.unit
+def test_relink_to_existing_id_with_same_content_is_no_change():
+    # Matching a scraped person to an existing record changes only their id;
+    # identical content must not surface as an add + delete.
+    before = [_person("scraped-tmp-id", name="Matt Moore")]
+    after = [_person("existing-matthew-id", name="Matt Moore")]
+    assert diff_people(before, after) == []
+
+
+@pytest.mark.unit
+def test_distinct_people_still_add_and_delete():
+    # Different content must NOT be cancelled as a re-link.
+    result = diff_people([_person("a", name="Alice")], [_person("b", name="Bob")])
+    assert {c.type for c in result} == {ChangeLogType.ADD_PERSON, ChangeLogType.DELETE_PERSON}

@@ -4,6 +4,7 @@ import { html } from "lit-html";
 import "../basic/modal.js";
 import "../person-image.js";
 import { fetchPeopleDirectory } from "../../api.js";
+import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 
 const PER_PAGE = 20;
 
@@ -143,7 +144,7 @@ function ProfileModal({ open, onClose, person, existingPerson, nameMatches = [],
               <li class="profile-modal__match-item">
                 <person-image .person=${m}></person-image>
                 <span>${m.name}</span>
-                <span>${[m.office?.name, m.office?.division_ocdid].filter(Boolean).join(" — ")}</span>
+                <span>${[m.office?.name, divisionOcdidToFriendly(m.office?.division_ocdid)].filter(Boolean).join(" — ")}</span>
                 <button
                   type="button"
                   class="secondary btn-sm"
