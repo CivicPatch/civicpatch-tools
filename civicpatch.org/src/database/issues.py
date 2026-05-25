@@ -44,47 +44,6 @@ async def get_pending_issue_ocdids() -> set[str]:
     return {row[0] for row in rows}
 
 
-async def get_unrecognized_roles_grouped() -> list[dict]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT issue_key AS role,
-                   request_ids,
-                   data->'person_names' AS person_names,
-                   array_length(request_ids, 1) AS occurrence_count
-            FROM issues
-            WHERE issue_type = 'unrecognized_role'
-              AND status = 'pending'
-            ORDER BY array_length(request_ids, 1) DESC
-            """
-        )
-        rows = await cur.fetchall()
-    return [
-        {
-            "role": r[0],
-            "request_ids": r[1],
-            "person_names": r[2] or [],
-            "occurrence_count": r[3],
-        }
-        for r in rows
-    ]
-
-
-async def resolve_unrecognized_role_group(request_ids: list[str]) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE review_session_entries
-            SET status = 'resolved', resolved_at = NOW()
-            WHERE request_ids && %s::text[]
-              AND status != 'resolved'
-            """,
-            (request_ids,),
-        )
-
-
 async def resolve_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:

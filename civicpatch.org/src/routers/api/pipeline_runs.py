@@ -33,8 +33,6 @@ from database.issues import (
     get_issues_page,
     get_issue_by_id,
     get_issue_counts,
-    get_unrecognized_roles_grouped,
-    resolve_unrecognized_role_group,
     resolve_issue,
     set_issue_flagged,
     upsert_issue,
@@ -60,7 +58,6 @@ from schemas.pipeline_runs import (
     UpdatePipelineRunStatusRequest,
     UpdatePipelineRunStatusResponse,
     PostPipelineRunResultRequest,
-    ResolveUnrecognizedRoleGroupRequest,
     FlagPipelineIssueRequest,
     CreatePipelineRunResponse,
     GetPipelineRunResponse,
@@ -556,27 +553,6 @@ def get_router(api_key_header):
                 "debug_url": storage_service.get_bucket_url("civicpatch-debug", req_id) if (is_admin and req_id) else None,
             })
         return {"data": rows}
-
-    @router.get(
-        "/unrecognized-roles/grouped",
-        summary="List unrecognized roles grouped by role text, each with affected request IDs",
-    )
-    async def get_unrecognized_roles_grouped_endpoint(
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
-    ):
-        rows = await get_unrecognized_roles_grouped()
-        return {"data": rows}
-
-    @router.post(
-        "/unrecognized-roles/grouped/resolve",
-        summary="Bulk-resolve review session entries for a grouped unrecognized role",
-    )
-    async def resolve_unrecognized_roles_grouped_endpoint(
-        body: ResolveUnrecognizedRoleGroupRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
-    ):
-        await resolve_unrecognized_role_group(body.request_ids)
-        return {"data": None}
 
     @router.get(
         "/{request_id}/status",

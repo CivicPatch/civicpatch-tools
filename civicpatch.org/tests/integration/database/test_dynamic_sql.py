@@ -99,13 +99,6 @@ async def test_get_requests_for_export_with_date_range():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_unrecognized_roles_grouped():
-    rows = await db_issues.get_unrecognized_roles_grouped()
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_issues_page_no_filter():
     rows, total = await db_issues.get_issues_page(issue_types=[], page=1, per_page=10)
     assert isinstance(rows, list)
