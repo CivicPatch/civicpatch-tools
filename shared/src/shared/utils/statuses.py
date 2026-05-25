@@ -57,6 +57,9 @@ class PipelineRunErrorType(StrEnum):
 
 class PipelineIssueType(StrEnum):
     UNRECOGNIZED_ROLE = "unrecognized_role"
+    # A queued merge failed; the PR stays parked (merge_enqueued_at kept) out of the review
+    # pool until an admin dismisses this issue, which clears the park.
+    MERGE_FAILED = "merge_failed"
 
 
 class PullRequestStatus(StrEnum):

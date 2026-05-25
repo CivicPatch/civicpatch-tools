@@ -14,6 +14,7 @@ from database.database import get_pool
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.review_session_entries import resolve_entries_for_request
+from database.pull_requests import list_open_pull_requests, set_merge_enqueued, clear_merge_enqueued
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -95,6 +96,35 @@ async def _count_entries(session_id: uuid.UUID, status: str | None = None) -> in
 async def _create_session(user_id: uuid.UUID) -> uuid.UUID:
     result = await create_or_get_review_session(str(user_id), _STATE_CODE, daily_goal=10)
     return uuid.UUID(result["id"])
+
+
+async def _seed_open_pr(suffix: str) -> tuple[str, str]:
+    """Insert a jurisdiction + request + open pull_request in state zz. Returns (request_id, ocdid)."""
+    ocdid = f"ocd-jurisdiction/country:us/state:zz/place:pool_{suffix}/government"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') ON CONFLICT DO NOTHING",
+            (ocdid,),
+        )
+        await cur.execute(
+            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            (ocdid,),
+        )
+        request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO pull_requests (request_id, pr_number, status) VALUES (%s, %s, 'open')",
+            (request_id, 990000),
+        )
+    return request_id, ocdid
+
+
+async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute("DELETE FROM pull_requests WHERE request_id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
 # ── get_active_review_session ─────────────────────────────────────────────────
@@ -379,3 +409,30 @@ async def test_get_active_session_returns_none_after_end_session(test_user):
     assert result is None, (
         "Session must not appear active after end_review_session — claimed entries were purged"
     )
+
+
+# ── availability pool: publishing parks a PR until the park is cleared ─────────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_published_pr_parks_until_park_cleared():
+    """
+    Publishing parks a PR out of the review pool by setting merge_enqueued_at, and it stays
+    parked regardless of merge outcome until the park is cleared (an admin dismissing the
+    merge_failed issue calls clear_merge_enqueued). Regression: a failed merge used to clear
+    the park, re-offering an already-published PR in the next session.
+    """
+    request_id, ocdid = await _seed_open_pr("x")
+    try:
+        before, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id in [r["request_id"] for r in before], "open PR should start in the pool"
+
+        await set_merge_enqueued(request_id)  # publishing parks it
+        parked, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id not in [r["request_id"] for r in parked], "parked PR must leave the pool"
+
+        await clear_merge_enqueued(request_id)  # dismissing un-parks it
+        after, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id in [r["request_id"] for r in after], "PR returns to the pool once unparked"
+    finally:
+        await _cleanup_open_pr(request_id, ocdid)

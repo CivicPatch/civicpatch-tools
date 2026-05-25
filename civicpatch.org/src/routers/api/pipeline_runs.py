@@ -7,7 +7,7 @@ import time
 from typing import Optional
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
-from shared.utils.statuses import PipelineRunStatus, PullRequestStatus, TERMINAL_PIPELINE_RUN_STATUSES
+from shared.utils.statuses import PipelineIssueType, PipelineRunStatus, PullRequestStatus, TERMINAL_PIPELINE_RUN_STATUSES
 import yaml
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
@@ -41,6 +41,7 @@ from database.issues import (
 from database.pull_requests import (
     update_pipeline_run_pull_request_url,
     update_pull_request_status,
+    clear_merge_enqueued,
 )
 from database.requests import (
     register_request_with_pipeline_run,
@@ -490,6 +491,10 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
         await resolve_issue(issue_id)
+        if issue["issue_type"] == PipelineIssueType.MERGE_FAILED and issue["request_ids"]:
+            # Dismissing a failed-merge issue un-parks the PR: clear the merge hold so it
+            # returns to the review pool.
+            await clear_merge_enqueued(issue["request_ids"][0])
         return {"data": None}
 
     @router.patch(
