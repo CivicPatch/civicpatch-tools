@@ -26,12 +26,13 @@ const NAVBAR_CSS = html`
     nav {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.85rem;
       padding: 0.875rem 0;
       background: transparent;
       border-bottom: 3px solid var(--civ-border-strong, #111);
       user-select: none;
-      max-width: 1200px;
+      max-width: var(--page-width);
       margin-inline: auto;
     }
 
@@ -111,7 +112,7 @@ const NAVBAR_CSS = html`
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 0.85rem;
       margin-left: auto;
     }
 
@@ -155,6 +156,7 @@ const NAVBAR_CSS = html`
       text-decoration: none;
       opacity: 0.45;
       transition: opacity 0.15s ease;
+      white-space: nowrap;
     }
     .nav-link:hover {
       opacity: 0.7;
@@ -165,21 +167,44 @@ const NAVBAR_CSS = html`
       opacity: 1;
     }
 
-    /* Admin hover menu */
+    /* Admin disclosure menu — native <details>/<summary> (tap + keyboard, no JS) */
+    /* Override Pico's accordion <details>/<summary> defaults that misalign it in the nav:
+       its margin-bottom (shifts the item up), its ::after chevron marker, and the
+       margin it adds to summary when open (shifts the row). */
     .nav-dropdown {
       position: relative;
-      display: inline-flex;
-      align-items: center;
+      margin: 0;
+    }
+    summary.nav-dropdown-trigger {
+      list-style: none;
+      cursor: pointer;
+      line-height: inherit;
+    }
+    summary.nav-dropdown-trigger::-webkit-details-marker {
+      display: none;
+    }
+    summary.nav-dropdown-trigger::after {
+      display: none;
+    }
+    .nav-dropdown[open] > summary {
+      margin-bottom: 0;
     }
     .nav-dropdown-caret {
       font-size: 0.6em;
       opacity: 0.6;
+      margin-left: 0.3rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
     }
-    .nav-dropdown__menu {
-      display: none;
+    .nav-dropdown[open] .nav-dropdown-caret {
+      transform: rotate(180deg);
+    }
+    /* Menu is hidden by the UA when <details> is closed; only style the open state. */
+    .nav-dropdown[open] .nav-dropdown__menu {
       position: absolute;
       top: 100%;
       right: 0;
+      display: flex;
       flex-direction: column;
       min-width: 9rem;
       padding: 0.35rem 0;
@@ -189,14 +214,16 @@ const NAVBAR_CSS = html`
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
       z-index: 200;
     }
-    .nav-dropdown:hover .nav-dropdown__menu,
-    .nav-dropdown:focus-within .nav-dropdown__menu {
-      display: flex;
-    }
     .nav-dropdown__menu .nav-link {
+      display: block;
       padding: 0.4rem 0.9rem;
       white-space: nowrap;
       opacity: 0.8;
+    }
+    .nav-dropdown__menu .nav-link:hover {
+      opacity: 1;
+      color: var(--pico-primary);
+      background: color-mix(in srgb, var(--pico-primary) 14%, transparent);
     }
 
     /* Active state indicator */
@@ -466,15 +493,15 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
       ? html`<a href="/activity" class="${active("/activity")}">Activity</a>`
       : ""}
     ${user.permissions?.can_manage_roles
-      ? html`<span class="nav-dropdown">
-          <a href="/admin" class="${active("/admin")} nav-dropdown-trigger">Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i></a>
-          <span class="nav-dropdown__menu">
+      ? html`<details class="nav-dropdown">
+          <summary class="nav-link nav-dropdown-trigger">Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i></summary>
+          <div class="nav-dropdown__menu">
             <a href="/admin" class="${active("/admin")}">User roles</a>
             ${user.permissions?.can_view_issues_page
               ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
               : ""}
-          </span>
-        </span>`
+          </div>
+        </details>`
       : ""}
   `;
 }

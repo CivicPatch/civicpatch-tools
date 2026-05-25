@@ -234,6 +234,7 @@ function AdminPage() {
         ? html`
             <section class="admin-page__pending">
               <h2 class="admin-page__subtitle">Pending invites</h2>
+              <div class="admin-table-scroll">
               <table class="admin-users-table">
                 <thead>
                   <tr>
@@ -261,6 +262,7 @@ function AdminPage() {
                   `)}
                 </tbody>
               </table>
+              </div>
             </section>
           `
         : null}
@@ -271,6 +273,7 @@ function AdminPage() {
         : null}
       ${!loading && !loadError && users.length > 0
         ? html`
+            <div class="admin-table-scroll">
             <table class="admin-users-table">
               <thead>
                 <tr>
@@ -316,6 +319,7 @@ function AdminPage() {
                 })}
               </tbody>
             </table>
+            </div>
           `
         : null}
       ${toast
