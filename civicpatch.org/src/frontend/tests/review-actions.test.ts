@@ -40,6 +40,7 @@ function cardData(overrides = {}) {
   return {
     request_id: "req-1",
     entry_number: 2,
+    total: 5,
     has_next: true,
     jurisdiction: { ocdid: "ocd-x", name: "X City", path: null },
     pr: { url: "u", status: "open", reviewState: null, number: 123 },
@@ -79,6 +80,7 @@ describe("boot", () => {
     expect(action.type).toBe(ActionType.SESSION_LOADED);
     expect(action.payload.session).toEqual({ id: "s1", daily_goal: 10 });
     expect(action.payload.entry_number).toBe(2);
+    expect(action.payload.total).toBe(5);
     expect(e.setRequestIdParam).toHaveBeenCalledWith("req-1");
   });
 
@@ -150,6 +152,7 @@ describe("goToEntry", () => {
 
     expect(dispatchedTypes(e)).toEqual([ActionType.NAV_STARTED, ActionType.ENTRY_LOADED]);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
+    expect(lastAction(e).payload.total).toBe(5);
     expect(e.setRequestIdParam).toHaveBeenCalledWith("req-1");
   });
 

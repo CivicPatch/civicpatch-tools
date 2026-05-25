@@ -10,7 +10,7 @@ from routers.temporal.activities import cleanup_stale_review_entries_activity
 async def test_cleanup_activity_calls_db_function():
     result = {"entries_deleted": 0}
     with patch(
-        "routers.temporal.activities.review_session_nav_db.cleanup_stale_review_session_entries",
+        "routers.temporal.activities.review_session_entries_db.purge_stale_idle_sessions",
         new_callable=AsyncMock,
         return_value=result,
     ) as mock_cleanup:
@@ -25,7 +25,7 @@ async def test_cleanup_activity_calls_db_function():
 async def test_cleanup_activity_logs_when_entries_deleted():
     result = {"entries_deleted": 3}
     with patch(
-        "routers.temporal.activities.review_session_nav_db.cleanup_stale_review_session_entries",
+        "routers.temporal.activities.review_session_entries_db.purge_stale_idle_sessions",
         new_callable=AsyncMock,
         return_value=result,
     ):
@@ -39,7 +39,7 @@ async def test_cleanup_activity_logs_when_entries_deleted():
 async def test_cleanup_activity_silent_when_nothing_to_clean():
     result = {"entries_deleted": 0}
     with patch(
-        "routers.temporal.activities.review_session_nav_db.cleanup_stale_review_session_entries",
+        "routers.temporal.activities.review_session_entries_db.purge_stale_idle_sessions",
         new_callable=AsyncMock,
         return_value=result,
     ):

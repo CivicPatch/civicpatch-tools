@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from database.review_session_navigation import cleanup_stale_review_session_entries
+from database.review_session_entries import purge_stale_idle_sessions
 
 
 def _make_pool_with_rowcount(rowcount: int):
@@ -26,8 +26,8 @@ async def test_cleanup_returns_zero_when_nothing_stale():
     # Was: returned {"entries_deleted": 0, "sessions_idled": 0}.
     # Now: returned {"entries_deleted": 0} — sessions_idled key removed with status column.
     pool, _ = _make_pool_with_rowcount(0)
-    with patch("database.review_session_navigation.get_pool", new_callable=AsyncMock, return_value=pool):
-        result = await cleanup_stale_review_session_entries()
+    with patch("database.review_session_entries.get_pool", new_callable=AsyncMock, return_value=pool):
+        result = await purge_stale_idle_sessions()
 
     assert result == {"entries_deleted": 0}
 
@@ -38,8 +38,8 @@ async def test_cleanup_returns_correct_entry_count():
     # Was: returned both entries_deleted and sessions_idled counts.
     # Now: returns only entries_deleted — no session status to update.
     pool, _ = _make_pool_with_rowcount(4)
-    with patch("database.review_session_navigation.get_pool", new_callable=AsyncMock, return_value=pool):
-        result = await cleanup_stale_review_session_entries()
+    with patch("database.review_session_entries.get_pool", new_callable=AsyncMock, return_value=pool):
+        result = await purge_stale_idle_sessions()
 
     assert result == {"entries_deleted": 4}
 
@@ -67,8 +67,8 @@ async def test_cleanup_runs_single_delete():
     pool = AsyncMock()
     pool.connection = MagicMock(return_value=conn)
 
-    with patch("database.review_session_navigation.get_pool", new_callable=AsyncMock, return_value=pool):
-        await cleanup_stale_review_session_entries()
+    with patch("database.review_session_entries.get_pool", new_callable=AsyncMock, return_value=pool):
+        await purge_stale_idle_sessions()
 
     assert sql_verbs == ["DELETE"], (
         "Cleanup must run exactly one DELETE — the UPDATE sessions step was removed with status column"
@@ -99,8 +99,8 @@ async def test_cleanup_delete_checks_session_updated_at():
     pool = AsyncMock()
     pool.connection = MagicMock(return_value=conn)
 
-    with patch("database.review_session_navigation.get_pool", new_callable=AsyncMock, return_value=pool):
-        await cleanup_stale_review_session_entries()
+    with patch("database.review_session_entries.get_pool", new_callable=AsyncMock, return_value=pool):
+        await purge_stale_idle_sessions()
 
     delete_sql = sqls[0]
     assert "USING review_sessions" in delete_sql

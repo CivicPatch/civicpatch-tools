@@ -36,22 +36,22 @@ async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
     )
 
 
-async def _session_in_progress_jurisdictions(cur, review_session_id: str) -> list[str]:
-    """Jurisdictions currently claimed (in progress) in this session."""
+async def _session_in_progress_request_ids(cur, review_session_id: str) -> list[str]:
+    """request_ids currently claimed (in progress) in this session."""
     await cur.execute(
-        "SELECT jurisdiction_ocdid FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
+        "SELECT DISTINCT unnest(request_ids) FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
         (review_session_id,),
     )
     return [r[0] for r in await cur.fetchall()]
 
 
-async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, limit: int = 1):
+async def _allocate_next_review(cur, state_code: str, reviewed_request_ids: list, limit: int = 1):
     """
     Returns the next available open review(s) for this session.
 
-    Excludes jurisdictions in reviewed_ocdids (already seen this session).
-    Concurrent claim exclusion is enforced by the DB unique index on active claims;
-    the router's UniqueViolation retry handles the rare collision.
+    Excludes request_ids already reviewed this session (the review unit is the PR,
+    not the jurisdiction). Concurrent claim exclusion is enforced by the DB unique
+    index on active claims; the router's UniqueViolation retry handles the rare collision.
     """
     await cur.execute(
         f"""
@@ -62,7 +62,7 @@ async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, lim
         JOIN pull_requests pr ON pr.request_id = j.request_id
         WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
-          AND r.jurisdiction_ocdid != ALL(%s::text[])
+          AND j.request_id::text != ALL(%s::text[])
         ORDER BY
             jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
             pr.created_at DESC
@@ -70,14 +70,14 @@ async def _allocate_next_review(cur, state_code: str, reviewed_ocdids: list, lim
         """,
         (
             f"ocd-jurisdiction/country:us/state:{state_code}/%",
-            reviewed_ocdids,
+            reviewed_request_ids,
             limit,
         ),
     )
     return await cur.fetchall()
 
 
-async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str, reviewed_ocdids: list):
+async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str, reviewed_request_ids: list):
     """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_next) or None."""
     await cur.execute(
         """
@@ -109,8 +109,8 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     )
     has_next = (await cur.fetchone()) is not None
     if not has_next:
-        in_progress = await _session_in_progress_jurisdictions(cur, review_session_id)
-        excluded = list(reviewed_ocdids or []) + in_progress
+        in_progress = await _session_in_progress_request_ids(cur, review_session_id)
+        excluded = list(reviewed_request_ids or []) + in_progress
         peek = await _allocate_next_review(cur, state_code, excluded, limit=1)
         has_next = len(peek) > 0
 
@@ -134,10 +134,10 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
     if counts_row.resolved >= session_row.daily_goal:  # type: ignore[union-attr]
         return {"done": AdvanceDoneReason.GOAL_REACHED}
 
-    # Exclude both resolved jurisdictions and any currently claimed in this session,
+    # Exclude both reviewed request_ids and any currently claimed in this session,
     # to avoid re-offering a card that's already in progress.
-    in_progress = await _session_in_progress_jurisdictions(cur, review_session_id)
-    excluded = list(session_row.reviewed_ocdids or []) + in_progress  # type: ignore[union-attr]
+    in_progress = await _session_in_progress_request_ids(cur, review_session_id)
+    excluded = list(session_row.reviewed_request_ids or []) + in_progress  # type: ignore[union-attr]
 
     rows = await _allocate_next_review(cur, session_row.state_code, excluded, limit=2)  # type: ignore[union-attr]
     if not rows:
@@ -163,14 +163,14 @@ async def navigate_to_entry(
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
             await cur.execute(
-                "SELECT state_code, daily_goal, reviewed_ocdids FROM review_sessions WHERE id = %s FOR UPDATE",
+                "SELECT state_code, daily_goal, reviewed_request_ids FROM review_sessions WHERE id = %s FOR UPDATE",
                 (review_session_id,),
             )
             session_row = await cur.fetchone()
             if not session_row:
                 return None
 
-            result = await _navigate_to_existing_entry(cur, review_session_id, entry_number, session_row.state_code, session_row.reviewed_ocdids)  # type: ignore[union-attr]
+            result = await _navigate_to_existing_entry(cur, review_session_id, entry_number, session_row.state_code, session_row.reviewed_request_ids)  # type: ignore[union-attr]
             if result is None:
                 # Release any jurisdictions held by idle sessions before allocating
                 await _cleanup_stale_entries(cur, review_session_id)
@@ -203,39 +203,38 @@ async def navigate_to_entry(
             )
             counts = await cur.fetchone()
 
+            # Live count of PRs still reviewable for this session (open, not mid-merge,
+            # not already reviewed). request_id is the unit, so COUNT(*), not distinct
+            # jurisdictions. This is the authoritative basis for the progress total.
+            await cur.execute(
+                f"""
+                SELECT COUNT(*) AS available
+                FROM pipeline_runs j
+                JOIN requests r ON r.id = j.request_id
+                JOIN pull_requests pr ON pr.request_id = j.request_id
+                WHERE {AVAILABLE_FOR_REVIEW}
+                  AND r.jurisdiction_ocdid LIKE %s
+                  AND j.request_id::text != ALL(%s::text[])
+                """,
+                (
+                    f"ocd-jurisdiction/country:us/state:{session_row.state_code}/%",  # type: ignore[union-attr]
+                    list(session_row.reviewed_request_ids or []),  # type: ignore[union-attr]
+                ),
+            )
+            avail = await cur.fetchone()
+
+    resolved_count = counts.resolved_count  # type: ignore[union-attr]
+    daily_goal = session_row.daily_goal  # type: ignore[union-attr]
+    # Session length = the goal, capped by what's actually reviewable (done +
+    # still-available), and never fewer than where we already are.
+    total = max(entry_number, min(daily_goal, resolved_count + avail.available))  # type: ignore[union-attr]
+
     return {
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
-        "resolved_count": counts.resolved_count,  # type: ignore[union-attr]
+        "resolved_count": resolved_count,
+        "goal": daily_goal,
+        "total": total,
         "has_next": has_next,
     }
-
-
-async def cleanup_stale_review_session_entries() -> dict:
-    """
-    Periodic cleanup for the Temporal scheduler.
-
-    Deletes non-resolved entries from sessions whose updated_at is past the idle
-    timeout. The trigger on review_sessions keeps updated_at current on every write,
-    so only genuinely abandoned sessions are affected.
-
-    Returns the number of entries deleted.
-    """
-    timeout = timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        async with conn.cursor() as cur:
-            await cur.execute(
-                """
-                DELETE FROM review_session_entries
-                USING review_sessions
-                WHERE review_session_entries.review_session_id = review_sessions.id
-                  AND review_session_entries.status NOT IN ('resolved')
-                  AND review_sessions.updated_at < NOW() - %s
-                """,
-                (timeout,),
-            )
-            entries_deleted = cur.rowcount
-
-    return {"entries_deleted": entries_deleted}

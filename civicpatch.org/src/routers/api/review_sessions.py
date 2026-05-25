@@ -96,7 +96,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
         ),
     ):
-        await review_session_entries_db.pass_current_entry(session_id, body.entry_number)
+        await review_session_entries_db.pass_entry(session_id, body.entry_number)
         return await _navigate_response(session_id, body.entry_number)
 
     @router.get("/active")
@@ -171,6 +171,9 @@ async def _navigate_response(session_id: str, entry_number: int):
         "data": {
             "request_id": request_id,
             "entry_number": result["entry_number"],
+            "total": result["total"],
+            "goal": result["goal"],
+            "resolved_count": result["resolved_count"],
             "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],

@@ -4,7 +4,7 @@ import core.pull_request_sync as pr_sync
 import core.open_data_sync as data_sync
 import core.pull_request_merge as pull_request_merge
 import database.pipeline_runs as pipeline_runs_db
-import database.review_session_navigation as review_session_nav_db
+import database.review_session_entries as review_session_entries_db
 from lib.temporal.types import MergeRequest
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 
@@ -28,7 +28,7 @@ async def expire_stale_pipeline_runs_activity() -> None:
 
 @activity.defn
 async def cleanup_stale_review_entries_activity() -> None:
-    result = await review_session_nav_db.cleanup_stale_review_session_entries()
+    result = await review_session_entries_db.purge_stale_idle_sessions()
     if result["entries_deleted"]:
         activity.logger.info(
             "Review session cleanup: %d entries deleted",

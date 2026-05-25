@@ -321,7 +321,7 @@ def get_router(api_key_header):
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
         await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
         # Credit the review: closing is a completed review action, same as publishing.
-        await review_session_entries_db.resolve_review_session_entries_by_request_id(request_id)
+        await review_session_entries_db.resolve_entries_for_request(request_id)
         await change_logs.record_close(request_id, user_id)
         return {"status": "success"}
 
@@ -367,7 +367,7 @@ def get_router(api_key_header):
         # Credit the review now: the reviewer completed it by publishing. The merge is
         # async, so resolving the entry here (instead of waiting for do_merge) keeps it
         # from being purged as unresolved before the queued merge runs.
-        await review_session_entries_db.resolve_review_session_entries_by_request_id(request.request_id)
+        await review_session_entries_db.resolve_entries_for_request(request.request_id)
         await temporal_client.enqueue_merge(MergeRequest(
             pull_request_number=pull_request_number,
             request_id=request.request_id,

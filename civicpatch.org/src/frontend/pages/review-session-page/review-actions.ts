@@ -55,7 +55,7 @@ async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEn
   const entry = await buildEntry(data, e.api);
   e.dispatch({
     type: ActionType.SESSION_LOADED,
-    payload: { current_entry: entry, entry_number: data.entry_number ?? 1, session, resolved_entry_numbers: resolvedEntryNumbers },
+    payload: { current_entry: entry, entry_number: data.entry_number ?? 1, total: data.total ?? data.entry_number ?? 1, session, resolved_entry_numbers: resolvedEntryNumbers },
   });
   e.setRequestIdParam(entry.request_id ?? null);
 }
@@ -101,7 +101,7 @@ export async function goToEntry(sessionId: string, targetEntry: number, stateCod
     const data = (await e.api.navigateToEntry(sessionId, targetEntry))?.data;
     if (!data) return endSessionAndExit(sessionId, stateCode, e); // exhausted: server already ended it
     const entry = await buildEntry(data, e.api);
-    e.dispatch({ type: ActionType.ENTRY_LOADED, payload: { current_entry: entry, entry_number: data.entry_number } });
+    e.dispatch({ type: ActionType.ENTRY_LOADED, payload: { current_entry: entry, entry_number: data.entry_number, total: data.total ?? data.entry_number } });
     e.setRequestIdParam(entry.request_id ?? null);
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
