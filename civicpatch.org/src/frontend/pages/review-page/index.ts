@@ -30,17 +30,12 @@ function ReviewPage() {
     fetchActiveReviewSession(stateCode).then((res) => setActiveSession(res.data)).catch(() => {});
   }, [stateCode]);
 
-  // Cap at total reviewable today (already-resolved + still-available), not just remaining;
-  // never below what's already claimed.
-  const maxReviewable = (stats.today_resolved ?? 0) + (stats.available_count ?? 0);
-  const effectiveGoal = Math.max(
-    maxReviewable > 0 ? Math.min(dailyGoal, maxReviewable) : dailyGoal,
-    stats.claimed_count ?? 0,
-  );
+  // The goal is the user's chosen target — never clamped to availability or
+  // progress. A session simply ends early if there aren't enough cards to reach it.
+  const effectiveGoal = dailyGoal;
 
   const handleGoalChange = (n) => {
-    const clamped = maxReviewable > 0 ? Math.min(n, maxReviewable) : n;
-    setDailyGoal(clamped);
+    setDailyGoal(n);
   };
 
   // With an active session, just hand off to the session route, which resumes

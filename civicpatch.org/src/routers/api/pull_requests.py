@@ -24,6 +24,7 @@ import database.pipeline_runs
 import database.people
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
+import database.review_session_entries as review_session_entries_db
 import database.users
 import lib.github.api as github_service
 import core.change_logs as change_logs
@@ -319,6 +320,8 @@ def get_router(api_key_header):
             )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
         await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        # Credit the review: closing is a completed review action, same as publishing.
+        await review_session_entries_db.resolve_review_session_entries_by_request_id(request_id)
         await change_logs.record_close(request_id, user_id)
         return {"status": "success"}
 
@@ -361,6 +364,10 @@ def get_router(api_key_header):
         # Mark the PR in-flight before the async merge so it leaves the available queue
         # immediately; do_merge clears it once the merge settles.
         await pull_requests_db.set_merge_enqueued(request.request_id)
+        # Credit the review now: the reviewer completed it by publishing. The merge is
+        # async, so resolving the entry here (instead of waiting for do_merge) keeps it
+        # from being purged as unresolved before the queued merge runs.
+        await review_session_entries_db.resolve_review_session_entries_by_request_id(request.request_id)
         await temporal_client.enqueue_merge(MergeRequest(
             pull_request_number=pull_request_number,
             request_id=request.request_id,

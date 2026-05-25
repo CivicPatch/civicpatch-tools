@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
+import { reviewsReady } from "../review-session-page/review-progress.js";
 import "../../components/stat-cards/index.js";
 import "../../components/streak-graph/streak-graph.js";
 import "../../components/goal-ring/goal-ring.js";
@@ -47,7 +48,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
               <span>Use the state selector in the top nav to load reviews.</span>
             </div>
           ` : html`
-            <span class="review-page__ready-count">${Math.max(0, Math.min(stats.available_count ?? 0, dailyGoal) - (stats.today_resolved ?? 0))}</span>
+            <span class="review-page__ready-count">${reviewsReady(stats.available_count ?? 0, dailyGoal, stats.today_resolved ?? 0)}</span>
             <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
             <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
             ${stats.today_resolved >= effectiveGoal ? html`

@@ -5,7 +5,6 @@ import database.issues as issues_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import database.review_sessions as review_sessions_db
-import database.review_session_entries as review_session_entries_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
@@ -29,18 +28,24 @@ def _get_pr_env(labels: list[dict]) -> str:
 
 
 async def publish_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
-    """Run side effects when a job PR transitions to MERGED or CLOSED."""
-    if status in (PullRequestStatus.MERGED, PullRequestStatus.CLOSED):
-        await review_session_entries_db.resolve_review_session_entries_by_request_id(request_id)
-    if status == PullRequestStatus.MERGED:
-        pr_env = _get_pr_env(pr_labels)
-        server_env = get_env_vars().get("APP_ENVIRONMENT", "production")
-        if pr_env != server_env:
-            logger.info("Skipping people sync: PR env=%s, server env=%s", pr_env, server_env)
-            return
-        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
-        if jurisdiction_ocdid:
-            await sync_people_by_ocdids([jurisdiction_ocdid])
+    """Sync open data live when a job PR is merged.
+
+    Review credit (resolving the session entry) is NOT done here — it happens
+    synchronously at the publish/close endpoints, the moment the reviewer acts.
+    This keeps data-sync (a consequence of the merge) separate from credit (a
+    consequence of the review), and means external merges sync data without
+    ever crediting a user we can't identify.
+    """
+    if status != PullRequestStatus.MERGED:
+        return
+    pr_env = _get_pr_env(pr_labels)
+    server_env = get_env_vars().get("APP_ENVIRONMENT", "production")
+    if pr_env != server_env:
+        logger.info("Skipping people sync: PR env=%s, server env=%s", pr_env, server_env)
+        return
+    jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+    if jurisdiction_ocdid:
+        await sync_people_by_ocdids([jurisdiction_ocdid])
 
 
 async def apply_pull_request_status(

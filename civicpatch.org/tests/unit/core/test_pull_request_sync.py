@@ -34,17 +34,13 @@ def test_get_pr_env_defaults_to_production_when_empty():
     assert _get_pr_env([]) == "production"
 
 
-# ── publish_side_effects ─────────────────────────────────────────────
+# ── publish_side_effects (people-sync only; credit lives at the endpoints) ────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_merged_matching_env_syncs_people():
     labels = [{"name": "env:production"}]
     with (
-        patch(
-            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
         patch(
             "core.pull_request_sync.requests_db.get_request_jurisdiction",
             new_callable=AsyncMock,
@@ -60,7 +56,6 @@ async def test_merged_matching_env_syncs_people():
         ),
     ):
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
-        mock_resolve.assert_called_once_with(REQUEST_ID)
         mock_sync.assert_called_once_with([JURISDICTION_OCDID])
 
 
@@ -69,10 +64,6 @@ async def test_merged_matching_env_syncs_people():
 async def test_merged_mismatched_env_skips_sync():
     labels = [{"name": "env:development"}]
     with (
-        patch(
-            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
         patch(
             "core.pull_request_sync.requests_db.get_request_jurisdiction",
             new_callable=AsyncMock,
@@ -87,7 +78,6 @@ async def test_merged_mismatched_env_skips_sync():
         ),
     ):
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
-        mock_resolve.assert_called_once_with(REQUEST_ID)
         mock_get_jurisdiction.assert_not_called()
         mock_sync.assert_not_called()
 
@@ -97,10 +87,6 @@ async def test_merged_mismatched_env_skips_sync():
 async def test_merged_no_env_label_defaults_to_production_and_syncs():
     labels = []
     with (
-        patch(
-            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
-            new_callable=AsyncMock,
-        ),
         patch(
             "core.pull_request_sync.requests_db.get_request_jurisdiction",
             new_callable=AsyncMock,
@@ -121,47 +107,17 @@ async def test_merged_no_env_label_defaults_to_production_and_syncs():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_closed_resolves_review_sessions_no_sync():
-    labels = [{"name": "env:production"}]
-    with (
-        patch(
-            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
-        patch(
-            "core.pull_request_sync.sync_people_by_ocdids",
-            new_callable=AsyncMock,
-        ) as mock_sync,
-        patch(
-            "core.pull_request_sync.get_env_vars",
-            return_value={"APP_ENVIRONMENT": "production"},
-        ),
-    ):
-        await publish_side_effects(REQUEST_ID, PullRequestStatus.CLOSED, labels)
-        mock_resolve.assert_called_once_with(REQUEST_ID)
+async def test_closed_does_not_sync():
+    with patch("core.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.CLOSED, [])
         mock_sync.assert_not_called()
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_status_no_side_effects():
-    labels = [{"name": "env:production"}]
-    with (
-        patch(
-            "core.pull_request_sync.review_session_entries_db.resolve_review_session_entries_by_request_id",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
-        patch(
-            "core.pull_request_sync.sync_people_by_ocdids",
-            new_callable=AsyncMock,
-        ) as mock_sync,
-        patch(
-            "core.pull_request_sync.get_env_vars",
-            return_value={"APP_ENVIRONMENT": "production"},
-        ),
-    ):
-        await publish_side_effects(REQUEST_ID, PullRequestStatus.OPEN, labels)
-        mock_resolve.assert_not_called()
+async def test_open_does_not_sync():
+    with patch("core.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.OPEN, [])
         mock_sync.assert_not_called()
 
 
