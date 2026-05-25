@@ -134,6 +134,7 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
         cursor: pointer;
       }
       progress {
+        display: block;
         width: 100%;
         height: 0.3rem;
         margin-top: 0.2rem;

@@ -136,6 +136,10 @@ def test_close_pull_request_returns_success(client):
             "core.change_logs.record_close",
             new_callable=AsyncMock,
         ),
+        patch(
+            "database.review_session_entries.resolve_review_session_entries_by_request_id",
+            new_callable=AsyncMock,
+        ) as mock_resolve,
     ):
         response = client.delete(
             f"/pull_requests/{TEST_PR_NUMBER}",
@@ -144,6 +148,7 @@ def test_close_pull_request_returns_success(client):
 
     assert response.status_code == 200
     assert response.json()["status"] == "success"
+    mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
 
 
 @pytest.mark.unit
@@ -167,6 +172,7 @@ def test_save_and_merge_returns_202(client):
         patch("lib.redis.set", new_callable=AsyncMock),
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
+        patch("database.review_session_entries.resolve_review_session_entries_by_request_id", new_callable=AsyncMock) as mock_resolve,
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
@@ -175,6 +181,7 @@ def test_save_and_merge_returns_202(client):
 
     assert response.status_code == 202
     assert response.json()["status"] == "pending"
+    mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
     mock_enqueue.assert_awaited_once()
     assert mock_enqueue.await_args is not None
     sent_request = mock_enqueue.await_args.args[0]
