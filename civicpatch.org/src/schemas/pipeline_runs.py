@@ -101,13 +101,6 @@ class ResolveIssueRequest(BaseModel):
     locality: Optional[str] = None
 
 
-# ── POST /api/v1/pipeline_runs/issues/roles/resolve ──────────────────────────
-
-class ResolveUnrecognizedRoleGroupRequest(BaseModel):
-    role: str
-    request_ids: list[str]
-
-
 # ── PATCH /api/v1/pipeline_runs/issues/{issue_id}/flag ───────────────────────
 
 class FlagPipelineIssueRequest(BaseModel):

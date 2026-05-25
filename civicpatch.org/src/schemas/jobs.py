@@ -36,11 +36,6 @@ class PostJobResultRequest(BaseModel):
     data: Optional[Any] = None
 
 
-class ResolveUnrecognizedRoleGroupRequest(BaseModel):
-    role: str
-    request_ids: list[str]
-
-
 class CreateRegisterRequest(BaseModel):
     request_id: str
     arguments: dict
