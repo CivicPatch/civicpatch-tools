@@ -45,13 +45,13 @@ async def _session_in_progress_request_ids(cur, review_session_id: str) -> list[
     return [r[0] for r in await cur.fetchall()]
 
 
-async def _allocate_next_review(cur, state_code: str, reviewed_request_ids: list, limit: int = 1):
+async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list, limit: int = 1):
     """
     Returns the next available open review(s) for this session.
 
-    Excludes request_ids already reviewed this session (the review unit is the PR,
-    not the jurisdiction). Concurrent claim exclusion is enforced by the DB unique
-    index on active claims; the router's UniqueViolation retry handles the rare collision.
+    Excludes request_ids currently claimed (in progress) in this session so an in-flight
+    card isn't re-offered. Resolved/published PRs are already out of the pool via
+    AVAILABLE_FOR_REVIEW. The router's UniqueViolation retry handles rare claim collisions.
     """
     await cur.execute(
         f"""
@@ -70,14 +70,14 @@ async def _allocate_next_review(cur, state_code: str, reviewed_request_ids: list
         """,
         (
             f"ocd-jurisdiction/country:us/state:{state_code}/%",
-            reviewed_request_ids,
+            excluded_request_ids,
             limit,
         ),
     )
     return await cur.fetchall()
 
 
-async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str, reviewed_request_ids: list):
+async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str):
     """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_next) or None."""
     await cur.execute(
         """
@@ -110,8 +110,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     has_next = (await cur.fetchone()) is not None
     if not has_next:
         in_progress = await _session_in_progress_request_ids(cur, review_session_id)
-        excluded = list(reviewed_request_ids or []) + in_progress
-        peek = await _allocate_next_review(cur, state_code, excluded, limit=1)
+        peek = await _allocate_next_review(cur, state_code, in_progress, limit=1)
         has_next = len(peek) > 0
 
     return request_id, jurisdiction_ocdid, has_next
@@ -134,12 +133,9 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
     if counts_row.resolved >= session_row.daily_goal:  # type: ignore[union-attr]
         return {"done": AdvanceDoneReason.GOAL_REACHED}
 
-    # Exclude both reviewed request_ids and any currently claimed in this session,
-    # to avoid re-offering a card that's already in progress.
+    # Exclude any card currently claimed in this session so an in-flight one isn't re-offered.
     in_progress = await _session_in_progress_request_ids(cur, review_session_id)
-    excluded = list(session_row.reviewed_request_ids or []) + in_progress  # type: ignore[union-attr]
-
-    rows = await _allocate_next_review(cur, session_row.state_code, excluded, limit=2)  # type: ignore[union-attr]
+    rows = await _allocate_next_review(cur, session_row.state_code, in_progress, limit=2)  # type: ignore[union-attr]
     if not rows:
         return {"done": AdvanceDoneReason.NO_MORE_CARDS}
 
@@ -163,14 +159,14 @@ async def navigate_to_entry(
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
             await cur.execute(
-                "SELECT state_code, daily_goal, reviewed_request_ids FROM review_sessions WHERE id = %s FOR UPDATE",
+                "SELECT state_code, daily_goal FROM review_sessions WHERE id = %s FOR UPDATE",
                 (review_session_id,),
             )
             session_row = await cur.fetchone()
             if not session_row:
                 return None
 
-            result = await _navigate_to_existing_entry(cur, review_session_id, entry_number, session_row.state_code, session_row.reviewed_request_ids)  # type: ignore[union-attr]
+            result = await _navigate_to_existing_entry(cur, review_session_id, entry_number, session_row.state_code)  # type: ignore[union-attr]
             if result is None:
                 # Release any jurisdictions held by idle sessions before allocating
                 await _cleanup_stale_entries(cur, review_session_id)
@@ -203,9 +199,9 @@ async def navigate_to_entry(
             )
             counts = await cur.fetchone()
 
-            # Live count of PRs still reviewable for this session (open, not mid-merge,
-            # not already reviewed). request_id is the unit, so COUNT(*), not distinct
-            # jurisdictions. This is the authoritative basis for the progress total.
+            # Live count of PRs still reviewable in this state (open, not parked for merge).
+            # request_id is the unit, so COUNT(*), not distinct jurisdictions. Published PRs
+            # are already excluded by AVAILABLE_FOR_REVIEW. The authoritative progress total.
             await cur.execute(
                 f"""
                 SELECT COUNT(*) AS available
@@ -214,12 +210,8 @@ async def navigate_to_entry(
                 JOIN pull_requests pr ON pr.request_id = j.request_id
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
-                  AND j.request_id::text != ALL(%s::text[])
                 """,
-                (
-                    f"ocd-jurisdiction/country:us/state:{session_row.state_code}/%",  # type: ignore[union-attr]
-                    list(session_row.reviewed_request_ids or []),  # type: ignore[union-attr]
-                ),
+                (f"ocd-jurisdiction/country:us/state:{session_row.state_code}/%",),  # type: ignore[union-attr]
             )
             avail = await cur.fetchone()
 

@@ -8,7 +8,7 @@ from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES
 #
 #   claimed ──pass_entry──────────────▶ passed
 #      │
-#      └──resolve_entries_for_request──▶ resolved   (credit: appends reviewed_request_ids)
+#      └──resolve_entries_for_request──▶ resolved   (credit signal for stats/streak/goal)
 #
 #   non-resolved entries are purged (DELETEd) in three places:
 #     • purge_stale_idle_sessions()                      — scheduled sweep (here)
@@ -42,21 +42,6 @@ async def resolve_entries_for_request(request_id: str) -> None:
                 WHERE %s = ANY(request_ids) AND status != 'resolved'
                 """,
                 (request_id,),
-            )
-            # Append the resolved request_id to the session's reviewed list so the
-            # allocator won't re-serve it this session.
-            await cur.execute(
-                """
-                UPDATE review_sessions rs
-                SET reviewed_request_ids = array_append(reviewed_request_ids, %s)
-                WHERE NOT (%s = ANY(COALESCE(rs.reviewed_request_ids, ARRAY[]::text[])))
-                  AND EXISTS (
-                      SELECT 1 FROM review_session_entries rse
-                      WHERE rse.review_session_id = rs.id
-                        AND %s = ANY(rse.request_ids)
-                  )
-                """,
-                (request_id, request_id, request_id),
             )
 
 
