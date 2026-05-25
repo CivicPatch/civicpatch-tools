@@ -15,6 +15,10 @@
   --color-8: var(--catppuccin-green);
   --color-9: var(--catppuccin-red);
   --color-10: var(--catppuccin-sapphire);
+
+  /* Shared max content width for the navbar + page containers, so the nav rail
+     and page content align on the same gutters. */
+  --page-width: 1400px;
 }
 
 .color-1 {
@@ -60,7 +64,7 @@
 
 :root,
 :host {
-  font-size: 16px;
+  font-size: 20px;
   --pico-font-family: "Figtree", sans-serif;
   --pico-form-element-spacing-vertical: 0.5rem;
   --pico-form-element-spacing-horizontal: 0.5rem;
@@ -238,7 +242,7 @@
   --pico-primary-inverse: #111111;
 
   --pico-secondary-background: #555555;
-  --pico-secondary-inverse: #111111;
+  --pico-secondary-inverse: #ffffff;
   --pico-secondary-hover-background: #777777;
 
   --pico-muted-color: var(--civ-text-muted);
@@ -322,9 +326,9 @@ input:not(
 }
 
 [type="submit"]:not(.profile-modal__tab),
-[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost),
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):not(.role-chip),
 [type="reset"],
-button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(
+button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(.role-chip):not(
     .destructive
   ) {
   --pico-background-color: var(--pico-primary);
@@ -332,19 +336,19 @@ button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(
   --pico-color: var(--pico-primary-inverse);
 }
 
-button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):not(
     .profile-modal__tab
   ):not(.secondary):hover,
 [type="submit"]:not(.profile-modal__tab):hover,
-[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):hover {
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):not(.role-chip):hover {
   --pico-background-color: var(--pico-primary-hover-background);
   --pico-border-color: var(--pico-primary-hover-background);
   --pico-color: var(--pico-primary-inverse);
 }
 
-button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):active,
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):active,
 [type="submit"]:active,
-[type="button"]:not(.btn-ghost):active {
+[type="button"]:not(.btn-ghost):not(.role-chip):active {
   --pico-background-color: var(--pico-primary-hover-background);
   --pico-border-color: var(--pico-primary-hover-background);
   --pico-color: var(--pico-primary-inverse);
@@ -687,7 +691,7 @@ main.container-fluid--wide {
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 
 .page-content {
-  max-width: 1400px;
+  max-width: var(--page-width);
   margin-inline: auto;
 }
 
@@ -1293,7 +1297,7 @@ dialog[open] > article > footer {
 }
 
 .about-footer__inner {
-  max-width: 1400px;
+  max-width: var(--page-width);
   margin-inline: auto;
   display: flex;
   flex-direction: column;
