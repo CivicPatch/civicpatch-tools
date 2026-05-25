@@ -3,10 +3,11 @@ import logging
 
 import core.change_logs as change_logs
 import core.pull_request_sync as pull_request_sync
+import database.issues as issues_db
 import database.pull_requests as pull_requests_db
 import lib.github.api as github_service
 import lib.redis as redis_store
-from shared.utils.statuses import PullRequestStatus
+from shared.utils.statuses import PipelineIssueType, PullRequestStatus
 
 logger = logging.getLogger(__name__)
 
@@ -14,10 +15,11 @@ MERGE_STATUS_TTL = 3600
 
 
 async def _handle_failure(merge_key: str, request_id: str, error: str) -> None:
-    # A failed merge must both report to the client (Redis) and clear the in-flight mark
-    # so the PR returns to the available queue.
+    # A failed merge reports to the client (Redis) and stays parked: merge_enqueued_at is
+    # left set so the PR does NOT return to the review pool, and a merge_failed issue is
+    # raised for an admin to dismiss (which clears the park).
     await redis_store.set(merge_key, json.dumps({"status": "error", "error": error}), ttl=MERGE_STATUS_TTL)
-    await pull_requests_db.clear_merge_enqueued(request_id)
+    await issues_db.upsert_issue(request_id, PipelineIssueType.MERGE_FAILED, [{"error": error}])
 
 
 async def do_merge(pull_request_number: str, request_id: str, approved_by: str | None, user_id: str, merge_key: str) -> None:

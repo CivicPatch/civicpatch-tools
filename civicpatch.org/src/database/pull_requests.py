@@ -10,9 +10,12 @@ from lib.github.utils import pull_request_url_to_number
 # (set at enqueue, cleared on settle) so the two never fight. The time window self-heals a
 # stuck/lost merge back into the pool. Callers share this one definition instead of
 # re-spelling it; requires the pull_requests table to be aliased `pr`.
+# "Available for review" = an open PR that has not been published. Publishing parks the PR
+# by setting merge_enqueued_at, which stays set even if the merge later fails — a failed
+# merge raises a merge_failed issue for an admin to dismiss (which clears the park). So a
+# published PR never returns to the review pool on its own, regardless of merge outcome.
 AVAILABLE_FOR_REVIEW = (
-    "pr.status = 'open' "
-    "AND (pr.merge_enqueued_at IS NULL OR pr.merge_enqueued_at < now() - interval '10 minutes')"
+    "pr.status = 'open' AND pr.merge_enqueued_at IS NULL"
 )
 
 

@@ -293,20 +293,25 @@ def test_do_merge_clean_pr_writes_merged():
 
 
 @pytest.mark.unit
-def test_do_merge_dirty_pr_writes_error_and_clears_in_flight():
+def test_do_merge_dirty_pr_keeps_park_and_raises_issue():
     redis_set = AsyncMock()
     clear_enqueued = AsyncMock()
+    upsert_issue = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
         patch("database.pull_requests.clear_merge_enqueued", clear_enqueued),
+        patch("database.issues.upsert_issue", upsert_issue),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "error"
     assert "conflicts" in last_call_value["error"]
-    clear_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
+    # A failed merge stays parked (merge_enqueued_at NOT cleared) and surfaces as a
+    # merge_failed issue for an admin to dismiss.
+    clear_enqueued.assert_not_awaited()
+    upsert_issue.assert_awaited_once()
 
 
 @pytest.mark.unit
@@ -316,6 +321,7 @@ def test_do_merge_blocked_pr_writes_error():
         patch("lib.redis.set", redis_set),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -354,6 +360,7 @@ def test_do_merge_behind_pr_dirty_after_update_writes_error():
         patch("lib.github.api.get_pull_request_mergeability", mergeability),
         patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -370,6 +377,7 @@ def test_do_merge_github_error_writes_error():
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
         patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value="GitHub API error"),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -387,6 +395,7 @@ def test_do_merge_behind_pr_update_branch_error_writes_error():
         patch("lib.github.api.get_pull_request_mergeability", mergeability),
         patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value="branch update failed"),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -402,6 +411,7 @@ def test_do_merge_unexpected_exception_writes_error():
         patch("lib.redis.set", redis_set),
         patch("lib.github.api.get_pull_request_mergeability", side_effect=RuntimeError("boom")),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
