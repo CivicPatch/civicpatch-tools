@@ -33,7 +33,7 @@ def test_changed_field_emits_edit_person():
     result = diff_people([_person("1", name="Jane Doe")], [_person("1", name="Jane Smith")])
     assert len(result) == 1
     assert result[0].type == ChangeLogType.EDIT_PERSON
-    assert [(f.field, f.from_, f.to) for f in result[0].payload.fields] == [("name", "Jane Doe", "Jane Smith")]
+    assert [(f.field, f.before, f.after) for f in result[0].payload.fields] == [("name", "Jane Doe", "Jane Smith")]
 
 
 @pytest.mark.unit
@@ -41,7 +41,7 @@ def test_office_is_diffed_by_component():
     result = diff_people([_person("1", office_name="Mayor")], [_person("1", office_name="Council Member")])
     fields = result[0].payload.fields
     assert [f.field for f in fields] == ["office.name"]
-    assert (fields[0].from_, fields[0].to) == ("Mayor", "Council Member")
+    assert (fields[0].before, fields[0].after) == ("Mayor", "Council Member")
 
 
 # ── add_person ──────────────────────────────────────────────────────────────────
@@ -52,7 +52,7 @@ def test_new_id_emits_add_person_with_null_from():
     assert result[0].type == ChangeLogType.ADD_PERSON
     assert result[0].payload.person_name == "New Person"
     name_field = next(f for f in result[0].payload.fields if f.field == "name")
-    assert (name_field.from_, name_field.to) == (None, "New Person")
+    assert (name_field.before, name_field.after) == (None, "New Person")
 
 
 # ── delete_person ────────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ def test_missing_id_emits_delete_person_with_null_to():
     result = diff_people([_person("1", name="Gone")], [])
     assert result[0].type == ChangeLogType.DELETE_PERSON
     name_field = next(f for f in result[0].payload.fields if f.field == "name")
-    assert (name_field.from_, name_field.to) == ("Gone", None)
+    assert (name_field.before, name_field.after) == ("Gone", None)
 
 
 # ── mixed ───────────────────────────────────────────────────────────────────────

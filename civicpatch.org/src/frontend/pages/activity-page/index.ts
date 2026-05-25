@@ -29,8 +29,8 @@ function renderChange(changes) {
         ${changes.fields.map(
           (f) => html`<li>
             <span class="activity-page__field-name">${f.field}</span>:
-            <span class="activity-page__from">${formatValue(f.from)}</span> →
-            <span class="activity-page__to">${formatValue(f.to)}</span>
+            <span class="activity-page__before">${formatValue(f.before)}</span> →
+            <span class="activity-page__after">${formatValue(f.after)}</span>
           </li>`,
         )}
       </ul>

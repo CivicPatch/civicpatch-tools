@@ -20,42 +20,42 @@ def _comparable(person: dict) -> dict[str, Any]:
     }
 
 
-def diff_people(existing: list[dict], published: list[dict]) -> list[PersonChange]:
-    existing_by_id = {person["id"]: person for person in existing}
-    published_by_id = {person["id"]: person for person in published}
+def diff_people(before: list[dict], after: list[dict]) -> list[PersonChange]:
+    before_by_id = {person["id"]: person for person in before}
+    after_by_id = {person["id"]: person for person in after}
 
     changes: list[PersonChange] = []
-    for person_id, after in published_by_id.items():
-        before = existing_by_id.get(person_id)
-        if before is None:
-            changes.append(_added(after))
+    for person_id, after_person in after_by_id.items():
+        before_person = before_by_id.get(person_id)
+        if before_person is None:
+            changes.append(_added(after_person))
             continue
-        field_changes = _field_changes(_comparable(before), _comparable(after))
+        field_changes = _field_changes(_comparable(before_person), _comparable(after_person))
         if field_changes:
-            changes.append(_edited(after, field_changes))
+            changes.append(_edited(after_person, field_changes))
 
-    for person_id, before in existing_by_id.items():
-        if person_id not in published_by_id:
-            changes.append(_removed(before))
+    for person_id, before_person in before_by_id.items():
+        if person_id not in after_by_id:
+            changes.append(_removed(before_person))
 
     return changes
 
 
 def _field_changes(before: dict[str, Any], after: dict[str, Any]) -> list[FieldChange]:
     return [
-        FieldChange(field=field, from_=before[field], to=after[field])
+        FieldChange(field=field, before=before[field], after=after[field])
         for field in before
         if before[field] != after[field]
     ]
 
 
 def _added(person: dict) -> PersonChange:
-    fields = [FieldChange(field=field, to=value) for field, value in _comparable(person).items() if value]
+    fields = [FieldChange(field=field, after=value) for field, value in _comparable(person).items() if value]
     return PersonChange(type=ChangeLogType.ADD_PERSON, payload=_payload(person, fields))
 
 
 def _removed(person: dict) -> PersonChange:
-    fields = [FieldChange(field=field, from_=value) for field, value in _comparable(person).items() if value]
+    fields = [FieldChange(field=field, before=value) for field, value in _comparable(person).items() if value]
     return PersonChange(type=ChangeLogType.DELETE_PERSON, payload=_payload(person, fields))
 
 
