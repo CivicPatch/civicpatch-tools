@@ -11,11 +11,11 @@ _OPEN_PRS_STATE = f"""
 """
 
 _ISSUES_SUBQUERIES_GLOBAL = """
-    , (SELECT COUNT(*) FROM pipeline_issues WHERE status IN ('pending', 'pr_opened'))
+    , (SELECT COUNT(*) FROM issues WHERE status IN ('pending', 'pr_opened'))
 """
 
 _ISSUES_SUBQUERIES_STATE = """
-    , (SELECT COUNT(*) FROM pipeline_issues pi2
+    , (SELECT COUNT(*) FROM issues pi2
        WHERE pi2.status IN ('pending', 'pr_opened')
        AND EXISTS (
            SELECT 1 FROM requests r2

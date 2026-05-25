@@ -11,7 +11,7 @@ import shared.utils.config_utils
 import lib.storage as storage_service
 import lib.github.api as github_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
-from database.pipeline_issues import upsert_pipeline_issue
+from database.issues import upsert_issue
 from shared.utils.statuses import PipelineRunStatus
 import logging
 import yaml
@@ -37,7 +37,7 @@ async def handle_submit_pipeline_run_artifacts(
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
-        await upsert_pipeline_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
+        await upsert_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
         raise
 
 
@@ -114,7 +114,7 @@ async def _handle_submit_pipeline_run_artifacts(
         await update_pipeline_run_review_json(request.request_id, review_json)
 
         for issue in workflow_context.get("data", {}).get("issues", []):
-            await upsert_pipeline_issue(
+            await upsert_issue(
                 request.request_id,
                 issue["type"],
                 [issue.get("data") or {}],
@@ -123,7 +123,7 @@ async def _handle_submit_pipeline_run_artifacts(
         context_data = workflow_context.get("data", {})
         error_step = context_data.get("error_step") or "pipeline_error"
         error_detail = context_data.get("error_detail") or {}
-        await upsert_pipeline_issue(request.request_id, error_step, [error_detail])
+        await upsert_issue(request.request_id, error_step, [error_detail])
 
 
     artifact_zip_path = await file_utils.zip_directory(pull_request_file_dir, f"artifact_{file_suffix}.zip")

@@ -33,7 +33,7 @@ async def get_pending_issue_ocdids() -> set[str]:
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM pipeline_issues pi
+            FROM issues pi
             JOIN requests r ON r.id::text = ANY(pi.request_ids)
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid IS NOT NULL
@@ -53,7 +53,7 @@ async def get_unrecognized_roles_grouped() -> list[dict]:
                    request_ids,
                    data->'person_names' AS person_names,
                    array_length(request_ids, 1) AS occurrence_count
-            FROM pipeline_issues
+            FROM issues
             WHERE issue_type = 'unrecognized_role'
               AND status = 'pending'
             ORDER BY array_length(request_ids, 1) DESC
@@ -85,29 +85,29 @@ async def resolve_unrecognized_role_group(request_ids: list[str]) -> None:
         )
 
 
-async def resolve_pipeline_issue(issue_id: str) -> None:
+async def resolve_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE pipeline_issues SET status = %s, resolved_at = NOW() WHERE id = %s",
+            "UPDATE issues SET status = %s, resolved_at = NOW() WHERE id = %s",
             (PipelineIssueStatus.RESOLVED, issue_id),
         )
 
 
-async def open_pipeline_issue_pull_request(issue_id: str, pull_request_url: str) -> None:
+async def open_issue_pull_request(issue_id: str, pull_request_url: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE pipeline_issues SET status = %s, pull_request_url = %s WHERE id = %s",
+            "UPDATE issues SET status = %s, pull_request_url = %s WHERE id = %s",
             (PipelineIssueStatus.PR_OPENED, pull_request_url, issue_id),
         )
 
 
-async def get_pipeline_issue_by_pull_request_url(pull_request_url: str) -> dict | None:
+async def get_issue_by_pull_request_url(pull_request_url: str) -> dict | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text, status FROM pipeline_issues WHERE pull_request_url = %s",
+            "SELECT id::text, status FROM issues WHERE pull_request_url = %s",
             (pull_request_url,),
         )
         row = await cur.fetchone()
@@ -116,22 +116,22 @@ async def get_pipeline_issue_by_pull_request_url(pull_request_url: str) -> dict 
     return {"id": row[0], "status": row[1]}
 
 
-async def get_pipeline_issues_with_open_pr() -> list[dict]:
+async def get_issues_with_open_pr() -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text, pull_request_url FROM pipeline_issues WHERE status = %s",
+            "SELECT id::text, pull_request_url FROM issues WHERE status = %s",
             (PipelineIssueStatus.PR_OPENED,),
         )
         rows = await cur.fetchall()
     return [{"id": r[0], "pull_request_url": r[1]} for r in rows]
 
 
-async def reopen_pipeline_issue(issue_id: str) -> None:
+async def reopen_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE pipeline_issues SET status = %s, pull_request_url = NULL WHERE id = %s",
+            "UPDATE issues SET status = %s, pull_request_url = NULL WHERE id = %s",
             (PipelineIssueStatus.PENDING, issue_id),
         )
 
@@ -141,13 +141,13 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
     async with pool.connection() as conn:
         await conn.execute(
             """
-            UPDATE pipeline_issues
+            UPDATE issues
             SET status = %s, resolved_at = NOW()
             WHERE status = %s
               AND NOT (%s = ANY(request_ids))
               AND EXISTS (
                 SELECT 1 FROM requests r
-                WHERE r.id::text = ANY(pipeline_issues.request_ids)
+                WHERE r.id::text = ANY(issues.request_ids)
                   AND r.jurisdiction_ocdid = %s
               )
             """,
@@ -160,7 +160,7 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
         )
 
 
-async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
+async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return
     rows = []
@@ -177,40 +177,40 @@ async def upsert_pipeline_issue(request_id: str, issue_type: str, issues: list[d
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO pipeline_issues (issue_type, issue_key, request_ids, data, status)
+            INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
             VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (issue_type, issue_key) DO UPDATE SET
               request_ids = (
                 SELECT array_agg(DISTINCT r)
-                FROM unnest(pipeline_issues.request_ids || EXCLUDED.request_ids) r
+                FROM unnest(issues.request_ids || EXCLUDED.request_ids) r
               ),
               data = CASE
-                WHEN pipeline_issues.issue_type = 'unrecognized_role' THEN
+                WHEN issues.issue_type = 'unrecognized_role' THEN
                   jsonb_set(
-                    pipeline_issues.data,
+                    issues.data,
                     '{person_names}',
                     (SELECT jsonb_agg(DISTINCT v)
                      FROM jsonb_array_elements_text(
-                       COALESCE(pipeline_issues.data->'person_names', '[]'::jsonb) ||
+                       COALESCE(issues.data->'person_names', '[]'::jsonb) ||
                        COALESCE(EXCLUDED.data->'person_names', '[]'::jsonb)
                      ) v)
                   )
-                ELSE pipeline_issues.data
+                ELSE issues.data
               END,
               status = CASE
-                WHEN pipeline_issues.status IN ('resolved', 'superseded') THEN 'pending'
-                ELSE pipeline_issues.status
+                WHEN issues.status IN ('resolved', 'superseded') THEN 'pending'
+                ELSE issues.status
               END,
               resolved_at = CASE
-                WHEN pipeline_issues.status IN ('resolved', 'superseded') THEN NULL
-                ELSE pipeline_issues.resolved_at
+                WHEN issues.status IN ('resolved', 'superseded') THEN NULL
+                ELSE issues.resolved_at
               END
             """,
             rows,
         )
 
 
-async def get_pipeline_issues_page(
+async def get_issues_page(
     issue_types: list[str],
     page: int,
     per_page: int,
@@ -251,7 +251,7 @@ async def get_pipeline_issues_page(
                 SELECT ri.id AS issue_id,
                        array_agg(DISTINCT r.jurisdiction_ocdid)
                            FILTER (WHERE r.jurisdiction_ocdid IS NOT NULL) AS ocdids
-                FROM pipeline_issues ri
+                FROM issues ri
                 LEFT JOIN requests r ON r.id::text = ANY(ri.request_ids)
                 GROUP BY ri.id
             )
@@ -266,7 +266,7 @@ async def get_pipeline_issues_page(
                        LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
                    ) AS jurisdiction_names,
                    ri.is_flagged
-            FROM pipeline_issues ri
+            FROM issues ri
             LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
             {where}
             ORDER BY ri.created_at {order}
@@ -296,7 +296,7 @@ async def get_pipeline_issues_page(
     return result, total
 
 
-async def get_pipeline_issue_counts(state_code: str | None = None) -> dict[str, int]:
+async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
     pool = await get_pool()
     active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
     params: list[Any] = list(active_statuses)
@@ -308,7 +308,7 @@ async def get_pipeline_issue_counts(state_code: str | None = None) -> dict[str, 
         params.append(f"%state:{state_code.lower()}%")
     query = sql.SQL("""
         SELECT pi.issue_type, COUNT(*) AS cnt
-        FROM pipeline_issues pi
+        FROM issues pi
         WHERE pi.status IN ({statuses})
         {state_filter}
         GROUP BY pi.issue_type
@@ -322,22 +322,22 @@ async def get_pipeline_issue_counts(state_code: str | None = None) -> dict[str, 
     return {row[0]: row[1] for row in rows}
 
 
-async def set_pipeline_issue_flagged(issue_id: str, is_flagged: bool) -> None:
+async def set_issue_flagged(issue_id: str, is_flagged: bool) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE pipeline_issues SET is_flagged = %s WHERE id = %s",
+            "UPDATE issues SET is_flagged = %s WHERE id = %s",
             (is_flagged, issue_id),
         )
 
 
-async def get_pipeline_issue_by_id(issue_id: str) -> dict | None:
+async def get_issue_by_id(issue_id: str) -> dict | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT id::text, issue_type, issue_key, request_ids, data, status, resolved_at, created_at
-            FROM pipeline_issues WHERE id = %s
+            FROM issues WHERE id = %s
             """,
             (issue_id,),
         )

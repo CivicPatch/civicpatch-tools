@@ -2,7 +2,7 @@ import logging
 
 import core.role_config as role_config_service
 import lib.github.pull_requests as pr_service
-from database.pipeline_issues import open_pipeline_issue_pull_request
+from database.issues import open_issue_pull_request
 from lib.github.pull_requests import PrAuthor
 from schemas.jurisdictions import SetScopeRolesRequest
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
@@ -25,5 +25,5 @@ async def resolve_via_config_pr(req: SetScopeRolesRequest, author: PrAuthor, iss
     )
     if pr_number is None:
         raise RuntimeError(f"Failed to open config PR: {pull_request_url}")
-    await open_pipeline_issue_pull_request(issue_id, pull_request_url)
+    await open_issue_pull_request(issue_id, pull_request_url)
     return pull_request_url

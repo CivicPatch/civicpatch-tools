@@ -29,15 +29,15 @@ from database.pipeline_runs import (
     update_pipeline_run_status,
     set_pipeline_run_github_run_id,
 )
-from database.pipeline_issues import (
-    get_pipeline_issues_page,
-    get_pipeline_issue_by_id,
-    get_pipeline_issue_counts,
+from database.issues import (
+    get_issues_page,
+    get_issue_by_id,
+    get_issue_counts,
     get_unrecognized_roles_grouped,
     resolve_unrecognized_role_group,
-    resolve_pipeline_issue,
-    set_pipeline_issue_flagged,
-    upsert_pipeline_issue,
+    resolve_issue,
+    set_issue_flagged,
+    upsert_issue,
     supersede_prior_jurisdiction_issues,
 )
 from database.pull_requests import (
@@ -446,7 +446,7 @@ def get_router(api_key_header):
         state_code: Optional[str] = None,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        counts = await get_pipeline_issue_counts(state_code=state_code)
+        counts = await get_issue_counts(state_code=state_code)
         return {"data": counts}
 
     @router.get(
@@ -464,7 +464,7 @@ def get_router(api_key_header):
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
-        rows, total = await get_pipeline_issues_page(issue_types, page, per_page, sort_desc, state_code=state_code, show_archived=show_archived)
+        rows, total = await get_issues_page(issue_types, page, per_page, sort_desc, state_code=state_code, show_archived=show_archived)
         return {"data": rows, "total": total}
 
     @router.post(
@@ -475,10 +475,10 @@ def get_router(api_key_header):
         issue_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        issue = await get_pipeline_issue_by_id(issue_id)
+        issue = await get_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
-        await resolve_pipeline_issue(issue_id)
+        await resolve_issue(issue_id)
         return {"data": None}
 
     @router.post(
@@ -489,10 +489,10 @@ def get_router(api_key_header):
         issue_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        issue = await get_pipeline_issue_by_id(issue_id)
+        issue = await get_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
-        await resolve_pipeline_issue(issue_id)
+        await resolve_issue(issue_id)
         return {"data": None}
 
     @router.patch(
@@ -504,10 +504,10 @@ def get_router(api_key_header):
         request: FlagPipelineIssueRequest,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        issue = await get_pipeline_issue_by_id(issue_id)
+        issue = await get_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
-        await set_pipeline_issue_flagged(issue_id, request.is_flagged)
+        await set_issue_flagged(issue_id, request.is_flagged)
         return {"data": None}
 
     @router.get(
@@ -518,7 +518,7 @@ def get_router(api_key_header):
         issue_id: str,
         identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        issue = await get_pipeline_issue_by_id(issue_id)
+        issue = await get_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
 

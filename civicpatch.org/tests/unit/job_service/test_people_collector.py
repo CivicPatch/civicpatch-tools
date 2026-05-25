@@ -33,7 +33,7 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
             new_callable=AsyncMock,
         ) as mock_update_status,
         patch(
-            "core.people_collector.upsert_pipeline_issue",
+            "core.people_collector.upsert_issue",
             new_callable=AsyncMock,
         ),
     ):

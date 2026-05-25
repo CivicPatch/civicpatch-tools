@@ -17,7 +17,7 @@ import database.notes as db_notes
 import database.people as db_people
 import database.pull_requests as db_pull_requests
 import database.requests as db_requests
-import database.pipeline_issues as db_pipeline_issues
+import database.issues as db_issues
 import database.summary as db_summary
 import database.users as db_users
 
@@ -100,23 +100,23 @@ async def test_get_requests_for_export_with_date_range():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_unrecognized_roles_grouped():
-    rows = await db_pipeline_issues.get_unrecognized_roles_grouped()
+    rows = await db_issues.get_unrecognized_roles_grouped()
     assert isinstance(rows, list)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_pipeline_issues_page_no_filter():
-    rows, total = await db_pipeline_issues.get_pipeline_issues_page(issue_types=[], page=1, per_page=10)
+async def test_get_issues_page_no_filter():
+    rows, total = await db_issues.get_issues_page(issue_types=[], page=1, per_page=10)
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_pipeline_issues_page_with_issue_types():
+async def test_get_issues_page_with_issue_types():
     """Exercises the IN clause and ORDER BY direction branches."""
-    rows, total = await db_pipeline_issues.get_pipeline_issues_page(
+    rows, total = await db_issues.get_issues_page(
         issue_types=["unrecognized_role"],
         page=1,
         per_page=5,
@@ -440,14 +440,14 @@ async def test_get_open_pr_request_ids():
 
 
 # ---------------------------------------------------------------------------
-# database.pipeline_issues — pipeline issues
+# database.issues — pipeline issues
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_upsert_pipeline_issue_unrecognized_role():
+async def test_upsert_issue_unrecognized_role():
     """Exercises the INSERT ... ON CONFLICT path; catches placeholder count mismatches."""
-    await db_pipeline_issues.upsert_pipeline_issue(
+    await db_issues.upsert_issue(
         "test-request-id",
         "unrecognized_role",
         [{"role": "grand_poobah", "person_name": "Alice"}],
@@ -456,11 +456,11 @@ async def test_upsert_pipeline_issue_unrecognized_role():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
+async def test_upsert_issue_conflict_preserves_pr_opened():
     """A new request for an issue already in pr_opened must not reset it to pending."""
     from shared.utils.statuses import PipelineIssueStatus
 
-    await db_pipeline_issues.upsert_pipeline_issue(
+    await db_issues.upsert_issue(
         "test-request-id-1",
         "unrecognized_role",
         [{"role": "archduke", "person_name": "Bob"}],
@@ -471,12 +471,12 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE pipeline_issues SET status = %s WHERE issue_type = %s AND issue_key = %s",
+            "UPDATE issues SET status = %s WHERE issue_type = %s AND issue_key = %s",
             (PipelineIssueStatus.PR_OPENED, "unrecognized_role", "archduke"),
         )
 
     # New request for the same role — must not clobber pr_opened
-    await db_pipeline_issues.upsert_pipeline_issue(
+    await db_issues.upsert_issue(
         "test-request-id-2",
         "unrecognized_role",
         [{"role": "archduke", "person_name": "Carol"}],
@@ -485,7 +485,7 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM pipeline_issues WHERE issue_type = %s AND issue_key = %s",
+            "SELECT status FROM issues WHERE issue_type = %s AND issue_key = %s",
             ("unrecognized_role", "archduke"),
         )
         row = await cur.fetchone()
@@ -495,8 +495,8 @@ async def test_upsert_pipeline_issue_conflict_preserves_pr_opened():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_pipeline_issue_by_id_not_found():
-    result = await db_pipeline_issues.get_pipeline_issue_by_id(_FAKE_UUID)
+async def test_get_issue_by_id_not_found():
+    result = await db_issues.get_issue_by_id(_FAKE_UUID)
     assert result is None
 
 

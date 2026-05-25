@@ -185,9 +185,9 @@ def test_delete_context_returns_request_id(client):
 
 
 @pytest.mark.unit
-def test_get_pipeline_issues_returns_paginated_list(client):
+def test_get_issues_returns_paginated_list(client):
     with patch(
-        "routers.api.pipeline_runs.get_pipeline_issues_page",
+        "routers.api.pipeline_runs.get_issues_page",
         new_callable=AsyncMock,
         return_value=([], 0),
     ):
