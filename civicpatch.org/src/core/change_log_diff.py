@@ -25,20 +25,41 @@ def diff_people(before: list[dict], after: list[dict]) -> list[PersonChange]:
     after_by_id = {person["id"]: person for person in after}
 
     changes: list[PersonChange] = []
+    added: list[dict] = []
     for person_id, after_person in after_by_id.items():
         before_person = before_by_id.get(person_id)
         if before_person is None:
-            changes.append(_added(after_person))
+            added.append(after_person)
             continue
         field_changes = _field_changes(_comparable(before_person), _comparable(after_person))
         if field_changes:
             changes.append(_edited(after_person, field_changes))
 
-    for person_id, before_person in before_by_id.items():
-        if person_id not in after_by_id:
-            changes.append(_removed(before_person))
+    removed = [p for pid, p in before_by_id.items() if pid not in after_by_id]
 
+    # Re-link reconciliation: matching a person to an existing record changes their
+    # id, which looks like an add + a delete. When the content is identical, it's the
+    # same person re-linked, not a real change — cancel those pairs out.
+    added, removed = _cancel_relinks(added, removed)
+
+    changes.extend(_added(person) for person in added)
+    changes.extend(_removed(person) for person in removed)
     return changes
+
+
+def _cancel_relinks(added: list[dict], removed: list[dict]) -> tuple[list[dict], list[dict]]:
+    remaining_removed = list(removed)
+    real_added: list[dict] = []
+    for after_person in added:
+        match = next(
+            (p for p in remaining_removed if _comparable(p) == _comparable(after_person)),
+            None,
+        )
+        if match is None:
+            real_added.append(after_person)
+        else:
+            remaining_removed.remove(match)
+    return real_added, remaining_removed
 
 
 def _field_changes(before: dict[str, Any], after: dict[str, Any]) -> list[FieldChange]:

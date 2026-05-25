@@ -42,7 +42,7 @@ from database.issues import (
 )
 from database.pull_requests import (
     update_pipeline_run_pull_request_url,
-    update_pipeline_run_pull_request_status,
+    update_pull_request_status,
 )
 from database.requests import (
     register_request_with_pipeline_run,

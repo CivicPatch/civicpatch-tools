@@ -35,6 +35,7 @@ async def resolve_review_session_entries_by_request_id(request_id: str) -> None:
                 SET reviewed_ocdids = array_append(reviewed_ocdids, r.jurisdiction_ocdid)
                 FROM requests r
                 WHERE r.id::text = %s
+                  AND NOT (r.jurisdiction_ocdid = ANY(COALESCE(rs.reviewed_ocdids, ARRAY[]::text[])))
                   AND EXISTS (
                       SELECT 1 FROM review_session_entries rse
                       WHERE rse.review_session_id = rs.id

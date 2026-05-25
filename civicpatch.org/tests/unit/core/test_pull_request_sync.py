@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core.pull_request_sync import _get_pr_env, handle_pr_status_side_effects
+from core.pull_request_sync import _get_pr_env, apply_pull_request_status, publish_side_effects
 from shared.utils.statuses import PullRequestStatus
 
 REQUEST_ID = "2025-09-25-1a2b"
@@ -34,7 +34,7 @@ def test_get_pr_env_defaults_to_production_when_empty():
     assert _get_pr_env([]) == "production"
 
 
-# ── handle_pr_status_side_effects ─────────────────────────────────────────────
+# ── publish_side_effects ─────────────────────────────────────────────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
@@ -59,7 +59,7 @@ async def test_merged_matching_env_syncs_people():
             return_value={"APP_ENVIRONMENT": "production"},
         ),
     ):
-        await handle_pr_status_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
         mock_resolve.assert_called_once_with(REQUEST_ID)
         mock_sync.assert_called_once_with([JURISDICTION_OCDID])
 
@@ -86,7 +86,7 @@ async def test_merged_mismatched_env_skips_sync():
             return_value={"APP_ENVIRONMENT": "production"},
         ),
     ):
-        await handle_pr_status_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
         mock_resolve.assert_called_once_with(REQUEST_ID)
         mock_get_jurisdiction.assert_not_called()
         mock_sync.assert_not_called()
@@ -115,7 +115,7 @@ async def test_merged_no_env_label_defaults_to_production_and_syncs():
             return_value={"APP_ENVIRONMENT": "production"},
         ),
     ):
-        await handle_pr_status_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED, labels)
         mock_sync.assert_called_once_with([JURISDICTION_OCDID])
 
 
@@ -137,7 +137,7 @@ async def test_closed_resolves_review_sessions_no_sync():
             return_value={"APP_ENVIRONMENT": "production"},
         ),
     ):
-        await handle_pr_status_side_effects(REQUEST_ID, PullRequestStatus.CLOSED, labels)
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.CLOSED, labels)
         mock_resolve.assert_called_once_with(REQUEST_ID)
         mock_sync.assert_not_called()
 
@@ -160,6 +160,57 @@ async def test_open_status_no_side_effects():
             return_value={"APP_ENVIRONMENT": "production"},
         ),
     ):
-        await handle_pr_status_side_effects(REQUEST_ID, PullRequestStatus.OPEN, labels)
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.OPEN, labels)
         mock_resolve.assert_not_called()
         mock_sync.assert_not_called()
+
+
+# ── apply_pull_request_status (funnel: gate side effects on real transition) ───
+
+def _patch_status(previous: str | None, written: bool = True):
+    return (
+        patch(
+            "core.pull_request_sync.pull_requests_db.get_pull_request_status",
+            new_callable=AsyncMock,
+            return_value=previous,
+        ),
+        patch(
+            "core.pull_request_sync.pull_requests_db.update_pull_request_status",
+            new_callable=AsyncMock,
+            return_value=written,
+        ),
+        patch(
+            "core.pull_request_sync.publish_side_effects",
+            new_callable=AsyncMock,
+        ),
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_apply_runs_side_effects_on_transition():
+    get_status, update, side_effects = _patch_status(previous=PullRequestStatus.OPEN)
+    with get_status, update, side_effects as mock_side_effects:
+        changed = await apply_pull_request_status(REQUEST_ID, PullRequestStatus.MERGED)
+    assert changed is True
+    mock_side_effects.assert_awaited_once()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_apply_skips_side_effects_when_already_in_status():
+    get_status, update, side_effects = _patch_status(previous=PullRequestStatus.MERGED)
+    with get_status, update, side_effects as mock_side_effects:
+        changed = await apply_pull_request_status(REQUEST_ID, PullRequestStatus.MERGED)
+    assert changed is False
+    mock_side_effects.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_apply_skips_side_effects_when_request_missing():
+    get_status, update, side_effects = _patch_status(previous=None, written=False)
+    with get_status, update, side_effects as mock_side_effects:
+        changed = await apply_pull_request_status(REQUEST_ID, PullRequestStatus.MERGED)
+    assert changed is False
+    mock_side_effects.assert_not_awaited()

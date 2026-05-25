@@ -10,15 +10,15 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 USER_ID = "user-123"
 
 
-# ── record_merge_review / record_close_review (event-only) ───────────────────
+# ── record_publish / record_close (event-only) ───────────────────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 @patch("core.change_logs.create_change_log", new_callable=AsyncMock)
 @patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_merge_review_logs_event(mock_jurisdiction, mock_create):
+async def test_record_publish_logs_event(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
-    await change_logs.record_merge_review(REQUEST_ID, USER_ID)
+    await change_logs.record_publish(REQUEST_ID, USER_ID)
     mock_create.assert_awaited_once()
     assert mock_create.call_args.args == (ChangeLogType.MERGE_REVIEW, USER_ID, JURISDICTION_OCDID, REQUEST_ID)
 
@@ -27,18 +27,18 @@ async def test_record_merge_review_logs_event(mock_jurisdiction, mock_create):
 @pytest.mark.asyncio
 @patch("core.change_logs.create_change_log", new_callable=AsyncMock)
 @patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_merge_review_swallows_errors(mock_jurisdiction, mock_create):
+async def test_record_publish_swallows_errors(mock_jurisdiction, mock_create):
     mock_jurisdiction.side_effect = RuntimeError("db down")
-    await change_logs.record_merge_review(REQUEST_ID, USER_ID)  # best-effort: must not raise
+    await change_logs.record_publish(REQUEST_ID, USER_ID)  # best-effort: must not raise
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 @patch("core.change_logs.create_change_log", new_callable=AsyncMock)
 @patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_close_review_logs_close_event(mock_jurisdiction, mock_create):
+async def test_record_close_logs_close_event(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
-    await change_logs.record_close_review(REQUEST_ID, USER_ID)
+    await change_logs.record_close(REQUEST_ID, USER_ID)
     mock_create.assert_awaited_once()
     assert mock_create.call_args.args == (ChangeLogType.CLOSE_REVIEW, USER_ID, JURISDICTION_OCDID, REQUEST_ID)
 
@@ -47,10 +47,10 @@ async def test_record_close_review_logs_close_event(mock_jurisdiction, mock_crea
 @pytest.mark.asyncio
 @patch("core.change_logs.create_change_log", new_callable=AsyncMock)
 @patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_close_review_swallows_errors(mock_jurisdiction, mock_create):
+async def test_record_close_swallows_errors(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
     mock_create.side_effect = RuntimeError("db down")
-    await change_logs.record_close_review(REQUEST_ID, USER_ID)  # best-effort: must not raise
+    await change_logs.record_close(REQUEST_ID, USER_ID)  # best-effort: must not raise
 
 
 # ── record_manual_edits (the publish-time diff) ──────────────────────────────

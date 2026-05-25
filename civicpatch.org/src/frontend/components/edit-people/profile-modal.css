@@ -27,6 +27,7 @@
 
 .profile-modal__match-item {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.6rem;
     padding: 0.4rem 0.6rem;
@@ -39,6 +40,8 @@
     font-size: var(--text-md);
     color: var(--pico-color);
     flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .profile-modal__match-item span + span {

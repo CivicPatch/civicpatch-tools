@@ -162,7 +162,7 @@ async def update_pipeline_run_pull_request_url(request_id: str, pull_request_url
         return result.rowcount > 0
 
 
-async def update_pipeline_run_pull_request_status(
+async def update_pull_request_status(
     request_id: str,
     pull_request_status: str,
     pull_request_merged_at=None,
@@ -193,6 +193,14 @@ async def update_pipeline_run_pull_request_status(
             (request_id, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
         )
         return True
+
+
+async def get_pull_request_status(request_id: str) -> Optional[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT status FROM pull_requests WHERE request_id = %s", (request_id,))
+        row = await cur.fetchone()
+        return row[0] if row else None
 
 
 async def set_merge_enqueued(request_id: str) -> None:

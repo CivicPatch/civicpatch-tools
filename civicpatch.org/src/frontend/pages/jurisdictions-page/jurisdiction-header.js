@@ -1,5 +1,6 @@
 import { component } from "haunted";
 import { html } from "lit-html";
+import { dateStringToFriendly } from "../../utils/date-utils.js";
 import "../../components/badge/badge.js";
 
 function buildIssueUrl(name, ocdid) {
@@ -10,7 +11,7 @@ function buildIssueUrl(name, ocdid) {
   return `https://github.com/CivicPatch/open-data/issues/new?template=jurisdiction_issue.md&title=${title}&body=${body}&labels=data-quality`;
 }
 
-function JurisdictionHeader({ name, scrapeStatus, details, ocdid }) {
+function JurisdictionHeader({ name, scrapeStatus, publishedAt, details, ocdid }) {
   const isScraped = scrapeStatus === "Scraped";
 
   return html`
@@ -53,6 +54,10 @@ function JurisdictionHeader({ name, scrapeStatus, details, ocdid }) {
         background: ${isScraped ? 'var(--pico-ins-background)' : 'var(--pico-muted-background)'};
         color: ${isScraped ? 'var(--pico-ins-color)' : 'var(--pico-muted-color)'};
       }
+      .jh-status-date {
+        font-weight: 500;
+        opacity: 0.8;
+      }
       .jh-status-dot {
         width: 0.4rem;
         height: 0.4rem;
@@ -71,6 +76,7 @@ function JurisdictionHeader({ name, scrapeStatus, details, ocdid }) {
           <span class="jh-status">
             <span class="jh-status-dot"></span>
             ${scrapeStatus}
+            ${isScraped && publishedAt ? html`<span class="jh-status-date">· ${dateStringToFriendly(publishedAt)}</span>` : null}
           </span>
           ${name && ocdid ? html`<a href=${buildIssueUrl(name, ocdid)} target="_blank" rel="noopener noreferrer" style="font-size: 0.8125rem; white-space: nowrap;"><i class="fa-regular fa-flag"></i> Report an issue</a>` : null}
         </div>

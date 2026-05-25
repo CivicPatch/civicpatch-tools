@@ -8,7 +8,7 @@ from shared.utils.statuses import ChangeLogType
 logger = logging.getLogger(__name__)
 
 
-async def record_merge_review(request_id: str, user_id: str) -> None:
+async def record_publish(request_id: str, user_id: str) -> None:
     # Best-effort: the merge already succeeded, so a logging failure must not surface as one.
     try:
         jurisdiction_ocdid = await get_request_jurisdiction(request_id)
@@ -17,7 +17,7 @@ async def record_merge_review(request_id: str, user_id: str) -> None:
         logger.exception("Failed to record merge_review change log for request %s", request_id)
 
 
-async def record_close_review(request_id: str, user_id: str | None) -> None:
+async def record_close(request_id: str, user_id: str | None) -> None:
     # Best-effort: the close already succeeded, so a logging failure must not surface as one.
     try:
         jurisdiction_ocdid = await get_request_jurisdiction(request_id)
