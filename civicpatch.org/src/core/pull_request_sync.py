@@ -1,7 +1,7 @@
 import logging
 
 import database.pipeline_runs as jobs_db
-import database.pipeline_issues as pipeline_issues_db
+import database.issues as issues_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import database.review_sessions as review_sessions_db
@@ -74,17 +74,17 @@ async def sync_open_pr_state():
         github_prs = await _fetch_open_github_prs()
         await _sync_known_prs(github_prs)
         await _close_stale_prs(set(github_prs.keys()))
-        await sync_pipeline_issue_pr_state()
+        await sync_issue_pr_state()
         logger.info("sync_open_pr_state: done")
     finally:
         await lock_service.release_lock(_SYNC_LOCK_KEY)
 
 
-async def sync_pipeline_issue_pr_state():
-    issues = await pipeline_issues_db.get_pipeline_issues_with_open_pr()
+async def sync_issue_pr_state():
+    issues = await issues_db.get_issues_with_open_pr()
     if not issues:
         return
-    logger.info("sync_pipeline_issue_pr_state: checking %d open issue PR(s)", len(issues))
+    logger.info("sync_issue_pr_state: checking %d open issue PR(s)", len(issues))
     for issue in issues:
         pr_number = pull_request_url_to_number(issue["pull_request_url"])
         if not pr_number:
@@ -93,11 +93,11 @@ async def sync_pipeline_issue_pr_state():
         if not pr_data:
             continue
         if pr_data.get("merged"):
-            await pipeline_issues_db.resolve_pipeline_issue(issue["id"])
-            logger.info("sync_pipeline_issue_pr_state: resolved issue %s (PR merged)", issue["id"])
+            await issues_db.resolve_issue(issue["id"])
+            logger.info("sync_issue_pr_state: resolved issue %s (PR merged)", issue["id"])
         elif pr_data.get("state") == "closed":
-            await pipeline_issues_db.reopen_pipeline_issue(issue["id"])
-            logger.info("sync_pipeline_issue_pr_state: reopened issue %s (PR closed)", issue["id"])
+            await issues_db.reopen_issue(issue["id"])
+            logger.info("sync_issue_pr_state: reopened issue %s (PR closed)", issue["id"])
 
 
 async def maybe_backfill_job_result(request_id: str):

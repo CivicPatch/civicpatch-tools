@@ -79,7 +79,7 @@ erDiagram
         timestamptz     created_at
     }
 
-    pipeline_issues {
+    issues {
         uuid            id          PK
         text            issue_type      "idx"
         text            issue_key       "unique: (issue_type, issue_key)"
@@ -145,7 +145,7 @@ erDiagram
     jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"
     requests ||--o| pull_requests : "request_id"
-    requests }o--o{ pipeline_issues : "request_ids"
+    requests }o--o{ issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"

@@ -76,16 +76,16 @@ async def test_review_issue_pr_merged_resolves_issue():
     payload = _make_payload("closed", merged=True, branch=RESOLVE_BRANCH, pr_url=RESOLVE_PR_URL)
     with (
         patch(
-            "routers.webhooks.github.pipeline_issues_db.get_pipeline_issue_by_pull_request_url",
+            "routers.webhooks.github.issues_db.get_issue_by_pull_request_url",
             new_callable=AsyncMock,
             return_value={"id": ISSUE_ID, "status": "pr_opened"},
         ),
         patch(
-            "routers.webhooks.github.pipeline_issues_db.resolve_pipeline_issue",
+            "routers.webhooks.github.issues_db.resolve_issue",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
-            "routers.webhooks.github.pipeline_issues_db.reopen_pipeline_issue",
+            "routers.webhooks.github.issues_db.reopen_issue",
             new_callable=AsyncMock,
         ) as mock_reopen,
     ):
@@ -100,16 +100,16 @@ async def test_review_issue_pr_closed_without_merge_reopens_issue():
     payload = _make_payload("closed", merged=False, branch=RESOLVE_BRANCH, pr_url=RESOLVE_PR_URL)
     with (
         patch(
-            "routers.webhooks.github.pipeline_issues_db.get_pipeline_issue_by_pull_request_url",
+            "routers.webhooks.github.issues_db.get_issue_by_pull_request_url",
             new_callable=AsyncMock,
             return_value={"id": ISSUE_ID, "status": "pr_opened"},
         ),
         patch(
-            "routers.webhooks.github.pipeline_issues_db.resolve_pipeline_issue",
+            "routers.webhooks.github.issues_db.resolve_issue",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
-            "routers.webhooks.github.pipeline_issues_db.reopen_pipeline_issue",
+            "routers.webhooks.github.issues_db.reopen_issue",
             new_callable=AsyncMock,
         ) as mock_reopen,
     ):
