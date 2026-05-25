@@ -8,8 +8,9 @@
  * `todayResolved` from `availableCount`; doing both double-counts and makes the
  * number bottom out at 0 while PRs are still available.
  *
- * Used for both the landing "Ready for Review" count and the in-session dot
- * total, so the two can never disagree.
+ * Used for the landing "Ready for Review" count. The in-session progress total
+ * is computed server-side per navigate (see review_session_navigation.py) so the
+ * current position can never exceed it.
  */
 export function reviewsReady(
   availableCount: number,

@@ -34,6 +34,7 @@ function reviewing(n: number, resolved: number[] = [], frontier = n): PageState 
       entry_number: n,
       resolved_entry_numbers: new Set(resolved),
       frontier_entry: frontier,
+      total: 10,
       busy: false,
     },
     stats: DEFAULT_STATS,
@@ -50,12 +51,13 @@ describe("reduceReview", () => {
   it("session_loaded with a session enters reviewing at the loaded entry", () => {
     const next = reduceReview(initialPageState("nj"), {
       type: "session_loaded",
-      payload: { current_entry: entry(), entry_number: 2, session: SESSION, resolved_entry_numbers: [1] },
+      payload: { current_entry: entry(), entry_number: 2, total: 5, session: SESSION, resolved_entry_numbers: [1] },
     });
     expect(next.fsm.kind).toBe("reviewing");
     if (next.fsm.kind !== "reviewing") throw new Error("unreachable");
     expect(next.fsm.session).toBe(SESSION);
     expect(next.fsm.entry_number).toBe(2);
+    expect(next.fsm.total).toBe(5);
     expect(next.fsm.frontier_entry).toBe(2);
     expect([...next.fsm.resolved_entry_numbers]).toEqual([1]);
     expect(next.fsm.busy).toBe(false);
@@ -64,7 +66,7 @@ describe("reduceReview", () => {
   it("session_loaded with a null session (deep-link) enters reviewing with no session", () => {
     const next = reduceReview(initialPageState("nj"), {
       type: "session_loaded",
-      payload: { current_entry: entry(), entry_number: 1, session: null, resolved_entry_numbers: [] },
+      payload: { current_entry: entry(), entry_number: 1, total: 1, session: null, resolved_entry_numbers: [] },
     });
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect(next.fsm.session).toBeNull();
@@ -78,17 +80,18 @@ describe("reduceReview", () => {
 
   it("entry_loaded reuses session and resolved set, clears busy", () => {
     const busy = reduceReview(reviewing(2, [1]), { type: "nav_started" });
-    const next = reduceReview(busy, { type: "entry_loaded", payload: { current_entry: entry("req-2"), entry_number: 3 } });
+    const next = reduceReview(busy, { type: "entry_loaded", payload: { current_entry: entry("req-2"), entry_number: 3, total: 7 } });
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect(next.fsm.session).toBe(SESSION);
     expect([...next.fsm.resolved_entry_numbers]).toEqual([1]);
     expect(next.fsm.current_entry.request_id).toBe("req-2");
     expect(next.fsm.entry_number).toBe(3);
+    expect(next.fsm.total).toBe(7);
     expect(next.fsm.busy).toBe(false);
   });
 
   it("frontier never shrinks when navigating backward", () => {
-    const next = reduceReview(reviewing(5, [], 5), { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 3 } });
+    const next = reduceReview(reviewing(5, [], 5), { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 3, total: 10 } });
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect(next.fsm.frontier_entry).toBe(5);
   });
@@ -118,6 +121,6 @@ describe("reduceReview", () => {
   it("nav_started and entry_loaded are no-ops outside reviewing (same reference)", () => {
     const loading = initialPageState("nj");
     expect(reduceReview(loading, { type: "nav_started" })).toBe(loading);
-    expect(reduceReview(loading, { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 1 } })).toBe(loading);
+    expect(reduceReview(loading, { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 1, total: 1 } })).toBe(loading);
   });
 });

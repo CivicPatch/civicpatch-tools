@@ -7,7 +7,6 @@ import { useReviewSession } from "./use-review-session.js";
 import { useReviewPeople } from "./use-review-people.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
-import { reviewsReady } from "./review-progress.js";
 import "./review-session.js";
 import "../../components/publish-log/index.js";
 import "../review-page/review-page.css";
@@ -23,7 +22,7 @@ function ReviewSessionPage() {
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
-  const { fsm, stats, advance, back, navigateTo, merge, closePr, endSession } = useReviewSession(stateCode, {
+  const { fsm, advance, back, navigateTo, merge, closePr, endSession } = useReviewSession(stateCode, {
     trackMerge,
     trackClose,
   });
@@ -58,9 +57,7 @@ function ReviewSessionPage() {
         hasPrev: reviewing.entry_number > 1,
         resolvedEntryNumbers: reviewing.resolved_entry_numbers,
         frontierEntry: reviewing.frontier_entry,
-        // Dots reflect what's actually reachable this session: the goal clamped by
-        // what's available. The goal target itself is never changed by availability.
-        goal: reviewsReady(stats.available_count ?? 0, session?.daily_goal ?? 1, stats.today_resolved ?? 0),
+        total: reviewing.total,
       }
     : null;
 

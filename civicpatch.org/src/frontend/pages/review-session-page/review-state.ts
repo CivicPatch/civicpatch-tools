@@ -70,6 +70,9 @@ export type ReviewState =
       entry_number: number;
       resolved_entry_numbers: Set<number>;
       frontier_entry: number;
+      // Session length, computed server-side per navigate (goal capped by what's
+      // reviewable). The client renders this; it does not derive its own count.
+      total: number;
       busy: boolean;
     }
   | { kind: typeof StateKind.ERROR; state_code: string; message: string };
@@ -82,10 +85,10 @@ export type ReviewAction =
   // (session is null for a deep-link).
   | {
       type: typeof ActionType.SESSION_LOADED;
-      payload: { current_entry: CurrentEntry; entry_number: number; session: SessionMeta | null; resolved_entry_numbers: number[] };
+      payload: { current_entry: CurrentEntry; entry_number: number; total: number; session: SessionMeta | null; resolved_entry_numbers: number[] };
     }
   // A subsequent within-session navigation — reuses the current session/resolved.
-  | { type: typeof ActionType.ENTRY_LOADED; payload: { current_entry: CurrentEntry; entry_number: number } }
+  | { type: typeof ActionType.ENTRY_LOADED; payload: { current_entry: CurrentEntry; entry_number: number; total: number } }
   | { type: typeof ActionType.MARK_RESOLVED }
   | { type: typeof ActionType.LOAD_FAILED; payload: { message: string } }
   | { type: typeof ActionType.STATS_LOADED; payload: { stats: Stats } };
@@ -96,7 +99,7 @@ export function initialPageState(stateCode: string): PageState {
 
 function reviewingFrom(
   state: PageState,
-  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; resolved_entry_numbers: Set<number> },
+  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; total: number; resolved_entry_numbers: Set<number> },
 ): PageState {
   const prevFrontier = state.fsm.kind === StateKind.REVIEWING ? state.fsm.frontier_entry : 0;
   return {
@@ -109,6 +112,7 @@ function reviewingFrom(
       entry_number: args.entry_number,
       resolved_entry_numbers: args.resolved_entry_numbers,
       frontier_entry: Math.max(prevFrontier, args.entry_number),
+      total: args.total,
       busy: false,
     },
   };
@@ -126,6 +130,7 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         session: action.payload.session,
         current_entry: action.payload.current_entry,
         entry_number: action.payload.entry_number,
+        total: action.payload.total,
         resolved_entry_numbers: new Set(action.payload.resolved_entry_numbers),
       });
 
@@ -135,6 +140,7 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         session: fsm.session,
         current_entry: action.payload.current_entry,
         entry_number: action.payload.entry_number,
+        total: action.payload.total,
         resolved_entry_numbers: fsm.resolved_entry_numbers,
       });
 

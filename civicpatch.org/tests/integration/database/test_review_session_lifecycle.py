@@ -13,7 +13,7 @@ import pytest_asyncio
 from database.database import get_pool
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
-from database.review_session_entries import resolve_review_session_entries_by_request_id
+from database.review_session_entries import resolve_entries_for_request
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -192,8 +192,8 @@ async def test_end_session_then_create_starts_fresh_session(test_user):
 
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE review_sessions SET reviewed_ocdids = %s WHERE id = %s",
-            (["ocd-jurisdiction/country:us/state:zz/place:test_1/government"], str(session_a_id)),
+            "UPDATE review_sessions SET reviewed_request_ids = %s WHERE id = %s",
+            (["00000000-0000-0000-cccc-000000000001"], str(session_a_id)),
         )
     await _insert_entry(session_a_id, entry_number=1, status="resolved")
     await _insert_entry(session_a_id, entry_number=2, status="claimed")
@@ -206,18 +206,18 @@ async def test_end_session_then_create_starts_fresh_session(test_user):
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT ended_at, reviewed_ocdids FROM review_sessions WHERE id = %s",
+            "SELECT ended_at, reviewed_request_ids FROM review_sessions WHERE id = %s",
             (str(session_a_id),),
         )
         old = await cur.fetchone()
         assert old[0] is not None, "Old session must be marked ended"
 
         await cur.execute(
-            "SELECT reviewed_ocdids FROM review_sessions WHERE id = %s",
+            "SELECT reviewed_request_ids FROM review_sessions WHERE id = %s",
             (session_b["id"],),
         )
         new = await cur.fetchone()
-        assert new[0] == [], "New session row must have empty reviewed_ocdids"
+        assert new[0] == [], "New session row must have empty reviewed_request_ids"
 
         await cur.execute(
             "SELECT status FROM review_session_entries WHERE review_session_id = %s ORDER BY entry_number",
@@ -283,10 +283,10 @@ async def test_purges_when_session_updated_at_is_stale(test_user):
 @pytest.mark.integration
 async def test_cleanup_releases_stale_claimed_entry(test_user):
     """
-    cleanup_stale_review_session_entries must delete claimed entries from sessions
+    purge_stale_idle_sessions must delete claimed entries from sessions
     whose updated_at is past the idle window, unblocking that jurisdiction.
     """
-    from database.review_session_navigation import cleanup_stale_review_session_entries
+    from database.review_session_entries import purge_stale_idle_sessions
 
     pool = await get_pool()
     session_id = await _create_session(test_user)
@@ -299,7 +299,7 @@ async def test_cleanup_releases_stale_claimed_entry(test_user):
             (session_id,),
         )
 
-    result = await cleanup_stale_review_session_entries()
+    result = await purge_stale_idle_sessions()
 
     assert result["entries_deleted"] >= 1, "Cleanup must delete at least the stale claimed entry"
     assert await _count_entries(session_id, "claimed") == 0, (

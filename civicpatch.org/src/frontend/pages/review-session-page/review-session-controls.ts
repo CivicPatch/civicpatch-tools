@@ -6,7 +6,7 @@ export interface Progress {
   hasPrev: boolean;
   resolvedEntryNumbers: Set<number>;
   frontierEntry: number;
-  goal: number;
+  total: number;
 }
 
 interface ReviewSessionControlsProps {
@@ -38,8 +38,8 @@ function ReviewSessionControls({
   onClosePr,
   onMerge,
 }: ReviewSessionControlsProps) {
-  const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, goal } = progress ?? {};
-  const displayMax = hasSession ? goal : entryNumber;
+  const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, total } = progress ?? {};
+  const displayMax = hasSession ? total : entryNumber;
 
   function getDotStatus(n: number) {
     if (n === entryNumber) return "current";
@@ -58,7 +58,7 @@ function ReviewSessionControls({
         <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
         <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
         <div class="review-page__dots">
-          ${Array.from({ length: goal }, (_, i) => i + 1).map((n) => {
+          ${Array.from({ length: total }, (_, i) => i + 1).map((n) => {
             const status = getDotStatus(n);
             return html`<button
               class="review-page__dot review-page__dot--${status}"
