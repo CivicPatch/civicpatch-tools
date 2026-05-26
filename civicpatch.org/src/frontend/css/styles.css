@@ -91,13 +91,13 @@
 :root:not([data-theme="dark"]) {
   /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
   --civ-bg: #fafafa;
-  --civ-surface: #ffffff;
+  --civ-surface: #fcfcfc;
   --civ-surface-2: #f5f5f5;
-  --civ-text: #111111;
+  --civ-text: #222222;
   --civ-text-secondary: #444444;
   --civ-text-muted: #767676; /* WCAG AA minimum on white */
   --civ-border: #e0e0e0;
-  --civ-border-strong: #111111;
+  --civ-border-strong: #333333;
   --civ-accent: #f0c840;
   --civ-accent-border: #d4a800;
   --civ-accent-text: #111111; /* text on top of accent bg */
@@ -642,6 +642,11 @@ main.container-fluid--wide {
   padding-inline: 0.5rem;
 }
 
+/* Blog pages: tighten the nav→content gap so the breadcrumb sits close under the nav */
+main.container-fluid--blog {
+  gap: 0.5rem;
+}
+
 @media (max-width: 480px) {
   main.container-fluid {
     padding-inline: 1.25rem;
@@ -846,8 +851,6 @@ dialog[open] > article > footer {
 /* ── Blog post page ──────────────────────────────────────────────────────── */
 
 .blog-post {
-  max-width: 1200px;
-  margin-inline: auto;
   /* Reset Pico article card styles */
   background: none;
   box-shadow: none;
@@ -864,7 +867,7 @@ dialog[open] > article > footer {
 }
 
 .blog-breadcrumb {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
 }
 
 .blog-breadcrumb ol {
@@ -938,6 +941,12 @@ dialog[open] > article > footer {
 .blog-post__body {
   font-size: var(--text-base);
   line-height: 1.75;
+  max-width: 72ch;
+}
+
+/* No TOC: center the lone reading column instead of leaving a right gutter */
+.blog-post__body:only-child {
+  margin-inline: auto;
 }
 
 .blog-post__body h2 {
@@ -965,6 +974,8 @@ dialog[open] > article > footer {
   flex-shrink: 0;
   position: sticky;
   top: 1.5rem;
+  order: 1;
+  margin-left: auto;
 }
 
 .blog-post__discuss {
@@ -1035,6 +1046,8 @@ dialog[open] > article > footer {
   .blog-post__toc {
     width: 100%;
     position: static;
+    order: 0;
+    margin-left: 0;
   }
 
   .blog-post__toc-mobile {

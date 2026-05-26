@@ -2,6 +2,7 @@
 {% block title %}Blog — CivicPatch{% endblock %}
 {% block scripts %}<script type="module" src="{{ vite_asset('assets/index.js') }}"></script>{% endblock %}
 {% block styles %}{% for href in vite_css('assets/index.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
+{% block main_class %}container-fluid--blog{% endblock %}
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 <div class="blog-list page-content">

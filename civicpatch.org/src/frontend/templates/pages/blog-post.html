@@ -5,10 +5,11 @@ CivicPatch{% endblock %} {% block scripts %}
   property="og:title"
   content="{{ post.title }}"
 />{% endblock %} {% block styles %}{% for href in vite_css('assets/index.js')
-%}<link rel="stylesheet" href="{{ href }}" />{% endfor %}{% endblock %} {% block
-content %}
+%}<link rel="stylesheet" href="{{ href }}" />{% endfor %}{% endblock %}
+{% block main_class %}container-fluid--blog{% endblock %}
+{% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
-<article class="blog-post">
+<article class="blog-post page-content">
   <header class="blog-header">
     <nav class="blog-breadcrumb" aria-label="Breadcrumb">
       <ol>
