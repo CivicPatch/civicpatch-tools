@@ -61,13 +61,10 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=MERGE_STATUS_TTL)
         await change_logs.record_publish(request_id, user_id)
 
-        # Resolve the review entry + sync open data. Best-effort and isolated so a failure
-        # here can't turn a successful merge into a reported error. Idempotent, so a webhook
-        # racing in for the same PR is harmless.
+        # Sync open data. Best-effort and isolated so a failure here can't turn a successful
+        # merge into a reported error. Idempotent, so a webhook racing in for the same PR is harmless.
         try:
-            pr = await github_service.get_pull_request(pull_request_number)
-            pr_labels = pr.get("labels", []) if pr else []
-            await pull_request_sync.publish_side_effects(request_id, PullRequestStatus.MERGED, pr_labels)
+            await pull_request_sync.publish_side_effects(request_id, PullRequestStatus.MERGED)
         except Exception:
             logger.exception(f"Publish side effects failed after merging PR {pull_request_number}")
 

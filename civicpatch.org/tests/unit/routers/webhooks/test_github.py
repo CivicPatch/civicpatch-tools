@@ -43,7 +43,7 @@ async def test_handle_job_pr_event_merged_funnels_to_apply():
     ) as mock_apply:
         await _handle_job_pr_event(payload)
     mock_apply.assert_awaited_once_with(
-        REQUEST_ID, "merged", merged_at=MERGED_AT, pull_request_url=RESOLVE_PR_URL, pr_labels=[]
+        REQUEST_ID, "merged", merged_at=MERGED_AT, pull_request_url=RESOLVE_PR_URL
     )
 
 

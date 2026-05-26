@@ -64,7 +64,7 @@
 
 :root,
 :host {
-  font-size: 20px;
+  font-size: 17px;
   --pico-font-family: "Figtree", sans-serif;
   --pico-form-element-spacing-vertical: 0.5rem;
   --pico-form-element-spacing-horizontal: 0.5rem;
@@ -691,6 +691,10 @@ main.container-fluid--wide {
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 
 .page-content {
+  /* width:100% so the rail fills its parent up to max-width. Without it, a
+     .page-content that's a flex item (main is a column flex) shrinks to its
+     content width instead of stretching — collapsing on content-light pages. */
+  width: 100%;
   max-width: var(--page-width);
   margin-inline: auto;
 }
@@ -790,10 +794,7 @@ dialog[open] > article > footer {
 
 /* ── Blog list page ──────────────────────────────────────────────────────── */
 
-.blog-list {
-  max-width: 1200px;
-  margin-inline: auto;
-}
+/* .blog-list width/centering comes from the shared .page-content rail */
 
 .blog-list__item {
   display: grid;

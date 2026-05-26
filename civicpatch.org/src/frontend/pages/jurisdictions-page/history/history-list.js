@@ -85,7 +85,11 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
       }
       .sh-table {
         margin: 0;
-        width: auto;
+        width: 100%;
+        /* styles.css sets table-layout: fixed globally, which (with a width:100%
+           column) starves the other columns to zero and overlaps their text.
+           Opt back into auto so the status column can absorb the slack. */
+        table-layout: auto;
         font-size: 0.75rem;
         font-family: inherit;
       }
@@ -95,6 +99,10 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
       }
       .sh-table td:first-child {
         white-space: nowrap;
+      }
+      /* The status column absorbs the table's slack; the others hug their content. */
+      .sh-table td:nth-child(3) {
+        width: 100%;
       }
       .sh-table tr:last-child td {
         border-bottom: none;

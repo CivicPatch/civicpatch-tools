@@ -9,25 +9,13 @@ import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
 from core.open_data_sync import sync_people_by_ocdids
-from environment import get_env_vars
 from shared.utils.statuses import PullRequestStatus
 from lib.github.utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
 
-_ENV_LABEL_PREFIX = "env:"
 
-
-def _get_pr_env(labels: list[dict]) -> str:
-    """Extract env from PR labels (e.g. {"name": "env:development"}). Defaults to 'production'."""
-    for label in labels:
-        name = label.get("name", "")
-        if name.startswith(_ENV_LABEL_PREFIX):
-            return name[len(_ENV_LABEL_PREFIX):]
-    return "production"
-
-
-async def publish_side_effects(request_id: str, status: str, pr_labels: list[dict]) -> None:
+async def publish_side_effects(request_id: str, status: str) -> None:
     """Sync open data live when a job PR is merged.
 
     Review credit (resolving the session entry) is NOT done here — it happens
@@ -37,11 +25,6 @@ async def publish_side_effects(request_id: str, status: str, pr_labels: list[dic
     ever crediting a user we can't identify.
     """
     if status != PullRequestStatus.MERGED:
-        return
-    pr_env = _get_pr_env(pr_labels)
-    server_env = get_env_vars().get("APP_ENVIRONMENT", "production")
-    if pr_env != server_env:
-        logger.info("Skipping people sync: PR env=%s, server env=%s", pr_env, server_env)
         return
     jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
     if jurisdiction_ocdid:
@@ -55,18 +38,20 @@ async def apply_pull_request_status(
     merged_at=None,
     pull_request_url: str | None = None,
     resolved_by_user_id: str | None = None,
-    pr_labels: list[dict] | None = None,
 ) -> bool:
     """Write a PR's status and, only if it actually transitioned, run the publish side
     effects once. Every status-change path funnels through here so a PR is credited and
-    synced exactly once, no matter which path (publish, webhook, reconciliation) sees it first."""
+    synced exactly once, no matter which path (publish, webhook, reconciliation) sees it first.
+
+    A PR is only synced if its request exists in this server's DB (update returns truthy),
+    which is what isolates environments that share a repo — no env label needed."""
     previous_status = await pull_requests_db.get_pull_request_status(request_id)
     written = await pull_requests_db.update_pull_request_status(
         request_id, status, merged_at, pull_request_url, resolved_by_user_id
     )
     changed = written and previous_status != status
     if changed:
-        await publish_side_effects(request_id, status, pr_labels or [])
+        await publish_side_effects(request_id, status)
     return changed
 
 
@@ -85,11 +70,10 @@ async def sync_single_pr_state(request_id: str):
     pr_data = await github_service.get_pull_request(pr_number)
     if not pr_data:
         return
-    pr_labels = pr_data.get("labels", [])
     if pr_data.get("merged"):
-        await apply_pull_request_status(request_id, PullRequestStatus.MERGED, merged_at=pr_data.get("merged_at"), pr_labels=pr_labels)
+        await apply_pull_request_status(request_id, PullRequestStatus.MERGED, merged_at=pr_data.get("merged_at"))
     elif pr_data.get("state") == PullRequestStatus.CLOSED:
-        await apply_pull_request_status(request_id, PullRequestStatus.CLOSED, pr_labels=pr_labels)
+        await apply_pull_request_status(request_id, PullRequestStatus.CLOSED)
 
 
 async def sync_open_pr_state():
@@ -211,5 +195,4 @@ async def _close_stale_prs(github_request_ids: set[str]):
             elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:
                 status = PullRequestStatus.CLOSED
             if status:
-                pr_labels = pr_data.get("labels", []) if pr_data else []
-                await apply_pull_request_status(request_id, status, merged_at=merged_at, pr_labels=pr_labels)
+                await apply_pull_request_status(request_id, status, merged_at=merged_at)

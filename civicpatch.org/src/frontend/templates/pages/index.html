@@ -6,6 +6,7 @@
 
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 
+<div class="page-content" style="display: flex; flex-direction: column; gap: 1rem;">
 <civ-search-jurisdictions></civ-search-jurisdictions>
 
 <section class="blog-preview">
@@ -53,6 +54,9 @@
         </div>
     </div>
 </section>
+
+<civ-leaderboard></civ-leaderboard>
+</div>
 
 {% endif %}
 {% if missing_env %}

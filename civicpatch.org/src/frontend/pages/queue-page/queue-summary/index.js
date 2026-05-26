@@ -5,7 +5,7 @@ import "../../../components/stat-cards/index.js";
 function QueueSummary({ summary }) {
   const withIssuesPct = summary?.total_with_pr
     ? ((summary.with_issues / summary.total_with_pr) * 100).toFixed(1)
-    : null;
+    : "0";
 
   const stats = [
     {

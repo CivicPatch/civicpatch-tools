@@ -53,8 +53,8 @@ const NAVBAR_CSS = html`
     nav.nav--logged-out {
       border-bottom: none;
       position: relative;
-      padding-top: 2.5rem;
-      padding-bottom: 2.5rem;
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
     }
     nav.nav--logged-out .nav-brand {
       font-size: 2.25rem;

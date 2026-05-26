@@ -4,7 +4,7 @@
 {% block styles %}{% for href in vite_css('assets/index.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
-<div class="blog-list">
+<div class="blog-list page-content">
     <header class="blog-header">
         <nav class="blog-breadcrumb" aria-label="Breadcrumb">
             <ol>

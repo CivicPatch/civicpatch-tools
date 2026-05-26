@@ -114,8 +114,6 @@ function SearchJurisdictions() {
         </section>
       ` : ''}
 
-      <civ-leaderboard></civ-leaderboard>
-
       <div class="below-grid">
         <civ-people-directory .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-directory>
       </div>
