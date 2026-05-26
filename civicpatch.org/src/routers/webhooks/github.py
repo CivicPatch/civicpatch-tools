@@ -54,8 +54,7 @@ async def _handle_job_pr_event(payload: dict[str, Any]) -> None:
     if result is None:
         return
     request_id, status, merged_at, pr_url = result
-    pr_labels = payload.get("pull_request", {}).get("labels", [])
-    await apply_pull_request_status(request_id, status, merged_at=merged_at, pull_request_url=pr_url, pr_labels=pr_labels)
+    await apply_pull_request_status(request_id, status, merged_at=merged_at, pull_request_url=pr_url)
 
 
 async def _handle_review_issue_pr_event(payload: dict[str, Any]) -> None:

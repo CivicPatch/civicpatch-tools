@@ -77,3 +77,23 @@ def test_row_maps_to_entry(client):
     assert entry["author_role"] == "admins"
     assert entry["jurisdiction_name"] == "Seattle city"
     assert entry["changes"]["fields"][0] == {"field": "name", "before": "Jane", "after": "Jane Doe"}
+
+
+@pytest.mark.unit
+def test_jurisdiction_path_derived_from_ocdid(client):
+    from shared.utils.id_utils import jurisdiction_ocdid_to_folder
+
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
+        response = client.get("/change_logs", params={"bucket": "activity"})
+
+    entry = response.json()["data"][0]
+    assert entry["jurisdiction_path"] == jurisdiction_ocdid_to_folder(ROW["jurisdiction_ocdid"])
+
+
+@pytest.mark.unit
+def test_jurisdiction_path_null_when_no_ocdid(client):
+    row = {**ROW, "jurisdiction_ocdid": None}
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
+        response = client.get("/change_logs", params={"bucket": "activity"})
+
+    assert response.json()["data"][0]["jurisdiction_path"] is None

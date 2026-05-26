@@ -43,7 +43,9 @@ function renderRow(entry) {
     <tr>
       <td><span class="activity-page__type">${formatType(entry.type)}</span></td>
       <td>${entry.author_name} <span class="activity-page__muted">(${entry.author_role})</span></td>
-      <td>${entry.jurisdiction_name ?? "—"}</td>
+      <td>${entry.jurisdiction_path
+        ? html`<a href="/${entry.jurisdiction_path}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
+        : (entry.jurisdiction_name ?? "—")}</td>
       <td>${renderChange(entry.changes)}</td>
       <td class="activity-page__date">${formatDate(entry.created_at)}</td>
     </tr>

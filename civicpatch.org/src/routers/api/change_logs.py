@@ -3,6 +3,7 @@ from fastapi import APIRouter, Query
 import database.change_logs as database
 from schemas.change_logs import ChangeLogBucket, ChangeLogEntry
 from schemas.common import Role
+from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 # Route access (MAINTAINERS+) is enforced at the mount in main.py.
 _BUCKET_ROLES = {
@@ -27,7 +28,15 @@ def get_router() -> APIRouter:
             "total_items": total,
             "page": page,
             "total_pages": total_pages,
-            "data": [ChangeLogEntry(**row) for row in rows],
+            "data": [
+                ChangeLogEntry(
+                    **row,
+                    jurisdiction_path=jurisdiction_ocdid_to_folder(row["jurisdiction_ocdid"])
+                    if row["jurisdiction_ocdid"]
+                    else None,
+                )
+                for row in rows
+            ],
         }
 
     return router

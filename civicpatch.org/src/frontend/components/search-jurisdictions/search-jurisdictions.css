@@ -1,6 +1,5 @@
 .search-page {
-    max-width: var(--page-width);
-    margin-inline: auto;
+    /* width/centering comes from the shared .page-content rail on the page */
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -9,7 +8,9 @@
 /* ── Masthead ──────────────────────────────────────────────────────────────── */
 
 .search-page hgroup {
-    padding-block: 1.5rem 1rem;
+    /* No top padding: the navbar + main's row gap already separate this from the nav.
+       A top pad here just stacks on those and over-pads. */
+    padding-block: 0 1rem;
     border-bottom: 2px solid var(--civ-border-strong);
 }
 

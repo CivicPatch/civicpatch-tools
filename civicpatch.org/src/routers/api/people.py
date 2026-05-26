@@ -9,6 +9,7 @@ from schemas.common import Identity, Role, RouteCategory
 
 import database.people as database
 import database.jurisdictions as jurisdictions_db
+import core.change_logs as change_logs
 import yaml
 import lib.github.api as github_service
 import lib.github.pull_requests as github_pr_service
@@ -162,6 +163,14 @@ def get_router() -> APIRouter:
         )
         if pr_number is None:
             return JSONResponse({"error": f"Failed to open PR: {pr_url}"}, status_code=500)
+
+        # Record the manual edit in the change log now: before = the current canonical
+        # people, after = what was just published. (Best-effort; logging must not fail the edit.)
+        if user.user_id:
+            before = await database.get_people_by_jurisdiction_ocdid(request.jurisdiction_ocdid)
+            await change_logs.record_manual_edits(
+                request_id, request.jurisdiction_ocdid, user.user_id, before, request.data
+            )
 
         return {"data": {"request_id": request_id, "pr_number": pr_number, "pr_url": pr_url}}
 

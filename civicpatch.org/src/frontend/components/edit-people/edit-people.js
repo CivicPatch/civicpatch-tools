@@ -215,7 +215,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       onPublished();
     } catch (err) {
       setPrStatus("error");
-      setError("Failed to publish.");
+      setError(err.message || "Failed to publish.");
     }
   }
 

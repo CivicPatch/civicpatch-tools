@@ -34,6 +34,7 @@ class ChangeLogEntry(BaseModel):
     type: ChangeLogType
     jurisdiction_ocdid: str | None
     jurisdiction_name: str | None
+    jurisdiction_path: str | None = None
     request_id: str | None
     changes: PersonChangePayload | None
     author_name: str | None
