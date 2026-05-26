@@ -79,6 +79,24 @@ export function stateFromOcdid(ocdid: string): string | null {
   return part ? part.split(':')[1] : null;
 }
 
+// Run fn once the style is ready to mutate. `load` fires only once and may
+// have already passed (and `styledata` can settle without re-firing once
+// glyphs/sprite resolve), so a deferred map.once(...) can hang forever. `idle`
+// fires after the map settles AND re-fires on later changes, so we re-check
+// until the style has loaded.
+export function whenStyleReady(map: maplibregl.Map, fn: () => void): void {
+  if (map.isStyleLoaded()) {
+    fn();
+    return;
+  }
+  const onIdle = () => {
+    if (!map.isStyleLoaded()) return;
+    map.off('idle', onIdle);
+    fn();
+  };
+  map.on('idle', onIdle);
+}
+
 export function createMap(container: HTMLElement): maplibregl.Map {
   const m = new maplibregl.Map({
     container,

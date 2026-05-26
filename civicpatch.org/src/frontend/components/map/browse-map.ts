@@ -18,6 +18,7 @@ import {
   applyCountyCoverage,
   applyStateCoverage,
   featureBounds,
+  whenStyleReady,
 } from './map-base.js';
 
 interface BrowseMapProps {
@@ -47,6 +48,31 @@ function BrowseMap(this: HTMLElement, {
   localStatusRef.current = localStatus;
   const coverageSummaryRef = useRef<CoverageSummary>(coverageSummary);
   coverageSummaryRef.current = coverageSummary;
+  // stateRef / selectedOcdidRef keep the context-restore handler in sync — registered once.
+  const stateRef = useRef<string | undefined>(state);
+  stateRef.current = state;
+  const selectedOcdidRef = useRef<string | null>(selectedOcdid);
+  selectedOcdidRef.current = selectedOcdid;
+
+  // A backgrounded tab can lose its WebGL context; on restore MapLibre reloads
+  // tiles into a fresh context but feature-state is gone, so coverage falls back
+  // to the zero-coverage (red) color. Re-apply it from current props.
+  const reapplyFeatureState = () => {
+    const map = mapRef.current;
+    if (!map) return;
+    applyStateCoverage(map, coverageSummaryRef.current);
+    const selectedState = stateRef.current;
+    if (selectedState) {
+      applyCountyCoverage(map, coverageSummaryRef.current[selectedState]?.counties ?? {});
+      applyLocalStatus(map, localStatusRef.current);
+    }
+    if (selectedOcdidRef.current) {
+      map.setFeatureState(
+        { source: STATE_SOURCE_ID, sourceLayer: 'local', id: selectedOcdidRef.current },
+        { selected: true },
+      );
+    }
+  };
 
   const setupContainer = (el: Element | undefined) => {
     if (!el || mapRef.current) return;
@@ -54,6 +80,10 @@ function BrowseMap(this: HTMLElement, {
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
     mapRef.current.on('load', () => mapRef.current?.resize());
     mapRef.current.on('click', handleClick);
+    mapRef.current.getCanvas().addEventListener('webglcontextrestored', reapplyFeatureState);
+    // The map is otherwise trapped in this closure; expose it on the element
+    // for debugging and for e2e assertions about layers/feature-state.
+    (el as any)._map = mapRef.current;
   };
 
   const handleClick = (e: maplibregl.MapMouseEvent) => {
@@ -141,8 +171,7 @@ function BrowseMap(this: HTMLElement, {
       applyLevelVisibility(map, 'national');
       map.on('sourcedata', onSourceData);
     };
-    if (map.isStyleLoaded()) load();
-    else map.once('load', load);
+    whenStyleReady(map, load);
     return () => map.off('sourcedata', onSourceData);
   }, []);
 
@@ -173,8 +202,7 @@ function BrowseMap(this: HTMLElement, {
       const bounds = STATE_BOUNDS[state];
       if (bounds) map.fitBounds(bounds, { padding: 40, duration: 600 });
     };
-    if (map.isStyleLoaded()) load();
-    else map.once('load', load);
+    whenStyleReady(map, load);
     return () => map.off('sourcedata', onSourceData);
   }, [state]);
 
@@ -183,8 +211,7 @@ function BrowseMap(this: HTMLElement, {
     const map = mapRef.current;
     if (!map) return;
     const apply = () => applyLocalStatus(map, localStatus);
-    if (map.isStyleLoaded()) apply();
-    else map.once('load', apply);
+    whenStyleReady(map, apply);
   }, [localStatus]);
 
   // Re-apply state/county coverage when coverageSummary changes; wait for style if needed.
@@ -195,8 +222,7 @@ function BrowseMap(this: HTMLElement, {
       applyStateCoverage(map, coverageSummary);
       if (state) applyCountyCoverage(map, coverageSummary[state]?.counties ?? {});
     };
-    if (map.isStyleLoaded()) apply();
-    else map.once('load', apply);
+    whenStyleReady(map, apply);
   }, [coverageSummary]);
 
   // Apply level visibility when level changes

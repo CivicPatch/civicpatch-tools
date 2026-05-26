@@ -668,7 +668,7 @@ main.container-fluid--wide {
     --pico-font-size: 118.75%;
   }
   main.container-fluid {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 2rem;
   }
 }
 
@@ -1106,8 +1106,6 @@ dialog[open] > article > footer {
 /* ── Blog preview (homepage) ─────────────────────────────────────────────────*/
 
 .blog-preview {
-  max-width: 1200px;
-  margin-inline: auto;
   margin-top: 1.5rem;
 }
 
@@ -1162,14 +1160,15 @@ dialog[open] > article > footer {
   border-left: none;
   padding-left: 0;
   grid-column: 1 / -1;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2rem;
+  row-gap: 1.25rem;
 }
 
-.blog-preview__get-involved--full > div {
-  flex: 1;
-  min-width: 180px;
+/* Heading spans the full row; its underline becomes a divider above the columns */
+.blog-preview__get-involved--full .civ-section-label {
+  grid-column: 1 / -1;
 }
 
 .blog-preview__gi-section {
@@ -1238,6 +1237,9 @@ dialog[open] > article > footer {
     border-top: 1px solid var(--civ-border);
     padding-top: 1rem;
   }
+  .blog-preview__get-involved--full {
+    grid-template-columns: 1fr;
+  }
 }
 
 .blog-preview__item {
@@ -1266,6 +1268,12 @@ dialog[open] > article > footer {
   white-space: nowrap;
 }
 
+/* Cap the prose measure so titles/leads stay readable now that the section
+   fills the full page rail rather than a narrower 1200px band */
+.blog-preview__body {
+  max-width: 65ch;
+}
+
 .blog-preview__title {
   font-family: "Space Grotesk", var(--pico-font-family);
   font-size: var(--text-md);
@@ -1292,7 +1300,7 @@ dialog[open] > article > footer {
 .about-footer {
   background: var(--civ-surface-2);
   border-top: 2px solid var(--civ-border-strong);
-  padding: 2rem 2rem;
+  padding: 3rem 2rem;
   margin-top: auto;
   margin-inline: 0;
 }

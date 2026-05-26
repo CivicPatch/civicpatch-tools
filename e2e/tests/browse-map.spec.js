@@ -6,10 +6,12 @@
  * Then the map renders
  * And selecting NJ fetches local status and shows the reset button
  * And clicking reset clears the state selector and hides the reset button
+ * And the national view actually renders the coverage fill layer
  *
- * Internal map state (feature-state, layer visibility) is covered by
- * unit tests of applyLocalStatus / paint expressions and by backend
- * integration tests of the /coverage/{state}/local endpoint — not here.
+ * The paint expressions themselves are unit-tested (applyLocalStatus, etc.),
+ * but a map-load-timing regression once silently stopped the layers from being
+ * added at all — invisible to DOM-only checks — so the render assertion below
+ * verifies the layer/source/feature-state pipeline end-to-end.
  */
 
 import { test, expect } from "../fixtures/index.js";
@@ -21,11 +23,7 @@ test.describe("Browse map", () => {
     await page.goto("/");
   });
 
-  // TODO: this test fails only in headless Chromium e2e — the reset button
-  // briefly appears on initial render even with state="" and level initialized
-  // to 'national'. Does not reproduce in real browsers. Re-enable when the
-  // race condition is understood or after migrating to a different headless engine.
-  test.skip("home page renders the map and state selector", async ({ page }) => {
+  test("home page renders the map and state selector", async ({ page }) => {
     await expect(page.locator(".map-container")).toBeVisible();
     await expect(page.locator("civ-select-state select")).toBeVisible();
     await expect(page.locator(".map-reset-btn")).toHaveCount(0);
@@ -39,6 +37,30 @@ test.describe("Browse map", () => {
 
     await expect(page.locator(".map-reset-btn")).toBeVisible();
     await expect(page.locator("civ-select-state select")).toHaveValue("nj");
+  });
+
+  test("national view adds the states fill layer and applies coverage feature-state", async ({ page }) => {
+    await page.waitForFunction(() => {
+      const map = document.querySelector(".map-inner")?._map;
+      return map && map.getLayer("states") && map.isSourceLoaded("national");
+    }, null, { timeout: 15000 });
+
+    const result = await page.evaluate(() => {
+      const map = document.querySelector(".map-inner")._map;
+      const feats = map.querySourceFeatures("national", { sourceLayer: "states" });
+      const withCoverage = feats.filter(
+        (f) => map.getFeatureState({ source: "national", sourceLayer: "states", id: f.id }).coverage !== undefined,
+      );
+      return {
+        statesVisible: map.getLayoutProperty("states", "visibility"),
+        featureCount: feats.length,
+        withCoverageCount: withCoverage.length,
+      };
+    });
+
+    expect(result.statesVisible).toBe("visible");
+    expect(result.featureCount).toBeGreaterThan(0);
+    expect(result.withCoverageCount).toBeGreaterThan(0);
   });
 
   test("reset clears the state selector and hides itself", async ({ page }) => {
