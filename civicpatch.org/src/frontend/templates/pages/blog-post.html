@@ -7,7 +7,7 @@ CivicPatch{% endblock %} {% block scripts %}
 />{% endblock %} {% block styles %}{% for href in vite_css('assets/index.js')
 %}<link rel="stylesheet" href="{{ href }}" />{% endfor %}{% endblock %} {% block
 content %}
-<civ-navbar user="{{ user | tojson }}"></civ-navbar>
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
 <article class="blog-post">
   <header class="blog-header">
     <nav class="blog-breadcrumb" aria-label="Breadcrumb">
