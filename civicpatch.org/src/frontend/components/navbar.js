@@ -494,9 +494,11 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
       : ""}
     ${user.permissions?.can_manage_roles
       ? html`<details class="nav-dropdown">
-          <summary class="nav-link nav-dropdown-trigger">Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i></summary>
+          <summary class="nav-link nav-dropdown-trigger">
+            Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+          </summary>
           <div class="nav-dropdown__menu">
-            <a href="/admin" class="${active("/admin")}">User roles</a>
+            <a href="/admin" class="${active("/admin")}">Users</a>
             ${user.permissions?.can_view_issues_page
               ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
               : ""}
@@ -589,7 +591,13 @@ function Navbar({ user }) {
           ></i>
         </button>
         ${isAuthed
-          ? renderAuthed(userData, summary, currentPath, stateCode, handleNavStateChange)
+          ? renderAuthed(
+              userData,
+              summary,
+              currentPath,
+              stateCode,
+              handleNavStateChange,
+            )
           : html`
               ${renderPublicLinks(currentPath)}
               <a class="login-link" href="/login"

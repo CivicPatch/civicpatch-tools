@@ -9,7 +9,12 @@ import {
   revokeInvite,
 } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
-import { ROLES_META, getRoleMeta, type RoleKey, type RoleMeta } from "./roles-meta.js";
+import {
+  ROLES_META,
+  getRoleMeta,
+  type RoleKey,
+  type RoleMeta,
+} from "./roles-meta.js";
 import type { ConfirmRoleContext } from "./confirm-role-modal.js";
 import "./role-chip.js";
 import "./status-toast.js";
@@ -66,7 +71,11 @@ function isHighPower(role: string): boolean {
   return meta?.power === "high";
 }
 
-function changedMessage(user: AdminUser, fromRole: string, toRole: string): string {
+function changedMessage(
+  user: AdminUser,
+  fromRole: string,
+  toRole: string,
+): string {
   const who = user.email ?? user.display_name ?? "user";
   const fromLabel = getRoleMeta(fromRole)?.label ?? "default";
   const toLabel = getRoleMeta(toRole)?.label ?? "default";
@@ -87,7 +96,8 @@ function AdminPage() {
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<number | null>(null);
 
-  const [pendingConfirm, setPendingConfirm] = useState<ConfirmRoleContext | null>(null);
+  const [pendingConfirm, setPendingConfirm] =
+    useState<ConfirmRoleContext | null>(null);
 
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteSubmitting, setInviteSubmitting] = useState(false);
@@ -96,7 +106,9 @@ function AdminPage() {
 
   const refreshPendingInvites = () => {
     fetchPendingInvites()
-      .then((result: { data: PendingInvite[] }) => setPendingInvites(result.data))
+      .then((result: { data: PendingInvite[] }) =>
+        setPendingInvites(result.data),
+      )
       .catch(() => setPendingInvites([]));
   };
 
@@ -134,10 +146,16 @@ function AdminPage() {
   };
 
   // Persist the new role and update the local row on success.
-  const commitRole = async (user: AdminUser, fromRole: string, toRole: string): Promise<boolean> => {
+  const commitRole = async (
+    user: AdminUser,
+    fromRole: string,
+    toRole: string,
+  ): Promise<boolean> => {
     try {
       await setUserRole(user.id, toRole);
-      setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, role: toRole } : u)));
+      setUsers((prev) =>
+        prev.map((u) => (u.id === user.id ? { ...u, role: toRole } : u)),
+      );
       showToast(changedMessage(user, fromRole, toRole));
       return true;
     } catch (err) {
@@ -148,7 +166,10 @@ function AdminPage() {
   };
 
   const handleChipClick = (user: AdminUser, ev: CustomEvent) => {
-    const { role: chipKey, assigned } = ev.detail as { role: RoleKey; assigned: boolean };
+    const { role: chipKey, assigned } = ev.detail as {
+      role: RoleKey;
+      assigned: boolean;
+    };
     const fromRole = user.role;
     const toRole = computeTargetRole(chipKey, assigned);
     if (fromRole === toRole) return;
@@ -222,7 +243,7 @@ function AdminPage() {
   return html`
     <main class="admin-page page-content">
       <div class="admin-page__header">
-        <h1 class="admin-page__title">User roles</h1>
+        <h1 class="admin-page__title">Users</h1>
         <button
           class="btn btn-sm admin-page__invite-button"
           @click=${() => setInviteOpen(true)}
@@ -235,90 +256,113 @@ function AdminPage() {
             <section class="admin-page__pending">
               <h2 class="admin-page__subtitle">Pending invites</h2>
               <div class="admin-table-scroll">
-              <table class="admin-users-table">
-                <thead>
-                  <tr>
-                    <th>Email</th>
-                    <th>Invited</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${pendingInvites.map((invite) => html`
+                <table class="admin-users-table">
+                  <thead>
                     <tr>
-                      <td>${invite.email ?? "—"}</td>
-                      <td>${invite.invited_at ? new Date(invite.invited_at).toLocaleString() : "—"}</td>
-                      <td class="admin-page__pending-actions">
-                        <button
-                          class="btn btn-sm secondary"
-                          @click=${() => handleResendInvite(invite)}
-                        >Resend</button>
-                        <button
-                          class="btn btn-sm destructive"
-                          @click=${() => handleRevokeInvite(invite)}
-                        >Revoke</button>
-                      </td>
+                      <th>Email</th>
+                      <th>Invited</th>
+                      <th></th>
                     </tr>
-                  `)}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    ${pendingInvites.map(
+                      (invite) => html`
+                        <tr>
+                          <td>${invite.email ?? "—"}</td>
+                          <td>
+                            ${invite.invited_at
+                              ? new Date(invite.invited_at).toLocaleString()
+                              : "—"}
+                          </td>
+                          <td class="admin-page__pending-actions">
+                            <button
+                              class="btn btn-sm secondary"
+                              @click=${() => handleResendInvite(invite)}
+                            >
+                              Resend
+                            </button>
+                            <button
+                              class="btn btn-sm destructive"
+                              @click=${() => handleRevokeInvite(invite)}
+                            >
+                              Revoke
+                            </button>
+                          </td>
+                        </tr>
+                      `,
+                    )}
+                  </tbody>
+                </table>
               </div>
             </section>
           `
         : null}
       ${loading ? html`<p class="admin-page__status">Loading…</p>` : null}
-      ${loadError ? html`<p class="admin-page__status admin-page__error">${loadError}</p>` : null}
+      ${loadError
+        ? html`<p class="admin-page__status admin-page__error">${loadError}</p>`
+        : null}
       ${!loading && !loadError && users.length === 0
         ? html`<p class="admin-page__status">No users.</p>`
         : null}
       ${!loading && !loadError && users.length > 0
         ? html`
             <div class="admin-table-scroll">
-            <table class="admin-users-table">
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Display name</th>
-                  <th>Provider</th>
-                  <th>Last login</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${users.map((user) => {
-                  const isSelf = currentUserId !== null && user.id === currentUserId;
-                  return html`
-                    <tr>
-                      <td>
-                        ${user.email ?? "—"}
-                        ${isSelf
-                          ? html`<span class="admin-users-table__self-tag">you</span>`
-                          : null}
-                      </td>
-                      <td>${user.display_name ?? "—"}</td>
-                      <td>${user.provider}</td>
-                      <td>${user.last_login_at ? new Date(user.last_login_at).toLocaleString() : "—"}</td>
-                      <td>
-                        <div class="admin-users-table__roles">
-                          ${ROLES_META.map((meta: RoleMeta) => {
-                            const assigned = isChipFilled(user.role, meta.key);
-                            return html`
-                              <role-chip
-                                .role=${meta.key}
-                                .assigned=${assigned}
-                                .disabled=${isSelf}
-                                .disabledTooltip=${SELF_LOCK_TOOLTIP}
-                                @role-chip-click=${(e: CustomEvent) => handleChipClick(user, e)}
-                              ></role-chip>
-                            `;
-                          })}
-                        </div>
-                      </td>
-                    </tr>
-                  `;
-                })}
-              </tbody>
-            </table>
+              <table class="admin-users-table">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Display name</th>
+                    <th>Provider</th>
+                    <th>Last login</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${users.map((user) => {
+                    const isSelf =
+                      currentUserId !== null && user.id === currentUserId;
+                    return html`
+                      <tr>
+                        <td>
+                          ${user.email ?? "—"}
+                          ${isSelf
+                            ? html`<span class="admin-users-table__self-tag"
+                                >you</span
+                              >`
+                            : null}
+                        </td>
+                        <td>${user.display_name ?? "—"}</td>
+                        <td>${user.provider}</td>
+                        <td>
+                          ${user.last_login_at
+                            ? new Date(user.last_login_at).toLocaleString()
+                            : "—"}
+                        </td>
+                        <td>
+                          <div class="admin-users-table__roles">
+                            ${ROLES_META.map((meta: RoleMeta) => {
+                              const assigned = isChipFilled(
+                                user.role,
+                                meta.key,
+                              );
+                              return html`
+                                <role-chip
+                                  .role=${meta.key}
+                                  .assigned=${assigned}
+                                  .disabled=${isSelf}
+                                  .disabledTooltip=${SELF_LOCK_TOOLTIP}
+                                  @role-chip-click=${(e: CustomEvent) =>
+                                    handleChipClick(user, e)}
+                                ></role-chip>
+                              `;
+                            })}
+                          </div>
+                        </td>
+                      </tr>
+                    `;
+                  })}
+                </tbody>
+              </table>
             </div>
           `
         : null}
@@ -352,5 +396,8 @@ function AdminPage() {
   `;
 }
 
-customElements.define("admin-page", component(AdminPage, { useShadowDOM: false }));
+customElements.define(
+  "admin-page",
+  component(AdminPage, { useShadowDOM: false }),
+);
 export default AdminPage;
