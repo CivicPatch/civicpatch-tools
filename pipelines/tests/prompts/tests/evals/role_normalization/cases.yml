@@ -1,0 +1,43 @@
+# Labeled eval cases for role normalization.
+#
+# `expected` is the GROUND TRUTH — what the matcher SHOULD do — and is one of:
+#   <canonical role>  the matcher should resolve to this role
+#   NEW               no canonical exists yet; the matcher should PASS THROUGH the
+#                     raw string, NOT snap it onto an existing canonical
+#   DROP              noise / suppressed; the matcher should emit nothing for it
+#
+# Some NEW / canonical labels intentionally reflect what SHOULD happen even where
+# today's exact+fuzzy matcher misses (a tracked gap surfaces as a false_negative in
+# the report) — that's the point of having ground truth.
+#
+# Seed set below is small + illustrative. Curate from the live unrecognized_role
+# queue; hold the taxonomy's own aliases OUT of this set (scoring against seeded
+# aliases makes exact-match pass trivially — contamination).
+
+- raw_string: Mayor
+  scope: { state: TX, output_type: local, locality: Coleman }
+  expected: Mayor
+
+- raw_string: City Councilmember
+  scope: { state: WA, output_type: local, locality: Seattle }
+  expected: Council Member
+
+- raw_string: Seattle City Councilmember
+  scope: { state: WA, output_type: local, locality: Seattle }
+  expected: Council Member
+
+- raw_string: City Hall
+  scope: { state: TN, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: City Recorder
+  scope: { state: TN, output_type: local, locality: null }
+  expected: Recorder
+
+- raw_string: City Recorder & Bookkeeper
+  scope: { state: TN, output_type: local, locality: Trenton }
+  expected: Recorder
+
+- raw_string: Commissioner Of Fire & Police
+  scope: { state: TN, output_type: local, locality: Lookout Mountain }
+  expected: NEW

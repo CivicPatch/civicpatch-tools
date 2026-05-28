@@ -49,6 +49,9 @@ run = "uv run pytest -vvm evals tests/prompts"
 [tasks.evals_relevant]
 run = "uv run pytest -vvm evals_relevant tests/prompts"
 
+[tasks.evals_roles]
+run = "uv run pytest -vvm evals_roles tests/prompts/tests/evals/role_normalization"
+
 [tasks.evals_relevant_case]
 run = "EVAL_CASE='{{ arg(name=\"case\") }}' uv run pytest -vvm evals_relevant tests/prompts"
 

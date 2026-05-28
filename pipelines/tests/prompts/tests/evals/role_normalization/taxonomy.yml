@@ -1,0 +1,21 @@
+# Fixture taxonomy for the role-normalization eval — the canonical roles + aliases
+# the matcher is allowed to know. Kept small and hermetic on purpose: the eval
+# controls the taxonomy and varies the INPUTS, so a failure points at matcher logic,
+# not at production config drift.
+#
+# `include: false` marks a role to actively suppress (drop) — used here to exercise
+# the DROP disposition without depending on the global designation map.
+roles:
+  - role: Mayor
+    aliases: [mayor]
+  - role: Council Member
+    aliases: [council member, councilmember, city councilmember, councilperson]
+  - role: Mayor Pro-Tem
+    aliases: [mayor pro tem, mayor pro-tem]
+  - role: Recorder
+    aliases: [recorder, city recorder]
+  - role: Clerk
+    aliases: [clerk, city clerk, town clerk, municipal clerk]
+  - role: City Hall
+    include: false
+    aliases: [city hall]
