@@ -5,6 +5,12 @@ repos:
       - id: gitleaks
   - repo: local
     hooks:
+      - id: tour-staleness-reminder
+        name: Check .tour files for stale steps
+        language: system
+        entry: scripts/tour_staleness_reminder.sh
+        pass_filenames: false
+        files: '^\.tours/.*\.tour$'
       - id: run-tests
         name: Run unit tests
         language: system

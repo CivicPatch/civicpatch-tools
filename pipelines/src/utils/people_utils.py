@@ -39,7 +39,7 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
     role_aliases = config_utils.get_role_alias_map(role_config)
     designation_aliases = config_utils.get_designation_alias_map()
     excluded = config_utils.get_excluded_role_names(role_config)
-    seen = set()
+    seen: dict[str, str] = {}
 
     expanded_roles = []
     for role in roles:
@@ -64,7 +64,7 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
         # Try exact match first
         direct_match = role_aliases.get(role_lower)
         if direct_match:
-            seen.add(direct_match)
+            seen[direct_match.lower()] = direct_match
             continue
 
         # Try progressively shorter suffixes
@@ -75,18 +75,18 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
             suffix = " ".join(words[i:])
             suffix_match = role_aliases.get(suffix)
             if suffix_match:
-                seen.add(suffix_match)
+                seen[suffix_match.lower()] = suffix_match
                 matched = True
                 break
 
         if not matched:
             fuzzy = fuzzy_match_role(role_lower, role_aliases)
             if fuzzy and fuzzy.lower() not in excluded:
-                seen.add(fuzzy)
+                seen[fuzzy.lower()] = fuzzy
             else:
-                seen.add(role_lower)
+                seen.setdefault(role.lower(), role)
 
-    return [r.title() for r in sort_roles(list(seen), role_config)]
+    return sort_roles(list(seen.values()), role_config)
 
 
 def office_name_to_roles(office_name: str, role_config=None) -> List[str]:

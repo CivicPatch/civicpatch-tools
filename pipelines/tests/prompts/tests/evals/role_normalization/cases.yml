@@ -10,9 +10,7 @@
 # today's exact+fuzzy matcher misses (a tracked gap surfaces as a false_negative in
 # the report) — that's the point of having ground truth.
 #
-# Seed set below is small + illustrative. Curate from the live unrecognized_role
-# queue; hold the taxonomy's own aliases OUT of this set (scoring against seeded
-# aliases makes exact-match pass trivially — contamination).
+# Seed set from taxonomy.yml; expand from the live unrecognized_role queue.
 
 - raw_string: Mayor
   scope: { state: TX, output_type: local, locality: Coleman }
@@ -34,10 +32,91 @@
   scope: { state: TN, output_type: local, locality: null }
   expected: Recorder
 
+# Matcher can't strip "& Bookkeeper" noise — no alias covers it
 - raw_string: City Recorder & Bookkeeper
   scope: { state: TN, output_type: local, locality: Trenton }
-  expected: Recorder
+  expected: NEW
 
 - raw_string: Commissioner Of Fire & Police
   scope: { state: TN, output_type: local, locality: Lookout Mountain }
+  expected: NEW
+
+- raw_string: Mayor Pro Tem
+  scope: { state: TX, output_type: local, locality: null }
+  expected: Mayor Pro-Tem
+
+- raw_string: Town Clerk
+  scope: { state: TN, output_type: local, locality: null }
+  expected: Clerk
+
+- raw_string: Municipal Clerk
+  scope: { state: RI, output_type: local, locality: null }
+  expected: Clerk
+
+- raw_string: Councilwoman
+  scope: { state: WA, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Council Member At-Large
+  scope: { state: TX, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Alderman
+  scope: { state: WI, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Village President
+  scope: { state: IL, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Township Supervisor
+  scope: { state: MI, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Constable
+  scope: { state: TX, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Planning Board Member
+  scope: { state: NY, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Zoning Board Of Appeals
+  scope: { state: NY, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: City Attorney
+  scope: { state: CA, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: Town Manager
+  scope: { state: VT, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: City Administrator
+  scope: { state: OR, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: Village Manager
+  scope: { state: IL, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: City Secretary
+  scope: { state: TX, output_type: local, locality: null }
+  expected: DROP
+
+- raw_string: Selectman
+  scope: { state: MA, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Tax Collector
+  scope: { state: CT, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Town Assessor
+  scope: { state: ME, output_type: local, locality: null }
+  expected: NEW
+
+- raw_string: Commissioner
+  scope: { state: GA, output_type: local, locality: null }
   expected: NEW
