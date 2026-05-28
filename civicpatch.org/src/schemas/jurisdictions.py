@@ -11,6 +11,7 @@ class RoleEntryWithSource(BaseModel):
     role: str
     is_unique: bool
     aliases: List[str]
+    include: bool = True
     source: Literal["global", "state", "locality"]
 
 

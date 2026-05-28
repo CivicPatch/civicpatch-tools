@@ -203,6 +203,11 @@ dir = "pipelines"
 run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
+[tasks.evals_roles]
+description = "Run the role-normalization eval (offline, no LLM)"
+run = "uv run pytest tests/prompts/tests/evals/role_normalization/"
+dir = "pipelines"
+
 [tasks.e2e-install]
 description = "Install e2e dependencies and Playwright browsers (run once)"
 run = "npm install && npx playwright install chromium"
