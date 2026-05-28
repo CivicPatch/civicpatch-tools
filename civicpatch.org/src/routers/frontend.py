@@ -114,6 +114,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
         return templates.TemplateResponse("pages/activity.html", {"request": request, "user": user})
 
+    @router.get("/roles", response_class=HTMLResponse, include_in_schema=False)
+    async def roles_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_write_config"]:
+            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+        return templates.TemplateResponse("pages/roles.html", {"request": request, "user": user})
+
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)

@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/roles.js') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/roles.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
+{% block title %}Roles{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+<roles-page></roles-page>
+{% endblock %}

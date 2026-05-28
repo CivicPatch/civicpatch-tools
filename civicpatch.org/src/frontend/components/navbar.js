@@ -478,19 +478,27 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
     ></civ-select-state>
     <a href="/" class="${active("/")}">Home</a>
     <a href="/blog" class="${active("/blog")}">Blog</a>
-    ${user.permissions?.can_view_queue_page
-      ? html`<a href="/queue" class="${active("/queue")}"
-          >Bulk review
-          <span class="nav-count ${summary == null ? "nav-count--hidden" : ""}"
-            >${summary?.open_prs ?? 0}</span
-          ></a
-        >`
-      : ""}
     ${user.permissions?.can_view_reviews_page
       ? html`<a href="/review" class="${active("/review")}">Reviews</a>`
       : ""}
     ${user.permissions?.can_view_activity_page
       ? html`<a href="/activity" class="${active("/activity")}">Activity</a>`
+      : ""}
+    ${user.permissions?.can_view_queue_page
+      ? html`<details class="nav-dropdown">
+          <summary class="nav-link nav-dropdown-trigger">
+            Manage <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+          </summary>
+          <div class="nav-dropdown__menu">
+            <a href="/queue" class="${active("/queue")}">Bulk review
+              <span class="nav-count ${summary == null ? "nav-count--hidden" : ""}"
+                >${summary?.open_prs ?? 0}</span
+              ></a>
+            ${user.permissions?.can_write_config
+              ? html`<a href="/roles" class="${active("/roles")}">Roles</a>`
+              : ""}
+          </div>
+        </details>`
       : ""}
     ${user.permissions?.can_manage_roles
       ? html`<details class="nav-dropdown">

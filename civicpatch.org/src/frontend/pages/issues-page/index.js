@@ -79,7 +79,7 @@ function IssuesPage() {
 
   const [openSections, setOpenSections] = useLocalStorage(
     "issues-page:open-sections",
-    { issues: true, roleConfigs: false },
+    { issues: true },
     { ttl: PERSIST_FOREVER },
   );
   const toggleSection = (key) => setOpenSections({ ...openSections, [key]: !openSections[key] });
@@ -239,21 +239,8 @@ function IssuesPage() {
     </section>
   `;
 
-  const roleConfigsSection = html`
-    <section class="issues-page__section">
-      <div class="section-header" @click=${() => toggleSection("roleConfigs")}>
-        <h2 class="section-title section-title--warning">Role Configs</h2>
-        <i class="fa-solid fa-chevron-down btn-icon${openSections.roleConfigs ? " btn-icon--rotated" : ""}"></i>
-      </div>
-      ${openSections.roleConfigs ? html`
-        <issues-config-editor .inline=${true} .stateCode=${stateCode}></issues-config-editor>
-      ` : null}
-    </section>
-  `;
-
   return html`
     <main class="issues-page page-content">
-      ${roleConfigsSection}
       ${issuesSection}
     </main>
 
