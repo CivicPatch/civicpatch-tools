@@ -18,6 +18,7 @@ export default defineConfig(({ command }) => ({
         login: "./assets/login.ts",
         admin: "./assets/admin.ts",
         activity: "./assets/activity.ts",
+        roles: "./assets/roles.js",
       },
     },
   },

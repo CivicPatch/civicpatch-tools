@@ -1,3 +1,4 @@
+import "./config-editor.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchJurisdictionConfig, putJurisdictionConfig, fetchGlobalConfig, putGlobalConfig, fetchJurisdictionForState } from "../../api.js";
@@ -93,7 +94,7 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
   };
 
   const handleDelete = (roleName) => {
-    if (!confirm(`Delete role "${roleName}" from ${scope}?`)) return;
+    if (!confirm(`Disable role "${roleName}" from ${scope}?`)) return;
     const updated = roles
       .filter((r) => r.role !== roleName)
       .map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases }));
@@ -101,18 +102,18 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
   };
 
   const formContent = editingRole !== null ? html`
-    <div class="issues-page__config-edit-form">
+    <div class="config-editor__edit-form">
       <label>Role name <input type="text" .value=${editName} @input=${(e) => setEditName(e.target.value)} /></label>
-      <label class="issues-page__config-checkbox-label"><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>
+      <label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>
       <label>Aliases (one per line)<br /><textarea rows="5" .value=${editAliases} @input=${(e) => setEditAliases(e.target.value)}></textarea></label>
-      ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
+      ${saveError ? html`<p class="config-editor__error">${saveError}</p>` : null}
     </div>
   ` : addingRole ? html`
-    <div class="issues-page__config-edit-form">
+    <div class="config-editor__edit-form">
       <label>Role name <input type="text" .value=${addName} @input=${(e) => setAddName(e.target.value)} /></label>
-      <label class="issues-page__config-checkbox-label"><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>
+      <label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>
       <label>Aliases (one per line)<br /><textarea rows="5" .value=${addAliases} @input=${(e) => setAddAliases(e.target.value)}></textarea></label>
-      ${saveError ? html`<p class="issues-page__config-error">${saveError}</p>` : null}
+      ${saveError ? html`<p class="config-editor__error">${saveError}</p>` : null}
     </div>
   ` : null;
 
@@ -127,7 +128,7 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
   const formTitle = editingRole !== null ? `Edit: ${editingRole}` : "Add role";
 
   return html`
-    <table class="issues-page__config-table">
+    <table class="config-editor__table">
       <thead>
         <tr>
           <th>Role</th><th>Unique</th><th>Aliases</th>
@@ -140,13 +141,13 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
             <td>${r.role}</td>
             <td>${r.is_unique ? "Yes" : "No"}</td>
             <td
-              class=${r.aliases?.length > 1 ? "issues-page__alias-clickable" : ""}
+              class=${r.aliases?.length > 1 ? "config-editor__alias-clickable" : ""}
               @click=${() => r.aliases?.length > 1 && setAliasModal(r)}
             >${aliasLabel(r.aliases)}</td>
             ${editable ? html`
-              <td class="issues-page__config-actions">
+              <td class="config-editor__actions">
                 <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
-                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Delete</button>
+                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Disable</button>
               </td>
             ` : null}
           </tr>
@@ -178,13 +179,13 @@ customElements.define("civ-role-table", component(RoleTable, { useShadowDOM: fal
 
 function ConfigSection({ title, badge, roles, loading, error, editable, onSave }) {
   return html`
-    <div class="issues-page__config-section">
-      <h4 class="issues-page__config-section-title">
+    <div class="config-editor__section">
+      <h4 class="config-editor__section-title">
         ${title}
         <civ-badge .label=${badge} .variant=${badge}></civ-badge>
-        ${!editable ? html`<span class="issues-page__config-readonly">read-only</span>` : null}
+        ${!editable ? html`<span class="config-editor__readonly">read-only</span>` : null}
       </h4>
-      ${error ? html`<p class="issues-page__config-error">${error}</p>` : null}
+      ${error ? html`<p class="config-editor__error">${error}</p>` : null}
       ${loading ? html`<div>Loading…</div>` : null}
       ${roles !== null && !loading
         ? html`<civ-role-table
@@ -331,58 +332,24 @@ function ConfigEditor(host) {
   const handleClose = () => dispatch("modal-close", {});
 
   const content = html`
-    ${permissions.CONFIG_WRITE ? html`
-      <div class="issues-page__config-section">
-        <h4 class="issues-page__config-section-title">
-          <civ-badge .label=${"global"} .variant=${"global"}></civ-badge>
-        </h4>
-        ${globalError ? html`<p class="issues-page__config-error">${globalError}</p>` : null}
-        ${globalRoles === null && !globalError ? html`<div>Loading…</div>` : null}
-        ${globalRoles !== null ? html`<civ-role-table
-          .roles=${globalRoles}
-          .scope=${SCOPE_GLOBAL}
-          .editable=${permissions.CONFIG_GLOBAL_WRITE}
-          .editor=${globalEditor}
-          .onSave=${makeSave(SCOPE_GLOBAL, null, null, globalEditor)}
-        ></civ-role-table>` : null}
-      </div>
-    ` : null}
-
     ${permissions.CONFIG_WRITE && stateCode ? html`
-      <div class="issues-page__config-section">
-        <h4 class="issues-page__config-section-title">
-          <civ-badge .label=${"state"} .variant=${"state"}></civ-badge>
-          ${stateCode ? html`<span class="issues-page__config-section-label">${stateCode.toUpperCase()}</span>` : null}
-        </h4>
-        ${stateError ? html`<p class="issues-page__config-error">${stateError}</p>` : null}
-        ${stateRoles === null && !stateError && stateCode ? html`<div>Loading…</div>` : null}
-        ${stateRoles !== null ? html`<civ-role-table
-          .roles=${stateRoles}
-          .scope=${SCOPE_STATE}
-          .editable=${true}
-          .editor=${stateEditor}
-          .onSave=${makeSave(SCOPE_STATE, stateOcdid, loadStateConfig, stateEditor)}
-        ></civ-role-table>` : null}
-      </div>
-    ` : null}
-
-    ${permissions.CONFIG_WRITE && stateCode ? html`
-      <div class="issues-page__config-section">
-        <h4 class="issues-page__config-section-title">
+      <details class="config-editor__section" open>
+        <summary class="config-editor__section-title">
           <civ-badge .label=${"locality"} .variant=${"locality"}></civ-badge>
-          <div class="issues-page__config-locality-autocomplete">
-            <civ-autocomplete-select
-              .options=${localityOptions}
-              .optionsMetadata=${localityOptionsMetadata}
-              .inputValue=${localityInputValue}
-              .pageSize=${25}
-              @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
-              @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
-              @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
-            ></civ-autocomplete-select>
-          </div>
-        </h4>
-        ${localityError ? html`<p class="issues-page__config-error">${localityError}</p>` : null}
+          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+        </summary>
+        <div class="config-editor__locality-autocomplete">
+          <civ-autocomplete-select
+            .options=${localityOptions}
+            .optionsMetadata=${localityOptionsMetadata}
+            .inputValue=${localityInputValue}
+            .pageSize=${25}
+            @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
+            @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
+            @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
+          ></civ-autocomplete-select>
+        </div>
+        ${localityError ? html`<p class="config-editor__error">${localityError}</p>` : null}
         ${localityRoles === null && !localityError && localityOcdid ? html`<div>Loading…</div>` : null}
         ${localityRoles !== null ? html`<civ-role-table
           .roles=${localityRoles}
@@ -391,11 +358,48 @@ function ConfigEditor(host) {
           .editor=${localityEditor}
           .onSave=${makeSave(SCOPE_LOCALITY, localityOcdid, loadLocalityConfig, localityEditor)}
         ></civ-role-table>` : null}
-      </div>
+      </details>
+    ` : null}
+
+    ${permissions.CONFIG_WRITE && stateCode ? html`
+      <details class="config-editor__section" open>
+        <summary class="config-editor__section-title">
+          <civ-badge .label=${"state"} .variant=${"state"}></civ-badge>
+          <span class="config-editor__section-label">${stateCode.toUpperCase()}</span>
+          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+        </summary>
+        ${stateError ? html`<p class="config-editor__error">${stateError}</p>` : null}
+        ${stateRoles === null && !stateError && stateCode ? html`<div>Loading…</div>` : null}
+        ${stateRoles !== null ? html`<civ-role-table
+          .roles=${stateRoles}
+          .scope=${SCOPE_STATE}
+          .editable=${true}
+          .editor=${stateEditor}
+          .onSave=${makeSave(SCOPE_STATE, stateOcdid, loadStateConfig, stateEditor)}
+        ></civ-role-table>` : null}
+      </details>
+    ` : null}
+
+    ${permissions.CONFIG_WRITE ? html`
+      <details class="config-editor__section">
+        <summary class="config-editor__section-title">
+          <civ-badge .label=${"global"} .variant=${"global"}></civ-badge>
+          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+        </summary>
+        ${globalError ? html`<p class="config-editor__error">${globalError}</p>` : null}
+        ${globalRoles === null && !globalError ? html`<div>Loading…</div>` : null}
+        ${globalRoles !== null ? html`<civ-role-table
+          .roles=${globalRoles}
+          .scope=${SCOPE_GLOBAL}
+          .editable=${permissions.CONFIG_GLOBAL_WRITE}
+          .editor=${globalEditor}
+          .onSave=${makeSave(SCOPE_GLOBAL, null, null, globalEditor)}
+        ></civ-role-table>` : null}
+      </details>
     ` : null}
   `;
 
-  if (inline) return html`<div class="issues-page__config-inline">${content}</div>`;
+  if (inline) return html`<div class="config-editor__inline">${content}</div>`;
 
   const title = jurisdictions.length === 1
     ? "Config: " + (jurisdictions[0].name || jurisdictions[0].jurisdiction_ocdid)
