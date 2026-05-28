@@ -131,12 +131,42 @@ erDiagram
 
     change_logs {
         uuid            id                  PK
-        text            type                "check: merge_review|close_review|add_person|edit_person|delete_person|edit_jurisdiction"
+        text            type                "check: merge_review|close_review|add_person|edit_person|delete_person|edit_jurisdiction|add_role|edit_role|disable_role|add_role_alias|disable_role_alias|add_role_exclusion|disable_role_exclusion"
         text_null       jurisdiction_ocdid  "idx"
         text_null       request_id          "the request the change belongs to; NULL for non-review changes"
         jsonb_null      changes             "type-specific payload; {field,from,to} diff for edit_person"
         uuid_null       user_id             FK
         timestamptz     created_at          "idx: created_at DESC, default: now()"
+    }
+
+    roles {
+        uuid            id                  PK
+        text            value               "unique: (value, jurisdiction_ocdid) WHERE disabled_at IS NULL"
+        text            display_name
+        text_null       jurisdiction_ocdid
+        bool            is_unique
+        int             priority
+        timestamptz_null disabled_at
+        timestamptz     created_at
+    }
+
+    role_aliases {
+        uuid            id                  PK
+        uuid            role_id             FK  "unique: (role_id, value) WHERE disabled_at IS NULL"
+        text            value               "idx: value WHERE disabled_at IS NULL"
+        text            source              "check: curated|confirmed|learned"
+        real_null       confidence
+        timestamptz_null disabled_at
+        timestamptz     created_at
+    }
+
+    role_exclusions {
+        uuid            id                  PK
+        text            value               "unique: (value, jurisdiction_ocdid) WHERE disabled_at IS NULL"
+        text_null       jurisdiction_ocdid
+        text            source              "check: curated|confirmed"
+        timestamptz_null disabled_at
+        timestamptz     created_at          "idx: value WHERE disabled_at IS NULL"
     }
 
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
@@ -154,6 +184,7 @@ erDiagram
     users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
     jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
+    roles ||--o{ role_aliases : "role_id (ON DELETE CASCADE)"
 ```
 
 **Notes:**

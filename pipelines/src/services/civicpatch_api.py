@@ -5,6 +5,9 @@ import httpx
 from fastapi import Request
 
 from domain.models import Official
+from services.github_config_service import make_github_fetcher
+from shared.utils.config_utils import RoleConfig, RoleEntry, load_role_config_for_jurisdiction
+from shared.utils.github_urls import derive_raw_base_url
 from utils.request_utils import with_retry
 from pipelines_environment import get_env_vars
 
@@ -154,6 +157,50 @@ async def submit_job_artifacts(
 
 async def get_current_people(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> List[dict]:
     return await search_people(client, jurisdiction_ocdid, state="current")
+
+
+async def get_role_config(jurisdiction_ocdid: str) -> Optional[dict]:
+    """Fetch the merged role config response from the backend API."""
+    env = get_env_vars()
+    try:
+        async with httpx.AsyncClient(
+            headers={"Authorization": env["SERVICE_API_KEY"]},
+            timeout=10,
+        ) as client:
+            response = await client.get(
+                f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/config",
+                params={"ocdid": jurisdiction_ocdid},
+            )
+            response.raise_for_status()
+            return response.json()
+    except Exception:
+        return None
+
+
+async def resolve_role_config(jurisdiction_ocdid: str) -> Optional[RoleConfig]:
+    """Fetch merged role config from the backend API, GitHub fallback on failure."""
+    raw = await get_role_config(jurisdiction_ocdid)
+    if raw:
+        roles_data = raw.get("data", {}).get("roles", [])
+        return RoleConfig(
+            roles=[
+                RoleEntry(
+                    role=r["role"],
+                    is_unique=r.get("is_unique", False),
+                    aliases=r.get("aliases", []),
+                    include=r.get("include", True),
+                )
+                for r in roles_data
+            ]
+        )
+
+    # Fallback to GitHub if backend unreachable
+    env = get_env_vars()
+    fetch_remote = make_github_fetcher(derive_raw_base_url(env["OPEN_DATA_REPO_URL"]))
+    try:
+        return load_role_config_for_jurisdiction(jurisdiction_ocdid, fetch_remote)
+    except Exception:
+        return None
 
 
 async def search_people(

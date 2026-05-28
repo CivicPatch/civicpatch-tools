@@ -132,9 +132,8 @@ def get_router() -> APIRouter:
         body: SetGlobalRolesRequest,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        author = {"name": user.email or user.provider_user_id, "email": user.email or f"{user.provider_user_id}@users.noreply.github.com"}
         try:
-            await role_config_service.set_global_roles(body.roles, author=author)
+            await role_config_service.set_global_roles(body.roles, user_id=user.user_id)
         except RuntimeError as e:
             return JSONResponse({"error": str(e)}, status_code=409)
         return {"data": {"ok": True}}
@@ -157,15 +156,9 @@ def get_router() -> APIRouter:
     ):
         try:
             if body.issue_id:
-                author = PrAuthor(
-                    name=user.display_name or user.email or user.provider_user_id,
-                    email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
-                    teams=[user.role] if user.role else [],
-                )
-                pull_request_url = await pipeline_issue_resolution_service.resolve_via_config_pr(body, author, body.issue_id)
-                return {"data": {"pull_request_url": pull_request_url}}
-            commit_author = {"name": user.email or user.provider_user_id, "email": user.email or f"{user.provider_user_id}@users.noreply.github.com"}
-            await role_config_service.set_scope_roles(body, author=commit_author)
+                await pipeline_issue_resolution_service.resolve_via_config_db(body, user_id=user.user_id, issue_id=body.issue_id)
+                return {"data": {"ok": True}}
+            await role_config_service.set_scope_roles(body, user_id=user.user_id)
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         except RuntimeError as e:
