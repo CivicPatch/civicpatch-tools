@@ -110,6 +110,31 @@ def load_taxonomy(path: Path) -> RoleConfig:
     return RoleConfig.model_validate(_load_yaml(path))
 
 
+REPORT_PATH = Path(__file__).parent / "eval-report.yml"
+
+
+def build_report_data(report: EvalReport, outcomes: list[Outcome]) -> dict:
+    return {
+        "summary": {
+            "total": report.total,
+            "correct": report.correct,
+            "false_positives": report.false_positives,
+            "false_negatives": report.false_negatives,
+            "wrong_matches": report.by_disposition[Disposition.wrong_match],
+            "pct_correct": round(report.correct / report.total * 100, 1) if report.total else 0,
+        },
+        "dispositions": [
+            {
+                "raw_string": o.case.raw_string,
+                "expected": o.case.expected,
+                "actual": o.actual,
+                "disposition": o.disposition.value,
+            }
+            for o in outcomes
+        ],
+    }
+
+
 @pytest.mark.evals_roles
 def test_role_normalization_eval():
     taxonomy: RoleConfig = load_taxonomy(TAXONOMY_PATH)
@@ -121,4 +146,6 @@ def test_role_normalization_eval():
         for case in cases
     ]
     report = summarize(outcomes)
+    data = build_report_data(report, outcomes)
+    REPORT_PATH.write_text(yaml.dump(data, default_flow_style=False, sort_keys=False), encoding="utf-8")
     assert report.false_positives == 0, report.by_disposition

@@ -8,10 +8,11 @@ pytestmark = pytest.mark.unit
 
 
 @pytest.mark.parametrize("roles, expected", [
-    (["Mayor", "mayor"], ["Mayor"]),  # Case-insensitive deduplication
+    (["Mayor", "mayor"], ["Mayor"]),  # Case-insensitive dedup — keeps first occurrence
     ([], []),  # Empty input
     ([None, ""], []),  # Invalid roles
-    (["  mayor  ", "MAYOR"], ["Mayor"]),  # Mixed case and whitespace
+    (["  mayor  ", "MAYOR"], ["mayor"]),  # Mixed case — keeps first occurrence
+    (["mayor"], ["mayor"]),  # Single unknown role preserves original casing
 ])
 def test_normalize_roles(roles, expected):
     assert people_utils.normalize_roles(roles) == expected

@@ -1,10 +1,6 @@
 {
   "permissions": {
-    "deny": [
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(git ci:*)"
-    ]
+    "deny": ["Bash(git commit:*)", "Bash(git push:*)", "Bash(git ci:*)"]
   },
   "hooks": {
     "PreToolUse": [
