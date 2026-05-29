@@ -10,7 +10,7 @@ repos:
         language: system
         entry: scripts/tour_staleness_reminder.sh
         pass_filenames: false
-        files: '^\.tours/.*\.tour$'
+        always_run: true
       - id: run-tests
         name: Run unit tests
         language: system
