@@ -1,0 +1,41 @@
+.settings-page {
+  margin-inline: auto;
+  max-width: 36rem;
+}
+
+.settings-page__banner {
+  background: var(--pico-mark-background-color);
+  color: var(--pico-mark-color);
+  padding: 0.75rem 1rem;
+  border-radius: var(--pico-border-radius);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.settings-page__title {
+  margin-bottom: 1.5rem;
+}
+
+.settings-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-page__label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.settings-page__input {
+  font-family: var(--pico-font-family-monospace);
+}
+
+.settings-page__error {
+  color: var(--pico-color-red-600, #c92a2a);
+  font-size: 0.85rem;
+}
+
+.settings-page__submit {
+  align-self: flex-start;
+}

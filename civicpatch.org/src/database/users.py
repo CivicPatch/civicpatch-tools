@@ -16,7 +16,7 @@ async def upsert_user(provider, provider_user_id, email, display_name: str | Non
             ON CONFLICT (provider, provider_user_id)
             DO UPDATE SET
                 email = EXCLUDED.email,
-                display_name = EXCLUDED.display_name,
+                display_name = COALESCE(users.display_name, EXCLUDED.display_name),
                 last_login_at = NOW()
             RETURNING id::text
             """,
@@ -33,6 +33,25 @@ async def set_user_role(user_id: str, role: str) -> None:
         await conn.execute(
             "UPDATE users SET role = %s WHERE id = %s",
             (role, user_id),
+        )
+
+
+async def display_name_in_use(display_name: str) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT 1 FROM users WHERE display_name = %s LIMIT 1",
+            (display_name,),
+        )
+        return await cur.fetchone() is not None
+
+
+async def set_user_display_name(user_id: str, display_name: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE users SET display_name = %s WHERE id = %s",
+            (display_name, user_id),
         )
 
 
