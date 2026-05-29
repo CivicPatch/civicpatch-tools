@@ -628,4 +628,32 @@ export const revokeInvite = async (userId) => {
   return res.json();
 };
 
+export const fetchDisplayNameSuggestion = async () => {
+  const res = await fetch(`${API_URL}/api/internal/user/display-name/suggestion`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const body = await res.json();
+  return body.data;
+};
+
+export const setDisplayName = async (displayName) => {
+  const res = await fetch(`${API_URL}/api/internal/user/display-name`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ display_name: displayName }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(body.detail || `HTTP ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+};
+
 

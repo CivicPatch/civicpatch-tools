@@ -109,7 +109,12 @@ This execs `psql` inside the container, so no host postgres client is required �
 
 ## API consumers
 
-This API has a single consumer: the civicpatch frontend. Backward compatibility is not required — endpoints can be renamed, removed, or changed freely as long as the frontend is updated in the same changeset.
+The API has two surfaces, distinguished by prefix:
+
+- **`/api/v1/...`** — intended to grow into a public-consumer surface (third parties, integrations). Treat as a stable contract going forward: renames/removals/shape changes need explicit deprecation, not silent edits. New endpoints here should be designed assuming external consumers.
+- **`/api/internal/...`** — the civicpatch frontend is the sole consumer. Backward compatibility is not required; endpoints can be renamed, removed, or changed freely as long as the frontend is updated in the same changeset.
+
+When adding a new endpoint, pick the prefix deliberately. If it returns frontend-shaped data (permission flags, identity blobs tailored to the current UI), it belongs under `/api/internal/`. If it returns a clean domain resource a third party could plausibly consume, it can live under `/api/v1/`.
 
 ## Frontend components
 
