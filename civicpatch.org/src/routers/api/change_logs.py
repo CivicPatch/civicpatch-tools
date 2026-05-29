@@ -1,11 +1,16 @@
-from fastapi import APIRouter, Query
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 import database.change_logs as database
+from lib.auth import get_optional_user
 from schemas.change_logs import ChangeLogBucket, ChangeLogEntry
-from schemas.common import Role
+from schemas.common import Identity, Role, has_at_least
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
-# Route access (MAINTAINERS+) is enforced at the mount in main.py.
+# The activity bucket is visible to any logged-in user (route mount enforces
+# AUTHENTICATED). The quarantine bucket — which surfaces unreviewed content
+# from untrusted authors — is additionally gated to MAINTAINERS+ here.
 _BUCKET_ROLES = {
     ChangeLogBucket.QUARANTINE: [Role.DEFAULT.value],
     ChangeLogBucket.ACTIVITY: [Role.CONTRIBUTORS.value, Role.MAINTAINERS.value, Role.ADMINS.value],
@@ -32,7 +37,12 @@ def get_router() -> APIRouter:
         bucket: ChangeLogBucket = Query(...),
         page: int = Query(1, ge=1),
         per_page: int = Query(20, ge=1, le=100),
+        identity: Optional[Identity] = Depends(get_optional_user),
     ):
+        if bucket == ChangeLogBucket.QUARANTINE and not has_at_least(
+            identity.role if identity else None, Role.MAINTAINERS
+        ):
+            raise HTTPException(status_code=403, detail="Quarantine is restricted")
         offset = (page - 1) * per_page
         total, rows = await database.get_change_logs_for_roles(_BUCKET_ROLES[bucket], per_page, offset)
         total_pages = max(1, (total + per_page - 1) // per_page)

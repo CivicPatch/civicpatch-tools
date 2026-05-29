@@ -88,7 +88,7 @@ def test_verify_otp_happy_path_mints_session():
     supabase_mock.auth.verify_otp.assert_awaited_once_with(
         {"email": "alice@example.com", "token": "123456", "type": "email"}
     )
-    mock_upsert.assert_awaited_once_with("supabase", "user-uuid", "alice@example.com", "Alice")
+    mock_upsert.assert_awaited_once_with("supabase", "user-uuid", "alice@example.com")
     mock_cookies.assert_awaited_once()
 
 

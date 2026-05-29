@@ -73,10 +73,14 @@ Stored as a single `users.role` column. The `build_permissions()` function in `r
 
 | Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |
 |---|---|
-| **default** (any signed-in user) | Read-only API access: list jurisdictions, people, pull requests, notes. Read review session stats and active session. (No editor pages — Queue / Reviews / Issues all require Contributor+.) |
+| **default** (any signed-in user) | Read-only API access: list jurisdictions, people, pull requests, notes. Read review session stats and active session. View the Activity page (change log of trusted-contributor curation activity). (No editor pages — Queue / Reviews / Issues all require Contributor+.) |
 | **contributors** | View the Queue page. Edit jurisdiction details via PRs. Create / update / delete directory people. Create notes. Create / navigate / pass / end review sessions. Close / merge / update pull requests. |
-| **maintainers** | Trigger pipeline runs (single + batch). Read & edit role configs (state and locality scope). Read pipeline run details. Resume paused runs. View the Activity page (quarantine + change log of curation activity). |
+| **maintainers** | Trigger pipeline runs (single + batch). Read & edit role configs (state and locality scope). Read pipeline run details. Resume paused runs. View the Quarantine bucket on the Activity page (changes from untrusted default-role contributors, awaiting spam/profanity review). |
 | **admins** | View and moderate the Issues page (flag, dismiss, resolve). Manage other users' trust levels (via `/admin`). Cancel pipeline runs. Edit global role config. View queue page errors. All admin-bus endpoints (od_sync, pr_sync, etc.). |
+
+### Display name onboarding
+
+Independent of role, every signed-in user is redirected to `/settings` until they pick a `display_name`. This is enforced by middleware (`lib/middleware.py`) so the activity feed and any other surface that shows authorship can render a user-chosen handle instead of falling back to the user's email. New users see a suggested name (e.g. `wandering-meadow`) prefilled in the form; they can accept it or type their own. Display names must be unique.
 
 ### Bootstrapping the first admin
 

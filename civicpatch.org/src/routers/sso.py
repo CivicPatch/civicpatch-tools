@@ -100,7 +100,7 @@ def get_router(is_production: bool) -> APIRouter:
 
         identity = supabase_auth_service.to_supabase_user(auth_response.user)
         await database.upsert_user(
-            identity.provider, identity.id, identity.email, identity.display_name
+            identity.provider, identity.id, identity.email
         )
 
         response = JSONResponse(content={"data": {"authenticated": True}})

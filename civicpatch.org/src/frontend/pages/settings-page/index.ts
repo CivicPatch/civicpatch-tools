@@ -48,7 +48,8 @@ function SettingsPage({ user }: { user: string }) {
     <main class="settings-page page-content">
       ${needsDisplayName
         ? html`<div class="settings-page__banner" role="alert">
-            Pick a display name to continue.
+            Before you can continue, pick a public display name. This is what
+            other contributors will see on your edits.
           </div>`
         : ""}
       <h1 class="settings-page__title">Settings</h1>

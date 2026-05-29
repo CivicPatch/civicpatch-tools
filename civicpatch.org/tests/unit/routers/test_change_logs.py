@@ -4,7 +4,22 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from lib.auth import get_optional_user
 from routers.api import change_logs as change_logs_router
+from schemas.common import Identity, Role
+
+
+def _identity(role: str | None) -> Identity | None:
+    if role is None:
+        return None
+    return Identity(
+        type="cookie",
+        provider="supabase",
+        provider_user_id="sb-1",
+        email="user@example.com",
+        role=role,
+        user_id="11111111-1111-1111-1111-111111111111",
+    )
 
 ROW = {
     "id": "cl-1",
@@ -24,11 +39,16 @@ ROW = {
 }
 
 
-@pytest.fixture
-def client():
+def _client(role: str | None = Role.MAINTAINERS.value) -> TestClient:
     app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: _identity(role)
     app.include_router(change_logs_router.get_router(), prefix="/change_logs")
     return TestClient(app)
+
+
+@pytest.fixture
+def client():
+    return _client()
 
 
 @pytest.mark.unit
@@ -41,12 +61,43 @@ def test_quarantine_bucket_queries_default_role(client):
 
 
 @pytest.mark.unit
+def test_quarantine_bucket_forbidden_for_default_role():
+    client = _client(role=Role.DEFAULT.value)
+    response = client.get("/change_logs", params={"bucket": "quarantine"})
+    assert response.status_code == 403
+
+
+@pytest.mark.unit
+def test_quarantine_bucket_forbidden_for_contributors():
+    client = _client(role=Role.CONTRIBUTORS.value)
+    response = client.get("/change_logs", params={"bucket": "quarantine"})
+    assert response.status_code == 403
+
+
+@pytest.mark.unit
+def test_quarantine_bucket_allowed_for_admins():
+    client = _client(role=Role.ADMINS.value)
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])):
+        response = client.get("/change_logs", params={"bucket": "quarantine"})
+    assert response.status_code == 200
+
+
+@pytest.mark.unit
 def test_activity_bucket_queries_trusted_roles(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
         response = client.get("/change_logs", params={"bucket": "activity"})
 
     assert response.status_code == 200
     mock_get.assert_awaited_once_with(["contributors", "maintainers", "admins"], 20, 0)
+
+
+@pytest.mark.unit
+def test_activity_bucket_allowed_for_default_role():
+    # The trusted-author change log is visible to any signed-in user.
+    client = _client(role=Role.DEFAULT.value)
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])):
+        response = client.get("/change_logs", params={"bucket": "activity"})
+    assert response.status_code == 200
 
 
 @pytest.mark.unit
