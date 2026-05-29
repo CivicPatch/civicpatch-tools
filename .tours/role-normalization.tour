@@ -1,0 +1,114 @@
+{
+  "title": "Role normalization",
+  "description": "How the role-config taxonomy works end-to-end: the unified `role_terms` schema (one table for both canonical roles and exclusions), the surgical exclude/include/delete endpoints, why the change_log vocabulary collapsed to 5 types with kind in the payload, the activity-feed render path, and how to seed the taxonomy in dev vs prod. Read this before adding a new role-config feature, a new change_log type, or a new scope tier. The design rationale lives in .scratch/role-normalization-plan.md; this tour is the code map.",
+  "steps": [
+    {
+      "title": "1. The unified schema",
+      "description": "**Why one table for both canonical roles and exclusions.** An earlier design had two tables (`roles` + `role_exclusions`). Moving a role to an exclusion meant deleting + re-inserting + re-attaching aliases. With `role_terms.kind`, exclude/include is an `UPDATE kind` and aliases stay attached automatically — no cross-table dance.\n\n`role_aliases` attaches to a term via `term_id` regardless of kind. `disabled_at` lives only on aliases (alias history is append-only); roles are hard-deleted.",
+      "file": "civicpatch.org/database_operations/migrations/095_add_role_taxonomy.up.sql",
+      "line": 14
+    },
+    {
+      "title": "2. change_log_types reference table",
+      "description": "Five role event types: `add_role`, `edit_role`, `delete_role`, `exclude_role`, `include_role`. Kind (`canonical | exclusion`) goes in the JSONB payload, not the type — so adding a new kind doesn't double the type vocabulary. The reference table makes adding/removing types a one-line diff in future migrations vs recreating a CHECK constraint.",
+      "file": "civicpatch.org/database_operations/migrations/095_add_role_taxonomy.up.sql",
+      "line": 46
+    },
+    {
+      "title": "3. Reading both kinds in one query",
+      "description": "Single SELECT pulls canonical + exclusion terms together, joined with their active aliases. Callers filter by `kind` if they care. Note `r.kind == \"canonical\"` becomes the `entry.include` for the wire format — kept for backward compat with the pipeline's `RoleConfig`.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 48
+    },
+    {
+      "title": "4. Pure decision helpers (functional core)",
+      "description": "`classify_term_op` decides ADD / FLIP_KIND / EDIT / NO_CHANGE based on what the entry says vs what's in the DB. Pure function — covered by ~10 unit tests with no DB. The shell at step 6 just dispatches on the op.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 104
+    },
+    {
+      "title": "5. Pure alias diff + payload builder",
+      "description": "`diff_aliases` returns (to_disable, to_add) sets — pure set math. `build_event_payload` folds kind + alias deltas into a single JSONB blob. The shell appends it to one change_log event per term per PUT, not one per alias.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 127
+    },
+    {
+      "title": "6. The imperative shell",
+      "description": "`replace_roles_at_scope` is the batch PUT handler. It fetches existing terms, diffs against incoming, and applies the ops. The branching mirrors the four TermOp values; each branch emits at most one change_log per term. NO_CHANGE still runs the alias sync — that's the common edit case.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 180
+    },
+    {
+      "title": "7. Exclude / include — UPDATE not DELETE+INSERT",
+      "description": "The whole reason for the unified schema. Flipping kind keeps the row, the id, and the attached aliases. If we DELETE+INSERTed instead, we'd lose aliases and break any future provenance tracking.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 260
+    },
+    {
+      "title": "8. Hard delete with kind-in-payload",
+      "description": "`DELETE ... RETURNING kind` grabs the kind in the same round-trip so the change_log payload records whether a canonical or an exclusion was removed. The activity feed renders that as 'Removed role X' vs 'Removed exclusion X'.",
+      "file": "civicpatch.org/src/database/roles.py",
+      "line": 286
+    },
+    {
+      "title": "9. Scope key convention",
+      "description": "Scope keys in `role_terms.jurisdiction_ocdid` are full OCDIDs that round-trip through `parse_jurisdiction_ocdid`. State scope is `.../state:tx/government` (with the `/government` suffix), not the truncated `.../state:tx` prefix. The mirror function `_state_ocdid_from_ocdid` in `database/roles.py` must produce the same format.",
+      "file": "civicpatch.org/src/core/role_config.py",
+      "pattern": "def _scope_to_ocdid"
+    },
+    {
+      "title": "10. Surgical HTTP endpoints",
+      "description": "Three single-row POSTs (`/config/exclude`, `/config/include`, `/config/delete`) live alongside the batch PUT (`/config`). The UI uses the POSTs for row-level actions (atomic, no read-modify-write race); the batch PUT is for the Add/Edit form. All gated on `Role.MAINTAINERS`.",
+      "file": "civicpatch.org/src/routers/api/jurisdictions.py",
+      "line": 178
+    },
+    {
+      "title": "11. /roles page route",
+      "description": "Frontend route, gated at `can_write_config` (maintainers+). Renders the config-editor in inline mode. The 'Manage' dropdown in the navbar links here.",
+      "file": "civicpatch.org/src/routers/frontend.py",
+      "line": 122
+    },
+    {
+      "title": "12. The config-editor frontend",
+      "description": "Three collapsible scope sections (locality / state / global). Each contains TWO `civ-term-table` instances — one for canonical roles, one for exclusions. Each row's `Edit/Exclude/Remove` (or `Edit/Include/Remove`) buttons hit the surgical endpoints; Add/Edit hits the batch PUT. Modal mode (opened from an issue's Resolve button) narrows the locality picker to the issue's tagged jurisdictions.",
+      "file": "civicpatch.org/src/frontend/pages/issues-page/config-editor.js",
+      "line": 209
+    },
+    {
+      "title": "13. Activity feed: server-rendered summary",
+      "description": "Pure formatter that turns `(type, changes)` into a human-readable summary string. Server-side because the alternative — polymorphic dispatch in the frontend on a JSONB blob — leaked shape knowledge into JS and broke whenever a new event type was added. Frontend renders `entry.summary`; the raw `changes` is kept for the person-edit field-diff expander.",
+      "file": "civicpatch.org/src/database/change_log_summary.py",
+      "line": 16
+    },
+    {
+      "title": "14. Seeding the taxonomy — the import script",
+      "description": "Idempotent — safe to re-run. Reads a RoleConfig-shaped YAML, upserts into `role_terms` with the appropriate kind, attaches aliases. The seed file `seed/role_taxonomy.yml` is a starter state, NOT source of truth — the DB is.\n\n**Dev** (script + seed live at repo root; uv resolves the workspace):\n```sh\nCIVICPATCH_API_DB_URL=postgres://civicpatch:development_password@127.0.0.1:8003/development_db \\\n  uv run scripts/import_role_taxonomy.py seed/role_taxonomy.yml\n```\n\n**Prod** — the Dockerfile only copies `civicpatch.org` + `shared/src/shared` into `/app`. `scripts/` and `seed/` at the repo root are NOT in the image. Copy them in before running:\n```sh\ndocker cp scripts/import_role_taxonomy.py civicpatch-org:/tmp/import.py\ndocker cp seed/role_taxonomy.yml civicpatch-org:/tmp/seed.yml\ndocker compose exec civicpatch-org python3 /tmp/import.py /tmp/seed.yml\n```\nDB URL comes from the container's env, no override needed.",
+      "file": "scripts/import_role_taxonomy.py",
+      "line": 60
+    },
+    {
+      "title": "15. Seed YAML format",
+      "description": "Flat list of entries. `kind: canonical` (default, can omit) or `kind: exclusion`. `is_unique: true` marks roles that should appear at most once per jurisdiction (e.g. Mayor). Aliases get attached to the term regardless of kind. To regenerate from prod for a snapshot, export `role_terms` + `role_aliases` and reshape into this YAML.",
+      "file": "seed/role_taxonomy.yml",
+      "line": 1
+    },
+    {
+      "title": "16. Tests — four layers, each catches a different bug class",
+      "description": "**a) Unit tests on pure helpers** — `classify_term_op`, `diff_aliases`, `build_event_payload`, `summarize_change_log`. No DB. Catches diff-logic bugs. The FCIS split (step 4-5) is what makes this possible.\n\n**b) DB integration tests** — exercise `replace_roles_at_scope` and friends directly against the test DB. Catches SQL bugs, FK violations, NULLS NOT DISTINCT edge cases.\n\n**c) Route integration tests** — TestClient → real route → service → DB. Auth dependency is overridden with a fake admin Identity. Catches what the DB-level tests miss: Pydantic validation surprises, service-layer crashes when receiving real HTTP payloads (the `_to_entry_data` bug type), wire-contract drift.\n\n**d) E2E spec** — full add → exclude → include → remove cycle in a real browser against the e2e Docker stack. Catches frontend wiring regressions only.\n\n**Run them:**\n```sh\nmise run tcp                                # all unit tests\nmise run tcp -- -k roles                    # just the roles unit tests\nmise run tcp -- -m integration -k role      # DB + route integration\nmise run e2e                                # Playwright UI; pick the spec\n```",
+      "file": "civicpatch.org/tests/unit/database/test_roles.py",
+      "line": 1
+    },
+    {
+      "title": "17. Route-level integration tests file",
+      "description": "Where to add new tests when you add a new endpoint. Auth is mocked via `app.dependency_overrides[get_optional_user]` so tests don't need a real session. Each test wipes a sentinel scope before and after, so they don't collide with seeded data.",
+      "file": "civicpatch.org/tests/integration/routers/test_jurisdictions_config.py",
+      "line": 1
+    },
+    {
+      "title": "18. E2E spec for the full UI cycle",
+      "description": "Single happy-path test: add → exclude → include → remove. Uses the `maintainerPage` fixture (separate session from the default contributors test user since /roles is maintainer-gated). Sentinel role name + afterEach cleanup so interrupted runs don't leave debris.",
+      "file": "e2e/tests/roles-edit-cycle.spec.js",
+      "line": 1
+    }
+  ]
+}

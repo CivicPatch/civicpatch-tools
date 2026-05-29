@@ -1,26 +1,52 @@
 #!/usr/bin/env bash
-# Check staged .tour files for stale steps (missing files, lines past EOF,
-# patterns no longer in file). Prints a reminder if any are stale. Always
-# exits 0 — this is a nudge, not a gate.
+# Check tours for stale steps. Runs whenever:
+#   - a .tour file itself is staged, OR
+#   - any file referenced by a tour is staged
+#
+# A tour that maps a code path becomes wrong silently when that code moves —
+# this hook is a nudge to update the tour. Always exits 0 (nudge, not gate).
 set -euo pipefail
 
 if ! command -v jq &>/dev/null; then
     exit 0
 fi
 
-staged_tours=$(git diff --cached --name-only | grep '^\.tours/.*\.tour$' || true)
-
-if [ -z "$staged_tours" ]; then
+if [ ! -d .tours ]; then
     exit 0
 fi
 
-stale=0
+staged=$(git diff --cached --name-only)
+[ -z "$staged" ] && exit 0
 
-while IFS= read -r tour_file; do
+# Find tours to check: any tour whose .file references include a staged path,
+# plus any tour that is itself staged.
+tours_to_check=()
+for tour_file in .tours/*.tour; do
     [ -f "$tour_file" ] || continue
 
-    problems=()
+    # If the tour itself is staged, check it.
+    if echo "$staged" | grep -qxF "$tour_file"; then
+        tours_to_check+=("$tour_file")
+        continue
+    fi
 
+    # Otherwise: does it reference any staged file?
+    referenced=$(jq -r '.steps[].file // empty' "$tour_file" 2>/dev/null || true)
+    while IFS= read -r ref; do
+        [ -z "$ref" ] && continue
+        if echo "$staged" | grep -qxF "$ref"; then
+            tours_to_check+=("$tour_file")
+            break
+        fi
+    done <<< "$referenced"
+done
+
+[ ${#tours_to_check[@]} -eq 0 ] && exit 0
+
+stale=0
+
+for tour_file in "${tours_to_check[@]}"; do
+    problems=()
     step_count=$(jq '.steps | length' "$tour_file")
 
     for i in $(seq 0 $((step_count - 1))); do
@@ -42,11 +68,9 @@ while IFS= read -r tour_file; do
             fi
         fi
 
-        if [ -n "$pattern" ]; then
-            if [ -n "$file" ] && [ -f "$file" ]; then
-                if ! grep -qF "$pattern" "$file" 2>/dev/null; then
-                    problems+=("  \"$step_title\": pattern \"$pattern\" not found in \"$file\"")
-                fi
+        if [ -n "$pattern" ] && [ -n "$file" ] && [ -f "$file" ]; then
+            if ! grep -qF "$pattern" "$file" 2>/dev/null; then
+                problems+=("  \"$step_title\": pattern \"$pattern\" not found in \"$file\"")
             fi
         fi
     done
@@ -64,10 +88,7 @@ while IFS= read -r tour_file; do
         echo "  Ask an LLM to update the stale steps in this tour file."
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     fi
-done <<< "$staged_tours"
+done
 
-if [ "$stale" = "1" ]; then
-    echo ""
-fi
-
+[ "$stale" = "1" ] && echo ""
 exit 0
