@@ -85,25 +85,28 @@
   scope: { state: NY, output_type: local, locality: null }
   expected: NEW
 
+# None of these have a canonical or an exclusion in taxonomy.yml, so the only
+# taxonomy-consistent label is NEW (the matcher passes them through). They are
+# not DROP — nothing in the fixture suppresses them.
 - raw_string: City Attorney
   scope: { state: CA, output_type: local, locality: null }
-  expected: DROP
+  expected: NEW
 
 - raw_string: Town Manager
   scope: { state: VT, output_type: local, locality: null }
-  expected: DROP
+  expected: NEW
 
 - raw_string: City Administrator
   scope: { state: OR, output_type: local, locality: null }
-  expected: DROP
+  expected: NEW
 
 - raw_string: Village Manager
   scope: { state: IL, output_type: local, locality: null }
-  expected: DROP
+  expected: NEW
 
 - raw_string: City Secretary
   scope: { state: TX, output_type: local, locality: null }
-  expected: DROP
+  expected: NEW
 
 - raw_string: Selectman
   scope: { state: MA, output_type: local, locality: null }

@@ -29,53 +29,31 @@ import yaml
 from shared.utils.config_utils import RoleConfig
 
 
-def _upsert_role(cur, value: str, is_unique: bool):
+def _upsert_term(cur, value: str, kind: str, is_unique: bool) -> str:
+    """Insert or update a role_term at global scope; return its id."""
     cur.execute(
         """
-        INSERT INTO roles (value, display_name, jurisdiction_ocdid, is_unique, priority)
-        VALUES (%s, %s, NULL, %s, 0)
-        ON CONFLICT (value, jurisdiction_ocdid)
-            WHERE disabled_at IS NULL
-            DO UPDATE SET priority = 0
+        INSERT INTO role_terms (value, kind, jurisdiction_ocdid, display_name, is_unique, priority)
+        VALUES (%s, %s, NULL, %s, %s, 0)
+        ON CONFLICT ON CONSTRAINT role_terms_scope_uq
+            DO UPDATE SET kind = EXCLUDED.kind, is_unique = EXCLUDED.is_unique
+        RETURNING id::text
         """,
-        (value, value, is_unique),
-    )
-
-
-def _resolve_role_id(cur, value: str) -> str:
-    cur.execute(
-        "SELECT id::text FROM roles WHERE value = %s AND jurisdiction_ocdid IS NULL AND disabled_at IS NULL",
-        (value,),
+        (value, kind, value, is_unique),
     )
     row = cur.fetchone()
-    if not row:
-        raise RuntimeError(f"Role '{value}' not found after upsert (bug?)")
+    assert row, "INSERT ... RETURNING id returned no row"
     return row[0]
 
 
-def _upsert_role_alias(cur, role_id: str, alias: str):
+def _upsert_alias(cur, term_id: str, alias: str):
     cur.execute(
         """
-        INSERT INTO role_aliases (role_id, value, source)
+        INSERT INTO role_aliases (term_id, value, source)
         VALUES (%s, %s, 'curated')
-        ON CONFLICT (role_id, value)
-            WHERE disabled_at IS NULL
-            DO NOTHING
+        ON CONFLICT (term_id, value) WHERE disabled_at IS NULL DO NOTHING
         """,
-        (role_id, alias),
-    )
-
-
-def _upsert_exclusion(cur, value: str):
-    cur.execute(
-        """
-        INSERT INTO role_exclusions (value, jurisdiction_ocdid, source)
-        VALUES (%s, NULL, 'curated')
-        ON CONFLICT (value, jurisdiction_ocdid)
-            WHERE disabled_at IS NULL
-            DO NOTHING
-        """,
-        (value,),
+        (term_id, alias),
     )
 
 
@@ -88,23 +66,16 @@ def import_taxonomy(path: str):
     with psycopg.connect(db_url) as conn:
         with conn.cursor() as cur:
             for entry in config.roles:
-                if not entry.include:
-                    _upsert_exclusion(cur, entry.role)
-                    for alias in entry.aliases:
-                        _upsert_exclusion(cur, alias)
-                    continue
-
-                _upsert_role(cur, entry.role, entry.is_unique)
-                role_id = _resolve_role_id(cur, entry.role)
+                term_id = _upsert_term(cur, entry.role, entry.kind, entry.is_unique)
                 for alias in entry.aliases:
-                    _upsert_role_alias(cur, role_id, alias)
+                    _upsert_alias(cur, term_id, alias)
 
         conn.commit()
 
     total = len(config.roles)
-    incl = sum(1 for r in config.roles if r.include)
-    excl = total - incl
-    print(f"Imported {total} role entries ({incl} roles, {excl} exclusions).")
+    canonical = sum(1 for r in config.roles if r.kind == "canonical")
+    exclusion = total - canonical
+    print(f"Imported {total} role entries ({canonical} canonical, {exclusion} exclusions).")
 
 
 if __name__ == "__main__":

@@ -188,7 +188,7 @@ async def resolve_role_config(jurisdiction_ocdid: str) -> Optional[RoleConfig]:
                     role=r["role"],
                     is_unique=r.get("is_unique", False),
                     aliases=r.get("aliases", []),
-                    include=r.get("include", True),
+                    kind=r.get("kind", "canonical"),
                 )
                 for r in roles_data
             ]

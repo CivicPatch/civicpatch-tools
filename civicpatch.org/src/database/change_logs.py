@@ -1,5 +1,6 @@
 import json
 
+from database.change_log_summary import summarize_change_log
 from database.database import get_pool
 from schemas.change_logs import PersonChangePayload
 from shared.utils.statuses import ChangeLogType
@@ -47,6 +48,7 @@ async def get_change_logs_for_roles(roles: list[str], limit: int, offset: int) -
             "author_name": r[6],
             "author_role": r[7],
             "jurisdiction_name": r[8],
+            "summary": summarize_change_log(r[1], r[4]),
         }
         for r in rows
     ]

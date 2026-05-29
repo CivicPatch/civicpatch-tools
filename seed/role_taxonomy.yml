@@ -195,14 +195,14 @@ roles:
       - president pro tem
   - role: city manager
     is_unique: true
-    include: false
+    kind: exclusion
     aliases:
       - city administrator
       - town manager
       - village manager
   - role: city attorney
     is_unique: true
-    include: false
+    kind: exclusion
     aliases:
       - municipal attorney
       - town attorney
@@ -210,4 +210,4 @@ roles:
       - city solicitor
   - role: city secretary
     is_unique: true
-    include: false
+    kind: exclusion

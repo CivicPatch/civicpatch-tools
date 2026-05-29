@@ -19,8 +19,8 @@ def test_normalize_roles(roles, expected):
 
 
 _EXCLUDED_ROLE_CONFIG = RoleConfig(roles=[
-    RoleEntry(role="city attorney", include=False, aliases=["municipal attorney", "town attorney", "village attorney", "city solicitor"]),
-    RoleEntry(role="city secretary", include=False),
+    RoleEntry(role="city attorney", kind="exclusion", aliases=["municipal attorney", "town attorney", "village attorney", "city solicitor"]),
+    RoleEntry(role="city secretary", kind="exclusion"),
 ])
 
 
@@ -41,12 +41,12 @@ def test_normalize_roles_config_order_is_respected():
 def test_normalize_roles_excluded_role_removed_from_mix():
     mayor_config = RoleConfig(roles=[
         RoleEntry(role="Mayor"),
-        RoleEntry(role="city secretary", include=False),
+        RoleEntry(role="city secretary", kind="exclusion"),
     ])
     assert people_utils.normalize_roles(["Mayor", "City Secretary"], role_config=mayor_config) == ["Mayor"]
 
 def test_normalize_roles_slash_excluded():
-    city_admin_config = RoleConfig(roles=[RoleEntry(role="city administrator", include=False)])
+    city_admin_config = RoleConfig(roles=[RoleEntry(role="city administrator", kind="exclusion")])
     assert people_utils.normalize_roles(["Mayor/City Administrator"], role_config=city_admin_config) == ["Mayor"]
 
 
