@@ -12,6 +12,18 @@ _BUCKET_ROLES = {
 }
 
 
+def _safe_path(jurisdiction_ocdid: str | None) -> str | None:
+    """Folder path for the activity feed's jurisdiction link. Returns None for
+    NULL ocdids, state/county-level scopes, and any malformed/legacy ocdids
+    rather than 500'ing the whole feed."""
+    if not jurisdiction_ocdid:
+        return None
+    try:
+        return jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    except ValueError:
+        return None
+
+
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -29,12 +41,7 @@ def get_router() -> APIRouter:
             "page": page,
             "total_pages": total_pages,
             "data": [
-                ChangeLogEntry(
-                    **row,
-                    jurisdiction_path=jurisdiction_ocdid_to_folder(row["jurisdiction_ocdid"])
-                    if row["jurisdiction_ocdid"]
-                    else None,
-                )
+                ChangeLogEntry(**row, jurisdiction_path=_safe_path(row["jurisdiction_ocdid"]))
                 for row in rows
             ],
         }

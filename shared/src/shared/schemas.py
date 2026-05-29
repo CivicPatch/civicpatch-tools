@@ -133,7 +133,8 @@ class JurisdictionId(BaseModel):
     state: str
     county: Optional[str] = None
     place_label: str = "place"
-    place: str
+    # State-level and county-level OCDIDs have no place component.
+    place: Optional[str] = None
     jurisdiction_type: str
     output_type: str
 

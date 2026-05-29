@@ -30,12 +30,12 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
       <td class="issues-page__issue-date">${formatDate(issue.created_at)}</td>
       <td>
         <div class="issues-page__issue-actions">
-          <button class="btn btn-sm secondary" @click=${() => onDetails(issue)}>Details</button>
+          <button class="civ-action-btn" @click=${() => onDetails(issue)}>Details</button>
           ${issue.issue_type === "unrecognized_role" && issue.jurisdictions?.length
-            ? html`<button class="btn btn-sm" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
+            ? html`<button class="civ-action-btn" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
             : ""}
           ${issue.status === "pending"
-            ? html`<button class="btn btn-sm destructive" @click=${() => onDismiss(issue)}>Dismiss</button>`
+            ? html`<button class="civ-action-btn civ-action-btn--danger" @click=${() => onDismiss(issue)}>Dismiss</button>`
             : ""}
         </div>
       </td>

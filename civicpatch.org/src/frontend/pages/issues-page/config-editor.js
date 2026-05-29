@@ -174,11 +174,11 @@ function TermTable({ terms, kind, scope, editable, editor, onSave, onExclude, on
                 >${aliasLabel(t.aliases)}</td>
                 ${editable ? html`
                   <td class="config-editor__actions">
-                    <button class="config-editor__action-btn" @click=${() => openEdit(t)}>Edit</button>
+                    <button class="civ-action-btn" @click=${() => openEdit(t)}>Edit</button>
                     ${kind === KIND_CANONICAL
-                      ? html`<button class="config-editor__action-btn" @click=${() => handleExclude(t)}>Exclude</button>`
-                      : html`<button class="config-editor__action-btn" @click=${() => handleInclude(t)}>Include</button>`}
-                    <button class="config-editor__action-btn config-editor__action-btn--danger" @click=${() => handleDelete(t)}>Remove</button>
+                      ? html`<button class="civ-action-btn" @click=${() => handleExclude(t)}>Exclude</button>`
+                      : html`<button class="civ-action-btn" @click=${() => handleInclude(t)}>Include</button>`}
+                    <button class="civ-action-btn civ-action-btn--danger" @click=${() => handleDelete(t)}>Remove</button>
                   </td>
                 ` : null}
               </tr>
@@ -386,17 +386,39 @@ function ConfigEditor(host) {
         </summary>
         <div class="config-editor__section-body">
           ${scope === SCOPE_LOCALITY ? html`
-            <div class="config-editor__locality-autocomplete">
-              <civ-autocomplete-select
-                .options=${localityOptions}
-                .optionsMetadata=${localityOptionsMetadata}
-                .inputValue=${localityInputValue}
-                .pageSize=${25}
-                @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
-                @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
-                @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
-              ></civ-autocomplete-select>
-            </div>
+            ${jurisdictions.length > 0
+              ? html`
+                <!-- Modal mode (e.g. opened from an issue's Resolve button):
+                     restrict the picker to the jurisdictions the issue is
+                     tagged for. A single tagged jurisdiction gets auto-picked
+                     and the dropdown is hidden entirely. -->
+                ${jurisdictions.length === 1 ? null : html`
+                  <label class="config-editor__locality-picker">
+                    Jurisdiction
+                    <select @change=${(e) => { localityEditor.reset(); setLocalityOcdid(e.target.value); }}>
+                      ${jurisdictions.map((j) => html`
+                        <option value=${j.jurisdiction_ocdid} ?selected=${j.jurisdiction_ocdid === localityOcdid}>
+                          ${j.name || j.jurisdiction_ocdid}
+                        </option>
+                      `)}
+                    </select>
+                  </label>
+                `}
+              `
+              : html`
+                <!-- Inline mode (/roles page): full state-wide search. -->
+                <div class="config-editor__locality-autocomplete">
+                  <civ-autocomplete-select
+                    .options=${localityOptions}
+                    .optionsMetadata=${localityOptionsMetadata}
+                    .inputValue=${localityInputValue}
+                    .pageSize=${25}
+                    @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
+                    @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
+                    @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
+                  ></civ-autocomplete-select>
+                </div>
+              `}
           ` : null}
           ${error ? html`<p class="config-editor__error">${error}</p>` : null}
           ${loading ? html`<div>Loading…</div>` : null}

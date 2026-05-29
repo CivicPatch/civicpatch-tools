@@ -68,17 +68,23 @@ async def include_role(
 def _scope_to_ocdid(scope: str, ocdid: str) -> str | None:
     """Derive the DB jurisdiction_ocdid from a scope + full ocdid pair.
 
-    global → None (the DB sentinel for global scope)
-    state  → state-level ocdid prefix (e.g. ocd-jurisdiction/country:us/state:tx)
+    Produces full OCDIDs that round-trip through parse_jurisdiction_ocdid —
+    state/county scope keys include the jurisdiction_type suffix (e.g.
+    `/government`), not just the prefix.
+
+    global   → None (DB sentinel for global scope)
+    state    → ocd-jurisdiction/country:us/state:tx/government
+    county   → ocd-jurisdiction/country:us/state:tx/county:travis/government
     locality → the full ocdid as-is
     """
     if scope == "global":
         return None
-    if scope == "state":
+    if scope in ("state", "county"):
+        prefix = "state:" if scope == "state" else "county:"
         parts = ocdid.split("/")
         for i, p in enumerate(parts):
-            if p.startswith("state:"):
-                return "/".join(parts[: i + 1])
+            if p.startswith(prefix):
+                return "/".join(parts[: i + 1] + [parts[-1]])
         # Shouldn't happen for valid ocdids, but fall through to locality
     return ocdid
 
