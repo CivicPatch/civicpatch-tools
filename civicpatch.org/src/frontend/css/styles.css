@@ -444,6 +444,55 @@ button.destructive:active,
   --pico-color: rgb(var(--catppuccin-base));
 }
 
+/* ── civ-action-btn ──────────────────────────────────────────────────────
+ * Compact outline button for table-row actions. Used in role-config tables
+ * and the issues table. !important throughout because Pico's aggressive
+ * default `button` styling otherwise re-fills it.
+ */
+.civ-action-btn {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  padding: 0.2em 0.6em !important;
+  border-radius: 4px !important;
+  border: 1px solid var(--pico-muted-border-color) !important;
+  background: transparent !important;
+  color: var(--pico-muted-color) !important;
+  cursor: pointer;
+  line-height: 1.4 !important;
+  margin-left: 0.25rem;
+  min-height: unset !important;
+  width: auto !important;
+  transition: border-color 0.1s, color 0.1s, background 0.1s;
+  box-shadow: none !important;
+}
+
+.civ-action-btn:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .civ-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+}
+
+button.civ-action-btn:focus-visible {
+  outline: 2px solid var(--pico-primary) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.civ-action-btn--danger {
+  color: var(--pico-del-color) !important;
+  border-color: color-mix(in srgb, var(--pico-del-color) 40%, transparent) !important;
+}
+
+.civ-action-btn--danger:hover {
+  border-color: var(--pico-del-color) !important;
+  background: color-mix(in srgb, var(--pico-del-color) 6%, transparent) !important;
+  color: var(--pico-del-color) !important;
+}
+
 .btn-icon {
   background: none;
   border: none;

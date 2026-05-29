@@ -82,12 +82,14 @@ def test_scope_global_maps_to_none():
 
 
 @pytest.mark.unit
-def test_scope_state_maps_to_state_prefix():
-    full = "ocd-jurisdiction/country:us/state:tx/place:austin"
-    assert _scope_to_ocdid("state", full) == "ocd-jurisdiction/country:us/state:tx"
+def test_scope_state_appends_jurisdiction_type():
+    """State-scope OCDID must end in the jurisdiction_type suffix so it parses
+    as a valid state-level OCDID (vs the truncated prefix we used initially)."""
+    full = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
+    assert _scope_to_ocdid("state", full) == "ocd-jurisdiction/country:us/state:tx/government"
 
 
 @pytest.mark.unit
 def test_scope_locality_maps_to_full_ocdid():
-    full = "ocd-jurisdiction/country:us/state:tx/place:austin"
+    full = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
     assert _scope_to_ocdid("locality", full) == full

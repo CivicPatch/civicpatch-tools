@@ -35,11 +35,13 @@ def _kind_for(entry: RoleEntryData) -> TermKind:
 
 
 def _state_ocdid_from_ocdid(ocdid: str) -> str | None:
-    """Extract the state-level ocdid prefix from a full ocdid."""
+    """Derive the state-level OCDID for a given place OCDID. Must produce the
+    same form as core.role_config._scope_to_ocdid("state", ...) so the keys
+    match across writes/reads."""
     parts = ocdid.split("/")
     for i, p in enumerate(parts):
         if p.startswith("state:"):
-            return "/".join(parts[: i + 1])
+            return "/".join(parts[: i + 1] + [parts[-1]])
     return None
 
 

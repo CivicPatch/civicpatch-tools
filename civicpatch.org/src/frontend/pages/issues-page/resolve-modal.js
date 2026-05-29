@@ -34,6 +34,18 @@ function ResolveModal(host) {
       .catch(() => setModalDetails([]));
   }, []);
 
+  // Auto-fill locality when the current state has exactly one jurisdiction —
+  // the most common case for unrecognized_role issues flagged in a single
+  // place. Multi-locality states still require an explicit pick.
+  useEffect(() => {
+    const matches = (issue?.jurisdictions || []).filter((j) => j.state === modalState);
+    if (matches.length === 1) {
+      setModalLocality(matches[0].locality);
+    } else {
+      setModalLocality("");
+    }
+  }, [modalState, issue?.jurisdictions]);
+
   const detail = modalDetails?.[0] ?? null;
 
   useEffect(() => {
@@ -121,7 +133,7 @@ function ResolveModal(host) {
           ` : null}
           <label>
             State
-            <select @change=${(e) => { setModalState(e.target.value); setModalLocality(""); }}>
+            <select @change=${(e) => setModalState(e.target.value)}>
               ${(issue.states || []).map((s) => html`
                 <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
               `)}
@@ -229,10 +241,12 @@ function ResolveModal(host) {
   const isResolvable = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE;
 
   const content = html`
-    ${typeExtras}
-    ${domainChangeExtras}
-    ${debugSection}
-    ${sourceSection}
+    <div class="issues-page__resolve-content">
+      ${typeExtras}
+      ${domainChangeExtras}
+      ${debugSection}
+      ${sourceSection}
+    </div>
   `;
 
   const footer = isResolvable

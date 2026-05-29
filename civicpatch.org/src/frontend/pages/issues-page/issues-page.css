@@ -455,6 +455,22 @@
 }
 
 
+.issues-page__resolve-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Long source URLs break onto a new line instead of clipping the row. */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* The resolve modal carries source URLs + debug content + form — the global
+   32rem dialog cap is too narrow. :has() lets us widen this one modal without
+   touching other dialogs or threading a className through civ-modal's props. */
+dialog[open]:has(.issues-page__resolve-content) {
+    max-width: min(95vw, 56rem) !important;
+}
+
 .issues-page__resolve-role-form {
     display: flex;
     flex-direction: column;

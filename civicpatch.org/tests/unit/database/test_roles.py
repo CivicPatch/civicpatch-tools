@@ -19,15 +19,17 @@ from schemas.jurisdictions import RoleEntryData
 
 
 @pytest.mark.unit
-def test_state_ocdid_from_place():
-    ocdid = "ocd-jurisdiction/country:us/state:tx/place:combes"
-    assert _state_ocdid_from_ocdid(ocdid) == "ocd-jurisdiction/country:us/state:tx"
+def test_state_ocdid_from_place_appends_jurisdiction_type():
+    """State-scope key must include the jurisdiction_type suffix so it round-
+    trips through parse_jurisdiction_ocdid as a valid state-level OCDID."""
+    ocdid = "ocd-jurisdiction/country:us/state:tx/place:combes/government"
+    assert _state_ocdid_from_ocdid(ocdid) == "ocd-jurisdiction/country:us/state:tx/government"
 
 
 @pytest.mark.unit
-def test_state_ocdid_from_state_returns_itself():
-    ocdid = "ocd-jurisdiction/country:us/state:tx"
-    assert _state_ocdid_from_ocdid(ocdid) == "ocd-jurisdiction/country:us/state:tx"
+def test_state_ocdid_from_state_only_returns_itself():
+    ocdid = "ocd-jurisdiction/country:us/state:tx/government"
+    assert _state_ocdid_from_ocdid(ocdid) == "ocd-jurisdiction/country:us/state:tx/government"
 
 
 @pytest.mark.unit
