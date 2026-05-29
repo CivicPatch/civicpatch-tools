@@ -183,9 +183,7 @@ app.include_router(
     api_change_logs_router.get_router(),
     prefix="/api/v1/change_logs",
     tags=["change_logs"],
-    dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS))
-    ],
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))],
 )
 
 app.include_router(

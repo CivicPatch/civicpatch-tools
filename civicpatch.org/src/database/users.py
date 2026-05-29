@@ -6,21 +6,23 @@ from environment import get_env_vars
 import lib.hash as hash_utils
 
 
-async def upsert_user(provider, provider_user_id, email, display_name: str | None = None) -> str:
+async def upsert_user(provider, provider_user_id, email) -> str:
+    # display_name is intentionally not written here. Users pick their own via
+    # /settings on first login; OAuth-supplied names are ignored to keep the
+    # handle under user control and prevent surprise overwrites on re-login.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email, display_name, last_login_at)
-            VALUES (%s, %s, %s, %s, NOW())
+            INSERT INTO users (provider, provider_user_id, email, last_login_at)
+            VALUES (%s, %s, %s, NOW())
             ON CONFLICT (provider, provider_user_id)
             DO UPDATE SET
                 email = EXCLUDED.email,
-                display_name = COALESCE(users.display_name, EXCLUDED.display_name),
                 last_login_at = NOW()
             RETURNING id::text
             """,
-            (provider, provider_user_id, email, display_name),
+            (provider, provider_user_id, email),
         )
         row = await cur.fetchone()
     assert row, "upsert_user RETURNING returned no row"

@@ -125,6 +125,7 @@ When adding a new endpoint, pick the prefix deliberately. If it returns frontend
 ## Testing
 
 - Framework: pytest
+- **Pick the test layer deliberately.** Before writing a test, ask: what behavior am I trying to lock down, and what's the cheapest layer that exercises it honestly? Mocking is for crossing process boundaries you can't cross in the test environment (external APIs, network, sometimes the DB); it is not a tool for isolating in-process code from itself. A test that mocks five things to verify one thing is a sign you picked the wrong layer — either move down (unit-test the pure function directly with no mocks) or up (integration test with real collaborators). Don't add mocks to make a test pass; if a real call from the layer under test feels wrong to make, the layering itself is probably the issue.
 - **Unit test business logic functions directly** — import and call them, mock only external boundaries (GitHub API, Redis, DB). Do not test logic through the HTTP layer.
 - **Route handler tests are thin** — verify the HTTP contract only (status code, response shape). Mock the background task function itself; don't re-test its logic in route tests.
 - Mock external services (GitHub, Redis, DB) at the service-call boundary — patch the module-level function, not internal implementation details.

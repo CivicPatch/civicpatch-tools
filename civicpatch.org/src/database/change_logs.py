@@ -25,7 +25,7 @@ async def get_change_logs_for_roles(roles: list[str], limit: int, offset: int) -
             """
             SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.request_id,
                    cl.changes, cl.created_at,
-                   COALESCE(u.display_name, u.email) AS author_name, u.role AS author_role,
+                   COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id

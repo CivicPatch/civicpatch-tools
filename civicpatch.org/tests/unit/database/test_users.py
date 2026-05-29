@@ -6,6 +6,8 @@ from database.users import (
     set_user_role,
     list_users,
     get_user_by_id,
+    display_name_in_use,
+    set_user_display_name,
 )
 
 
@@ -44,14 +46,14 @@ def _make_conn_pool():
 async def test_upsert_user_returns_uuid_string():
     cur = _make_cursor(returning_row=("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await upsert_user("supabase", "supabase-uuid", "alice@example.com", "Alice")
+        result = await upsert_user("supabase", "supabase-uuid", "alice@example.com")
 
     assert result == "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
     cur.execute.assert_awaited_once()
     args, _ = cur.execute.await_args
     assert "INSERT INTO users" in args[0]
     assert "RETURNING id::text" in args[0]
-    assert args[1] == ("supabase", "supabase-uuid", "alice@example.com", "Alice")
+    assert args[1] == ("supabase", "supabase-uuid", "alice@example.com")
 
 
 @pytest.mark.asyncio
@@ -59,12 +61,62 @@ async def test_upsert_user_returns_uuid_string():
 async def test_upsert_user_does_not_touch_user_roles():
     cur = _make_cursor(returning_row=("any-uuid",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await upsert_user("supabase", "id", "x@example.com", None)
+        await upsert_user("supabase", "id", "x@example.com")
 
     # Only one execute call — no role mutation
     assert cur.execute.await_count == 1
     args, _ = cur.execute.await_args
     assert "user_roles" not in args[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_upsert_user_does_not_write_display_name():
+    # display_name belongs to the user, set via /settings — upsert_user must
+    # never insert or update it (no clobbering on re-login, no OAuth import).
+    cur = _make_cursor(returning_row=("any-uuid",))
+    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await upsert_user("supabase", "id", "x@example.com")
+
+    args, _ = cur.execute.await_args
+    sql = args[0]
+    assert "display_name" not in sql
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_display_name_in_use_true_when_row_returned():
+    cur = _make_cursor(returning_row=(1,))
+    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        result = await display_name_in_use("apple-witch")
+
+    assert result is True
+    args, _ = cur.execute.await_args
+    assert "WHERE display_name = %s" in args[0]
+    assert args[1] == ("apple-witch",)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_display_name_in_use_false_when_no_row():
+    cur = _make_cursor(returning_row=None)
+    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        result = await display_name_in_use("free-name")
+
+    assert result is False
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_set_user_display_name_runs_update():
+    pool, conn = _make_conn_pool()
+    with patch("database.users.get_pool", AsyncMock(return_value=pool)):
+        await set_user_display_name("user-uuid", "apple-witch")
+
+    assert conn.execute.await_count == 1
+    args, _ = conn.execute.await_args_list[0]
+    assert "UPDATE users SET display_name = %s WHERE id = %s" in args[0]
+    assert args[1] == ("apple-witch", "user-uuid")
 
 
 @pytest.mark.asyncio

@@ -1,0 +1,66 @@
+{
+  "title": "[tmp/PR] display_name picker + activity-page gating",
+  "description": "Temporary review-only tour for the display_name picker + activity-page gating PR. Captures the cross-cutting flow for the reviewer's first pass; not meant to outlive the PR.\n\n*** IF YOU'RE SEEING A STALENESS WARNING FOR THIS FILE: delete this file. Do not update it. *** The tmp_ prefix marks it as PR-review-only — long-lived design rationale already lives in AGENTS.md (API surface, test-layer principle), inline code comments (upsert_user, change_logs SQL), and the README permissions section.",
+  "steps": [
+    {
+      "title": "1. The leak this PR fixes",
+      "description": "Before this PR, the activity feed's `author_name` fell back to the user's email when `display_name` was NULL — a PII leak on every change log row from any user who hadn't manually picked a name (which was everyone, since OAuth was never populating it either). The fix here drops `u.email` from the COALESCE and substitutes a literal `'Anonymous'` as a defensive fallback for orphaned rows (deleted users via `ON DELETE SET NULL`). The rest of the PR is the machinery that ensures every active user actually has a display_name to render.",
+      "file": "civicpatch.org/src/database/change_logs.py",
+      "line": 28
+    },
+    {
+      "title": "2. The UNIQUE constraint",
+      "description": "Single-line migration. PostgreSQL's default `UNIQUE` treats NULLs as distinct (multiple NULLs coexist) — so existing users with no display_name stay valid until they pick one. Once a non-NULL value is written, it has to be unique. No backfill needed; the middleware (step 7) routes everyone through the picker on first interaction.",
+      "file": "civicpatch.org/database_operations/migrations/096_unique_display_name.up.sql",
+      "line": 5
+    },
+    {
+      "title": "3. Wordlists — vendored from three sources",
+      "description": "194 adjectives × 445 nouns × 104 places ≈ 86k two-word combos, 8.9M three-word combos. Sources: haikunator (nature/poetic), moby/moby names-generator (personality), unique-names-generator (animals). Places curated in-repo and kept disjoint from nouns so collision overflow never produces e.g. `youthful-meadow-meadow`. No manual culling pass — the output is a *suggestion*, so an unfortunate combination can be replaced by the user.",
+      "file": "civicpatch.org/src/lib/usernames.yml",
+      "line": 1
+    },
+    {
+      "title": "4. Generator — pure pick functions, no DB",
+      "description": "Three pure functions. The orchestration (try 2-word → on collision append place → on collision append numeric suffix) lives in the route handler (step 5), not here. This keeps the lib pure-sync, no `existing: set[str]` parameter, no async leakage. CLAUDE.md philosophy: 'side effects at the edges, pure logic in the middle.'",
+      "file": "civicpatch.org/src/lib/usernames.py",
+      "line": 18
+    },
+    {
+      "title": "5. Suggest endpoint — orchestration",
+      "description": "Try 2-word → DB check → fall back to 3-word → DB check → final fallback adds 4-digit suffix. Worst case is 2 indexed DB lookups (the UNIQUE constraint from step 2 created the index). The chain is inlined deliberately rather than extracted; only one caller exists. Path is `GET /api/internal/user/display-name/suggestion` — REST-y nesting on a virtual sub-resource, not an `:action` verb in the URL.",
+      "file": "civicpatch.org/src/routers/api/user.py",
+      "line": 31
+    },
+    {
+      "title": "6. Save endpoint — 400 / 409 / 200",
+      "description": "Strip whitespace; reject empty or >50 chars (400); catch `psycopg.errors.UniqueViolation` on the UPDATE and surface as 409 ('That name is already taken'). The `if not user.user_id` check matches the project pattern in test_notes.py for narrowing `str | None` (Pyright wants it; the `get_user` dep guarantees it for human identities at runtime).",
+      "file": "civicpatch.org/src/routers/api/user.py",
+      "line": 41
+    },
+    {
+      "title": "7. upsert_user — the deliberate omission",
+      "description": "**Behavior change worth pausing on.** Previously this took `display_name` as a parameter and wrote it from whatever OAuth provided. That meant (a) every re-login could clobber the user-picked name, and (b) the GitHub-SSO path (deprecated, being ripped out) was the only OAuth that even returned one. Now `upsert_user` never touches `display_name`; it's owned entirely by the user via /settings (step 9). The signature change is reflected in `sso.py` and the test suite.",
+      "file": "civicpatch.org/src/database/users.py",
+      "line": 9
+    },
+    {
+      "title": "8. The middleware — the gate",
+      "description": "Real FastAPI HTTP middleware (not a Depends). Lives outside the dependency system because: (a) it needs to redirect, which is awkward to express as a dependency-failure return value; (b) it auto-applies to every route, so new pages can't accidentally bypass the gate. Allowlist covers `/settings` itself (preventing infinite redirect), the suggest + save endpoints (the page needs them), `/frontend/*` (vite assets), and `/api/v1/auth/*` + auth endpoints. The middleware re-parses the session cookie itself; a one-time per-request DB read for the user row — fine at this scale, noted as a future caching opportunity.",
+      "file": "civicpatch.org/src/lib/middleware.py",
+      "line": 22
+    },
+    {
+      "title": "9. /settings page + frontend",
+      "description": "Route handler is logged-in-only (no role gate) — the middleware sends users here, so it must not redirect them away. Frontend `settings-page/index.ts` fetches `/api/internal/user/display-name/suggestion` on mount, prefills the input, POSTs on submit, redirects to `/` on success. The banner above the form only renders when `display_name` is null (passed via the `user` attribute from the Jinja template). No 'try another' button per design — refresh the page for a new suggestion.",
+      "file": "civicpatch.org/src/routers/frontend.py",
+      "line": 135
+    },
+    {
+      "title": "10. Permission split + bucket gate",
+      "description": "`can_view_activity_page` drops from MAINTAINERS+ to DEFAULT (any signed-in user). New `can_view_quarantine` takes the old MAINTAINERS+ slot — for the quarantine section specifically (untrusted-author content awaiting spam review). The `/api/v1/change_logs` mount loosens to AUTHENTICATED; the QUARANTINE bucket is gated inside the route handler by inspecting the identity's role. Two-route-endpoint refactor (`/change_logs/quarantine` vs `/change_logs/activity`) would be cleaner but was out of scope; the inline gate matches existing patterns in this codebase. Frontend `activity-page/index.ts` reads `user.permissions.can_view_quarantine` and conditionally renders + fetches.",
+      "file": "civicpatch.org/src/routers/frontend.py",
+      "line": 42
+    }
+  ]
+}

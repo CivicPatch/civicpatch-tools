@@ -79,7 +79,15 @@ function renderTable(entries, emptyText) {
   `;
 }
 
-function ActivityPage() {
+function ActivityPage({ user }) {
+  let canViewQuarantine = false;
+  try {
+    const parsed = user ? JSON.parse(user) : null;
+    canViewQuarantine = !!parsed?.permissions?.can_view_quarantine;
+  } catch (_e) {
+    /* leave false */
+  }
+
   const [quarantine, setQuarantine] = useState([]);
   const [quarantineTotal, setQuarantineTotal] = useState(0);
   const [quarantinePage, setQuarantinePage] = useState(1);
@@ -91,6 +99,7 @@ function ActivityPage() {
   const [activityTotalPages, setActivityTotalPages] = useState(1);
 
   useEffect(() => {
+    if (!canViewQuarantine) return;
     fetchChangeLogs("quarantine", quarantinePage, PER_PAGE)
       .then((r) => {
         setQuarantine(r.data || []);
@@ -98,7 +107,7 @@ function ActivityPage() {
         setQuarantineTotalPages(r.total_pages || 1);
       })
       .catch(console.error);
-  }, [quarantinePage]);
+  }, [quarantinePage, canViewQuarantine]);
 
   useEffect(() => {
     fetchChangeLogs("activity", activityPage, PER_PAGE)
@@ -112,23 +121,25 @@ function ActivityPage() {
 
   return html`
     <main class="activity-page page-content">
-      <section class="activity-page__section">
-        <div class="section-header">
-          <h2 class="section-title section-title--warning">
-            Quarantine <span class="section-count">${quarantineTotal || ""}</span>
-          </h2>
-        </div>
-        <p class="activity-page__subtitle">Changes from untrusted (default-role) contributors — review for spam or profanity.</p>
-        ${renderTable(quarantine, "Nothing awaiting review.")}
-        ${Pagination({
-          page: quarantinePage,
-          totalPages: quarantineTotalPages,
-          onPrevious: () => setQuarantinePage(quarantinePage - 1),
-          onNext: () => setQuarantinePage(quarantinePage + 1),
-          perPage: PER_PAGE,
-          onPerPageChange: undefined,
-        })}
-      </section>
+      ${canViewQuarantine
+        ? html`<section class="activity-page__section">
+            <div class="section-header">
+              <h2 class="section-title section-title--warning">
+                Quarantine <span class="section-count">${quarantineTotal || ""}</span>
+              </h2>
+            </div>
+            <p class="activity-page__subtitle">Changes from untrusted (default-role) contributors — review for spam or profanity.</p>
+            ${renderTable(quarantine, "Nothing awaiting review.")}
+            ${Pagination({
+              page: quarantinePage,
+              totalPages: quarantineTotalPages,
+              onPrevious: () => setQuarantinePage(quarantinePage - 1),
+              onNext: () => setQuarantinePage(quarantinePage + 1),
+              perPage: PER_PAGE,
+              onPerPageChange: undefined,
+            })}
+          </section>`
+        : ""}
 
       <section class="activity-page__section">
         <div class="section-header">
@@ -151,4 +162,4 @@ function ActivityPage() {
   `;
 }
 
-customElements.define("activity-page", component(ActivityPage, { useShadowDOM: false }));
+customElements.define("activity-page", component(ActivityPage, { useShadowDOM: false, observedAttributes: ["user"] }));
