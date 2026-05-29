@@ -36,7 +36,11 @@ class ChangeLogEntry(BaseModel):
     jurisdiction_name: str | None
     jurisdiction_path: str | None = None
     request_id: str | None
-    changes: PersonChangePayload | None
+    # Raw JSONB payload — shape varies by type. Kept as a dict so the wire
+    # contract doesn't break when new types are added; humans read `summary`,
+    # specialized renderers (e.g. person field-diff expander) can still dig in.
+    changes: dict[str, Any] | None
     author_name: str | None
     author_role: str | None
     created_at: datetime
+    summary: str

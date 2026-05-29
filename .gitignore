@@ -50,3 +50,5 @@ e2e/node_modules/
 # Supabase CLI runtime artifacts (created by `supabase start`)
 .branches
 .temp
+
+.pi

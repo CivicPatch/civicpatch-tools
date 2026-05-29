@@ -96,27 +96,27 @@ dispositions:
   - Zoning Board Of Appeals
   disposition: correct
 - raw_string: City Attorney
-  expected: DROP
+  expected: NEW
   actual:
   - City Attorney
   disposition: correct
 - raw_string: Town Manager
-  expected: DROP
+  expected: NEW
   actual:
   - Town Manager
   disposition: correct
 - raw_string: City Administrator
-  expected: DROP
+  expected: NEW
   actual:
   - City Administrator
   disposition: correct
 - raw_string: Village Manager
-  expected: DROP
+  expected: NEW
   actual:
   - Village Manager
   disposition: correct
 - raw_string: City Secretary
-  expected: DROP
+  expected: NEW
   actual:
   - City Secretary
   disposition: correct

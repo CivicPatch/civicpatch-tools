@@ -3,7 +3,7 @@
 # controls the taxonomy and varies the INPUTS, so a failure points at matcher logic,
 # not at production config drift.
 #
-# `include: false` marks a role to actively suppress (drop) — used here to exercise
+# `kind: exclusion` marks a term to actively suppress (drop) — used here to exercise
 # the DROP disposition without depending on the global designation map.
 roles:
   - role: Mayor
@@ -17,5 +17,5 @@ roles:
   - role: Clerk
     aliases: [clerk, city clerk, town clerk, municipal clerk]
   - role: City Hall
-    include: false
+    kind: exclusion
     aliases: [city hall]

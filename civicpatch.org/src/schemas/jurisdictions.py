@@ -7,11 +7,14 @@ class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
 
 
+RoleKind = Literal["canonical", "exclusion"]
+
+
 class RoleEntryWithSource(BaseModel):
     role: str
     is_unique: bool
     aliases: List[str]
-    include: bool = True
+    kind: RoleKind = "canonical"
     source: Literal["global", "state", "locality"]
 
 
@@ -23,7 +26,7 @@ class RoleEntryData(BaseModel):
     role: str
     is_unique: bool = False
     aliases: List[str] = []
-    include: bool = True
+    kind: RoleKind = "canonical"
 
 
 class SetScopeRolesRequest(BaseModel):
@@ -35,3 +38,26 @@ class SetScopeRolesRequest(BaseModel):
 
 class SetGlobalRolesRequest(BaseModel):
     roles: List[RoleEntryData]
+
+
+class RoleScopeRequest(BaseModel):
+    """Base for operations targeting a single role at a given scope."""
+    role: str
+    scope: Literal["global", "state", "locality"]
+    ocdid: str = ""  # ignored for global scope
+
+
+class ExcludeRoleRequest(RoleScopeRequest):
+    pass
+
+
+class DeleteRoleRequest(RoleScopeRequest):
+    pass
+
+
+class IncludeExclusionRequest(BaseModel):
+    """Move an exclusion pattern back to roles."""
+    value: str
+    scope: Literal["global", "state", "locality"]
+    ocdid: str = ""  # ignored for global scope
+    is_unique: bool = False

@@ -1,17 +1,20 @@
 import os
 import yaml
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Literal, Optional
 from decimal import Decimal, InvalidOperation
 from pydantic import BaseModel
 from shared.schemas import JobConfig
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 
+RoleKind = Literal["canonical", "exclusion"]
+
+
 class RoleEntry(BaseModel):
     role: str
     is_unique: bool = False
     aliases: List[str] = []
-    include: bool = True
+    kind: RoleKind = "canonical"
 
 
 class RoleConfig(BaseModel):
@@ -46,7 +49,7 @@ def get_data_config():
 
 def get_role_configs(role_config_override: Optional[RoleConfig] = None) -> List[RoleEntry]:
     if role_config_override is not None:
-        return [entry for entry in role_config_override.roles if entry.include]
+        return [entry for entry in role_config_override.roles if entry.kind == "canonical"]
     return []
 
 
@@ -80,7 +83,7 @@ def get_excluded_role_names(role_config_override: Optional[RoleConfig] = None) -
         return set()
     names = set()
     for entry in role_config_override.roles:
-        if not entry.include:
+        if entry.kind == "exclusion":
             names.add(entry.role.lower())
             names.update(a.lower() for a in entry.aliases)
     return names

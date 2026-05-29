@@ -1,7 +1,16 @@
 import "./config-editor.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { fetchJurisdictionConfig, putJurisdictionConfig, fetchGlobalConfig, putGlobalConfig, fetchJurisdictionForState } from "../../api.js";
+import {
+  fetchJurisdictionConfig,
+  putJurisdictionConfig,
+  fetchGlobalConfig,
+  putGlobalConfig,
+  fetchJurisdictionForState,
+  excludeRole,
+  includeExclusion,
+  deleteRole,
+} from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 import "../../components/badge/badge.js";
@@ -10,6 +19,9 @@ import "../../components/inputs/auto-complete-select.js";
 const SCOPE_GLOBAL = "global";
 const SCOPE_STATE = "state";
 const SCOPE_LOCALITY = "locality";
+
+const KIND_CANONICAL = "canonical";
+const KIND_EXCLUSION = "exclusion";
 
 function parseAliases(text) {
   return text.split("\n").map((s) => s.trim()).filter(Boolean);
@@ -26,135 +38,154 @@ function seedState(jurisdictions) {
   return j?.state || j?.jurisdiction_path?.split("/")[0] || "";
 }
 
-function useRoleEditor() {
-  const [editingRole, setEditingRole] = useState(null);
+// One editor per scope; tracks which entry is being edited/added and of what kind.
+function useTermEditor() {
+  const [editingValue, setEditingValue] = useState(null);
+  const [editingKind, setEditingKind] = useState(KIND_CANONICAL);
   const [editName, setEditName] = useState("");
   const [editUnique, setEditUnique] = useState(false);
   const [editAliases, setEditAliases] = useState("");
-  const [addingRole, setAddingRole] = useState(false);
+  const [addingKind, setAddingKind] = useState(null);  // null | "canonical" | "exclusion"
   const [addName, setAddName] = useState("");
   const [addUnique, setAddUnique] = useState(false);
   const [addAliases, setAddAliases] = useState("");
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
-  const openEdit = (role) => {
-    setEditingRole(role.role);
-    setEditName(role.role);
-    setEditUnique(role.is_unique);
-    setEditAliases((role.aliases || []).join("\n"));
-    setAddingRole(false);
+  const openEdit = (term) => {
+    setEditingValue(term.role);
+    setEditingKind(term.kind || KIND_CANONICAL);
+    setEditName(term.role);
+    setEditUnique(term.is_unique);
+    setEditAliases((term.aliases || []).join("\n"));
+    setAddingKind(null);
     setSaveError(null);
   };
 
-  const openAdd = () => {
-    setAddingRole(true);
-    setEditingRole(null);
+  const openAdd = (kind) => {
+    setAddingKind(kind);
+    setEditingValue(null);
     setAddName("");
     setAddUnique(false);
     setAddAliases("");
     setSaveError(null);
   };
 
-  const reset = () => { setEditingRole(null); setAddingRole(false); setSaveError(null); };
+  const reset = () => { setEditingValue(null); setAddingKind(null); setSaveError(null); };
 
   return {
-    editingRole, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
-    addingRole, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
+    editingValue, editingKind, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
+    addingKind, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
     saving, setSaving, saveError, setSaveError,
     openEdit, openAdd, reset,
   };
 }
 
-function RoleTable({ roles, scope, editable, editor, onSave }) {
+// Renders one table — either the canonical roles or the exclusions for a scope.
+function TermTable({ terms, kind, scope, editable, editor, onSave, onExclude, onInclude, onDelete }) {
   const [aliasModal, setAliasModal] = useState(null);
   const {
-    editingRole, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
-    addingRole, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
+    editingValue, editingKind, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
+    addingKind, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
     saving, saveError, setSaveError,
     openEdit, openAdd, reset,
   } = editor;
 
+  // Edit / Add still flow through PUT (batched diff). Single-row actions use surgical endpoints.
   const handleSaveEdit = () => {
-    const updated = roles.map((r) =>
-      r.role === editingRole
-        ? { role: editName.trim(), is_unique: editUnique, aliases: parseAliases(editAliases) }
-        : { role: r.role, is_unique: r.is_unique, aliases: r.aliases }
-    );
-    onSave(updated, reset, setSaveError, saving);
+    onSave({ type: "edit", value: editingValue, kind: editingKind, name: editName.trim(), is_unique: editUnique, aliases: parseAliases(editAliases) }, reset, setSaveError);
   };
 
   const handleSaveAdd = () => {
     if (!addName.trim()) return;
-    const updated = [
-      ...roles.map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases })),
-      { role: addName.trim(), is_unique: addUnique, aliases: parseAliases(addAliases) },
-    ];
-    onSave(updated, reset, setSaveError, saving);
+    onSave({ type: "add", kind: addingKind, name: addName.trim(), is_unique: addUnique, aliases: parseAliases(addAliases) }, reset, setSaveError);
   };
 
-  const handleDelete = (roleName) => {
-    if (!confirm(`Disable role "${roleName}" from ${scope}?`)) return;
-    const updated = roles
-      .filter((r) => r.role !== roleName)
-      .map((r) => ({ role: r.role, is_unique: r.is_unique, aliases: r.aliases }));
-    onSave(updated, reset, setSaveError, saving);
+  const handleExclude = (term) => {
+    if (!confirm(`Exclude "${term.role}" from ${scope}? It will move to the Exclusions list.`)) return;
+    onExclude(term.role);
   };
 
-  const formContent = editingRole !== null ? html`
+  const handleInclude = (term) => {
+    if (!confirm(`Include "${term.role}" in ${scope}? It will move to the Roles list.`)) return;
+    onInclude(term.role);
+  };
+
+  const handleDelete = (term) => {
+    const label = kind === KIND_CANONICAL ? "role" : "exclusion";
+    if (!confirm(`Remove ${label} "${term.role}" from ${scope}? This cannot be undone.`)) return;
+    onDelete(term.role);
+  };
+
+  const isEditingThisKind = editingValue !== null && editingKind === kind;
+  const isAddingThisKind = addingKind === kind;
+  const showsUnique = kind === KIND_CANONICAL;
+
+  const formContent = isEditingThisKind ? html`
     <div class="config-editor__edit-form">
-      <label>Role name <input type="text" .value=${editName} @input=${(e) => setEditName(e.target.value)} /></label>
-      <label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>
+      <label>${showsUnique ? "Role" : "Pattern"}
+        <input type="text" readonly .value=${editName} title="Rename isn't supported yet — use Remove + Add to change the name." />
+      </label>
+      ${showsUnique ? html`<label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${editUnique} @change=${(e) => setEditUnique(e.target.checked)} /> Unique</label>` : null}
       <label>Aliases (one per line)<br /><textarea rows="5" .value=${editAliases} @input=${(e) => setEditAliases(e.target.value)}></textarea></label>
       ${saveError ? html`<p class="config-editor__error">${saveError}</p>` : null}
     </div>
-  ` : addingRole ? html`
+  ` : isAddingThisKind ? html`
     <div class="config-editor__edit-form">
-      <label>Role name <input type="text" .value=${addName} @input=${(e) => setAddName(e.target.value)} /></label>
-      <label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>
+      <label>${showsUnique ? "Role" : "Pattern"} <input type="text" .value=${addName} @input=${(e) => setAddName(e.target.value)} /></label>
+      ${showsUnique ? html`<label class="config-editor__checkbox-label"><input type="checkbox" ?checked=${addUnique} @change=${(e) => setAddUnique(e.target.checked)} /> Unique</label>` : null}
       <label>Aliases (one per line)<br /><textarea rows="5" .value=${addAliases} @input=${(e) => setAddAliases(e.target.value)}></textarea></label>
       ${saveError ? html`<p class="config-editor__error">${saveError}</p>` : null}
     </div>
   ` : null;
 
-  const formFooter = editingRole !== null ? html`
+  const formFooter = isEditingThisKind ? html`
     <button class="btn btn-sm" @click=${handleSaveEdit} ?disabled=${saving}>Save</button>
     <button class="btn btn-sm secondary" @click=${reset}>Cancel</button>
-  ` : addingRole ? html`
+  ` : isAddingThisKind ? html`
     <button class="btn btn-sm" @click=${handleSaveAdd} ?disabled=${saving || !addName.trim()}>Add</button>
     <button class="btn btn-sm secondary" @click=${reset}>Cancel</button>
   ` : null;
 
-  const formTitle = editingRole !== null ? `Edit: ${editingRole}` : "Add role";
+  const formTitle = isEditingThisKind
+    ? `Edit: ${editingValue}`
+    : (kind === KIND_CANONICAL ? "Add role" : "Add exclusion");
 
   return html`
     <table class="config-editor__table">
       <thead>
         <tr>
-          <th>Role</th><th>Unique</th><th>Aliases</th>
+          <th>${showsUnique ? "Role" : "Pattern"}</th>
+          ${showsUnique ? html`<th>Unique</th>` : null}
+          <th>Aliases</th>
           ${editable ? html`<th></th>` : null}
         </tr>
       </thead>
       <tbody>
-        ${roles.map((r) => html`
-          <tr>
-            <td>${r.role}</td>
-            <td>${r.is_unique ? "Yes" : "No"}</td>
-            <td
-              class=${r.aliases?.length > 1 ? "config-editor__alias-clickable" : ""}
-              @click=${() => r.aliases?.length > 1 && setAliasModal(r)}
-            >${aliasLabel(r.aliases)}</td>
-            ${editable ? html`
-              <td class="config-editor__actions">
-                <button class="btn btn-sm secondary" @click=${() => openEdit(r)}>Edit</button>
-                <button class="btn btn-sm destructive" @click=${() => handleDelete(r.role)}>Disable</button>
-              </td>
-            ` : null}
-          </tr>
-        `)}
+        ${terms.length === 0
+          ? html`<tr><td colspan=${showsUnique ? 4 : 3} class="config-editor__empty">No ${kind === KIND_CANONICAL ? "roles" : "exclusions"} yet.</td></tr>`
+          : terms.map((t) => html`
+              <tr>
+                <td>${t.role}</td>
+                ${showsUnique ? html`<td>${t.is_unique ? "Yes" : "No"}</td>` : null}
+                <td
+                  class=${t.aliases?.length > 1 ? "config-editor__alias-clickable" : ""}
+                  @click=${() => t.aliases?.length > 1 && setAliasModal(t)}
+                >${aliasLabel(t.aliases)}</td>
+                ${editable ? html`
+                  <td class="config-editor__actions">
+                    <button class="config-editor__action-btn" @click=${() => openEdit(t)}>Edit</button>
+                    ${kind === KIND_CANONICAL
+                      ? html`<button class="config-editor__action-btn" @click=${() => handleExclude(t)}>Exclude</button>`
+                      : html`<button class="config-editor__action-btn" @click=${() => handleInclude(t)}>Include</button>`}
+                    <button class="config-editor__action-btn config-editor__action-btn--danger" @click=${() => handleDelete(t)}>Remove</button>
+                  </td>
+                ` : null}
+              </tr>
+            `)}
       </tbody>
     </table>
-    ${editable ? html`<button class="btn btn-sm" @click=${openAdd}>+ Add role</button>` : null}
+    ${editable ? html`<button class="config-editor__add-btn" @click=${() => openAdd(kind)}>+ Add ${kind === KIND_CANONICAL ? "role" : "exclusion"}</button>` : null}
     ${formContent ? html`
       <civ-modal
         .title=${formTitle}
@@ -175,32 +206,7 @@ function RoleTable({ roles, scope, editable, editor, onSave }) {
   `;
 }
 
-customElements.define("civ-role-table", component(RoleTable, { useShadowDOM: false }));
-
-function ConfigSection({ title, badge, roles, loading, error, editable, onSave }) {
-  return html`
-    <div class="config-editor__section">
-      <h4 class="config-editor__section-title">
-        ${title}
-        <civ-badge .label=${badge} .variant=${badge}></civ-badge>
-        ${!editable ? html`<span class="config-editor__readonly">read-only</span>` : null}
-      </h4>
-      ${error ? html`<p class="config-editor__error">${error}</p>` : null}
-      ${loading ? html`<div>Loading…</div>` : null}
-      ${roles !== null && !loading
-        ? html`<civ-role-table
-            .roles=${roles}
-            .scope=${badge}
-            .editable=${editable}
-            .editor=${onSave.__editor}
-            .onSave=${onSave}
-          ></civ-role-table>`
-        : null}
-    </div>
-  `;
-}
-
-customElements.define("civ-config-section", component(ConfigSection, { useShadowDOM: false }));
+customElements.define("civ-term-table", component(TermTable, { useShadowDOM: false }));
 
 function ConfigEditor(host) {
   const jurisdictions = host.jurisdictions || [];
@@ -210,57 +216,58 @@ function ConfigEditor(host) {
 
   const stateCode = inline ? (host.stateCode || "") : seedState(jurisdictions);
 
-  // Global config
-  const [globalRoles, setGlobalRoles] = useState(null);
+  const [globalTerms, setGlobalTerms] = useState(null);
   const [globalError, setGlobalError] = useState(null);
-  const globalEditor = useRoleEditor();
+  const globalEditor = useTermEditor();
 
-  // State config
   const [stateOcdid, setStateOcdid] = useState(firstOcdid || null);
-  const [stateRoles, setStateRoles] = useState(null);
+  const [stateTerms, setStateTerms] = useState(null);
   const [stateError, setStateError] = useState(null);
-  const stateEditor = useRoleEditor();
+  const stateEditor = useTermEditor();
 
-  // Locality config
   const [localityOcdid, setLocalityOcdid] = useState(firstOcdid || null);
-  const [localityRoles, setLocalityRoles] = useState(null);
+  const [localityTerms, setLocalityTerms] = useState(null);
   const [localityError, setLocalityError] = useState(null);
   const [localityOptions, setLocalityOptions] = useState([]);
   const [localityOptionsMetadata, setLocalityOptionsMetadata] = useState({});
   const [localityInputValue, setLocalityInputValue] = useState("");
-  const localityEditor = useRoleEditor();
+  const localityEditor = useTermEditor();
+
+  const [localityFilter, setLocalityFilter] = useState("");
+  const [stateFilter, setStateFilter] = useState("");
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const dispatch = (name, detail) =>
     host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
 
   const loadGlobal = () => {
-    setGlobalRoles(null);
+    setGlobalTerms(null);
     setGlobalError(null);
     fetchGlobalConfig()
-      .then((r) => setGlobalRoles(r.data?.roles || []))
+      .then((r) => setGlobalTerms(r.data?.roles || []))
       .catch((e) => setGlobalError(e.message));
   };
 
   const loadStateConfig = (ocdid) => {
     if (!ocdid) return;
-    setStateRoles(null);
+    setStateTerms(null);
     setStateError(null);
     fetchJurisdictionConfig(ocdid)
       .then((r) => {
-        const roles = r.data?.roles || [];
-        setStateRoles(roles.filter((r) => r.source === SCOPE_STATE));
+        const terms = r.data?.roles || [];
+        setStateTerms(terms.filter((t) => t.source === SCOPE_STATE));
       })
       .catch((e) => setStateError(e.message));
   };
 
   const loadLocalityConfig = (ocdid) => {
     if (!ocdid) return;
-    setLocalityRoles(null);
+    setLocalityTerms(null);
     setLocalityError(null);
     fetchJurisdictionConfig(ocdid)
       .then((r) => {
-        const roles = r.data?.roles || [];
-        setLocalityRoles(roles.filter((r) => r.source === SCOPE_LOCALITY));
+        const terms = r.data?.roles || [];
+        setLocalityTerms(terms.filter((t) => t.source === SCOPE_LOCALITY));
       })
       .catch((e) => setLocalityError(e.message));
   };
@@ -270,11 +277,11 @@ function ConfigEditor(host) {
   }, []);
 
   useEffect(() => {
-    if (permissions.CONFIG_WRITE && globalRoles === null && !globalError) loadGlobal();
+    if (permissions.CONFIG_WRITE && globalTerms === null && !globalError) loadGlobal();
   }, [permissions.CONFIG_WRITE]);
 
   useEffect(() => {
-    if (!stateCode) { setStateRoles(null); setStateOcdid(null); return; }
+    if (!stateCode) { setStateTerms(null); setStateOcdid(null); return; }
     fetchJurisdictionForState(stateCode)
       .then((r) => {
         const ocdid = r?.data?.[0]?.jurisdiction_ocdid;
@@ -286,7 +293,7 @@ function ConfigEditor(host) {
   }, [stateCode]);
 
   useEffect(() => {
-    if (!stateCode) { setLocalityOptions([]); setLocalityRoles(null); setLocalityInputValue(""); return; }
+    if (!stateCode) { setLocalityOptions([]); setLocalityTerms(null); setLocalityInputValue(""); return; }
     fetchLocalitySuggestions("");
   }, [stateCode]);
 
@@ -306,18 +313,29 @@ function ConfigEditor(host) {
     if (localityOcdid) loadLocalityConfig(localityOcdid);
   }, [localityOcdid]);
 
-  const makeSave = (scope, ocdid, reload, editor) => {
-    const fn = async (updatedRoles, reset, setSaveError) => {
+  // PUT-based batch save (Edit / Add). Rebuilds the full term list and ships it.
+  const makeBatchSave = (scope, ocdid, terms, reload, editor) => {
+    return async (op, reset, setSaveError) => {
       editor.setSaving(true);
       setSaveError(null);
       try {
-        if (scope === SCOPE_GLOBAL) {
-          await putGlobalConfig(updatedRoles);
-          loadGlobal();
-        } else {
-          await putJurisdictionConfig({ ocdid, scope, roles: updatedRoles });
-          reload(ocdid);
+        let updated;
+        if (op.type === "edit") {
+          updated = terms.map((t) => t.role === op.value
+            ? { role: op.name, is_unique: op.is_unique, aliases: op.aliases, kind: op.kind }
+            : { role: t.role, is_unique: t.is_unique, aliases: t.aliases, kind: t.kind });
+        } else {  // add
+          updated = [
+            ...terms.map((t) => ({ role: t.role, is_unique: t.is_unique, aliases: t.aliases, kind: t.kind })),
+            { role: op.name, is_unique: op.is_unique, aliases: op.aliases, kind: op.kind },
+          ];
         }
+        if (scope === SCOPE_GLOBAL) {
+          await putGlobalConfig(updated);
+        } else {
+          await putJurisdictionConfig({ ocdid, scope, roles: updated });
+        }
+        reload();
         reset();
       } catch (e) {
         setSaveError(e.message);
@@ -325,79 +343,143 @@ function ConfigEditor(host) {
         editor.setSaving(false);
       }
     };
-    fn.__editor = editor;
-    return fn;
   };
 
-  const handleClose = () => dispatch("modal-close", {});
+  // Surgical single-row endpoints — atomic kind flips / hard deletes.
+  const makeExclude = (scope, ocdid, reload) => async (role) => {
+    try { await excludeRole(role, scope, ocdid || ""); reload(); }
+    catch (e) { console.error("Exclude failed:", e); alert(`Exclude failed: ${e.message}`); }
+  };
+  const makeInclude = (scope, ocdid, reload) => async (value) => {
+    try { await includeExclusion(value, scope, ocdid || ""); reload(); }
+    catch (e) { console.error("Include failed:", e); alert(`Include failed: ${e.message}`); }
+  };
+  const makeDelete = (scope, ocdid, reload) => async (role) => {
+    try { await deleteRole(role, scope, ocdid || ""); reload(); }
+    catch (e) { console.error("Remove failed:", e); alert(`Remove failed: ${e.message}`); }
+  };
+
+  const renderSection = (params) => {
+    const {
+      scope, badge, label, terms, error, loading, ocdid, reload, editor, filter, setFilter,
+      editable, open,
+    } = params;
+
+    const filtered = (terms ?? []).filter(
+      (t) => t.role.toLowerCase().includes(filter.toLowerCase())
+    );
+    const canonicals = filtered.filter((t) => (t.kind || KIND_CANONICAL) === KIND_CANONICAL);
+    const exclusions = filtered.filter((t) => t.kind === KIND_EXCLUSION);
+
+    const batchSave = makeBatchSave(scope, ocdid, terms || [], reload, editor);
+    const exclude = makeExclude(scope, ocdid, reload);
+    const include = makeInclude(scope, ocdid, reload);
+    const remove = makeDelete(scope, ocdid, reload);
+
+    return html`
+      <details class="config-editor__section" ?open=${open}>
+        <summary class="config-editor__section-title">
+          <civ-badge .label=${badge} .variant=${badge}></civ-badge>
+          ${label ? html`<span class="config-editor__section-label">${label}</span>` : null}
+          ${terms !== null ? html`<span class="config-editor__role-count">${terms.length}</span>` : null}
+          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+        </summary>
+        <div class="config-editor__section-body">
+          ${scope === SCOPE_LOCALITY ? html`
+            <div class="config-editor__locality-autocomplete">
+              <civ-autocomplete-select
+                .options=${localityOptions}
+                .optionsMetadata=${localityOptionsMetadata}
+                .inputValue=${localityInputValue}
+                .pageSize=${25}
+                @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
+                @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
+                @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
+              ></civ-autocomplete-select>
+            </div>
+          ` : null}
+          ${error ? html`<p class="config-editor__error">${error}</p>` : null}
+          ${loading ? html`<div>Loading…</div>` : null}
+          ${terms !== null ? html`
+            <div class="config-editor__filter">
+              <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
+              <input
+                type="text"
+                class="config-editor__filter-input"
+                placeholder="Filter…"
+                .value=${filter}
+                @input=${(e) => setFilter(e.target.value)}
+              >
+            </div>
+
+            <p class="config-editor__subsection-label">Roles</p>
+            <civ-term-table
+              .terms=${canonicals}
+              .kind=${KIND_CANONICAL}
+              .scope=${scope}
+              .editable=${editable}
+              .editor=${editor}
+              .onSave=${batchSave}
+              .onExclude=${exclude}
+              .onInclude=${include}
+              .onDelete=${remove}
+            ></civ-term-table>
+
+            <p class="config-editor__subsection-label">Exclusions</p>
+            <civ-term-table
+              .terms=${exclusions}
+              .kind=${KIND_EXCLUSION}
+              .scope=${scope}
+              .editable=${editable}
+              .editor=${editor}
+              .onSave=${batchSave}
+              .onExclude=${exclude}
+              .onInclude=${include}
+              .onDelete=${remove}
+            ></civ-term-table>
+          ` : null}
+        </div>
+      </details>
+    `;
+  };
+
+  const localitySection = renderSection({
+    scope: SCOPE_LOCALITY, badge: "locality", label: null,
+    terms: localityTerms, error: localityError,
+    loading: localityTerms === null && !localityError && localityOcdid,
+    ocdid: localityOcdid,
+    reload: () => loadLocalityConfig(localityOcdid),
+    editor: localityEditor, filter: localityFilter, setFilter: setLocalityFilter,
+    editable: true, open: true,
+  });
+
+  const stateSection = renderSection({
+    scope: SCOPE_STATE, badge: "state", label: stateCode ? stateCode.toUpperCase() : null,
+    terms: stateTerms, error: stateError,
+    loading: stateTerms === null && !stateError && stateCode,
+    ocdid: stateOcdid,
+    reload: () => loadStateConfig(stateOcdid),
+    editor: stateEditor, filter: stateFilter, setFilter: setStateFilter,
+    editable: true, open: true,
+  });
+
+  const globalSection = renderSection({
+    scope: SCOPE_GLOBAL, badge: "global", label: null,
+    terms: globalTerms, error: globalError,
+    loading: globalTerms === null && !globalError,
+    ocdid: null,
+    reload: loadGlobal,
+    editor: globalEditor, filter: globalFilter, setFilter: setGlobalFilter,
+    editable: permissions.CONFIG_GLOBAL_WRITE, open: false,
+  });
 
   const content = html`
-    ${permissions.CONFIG_WRITE && stateCode ? html`
-      <details class="config-editor__section" open>
-        <summary class="config-editor__section-title">
-          <civ-badge .label=${"locality"} .variant=${"locality"}></civ-badge>
-          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
-        </summary>
-        <div class="config-editor__locality-autocomplete">
-          <civ-autocomplete-select
-            .options=${localityOptions}
-            .optionsMetadata=${localityOptionsMetadata}
-            .inputValue=${localityInputValue}
-            .pageSize=${25}
-            @fetch-suggestions=${(e) => fetchLocalitySuggestions(e.detail)}
-            @input-change=${(e) => { setLocalityInputValue(e.detail.value); }}
-            @item-selected=${(e) => { localityEditor.reset(); setLocalityOcdid(e.detail.value); }}
-          ></civ-autocomplete-select>
-        </div>
-        ${localityError ? html`<p class="config-editor__error">${localityError}</p>` : null}
-        ${localityRoles === null && !localityError && localityOcdid ? html`<div>Loading…</div>` : null}
-        ${localityRoles !== null ? html`<civ-role-table
-          .roles=${localityRoles}
-          .scope=${SCOPE_LOCALITY}
-          .editable=${true}
-          .editor=${localityEditor}
-          .onSave=${makeSave(SCOPE_LOCALITY, localityOcdid, loadLocalityConfig, localityEditor)}
-        ></civ-role-table>` : null}
-      </details>
-    ` : null}
-
-    ${permissions.CONFIG_WRITE && stateCode ? html`
-      <details class="config-editor__section" open>
-        <summary class="config-editor__section-title">
-          <civ-badge .label=${"state"} .variant=${"state"}></civ-badge>
-          <span class="config-editor__section-label">${stateCode.toUpperCase()}</span>
-          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
-        </summary>
-        ${stateError ? html`<p class="config-editor__error">${stateError}</p>` : null}
-        ${stateRoles === null && !stateError && stateCode ? html`<div>Loading…</div>` : null}
-        ${stateRoles !== null ? html`<civ-role-table
-          .roles=${stateRoles}
-          .scope=${SCOPE_STATE}
-          .editable=${true}
-          .editor=${stateEditor}
-          .onSave=${makeSave(SCOPE_STATE, stateOcdid, loadStateConfig, stateEditor)}
-        ></civ-role-table>` : null}
-      </details>
-    ` : null}
-
-    ${permissions.CONFIG_WRITE ? html`
-      <details class="config-editor__section">
-        <summary class="config-editor__section-title">
-          <civ-badge .label=${"global"} .variant=${"global"}></civ-badge>
-          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
-        </summary>
-        ${globalError ? html`<p class="config-editor__error">${globalError}</p>` : null}
-        ${globalRoles === null && !globalError ? html`<div>Loading…</div>` : null}
-        ${globalRoles !== null ? html`<civ-role-table
-          .roles=${globalRoles}
-          .scope=${SCOPE_GLOBAL}
-          .editable=${permissions.CONFIG_GLOBAL_WRITE}
-          .editor=${globalEditor}
-          .onSave=${makeSave(SCOPE_GLOBAL, null, null, globalEditor)}
-        ></civ-role-table>` : null}
-      </details>
-    ` : null}
+    ${permissions.CONFIG_WRITE && stateCode ? localitySection : null}
+    ${permissions.CONFIG_WRITE && stateCode ? stateSection : null}
+    ${permissions.CONFIG_WRITE ? globalSection : null}
   `;
+
+  const handleClose = () => dispatch("modal-close", {});
 
   if (inline) return html`<div class="config-editor__inline">${content}</div>`;
 

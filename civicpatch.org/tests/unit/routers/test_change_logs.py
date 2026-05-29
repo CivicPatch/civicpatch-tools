@@ -20,6 +20,7 @@ ROW = {
     "author_name": "michelle@civicpatch.org",
     "author_role": "admins",
     "jurisdiction_name": "Seattle city",
+    "summary": "Edited Jane Doe (1 field)",
 }
 
 

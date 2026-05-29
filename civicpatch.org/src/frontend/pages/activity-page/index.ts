@@ -20,22 +20,25 @@ function formatValue(value) {
   return String(value);
 }
 
-function renderChange(changes) {
-  if (!changes) return html`<span class="activity-page__muted">—</span>`;
-  return html`
-    <div class="activity-page__change">
-      <strong>${changes.person_name}</strong>
-      <ul class="activity-page__fields">
-        ${changes.fields.map(
-          (f) => html`<li>
-            <span class="activity-page__field-name">${f.field}</span>:
-            <span class="activity-page__before">${formatValue(f.before)}</span> →
-            <span class="activity-page__after">${formatValue(f.after)}</span>
-          </li>`,
-        )}
-      </ul>
-    </div>
-  `;
+// Person edits get a field-level diff expander; everything else relies on the
+// server-rendered `summary` string.
+function renderChange(entry) {
+  if (entry.type === "edit_person" && entry.changes?.fields?.length) {
+    return html`
+      <div class="activity-page__change">
+        <ul class="activity-page__fields">
+          ${entry.changes.fields.map(
+            (f) => html`<li>
+              <span class="activity-page__field-name">${f.field}</span>:
+              <span class="activity-page__before">${formatValue(f.before)}</span> →
+              <span class="activity-page__after">${formatValue(f.after)}</span>
+            </li>`,
+          )}
+        </ul>
+      </div>
+    `;
+  }
+  return html`<span class="activity-page__muted">—</span>`;
 }
 
 function renderRow(entry) {
@@ -46,7 +49,10 @@ function renderRow(entry) {
       <td>${entry.jurisdiction_path
         ? html`<a href="/${entry.jurisdiction_path}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
         : (entry.jurisdiction_name ?? "—")}</td>
-      <td>${renderChange(entry.changes)}</td>
+      <td>
+        <div class="activity-page__summary">${entry.summary}</div>
+        ${renderChange(entry)}
+      </td>
       <td class="activity-page__date">${formatDate(entry.created_at)}</td>
     </tr>
   `;

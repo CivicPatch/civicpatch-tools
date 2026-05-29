@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Config Editor — Faithful Preview</title>
+<!-- Real app stylesheets -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/frontend/css/pico.min.css">
+<link rel="stylesheet" href="/frontend/css/styles.css">
+<link rel="stylesheet" href="/frontend/build/assets/badge-BWmQmmLb.css">
+<link rel="stylesheet" href="/frontend/build/assets/auto-complete-select-CPpi8CXd.css">
+<link rel="stylesheet" href="/frontend/build/assets/config-editor-CR242kT5.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  .demo-shell {
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .demo-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pico-muted-color);
+    margin-bottom: 1.5rem;
+  }
+  .theme-bar {
+    position: fixed; top: 1rem; right: 1rem;
+    display: flex; gap: 0.5rem;
+  }
+  .theme-btn {
+    font-size: 0.75rem; padding: 0.3rem 0.7rem;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 6px; background: var(--pico-card-background-color);
+    color: var(--pico-color); cursor: pointer; font-family: inherit;
+  }
+
+  /* Badge simulation (civ-badge custom element not loaded) */
+  .badge {
+    display: inline-flex; align-items: center;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; border-radius: 4px;
+    padding: 0.15em 0.55em; border: 1px solid; white-space: nowrap;
+  }
+  .badge--locality { background: #ccfbf1; color: #0f766e; border-color: #5eead4; }
+  .badge--state    { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+  .badge--global   { background: var(--pico-card-sectioning-background-color); color: var(--pico-muted-color); border-color: var(--pico-muted-border-color); }
+  [data-theme="dark"] .badge--locality { background: #134e4a; color: #5eead4; border-color: #0f766e; }
+  [data-theme="dark"] .badge--state    { background: #312e81; color: #a5b4fc; border-color: #4338ca; }
+
+  /* Outline action buttons (replacing solid btn-sm) */
+  .btn-outline-action {
+    font-size: 0.75rem; font-weight: 500;
+    padding: 0.2em 0.6em; border-radius: 4px;
+    border: 1px solid var(--pico-muted-border-color);
+    background: transparent; color: var(--pico-color);
+    cursor: pointer; line-height: 1.4; margin-left: 0.25rem;
+    transition: border-color 0.1s, background 0.1s;
+  }
+  .btn-outline-action:hover { border-color: var(--pico-color); }
+  .btn-outline-action--danger { color: var(--pico-del-color); border-color: color-mix(in srgb, var(--pico-del-color) 40%, transparent); }
+  .btn-outline-action--danger:hover { border-color: var(--pico-del-color); background: color-mix(in srgb, var(--pico-del-color) 6%, transparent); }
+
+  /* Role table */
+  .role-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+  .role-table th {
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--pico-muted-color);
+    padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--pico-muted-border-color);
+    text-align: left;
+  }
+  .role-table th:last-child { text-align: right; }
+  .role-table td { padding: 0.45rem 0.5rem; border-bottom: 1px solid color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent); vertical-align: middle; }
+  .role-table tbody tr:last-child td { border-bottom: none; }
+  .role-table td:last-child { text-align: right; white-space: nowrap; }
+  .alias-cell { color: var(--pico-muted-color); font-size: 0.75rem; }
+  .unique-yes { color: #0f766e; font-size: 0.75rem; }
+  .unique-no  { color: var(--pico-muted-color); font-size: 0.75rem; }
+
+  /* Subsection label */
+  .subsection-label {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--pico-muted-color);
+    margin: 0; padding: 0;
+  }
+
+  /* Add role */
+  .add-role-btn {
+    font-size: 0.8125rem; font-weight: 500; color: var(--pico-primary);
+    background: none; border: none; cursor: pointer; padding: 0.35rem 0;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    opacity: 0.75; transition: opacity 0.1s;
+  }
+  .add-role-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="theme-bar">
+  <button class="theme-btn" onclick="document.documentElement.dataset.theme='light'">☀ Light</button>
+  <button class="theme-btn" onclick="document.documentElement.dataset.theme='dark'">☽ Dark</button>
+</div>
+
+<div class="demo-shell">
+  <p class="demo-heading">Config editor — faithful preview</p>
+
+  <div class="config-editor__inline">
+
+    <!-- Locality (open) -->
+    <details class="config-editor__section" open>
+      <summary class="config-editor__section-title">
+        <span class="badge badge--locality">locality</span>
+        <span class="config-editor__section-label">Seattle, WA</span>
+        <span class="config-editor__role-count">12</span>
+        <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+      </summary>
+      <div class="config-editor__section-body">
+        <!-- Compact jurisdiction picker simulation -->
+        <div class="config-editor__locality-autocomplete">
+          <fieldset class="grid" style="margin:0;gap:0">
+            <input class="autocomplete-input" type="text" placeholder="Search jurisdiction…" value="Seattle, WA" style="margin:0">
+            <button class="autocomplete-toggle" style="margin:0"><i class="fa-solid fa-chevron-down autocomplete-toggle__icon"></i></button>
+          </fieldset>
+        </div>
+
+        <p class="subsection-label">Roles</p>
+        <div class="config-editor__filter">
+          <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
+          <input type="text" class="config-editor__filter-input" placeholder="Filter roles…">
+        </div>
+        <table class="role-table">
+          <thead><tr><th>Role</th><th>Unique</th><th>Aliases</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Mayor</td><td><span class="unique-yes">Yes</span></td><td class="alias-cell">—</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+            <tr>
+              <td>Council Member</td><td><span class="unique-no">No</span></td><td class="alias-cell">4 aliases</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+            <tr>
+              <td>City Clerk</td><td><span class="unique-no">No</span></td><td class="alias-cell">2 aliases</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-role-btn"><i class="fa-solid fa-plus" style="font-size:0.6rem"></i> Add role</button>
+
+        <p class="subsection-label">Exclusions</p>
+        <table class="role-table">
+          <thead><tr><th>Pattern</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>City Hall</td>
+              <td><button class="config-editor__action-btn">Include</button></td>
+            </tr>
+            <tr>
+              <td>Contact Us</td>
+              <td><button class="config-editor__action-btn">Include</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-role-btn"><i class="fa-solid fa-plus" style="font-size:0.6rem"></i> Add exclusion</button>
+      </div>
+    </details>
+
+    <!-- State (open) -->
+    <details class="config-editor__section" open>
+      <summary class="config-editor__section-title">
+        <span class="badge badge--state">state</span>
+        <span class="config-editor__section-label">WA</span>
+        <span class="config-editor__role-count">3</span>
+        <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+      </summary>
+      <div class="config-editor__section-body">
+        <div class="config-editor__filter">
+          <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
+          <input type="text" class="config-editor__filter-input" placeholder="Filter roles…">
+        </div>
+        <table class="role-table">
+          <thead><tr><th>Role</th><th>Unique</th><th>Aliases</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>County Executive</td><td><span class="unique-yes">Yes</span></td><td class="alias-cell">1 alias</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-role-btn"><i class="fa-solid fa-plus" style="font-size:0.6rem"></i> Add role</button>
+      </div>
+    </details>
+
+    <!-- Global (closed) -->
+    <details class="config-editor__section">
+      <summary class="config-editor__section-title">
+        <span class="badge badge--global">global</span>
+        <span class="config-editor__role-count">26</span>
+        <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
+      </summary>
+      <div class="config-editor__section-body">
+        <div class="config-editor__filter">
+          <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
+          <input type="text" class="config-editor__filter-input" placeholder="Filter roles…" value="council">
+        </div>
+        <table class="role-table">
+          <thead><tr><th>Role</th><th>Unique</th><th>Aliases</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Council Member</td><td><span class="unique-no">No</span></td><td class="alias-cell">4 aliases</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+            <tr>
+              <td>Council President</td><td><span class="unique-yes">Yes</span></td><td class="alias-cell">1 alias</td>
+              <td><button class="config-editor__action-btn">Edit</button><button class="config-editor__action-btn">Exclude</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="add-role-btn"><i class="fa-solid fa-plus" style="font-size:0.6rem"></i> Add role</button>
+      </div>
+    </details>
+
+  </div>
+</div>
+
+</body>
+</html>

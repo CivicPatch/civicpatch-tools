@@ -13,7 +13,14 @@ import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access
 from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
-from schemas.jurisdictions import JurisdictionsByOcdidsRequest, SetGlobalRolesRequest, SetScopeRolesRequest
+from schemas.jurisdictions import (
+    DeleteRoleRequest,
+    ExcludeRoleRequest,
+    IncludeExclusionRequest,
+    JurisdictionsByOcdidsRequest,
+    SetGlobalRolesRequest,
+    SetScopeRolesRequest,
+)
 
 
 class PatchJurisdictionDataRequest(BaseModel):
@@ -124,7 +131,10 @@ def get_router() -> APIRouter:
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         config = await role_config_service.load_global_config()
-        roles = [{"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases} for r in config.roles]
+        roles = [
+            {"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases, "kind": r.kind}
+            for r in config.roles
+        ]
         return {"data": {"roles": roles}}
 
     @router.put("/config/global")
@@ -163,6 +173,39 @@ def get_router() -> APIRouter:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         except RuntimeError as e:
             return JSONResponse({"error": str(e)}, status_code=409)
+        return {"data": {"ok": True}}
+
+    @router.post("/config/exclude")
+    async def exclude_role_endpoint(
+        body: ExcludeRoleRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+    ):
+        try:
+            await role_config_service.exclude_role(body.role, body.scope, body.ocdid, user_id=user.user_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
+        return {"data": {"ok": True}}
+
+    @router.post("/config/include")
+    async def include_role_endpoint(
+        body: IncludeExclusionRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+    ):
+        try:
+            await role_config_service.include_role(body.value, body.scope, body.ocdid, user_id=user.user_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
+        return {"data": {"ok": True}}
+
+    @router.post("/config/delete")
+    async def delete_role_endpoint(
+        body: DeleteRoleRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+    ):
+        try:
+            await role_config_service.delete_role(body.role, body.scope, body.ocdid, user_id=user.user_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         return {"data": {"ok": True}}
 
     @router.get("/{state}/search")

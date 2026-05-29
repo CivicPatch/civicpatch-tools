@@ -114,6 +114,10 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
         return templates.TemplateResponse("pages/activity.html", {"request": request, "user": user})
 
+    @router.get("/config-editor-demo", response_class=HTMLResponse, include_in_schema=False)
+    async def config_editor_demo(request: Request):
+        return templates.TemplateResponse("pages/config-editor-demo.html", {"request": request})
+
     @router.get("/roles", response_class=HTMLResponse, include_in_schema=False)
     async def roles_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)

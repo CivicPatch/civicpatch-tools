@@ -80,3 +80,10 @@ class ChangeLogType(StrEnum):
     EDIT_PERSON = "edit_person"
     DELETE_PERSON = "delete_person"
     EDIT_JURISDICTION = "edit_jurisdiction"
+    # Role taxonomy. Kind (canonical|exclusion) lives in the payload, not the
+    # type. Alias deltas fold into edit_role's payload as aliases_added/removed.
+    ADD_ROLE = "add_role"
+    EDIT_ROLE = "edit_role"
+    DELETE_ROLE = "delete_role"
+    EXCLUDE_ROLE = "exclude_role"
+    INCLUDE_ROLE = "include_role"

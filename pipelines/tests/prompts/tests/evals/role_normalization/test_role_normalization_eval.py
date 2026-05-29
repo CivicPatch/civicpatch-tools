@@ -54,27 +54,73 @@ def parse_cases(raw: list[dict]) -> list[EvalCase]:
 
 
 def validate_cases(cases: list[EvalCase], taxonomy: RoleConfig) -> None:
-    allowed = {NEW, DROP, *(entry.role for entry in taxonomy.roles)}
-    unknown = [c for c in cases if c.expected not in allowed]
-    if unknown:
-        details = "\n".join(
-            f"  {c.raw_string!r} → expected={c.expected!r}" for c in unknown
-        )
+    """Every case label must be consistent with the fixture taxonomy.
+
+    - a canonical label must name a real (active) role in the taxonomy
+    - DROP must correspond to an actual exclusion (kind: exclusion) entry
+    - NEW must match no canonical, alias, or exclusion — so passthrough is the
+      truthful expectation, not a missing-from-fixture accident
+
+    Membership is EXACT (canonical/alias/exclusion strings), NOT the fuzzy matcher:
+    a NEW string is allowed to fuzzy/suffix-match a canonical — catching that
+    mis-map is the eval's job, not the validator's.
+    """
+    canonicals = set()      # active canonical role names (for the expected-label check)
+    known = set()           # lowercased canonical + alias strings of active roles
+    exclusions = set()      # lowercased role + alias strings of exclusion entries
+    for entry in taxonomy.roles:
+        if entry.kind == "canonical":
+            canonicals.add(entry.role)
+            known.add(entry.role.lower())
+            for alias in entry.aliases:
+                known.add(alias.lower())
+        else:
+            exclusions.add(entry.role.lower())
+            for alias in entry.aliases:
+                exclusions.add(alias.lower())
+
+    errors: list[str] = []
+    for c in cases:
+        raw = c.raw_string.lower()
+        if c.expected == NEW:
+            if raw in known or raw in exclusions:
+                errors.append(f"{c.raw_string!r} labeled NEW but matches the taxonomy")
+        elif c.expected == DROP:
+            if raw not in exclusions:
+                errors.append(f"{c.raw_string!r} labeled DROP but no taxonomy exclusion covers it")
+        elif c.expected not in canonicals:
+            errors.append(f"{c.raw_string!r} → expected={c.expected!r} is not a taxonomy canonical")
+
+    if errors:
         raise ValueError(
-            "cases.yml has expected values not in taxonomy or sentinels:\n" + details
+            "cases.yml inconsistent with taxonomy:\n" + "\n".join(f"  {e}" for e in errors)
         )
 
 
 def score_case(case: EvalCase, actual: list[str]) -> Outcome:
-    """Classify the matcher's output for one case into a Disposition."""
-    actual_titled = [a.title() for a in actual]
-    produced_no_role = len(actual) == 0 or actual_titled == [case.raw_string.title()]
+    """Classify the matcher's output for one case into a Disposition.
 
-    if case.expected in (NEW, DROP):
-        disposition = Disposition.correct if produced_no_role else Disposition.false_positive
+    "Emitted nothing" and "passed the raw string through" are distinct outcomes
+    that mean opposite things by `expected`: a DROP must emit nothing (a passthrough
+    is a leak → false_positive), while a NEW must pass through (emitting nothing
+    loses the role → false_negative). They must not be conflated into one boolean.
+    """
+    actual_titled = [a.title() for a in actual]
+    emitted_nothing = len(actual) == 0
+    passed_through_raw = actual_titled == [case.raw_string.title()]
+
+    if case.expected == DROP:
+        disposition = Disposition.correct if emitted_nothing else Disposition.false_positive
+    elif case.expected == NEW:
+        if passed_through_raw:
+            disposition = Disposition.correct
+        elif emitted_nothing:
+            disposition = Disposition.false_negative
+        else:
+            disposition = Disposition.false_positive
     elif case.expected.title() in actual_titled:
         disposition = Disposition.correct
-    elif produced_no_role:
+    elif emitted_nothing or passed_through_raw:
         disposition = Disposition.false_negative
     else:
         disposition = Disposition.wrong_match
@@ -121,7 +167,9 @@ def build_report_data(report: EvalReport, outcomes: list[Outcome]) -> dict:
             "false_positives": report.false_positives,
             "false_negatives": report.false_negatives,
             "wrong_matches": report.by_disposition[Disposition.wrong_match],
-            "pct_correct": round(report.correct / report.total * 100, 1) if report.total else 0,
+            "pct_correct": round(report.correct / report.total * 100, 1)
+            if report.total
+            else 0,
         },
         "dispositions": [
             {
@@ -141,11 +189,16 @@ def test_role_normalization_eval():
     cases: list[EvalCase] = load_cases(CASES_PATH, taxonomy)
     outcomes: list[Outcome] = [
         score_case(
-            case, actual=people_utils.normalize_roles([case.raw_string], role_config=taxonomy)
+            case,
+            actual=people_utils.normalize_roles(
+                [case.raw_string], role_config=taxonomy
+            ),
         )
         for case in cases
     ]
     report = summarize(outcomes)
     data = build_report_data(report, outcomes)
-    REPORT_PATH.write_text(yaml.dump(data, default_flow_style=False, sort_keys=False), encoding="utf-8")
+    REPORT_PATH.write_text(
+        yaml.dump(data, default_flow_style=False, sort_keys=False), encoding="utf-8"
+    )
     assert report.false_positives == 0, report.by_disposition

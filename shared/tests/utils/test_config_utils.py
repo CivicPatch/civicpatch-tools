@@ -25,21 +25,21 @@ def test_merge_role_configs_more_specific_wins():
     assert mayor.aliases == ["the mayor"]
 
 
-def test_merge_role_configs_include_false_removes_role_from_active():
+def test_merge_role_configs_exclusion_removes_role_from_active():
     base = _make_config(roles=[{"role": "city manager"}, {"role": "mayor"}])
-    override = _make_config(roles=[{"role": "city manager", "include": False}])
+    override = _make_config(roles=[{"role": "city manager", "kind": "exclusion"}])
     result = merge_role_configs(base, override)
-    active_names = {e.role.lower() for e in result.roles if e.include}
+    active_names = {e.role.lower() for e in result.roles if e.kind == "canonical"}
     assert "city manager" not in active_names
     assert "mayor" in active_names
 
 
 def test_merge_role_configs_lower_layer_can_reenable():
-    base = _make_config(roles=[{"role": "city manager", "include": False}])
-    locality = _make_config(roles=[{"role": "city manager", "include": True}])
+    base = _make_config(roles=[{"role": "city manager", "kind": "exclusion"}])
+    locality = _make_config(roles=[{"role": "city manager", "kind": "canonical"}])
     result = merge_role_configs(base, locality)
     city_manager = next(e for e in result.roles if e.role == "city manager")
-    assert city_manager.include is True
+    assert city_manager.kind == "canonical"
 
 
 def test_merge_role_configs_empty_configs():
@@ -48,7 +48,7 @@ def test_merge_role_configs_empty_configs():
 
 
 def test_merge_role_configs_single_config():
-    cfg = _make_config(roles=[{"role": "mayor"}, {"role": "city manager", "include": False}])
+    cfg = _make_config(roles=[{"role": "mayor"}, {"role": "city manager", "kind": "exclusion"}])
     result = merge_role_configs(cfg)
     assert len(result.roles) == 2
     assert result.roles[0].role == "mayor"
@@ -108,16 +108,16 @@ def test_load_role_config_returns_empty_when_no_files_found():
     assert result.roles == []
 
 
-def test_load_role_config_applies_include_false_from_state_level():
+def test_load_role_config_applies_exclusion_from_state_level():
     responses = {
         "data_source/local/config.yml": "roles:\n  - role: mayor\n  - role: city manager\n",
-        "data_source/mi/config.yml": "roles:\n  - role: city manager\n    include: false\n",
+        "data_source/mi/config.yml": "roles:\n  - role: city manager\n    kind: exclusion\n",
     }
 
     def fetch(path):
         return responses.get(path)
 
     result = load_role_config_for_jurisdiction(OCDID, fetch)
-    active_names = {e.role.lower() for e in result.roles if e.include}
+    active_names = {e.role.lower() for e in result.roles if e.kind == "canonical"}
     assert "city manager" not in active_names
     assert "mayor" in active_names

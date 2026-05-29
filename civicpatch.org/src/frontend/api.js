@@ -215,6 +215,39 @@ export const putJurisdictionConfig = async (body) => {
   return res.json();
 };
 
+export const excludeRole = async (role, scope, ocdid) => {
+  const res = await fetch(`/api/v1/jurisdictions/config/exclude`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ role, scope, ocdid }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const includeExclusion = async (value, scope, ocdid) => {
+  const res = await fetch(`/api/v1/jurisdictions/config/include`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ value, scope, ocdid }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const deleteRole = async (role, scope, ocdid) => {
+  const res = await fetch(`/api/v1/jurisdictions/config/delete`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ role, scope, ocdid }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchJurisdictionHistory = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/v1/jurisdictions/history?${params}`, {
