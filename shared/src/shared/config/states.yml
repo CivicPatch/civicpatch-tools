@@ -2,6 +2,8 @@
   name: "Colorado"
 - code: "mi"
   name: "Michigan"
+- code: "nh"
+  name: "New Hampshire"
 - code: "nj"
   name: "New Jersey"
 - code: "sc"
