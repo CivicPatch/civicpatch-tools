@@ -81,10 +81,10 @@
       "line": 16
     },
     {
-      "title": "14. Seeding the taxonomy — the import script",
-      "description": "Idempotent — safe to re-run. Reads a RoleConfig-shaped YAML, upserts into `role_terms` with the appropriate kind, attaches aliases. The seed file `seed/role_taxonomy.yml` is a starter state, NOT source of truth — the DB is.\n\n**Dev** (script + seed live at repo root; uv resolves the workspace):\n```sh\nCIVICPATCH_API_DB_URL=postgres://civicpatch:development_password@127.0.0.1:8003/development_db \\\n  uv run scripts/import_role_taxonomy.py seed/role_taxonomy.yml\n```\n\n**Prod** — the Dockerfile only copies `civicpatch.org` + `shared/src/shared` into `/app`. `scripts/` and `seed/` at the repo root are NOT in the image. Copy them in before running:\n```sh\ndocker cp scripts/import_role_taxonomy.py civicpatch-org:/tmp/import.py\ndocker cp seed/role_taxonomy.yml civicpatch-org:/tmp/seed.yml\ndocker compose exec civicpatch-org python3 /tmp/import.py /tmp/seed.yml\n```\nDB URL comes from the container's env, no override needed.",
-      "file": "scripts/import_role_taxonomy.py",
-      "line": 60
+      "title": "14. Seeding the taxonomy — the 097 data migration",
+      "description": "Seeding is a tracked, idempotent **data migration**, not a manual script. `097_seed_role_taxonomy.up.sql` inserts the 29 starter terms at global scope (`ON CONFLICT ON CONSTRAINT role_terms_scope_uq DO NOTHING`) and their aliases (resolved by value + global scope, `ON CONFLICT ... WHERE disabled_at IS NULL DO NOTHING`).\n\nIt runs automatically on deploy via `entrypoint.sh → migrate.py up`, so a fresh/empty environment (prod) self-seeds, while an already-seeded one (dev) is a no-op that only back-fills anything missing — it never clobbers later admin edits. The DB stays the source of truth; `seed/role_taxonomy.yml` is now only the human-readable DR snapshot the migration was generated from.",
+      "file": "civicpatch.org/database_operations/migrations/097_seed_role_taxonomy.up.sql",
+      "line": 9
     },
     {
       "title": "15. Seed YAML format",
