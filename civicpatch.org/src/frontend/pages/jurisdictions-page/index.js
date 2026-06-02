@@ -1,4 +1,3 @@
-import "../review-page/review-page.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { useWebSocket } from "../../hooks/use-websocket.js";
@@ -6,7 +5,6 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import "../../components/edit-people/edit-people.js";
-import "../../components/side-panel/side-panel.js";
 import "./history/history-list.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
@@ -20,7 +18,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
-  const [sourceContentUrls, setSourceContentUrls] = useState([]);
   const [history, setHistory] = useState(null);
   const [isTriggering, setIsTriggering] = useState(false);
 
@@ -159,16 +156,12 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
       </div>
 
       ${!peopleLoading ? html`
-        <div class="review-page__content">
-          <civ-editable-people-list
-            jurisdiction_ocdid=${jurisdiction_ocdid}
-            .people=${people}
-            .canDeletePeople=${permissions.DIRECTORY_DELETE}
-            .onSourceUrlsChange=${setSourceContentUrls}
-            .onPublished=${() => window.location.reload()}
-          ></civ-editable-people-list>
-          <civ-side-panel .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
-        </div>
+        <civ-editable-people-list
+          jurisdiction_ocdid=${jurisdiction_ocdid}
+          .people=${people}
+          .canDeletePeople=${permissions.DIRECTORY_DELETE}
+          .onPublished=${() => window.location.reload()}
+        ></civ-editable-people-list>
       ` : null}
     </div>
   `;
