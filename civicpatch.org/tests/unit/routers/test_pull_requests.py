@@ -312,22 +312,47 @@ def test_do_merge_dirty_pr_keeps_park_and_raises_issue():
     # merge_failed issue for an admin to dismiss.
     clear_enqueued.assert_not_awaited()
     upsert_issue.assert_awaited_once()
+    _, _, issues = upsert_issue.call_args.args
+    assert issues[0]["mergeable_state"] == "dirty"
 
 
 @pytest.mark.unit
 def test_do_merge_blocked_pr_writes_error():
     redis_set = AsyncMock()
+    upsert_issue = AsyncMock()
     with (
         patch("lib.redis.set", redis_set),
         patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", upsert_issue),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "error"
     assert "blocked" in last_call_value["error"]
+    _, _, issues = upsert_issue.call_args.args
+    assert issues[0]["mergeable_state"] == "blocked"
+
+
+@pytest.mark.unit
+def test_do_merge_null_mergeability_records_state():
+    # GitHub never finished computing mergeability within the poll window: the issue
+    # records mergeable_state=None so the details page shows a timeout, not a bare id.
+    redis_set = AsyncMock()
+    upsert_issue = AsyncMock()
+    with (
+        patch("lib.redis.set", redis_set),
+        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value=None),
+        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
+        patch("database.issues.upsert_issue", upsert_issue),
+    ):
+        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
+
+    last_call_value = json.loads(redis_set.call_args[0][1])
+    assert last_call_value["status"] == "error"
+    _, _, issues = upsert_issue.call_args.args
+    assert issues[0]["mergeable_state"] is None
 
 
 @pytest.mark.unit

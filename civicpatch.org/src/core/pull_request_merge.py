@@ -14,12 +14,16 @@ logger = logging.getLogger(__name__)
 MERGE_STATUS_TTL = 3600
 
 
-async def _handle_failure(merge_key: str, request_id: str, error: str) -> None:
+async def _handle_failure(merge_key: str, request_id: str, error: str, mergeable_state: str | None = None) -> None:
     # A failed merge reports to the client (Redis) and stays parked: merge_enqueued_at is
     # left set so the PR does NOT return to the review pool, and a merge_failed issue is
-    # raised for an admin to dismiss (which clears the park).
+    # raised for an admin to dismiss (which clears the park). mergeable_state is recorded on
+    # the issue so the details page can show why it failed (blocked vs dirty vs a null poll
+    # timeout vs clean-but-GitHub-refused), not just a request id.
     await redis_store.set(merge_key, json.dumps({"status": "error", "error": error}), ttl=MERGE_STATUS_TTL)
-    await issues_db.upsert_issue(request_id, PipelineIssueType.MERGE_FAILED, [{"error": error}])
+    await issues_db.upsert_issue(
+        request_id, PipelineIssueType.MERGE_FAILED, [{"error": error, "mergeable_state": mergeable_state}]
+    )
 
 
 async def do_merge(pull_request_number: str, request_id: str, approved_by: str | None, user_id: str, merge_key: str) -> None:
@@ -28,32 +32,32 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
         logger.info(f"PR {pull_request_number} mergeable_state={mergeable_state!r}")
 
         if mergeable_state == "dirty":
-            await _handle_failure(merge_key, request_id, "Pull request has merge conflicts and cannot be merged automatically")
+            await _handle_failure(merge_key, request_id, "Pull request has merge conflicts and cannot be merged automatically", mergeable_state)
             return
 
         if mergeable_state == "blocked":
-            await _handle_failure(merge_key, request_id, "Pull request is blocked — required reviews or status checks have not been satisfied")
+            await _handle_failure(merge_key, request_id, "Pull request is blocked — required reviews or status checks have not been satisfied", mergeable_state)
             return
 
         if mergeable_state == "behind":
             update_error = await github_service.update_pull_request_branch(pull_request_number=pull_request_number)
             if update_error:
-                await _handle_failure(merge_key, request_id, update_error)
+                await _handle_failure(merge_key, request_id, update_error, mergeable_state)
                 return
             mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number, wait_for_change_from="behind")
             logger.info(f"PR {pull_request_number} mergeable_state after branch update={mergeable_state!r}")
             if mergeable_state == "dirty":
-                await _handle_failure(merge_key, request_id, "Pull request has merge conflicts and cannot be merged automatically")
+                await _handle_failure(merge_key, request_id, "Pull request has merge conflicts and cannot be merged automatically", mergeable_state)
                 return
 
         if mergeable_state != "clean":
-            await _handle_failure(merge_key, request_id, f"Pull request is not in a mergeable state ({mergeable_state!r})")
+            await _handle_failure(merge_key, request_id, f"Pull request is not in a mergeable state ({mergeable_state!r})", mergeable_state)
             return
 
         merge_error = await github_service.merge_pull_request(pull_request_number=pull_request_number, approved_by=approved_by)
 
         if merge_error:
-            await _handle_failure(merge_key, request_id, merge_error)
+            await _handle_failure(merge_key, request_id, merge_error, mergeable_state)
             return
 
         await pull_requests_db.update_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
