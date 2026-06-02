@@ -108,7 +108,7 @@ function ReviewSession({
           @data-change=${onTableDataChange}
           @reorder=${onTableReorder}
         ></civ-review-workspace>
-        <civ-side-panel .jurisdictionOcdid=${jurisdictionOcdid} .sourceContentUrls=${source_content_urls}></civ-side-panel>
+        <civ-side-panel .sourceContentUrls=${source_content_urls}></civ-side-panel>
       </div>
     </main>
   `;

@@ -13,7 +13,6 @@ import pytest
 
 import database.jurisdictions as db_jurisdictions
 import database.pipeline_runs as db_jobs
-import database.notes as db_notes
 import database.people as db_people
 import database.pull_requests as db_pull_requests
 import database.requests as db_requests
@@ -491,18 +490,6 @@ async def test_upsert_issue_conflict_preserves_pr_opened():
 async def test_get_issue_by_id_not_found():
     result = await db_issues.get_issue_by_id(_FAKE_UUID)
     assert result is None
-
-
-# ---------------------------------------------------------------------------
-# database.notes — notes
-# ---------------------------------------------------------------------------
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_notes_for_jurisdiction_not_found():
-    total, notes = await db_notes.get_notes_for_jurisdiction(_FAKE_OCDID, limit=10, offset=0)
-    assert isinstance(total, int)
-    assert isinstance(notes, list)
 
 
 # ---------------------------------------------------------------------------

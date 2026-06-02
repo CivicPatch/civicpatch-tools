@@ -23,7 +23,6 @@ export const ROLES_META: ReadonlyArray<RoleMeta> = [
     powers: [
       "Edit jurisdiction details via PRs",
       "Add, update, or delete directory people",
-      "Create jurisdiction notes",
     ],
   },
   {
