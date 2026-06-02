@@ -113,22 +113,6 @@ class VerifyOtpRequest(BaseModel):
     code: str
 
 
-class NoteResponse(BaseModel):
-    id: str
-    jurisdiction_ocdid: str
-    body: str
-    user_id: str
-    created_at: str
-    avatar_url: Optional[str] = None
-    display_name: Optional[str] = None
-    profile_url: Optional[str] = None
-
-
-class CreateNoteRequest(BaseModel):
-    jurisdiction_ocdid: str
-    body: str
-
-
 class PeoplePipelineRunHistory(BaseModel):
     request_id: str
     created_at: float

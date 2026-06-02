@@ -167,7 +167,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .onSourceUrlsChange=${setSourceContentUrls}
             .onPublished=${() => window.location.reload()}
           ></civ-editable-people-list>
-          <civ-side-panel .jurisdictionOcdid=${jurisdiction_ocdid} .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
+          <civ-side-panel .sourceContentUrls=${sourceContentUrls}></civ-side-panel>
         </div>
       ` : null}
     </div>

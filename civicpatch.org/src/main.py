@@ -11,7 +11,6 @@ import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.leaderboard as api_leaderboard_router
-import routers.api.notes as api_notes_router
 import routers.api.people as api_people_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.pull_requests as api_pull_requests_router
@@ -190,12 +189,6 @@ app.include_router(
     api_requests_router.get_router(api_key_header),
     prefix="/api/v1/requests",
     tags=["requests"],
-)
-
-app.include_router(
-    api_notes_router.get_router(),
-    prefix="/api/v1/notes",
-    tags=["notes"],
 )
 
 app.include_router(

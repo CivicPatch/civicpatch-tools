@@ -426,17 +426,6 @@
     margin-top: 0.25rem;
 }
 
-.issues-page__modal-optional {
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
-    font-weight: 400;
-}
-
-.issues-page__dismiss-note {
-    width: 100%;
-    margin-top: 0.25rem;
-}
-
 /* ── PR toast ── */
 
 .issues-page__pr-toast {

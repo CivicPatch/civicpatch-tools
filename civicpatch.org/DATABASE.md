@@ -71,14 +71,6 @@ erDiagram
         timestamptz_null updated_at
     }
 
-    notes {
-        uuid            id                  PK
-        text            jurisdiction_ocdid  FK  "idx"
-        text            body
-        uuid_null       user_id             FK
-        timestamptz     created_at
-    }
-
     issues {
         uuid            id          PK
         text            issue_type      "idx"
@@ -166,14 +158,12 @@ erDiagram
 
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
-    jurisdictions ||--o{ notes : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"
     requests ||--o| pull_requests : "request_id"
     requests }o--o{ issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
     users ||--o{ pull_requests : "resolved_by_user_id"
-    users ||--o{ notes : "user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     change_log_types ||--o{ change_logs : "type"
