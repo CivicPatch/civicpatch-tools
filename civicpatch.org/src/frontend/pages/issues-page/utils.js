@@ -19,5 +19,8 @@ export function getIssueDetail(issueType, issueKey, data) {
     const names = (data.person_names || []).join(", ");
     return names ? `${issueKey} — ${names}` : issueKey;
   }
+  if (issueType === ISSUE_TYPE.MERGE_FAILED) {
+    return data.error || issueKey;
+  }
   return issueKey;
 }

@@ -111,46 +111,53 @@ function ResolveModal(host) {
   const data = issue.data || {};
   const newUrl = data.discovered_url || data.resolved_url;
 
-  // Type-specific content — one branch per issue type that has unique UI
-  const typeExtras =
-    issue.issue_type === ISSUE_TYPE.PIPELINE_ERROR
-      ? (detail?.error ? html`<p class="issues-page__modal-meta"><code>${detail.error}</code></p>` : null)
-    : issue.issue_type === ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR
-      ? (data.failure_reason || data.failure_source ? html`
-          <div class="issues-page__modal-meta">
-            ${data.failure_reason ? html`<p><code>${data.failure_reason}</code></p>` : null}
-            ${data.failure_source ? html`<p><code>${data.failure_source}</code></p>` : null}
-          </div>
-        ` : null)
-    : issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE
-      ? html`
-        <div class="issues-page__resolve-role-form">
-          ${(issue.states || []).length ? html`
-            <p class="issues-page__modal-meta">
-              Seen in:
-              ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
-            </p>
-          ` : null}
-          <label>
-            State
-            <select @change=${(e) => setModalState(e.target.value)}>
-              ${(issue.states || []).map((s) => html`
-                <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
-              `)}
-            </select>
-          </label>
-          <label>
-            Locality
-            <select @change=${(e) => setModalLocality(e.target.value)}>
-              <option value="">— select —</option>
-              ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
-                <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
-              `)}
-            </select>
-          </label>
-        </div>
-      `
+  // Per-type metadata blocks — the UI unique to each issue type. renderBody() (below)
+  // decides which of these, and which shared sections, each issue type composes into its view.
+  const pipelineErrorMeta = detail?.error
+    ? html`<p class="issues-page__modal-meta"><code>${detail.error}</code></p>`
     : null;
+
+  const mergeFailedMeta = data.error || data.mergeable_state ? html`
+    <div class="issues-page__modal-meta">
+      ${data.error ? html`<p><code>${data.error}</code></p>` : null}
+      ${data.mergeable_state ? html`<p>Mergeable state: <code>${data.mergeable_state}</code></p>` : null}
+    </div>
+  ` : null;
+
+  const domainNavigationMeta = data.failure_reason || data.failure_source ? html`
+    <div class="issues-page__modal-meta">
+      ${data.failure_reason ? html`<p><code>${data.failure_reason}</code></p>` : null}
+      ${data.failure_source ? html`<p><code>${data.failure_source}</code></p>` : null}
+    </div>
+  ` : null;
+
+  const unrecognizedRoleForm = html`
+    <div class="issues-page__resolve-role-form">
+      ${(issue.states || []).length ? html`
+        <p class="issues-page__modal-meta">
+          Seen in:
+          ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
+        </p>
+      ` : null}
+      <label>
+        State
+        <select @change=${(e) => setModalState(e.target.value)}>
+          ${(issue.states || []).map((s) => html`
+            <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
+          `)}
+        </select>
+      </label>
+      <label>
+        Locality
+        <select @change=${(e) => setModalLocality(e.target.value)}>
+          <option value="">— select —</option>
+          ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
+            <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
+          `)}
+        </select>
+      </label>
+    </div>
+  `;
 
   // Domain change info — shown when the issue data carries a URL change
   const domainChangeExtras = data.original_url ? html`
@@ -240,12 +247,29 @@ function ResolveModal(host) {
 
   const isResolvable = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE;
 
+  // Sections common to pipeline/domain issues: a URL change, pipeline debug tabs, and the
+  // scraped source context. merge_failed deliberately skips the first two — a merge failure
+  // is about the PR's state and the failing jurisdiction, not pipeline run artifacts.
+  const sharedSections = html`${domainChangeExtras}${debugSection}${sourceSection}`;
+
+  function renderBody() {
+    switch (issue.issue_type) {
+      case ISSUE_TYPE.MERGE_FAILED:
+        return html`${mergeFailedMeta}${sourceSection}`;
+      case ISSUE_TYPE.PIPELINE_ERROR:
+        return html`${pipelineErrorMeta}${sharedSections}`;
+      case ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR:
+        return html`${domainNavigationMeta}${sharedSections}`;
+      case ISSUE_TYPE.UNRECOGNIZED_ROLE:
+        return html`${unrecognizedRoleForm}${sharedSections}`;
+      default:
+        return sharedSections;
+    }
+  }
+
   const content = html`
     <div class="issues-page__resolve-content">
-      ${typeExtras}
-      ${domainChangeExtras}
-      ${debugSection}
-      ${sourceSection}
+      ${renderBody()}
     </div>
   `;
 
