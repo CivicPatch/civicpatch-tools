@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { component, useState } from "haunted";
+import { component } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/diff-panel/diff-panel.js";
 import "../../components/review-workspace/review-workspace.js";
@@ -54,38 +54,29 @@ function ReviewSession({
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
 
-  const [collapsed, setCollapsed] = useState(false);
-
   return html`
     <main class="review-page">
-      <div class="review-page__sticky-header">
-        <review-session-controls
-          .progress=${progress}
-          .hasSession=${hasSession}
-          .hasNext=${has_next}
-          .isReadOnly=${is_read_only}
-          .isClosingPr=${isClosingPr}
-          .isDirty=${isDirty}
-          .onEndSession=${onEndSession}
-          .onBack=${onBack}
-          .onNavigateTo=${onNavigateTo}
-          .onAdvance=${onAdvance}
-          .onClosePr=${onClosePr}
-          .onMerge=${onMerge}
-        ></review-session-controls>
-        ${collapsed ? "" : html`
-          ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-          <div class="review-page__info-row">
-            <div class="review-page__pr-meta">
-              ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
-              ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
-            </div>
-            <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
-          </div>
-        `}
-        <button class="review-page__collapse-btn" @click=${() => setCollapsed(c => !c)} aria-label=${collapsed ? "Show controls" : "Hide controls"}>
-          <i class="fa-solid ${collapsed ? "fa-chevron-down" : "fa-chevron-up"}"></i>
-        </button>
+      <review-session-controls
+        .progress=${progress}
+        .hasSession=${hasSession}
+        .hasNext=${has_next}
+        .isReadOnly=${is_read_only}
+        .isClosingPr=${isClosingPr}
+        .isDirty=${isDirty}
+        .onEndSession=${onEndSession}
+        .onBack=${onBack}
+        .onNavigateTo=${onNavigateTo}
+        .onAdvance=${onAdvance}
+        .onClosePr=${onClosePr}
+        .onMerge=${onMerge}
+      ></review-session-controls>
+      ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+      <div class="review-page__info-row">
+        <div class="review-page__pr-meta">
+          ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
+          ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+        </div>
+        <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
       </div>
       ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
       <civ-diff-panel
