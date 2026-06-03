@@ -20,6 +20,7 @@ from database.roles import (
     exclude_role,
     get_role_config_per_level,
     include_role,
+    reorder_roles_at_scope,
     replace_roles_at_scope,
 )
 from schemas.jurisdictions import RoleEntryData
@@ -65,6 +66,21 @@ async def _change_log_types():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("SELECT type, user_id FROM change_logs WHERE jurisdiction_ocdid = %s", (_SCOPE,))
+        return await cur.fetchall()
+
+
+async def _canonical_order(ocdid=_SCOPE):
+    local = await _locality_config(ocdid)
+    return [r.role for r in local.roles if r.kind == "canonical"]
+
+
+async def _reorder_logs():
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT type, changes FROM change_logs WHERE jurisdiction_ocdid = %s AND type = 'reorder_roles'",
+            (_SCOPE,),
+        )
         return await cur.fetchall()
 
 
@@ -288,3 +304,110 @@ async def test_replace_handles_mixed_ops_in_one_call():
     assert "delete_role" in types          # Clerk removed
     assert "include_role" in types         # City Hall flipped
     assert "add_role" in types             # Sheriff added (alias delta in payload)
+
+
+# ── reorder_roles_at_scope ──────────────────────────────────────────────
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_sets_priority_by_position():
+    await replace_roles_at_scope(
+        _SCOPE,
+        [_entry("Council Member"), _entry("Mayor"), _entry("Clerk")],
+        None,
+    )
+
+    await reorder_roles_at_scope(_SCOPE, ["Mayor", "Clerk", "Council Member"], None)
+
+    assert await _canonical_order() == ["Mayor", "Clerk", "Council Member"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_emits_one_event_with_before_after():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+    await _wipe_change_logs()
+
+    await reorder_roles_at_scope(_SCOPE, ["Clerk", "Mayor"], None)
+
+    rows = await _reorder_logs()
+    assert len(rows) == 1
+    _, changes = rows[0]
+    assert changes["after"] == ["Clerk", "Mayor"]
+    assert set(changes["before"]) == {"Mayor", "Clerk"}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_unchanged_order_is_noop():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+    current = await _canonical_order()
+    await _wipe_change_logs()
+
+    await reorder_roles_at_scope(_SCOPE, current, None)
+
+    assert await _reorder_logs() == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_only_touches_canonical_terms():
+    """role_order is canonical-only; an exclusion at the scope is left out of
+    the set and unaffected by the reorder."""
+    await replace_roles_at_scope(
+        _SCOPE,
+        [_entry("Mayor"), _entry("Clerk"), _entry("City Hall", kind="exclusion")],
+        None,
+    )
+
+    await reorder_roles_at_scope(_SCOPE, ["Clerk", "Mayor"], None)
+
+    assert await _canonical_order() == ["Clerk", "Mayor"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_set_mismatch_raises():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+
+    with pytest.raises(RuntimeError):
+        await reorder_roles_at_scope(_SCOPE, ["Mayor", "Sheriff"], None)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_records_moved_roles_in_payload():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+    await _wipe_change_logs()
+
+    await reorder_roles_at_scope(_SCOPE, ["Clerk", "Mayor"], None, ["Clerk"])
+
+    rows = await _reorder_logs()
+    assert len(rows) == 1
+    _, changes = rows[0]
+    assert changes["moved"] == ["Clerk"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reorder_drops_unknown_moved_roles():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+    await _wipe_change_logs()
+
+    # "Sheriff" isn't part of the reorder — it must not leak into the audit payload.
+    await reorder_roles_at_scope(_SCOPE, ["Clerk", "Mayor"], None, ["Clerk", "Sheriff"])
+
+    _, changes = (await _reorder_logs())[0]
+    assert changes["moved"] == ["Clerk"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_added_canonical_role_lands_at_bottom_priority():
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk")], None)
+
+    # Adding a role must not default to priority 0 (which would tie/jump the top).
+    await replace_roles_at_scope(_SCOPE, [_entry("Mayor"), _entry("Clerk"), _entry("Sheriff")], None)
+
+    assert (await _canonical_order())[-1] == "Sheriff"

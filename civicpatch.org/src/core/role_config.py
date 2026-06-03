@@ -42,6 +42,18 @@ async def set_scope_roles(req: SetScopeRolesRequest, user_id: str | None = None)
     await db_roles.replace_roles_at_scope(scope_ocdid, req.roles, user_id)
 
 
+async def reorder_roles(
+    scope: str,
+    ocdid: str | None,
+    role_order: list[str],
+    moved_roles: list[str] | None = None,
+    user_id: str | None = None,
+) -> None:
+    """Set canonical role priority by position for a scope (global/state/locality)."""
+    scope_ocdid = _scope_to_ocdid(scope, ocdid or "")
+    await db_roles.reorder_roles_at_scope(scope_ocdid, role_order, user_id, moved_roles)
+
+
 async def delete_role(role_value: str, scope: str, ocdid: str, user_id: str | None = None) -> None:
     """Hard-delete a role with no exclusion created."""
     scope_ocdid = _scope_to_ocdid(scope, ocdid)

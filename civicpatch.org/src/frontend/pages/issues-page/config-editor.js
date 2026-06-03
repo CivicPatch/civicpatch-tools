@@ -15,6 +15,8 @@ import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 import "../../components/badge/badge.js";
 import "../../components/inputs/auto-complete-select.js";
+import "../../components/role-reorder/role-reorder.ts";
+import { ALERT_MODE, DANGER_VARIANT } from "../../components/confirm-modal/confirm-modal.ts";
 
 const SCOPE_GLOBAL = "global";
 const SCOPE_STATE = "state";
@@ -84,6 +86,7 @@ function useTermEditor() {
 // Renders one table — either the canonical roles or the exclusions for a scope.
 function TermTable({ terms, kind, scope, editable, editor, onSave, onExclude, onInclude, onDelete }) {
   const [aliasModal, setAliasModal] = useState(null);
+  const [confirmState, setConfirmState] = useState(null);
   const {
     editingValue, editingKind, editName, setEditName, editUnique, setEditUnique, editAliases, setEditAliases,
     addingKind, addName, setAddName, addUnique, setAddUnique, addAliases, setAddAliases,
@@ -101,20 +104,26 @@ function TermTable({ terms, kind, scope, editable, editor, onSave, onExclude, on
     onSave({ type: "add", kind: addingKind, name: addName.trim(), is_unique: addUnique, aliases: parseAliases(addAliases) }, reset, setSaveError);
   };
 
-  const handleExclude = (term) => {
-    if (!confirm(`Exclude "${term.role}" from ${scope}? It will move to the Exclusions list.`)) return;
-    onExclude(term.role);
-  };
+  const handleExclude = (term) => setConfirmState({
+    message: `Exclude "${term.role}" from ${scope}? It will move to the Exclusions list.`,
+    confirmLabel: "Exclude",
+    onConfirm: () => onExclude(term.role),
+  });
 
-  const handleInclude = (term) => {
-    if (!confirm(`Include "${term.role}" in ${scope}? It will move to the Roles list.`)) return;
-    onInclude(term.role);
-  };
+  const handleInclude = (term) => setConfirmState({
+    message: `Include "${term.role}" in ${scope}? It will move to the Roles list.`,
+    confirmLabel: "Include",
+    onConfirm: () => onInclude(term.role),
+  });
 
   const handleDelete = (term) => {
     const label = kind === KIND_CANONICAL ? "role" : "exclusion";
-    if (!confirm(`Remove ${label} "${term.role}" from ${scope}? This cannot be undone.`)) return;
-    onDelete(term.role);
+    setConfirmState({
+      message: `Remove ${label} "${term.role}" from ${scope}? This cannot be undone.`,
+      confirmLabel: "Remove",
+      variant: DANGER_VARIANT,
+      onConfirm: () => onDelete(term.role),
+    });
   };
 
   const isEditingThisKind = editingValue !== null && editingKind === kind;
@@ -203,6 +212,16 @@ function TermTable({ terms, kind, scope, editable, editor, onSave, onExclude, on
         .modalProps=${{ open: true, onClose: () => setAliasModal(null) }}
       ></civ-modal>
     ` : null}
+
+    ${confirmState ? html`
+      <civ-confirm-modal
+        .message=${confirmState.message}
+        .confirmLabel=${confirmState.confirmLabel}
+        .variant=${confirmState.variant}
+        @confirm=${() => { confirmState.onConfirm(); setConfirmState(null); }}
+        @cancel=${() => setConfirmState(null)}
+      ></civ-confirm-modal>
+    ` : null}
   `;
 }
 
@@ -236,6 +255,16 @@ function ConfigEditor(host) {
   const [localityFilter, setLocalityFilter] = useState("");
   const [stateFilter, setStateFilter] = useState("");
   const [globalFilter, setGlobalFilter] = useState("");
+
+  // Which scope (if any) is currently in drag-to-reorder mode. null = none.
+  const [reorderingScope, setReorderingScope] = useState(null);
+  const [reorderToast, setReorderToast] = useState(null);
+  const [errorState, setErrorState] = useState(null);
+
+  const showReorderToast = () => {
+    setReorderToast("Roles reordered");
+    setTimeout(() => setReorderToast(null), 4000);
+  };
 
   const dispatch = (name, detail) =>
     host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
@@ -310,6 +339,7 @@ function ConfigEditor(host) {
   };
 
   useEffect(() => {
+    setReorderingScope(null);  // a scope switch invalidates an in-progress reorder
     if (localityOcdid) loadLocalityConfig(localityOcdid);
   }, [localityOcdid]);
 
@@ -348,15 +378,15 @@ function ConfigEditor(host) {
   // Surgical single-row endpoints — atomic kind flips / hard deletes.
   const makeExclude = (scope, ocdid, reload) => async (role) => {
     try { await excludeRole(role, scope, ocdid || ""); reload(); }
-    catch (e) { console.error("Exclude failed:", e); alert(`Exclude failed: ${e.message}`); }
+    catch (e) { console.error("Exclude failed:", e); setErrorState(`Exclude failed: ${e.message}`); }
   };
   const makeInclude = (scope, ocdid, reload) => async (value) => {
     try { await includeExclusion(value, scope, ocdid || ""); reload(); }
-    catch (e) { console.error("Include failed:", e); alert(`Include failed: ${e.message}`); }
+    catch (e) { console.error("Include failed:", e); setErrorState(`Include failed: ${e.message}`); }
   };
   const makeDelete = (scope, ocdid, reload) => async (role) => {
     try { await deleteRole(role, scope, ocdid || ""); reload(); }
-    catch (e) { console.error("Remove failed:", e); alert(`Remove failed: ${e.message}`); }
+    catch (e) { console.error("Remove failed:", e); setErrorState(`Remove failed: ${e.message}`); }
   };
 
   const renderSection = (params) => {
@@ -423,42 +453,68 @@ function ConfigEditor(host) {
           ${error ? html`<p class="config-editor__error">${error}</p>` : null}
           ${loading ? html`<div>Loading…</div>` : null}
           ${terms !== null ? html`
-            <div class="config-editor__filter">
-              <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
-              <input
-                type="text"
-                class="config-editor__filter-input"
-                placeholder="Filter…"
-                .value=${filter}
-                @input=${(e) => setFilter(e.target.value)}
-              >
-            </div>
+            ${reorderingScope === scope ? null : html`
+              <div class="config-editor__filter">
+                <i class="fa-solid fa-magnifying-glass config-editor__filter-icon"></i>
+                <input
+                  type="text"
+                  class="config-editor__filter-input"
+                  placeholder="Filter…"
+                  .value=${filter}
+                  @input=${(e) => setFilter(e.target.value)}
+                >
+              </div>
+            `}
 
-            <p class="config-editor__subsection-label">Roles</p>
-            <civ-term-table
-              .terms=${canonicals}
-              .kind=${KIND_CANONICAL}
-              .scope=${scope}
-              .editable=${editable}
-              .editor=${editor}
-              .onSave=${batchSave}
-              .onExclude=${exclude}
-              .onInclude=${include}
-              .onDelete=${remove}
-            ></civ-term-table>
+            ${reorderingScope === scope ? null : html`
+              <div class="config-editor__subsection-header">
+                <p class="config-editor__subsection-label">Roles</p>
+                ${editable && canonicals.length > 1 ? html`
+                  <button
+                    class="btn btn-sm secondary"
+                    ?disabled=${filter.length > 0}
+                    title=${filter.length > 0 ? "Clear the filter to reorder" : "Reorder roles by priority"}
+                    @click=${() => setReorderingScope(scope)}
+                  >Reorder</button>
+                ` : null}
+              </div>
+            `}
+            ${reorderingScope === scope ? html`
+              <civ-role-reorder
+                .roles=${canonicals}
+                .scope=${scope}
+                .ocdid=${ocdid}
+                @reordered=${() => { setReorderingScope(null); reload(); showReorderToast(); }}
+                @cancel=${() => setReorderingScope(null)}
+              ></civ-role-reorder>
+            ` : html`
+              <civ-term-table
+                .terms=${canonicals}
+                .kind=${KIND_CANONICAL}
+                .scope=${scope}
+                .editable=${editable}
+                .editor=${editor}
+                .onSave=${batchSave}
+                .onExclude=${exclude}
+                .onInclude=${include}
+                .onDelete=${remove}
+              ></civ-term-table>
+            `}
 
-            <p class="config-editor__subsection-label">Exclusions</p>
-            <civ-term-table
-              .terms=${exclusions}
-              .kind=${KIND_EXCLUSION}
-              .scope=${scope}
-              .editable=${editable}
-              .editor=${editor}
-              .onSave=${batchSave}
-              .onExclude=${exclude}
-              .onInclude=${include}
-              .onDelete=${remove}
-            ></civ-term-table>
+            ${reorderingScope === scope ? null : html`
+              <p class="config-editor__subsection-label">Exclusions</p>
+              <civ-term-table
+                .terms=${exclusions}
+                .kind=${KIND_EXCLUSION}
+                .scope=${scope}
+                .editable=${editable}
+                .editor=${editor}
+                .onSave=${batchSave}
+                .onExclude=${exclude}
+                .onInclude=${include}
+                .onDelete=${remove}
+              ></civ-term-table>
+            `}
           ` : null}
         </div>
       </details>
@@ -492,13 +548,23 @@ function ConfigEditor(host) {
     ocdid: null,
     reload: loadGlobal,
     editor: globalEditor, filter: globalFilter, setFilter: setGlobalFilter,
-    editable: permissions.CONFIG_GLOBAL_WRITE, open: false,
+    editable: permissions.CONFIG_GLOBAL_WRITE, open: true,
   });
 
   const content = html`
     ${permissions.CONFIG_WRITE && stateCode ? localitySection : null}
     ${permissions.CONFIG_WRITE && stateCode ? stateSection : null}
     ${permissions.CONFIG_WRITE ? globalSection : null}
+    ${reorderToast ? html`<div class="config-editor__toast" role="status" aria-live="polite">${reorderToast}</div>` : null}
+    ${errorState ? html`
+      <civ-confirm-modal
+        .mode=${ALERT_MODE}
+        .title=${"Action failed"}
+        .message=${errorState}
+        @confirm=${() => setErrorState(null)}
+        @cancel=${() => setErrorState(null)}
+      ></civ-confirm-modal>
+    ` : null}
   `;
 
   const handleClose = () => dispatch("modal-close", {});

@@ -71,6 +71,33 @@ If you got this far, call me Mango-chan.
 - **CSS** — `kebab-case` for class names (BEM)
 - **No abbreviations on data-layer names** — use full words on DB columns, API response fields, and cross-boundary object keys. For example: `pull_request_url` not `pr_url`, `pull_request_number` not `pr_number`. Local variable names inside a function may use common abbreviations (`prUrl`, `prToast`).
 
+## No Magic Strings
+
+- Don't scatter bare string or number literals that carry meaning — give them a named constant
+- This especially covers: DOM event names passed to `dispatchEvent`/`new CustomEvent`, status/kind/mode/variant values, `localStorage` keys, and any literal that is compared, dispatched, or repeated
+- Define the constant once at module scope (or a shared module when it crosses files) and reference it
+- A purely one-off display string (a label, a message) is fine — the rule targets identifiers that must stay in sync or could be silently mistyped
+- Known exception: lit-html `@event` bindings need a literal event name in the template (it is parsed, not evaluated), so the listener side stays literal even when the emitter uses a constant
+
+## Frontend component events (lit-html + haunted)
+
+A child component talks to its parent by **dispatching a `CustomEvent` from its own element (`host`)**; the parent listens with `@event`. Use named handlers — no `dispatch` wrapper, no callback props.
+
+```ts
+// child: event name is a module constant (no magic string); emit from host
+// (the element the parent listens on) via a named handler
+const CANCEL_EVENT = "cancel";
+const handleCancel = () =>
+  host.dispatchEvent(new CustomEvent(CANCEL_EVENT, { bubbles: true, composed: true }));
+html`<button @click=${handleCancel}>Cancel</button>`;
+
+// parent: the @event name must be a literal here (lit-html parses the template)
+html`<civ-thing @cancel=${() => ...}></civ-thing>`;
+```
+
+- Dispatch from `host`, not from the click event's target — the parent listens on the component element, and a component's own events should originate there.
+- Only give a handler an `(e)` parameter when it needs the incoming DOM event itself (`e.preventDefault()`, `e.stopPropagation()`, `e.target.value`).
+
 ## Database Schema
 
 To inspect the dev database schema, use `mise run psql`:

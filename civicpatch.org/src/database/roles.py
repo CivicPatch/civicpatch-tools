@@ -145,6 +145,20 @@ def build_event_payload(
     return payload
 
 
+def reorder_validation_error(current: list[str], requested: list[str]) -> str | None:
+    """Pure: a reorder must be a permutation of the scope's current canonical
+    values. Returns an error message if it isn't (duplicate, missing, or
+    unexpected role), else None. A stale client gets a clear 409 instead of
+    silently dropping a role's priority."""
+    if len(requested) != len(set(requested)):
+        return "Reorder contains duplicate roles."
+    missing = set(current) - set(requested)
+    extra = set(requested) - set(current)
+    if missing or extra:
+        return f"Reorder set mismatch (missing: {sorted(missing)}, unexpected: {sorted(extra)})."
+    return None
+
+
 # ── Imperative shell ────────────────────────────────────────────────────
 
 
@@ -216,12 +230,18 @@ async def replace_roles_at_scope(
                 )
 
                 if op == TermOp.ADD:
+                    # New canonical roles land at the bottom (max priority + 1), not 0 —
+                    # priority 0 is now a real position (the top), so defaulting there
+                    # would dislodge whatever the taxonomy was ordered to lead with.
                     await cur.execute(
                         """
                         INSERT INTO role_terms (value, kind, jurisdiction_ocdid, display_name, is_unique, priority)
-                        VALUES (%s, %s, %s, %s, %s, 0) RETURNING id::text
+                        VALUES (%s, %s, %s, %s, %s,
+                            COALESCE((SELECT MAX(priority) + 1 FROM role_terms
+                                      WHERE jurisdiction_ocdid IS NOT DISTINCT FROM %s AND kind = 'canonical'), 0))
+                        RETURNING id::text
                         """,
-                        (entry.role, _kind_for(entry).value, jurisdiction_ocdid, entry.role, entry.is_unique),
+                        (entry.role, _kind_for(entry).value, jurisdiction_ocdid, entry.role, entry.is_unique, jurisdiction_ocdid),
                     )
                     row = await cur.fetchone()
                     assert row, "INSERT ... RETURNING id returned no row"
@@ -254,6 +274,57 @@ async def replace_roles_at_scope(
                 elif added or removed:
                     await _emit_change_log(cur, "edit_role", jurisdiction_ocdid, payload, user_id)
 
+        await conn.commit()
+
+
+async def reorder_roles_at_scope(
+    jurisdiction_ocdid: str | None,
+    role_order: list[str],
+    user_id: str | None,
+    moved_roles: list[str] | None = None,
+) -> None:
+    """Set canonical role priority = position in role_order at a scope.
+    role_order must be a permutation of the scope's current canonical values.
+    moved_roles names the values the user actively moved (folded into the
+    change_log so the summary can list them, not just the furthest shift).
+    Emits one reorder_roles change_log; an unchanged order writes nothing."""
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                SELECT value FROM role_terms
+                WHERE jurisdiction_ocdid IS NOT DISTINCT FROM %s AND kind = 'canonical'
+                ORDER BY priority, value
+                """,
+                (jurisdiction_ocdid,),
+            )
+            before = [row[0] for row in await cur.fetchall()]
+
+            error = reorder_validation_error(before, role_order)
+            if error:
+                raise RuntimeError(error)
+
+            if before == role_order:
+                return  # nothing moved — don't write a phantom event
+
+            for position, value in enumerate(role_order):
+                await cur.execute(
+                    """
+                    UPDATE role_terms SET priority = %s
+                    WHERE value = %s AND jurisdiction_ocdid IS NOT DISTINCT FROM %s AND kind = 'canonical'
+                    """,
+                    (position, value, jurisdiction_ocdid),
+                )
+
+            payload: dict = {"before": before, "after": role_order}
+            # Only keep moved hints that are actually in this reorder — a stale
+            # client can't poison the audit summary with unknown role values.
+            requested = set(role_order)
+            valid_moved = [role for role in (moved_roles or []) if role in requested]
+            if valid_moved:
+                payload["moved"] = valid_moved
+            await _emit_change_log(cur, "reorder_roles", jurisdiction_ocdid, payload, user_id)
         await conn.commit()
 
 

@@ -87,3 +87,4 @@ class ChangeLogType(StrEnum):
     DELETE_ROLE = "delete_role"
     EXCLUDE_ROLE = "exclude_role"
     INCLUDE_ROLE = "include_role"
+    REORDER_ROLES = "reorder_roles"

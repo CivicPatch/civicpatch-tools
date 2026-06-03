@@ -1,0 +1,97 @@
+.role-reorder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* Stays put while a long list scrolls, so Save/Cancel are always reachable
+   and sit right where the Reorder trigger was. */
+.role-reorder__bar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    background: var(--pico-card-background-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.role-reorder__hint {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+}
+
+.role-reorder__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+}
+
+.role-reorder__row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: var(--text-sm);
+    border-bottom: 1px solid color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent);
+    background: var(--pico-card-background-color);
+    cursor: grab;
+}
+
+.role-reorder__row:last-child {
+    border-bottom: none;
+}
+
+.role-reorder__row--dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+/* Insertion line showing where the dragged item will land — above the hovered
+   row when dragging up, below it when dragging down. inset box-shadow avoids
+   the layout shift a border would cause. */
+.role-reorder__row--drop-before {
+    box-shadow: inset 0 3px 0 0 var(--pico-primary);
+}
+
+.role-reorder__row--drop-after {
+    box-shadow: inset 0 -3px 0 0 var(--pico-primary);
+}
+
+/* Rows the user has actively moved — a persistent "pending change" tint. */
+.role-reorder__row--moved {
+    background: color-mix(in srgb, var(--pico-primary) 12%, var(--pico-card-background-color));
+}
+
+.role-reorder__handle {
+    color: var(--pico-muted-color);
+    font-size: 0.8rem;
+}
+
+.role-reorder__name {
+    flex: 1;
+}
+
+.role-reorder__buttons {
+    display: inline-flex;
+    gap: 0.15rem;
+}
+
+/* Visually subtle; the aria-live attribute carries it to assistive tech. */
+.role-reorder__announce {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    min-height: 1em;
+}
+
+.role-reorder__actions {
+    display: flex;
+    gap: 0.5rem;
+}

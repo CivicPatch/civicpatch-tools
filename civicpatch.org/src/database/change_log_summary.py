@@ -13,6 +13,29 @@ def _alias_summary(payload: dict) -> str:
     return f" ({', '.join(parts)})" if parts else ""
 
 
+def _reorder_summary(payload: dict) -> str:
+    """Describe a reorder. Prefers the explicit `moved` list (the roles the user
+    actually dragged) and names them. Falls back, for older entries without it,
+    to the role that shifted furthest — since before/after alone can't tell an
+    intentional move from a one-slot side-effect shift."""
+    moved = payload.get("moved") or []
+    if moved:
+        shown = ", ".join(moved[:3])
+        extra = len(moved) - 3
+        suffix = f" (+{extra} more)" if extra > 0 else ""
+        return f"Reordered roles: moved {shown}{suffix}"
+
+    before = payload.get("before") or []
+    after = payload.get("after") or []
+    movers = [r for r in after if r in before and before.index(r) != after.index(r)]
+    if not movers:
+        return "Reordered roles"
+    primary = max(movers, key=lambda r: abs(before.index(r) - after.index(r)))
+    pos = after.index(primary)
+    where = "to the top" if pos == 0 else f"below '{after[pos - 1]}'"
+    return f"Reordered roles: '{primary}' moved {where}"
+
+
 def summarize_change_log(type_: str, changes: dict | None) -> str:
     """Pure: render a one-line summary for an activity-feed row.
     Unknown types fall back to the raw type — never raises."""
@@ -31,6 +54,9 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
 
     if type_ in ("merge_review", "close_review"):
         return "Merged review" if type_ == "merge_review" else "Closed review"
+
+    if type_ == "reorder_roles":
+        return _reorder_summary(c)
 
     # ── Role taxonomy events ────────────────────────────────────────────
     role = c.get("role", "?")
