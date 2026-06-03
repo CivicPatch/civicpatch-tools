@@ -33,10 +33,6 @@ test.describe("Roles page edit cycle", () => {
 
   test("add → exclude → include → remove", async ({ maintainerPage }) => {
     const page = maintainerPage;
-    // Auto-accept all native confirm() dialogs that fire from
-    // Exclude/Include/Remove buttons.
-    page.on("dialog", (d) => d.accept());
-
     await page.goto("/roles");
 
     // The state section is open by default and labeled with the state code.
@@ -64,6 +60,8 @@ test.describe("Roles page edit cycle", () => {
     // ── EXCLUDE ────────────────────────────────────────────────────────
     const sentinelRoleRow = rolesTable.locator("tr").filter({ hasText: SENTINEL_ROLE });
     await sentinelRoleRow.getByRole("button", { name: "Exclude" }).click();
+    // Confirm in the civ-confirm-modal (replaced the old native confirm()).
+    await page.getByRole("dialog").getByRole("button", { name: "Exclude" }).click();
 
     // ── VERIFY MOVED TO EXCLUSIONS ─────────────────────────────────────
     const exclusionsTable = stateSection.locator("civ-term-table").nth(1);
@@ -73,6 +71,7 @@ test.describe("Roles page edit cycle", () => {
     // ── INCLUDE (BACK) ─────────────────────────────────────────────────
     const sentinelExclusionRow = exclusionsTable.locator("tr").filter({ hasText: SENTINEL_ROLE });
     await sentinelExclusionRow.getByRole("button", { name: "Include" }).click();
+    await page.getByRole("dialog").getByRole("button", { name: "Include" }).click();
 
     await expect(rolesTable.getByRole("cell", { name: SENTINEL_ROLE })).toBeVisible();
     await expect(exclusionsTable.getByRole("cell", { name: SENTINEL_ROLE })).toHaveCount(0);
@@ -80,6 +79,7 @@ test.describe("Roles page edit cycle", () => {
     // ── REMOVE ─────────────────────────────────────────────────────────
     await rolesTable.locator("tr").filter({ hasText: SENTINEL_ROLE })
       .getByRole("button", { name: "Remove" }).click();
+    await page.getByRole("dialog").getByRole("button", { name: "Remove" }).click();
 
     await expect(rolesTable.getByRole("cell", { name: SENTINEL_ROLE })).toHaveCount(0);
     await expect(exclusionsTable.getByRole("cell", { name: SENTINEL_ROLE })).toHaveCount(0);

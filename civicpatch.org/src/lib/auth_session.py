@@ -9,7 +9,7 @@ from fastapi.responses import Response
 import lib.redis as redis_store
 import environment
 
-SESSION_EXPIRY_DAYS = 1
+SESSION_EXPIRY_DAYS = 7
 
 _TOKEN_PREFIX = "session:tok:"
 _USER_PREFIX = "session:usr:"
