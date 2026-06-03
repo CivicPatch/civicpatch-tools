@@ -49,12 +49,9 @@ function ReviewSessionControls({
   }
 
   return html`
-    <div class="review-page__nav">
-      <div class="review-page__nav-left">
-        <button class="btn-sm review-page__end-btn" @click=${onEndSession}>${hasSession ? "End session" : "Exit"}</button>
-      </div>
-      ${!hasSession ? html`<div class="review-page__nav-center"></div>` : html`
-      <div class="review-page__nav-center">
+    <div class="review-page__header">
+      ${!hasSession ? html`<div class="review-page__step-nav"></div>` : html`
+      <div class="review-page__step-nav">
         <button class="btn-sm review-page__back-btn" @click=${onBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
         <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
         <div class="review-page__dots">
@@ -69,17 +66,18 @@ function ReviewSessionControls({
         </div>
         <button class="btn-sm review-page__next-btn" @click=${() => onAdvance()} ?disabled=${!hasNext}>Next <i class="fa-solid fa-arrow-right"></i></button>
       </div>
-      ${isReadOnly ? html`<div class="review-page__nav-right"></div>` : html`
-      <div class="review-page__nav-right">
-        <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
-          ${isClosingPr ? "Closing..." : "Close PR"}
-        </button>
+      `}
+      <div class="review-page__actions">
+        ${isReadOnly ? "" : html`
         <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
           ${isDirty ? "Save and Publish" : "Publish"}
         </button>
+        <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
+          ${isClosingPr ? "Closing..." : "Close PR"}
+        </button>
+        `}
+        <button class="btn-sm review-page__end-btn" @click=${onEndSession}>${hasSession ? "End session" : "Exit"}</button>
       </div>
-      `}
-      `}
     </div>
   `;
 }

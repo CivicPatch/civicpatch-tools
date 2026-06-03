@@ -1,5 +1,5 @@
 import "./review-checklist.css";
-import { html, component, useState, useEffect } from "haunted";
+import { html, component } from "haunted";
 
 const ORIGIN_SOURCE_LABELS = {
   google_gemini: "Google Gemini",
@@ -8,19 +8,8 @@ const ORIGIN_SOURCE_LABELS = {
 
 function ReviewChecklist({ reviewData }) {
   const researchLabel = ORIGIN_SOURCE_LABELS[reviewData?.origin_source] ?? "Research";
-  const [checked, setChecked] = useState(new Set());
-
-  useEffect(() => {
-    setChecked(new Set());
-  }, [reviewData]);
 
   if (!reviewData) return html``;
-
-  const toggle = (i) => {
-    const next = new Set(checked);
-    next.has(i) ? next.delete(i) : next.add(i);
-    setChecked(next);
-  };
 
   const renderCheckmark = (value) =>
     value
@@ -33,18 +22,8 @@ function ReviewChecklist({ reviewData }) {
         <div class="review-checklist__issues">
           <h4 class="review-checklist__section-title">Issues</h4>
           <ul class="review-checklist__list">
-            ${reviewData.issues.map((issue, i) => html`
-              <li class="review-checklist__item ${checked.has(i) ? "review-checklist__item--checked" : ""}">
-                <label class="review-checklist__label">
-                  <input
-                    type="checkbox"
-                    class="review-checklist__checkbox"
-                    .checked=${checked.has(i)}
-                    @change=${() => toggle(i)}
-                  />
-                  ${issue}
-                </label>
-              </li>
+            ${reviewData.issues.map((issue) => html`
+              <li class="review-checklist__item">${issue}</li>
             `)}
           </ul>
         </div>
