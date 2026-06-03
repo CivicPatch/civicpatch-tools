@@ -144,3 +144,51 @@ def test_put_jurisdiction_config_runtime_error_is_409():
         response = _client(Role.MAINTAINERS).put("/jurisdictions/config", json=body)
 
     assert response.status_code == 409
+
+
+# ── PUT /config/global/reorder (ADMINS) ─────────────────────────────────────
+
+
+@pytest.mark.unit
+def test_reorder_global_config_happy():
+    body = {"role_order": ["Mayor", "Council Member"]}
+    with patch("core.role_config.reorder_roles", new_callable=AsyncMock) as mock_reorder:
+        response = _client(Role.ADMINS).put("/jurisdictions/config/global/reorder", json=body)
+
+    assert response.status_code == 200
+    assert response.json()["data"] == {"ok": True}
+    mock_reorder.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_reorder_global_config_forbidden_for_maintainer():
+    body = {"role_order": ["Mayor"]}
+    response = _client(Role.MAINTAINERS).put("/jurisdictions/config/global/reorder", json=body)
+    assert response.status_code == 403
+
+
+# ── PUT /config/reorder (MAINTAINERS) ───────────────────────────────────────
+
+
+@pytest.mark.unit
+def test_reorder_jurisdiction_config_happy():
+    body = {"ocdid": _OCDID, "scope": "locality", "role_order": ["Mayor", "Council Member"]}
+    with patch("core.role_config.reorder_roles", new_callable=AsyncMock) as mock_reorder:
+        response = _client(Role.MAINTAINERS).put("/jurisdictions/config/reorder", json=body)
+
+    assert response.status_code == 200
+    assert response.json()["data"] == {"ok": True}
+    mock_reorder.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_reorder_jurisdiction_config_set_mismatch_is_409():
+    body = {"ocdid": _OCDID, "scope": "locality", "role_order": ["Mayor"]}
+    with patch(
+        "core.role_config.reorder_roles",
+        new_callable=AsyncMock,
+        side_effect=RuntimeError("Reorder set mismatch"),
+    ):
+        response = _client(Role.MAINTAINERS).put("/jurisdictions/config/reorder", json=body)
+
+    assert response.status_code == 409

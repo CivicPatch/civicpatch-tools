@@ -40,6 +40,18 @@ class SetGlobalRolesRequest(BaseModel):
     roles: List[RoleEntryData]
 
 
+class ReorderGlobalRolesRequest(BaseModel):
+    role_order: List[str]  # canonical role values, desired order (priority 0..N)
+    moved_roles: List[str] = []  # values the user actively moved (for the audit summary)
+
+
+class ReorderScopeRolesRequest(BaseModel):
+    ocdid: str
+    scope: Literal["state", "locality"]
+    role_order: List[str]  # canonical role values, desired order (priority 0..N)
+    moved_roles: List[str] = []  # values the user actively moved (for the audit summary)
+
+
 class RoleScopeRequest(BaseModel):
     """Base for operations targeting a single role at a given scope."""
     role: str

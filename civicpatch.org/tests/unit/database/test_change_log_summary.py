@@ -96,3 +96,40 @@ def test_unknown_type_returns_type_string():
 
 def test_none_changes_doesnt_crash():
     assert summarize_change_log("edit_jurisdiction", None) == "Edited jurisdiction"
+
+
+# ── Reorder events ──────────────────────────────────────────────────────
+
+
+def test_reorder_to_top():
+    payload = {"before": ["a", "b", "c"], "after": ["c", "a", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'c' moved to the top"
+
+
+def test_reorder_below_neighbor():
+    payload = {"before": ["a", "b", "c"], "after": ["a", "c", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'c' moved below 'a'"
+
+
+def test_reorder_no_movers_falls_back():
+    payload = {"before": ["a", "b"], "after": ["a", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles"
+
+
+def test_reorder_picks_furthest_mover():
+    # 'mayor' jumps from the bottom to the top; the others only shift by one.
+    payload = {
+        "before": ["x", "y", "z", "mayor"],
+        "after": ["mayor", "x", "y", "z"],
+    }
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'mayor' moved to the top"
+
+
+def test_reorder_lists_moved_roles_when_present():
+    payload = {"before": ["a", "b", "c"], "after": ["c", "a", "b"], "moved": ["c", "a"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: moved c, a"
+
+
+def test_reorder_truncates_many_moved_roles():
+    payload = {"moved": ["a", "b", "c", "d", "e"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: moved a, b, c (+2 more)"

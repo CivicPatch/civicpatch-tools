@@ -46,6 +46,28 @@
     margin: 0.5rem 0 0;
 }
 
+.config-editor__subsection-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.config-editor__toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: var(--pico-primary);
+    color: var(--pico-primary-inverse);
+    padding: 0.5rem 1rem;
+    border-radius: var(--pico-border-radius);
+    font-size: var(--text-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 .config-editor__empty {
     color: var(--pico-muted-color);
     font-style: italic;

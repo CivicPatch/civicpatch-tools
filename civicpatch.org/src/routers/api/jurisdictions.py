@@ -18,6 +18,8 @@ from schemas.jurisdictions import (
     ExcludeRoleRequest,
     IncludeExclusionRequest,
     JurisdictionsByOcdidsRequest,
+    ReorderGlobalRolesRequest,
+    ReorderScopeRolesRequest,
     SetGlobalRolesRequest,
     SetScopeRolesRequest,
 )
@@ -169,6 +171,30 @@ def get_router() -> APIRouter:
                 await pipeline_issue_resolution_service.resolve_via_config_db(body, user_id=user.user_id, issue_id=body.issue_id)
                 return {"data": {"ok": True}}
             await role_config_service.set_scope_roles(body, user_id=user.user_id)
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
+        except RuntimeError as e:
+            return JSONResponse({"error": str(e)}, status_code=409)
+        return {"data": {"ok": True}}
+
+    @router.put("/config/global/reorder")
+    async def reorder_global_config_endpoint(
+        body: ReorderGlobalRolesRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+    ):
+        try:
+            await role_config_service.reorder_roles("global", None, body.role_order, body.moved_roles, user_id=user.user_id)
+        except RuntimeError as e:
+            return JSONResponse({"error": str(e)}, status_code=409)
+        return {"data": {"ok": True}}
+
+    @router.put("/config/reorder")
+    async def reorder_jurisdiction_config_endpoint(
+        body: ReorderScopeRolesRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+    ):
+        try:
+            await role_config_service.reorder_roles(body.scope, body.ocdid, body.role_order, body.moved_roles, user_id=user.user_id)
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         except RuntimeError as e:

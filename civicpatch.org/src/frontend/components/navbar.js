@@ -448,6 +448,14 @@ function activeClass(currentPath, href) {
   return isActive ? "nav-link nav-link--active" : "nav-link";
 }
 
+// Pages that aren't scoped to a state. On these we hide the state selector
+// (it doesn't apply) and show a static "Global" badge instead. The badge is
+// presentational only — it never touches the stored app:default-state, so the
+// user's selected state is preserved for when they return to a scoped page.
+const GLOBAL_ROUTES = ["/activity", "/blog", "/admin"];
+const isGlobalRoute = (currentPath) =>
+  GLOBAL_ROUTES.some((route) => currentPath.startsWith(route));
+
 function renderPublicLinks(currentPath) {
   return html`
     <a href="/blog" class="${activeClass(currentPath, "/blog")}">Blog</a>
@@ -471,11 +479,13 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
         >${user.display_name || user.email || "User"}</span
       >
     </span>
-    <civ-select-state
-      class="nav-state-selector"
-      .selected=${stateCode}
-      @state-change=${onStateChange}
-    ></civ-select-state>
+    ${isGlobalRoute(currentPath)
+      ? html`<span class="nav-state-badge">Global</span>`
+      : html`<civ-select-state
+          class="nav-state-selector"
+          .selected=${stateCode}
+          @state-change=${onStateChange}
+        ></civ-select-state>`}
     <a href="/" class="${active("/")}">Home</a>
     <a href="/blog" class="${active("/blog")}">Blog</a>
     ${user.permissions?.can_view_reviews_page

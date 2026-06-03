@@ -215,6 +215,24 @@ export const putJurisdictionConfig = async (body) => {
   return res.json();
 };
 
+export const reorderRoles = async ({ scope, ocdid, roleOrder, movedRoles }) => {
+  const isGlobal = scope === "global";
+  const url = isGlobal
+    ? `/api/v1/jurisdictions/config/global/reorder`
+    : `/api/v1/jurisdictions/config/reorder`;
+  const body = isGlobal
+    ? { role_order: roleOrder, moved_roles: movedRoles }
+    : { ocdid, scope, role_order: roleOrder, moved_roles: movedRoles };
+  const res = await fetch(url, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const excludeRole = async (role, scope, ocdid) => {
   const res = await fetch(`/api/v1/jurisdictions/config/exclude`, {
     method: "POST",

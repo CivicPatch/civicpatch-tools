@@ -7,6 +7,7 @@ from database.roles import (
     build_event_payload,
     classify_term_op,
     diff_aliases,
+    reorder_validation_error,
 )
 from schemas.jurisdictions import RoleEntryData
 
@@ -183,3 +184,37 @@ def test_diff_aliases_dedups_incoming():
     """Incoming list with duplicates is treated as a set."""
     _, to_add = diff_aliases(set(), ["a", "a", "b"])
     assert to_add == {"a", "b"}
+
+
+# ── reorder_validation_error ────────────────────────────────────────────
+
+
+@pytest.mark.unit
+def test_reorder_valid_permutation_is_none():
+    assert reorder_validation_error(["a", "b", "c"], ["c", "a", "b"]) is None
+
+
+@pytest.mark.unit
+def test_reorder_empty_is_none():
+    assert reorder_validation_error([], []) is None
+
+
+@pytest.mark.unit
+def test_reorder_missing_role_errors():
+    err = reorder_validation_error(["a", "b"], ["a"])
+    assert err is not None
+    assert "b" in err
+
+
+@pytest.mark.unit
+def test_reorder_unexpected_role_errors():
+    err = reorder_validation_error(["a"], ["a", "b"])
+    assert err is not None
+    assert "b" in err
+
+
+@pytest.mark.unit
+def test_reorder_duplicate_errors():
+    err = reorder_validation_error(["a", "b"], ["a", "a"])
+    assert err is not None
+    assert "duplicate" in err.lower()
