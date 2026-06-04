@@ -140,7 +140,7 @@ async def filter_existing_person_ids(ids: list[str]) -> list[str]:
     return [row[0] for row in rows]
 
 
-async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
+async def get_jurisdiction_people(jurisdiction_ocdid: str) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -151,8 +151,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
             (jurisdiction_ocdid,),
         )
         rows = await cur.fetchall()
-        people = [Person(**row[0]) for row in rows]
-    return people
+    return [row[0] for row in rows]
 
 
 async def get_all_people_for_jurisdiction(
