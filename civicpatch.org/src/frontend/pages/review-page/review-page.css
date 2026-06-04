@@ -319,6 +319,10 @@ review-session-controls {
     background: var(--pico-success-color);
 }
 
+.review-page__dot--failed {
+    background: var(--pico-del-color);
+}
+
 .review-page__dot--deferred {
     background: var(--pico-muted-border-color);
 }

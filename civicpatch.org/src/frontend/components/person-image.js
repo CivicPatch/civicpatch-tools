@@ -15,9 +15,12 @@ function PersonImage({ person, onClick, size = "2rem" }) {
 
   const value = person?.cdn_image;
   const showInitials = !value || imgError;
+  const label = person?.name ? `Photo of ${person.name}` : "Profile photo";
 
   const avatar = showInitials
     ? html`<div
+        role="img"
+        aria-label=${label}
         style="
         width: ${size}; height: ${size}; border-radius: 50%;
         display: flex; align-items: center; justify-content: center;
@@ -30,7 +33,7 @@ function PersonImage({ person, onClick, size = "2rem" }) {
       </div>`
     : html`<img
         src="${value}"
-        alt="Profile image"
+        alt=${label}
         style="
         width: ${size}; height: ${size}; border-radius: 50%;
         object-fit: cover; object-position: center;

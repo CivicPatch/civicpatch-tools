@@ -20,6 +20,7 @@ export const ActionType = {
   SESSION_LOADED: "session_loaded",
   ENTRY_LOADED: "entry_loaded",
   MARK_RESOLVED: "mark_resolved",
+  MARK_FAILED: "mark_failed",
   LOAD_FAILED: "load_failed",
   STATS_LOADED: "stats_loaded",
 } as const;
@@ -69,6 +70,10 @@ export type ReviewState =
       current_entry: CurrentEntry;
       entry_number: number;
       resolved_entry_numbers: Set<number>;
+      // Entries whose publish was rejected for a reason we caught synchronously
+      // (bad input / save error), entry_number -> error message. Drives the red
+      // dot + the error banner; session-local (a reload re-encounters it unresolved).
+      failed_entries: Map<number, string>;
       frontier_entry: number;
       // Session length, computed server-side per navigate (goal capped by what's
       // reviewable). The client renders this; it does not derive its own count.
@@ -90,6 +95,7 @@ export type ReviewAction =
   // A subsequent within-session navigation — reuses the current session/resolved.
   | { type: typeof ActionType.ENTRY_LOADED; payload: { current_entry: CurrentEntry; entry_number: number; total: number } }
   | { type: typeof ActionType.MARK_RESOLVED }
+  | { type: typeof ActionType.MARK_FAILED; payload: { entry_number: number; message: string } }
   | { type: typeof ActionType.LOAD_FAILED; payload: { message: string } }
   | { type: typeof ActionType.STATS_LOADED; payload: { stats: Stats } };
 
@@ -99,7 +105,7 @@ export function initialPageState(stateCode: string): PageState {
 
 function reviewingFrom(
   state: PageState,
-  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; total: number; resolved_entry_numbers: Set<number> },
+  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; total: number; resolved_entry_numbers: Set<number>; failed_entries: Map<number, string> },
 ): PageState {
   const prevFrontier = state.fsm.kind === StateKind.REVIEWING ? state.fsm.frontier_entry : 0;
   return {
@@ -111,6 +117,7 @@ function reviewingFrom(
       current_entry: args.current_entry,
       entry_number: args.entry_number,
       resolved_entry_numbers: args.resolved_entry_numbers,
+      failed_entries: args.failed_entries,
       frontier_entry: Math.max(prevFrontier, args.entry_number),
       total: args.total,
       busy: false,
@@ -132,6 +139,7 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         entry_number: action.payload.entry_number,
         total: action.payload.total,
         resolved_entry_numbers: new Set(action.payload.resolved_entry_numbers),
+        failed_entries: new Map(),
       });
 
     case ActionType.ENTRY_LOADED:
@@ -142,11 +150,29 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         entry_number: action.payload.entry_number,
         total: action.payload.total,
         resolved_entry_numbers: fsm.resolved_entry_numbers,
+        failed_entries: fsm.failed_entries,
       });
 
-    case ActionType.MARK_RESOLVED:
+    case ActionType.MARK_RESOLVED: {
       if (fsm.kind !== StateKind.REVIEWING) return state;
-      return { ...state, fsm: { ...fsm, resolved_entry_numbers: new Set([...fsm.resolved_entry_numbers, fsm.entry_number]) } };
+      const failed = new Map(fsm.failed_entries);
+      failed.delete(fsm.entry_number); // a successful (re)publish clears the red flag
+      return {
+        ...state,
+        fsm: {
+          ...fsm,
+          resolved_entry_numbers: new Set([...fsm.resolved_entry_numbers, fsm.entry_number]),
+          failed_entries: failed,
+        },
+      };
+    }
+
+    case ActionType.MARK_FAILED: {
+      if (fsm.kind !== StateKind.REVIEWING) return state;
+      const failed = new Map(fsm.failed_entries);
+      failed.set(action.payload.entry_number, action.payload.message);
+      return { ...state, fsm: { ...fsm, failed_entries: failed } };
+    }
 
     case ActionType.LOAD_FAILED:
       return { ...state, fsm: { kind: StateKind.ERROR, state_code: fsm.state_code, message: action.payload.message } };

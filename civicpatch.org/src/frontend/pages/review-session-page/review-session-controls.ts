@@ -5,6 +5,7 @@ export interface Progress {
   entryNumber: number;
   hasPrev: boolean;
   resolvedEntryNumbers: Set<number>;
+  failedEntryNumbers: Set<number>;
   frontierEntry: number;
   total: number;
 }
@@ -38,11 +39,12 @@ function ReviewSessionControls({
   onClosePr,
   onMerge,
 }: ReviewSessionControlsProps) {
-  const { entryNumber, hasPrev, resolvedEntryNumbers, frontierEntry, total } = progress ?? {};
+  const { entryNumber, hasPrev, resolvedEntryNumbers, failedEntryNumbers, frontierEntry, total } = progress ?? {};
   const displayMax = hasSession ? total : entryNumber;
 
   function getDotStatus(n: number) {
     if (n === entryNumber) return "current";
+    if (failedEntryNumbers.has(n)) return "failed";
     if (resolvedEntryNumbers.has(n)) return "resolved";
     if (n <= frontierEntry) return "deferred";
     return "future";

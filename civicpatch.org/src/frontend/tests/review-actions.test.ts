@@ -31,7 +31,7 @@ function fakeEffects(api: ReviewApi): Effects {
     dispatch: vi.fn(),
     navigate: vi.fn(),
     setRequestIdParam: vi.fn(),
-    trackMerge: vi.fn(),
+    trackMerge: vi.fn(async () => ({ ok: true })),
     trackClose: vi.fn(),
   };
 }
@@ -203,6 +203,20 @@ describe("mergeCurrent", () => {
     expect(e.trackMerge).toHaveBeenCalledWith(123, "req-1", "ocd-x", people, "X City");
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_RESOLVED);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
+  });
+
+  it("flags the entry failed and stays put when the publish is rejected", async () => {
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const e = fakeEffects(api);
+    (e.trackMerge as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
+    await mergeCurrent(current, "s1", 2, [{ id: "p1" }], STATE, e);
+
+    expect(e.dispatch).toHaveBeenCalledWith({
+      type: ActionType.MARK_FAILED,
+      payload: { entry_number: 2, message: "phones: Invalid phone number" },
+    });
+    expect(dispatchedTypes(e)).not.toContain(ActionType.MARK_RESOLVED);
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
   });
 
   it("does nothing without a PR number", async () => {

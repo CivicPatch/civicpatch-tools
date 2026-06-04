@@ -33,6 +33,7 @@ function reviewing(n: number, resolved: number[] = [], frontier = n): PageState 
       current_entry: entry(),
       entry_number: n,
       resolved_entry_numbers: new Set(resolved),
+      failed_entries: new Map(),
       frontier_entry: frontier,
       total: 10,
       busy: false,
@@ -103,6 +104,27 @@ describe("reduceReview", () => {
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect([...next.fsm.resolved_entry_numbers].sort()).toEqual([1, 4]);
     expect(next.fsm.resolved_entry_numbers).not.toBe(beforeSet);
+  });
+
+  it("mark_failed records the entry's error message", () => {
+    const next = reduceReview(reviewing(2), { type: "mark_failed", payload: { entry_number: 2, message: "phones: bad" } });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect(next.fsm.failed_entries.get(2)).toBe("phones: bad");
+  });
+
+  it("mark_resolved clears a prior failed flag for that entry", () => {
+    const failed = reduceReview(reviewing(2), { type: "mark_failed", payload: { entry_number: 2, message: "phones: bad" } });
+    const next = reduceReview(failed, { type: "mark_resolved" });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect(next.fsm.failed_entries.has(2)).toBe(false);
+    expect([...next.fsm.resolved_entry_numbers]).toContain(2);
+  });
+
+  it("entry_loaded carries failed_entries across navigation", () => {
+    const failed = reduceReview(reviewing(2), { type: "mark_failed", payload: { entry_number: 2, message: "phones: bad" } });
+    const next = reduceReview(failed, { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 3, total: 10 } });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect(next.fsm.failed_entries.get(2)).toBe("phones: bad");
   });
 
   it("load_failed moves to error from any state", () => {

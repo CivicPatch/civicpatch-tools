@@ -5,7 +5,6 @@ import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { searchPeople } from "../../api.js";
 import "../edit-people/people-table.js";
 import "../person-image.js";
-import "../edit-people/profile-modal.js";
 import "../edit-people/person-edit-modal.js";
 
 interface ReviewWorkspaceProps {
@@ -21,75 +20,54 @@ interface ReviewWorkspaceProps {
   onBulkDelete: () => void;
   onReset: () => void;
   onAdd: () => void;
+  onPersonSave: (id: string, updates: Record<string, unknown>) => void;
 }
 
 type ReviewWorkspaceHost = HTMLElement & ReviewWorkspaceProps;
 
 function ReviewWorkspace(host: ReviewWorkspaceHost) {
-  const { pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false } = host;
+  const { pullRequest, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, onPersonSave, isTerminal = false } = host;
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
-  const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
   const matches = resolvedMatches ?? {};
 
   const allEditable = pullRequestArr;
 
-  const [profileModal, setProfileModal] = useState({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] });
   const [editingPerson, setEditingPerson] = useState<any>(null);
+  const [editingCandidates, setEditingCandidates] = useState<any[]>([]);
 
-  // The modal emits a batch `save`; re-dispatch it as the table's per-field
-  // `data-change` events so it flows through the existing updatePerson handler.
-  function handlePersonSave(e: CustomEvent) {
-    const { id, updates } = e.detail;
-    for (const [field, value] of Object.entries(updates)) {
-      host.dispatchEvent(new CustomEvent("data-change", {
-        detail: { identifier: id, field, value },
-        bubbles: true,
-        composed: true,
-      }));
-    }
+  function closeEdit() {
     setEditingPerson(null);
+    setEditingCandidates([]);
   }
 
-  async function openProfileModal(person) {
+  function handlePersonSave(e: CustomEvent) {
+    onPersonSave(e.detail.id, e.detail.updates);
+    closeEdit();
+  }
+
+  // Existing-record candidates to offer for linking: ambiguous auto-matches, or
+  // name-search hits for new people. Nothing for confident or no-match people.
+  async function openEdit(person) {
+    setEditingPerson(person);
+    setEditingCandidates([]);
     const resolved = matches[person.id];
-    let existingPerson = existingArr.find(p => p.id === person.id) ?? resolved?.person ?? null;
-    let nameMatches = [];
-
-    if (resolved && resolved.id !== person.id) {
-      if (resolved.ambiguous) {
-        nameMatches = resolved.person;
-      } else {
-        existingPerson = resolved.person;
-        nameMatches = [resolved.person];
-      }
-    }
-
-    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [] });
-
-    if (person._isNew && person.name && jurisdictionOcdid) {
+    if (resolved?.ambiguous) {
+      setEditingCandidates(resolved.person ?? []);
+    } else if (person._isNew && person.name && jurisdictionOcdid) {
       try {
         const result = await searchPeople(jurisdictionOcdid, person.name);
-        setProfileModal(prev => ({ ...prev, searchSuggestions: result.data ?? [] }));
+        setEditingCandidates(result.data ?? []);
       } catch {
         // non-blocking
       }
     }
   }
 
-  function handleLinkPerson(e) {
-    const { personId } = e.detail;
-    setProfileModal(prev => ({ ...prev, open: false }));
-    e.target.parentNode.dispatchEvent(new CustomEvent("link-person", {
-      detail: { personId, proposedPerson: profileModal.person, existingPeople: existingArr },
-      bubbles: true,
-    }));
-  }
-
   const sourceUrlMap = buildSourceUrlMap(sourceContentUrls ?? []);
-  const columns = getColumns(openProfileModal, sourceUrlMap, {
+  const columns = getColumns(sourceUrlMap, {
     readOnly: true,
-    onEdit: isTerminal ? null : setEditingPerson,
+    onEdit: isTerminal ? null : openEdit,
   });
 
   return html`
@@ -108,22 +86,13 @@ function ReviewWorkspace(host: ReviewWorkspaceHost) {
         .data=${allEditable}
         .columns=${columns}
       ></civ-people-table>
-      <profile-modal
-        .open=${profileModal.open}
-        .person=${profileModal.person}
-        .existingPerson=${profileModal.existingPerson}
-        .nameMatches=${profileModal.nameMatches ?? []}
-        .searchSuggestions=${profileModal.searchSuggestions ?? []}
-        .jurisdictionOcdid=${jurisdictionOcdid}
-        @link-person=${handleLinkPerson}
-        @close=${() => setProfileModal({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
-      ></profile-modal>
       ${editingPerson ? html`
         <civ-person-edit-modal
           .person=${editingPerson}
           .jurisdictionOcdid=${jurisdictionOcdid}
+          .candidates=${editingCandidates}
           @save=${handlePersonSave}
-          @cancel=${() => setEditingPerson(null)}
+          @cancel=${closeEdit}
         ></civ-person-edit-modal>
       ` : ""}
     </div>

@@ -48,6 +48,15 @@ export function parseDivision(divisionOcdid: string | null | undefined): Divisio
   return { type: DIVISION_OTHER, value: "" };
 }
 
+// Permissive, format-agnostic phone check: just needs a plausible digit count
+// (10–15, the E.164 max). Empty is allowed (blank rows are dropped, not invalid).
+// The backend's `phonenumbers` does the authoritative validation + normalization.
+export function isValidPhone(phone: string): boolean {
+  if (!phone.trim()) return true;
+  const digits = phone.replace(/\D/g, "");
+  return digits.length >= 10 && digits.length <= 15;
+}
+
 // {type, value} + jurisdiction -> division_ocdid. At-large is just the base.
 export function buildDivisionOcdid(
   jurisdictionOcdid: string | null | undefined,
@@ -86,6 +95,7 @@ export type Draft = {
   emails: string[];
   urls: string[];
   sourceUrls: string[];
+  linkedId: string; // staged "link to existing record" — applied as `id` on save
 };
 
 export function toDraft(person: Person): Draft {
@@ -102,6 +112,7 @@ export function toDraft(person: Person): Draft {
     emails: person.emails ?? [],
     urls: person.urls ?? [],
     sourceUrls: person.source_urls ?? [],
+    linkedId: "",
   };
 }
 
@@ -127,6 +138,9 @@ export function buildUpdates(person: Person, draft: Draft, jurisdictionOcdid: st
     ? person.office?.division_ocdid ?? ""
     : buildDivisionOcdid(jurisdictionOcdid, draft.divisionType, draft.divisionValue);
   set("office", { ...(person.office ?? {}), name: draft.officeName, division_ocdid }, person.office ?? {});
+
+  // linking just re-points the id; usePeopleState handles the re-ID + collapse
+  if (draft.linkedId && draft.linkedId !== person.id) updates.id = draft.linkedId;
 
   return updates;
 }
