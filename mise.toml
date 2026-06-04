@@ -7,6 +7,7 @@ gh = "latest"
 gcloud = "latest"
 jq = "latest"
 supabase = "2.98.0"
+infisical = "latest"
 
 [env]
 _.file = ["../pipelines.env", "../civicpatch.org.env"]
