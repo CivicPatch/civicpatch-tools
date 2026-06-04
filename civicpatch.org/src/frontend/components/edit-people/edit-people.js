@@ -208,9 +208,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       await saveAndEnqueueMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
       setPrStatus("merged");
       onPublished();
-    } catch {
+    } catch (err) {
       setPrStatus("error");
-      setError("Failed to merge pull request.");
+      setError(err.message || "Failed to merge pull request.");
     }
   }
 

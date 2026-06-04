@@ -20,6 +20,11 @@ import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
+from core.pull_request_merge import (
+    STUCK_MERGE_AFTER_MINUTES,
+    STUCK_MERGE_SWEEP_INTERVAL_SECONDS,
+    reconcile_stuck_merges,
+)
 from database.database import (
     close_pool,
     get_pool,
@@ -68,6 +73,18 @@ is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 
+# Runs in the API process — off the merge worker's failure domain — so a stuck/never-run
+# merge still surfaces to the issues table even when the worker that would have reported it
+# is down. Supervised: a failed sweep is logged and the loop continues.
+async def _stuck_merge_sweep() -> None:
+    while True:
+        await asyncio.sleep(STUCK_MERGE_SWEEP_INTERVAL_SECONDS)
+        try:
+            await reconcile_stuck_merges(STUCK_MERGE_AFTER_MINUTES)
+        except Exception:
+            logger.exception("Stuck-merge sweep failed")
+
+
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
@@ -75,7 +92,9 @@ async def lifespan(app):
     # Held separately from app.state.supabase to keep auth.admin.* calls isolated
     # from user sign-in flows. See supabase-py issue #1143.
     app.state.supabase_admin = await create_supabase_admin_client()
+    sweep_task = asyncio.create_task(_stuck_merge_sweep())
     yield
+    sweep_task.cancel()
     for client in (app.state.supabase, app.state.supabase_admin):
         try:
             await client.auth.close()

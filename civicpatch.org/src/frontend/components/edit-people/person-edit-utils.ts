@@ -48,15 +48,6 @@ export function parseDivision(divisionOcdid: string | null | undefined): Divisio
   return { type: DIVISION_OTHER, value: "" };
 }
 
-// Permissive, format-agnostic phone check: just needs a plausible digit count
-// (10–15, the E.164 max). Empty is allowed (blank rows are dropped, not invalid).
-// The backend's `phonenumbers` does the authoritative validation + normalization.
-export function isValidPhone(phone: string): boolean {
-  if (!phone.trim()) return true;
-  const digits = phone.replace(/\D/g, "");
-  return digits.length >= 10 && digits.length <= 15;
-}
-
 // {type, value} + jurisdiction -> division_ocdid. At-large is just the base.
 export function buildDivisionOcdid(
   jurisdictionOcdid: string | null | undefined,

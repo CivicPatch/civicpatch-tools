@@ -13,6 +13,12 @@ logger = logging.getLogger(__name__)
 
 MERGE_STATUS_TTL = 3600
 
+# A merge that stays parked past this window never settled: do_merge — which records its
+# own failure as an issue — never ran (e.g. the merge worker is down). 15 min is well clear
+# of a healthy merge (seconds) so an in-flight one is never flagged.
+STUCK_MERGE_AFTER_MINUTES = 15
+STUCK_MERGE_SWEEP_INTERVAL_SECONDS = 60
+
 
 async def _handle_failure(merge_key: str, request_id: str, error: str, mergeable_state: str | None = None) -> None:
     # A failed merge reports to the client (Redis) and stays parked: merge_enqueued_at is
@@ -65,12 +71,21 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
         await redis_store.set(merge_key, json.dumps({"status": "merged"}), ttl=MERGE_STATUS_TTL)
         await change_logs.record_publish(request_id, user_id)
 
-        # Sync open data. Best-effort and isolated so a failure here can't turn a successful
-        # merge into a reported error. Idempotent, so a webhook racing in for the same PR is harmless.
+        # Sync open data. Isolated so a failure here can't fail the already-successful merge,
+        # but no longer silent: record a merge_failed issue so a failed sync still surfaces to an
+        # admin. Idempotent, so a webhook racing in for the same PR is harmless.
         try:
             await pull_request_sync.publish_side_effects(request_id, PullRequestStatus.MERGED)
-        except Exception:
+        except Exception as e:
             logger.exception(f"Publish side effects failed after merging PR {pull_request_number}")
+            try:
+                await issues_db.upsert_issue(
+                    request_id,
+                    PipelineIssueType.MERGE_FAILED,
+                    [{"error": f"Merge succeeded but the open-data sync failed: {e}", "mergeable_state": None}],
+                )
+            except Exception:
+                logger.exception(f"Failed to record data-sync issue for PR {pull_request_number}")
 
     except Exception as e:
         logger.error(f"Background merge task failed for PR {pull_request_number}: {e}")
@@ -78,3 +93,19 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             await _handle_failure(merge_key, request_id, "An unexpected error occurred during merge")
         except Exception:
             pass
+
+
+async def reconcile_stuck_merges(stuck_after_minutes: int) -> None:
+    # Backstop for merges that the merge worker never settled: do_merge records its own
+    # failures, but only if it ran — a dead worker leaves the PR parked with no issue and
+    # no error reaching the reviewer. This runs in the API process, off the merge worker's
+    # failure domain, so it surfaces the stuck merge into the issues table regardless of why
+    # the merge never happened. If the merge later recovers, an admin dismisses the issue.
+    stuck = await pull_requests_db.get_stuck_merges(stuck_after_minutes)
+    for pr in stuck:
+        logger.warning(f"Stuck merge for PR {pr['pr_number']} (request {pr['request_id']}); raising issue")
+        await issues_db.upsert_issue(
+            pr["request_id"],
+            PipelineIssueType.MERGE_FAILED,
+            [{"error": "Merge never completed — the merge worker may be down", "mergeable_state": None}],
+        )

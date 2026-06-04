@@ -16,7 +16,6 @@ import {
   buildDivisionOcdid,
   toDraft,
   buildUpdates,
-  isValidPhone,
 } from "./person-edit-utils.js";
 
 export const SAVE_EVENT = "save";
@@ -44,12 +43,9 @@ function renderMultiValue(
   addLabel: string,
   type: string,
   onChange: (next: string[]) => void,
-  validate?: (value: string) => string,
 ) {
-  const onInput = (e: Event, i: number) => {
-    if (validate) (e.target as HTMLInputElement).setCustomValidity(validate(inputValue(e)));
+  const onInput = (e: Event, i: number) =>
     onChange(replaceAt(items, i, inputValue(e)));
-  };
   return html`
     <p class="person-edit__section-title">${label}</p>
     <div class="person-edit__rows">
@@ -198,7 +194,7 @@ function PersonEditModal(host: PersonEditModalHost) {
   const handleCancel = () =>
     host.dispatchEvent(new CustomEvent(CANCEL_EVENT, { bubbles: true, composed: true }));
   const handleSave = () => {
-    if (formEl && !formEl.reportValidity()) return; // native email/url/required + the phone check
+    if (formEl && !formEl.reportValidity()) return; // native email/url/required validation
     host.dispatchEvent(new CustomEvent(SAVE_EVENT, {
       detail: { id: person.id, updates: buildUpdates(person, draft, jurisdictionOcdid) },
       bubbles: true,
@@ -231,8 +227,7 @@ function PersonEditModal(host: PersonEditModalHost) {
       </div>
 
       ${renderMultiValue("Other names", draft.otherNames, "Add name", "text", (otherNames) => patch({ otherNames }))}
-      ${renderMultiValue("Phones", draft.phones, "Add phone", "tel", (phones) => patch({ phones }),
-        (v) => (isValidPhone(v) ? "" : "Enter a valid phone number (at least 10 digits)."))}
+      ${renderMultiValue("Phones", draft.phones, "Add phone", "tel", (phones) => patch({ phones }))}
       ${renderMultiValue("Emails", draft.emails, "Add email", "email", (emails) => patch({ emails }))}
       ${renderMultiValue("URLs", draft.urls, "Add URL", "url", (urls) => patch({ urls }))}
       ${renderSources(draft.sourceUrls, (sourceUrls) => patch({ sourceUrls }))}
