@@ -832,9 +832,32 @@ dialog[open]::backdrop {
 dialog[open] > article {
   margin: 0;
   width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border: 2px solid var(--civ-border-strong, var(--pico-color));
   box-shadow: 6px 6px 0 var(--civ-border-strong, var(--pico-color));
   border-radius: 0;
+}
+
+/* pin header + footer; only the body scrolls (sticky footer on tall modals) */
+dialog[open] > article > header,
+dialog[open] > article > footer {
+  flex: 0 0 auto;
+}
+
+dialog[open] > article > section {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  /* full-bleed to the article edges and re-pad (like header/footer) so the
+     scrollbar sits at the edge with content padded clear of it */
+  margin-left: calc(var(--pico-block-spacing-horizontal) * -1);
+  margin-right: calc(var(--pico-block-spacing-horizontal) * -1);
+  padding-left: var(--pico-block-spacing-horizontal);
+  padding-right: var(--pico-block-spacing-horizontal);
 }
 
 dialog[open] > article > footer {

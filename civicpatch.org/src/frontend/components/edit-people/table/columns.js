@@ -10,7 +10,8 @@ const customCss = (person, field) => {
     }
     return "";
 }
-export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOtherNames = false } = {}) => {
+export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOtherNames = false, readOnly = false, onEdit = null } = {}) => {
+    const editable = !readOnly;
     return [
         {
           type: "drag-row",
@@ -22,6 +23,16 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
             </span>
           `,
         },
+        ...(onEdit ? [{
+          field: "_edit",
+          editable: false,
+          colClass: "col-shrink col-icon",
+          renderCell: (person) => html`
+            <button class="btn-ghost" title="Edit person" @click=${() => onEdit(person)}>
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          `,
+        }] : []),
         {
           field: "_selected",
           editable: true,
@@ -40,7 +51,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "name",
           label: "Name",
-          editable: true,
+          editable: editable,
           type: "single",
           customCss: customCss,
           colClass: "col-name col-shrink",
@@ -48,7 +59,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         ...(showOtherNames ? [{
           field: "other_names",
           label: "Other Names",
-          editable: true,
+          editable: editable,
           type: "multiple",
           customCss: customCss,
           colClass: "col-shrink",
@@ -56,7 +67,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "phones",
           label: "Phones",
-          editable: true,
+          editable: editable,
           format: "phone",
           type: "multiple",
           customCss: customCss,
@@ -65,7 +76,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "emails",
           label: "Emails",
-          editable: true,
+          editable: editable,
           format: "email",
           type: "multiple",
           customCss: customCss,
@@ -74,7 +85,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "urls",
           label: "URLs",
-          editable: true,
+          editable: editable,
           type: "multiple",
           customCss: customCss,
           colClass: "col-shrink",
@@ -83,7 +94,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "start_date",
           label: "Start Date",
-          editable: true,
+          editable: editable,
           type: "date",
           customCss: customCss,
           colClass: "col-shrink",
@@ -91,7 +102,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "end_date",
           label: "End Date",
-          editable: true,
+          editable: editable,
           type: "date",
           customCss: customCss,
           colClass: "col-shrink",
@@ -99,7 +110,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "office.name",
           label: "Office Name",
-          editable: true,
+          editable: editable,
           type: "single",
           customCss: customCss,
           colClass: "col-shrink col-office-name",
@@ -107,7 +118,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "office.division_ocdid",
           label: "Division",
-          editable: true,
+          editable: editable,
           type: "single",
           customCss: customCss,
           colClass: "col-shrink col-division",
@@ -116,7 +127,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
         {
           field: "source_urls",
           label: "Source URLs",
-          editable: true,
+          editable: editable,
           type: "multiple",
           customCss: customCss,
           colClass: "col-shrink",
@@ -127,10 +138,5 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
             return html`<a href="${url}" target="_blank" rel="noopener noreferrer" class="tag-link ${colorClass}" tabindex="-1">[${label}]</a>`;
           },
         },
-        //{
-        //  field: "id",
-        //  label: "ID",
-        //  editable: false,
-        //}
       ]
 }
