@@ -9,7 +9,7 @@ import "./profile-modal.js";
 import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndEnqueueMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { blankPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
@@ -43,8 +43,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     assignPeople,
     addPerson,
     updatePerson,
-    toggleSelect,
-    handleDelete,
     handleBulkDelete,
     handleMerge,
     handleReset,
@@ -207,7 +205,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     if (!prNumber) return;
     setPrStatus("loading_merge");
     try {
-      await saveAndMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
+      await saveAndEnqueueMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
       setPrStatus("merged");
       onPublished();
     } catch {
@@ -220,7 +218,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     setPrStatus("loading_merge");
     try {
       const { data } = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
-      await saveAndMerge(data.pr_number, data.request_id, jurisdiction_ocdid, null);
+      await saveAndEnqueueMerge(data.pr_number, data.request_id, jurisdiction_ocdid, null);
       setPrStatus("merged");
       onPublished();
     } catch (err) {
