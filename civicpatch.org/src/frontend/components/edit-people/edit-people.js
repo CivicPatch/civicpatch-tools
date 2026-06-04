@@ -1,11 +1,8 @@
 import { html, component, useEffect, useState } from "haunted";
-import { ref } from "lit-html/directives/ref.js";
-import { keyed } from "lit/directives/keyed.js";
 import { getColumns } from "./table/columns.js";
 import "../person-image.js";
-import "./person-card.js";
 import "./people-table.js";
-import { useRovingFocusList } from "../../hooks/use-roving-focus-list.js";
+import "./person-edit-modal.ts";
 import "./action-buttons.js";
 import "./people-tabs.js";
 import "./profile-modal.js";
@@ -69,9 +66,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     if (status === "merged" || status === "closed") setPrStatus(status);
     else setPrStatus(null);
   }, [selectedPullRequest]);
-  const [isMobile, setIsMobile] = useState(
-    window.matchMedia("(max-width: 700px)").matches,
-  );
   const [profileModal, setProfileModal] = useState({
     open: false,
     person: null,
@@ -81,12 +75,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   const [directoryPeople, setDirectoryPeople] = useState([]);
   const [directoryLoading, setDirectoryLoading] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 700px)");
-    const handler = (e) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  const [editingPerson, setEditingPerson] = useState(null);
+
+  function handlePersonSave(e) {
+    updatePerson(e.detail.id, e.detail.updates);
+    setEditingPerson(null);
+  }
 
   async function handleFetchPullRequests() {
     setPullRequestsLoading(true);
@@ -114,13 +108,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   useEffect(() => {
     handleFetchPullRequests();
   }, []);
-
-  const {
-    refs: cardRefs,
-    focusedIdx,
-    setFocusedIdx,
-    handleKeyDown,
-  } = useRovingFocusList(currentPeople.length);
 
   const activeTab = activeTabFromSelection(selectedPullRequest);
 
@@ -233,15 +220,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     }
   }
 
-function handleCardKeyDown(e, idx, key) {
-    handleKeyDown(e, idx);
-    if (e.target !== e.currentTarget) return;
-    if ((e.key === " " || e.key === "Enter") && key) {
-      e.preventDefault();
-      toggleSelect(key);
-    }
-  }
-
   async function openProfileModal(person) {
     const resolved = resolvedMatches[person.id];
     let existingPerson = people.find(p => p.id === person.id) ?? resolved?.person ?? null;
@@ -350,39 +328,10 @@ function handleCardKeyDown(e, idx, key) {
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(openProfileModal, activeSourceUrlMap, { showOtherNames: activeTab === TAB.current })}
+      .columns=${getColumns(openProfileModal, activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: setEditingPerson })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
-  }
-
-  function renderCardView() {
-    return html`<div
-      class="grid"
-      style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem; align-items:stretch; width:100%;"
-    >
-      ${currentPeople.map((person, idx) =>
-        keyed(
-          person.id,
-          html`
-            <div role="listitem">
-              <person-card
-                tabIndex=${focusedIdx === idx ? "0" : "-1"}
-                ${ref(cardRefs[idx])}
-                @focus=${() => setFocusedIdx(idx)}
-                @keydown=${(e) => handleCardKeyDown(e, idx, person.id)}
-                .person=${person}
-                .onSelect=${() => toggleSelect(person.id)}
-                .onDelete=${() => handleDelete([person.id])}
-                .onChange=${(field, value) =>
-                  updatePerson(person.id, { [field]: value })}
-                .onReset=${() => handleReset(person.id)}
-              ></person-card>
-            </div>
-          `,
-        ),
-      )}
-    </div>`;
   }
 
   function renderContent() {
@@ -422,9 +371,7 @@ function handleCardKeyDown(e, idx, key) {
           >
             Loading pull request data...
           </div>`
-        : isMobile
-          ? renderCardView()
-          : renderTableView()}
+        : renderTableView()}
     `;
   }
 
@@ -459,6 +406,15 @@ function handleCardKeyDown(e, idx, key) {
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}
     ></profile-modal>
+
+    ${editingPerson ? html`
+      <civ-person-edit-modal
+        .person=${editingPerson}
+        .jurisdictionOcdid=${jurisdiction_ocdid}
+        @save=${handlePersonSave}
+        @cancel=${() => setEditingPerson(null)}
+      ></civ-person-edit-modal>
+    ` : ""}
 
     <civ-modal
       .title=${"Delete person?"}

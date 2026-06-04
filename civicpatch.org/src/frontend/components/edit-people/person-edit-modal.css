@@ -1,0 +1,116 @@
+/* Person-edit modal — form layout inside civ-modal's <dialog>. */
+
+/* this form needs more room than the default 32rem modal cap */
+dialog[open]:has(.person-edit__form) > article {
+  max-width: min(90vw, 40rem);
+}
+
+/* dense layout — this is a data-entry surface, so tighten everything down */
+.person-edit__form {
+  --pico-form-element-spacing-vertical: 0.3rem;
+  --pico-form-element-spacing-horizontal: 0.6rem;
+}
+.person-edit__form input,
+.person-edit__form select {
+  font-size: var(--text-sm);
+  line-height: 1.25;
+}
+
+.person-edit__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.85rem;
+}
+
+/* a field = small muted label above a normal-weight control */
+.person-edit__field {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--pico-muted-color);
+}
+.person-edit__field--full { grid-column: 1 / -1; }
+.person-edit__field input,
+.person-edit__field select {
+  margin: 0.2rem 0 0;
+  font-weight: 400;
+  color: var(--pico-form-element-color);
+}
+
+.person-edit__division { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
+.person-edit__division select { margin: 0; flex: 1; }
+.person-edit__division input { margin: 0; width: 7rem; }
+
+.person-edit__date { display: flex; gap: 0.4rem; margin-top: 0.25rem; }
+.person-edit__date .year { width: 4.75rem; margin: 0; }
+.person-edit__date select { margin: 0; }
+.person-edit__date .month { flex: 1; min-width: 0; }
+.person-edit__date .day { width: 4.75rem; }
+
+.person-edit__hint {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--pico-font-family-monospace);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--pico-muted-color);
+  word-break: break-all;
+}
+
+.person-edit__section-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--pico-muted-color);
+  margin: 0.9rem 0 0.35rem;
+}
+
+.person-edit__rows { display: flex; flex-direction: column; gap: 0.3rem; }
+.person-edit__row { display: flex; align-items: stretch; gap: 0.4rem; }
+.person-edit__row input { margin: 0; flex: 1; min-width: 0; }
+
+/* icon buttons match the input height (align-items: stretch on the row) */
+.person-edit__icon-btn {
+  flex-shrink: 0;
+  width: 2rem;
+  padding: 0;
+  font-size: var(--text-sm);
+  background: transparent;
+  border: 1px solid var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
+}
+.person-edit__icon-btn:hover {
+  background: var(--pico-muted-background-color);
+  border-color: var(--pico-muted-border-color);
+  color: var(--pico-color);
+}
+
+.person-edit__source-open {
+  flex-shrink: 0;
+  width: 2rem;
+  padding: 0;
+  font-size: var(--text-sm);
+  background: transparent;
+  border: 1px solid var(--pico-primary);
+  color: var(--pico-primary);
+}
+.person-edit__source-open:hover {
+  background: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+}
+
+.person-edit__add {
+  align-self: flex-start;
+  padding: 0.3rem 0.4rem;
+  background: none;
+  border: none;
+  color: var(--pico-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: 0.5rem 0 0.15rem 0.35rem;
+  width: auto;
+}
+.person-edit__add:hover { background: none; text-decoration: underline; }

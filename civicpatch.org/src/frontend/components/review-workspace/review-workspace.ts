@@ -6,6 +6,7 @@ import { searchPeople } from "../../api.js";
 import "../edit-people/people-table.js";
 import "../person-image.js";
 import "../edit-people/profile-modal.js";
+import "../edit-people/person-edit-modal.js";
 
 interface ReviewWorkspaceProps {
   pullRequest: any[];
@@ -22,7 +23,10 @@ interface ReviewWorkspaceProps {
   onAdd: () => void;
 }
 
-function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false }: ReviewWorkspaceProps) {
+type ReviewWorkspaceHost = HTMLElement & ReviewWorkspaceProps;
+
+function ReviewWorkspace(host: ReviewWorkspaceHost) {
+  const { pullRequest, existing, selectedPeople, isDirty, resolvedMatches, jurisdictionOcdid, sourceContentUrls, onMerge, onBulkDelete, onReset, onAdd, isTerminal = false } = host;
   const pullRequestArr = Array.isArray(pullRequest) ? pullRequest : [];
   const existingArr = Array.isArray(existing) ? existing : [];
   const selected = Array.isArray(selectedPeople) ? selectedPeople : [];
@@ -31,6 +35,21 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
   const allEditable = pullRequestArr;
 
   const [profileModal, setProfileModal] = useState({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] });
+  const [editingPerson, setEditingPerson] = useState<any>(null);
+
+  // The modal emits a batch `save`; re-dispatch it as the table's per-field
+  // `data-change` events so it flows through the existing updatePerson handler.
+  function handlePersonSave(e: CustomEvent) {
+    const { id, updates } = e.detail;
+    for (const [field, value] of Object.entries(updates)) {
+      host.dispatchEvent(new CustomEvent("data-change", {
+        detail: { identifier: id, field, value },
+        bubbles: true,
+        composed: true,
+      }));
+    }
+    setEditingPerson(null);
+  }
 
   async function openProfileModal(person) {
     const resolved = matches[person.id];
@@ -68,7 +87,10 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
   }
 
   const sourceUrlMap = buildSourceUrlMap(sourceContentUrls ?? []);
-  const columns = getColumns(openProfileModal, sourceUrlMap);
+  const columns = getColumns(openProfileModal, sourceUrlMap, {
+    readOnly: true,
+    onEdit: isTerminal ? null : setEditingPerson,
+  });
 
   return html`
     <div class="review-workspace">
@@ -96,6 +118,14 @@ function ReviewWorkspace({ pullRequest, existing, selectedPeople, isDirty, resol
         @link-person=${handleLinkPerson}
         @close=${() => setProfileModal({ open: false, person: null, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
       ></profile-modal>
+      ${editingPerson ? html`
+        <civ-person-edit-modal
+          .person=${editingPerson}
+          .jurisdictionOcdid=${jurisdictionOcdid}
+          @save=${handlePersonSave}
+          @cancel=${() => setEditingPerson(null)}
+        ></civ-person-edit-modal>
+      ` : ""}
     </div>
   `;
 }
