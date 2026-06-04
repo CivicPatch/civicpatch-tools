@@ -30,7 +30,7 @@ export type Effects = {
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
   setRequestIdParam: (requestId: string | null) => void;
-  trackMerge: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => void;
+  trackMerge: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
   trackClose: (prNumber: number, requestId: string, jurisdictionName: string) => void;
 };
 
@@ -116,7 +116,13 @@ export async function endSessionAndExit(sessionId: string | null, stateCode: str
 export async function mergeCurrent(current: CurrentEntry, sessionId: string, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
   const { pr, request_id, jurisdiction } = current;
   if (!pr?.number || !request_id) return;
-  e.trackMerge(pr.number, request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? `#${pr.number}`);
+  const result = await e.trackMerge(pr.number, request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? `#${pr.number}`);
+  if (!result.ok) {
+    // Caught synchronously (bad input / save error): flag the entry red and keep
+    // the reviewer here so they can fix it. The merge itself stays a background job.
+    e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: result.error ?? "Publish failed." } });
+    return;
+  }
   e.dispatch({ type: ActionType.MARK_RESOLVED });
   await goToEntry(sessionId, entryNumber + 1, stateCode, e);
 }

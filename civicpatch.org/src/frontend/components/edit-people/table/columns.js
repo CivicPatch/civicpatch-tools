@@ -10,7 +10,7 @@ const customCss = (person, field) => {
     }
     return "";
 }
-export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOtherNames = false, readOnly = false, onEdit = null } = {}) => {
+export const getColumns = (sourceUrlMap = new Map(), { showOtherNames = false, readOnly = false, onEdit = null } = {}) => {
     const editable = !readOnly;
     return [
         {
@@ -45,7 +45,7 @@ export const getColumns = (openProfileModal, sourceUrlMap = new Map(), { showOth
           editable: false,
           colClass: "col-shrink col-icon",
           renderCell: (person) => html`
-            <person-image .person=${person} .onClick=${openProfileModal}></person-image>
+            <person-image .person=${person}></person-image>
           `
         },
         {

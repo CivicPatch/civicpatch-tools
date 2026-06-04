@@ -38,15 +38,16 @@ function ReviewSessionPage() {
     selectedPeople,
     resolvedMatches,
     handleAdd,
-    handleLinkPerson,
     handleTableDataChange,
     handleTableDataReorder,
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
     handleResetAll,
+    updatePerson,
   } = useReviewPeople(currentEntry);
 
   const handleMerge = () => merge(dirty ? peopleToSubmit : null);
+  const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
 
   const prNumber = currentEntry?.pr?.number;
   const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
@@ -56,10 +57,15 @@ function ReviewSessionPage() {
         entryNumber: reviewing.entry_number,
         hasPrev: reviewing.entry_number > 1,
         resolvedEntryNumbers: reviewing.resolved_entry_numbers,
+        failedEntryNumbers: new Set(reviewing.failed_entries.keys()),
         frontierEntry: reviewing.frontier_entry,
         total: reviewing.total,
       }
     : null;
+
+  // The publish error for the entry we're currently on (if its last publish was
+  // rejected), shown as an in-place banner so the reviewer can fix and retry.
+  const publishError = reviewing ? reviewing.failed_entries.get(reviewing.entry_number) ?? null : null;
 
   const renderBody = () => {
     if (fsm.kind === StateKind.LOADING) {
@@ -75,7 +81,7 @@ function ReviewSessionPage() {
       .currentEntry=${currentEntry}
       .hasSession=${session != null}
       .progress=${progress}
-      .error=${null}
+      .error=${publishError}
       .isDirty=${dirty}
       .currentPeople=${currentPeople}
       .selectedPeople=${selectedPeople}
@@ -92,7 +98,7 @@ function ReviewSessionPage() {
       .onBulkDelete=${handleBulkDelete}
       .onReset=${handleResetAll}
       .onAdd=${handleAdd}
-      @link-person=${handleLinkPerson}
+      .onPersonSave=${handlePersonSave}
       .resolvedMatches=${resolvedMatches}
     ></review-session>`;
   };

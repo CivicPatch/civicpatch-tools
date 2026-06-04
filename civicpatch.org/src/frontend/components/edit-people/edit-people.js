@@ -10,7 +10,6 @@ import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
-import { buildOtherNames } from "../../utils/name-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { blankPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
@@ -76,10 +75,34 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   const [directoryLoading, setDirectoryLoading] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [editingPerson, setEditingPerson] = useState(null);
+  const [editingCandidates, setEditingCandidates] = useState([]);
+
+  function closeEdit() {
+    setEditingPerson(null);
+    setEditingCandidates([]);
+  }
 
   function handlePersonSave(e) {
     updatePerson(e.detail.id, e.detail.updates);
-    setEditingPerson(null);
+    closeEdit();
+  }
+
+  // Existing-record candidates to offer for linking: ambiguous auto-matches, or
+  // name-search hits for new people. Nothing for confident or no-match people.
+  async function openEdit(person) {
+    setEditingPerson(person);
+    setEditingCandidates([]);
+    const resolved = resolvedMatches[person.id];
+    if (resolved?.ambiguous) {
+      setEditingCandidates(resolved.person ?? []);
+    } else if (person._isNew && person.name) {
+      try {
+        const result = await searchPeople(jurisdiction_ocdid, person.name);
+        setEditingCandidates(result.data ?? []);
+      } catch {
+        // non-blocking
+      }
+    }
   }
 
   async function handleFetchPullRequests() {
@@ -220,46 +243,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     }
   }
 
-  async function openProfileModal(person) {
-    const resolved = resolvedMatches[person.id];
-    let existingPerson = people.find(p => p.id === person.id) ?? resolved?.person ?? null;
-    let nameMatches = [];
-
-    if (resolved && resolved.id !== person.id) {
-      if (resolved.ambiguous) {
-        nameMatches = resolved.person;
-      } else {
-        existingPerson = resolved.person;
-        nameMatches = [resolved.person];
-      }
-    }
-
-    setProfileModal({ open: true, person, existingPerson, nameMatches, searchSuggestions: [], jurisdictionOcdid: jurisdiction_ocdid });
-
-    if (person._isNew && person.name) {
-      try {
-        const result = await searchPeople(jurisdiction_ocdid, person.name);
-        setProfileModal(prev => ({ ...prev, searchSuggestions: result.data ?? [] }));
-      } catch {
-        // non-blocking
-      }
-    }
-  }
-
-  function handleLinkPerson(e) {
-    const { personId } = e.detail;
-    const existingPerson = people.find(p => p.id === personId);
-    const proposedPerson = profileModal.person;
-    const other_names = buildOtherNames(proposedPerson, existingPerson);
-    updatePerson(proposedPerson.id, { id: personId, _isNew: false, other_names });
-    setProfileModal(prev => ({
-      ...prev,
-      person: { ...prev.person, id: personId, _isNew: false, other_names },
-      existingPerson,
-      nameMatches: [],
-      searchSuggestions: [],
-    }));
-  }
 
   function formatDate(isoString) {
     if (!isoString) return "—";
@@ -328,7 +311,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(openProfileModal, activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: setEditingPerson })}
+      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: openEdit })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
@@ -402,7 +385,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       .searchSuggestions=${profileModal.searchSuggestions ?? []}
       .jurisdictionOcdid=${profileModal.jurisdictionOcdid ?? jurisdiction_ocdid}
       .readOnly=${activeTab === TAB.directory}
-      @link-person=${handleLinkPerson}
       @close=${() =>
         setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}
     ></profile-modal>
@@ -411,8 +393,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       <civ-person-edit-modal
         .person=${editingPerson}
         .jurisdictionOcdid=${jurisdiction_ocdid}
+        .candidates=${editingCandidates}
         @save=${handlePersonSave}
-        @cancel=${() => setEditingPerson(null)}
+        @cancel=${closeEdit}
       ></civ-person-edit-modal>
     ` : ""}
 

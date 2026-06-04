@@ -40,6 +40,7 @@ interface ReviewSessionProps {
   onBulkDelete: () => void;
   onReset: () => void;
   onAdd: () => void;
+  onPersonSave: (id: string, updates: Record<string, unknown>) => void;
 }
 
 function ReviewSession({
@@ -48,7 +49,7 @@ function ReviewSession({
   currentPeople, selectedPeople,
   resolvedMatches,
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
-  onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd,
+  onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd, onPersonSave,
 }: ReviewSessionProps) {
   const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
@@ -96,6 +97,7 @@ function ReviewSession({
           .onBulkDelete=${onBulkDelete}
           .onReset=${onReset}
           .onAdd=${onAdd}
+          .onPersonSave=${onPersonSave}
           @data-change=${onTableDataChange}
           @reorder=${onTableReorder}
         ></civ-review-workspace>

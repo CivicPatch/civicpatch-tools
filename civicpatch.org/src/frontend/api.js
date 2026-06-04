@@ -1,4 +1,5 @@
 import { config } from "./assets/config.js";
+import { parseSaveError } from "./api-errors.js";
 
 const API_URL = config.apiUrl;
 
@@ -123,7 +124,10 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
   return res.json();
 };
 
-export const saveAndMerge = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
+// The catchable, synchronous half of publishing: validate + write the file +
+// enqueue the merge. Returns once the server accepts the request (202); throws
+// (with a parsed message) on a validation/save rejection.
+export const saveAndEnqueueMerge = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
   const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save-and-merge`, {
     credentials: "include",
     method: "POST",
@@ -135,11 +139,16 @@ export const saveAndMerge = async (pullRequestNumber, request_id, jurisdiction_o
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    const err = new Error(body.error || `HTTP ${res.status}`);
+    const err = new Error(parseSaveError(body, res.status, people));
     err.status = res.status;
     throw err;
   }
+  return res.json();
+};
 
+// The background half: poll until the async merge settles. Resolves on success,
+// throws on a merge error or timeout.
+export const pollMergeStatus = async (pullRequestNumber) => {
   const POLL_INTERVAL_MS = 2000;
   const MAX_ATTEMPTS = 120;
   for (let i = 0; i < MAX_ATTEMPTS; i++) {

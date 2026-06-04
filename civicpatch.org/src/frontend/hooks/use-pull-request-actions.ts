@@ -1,5 +1,5 @@
 import { useState } from "haunted";
-import { saveAndMerge, closePullRequest } from "../api.js";
+import { saveAndEnqueueMerge, pollMergeStatus, closePullRequest } from "../api.js";
 import { PULL_REQUEST_STATUS } from "../components/pull-request-card/pull-request-status.js";
 
 type ActionState = {
@@ -47,20 +47,30 @@ export function usePullRequestActions() {
     }
   };
 
-  const trackMerge = (
+  // Publishing splits at the 202: await the save (catchable — validation/save
+  // errors), then let the merge settle in the background (the poll updates the log
+  // without blocking the caller). Resolves {ok:false, error} on a catchable reject
+  // so the review session can keep the reviewer on the entry.
+  const trackMerge = async (
     pullRequestNumber: number,
     requestId: string,
     jurisdictionOcdid: string,
     people: any[] | null,
     jurisdictionName: string,
-  ): Promise<void> =>
-    track({
-      pullRequestNumber,
-      jurisdictionName,
-      loading: PULL_REQUEST_STATUS.LOADING_MERGE,
-      done: PULL_REQUEST_STATUS.MERGED,
-      run: () => saveAndMerge(pullRequestNumber, requestId, jurisdictionOcdid, people),
-    });
+  ): Promise<{ ok: boolean; error?: string }> => {
+    setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.LOADING_MERGE);
+    try {
+      await saveAndEnqueueMerge(pullRequestNumber, requestId, jurisdictionOcdid, people);
+    } catch (err: any) {
+      const error = err?.message ?? String(err);
+      setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, error);
+      return { ok: false, error };
+    }
+    pollMergeStatus(pullRequestNumber)
+      .then(() => setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.MERGED))
+      .catch((err: any) => setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err)));
+    return { ok: true };
+  };
 
   const trackClose = (
     pullRequestNumber: number,

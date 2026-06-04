@@ -4,7 +4,9 @@ export const PERSON_FIELDS = {
   object: ["office"],
 };
 
-export const TRACKED_FIELDS = [...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
+// `id` is tracked so re-identifying a person (linking to an existing record)
+// marks the row dirty and gets submitted, even with no other edits.
+export const TRACKED_FIELDS = ["id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
 
 export function applyUpdate(person, updates, original) {
   const next = { ...person, ...updates };

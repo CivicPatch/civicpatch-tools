@@ -7,6 +7,7 @@ import {
   buildDivisionOcdid,
   toDraft,
   buildUpdates,
+  isValidPhone,
   type Person,
 } from '../components/edit-people/person-edit-utils.js';
 
@@ -78,6 +79,23 @@ describe('division OCD-ID', () => {
       const { type, value } = parseDivision(ocdid);
       expect(buildDivisionOcdid(jurisdiction, type, value)).toBe(ocdid);
     }
+  });
+});
+
+describe('isValidPhone', () => {
+  it('accepts any layout with 10–15 digits', () => {
+    for (const v of ['(805) 555-0100', '805-555-0100', '8055550100', '+1 805 555 0100', '(805) 555-0100 ext. 5']) {
+      expect(isValidPhone(v)).toBe(true);
+    }
+  });
+  it('allows empty (blank rows are dropped, not invalid)', () => {
+    expect(isValidPhone('')).toBe(true);
+    expect(isValidPhone('   ')).toBe(true);
+  });
+  it('rejects letters, too-short, and too-long', () => {
+    expect(isValidPhone('not a phone')).toBe(false);
+    expect(isValidPhone('555-0100')).toBe(false);
+    expect(isValidPhone('1234567890123456')).toBe(false);
   });
 });
 

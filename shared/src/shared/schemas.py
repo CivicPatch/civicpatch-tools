@@ -6,6 +6,8 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, field_validator
 
+from shared.utils.phone_utils import normalize_phone_number
+
 
 class Office(BaseModel):
     name: str
@@ -51,13 +53,19 @@ class Official(BaseModel):
     @field_validator("phones")
     @classmethod
     def validate_phones(cls, v):
-        phone_pattern = r"^\(\d{3}\) \d{3}-\d{4}( ext\. ?\d+)?$"
+        # accept any layout and canonicalize to '(XXX) XXX-XXXX'; reject the truly invalid
+        normalized = []
         for phone in v:
-            if not re.match(phone_pattern, phone):
-                raise ValueError(
-                    f"Phone number must be in format '(XXX) XXX-XXXX' or '(XXX) XXX-XXXX ext.XXX', got: '{phone}'"
-                )
-        return v
+            if not phone or not phone.strip():
+                continue
+            try:
+                canonical = normalize_phone_number(phone)
+            except ValueError as e:
+                raise ValueError(f"Invalid phone number: '{phone}' (phonenumbers failed to parse)") from e
+            if not canonical:
+                raise ValueError(f"Invalid phone number: '{phone}'")
+            normalized.append(canonical)
+        return normalized
 
     @field_validator("emails")
     @classmethod
@@ -68,16 +76,20 @@ class Official(BaseModel):
                 raise ValueError(f"Email must be in format 'anything@anything', got: '{email}'")
         return v
 
-    @field_validator("urls")
+    @field_validator("urls", "source_urls")
     @classmethod
     def validate_urls(cls, v):
+        cleaned = []
         for url in v:
+            if not url or not url.strip():
+                continue
             if not url.startswith(("http://", "https://")):
                 raise ValueError(f"Website must start with 'http://' or 'https://', got: '{url}'")
             parsed = urlparse(url)
             if not parsed.netloc or "." not in parsed.netloc:
                 raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
-        return v
+            cleaned.append(url)
+        return cleaned
 
     @field_validator("updated_at")
     @classmethod
