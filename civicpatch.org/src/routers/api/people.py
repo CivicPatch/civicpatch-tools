@@ -1,5 +1,5 @@
 import math
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from pydantic import BaseModel
@@ -10,7 +10,8 @@ from schemas.common import Identity, Role, RouteCategory
 import database.people as database
 import database.jurisdictions as jurisdictions_db
 import core.change_logs as change_logs
-import yaml
+from core.people_patch import PersonPatch, patch_people, PeopleValidationError
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 import lib.github.api as github_service
 import lib.github.pull_requests as github_pr_service
 from lib.github.pull_requests import PrAuthor
@@ -30,7 +31,7 @@ class PeopleBatchResolveRequest(BaseModel):
 
 class OpenPrRequest(BaseModel):
     jurisdiction_ocdid: str
-    data: list[dict]
+    data: list[PersonPatch]
 
 
 def get_router() -> APIRouter:
@@ -146,7 +147,18 @@ def get_router() -> APIRouter:
         request_id = shared.utils.id_utils.make_request_id()
         branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request_id)
 
-        content = yaml.dump(request.data, sort_keys=False, allow_unicode=True)
+        # The file on `main` is the base: overlay only the edited fields so the PR diff
+        # shows exactly what changed, then validate + normalize.
+        raw = await github_service.get_github_file_contents(file_path)
+        base = yaml_load(raw) if raw else []
+        if not isinstance(base, list):
+            base = []
+        try:
+            patched = patch_people(base, request.data)
+        except PeopleValidationError as exc:
+            raise HTTPException(status_code=422, detail=exc.failures)
+
+        content = yaml_dump(patched)
         author = PrAuthor(
             name=user.display_name or user.email or user.provider_user_id,
             email=user.email or f"{user.provider_user_id}@users.noreply.github.com",
@@ -164,12 +176,11 @@ def get_router() -> APIRouter:
         if pr_number is None:
             return JSONResponse({"error": f"Failed to open PR: {pr_url}"}, status_code=500)
 
-        # Record the manual edit in the change log now: before = the current canonical
-        # people, after = what was just published. (Best-effort; logging must not fail the edit.)
+        # Record the manual edit in the change log: before = the `main` file we patched,
+        # after = what was just published. (Best-effort; logging must not fail the edit.)
         if user.user_id:
-            before = await database.get_people_by_jurisdiction_ocdid(request.jurisdiction_ocdid)
             await change_logs.record_manual_edits(
-                request_id, request.jurisdiction_ocdid, user.user_id, before, request.data
+                request_id, request.jurisdiction_ocdid, user.user_id, base, patched
             )
 
         return {"data": {"request_id": request_id, "pr_number": pr_number, "pr_url": pr_url}}

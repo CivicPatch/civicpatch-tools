@@ -6,6 +6,7 @@ from unittest.mock import AsyncMock, patch
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
 from routers.api import people as people_router
+from shared.utils.yaml_utils import yaml_dump
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -72,29 +73,45 @@ def test_delete_person_returns_200(client):
     assert data["data"] is None
 
 
-@pytest.mark.unit
-def test_patch_people_data_records_change_log(client):
-    """Publishing a manual edit records the diff in the change log
-    (before = current canonical people, after = submitted data)."""
-    ocdid = "ocd-jurisdiction/country:us/state:ca/place:oakland/government"
-    submitted = [{"id": "p-1", "name": "Renamed Person"}]
-    before = [{"id": "p-1", "name": "Original Person"}]
-    record = AsyncMock()
-    identity = Identity(
+# An Official-valid person on `main`, in on-disk order; a patch overlays the edited fields.
+BASE_PERSON = {
+    "name": "Original Person",
+    "phones": [],
+    "emails": [],
+    "urls": [],
+    "office": {"name": "Mayor", "division_ocdid": None},
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
+    "source_urls": [],
+    "updated_at": "2025-11-18T19:49:42+00:00",
+    "id": "p-1",
+}
+
+
+def _contributor():
+    return Identity(
         type="session", provider="github", provider_user_id="u1",
         email="u@x.com", role=Role.CONTRIBUTORS, user_id="user-123",
     )
-    client.app.dependency_overrides[get_optional_user] = lambda: identity
+
+
+@pytest.mark.unit
+def test_patch_people_data_records_change_log(client):
+    # This test previously verified before = DB canonical, after = the full submitted data.
+    # It now verifies before = the `main` file we patched, after = the patched result —
+    # because the endpoint moved to the patch model (overlay edits onto the main file).
+    ocdid = BASE_PERSON["jurisdiction_ocdid"]
+    record = AsyncMock()
+    client.app.dependency_overrides[get_optional_user] = _contributor
     with (
         patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock,
               return_value=(42, "https://github.com/x/pull/42")),
-        patch("database.people.get_people_by_jurisdiction_ocdid", new_callable=AsyncMock,
-              return_value=before),
+        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
+              return_value=yaml_dump([BASE_PERSON])),
         patch("core.change_logs.record_manual_edits", record),
     ):
         response = client.patch(
             "/people/data",
-            json={"jurisdiction_ocdid": ocdid, "data": submitted},
+            json={"jurisdiction_ocdid": ocdid, "data": [{"id": "p-1", "fields": {"name": "Renamed Person"}}]},
         )
 
     assert response.status_code == 200
@@ -102,5 +119,30 @@ def test_patch_people_data_records_change_log(client):
     _, logged_ocdid, user_id, before_arg, after_arg = record.await_args.args
     assert logged_ocdid == ocdid
     assert user_id == "user-123"
-    assert before_arg == before
-    assert after_arg == submitted
+    assert [p["name"] for p in before_arg] == ["Original Person"]
+    assert [p["name"] for p in after_arg] == ["Renamed Person"]
+
+
+@pytest.mark.unit
+def test_patch_people_data_rejects_invalid_field(client):
+    client.app.dependency_overrides[get_optional_user] = _contributor
+    with (
+        patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr,
+        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
+              return_value=yaml_dump([BASE_PERSON])),
+        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+    ):
+        response = client.patch(
+            "/people/data",
+            json={
+                "jurisdiction_ocdid": BASE_PERSON["jurisdiction_ocdid"],
+                "data": [{"id": "p-1", "fields": {"phones": ["not-a-phone"]}}],
+            },
+        )
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert detail[0]["id"] == "p-1"
+    assert detail[0]["name"] == "Original Person"
+    assert detail[0]["field"] == "phones"
+    mock_pr.assert_not_awaited()

@@ -8,7 +8,6 @@ import shared.utils.data_path_utils
 import shared.utils.id_utils
 import shared.utils.url_utils
 from shared.utils.statuses import PullRequestStatus
-from shared.utils.person_id_utils import ensure_person_ids
 import yaml
 from fastapi import (
     APIRouter,
@@ -28,6 +27,7 @@ import database.review_session_entries as review_session_entries_db
 import database.users
 import lib.github.api as github_service
 import core.change_logs as change_logs
+from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 import core.pull_request_merge as merge_service
 import core.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
@@ -65,7 +65,7 @@ class PostJobPullRequestDataRequest(BaseModel):
 class SaveAndMergeRequest(BaseModel):
     request_id: str
     jurisdiction_ocdid: str
-    data: List[Official] | None = None
+    data: List[PersonPatch] | None = None
 
 
 # ──────────────────────────────────────────────
@@ -336,14 +336,24 @@ def get_router(api_key_header):
         ),
     ):
         if request.data:
-            file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
+            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
+            data_file_path = f"data/{folder}.yml"
             branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request.request_id)
-            before = await database.pipeline_runs.get_pipeline_run_data_json(request.request_id) or []
-            normalized = ensure_person_ids([official.model_dump() for official in request.data])
+            # The branch file is the authoritative base: we diff against it and write back to it,
+            # so untouched entries stay byte-identical and the PR shows only the edited fields.
+            base = await github_service.get_pull_request_file_yaml(
+                request.request_id, request.jurisdiction_ocdid, data_file_path
+            )
+            if not isinstance(base, list):
+                base = []
+            try:
+                patched = patch_people(base, request.data)
+            except PeopleValidationError as exc:
+                raise HTTPException(status_code=422, detail=exc.failures)
             success = await github_service.update_pull_request_file(
                 branch_name=branch_name,
-                file_path=f"data/{file_path}.yml",
-                new_data=normalized,
+                file_path=data_file_path,
+                new_data=patched,
                 commit_message=f"Data update by {user.email}",
             )
             if not success:
@@ -351,10 +361,10 @@ def get_router(api_key_header):
                     content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
                     status_code=500,
                 )
-            background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request.request_id, normalized)
+            background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request.request_id, patched)
             if user.user_id:
                 await change_logs.record_manual_edits(
-                    request.request_id, request.jurisdiction_ocdid, user.user_id, before, normalized
+                    request.request_id, request.jurisdiction_ocdid, user.user_id, base, patched
                 )
 
         merge_key = f"merge_status:{pull_request_number}"
