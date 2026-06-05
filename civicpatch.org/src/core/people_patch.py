@@ -38,6 +38,16 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
 # actually edited (`edit.fields`), so untouched fields keep their exact base representation.
 # Raises `PeopleValidationError` (failures keyed by person id) if any person is invalid.
 # `patched[i]` corresponds to `edits[i]`.
+# The one place that touches pydantic's error encoding. `loc` is the path to the bad value
+# — ("phones",), ("phones", 0), ("office", "name") — and its first element is the top-level
+# field we surface (loc[-1] would be a list index for list fields).
+def _field_errors(exc: ValidationError) -> list[dict]:
+    return [
+        {"field": str(e["loc"][0]) if e["loc"] else "", "message": e["msg"]}
+        for e in exc.errors()
+    ]
+
+
 def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> list[dict]:
     people = []
     failures = []
@@ -45,9 +55,9 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
         try:
             normalized = Official.model_validate(entry).model_dump()
         except ValidationError as exc:
-            for err in exc.errors():
-                field = str(err["loc"][0]) if err["loc"] else ""
-                failures.append({"id": edit.id, "name": entry.get("name"), "field": field, "message": err["msg"]})
+            failures.extend(
+                {"id": edit.id, "name": entry.get("name"), **err} for err in _field_errors(exc)
+            )
             people.append(entry)
             continue
         edited = {key: normalized[key] for key in edit.fields if key in normalized}

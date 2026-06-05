@@ -154,10 +154,8 @@ def test_validate_raises_failures_keyed_by_id():
 
 
 # The headline guarantee, end-to-end on real YAML: editing one field changes only that line.
-# Fixture is in post-reformat canonical (ruamel-native) form — blank nulls — which is what
-# files look like after the Step 5 bulk reformat. The guarantee holds against that baseline;
-# against a PyYAML-spelled (`: null`) base the first edit would also flip nulls to blank,
-# which is precisely why the reformat is a prerequisite.
+# Nulls are explicit `null` (the canonical form the manager emits), so they round-trip
+# untouched — only the edited field's line moves.
 FIXTURE = """\
 - name: Alice Adams
   phones:
@@ -166,7 +164,7 @@ FIXTURE = """\
   office:
     name: Mayor
     division_ocdid: ocd-division/country:us/state:ca/place:x
-  cdn_image:
+  cdn_image: null
   updated_at: '2025-11-18T19:49:42+00:00'
   id: a
 - name: Bob Brown
@@ -176,7 +174,7 @@ FIXTURE = """\
   office:
     name: Council Member
     division_ocdid: ocd-division/country:us/state:ca/place:x
-  cdn_image:
+  cdn_image: null
   updated_at: '2025-11-18T19:49:42+00:00'
   id: b
 """

@@ -69,7 +69,7 @@ def test_unicode_is_written_literally_not_escaped():
     assert "\\u" not in dumped and "\\x" not in dumped
 
 
-def test_none_renders_as_blank():
-    # Canonical ruamel-native form (not PyYAML's `null`); pinned so it's a
-    # deliberate choice, not a silent surprise.
-    assert yaml_dump({"cdn_image": None}) == "cdn_image:\n"
+def test_none_renders_as_explicit_null():
+    # Explicit `null` (YAML's canonical, unambiguous null), not ruamel's default blank
+    # scalar — pinned so it stays a deliberate choice.
+    assert yaml_dump({"cdn_image": None}) == "cdn_image: null\n"
