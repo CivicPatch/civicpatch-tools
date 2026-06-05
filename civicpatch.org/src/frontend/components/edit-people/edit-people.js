@@ -39,7 +39,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     currentPeople,
     selectedPeople,
     dirty,
-    peopleToSubmit,
+    peoplePatch,
     assignPeople,
     addPerson,
     updatePerson,
@@ -205,7 +205,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     if (!prNumber) return;
     setPrStatus("loading_merge");
     try {
-      await saveAndEnqueueMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peopleToSubmit : null);
+      await saveAndEnqueueMerge(prNumber, request_id, jurisdiction_ocdid, dirty ? peoplePatch : null);
       setPrStatus("merged");
       onPublished();
     } catch (err) {
@@ -217,7 +217,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   async function handleOpenPR() {
     setPrStatus("loading_merge");
     try {
-      const { data } = await patchPeopleData(jurisdiction_ocdid, peopleToSubmit);
+      const { data } = await patchPeopleData(jurisdiction_ocdid, peoplePatch);
       await saveAndEnqueueMerge(data.pr_number, data.request_id, jurisdiction_ocdid, null);
       setPrStatus("merged");
       onPublished();

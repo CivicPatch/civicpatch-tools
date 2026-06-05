@@ -1,5 +1,5 @@
 import { useState } from 'haunted';
-import { TRACKED_FIELDS, applyUpdate, mergeFields, collapseInto } from './people-state-utils.js';
+import { TRACKED_FIELDS, applyUpdate, mergeFields, collapseInto, buildPeoplePatch } from './people-state-utils.js';
 
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
@@ -7,9 +7,7 @@ export function usePeopleState({ people }) {
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
   const dirty = currentPeople.some(p => p._dirty);
-  const peopleToSubmit = currentPeople
-    .filter(p => !p._deleted)
-    .map(({ _dirty, _changes, _selected, _deleted, _isNew, ...person }) => person);
+  const peoplePatch = buildPeoplePatch(currentPeople);
 
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
@@ -107,7 +105,7 @@ export function usePeopleState({ people }) {
     originalPeople,
     selectedPeople,
     dirty,
-    peopleToSubmit,
+    peoplePatch,
     assignPeople,
     addPerson,
     updatePerson,

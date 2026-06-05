@@ -1,7 +1,7 @@
 import os
 from typing import Any, List
 
-import yaml
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 from shared.utils import id_utils
 
@@ -87,7 +87,7 @@ def get_data(jurisdiction_ocdid: str) -> List[Any]:
         return []
 
     with open(data_file_path, "r", encoding="utf-8") as file:
-        data = yaml.safe_load(file)
+        data = yaml_load(file.read())
         return data or []
 
 
@@ -99,7 +99,7 @@ def update_data_for_jurisdiction(
         os.makedirs(os.path.dirname(data_file_path))
 
     with open(data_file_path, "w+") as file:
-        file.write(yaml.dump(serialized_data, sort_keys=False, allow_unicode=True))
+        file.write(yaml_dump(serialized_data))
 
 def get_cache_path(jurisdiction_ocdid: str):
     folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)

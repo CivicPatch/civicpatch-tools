@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 import shared.utils.id_utils
-import yaml
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import environment
 import lib.cache as cache_service
@@ -233,7 +233,7 @@ async def update_pull_request_file(
             )
             return False
         sha = contents_response.json()["sha"]
-        serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
+        serialized_data = yaml_dump(new_data)
         encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode(
             "utf-8"
         )
@@ -323,7 +323,7 @@ async def get_pull_request_file_yaml(
     if content is None:
         return None
     try:
-        return yaml.safe_load(content)
+        return yaml_load(content)
     except Exception as e:
         logger.error(
             f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}"

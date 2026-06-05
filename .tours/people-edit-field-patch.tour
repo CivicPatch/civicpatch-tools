@@ -1,0 +1,78 @@
+{
+  "title": "People edit → field patch → minimal-diff PR",
+  "description": "How a manual people-edit flows from the UI to a pull request that changes **only the fields the user edited**. The old path coerced people through a Pydantic model on read AND write, which reordered keys and injected empty defaults — so editing one phone reshuffled every row in the YAML diff. The new design is a **server-enforced field patch**: the frontend sends `{id, fields}` (only the changed fields), the backend loads the authoritative file, overlays just those fields by id, and writes it back — nothing else is re-serialized, so untouched entries stay byte-identical. Read this before touching the publish flow, the YAML manager, or the people-edit frontend.\n\n**PR:** _(fill in once opened against `merge-issues`)_  ·  **Design rationale:** `.scratch/2026-06-04-plan-yaml-manager-and-decoercion.md`",
+  "steps": [
+    {
+      "title": "1. One YAML manager (ruamel)",
+      "description": "**Why a single manager.** Every read/write of a data file goes through `yaml_load`/`yaml_dump` here — no caller passes its own flags. Ruamel is forced (not chosen): it's the only engine that preserves **comments** (needed for `jurisdictions.yml`) and keeps long scalars on one line (`width=2**16`). Routing the pipeline's `save_output` through this also stopped it emitting PyYAML-folded (wrapped) scalars. Output is ruamel-native (blank nulls); the one-time open-data reformat (Step 5) converges existing files onto it so edits diff cleanly.",
+      "file": "shared/src/shared/utils/yaml_utils.py",
+      "line": 12
+    },
+    {
+      "title": "2. The patch wire model",
+      "description": "**Every person carries a backend-assigned id** — existing people from the data they were loaded with, new people from the 'Add' action (`generatePersonId`). The frontend never mints a persisted id. `id` is the lookup key: matches a base entry → overlay only `fields`; no match → the person is new and `fields` is the whole entry. That single rule encodes new/existing/delete with no `is_new` flag.",
+      "file": "civicpatch.org/src/core/people_patch.py",
+      "line": 5
+    },
+    {
+      "title": "3. The pure patch engine (functional core)",
+      "description": "The heart of the feature, and **pure** — no I/O, no HTTP, exhaustively unit-tested with zero mocks. Overlay each edit's `fields` onto the matching base entry (`{**base, **fields}` preserves base key order); unknown id → insert whole; base entry absent from `edits` → dropped (deletion); order follows `edits`. Because untouched fields are never re-serialized, they keep their exact on-disk representation — that's what makes 'only edited fields move' structural rather than best-effort.",
+      "file": "civicpatch.org/src/core/people_patch.py",
+      "line": 24
+    },
+    {
+      "title": "4. Validate + normalize (still pure)",
+      "description": "Validates the **whole merged person** through `Official` (parity with the old `List[Official]` binding), but writes back normalized values for **only the edited fields** — so an edited phone canonicalizes to `(805) 555-0100` while untouched fields stay byte-identical. Normalization is idempotent, so adding live frontend normalization later composes cleanly. On failure it raises `PeopleValidationError` with `{id, name, field, message}` — **domain facts** about which person failed, no `loc`/`422`/framework vocabulary (that mapping is the router's job).",
+      "file": "civicpatch.org/src/core/people_patch.py",
+      "line": 41
+    },
+    {
+      "title": "5. The composition",
+      "description": "`patch_people` = `validate_and_normalize(apply_people_patch(base, edits), edits)` — one named pure operation, so the routers read `patch_people(base, request.data)` instead of the nested call. The routers (next two steps) are the thin imperative shells: each does its own (different) fetch and write around this shared pure core.",
+      "file": "civicpatch.org/src/core/people_patch.py",
+      "line": 63
+    },
+    {
+      "title": "6. Path A — edit the current/canonical people",
+      "description": "`PATCH /people/data`, used by the jurisdiction page's **Current tab**. The base is the file on `main` (the diff target), fetched here. Then `patch_people` → on `PeopleValidationError` raise `422 {id,name,field,message}` → `yaml_dump` → open a fresh PR off `main`. The change-log records `before = base`, `after = patched`.",
+      "file": "civicpatch.org/src/routers/api/people.py",
+      "line": 150
+    },
+    {
+      "title": "7. Path B — edit an existing scraped PR",
+      "description": "`POST /pull_requests/{n}/save-and-merge`, shared by the jurisdiction page's **Pull-request tab** AND the **review session**. Same pure core, different I/O: the base is the file on the PR's job branch (what we diff against and write back to), and the write is `update_pull_request_file` rather than opening a new PR. This is why both surfaces get the patch behavior from one endpoint.",
+      "file": "civicpatch.org/src/routers/api/pull_requests.py",
+      "line": 342
+    },
+    {
+      "title": "8. Frontend: building the patch",
+      "description": "The frontend half of the wire contract. Per non-deleted row: an edited existing person sends only its `_changes` fields; a new or re-identified row (id changed) or a merged row sends the whole entry; deleted rows are omitted (the backend reads omission as a deletion). This is the inverse of the engine in step 3.",
+      "file": "civicpatch.org/src/frontend/components/edit-people/hooks/people-state-utils.js",
+      "line": 58
+    },
+    {
+      "title": "9. One builder, both surfaces",
+      "description": "`usePeopleState` exposes `peoplePatch` (was `peopleToSubmit`, a full array). Because the review page's `useReviewPeople` delegates to this same hook, the jurisdiction page and the review page both publish the patch from one place — no duplicated editing logic.",
+      "file": "civicpatch.org/src/frontend/components/edit-people/hooks/use-people-state.js",
+      "line": 10
+    },
+    {
+      "title": "10. Frontend: the two publish paths",
+      "description": "`handlePublish` (PR tab → Path B `saveAndEnqueueMerge`) and `handleOpenPR` (Current tab → Path A `patchPeopleData`, then enqueue the merge). Both send `dirty ? peoplePatch : null` — when nothing changed, no data is sent and only the merge is enqueued.",
+      "file": "civicpatch.org/src/frontend/components/edit-people/edit-people.js",
+      "line": 202
+    },
+    {
+      "title": "11. Frontend: error display",
+      "description": "Reads the self-describing `{id, name, field, message}` straight from the response — no `currentPeople` lookup needed — to show 'Jane Smith — phones: Invalid phone number'. Falls back to FastAPI's `{loc, msg}` shape for framework errors (e.g. a malformed `request_id`) and to `{error}` for our other handlers.",
+      "file": "civicpatch.org/src/frontend/api-errors.js",
+      "line": 5
+    },
+    {
+      "title": "12. The guarantee, end-to-end",
+      "description": "The headline test: load a real YAML fixture, edit one person's phone, dump, and assert the unified diff is **exactly** the phone line(s) — nothing else moves. The fixture is in post-reformat (ruamel-native, blank-null) form, which is why the Step 5 open-data reformat is a prerequisite: against a PyYAML-spelled (`: null`) base, the first edit would also flip nulls to blank.",
+      "file": "civicpatch.org/tests/unit/core/test_people_patch.py",
+      "line": 185
+    }
+  ]
+}

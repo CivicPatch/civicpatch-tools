@@ -139,7 +139,7 @@ export const saveAndEnqueueMerge = async (pullRequestNumber, request_id, jurisdi
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    const err = new Error(parseSaveError(body, res.status, people));
+    const err = new Error(parseSaveError(body, res.status));
     err.status = res.status;
     throw err;
   }
@@ -347,7 +347,7 @@ export const patchPeopleData = async (jurisdictionOcdid, data) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || `HTTP ${res.status}`);
+    throw new Error(parseSaveError(body, res.status));
   }
   return res.json();
 };

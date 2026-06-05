@@ -191,6 +191,76 @@ def test_save_and_merge_returns_202(client):
     mock_set_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
 
 
+# An Official-valid person on the PR branch, in on-disk field order. A patch overlays only
+# the edited fields onto this base, so untouched fields and key order stay intact.
+BASE_PERSON = {
+    "name": "Jane Doe",
+    "phones": ["(916) 808-5300"],
+    "emails": [],
+    "urls": [],
+    "office": {"name": "Mayor", "division_ocdid": None},
+    "jurisdiction_ocdid": TEST_OCDID,
+    "source_urls": [],
+    "updated_at": "2025-11-18T19:49:42+00:00",
+    "id": "p1",
+}
+
+
+@pytest.mark.unit
+def test_save_and_merge_applies_patch_and_normalizes(client):
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("lib.redis.set", new_callable=AsyncMock),
+        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
+        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            json={
+                "request_id": TEST_REQUEST_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
+            },
+        )
+
+    assert response.status_code == 202
+    sent = mock_update.await_args.kwargs["new_data"]
+    assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
+    assert sent[0]["name"] == "Jane Doe"                      # untouched
+    assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
+
+
+@pytest.mark.unit
+def test_save_and_merge_rejects_invalid_field(client):
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock) as mock_update,
+        patch("lib.redis.set", new_callable=AsyncMock),
+        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
+        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            json={
+                "request_id": TEST_REQUEST_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
+            },
+        )
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert detail[0]["id"] == "p1"
+    assert detail[0]["name"] == "Jane Doe"
+    assert detail[0]["field"] == "phones"
+    mock_update.assert_not_awaited()
+
+
 # ── get_pull_request_by_number tests ──────────────────────────────────────
 
 OPEN_PR_DB_RESULT = {

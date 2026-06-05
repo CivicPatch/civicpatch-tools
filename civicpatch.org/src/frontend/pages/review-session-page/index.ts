@@ -34,7 +34,7 @@ function ReviewSessionPage() {
   const {
     currentPeople,
     dirty,
-    peopleToSubmit,
+    peoplePatch,
     selectedPeople,
     resolvedMatches,
     handleAdd,
@@ -46,7 +46,7 @@ function ReviewSessionPage() {
     updatePerson,
   } = useReviewPeople(currentEntry);
 
-  const handleMerge = () => merge(dirty ? peopleToSubmit : null);
+  const handleMerge = () => merge(dirty ? peoplePatch : null);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
 
   const prNumber = currentEntry?.pr?.number;

@@ -14,7 +14,7 @@ from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run
 from database.issues import upsert_issue
 from shared.utils.statuses import PipelineRunStatus
 import logging
-import yaml
+from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import environment
 
@@ -104,10 +104,10 @@ async def _handle_submit_pipeline_run_artifacts(
 
         data_file_path = file_utils.find_file(pull_request_file_dir, "data/*/local/*.yml")
         with open(data_file_path, "r") as f:
-            data = yaml.safe_load(f)
+            data = yaml_load(f.read())
         updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
         with open(data_file_path, "w") as f:
-            yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
+            f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
 
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
