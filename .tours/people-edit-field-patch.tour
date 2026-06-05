@@ -4,7 +4,7 @@
   "steps": [
     {
       "title": "1. One YAML manager (ruamel)",
-      "description": "**Why a single manager.** Every read/write of a data file goes through `yaml_load`/`yaml_dump` here — no caller passes its own flags. Ruamel is forced (not chosen): it's the only engine that preserves **comments** (needed for `jurisdictions.yml`) and keeps long scalars on one line (`width=2**16`). Routing the pipeline's `save_output` through this also stopped it emitting PyYAML-folded (wrapped) scalars. Output is ruamel-native (blank nulls); the one-time open-data reformat (Step 5) converges existing files onto it so edits diff cleanly.",
+      "description": "**Why a single manager.** Every read/write of a data file goes through `yaml_load`/`yaml_dump` here — no caller passes its own flags. Ruamel is forced (not chosen): it's the only engine that preserves **comments** (needed for `jurisdictions.yml`) and keeps long scalars on one line (`width=2**16`). Routing the pipeline's `save_output` through this also stopped it emitting PyYAML-folded (wrapped) scalars. A one-line representer renders `None` as explicit `null` (YAML's canonical, unambiguous form) — which also means existing `: null` files don't churn, so the one-time open-data reformat (Step 5) is unwrap-only.",
       "file": "shared/src/shared/utils/yaml_utils.py",
       "line": 12
     },
@@ -70,7 +70,7 @@
     },
     {
       "title": "12. The guarantee, end-to-end",
-      "description": "The headline test: load a real YAML fixture, edit one person's phone, dump, and assert the unified diff is **exactly** the phone line(s) — nothing else moves. The fixture is in post-reformat (ruamel-native, blank-null) form, which is why the Step 5 open-data reformat is a prerequisite: against a PyYAML-spelled (`: null`) base, the first edit would also flip nulls to blank.",
+      "description": "The headline test: load a real YAML fixture, edit one person's phone, dump, and assert the unified diff is **exactly** the phone line(s) — nothing else moves. The fixture uses explicit `null` (the canonical form the manager emits), so nulls round-trip untouched and only the edited line moves. The Step 5 reformat handles the one remaining churn source — unwrapping the PyYAML-folded long scalars in today's files.",
       "file": "civicpatch.org/tests/unit/core/test_people_patch.py",
       "line": 185
     }
