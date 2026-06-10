@@ -27,10 +27,16 @@ def test_patch_jurisdiction_data_allows_default_role(client):
     # Default-role reviewers may open a jurisdiction-edit PR; the route is
     # AUTHENTICATED, not contributor-gated.
     client.app.dependency_overrides[get_optional_user] = _default
-    with patch(
-        "core.jurisdiction_pull_request.open_jurisdiction_edit_pr",
-        new_callable=AsyncMock,
-        return_value=(42, "https://github.com/x/pull/42"),
+    with (
+        patch(
+            "core.jurisdiction_pull_request.open_jurisdiction_url_pr",
+            new_callable=AsyncMock,
+            return_value=(42, "https://github.com/x/pull/42"),
+        ),
+        patch(
+            "core.jurisdiction_pull_request.merge_jurisdiction_pr",
+            new_callable=AsyncMock,
+        ) as mock_merge,
     ):
         response = client.patch(
             "/jurisdictions/data",
@@ -39,6 +45,8 @@ def test_patch_jurisdiction_data_allows_default_role(client):
 
     assert response.status_code == 200
     assert response.json()["data"]["pull_request_number"] == 42
+    # The opened PR is auto-merged via a background task.
+    mock_merge.assert_awaited_once_with("42", "d@x.com")
 
 
 @pytest.mark.unit

@@ -1,12 +1,17 @@
 import base64
+import logging
 
 import httpx
 
+import core.change_logs as change_logs
 import environment
+import lib.github.api as github_service
 import shared.utils.id_utils as id_utils
 from lib.github.auth import get_default_headers, get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
+
+logger = logging.getLogger(__name__)
 
 
 def _get_jurisdictions_repo_url() -> str:
@@ -82,3 +87,72 @@ async def open_jurisdiction_edit_pr(
         headers=auth_headers,
         fork_headers=fork_auth_headers,
     )
+
+
+def _find_jurisdiction(doc: dict, jurisdiction_ocdid: str) -> dict | None:
+    for entry in doc.get("jurisdictions", []):
+        if entry.get("id") == jurisdiction_ocdid:
+            return entry
+    return None
+
+
+async def open_jurisdiction_url_pr(
+    jurisdiction_ocdid: str,
+    url: str | None,
+    author: PrAuthor,
+    user_id: str | None,
+) -> tuple[int, str] | tuple[None, str]:
+    state = _extract_state(jurisdiction_ocdid)
+    file_path = f"data_source/{state}/local/jurisdictions.yml"
+
+    raw = await github_service.get_github_file_contents(file_path)
+    if not raw:
+        return None, f"Failed to fetch {file_path}"
+
+    doc = yaml_load(raw)
+    entry = _find_jurisdiction(doc, jurisdiction_ocdid)
+    if entry is None:
+        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
+
+    before_url = entry.get("url")
+    entry["url"] = url
+
+    request_id = id_utils.make_request_id()
+    branch_name = f"civicpatch/jurisdiction-edit/{request_id}"
+    result = await open_attributed_pr(
+        branch_name=branch_name,
+        file_path=file_path,
+        content=yaml_dump(doc),
+        commit_message=f"Update url: {jurisdiction_ocdid}",
+        pull_request_title=f"Jurisdiction url edit: {state}/{jurisdiction_ocdid.split('/')[-2]}",
+        pull_request_body=f"Updating url for `{jurisdiction_ocdid}`.",
+        author=author,
+    )
+
+    if result[0] is not None and user_id and before_url != url:
+        await change_logs.record_jurisdiction_edit(
+            request_id=request_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            jurisdiction_name=entry["name"],
+            user_id=user_id,
+            before_url=before_url,
+            after_url=url,
+        )
+
+    return result
+
+
+async def merge_jurisdiction_pr(pull_request_number: str, approved_by: str | None) -> None:
+    # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
+    try:
+        mergeable_state = await github_service.get_pull_request_mergeability(pull_request_number)
+        if mergeable_state != "clean":
+            logger.warning(
+                "Jurisdiction PR %s not mergeable (%s); leaving open", pull_request_number, mergeable_state
+            )
+            return
+        merge_error = await github_service.merge_pull_request(pull_request_number, approved_by=approved_by)
+        if merge_error:
+            logger.warning("Jurisdiction PR %s merge failed: %s", pull_request_number, merge_error)
+    except Exception:
+        logger.exception("Failed to auto-merge jurisdiction PR %s", pull_request_number)

@@ -2,7 +2,7 @@ import json
 
 from database.change_log_summary import summarize_change_log
 from database.database import get_pool
-from schemas.change_logs import PersonChangePayload
+from schemas.change_logs import JurisdictionChangePayload, PersonChangePayload
 from shared.utils.statuses import ChangeLogType
 
 
@@ -59,7 +59,7 @@ async def create_change_log(
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
     request_id: str | None = None,
-    changes: PersonChangePayload | None = None,
+    changes: PersonChangePayload | JurisdictionChangePayload | None = None,
 ) -> None:
     payload = json.dumps(changes.model_dump()) if changes else None
     pool = await get_pool()
