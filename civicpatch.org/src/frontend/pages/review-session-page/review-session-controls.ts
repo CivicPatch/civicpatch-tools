@@ -15,6 +15,7 @@ interface ReviewSessionControlsProps {
   hasSession: boolean;
   hasNext: boolean;
   isReadOnly: boolean;
+  canClosePr: boolean;
   isClosingPr: boolean;
   isDirty: boolean;
   onEndSession: () => void;
@@ -30,6 +31,7 @@ function ReviewSessionControls({
   hasSession,
   hasNext,
   isReadOnly,
+  canClosePr,
   isClosingPr,
   isDirty,
   onEndSession,
@@ -74,9 +76,11 @@ function ReviewSessionControls({
         <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
           ${isDirty ? "Save and Publish" : "Publish"}
         </button>
+        ${canClosePr ? html`
         <button class="btn-sm destructive" @click=${onClosePr} ?disabled=${isClosingPr}>
           ${isClosingPr ? "Closing..." : "Close PR"}
         </button>
+        ` : ""}
         `}
         <button class="btn-sm review-page__end-btn" @click=${onEndSession}>${hasSession ? "End session" : "Exit"}</button>
       </div>

@@ -34,7 +34,7 @@ function updateTabParam(tab) {
   history.replaceState(null, '', `?${p}`);
 }
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, canClosePr = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
   const {
     currentPeople,
     selectedPeople,
@@ -344,6 +344,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
         .dirty=${dirty}
         .isLoading=${isLoading}
         .hasPullRequest=${activeTab === TAB.pull_request}
+        .canClosePr=${canClosePr}
         .prStatus=${prStatus}
       ></civ-people-action-buttons>
       ${isLoading

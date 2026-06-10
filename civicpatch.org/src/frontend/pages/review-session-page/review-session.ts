@@ -33,6 +33,7 @@ interface ReviewSessionProps {
   onNavigateTo: (n: number) => void;
   onEndSession: () => void;
   onClosePr: () => void;
+  canClosePr: boolean;
   isClosingPr: boolean;
   onTableDataChange: EventListener;
   onTableReorder: EventListener;
@@ -45,7 +46,7 @@ interface ReviewSessionProps {
 
 function ReviewSession({
   progress, hasSession, currentEntry,
-  error, isDirty, isClosingPr,
+  error, isDirty, isClosingPr, canClosePr,
   currentPeople, selectedPeople,
   resolvedMatches,
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
@@ -62,6 +63,7 @@ function ReviewSession({
         .hasSession=${hasSession}
         .hasNext=${has_next}
         .isReadOnly=${is_read_only}
+        .canClosePr=${canClosePr}
         .isClosingPr=${isClosingPr}
         .isDirty=${isDirty}
         .onEndSession=${onEndSession}

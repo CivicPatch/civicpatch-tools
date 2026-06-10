@@ -13,6 +13,7 @@ function PeopleActionButtons({
   selectedPeople,
   dirty,
   hasPullRequest,
+  canClosePr,
   prStatus,
 }) {
   const isTerminal = TERMINAL_STATUSES.includes(prStatus);
@@ -32,9 +33,11 @@ function PeopleActionButtons({
         Reset
       </button>
       ${hasPullRequest ? html`
+        ${canClosePr ? html`
         <button type="button" @click=${onClosePR} ?disabled=${isTerminal || isPublishing || isClosing} class="destructive btn-sm">
           ${isClosing ? "Closing..." : prStatus === "closed" ? "Closed" : "Close PR"}
         </button>
+        ` : ""}
         <button type="button" @click=${onPublish} ?disabled=${isTerminal || isPublishing || isClosing} class="btn-sm">
           ${isPublishing ? "Publishing..." : prStatus === "merged" ? "Published" : dirty ? "Save and Publish" : "Publish"}
         </button>

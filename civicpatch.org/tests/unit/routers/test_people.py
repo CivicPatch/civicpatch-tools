@@ -94,6 +94,13 @@ def _contributor():
     )
 
 
+def _default():
+    return Identity(
+        type="session", provider="github", provider_user_id="u2",
+        email="d@x.com", role=Role.DEFAULT, user_id="user-456",
+    )
+
+
 @pytest.mark.unit
 def test_patch_people_data_records_change_log(client):
     # This test previously verified before = DB canonical, after = the full submitted data.
@@ -146,3 +153,24 @@ def test_patch_people_data_rejects_invalid_field(client):
     assert detail[0]["name"] == "Original Person"
     assert detail[0]["field"] == "phones"
     mock_pr.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_patch_people_data_allows_default_role(client):
+    # Default-role reviewers may open a manual-edit PR; the route is AUTHENTICATED,
+    # not contributor-gated.
+    client.app.dependency_overrides[get_optional_user] = _default
+    with (
+        patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock,
+              return_value=(42, "https://github.com/x/pull/42")),
+        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
+              return_value=yaml_dump([BASE_PERSON])),
+        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+    ):
+        response = client.patch(
+            "/people/data",
+            json={"jurisdiction_ocdid": BASE_PERSON["jurisdiction_ocdid"],
+                  "data": [{"id": "p-1", "fields": {"name": "Renamed Person"}}]},
+        )
+
+    assert response.status_code == 200

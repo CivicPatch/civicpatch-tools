@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
+from schemas.common import Identity, Role
+from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
 
 
@@ -11,6 +13,32 @@ def client():
     app = FastAPI()
     app.include_router(jurisdictions_router.get_router(), prefix="/jurisdictions")
     return TestClient(app)
+
+
+def _default():
+    return Identity(
+        type="session", provider="github", provider_user_id="u2",
+        email="d@x.com", role=Role.DEFAULT, user_id="user-456",
+    )
+
+
+@pytest.mark.unit
+def test_patch_jurisdiction_data_allows_default_role(client):
+    # Default-role reviewers may open a jurisdiction-edit PR; the route is
+    # AUTHENTICATED, not contributor-gated.
+    client.app.dependency_overrides[get_optional_user] = _default
+    with patch(
+        "core.jurisdiction_pull_request.open_jurisdiction_edit_pr",
+        new_callable=AsyncMock,
+        return_value=(42, "https://github.com/x/pull/42"),
+    ):
+        response = client.patch(
+            "/jurisdictions/data",
+            json={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland", "url": "https://oakland.gov"},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"]["pull_request_number"] == 42
 
 
 @pytest.mark.unit
