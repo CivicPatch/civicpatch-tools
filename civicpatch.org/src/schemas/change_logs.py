@@ -24,6 +24,12 @@ class PersonChange(BaseModel):
     payload: PersonChangePayload
 
 
+class JurisdictionChangePayload(BaseModel):
+    jurisdiction_ocdid: str
+    jurisdiction_name: str
+    fields: list[FieldChange]
+
+
 class ChangeLogBucket(StrEnum):
     QUARANTINE = "quarantine"  # changes authored by default-role users — reviewed for spam/profanity
     ACTIVITY = "activity"  # changes authored by trusted users (contributors and up)

@@ -3,6 +3,7 @@ import logging
 from core.change_log_diff import diff_people
 from database.change_logs import create_change_log
 from database.requests import get_request_jurisdiction
+from schemas.change_logs import FieldChange, JurisdictionChangePayload
 from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
@@ -40,3 +41,25 @@ async def record_manual_edits(
             await create_change_log(change.type, user_id, jurisdiction_ocdid, request_id, change.payload)
     except Exception:
         logger.exception("Failed to record manual edits for request %s", request_id)
+
+
+async def record_jurisdiction_edit(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    jurisdiction_name: str,
+    user_id: str,
+    before_url: str | None,
+    after_url: str | None,
+) -> None:
+    # Best-effort: the PR is already open, so a logging failure must not surface as one.
+    try:
+        payload = JurisdictionChangePayload(
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            jurisdiction_name=jurisdiction_name,
+            fields=[FieldChange(field="url", before=before_url, after=after_url)],
+        )
+        await create_change_log(
+            ChangeLogType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, request_id, payload
+        )
+    except Exception:
+        logger.exception("Failed to record jurisdiction edit for %s", jurisdiction_ocdid)

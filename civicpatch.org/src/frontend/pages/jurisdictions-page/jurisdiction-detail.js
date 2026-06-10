@@ -1,6 +1,10 @@
 import { html } from 'lit-html';
 import { component, useState } from 'haunted';
 
+// Temporary: only the Website (url) field is editable. All other jurisdiction
+// fields are locked while edits are routed as url-only patches to open-data.
+const OTHER_FIELDS_DISABLED = true;
+
 function JurisdictionDetail({ data, onSave }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
@@ -183,23 +187,23 @@ function JurisdictionDetail({ data, onSave }) {
             </label>
             <label>
               <strong>Geoid:</strong>
-              <input type="text" .value=${formData.geoid || ''} @input=${e => handleInputChange('geoid', e.target.value)} />
+              <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${formData.geoid || ''} @input=${e => handleInputChange('geoid', e.target.value)} />
             </label>
             <label>
               <strong>Population:</strong>
-              <input type="number" .value=${formData.population || ''} @input=${e => handleInputChange('population', e.target.value)} />
+              <input type="number" ?disabled=${OTHER_FIELDS_DISABLED} .value=${formData.population || ''} @input=${e => handleInputChange('population', e.target.value)} />
             </label>
             <label>
               <strong>Classification:</strong>
-              <input type="text" .value=${formData.classification || ''} @input=${e => handleInputChange('classification', e.target.value)} />
+              <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${formData.classification || ''} @input=${e => handleInputChange('classification', e.target.value)} />
             </label>
             <label>
               <strong>Accurate As Of:</strong>
-              <input type="date" .value=${formData.accurate_asof ? new Date(formData.accurate_asof).toISOString().split('T')[0] : ''} @input=${e => handleInputChange('accurate_asof', e.target.value)} />
+              <input type="date" ?disabled=${OTHER_FIELDS_DISABLED} .value=${formData.accurate_asof ? new Date(formData.accurate_asof).toISOString().split('T')[0] : ''} @input=${e => handleInputChange('accurate_asof', e.target.value)} />
             </label>
             <label>
               <strong>Last Updated:</strong>
-              <input type="date" .value=${formData.last_updated ? new Date(formData.last_updated).toISOString().split('T')[0] : ''} @input=${e => handleInputChange('last_updated', e.target.value)} />
+              <input type="date" ?disabled=${OTHER_FIELDS_DISABLED} .value=${formData.last_updated ? new Date(formData.last_updated).toISOString().split('T')[0] : ''} @input=${e => handleInputChange('last_updated', e.target.value)} />
             </label>
           </div>
 
@@ -208,24 +212,24 @@ function JurisdictionDetail({ data, onSave }) {
             ${(formData?.term || []).map((term, index) => html`
               <div class="jd-array-item">
                 <label><strong>Duration:</strong>
-                  <input type="number" .value=${term.duration || ''} @input=${e => handleArrayChange('term', index, 'duration', e.target.value)} />
+                  <input type="number" ?disabled=${OTHER_FIELDS_DISABLED} .value=${term.duration || ''} @input=${e => handleArrayChange('term', index, 'duration', e.target.value)} />
                 </label>
                 <label><strong>Description:</strong>
-                  <textarea @input=${e => handleArrayChange('term', index, 'term_description', e.target.value)}>${term.term_description || ''}</textarea>
+                  <textarea ?disabled=${OTHER_FIELDS_DISABLED} @input=${e => handleArrayChange('term', index, 'term_description', e.target.value)}>${term.term_description || ''}</textarea>
                 </label>
                 <label><strong>Number of Positions:</strong>
-                  <input type="number" .value=${term.number_of_positions || ''} @input=${e => handleArrayChange('term', index, 'number_of_positions', e.target.value)} />
+                  <input type="number" ?disabled=${OTHER_FIELDS_DISABLED} .value=${term.number_of_positions || ''} @input=${e => handleArrayChange('term', index, 'number_of_positions', e.target.value)} />
                 </label>
                 <label><strong>Term Limits:</strong>
-                  <input type="text" .value=${term.term_limits || ''} @input=${e => handleArrayChange('term', index, 'term_limits', e.target.value)} />
+                  <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${term.term_limits || ''} @input=${e => handleArrayChange('term', index, 'term_limits', e.target.value)} />
                 </label>
                 <label><strong>Last Known Term End Date:</strong>
-                  <input type="date" .value=${term.last_known_term_end_date || ''} @input=${e => handleArrayChange('term', index, 'last_known_term_end_date', e.target.value)} />
+                  <input type="date" ?disabled=${OTHER_FIELDS_DISABLED} .value=${term.last_known_term_end_date || ''} @input=${e => handleArrayChange('term', index, 'last_known_term_end_date', e.target.value)} />
                 </label>
-                <button type="button" class="destructive" @click=${() => handleArrayRemove('term', index)}>Remove Term</button>
+                <button type="button" class="destructive" ?disabled=${OTHER_FIELDS_DISABLED} @click=${() => handleArrayRemove('term', index)}>Remove Term</button>
               </div>
             `)}
-            <button type="button" class="jd-btn-add"
+            <button type="button" class="jd-btn-add" ?disabled=${OTHER_FIELDS_DISABLED}
               @click=${() => handleArrayAdd('term', { duration: '', term_description: '', number_of_positions: '', term_limits: '', last_known_term_end_date: '' })}>
               + Add Term
             </button>
@@ -236,21 +240,21 @@ function JurisdictionDetail({ data, onSave }) {
             ${(formData?.sourcing || []).map((source, index) => html`
               <div class="jd-array-item">
                 <label><strong>Field:</strong>
-                  <input type="text" .value=${source.field || ''} @input=${e => handleArrayChange('sourcing', index, 'field', e.target.value)} />
+                  <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${source.field || ''} @input=${e => handleArrayChange('sourcing', index, 'field', e.target.value)} />
                 </label>
                 <label><strong>Source Name:</strong>
-                  <input type="text" .value=${source.source_name || ''} @input=${e => handleArrayChange('sourcing', index, 'source_name', e.target.value)} />
+                  <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${source.source_name || ''} @input=${e => handleArrayChange('sourcing', index, 'source_name', e.target.value)} />
                 </label>
                 <label><strong>Source URL:</strong>
-                  <input type="url" .value=${source.source_url || ''} @input=${e => handleArrayChange('sourcing', index, 'source_url', e.target.value)} />
+                  <input type="url" ?disabled=${OTHER_FIELDS_DISABLED} .value=${source.source_url || ''} @input=${e => handleArrayChange('sourcing', index, 'source_url', e.target.value)} />
                 </label>
                 <label><strong>Source Type:</strong>
-                  <input type="text" .value=${source.source_type || ''} @input=${e => handleArrayChange('sourcing', index, 'source_type', e.target.value)} />
+                  <input type="text" ?disabled=${OTHER_FIELDS_DISABLED} .value=${source.source_type || ''} @input=${e => handleArrayChange('sourcing', index, 'source_type', e.target.value)} />
                 </label>
-                <button type="button" class="destructive" @click=${() => handleArrayRemove('sourcing', index)}>Remove Source</button>
+                <button type="button" class="destructive" ?disabled=${OTHER_FIELDS_DISABLED} @click=${() => handleArrayRemove('sourcing', index)}>Remove Source</button>
               </div>
             `)}
-            <button type="button" class="jd-btn-add"
+            <button type="button" class="jd-btn-add" ?disabled=${OTHER_FIELDS_DISABLED}
               @click=${() => handleArrayAdd('sourcing', { field: '', source_name: '', source_url: '', source_type: '' })}>
               + Add Source
             </button>
@@ -261,12 +265,12 @@ function JurisdictionDetail({ data, onSave }) {
             ${(formData?.metadata?.urls || []).map((url, index) => html`
               <div class="jd-array-item">
                 <label><strong>URL:</strong>
-                  <input type="url" .value=${url || ''} @input=${e => handleArrayChange('metadata', index, 'urls', e.target.value)} />
+                  <input type="url" ?disabled=${OTHER_FIELDS_DISABLED} .value=${url || ''} @input=${e => handleArrayChange('metadata', index, 'urls', e.target.value)} />
                 </label>
-                <button type="button" class="destructive" @click=${() => handleArrayRemove('metadata', index)}>Remove URL</button>
+                <button type="button" class="destructive" ?disabled=${OTHER_FIELDS_DISABLED} @click=${() => handleArrayRemove('metadata', index)}>Remove URL</button>
               </div>
             `)}
-            <button type="button" class="jd-btn-add" @click=${() => handleArrayAdd('metadata', '')}>+ Add URL</button>
+            <button type="button" class="jd-btn-add" ?disabled=${OTHER_FIELDS_DISABLED} @click=${() => handleArrayAdd('metadata', '')}>+ Add URL</button>
           </div>
 
           <button type="submit" ?disabled=${isSaving}>${isSaving ? 'Opening PR…' : 'Save Changes'}</button>

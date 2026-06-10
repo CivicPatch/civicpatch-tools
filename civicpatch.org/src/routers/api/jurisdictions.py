@@ -1,6 +1,6 @@
 import urllib.parse
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
@@ -115,17 +115,22 @@ def get_router() -> APIRouter:
     @router.patch("/data")
     async def patch_jurisdiction_data_endpoint(
         request: PatchJurisdictionDataRequest,
+        background_tasks: BackgroundTasks,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
-        pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_edit_pr(
+        pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_url_pr(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
-            fields={"url": request.url, "population": request.population, "geoid": request.geoid},
+            url=request.url,
             author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=[user.role] if user.role else []),
+            user_id=user.user_id,
         )
         if pull_request_number is None:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
+        background_tasks.add_task(
+            jurisdiction_pr_service.merge_jurisdiction_pr, str(pull_request_number), user.email
+        )
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
 
     @router.get("/config/global")
