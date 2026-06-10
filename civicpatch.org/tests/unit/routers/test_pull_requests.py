@@ -517,10 +517,11 @@ def test_do_merge_unexpected_exception_writes_error():
 
 # ── Auth gates on write routes ──────────────────────────────────────────────
 #
-# These routes were bumped from RouteCategory.AUTHENTICATED to
-# (TEAM_REQUIRED, Role.CONTRIBUTORS). The default-level (signed-in but no
-# elevation) user must be rejected with 403; the auth-ladder cascade is
-# proven separately in test_auth.py, so here we just pin the gate floor.
+# These routes require (TEAM_REQUIRED, Role.CONTRIBUTORS). The default-level
+# (signed-in but no elevation) user must be rejected with 403; the auth-ladder
+# cascade is proven separately in test_auth.py, so here we just pin the gate
+# floor. save-and-merge is intentionally absent — reviewers (default role) may
+# publish, so it is AUTHENTICATED; see test_save_and_merge_allows_default_role.
 
 
 @pytest.mark.unit
@@ -529,7 +530,6 @@ def test_do_merge_unexpected_exception_writes_error():
     [
         ("put", "/pull_requests/data"),
         ("delete", f"/pull_requests/{TEST_PR_NUMBER}?request_id={TEST_REQUEST_ID}"),
-        ("post", f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge"),
         ("post", f"/pull_requests/{TEST_PR_NUMBER}/merge?request_id={TEST_REQUEST_ID}"),
         ("post", f"/pull_requests/{TEST_PR_NUMBER}/update-branch"),
     ],
@@ -541,3 +541,22 @@ def test_pull_request_writes_reject_default_role(method, url):
     kwargs = {} if method == "delete" else {"json": {}}
     response = getattr(client, method)(url, **kwargs)
     assert response.status_code == 403
+
+
+@pytest.mark.unit
+def test_save_and_merge_allows_default_role():
+    """A default-role reviewer may publish (save & merge) the PR they're
+    reviewing — the route is AUTHENTICATED, not contributor-gated."""
+    client = _client_as(_user_at(Role.DEFAULT))
+    with (
+        patch("lib.redis.set", new_callable=AsyncMock),
+        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
+        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+        )
+
+    assert response.status_code == 202

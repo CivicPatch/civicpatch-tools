@@ -332,7 +332,7 @@ def get_router(api_key_header):
         request: SaveAndMergeRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
+            require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
         if request.data:

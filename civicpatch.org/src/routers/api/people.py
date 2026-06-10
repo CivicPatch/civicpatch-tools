@@ -139,7 +139,7 @@ def get_router() -> APIRouter:
     @router.patch("/data")
     async def patch_people_data_endpoint(
         request: OpenPrRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
         file_path = f"data/{folder_path}.yml"

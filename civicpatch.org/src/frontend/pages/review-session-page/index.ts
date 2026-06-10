@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component } from "haunted";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { useReviewSession } from "./use-review-session.js";
@@ -21,6 +22,7 @@ function ReviewSessionPage() {
   const [defaultState] = useLocalStorage(DEFAULT_STATE_KEY, "");
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
+  const { permissions } = useAuth();
   const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
   const { fsm, advance, back, navigateTo, merge, closePr, endSession } = useReviewSession(stateCode, {
     trackMerge,
@@ -87,6 +89,7 @@ function ReviewSessionPage() {
       .selectedPeople=${selectedPeople}
       .onMerge=${handleMerge}
       .onClosePr=${closePr}
+      .canClosePr=${permissions.PR_CLOSE}
       .isClosingPr=${isClosingPr}
       .onAdvance=${advance}
       .onBack=${back}

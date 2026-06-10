@@ -175,10 +175,9 @@ def test_get_active_session_requires_state_code(client):
 
 # ── Auth gates on write routes ──────────────────────────────────────────────
 #
-# These routes were bumped from RouteCategory.AUTHENTICATED to
-# (TEAM_REQUIRED, Role.CONTRIBUTORS). Default-level users (signed-in but no
-# elevation) must be rejected with 403. The auth-ladder cascade above the
-# floor is proven separately in test_auth.py.
+# These routes are RouteCategory.AUTHENTICATED: any signed-in user, including
+# a default-level user with no elevation, may run a review session. The write
+# routes must not 403 them.
 
 
 @pytest.mark.unit
@@ -191,9 +190,32 @@ def test_get_active_session_requires_state_code(client):
         ("post", f"/review-sessions/{TEST_SESSION_ID}/end", None),
     ],
 )
-def test_review_session_writes_reject_default_role(method, url, body):
-    """Default-level users must be 403'd from every write that mutates session state."""
+def test_review_session_writes_allow_default_role(method, url, body):
+    """Default-level signed-in users may run review sessions; the write routes
+    must not 403 them."""
     client = _client_as(_user_at(Role.DEFAULT))
     kwargs = {"json": body} if body is not None else {}
-    response = getattr(client, method)(url, **kwargs)
-    assert response.status_code == 403
+    with (
+        patch(
+            "database.review_sessions.create_or_get_review_session",
+            new_callable=AsyncMock,
+            return_value={"id": TEST_SESSION_ID},
+        ),
+        patch(
+            "database.review_session_entries.pass_entry",
+            new_callable=AsyncMock,
+        ),
+        # navigate/pass short-circuit through the "done" branch so the heavy
+        # downstream sync path doesn't need mocking.
+        patch(
+            "database.review_session_navigation.navigate_to_entry",
+            new_callable=AsyncMock,
+            return_value={"done": "no_more_cards"},
+        ),
+        patch(
+            "database.review_sessions.end_review_session",
+            new_callable=AsyncMock,
+        ),
+    ):
+        response = getattr(client, method)(url, **kwargs)
+    assert response.status_code == 200
