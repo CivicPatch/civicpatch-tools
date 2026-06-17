@@ -24,7 +24,19 @@ erDiagram
         text_null       state               "idx"
         text            level               "idx, default: 'local'"
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
+        timestamptz_null scraped_at          "idx: (state, scraped_at); last *scraped*, stamped on job-PR merge"
         timestamptz_null updated_at
+    }
+
+    state_configs {
+        text            state               PK
+        timestamptz     min_scraped_at      "default: epoch; freshness floor — fresh iff scraped_at >= this"
+    }
+
+    synced_files {
+        text            path                PK
+        text            blob_sha            "last-synced git blob SHA (sync cursor)"
+        timestamptz     synced_at           "default: now()"
     }
 
     requests {
@@ -178,6 +190,9 @@ erDiagram
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
+- `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one — the companion admin CRUD relies on this no-delete invariant). `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
+- `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
+- `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
 - `users.role` is a single trust level per user (one of `default`, `contributors`, `maintainers`, `admins`); permissions cascade downward (admin implies maintainer implies contributor implies default). The `user_roles` join table was dropped in migration 087.
 - `api_keys`, `api_usage_limits` use `user_id` (UUID FK to `users.id`); the deprecated composite `(provider, provider_user_id)` shape was migrated out in migration 086.

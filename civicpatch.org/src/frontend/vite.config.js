@@ -25,7 +25,7 @@ export default defineConfig(({ command }) => ({
   },
   server: {
     host: "0.0.0.0",
-    port: 5173,
-    origin: "http://localhost:5173",
+    port: 8004,
+    origin: "http://localhost:8004",
   },
 }));

@@ -24,7 +24,7 @@ services:
       dockerfile: civicpatch.org/Dockerfile
       target: frontend-dev
     ports:
-      - "5173:5173"
+      - "8004:8004"
     volumes:
       - ./civicpatch.org/src/frontend:/app
       - /app/node_modules
