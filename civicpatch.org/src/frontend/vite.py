@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 
 _MANIFEST = Path("src/frontend/build/.vite/manifest.json")
-_DEV_SERVER = os.getenv("VITE_DEV_SERVER_URL", "http://localhost:5173")
+_DEV_SERVER = os.getenv("VITE_DEV_SERVER_URL", "http://localhost:8004")
 
 
 @lru_cache(maxsize=None)
