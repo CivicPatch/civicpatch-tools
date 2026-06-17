@@ -15,7 +15,6 @@ services:
       INSTANCE_URL: "http://localhost:8000"
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
-      JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
@@ -127,7 +126,6 @@ services:
       REDIS_HOST: civicpatch-org-redis
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
-      JURISDICTIONS_FORK_REPO_URL: "https://api.github.com/repos/CivicPatch/jurisdictions"
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
