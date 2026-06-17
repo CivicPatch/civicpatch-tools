@@ -2,6 +2,7 @@
 Environment variable loader for civicpatch.org
 References variables and defaults from docker-compose.yml
 """
+
 import os
 
 REQUIRED_ENV_VARS = [
@@ -40,14 +41,13 @@ OPTIONAL_ENV_VARS = [
     "FRIENDLY_STORAGE_HOST",
     "TEMPORAL_HOST",
     "TEMPORAL_NAMESPACE",
-
     # Only needed to make edits to a jurisdiction
     "JURISDICTIONS_REPO_URL",
-    "JURISDICTIONS_FORK_REPO_URL",
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",
 ]
+
 
 def get_env_vars():
     """
@@ -69,5 +69,7 @@ def get_env_vars():
         value = os.getenv(var, _optional_defaults.get(var))
         env[var] = value
     if missing:
-        raise ValueError(f"Missing required environment variables: {', '.join(missing)}")
+        raise ValueError(
+            f"Missing required environment variables: {', '.join(missing)}"
+        )
     return env

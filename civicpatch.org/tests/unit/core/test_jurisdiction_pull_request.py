@@ -15,8 +15,7 @@ from lib.github.pull_requests import PrAuthor
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 AUTHOR = PrAuthor(name="Test User", email="test@example.com")
 REPO_URL = "https://api.github.com/repos/openstates/jurisdictions"
-FORK_REPO_URL = "https://api.github.com/repos/CivicPatch/jurisdictions"
-MOCK_ENV = {"JURISDICTIONS_REPO_URL": REPO_URL, "JURISDICTIONS_FORK_REPO_URL": FORK_REPO_URL}
+MOCK_ENV = {"JURISDICTIONS_REPO_URL": REPO_URL}
 
 YAML_ENTRIES = [
     {
@@ -66,11 +65,6 @@ async def test_open_jurisdiction_edit_pr_success():
             return_value={"Authorization": "Bearer sync-token"},
         ),
         patch(
-            "core.jurisdiction_pull_request.get_default_headers",
-            new_callable=AsyncMock,
-            return_value={"Authorization": "Bearer fork-token"},
-        ),
-        patch(
             "core.jurisdiction_pull_request.environment.get_env_vars",
             return_value=MOCK_ENV,
         ),
@@ -99,7 +93,6 @@ async def test_open_jurisdiction_edit_pr_success():
     call_kwargs = mock_open_pr.call_args.kwargs
     assert call_kwargs["file_path"] == "data/tx/local/jurisdictions.yml"
     assert call_kwargs["repo_url"] == REPO_URL
-    assert call_kwargs["fork_repo_url"] == FORK_REPO_URL
     patched_entries = yaml.safe_load(call_kwargs["content"])
     assert patched_entries[0]["url"] == "https://new.example.com"
     # Fields not provided stay unchanged
@@ -122,11 +115,6 @@ async def test_open_jurisdiction_edit_pr_jurisdiction_not_found():
             "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
-        ),
-        patch(
-            "core.jurisdiction_pull_request.get_default_headers",
-            new_callable=AsyncMock,
-            return_value={"Authorization": "Bearer fork-token"},
         ),
         patch(
             "core.jurisdiction_pull_request.environment.get_env_vars",
@@ -162,11 +150,6 @@ async def test_open_jurisdiction_edit_pr_file_not_found_creates_new():
             "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
-        ),
-        patch(
-            "core.jurisdiction_pull_request.get_default_headers",
-            new_callable=AsyncMock,
-            return_value={"Authorization": "Bearer fork-token"},
         ),
         patch(
             "core.jurisdiction_pull_request.environment.get_env_vars",
@@ -211,11 +194,6 @@ async def test_open_jurisdiction_edit_pr_fetch_fails():
             "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
-        ),
-        patch(
-            "core.jurisdiction_pull_request.get_default_headers",
-            new_callable=AsyncMock,
-            return_value={"Authorization": "Bearer fork-token"},
         ),
         patch(
             "core.jurisdiction_pull_request.environment.get_env_vars",

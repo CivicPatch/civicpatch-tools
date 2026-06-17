@@ -1,10 +1,7 @@
 import asyncio
 import base64
-import http
 import json
 import logging
-import os
-import re
 import time
 from typing import Any, Dict, List, Optional
 
@@ -12,10 +9,8 @@ import httpx
 import shared.utils.id_utils
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
-import environment
 import lib.cache as cache_service
 from lib.github.auth import _get_github_config, get_default_headers
-from schemas.common import PullRequest
 
 timeout = httpx.Timeout(60.0)
 
@@ -24,6 +19,7 @@ _RATE_LIMIT_THRESHOLD = 50  # sleep proactively when remaining drops below this
 
 class RateLimitError(Exception):
     pass
+
 
 ## TODO: Replace bulk sync calls with graphql
 
@@ -165,17 +161,24 @@ async def cached_github_get(
         if remaining < _RATE_LIMIT_THRESHOLD:
             reset_at = int(response.headers.get("X-RateLimit-Reset", 0))
             wait = max(reset_at - time.time(), 1)
-            logger.warning("GitHub rate limit low (%d remaining), sleeping %.0fs", remaining, wait)
+            logger.warning(
+                "GitHub rate limit low (%d remaining), sleeping %.0fs", remaining, wait
+            )
             await asyncio.sleep(wait)
         return content
-    elif response.status_code in (403, 429) and response.headers.get("X-RateLimit-Remaining") == "0":
+    elif (
+        response.status_code in (403, 429)
+        and response.headers.get("X-RateLimit-Remaining") == "0"
+    ):
         reset_at = response.headers.get("X-RateLimit-Reset", "unknown")
         raise RateLimitError(f"GitHub rate limit exceeded, resets at {reset_at}")
     elif response.status_code == 404:
         logger.debug(f"File not found (404): {url}")
         return None
     else:
-        logger.error(f"Unexpected response fetching {url}: {response.status_code} {response.text}")
+        logger.error(
+            f"Unexpected response fetching {url}: {response.status_code} {response.text}"
+        )
         return None
 
 
@@ -279,7 +282,11 @@ async def upsert_github_file(
     async with httpx.AsyncClient(timeout=timeout) as client:
         get_resp = await client.get(contents_url, headers=auth_headers)
         encoded = base64.b64encode(content_str.encode()).decode()
-        payload: dict = {"message": commit_message, "content": encoded, "branch": branch_name}
+        payload: dict = {
+            "message": commit_message,
+            "content": encoded,
+            "branch": branch_name,
+        }
         if get_resp.status_code == 200:
             payload["sha"] = get_resp.json()["sha"]
         if author:
@@ -291,7 +298,9 @@ async def upsert_github_file(
         )
         if put_resp.status_code in (200, 201):
             return True
-        logger.error(f"upsert_github_file failed ({put_resp.status_code}): {put_resp.text}")
+        logger.error(
+            f"upsert_github_file failed ({put_resp.status_code}): {put_resp.text}"
+        )
         return False
 
 
@@ -363,11 +372,15 @@ async def close_pull_request(pull_request_number: str) -> bool:
             json={"state": "closed"},
         )
         if response.status_code != 200:
-            logger.error(f"Failed to close PR {pull_request_number}: {response.status_code} {response.text}")
+            logger.error(
+                f"Failed to close PR {pull_request_number}: {response.status_code} {response.text}"
+            )
         return response.status_code == 200
 
 
-async def get_pull_request_mergeability(pull_request_number: str, wait_for_change_from: str | None = None) -> str | None:
+async def get_pull_request_mergeability(
+    pull_request_number: str, wait_for_change_from: str | None = None
+) -> str | None:
     """Polls until GitHub has computed mergeability (up to 10 attempts, 2s apart).
     Returns the mergeable_state string ("clean", "dirty", "blocked", etc.)
     or None if still unknown after all retries.
@@ -386,13 +399,18 @@ async def get_pull_request_mergeability(pull_request_number: str, wait_for_chang
                 return None
             data = response.json()
             state = data.get("mergeable_state")
-            if data.get("mergeable") is not None and state not in ("unknown", wait_for_change_from):
+            if data.get("mergeable") is not None and state not in (
+                "unknown",
+                wait_for_change_from,
+            ):
                 return state
             await asyncio.sleep(2)
     return None
 
 
-async def merge_pull_request(pull_request_number: str, approved_by: str | None = None) -> str | None:
+async def merge_pull_request(
+    pull_request_number: str, approved_by: str | None = None
+) -> str | None:
     """Returns None on success, or a GitHub error message string on failure."""
     label = f"Approved by {approved_by}" if approved_by else "Approved by unknown"
     data = {
@@ -416,11 +434,19 @@ async def merge_pull_request(pull_request_number: str, approved_by: str | None =
             github_message = response.json().get("message", "Unknown error")
             # GitHub can transiently report "not mergeable" immediately after a commit is pushed
             # while it recomputes mergeability; retry once to let it settle
-            if attempt == 0 and response.status_code == 405 and "not mergeable" in github_message.lower():
-                logger.warning(f"PR {pull_request_number} transiently not mergeable, retrying after recompute")
+            if (
+                attempt == 0
+                and response.status_code == 405
+                and "not mergeable" in github_message.lower()
+            ):
+                logger.warning(
+                    f"PR {pull_request_number} transiently not mergeable, retrying after recompute"
+                )
                 await asyncio.sleep(5)
                 continue
-            logger.error(f"GitHub merge failed ({response.status_code}): {github_message}")
+            logger.error(
+                f"GitHub merge failed ({response.status_code}): {github_message}"
+            )
             return github_message
     return github_message
 
@@ -439,31 +465,11 @@ async def update_pull_request_branch(pull_request_number: str) -> str | None:
         # 202 = accepted (async), 200 = done
         if response.status_code not in (200, 202):
             github_message = response.json().get("message", "Unknown error")
-            logger.error(f"Branch update failed ({response.status_code}): {github_message}")
+            logger.error(
+                f"Branch update failed ({response.status_code}): {github_message}"
+            )
             return github_message
         return None
-
-
-async def sync_fork_branch(
-    branch: str = "main",
-    repo_url: str | None = None,
-    headers: dict | None = None,
-) -> str | None:
-    _, _, _, open_data_repo_url = _get_github_config()
-    target_repo = repo_url or open_data_repo_url
-    auth_headers = headers if headers is not None else await get_default_headers()
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.post(
-            f"{target_repo}/merge-upstream",
-            headers=auth_headers,
-            json={"branch": branch},
-        )
-        if response.status_code not in (200, 204):
-            message = response.json().get("message", "Unknown error")
-            logger.error(f"Failed to sync fork branch {branch!r} ({response.status_code}): {message}")
-            return message
-    logger.info(f"Synced fork branch {branch!r} with upstream")
-    return None
 
 
 async def create_branch(
@@ -484,7 +490,9 @@ async def create_branch(
         )
         if ref_response.status_code != 200:
             message = ref_response.json().get("message", "Unknown error")
-            logger.error(f"Failed to resolve {base_ref} SHA ({ref_response.status_code}): {message}")
+            logger.error(
+                f"Failed to resolve {base_ref} SHA ({ref_response.status_code}): {message}"
+            )
             return message
         sha = ref_response.json()["object"]["sha"]
 
@@ -495,7 +503,9 @@ async def create_branch(
         )
         if create_response.status_code != 201:
             message = create_response.json().get("message", "Unknown error")
-            logger.error(f"Failed to create branch {branch_name!r} ({create_response.status_code}): {message}")
+            logger.error(
+                f"Failed to create branch {branch_name!r} ({create_response.status_code}): {message}"
+            )
             return message
     logger.info(f"Created branch {branch_name!r} off {base_ref} at {sha}")
     return None
@@ -508,12 +518,11 @@ async def create_pull_request(
     base: str = "main",
     repo_url: str | None = None,
     headers: dict | None = None,
-    head: str | None = None,
     labels: list[str] | None = None,
 ) -> tuple[int, str] | tuple[None, str]:
     """Opens a PR in the target repo from branch_name into base.
     Returns (pr_number, pr_url) on success, or (None, error_message) on failure.
-    head overrides the PR head ref — use "fork_org:branch_name" for cross-repo PRs."""
+    head overrides the PR head ref"""
     _, _, _, open_data_repo_url = _get_github_config()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
@@ -524,27 +533,31 @@ async def create_pull_request(
             json={
                 "title": title,
                 "body": body,
-                "head": head or branch_name,
+                "head": branch_name,
                 "base": base,
-                # cross-repo PRs: suppress fork_collab check — we don't need maintainers pushing to the fork
-                **( {"maintainer_can_modify": False} if head and ":" in head else {} ),
             },
         )
         if response.status_code != 201:
             resp_body = response.json()
             message = resp_body.get("message", "Unknown error")
             errors = resp_body.get("errors", [])
-            logger.error(f"Failed to create PR from {branch_name!r} ({response.status_code}): {message} errors={errors}")
+            logger.error(
+                f"Failed to create PR from {branch_name!r} ({response.status_code}): {message} errors={errors}"
+            )
             return None, message
         data = response.json()
     pr_number = data["number"]
     logger.info(f"Created PR #{pr_number} from {branch_name!r}: {data['html_url']}")
     if labels:
-        await add_pr_labels(pr_number, labels, repo_url=target_repo, headers=auth_headers)
+        await add_pr_labels(
+            pr_number, labels, repo_url=target_repo, headers=auth_headers
+        )
     return pr_number, data["html_url"]
 
 
-async def add_pr_labels(pr_number: int, labels: list[str], repo_url: str, headers: dict) -> None:
+async def add_pr_labels(
+    pr_number: int, labels: list[str], repo_url: str, headers: dict
+) -> None:
     """Upserts labels on the repo then applies them to the PR. Best-effort — logs and returns on failure."""
     async with httpx.AsyncClient(timeout=timeout) as client:
         for label in labels:
@@ -554,11 +567,15 @@ async def add_pr_labels(pr_number: int, labels: list[str], repo_url: str, header
                 json={"name": label, "color": "0075ca"},
             )
             if response.status_code not in (201, 422):
-                logger.warning(f"Unexpected status creating label {label!r}: {response.status_code}")
+                logger.warning(
+                    f"Unexpected status creating label {label!r}: {response.status_code}"
+                )
         response = await client.post(
             f"{repo_url}/issues/{pr_number}/labels",
             headers=headers,
             json={"labels": labels},
         )
         if response.status_code != 200:
-            logger.warning(f"Failed to apply labels {labels} to PR #{pr_number}: {response.status_code}")
+            logger.warning(
+                f"Failed to apply labels {labels} to PR #{pr_number}: {response.status_code}"
+            )
