@@ -25,7 +25,7 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Build app image
         run: docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
