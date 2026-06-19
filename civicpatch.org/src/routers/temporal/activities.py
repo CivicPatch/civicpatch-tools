@@ -28,6 +28,11 @@ async def od_sync_activity() -> None:
 
 
 @activity.defn
+async def od_sync_targeted_activity(jurisdiction_ocdids: list[str]) -> None:
+    await data_sync.sync_by_ocdids(jurisdiction_ocdids)
+
+
+@activity.defn
 async def expire_stale_pipeline_runs_activity() -> None:
     expired = await pipeline_runs_db.expire_stale_pipeline_runs(PEOPLE_COLLECTOR_EXECUTION_TIMEOUT)
     if not expired:

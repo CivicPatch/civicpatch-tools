@@ -4,28 +4,38 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec, ScheduleUpdate
-from temporalio.service import RPCError, RPCStatusCode
-from temporalio.worker import Worker
-
-from routers.temporal.activities import (
-    sync_pr_state_activity,
-    od_sync_activity,
-    expire_stale_pipeline_runs_activity,
-    cleanup_stale_review_entries_activity,
-    merge_pr_activity,
-)
+from database.database import get_pool
 from lib.temporal.workflows import (
-    PRSyncWorkflow,
+    TASK_QUEUE,
+    OdSyncTargetedWorkflow,
     OdSyncWorkflow,
     PipelineRunCleanupWorkflow,
+    PRSyncWorkflow,
     RepoMergeQueueWorkflow,
     ReviewSessionCleanupWorkflow,
     ScheduleId,
     WorkflowInstanceId,
-    TASK_QUEUE,
 )
-from database.database import get_pool, close_pool
+from routers.temporal.activities import (
+    cleanup_stale_review_entries_activity,
+    expire_stale_pipeline_runs_activity,
+    merge_pr_activity,
+    od_sync_activity,
+    od_sync_targeted_activity,
+    sync_pr_state_activity,
+)
+from temporalio.client import (
+    Client,
+    Schedule,
+    ScheduleActionStartWorkflow,
+    ScheduleAlreadyRunningError,
+    ScheduleOverlapPolicy,
+    SchedulePolicy,
+    ScheduleSpec,
+    ScheduleUpdate,
+)
+from temporalio.service import RPCError, RPCStatusCode
+from temporalio.worker import Worker
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
@@ -35,7 +45,9 @@ def _is_duplicate_schedule_error(e: RPCError) -> bool:
     return e.status == RPCStatusCode.ALREADY_EXISTS or "duplicate key" in str(e)
 
 
-async def _ensure_schedule(client: Client, schedule_id: str, schedule: Schedule) -> bool:
+async def _ensure_schedule(
+    client: Client, schedule_id: str, schedule: Schedule
+) -> bool:
     """Reconcile a schedule so the live one always matches this code: create it if absent,
     otherwise update its spec in place. This makes the code the source of truth — changing a
     cron here propagates on the next worker start instead of being silently ignored.
@@ -116,6 +128,7 @@ async def _register_schedules(client: Client) -> None:
 
 async def main() -> None:
     await get_pool()
+
     client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
     await _register_schedules(client)
     async with Worker(
@@ -124,6 +137,7 @@ async def main() -> None:
         workflows=[
             PRSyncWorkflow,
             OdSyncWorkflow,
+            OdSyncTargetedWorkflow,
             PipelineRunCleanupWorkflow,
             RepoMergeQueueWorkflow,
             ReviewSessionCleanupWorkflow,
@@ -131,6 +145,7 @@ async def main() -> None:
         activities=[
             sync_pr_state_activity,
             od_sync_activity,
+            od_sync_targeted_activity,
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
             merge_pr_activity,

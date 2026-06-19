@@ -1,8 +1,7 @@
 import logging
 
-from psycopg_pool import AsyncConnectionPool
-
 from environment import get_env_vars
+from psycopg_pool import AsyncConnectionPool
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,10 @@ async def get_pool() -> AsyncConnectionPool:
             max_size=int(env.get("DB_POOL_MAX_SIZE", 20)),
             reconnect_failed=_on_reconnect_failed,
         )
-        await _pool.open()
+        await _pool.open(
+            wait=True, timeout=10
+        )  # raises if the DB isn't ready, instead of wedging
+
         logger.info("Database pool opened")
     return _pool
 

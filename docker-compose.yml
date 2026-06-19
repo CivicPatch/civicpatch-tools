@@ -43,9 +43,17 @@ services:
       service: civicpatch-org-worker
     networks:
       - civicpatch_net
+    # The worker connects to the DB at startup (get_pool) and Temporal — wait for both to be
+    # healthy, else main() wedges on a dead pool and never starts polling the task queue.
+    # extends does not merge depends_on, so every dependency must be listed here.
     depends_on:
+      civicpatch-org-db:
+        condition: service_healthy
+      civicpatch-org-redis:
+        condition: service_started
       temporal:
         condition: service_healthy
+    restart: unless-stopped
 
   # ── Temporal worker ────────────────────────────────────────────────────────
   worker:

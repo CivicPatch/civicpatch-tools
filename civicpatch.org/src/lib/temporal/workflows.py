@@ -28,6 +28,7 @@ with workflow.unsafe.imports_passed_through():
         expire_stale_pipeline_runs_activity,
         merge_pr_activity,
         od_sync_activity,
+        od_sync_targeted_activity,
         sync_pr_state_activity,
     )
 
@@ -54,6 +55,17 @@ class OdSyncWorkflow:
     async def run(self) -> None:
         await workflow.execute_activity(
             od_sync_activity,
+            start_to_close_timeout=timedelta(minutes=60),
+        )
+
+
+@workflow.defn
+class OdSyncTargetedWorkflow:
+    @workflow.run
+    async def run(self, jurisdiction_ocdids: list[str]) -> None:
+        await workflow.execute_activity(
+            od_sync_targeted_activity,
+            jurisdiction_ocdids,
             start_to_close_timeout=timedelta(minutes=60),
         )
 

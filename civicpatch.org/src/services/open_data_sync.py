@@ -9,19 +9,17 @@ import database.people as people_db
 import database.synced_files as synced_files_db
 import environment
 import lib.github.api as github_service
-import lib.lock as lock_service
 import shared.utils.id_utils
 import yaml
 from core.sync_paths import classify_path
 from core.tree_diff import TreeDiff, diff_tree
 from database.synced_files import get_synced_file_shas
-from schemas.open_data import OdSyncRequestSchema
 
 logger = logging.getLogger(__name__)
 
-_OD_SYNC_LOCK_KEY = "lock:od_sync"
-_OD_SYNC_LOCK_TTL = 1800  # 30 min
-_MAX_FILES_PER_RUN = 500  # cap GitHub fetches per run; the backlog drains over later runs
+_MAX_FILES_PER_RUN = (
+    500  # cap GitHub fetches per run; the backlog drains over later runs
+)
 
 
 def get_current_tree(
@@ -112,68 +110,54 @@ async def sync_people(diffs: TreeDiff) -> list[str]:
 
 
 async def sync_all():
-    # TODO: remove this lock when we move this all into temporal
-    acquired = await lock_service.acquire_lock(_OD_SYNC_LOCK_KEY, _OD_SYNC_LOCK_TTL)
-    if not acquired:
-        logger.info("od_sync: skipping, lock held by another worker")
-        return
-    try:
-        logger.info("Starting bulk sync")
+    logger.info("Starting bulk sync")
 
-        env = environment.get_env_vars()
-        tree = await github_service.get_tree(env["OPEN_DATA_REPO_URL"])
+    env = environment.get_env_vars()
+    tree = await github_service.get_tree(env["OPEN_DATA_REPO_URL"])
 
-        current_jurisdictions, current_people_by_jurisdictions = get_current_tree(tree)
+    current_jurisdictions, current_people_by_jurisdictions = get_current_tree(tree)
 
-        synced_files = await get_synced_file_shas()
-        stored_jurisdictions, stored_people_by_jurisdicitons = get_stored_tree(
-            synced_files
+    synced_files = await get_synced_file_shas()
+    stored_jurisdictions, stored_people_by_jurisdicitons = get_stored_tree(synced_files)
+
+    jurisdiction_diffs = diff_tree(current_jurisdictions, stored_jurisdictions)
+    people_diffs = diff_tree(
+        current_people_by_jurisdictions, stored_people_by_jurisdicitons
+    )
+
+    # truncation guard: an incomplete tree must not drive deletions
+    if tree.truncated:
+        logger.warning("od_sync: tree truncated; skipping the deletion pass this run")
+        jurisdiction_diffs = TreeDiff(changed=jurisdiction_diffs.changed, deleted=[])
+        people_diffs = TreeDiff(changed=people_diffs.changed, deleted=[])
+
+    # cap GitHub load per run (jurisdictions are few, so cap the people backlog);
+    # deferred people stay "changed" next run since their cursors aren't advanced
+    if len(people_diffs.changed) > _MAX_FILES_PER_RUN:
+        logger.info(
+            "od_sync: capping at %d people this run; %d deferred to next run",
+            _MAX_FILES_PER_RUN,
+            len(people_diffs.changed) - _MAX_FILES_PER_RUN,
+        )
+        people_diffs = TreeDiff(
+            changed=people_diffs.changed[:_MAX_FILES_PER_RUN],
+            deleted=people_diffs.deleted,
         )
 
-        jurisdiction_diffs = diff_tree(current_jurisdictions, stored_jurisdictions)
-        people_diffs = diff_tree(
-            current_people_by_jurisdictions, stored_people_by_jurisdicitons
+    # jurisdictions before people: a new jurisdiction must exist before its people rows
+    synced_jurisdictions = await sync_jurisdictions(jurisdiction_diffs)
+    synced_people = await sync_people(people_diffs)
+
+    # SHA last, only for files that synced — a transient miss retries next run
+    for path in synced_jurisdictions:
+        await synced_files_db.upsert_synced_file(path, current_jurisdictions[path])
+    for path in synced_people:
+        await synced_files_db.upsert_synced_file(
+            path, current_people_by_jurisdictions[path]
         )
-
-        # truncation guard: an incomplete tree must not drive deletions
-        if tree.truncated:
-            logger.warning(
-                "od_sync: tree truncated; skipping the deletion pass this run"
-            )
-            jurisdiction_diffs = TreeDiff(
-                changed=jurisdiction_diffs.changed, deleted=[]
-            )
-            people_diffs = TreeDiff(changed=people_diffs.changed, deleted=[])
-
-        # cap GitHub load per run (jurisdictions are few, so cap the people backlog);
-        # deferred people stay "changed" next run since their cursors aren't advanced
-        if len(people_diffs.changed) > _MAX_FILES_PER_RUN:
-            logger.info(
-                "od_sync: capping at %d people this run; %d deferred to next run",
-                _MAX_FILES_PER_RUN, len(people_diffs.changed) - _MAX_FILES_PER_RUN,
-            )
-            people_diffs = TreeDiff(
-                changed=people_diffs.changed[:_MAX_FILES_PER_RUN],
-                deleted=people_diffs.deleted,
-            )
-
-        # jurisdictions before people: a new jurisdiction must exist before its people rows
-        synced_jurisdictions = await sync_jurisdictions(jurisdiction_diffs)
-        synced_people = await sync_people(people_diffs)
-
-        # SHA last, only for files that synced — a transient miss retries next run
-        for path in synced_jurisdictions:
-            await synced_files_db.upsert_synced_file(path, current_jurisdictions[path])
-        for path in synced_people:
-            await synced_files_db.upsert_synced_file(
-                path, current_people_by_jurisdictions[path]
-            )
-        # drop cursors for files that left the tree
-        for path in jurisdiction_diffs.deleted + people_diffs.deleted:
-            await synced_files_db.delete_synced_files(paths=[path])
-
-    finally:
-        await lock_service.release_lock(_OD_SYNC_LOCK_KEY)
+    # drop cursors for files that left the tree
+    for path in jurisdiction_diffs.deleted + people_diffs.deleted:
+        await synced_files_db.delete_synced_files(paths=[path])
 
 
 # --- Targeted refresh (specific jurisdictions) — used by publish_side_effects (post-merge),
@@ -202,11 +186,7 @@ async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids):
     await sync_jurisdictions(TreeDiff(changed=paths, deleted=[]))
 
 
-async def sync(request: OdSyncRequestSchema):
-    jurisdiction_ocdids = request.jurisdiction_ocdids
-    logger.info(f"Sync request for OCDIDs: {jurisdiction_ocdids}")
-    if jurisdiction_ocdids:
-        await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
-        await sync_people_by_ocdids(jurisdiction_ocdids)
-    else:
-        await sync_all()
+async def sync_by_ocdids(jurisdiction_ocdids: list[str]):
+    logger.info(f"Targeted sync for OCDIDs: {jurisdiction_ocdids}")
+    await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
+    await sync_people_by_ocdids(jurisdiction_ocdids)
