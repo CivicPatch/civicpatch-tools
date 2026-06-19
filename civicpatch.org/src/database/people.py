@@ -1,44 +1,60 @@
 import json
-import os
 import logging
 from typing import Any, List, LiteralString
+
 from database.database import get_pool
 from psycopg import sql
-import lib.storage as services_storage
-import shared.utils.data_path_utils
-import shared.utils.url_utils
 from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
 
 _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
-    "id":          ("'id'",          "data#>>'{id}'"),
-    "name":        ("'name'",        "data#>>'{name}'"),
-    "office":      ("'office'",      "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')"),
+    "id": ("'id'", "data#>>'{id}'"),
+    "name": ("'name'", "data#>>'{name}'"),
+    "office": (
+        "'office'",
+        "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')",
+    ),
     "source_urls": ("'source_urls'", "data#>'{source_urls}'"),
-    "phones":      ("'phones'",      "data#>'{phones}'"),
-    "emails":      ("'emails'",      "data#>'{emails}'"),
-    "urls":        ("'urls'",        "data#>'{urls}'"),
-    "start_date":  ("'start_date'",  "data#>>'{start_date}'"),
-    "end_date":    ("'end_date'",    "data#>>'{end_date}'"),
-    "image":       ("'image'",       "data#>>'{image}'"),
+    "phones": ("'phones'", "data#>'{phones}'"),
+    "emails": ("'emails'", "data#>'{emails}'"),
+    "urls": ("'urls'", "data#>'{urls}'"),
+    "start_date": ("'start_date'", "data#>>'{start_date}'"),
+    "end_date": ("'end_date'", "data#>>'{end_date}'"),
+    "image": ("'image'", "data#>>'{image}'"),
 }
 
 _RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
-    "id":          ("'id'",          "elem->>'id'"),
-    "name":        ("'name'",        "elem->>'name'"),
-    "office":      ("'office'",      "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')"),
+    "id": ("'id'", "elem->>'id'"),
+    "name": ("'name'", "elem->>'name'"),
+    "office": (
+        "'office'",
+        "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')",
+    ),
     "source_urls": ("'source_urls'", "elem->'source_urls'"),
-    "phones":      ("'phones'",      "elem->'phones'"),
-    "emails":      ("'emails'",      "elem->'emails'"),
-    "urls":        ("'urls'",        "elem->'urls'"),
-    "start_date":  ("'start_date'",  "elem->>'start_date'"),
-    "end_date":    ("'end_date'",    "elem->>'end_date'"),
-    "image":       ("'image'",       "elem->>'image'"),
+    "phones": ("'phones'", "elem->'phones'"),
+    "emails": ("'emails'", "elem->'emails'"),
+    "urls": ("'urls'", "elem->'urls'"),
+    "start_date": ("'start_date'", "elem->>'start_date'"),
+    "end_date": ("'end_date'", "elem->>'end_date'"),
+    "image": ("'image'", "elem->>'image'"),
 }
 
 _QUICK_FIELDS = frozenset({"id", "name", "office", "source_urls"})
-_DETAIL_FIELDS = frozenset({"id", "name", "office", "source_urls", "phones", "emails", "urls", "start_date", "end_date", "image"})
+_DETAIL_FIELDS = frozenset(
+    {
+        "id",
+        "name",
+        "office",
+        "source_urls",
+        "phones",
+        "emails",
+        "urls",
+        "start_date",
+        "end_date",
+        "image",
+    }
+)
 
 VIEWS: dict[str, frozenset[str]] = {
     "quick": _QUICK_FIELDS,
@@ -47,7 +63,9 @@ VIEWS: dict[str, frozenset[str]] = {
 DEFAULT_VIEW = "quick"
 
 
-def _build_jsonb_obj(exprs: dict[str, tuple[LiteralString, LiteralString]], fields: frozenset[str]) -> sql.Composed:
+def _build_jsonb_obj(
+    exprs: dict[str, tuple[LiteralString, LiteralString]], fields: frozenset[str]
+) -> sql.Composed:
     pairs: list[sql.Composable] = []
     for field in sorted(fields):
         if field in exprs:
@@ -70,11 +88,12 @@ async def get_people_by_jurisdiction_ocdid(
                 WHERE jurisdiction_ocdid = %s
                   AND status = 'current'
                 """,
-                (jurisdiction_ocdid,)
+                (jurisdiction_ocdid,),
             )
             rows = await cur.fetchall()
 
     return [row[0] for row in rows]
+
 
 async def get_people_data_by_request_ids(
     jurisdiction_ocdids: list[str],
@@ -96,7 +115,7 @@ async def get_people_data_by_request_ids(
                 WHERE jurisdiction_ocdid = ANY(%s)
                   AND status = 'current'
                 """).format(people_projection),
-                (jurisdiction_ocdids,)
+                (jurisdiction_ocdids,),
             )
             people_rows = await cur.fetchall()
 
@@ -112,7 +131,7 @@ async def get_people_data_by_request_ids(
                 FROM requests r
                 WHERE r.id = ANY(%s)
                 """).format(result_projection),
-                (request_ids,)
+                (request_ids,),
             )
             jobs_rows = await cur.fetchall()
 
@@ -124,7 +143,8 @@ async def get_people_data_by_request_ids(
     for request_id, people_data, jurisdiction_ocdid in jobs_rows:
         results[request_id] = {
             "existing": people_map.get(jurisdiction_ocdid, []),
-            "proposed": people_data or [],  # jsonb_agg returns None for empty/null result_data
+            "proposed": people_data
+            or [],  # jsonb_agg returns None for empty/null result_data
         }
 
     return results
@@ -231,11 +251,13 @@ async def bulk_update_people(people: list[dict]):
                 WHERE jurisdiction_ocdid = %s
                   AND id != ALL(%s)
                 """,
-                (jurisdiction_ocdid, incoming_ids)
+                (jurisdiction_ocdid, incoming_ids),
             )
 
 
-async def get_people_for_jurisdiction(jurisdiction_ocdid: str, status: str | None = None) -> List[Person]:
+async def get_people_for_jurisdiction(
+    jurisdiction_ocdid: str, status: str | None = None
+) -> List[Person]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         if status is not None:

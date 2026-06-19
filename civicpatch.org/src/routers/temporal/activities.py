@@ -16,7 +16,7 @@ async def sync_pr_state_activity() -> None:
 
 @activity.defn
 async def od_sync_activity() -> None:
-    await data_sync.od_sync()
+    await data_sync.sync_all()
 
 
 @activity.defn
