@@ -4,7 +4,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec
+from temporalio.client import Client, Schedule, ScheduleActionStartWorkflow, ScheduleAlreadyRunningError, ScheduleOverlapPolicy, SchedulePolicy, ScheduleSpec, ScheduleUpdate
 from temporalio.service import RPCError, RPCStatusCode
 from temporalio.worker import Worker
 
@@ -35,21 +35,27 @@ def _is_duplicate_schedule_error(e: RPCError) -> bool:
     return e.status == RPCStatusCode.ALREADY_EXISTS or "duplicate key" in str(e)
 
 
-async def _create_schedule(client: Client, schedule_id: str, schedule: Schedule) -> bool:
-    """Returns True if the schedule was newly created, False if it already existed."""
+async def _ensure_schedule(client: Client, schedule_id: str, schedule: Schedule) -> bool:
+    """Reconcile a schedule so the live one always matches this code: create it if absent,
+    otherwise update its spec in place. This makes the code the source of truth — changing a
+    cron here propagates on the next worker start instead of being silently ignored.
+    Returns True only when newly created, so the caller can trigger an immediate first run."""
     try:
         await client.create_schedule(schedule_id, schedule)
         return True
     except ScheduleAlreadyRunningError:
-        return False
+        pass
     except RPCError as e:
-        if _is_duplicate_schedule_error(e):
-            return False
-        raise
+        if not _is_duplicate_schedule_error(e):
+            raise
+    await client.get_schedule_handle(schedule_id).update(
+        lambda _input: ScheduleUpdate(schedule=schedule)
+    )
+    return False
 
 
 async def _register_schedules(client: Client) -> None:
-    await _create_schedule(
+    await _ensure_schedule(
         client,
         ScheduleId.PR_SYNC,
         Schedule(
@@ -63,7 +69,7 @@ async def _register_schedules(client: Client) -> None:
         ),
     )
 
-    created = await _create_schedule(
+    created = await _ensure_schedule(
         client,
         ScheduleId.OD_SYNC,
         Schedule(
@@ -72,14 +78,14 @@ async def _register_schedules(client: Client) -> None:
                 id=WorkflowInstanceId.OD_SYNC,
                 task_queue=TASK_QUEUE,
             ),
-            spec=ScheduleSpec(cron_expressions=["0 0 * * *"]),
+            spec=ScheduleSpec(cron_expressions=["0 * * * *"]),
             policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
         ),
     )
     if created:
         await client.get_schedule_handle(ScheduleId.OD_SYNC).trigger()
 
-    await _create_schedule(
+    await _ensure_schedule(
         client,
         ScheduleId.PIPELINE_RUN_CLEANUP,
         Schedule(
@@ -93,7 +99,7 @@ async def _register_schedules(client: Client) -> None:
         ),
     )
 
-    await _create_schedule(
+    await _ensure_schedule(
         client,
         ScheduleId.REVIEW_SESSION_CLEANUP,
         Schedule(

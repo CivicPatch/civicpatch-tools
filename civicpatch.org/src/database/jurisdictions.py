@@ -6,7 +6,7 @@ from typing import List
 import shared.utils.id_utils
 from database.database import get_pool, to_iso
 from psycopg import sql
-from schemas.common import PeoplePipelineRunHistory
+from schemas.common import Jurisdiction, PeoplePipelineRunHistory
 from shared.schemas import Person
 
 
@@ -446,3 +446,26 @@ async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
             (request_id, jurisdiction_ocdid),
         )
     return result.rowcount > 0
+
+
+async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
+    # Stale = never scraped, or scraped before the state's freshness cutoff (epoch when the
+    # state has no config row). Only active, url-bearing jurisdictions; never-scraped first.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
+            FROM jurisdictions j
+            LEFT JOIN state_configs sc ON sc.state = j.state
+            WHERE j.state = %s
+              AND j.status = 'current'
+              AND NULLIF(j.data->>'url', '') IS NOT NULL
+              AND (j.scraped_at IS NULL
+                   OR j.scraped_at < COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+            ORDER BY j.scraped_at ASC NULLS FIRST
+            """,
+            (state,),
+        )
+        rows = await cur.fetchall()
+    return [Jurisdiction(id=row[0], name=row[1], url=row[2]) for row in rows]

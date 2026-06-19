@@ -286,6 +286,14 @@ async def test_stamp_scraped_at_no_run_is_noop():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_get_stale_jurisdictions():
+    # Exercises the state_configs LEFT JOIN + cutoff/url/status predicates.
+    result = await db_jurisdictions.get_stale_jurisdictions("zz")
+    assert isinstance(result, list)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_get_geojson_by_latlong():
     result = await db_jurisdictions.get_geojson_by_latlong(37.8, -122.3)
     assert isinstance(result, dict)
