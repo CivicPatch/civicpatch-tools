@@ -431,3 +431,18 @@ async def deactivate_jurisdictions_not_in(state: str, keep_ocdids: List[str]):
             "WHERE state = %s AND jurisdiction_ocdid != ALL(%s)",
             (state, keep_ocdids),
         )
+
+
+async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
+    # "Last scraped" = the run's start time, stamped when a job PR merges. The FROM-join
+    # makes this a no-op when the request has no pipeline run (e.g. an external merge), so
+    # scraped_at is never blanked out.
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        result = await conn.execute(
+            "UPDATE jurisdictions j SET scraped_at = pr.created_at "
+            "FROM pipeline_runs pr "
+            "WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s",
+            (request_id, jurisdiction_ocdid),
+        )
+    return result.rowcount > 0

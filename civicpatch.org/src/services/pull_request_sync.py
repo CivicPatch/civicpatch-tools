@@ -2,6 +2,7 @@ import logging
 
 import database.pipeline_runs as jobs_db
 import database.issues as issues_db
+import database.jurisdictions as jurisdictions_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import database.review_sessions as review_sessions_db
@@ -29,6 +30,7 @@ async def publish_side_effects(request_id: str, status: str) -> None:
     jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
     if jurisdiction_ocdid:
         await sync_people_by_ocdids([jurisdiction_ocdid])
+        await jurisdictions_db.stamp_scraped_at(jurisdiction_ocdid, request_id)
 
 
 async def apply_pull_request_status(
