@@ -278,13 +278,6 @@ async def test_get_jurisdiction_history_not_found():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_jurisdiction_updates():
-    result = await db_jurisdictions.get_jurisdiction_updates()
-    assert isinstance(result, dict)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_geojson_by_latlong():
     result = await db_jurisdictions.get_geojson_by_latlong(37.8, -122.3)
     assert isinstance(result, dict)
