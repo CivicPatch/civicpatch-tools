@@ -60,6 +60,9 @@ class PipelineIssueType(StrEnum):
     # A queued merge failed; the PR stays parked (merge_enqueued_at kept) out of the review
     # pool until an admin dismisses this issue, which clears the park.
     MERGE_FAILED = "merge_failed"
+    # Generic pipeline failure (run errored, or timed out and was expired) — the default
+    # issue type when a run has no more specific error_step.
+    PIPELINE_ERROR = "pipeline_error"
 
 
 class PullRequestStatus(StrEnum):

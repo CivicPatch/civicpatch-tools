@@ -12,7 +12,7 @@ import lib.storage as storage_service
 import lib.github.api as github_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 import logging
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
@@ -37,7 +37,7 @@ async def handle_submit_pipeline_run_artifacts(
     except Exception as e:
         logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
-        await upsert_issue(request.request_id, "pipeline_error", [{"error": str(e)}])
+        await upsert_issue(request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}])
         raise
 
 
@@ -121,7 +121,7 @@ async def _handle_submit_pipeline_run_artifacts(
             )
     else:
         context_data = workflow_context.get("data", {})
-        error_step = context_data.get("error_step") or "pipeline_error"
+        error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
         error_detail = context_data.get("error_detail") or {}
         await upsert_issue(request.request_id, error_step, [error_detail])
 
