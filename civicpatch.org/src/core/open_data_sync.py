@@ -115,15 +115,12 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
         remote_data_list = yaml.safe_load(remote_data) if remote_data else None
         if not remote_data_list:
             return []
-        return [
-            (person.get("id"), jurisdiction_ocdid, json.dumps(person), person.get("updated_at"))
-            for person in remote_data_list
-        ]
+        return remote_data_list
 
     results = await asyncio.gather(*[_fetch(ocdid) for ocdid in jurisdiction_ocdids])
-    people_list = [row for rows in results for row in rows]
-    logger.debug(f"Prepared {len(people_list)} people for bulk update.")
-    await people_db.bulk_update_people(people_list)
+    people = [person for people_list in results for person in people_list]
+    logger.debug(f"Prepared {len(people)} people for bulk update.")
+    await people_db.bulk_update_people(people)
 
 
 _OD_SYNC_LOCK_KEY = "lock:od_sync"
