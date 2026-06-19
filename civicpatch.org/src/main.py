@@ -20,7 +20,7 @@ import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
-from core.pull_request_merge import (
+from services.pull_request_merge import (
     STUCK_MERGE_AFTER_MINUTES,
     STUCK_MERGE_SWEEP_INTERVAL_SECONDS,
     reconcile_stuck_merges,

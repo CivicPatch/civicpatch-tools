@@ -26,10 +26,10 @@ import database.review_sessions as review_sessions_db
 import database.review_session_entries as review_session_entries_db
 import database.users
 import lib.github.api as github_service
-import core.change_logs as change_logs
+import services.change_logs as change_logs
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
-import core.pull_request_merge as merge_service
-import core.pull_request_sync as pr_sync_service
+import services.pull_request_merge as merge_service
+import services.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
 import lib.storage as storage_service
 import lib.temporal.client as temporal_client

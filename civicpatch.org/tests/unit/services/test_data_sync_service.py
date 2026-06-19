@@ -2,7 +2,7 @@ import pytest
 import yaml
 from unittest.mock import AsyncMock, patch, call
 
-from core.open_data_sync import get_jurisdiction_metadata, od_sync as bulk_sync, sync_jurisdictions_by_ocdids
+from services.open_data_sync import get_jurisdiction_metadata, od_sync as bulk_sync, sync_jurisdictions_by_ocdids
 
 LACY_LAKEVIEW_OCDID = "ocd-jurisdiction/country:us/state:tx/place:lacy-lakeview/government"
 AUSTIN_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
@@ -18,7 +18,7 @@ def _metadata_yml(by_id):
 
 def _mock_github(metadata_response, entries_response):
     return patch(
-        "core.open_data_sync.github_service.get_github_file_contents",
+        "services.open_data_sync.github_service.get_github_file_contents",
         new=AsyncMock(side_effect=[metadata_response, entries_response]),
     )
 
@@ -140,7 +140,7 @@ def _mock_github_for_state(state_entries: dict):
                     return entries_yml
         return None
     return patch(
-        "core.open_data_sync.github_service.get_github_file_contents",
+        "services.open_data_sync.github_service.get_github_file_contents",
         new=AsyncMock(side_effect=side_effect),
     )
 
@@ -227,14 +227,14 @@ MOUNTAIN_CITY_OCDID = "ocd-jurisdiction/country:us/state:tx/place:mountain_city/
 def _mock_bulk_sync_deps(remote_metadata, local_jurisdictions):
     """Patch all external calls used by bulk_sync."""
     return (
-        patch("core.open_data_sync.config_utils.get_states", return_value=[{"code": "tx"}]),
-        patch("core.open_data_sync.get_jurisdiction_metadata", new=AsyncMock(return_value=remote_metadata)),
+        patch("services.open_data_sync.config_utils.get_states", return_value=[{"code": "tx"}]),
+        patch("services.open_data_sync.get_jurisdiction_metadata", new=AsyncMock(return_value=remote_metadata)),
         patch("database.jurisdictions.get_jurisdiction_updates", new=AsyncMock(return_value=local_jurisdictions)),
         patch("database.jurisdictions.deactivate_jurisdictions_by_ocdids", new=AsyncMock()),
-        patch("core.open_data_sync.sync_jurisdictions_by_ocdids_with_metadata", new=AsyncMock()),
-        patch("core.open_data_sync.sync_people_by_ocdids", new=AsyncMock()),
-        patch("core.open_data_sync.lock_service.acquire_lock", new=AsyncMock(return_value=True)),
-        patch("core.open_data_sync.lock_service.release_lock", new=AsyncMock()),
+        patch("services.open_data_sync.sync_jurisdictions_by_ocdids_with_metadata", new=AsyncMock()),
+        patch("services.open_data_sync.sync_people_by_ocdids", new=AsyncMock()),
+        patch("services.open_data_sync.lock_service.acquire_lock", new=AsyncMock(return_value=True)),
+        patch("services.open_data_sync.lock_service.release_lock", new=AsyncMock()),
     )
 
 

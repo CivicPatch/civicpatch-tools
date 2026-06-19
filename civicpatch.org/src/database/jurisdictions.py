@@ -3,12 +3,17 @@ import json
 import math
 from typing import List
 
-from psycopg import sql
-
 import shared.utils.id_utils
 from database.database import get_pool, to_iso
+from psycopg import sql
 from schemas.common import PeoplePipelineRunHistory
 from shared.schemas import Person
+
+
+def jurisdiction_rows(
+    entries: list[dict[str, str]], state: str, level: str, updated_at
+):
+    return [(entry["id"], state, level, json.dumps(entry), updated_at) for entry in entries]
 
 
 async def get_states() -> List[str]:
@@ -48,7 +53,11 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 if not row:
                     return None
                 data, lon, lat = row[0], row[1], row[2]
-                center = {"lat": float(lat), "lng": float(lon)} if lon is not None and lat is not None else None
+                center = (
+                    {"lat": float(lat), "lng": float(lon)}
+                    if lon is not None and lat is not None
+                    else None
+                )
                 return {"data": data, "geo_center": center}
             else:
                 await cur.execute(
@@ -111,7 +120,7 @@ async def get_people_by_geo(lat: float, long: float):
 
             first_jurisdiction = rows[0][0]
             people_list = []
-            for (jurisdiction_ocdid, _jurisdiction_data, person_json) in rows:
+            for jurisdiction_ocdid, _jurisdiction_data, person_json in rows:
                 try:
                     person_obj = Person(**person_json)
                 except Exception:
@@ -132,7 +141,7 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int | None = Non
         result_limit = 100
         exaggerate_buffer = 0
     else:
-        meters_per_pixel = 156543.03392 * math.cos(math.radians(lat)) / (2 ** zoom)
+        meters_per_pixel = 156543.03392 * math.cos(math.radians(lat)) / (2**zoom)
         buffer_m = max(50.0, meters_per_pixel * 512.0)
         if zoom < 7:
             simplify_tolerance = 0.05
@@ -188,18 +197,30 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int | None = Non
                 LIMIT %s;
                 """,
                 (
-                    exaggerate_buffer, simplify_tolerance
-                    if exaggerate_buffer > 0 else simplify_tolerance,
-                    long, lat,
-                    min_lon, min_lat, max_lon, max_lat,
-                    long, lat,
+                    exaggerate_buffer,
+                    simplify_tolerance if exaggerate_buffer > 0 else simplify_tolerance,
+                    long,
+                    lat,
+                    min_lon,
+                    min_lat,
+                    max_lon,
+                    max_lat,
+                    long,
+                    lat,
                     buffer_m,
                     result_limit,
-                ) if exaggerate_buffer > 0 else (
+                )
+                if exaggerate_buffer > 0
+                else (
                     simplify_tolerance,
-                    long, lat,
-                    min_lon, min_lat, max_lon, max_lat,
-                    long, lat,
+                    long,
+                    lat,
+                    min_lon,
+                    min_lat,
+                    max_lon,
+                    max_lat,
+                    long,
+                    lat,
                     buffer_m,
                     result_limit,
                 ),
@@ -220,14 +241,19 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int | None = Non
             return {"results": results, "buffer_m": buffer_m}
     except Exception as e:
         print(f"Error in get_geojson_by_latlong: {e}")
-        return {"results": [], "buffer_m": buffer_m if 'buffer_m' in locals() else None}
+        return {"results": [], "buffer_m": buffer_m if "buffer_m" in locals() else None}
 
 
-async def search_jurisdictions(state: str, search_string="", limit: int = 100, skip: int = 0):
+async def search_jurisdictions(
+    state: str, search_string="", limit: int = 100, skip: int = 0
+):
     if limit <= 0:
         limit = 100
 
-    where_clauses: list[sql.Composable] = [sql.SQL("state = %s"), sql.SQL("status = 'current'")]
+    where_clauses: list[sql.Composable] = [
+        sql.SQL("state = %s"),
+        sql.SQL("status = 'current'"),
+    ]
     params = [state.lower()]
 
     if search_string:
@@ -240,7 +266,9 @@ async def search_jurisdictions(state: str, search_string="", limit: int = 100, s
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                sql.SQL("SELECT COUNT(*) FROM jurisdictions {};").format(where_condition),
+                sql.SQL("SELECT COUNT(*) FROM jurisdictions {};").format(
+                    where_condition
+                ),
                 params,
             )
             count_row = await cur.fetchone()
@@ -261,11 +289,15 @@ async def search_jurisdictions(state: str, search_string="", limit: int = 100, s
 
             jurisdictions = []
             for row in results:
-                jurisdictions.append({
-                    "jurisdiction_ocdid": row[0],
-                    "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[0]),
-                    **row[1],
-                })
+                jurisdictions.append(
+                    {
+                        "jurisdiction_ocdid": row[0],
+                        "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(
+                            row[0]
+                        ),
+                        **row[1],
+                    }
+                )
 
             return total_count, jurisdictions
 
@@ -302,7 +334,9 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
         ]
 
 
-async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeoplePipelineRunHistory]:
+async def get_jurisdiction_history(
+    jurisdiction_ocdid,
+) -> List[PeoplePipelineRunHistory]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -319,7 +353,9 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeoplePipelineRun
         rows = await cur.fetchall()
         history = []
         for row in rows:
-            branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, row[0])
+            branch_name = shared.utils.id_utils.make_job_branch(
+                jurisdiction_ocdid, row[0]
+            )
             history.append(
                 {
                     "request_id": row[0],
@@ -330,7 +366,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeoplePipelineRun
                     "pull_request_url": row[5],
                     "pull_request_status": row[6],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
-                    "branch_name": branch_name
+                    "branch_name": branch_name,
                 }
             )
     return history
@@ -353,7 +389,7 @@ async def update_jurisdiction(jurisdiction_ocdid, state, data: dict):
                 data = EXCLUDED.data,
                 updated_at = EXCLUDED.updated_at;
             """,
-            (jurisdiction_ocdid, state, data_json, updated_at)
+            (jurisdiction_ocdid, state, data_json, updated_at),
         )
 
 
@@ -410,5 +446,5 @@ async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE jurisdictions SET status = 'inactive' WHERE jurisdiction_ocdid = ANY(%s)",
-            (ocdids,)
+            (ocdids,),
         )

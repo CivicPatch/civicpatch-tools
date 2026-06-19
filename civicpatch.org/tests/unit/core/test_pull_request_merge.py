@@ -2,14 +2,14 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core import pull_request_merge
+from services import pull_request_merge
 from shared.utils.statuses import PipelineIssueType
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.pull_request_merge.issues_db.upsert_issue", new_callable=AsyncMock)
-@patch("core.pull_request_merge.pull_requests_db.get_stuck_merges", new_callable=AsyncMock)
+@patch("services.pull_request_merge.issues_db.upsert_issue", new_callable=AsyncMock)
+@patch("services.pull_request_merge.pull_requests_db.get_stuck_merges", new_callable=AsyncMock)
 async def test_reconcile_raises_merge_failed_for_each_stuck_pr(mock_get_stuck, mock_upsert):
     mock_get_stuck.return_value = [
         {"request_id": "req-1", "pr_number": 40, "url": "https://github.com/x/y/pull/40"},
@@ -26,8 +26,8 @@ async def test_reconcile_raises_merge_failed_for_each_stuck_pr(mock_get_stuck, m
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.pull_request_merge.issues_db.upsert_issue", new_callable=AsyncMock)
-@patch("core.pull_request_merge.pull_requests_db.get_stuck_merges", new_callable=AsyncMock)
+@patch("services.pull_request_merge.issues_db.upsert_issue", new_callable=AsyncMock)
+@patch("services.pull_request_merge.pull_requests_db.get_stuck_merges", new_callable=AsyncMock)
 async def test_reconcile_raises_nothing_when_no_stuck_merges(mock_get_stuck, mock_upsert):
     mock_get_stuck.return_value = []
 

@@ -10,7 +10,7 @@ from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 import shared.utils.id_utils as id_utils
 from shared.utils.statuses import PullRequestStatus
 import database.issues as issues_db
-from core.pull_request_sync import apply_pull_request_status
+from services.pull_request_sync import apply_pull_request_status
 from environment import get_env_vars
 
 logger = logging.getLogger(__name__)

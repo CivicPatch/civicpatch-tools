@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core.pull_request_sync import apply_pull_request_status, publish_side_effects
+from services.pull_request_sync import apply_pull_request_status, publish_side_effects
 from shared.utils.statuses import PullRequestStatus
 
 REQUEST_ID = "2025-09-25-1a2b"
@@ -16,12 +16,12 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 async def test_merged_syncs_people():
     with (
         patch(
-            "core.pull_request_sync.requests_db.get_request_jurisdiction",
+            "services.pull_request_sync.requests_db.get_request_jurisdiction",
             new_callable=AsyncMock,
             return_value=JURISDICTION_OCDID,
         ),
         patch(
-            "core.pull_request_sync.sync_people_by_ocdids",
+            "services.pull_request_sync.sync_people_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
@@ -32,7 +32,7 @@ async def test_merged_syncs_people():
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_closed_does_not_sync():
-    with patch("core.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+    with patch("services.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
         await publish_side_effects(REQUEST_ID, PullRequestStatus.CLOSED)
         mock_sync.assert_not_called()
 
@@ -40,7 +40,7 @@ async def test_closed_does_not_sync():
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_open_does_not_sync():
-    with patch("core.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+    with patch("services.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
         await publish_side_effects(REQUEST_ID, PullRequestStatus.OPEN)
         mock_sync.assert_not_called()
 
@@ -50,17 +50,17 @@ async def test_open_does_not_sync():
 def _patch_status(previous: str | None, written: bool = True):
     return (
         patch(
-            "core.pull_request_sync.pull_requests_db.get_pull_request_status",
+            "services.pull_request_sync.pull_requests_db.get_pull_request_status",
             new_callable=AsyncMock,
             return_value=previous,
         ),
         patch(
-            "core.pull_request_sync.pull_requests_db.update_pull_request_status",
+            "services.pull_request_sync.pull_requests_db.update_pull_request_status",
             new_callable=AsyncMock,
             return_value=written,
         ),
         patch(
-            "core.pull_request_sync.publish_side_effects",
+            "services.pull_request_sync.publish_side_effects",
             new_callable=AsyncMock,
         ),
     )

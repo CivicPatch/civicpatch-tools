@@ -6,7 +6,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from core.blog_sync import SyncCollisionError, SyncResult
+from services.blog_sync import SyncCollisionError, SyncResult
 from routers.webhooks.blog_sync import _verify_signature, get_router
 
 SECRET = "test-blog_sync_webhook_secret"

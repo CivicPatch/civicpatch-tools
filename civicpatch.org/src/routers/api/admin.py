@@ -7,8 +7,8 @@ import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
 import lib.supabase_auth as supabase_auth_service
-import core.open_data_sync as data_sync
-import core.pull_request_sync as pr_sync
+import services.open_data_sync as data_sync
+import services.pull_request_sync as pr_sync
 from schemas.common import (
     Identity,
     InviteUserRequest,

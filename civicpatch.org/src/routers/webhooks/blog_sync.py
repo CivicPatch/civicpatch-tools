@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import logging
 
-from core.blog_sync import SyncCollisionError, sync_blog_posts
+from services.blog_sync import SyncCollisionError, sync_blog_posts
 from environment import get_env_vars
 from fastapi import APIRouter, Header, HTTPException, Request
 from pydantic import ValidationError

@@ -1,8 +1,8 @@
 import json
 import logging
 
-import core.change_logs as change_logs
-import core.pull_request_sync as pull_request_sync
+import services.change_logs as change_logs
+import services.pull_request_sync as pull_request_sync
 import database.issues as issues_db
 import database.pull_requests as pull_requests_db
 import lib.github.api as github_service

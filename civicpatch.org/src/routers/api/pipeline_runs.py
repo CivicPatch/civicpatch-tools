@@ -13,7 +13,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, Up
 from fastapi.responses import JSONResponse
 
 import lib.github.api as github_service
-import core.jurisdiction_scrape_candidate as candidate_service
+import services.jurisdiction_scrape_candidate as candidate_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import lib.files as file_utils
@@ -49,7 +49,7 @@ from database.requests import (
     get_request_jurisdiction,
     get_issue_request_details,
 )
-from core import people_collector
+from services import people_collector
 from schemas.common import Identity, Jurisdiction, Role, RouteCategory, has_at_least
 from schemas.pipeline_runs import (
     CreatePipelineRunRequest,

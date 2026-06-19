@@ -3,8 +3,8 @@ from datetime import datetime, timezone
 
 import pytest
 
-from core import blog_sync
-from core.blog_sync import (
+from services import blog_sync
+from services.blog_sync import (
     INDEX_KEY,
     POST_KEY_PREFIX,
     SyncCollisionError,

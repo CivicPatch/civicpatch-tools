@@ -21,12 +21,18 @@ src/
     auth.py         ← request auth middleware + permission enforcement
     auth_session.py ← session cookie management
     redis.py, pubsub.py, storage.py, files.py, hash.py, cache.py, lock.py, csv.py, sheets.py
-  core/             ← domain orchestration (coordinates lib/ + database/ calls)
-    pr_sync.py               ← PR state sync
-    merge.py                 ← PR merge background task
-    export.py                ← requests/people export
+  core/             ← PURE domain logic, no I/O (unit-testable with zero mocks)
+    tree_diff.py             ← sync tree-diff (pure)
+    sync_paths.py            ← repo-path classification (pure)
+    people_patch.py          ← people field-patch logic (pure)
+    change_log_diff.py       ← change-log diffing (pure)
+  services/         ← orchestration: coordinates lib/ + database/ + core/ (does the I/O)
+    open_data_sync.py        ← open-data sync
+    pull_request_sync.py     ← PR state sync
+    pull_request_merge.py    ← PR merge background task
+    people_csv_export.py     ← requests/people export
     people_collector.py      ← artifact processing pipeline
-    candidate.py             ← scrape candidate selection
+    jurisdiction_scrape_candidate.py ← scrape candidate selection
     pipeline_issue_resolution.py ← resolve pipeline issues via GitHub PRs
   database/         ← pure SQL queries (one file per domain)
   schemas/          ← Pydantic request/response models
@@ -78,8 +84,9 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 ## Layers
 
 - **`lib/`** — infrastructure wrappers: one file (or subpackage) per external concern. Thin — call external APIs or storage and return typed results. No domain decisions.
-- **`core/`** — domain orchestration: coordinates multiple `lib/` and `database/` calls to fulfill a domain operation. No HTTP concerns.
-- Side effects (network calls, DB writes) live in `lib/` and `database/`, not in routers or `core/`.
+- **`core/`** — **pure domain logic** (the functional core). No I/O: a `core/` module imports no `lib.*` / `database.*` and is unit-testable with zero mocks. Diffing, classification, field-patching, etc.
+- **`services/`** — orchestration (the imperative shell): coordinates multiple `lib/`, `database/`, and `core/` calls to fulfill a domain operation. No HTTP concerns. Depends inward (`services → core`), never the reverse.
+- Side effects (network calls, DB writes) live in `lib/`, `database/`, and `services/` — never in `core/` (pure) or routers.
 
 ## Database (dev)
 
