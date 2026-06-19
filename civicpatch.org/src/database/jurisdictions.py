@@ -13,7 +13,9 @@ from shared.schemas import Person
 def jurisdiction_rows(
     entries: list[dict[str, str]], state: str, level: str, updated_at
 ):
-    return [(entry["id"], state, level, json.dumps(entry), updated_at) for entry in entries]
+    return [
+        (entry["id"], state, level, json.dumps(entry), updated_at) for entry in entries
+    ]
 
 
 async def get_states() -> List[str]:
@@ -418,33 +420,14 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
         await cur.executemany(query, jurisdiction_records)
 
 
-async def get_jurisdiction_updates() -> dict[str, dict]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT j.jurisdiction_ocdid, j.updated_at, COUNT(p.id) AS people_count
-            FROM jurisdictions j
-            LEFT JOIN people p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-            GROUP BY j.jurisdiction_ocdid, j.updated_at
-            ORDER BY j.jurisdiction_ocdid;
-            """
-        )
-        rows = await cur.fetchall()
-        jurisdictions = {}
-        for row in rows:
-            jurisdictions[row[0]] = {
-                "jurisdiction_ocdids": row[0],
-                "updated_at": to_iso(row[1]),
-                "people_count": row[2],
-            }
-    return jurisdictions
-
-
-async def deactivate_jurisdictions_by_ocdids(ocdids: List[str]):
+async def deactivate_jurisdictions_not_in(state: str, keep_ocdids: List[str]):
+    # A jurisdiction in this state no longer in its synced jurisdictions.yml = removed upstream.
+    # No level filter for now (the sync is local-only, so every row is local); add
+    # `AND level = 'local'` here if county/state lists ever get synced.
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE jurisdictions SET status = 'inactive' WHERE jurisdiction_ocdid = ANY(%s)",
-            (ocdids,),
+            "UPDATE jurisdictions SET status = 'inactive' "
+            "WHERE state = %s AND jurisdiction_ocdid != ALL(%s)",
+            (state, keep_ocdids),
         )

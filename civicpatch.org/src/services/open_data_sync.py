@@ -1,187 +1,205 @@
 import asyncio
-import json
+import logging
 import os
-from datetime import timezone
-from typing import List
-
-import dateutil.parser
-import yaml
+from datetime import datetime, timezone
+from typing import Tuple
 
 import database.jurisdictions as jurisdictions_db
 import database.people as people_db
+import database.synced_files as synced_files_db
+import environment
 import lib.github.api as github_service
 import lib.lock as lock_service
-import shared
-import shared.utils.config_utils as config_utils
 import shared.utils.id_utils
+import yaml
+from core.sync_paths import classify_path
+from core.tree_diff import TreeDiff, diff_tree
+from database.synced_files import get_synced_file_shas
 from schemas.open_data import OdSyncRequestSchema
-import logging
 
 logger = logging.getLogger(__name__)
 
-
-async def get_jurisdiction_metadata(state: str):
-    jurisdictions_file_path = os.path.join("data_source", state, "local", "jurisdictions.yml")
-    jurisdictions_metadata_file_path = os.path.join("data_source", state, "local", "jurisdictions_metadata.yml")
-    logger.debug(f"Fetching jurisdictions_metadata from: {jurisdictions_metadata_file_path}")
-    jurisdictions_metadata_response = await github_service.get_github_file_contents(jurisdictions_metadata_file_path)
-    logger.debug(f"Fetching jurisdiction_entries from: {jurisdictions_file_path}")
-    jurisdiction_entries_response = await github_service.get_github_file_contents(jurisdictions_file_path)
-
-    if not jurisdiction_entries_response:
-        logger.warning(f"Missing jurisdictions.yml for state {state}, skipping")
-        return None
-
-    if not jurisdictions_metadata_response:
-        logger.info(f"No jurisdictions_metadata.yml for state {state}, proceeding without metadata")
-
-    jurisdiction_entries = yaml.safe_load(jurisdiction_entries_response)
-    logger.debug(f"Loaded jurisdiction_entries keys: {list(jurisdiction_entries.keys())}")
-    if jurisdictions_metadata_response:
-        jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_response)
-        logger.debug(f"Loaded jurisdictions_metadata keys: {list(jurisdictions_metadata.keys())}")
-        metadata_by_id = jurisdictions_metadata.get("jurisdictions_by_id", {})
-    else:
-        metadata_by_id = {}
-    result = {}
-
-    for entry in jurisdiction_entries.get("jurisdictions", []):
-        ocdid = entry.get("id")
-        if not ocdid:
-            continue
-        jurisdiction_metadata = metadata_by_id.get(ocdid, {})
-        jurisdiction_metadata["jurisdiction"] = entry
-        result[ocdid] = jurisdiction_metadata
-
-    logger.debug(f"Returning metadata for state {state}: {list(result.keys())}")
-    return result
-
-
-async def get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids: List[str]) -> dict:
-    jurisdiction_metadata_by_state = {}
-    logger.debug(f"Getting jurisdiction metadata for OCDIDs: {jurisdiction_ocdids}")
-    for jurisdiction_ocdid in jurisdiction_ocdids:
-        parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-        state = parsed_ocdid.state
-        if state not in jurisdiction_metadata_by_state:
-            jurisdiction_metadata_by_state[state] = await get_jurisdiction_metadata(state)
-    logger.debug(f"jurisdiction_metadata_by_state keys: {list(jurisdiction_metadata_by_state.keys())}")
-    return jurisdiction_metadata_by_state
-
-
-async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids: List[str]):
-    logger.info(f"Syncing jurisdictions by OCDIDs: {jurisdiction_ocdids}")
-    jurisdiction_metadata_by_state = await get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids)
-    flat_metadata = {}
-    for state_data in jurisdiction_metadata_by_state.values():
-        if state_data:
-            flat_metadata.update(state_data)
-    await sync_jurisdictions_by_ocdids_with_metadata(flat_metadata, jurisdiction_ocdids)
-
-
-async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, jurisdiction_ocdids: List[str]):
-    jurisdictions: List[tuple] = []
-    inactive_ocdids: List[str] = []
-    logger.debug(f"Syncing jurisdictions with metadata for OCDIDs: {jurisdiction_ocdids}")
-    for jurisdiction_ocdid in jurisdiction_ocdids:
-        jurisdiction_data = jurisdiction_metadata.get(jurisdiction_ocdid)
-        logger.debug(f"Jurisdiction data for {jurisdiction_ocdid}: {jurisdiction_data}")
-        parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-        state = parsed_ocdid.state
-        updated_at = jurisdiction_data.get("updated_at") if jurisdiction_data else None
-        nested_jurisdiction_data = jurisdiction_data.get("jurisdiction") if jurisdiction_data else None
-        if not nested_jurisdiction_data:
-            logger.warning(f"No jurisdiction entry found for {jurisdiction_ocdid}, marking as inactive")
-            inactive_ocdids.append(jurisdiction_ocdid)
-            continue
-        serialized_data = json.dumps(nested_jurisdiction_data)
-        jurisdictions.append((jurisdiction_ocdid, state, "local", serialized_data, updated_at))
-
-    logger.debug(f"Prepared {len(jurisdictions)} jurisdictions for bulk update.")
-    if inactive_ocdids:
-        await jurisdictions_db.mark_jurisdictions_inactive(inactive_ocdids)
-    await jurisdictions_db.bulk_update_jurisdictions(jurisdictions)
-
-
-async def sync_people_by_ocdids(jurisdiction_ocdids):
-    logger.info(f"Syncing people data for OCDIDs: {jurisdiction_ocdids}")
-    semaphore = asyncio.Semaphore(10)
-
-    async def _fetch(jurisdiction_ocdid):
-        folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-        people_file_path = os.path.join("data", f"{folder_path}.yml")
-        async with semaphore:
-            remote_data = await github_service.get_github_file_contents(people_file_path)
-        remote_data_list = yaml.safe_load(remote_data) if remote_data else None
-        if not remote_data_list:
-            return []
-        return remote_data_list
-
-    results = await asyncio.gather(*[_fetch(ocdid) for ocdid in jurisdiction_ocdids])
-    people = [person for people_list in results for person in people_list]
-    logger.debug(f"Prepared {len(people)} people for bulk update.")
-    await people_db.bulk_update_people(people)
-
-
 _OD_SYNC_LOCK_KEY = "lock:od_sync"
 _OD_SYNC_LOCK_TTL = 1800  # 30 min
+_MAX_FILES_PER_RUN = 500  # cap GitHub fetches per run; the backlog drains over later runs
 
 
-async def od_sync():
+def get_current_tree(
+    tree: github_service.RepoTree,
+) -> Tuple[dict[str, str], dict[str, str]]:
+    jurisdictions = {}
+    people = {}
+
+    for candidate_path, candidate_sha in tree.entries.items():
+        path_type = classify_path(candidate_path)
+        if path_type is None:
+            continue
+        elif path_type == "jurisdictions":
+            jurisdictions[candidate_path] = candidate_sha
+        elif path_type == "people":
+            people[candidate_path] = candidate_sha
+
+    return jurisdictions, people
+
+
+def get_stored_tree(
+    synced_files: dict[str, str],
+) -> Tuple[dict[str, str], dict[str, str]]:
+    jurisdictions = {}
+    people = {}
+
+    for candidate_path, candidate_sha in synced_files.items():
+        path_type = classify_path(candidate_path)
+        if path_type is None:
+            continue
+        elif path_type == "jurisdictions":
+            jurisdictions[candidate_path] = candidate_sha
+        elif path_type == "people":
+            people[candidate_path] = candidate_sha
+
+    return jurisdictions, people
+
+
+# path -> sha: list[path]
+async def sync_jurisdictions(diffs: TreeDiff) -> list[str]:
+    semaphore = asyncio.Semaphore(10)
+    now = datetime.now(timezone.utc)
+
+    async def _fetch(path):
+        async with semaphore:
+            content = await github_service.get_github_file_contents(path)
+        return path, content
+
+    rows, synced, state_keep = [], [], {}
+    for path, content in await asyncio.gather(*[_fetch(p) for p in diffs.changed]):
+        if content is None:
+            logger.warning("od_sync: no content for %s; skipping this run", path)
+            continue
+        entries = (yaml.safe_load(content) or {}).get("jurisdictions", [])
+        state = path.split("/")[1]
+        rows.extend(jurisdictions_db.jurisdiction_rows(entries, state, "local", now))
+        state_keep[state] = [
+            e["id"] for e in entries if e.get("id")
+        ]  # the authoritative list
+        synced.append(path)
+    await jurisdictions_db.bulk_update_jurisdictions(rows)
+
+    # within-list removal: a jurisdiction no longer in a synced state's list
+    for state, keep in state_keep.items():
+        await jurisdictions_db.deactivate_jurisdictions_not_in(state, keep)
+
+    return synced
+
+
+async def sync_people(diffs: TreeDiff) -> list[str]:
+    semaphore = asyncio.Semaphore(10)
+
+    async def _fetch(path):
+        async with semaphore:
+            content = await github_service.get_github_file_contents(path)
+        return path, content
+
+    people, synced = [], []
+    for path, content in await asyncio.gather(*[_fetch(p) for p in diffs.changed]):
+        if content is None:
+            logger.warning("od_sync: no content for %s; skipping this run", path)
+            continue
+        people.extend(yaml.safe_load(content) or [])
+        synced.append(path)
+    logger.debug("Prepared %d people for bulk update.", len(people))
+    await people_db.bulk_update_people(people)
+    return synced
+
+
+async def sync_all():
+    # TODO: remove this lock when we move this all into temporal
     acquired = await lock_service.acquire_lock(_OD_SYNC_LOCK_KEY, _OD_SYNC_LOCK_TTL)
     if not acquired:
         logger.info("od_sync: skipping, lock held by another worker")
         return
     try:
         logger.info("Starting bulk sync")
-        states_config = config_utils.get_states()
-        states = [state["code"] for state in states_config]
-        all_jurisdiction_metadata = {}
 
-        for state in states:
-            logger.debug(f"Fetching remote metadata for state: {state}")
-            remote_metadata_file = await get_jurisdiction_metadata(state)
-            logger.debug(f"Remote metadata keys for {state}: {list(remote_metadata_file.keys()) if remote_metadata_file else 'None'}")
-            if remote_metadata_file is None:
-                continue
-            all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
-            await asyncio.sleep(0)
+        env = environment.get_env_vars()
+        tree = await github_service.get_tree(env["OPEN_DATA_REPO_URL"])
 
-        local_jurisdictions = await jurisdictions_db.get_jurisdiction_updates()
-        logger.debug(f"Local jurisdictions keys: {list(local_jurisdictions.keys())}")
+        current_jurisdictions, current_people_by_jurisdictions = get_current_tree(tree)
 
-        jurisdictions_to_update_metadata = []
-        jurisdictions_to_update_data = []
+        synced_files = await get_synced_file_shas()
+        stored_jurisdictions, stored_people_by_jurisdicitons = get_stored_tree(
+            synced_files
+        )
 
-        for jurisdiction_ocdid in all_jurisdiction_metadata:
-            remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
-            jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
-            local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
-            local_updated_at = local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None
-            needs_people_sync = remote_updated_at and (
-                is_newer(remote_updated_at, local_updated_at)
-                or (local_jurisdiction_data is not None and local_jurisdiction_data.get("people_count") == 0)
+        jurisdiction_diffs = diff_tree(current_jurisdictions, stored_jurisdictions)
+        people_diffs = diff_tree(
+            current_people_by_jurisdictions, stored_people_by_jurisdicitons
+        )
+
+        # truncation guard: an incomplete tree must not drive deletions
+        if tree.truncated:
+            logger.warning(
+                "od_sync: tree truncated; skipping the deletion pass this run"
             )
-            if needs_people_sync:
-                jurisdictions_to_update_data.append(jurisdiction_ocdid)
-            await asyncio.sleep(0)
+            jurisdiction_diffs = TreeDiff(
+                changed=jurisdiction_diffs.changed, deleted=[]
+            )
+            people_diffs = TreeDiff(changed=people_diffs.changed, deleted=[])
 
-        remote_ocdids = set(all_jurisdiction_metadata.keys())
-        local_ocdids = set(local_jurisdictions.keys())
+        # cap GitHub load per run (jurisdictions are few, so cap the people backlog);
+        # deferred people stay "changed" next run since their cursors aren't advanced
+        if len(people_diffs.changed) > _MAX_FILES_PER_RUN:
+            logger.info(
+                "od_sync: capping at %d people this run; %d deferred to next run",
+                _MAX_FILES_PER_RUN, len(people_diffs.changed) - _MAX_FILES_PER_RUN,
+            )
+            people_diffs = TreeDiff(
+                changed=people_diffs.changed[:_MAX_FILES_PER_RUN],
+                deleted=people_diffs.deleted,
+            )
 
-        ocdids_to_delete = local_ocdids - remote_ocdids
-        if ocdids_to_delete:
-            logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
-            await jurisdictions_db.deactivate_jurisdictions_by_ocdids(list(ocdids_to_delete))
+        # jurisdictions before people: a new jurisdiction must exist before its people rows
+        synced_jurisdictions = await sync_jurisdictions(jurisdiction_diffs)
+        synced_people = await sync_people(people_diffs)
 
-        logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
-        logger.debug(f"OCDIDs to update metadata: {jurisdictions_to_update_metadata}")
-        await sync_jurisdictions_by_ocdids_with_metadata(all_jurisdiction_metadata, jurisdictions_to_update_metadata)
+        # SHA last, only for files that synced — a transient miss retries next run
+        for path in synced_jurisdictions:
+            await synced_files_db.upsert_synced_file(path, current_jurisdictions[path])
+        for path in synced_people:
+            await synced_files_db.upsert_synced_file(
+                path, current_people_by_jurisdictions[path]
+            )
+        # drop cursors for files that left the tree
+        for path in jurisdiction_diffs.deleted + people_diffs.deleted:
+            await synced_files_db.delete_synced_files(paths=[path])
 
-        logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
-        await sync_people_by_ocdids(jurisdictions_to_update_data)
     finally:
         await lock_service.release_lock(_OD_SYNC_LOCK_KEY)
+
+
+# --- Targeted refresh (specific jurisdictions) — used by publish_side_effects (post-merge),
+#     the /od_sync endpoint with ids, and seed_dev_prs. They reuse the per-kind functions via a
+#     one-off TreeDiff (no cursor advancement — the bulk run owns the cursors).
+
+
+def _people_path(jurisdiction_ocdid: str) -> str:
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    return os.path.join("data", f"{folder}.yml")
+
+
+async def sync_people_by_ocdids(jurisdiction_ocdids):
+    paths = [_people_path(o) for o in jurisdiction_ocdids]
+    await sync_people(TreeDiff(changed=paths, deleted=[]))
+
+
+async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids):
+    states = {
+        shared.utils.id_utils.parse_jurisdiction_ocdid(o).state
+        for o in jurisdiction_ocdids
+    }
+    paths = [
+        os.path.join("data_source", s, "local", "jurisdictions.yml") for s in states
+    ]
+    await sync_jurisdictions(TreeDiff(changed=paths, deleted=[]))
 
 
 async def sync(request: OdSyncRequestSchema):
@@ -191,18 +209,4 @@ async def sync(request: OdSyncRequestSchema):
         await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
         await sync_people_by_ocdids(jurisdiction_ocdids)
     else:
-        await od_sync()
-
-
-def is_newer(date1, date2):
-    if not date1:
-        return False
-    if not date2:
-        return True
-    dt1 = dateutil.parser.parse(date1)
-    dt2 = dateutil.parser.parse(date2)
-    if dt1.tzinfo is None:
-        dt1 = dt1.replace(tzinfo=timezone.utc)
-    if dt2.tzinfo is None:
-        dt2 = dt2.replace(tzinfo=timezone.utc)
-    return dt1 > dt2
+        await sync_all()
