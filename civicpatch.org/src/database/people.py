@@ -1,3 +1,4 @@
+import json
 import os
 import logging
 from typing import Any, List, LiteralString
@@ -187,12 +188,23 @@ async def delete_person(person_id: str) -> None:
         )
 
 
-async def bulk_update_people(people_records: list):
-    if not people_records:
+def people_rows(people: list[dict]) -> list[tuple]:
+    # Shape parsed person dicts into the (id, jurisdiction_ocdid, data, updated_at) rows the
+    # people table stores. Each person carries its own jurisdiction_ocdid; the whole dict is
+    # the jsonb `data` column. Pure — the DB layer owns its row format in one place.
+    return [
+        (p.get("id"), p.get("jurisdiction_ocdid"), json.dumps(p), p.get("updated_at"))
+        for p in people
+    ]
+
+
+async def bulk_update_people(people: list[dict]):
+    if not people:
         return
 
+    records = people_rows(people)
     jurisdictions: dict = {}
-    for record in people_records:
+    for record in records:
         person_id, jurisdiction_ocdid = record[0], record[1]
         if jurisdiction_ocdid not in jurisdictions:
             jurisdictions[jurisdiction_ocdid] = []
@@ -209,7 +221,7 @@ async def bulk_update_people(people_records: list):
                 updated_at = EXCLUDED.updated_at,
                 status = 'current'
         """
-        await cur.executemany(insert_query, people_records)
+        await cur.executemany(insert_query, records)
 
         for jurisdiction_ocdid, incoming_ids in jurisdictions.items():
             await cur.execute(

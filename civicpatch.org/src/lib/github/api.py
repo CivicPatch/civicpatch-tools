@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 import shared.utils.id_utils
+from pydantic import BaseModel
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import lib.cache as cache_service
@@ -19,6 +20,15 @@ _RATE_LIMIT_THRESHOLD = 50  # sleep proactively when remaining drops below this
 
 class RateLimitError(Exception):
     pass
+
+
+class GithubUnavailableError(Exception):
+    pass
+
+
+class RepoTree(BaseModel):
+    entries: dict[str, str]  # path -> blob SHA, blobs (files only)
+    truncated: bool
 
 
 ## TODO: Replace bulk sync calls with graphql
@@ -579,3 +589,14 @@ async def add_pr_labels(
             logger.warning(
                 f"Failed to apply labels {labels} to PR #{pr_number}: {response.status_code}"
             )
+
+
+async def get_tree(repo_url: str) -> RepoTree:
+    url = f"{repo_url}/git/trees/main?recursive=1"
+    response = await cached_github_get(url, f"github:tree:{repo_url}:main")
+    if response is None:
+        raise GithubUnavailableError(f"Tree fetch returned no data: {url}")
+    entries = {
+        item["path"]: item["sha"] for item in response["tree"] if item["type"] == "blob"
+    }
+    return RepoTree(entries=entries, truncated=response["truncated"])
