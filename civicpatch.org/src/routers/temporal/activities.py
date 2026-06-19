@@ -5,8 +5,15 @@ import services.open_data_sync as data_sync
 import services.pull_request_merge as pull_request_merge
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
+from database.issues import upsert_issue
 from lib.temporal.types import MergeRequest
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+
+# A run that dies before send_error uploads is expired to ERROR with no issue of its own.
+# Raise the same generic-failure issue the collector raises, so the jurisdiction lands in
+# `blocked` (excluded by get_pending_issue_ocdids) instead of silently re-queuing forever.
+_STALE_RUN_ISSUE_TYPE = "pipeline_error"
+_STALE_RUN_ISSUE_DETAIL = {"error": "pipeline run timed out and was expired"}
 
 
 @activity.defn
@@ -22,8 +29,11 @@ async def od_sync_activity() -> None:
 @activity.defn
 async def expire_stale_pipeline_runs_activity() -> None:
     expired = await pipeline_runs_db.expire_stale_pipeline_runs(PEOPLE_COLLECTOR_EXECUTION_TIMEOUT)
-    if expired:
-        activity.logger.warning("Expired %d stale pipeline run(s): %s", len(expired), expired)
+    if not expired:
+        return
+    activity.logger.warning("Expired %d stale pipeline run(s): %s", len(expired), expired)
+    for request_id in expired:
+        await upsert_issue(request_id, _STALE_RUN_ISSUE_TYPE, [_STALE_RUN_ISSUE_DETAIL])
 
 
 @activity.defn

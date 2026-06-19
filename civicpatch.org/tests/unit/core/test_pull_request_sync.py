@@ -13,7 +13,7 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_merged_syncs_people():
+async def test_merged_syncs_people_and_stamps_scraped_at():
     with (
         patch(
             "services.pull_request_sync.requests_db.get_request_jurisdiction",
@@ -24,9 +24,14 @@ async def test_merged_syncs_people():
             "services.pull_request_sync.sync_people_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
+        patch(
+            "services.pull_request_sync.jurisdictions_db.stamp_scraped_at",
+            new_callable=AsyncMock,
+        ) as mock_stamp,
     ):
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED)
         mock_sync.assert_called_once_with([JURISDICTION_OCDID])
+        mock_stamp.assert_awaited_once_with(JURISDICTION_OCDID, REQUEST_ID)
 
 
 @pytest.mark.unit
