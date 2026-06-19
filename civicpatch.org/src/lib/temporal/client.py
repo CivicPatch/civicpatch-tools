@@ -8,7 +8,9 @@ from temporalio.service import RPCError, RPCStatusCode
 
 from lib.temporal.types import MergeRequest
 from lib.temporal.workflows import (
+    OdSyncTargetedWorkflow,
     RepoMergeQueueWorkflow,
+    ScheduleId,
     TASK_QUEUE,
     WorkflowInstanceId,
 )
@@ -67,6 +69,25 @@ async def start_batch_people_collector_workflow(state: str, items: list[dict]) -
         id=f"batch-people-collector-{state}-{uuid.uuid4().hex[:8]}",
         task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+    )
+    return handle.id
+
+
+async def trigger_full_od_sync() -> None:
+    """Run a full open-data sync now by triggering the existing OD_SYNC schedule, so manual
+    and cron syncs share one durable path. The schedule's overlap policy + the singleton
+    workflow id keep it from running concurrently with an in-flight sync."""
+    client = await _get_client()
+    await client.get_schedule_handle(ScheduleId.OD_SYNC).trigger()
+
+
+async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
+    client = await _get_client()
+    handle = await client.start_workflow(
+        OdSyncTargetedWorkflow.run,
+        args=[jurisdiction_ocdids],
+        id=f"od-sync-targeted-{uuid.uuid4().hex[:8]}",
+        task_queue=TASK_QUEUE,
     )
     return handle.id
 

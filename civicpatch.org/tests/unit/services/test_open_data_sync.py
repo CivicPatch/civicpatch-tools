@@ -11,7 +11,6 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import yaml
-
 from core.tree_diff import TreeDiff
 from lib.github.api import RepoTree
 from services.open_data_sync import sync_all, sync_jurisdictions, sync_people
@@ -23,6 +22,7 @@ def _patch(stack, target, **kwargs):
 
 # ── sync_people ──────────────────────────────────────────────────────────────
 
+
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_sync_people_upserts_all_and_returns_synced():
@@ -31,8 +31,12 @@ async def test_sync_people_upserts_all_and_returns_synced():
         "data/tx/local/b.yml": yaml.dump([{"id": "p2", "jurisdiction_ocdid": "j-b"}]),
     }
     with ExitStack() as stack:
-        _patch(stack, "github_service.get_github_file_contents",
-               new_callable=AsyncMock, side_effect=lambda p: contents[p])
+        _patch(
+            stack,
+            "github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            side_effect=lambda p: contents[p],
+        )
         bulk = _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
         synced = await sync_people(TreeDiff(changed=list(contents), deleted=[]))
 
@@ -49,16 +53,23 @@ async def test_sync_people_excludes_transient_miss():
         "data/tx/local/miss.yml": None,  # transient fetch miss
     }
     with ExitStack() as stack:
-        _patch(stack, "github_service.get_github_file_contents",
-               new_callable=AsyncMock, side_effect=lambda p: contents[p])
+        _patch(
+            stack,
+            "github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            side_effect=lambda p: contents[p],
+        )
         bulk = _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
         synced = await sync_people(TreeDiff(changed=list(contents), deleted=[]))
 
-    assert synced == ["data/tx/local/ok.yml"]  # the miss is not synced → cursor not advanced
+    assert synced == [
+        "data/tx/local/ok.yml"
+    ]  # the miss is not synced → cursor not advanced
     assert {p["id"] for p in bulk.await_args.args[0]} == {"p1"}  # miss's rows excluded
 
 
 # ── sync_jurisdictions ───────────────────────────────────────────────────────
+
 
 @pytest.mark.unit
 @pytest.mark.asyncio
@@ -66,10 +77,20 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
     path = "data_source/tx/local/jurisdictions.yml"
     content = yaml.dump({"jurisdictions": [{"id": "ocd-a"}, {"id": "ocd-b"}]})
     with ExitStack() as stack:
-        _patch(stack, "github_service.get_github_file_contents",
-               new_callable=AsyncMock, side_effect=lambda p: content)
-        bulk = _patch(stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock)
-        deact = _patch(stack, "jurisdictions_db.deactivate_jurisdictions_not_in", new_callable=AsyncMock)
+        _patch(
+            stack,
+            "github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            side_effect=lambda p: content,
+        )
+        bulk = _patch(
+            stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
+        )
+        deact = _patch(
+            stack,
+            "jurisdictions_db.deactivate_jurisdictions_not_in",
+            new_callable=AsyncMock,
+        )
         synced = await sync_jurisdictions(TreeDiff(changed=[path], deleted=[]))
 
     assert synced == [path]
@@ -80,19 +101,30 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
 
 # ── sync_all ─────────────────────────────────────────────────────────────────
 
+
 def _patch_sync_all(stack, tree, stored, contents):
-    _patch(stack, "lock_service.acquire_lock", new_callable=AsyncMock, return_value=True)
-    _patch(stack, "lock_service.release_lock", new_callable=AsyncMock)
-    _patch(stack, "environment.get_env_vars", return_value={"OPEN_DATA_REPO_URL": "repo"})
+    _patch(
+        stack, "environment.get_env_vars", return_value={"OPEN_DATA_REPO_URL": "repo"}
+    )
     _patch(stack, "github_service.get_tree", new_callable=AsyncMock, return_value=tree)
     _patch(stack, "get_synced_file_shas", new_callable=AsyncMock, return_value=stored)
-    _patch(stack, "github_service.get_github_file_contents",
-           new_callable=AsyncMock, side_effect=lambda path: contents.get(path))
+    _patch(
+        stack,
+        "github_service.get_github_file_contents",
+        new_callable=AsyncMock,
+        side_effect=lambda path: contents.get(path),
+    )
     _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
     _patch(stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock)
-    _patch(stack, "jurisdictions_db.deactivate_jurisdictions_not_in", new_callable=AsyncMock)
+    _patch(
+        stack,
+        "jurisdictions_db.deactivate_jurisdictions_not_in",
+        new_callable=AsyncMock,
+    )
     upsert = _patch(stack, "synced_files_db.upsert_synced_file", new_callable=AsyncMock)
-    delete = _patch(stack, "synced_files_db.delete_synced_files", new_callable=AsyncMock)
+    delete = _patch(
+        stack, "synced_files_db.delete_synced_files", new_callable=AsyncMock
+    )
     return upsert, delete
 
 
@@ -107,11 +139,15 @@ async def test_sync_all_writes_cursors_for_changed_files():
         truncated=False,
     )
     contents = {
-        "data_source/tx/local/jurisdictions.yml": yaml.dump({"jurisdictions": [{"id": "ocd-a"}]}),
+        "data_source/tx/local/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-a"}]}
+        ),
         "data/tx/local/a.yml": yaml.dump([{"id": "p1"}]),
     }
     with ExitStack() as stack:
-        upsert, _delete = _patch_sync_all(stack, tree, {}, contents)  # empty stored → all new
+        upsert, _delete = _patch_sync_all(
+            stack, tree, {}, contents
+        )  # empty stored → all new
         await sync_all()
 
     written = {c.args[0]: c.args[1] for c in upsert.await_args_list}
@@ -125,7 +161,9 @@ async def test_sync_all_writes_cursors_for_changed_files():
 @pytest.mark.asyncio
 async def test_sync_all_skips_deletion_pass_when_truncated():
     tree = RepoTree(entries={"data/tx/local/a.yml": "psha"}, truncated=True)
-    stored = {"data/tx/local/gone.yml": "old"}  # absent from tree → would normally be deleted
+    stored = {
+        "data/tx/local/gone.yml": "old"
+    }  # absent from tree → would normally be deleted
     contents = {"data/tx/local/a.yml": yaml.dump([{"id": "p1"}])}
     with ExitStack() as stack:
         _upsert, delete = _patch_sync_all(stack, tree, stored, contents)
@@ -140,7 +178,9 @@ async def test_sync_all_caps_people_per_run():
     tree = RepoTree(
         entries={f"data/tx/local/p{i}.yml": f"s{i}" for i in range(3)}, truncated=False
     )
-    contents = {f"data/tx/local/p{i}.yml": yaml.dump([{"id": f"p{i}"}]) for i in range(3)}
+    contents = {
+        f"data/tx/local/p{i}.yml": yaml.dump([{"id": f"p{i}"}]) for i in range(3)
+    }
     with ExitStack() as stack:
         upsert, _delete = _patch_sync_all(stack, tree, {}, contents)
         # cap to 1 of the 3 changed people files

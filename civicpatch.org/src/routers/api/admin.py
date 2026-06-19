@@ -7,7 +7,7 @@ import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
 import lib.supabase_auth as supabase_auth_service
-import services.open_data_sync as data_sync
+import lib.temporal.client as temporal_client
 import services.pull_request_sync as pr_sync
 from schemas.common import (
     Identity,
@@ -28,10 +28,12 @@ def get_router() -> APIRouter:
     @router.post("/od_sync", include_in_schema=False)
     async def od_sync_endpoint(
         request: OdSyncRequestSchema,
-        background_tasks: BackgroundTasks,
         _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
     ):
-        background_tasks.add_task(data_sync.sync, request)
+        if request.jurisdiction_ocdids:
+            await temporal_client.start_targeted_od_sync(request.jurisdiction_ocdids)
+        else:
+            await temporal_client.trigger_full_od_sync()
 
         return {"status": "running"}
 
