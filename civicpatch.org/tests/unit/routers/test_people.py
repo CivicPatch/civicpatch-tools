@@ -114,7 +114,7 @@ def test_patch_people_data_records_change_log(client):
               return_value=(42, "https://github.com/x/pull/42")),
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
               return_value=yaml_dump([BASE_PERSON])),
-        patch("core.change_logs.record_manual_edits", record),
+        patch("services.change_logs.record_manual_edits", record),
     ):
         response = client.patch(
             "/people/data",
@@ -137,7 +137,7 @@ def test_patch_people_data_rejects_invalid_field(client):
         patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr,
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
               return_value=yaml_dump([BASE_PERSON])),
-        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
     ):
         response = client.patch(
             "/people/data",
@@ -165,7 +165,7 @@ def test_patch_people_data_allows_default_role(client):
               return_value=(42, "https://github.com/x/pull/42")),
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
               return_value=yaml_dump([BASE_PERSON])),
-        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
     ):
         response = client.patch(
             "/people/data",

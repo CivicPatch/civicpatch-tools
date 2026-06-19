@@ -8,7 +8,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
 from routers.api import pull_requests as pull_requests_router
-from core.pull_request_merge import do_merge
+from services.pull_request_merge import do_merge
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -129,11 +129,11 @@ def test_close_pull_request_returns_success(client):
             return_value="user-id-123",
         ),
         patch(
-            "core.pull_request_sync.apply_pull_request_status",
+            "services.pull_request_sync.apply_pull_request_status",
             new_callable=AsyncMock,
         ),
         patch(
-            "core.change_logs.record_close",
+            "services.change_logs.record_close",
             new_callable=AsyncMock,
         ),
         patch(
@@ -212,7 +212,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
         patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
-        patch("core.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("lib.redis.set", new_callable=AsyncMock),
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
@@ -352,8 +352,8 @@ def test_do_merge_clean_pr_writes_merged():
         patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
         patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("core.change_logs.record_publish", new_callable=AsyncMock),
-        patch("core.pull_request_sync.publish_side_effects", new_callable=AsyncMock) as mock_side_effects,
+        patch("services.change_logs.record_publish", new_callable=AsyncMock),
+        patch("services.pull_request_sync.publish_side_effects", new_callable=AsyncMock) as mock_side_effects,
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
@@ -437,8 +437,8 @@ def test_do_merge_behind_pr_updates_branch_and_merges():
         patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
         patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("core.change_logs.record_publish", new_callable=AsyncMock),
-        patch("core.pull_request_sync.publish_side_effects", new_callable=AsyncMock),
+        patch("services.change_logs.record_publish", new_callable=AsyncMock),
+        patch("services.pull_request_sync.publish_side_effects", new_callable=AsyncMock),
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 

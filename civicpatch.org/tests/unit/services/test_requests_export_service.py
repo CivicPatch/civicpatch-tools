@@ -1,5 +1,5 @@
 import pytest
-from core.people_csv_export import (
+from services.people_csv_export import (
     _changed_field_names,
     _extract_fields,
     _flatten_official,

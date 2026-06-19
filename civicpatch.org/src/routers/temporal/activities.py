@@ -1,8 +1,8 @@
 from temporalio import activity
 
-import core.pull_request_sync as pr_sync
-import core.open_data_sync as data_sync
-import core.pull_request_merge as pull_request_merge
+import services.pull_request_sync as pr_sync
+import services.open_data_sync as data_sync
+import services.pull_request_merge as pull_request_merge
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
 from lib.temporal.types import MergeRequest

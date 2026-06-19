@@ -4,10 +4,10 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-import core.jurisdiction_pull_request as jurisdiction_pr_service
-import core.jurisdiction_scrape_candidate as candidate_service
-import core.pipeline_issue_resolution as pipeline_issue_resolution_service
-import core.role_config as role_config_service
+import services.jurisdiction_pull_request as jurisdiction_pr_service
+import services.jurisdiction_scrape_candidate as candidate_service
+import services.pipeline_issue_resolution as pipeline_issue_resolution_service
+import services.role_config as role_config_service
 import database.jurisdictions as database
 import shared.utils.config_utils as config_utils
 from lib.auth import require_route_access

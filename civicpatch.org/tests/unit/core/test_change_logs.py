@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core import change_logs
+from services import change_logs
 from shared.utils.statuses import ChangeLogType
 
 REQUEST_ID = "2025-09-25-1a2b"
@@ -14,8 +14,8 @@ USER_ID = "user-123"
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
 async def test_record_publish_logs_event(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
     await change_logs.record_publish(REQUEST_ID, USER_ID)
@@ -25,8 +25,8 @@ async def test_record_publish_logs_event(mock_jurisdiction, mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
 async def test_record_publish_swallows_errors(mock_jurisdiction, mock_create):
     mock_jurisdiction.side_effect = RuntimeError("db down")
     await change_logs.record_publish(REQUEST_ID, USER_ID)  # best-effort: must not raise
@@ -34,8 +34,8 @@ async def test_record_publish_swallows_errors(mock_jurisdiction, mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
 async def test_record_close_logs_close_event(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
     await change_logs.record_close(REQUEST_ID, USER_ID)
@@ -45,8 +45,8 @@ async def test_record_close_logs_close_event(mock_jurisdiction, mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("core.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
 async def test_record_close_swallows_errors(mock_jurisdiction, mock_create):
     mock_jurisdiction.return_value = JURISDICTION_OCDID
     mock_create.side_effect = RuntimeError("db down")
@@ -57,7 +57,7 @@ async def test_record_close_swallows_errors(mock_jurisdiction, mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
 async def test_record_manual_edits_logs_diff_rows(mock_create):
     before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
     after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
@@ -70,7 +70,7 @@ async def test_record_manual_edits_logs_diff_rows(mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
 async def test_record_manual_edits_no_diff_logs_nothing(mock_create):
     people = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
     await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, people, people)
@@ -79,7 +79,7 @@ async def test_record_manual_edits_no_diff_logs_nothing(mock_create):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@patch("core.change_logs.create_change_log", new_callable=AsyncMock)
+@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
 async def test_record_manual_edits_swallows_errors(mock_create):
     mock_create.side_effect = RuntimeError("db down")
     before = []

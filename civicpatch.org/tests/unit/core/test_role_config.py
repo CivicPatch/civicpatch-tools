@@ -1,6 +1,6 @@
 import pytest
 
-from core.role_config import build_merged_response, _scope_to_ocdid
+from services.role_config import build_merged_response, _scope_to_ocdid
 from shared.utils.config_utils import RoleConfig, RoleEntry
 
 

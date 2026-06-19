@@ -9,7 +9,7 @@ from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
-import core.change_logs as change_logs
+import services.change_logs as change_logs
 
 logger = logging.getLogger(__name__)
 

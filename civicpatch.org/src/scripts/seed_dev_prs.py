@@ -21,8 +21,8 @@ import logging
 import psycopg.errors
 import shared.utils.id_utils as id_utils
 import lib.github.api as github_service
-from core.open_data_sync import sync_jurisdictions_by_ocdids
-from core.pull_request_sync import maybe_backfill_job_result
+from services.open_data_sync import sync_jurisdictions_by_ocdids
+from services.pull_request_sync import maybe_backfill_job_result
 from database.requests import register_foreign_request
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")

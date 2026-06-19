@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 import pytest
 
-from core.blog_sync import (
+from services.blog_sync import (
     compute_slug,
     discussion_to_post,
     is_draft,

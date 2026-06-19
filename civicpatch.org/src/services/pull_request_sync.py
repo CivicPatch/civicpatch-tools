@@ -8,7 +8,7 @@ import database.review_sessions as review_sessions_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
-from core.open_data_sync import sync_people_by_ocdids
+from services.open_data_sync import sync_people_by_ocdids
 from shared.utils.statuses import PullRequestStatus
 from lib.github.utils import pull_request_url_to_number
 

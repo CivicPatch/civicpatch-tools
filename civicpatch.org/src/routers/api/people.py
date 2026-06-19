@@ -9,7 +9,7 @@ from schemas.common import Identity, Role, RouteCategory
 
 import database.people as database
 import database.jurisdictions as jurisdictions_db
-import core.change_logs as change_logs
+import services.change_logs as change_logs
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 import lib.github.api as github_service

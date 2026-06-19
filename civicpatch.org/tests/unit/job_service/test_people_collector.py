@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from core.people_collector import handle_submit_pipeline_run_artifacts
+from services.people_collector import handle_submit_pipeline_run_artifacts
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
 from shared.utils.statuses import PipelineRunStatus
 
@@ -24,16 +24,16 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
     request = make_request()
     with (
         patch(
-            "core.people_collector._handle_submit_pipeline_run_artifacts",
+            "services.people_collector._handle_submit_pipeline_run_artifacts",
             new_callable=AsyncMock,
             side_effect=Exception("storage unavailable"),
         ),
         patch(
-            "core.people_collector.update_pipeline_run_status",
+            "services.people_collector.update_pipeline_run_status",
             new_callable=AsyncMock,
         ) as mock_update_status,
         patch(
-            "core.people_collector.upsert_issue",
+            "services.people_collector.upsert_issue",
             new_callable=AsyncMock,
         ),
     ):
@@ -52,12 +52,12 @@ async def test_handle_submit_pipeline_run_artifacts_does_not_update_status_on_su
     mock_response = MagicMock()
     with (
         patch(
-            "core.people_collector._handle_submit_pipeline_run_artifacts",
+            "services.people_collector._handle_submit_pipeline_run_artifacts",
             new_callable=AsyncMock,
             return_value=mock_response,
         ),
         patch(
-            "core.people_collector.update_pipeline_run_status",
+            "services.people_collector.update_pipeline_run_status",
             new_callable=AsyncMock,
         ) as mock_update_status,
     ):

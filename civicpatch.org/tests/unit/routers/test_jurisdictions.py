@@ -29,12 +29,12 @@ def test_patch_jurisdiction_data_allows_default_role(client):
     client.app.dependency_overrides[get_optional_user] = _default
     with (
         patch(
-            "core.jurisdiction_pull_request.open_jurisdiction_url_pr",
+            "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/x/pull/42"),
         ),
         patch(
-            "core.jurisdiction_pull_request.merge_jurisdiction_pr",
+            "services.jurisdiction_pull_request.merge_jurisdiction_pr",
             new_callable=AsyncMock,
         ) as mock_merge,
     ):

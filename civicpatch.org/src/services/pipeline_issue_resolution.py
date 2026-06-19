@@ -1,6 +1,6 @@
 import logging
 
-import core.role_config as role_config_service
+import services.role_config as role_config_service
 from database.issues import resolve_issue
 from schemas.jurisdictions import SetScopeRolesRequest
 

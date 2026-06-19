@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 import yaml
 
-from core.jurisdiction_pull_request import (
+from services.jurisdiction_pull_request import (
     _extract_state,
     merge_jurisdiction_pr,
     open_jurisdiction_edit_pr,
@@ -60,17 +60,17 @@ async def test_open_jurisdiction_edit_pr_success():
 
     with (
         patch(
-            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            "services.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
         ),
         patch(
-            "core.jurisdiction_pull_request.environment.get_env_vars",
+            "services.jurisdiction_pull_request.environment.get_env_vars",
             return_value=MOCK_ENV,
         ),
-        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch("services.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
         patch(
-            "core.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.open_attributed_pr",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/openstates/jurisdictions/pull/42"),
         ) as mock_open_pr,
@@ -112,15 +112,15 @@ async def test_open_jurisdiction_edit_pr_jurisdiction_not_found():
 
     with (
         patch(
-            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            "services.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
         ),
         patch(
-            "core.jurisdiction_pull_request.environment.get_env_vars",
+            "services.jurisdiction_pull_request.environment.get_env_vars",
             return_value=MOCK_ENV,
         ),
-        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch("services.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
     ):
         mock_client = AsyncMock()
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
@@ -147,17 +147,17 @@ async def test_open_jurisdiction_edit_pr_file_not_found_creates_new():
 
     with (
         patch(
-            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            "services.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
         ),
         patch(
-            "core.jurisdiction_pull_request.environment.get_env_vars",
+            "services.jurisdiction_pull_request.environment.get_env_vars",
             return_value=MOCK_ENV,
         ),
-        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch("services.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
         patch(
-            "core.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.open_attributed_pr",
             new_callable=AsyncMock,
             return_value=(99, "https://github.com/openstates/jurisdictions/pull/99"),
         ) as mock_open_pr,
@@ -191,15 +191,15 @@ async def test_open_jurisdiction_edit_pr_fetch_fails():
 
     with (
         patch(
-            "core.jurisdiction_pull_request.get_jurisdictions_sync_headers",
+            "services.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
         ),
         patch(
-            "core.jurisdiction_pull_request.environment.get_env_vars",
+            "services.jurisdiction_pull_request.environment.get_env_vars",
             return_value=MOCK_ENV,
         ),
-        patch("core.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
+        patch("services.jurisdiction_pull_request.httpx.AsyncClient") as mock_client_cls,
     ):
         mock_client = AsyncMock()
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
@@ -227,17 +227,17 @@ OPEN_DATA_CONTENT = yaml.dump({"jurisdictions": YAML_ENTRIES}, sort_keys=False, 
 async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
     with (
         patch(
-            "core.jurisdiction_pull_request.github_service.get_github_file_contents",
+            "services.jurisdiction_pull_request.github_service.get_github_file_contents",
             new_callable=AsyncMock,
             return_value=OPEN_DATA_CONTENT,
         ),
         patch(
-            "core.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.open_attributed_pr",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/CivicPatch/open-data/pull/42"),
         ) as mock_open_pr,
         patch(
-            "core.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
+            "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
     ):
@@ -269,17 +269,17 @@ async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
 async def test_open_jurisdiction_url_pr_skips_change_log_when_url_unchanged():
     with (
         patch(
-            "core.jurisdiction_pull_request.github_service.get_github_file_contents",
+            "services.jurisdiction_pull_request.github_service.get_github_file_contents",
             new_callable=AsyncMock,
             return_value=OPEN_DATA_CONTENT,
         ),
         patch(
-            "core.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.open_attributed_pr",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/CivicPatch/open-data/pull/42"),
         ),
         patch(
-            "core.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
+            "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
     ):
@@ -302,12 +302,12 @@ async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
     )
     with (
         patch(
-            "core.jurisdiction_pull_request.github_service.get_github_file_contents",
+            "services.jurisdiction_pull_request.github_service.get_github_file_contents",
             new_callable=AsyncMock,
             return_value=content,
         ),
         patch(
-            "core.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.open_attributed_pr",
             new_callable=AsyncMock,
         ) as mock_open_pr,
     ):
@@ -327,7 +327,7 @@ async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
 @pytest.mark.asyncio
 async def test_open_jurisdiction_url_pr_fetch_fails():
     with patch(
-        "core.jurisdiction_pull_request.github_service.get_github_file_contents",
+        "services.jurisdiction_pull_request.github_service.get_github_file_contents",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -349,12 +349,12 @@ async def test_open_jurisdiction_url_pr_fetch_fails():
 async def test_merge_jurisdiction_pr_merges_when_clean():
     with (
         patch(
-            "core.jurisdiction_pull_request.github_service.get_pull_request_mergeability",
+            "services.jurisdiction_pull_request.github_service.get_pull_request_mergeability",
             new_callable=AsyncMock,
             return_value="clean",
         ),
         patch(
-            "core.jurisdiction_pull_request.github_service.merge_pull_request",
+            "services.jurisdiction_pull_request.github_service.merge_pull_request",
             new_callable=AsyncMock,
             return_value=None,
         ) as mock_merge,
@@ -369,12 +369,12 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
 async def test_merge_jurisdiction_pr_skips_when_not_clean():
     with (
         patch(
-            "core.jurisdiction_pull_request.github_service.get_pull_request_mergeability",
+            "services.jurisdiction_pull_request.github_service.get_pull_request_mergeability",
             new_callable=AsyncMock,
             return_value="dirty",
         ),
         patch(
-            "core.jurisdiction_pull_request.github_service.merge_pull_request",
+            "services.jurisdiction_pull_request.github_service.merge_pull_request",
             new_callable=AsyncMock,
         ) as mock_merge,
     ):
