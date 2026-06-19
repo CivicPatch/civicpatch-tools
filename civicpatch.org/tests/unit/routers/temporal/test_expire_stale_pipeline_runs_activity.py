@@ -2,9 +2,10 @@ import pytest
 from unittest.mock import AsyncMock, patch
 from temporalio.testing import ActivityEnvironment
 
+from shared.utils.statuses import PipelineIssueType
+
 from routers.temporal.activities import (
     _STALE_RUN_ISSUE_DETAIL,
-    _STALE_RUN_ISSUE_TYPE,
     expire_stale_pipeline_runs_activity,
 )
 
@@ -32,8 +33,8 @@ async def test_raises_an_issue_per_expired_run():
 
     # each crashed run gets a blocking issue so it isn't silently re-queued
     assert mock_upsert.await_count == 2
-    mock_upsert.assert_any_await("req-a", _STALE_RUN_ISSUE_TYPE, [_STALE_RUN_ISSUE_DETAIL])
-    mock_upsert.assert_any_await("req-b", _STALE_RUN_ISSUE_TYPE, [_STALE_RUN_ISSUE_DETAIL])
+    mock_upsert.assert_any_await("req-a", PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL])
+    mock_upsert.assert_any_await("req-b", PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL])
 
 
 @pytest.mark.asyncio
