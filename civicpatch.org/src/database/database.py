@@ -27,10 +27,13 @@ async def get_pool() -> AsyncConnectionPool:
             max_size=int(env.get("DB_POOL_MAX_SIZE", 20)),
             reconnect_failed=_on_reconnect_failed,
         )
-        await _pool.open(
-            wait=True, timeout=10
-        )  # raises if the DB isn't ready, instead of wedging
-
+        try:
+            # wait=True so a not-ready DB raises here instead of returning a dead pool that
+            # silently wedges the caller; the process crashes and its restart policy retries.
+            await _pool.open(wait=True, timeout=10)
+        except Exception:
+            _pool = None  # don't cache a half-open pool; let the next call rebuild it
+            raise
         logger.info("Database pool opened")
     return _pool
 
