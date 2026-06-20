@@ -37,7 +37,7 @@ test.describe("Review navigation", () => {
     await expect(page.getByText("E2E Test City")).toBeVisible();
 
     // The seeded proposed person should appear in the diff panel
-    await expect(page.locator("civ-diff-panel").getByText("Jane Smith")).toBeVisible();
+    await expect(page.locator("people-diff").getByText("Jane Smith").first()).toBeVisible();
   });
 
   test("next advances to second card", async ({ authenticatedPage: page }) => {

@@ -78,7 +78,7 @@ export interface MultiValueDiff {
   status: MultiValueStatus;
 }
 
-function normalizeMultiValue(value: string): string {
+export function normalizeMultiValue(value: string): string {
   return value.trim().toLowerCase();
 }
 

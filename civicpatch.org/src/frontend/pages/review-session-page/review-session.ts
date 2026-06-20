@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { component } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
-import "../../components/diff-panel/diff-panel.js";
+import "../../components/people-diff/people-diff.js";
 import "../../components/review-workspace/review-workspace.js";
 import "../../components/side-panel/side-panel.js";
 import { type Progress } from "./review-session-controls.js";
@@ -87,9 +87,9 @@ function ReviewSession({
       ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
       ${isBaseline
         ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
-        : html`<civ-diff-panel
+        : html`<people-diff
             .data=${pr_people ?? { existing: [], proposed: [] }}
-          ></civ-diff-panel>`}
+          ></people-diff>`}
       <div class="review-page__content">
         <civ-review-workspace
           .pullRequest=${currentPeople ?? []}

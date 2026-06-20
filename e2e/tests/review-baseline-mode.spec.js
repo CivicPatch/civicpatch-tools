@@ -24,7 +24,7 @@ test.describe("Review baseline mode (first capture)", () => {
     await expect(banner).toContainText("First capture for E2E Baseline City");
 
     // Nothing to diff against on a first capture — the panel must be absent.
-    await expect(page.locator("civ-diff-panel")).toHaveCount(0);
+    await expect(page.locator("people-diff")).toHaveCount(0);
 
     // The proposed person still appears, in the editable workspace.
     await expect(
