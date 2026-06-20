@@ -8,22 +8,28 @@ export interface FieldSpec {
   key: string; // dotted path into a person record, e.g. "office.name"
   label: string;
   type: FieldType;
+  required?: boolean; // must be non-empty; flagged when empty
+  diff?: boolean;     // default true; false = shown per-side but not compared
 }
 
 // Aligned to the Official data model: office is an object, urls (not websites),
 // image (not avatar), start_date/end_date. Jurisdiction is constant across a
 // review (one jurisdiction per PR), so it is not an editable per-row field.
+// Required fields render always; optional fields collapse when unchanged.
+// source_urls is documentation — shown per-side, never diffed (each list has
+// its own sources). Division is edited as a seat-type + number (see component).
 export const FIELD_SCHEMA: FieldSpec[] = [
-  { key: "name", label: "Name", type: "text" },
-  { key: "other_names", label: "Other names", type: "multi" },
-  { key: "office.name", label: "Office", type: "text" },
-  { key: "office.division_ocdid", label: "Division", type: "text" },
+  { key: "name", label: "Name", type: "text", required: true },
+  { key: "office.name", label: "Office", type: "text", required: true },
+  { key: "office.division_ocdid", label: "Division", type: "text", required: true },
   { key: "start_date", label: "Term start", type: "date" },
   { key: "end_date", label: "Term end", type: "date" },
   { key: "emails", label: "Email", type: "multi" },
   { key: "phones", label: "Phone", type: "multi" },
   { key: "urls", label: "Links", type: "multi" },
+  { key: "other_names", label: "Other names", type: "multi" },
   { key: "image", label: "Photo", type: "image" },
+  { key: "source_urls", label: "Source urls", type: "multi", diff: false },
 ];
 
 export function getFieldValue(person: any, key: string): unknown {
@@ -108,6 +114,7 @@ export function multiValueDiff(
 
 export function recordsDiffer(oldRecord: any, newRecord: any): boolean {
   for (const field of FIELD_SCHEMA) {
+    if (field.diff === false) continue; // documentation (source_urls) isn't compared
     const oldValue = diffValue(oldRecord, field);
     const newValue = diffValue(newRecord, field);
     if (field.type === "multi") {
@@ -138,4 +145,13 @@ function padDate(value: string): string {
 export function isTermOrderValid(start: string, end: string): boolean {
   if (!start || !end || !isValidDate(start) || !isValidDate(end)) return true;
   return padDate(start) <= padDate(end);
+}
+
+// A required field with no value is an error. Multi fields count as empty when
+// the list has no entries; scalars when blank after trim.
+export function isRequiredFieldEmpty(record: any, field: FieldSpec): boolean {
+  if (!field.required) return false;
+  const value = diffValue(record, field);
+  if (Array.isArray(value)) return value.length === 0;
+  return normalizeScalar(value) === "";
 }

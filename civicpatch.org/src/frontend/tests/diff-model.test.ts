@@ -7,6 +7,7 @@ import {
   recordsDiffer,
   isValidDate,
   isTermOrderValid,
+  isRequiredFieldEmpty,
   type FieldSpec,
 } from "../components/people-diff/diff-model.js";
 
@@ -131,6 +132,29 @@ describe("recordsDiffer", () => {
 
   it("ignores photo URL differences (presence-only)", () => {
     expect(recordsDiffer({ ...base, cdn_image: "cdn.jpg" }, { ...base, image: "raw.jpg" })).toBe(false);
+  });
+
+  it("ignores source_urls (documentation, not diffed)", () => {
+    expect(recordsDiffer({ ...base, source_urls: ["a"] }, { ...base, source_urls: ["b", "c"] })).toBe(false);
+  });
+});
+
+describe("isRequiredFieldEmpty", () => {
+  const nameField: FieldSpec = { key: "name", label: "Name", type: "text", required: true };
+  const divisionField: FieldSpec = { key: "office.division_ocdid", label: "Division", type: "text", required: true };
+  const emailField: FieldSpec = { key: "emails", label: "Email", type: "multi" };
+
+  it("flags an empty required scalar", () => {
+    expect(isRequiredFieldEmpty({ name: "" }, nameField)).toBe(true);
+    expect(isRequiredFieldEmpty({ office: { division_ocdid: null } }, divisionField)).toBe(true);
+  });
+
+  it("passes a filled required field", () => {
+    expect(isRequiredFieldEmpty({ name: "Maria" }, nameField)).toBe(false);
+  });
+
+  it("never flags an optional field", () => {
+    expect(isRequiredFieldEmpty({ emails: [] }, emailField)).toBe(false);
   });
 });
 

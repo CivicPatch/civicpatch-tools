@@ -22,25 +22,21 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(page.locator("people-diff")).toBeVisible();
     await expect(page.locator(".review-page__baseline-banner")).toHaveCount(0);
 
-    // Maria must pair as a single CHANGED row (not added+removed) — guards the
-    // existing<->proposed id pairing before the field-level checks.
-    await expect(
-      page.locator(".people-diff__person--changed").filter({ hasText: "Maria González" })
-    ).toBeVisible();
+    // Maria pairs as a single CHANGED row — guards the existing<->new id pairing.
+    const mariaRow = page.locator(".people-diff__person--changed").filter({ hasText: "Maria González" });
+    await expect(mariaRow).toBeVisible();
 
-    // Changed scalar field: office Mayor → Council Member.
-    await expect(
-      page.locator(".people-diff__cell--changed").filter({ hasText: "Council Member" })
-    ).toBeVisible();
+    // Office changed → editable input carries the new value with changed styling.
+    const officeInput = mariaRow.locator(".people-diff__field").filter({ hasText: "Office" }).first().locator("input");
+    await expect(officeInput).toHaveValue("Council Member");
+    await expect(officeInput).toHaveClass(/people-diff__input--changed/);
 
-    // Added multi value: the new email.
-    await expect(
-      page.locator(".people-diff__value--added").filter({ hasText: "mayor@nh.gov" })
-    ).toBeVisible();
+    // Added email → an added-styled input with the new value (scoped to Maria).
+    await expect(mariaRow.locator("input.people-diff__input--added")).toHaveValue("mayor@nh.gov");
 
-    // Removed multi value: the dropped phone, struck on the old side.
+    // Removed phone → struck on the old side.
     await expect(
-      page.locator(".people-diff__value--removed").filter({ hasText: "(555) 010-0101" })
+      mariaRow.locator(".people-diff__value--removed").filter({ hasText: "(555) 010-0101" })
     ).toBeVisible();
 
     // Added-only and removed-only person rows.
@@ -50,5 +46,10 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(
       page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })
     ).toBeVisible();
+
+    // Editing round-trips: setting Office back to "Mayor" recomputes the diff live
+    // and clears the changed styling.
+    await officeInput.fill("Mayor");
+    await expect(officeInput).not.toHaveClass(/people-diff__input--changed/);
   });
 });
