@@ -25,11 +25,21 @@ export const ActionType = {
   STATS_LOADED: "stats_loaded",
 } as const;
 
+// baseline = first capture for a jurisdiction (nothing to diff against);
+// reconcile = subsequent scrape (old<->new pairing is meaningful). Mirrors the
+// backend ReviewMode enum; the API sends `mode` on the navigate response.
+export const ReviewMode = {
+  BASELINE: "baseline",
+  RECONCILE: "reconcile",
+} as const;
+export type ReviewModeValue = typeof ReviewMode[keyof typeof ReviewMode];
+
 // The data for the entry currently displayed in the review card.
 export type CurrentEntry = {
   request_id: string;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null };
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
+  mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
   review_data: any;
   source_content_urls: any[];

@@ -6,11 +6,13 @@ import "../../components/review-workspace/review-workspace.js";
 import "../../components/side-panel/side-panel.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
+import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 
 type CurrentEntry = {
   request_id: string;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null };
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
+  mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
   review_data: any;
   source_content_urls: any[];
@@ -52,9 +54,10 @@ function ReviewSession({
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
   onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd, onPersonSave,
 }: ReviewSessionProps) {
-  const { jurisdiction, pr, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
+  const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
+  const isBaseline = mode === ReviewMode.BASELINE;
 
   return html`
     <main class="review-page">
@@ -82,9 +85,11 @@ function ReviewSession({
         <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
       </div>
       ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
-      <civ-diff-panel
-        .data=${pr_people ?? { existing: [], proposed: [] }}
-      ></civ-diff-panel>
+      ${isBaseline
+        ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
+        : html`<civ-diff-panel
+            .data=${pr_people ?? { existing: [], proposed: [] }}
+          ></civ-diff-panel>`}
       <div class="review-page__content">
         <civ-review-workspace
           .pullRequest=${currentPeople ?? []}

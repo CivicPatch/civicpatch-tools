@@ -15,6 +15,11 @@ class RouteCategory(str, Enum):
     SERVICE = "service"
 
 
+class ReviewMode(str, Enum):
+    BASELINE = "baseline"      # first capture for a jurisdiction; nothing to diff against
+    RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful
+
+
 class Role(str, Enum):
     DEFAULT = "default"
     CONTRIBUTORS = "contributors"

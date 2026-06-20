@@ -20,6 +20,18 @@ export const TEST_JURISDICTION_OCDID_3 =
 export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
+// Baseline fixture — a first-capture jurisdiction (scraped_at left NULL) so the
+// review renders in BASELINE mode (banner, no diff panel). Deep-linked by its
+// pr_number in the baseline-mode spec.
+// Own state (vt) so this extra open card doesn't pollute the nj review queue
+// that the state-switching specs count on. Deep-linked by pr_number, so state
+// isolation costs nothing.
+export const BASELINE_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:vt/place:e2e_baseline/government";
+export const BASELINE_REQUEST_ID = "00000000-0000-0000-eeee-000000000007";
+const BASELINE_PR_ID = "00000000-0000-0000-eeee-000000000008";
+export const BASELINE_PR_NUMBER = 4;
+
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).
 export const TX_JURISDICTION_OCDID =
@@ -59,12 +71,13 @@ export async function seedE2eFixtures() {
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID, "e2e@civicpatch.org", "E2E Test User"]
     );
 
-    // Jurisdiction
+    // Jurisdiction. scraped_at set (NOW) so the review renders in RECONCILE mode
+    // (old<->new diff panel). The baseline fixture below leaves scraped_at NULL.
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-       VALUES ($1, 'nj', 'current', '{"name":"E2E Test City","geoid":"0600001"}')
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'nj', 'current', '{"name":"E2E Test City","geoid":"0600001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [TEST_JURISDICTION_OCDID]
     );
 
@@ -104,9 +117,9 @@ export async function seedE2eFixtures() {
       [TX_JURISDICTION_OCDID,     "E2E TX City",    TX_REQUEST_ID,      TX_PR_ID,      10, 'tx', '480000'],
     ]) {
       await client.query(
-        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-         VALUES ($1, $3, 'current', $2)
-         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+         VALUES ($1, $3, 'current', $2, NOW())
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
         [jOcdid, JSON.stringify({ name: jName, geoid: `${geoidPrefix}${prNum}` }), stateCode]
       );
       await client.query(
@@ -128,6 +141,35 @@ export async function seedE2eFixtures() {
         [prId, reqId, prNum]
       );
     }
+
+    // Baseline card — scraped_at intentionally omitted (NULL) → BASELINE mode.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'vt', 'current', '{"name":"E2E Baseline City","geoid":"5000009"}')
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+      [BASELINE_JURISDICTION_OCDID]
+    );
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}',
+               '[{"name":"Jane Baseline","roles":[{"title":"Council Member"}]}]',
+               '{}', NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
+      [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [BASELINE_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_PR_NUMBER]
+    );
 
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
@@ -184,6 +226,7 @@ export async function teardownE2eFixtures() {
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
       [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
+      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
