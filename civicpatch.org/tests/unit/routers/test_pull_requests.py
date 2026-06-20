@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import json
 import pytest
 from fastapi import FastAPI
@@ -302,6 +303,11 @@ def test_get_by_request_200_for_open_pr(client):
             new_callable=AsyncMock,
             return_value=[],
         ),
+        patch(
+            "database.jurisdictions.get_scraped_at",
+            new_callable=AsyncMock,
+            return_value=None,
+        ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
 
@@ -311,6 +317,8 @@ def test_get_by_request_200_for_open_pr(client):
     assert data["pr"]["status"] == "open"
     assert data["has_next"] is False
     assert data["has_prev"] is False
+    # never scraped → baseline mode
+    assert data["mode"] == "baseline"
 
 
 @pytest.mark.unit
@@ -326,11 +334,19 @@ def test_get_by_request_200_for_merged_pr(client):
             new_callable=AsyncMock,
             return_value=[],
         ),
+        patch(
+            "database.jurisdictions.get_scraped_at",
+            new_callable=AsyncMock,
+            return_value=datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
+        ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
 
     assert response.status_code == 200
-    assert response.json()["data"]["pr"]["status"] == "merged"
+    data = response.json()["data"]
+    assert data["pr"]["status"] == "merged"
+    # previously scraped → reconcile mode
+    assert data["mode"] == "reconcile"
 
 
 # ── do_merge unit tests ────────────────────────────────────────────────────

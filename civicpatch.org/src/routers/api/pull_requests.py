@@ -21,6 +21,7 @@ from pydantic import BaseModel
 
 import database.pipeline_runs
 import database.people
+import database.jurisdictions as jurisdictions_db
 import database.pull_requests as pull_requests_db
 import database.review_sessions as review_sessions_db
 import database.review_session_entries as review_session_entries_db
@@ -28,6 +29,7 @@ import database.users
 import lib.github.api as github_service
 import services.change_logs as change_logs
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
+from core.review_mode import review_mode_for
 import services.pull_request_merge as merge_service
 import services.pull_request_sync as pr_sync_service
 import lib.redis as redis_store
@@ -267,7 +269,10 @@ def get_router(api_key_header):
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
         proposed = result["proposed"] or []
 
-        existing = await database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid)
+        existing, scraped_at = await asyncio.gather(
+            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
+            jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
+        )
         unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
 
         return {
@@ -282,6 +287,7 @@ def get_router(api_key_header):
                     "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid),
                 },
                 "pr": result["pr"],
+                "mode": review_mode_for(scraped_at).value,
                 "existing": existing,
                 "proposed": proposed,
                 "sources": build_sources(request_id, jurisdiction_ocdid, unique_source_urls),

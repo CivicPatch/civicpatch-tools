@@ -5,7 +5,7 @@
 
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { landingUrl } from "../review-routes.js";
-import { ActionType, type CurrentEntry, type SessionMeta, type ReviewAction } from "./review-state.js";
+import { ActionType, ReviewMode, type CurrentEntry, type SessionMeta, type ReviewAction } from "./review-state.js";
 
 const errMessage = (err: any) => err?.message ?? String(err);
 
@@ -41,6 +41,7 @@ export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntr
     request_id: data.request_id,
     jurisdiction: data.jurisdiction,
     pr: data.pr,
+    mode: data.mode ?? ReviewMode.RECONCILE,
     pr_people: { existing: data.existing, proposed: data.proposed },
     review_data: review?.data ?? null,
     source_content_urls: data.sources,

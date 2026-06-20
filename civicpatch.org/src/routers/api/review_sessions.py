@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 
+import database.jurisdictions as jurisdictions_db
 import database.pipeline_runs as jobs_db
 import database.people as database_people
 import database.pull_requests as pull_requests_db
@@ -20,6 +21,7 @@ import services.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
 from schemas.common import Identity, RouteCategory
+from core.review_mode import review_mode_for
 from lib.auth import require_route_access
 
 
@@ -145,10 +147,11 @@ async def _navigate_response(session_id: str, entry_number: int):
 
     await pr_sync_service.sync_single_pr_state(request_id)
 
-    pr_meta, existing, proposed = await asyncio.gather(
+    pr_meta, existing, proposed, scraped_at = await asyncio.gather(
         pull_requests_db.get_pull_request_for_review(request_id),
         database_people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
         jobs_db.get_pipeline_run_data_json(request_id),
+        jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
     )
 
     if proposed is None:
@@ -177,6 +180,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],
+            "mode": review_mode_for(scraped_at).value,
             "existing": existing,
             "proposed": proposed,
             "sources": sources,

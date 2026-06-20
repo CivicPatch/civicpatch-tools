@@ -448,6 +448,17 @@ async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
     return result.rowcount > 0
 
 
+async def get_scraped_at(jurisdiction_ocdid: str) -> datetime.datetime | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT scraped_at FROM jurisdictions WHERE jurisdiction_ocdid = %s LIMIT 1;",
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else None
+
+
 async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
     # Stale = never scraped, or scraped before the state's freshness cutoff (epoch when the
     # state has no config row). Only active, url-bearing jurisdictions; never-scraped first.

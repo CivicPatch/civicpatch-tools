@@ -514,3 +514,13 @@ review-session-controls {
     background: var(--pico-del-color);
     color: #fff;
 }
+
+.review-page__baseline-banner {
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    background: var(--pico-card-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+}
