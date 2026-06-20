@@ -88,7 +88,10 @@ function ReviewSession({
       ${isBaseline
         ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
         : html`<people-diff
-            .data=${pr_people ?? { existing: [], proposed: [] }}
+            .existing=${pr_people?.existing ?? []}
+            .currentPeople=${currentPeople ?? []}
+            .onPersonSave=${onPersonSave}
+            .isReadOnly=${is_read_only}
           ></people-diff>`}
       <div class="review-page__content">
         <civ-review-workspace
