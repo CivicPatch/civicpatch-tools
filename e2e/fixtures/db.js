@@ -21,16 +21,14 @@ export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
 // Baseline fixture — a first-capture jurisdiction (scraped_at left NULL) so the
-// review renders in BASELINE mode (banner, no diff panel). Deep-linked by its
-// pr_number in the baseline-mode spec.
-// Own state (vt) so this extra open card doesn't pollute the nj review queue
-// that the state-switching specs count on. Deep-linked by pr_number, so state
-// isolation costs nothing.
+// review renders in BASELINE mode (banner, no diff panel). The baseline-mode spec
+// deep-links to it by request_id. Kept in its own state (vt) so this extra open
+// card doesn't pollute the nj review queue the state-switching specs count on.
 export const BASELINE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:vt/place:e2e_baseline/government";
 export const BASELINE_REQUEST_ID = "00000000-0000-0000-eeee-000000000007";
 const BASELINE_PR_ID = "00000000-0000-0000-eeee-000000000008";
-export const BASELINE_PR_NUMBER = 4;
+const BASELINE_PR_NUMBER = 4;
 
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).

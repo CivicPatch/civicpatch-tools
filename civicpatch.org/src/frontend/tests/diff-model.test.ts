@@ -1,0 +1,164 @@
+import { describe, it, expect } from "vitest";
+import {
+  getFieldValue,
+  diffValue,
+  fieldDiffState,
+  multiValueDiff,
+  recordsDiffer,
+  isValidDate,
+  isTermOrderValid,
+  type FieldSpec,
+} from "../components/people-diff/diff-model.js";
+
+const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
+
+describe("getFieldValue", () => {
+  it("reads a top-level key", () => {
+    expect(getFieldValue({ name: "Maria" }, "name")).toBe("Maria");
+  });
+
+  it("reads a dotted path", () => {
+    expect(getFieldValue({ office: { name: "Mayor" } }, "office.name")).toBe("Mayor");
+  });
+
+  it("returns undefined for a missing nested path without throwing", () => {
+    expect(getFieldValue({}, "office.name")).toBeUndefined();
+  });
+});
+
+describe("diffValue", () => {
+  it("prefers cdn_image over image for the photo field", () => {
+    expect(diffValue({ image: "raw.jpg", cdn_image: "cdn.jpg" }, IMAGE_FIELD)).toBe("cdn.jpg");
+  });
+
+  it("falls back to image when cdn_image is absent (the new side)", () => {
+    expect(diffValue({ image: "raw.jpg" }, IMAGE_FIELD)).toBe("raw.jpg");
+  });
+
+  it("returns the field value for non-image fields", () => {
+    const field: FieldSpec = { key: "name", label: "Name", type: "text" };
+    expect(diffValue({ name: "Maria" }, field)).toBe("Maria");
+  });
+});
+
+describe("fieldDiffState (text)", () => {
+  it("is same for equal values (whitespace-insensitive)", () => {
+    expect(fieldDiffState("Mayor", " Mayor ", "text")).toBe("same");
+  });
+
+  it("is added when old is empty", () => {
+    expect(fieldDiffState("", "Mayor", "text")).toBe("added");
+  });
+
+  it("is cleared when new is empty", () => {
+    expect(fieldDiffState("Mayor", "", "text")).toBe("cleared");
+  });
+
+  it("is changed when both present and differ", () => {
+    expect(fieldDiffState("Mayor", "Council", "text")).toBe("changed");
+  });
+
+  it("treats a date precision change as changed (no 'refined' state)", () => {
+    expect(fieldDiffState("2021", "2021-01-04", "date")).toBe("changed");
+  });
+});
+
+describe("fieldDiffState (image, presence-only)", () => {
+  it("is same when both sides have a photo, even if the URLs differ", () => {
+    expect(fieldDiffState("cdn.jpg", "raw.jpg", "image")).toBe("same");
+  });
+
+  it("is added when only the new side has a photo", () => {
+    expect(fieldDiffState("", "raw.jpg", "image")).toBe("added");
+  });
+
+  it("is cleared when only the old side had a photo", () => {
+    expect(fieldDiffState("cdn.jpg", "", "image")).toBe("cleared");
+  });
+});
+
+describe("multiValueDiff", () => {
+  it("flags new-only values as added and old-only as removed", () => {
+    const diff = multiValueDiff(["a@x.gov"], ["a@x.gov", "b@x.gov"]);
+    expect(diff).toEqual([
+      { value: "a@x.gov", status: "both" },
+      { value: "b@x.gov", status: "added" },
+    ]);
+  });
+
+  it("appends old-only values flagged removed", () => {
+    const diff = multiValueDiff(["old@x.gov"], ["new@x.gov"]);
+    expect(diff).toEqual([
+      { value: "new@x.gov", status: "added" },
+      { value: "old@x.gov", status: "removed" },
+    ]);
+  });
+
+  it("matches case- and whitespace-insensitively", () => {
+    const diff = multiValueDiff(["A@X.gov"], [" a@x.gov "]);
+    expect(diff).toEqual([{ value: " a@x.gov ", status: "both" }]);
+  });
+
+  it("handles empty inputs", () => {
+    expect(multiValueDiff([], [])).toEqual([]);
+  });
+});
+
+describe("recordsDiffer", () => {
+  const base = {
+    name: "Maria",
+    office: { name: "Mayor", division_ocdid: null },
+    start_date: "2021",
+    end_date: "2025",
+    emails: ["m@x.gov"],
+    phones: [],
+    urls: [],
+    other_names: [],
+    image: "p.jpg",
+  };
+
+  it("is false for identical records", () => {
+    expect(recordsDiffer(base, { ...base })).toBe(false);
+  });
+
+  it("is true when a scalar field differs", () => {
+    expect(recordsDiffer(base, { ...base, office: { name: "Council", division_ocdid: null } })).toBe(true);
+  });
+
+  it("is true when a multi field gains a value", () => {
+    expect(recordsDiffer(base, { ...base, emails: ["m@x.gov", "m2@x.gov"] })).toBe(true);
+  });
+
+  it("ignores photo URL differences (presence-only)", () => {
+    expect(recordsDiffer({ ...base, cdn_image: "cdn.jpg" }, { ...base, image: "raw.jpg" })).toBe(false);
+  });
+});
+
+describe("isValidDate", () => {
+  it.each(["", "2024", "2024-06", "2024-06-19"])("accepts %s", (value) => {
+    expect(isValidDate(value)).toBe(true);
+  });
+
+  it.each(["24", "2024/06", "2024-6", "June 2024"])("rejects %s", (value) => {
+    expect(isValidDate(value)).toBe(false);
+  });
+});
+
+describe("isTermOrderValid", () => {
+  it("accepts start before end", () => {
+    expect(isTermOrderValid("2021", "2025")).toBe(true);
+  });
+
+  it("pads partial dates: 2024 start vs 2024-06 end is valid", () => {
+    expect(isTermOrderValid("2024", "2024-06")).toBe(true);
+  });
+
+  it("rejects start after end", () => {
+    expect(isTermOrderValid("2025", "2021")).toBe(false);
+  });
+
+  it("does not flag indeterminate input (empty or malformed)", () => {
+    expect(isTermOrderValid("", "2025")).toBe(true);
+    expect(isTermOrderValid("nope", "2025")).toBe(true);
+  });
+});
