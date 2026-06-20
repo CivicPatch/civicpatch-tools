@@ -1,0 +1,116 @@
+.people-diff {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.people-diff__legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--pico-muted-color);
+}
+
+.people-diff__toggle {
+  margin-left: auto;
+}
+
+.people-diff__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.people-diff__person {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  overflow: hidden;
+}
+
+.people-diff__person-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.people-diff__person--added .people-diff__person-header {
+  background: var(--pico-ins-background);
+}
+.people-diff__person--removed .people-diff__person-header {
+  background: var(--pico-del-background);
+}
+.people-diff__person--changed .people-diff__person-header {
+  background: var(--pico-info-background);
+}
+
+.people-diff__status {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--pico-muted-color);
+}
+
+.people-diff__name {
+  font-weight: 600;
+}
+
+/* Three columns: field label, old value, new value. */
+.people-diff__field {
+  display: grid;
+  grid-template-columns: 8rem 1fr 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--pico-muted-border-color);
+}
+
+.people-diff__label {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--pico-muted-color);
+}
+
+.people-diff__cell {
+  min-width: 0;
+  word-break: break-word;
+}
+
+.people-diff__cell--old {
+  color: var(--pico-muted-color);
+}
+
+/* New-side diff state (scalar + image fields). */
+.people-diff__cell--changed {
+  background: var(--pico-info-background);
+}
+.people-diff__cell--added {
+  background: var(--pico-ins-background);
+}
+.people-diff__cell--cleared {
+  background: var(--pico-del-background);
+}
+.people-diff__cell--changed,
+.people-diff__cell--added,
+.people-diff__cell--cleared {
+  border-radius: var(--pico-border-radius);
+  padding: 0 0.3rem;
+}
+
+/* Per-value state for multi fields. */
+.people-diff__value--added {
+  display: inline-block;
+  background: var(--pico-ins-background);
+  border-radius: var(--pico-border-radius);
+  padding: 0 0.3rem;
+}
+.people-diff__value--removed {
+  text-decoration: line-through;
+  color: var(--pico-del-color);
+}

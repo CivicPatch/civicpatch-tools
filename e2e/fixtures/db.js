@@ -30,6 +30,15 @@ export const BASELINE_REQUEST_ID = "00000000-0000-0000-eeee-000000000007";
 const BASELINE_PR_ID = "00000000-0000-0000-eeee-000000000008";
 const BASELINE_PR_NUMBER = 4;
 
+// Populated reconcile fixture — a previously-scraped jurisdiction (scraped_at
+// set) with existing people, so the diff renders real changed/added/removed
+// states. Own state (vt2 → "nh") and deep-linked by request_id, like baseline.
+export const RECONCILE_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:nh/place:e2e_reconcile/government";
+export const RECONCILE_REQUEST_ID = "00000000-0000-0000-eeee-000000000009";
+const RECONCILE_PR_ID = "00000000-0000-0000-eeee-00000000000a";
+const RECONCILE_PR_NUMBER = 5;
+
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).
 export const TX_JURISDICTION_OCDID =
@@ -169,6 +178,73 @@ export async function seedE2eFixtures() {
       [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_PR_NUMBER]
     );
 
+    // Populated reconcile card — scraped_at set → RECONCILE mode, with existing
+    // people so the diff renders changed / added / removed states.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'nh', 'current', '{"name":"E2E Reconcile City","geoid":"3300001"}', NOW())
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+      [RECONCILE_JURISDICTION_OCDID]
+    );
+    // Existing people: maria will be CHANGED, bob will be REMOVED. The `id` in
+    // the JSONB is what computePeopleDiff pairs old<->new on.
+    const reconcileExisting = [
+      {
+        id: "recon-maria", name: "Maria González",
+        office: { name: "Mayor", division_ocdid: null },
+        emails: ["maria@nh.gov"], phones: ["(555) 010-0101"], urls: [], other_names: [],
+        start_date: "2021", end_date: "2025", cdn_image: "https://cdn.test/maria.jpg",
+      },
+      {
+        id: "recon-bob", name: "Bob Clerk",
+        office: { name: "Clerk", division_ocdid: null },
+        emails: ["bob@nh.gov"], phones: [], urls: [], other_names: [],
+      },
+    ];
+    // people PK is an auto-uuid, so re-seeding can't ON CONFLICT — clear first
+    // to keep the row set deterministic if a prior run didn't tear down cleanly.
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [RECONCILE_JURISDICTION_OCDID]);
+    for (const person of reconcileExisting) {
+      await client.query(
+        `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
+         VALUES ($1, $2, 'current', NOW())`,
+        [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)]
+      );
+    }
+    // Proposed: maria changed (office + added email + removed phone), tom added.
+    const reconcileProposed = [
+      {
+        id: "recon-maria", name: "Maria González",
+        office: { name: "Council Member", division_ocdid: null },
+        emails: ["maria@nh.gov", "mayor@nh.gov"], phones: [], urls: [], other_names: [],
+        start_date: "2021", end_date: "2025", image: "https://nh.gov/maria.jpg",
+      },
+      {
+        id: "recon-tom", name: "Tom Treasurer",
+        office: { name: "Treasurer", division_ocdid: null },
+        emails: ["tom@nh.gov"], phones: [], urls: [], other_names: [],
+      },
+    ];
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
+      [RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID, JSON.stringify(reconcileProposed)]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [RECONCILE_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER]
+    );
+
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
     const STALE_DAYS = 200;  // > FRESH_THRESHOLD_DAYS (90)
@@ -220,11 +296,14 @@ export async function teardownE2eFixtures() {
        )`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
     );
+    // The reconcile fixture seeds people; clear them before its jurisdiction row.
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [RECONCILE_JURISDICTION_OCDID]);
     for (const [prId, reqId, jOcdid] of [
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
       [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
       [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
+      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
