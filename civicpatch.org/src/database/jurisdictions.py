@@ -420,16 +420,18 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
         await cur.executemany(query, jurisdiction_records)
 
 
-async def deactivate_jurisdictions_not_in(state: str, keep_ocdids: List[str]):
-    # A jurisdiction in this state no longer in its synced jurisdictions.yml = removed upstream.
-    # No level filter for now (the sync is local-only, so every row is local); add
-    # `AND level = 'local'` here if county/state lists ever get synced.
+async def deactivate_jurisdictions_not_in(
+    state: str, level: str, keep_ocdids: List[str]
+):
+    # A jurisdiction in this (state, level) no longer in its synced jurisdictions.yml =
+    # removed upstream. Each jurisdictions.yml owns exactly one (state, level) slice, so the
+    # level filter keeps a state-file sync from deactivating the state's local/county rows.
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             "UPDATE jurisdictions SET status = 'inactive' "
-            "WHERE state = %s AND jurisdiction_ocdid != ALL(%s)",
-            (state, keep_ocdids),
+            "WHERE state = %s AND level = %s AND jurisdiction_ocdid != ALL(%s)",
+            (state, level, keep_ocdids),
         )
 
 

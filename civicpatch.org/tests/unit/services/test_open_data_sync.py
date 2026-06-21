@@ -95,8 +95,49 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
 
     assert synced == [path]
     assert bulk.await_count == 1
-    # deactivates anything in the state NOT in the file's entry ids (within-list removal)
-    deact.assert_awaited_once_with("tx", ["ocd-a", "ocd-b"])
+    # deactivates anything in the (state, level) NOT in the file's entry ids (within-list removal)
+    deact.assert_awaited_once_with("tx", "local", ["ocd-a", "ocd-b"])
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_sync_jurisdictions_scopes_deactivation_per_level():
+    # A state has one jurisdictions.yml per level; each file owns only its own (state, level)
+    # slice. A state-file sync must NOT deactivate the state's local rows.
+    contents = {
+        "data_source/wa/local/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-seattle"}]}
+        ),
+        "data_source/wa/state/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-wa-gov"}]}
+        ),
+    }
+    with ExitStack() as stack:
+        _patch(
+            stack,
+            "github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            side_effect=lambda p: contents[p],
+        )
+        bulk = _patch(
+            stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
+        )
+        deact = _patch(
+            stack,
+            "jurisdictions_db.deactivate_jurisdictions_not_in",
+            new_callable=AsyncMock,
+        )
+        await sync_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
+
+    # each row carries its file's level (not a hardcoded "local")
+    levels = {row[0]: row[2] for row in bulk.await_args.args[0]}
+    assert levels == {"ocd-seattle": "local", "ocd-wa-gov": "state"}
+    # one scoped deactivation per file — the state file does not touch the local slice
+    calls = {(c.args[0], c.args[1]): c.args[2] for c in deact.await_args_list}
+    assert calls == {
+        ("wa", "local"): ["ocd-seattle"],
+        ("wa", "state"): ["ocd-wa-gov"],
+    }
 
 
 # ── sync_all ─────────────────────────────────────────────────────────────────

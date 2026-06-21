@@ -68,23 +68,23 @@ async def sync_jurisdictions(diffs: TreeDiff) -> list[str]:
             content = await github_service.get_github_file_contents(path)
         return path, content
 
-    rows, synced, state_keep = [], [], {}
+    rows, synced, slice_keep = [], [], {}
     for path, content in await asyncio.gather(*[_fetch(p) for p in diffs.changed]):
         if content is None:
             logger.warning("od_sync: no content for %s; skipping this run", path)
             continue
         entries = (yaml.safe_load(content) or {}).get("jurisdictions", [])
-        state = path.split("/")[1]
-        rows.extend(jurisdictions_db.jurisdiction_rows(entries, state, "local", now))
-        state_keep[state] = [
+        state, level = path.split("/")[1], path.split("/")[2]
+        rows.extend(jurisdictions_db.jurisdiction_rows(entries, state, level, now))
+        slice_keep[(state, level)] = [
             e["id"] for e in entries if e.get("id")
-        ]  # the authoritative list
+        ]  # the authoritative list for this (state, level) file
         synced.append(path)
     await jurisdictions_db.bulk_update_jurisdictions(rows)
 
-    # within-list removal: a jurisdiction no longer in a synced state's list
-    for state, keep in state_keep.items():
-        await jurisdictions_db.deactivate_jurisdictions_not_in(state, keep)
+    # within-list removal: a jurisdiction no longer in a synced file's (state, level) list
+    for (state, level), keep in slice_keep.items():
+        await jurisdictions_db.deactivate_jurisdictions_not_in(state, level, keep)
 
     return synced
 
