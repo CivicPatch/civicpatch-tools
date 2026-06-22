@@ -146,15 +146,26 @@ export function loadStateSource(map: maplibregl.Map, state: string): void {
   }
 }
 
+// Two axes, two channels: color = freshness (covered_fresh / covered), so all-stale reads
+// amber and all-fresh reads green; opacity = coverage (covered / total), so faint = little
+// data and bold = mostly covered. No coverage at all → grey (gap).
 const GRADIENT_PAINT = {
   'fill-color': [
+    'case',
+    ['==', ['coalesce', ['feature-state', 'coverage'], 0], 0], STATUS_COLORS.gap,
+    [
+      'interpolate', ['linear'],
+      ['coalesce', ['feature-state', 'freshness'], 0],
+      0, STATUS_COLORS.stale,
+      1, STATUS_COLORS.fresh,
+    ],
+  ] as any,
+  'fill-opacity': [
     'interpolate', ['linear'],
     ['coalesce', ['feature-state', 'coverage'], 0],
-    0,   STATUS_COLORS.gap,
-    0.5, STATUS_COLORS.stale,
-    1,   STATUS_COLORS.fresh,
+    0, 0.15,
+    1, 0.5,
   ] as any,
-  'fill-opacity': 0.35,
 };
 
 const LOCAL_PAINT = {
@@ -239,7 +250,8 @@ export function applyLocalStatus(
 export interface CoverageEntry {
   ocdid?: string;
   total: number;
-  scraped: number;
+  covered: number;
+  covered_fresh: number;
 }
 
 export interface CoverageSummary {
@@ -253,10 +265,13 @@ export function applyCountyCoverage(
   map: maplibregl.Map,
   counties: Record<string, CoverageEntry>,
 ): void {
-  for (const [ocdid, { total, scraped }] of Object.entries(counties)) {
+  for (const [ocdid, { total, covered, covered_fresh }] of Object.entries(counties)) {
     map.setFeatureState(
       { source: STATE_SOURCE_ID, sourceLayer: 'counties', id: ocdid },
-      { coverage: total > 0 ? scraped / total : 0 },
+      {
+        coverage: total > 0 ? covered / total : 0,
+        freshness: covered > 0 ? covered_fresh / covered : 0,
+      },
     );
   }
 }
@@ -269,11 +284,13 @@ export function applyStateCoverage(
     if (!summary.state?.ocdid) {
       continue;
     }
-    const { ocdid, total, scraped } = summary.state;
-    const coverage = total > 0 ? scraped / total : 0;
+    const { ocdid, total, covered, covered_fresh } = summary.state;
     map.setFeatureState(
       { source: NATIONAL_SOURCE_ID, sourceLayer: 'states', id: ocdid },
-      { coverage },
+      {
+        coverage: total > 0 ? covered / total : 0,
+        freshness: covered > 0 ? covered_fresh / covered : 0,
+      },
     );
   }
 }

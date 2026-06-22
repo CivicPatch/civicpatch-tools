@@ -59,3 +59,47 @@
   color: var(--pico-muted-color);
   font-size: var(--text-sm, 0.875rem);
 }
+
+.map-legend {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+  max-width: calc(100% - 1rem);
+  background: var(--civ-surface, #fff);
+  color: var(--civ-text);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.map-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.map-legend__swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 2px;
+  border: 1px solid var(--pico-muted-border-color);
+}
+
+.map-legend__swatch--fresh { background: var(--civ-status-fresh); }
+.map-legend__swatch--stale { background: var(--civ-status-stale); }
+.map-legend__swatch--gap { background: var(--civ-status-gap); }
+.map-legend__swatch--untracked { background: var(--civ-status-untracked); }
+
+.map-legend__note {
+  color: var(--pico-muted-color);
+  white-space: nowrap;
+}
