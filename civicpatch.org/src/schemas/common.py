@@ -72,6 +72,12 @@ class Jurisdiction(BaseModel):
     url: str | None
 
 
+class StateJurisdictionSets(BaseModel):
+    total: set[str]  # all current jurisdictions in the state
+    scrapeable: set[str]  # subset with a url
+    done: set[str]  # subset scraped since the state's cutoff
+
+
 class Identity(BaseModel):
     type: str  # "session", "service_key", "user_key"
     provider: str
