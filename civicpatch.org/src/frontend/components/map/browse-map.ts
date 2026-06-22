@@ -286,6 +286,13 @@ function BrowseMap(this: HTMLElement, {
     <div class="map-container" style="height:${height}">
       <div class="map-inner" style="height:100%" ${ref(setupContainer)}></div>
       ${level !== 'national' ? html`<button class="map-reset-btn" title="Reset to national view" @click=${handleReset}>↩ Reset</button>` : ''}
+      <div class="map-legend" aria-label="Map legend">
+        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--fresh"></span>Fresh</span>
+        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--stale"></span>Stale</span>
+        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--gap"></span>No data</span>
+        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--untracked"></span>Untracked</span>
+        ${level === 'local' ? '' : html`<span class="map-legend__note">bolder = more covered</span>`}
+      </div>
     </div>
   `;
 }

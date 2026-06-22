@@ -16,7 +16,7 @@ function SummaryStats({ stats, state = "TX" }) {
   if (!stats || !stats.states || !stats.states[state]) return html``;
   const stateStats = stats.states[state];
   const {
-    coverage = 0,
+    covered = 0,
     known = 1,
     scrapeable = 1,
   } = stateStats.civicpatch.localities;
@@ -25,18 +25,18 @@ function SummaryStats({ stats, state = "TX" }) {
     {
       key: "reach",
       label: "Reach",
-      value: percentLabel(coverage, scrapeable),
-      sub: `${coverage} of ${scrapeable} jurisdictions`,
-      copyText: `[coverage] ${percentLabel(coverage, scrapeable)} (${coverage} of ${scrapeable} jurisdictions)`,
+      value: percentLabel(covered, scrapeable),
+      sub: `${covered} of ${scrapeable} jurisdictions`,
+      copyText: `[coverage] ${percentLabel(covered, scrapeable)} (${covered} of ${scrapeable} jurisdictions)`,
       description:
         "Percentage of scrapeable jurisdictions covered by CivicPatch. A jurisdiction is scrapeable if it has a website we can crawl.",
     },
     {
       key: "total-coverage",
       label: "Total Coverage",
-      value: percentLabel(coverage, known),
-      sub: `${coverage} of ${known} jurisdictions`,
-      copyText: `[total coverage] ${percentLabel(coverage, known)} (${coverage} of ${known} jurisdictions)`,
+      value: percentLabel(covered, known),
+      sub: `${covered} of ${known} jurisdictions`,
+      copyText: `[total coverage] ${percentLabel(covered, known)} (${covered} of ${known} jurisdictions)`,
       description:
         "Percentage of all known jurisdictions covered, including those without scrapeable websites.",
     },
@@ -77,10 +77,10 @@ function SummaryStats({ stats, state = "TX" }) {
     <section>
       <div
         class="progress-bar-container"
-        title="Total Coverage: ${coverage} of ${known} known localities"
+        title="Total Coverage: ${covered} of ${known} known localities"
       >
-        <progress value="${coverage}" max="${scrapeable}"></progress>
-        <small>${percentLabel(coverage, scrapeable)} covered</small>
+        <progress value="${covered}" max="${scrapeable}"></progress>
+        <small>${percentLabel(covered, scrapeable)} covered</small>
       </div>
       <stat-cards .stats=${statsList}></stat-cards>
     </section>

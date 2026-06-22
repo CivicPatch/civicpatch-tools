@@ -8,7 +8,6 @@ import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
 import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
-import "../../components/progress-dashboard/states-overview.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
 
@@ -102,10 +101,6 @@ function SearchJurisdictions() {
         </div>
 
       </div>
-
-      ${dashboardData && !selectedState ? html`
-        <states-overview .stats=${dashboardData}></states-overview>
-      ` : ''}
 
       ${dashboardData && selectedState ? html`
         <section>

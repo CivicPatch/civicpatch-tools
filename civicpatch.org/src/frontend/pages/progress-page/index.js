@@ -1,7 +1,6 @@
 import { html } from 'lit-html';
 import { useState, useEffect, component } from 'haunted';
 import '../../components/progress-dashboard/summary-stats.js';
-import '../../components/progress-dashboard/states-overview.js';
 import { config } from '../../assets/config.js';
 const API_URL = config.apiUrl;
 
@@ -43,7 +42,7 @@ function ProgressPage() {
       <section>
         ${selectedState
           ? html`<summary-stats .stats=${data} .state=${selectedState}></summary-stats>`
-          : html`<states-overview .stats=${data}></states-overview>`
+          : html`<p>Select a state to see its coverage.</p>`
         }
       </section>
     </main>

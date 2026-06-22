@@ -3,6 +3,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from core.coverage import Bucket, StateCoverage
 from routers.api import coverage as coverage_router
 
 MOCK_COVERAGE = {
@@ -58,3 +59,26 @@ def test_get_local_status_returns_db_data(client):
 
     assert response.status_code == 200
     assert response.json() == {"data": MOCK_LOCAL_STATUS}
+
+
+@pytest.mark.unit
+def test_get_state_summary_returns_coverage(client):
+    cov = StateCoverage(
+        total=10,
+        scrapeable=8,
+        covered_fresh=5,
+        covered_stale=2,
+        buckets={b: 0 for b in Bucket},
+    )
+    with patch(
+        "services.coverage.get_state_coverage",
+        new_callable=AsyncMock,
+        return_value=cov,
+    ):
+        response = client.get("/coverage/wa/summary")
+
+    assert response.status_code == 200
+    data = response.json()["data"]
+    assert data["covered_fresh"] == 5
+    assert data["covered"] == 7  # computed field serializes
+    assert data["reach_fraction"] == pytest.approx(7 / 8)  # computed field serializes
