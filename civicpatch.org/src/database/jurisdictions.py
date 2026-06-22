@@ -6,7 +6,11 @@ from typing import List
 import shared.utils.id_utils
 from database.database import get_pool, to_iso
 from psycopg import sql
-from schemas.common import Jurisdiction, PeoplePipelineRunHistory
+from schemas.common import (
+    Jurisdiction,
+    PeoplePipelineRunHistory,
+    StateJurisdictionSets,
+)
 from shared.schemas import Person
 
 
@@ -482,3 +486,36 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
         )
         rows = await cur.fetchall()
     return [Jurisdiction(id=row[0], name=row[1], url=row[2]) for row in rows]
+
+
+async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
+    # The per-state denominators for coverage: all current jurisdictions, the url-bearing
+    # subset, and the subset scraped since the state's cutoff (epoch when it has no config).
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT
+                j.jurisdiction_ocdid,
+                NULLIF(j.data->>'url', '') IS NOT NULL AS has_url,
+                (j.scraped_at IS NOT NULL
+                 AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+                    AS is_fresh
+            FROM jurisdictions j
+            LEFT JOIN state_configs sc ON sc.state = j.state
+            WHERE j.state = %s AND j.status = 'current'
+            """,
+            (state,),
+        )
+        rows = await cur.fetchall()
+
+    total: set[str] = set()
+    scrapeable: set[str] = set()
+    done: set[str] = set()
+    for jurisdiction_ocdid, has_url, is_fresh in rows:
+        total.add(jurisdiction_ocdid)
+        if has_url:
+            scrapeable.add(jurisdiction_ocdid)
+            if is_fresh:
+                done.add(jurisdiction_ocdid)
+    return StateJurisdictionSets(total=total, scrapeable=scrapeable, done=done)

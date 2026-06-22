@@ -1,14 +1,23 @@
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, patch
-
 from routers.api import coverage as coverage_router
 
 MOCK_COVERAGE = {
     "co": {
-        "state": {"ocdid": "ocd-jurisdiction/country:us/state:co/government", "total": 271, "scraped": 120},
-        "counties": {"ocd-jurisdiction/country:us/state:co/county:adams/government": {"total": 6, "scraped": 5}},
+        "state": {
+            "ocdid": "ocd-jurisdiction/country:us/state:co/government",
+            "total": 271,
+            "scraped": 120,
+        },
+        "counties": {
+            "ocd-jurisdiction/country:us/state:co/county:adams/government": {
+                "total": 6,
+                "scraped": 5,
+            }
+        },
     },
 }
 
@@ -26,7 +35,9 @@ def client():
 
 @pytest.mark.unit
 def test_get_maps_coverage_returns_cached(client):
-    with patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=MOCK_COVERAGE):
+    with patch(
+        "lib.cache.get_cached", new_callable=AsyncMock, return_value=MOCK_COVERAGE
+    ):
         response = client.get("/coverage")
 
     assert response.status_code == 200
@@ -38,7 +49,11 @@ def test_get_maps_coverage_fetches_from_db_on_cache_miss(client):
     mock_set_cached = AsyncMock()
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.coverage.get_maps_coverage", new_callable=AsyncMock, return_value=MOCK_COVERAGE),
+        patch(
+            "database.coverage.get_maps_coverage",
+            new_callable=AsyncMock,
+            return_value=MOCK_COVERAGE,
+        ),
         patch("lib.cache.set_cached", mock_set_cached),
     ):
         response = client.get("/coverage")
@@ -57,7 +72,11 @@ def test_get_maps_coverage_does_not_cache_empty_db_result(client):
     mock_set_cached = AsyncMock()
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.coverage.get_maps_coverage", new_callable=AsyncMock, return_value={}),
+        patch(
+            "database.coverage.get_maps_coverage",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
         patch("lib.cache.set_cached", mock_set_cached),
     ):
         response = client.get("/coverage")
@@ -69,7 +88,9 @@ def test_get_maps_coverage_does_not_cache_empty_db_result(client):
 
 @pytest.mark.unit
 def test_get_local_status_returns_cached(client):
-    with patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=MOCK_LOCAL_STATUS):
+    with patch(
+        "lib.cache.get_cached", new_callable=AsyncMock, return_value=MOCK_LOCAL_STATUS
+    ):
         response = client.get("/coverage/co/local")
 
     assert response.status_code == 200
@@ -81,7 +102,11 @@ def test_get_local_status_does_not_cache_empty_db_result(client):
     mock_set_cached = AsyncMock()
     with (
         patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.coverage.get_local_status_for_state", new_callable=AsyncMock, return_value={}),
+        patch(
+            "database.coverage.get_local_status_for_state",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
         patch("lib.cache.set_cached", mock_set_cached),
     ):
         response = client.get("/coverage/co/local")
