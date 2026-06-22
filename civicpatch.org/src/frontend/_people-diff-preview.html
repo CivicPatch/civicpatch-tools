@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>people-diff — live CSS preview (THROWAWAY)</title>
+<link href="css/pico.min.css" rel="stylesheet" />
+<link href="css/styles.css" rel="stylesheet" />
+<link href="components/people-diff/people-diff.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+  body { padding: 1.5rem; max-width: 1000px; margin: 0 auto; }
+  /* stand-in for the <person-image> web component */
+  .avatar { width: 2.75rem; height: 2.75rem; border-radius: 50%; background: #d8b27a; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<div class="people-diff">
+  <div class="people-diff__header">
+    <div class="people-diff__header-title-row">
+      <div class="people-diff__header-title">Officials list diff</div>
+      <button class="people-diff__add-person btn-sm">+ Add person</button>
+    </div>
+    <div class="people-diff__count-chips">
+      <button class="people-diff__chip people-diff__chip--all people-diff__chip--active">All <span class="people-diff__chip-count">4</span></button>
+      <button class="people-diff__chip people-diff__chip--changed">Changed <span class="people-diff__chip-count">1</span></button>
+      <button class="people-diff__chip people-diff__chip--added">New <span class="people-diff__chip-count">1</span></button>
+      <button class="people-diff__chip people-diff__chip--removed">Removed <span class="people-diff__chip-count">1</span></button>
+      <button class="people-diff__chip people-diff__chip--unchanged">Unchanged <span class="people-diff__chip-count">1</span></button>
+    </div>
+  </div>
+
+  <div class="people-diff__legend"><span>Old</span><span>New — editable</span></div>
+
+  <div class="people-diff__rows">
+    <div class="people-diff__person people-diff__person--changed">
+      <div class="people-diff__person-header">
+        <div class="people-diff__hdr-main">
+          <span class="people-diff__status">changed</span>
+          <span class="people-diff__name">Maria González</span>
+        </div>
+        <div class="people-diff__gutter"><button class="people-diff__copy" title="copy all"><i class="fa-solid fa-arrow-right"></i></button></div>
+        <div class="people-diff__row-actions"><button class="people-diff__reset btn-sm">Reset</button></div>
+      </div>
+      <div class="people-diff__fields">
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Photo</div>
+          <div class="people-diff__cell people-diff__cell--old"><span class="avatar">MG</span></div>
+          <div class="people-diff__gutter"></div>
+          <div class="people-diff__cell people-diff__cell--new"><div class="people-diff__photo"><span class="avatar">MG</span><button class="people-diff__photo-clear">Remove photo</button></div></div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Name <span class="people-diff__req">*</span></div>
+          <div class="people-diff__cell people-diff__cell--old">Maria González</div>
+          <div class="people-diff__gutter"></div>
+          <div class="people-diff__cell people-diff__cell--new"><input class="people-diff__input people-diff__input--same" value="Maria González" /></div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Office <span class="people-diff__req">*</span></div>
+          <div class="people-diff__cell people-diff__cell--old"><del>Mayor</del></div>
+          <div class="people-diff__gutter"><button class="people-diff__copy" title="copy old → new"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="people-diff__cell people-diff__cell--new"><input class="people-diff__input people-diff__input--changed" value="Council Member" /></div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Division <span class="people-diff__req">*</span></div>
+          <div class="people-diff__cell people-diff__cell--old"><del>At-large</del></div>
+          <div class="people-diff__gutter"><button class="people-diff__copy"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="people-diff__cell people-diff__cell--new">
+            <div class="people-diff__division">
+              <select class="people-diff__division-select"><option>At-large (no district)</option><option selected>Council District</option><option>Ward</option></select>
+              <input class="people-diff__division-input" type="text" value="2" />
+            </div>
+          </div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Term start</div>
+          <div class="people-diff__cell people-diff__cell--old">2021</div>
+          <div class="people-diff__gutter"></div>
+          <div class="people-diff__cell people-diff__cell--new"><input class="people-diff__input people-diff__input--same" value="2021" /></div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Email</div>
+          <div class="people-diff__cell people-diff__cell--old">maria@nh.gov</div>
+          <div class="people-diff__gutter"></div>
+          <div class="people-diff__cell people-diff__cell--new">
+            <div class="people-diff__multi">
+              <div class="people-diff__multi-row"><input class="people-diff__input" value="maria@nh.gov" /><button class="people-diff__x"><i class="fa-solid fa-xmark"></i></button></div>
+              <div class="people-diff__multi-row"><input class="people-diff__input people-diff__input--added" value="mayor@nh.gov" /><button class="people-diff__x"><i class="fa-solid fa-xmark"></i></button></div>
+              <button class="people-diff__add">+ add email</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Phone</div>
+          <div class="people-diff__cell people-diff__cell--old"><div class="people-diff__value people-diff__value--removed">(555) 010-0101</div></div>
+          <div class="people-diff__gutter"><button class="people-diff__copy" title="add old → new"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="people-diff__cell people-diff__cell--new"><div class="people-diff__multi"><button class="people-diff__add">+ add phone</button></div></div>
+        </div>
+
+        <div class="people-diff__field">
+          <div class="people-diff__label">Source urls</div>
+          <div class="people-diff__cell people-diff__cell--old"><div class="people-diff__source-urls"><a class="people-diff__source-link" href="#">https://nh.gov/old-roster <i class="fa-solid fa-arrow-up-right-from-square people-diff__source-icon"></i></a></div></div>
+          <div class="people-diff__gutter"></div>
+          <div class="people-diff__cell people-diff__cell--new">
+            <div class="people-diff__multi">
+              <div class="people-diff__multi-row"><input class="people-diff__input" value="https://nh.gov/council" /><a class="people-diff__source-link-btn" href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a><button class="people-diff__x"><i class="fa-solid fa-xmark"></i></button></div>
+              <button class="people-diff__add">+ add source url</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

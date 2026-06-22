@@ -2,7 +2,6 @@ import { html } from "lit-html";
 import { component } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/people-diff/people-diff.js";
-import "../../components/review-workspace/review-workspace.js";
 import "../../components/side-panel/side-panel.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
@@ -37,28 +36,22 @@ interface ReviewSessionProps {
   onClosePr: () => void;
   canClosePr: boolean;
   isClosingPr: boolean;
-  onTableDataChange: EventListener;
-  onTableReorder: EventListener;
-  onPeopleMerge: (...args: any[]) => unknown;
-  onBulkDelete: () => void;
-  onReset: () => void;
   onAdd: () => void;
+  onResetPerson: (id: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
 }
 
 function ReviewSession({
   progress, hasSession, currentEntry,
   error, isDirty, isClosingPr, canClosePr,
-  currentPeople, selectedPeople,
-  resolvedMatches,
+  currentPeople,
   onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
-  onTableDataChange, onTableReorder, onPeopleMerge, onBulkDelete, onReset, onAdd, onPersonSave,
+  onAdd, onResetPerson, onPersonSave,
 }: ReviewSessionProps) {
   const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
-
   return html`
     <main class="review-page">
       <review-session-controls
@@ -87,30 +80,17 @@ function ReviewSession({
       ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
       ${isBaseline
         ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
-        : html`<people-diff
-            .existing=${pr_people?.existing ?? []}
-            .currentPeople=${currentPeople ?? []}
-            .onPersonSave=${onPersonSave}
-            .isReadOnly=${is_read_only}
-          ></people-diff>`}
+        : ""}
+      <people-diff
+        .existing=${pr_people?.existing ?? []}
+        .currentPeople=${currentPeople ?? []}
+        .onPersonSave=${onPersonSave}
+        .onAdd=${onAdd}
+        .onResetPerson=${onResetPerson}
+        .jurisdictionOcdid=${jurisdictionOcdid}
+        .isReadOnly=${is_read_only}
+      ></people-diff>
       <div class="review-page__content">
-        <civ-review-workspace
-          .pullRequest=${currentPeople ?? []}
-          .existing=${pr_people?.existing ?? []}
-          .selectedPeople=${selectedPeople ?? []}
-          .isDirty=${isDirty}
-          .isTerminal=${is_read_only}
-          .resolvedMatches=${resolvedMatches ?? {}}
-          .jurisdictionOcdid=${jurisdictionOcdid}
-          .sourceContentUrls=${source_content_urls}
-          .onMerge=${onPeopleMerge}
-          .onBulkDelete=${onBulkDelete}
-          .onReset=${onReset}
-          .onAdd=${onAdd}
-          .onPersonSave=${onPersonSave}
-          @data-change=${onTableDataChange}
-          @reorder=${onTableReorder}
-        ></civ-review-workspace>
         <civ-side-panel .sourceContentUrls=${source_content_urls}></civ-side-panel>
       </div>
     </main>

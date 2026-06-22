@@ -51,5 +51,12 @@ test.describe("Review reconcile diff (populated)", () => {
     // and clears the changed styling.
     await officeInput.fill("Mayor");
     await expect(officeInput).not.toHaveClass(/people-diff__input--changed/);
+
+    // Validation surfaces live: a malformed date flags an inline error.
+    const termStartField = mariaRow.locator(".people-diff__field").filter({ hasText: "Term start" }).first();
+    const termStartInput = termStartField.locator("input");
+    await termStartInput.fill("20-24");
+    await expect(termStartInput).toHaveClass(/people-diff__input--error/);
+    await expect(termStartField.locator(".people-diff__field-error")).toContainText("YYYY");
   });
 });

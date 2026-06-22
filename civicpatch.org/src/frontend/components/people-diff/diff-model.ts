@@ -19,7 +19,10 @@ export interface FieldSpec {
 // source_urls is documentation — shown per-side, never diffed (each list has
 // its own sources). Division is edited as a seat-type + number (see component).
 export const FIELD_SCHEMA: FieldSpec[] = [
+  // Order follows the mockup: photo, identity, office, term, contacts, sources.
+  { key: "image", label: "Photo", type: "image" },
   { key: "name", label: "Name", type: "text", required: true },
+  { key: "other_names", label: "Other names", type: "multi" },
   { key: "office.name", label: "Office", type: "text", required: true },
   { key: "office.division_ocdid", label: "Division", type: "text", required: true },
   { key: "start_date", label: "Term start", type: "date" },
@@ -27,8 +30,6 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "emails", label: "Email", type: "multi" },
   { key: "phones", label: "Phone", type: "multi" },
   { key: "urls", label: "Links", type: "multi" },
-  { key: "other_names", label: "Other names", type: "multi" },
-  { key: "image", label: "Photo", type: "image" },
   { key: "source_urls", label: "Source urls", type: "multi", diff: false },
 ];
 
@@ -154,4 +155,19 @@ export function isRequiredFieldEmpty(record: any, field: FieldSpec): boolean {
   const value = diffValue(record, field);
   if (Array.isArray(value)) return value.length === 0;
   return normalizeScalar(value) === "";
+}
+
+// The single client-side error for a field's value on `record`, or null. Order:
+// required → date format → term ordering (end_date only).
+export function fieldError(field: FieldSpec, record: any): string | null {
+  if (!record) return null;
+  if (isRequiredFieldEmpty(record, field)) return "Required";
+  if (field.type === "date") {
+    const value = String(diffValue(record, field) ?? "");
+    if (!isValidDate(value)) return "Use YYYY, YYYY-MM, or YYYY-MM-DD";
+    if (field.key === "end_date" && !isTermOrderValid(String(getFieldValue(record, "start_date") ?? ""), value)) {
+      return "Term end is before term start";
+    }
+  }
+  return null;
 }
