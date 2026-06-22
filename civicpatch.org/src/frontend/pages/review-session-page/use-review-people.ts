@@ -1,7 +1,7 @@
 import { useState, useEffect } from "haunted";
 import { generatePersonId } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
-import { blankPerson, resolvePeopleMatches } from "../../components/edit-people/people-editing.js";
+import { emptyPerson, resolvePeopleMatches } from "../../components/edit-people/people-editing.js";
 import { type CurrentEntry } from "./review-state.js";
 
 // People-editing for the review card: the same add/resolve/link actions the full
@@ -17,7 +17,7 @@ export function useReviewPeople(currentEntry: CurrentEntry | null) {
 
   async function handleAdd() {
     const personId = await generatePersonId();
-    addPerson(blankPerson(personId, jurisdictionOcdid, proposed));
+    addPerson(emptyPerson(personId, jurisdictionOcdid));
   }
 
   useEffect(() => {

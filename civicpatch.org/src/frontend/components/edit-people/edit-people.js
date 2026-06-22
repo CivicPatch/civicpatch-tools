@@ -11,7 +11,7 @@ import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
 import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndEnqueueMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { blankPerson, resolvePeopleMatches } from "./people-editing.js";
+import { emptyPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
 
 const TAB = {
@@ -196,7 +196,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
 
   async function handleAdd() {
     const person_id = await generatePersonId();
-    addPerson(blankPerson(person_id, jurisdiction_ocdid, people));
+    addPerson(emptyPerson(person_id, jurisdiction_ocdid));
   }
 
   async function handlePublish() {

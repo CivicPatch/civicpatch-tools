@@ -316,8 +316,13 @@ function PeopleDiff({ existing, currentPeople, onPersonSave, onAdd, onResetPerso
     unchanged: unchangedEntries.length,
   };
 
+  // Added people float to the top (a freshly-added blank lands there to fill in),
+  // then changed, then removed. Stable sort keeps newest-added first.
+  const TYPE_ORDER: Record<string, number> = { added: 0, changed: 1, removed: 2 };
   const matchesFilter = (type: string) => activeFilter === "all" || activeFilter === type;
-  const visibleDiffs = diffEntries.filter((e) => matchesFilter(e.type));
+  const visibleDiffs = diffEntries
+    .filter((e) => matchesFilter(e.type))
+    .sort((a, b) => (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9));
   const visibleUnchanged = matchesFilter("unchanged") ? unchangedEntries : [];
 
   if (counts.all === 0) {

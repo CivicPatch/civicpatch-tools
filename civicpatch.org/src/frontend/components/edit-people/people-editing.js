@@ -2,13 +2,14 @@
 // and the review session card, so both add and resolve people identically.
 
 import { batchResolvePeople } from "../../api.js";
+import { jurisdictionToDivisionBase } from "./person-edit-utils.ts";
 
 const INTERNAL_FIELDS = ["_isNew", "_dirty", "_changes", "_selected", "_deleted"];
 
-// A fresh, unsaved council member. Carries over the previous row's url/source so
-// consecutive adds from the same page need less retyping.
-export function blankPerson(personId, jurisdictionOcdid, people) {
-  const last = people[people.length - 1] ?? null;
+// A fully-empty new person — only the default division is pre-filled (the
+// jurisdiction base). Both the review/people-diff card and the full editor want
+// this clean slate; required fields then flag until the reviewer fills them.
+export function emptyPerson(personId, jurisdictionOcdid) {
   return {
     id: personId,
     _changes: [],
@@ -19,17 +20,17 @@ export function blankPerson(personId, jurisdictionOcdid, people) {
     other_names: [],
     phones: [],
     emails: [],
-    urls: last?.urls?.[0] ? [last.urls[0]] : [],
+    urls: [],
     start_date: null,
     end_date: null,
     office: {
-      name: "Council Member",
-      division_ocdid: people[0]?.office?.division_ocdid ?? null,
+      name: "",
+      division_ocdid: jurisdictionOcdid ? jurisdictionToDivisionBase(jurisdictionOcdid) : null,
     },
     image: null,
     cdn_image: null,
     jurisdiction_ocdid: jurisdictionOcdid,
-    source_urls: last?.source_urls?.[0] ? [last.source_urls[0]] : [],
+    source_urls: [],
     updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00"),
   };
 }
