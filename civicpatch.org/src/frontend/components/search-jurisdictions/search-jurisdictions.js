@@ -1,8 +1,16 @@
 import "./search-jurisdictions.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import { fetchPeople, fetchDashboard, fetchMapsCoverage, fetchLocalStatus } from "../../api.js";
-import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import {
+  fetchPeople,
+  fetchDashboard,
+  fetchMapsCoverage,
+  fetchLocalStatus,
+} from "../../api.js";
+import {
+  useLocalStorage,
+  PERSIST_FOREVER,
+} from "../../hooks/use-local-storage.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
@@ -13,55 +21,67 @@ import "../../components/map/browse-map.ts";
 
 function SearchJurisdictions() {
   const { permissions } = useAuth();
-  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [selectedState, setSelectedState] = useState((defaultState || '').toLowerCase());
-  const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] = useState(null);
-  const [selectedJurisdictionName, setSelectedJurisdictionName] = useState('');
+  const [defaultState] = useLocalStorage("app:default-state", "", {
+    ttl: PERSIST_FOREVER,
+  });
+  const [selectedState, setSelectedState] = useState(
+    (defaultState || "").toLowerCase(),
+  );
+  const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] =
+    useState(null);
+  const [selectedJurisdictionName, setSelectedJurisdictionName] = useState("");
   const [selectedCountyOcdid, setSelectedCountyOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
   const [coverageSummary, setCoverageSummary] = useState({});
   const [localStatus, setLocalStatus] = useState({});
 
-
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
       setPeople([]);
       return;
     }
-    fetchPeople(selectedJurisdictionOcdid).then(data => setPeople(data.data));
+    fetchPeople(selectedJurisdictionOcdid).then((data) => setPeople(data.data));
   }, [selectedJurisdictionOcdid]);
 
   useEffect(() => {
-    fetchDashboard().then(data => setDashboardData(data.data));
+    fetchDashboard().then((data) => setDashboardData(data.data));
   }, []);
 
   useEffect(() => {
-    fetchMapsCoverage().then(data => setCoverageSummary(data.data ?? {})).catch(() => {});
+    fetchMapsCoverage()
+      .then((data) => setCoverageSummary(data.data ?? {}))
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
-    const handler = (e) => setSelectedState((e.detail.state || '').toLowerCase());
-    document.addEventListener('state-select', handler);
-    return () => document.removeEventListener('state-select', handler);
+    const handler = (e) =>
+      setSelectedState((e.detail.state || "").toLowerCase());
+    document.addEventListener("state-select", handler);
+    return () => document.removeEventListener("state-select", handler);
   }, []);
 
   useEffect(() => {
-    if (!selectedState) { setLocalStatus({}); return; }
-    fetchLocalStatus(selectedState).then(d => setLocalStatus(d.data ?? {})).catch(() => {});
+    if (!selectedState) {
+      setLocalStatus({});
+      return;
+    }
+    fetchLocalStatus(selectedState)
+      .then((d) => setLocalStatus(d.data ?? {}))
+      .catch(() => {});
   }, [selectedState]);
 
   const handleStateChange = (event) => {
-    setSelectedState((event.detail.state || '').toLowerCase());
+    setSelectedState((event.detail.state || "").toLowerCase());
     setSelectedCountyOcdid(null);
     setSelectedJurisdictionOcdid(null);
-    setSelectedJurisdictionName('');
+    setSelectedJurisdictionName("");
   };
 
   const handleCountyChange = (event) => {
     setSelectedCountyOcdid(event.detail.jurisdiction_ocdid);
     setSelectedJurisdictionOcdid(null);
-    setSelectedJurisdictionName('');
+    setSelectedJurisdictionName("");
   };
 
   const handleSelectJurisdictionChange = (event) => {
@@ -73,11 +93,13 @@ function SearchJurisdictions() {
   return html`
     <div class="search-page">
       <hgroup>
-        <h1>Find your representatives</h1>
-        <p>Find contact information for local government officials across the U.S.</p>
+        <h1>Find your local representatives</h1>
+        <p>
+          Find contact information for local government officials across the
+          U.S.
+        </p>
       </hgroup>
       <div class="page-grid">
-
         <div class="select-col">
           <civ-select-jurisdiction
             .selected=${selectedState}
@@ -90,8 +112,8 @@ function SearchJurisdictions() {
 
         <div class="map-col">
           <browse-map
-            .state=${selectedState || ''}
-            .selectedOcdid=${selectedJurisdictionOcdid || ''}
+            .state=${selectedState || ""}
+            .selectedOcdid=${selectedJurisdictionOcdid || ""}
             .localStatus=${localStatus}
             .coverageSummary=${coverageSummary}
             @on-jurisdiction-change=${handleSelectJurisdictionChange}
@@ -99,18 +121,25 @@ function SearchJurisdictions() {
             @on-county-change=${handleCountyChange}
           ></browse-map>
         </div>
-
       </div>
 
-      ${dashboardData && selectedState ? html`
-        <section>
-          <h4>Progress — ${selectedState.toUpperCase()}</h4>
-          <summary-stats .stats=${dashboardData} .state=${selectedState}></summary-stats>
-        </section>
-      ` : ''}
+      ${dashboardData && selectedState
+        ? html`
+            <section>
+              <h4>Progress — ${selectedState.toUpperCase()}</h4>
+              <summary-stats
+                .stats=${dashboardData}
+                .state=${selectedState}
+              ></summary-stats>
+            </section>
+          `
+        : ""}
 
       <div class="below-grid">
-        <civ-people-directory .local=${people} .jurisdictionSelected=${!!selectedJurisdictionOcdid}></civ-people-directory>
+        <civ-people-directory
+          .local=${people}
+          .jurisdictionSelected=${!!selectedJurisdictionOcdid}
+        ></civ-people-directory>
       </div>
     </div>
   `;

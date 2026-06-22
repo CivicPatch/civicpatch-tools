@@ -1,105 +1,105 @@
 .search-page {
-    /* width/centering comes from the shared .page-content rail on the page */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  /* width/centering comes from the shared .page-content rail on the page */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* ── Masthead ──────────────────────────────────────────────────────────────── */
 
 .search-page hgroup {
-    /* No top padding: the navbar + main's row gap already separate this from the nav.
+  /* No top padding: the navbar + main's row gap already separate this from the nav.
        A top pad here just stacks on those and over-pads. */
-    padding-block: 0 1rem;
-    border-bottom: 2px solid var(--civ-border-strong);
+  padding-block: 0 1rem;
+  border-bottom: 2px solid var(--civ-border-strong);
 }
 
 .search-page hgroup::before {
-    content: "Civic data \2014 United States";
-    display: block;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-weight: 600;
-    color: var(--civ-text-muted);
-    margin-bottom: 0.3rem;
+  content: "United States";
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: var(--civ-text-muted);
+  margin-bottom: 0.3rem;
 }
 
 .search-page hgroup h1 {
-    color: var(--civ-text);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-    letter-spacing: -0.03em;
+  color: var(--civ-text);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.03em;
 }
 
 .search-page hgroup p {
-    color: var(--civ-text-secondary);
-    font-size: var(--text-md);
-    margin: 0;
+  color: var(--civ-text-secondary);
+  font-size: var(--text-md);
+  margin: 0;
 }
 
 /* ── Grid: selector left, map right ───────────────────────────────────────── */
 
 .page-grid {
-    display: grid;
-    gap: 1.25rem;
-    grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
-    align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
+  align-items: start;
 }
 
 .select-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 /* ── State progress ────────────────────────────────────────────────────────── */
 
 .state-progress {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .state-progress h3 {
-    margin: 0;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--civ-text-muted);
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--civ-text-muted);
 }
 
 /* ── Below grid ────────────────────────────────────────────────────────────── */
 
 .below-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .not-scraped {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .not-scraped__heading {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--civ-text-muted);
-    margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--civ-text-muted);
+  margin: 0;
 }
 
 /* ── Responsive ────────────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-    .page-grid {
-        grid-template-columns: 1fr;
-    }
+  .page-grid {
+    grid-template-columns: 1fr;
+  }
 }

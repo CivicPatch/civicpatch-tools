@@ -3,6 +3,7 @@ import { component, useEffect, useRef, useState } from 'haunted';
 import { html } from 'lit-html';
 import { ref } from 'lit-html/directives/ref.js';
 import maplibregl from 'maplibre-gl';
+import { fetchStateCoverageSummary } from '../../api.js';
 import {
   DrillLevel,
   NATIONAL_SOURCE_ID,
@@ -53,6 +54,11 @@ function BrowseMap(this: HTMLElement, {
   stateRef.current = state;
   const selectedOcdidRef = useRef<string | null>(selectedOcdid);
   selectedOcdidRef.current = selectedOcdid;
+  // National-level hover tooltip: a single reused popup, the state it's currently showing,
+  // and a per-state cache so we fetch each state's coverage summary at most once.
+  const hoverPopupRef = useRef<maplibregl.Popup | null>(null);
+  const hoverStateRef = useRef<string | null>(null);
+  const summaryCacheRef = useRef<Map<string, any>>(new Map());
 
   // A backgrounded tab can lose its WebGL context; on restore MapLibre reloads
   // tiles into a fresh context but feature-state is gone, so coverage falls back
@@ -80,6 +86,8 @@ function BrowseMap(this: HTMLElement, {
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
     mapRef.current.on('load', () => mapRef.current?.resize());
     mapRef.current.on('click', handleClick);
+    mapRef.current.on('mousemove', 'states', handleStateHover);
+    mapRef.current.on('mouseleave', 'states', handleStateLeave);
     mapRef.current.getCanvas().addEventListener('webglcontextrestored', reapplyFeatureState);
     // The map is otherwise trapped in this closure; expose it on the element
     // for debugging and for e2e assertions about layers/feature-state.
@@ -152,6 +160,58 @@ function BrowseMap(this: HTMLElement, {
         composed: true,
       }));
     }
+  };
+
+  const stateTooltipHtml = (code: string, s: any): string => {
+    const header = `<strong>${code.toUpperCase()}</strong>`;
+    if (!s) {
+      return `<div class="map-tooltip">${header}<div class="map-tooltip__sub">Loading…</div></div>`;
+    }
+    const reach = Math.round((s.reach_fraction ?? 0) * 100);
+    const toReview = s.buckets?.to_review ?? 0;
+    return `
+      <div class="map-tooltip">
+        ${header}
+        <div>${reach}% covered (${s.covered ?? 0} / ${s.scrapeable ?? 0})</div>
+        <div class="map-tooltip__sub">${toReview} to review</div>
+      </div>`;
+  };
+
+  const handleStateHover = (e: maplibregl.MapLayerMouseEvent) => {
+    const map = mapRef.current;
+    if (!map || levelRef.current !== 'national') return;
+    const code = (e.features?.[0]?.properties?.code as string | undefined)?.toLowerCase();
+    if (!code) return;
+    map.getCanvas().style.cursor = 'pointer';
+    if (!hoverPopupRef.current) {
+      hoverPopupRef.current = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 8,
+        className: 'map-tooltip-popup',
+      });
+    }
+    hoverPopupRef.current.setLngLat(e.lngLat).addTo(map);
+    if (hoverStateRef.current === code) return; // same state — just reposition
+    hoverStateRef.current = code;
+    const cached = summaryCacheRef.current.get(code);
+    hoverPopupRef.current.setHTML(stateTooltipHtml(code, cached));
+    if (cached) return;
+    fetchStateCoverageSummary(code)
+      .then((d: any) => {
+        summaryCacheRef.current.set(code, d.data);
+        if (hoverStateRef.current === code) {
+          hoverPopupRef.current?.setHTML(stateTooltipHtml(code, d.data));
+        }
+      })
+      .catch(() => {});
+  };
+
+  const handleStateLeave = () => {
+    const map = mapRef.current;
+    if (map) map.getCanvas().style.cursor = '';
+    hoverStateRef.current = null;
+    hoverPopupRef.current?.remove();
   };
 
   // Load national source when no state selected
@@ -277,6 +337,7 @@ function BrowseMap(this: HTMLElement, {
   // Cleanup
   useEffect(() => {
     return () => {
+      hoverPopupRef.current?.remove();
       mapRef.current?.remove();
       mapRef.current = null;
     };
