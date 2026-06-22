@@ -1,18 +1,19 @@
 """Unit tests for summarize_state_coverage (core/coverage.py).
 
-summarize_state_coverage(total, scrapeable, done, blocked, to_review, scraping) -> StateCoverage
-  - inputs: six set[str] of jurisdiction ocdids for ONE state
-  - total = all known jurisdictions; scrapeable ⊆ total = the ones with a url
-  - done = numerator (scraped_at >= cutoff)
-  - done_over_scrapeable_fraction = done / scrapeable  (reach: progress on scrapeable work)
-  - done_over_total_fraction      = done / total       (coverage of everything known)
-    (both 0.0–1.0; 0.0 when the denominator is empty)
-  - buckets = each SCRAPEABLE ocdid in EXACTLY ONE bucket by priority
-              blocked > to_review > scraping > done > queued; sums to scrapeable
+summarize_state_coverage(total, scrapeable, covered_fresh, covered_stale, blocked, to_review,
+scraping) -> StateCoverage
+  - inputs: seven set[str] of jurisdiction ocdids for ONE state
+  - total = all known; scrapeable ⊆ total = has url
+  - covered_fresh = has officials AND scraped since cutoff; covered_stale = has officials but aging
+    (disjoint; both subsets of scrapeable)
+  - StateCoverage stores covered_fresh/covered_stale counts; done / reach_fraction / total_fraction
+    are computed (done = covered_fresh + covered_stale)
+  - buckets = each SCRAPEABLE ocdid in EXACTLY ONE pipeline bucket by priority
+    blocked > to_review > scraping > done(fresh) > queued; stale falls into queued
+    (it's a re-scrape candidate); sums to scrapeable
 
-Two rules pinned below: (1) bucket priority is exclusive and sums to scrapeable;
-(2) done-wins — done/fractions count scraped_at>=cutoff regardless of flight buckets,
-so result.done can exceed buckets[DONE].
+Rules pinned: (1) pipeline priority is exclusive and sums to scrapeable; (2) done-wins —
+covered_fresh/covered_stale are tallied regardless of flight bucket, so done can exceed buckets[DONE].
 """
 
 import pytest
@@ -30,7 +31,8 @@ def _summary(**kwargs) -> StateCoverage:
     base = {
         "total": set(),
         "scrapeable": set(),
-        "done": set(),
+        "covered_fresh": set(),
+        "covered_stale": set(),
         "blocked": set(),
         "to_review": set(),
         "scraping": set(),
@@ -48,7 +50,7 @@ def test_each_category_lands_in_its_own_bucket():
         blocked={"jb"},
         to_review={"jr"},
         scraping={"js"},
-        done={"jd"},
+        covered_fresh={"jd"},
     )
 
     assert result.buckets[Bucket.BLOCKED] == 1
@@ -66,7 +68,7 @@ def test_buckets_sum_to_scrapeable():
         blocked={"j1"},
         to_review={"j2"},
         scraping={"j3"},
-        done={"j4", "j5"},
+        covered_fresh={"j4", "j5"},
     )
     assert result.buckets == {
         Bucket.BLOCKED: 1,
@@ -81,11 +83,7 @@ def test_buckets_sum_to_scrapeable():
 @pytest.mark.unit
 def test_blocked_beats_open_pr():
     # pin: an ocdid in BOTH blocked and to_review → bucket is blocked (review-pool overlap)
-    result = _summary(
-        scrapeable={"j1"},
-        blocked={"j1"},
-        to_review={"j1"},
-    )
+    result = _summary(scrapeable={"j1"}, blocked={"j1"}, to_review={"j1"})
     assert result.buckets[Bucket.BLOCKED] == 1
     assert result.buckets[Bucket.TO_REVIEW] == 0
 
@@ -98,7 +96,7 @@ def test_full_priority_order_blocked_wins_over_all():
         blocked={"j1"},
         to_review={"j1"},
         scraping={"j1"},
-        done={"j1"},
+        covered_fresh={"j1"},
     )
     assert result.buckets == {
         Bucket.BLOCKED: 1,
@@ -107,112 +105,127 @@ def test_full_priority_order_blocked_wins_over_all():
         Bucket.DONE: 0,
         Bucket.QUEUED: 0,
     }
-    assert result.done == 1  # done-wins: still counted in the numerator
+    assert result.covered == 1  # done-wins: still tallied
 
 
 @pytest.mark.unit
 def test_scraping_beats_done():
-    # pin: mid-chain priority — in scraping AND done → bucket is scraping
-    result = _summary(
-        scrapeable={"j1"},
-        scraping={"j1"},
-        done={"j1"},
-    )
+    # pin: mid-chain priority — in scraping AND covered_fresh → bucket is scraping
+    result = _summary(scrapeable={"j1"}, scraping={"j1"}, covered_fresh={"j1"})
     assert result.buckets[Bucket.SCRAPING] == 1
     assert result.buckets[Bucket.DONE] == 0
-    assert result.done == 1  # done-wins
+    assert result.covered_fresh == 1  # done-wins
 
 
 @pytest.mark.unit
-def test_done_wins_percent_counts_done_despite_open_pr():
-    # pin: in done AND to_review → bucket=to_review, but done/fraction still count it
-    result = _summary(
-        scrapeable={"j1"},
-        done={"j1"},
-        to_review={"j1"},
-    )
+def test_covered_fresh_wins_counts_despite_open_pr():
+    # pin: fresh AND to_review → bucket=to_review, but covered_fresh/reach still count it
+    result = _summary(scrapeable={"j1"}, covered_fresh={"j1"}, to_review={"j1"})
     assert result.buckets[Bucket.TO_REVIEW] == 1
-    assert result.buckets[Bucket.DONE] == 0  # the exclusive bucket excludes it
-    assert result.done == 1  # ...but the numerator includes it
-    assert result.done_over_scrapeable_fraction == pytest.approx(1.0)
+    assert result.buckets[Bucket.DONE] == 0  # exclusive bucket excludes it
+    assert result.covered_fresh == 1  # ...but the freshness tally includes it
+    assert result.covered == 1
+    assert result.reach_fraction == pytest.approx(1.0)
 
 
 @pytest.mark.unit
-def test_done_wins_counts_done_despite_blocked():
-    # pin: a new issue on a done ocdid doesn't dip the bar — done counts, bucket=blocked
-    result = _summary(
-        scrapeable={"j1"},
-        done={"j1"},
-        blocked={"j1"},
-    )
+def test_covered_fresh_wins_counts_despite_blocked():
+    # pin: a new issue on a fresh ocdid doesn't drop it from the freshness tally
+    result = _summary(scrapeable={"j1"}, covered_fresh={"j1"}, blocked={"j1"})
     assert result.buckets[Bucket.BLOCKED] == 1
     assert result.buckets[Bucket.DONE] == 0
-    assert result.done == 1
-    assert result.done_over_scrapeable_fraction == pytest.approx(1.0)
+    assert result.covered_fresh == 1
+    assert result.reach_fraction == pytest.approx(1.0)
+
+
+@pytest.mark.unit
+def test_stale_counts_and_falls_into_queued():
+    # pin: stale = has data but aging → counted as covered_stale, but bucketed QUEUED (re-scrape candidate)
+    result = _summary(scrapeable={"j1"}, covered_stale={"j1"})
+    assert result.covered_stale == 1
+    assert result.covered_fresh == 0
+    assert result.covered == 1  # it IS done (we have data)
+    assert result.buckets[Bucket.QUEUED] == 1
+    assert result.buckets[Bucket.DONE] == 0  # only fresh fills the DONE bucket
+
+
+@pytest.mark.unit
+def test_stale_wins_counts_despite_open_pr():
+    # pin: stale with a re-scrape PR open → still tallied stale, bucketed to_review
+    result = _summary(scrapeable={"j1"}, covered_stale={"j1"}, to_review={"j1"})
+    assert result.covered_stale == 1
+    assert result.buckets[Bucket.TO_REVIEW] == 1
+    assert result.buckets[Bucket.QUEUED] == 0
+
+
+@pytest.mark.unit
+def test_fresh_stale_gap_split():
+    # pin: fresh + stale + gap partition the scrapeable set
+    result = _summary(
+        scrapeable={"j1", "j2", "j3"},
+        covered_fresh={"j1"},
+        covered_stale={"j2"},  # j3 = gap
+    )
+    assert result.covered_fresh == 1
+    assert result.covered_stale == 1
+    assert result.covered == 2
+    assert result.buckets[Bucket.DONE] == 1  # j1
+    assert result.buckets[Bucket.QUEUED] == 2  # j2 (stale) + j3 (gap)
+    assert result.reach_fraction == pytest.approx(2 / 3)
 
 
 @pytest.mark.unit
 def test_category_ocdids_outside_scrapeable_are_ignored():
-    # pin: category sets carry non-scrapeable ocdids → ignored, don't inflate buckets/done
+    # pin: category sets carry non-scrapeable ocdids → ignored, don't inflate buckets/counts
     result = _summary(
         scrapeable={"j1"},
         scraping={"jx"},
         blocked={"jy"},
-        done={"jz"},
+        covered_fresh={"jz"},
     )
     assert result.buckets == {
         Bucket.BLOCKED: 0,
         Bucket.TO_REVIEW: 0,
         Bucket.SCRAPING: 0,
         Bucket.DONE: 0,
-        Bucket.QUEUED: 1,  # only j1, and it's in no (scrapeable) category
+        Bucket.QUEUED: 1,  # only j1, in no (scrapeable) category
     }
-    assert result.done == 0  # jz is not scrapeable, so it's not in the numerator
+    assert result.covered == 0
     assert sum(result.buckets.values()) == result.scrapeable == 1
 
 
 @pytest.mark.unit
-def test_queued_is_everything_uncategorized():
-    # pin: scrapeable ocdids in no category set → queued
-    result = _summary(scrapeable={"j1", "j2", "j3"})
-    assert result.buckets[Bucket.QUEUED] == 3
-    assert result.done == 0
-
-
-@pytest.mark.unit
-def test_fraction_is_done_over_scrapeable():
+def test_reach_fraction_is_done_over_scrapeable():
     # pin: reach ratio — 3 done of 4 scrapeable → 0.75
     result = _summary(
         scrapeable={"j1", "j2", "j3", "j4"},
-        done={"j1", "j2", "j3"},
+        covered_fresh={"j1", "j2", "j3"},
     )
-    assert result.done == 3
+    assert result.covered == 3
     assert result.scrapeable == 4
-    assert result.buckets[Bucket.DONE] == 3
-    assert result.buckets[Bucket.QUEUED] == 1  # j4
-    assert result.done_over_scrapeable_fraction == pytest.approx(0.75)
+    assert result.reach_fraction == pytest.approx(0.75)
 
 
 @pytest.mark.unit
-def test_done_over_total_uses_all_known_not_just_scrapeable():
+def test_total_fraction_uses_all_known_not_just_scrapeable():
     # pin: total denominator includes url-less jurisdictions → reach and total fractions differ
     result = _summary(
         total={"j1", "j2", "j3", "j4", "n1", "n2", "n3", "n4"},  # 8 known
         scrapeable={"j1", "j2", "j3", "j4"},  # 4 have urls
-        done={"j1", "j2"},  # 2 scraped
+        covered_fresh={"j1", "j2"},  # 2 fresh
     )
-    assert result.done == 2
-    assert result.done_over_scrapeable_fraction == pytest.approx(0.5)  # 2/4
-    assert result.done_over_total_fraction == pytest.approx(0.25)  # 2/8
+    assert result.covered == 2
+    assert result.reach_fraction == pytest.approx(0.5)  # 2/4
+    assert result.total_fraction == pytest.approx(0.25)  # 2/8
 
 
 @pytest.mark.unit
 def test_empty_scrapeable_is_zero_not_division_error():
-    # pin: scrapeable empty (other sets non-empty) → fraction 0.0, all buckets 0, no ZeroDivisionError
-    result = _summary(scrapeable=set(), blocked={"j1"}, done={"j2"})
+    # pin: scrapeable empty (other sets non-empty) → fractions 0.0, all buckets 0, no ZeroDivisionError
+    result = _summary(scrapeable=set(), blocked={"j1"}, covered_fresh={"j2"})
     assert result.scrapeable == 0
-    assert result.done == 0
-    assert result.done_over_scrapeable_fraction == 0.0
+    assert result.covered == 0
+    assert result.reach_fraction == 0.0
     assert result.buckets == {
         Bucket.BLOCKED: 0,
         Bucket.TO_REVIEW: 0,
@@ -262,7 +275,6 @@ def test_map_no_people_without_url_is_untracked():
 
 @pytest.mark.unit
 def test_map_url_is_irrelevant_when_it_has_people():
-    # with people, FRESH/STALE is decided by freshness alone — url doesn't change it
     assert (
         classify_map_status(has_people=True, is_fresh=True, has_url=False)
         == MapStatus.FRESH
@@ -275,7 +287,6 @@ def test_map_url_is_irrelevant_when_it_has_people():
 
 @pytest.mark.unit
 def test_map_freshness_is_irrelevant_when_no_people():
-    # no people → GAP/UNTRACKED by url alone; a stray is_fresh=True doesn't make it FRESH
     assert (
         classify_map_status(has_people=False, is_fresh=True, has_url=True)
         == MapStatus.GAP

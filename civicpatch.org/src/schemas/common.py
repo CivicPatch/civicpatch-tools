@@ -75,7 +75,8 @@ class Jurisdiction(BaseModel):
 class StateJurisdictionSets(BaseModel):
     total: set[str]  # all current jurisdictions in the state
     scrapeable: set[str]  # subset with a url
-    done: set[str]  # subset scraped since the state's cutoff
+    covered_fresh: set[str]  # scrapeable + has officials + scraped since the cutoff
+    covered_stale: set[str]  # scrapeable + has officials but aging (or never-stamped)
 
 
 class Identity(BaseModel):

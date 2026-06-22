@@ -1,16 +1,16 @@
-"""Integration tests for get_state_jurisdiction_sets (coverage denominators).
+"""Integration tests for get_state_jurisdiction_sets (coverage sets).
 
-Real Postgres: the function is pure SQL at the DB boundary (the cutoff join +
-url/freshness partition), so mocking a cursor would only re-assert the SQL string.
+Real Postgres: the cutoff join + url/has-people/freshness partition is pure SQL.
 
 Run with: mise run tcp-integration
 
-Isolation: sentinel state codes ('zz' has a config row, 'zy' has none) that can't
-collide with real states; clean_sentinel_states wipes them before/after each test.
+Isolation: sentinel state codes ('zz' has a config row, 'zy' has none) + ocdid prefixes;
+clean_sentinel_states wipes jurisdictions, people, and configs for them each test.
 """
 
 import datetime
 import json
+import uuid
 
 import pytest
 import pytest_asyncio
@@ -28,6 +28,10 @@ async def _wipe_sentinels():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
+            "DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%' "
+            "OR jurisdiction_ocdid LIKE 'zy-%'"
+        )
+        await cur.execute(
             "DELETE FROM jurisdictions WHERE state = ANY(%s)", (list(_SENTINEL_STATES),)
         )
         await cur.execute(
@@ -44,7 +48,7 @@ async def clean_sentinel_states():
 
 
 async def _insert_jurisdiction(
-    ocdid, *, state="zz", url=None, scraped_at=None, status="current"
+    ocdid, *, state="zz", url=None, scraped_at=None, status="current", people=False
 ):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
@@ -57,6 +61,14 @@ async def _insert_jurisdiction(
             """,
             (ocdid, state, data, status, scraped_at),
         )
+        if people:
+            await cur.execute(
+                """
+                INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
+                VALUES (%s, %s, %s, now(), 'current')
+                """,
+                (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
+            )
         await conn.commit()
 
 
@@ -90,9 +102,9 @@ async def test_total_includes_all_current_excludes_inactive():
 @pytest.mark.integration
 async def test_scrapeable_is_url_bearing_subset():
     await _set_cutoff("zz", _CUTOFF)
-    await _insert_jurisdiction("zz-url", url="https://x", scraped_at=None)
-    await _insert_jurisdiction("zz-nourl", url=None, scraped_at=None)
-    await _insert_jurisdiction("zz-empty", url="", scraped_at=None)  # blank url ≠ scrapeable
+    await _insert_jurisdiction("zz-url", url="https://x")
+    await _insert_jurisdiction("zz-nourl", url=None)
+    await _insert_jurisdiction("zz-empty", url="")  # blank url ≠ scrapeable
 
     sets = await get_state_jurisdiction_sets("zz")
 
@@ -102,41 +114,46 @@ async def test_scrapeable_is_url_bearing_subset():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_done_is_scraped_since_cutoff_only():
+async def test_done_split_needs_url_people_and_freshness():
     await _set_cutoff("zz", _CUTOFF)
-    await _insert_jurisdiction("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF)
-    await _insert_jurisdiction("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF)
-    await _insert_jurisdiction("zz-never", url="https://n", scraped_at=None)
+    # url + people + fresh → covered_fresh
+    await _insert_jurisdiction(
+        "zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF, people=True
+    )
+    # url + people + old → covered_stale
+    await _insert_jurisdiction(
+        "zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF, people=True
+    )
+    # url + people + never stamped → covered_stale (NULL is not fresh)
+    await _insert_jurisdiction(
+        "zz-null", url="https://n", scraped_at=None, people=True
+    )
+    # url, fresh, but NO people → neither (it's a gap)
+    await _insert_jurisdiction(
+        "zz-nopeople", url="https://g", scraped_at=_AFTER_CUTOFF, people=False
+    )
+    # people + fresh but NO url → not scrapeable → neither
+    await _insert_jurisdiction(
+        "zz-nourl", url=None, scraped_at=_AFTER_CUTOFF, people=True
+    )
 
     sets = await get_state_jurisdiction_sets("zz")
 
-    assert sets.scrapeable == {"zz-fresh", "zz-stale", "zz-never"}
-    assert sets.done == {"zz-fresh"}  # before-cutoff and never-scraped are not done
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_done_excludes_fresh_scrape_without_url():
-    # scraped_at set but no url → not scrapeable, so not counted as done
-    await _set_cutoff("zz", _CUTOFF)
-    await _insert_jurisdiction("zz-nourl-fresh", url=None, scraped_at=_AFTER_CUTOFF)
-
-    sets = await get_state_jurisdiction_sets("zz")
-
-    assert sets.scrapeable == set()
-    assert sets.done == set()
+    assert sets.covered_fresh == {"zz-fresh"}
+    assert sets.covered_stale == {"zz-stale", "zz-null"}
+    assert sets.scrapeable == {"zz-fresh", "zz-stale", "zz-null", "zz-nopeople"}
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_missing_state_config_treats_cutoff_as_epoch():
-    # state 'zy' has no state_configs row → cutoff falls back to epoch, so ANY non-null
-    # scraped_at counts as done; only never-scraped stays out.
+    # 'zy' has no config row → cutoff falls back to epoch, so any stamped scrape with
+    # people is fresh; only never-scraped / people-less stay out of covered_fresh.
     await _insert_jurisdiction(
-        "zy-old", state="zy", url="https://o", scraped_at=_BEFORE_CUTOFF
+        "zy-old", state="zy", url="https://o", scraped_at=_BEFORE_CUTOFF, people=True
     )
-    await _insert_jurisdiction("zy-never", state="zy", url="https://n", scraped_at=None)
 
     sets = await get_state_jurisdiction_sets("zy")
 
-    assert sets.done == {"zy-old"}  # epoch cutoff → old scrape still counts
+    assert sets.covered_fresh == {"zy-old"}  # epoch cutoff → old scrape still fresh
+    assert sets.covered_stale == set()
