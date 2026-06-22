@@ -129,6 +129,14 @@ When adding a new endpoint, pick the prefix deliberately. If it returns frontend
 - When importing a `.ts` component from a `.js` file, use the `.ts` extension explicitly (e.g. `import "../foo/foo.ts"`). Rollup does not resolve `.js` → `.ts` for plain JS importers; the `.js` → `.ts` remapping only works within TypeScript files.
 - After any change to a frontend component, run `mise run typecheck-fe` and fix all errors before considering the task done
 
+## CSS Style
+
+- One property per line, each on its own indented line — no inlining multiple
+  properties on the same line. Readability over compactness.
+- Group conceptually related rules with lightweight section comments
+  (`/* Header */`, `/* Field rows */`).
+- One blank line between rule blocks, no extra vertical whitespace.
+
 ## Testing
 
 - Framework: pytest

@@ -44,12 +44,14 @@ function ReviewSessionPage() {
     handleTableDataReorder,
     handleBulkDelete,
     handleMerge: handlePeopleMerge,
+    handleReset,
     handleResetAll,
     updatePerson,
   } = useReviewPeople(currentEntry);
 
   const handleMerge = () => merge(dirty ? peoplePatch : null);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
+  const handleResetPerson = (id: string) => handleReset(id);
 
   const prNumber = currentEntry?.pr?.number;
   const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
@@ -101,6 +103,7 @@ function ReviewSessionPage() {
       .onBulkDelete=${handleBulkDelete}
       .onReset=${handleResetAll}
       .onAdd=${handleAdd}
+      .onResetPerson=${handleResetPerson}
       .onPersonSave=${handlePersonSave}
       .resolvedMatches=${resolvedMatches}
     ></review-session>`;

@@ -8,6 +8,7 @@ import {
   isValidDate,
   isTermOrderValid,
   isRequiredFieldEmpty,
+  fieldError,
   type FieldSpec,
 } from "../components/people-diff/diff-model.js";
 
@@ -184,5 +185,28 @@ describe("isTermOrderValid", () => {
   it("does not flag indeterminate input (empty or malformed)", () => {
     expect(isTermOrderValid("", "2025")).toBe(true);
     expect(isTermOrderValid("nope", "2025")).toBe(true);
+  });
+});
+
+describe("fieldError", () => {
+  const nameField: FieldSpec = { key: "name", label: "Name", type: "text", required: true };
+  const startField: FieldSpec = { key: "start_date", label: "Term start", type: "date" };
+  const endField: FieldSpec = { key: "end_date", label: "Term end", type: "date" };
+
+  it("flags a required field left empty", () => {
+    expect(fieldError(nameField, { name: "" })).toBe("Required");
+  });
+
+  it("flags a malformed date", () => {
+    expect(fieldError(startField, { start_date: "20-24" })).toBe("Use YYYY, YYYY-MM, or YYYY-MM-DD");
+  });
+
+  it("flags term end before term start", () => {
+    expect(fieldError(endField, { start_date: "2025", end_date: "2021" })).toBe("Term end is before term start");
+  });
+
+  it("returns null for a valid field", () => {
+    expect(fieldError(nameField, { name: "Maria" })).toBeNull();
+    expect(fieldError(endField, { start_date: "2021", end_date: "2025" })).toBeNull();
   });
 });
