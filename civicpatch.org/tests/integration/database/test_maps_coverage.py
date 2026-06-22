@@ -1,10 +1,11 @@
-"""Integration test for get_dashboard's cutoff-based coverage split.
+"""Integration test for get_maps_coverage's fresh/scraped/total counts.
 
-`localities` now carries `covered_fresh` / `covered_stale` (+ `coverage` = their sum). Real
-Postgres because it's the state_configs join + pre-aggregated people join + FILTERs.
+Real Postgres: the people pre-agg join + state_configs cutoff + parent_ocdids county
+expansion. Verifies `fresh` (has-data + since cutoff) sits alongside `scraped` (has-data)
+at both state and county level, so the map can shade by staleness.
 
 Run with: mise run tcp-integration
-Isolation: sentinel state 'zz', cleaned before/after.
+Isolation: sentinel state 'zz' + ocdid prefix, cleaned before/after.
 """
 
 import datetime
@@ -14,9 +15,10 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from database.dashboard import get_dashboard
+from database.coverage import get_maps_coverage
 from database.database import get_pool
 
+_COUNTY = "ocd-jurisdiction/country:us/state:zz/county:testcounty/government"
 _CUTOFF = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
 _AFTER_CUTOFF = datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
 _BEFORE_CUTOFF = datetime.datetime(2025, 6, 1, tzinfo=datetime.timezone.utc)
@@ -38,8 +40,8 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert(ocdid, *, url, scraped_at, people=False):
-    data = json.dumps({"url": url} if url else {})
+async def _insert(ocdid, *, scraped_at, people):
+    data = json.dumps({"url": "https://x", "parent_ocdids": [_COUNTY]})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -70,16 +72,19 @@ async def _insert(ocdid, *, url, scraped_at, people=False):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_localities_split_fresh_stale_and_coverage():
-    await _insert("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF, people=True)
-    await _insert("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF, people=True)
-    await _insert("zz-gap", url="https://n", scraped_at=None, people=False)
+async def test_fresh_sits_alongside_scraped_and_total():
+    await _insert("zz-fresh", scraped_at=_AFTER_CUTOFF, people=True)
+    await _insert("zz-stale", scraped_at=_BEFORE_CUTOFF, people=True)
+    await _insert("zz-nopeople", scraped_at=_AFTER_CUTOFF, people=False)
 
-    data = await get_dashboard()
+    coverage = await get_maps_coverage()
 
-    localities = data["states"]["zz"]["civicpatch"]["localities"]
-    assert localities["known"] == 3
-    assert localities["scrapeable"] == 3
-    assert localities["covered_fresh"] == 1  # zz-fresh
-    assert localities["covered_stale"] == 1  # zz-stale
-    assert localities["covered"] == 2  # covered_fresh + covered_stale (zz-gap excluded)
+    state = coverage["zz"]["state"]
+    assert state["total"] == 3
+    assert state["covered"] == 2  # zz-fresh + zz-stale have people
+    assert state["covered_fresh"] == 1  # only zz-fresh is since cutoff
+
+    county = coverage["zz"]["counties"][_COUNTY]
+    assert county["total"] == 3
+    assert county["covered"] == 2
+    assert county["covered_fresh"] == 1

@@ -489,8 +489,9 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
 
 
 async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
-    # The per-state denominators for coverage: all current jurisdictions, the url-bearing
-    # subset, and the subset scraped since the state's cutoff (epoch when it has no config).
+    # The per-state coverage sets: all current jurisdictions, the url-bearing subset, and
+    # that subset split by freshness — covered_fresh (has officials, scraped since the cutoff)
+    # vs covered_stale (has officials but aging). Cutoff falls back to epoch when unconfigured.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -500,7 +501,11 @@ async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
                 NULLIF(j.data->>'url', '') IS NOT NULL AS has_url,
                 (j.scraped_at IS NOT NULL
                  AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
-                    AS is_fresh
+                    AS is_fresh,
+                EXISTS (
+                    SELECT 1 FROM people
+                    WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
+                ) AS has_people
             FROM jurisdictions j
             LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.state = %s AND j.status = 'current'
@@ -511,11 +516,18 @@ async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
 
     total: set[str] = set()
     scrapeable: set[str] = set()
-    done: set[str] = set()
-    for jurisdiction_ocdid, has_url, is_fresh in rows:
+    covered_fresh: set[str] = set()
+    covered_stale: set[str] = set()
+    for jurisdiction_ocdid, has_url, is_fresh, has_people in rows:
         total.add(jurisdiction_ocdid)
         if has_url:
             scrapeable.add(jurisdiction_ocdid)
-            if is_fresh:
-                done.add(jurisdiction_ocdid)
-    return StateJurisdictionSets(total=total, scrapeable=scrapeable, done=done)
+            if has_people:
+                target = covered_fresh if is_fresh else covered_stale
+                target.add(jurisdiction_ocdid)
+    return StateJurisdictionSets(
+        total=total,
+        scrapeable=scrapeable,
+        covered_fresh=covered_fresh,
+        covered_stale=covered_stale,
+    )

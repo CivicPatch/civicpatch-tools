@@ -3,18 +3,28 @@ from database.database import get_pool
 
 
 async def get_maps_coverage() -> dict:
-    """Return scraped/total counts by county and state, grouped by state.
+    """Return total/covered/covered_fresh counts by county and state, grouped by state.
 
     County counts come from parent_ocdids stored in jurisdictions.data; the array
     contains all OCD ancestors (county, state, etc.) so we filter to county OCDs.
     State counts are computed directly from j.state.
-    A jurisdiction is counted as scraped when it has at least one row in people.
+
+    - `covered`       = has ≥1 current people row (has-data)
+    - `covered_fresh` = covered AND scraped_at >= the state's cutoff
+    so `stale = covered - covered_fresh` lets the map shade by staleness. The people set
+    is pre-aggregated (DISTINCT once) and hash-joined — one pass, not per-row.
     """
     pool = await get_pool()
-    scraped_subquery = """
+    has_people_subquery = """
         SELECT DISTINCT jurisdiction_ocdid
         FROM people
         WHERE status = 'current'
+    """
+    covered_fresh_filter = """
+        COUNT(*) FILTER (
+            WHERE p.jurisdiction_ocdid IS NOT NULL
+              AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)
+        )::int AS covered_fresh
     """
     async with pool.connection() as conn, conn.cursor() as cur:
         # County-level counts
@@ -23,10 +33,12 @@ async def get_maps_coverage() -> dict:
                 j.state,
                 parent_ocdid AS county_ocdid,
                 COUNT(*)::int       AS total,
-                COUNT(p.jurisdiction_ocdid)::int AS scraped
+                COUNT(p.jurisdiction_ocdid)::int AS covered,
+                {covered_fresh_filter}
             FROM jurisdictions j
             CROSS JOIN LATERAL jsonb_array_elements_text(j.data -> 'parent_ocdids') AS parent_ocdid
-            LEFT JOIN ({scraped_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.status = 'current'
               AND j.data ? 'parent_ocdids'
               AND parent_ocdid LIKE '%/county:%'
@@ -40,9 +52,11 @@ async def get_maps_coverage() -> dict:
             SELECT
                 j.state,
                 COUNT(*)::int       AS total,
-                COUNT(p.jurisdiction_ocdid)::int AS scraped
+                COUNT(p.jurisdiction_ocdid)::int AS covered,
+                {covered_fresh_filter}
             FROM jurisdictions j
-            LEFT JOIN ({scraped_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.status = 'current'
             GROUP BY j.state
             ORDER BY j.state
@@ -51,19 +65,24 @@ async def get_maps_coverage() -> dict:
 
     result: dict = {}
 
-    for state, total, scraped in state_rows:
+    for state, total, covered, covered_fresh in state_rows:
         result[state] = {
             "state": {
                 "ocdid": f"ocd-jurisdiction/country:us/state:{state}/government",
                 "total": total,
-                "scraped": scraped,
+                "covered": covered,
+                "covered_fresh": covered_fresh,
             },
             "counties": {},
         }
 
-    for state, county_ocdid, total, scraped in county_rows:
+    for state, county_ocdid, total, covered, covered_fresh in county_rows:
         if state in result:
-            result[state]["counties"][county_ocdid] = {"total": total, "scraped": scraped}
+            result[state]["counties"][county_ocdid] = {
+                "total": total,
+                "covered": covered,
+                "covered_fresh": covered_fresh,
+            }
 
     return result
 

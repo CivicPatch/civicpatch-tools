@@ -6,25 +6,40 @@ async def get_dashboard() -> dict:
 
     Shape matches the legacy dashboard.json contract consumed by the
     progress-dashboard frontend components, minus the deprecated external/*
-    fields.
+    fields. `covered` = covered_fresh + covered_stale; the fresh/stale split powers the
+    new bar + staleness-aware map color.
+
+    People are joined pre-aggregated (one GROUP BY over people, hash-joined) rather
+    than a per-row correlated subquery — this scans all states once, so it stays a
+    couple of passes even at tens of thousands of jurisdictions.
     """
     query = """
         SELECT
             j.state,
-            COUNT(*)::int                                                       AS known,
-            COUNT(*) FILTER (WHERE COALESCE(j.data->>'url', '') != '')::int     AS scrapeable,
+            COUNT(*)::int                                                   AS known,
             COUNT(*) FILTER (
-                WHERE j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)
-            )::int                                                              AS coverage,
-            COALESCE(SUM(p.people_count), 0)::int                               AS officials
+                WHERE NULLIF(j.data->>'url', '') IS NOT NULL
+            )::int                                                          AS scrapeable,
+            COUNT(*) FILTER (
+                WHERE NULLIF(j.data->>'url', '') IS NOT NULL
+                  AND pc.people_count > 0
+                  AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)
+            )::int                                                          AS covered_fresh,
+            COUNT(*) FILTER (
+                WHERE NULLIF(j.data->>'url', '') IS NOT NULL
+                  AND pc.people_count > 0
+                  AND (j.scraped_at IS NULL
+                       OR j.scraped_at < COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+            )::int                                                          AS covered_stale,
+            COALESCE(SUM(pc.people_count), 0)::int                          AS officials
         FROM jurisdictions j
         LEFT JOIN state_configs sc ON sc.state = j.state
-        LEFT JOIN LATERAL (
-            SELECT COUNT(*)::int AS people_count
+        LEFT JOIN (
+            SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
             FROM people
-            WHERE jurisdiction_ocdid = j.jurisdiction_ocdid
-              AND status = 'current'
-        ) p ON true
+            WHERE status = 'current'
+            GROUP BY jurisdiction_ocdid
+        ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
         WHERE j.status = 'current'
           AND j.level = 'local'
         GROUP BY j.state
@@ -36,7 +51,7 @@ async def get_dashboard() -> dict:
         rows = await cur.fetchall()
 
     states: dict = {}
-    for state, known, scrapeable, coverage, officials in rows:
+    for state, known, scrapeable, covered_fresh, covered_stale, officials in rows:
         states[state] = {
             "state": state,
             "civicpatch": {
@@ -44,7 +59,9 @@ async def get_dashboard() -> dict:
                 "localities": {
                     "known": known,
                     "scrapeable": scrapeable,
-                    "coverage": coverage,
+                    "covered": covered_fresh + covered_stale,
+                    "covered_fresh": covered_fresh,
+                    "covered_stale": covered_stale,
                 },
             },
         }

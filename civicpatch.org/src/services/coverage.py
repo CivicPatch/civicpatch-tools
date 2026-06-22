@@ -13,7 +13,8 @@ async def get_state_coverage(state: str) -> StateCoverage:
     return summarize_state_coverage(
         total=sets.total,
         scrapeable=sets.scrapeable,
-        done=sets.done,
+        covered_fresh=sets.covered_fresh,
+        covered_stale=sets.covered_stale,
         blocked=blocked,
         to_review=to_review,
         scraping=scraping,

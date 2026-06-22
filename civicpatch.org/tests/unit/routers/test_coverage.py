@@ -10,12 +10,12 @@ MOCK_COVERAGE = {
         "state": {
             "ocdid": "ocd-jurisdiction/country:us/state:co/government",
             "total": 271,
-            "scraped": 120,
+            "covered": 120,
         },
         "counties": {
             "ocd-jurisdiction/country:us/state:co/county:adams/government": {
                 "total": 6,
-                "scraped": 5,
+                "covered": 5,
             }
         },
     },
