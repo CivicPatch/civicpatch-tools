@@ -1,16 +1,5 @@
-from enum import StrEnum
-
+from core.coverage import classify_map_status
 from database.database import get_pool
-
-
-class LocalStatus(StrEnum):
-    FRESH = "fresh"
-    STALE = "stale"
-    GAP = "gap"
-    UNTRACKED = "untracked"
-
-
-FRESH_THRESHOLD_DAYS = 90
 
 
 async def get_maps_coverage() -> dict:
@@ -80,41 +69,35 @@ async def get_maps_coverage() -> dict:
 
 
 async def get_local_status_for_state(state: str) -> dict[str, str]:
-    """ocdid -> status for every local jurisdiction in `state`.
+    """ocdid -> map status for every local jurisdiction in `state`.
 
-    Status is derived from `people.updated_at` (scrape time) and
-    `jurisdictions.data->>'url'` (scrapeable). Uses a LATERAL JOIN with the
-    existing `idx_people_jurisdiction_ocdid` index for sub-50ms execution.
+    Freshness is `scraped_at` vs the state's cutoff (epoch when unset) — the same
+    definition the dashboard uses for "done", not `people.updated_at` (which manual
+    edits bump). The FRESH/STALE/GAP/UNTRACKED call itself lives in core.coverage.
     """
     query = """
         SELECT
           j.jurisdiction_ocdid,
-          CASE
-            WHEN p.updated_at >= NOW() - make_interval(days => %s) THEN %s
-            WHEN p.updated_at IS NOT NULL                          THEN %s
-            WHEN COALESCE(j.data->>'url', '') != ''                THEN %s
-            ELSE                                                        %s
-          END AS status
+          EXISTS (
+              SELECT 1 FROM people
+              WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
+          ) AS has_people,
+          (j.scraped_at IS NOT NULL
+           AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+              AS is_fresh,
+          NULLIF(j.data->>'url', '') IS NOT NULL AS has_url
         FROM jurisdictions j
-        LEFT JOIN LATERAL (
-            SELECT MAX(updated_at) AS updated_at
-            FROM people
-            WHERE jurisdiction_ocdid = j.jurisdiction_ocdid
-              AND status = 'current'
-        ) p ON true
+        LEFT JOIN state_configs sc ON sc.state = j.state
         WHERE j.status = 'current'
           AND j.state = %s
     """
-    params = (
-        FRESH_THRESHOLD_DAYS,
-        LocalStatus.FRESH.value,
-        LocalStatus.STALE.value,
-        LocalStatus.GAP.value,
-        LocalStatus.UNTRACKED.value,
-        state,
-    )
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(query, params)
+        await cur.execute(query, (state,))
         rows = await cur.fetchall()
-    return {ocdid: status for ocdid, status in rows}
+    return {
+        jurisdiction_ocdid: classify_map_status(
+            has_people=has_people, is_fresh=is_fresh, has_url=has_url
+        )
+        for jurisdiction_ocdid, has_people, is_fresh, has_url in rows
+    }
