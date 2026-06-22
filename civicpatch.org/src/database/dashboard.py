@@ -13,9 +13,12 @@ async def get_dashboard() -> dict:
             j.state,
             COUNT(*)::int                                                       AS known,
             COUNT(*) FILTER (WHERE COALESCE(j.data->>'url', '') != '')::int     AS scrapeable,
-            COUNT(*) FILTER (WHERE p.people_count > 0)::int                     AS coverage,
+            COUNT(*) FILTER (
+                WHERE j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)
+            )::int                                                              AS coverage,
             COALESCE(SUM(p.people_count), 0)::int                               AS officials
         FROM jurisdictions j
+        LEFT JOIN state_configs sc ON sc.state = j.state
         LEFT JOIN LATERAL (
             SELECT COUNT(*)::int AS people_count
             FROM people

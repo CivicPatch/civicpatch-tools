@@ -27,43 +27,14 @@ def client():
 
 
 @pytest.mark.unit
-def test_dashboard_returns_cached(client):
-    with patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=MOCK_DASHBOARD):
-        response = client.get("/data/dashboard")
-
-    assert response.status_code == 200
-    assert response.json() == {"data": MOCK_DASHBOARD}
-
-
-@pytest.mark.unit
-def test_dashboard_fetches_from_db_on_cache_miss(client):
-    mock_set_cached = AsyncMock()
-    with (
-        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.dashboard.get_dashboard", new_callable=AsyncMock, return_value=MOCK_DASHBOARD),
-        patch("lib.cache.set_cached", mock_set_cached),
+def test_dashboard_returns_db_data(client):
+    # Computed live, no cache (the coverage-presentation plan dropped the 1-day cache).
+    with patch(
+        "database.dashboard.get_dashboard",
+        new_callable=AsyncMock,
+        return_value=MOCK_DASHBOARD,
     ):
         response = client.get("/data/dashboard")
 
     assert response.status_code == 200
     assert response.json() == {"data": MOCK_DASHBOARD}
-    mock_set_cached.assert_called_once()
-    assert mock_set_cached.call_args[0][0] == "dashboard_data"
-    assert mock_set_cached.call_args[0][1] == MOCK_DASHBOARD
-
-
-@pytest.mark.unit
-def test_dashboard_does_not_cache_empty_db_result(client):
-    """Regression guard: caching an empty result would poison the cache for 1 day."""
-    mock_set_cached = AsyncMock()
-    empty = {"states": {}}
-    with (
-        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
-        patch("database.dashboard.get_dashboard", new_callable=AsyncMock, return_value=empty),
-        patch("lib.cache.set_cached", mock_set_cached),
-    ):
-        response = client.get("/data/dashboard")
-
-    assert response.status_code == 200
-    assert response.json() == {"data": empty}
-    mock_set_cached.assert_not_called()
