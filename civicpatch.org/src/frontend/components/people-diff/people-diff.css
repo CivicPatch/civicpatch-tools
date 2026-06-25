@@ -1,5 +1,9 @@
 .people-diff {
-  --pd-cols: 7rem 1fr 2rem 1fr; /* label | old | copy-gutter | new */
+  /* label | old | copy-gutter | new. Value columns are capped (not greedy 1fr)
+     so short values don't float apart; the old column is right-aligned (below)
+     so old/new hug the copy arrow and read as a tight pair. Widths are kept tight
+     enough that two cards fit side-by-side under the nav width (see __rows). */
+  --pd-cols: 6rem minmax(0, 11rem) 1.5rem minmax(0, 16rem);
   --pd-changed-bg: #fef3c7;
   --pd-changed-fg: #92400e;
   /* Dense form controls (pico sizes inputs/selects/buttons from these vars —
@@ -9,6 +13,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
 }
 
 /* pico applies margin-bottom + a tall 1.5 line-height to form controls; reset
@@ -120,13 +127,27 @@
   letter-spacing: 0.05em;
   color: var(--pico-muted-color);
 }
-.people-diff__rows { display: flex; flex-direction: column; gap: 0.25rem; }
+/* Cards flow into as many columns as fit (~one per 37rem), so wide screens show
+   two people side-by-side instead of one skinny centered column. Multi-column
+   (not grid) so cards of differing heights pack top-to-bottom without the gaps a
+   rigid grid leaves when a short card sits beside a tall one. */
+.people-diff__rows {
+  columns: 37rem;
+  column-gap: 0.75rem;
+}
 
 /* Person card */
 .people-diff__person {
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius);
   overflow: hidden;
+  /* Cap to the card's natural content width and center within its column, so a
+     lone card (single-column) doesn't stretch its fields wide again. */
+  max-width: 37rem;
+  margin-inline: auto;
+  /* Keep each card whole within a column and space stacked cards vertically. */
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
 }
 .people-diff__person-header {
   display: grid;
@@ -134,12 +155,39 @@
   gap: 0.5rem;
   align-items: center;
   padding: 0.25rem 0.5rem;
+  /* Hold a constant height so the header doesn't resize when its controls swap
+     (copy-arrow vs none, Reset/Delete vs Undo, which differ in height). */
+  min-height: 2.1rem;
 }
 .people-diff__hdr-main { grid-column: 1 / 3; display: flex; align-items: baseline; gap: 0.35rem; }
 .people-diff__person--changed .people-diff__person-header { background: var(--pd-changed-bg); }
 .people-diff__person--added .people-diff__person-header { background: var(--pico-ins-background); }
 .people-diff__person--removed .people-diff__person-header { background: var(--pico-del-background); }
 .people-diff__person--unchanged .people-diff__person-header { background: var(--pico-card-background-color); }
+
+/* Deleted ghost: the card keeps its slot, struck through + dimmed, and is dropped
+   on publish. Undo (in the row actions) restores it. */
+.people-diff__person--deleted { opacity: 0.55; }
+.people-diff__person--deleted .people-diff__person-header { background: var(--pico-del-background); }
+.people-diff__person--deleted .people-diff__name { text-decoration: line-through; }
+/* Delete is a quiet, no-fill action: it reads in the normal text color (good
+   contrast on the tinted card headers, where muted gray washes out) and turns
+   red on hover to signal intent. */
+.people-diff__delete.btn-ghost {
+  color: inherit;
+  font-size: var(--text-xs);
+}
+.people-diff__delete.btn-ghost:hover {
+  color: var(--pico-del-color);
+}
+
+/* This is a data-entry surface, so its action buttons read in the content (sans)
+   font — not the monospace chrome the global .btn-sm applies to small buttons. */
+.people-diff__reset,
+.people-diff__delete,
+.people-diff__add-person {
+  font-family: var(--pico-font-family);
+}
 
 .people-diff__status {
   font-size: 0.6rem;
@@ -169,7 +217,7 @@
 }
 .people-diff__req { color: var(--pico-del-color); font-weight: 700; }
 .people-diff__cell { min-width: 0; word-break: break-word; font-size: var(--text-sm); }
-.people-diff__cell--old { color: var(--pico-muted-color); padding-top: 0.3rem; }
+.people-diff__cell--old { color: var(--pico-muted-color); padding-top: 0.3rem; text-align: right; }
 .people-diff__cell--old del { text-decoration: line-through; }
 .people-diff__cell--old .people-diff__input,
 .people-diff__cell--new .people-diff__input { font-size: var(--text-sm); }

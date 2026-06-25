@@ -184,11 +184,12 @@ function renderDivisionNewSide(field: FieldSpec, newRecord: any, save: Save, jur
   return html`
     <div class="people-diff__division">
       <select class="people-diff__division-select" aria-label="Division type"
+        .value=${division.type}
         @change=${(e: Event) => save(buildFieldUpdate(newRecord, field.key, rebuild((e.target as HTMLSelectElement).value, "")))}>
-        ${isOther ? html`<option selected disabled>Custom: ${newOcdid}</option>` : ""}
-        <option value=${DIVISION_AT_LARGE} ?selected=${atLarge}>At-large (no district)</option>
-        <option value="council_district" ?selected=${division.type === "council_district"}>Council District</option>
-        <option value="ward" ?selected=${division.type === "ward"}>Ward</option>
+        ${isOther ? html`<option value=${DIVISION_OTHER} disabled>Custom: ${newOcdid}</option>` : ""}
+        <option value=${DIVISION_AT_LARGE}>At-large (no district)</option>
+        <option value="council_district">Council District</option>
+        <option value="ward">Ward</option>
       </select>
       ${atLarge || isOther
         ? ""
@@ -278,20 +279,33 @@ function renderRow(
   const name = newRecord?.name || oldRecord?.name || DASH;
   const save: Save = (updates) => onPersonSave(newRecord.id, updates);
   const isDirty = newRecord?._dirty;
+  const isDeleted = !!newRecord?._deleted;
+  // A deleted person stays in its slot as a struck-through ghost (omitted on
+  // publish, so the record is dropped); Undo restores it. Removed people
+  // (scrape-dropped, no new-side record) aren't deletable here.
+  const canDelete = !isReadOnly && status !== "removed" && !!newRecord && !isDeleted;
+  const displayStatus = isDeleted ? "deleted" : status;
+  const handleDelete = () => save({ _deleted: true });
+  const handleUndo = () => save({ _deleted: false });
   return html`
-    <div class="people-diff__person people-diff__person--${status}">
+    <div class="people-diff__person people-diff__person--${displayStatus}">
       <div class="people-diff__person-header">
         <div class="people-diff__hdr-main">
-          <span class="people-diff__status">${status}</span>
+          <span class="people-diff__status">${displayStatus}</span>
           <span class="people-diff__name">${name}</span>
         </div>
         <div class="people-diff__gutter">
-          ${copyArrow(status === "changed" && !isReadOnly, () => save({ ...oldRecord, id: newRecord.id }))}
+          ${copyArrow(status === "changed" && !isReadOnly && !isDeleted, () => save({ ...oldRecord, id: newRecord.id }))}
         </div>
         <div class="people-diff__row-actions">
-          ${isDirty && !isReadOnly && onResetPerson
-            ? html`<button class="people-diff__reset btn-sm" @click=${() => onResetPerson(newRecord.id)}>Reset</button>`
-            : ""}
+          ${isDeleted
+            ? html`<button class="people-diff__undo btn-sm" @click=${handleUndo}>Undo</button>`
+            : html`${isDirty && !isReadOnly && onResetPerson
+                ? html`<button class="people-diff__reset btn-sm" @click=${() => onResetPerson(newRecord.id)}>Reset</button>`
+                : ""}
+              ${canDelete
+                ? html`<button class="people-diff__delete btn-ghost" @click=${handleDelete}>Delete</button>`
+                : ""}`}
         </div>
       </div>
       <div class="people-diff__fields">
@@ -316,14 +330,20 @@ function PeopleDiff({ existing, currentPeople, onPersonSave, onAdd, onResetPerso
     unchanged: unchangedEntries.length,
   };
 
-  // Added people float to the top (a freshly-added blank lands there to fill in),
-  // then changed, then removed. Stable sort keeps newest-added first.
-  const TYPE_ORDER: Record<string, number> = { added: 0, changed: 1, removed: 2 };
+  // Preserve list order: each card keeps its currentPeople slot, so editing a
+  // person never re-sorts the list out from under the reviewer. Newly-added
+  // people are prepended to currentPeople, so they land at the top. Removed
+  // people (scrape-dropped, not in the list) trail at the end.
+  const newsIndex = new Map(news.map((p, i) => [p?.id, i]));
   const matchesFilter = (type: string) => activeFilter === "all" || activeFilter === type;
-  const visibleDiffs = diffEntries
-    .filter((e) => matchesFilter(e.type))
-    .sort((a, b) => (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9));
-  const visibleUnchanged = matchesFilter("unchanged") ? unchangedEntries : [];
+  const ordered = [...diffEntries, ...unchangedEntries].sort((a, b) => {
+    const ai = newsIndex.get(a.person?.id);
+    const bi = newsIndex.get(b.person?.id);
+    if (ai === undefined) return bi === undefined ? 0 : 1;
+    if (bi === undefined) return -1;
+    return ai - bi;
+  });
+  const visible = ordered.filter((e) => matchesFilter(e.type));
 
   if (counts.all === 0) {
     return html`<div class="people-diff">
@@ -360,8 +380,7 @@ function PeopleDiff({ existing, currentPeople, onPersonSave, onAdd, onResetPerso
         <span>New — editable</span>
       </div>
       <div class="people-diff__rows">
-        ${visibleDiffs.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid))}
-        ${visibleUnchanged.map(({ person, from }) => renderRow("unchanged", from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid))}
+        ${visible.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid))}
       </div>
     </div>
   `;

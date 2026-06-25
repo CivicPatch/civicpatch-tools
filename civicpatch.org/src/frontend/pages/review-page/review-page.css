@@ -1,5 +1,5 @@
 .review-page {
-    max-width: 1800px;
+    max-width: var(--page-width);
     margin: 0 auto;
     padding: 1rem 1.5rem;
     display: flex;
