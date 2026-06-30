@@ -171,3 +171,20 @@ export function fieldError(field: FieldSpec, record: any): string | null {
   }
   return null;
 }
+
+// ── Linking an added person to an existing record ────────────────────────────
+
+// "Link to person": an unmatched scraped person (an `added` row) is actually an
+// existing old-side record. The scraped person adopts the existing id, so on
+// publish it overlays that record by id instead of inserting a duplicate (the
+// reviewer keeps the scraped fields). The existing person's name and aliases fold
+// into other_names so the *next* scrape resolves by alias instead of re-proposing
+// the same person.
+export function buildLinkUpdates(added: any, target: any): { id: string; other_names: string[] } {
+  // The target's old name and both sides' aliases all become aliases of the
+  // linked record — deduped, minus blanks and the added person's own name
+  // (which stays the primary name).
+  const candidates = [target?.name, ...(target?.other_names ?? []), ...(added?.other_names ?? [])];
+  const other_names = [...new Set(candidates)].filter((alias) => alias && alias !== added?.name);
+  return { id: target.id, other_names };
+}

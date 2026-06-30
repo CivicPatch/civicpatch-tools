@@ -9,6 +9,7 @@ import {
   isTermOrderValid,
   isRequiredFieldEmpty,
   fieldError,
+  buildLinkUpdates,
   type FieldSpec,
 } from "../components/people-diff/diff-model.js";
 
@@ -208,5 +209,40 @@ describe("fieldError", () => {
   it("returns null for a valid field", () => {
     expect(fieldError(nameField, { name: "Maria" })).toBeNull();
     expect(fieldError(endField, { start_date: "2021", end_date: "2025" })).toBeNull();
+  });
+});
+
+describe("buildLinkUpdates", () => {
+  it("adopts the target's id", () => {
+    const result = buildLinkUpdates({ id: "new", name: "Bob" }, { id: "old", name: "Robert" });
+    expect(result.id).toBe("old");
+  });
+
+  it("folds the target's old name into other_names as an alias", () => {
+    const result = buildLinkUpdates({ id: "new", name: "Bob Smith" }, { id: "old", name: "Robert Smith" });
+    expect(result.other_names).toContain("Robert Smith");
+  });
+
+  it("keeps both the target's and the added person's existing aliases", () => {
+    const added = { id: "new", name: "Bob", other_names: ["Bobby"] };
+    const target = { id: "old", name: "Robert", other_names: ["Rob"] };
+    expect(buildLinkUpdates(added, target).other_names).toEqual(["Robert", "Rob", "Bobby"]);
+  });
+
+  it("drops the added person's own name from the aliases", () => {
+    const added = { id: "new", name: "Bob" };
+    const target = { id: "old", name: "Bob", other_names: ["Bob"] };
+    expect(buildLinkUpdates(added, target).other_names).not.toContain("Bob");
+  });
+
+  it("dedupes aliases", () => {
+    const added = { id: "new", name: "Bob", other_names: ["Rob"] };
+    const target = { id: "old", name: "Robert", other_names: ["Rob", "Robert"] };
+    expect(buildLinkUpdates(added, target).other_names).toEqual(["Robert", "Rob"]);
+  });
+
+  it("handles records with no aliases", () => {
+    const result = buildLinkUpdates({ id: "new", name: "Bob" }, { id: "old", name: "Robert" });
+    expect(result.other_names).toEqual(["Robert"]);
   });
 });
