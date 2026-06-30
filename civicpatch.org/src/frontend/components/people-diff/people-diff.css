@@ -189,6 +189,14 @@
   font-family: var(--pico-font-family);
 }
 
+/* "Link to person" picker on an added card — compact, content font. */
+.people-diff__link {
+  width: auto;
+  font-size: var(--text-xs);
+  font-family: var(--pico-font-family);
+  padding: 0.1rem 1.3rem 0.1rem 0.4rem;
+}
+
 .people-diff__status {
   font-size: 0.6rem;
   font-weight: 700;

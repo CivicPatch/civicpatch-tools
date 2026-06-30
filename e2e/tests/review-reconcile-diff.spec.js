@@ -59,4 +59,28 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(termStartInput).toHaveClass(/people-diff__input--error/);
     await expect(termStartField.locator(".people-diff__field-error")).toContainText("YYYY");
   });
+
+  test("links an added person to a removed record", async ({ authenticatedPage: page }) => {
+    await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+    await expect(page.locator("people-diff")).toBeVisible();
+
+    // Tom is an unmatched ADDED card; Bob is an unmatched REMOVED card.
+    const tomAdded = page.locator(".people-diff__person--added").filter({ hasText: "Tom Treasurer" });
+    await expect(tomAdded).toBeVisible();
+    await expect(page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })).toBeVisible();
+
+    // Link Tom → Bob via the picker on Tom's card (value is Bob's fixture id).
+    await tomAdded.locator(".people-diff__link").selectOption("recon-bob");
+
+    // The removed Bob card is gone; Tom now pairs as a single CHANGED row.
+    await expect(page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })).toHaveCount(0);
+    const linked = page.locator(".people-diff__person--changed").filter({ hasText: "Tom Treasurer" });
+    await expect(linked).toBeVisible();
+    await expect(linked.locator(".people-diff__name")).toHaveText("Tom Treasurer");
+
+    // Old name struck on the old side; folded into other_names so the next scrape matches.
+    await expect(linked.locator(".people-diff__cell--old del").filter({ hasText: "Bob Clerk" })).toBeVisible();
+    const otherNames = linked.locator(".people-diff__field").filter({ hasText: "Other names" }).first();
+    await expect(otherNames.locator("input.people-diff__input--added")).toHaveValue("Bob Clerk");
+  });
 });
