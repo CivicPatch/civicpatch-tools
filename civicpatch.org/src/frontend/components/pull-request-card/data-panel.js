@@ -1,7 +1,7 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils";
-import { computePeopleDiff } from "../../utils/diff-utils.js";
+import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 
 const DataPanel = ({ entry }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);
@@ -41,7 +41,7 @@ const DataPanel = ({ entry }) => {
         >`,
     );
 
-    if (type === "added")
+    if (type === DiffType.ADDED)
       return html` <tr class="row--added">
         <td><ins>${name}</ins></td>
         <td></td>
@@ -50,7 +50,7 @@ const DataPanel = ({ entry }) => {
         <td>${urlLinks}</td>
       </tr>`;
 
-    if (type === "removed")
+    if (type === DiffType.REMOVED)
       return html` <tr class="row--removed">
         <td><del>${name}</del></td>
         <td><del>${beforeRole}</del></td>
@@ -59,7 +59,7 @@ const DataPanel = ({ entry }) => {
         <td>${urlLinks}</td>
       </tr>`;
 
-    if (type === "changed") {
+    if (type === DiffType.CHANGED) {
       const roleChanged = beforeRole !== afterRole;
       const divChanged = beforeDiv !== afterDiv;
       return html` <tr class="row--changed">
@@ -79,7 +79,7 @@ const DataPanel = ({ entry }) => {
       </tr>`;
     }
 
-    if (type === "unchanged")
+    if (type === DiffType.UNCHANGED)
       return html` <tr class="row--unchanged">
         <td>${name}</td>
         <td>${beforeRole}</td>

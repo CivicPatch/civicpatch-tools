@@ -2,7 +2,7 @@ import "./diff-panel.css";
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
-import { computePeopleDiff } from "../../utils/diff-utils.js";
+import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 
 const FIELDS = [
   { key: "name",                  label: "Name" },
@@ -153,8 +153,8 @@ const DiffPanel = ({ data }) => {
       </div>
       <div class="diff-panel__entries">
         ${diffEntries.map(({ type, person, from }) =>
-          type === "added"   ? renderAdded(person) :
-          type === "removed" ? renderRemoved(person) :
+          type === DiffType.ADDED   ? renderAdded(person) :
+          type === DiffType.REMOVED ? renderRemoved(person) :
                                renderChanged(person, from)
         )}
         ${showUnchanged ? unchangedEntries.map(({ person }) => renderUnchanged(person)) : ""}
