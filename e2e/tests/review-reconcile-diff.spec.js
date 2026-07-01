@@ -43,9 +43,13 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(
       page.locator(".people-diff__person--added").filter({ hasText: "Tom Treasurer" })
     ).toBeVisible();
-    await expect(
-      page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })
-    ).toBeVisible();
+    const bobRemoved = page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" });
+    await expect(bobRemoved).toBeVisible();
+
+    // A removed card has no new-side record: old values are struck, the new side
+    // is "—", and there are no editable inputs (consistent with other cards).
+    await expect(bobRemoved.locator(".people-diff__cell--old del").filter({ hasText: "Bob Clerk" })).toBeVisible();
+    await expect(bobRemoved.locator(".people-diff__cell--new input")).toHaveCount(0);
 
     // Editing round-trips: setting Office back to "Mayor" recomputes the diff live
     // and clears the changed styling.

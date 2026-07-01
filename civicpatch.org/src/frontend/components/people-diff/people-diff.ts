@@ -66,6 +66,9 @@ function renderRow(
   const handleUndo = () => save({ _deleted: false });
   const handleLink = (target: any) => save(buildLinkUpdates(newRecord, target));
   const canLink = status === DiffType.ADDED && !isReadOnly && linkCandidates.length > 0;
+  // A removed person has no new-side record — render the fields with a null new
+  // record so each shows old (struck) → "—", same as every other card's grid.
+  const fieldNewRecord = status === DiffType.REMOVED ? null : newRecord;
   return html`
     <div class="people-diff__person people-diff__person--${displayStatus}">
       <div class="people-diff__person-header">
@@ -89,7 +92,7 @@ function renderRow(
         </div>
       </div>
       <div class="people-diff__fields">
-        ${FIELD_SCHEMA.map((field) => renderField(field, oldRecord, newRecord, save, isReadOnly, jurisdictionOcdid))}
+        ${FIELD_SCHEMA.map((field) => renderField(field, oldRecord, fieldNewRecord, save, isReadOnly, jurisdictionOcdid))}
       </div>
     </div>
   `;

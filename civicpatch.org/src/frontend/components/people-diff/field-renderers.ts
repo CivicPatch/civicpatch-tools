@@ -83,7 +83,9 @@ function renderOldText(text: string, state: string) {
 
 function renderScalarField(field: FieldSpec, oldRecord: any, newRecord: any, save: Save, isReadOnly: boolean) {
   const oldValue = diffValue(oldRecord, field);
-  const state = newRecord ? fieldDiffState(oldValue, diffValue(newRecord, field), field.type) : "same";
+  // A removed card has no new record: treat its new value as empty so the field
+  // reads as `cleared` (old struck → "—"), not `same`.
+  const state = fieldDiffState(oldValue, newRecord ? diffValue(newRecord, field) : "", field.type);
   const error = !isReadOnly && newRecord ? fieldError(field, newRecord) : null;
   const hasOld = String(oldValue ?? "").trim() !== "";
   return fieldRow(field, {
@@ -176,7 +178,9 @@ function renderDivisionNewSide(field: FieldSpec, newRecord: any, save: Save, jur
 }
 
 function renderDivisionField(field: FieldSpec, oldRecord: any, newRecord: any, save: Save, isReadOnly: boolean, jurisdictionOcdid: string | null | undefined) {
-  const state = newRecord ? fieldDiffState(diffValue(oldRecord, field), diffValue(newRecord, field), field.type) : "same";
+  // A removed card has no new record: treat its new value as empty so the old
+  // division reads as `cleared` (struck → "—"), not `same`.
+  const state = fieldDiffState(diffValue(oldRecord, field), newRecord ? diffValue(newRecord, field) : "", field.type);
   const error = !isReadOnly && newRecord ? fieldError(field, newRecord) : null;
   return fieldRow(field, {
     old: renderOldText(oldRecord ? displayScalar(field, oldRecord) : "", state),
