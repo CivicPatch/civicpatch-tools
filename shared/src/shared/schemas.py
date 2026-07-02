@@ -1,6 +1,7 @@
 import re
 from datetime import datetime, timezone
 from decimal import Decimal
+from enum import Enum
 from typing import List, Optional
 from urllib.parse import urlparse
 
@@ -172,3 +173,23 @@ class PipelineRunConfig(BaseModel):
     url: str
     name: Optional[str] = None
     source_urls: Optional[List[str]] = None
+
+
+class IssueCode(str, Enum):
+    # A reviewer-facing data-quality issue. Each value is emitted by the
+    # `_check_*` named after it in review_utils (build_review_summary).
+    MISSING_OFFICIAL = "missing_official"
+    EXTRA_OFFICIAL = "extra_official"
+    TOO_FEW_PEOPLE = "too_few_people"
+    DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
+    DIVISION_NUMBERING_GAP = "division_numbering_gap"
+
+
+class Issue(BaseModel):
+    code: IssueCode
+    message: str
+    # people this issue lands on; empty for list-level issues (missing_official,
+    # division_numbering_gap, too_few_people). `field` anchors it to a cell, e.g.
+    # "office.name" — absent for whole-row / list-level issues.
+    person_ids: List[str] = []
+    field: Optional[str] = None
