@@ -50,16 +50,30 @@ async def format_output(context: PeopleCollectorContext, api_client: httpx.Async
         if existing and not resolved_person.get("ambiguous"):
             existing_name = existing.get("name") if isinstance(existing, dict) else existing.name
             existing_other_names = (existing.get("other_names") if isinstance(existing, dict) else existing.other_names) or []
-            names_differ = existing_name and existing_name != person.name
-            extra_names: List[str] = []
-            if names_differ:
-                extra_names.append(person.name)
-                if existing_name:
-                    extra_names.append(existing_name)
-            extra_names.extend(n for n in existing_other_names if isinstance(n, str))
-            person.other_names = list(dict.fromkeys(person.other_names + extra_names))
+            person.other_names = _merge_forward_other_names(
+                person.name, person.other_names, existing_name, existing_other_names
+            )
 
     return FormatOutputStep(officials=filtered_people)
+
+
+def _merge_forward_other_names(
+    person_name: str,
+    person_other_names: List[str],
+    existing_name: str | None,
+    existing_other_names: List[str],
+) -> List[str]:
+    """Carry the matched entity's confirmed aliases forward onto the freshly-scraped
+    person, so human-added `other_names` survive every run — they are the durable
+    signal that steers the next run's name matching. If the entity was renamed, both
+    the old and new names become aliases too. Deduped, order-preserving.
+
+    Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
+    """
+    # A renamed entity keeps both names as aliases; existing aliases always carry forward.
+    renamed_variants = [person_name, existing_name] if existing_name and existing_name != person_name else []
+    existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
+    return list(dict.fromkeys(person_other_names + renamed_variants + existing_aliases))
 
 
 def _maybe_add_fallback_url(person: Official) -> Official:
