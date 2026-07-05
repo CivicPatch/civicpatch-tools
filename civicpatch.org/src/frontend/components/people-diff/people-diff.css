@@ -230,6 +230,26 @@
 .people-diff__cell--old .people-diff__input,
 .people-diff__cell--new .people-diff__input { font-size: var(--text-sm); }
 
+/* Field change accent — a colored left bar (inset shadow, so it never shifts the
+   grid) plus a colored, bolder label, so a changed field is obvious at a glance
+   rather than inferred from the copy arrow. Same amber/green/red vocabulary as
+   the card headers and filter chips. Unchanged rows stay plain and recede. */
+.people-diff__field--changed {
+  box-shadow: inset 3px 0 0 var(--pd-changed-fg);
+  background: color-mix(in srgb, var(--pd-changed-bg) 45%, var(--pico-card-background-color));
+}
+.people-diff__field--added {
+  box-shadow: inset 3px 0 0 var(--pico-ins-color);
+  background: color-mix(in srgb, var(--pico-ins-background) 60%, var(--pico-card-background-color));
+}
+.people-diff__field--cleared {
+  box-shadow: inset 3px 0 0 var(--pico-del-color);
+  background: color-mix(in srgb, var(--pico-del-background) 60%, var(--pico-card-background-color));
+}
+.people-diff__field--changed .people-diff__label { color: var(--pd-changed-fg); font-weight: 700; }
+.people-diff__field--added .people-diff__label { color: var(--pico-ins-color); font-weight: 700; }
+.people-diff__field--cleared .people-diff__label { color: var(--pico-del-color); font-weight: 700; }
+
 /* Image diff state tints the new cell */
 .people-diff__cell--new.people-diff__cell--changed { background: var(--pd-changed-bg); border-radius: var(--pico-border-radius); }
 .people-diff__cell--new.people-diff__cell--added { background: var(--pico-ins-background); border-radius: var(--pico-border-radius); }
