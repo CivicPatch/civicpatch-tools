@@ -23,7 +23,7 @@ function ReviewChecklist({ reviewData }) {
           <h4 class="review-checklist__section-title">Issues</h4>
           <ul class="review-checklist__list">
             ${reviewData.issues.map((issue) => html`
-              <li class="review-checklist__item">${issue}</li>
+              <li class="review-checklist__item">${issue.message}</li>
             `)}
           </ul>
         </div>

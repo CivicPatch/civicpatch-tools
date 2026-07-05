@@ -6,6 +6,8 @@ from services.people_csv_export import (
     _request_to_rows,
 )
 
+pytestmark = pytest.mark.unit
+
 
 def _official(id="abc", name="Jane Doe", office_name="Mayor", office_division="ocd-division/x",
               phones=None, emails=None, urls=None, source_urls=None,
@@ -172,11 +174,14 @@ def test_request_to_rows_unchanged_included_when_flag_set():
     assert rows[0]["diff_status"] == "unchanged"
 
 
-def test_request_to_rows_review_issues_populated():
+def test_request_to_rows_review_issues_structured():
     official = _official(id="p-1")
     req = _request(
         result_data=[official],
-        review_json={"issues": ["Missing official: John", "Extra official: Jane"]},
+        review_json={"issues": [
+            {"code": "missing_official", "message": "Missing official: John"},
+            {"code": "extra_official", "message": "Extra official: Jane"},
+        ]},
     )
     rows = _request_to_rows(req, existing_people=[official], include_unchanged=True)
     assert rows[0]["review_issues"] == "Missing official: John | Extra official: Jane"
