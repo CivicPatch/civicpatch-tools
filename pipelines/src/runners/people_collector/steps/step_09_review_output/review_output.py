@@ -5,7 +5,7 @@ from runners.people_collector.schemas import (
     PipelineStatus,
 )
 from shared.utils import config_utils
-from shared.utils.review_utils import generate_review, ReviewInputs
+from shared.utils.review_utils import build_review_summary, ReviewInputs
 
 
 def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
@@ -30,7 +30,7 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
         unrecognized_roles=unrecognized_roles,
     )
 
-    result = generate_review(research_people, officials, inputs, origin_source)
+    result = build_review_summary(research_people, officials, inputs, origin_source)
 
     logger.info(f"review_output: {len(result['issues'])} issue(s) found.")
     return ReviewOutputStep(

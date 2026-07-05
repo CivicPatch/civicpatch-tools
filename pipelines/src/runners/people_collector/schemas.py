@@ -3,7 +3,7 @@ from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
 from domain.models import Person, Official
 from domain.pipeline_run_context import PipelineRunContext
-from shared.schemas import PipelineRunConfig
+from shared.schemas import Issue, PipelineRunConfig
 from shared.utils.config_utils import RoleConfig
 from shared.utils.statuses import PipelineRunStatus
 
@@ -201,7 +201,7 @@ class FormatOutputStep(BaseModel):
     officials: List[Official]
 
 class ReviewOutputStep(BaseModel):
-    issues: List[str]
+    issues: List[Issue]
     people_by_source: List[dict]
     origin_source: str = "google_gemini"
 
