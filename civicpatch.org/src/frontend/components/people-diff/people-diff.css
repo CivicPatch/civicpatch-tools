@@ -284,6 +284,27 @@
   margin-top: 0.1rem;
 }
 
+/* Person-anchored issue markers */
+.people-diff__issues {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--pd-changed-bg);
+}
+
+.people-diff__issue {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--text-sm);
+  color: var(--pd-changed-fg);
+}
+
+.people-diff__issue-icon {
+  color: var(--pico-warning-color);
+}
+
 /* Multi-value */
 .people-diff__multi { display: flex; flex-direction: column; gap: 0.2rem; }
 .people-diff__multi-row { display: flex; gap: 0.25rem; align-items: stretch; }

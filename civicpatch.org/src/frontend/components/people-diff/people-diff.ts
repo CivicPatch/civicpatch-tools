@@ -2,7 +2,7 @@ import "./people-diff.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
-import { FIELD_SCHEMA, recordsDiffer, buildLinkUpdates } from "./diff-model.js";
+import { FIELD_SCHEMA, recordsDiffer, buildLinkUpdates, indexIssuesByPersonId, type Issue } from "./diff-model.js";
 import { renderField, copyArrow, DASH, type Save } from "./field-renderers.js";
 
 // "all" = the no-filter chip; "deleted" = a UI-only card status (a deleted
@@ -23,6 +23,7 @@ const FILTERS: { key: FilterKey; label: string }[] = [
 interface PeopleDiffProps {
   existing: any[];
   currentPeople: any[];
+  issues?: Issue[];
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onAdd?: () => void;
   onResetPerson?: (id: string) => void;
@@ -43,6 +44,16 @@ function linkSelect(candidates: any[], onLink: (target: any) => void) {
   </select>`;
 }
 
+function renderIssueMarkers(issues: Issue[]) {
+  if (!issues.length) return "";
+  return html`<div class="people-diff__issues">
+    ${issues.map((issue) => html`<div class="people-diff__issue">
+      <i class="fa-solid fa-triangle-exclamation people-diff__issue-icon"></i>
+      <span>${issue.message}</span>
+    </div>`)}
+  </div>`;
+}
+
 function renderRow(
   status: string,
   oldRecord: any,
@@ -52,11 +63,17 @@ function renderRow(
   isReadOnly: boolean,
   jurisdictionOcdid: string | null | undefined,
   linkCandidates: any[],
+  issues: Issue[],
 ) {
   const name = newRecord?.name || oldRecord?.name || DASH;
   const save: Save = (updates) => onPersonSave(newRecord.id, updates);
   const isDirty = newRecord?._dirty;
   const isDeleted = !!newRecord?._deleted;
+  // Clear-on-edit: once the reviewer touches (or deletes) a card, its markers
+  // are presumed addressed and drop away. Field-less issues render at row level;
+  // field-anchored ones render under their field.
+  const showMarkers = !isDirty && !isDeleted;
+  const rowIssues = showMarkers ? issues.filter((issue) => !issue.field) : [];
   // A deleted person stays in its slot as a struck-through ghost (omitted on
   // publish, so the record is dropped); Undo restores it. Removed people
   // (scrape-dropped, no new-side record) aren't deletable here.
@@ -91,18 +108,24 @@ function renderRow(
                 : ""}`}
         </div>
       </div>
+      ${renderIssueMarkers(rowIssues)}
       <div class="people-diff__fields">
-        ${FIELD_SCHEMA.map((field) => renderField(field, oldRecord, fieldNewRecord, save, isReadOnly, jurisdictionOcdid))}
+        ${FIELD_SCHEMA.map((field) => html`
+          ${renderField(field, oldRecord, fieldNewRecord, save, isReadOnly, jurisdictionOcdid)}
+          ${renderIssueMarkers(showMarkers ? issues.filter((issue) => issue.field === field.key) : [])}
+        `)}
       </div>
     </div>
   `;
 }
 
-function PeopleDiff({ existing, currentPeople, onPersonSave, onAdd, onResetPerson, jurisdictionOcdid, isReadOnly = false }: PeopleDiffProps) {
+function PeopleDiff({ existing, currentPeople, issues = [], onPersonSave, onAdd, onResetPerson, jurisdictionOcdid, isReadOnly = false }: PeopleDiffProps) {
   const [activeFilter, setActiveFilter] = useState<FilterKey>(FILTER_ALL);
 
   const olds = Array.isArray(existing) ? existing : [];
   const news = Array.isArray(currentPeople) ? currentPeople : [];
+
+  const issuesByPersonId = indexIssuesByPersonId(issues);
   const { diffEntries, unchangedEntries } = computePeopleDiff(olds, news, recordsDiffer);
 
   const counts: Record<FilterKey, number> = {
@@ -167,7 +190,7 @@ function PeopleDiff({ existing, currentPeople, onPersonSave, onAdd, onResetPerso
         <span>New — editable</span>
       </div>
       <div class="people-diff__rows">
-        ${visible.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid, linkCandidates))}
+        ${visible.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid, linkCandidates, issuesByPersonId.get(person?.id) ?? []))}
       </div>
     </div>
   `;

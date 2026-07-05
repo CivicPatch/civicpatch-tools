@@ -10,7 +10,9 @@ import {
   isRequiredFieldEmpty,
   fieldError,
   buildLinkUpdates,
+  indexIssuesByPersonId,
   type FieldSpec,
+  type Issue,
 } from "../components/people-diff/diff-model.js";
 
 const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
@@ -244,5 +246,33 @@ describe("buildLinkUpdates", () => {
   it("handles records with no aliases", () => {
     const result = buildLinkUpdates({ id: "new", name: "Bob" }, { id: "old", name: "Robert" });
     expect(result.other_names).toEqual(["Robert"]);
+  });
+});
+
+describe("indexIssuesByPersonId", () => {
+  const extra: Issue = { code: "extra_official", message: "Extra official: Jane", person_ids: ["p2"] };
+  const dup: Issue = {
+    code: "duplicate_unique_role",
+    message: "Role 'mayor' held by multiple officials",
+    person_ids: ["p1", "p2"],
+    field: "office.name",
+  };
+
+  it("anchors an issue to each person it names", () => {
+    const byId = indexIssuesByPersonId([dup]);
+    expect(byId.get("p1")).toEqual([dup]);
+    expect(byId.get("p2")).toEqual([dup]);
+  });
+
+  it("collects multiple issues on the same card", () => {
+    const byId = indexIssuesByPersonId([extra, dup]);
+    expect(byId.get("p2")).toEqual([extra, dup]);
+  });
+
+  it("omits list-level issues (no person_ids)", () => {
+    const missing: Issue = { code: "missing_official", message: "Missing official: Bob", person_ids: [] };
+    const legacy: Issue = { code: "legacy", message: "Only 2 people found" };
+    const byId = indexIssuesByPersonId([missing, legacy]);
+    expect(byId.size).toBe(0);
   });
 });

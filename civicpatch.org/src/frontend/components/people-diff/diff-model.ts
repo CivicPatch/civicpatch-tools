@@ -188,3 +188,29 @@ export function buildLinkUpdates(added: any, target: any): { id: string; other_n
   const other_names = [...new Set(candidates)].filter((alias) => alias && alias !== added?.name);
   return { id: target.id, other_names };
 }
+
+// ── Reviewer issues → per-card anchoring ─────────────────────────────────────
+
+// A reviewer-facing issue from build_review_summary. Only person-anchored issues
+// (non-empty person_ids) mark a card; list-level issues stay in the checklist.
+// Legacy migrated issues carry only a message, hence the optionals.
+export interface Issue {
+  code: string;
+  message: string;
+  person_ids?: string[];
+  field?: string | null;
+}
+
+// Group person-anchored issues by the card (person id) they mark. One issue can
+// name several holders (e.g. a duplicated unique role), so it lands on each.
+export function indexIssuesByPersonId(issues: Issue[]): Map<string, Issue[]> {
+  const byId = new Map<string, Issue[]>();
+  for (const issue of issues) {
+    for (const id of issue.person_ids ?? []) {
+      const list = byId.get(id) ?? [];
+      list.push(issue);
+      byId.set(id, list);
+    }
+  }
+  return byId;
+}
