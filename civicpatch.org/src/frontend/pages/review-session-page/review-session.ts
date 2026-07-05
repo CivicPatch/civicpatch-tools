@@ -84,6 +84,7 @@ function ReviewSession({
       <people-diff
         .existing=${pr_people?.existing ?? []}
         .currentPeople=${currentPeople ?? []}
+        .issues=${review_data?.issues ?? []}
         .onPersonSave=${onPersonSave}
         .onAdd=${onAdd}
         .onResetPerson=${onResetPerson}

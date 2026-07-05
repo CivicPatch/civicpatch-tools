@@ -46,6 +46,16 @@ export const TX_JURISDICTION_OCDID =
 export const TX_REQUEST_ID = "00000000-0000-0000-eeee-000000000010";
 const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
+// Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
+// every proposed person renders as an "added" card. Its review_json carries
+// structured issues that anchor to proposed person ids, exercising people-diff's
+// per-card markers. Own state (me) and deep-linked by request_id, like the others.
+export const MARKERS_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:me/place:e2e_markers/government";
+export const MARKERS_REQUEST_ID = "00000000-0000-0000-eeee-000000000012";
+const MARKERS_PR_ID = "00000000-0000-0000-eeee-000000000013";
+const MARKERS_PR_NUMBER = 12;
+
 // Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
 // fresh/stale/gap/untracked colors deterministically against known OCD IDs.
 export const MAP_FIXTURES = {
@@ -245,6 +255,48 @@ export async function seedE2eFixtures() {
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER]
     );
 
+    // Issue-markers card — reconcile mode, all proposed render as added cards.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'me', 'current', '{"name":"E2E Markers City","geoid":"2300001"}', NOW())
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+      [MARKERS_JURISDICTION_OCDID]
+    );
+    // Alice & Bob both hold "Mayor" (the duplicated unique role); Carol is the extra.
+    const markersProposed = [
+      { id: "markers-alice", name: "Alice Mayor", office: { name: "Mayor", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "markers-bob", name: "Bob Council", office: { name: "Mayor", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "markers-carol", name: "Carol Extra", office: { name: "Council Member", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
+    ];
+    // extra_official → row-level marker (Carol); duplicate_unique_role → field-level
+    // marker under Office (Alice + Bob); missing_official → list-level (no card marker).
+    const markersReview = {
+      issues: [
+        { code: "extra_official", message: "Extra official: Carol Extra", person_ids: ["markers-carol"], field: null },
+        { code: "duplicate_unique_role", message: "Role 'mayor' is marked as unique but found in multiple officials: Alice Mayor, Bob Council", person_ids: ["markers-alice", "markers-bob"], field: "office.name" },
+        { code: "missing_official", message: "Missing official: Dave Absent", person_ids: [], field: null },
+      ],
+    };
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
+      [MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID, JSON.stringify(markersProposed), JSON.stringify(markersReview)]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [MARKERS_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_PR_NUMBER]
+    );
+
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
     const STALE_DAYS = 200;  // > FRESH_THRESHOLD_DAYS (90)
@@ -305,6 +357,7 @@ export async function teardownE2eFixtures() {
       [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
+      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
       await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);
