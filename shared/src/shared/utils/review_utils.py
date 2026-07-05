@@ -1,10 +1,11 @@
 import re
-from collections import Counter, defaultdict
+from collections import defaultdict
 from typing import List, Protocol, Dict, Set
 
 from pydantic import BaseModel
 
 from . import name_utils
+from shared.schemas import Issue, IssueCode
 
 
 class ReviewInputs(BaseModel):
@@ -24,57 +25,6 @@ class PersonLike(Protocol):
 class ReviewDecision(BaseModel):
     comment: str
     approved: bool
-
-
-def get_identity_issues(
-    research_people,
-    people,
-    identities: Dict[str, List[str]] | None = None,
-) -> List[str]:
-    identities = identities or {}
-    canonical_map = name_utils.build_canonical_map(
-        list(research_people) + list(people), identities
-    )
-    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
-    people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
-    return _generate_issues(research_canonicals, people_canonicals)
-
-
-def generate_review(
-    research_people,
-    people,
-    inputs: ReviewInputs | None = None,
-    origin_source: str = "google_gemini",
-):
-    inputs = inputs or ReviewInputs()
-
-    all_people = list(research_people) + list(people)
-    canonical_map = name_utils.build_canonical_map(all_people, inputs.identities)
-
-    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
-    people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
-
-    all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals)
-    issues = _generate_issues(research_canonicals, people_canonicals)
-    issues.extend(_check_people_count(people))
-    issues.extend(_check_unique_roles(people, inputs.unique_roles))
-    issues.extend(_check_division_sequence(people))
-    issues.extend(_check_office_name_sequence(people))
-    rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
-
-    return {
-        "issues": issues,
-        "people_by_source": rows,
-        "origin_source": origin_source,
-    }
-
-
-def has_data_issues(people: List[dict]) -> bool:
-    return bool(_check_people_count(people) or _check_division_sequence(people))
-
-
-def get_data_issues(people: List[dict]) -> List[str]:
-    return _check_people_count(people) + _check_division_sequence(people)
 
 
 def markdown_url_list(items: List[str]) -> str:
@@ -114,18 +64,6 @@ def _collect_all_canonicals(
     return sorted(research_canonicals | people_canonicals)
 
 
-def _generate_issues(
-    research_canonicals: Set[str],
-    people_canonicals: Set[str],
-) -> List[str]:
-    issues = []
-    for name in sorted(people_canonicals - research_canonicals):
-        issues.append(f"Extra official: {name}")
-    for name in sorted(research_canonicals - people_canonicals):
-        issues.append(f"Missing official: {name}")
-    return issues
-
-
 def _generate_rows(
     all_canonicals: List[str],
     research_canonicals: Set[str],
@@ -149,38 +87,11 @@ def _build_row(
     }
 
 
-# ── People count ──────────────────────────────────────────────────────────────
-
-def _check_people_count(people) -> List[str]:
-    if len(people) < MIN_EXPECTED_PEOPLE:
-        return [f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"]
-    return []
-
-
-# ── Unique roles ──────────────────────────────────────────────────────────────
-
 def _get_office_name(person) -> str:
     if isinstance(person, dict):
         return (person.get("office") or {}).get("name") or ""
     return getattr(getattr(person, "office", None), "name", "") or ""
 
-
-def _check_unique_roles(people, unique_roles: List[str]) -> List[str]:
-    unique_roles_set = {r.lower() for r in unique_roles}
-    role_to_persons = defaultdict(list)
-    for person in people:
-        tokens = [t.strip() for t in _get_office_name(person).lower().split(" - ") if t.strip()]
-        for token in tokens:
-            if token in unique_roles_set:
-                role_to_persons[token].append(name_utils.get_person_name(person))
-    return [
-        f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(persons)}"
-        for role, persons in role_to_persons.items()
-        if len(persons) > 1
-    ]
-
-
-# ── Division sequence ─────────────────────────────────────────────────────────
 
 def _get_division_ocdid(person) -> str:
     if isinstance(person, dict):
@@ -198,45 +109,93 @@ def _parse_division_entries(people) -> List[tuple]:
     return entries
 
 
-def _missing_division_issues(label: str, numbers: List[int]) -> List[str]:
-    expected = set(range(min(numbers), max(numbers) + 1))
+def _get_person_id(person) -> str:
+    return person.get("id", "")
+
+
+def _check_missing_officials(research_canonicals: Set[str], people_canonicals: Set[str]) -> List[Issue]:
     return [
-        f"Missing official with {label} {n}"
-        for n in sorted(expected - set(numbers))
+        Issue(code=IssueCode.MISSING_OFFICIAL, message=f"Missing official: {name}", person_ids=[])
+        for name in sorted(research_canonicals - people_canonicals)
     ]
 
 
-def _inconsistent_count_issues(label: str, numbers: List[int]) -> List[str]:
-    counts = Counter(numbers)
-    expected_count = Counter(counts.values()).most_common(1)[0][0]
+def _check_extra_officials(people, canonical_map: Dict[str, str], research_canonicals: Set[str]) -> List[Issue]:
+    issues = []
+    for person in people:
+        if canonical_map[name_utils.get_person_name(person)] in research_canonicals:
+            continue
+        person_id = _get_person_id(person)
+        issues.append(
+            Issue(
+                code=IssueCode.EXTRA_OFFICIAL,
+                message=f"Extra official: {name_utils.get_person_name(person)}",
+                person_ids=[person_id] if person_id else [],
+            )
+        )
+    return issues
+
+
+def _check_too_few_people(people) -> List[Issue]:
+    if len(people) >= MIN_EXPECTED_PEOPLE:
+        return []
+    message = f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"
+    return [Issue(code=IssueCode.TOO_FEW_PEOPLE, message=message, person_ids=[])]
+
+
+def _check_duplicate_unique_roles(people, unique_roles: List[str]) -> List[Issue]:
+    unique_roles_set = {r.lower() for r in unique_roles}
+    role_to_holders = defaultdict(list)  # role -> [(id, name), ...]
+    for person in people:
+        tokens = [t.strip() for t in _get_office_name(person).lower().split(" - ") if t.strip()]
+        for token in tokens:
+            if token in unique_roles_set:
+                role_to_holders[token].append((_get_person_id(person), name_utils.get_person_name(person)))
     return [
-        f"{label.title()} {n} has {c} official(s) (expected {expected_count})"
-        for n, c in sorted(counts.items())
-        if c != expected_count
+        Issue(
+            code=IssueCode.DUPLICATE_UNIQUE_ROLE,
+            message=f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(name for _, name in holders)}",
+            person_ids=[pid for pid, _ in holders if pid],
+            field="office.name",
+        )
+        for role, holders in role_to_holders.items()
+        if len(holders) > 1
     ]
 
 
-def _parse_office_name_entries(people) -> List[tuple]:
-    entries = []
-    for p in people:
-        for part in _get_office_name(p).split(" - "):
-            match = re.search(r"^(.+?)\s+(\d+)$", part.strip(), re.IGNORECASE)
-            if match:
-                entries.append((match.group(1).strip().lower(), int(match.group(2))))
-    return entries
-
-
-def _check_numeric_sequence(entries: List[tuple]) -> List[str]:
+def _check_division_numbering(people) -> List[Issue]:
+    entries = _parse_division_entries(people)
     if not entries:
         return []
     label = entries[0][0]
-    numbers = [n for _, n in entries]
-    return _missing_division_issues(label, numbers) + _inconsistent_count_issues(label, numbers)
+    numbers = {n for _, n in entries}
+    expected = set(range(min(numbers), max(numbers) + 1))
+    return [
+        Issue(code=IssueCode.DIVISION_NUMBERING_GAP, message=f"Missing official with {label} {n}", person_ids=[])
+        for n in sorted(expected - numbers)
+    ]
 
 
-def _check_division_sequence(people) -> List[str]:
-    return _check_numeric_sequence(_parse_division_entries(people))
+def build_review_summary(research_people, people, inputs: ReviewInputs | None = None, origin_source: str = "google_gemini") -> dict:
+    inputs = inputs or ReviewInputs()
+    # Normalize to dicts once so every check reads fields uniformly (the pipeline passes
+    # Official objects, open-data passes yaml dicts).
+    people = [p if isinstance(p, dict) else p.model_dump() for p in people]
+    research_people = [p if isinstance(p, dict) else p.model_dump() for p in research_people]
 
+    all_people = list(research_people) + list(people)
+    canonical_map = name_utils.build_canonical_map(all_people, inputs.identities)
+    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
+    people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
 
-def _check_office_name_sequence(people) -> List[str]:
-    return _check_numeric_sequence(_parse_office_name_entries(people))
+    issues: List[Issue] = [
+        *_check_missing_officials(research_canonicals, people_canonicals),
+        *_check_extra_officials(people, canonical_map, research_canonicals),
+        *_check_too_few_people(people),
+        *_check_duplicate_unique_roles(people, inputs.unique_roles),
+        *_check_division_numbering(people),
+    ]
+
+    all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals)
+    rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
+    return {"issues": issues, "people_by_source": rows, "origin_source": origin_source}

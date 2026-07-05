@@ -1,21 +1,16 @@
-import pytest
-
+from shared.schemas import Issue, IssueCode
+from shared.utils import name_utils
 from shared.utils.review_utils import (
     ReviewInputs,
     _build_row,
-    _check_division_sequence,
-    _check_office_name_sequence,
-    _check_people_count,
-    _check_unique_roles,
+    _check_division_numbering,
+    _check_duplicate_unique_roles,
+    _check_extra_officials,
+    _check_missing_officials,
+    _check_too_few_people,
     _collect_all_canonicals,
-    _generate_issues,
-    _inconsistent_count_issues,
-    _missing_division_issues,
     _parse_division_entries,
-    _parse_office_name_entries,
-    generate_review,
-    get_data_issues,
-    has_data_issues,
+    build_review_summary,
 )
 
 
@@ -35,21 +30,6 @@ def _rp(name):
 
 
 DISTRICT_OCDID = "ocd-division/country:us/state:tx/place:austin/council_district:{}"
-
-
-# ── _check_people_count ───────────────────────────────────────────────────────
-
-def test_people_count_empty():
-    assert _check_people_count([]) == ["Only 0 people found (minimum expected: 3)"]
-
-def test_people_count_below_minimum():
-    assert _check_people_count([_person()]) == ["Only 1 people found (minimum expected: 3)"]
-
-def test_people_count_at_minimum():
-    assert _check_people_count([_person()] * 3) == []
-
-def test_people_count_above_minimum():
-    assert _check_people_count([_person()] * 5) == []
 
 
 # ── _parse_division_entries ───────────────────────────────────────────────────
@@ -76,168 +56,6 @@ def test_parse_division_entries_multiple():
     ]
 
 
-# ── _missing_division_issues ──────────────────────────────────────────────────
-
-def test_missing_division_issues_no_gap():
-    assert _missing_division_issues("council district", [1, 2, 3]) == []
-
-def test_missing_division_issues_single_gap():
-    assert _missing_division_issues("council district", [1, 2, 4]) == [
-        "Missing official with council district 3"
-    ]
-
-def test_missing_division_issues_multiple_gaps():
-    issues = _missing_division_issues("council district", [1, 4])
-    assert issues == [
-        "Missing official with council district 2",
-        "Missing official with council district 3",
-    ]
-
-
-# ── _inconsistent_count_issues ────────────────────────────────────────────────
-
-def test_inconsistent_count_issues_all_same():
-    assert _inconsistent_count_issues("council district", [1, 1, 2, 2, 3, 3]) == []
-
-def test_inconsistent_count_issues_one_outlier():
-    # districts 1 and 2 have 2 each, district 3 has only 1
-    issues = _inconsistent_count_issues("council district", [1, 1, 2, 2, 3])
-    assert issues == ["Council District 3 has 1 official(s) (expected 2)"]
-
-def test_inconsistent_count_issues_all_unique():
-    assert _inconsistent_count_issues("council district", [1, 2, 3]) == []
-
-
-# ── _check_division_sequence ──────────────────────────────────────────────────
-
-def test_division_sequence_contiguous():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 2, 3]]
-    assert _check_division_sequence(people) == []
-
-def test_division_sequence_gap():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 2, 4]]
-    issues = _check_division_sequence(people)
-    assert issues == ["Missing official with council district 3"]
-
-def test_division_sequence_inconsistent_counts():
-    people = [
-        _person(division_ocdid=DISTRICT_OCDID.format(1)),
-        _person(division_ocdid=DISTRICT_OCDID.format(1)),
-        _person(division_ocdid=DISTRICT_OCDID.format(2)),
-    ]
-    issues = _check_division_sequence(people)
-    assert issues == ["Council District 2 has 1 official(s) (expected 2)"]
-
-def test_division_sequence_consistent_duplicates():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 1, 2, 2, 3, 3]]
-    assert _check_division_sequence(people) == []
-
-def test_division_sequence_no_numeric_ocdids():
-    people = [_person(division_ocdid="ocd-division/country:us/state:tx")] * 3
-    assert _check_division_sequence(people) == []
-
-def test_division_sequence_no_office():
-    assert _check_division_sequence([{"name": "Test"}] * 3) == []
-
-
-# ── _check_unique_roles ───────────────────────────────────────────────────────
-
-def test_unique_roles_no_duplicates():
-    people = [
-        _person("Alice", office_name="Mayor"),
-        _person("Bob", office_name="Council Member"),
-    ]
-    assert _check_unique_roles(people, ["Mayor"]) == []
-
-def test_unique_roles_duplicate_flagged():
-    people = [
-        _person("Alice", office_name="Mayor"),
-        _person("Bob", office_name="Mayor"),
-    ]
-    issues = _check_unique_roles(people, ["Mayor"])
-    assert len(issues) == 1
-    assert "mayor" in issues[0]
-    assert "Alice" in issues[0]
-    assert "Bob" in issues[0]
-
-def test_unique_roles_compound_office_name():
-    people = [
-        _person("Alice", office_name="Mayor - Council Member"),
-        _person("Bob", office_name="Mayor - Finance Chair"),
-    ]
-    issues = _check_unique_roles(people, ["Mayor"])
-    assert len(issues) == 1
-    assert "mayor" in issues[0].lower()
-
-def test_unique_roles_empty_unique_roles():
-    people = [_person("Alice", office_name="Mayor"), _person("Bob", office_name="Mayor")]
-    assert _check_unique_roles(people, []) == []
-
-
-# ── _parse_office_name_entries ────────────────────────────────────────────────
-
-def test_parse_office_name_entries_extracts_label_and_number():
-    people = [_person(office_name="Council Member - Place 1")]
-    assert _parse_office_name_entries(people) == [("place", 1)]
-
-def test_parse_office_name_entries_no_numeric_parts():
-    people = [_person(office_name="Mayor"), _person(office_name="At-Large")]
-    assert _parse_office_name_entries(people) == []
-
-def test_parse_office_name_entries_skips_non_numeric_tokens():
-    people = [_person(office_name="Council Member - Place 1")]
-    entries = _parse_office_name_entries(people)
-    assert ("council member", 1) not in entries
-
-def test_parse_office_name_entries_multiple():
-    people = [
-        _person(office_name="Council Member - Place 1"),
-        _person(office_name="Council Member - Place 2"),
-        _person(office_name="Council Member - Place 3"),
-    ]
-    assert _parse_office_name_entries(people) == [("place", 1), ("place", 2), ("place", 3)]
-
-
-# ── _check_office_name_sequence ───────────────────────────────────────────────
-
-def test_office_name_sequence_contiguous():
-    people = [_person(office_name=f"Council Member - Place {n}") for n in [1, 2, 3]]
-    assert _check_office_name_sequence(people) == []
-
-def test_office_name_sequence_gap():
-    people = [_person(office_name=f"Council Member - Place {n}") for n in [1, 2, 4]]
-    assert _check_office_name_sequence(people) == ["Missing official with place 3"]
-
-def test_office_name_sequence_inconsistent_counts():
-    people = [
-        _person(office_name="Council Member - Place 1"),
-        _person(office_name="Council Member - Place 1"),
-        _person(office_name="Council Member - Place 2"),
-    ]
-    assert _check_office_name_sequence(people) == ["Place 2 has 1 official(s) (expected 2)"]
-
-def test_office_name_sequence_no_numeric_parts():
-    people = [_person(office_name="Mayor"), _person(office_name="At-Large"), _person(office_name="Treasurer")]
-    assert _check_office_name_sequence(people) == []
-
-def test_parse_office_name_entries_numeric_in_middle_token():
-    # "Council Member - Seat 2 - Council" — numeric token is in the middle
-    people = [_person(office_name="Council Member - Seat 2 - Council")]
-    assert _parse_office_name_entries(people) == [("seat", 2)]
-
-def test_office_name_sequence_numeric_in_middle_gap():
-    people = [
-        _person(office_name="Council Member - Seat 1 - Council"),
-        _person(office_name="Council Member - Seat 2 - Council"),
-        _person(office_name="Council Member - Seat 4 - Council"),
-    ]
-    assert _check_office_name_sequence(people) == ["Missing official with seat 3"]
-
-def test_office_name_sequence_numeric_in_middle_contiguous():
-    people = [_person(office_name=f"Council Member - Seat {n} - Council") for n in [1, 2, 3]]
-    assert _check_office_name_sequence(people) == []
-
-
 # ── _collect_all_canonicals ───────────────────────────────────────────────────
 
 def test_collect_all_canonicals_union_and_sorted():
@@ -245,23 +63,6 @@ def test_collect_all_canonicals_union_and_sorted():
 
 def test_collect_all_canonicals_empty():
     assert _collect_all_canonicals(set(), set()) == []
-
-
-# ── _generate_issues ──────────────────────────────────────────────────────────
-
-def test_generate_issues_clean():
-    assert _generate_issues({"Alice", "Bob"}, {"Alice", "Bob"}) == []
-
-def test_generate_issues_extra():
-    assert _generate_issues({"Alice"}, {"Alice", "Bob"}) == ["Extra official: Bob"]
-
-def test_generate_issues_missing():
-    assert _generate_issues({"Alice", "Bob"}, {"Alice"}) == ["Missing official: Bob"]
-
-def test_generate_issues_both():
-    issues = _generate_issues({"Alice", "Carol"}, {"Alice", "Bob"})
-    assert "Extra official: Bob" in issues
-    assert "Missing official: Carol" in issues
 
 
 # ── _build_row ────────────────────────────────────────────────────────────────
@@ -282,52 +83,109 @@ def test_build_row_data_only():
     }
 
 
-# ── has_data_issues / get_data_issues ─────────────────────────────────────────
+# ── Structured issues: build_review_summary + the _check_* → Issue functions ──
 
-def test_has_data_issues_false_when_clean():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 2, 3]]
-    assert has_data_issues(people) is False
-
-def test_has_data_issues_true_for_low_count():
-    assert has_data_issues([_person()]) is True
-
-def test_has_data_issues_true_for_gap():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 3, 5]]
-    assert has_data_issues(people) is True
-
-def test_get_data_issues_empty_when_clean():
-    people = [_person(division_ocdid=DISTRICT_OCDID.format(n)) for n in [1, 2, 3]]
-    assert get_data_issues(people) == []
-
-def test_get_data_issues_returns_count_issue():
-    issues = get_data_issues([_person()])
-    assert any("Only 1" in i for i in issues)
+def _official(name, person_id="", office_name=None, division_ocdid=None):
+    office = {}
+    if office_name is not None:
+        office["name"] = office_name
+    if division_ocdid is not None:
+        office["division_ocdid"] = division_ocdid
+    return {"name": name, "id": person_id, "office": office}
 
 
-# ── generate_review ───────────────────────────────────────────────────────────
+def test_check_missing_officials_is_list_level():
+    issues = _check_missing_officials({"alice", "bob"}, {"alice"})
+    assert len(issues) == 1
+    assert issues[0].code == IssueCode.MISSING_OFFICIAL
+    assert "bob" in issues[0].message.lower()
+    assert issues[0].person_ids == []
+    assert issues[0].field is None
 
-def test_generate_review_clean():
-    research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
-    people = [_person(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
-    result = generate_review(research, people)
-    assert result["issues"] == []
-    assert len(result["people_by_source"]) == 3
 
-def test_generate_review_missing_official():
-    research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
-    people = [_person(n) for n in ["Alice Smith", "Carol White", "Carol White"]]
-    result = generate_review(research, people)
-    assert any("Missing official" in i for i in result["issues"])
+def test_check_extra_officials_anchors_to_person_id():
+    people = [_official("Carol White", person_id="c1")]
+    canonical_map = name_utils.build_canonical_map(people, {})
+    issues = _check_extra_officials(people, canonical_map, research_canonicals=set())
+    assert len(issues) == 1
+    assert issues[0].code == IssueCode.EXTRA_OFFICIAL
+    assert issues[0].person_ids == ["c1"]
 
-def test_generate_review_too_few_people():
-    research = [_rp("Alice Smith")]
-    people = [_person("Alice Smith")]
-    result = generate_review(research, people)
-    assert any("minimum expected" in i for i in result["issues"])
 
-def test_generate_review_with_identities():
-    research = [_rp(n) for n in ["Alice Smith", "Bob Jones", "Carol White"]]
-    people = [_person(n) for n in ["Al Smith", "Bob Jones", "Carol White"]]
-    inputs = ReviewInputs(identities={"Alice Smith": ["Al Smith"]})
-    result = generate_review(research, people, inputs)
-    assert result["issues"] == []
+def test_check_extra_officials_new_person_degrades_to_list_level():
+    people = [_official("New Person", person_id="")]  # not yet in the DB
+    canonical_map = name_utils.build_canonical_map(people, {})
+    issues = _check_extra_officials(people, canonical_map, research_canonicals=set())
+    assert issues[0].person_ids == []
+
+
+def test_check_too_few_people():
+    issues = _check_too_few_people([_official("A"), _official("B")])
+    assert len(issues) == 1
+    assert issues[0].code == IssueCode.TOO_FEW_PEOPLE
+    assert issues[0].person_ids == []
+    assert _check_too_few_people([_official(f"P{i}") for i in range(5)]) == []
+
+
+def test_check_duplicate_unique_roles_anchors_to_holders():
+    people = [
+        _official("A", person_id="a1", office_name="Mayor"),
+        _official("B", person_id="b1", office_name="Mayor"),
+        _official("C", person_id="c1", office_name="Clerk"),
+    ]
+    issues = _check_duplicate_unique_roles(people, ["Mayor"])
+    assert len(issues) == 1
+    assert issues[0].code == IssueCode.DUPLICATE_UNIQUE_ROLE
+    assert issues[0].field == "office.name"
+    assert set(issues[0].person_ids) == {"a1", "b1"}
+
+
+def test_check_division_numbering_gap_is_list_level():
+    people = [
+        _official("A", division_ocdid=DISTRICT_OCDID.format(1)),
+        _official("B", division_ocdid=DISTRICT_OCDID.format(3)),  # gap at 2
+    ]
+    issues = _check_division_numbering(people)
+    assert len(issues) == 1
+    assert issues[0].code == IssueCode.DIVISION_NUMBERING_GAP
+    assert "2" in issues[0].message
+    assert issues[0].person_ids == []
+
+
+def test_build_review_summary_returns_structured_issues():
+    research = [_rp("Alice Smith"), _rp("Bob Jones")]
+    people = [_official("Alice Smith", person_id="a1", office_name="Mayor")]  # Bob missing, too few
+    result = build_review_summary(research, people)
+    assert result["origin_source"] == "google_gemini"
+    assert "people_by_source" in result
+    issues = result["issues"]
+    assert issues and all(isinstance(i, Issue) for i in issues)
+    codes = {i.code for i in issues}
+    assert IssueCode.MISSING_OFFICIAL in codes  # Bob Jones
+    assert IssueCode.TOO_FEW_PEOPLE in codes    # 1 < 3
+
+
+def test_build_review_summary_normalizes_official_objects():
+    from shared.schemas import Office, Official
+
+    official = Official(
+        name="Jane",
+        office=Office(name="Mayor"),
+        jurisdiction_ocdid="ocd-jurisdiction/country:us/state:co/place:denver/government",
+        source_urls=["https://denvergov.org/council"],
+        updated_at="2025-06-27T19:43:55+00:00",
+        id="j1",
+    )
+    # Passing Official objects (not dicts) must not raise — they normalize via model_dump.
+    result = build_review_summary([], [official])
+    assert all(isinstance(i, Issue) for i in result["issues"])
+
+
+def test_build_review_summary_matches_aliases():
+    # An explicit identity alias must not read as a missing/extra official.
+    research = [_rp("Michelle Drass"), _rp("Bob Jones"), _rp("Carol White")]
+    people = [_official("Michelle D Rass"), _official("Bob Jones"), _official("Carol White")]
+    inputs = ReviewInputs(identities={"Michelle Drass": ["Michelle D Rass"]})
+    codes = {i.code for i in build_review_summary(research, people, inputs)["issues"]}
+    assert IssueCode.MISSING_OFFICIAL not in codes
+    assert IssueCode.EXTRA_OFFICIAL not in codes
