@@ -60,9 +60,9 @@ export function copyArrow(show: boolean, onCopy: () => void) {
     : "";
 }
 
-function fieldRow(field: FieldSpec, parts: { old: unknown; copy?: unknown; new: unknown; error?: string | null }) {
+function fieldRow(field: FieldSpec, state: string, parts: { old: unknown; copy?: unknown; new: unknown; error?: string | null }) {
   return html`
-    <div class="people-diff__field">
+    <div class="people-diff__field people-diff__field--${state}">
       <div class="people-diff__label">${renderLabel(field)}</div>
       <div class="people-diff__cell people-diff__cell--old">${parts.old}</div>
       <div class="people-diff__gutter">${parts.copy ?? ""}</div>
@@ -88,7 +88,7 @@ function renderScalarField(field: FieldSpec, oldRecord: any, newRecord: any, sav
   const state = fieldDiffState(oldValue, newRecord ? diffValue(newRecord, field) : "", field.type);
   const error = !isReadOnly && newRecord ? fieldError(field, newRecord) : null;
   const hasOld = String(oldValue ?? "").trim() !== "";
-  return fieldRow(field, {
+  return fieldRow(field, state, {
     old: renderOldText(oldRecord ? displayScalar(field, oldRecord) : "", state),
     copy: copyArrow(!isReadOnly && !!newRecord && hasOld && state !== "same", () => save(buildFieldUpdate(newRecord, field.key, oldValue))),
     error,
@@ -132,7 +132,10 @@ function renderMultiField(field: FieldSpec, oldRecord: any, newRecord: any, save
   // Multi copy ADDS the old values that aren't already in new (union), rather
   // than replacing — so you don't lose what the scrape found.
   const oldOnly = oldValues.filter((v) => !newSet.has(normalizeMultiValue(v)));
-  return fieldRow(field, {
+  const hasAdded = newValues.some((v) => !oldSet.has(normalizeMultiValue(v)));
+  const hasRemoved = oldOnly.length > 0;
+  const state = hasAdded && hasRemoved ? "changed" : hasAdded ? "added" : hasRemoved ? "cleared" : "same";
+  return fieldRow(field, state, {
     copy: copyArrow(!isReadOnly && !!newRecord && oldOnly.length > 0, () => setValues([...newValues, ...oldOnly])),
     old: oldValues.length
       ? oldValues.map((value) => {
@@ -182,7 +185,7 @@ function renderDivisionField(field: FieldSpec, oldRecord: any, newRecord: any, s
   // division reads as `cleared` (struck → "—"), not `same`.
   const state = fieldDiffState(diffValue(oldRecord, field), newRecord ? diffValue(newRecord, field) : "", field.type);
   const error = !isReadOnly && newRecord ? fieldError(field, newRecord) : null;
-  return fieldRow(field, {
+  return fieldRow(field, state, {
     old: renderOldText(oldRecord ? displayScalar(field, oldRecord) : "", state),
     copy: copyArrow(!isReadOnly && !!newRecord && String(diffValue(oldRecord, field) ?? "").trim() !== "" && state !== "same", () => save(buildFieldUpdate(newRecord, field.key, diffValue(oldRecord, field)))),
     error,
@@ -204,7 +207,8 @@ function renderSourceUrlsField(field: FieldSpec, oldRecord: any, newRecord: any,
   const oldValues = (diffValue(oldRecord, field) as string[]) ?? [];
   const newValues = (diffValue(newRecord, field) as string[]) ?? [];
   const setValues = (values: string[]) => save({ source_urls: values });
-  return fieldRow(field, {
+  // source_urls are documentation, not part of recordsDiffer — never accented.
+  return fieldRow(field, "same", {
     old: oldValues.length ? sourceLinks(oldValues) : DASH,
     new: !newRecord
       ? DASH
@@ -224,10 +228,11 @@ function renderSourceUrlsField(field: FieldSpec, oldRecord: any, newRecord: any,
 
 function renderImageField(field: FieldSpec, oldRecord: any, newRecord: any, save: Save, isReadOnly: boolean) {
   const hasNewImage = !!newRecord?.image;
+  const state = fieldDiffState(oldRecord ? diffValue(oldRecord, field) : "", newRecord?.image ?? "", "image");
   // Old side always displays cdn_image (person-image's default); the new side
   // always uses the scraped `image`, fed in as cdn_image so person-image shows it.
   const newPerson = newRecord && { ...newRecord, cdn_image: newRecord.image };
-  return fieldRow(field, {
+  return fieldRow(field, state, {
     old: oldRecord ? html`<person-image .person=${oldRecord} size="2.75rem"></person-image>` : DASH,
     new: !newRecord
       ? DASH
