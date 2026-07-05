@@ -23,7 +23,7 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
           ${reviewData.issues.map(issue => html`
             <li class="review-issues__item">
               <i class="fa-solid fa-triangle-exclamation review-issues__icon"></i>
-              ${issue}
+              ${issue.message}
             </li>
           `)}
         </ul>

@@ -125,7 +125,8 @@ def _flatten_official(
 
 
 def _request_to_rows(request: dict, existing_people: list[dict], include_unchanged: bool) -> list[dict]:
-    review_issues = " | ".join((request["review_json"] or {}).get("issues") or [])
+    issues = (request["review_json"] or {}).get("issues") or []
+    review_issues = " | ".join(issue["message"] for issue in issues)
     result_data = request["data_json"] or []
 
     existing_map = {p["id"]: p for p in existing_people if p.get("id")}
