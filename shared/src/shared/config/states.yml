@@ -4,6 +4,8 @@
   name: "Maine"
 - code: "mi"
   name: "Michigan"
+- code: "nc"
+  name: "North Carolina"
 - code: "nh"
   name: "New Hampshire"
 - code: "nj"
