@@ -259,6 +259,7 @@ async def search_jurisdictions(
     where_clauses: list[sql.Composable] = [
         sql.SQL("state = %s"),
         sql.SQL("status = 'current'"),
+        sql.SQL("level = 'local'"),
     ]
     params = [state.lower()]
 
