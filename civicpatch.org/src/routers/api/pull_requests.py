@@ -28,6 +28,7 @@ import database.review_session_entries as review_session_entries_db
 import database.users
 import lib.github.api as github_service
 import services.change_logs as change_logs
+import services.review_issue_report as review_issue_report_service
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
 import services.pull_request_merge as merge_service
@@ -37,7 +38,7 @@ import lib.storage as storage_service
 import lib.temporal.client as temporal_client
 from lib.temporal.types import MergeRequest
 from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, ReportReviewIssueRequest, Role, RouteCategory
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -304,6 +305,27 @@ def get_router(api_key_header):
     ):
         result = await database.pipeline_runs.get_pipeline_run_result(request_id)
         return {"data": (result or {}).get("review_json") or {}}
+
+    # -- Pull Requests: Report an issue on open-data ---
+    @router.post("/{request_id}/issues")
+    async def report_review_issue_endpoint(
+        request_id: str,
+        body: ReportReviewIssueRequest,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.AUTHENTICATED)
+        ),
+    ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
+        try:
+            result = await review_issue_report_service.report_review_issue(
+                request_id, body.description, user.user_id
+            )
+        except review_issue_report_service.ReviewNotFoundError:
+            raise HTTPException(status_code=404, detail="Pull request not found")
+        except review_issue_report_service.GithubIssueCreationError as e:
+            raise HTTPException(status_code=502, detail=str(e))
+        return {"data": result}
 
     # -- Pull Requests: Close Pull Request ---
     @router.delete("/{pull_request_number}", include_in_schema=False)

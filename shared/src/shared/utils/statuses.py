@@ -63,6 +63,9 @@ class PipelineIssueType(StrEnum):
     # Generic pipeline failure (run errored, or timed out and was expired) — the default
     # issue type when a run has no more specific error_step.
     PIPELINE_ERROR = "pipeline_error"
+    # Filed manually by a reviewer from the review page (not pipeline-detected), but follows
+    # the identical issues lifecycle above, including scrape-candidate exclusion while pending.
+    USER_REPORTED = "user_reported"
 
 
 class PullRequestStatus(StrEnum):

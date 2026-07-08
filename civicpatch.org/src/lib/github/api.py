@@ -591,6 +591,38 @@ async def add_pr_labels(
             )
 
 
+async def create_issue(
+    title: str,
+    body: str = "",
+    labels: list[str] | None = None,
+    repo_url: str | None = None,
+    headers: dict | None = None,
+) -> tuple[int, str] | tuple[None, str]:
+    """Opens an issue in the target repo.
+    Returns (issue_number, issue_url) on success, or (None, error_message) on failure."""
+    _, _, _, open_data_repo_url = _get_github_config()
+    target_repo = repo_url or open_data_repo_url
+    auth_headers = headers if headers is not None else await get_default_headers()
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.post(
+            f"{target_repo}/issues",
+            headers=auth_headers,
+            json={"title": title, "body": body, "labels": labels or []},
+        )
+        if response.status_code != 201:
+            resp_body = response.json()
+            message = resp_body.get("message", "Unknown error")
+            errors = resp_body.get("errors", [])
+            logger.error(
+                f"Failed to create issue {title!r} ({response.status_code}): {message} errors={errors}"
+            )
+            return None, message
+        data = response.json()
+    issue_number = data["number"]
+    logger.info(f"Created issue #{issue_number}: {data['html_url']}")
+    return issue_number, data["html_url"]
+
+
 async def get_tree(repo_url: str) -> RepoTree:
     url = f"{repo_url}/git/trees/main?recursive=1"
     response = await cached_github_get(url, f"github:tree:{repo_url}:main")

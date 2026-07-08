@@ -1,4 +1,5 @@
 import json
+import uuid
 from typing import Any
 
 from psycopg import sql
@@ -167,6 +168,42 @@ async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> 
             """,
             rows,
         )
+
+
+async def create_user_reported_issue(
+    request_id: str,
+    title: str,
+    body: str,
+    github_issue_url: str,
+    github_issue_number: int,
+    reported_by_user_id: str,
+) -> str:
+    data = json.dumps({
+        "title": title,
+        "body": body,
+        "github_issue_url": github_issue_url,
+        "github_issue_number": github_issue_number,
+        "reported_by_user_id": reported_by_user_id,
+    })
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
+            VALUES (%s, %s, %s, %s, %s)
+            RETURNING id::text
+            """,
+            (
+                PipelineIssueType.USER_REPORTED,
+                str(uuid.uuid4()),
+                [request_id],
+                data,
+                PipelineIssueStatus.PENDING,
+            ),
+        )
+        row = await cur.fetchone()
+    assert row, "create_user_reported_issue RETURNING returned no row"
+    return row[0]
 
 
 async def get_issues_page(

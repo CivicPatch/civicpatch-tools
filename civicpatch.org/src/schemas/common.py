@@ -110,6 +110,10 @@ class InviteUserRequest(BaseModel):
     email: str
 
 
+class ReportReviewIssueRequest(BaseModel):
+    description: str
+
+
 class PendingInvite(BaseModel):
     id: str
     email: str | None
