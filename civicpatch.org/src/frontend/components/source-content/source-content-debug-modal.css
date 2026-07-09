@@ -1,0 +1,12 @@
+.source-content-debug-modal__link {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.source-content-debug-modal__markdown {
+  border: 1px solid var(--pico-form-element-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 0.75rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}

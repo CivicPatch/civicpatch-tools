@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component, useEffect, useState } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/people-diff/people-diff.js";
-import "../../components/side-panel/side-panel.js";
+import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
 import "./report-issue-modal.js";
@@ -66,6 +66,8 @@ function ReviewSession({
   const [isReportingIssue, setIsReportingIssue] = useState(false);
   const [reportError, setReportError] = useState<string | null>(null);
   const [reportedIssues, setReportedIssues] = useState<ReportedIssue[]>([]);
+  const [debugOpen, setDebugOpen] = useState(false);
+  const hasSourceContent = Boolean(source_content_urls && source_content_urls.length > 0);
 
   const requestId = currentEntry?.request_id ?? null;
 
@@ -136,6 +138,7 @@ function ReviewSession({
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+          ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
           <button class="btn btn-sm secondary" @click=${handleReportIssueOpen}>Report issue</button>
           ${reportedIssues.length
             ? html`
@@ -168,9 +171,6 @@ function ReviewSession({
         .jurisdictionOcdid=${jurisdictionOcdid}
         .isReadOnly=${is_read_only}
       ></people-diff>
-      <div class="review-page__content">
-        <civ-side-panel .sourceContentUrls=${source_content_urls}></civ-side-panel>
-      </div>
       ${showReportModal
         ? html`
             <report-issue-modal
@@ -179,6 +179,14 @@ function ReviewSession({
               @modal-close=${handleReportIssueClose}
               @report-issue-confirmed=${handleReportIssueConfirmed}
             ></report-issue-modal>
+          `
+        : null}
+      ${debugOpen
+        ? html`
+            <source-content-debug-modal
+              .sourceContentUrls=${source_content_urls}
+              @modal-close=${() => setDebugOpen(false)}
+            ></source-content-debug-modal>
           `
         : null}
     </main>
