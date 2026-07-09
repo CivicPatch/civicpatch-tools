@@ -1,5 +1,8 @@
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
 
@@ -146,6 +149,10 @@ def permissions_client():
     app = FastAPI()
     templates = Jinja2Templates(directory="src/frontend/templates")
     app.include_router(get_router(templates))
+    # layouts/base.html resolves CSS/JS via url_for('frontend', path=...) — mount matches
+    # main.py's real one so any test rendering a full page template (extends base.html)
+    # doesn't 500/NoMatchFound on assets it never actually requests in a unit test.
+    app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
     return app
 
 
@@ -186,3 +193,27 @@ def test_permissions_endpoint_admin(permissions_client):
     assert data["data"]["permissions"]["can_view_queue_page_errors"] is True
     # Under the ladder, admin >= maintainer, so scrape_remote is now True.
     assert data["data"]["permissions"]["can_scrape_remote"] is True
+
+
+# ── GET /{state}/local ────────────────────────────────────────────────────────
+# Must be registered ahead of the /{path:path} catch-all (jurisdiction_page), which
+# requires >=3 path segments and would otherwise 404 on a bare "{state}/local".
+
+@pytest.mark.unit
+def test_municipalities_page_takes_priority_over_catch_all(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client)
+    response = client.get("/nc/local")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+
+
+@pytest.mark.unit
+def test_catch_all_still_handles_three_segment_jurisdiction_paths(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client)
+    # Unrelated to the new route: a well-formed 3-segment path should still reach
+    # jurisdiction_page (mocked here as "not found"), not the new /{state}/local route.
+    with patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value=None):
+        response = client.get("/nc/local/place_does_not_exist")
+    assert response.status_code == 404

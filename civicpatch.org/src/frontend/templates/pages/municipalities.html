@@ -1,0 +1,7 @@
+{% extends "layouts/base.html" %}
+{% block title %}{{ state.upper() }} municipalities{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<p>Municipalities for {{ state.upper() }} — coming soon.</p>
+{% endblock %}

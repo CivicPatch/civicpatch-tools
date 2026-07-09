@@ -26,6 +26,17 @@ MOCK_LOCAL_STATUS = {
     "ocd-jurisdiction/country:us/state:co/place:denver/government": "fresh",
 }
 
+MOCK_MUNICIPALITY_LIST = [
+    {
+        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:denver/government",
+        "name": "Denver",
+        "status": "fresh",
+        "officials_count": 12,
+        "last_verified_at": "2026-04-01T00:00:00+00:00",
+        "needs_review": False,
+    },
+]
+
 
 @pytest.fixture
 def client():
@@ -82,3 +93,16 @@ def test_get_state_summary_returns_coverage(client):
     assert data["covered_fresh"] == 5
     assert data["covered"] == 7  # computed field serializes
     assert data["reach_fraction"] == pytest.approx(7 / 8)  # computed field serializes
+
+
+@pytest.mark.unit
+def test_get_municipalities_returns_service_data(client):
+    with patch(
+        "services.coverage.get_municipality_list",
+        new_callable=AsyncMock,
+        return_value=MOCK_MUNICIPALITY_LIST,
+    ):
+        response = client.get("/coverage/co/municipalities")
+
+    assert response.status_code == 200
+    assert response.json() == {"data": MOCK_MUNICIPALITY_LIST}
