@@ -1,11 +1,20 @@
 import { html } from "lit-html";
-import { component } from "haunted";
+import { component, useEffect, useState } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/people-diff/people-diff.js";
 import "../../components/side-panel/side-panel.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
+import "./report-issue-modal.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
+import { fetchReportedIssues, reportReviewIssue } from "../../api.js";
+
+type ReportedIssue = {
+  id: string;
+  github_issue_url: string | null;
+  github_issue_number: number | null;
+  status: string;
+};
 
 type CurrentEntry = {
   request_id: string;
@@ -52,6 +61,59 @@ function ReviewSession({
   const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
+
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [isReportingIssue, setIsReportingIssue] = useState(false);
+  const [reportError, setReportError] = useState<string | null>(null);
+  const [reportedIssues, setReportedIssues] = useState<ReportedIssue[]>([]);
+
+  const requestId = currentEntry?.request_id ?? null;
+
+  useEffect(() => {
+    if (!requestId) {
+      setReportedIssues([]);
+      return;
+    }
+    fetchReportedIssues(requestId)
+      .then((result: { data: ReportedIssue[] }) => setReportedIssues(result.data))
+      .catch(() => setReportedIssues([]));
+  }, [requestId]);
+
+  const handleReportIssueOpen = () => {
+    setReportError(null);
+    setShowReportModal(true);
+  };
+
+  const handleReportIssueClose = () => {
+    if (isReportingIssue) return;
+    setShowReportModal(false);
+  };
+
+  const handleReportIssueConfirmed = async (ev: CustomEvent) => {
+    const { description } = ev.detail as { description: string };
+    if (!currentEntry || isReportingIssue) return;
+    setIsReportingIssue(true);
+    setReportError(null);
+    try {
+      const result = await reportReviewIssue(currentEntry.request_id, description);
+      setReportedIssues((prev) => [
+        {
+          id: result.data.id,
+          github_issue_url: result.data.github_issue_url,
+          github_issue_number: result.data.github_issue_number,
+          status: "pending",
+        },
+        ...prev,
+      ]);
+      setShowReportModal(false);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setReportError(`Failed to file issue: ${message}`);
+    } finally {
+      setIsReportingIssue(false);
+    }
+  };
+
   return html`
     <main class="review-page">
       <review-session-controls
@@ -74,6 +136,21 @@ function ReviewSession({
         <div class="review-page__pr-meta">
           ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+          <button class="btn btn-sm secondary" @click=${handleReportIssueOpen}>Report issue</button>
+          ${reportedIssues.length
+            ? html`
+                <ul class="review-page__reported-issues">
+                  ${reportedIssues.map(
+                    (issue) => html`
+                      <li>
+                        <a href=${issue.github_issue_url ?? "#"} target="_blank" rel="noopener">Issue #${issue.github_issue_number}</a>
+                        — ${issue.status}
+                      </li>
+                    `,
+                  )}
+                </ul>
+              `
+            : ""}
         </div>
         <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
       </div>
@@ -94,6 +171,16 @@ function ReviewSession({
       <div class="review-page__content">
         <civ-side-panel .sourceContentUrls=${source_content_urls}></civ-side-panel>
       </div>
+      ${showReportModal
+        ? html`
+            <report-issue-modal
+              .submitting=${isReportingIssue}
+              .error=${reportError}
+              @modal-close=${handleReportIssueClose}
+              @report-issue-confirmed=${handleReportIssueConfirmed}
+            ></report-issue-modal>
+          `
+        : null}
     </main>
   `;
 }

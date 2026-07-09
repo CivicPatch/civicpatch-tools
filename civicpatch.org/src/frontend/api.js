@@ -306,6 +306,25 @@ export const fetchReview = async (requestId) => {
   return res.json();
 };
 
+export const fetchReportedIssues = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const reportReviewIssue = async (requestId, description) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ description }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const closePullRequest = async (request_id, pullRequestNumber) => {
   const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}?request_id=${request_id}`, {
     credentials: "include",
