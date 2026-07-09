@@ -1,0 +1,29 @@
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.verify-cta {
+  background: var(--civ-surface);
+  border: 1px solid var(--civ-border);
+  border-radius: var(--pico-border-radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.verify-cta__count {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--civ-accent);
+  margin: 0;
+}
+
+.verify-cta__description {
+  color: var(--civ-text-muted);
+  margin: 0 0 0.25rem 0;
+}
+
+.verify-cta__link {
+  font-weight: 700;
+  color: var(--civ-text);
+}

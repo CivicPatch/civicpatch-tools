@@ -1,6 +1,8 @@
 import { html } from "lit-html";
 import { component } from "haunted";
 import "../stat-cards/index.js";
+import { computeStatusSegments, STATUS_LABELS } from "./status-segments.js";
+import { dateStringToFriendly } from "../../utils/date-utils.js";
 
 function percent(n, d) {
   if (!d || d === 0) return 0;
@@ -20,6 +22,8 @@ function SummaryStats({ stats, state = "TX" }) {
     known = 1,
     scrapeable = 1,
   } = stateStats.civicpatch.localities;
+  const { status_counts: statusCounts, cutoff } = stateStats.civicpatch;
+  const segments = computeStatusSegments(statusCounts);
 
   const statsList = [
     {
@@ -73,6 +77,52 @@ function SummaryStats({ stats, state = "TX" }) {
         text-align: center;
         color: var(--pico-muted-color);
       }
+      .status-segments-container {
+        margin: 0 auto 0.5rem auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .status-segments-container__header {
+        display: flex;
+        justify-content: flex-end;
+        font-size: var(--text-xs);
+        color: var(--pico-muted-color);
+      }
+      .status-segments-bar {
+        display: flex;
+        width: 100%;
+        height: 0.5rem;
+        border-radius: 999px;
+        overflow: hidden;
+        background: var(--civ-surface-2);
+      }
+      .status-segments-bar__segment {
+        height: 100%;
+        transition: width 200ms ease;
+      }
+      .status-segments-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+      }
+      .status-segments-legend__item {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: var(--text-xs);
+        color: var(--pico-muted-color);
+      }
+      .status-segments-legend__dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+      }
+      .status-segments-legend__count {
+        font-weight: 700;
+        color: var(--pico-color);
+      }
     </style>
     <section>
       <div
@@ -81,6 +131,34 @@ function SummaryStats({ stats, state = "TX" }) {
       >
         <progress value="${covered}" max="${scrapeable}"></progress>
         <small>${percentLabel(covered, scrapeable)} covered</small>
+      </div>
+      <div class="status-segments-container">
+        ${cutoff
+          ? html`<div class="status-segments-container__header">
+              Data fresh after ${dateStringToFriendly(cutoff)}
+            </div>`
+          : ""}
+        <div class="status-segments-bar">
+          ${segments.map(
+            (s) => html`<div
+              class="status-segments-bar__segment"
+              style="width:${s.percent}%; background:var(--civ-status-${s.key})"
+              title="${STATUS_LABELS[s.key]}: ${s.count}"
+            ></div>`,
+          )}
+        </div>
+        <div class="status-segments-legend">
+          ${segments.map(
+            (s) => html`<span class="status-segments-legend__item">
+              <span
+                class="status-segments-legend__dot"
+                style="background:var(--civ-status-${s.key})"
+              ></span>
+              <span class="status-segments-legend__count">${s.count}</span>
+              ${STATUS_LABELS[s.key]}
+            </span>`,
+          )}
+        </div>
       </div>
       <stat-cards .stats=${statsList}></stat-cards>
     </section>
