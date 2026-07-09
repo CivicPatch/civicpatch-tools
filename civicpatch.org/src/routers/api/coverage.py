@@ -22,4 +22,9 @@ def get_router() -> APIRouter:
         data = await coverage_service.get_state_coverage(state)
         return {"data": data}
 
+    @router.get("/{state}/municipalities")
+    async def get_municipalities(state: str):
+        data = await coverage_service.get_municipality_list(state)
+        return {"data": data}
+
     return router

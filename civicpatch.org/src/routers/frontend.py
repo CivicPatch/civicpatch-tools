@@ -171,6 +171,19 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             {"request": request, "user": user, "post": post},
         )
 
+    @router.get("/{state}/local", response_class=HTMLResponse, include_in_schema=False)
+    async def municipalities_page(
+        request: Request, state: str, identity: Optional[Identity] = Depends(get_optional_user)
+    ):
+        # Registered ahead of the /{path:path} catch-all below — that route requires
+        # >=3 path segments (folder_to_jurisdiction_ocdid), so a bare "{state}/local"
+        # would otherwise 404 there instead of reaching this page. Page content lands
+        # in a later commit; this just claims the route.
+        user = _build_user_dict(identity)
+        return templates.TemplateResponse(
+            "pages/municipalities.html", {"request": request, "user": user, "state": state}
+        )
+
     @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)
     async def jurisdiction_page(
         request: Request,
