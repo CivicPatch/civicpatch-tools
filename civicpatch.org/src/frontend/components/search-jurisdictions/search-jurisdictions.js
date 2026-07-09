@@ -6,6 +6,7 @@ import {
   fetchDashboard,
   fetchMapsCoverage,
   fetchLocalStatus,
+  fetchStateCoverageSummary,
 } from "../../api.js";
 import {
   useLocalStorage,
@@ -18,9 +19,10 @@ import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
+import "../../components/verify-cta/verify-cta.ts";
 
 function SearchJurisdictions() {
-  const { permissions } = useAuth();
+  const { user, permissions } = useAuth();
   const [defaultState] = useLocalStorage("app:default-state", "", {
     ttl: PERSIST_FOREVER,
   });
@@ -35,6 +37,7 @@ function SearchJurisdictions() {
   const [dashboardData, setDashboardData] = useState(null);
   const [coverageSummary, setCoverageSummary] = useState({});
   const [localStatus, setLocalStatus] = useState({});
+  const [toReviewCount, setToReviewCount] = useState(0);
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -68,6 +71,16 @@ function SearchJurisdictions() {
     }
     fetchLocalStatus(selectedState)
       .then((d) => setLocalStatus(d.data ?? {}))
+      .catch(() => {});
+  }, [selectedState]);
+
+  useEffect(() => {
+    if (!selectedState) {
+      setToReviewCount(0);
+      return;
+    }
+    fetchStateCoverageSummary(selectedState)
+      .then((d) => setToReviewCount(d.data?.buckets?.to_review ?? 0))
       .catch(() => {});
   }, [selectedState]);
 
@@ -108,6 +121,11 @@ function SearchJurisdictions() {
             @state-change=${handleStateChange}
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
+
+          <civ-verify-cta
+            .isLoggedIn=${!!user}
+            .toReviewCount=${toReviewCount}
+          ></civ-verify-cta>
         </div>
 
         <div class="map-col">
