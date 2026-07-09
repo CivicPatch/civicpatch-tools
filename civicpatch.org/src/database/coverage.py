@@ -87,6 +87,55 @@ async def get_maps_coverage() -> dict:
     return result
 
 
+async def get_municipality_rows_for_state(state: str) -> list[dict]:
+    """Name, map status, officials count, and last-verified date for every local jurisdiction
+    in `state` — feeds the municipalities list page. Reuses classify_map_status, same as
+    get_local_status_for_state, so the two stay consistent by construction.
+
+    `needs_review` isn't included here — it requires the pull_requests domain, which this
+    file doesn't own. See services.coverage.get_municipality_list, which composes this with
+    the open-PR set (the same to_review signal get_state_coverage below already uses).
+    """
+    query = """
+        SELECT
+            j.jurisdiction_ocdid,
+            j.data->>'name'                                                     AS name,
+            COALESCE(pc.people_count, 0)::int                                   AS officials_count,
+            j.scraped_at,
+            NULLIF(j.data->>'url', '') IS NOT NULL                              AS has_url,
+            (j.scraped_at IS NOT NULL
+             AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)) AS is_fresh
+        FROM jurisdictions j
+        LEFT JOIN state_configs sc ON sc.state = j.state
+        LEFT JOIN (
+            SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
+            FROM people
+            WHERE status = 'current'
+            GROUP BY jurisdiction_ocdid
+        ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
+        WHERE j.status = 'current'
+          AND j.level = 'local'
+          AND j.state = %s
+        ORDER BY j.data->>'name'
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(query, (state,))
+        rows = await cur.fetchall()
+    return [
+        {
+            "jurisdiction_ocdid": jurisdiction_ocdid,
+            "name": name,
+            "status": classify_map_status(
+                has_people=officials_count > 0, is_fresh=is_fresh, has_url=has_url
+            ),
+            "officials_count": officials_count,
+            "last_verified_at": scraped_at.isoformat() if scraped_at else None,
+        }
+        for jurisdiction_ocdid, name, officials_count, scraped_at, has_url, is_fresh in rows
+    ]
+
+
 async def get_local_status_for_state(state: str) -> dict[str, str]:
     """ocdid -> map status for every local jurisdiction in `state`.
 

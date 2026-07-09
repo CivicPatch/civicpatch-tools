@@ -1,7 +1,9 @@
 """Integration test for get_dashboard's cutoff-based coverage split.
 
-`localities` now carries `covered_fresh` / `covered_stale` (+ `coverage` = their sum). Real
-Postgres because it's the state_configs join + pre-aggregated people join + FILTERs.
+`localities` carries `covered_fresh` / `covered_stale` (+ `coverage` = their sum).
+`status_counts` (fresh/stale/gap/untracked) mirrors the homepage's MapStatus taxonomy
+(core/coverage.py's `classify_map_status`), and `cutoff` surfaces `state_configs.min_scraped_at`
+directly. Real Postgres because it's the state_configs join + pre-aggregated people join + FILTERs.
 
 Run with: mise run tcp-integration
 Isolation: sentinel state 'zz', cleaned before/after.
@@ -83,3 +85,23 @@ async def test_localities_split_fresh_stale_and_coverage():
     assert localities["covered_fresh"] == 1  # zz-fresh
     assert localities["covered_stale"] == 1  # zz-stale
     assert localities["covered"] == 2  # covered_fresh + covered_stale (zz-gap excluded)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_status_counts_and_cutoff():
+    await _insert("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF, people=True)
+    await _insert("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF, people=True)
+    await _insert("zz-gap", url="https://n", scraped_at=None, people=False)
+    await _insert("zz-untracked", url=None, scraped_at=None, people=False)
+
+    data = await get_dashboard()
+
+    civicpatch = data["states"]["zz"]["civicpatch"]
+    assert civicpatch["status_counts"] == {
+        "fresh": 1,       # zz-fresh
+        "stale": 1,       # zz-stale
+        "gap": 1,         # zz-gap: has a url, no people
+        "untracked": 1,   # zz-untracked: no url, no people
+    }
+    assert civicpatch["cutoff"] == _CUTOFF.isoformat()
