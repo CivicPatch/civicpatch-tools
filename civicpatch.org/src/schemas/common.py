@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Optional
 
 import shared.utils.id_utils as id_utils
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
@@ -111,7 +111,7 @@ class InviteUserRequest(BaseModel):
 
 
 class ReportReviewIssueRequest(BaseModel):
-    description: str
+    description: str = Field(min_length=1, max_length=10000)
 
 
 class PendingInvite(BaseModel):

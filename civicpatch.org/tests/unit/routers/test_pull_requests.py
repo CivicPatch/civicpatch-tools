@@ -576,3 +576,110 @@ def test_save_and_merge_allows_default_role():
         )
 
     assert response.status_code == 202
+
+
+@pytest.mark.unit
+def test_report_review_issue_allows_default_role():
+    """A default-role reviewer may file a GitHub issue while reviewing — the
+    route is AUTHENTICATED, not contributor-gated."""
+    client = _client_as(_user_at(Role.DEFAULT))
+    with patch(
+        "services.review_issue_report.report_review_issue",
+        new_callable=AsyncMock,
+        return_value={"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9},
+    ) as mock_report:
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            json={"description": "Something looks wrong."},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"]["github_issue_url"] == "https://github.com/org/open-data/issues/9"
+    mock_report.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_report_review_issue_404_when_review_not_found(client):
+    with patch(
+        "services.review_issue_report.report_review_issue",
+        new_callable=AsyncMock,
+        side_effect=pull_requests_router.review_issue_report_service.ReviewNotFoundError("no review"),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            json={"description": "Something looks wrong."},
+        )
+
+    assert response.status_code == 404
+
+
+@pytest.mark.unit
+def test_report_review_issue_502_when_github_fails(client):
+    with patch(
+        "services.review_issue_report.report_review_issue",
+        new_callable=AsyncMock,
+        side_effect=pull_requests_router.review_issue_report_service.GithubIssueCreationError("GitHub is down"),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            json={"description": "Something looks wrong."},
+        )
+
+    assert response.status_code == 502
+
+
+@pytest.mark.unit
+def test_report_review_issue_422_on_empty_description(client):
+    response = client.post(
+        f"/pull_requests/{TEST_REQUEST_ID}/issues",
+        json={"description": ""},
+    )
+
+    assert response.status_code == 422
+
+
+@pytest.mark.unit
+def test_report_review_issue_401_when_user_id_missing():
+    identity = Identity(
+        type="cookie",
+        provider="supabase",
+        provider_user_id="sb-test",
+        email="test@example.com",
+        role=Role.DEFAULT.value,
+        user_id=None,
+    )
+    client = _client_as(identity)
+    response = client.post(
+        f"/pull_requests/{TEST_REQUEST_ID}/issues",
+        json={"description": "Something looks wrong."},
+    )
+
+    assert response.status_code == 401
+
+
+@pytest.mark.unit
+def test_get_reported_issues_returns_data(client):
+    with patch(
+        "database.issues.get_user_reported_issues_for_request",
+        new_callable=AsyncMock,
+        return_value=[{"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9, "status": "pending"}],
+    ):
+        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/issues")
+
+    assert response.status_code == 200
+    assert response.json()["data"][0]["github_issue_number"] == 9
+
+
+@pytest.mark.unit
+def test_get_reported_issues_allows_default_role():
+    """Reviewers (default role) can see issues they've already filed for this
+    request — read-only, same gate as the POST that creates them."""
+    client = _client_as(_user_at(Role.DEFAULT))
+    with patch(
+        "database.issues.get_user_reported_issues_for_request",
+        new_callable=AsyncMock,
+        return_value=[],
+    ):
+        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/issues")
+
+    assert response.status_code == 200

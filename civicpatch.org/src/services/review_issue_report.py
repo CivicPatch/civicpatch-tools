@@ -14,7 +14,7 @@ class GithubIssueCreationError(Exception):
     pass
 
 
-async def report_review_issue(request_id: str, description: str, user_id: str) -> dict:
+async def report_review_issue(request_id: str, description: str, user_id: str, reported_by: str) -> dict:
     review = await pull_requests_db.get_pull_request_for_review(request_id)
     if review is None:
         raise ReviewNotFoundError(f"No pull request found for request_id {request_id}")
@@ -26,7 +26,7 @@ async def report_review_issue(request_id: str, description: str, user_id: str) -
 
     review_url = f"https://{SITE_DOMAIN}/review/session?state={state_code}&request_id={request_id}"
     title = f"Review flag: {jurisdiction_name}"
-    body_lines = [description, "", f"Filed from {review_url}."]
+    body_lines = [description, "", f"Reported by {reported_by}.", f"Filed from {review_url}."]
     if pr_url:
         body_lines.append(f"Reviewing {pr_url}.")
     body = "\n".join(body_lines)

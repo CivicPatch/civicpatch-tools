@@ -19,6 +19,7 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+import database.issues
 import database.pipeline_runs
 import database.people
 import database.jurisdictions as jurisdictions_db
@@ -306,6 +307,17 @@ def get_router(api_key_header):
         result = await database.pipeline_runs.get_pipeline_run_result(request_id)
         return {"data": (result or {}).get("review_json") or {}}
 
+    # -- Pull Requests: Reviewer-filed issues for this request ---
+    @router.get("/{request_id}/issues")
+    async def get_reported_issues_endpoint(
+        request_id: str,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.AUTHENTICATED)
+        ),
+    ):
+        result = await database.issues.get_user_reported_issues_for_request(request_id)
+        return {"data": result}
+
     # -- Pull Requests: Report an issue on open-data ---
     @router.post("/{request_id}/issues")
     async def report_review_issue_endpoint(
@@ -317,9 +329,10 @@ def get_router(api_key_header):
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
+        reported_by = user.display_name or user.email or user.provider_user_id
         try:
             result = await review_issue_report_service.report_review_issue(
-                request_id, body.description, user.user_id
+                request_id, body.description, user.user_id, reported_by
             )
         except review_issue_report_service.ReviewNotFoundError:
             raise HTTPException(status_code=404, detail="Pull request not found")

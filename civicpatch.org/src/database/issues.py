@@ -206,6 +206,34 @@ async def create_user_reported_issue(
     return row[0]
 
 
+async def get_user_reported_issues_for_request(request_id: str) -> list[dict]:
+    """Reviewer-filed GitHub issues for this request only — not pipeline-internal
+    issue types (those are browsed separately, via the admin issues page)."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, data, status, created_at
+            FROM issues
+            WHERE issue_type = %s AND %s = ANY(request_ids)
+            ORDER BY created_at DESC
+            """,
+            (PipelineIssueType.USER_REPORTED, request_id),
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "id": row[0],
+            "title": row[1].get("title"),
+            "github_issue_url": row[1].get("github_issue_url"),
+            "github_issue_number": row[1].get("github_issue_number"),
+            "status": row[2],
+            "created_at": row[3].isoformat() if row[3] else None,
+        }
+        for row in rows
+    ]
+
+
 async def get_issues_page(
     issue_types: list[str],
     page: int,
