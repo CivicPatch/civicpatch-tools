@@ -418,20 +418,6 @@ review-session-controls {
     min-width: 0;
 }
 
-.review-page__content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
-    align-items: start;
-    width: 100%;
-    margin-top: 0.75rem;
-}
-
-.review-page__content > * {
-    min-width: 0;
-    box-sizing: border-box;
-}
-
 .review-page__left-col {
     display: flex;
     flex-direction: column;
@@ -440,9 +426,6 @@ review-session-controls {
 }
 
 @media (max-width: 768px) {
-    .review-page__content {
-        grid-template-columns: 1fr;
-    }
     .review-page__main-grid {
         grid-template-columns: 1fr;
     }

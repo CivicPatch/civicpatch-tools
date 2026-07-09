@@ -1,3 +1,5 @@
+import os
+
 import httpx
 from pipelines_environment import get_env_vars
 
@@ -17,29 +19,29 @@ async def send_success(context: PeopleCollectorContext, api_client: httpx.AsyncC
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
-    try:
-        if not SERVICE_API_KEY:
-            logger.error(
-                "SERVICE_API_KEY is not set, skipping github workflow dispatch."
-            )
-            logger.error(f"Generate api key from CRUDDER at {CIVICPATCH_ORG_URL}")
-            return MaybeSendToGitHubStep(status="skipped_no_token")
+    if not SERVICE_API_KEY:
+        logger.error(f"Generate api key from CRUDDER at {CIVICPATCH_ORG_URL}")
+        raise RuntimeError("SERVICE_API_KEY is not set; cannot submit job artifacts.")
 
-        zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
+    zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
+    zip_size_bytes = os.path.getsize(zip_file_path)
+    logger.info(f"Submitting job artifacts to {CIVICPATCH_ORG_URL} (zip size: {zip_size_bytes} bytes)")
 
-        response = await services.civicpatch_api.submit_job_artifacts(
-            api_client, request_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
-        )
-        if not response:
-            logger.error("Failed to get a response from Crudder after retries.")
-            return MaybeSendToGitHubStep(status="failed_no_response")
+    response = await services.civicpatch_api.submit_job_artifacts(
+        api_client, request_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
+    )
+    if not response:
+        raise RuntimeError("Failed to get a response from Crudder after retries.")
 
-        return MaybeSendToGitHubStep(
-            status="completed",
-            response_status_code=response.status_code,
-            response_text=response.text,
+    logger.info(f"submit_job_artifacts response: {response.status_code}")
+
+    if not response.is_success:
+        raise RuntimeError(
+            f"submit_job_artifacts failed with status {response.status_code}: {response.text}"
         )
 
-    except Exception as e:
-        logger.error(f"Error sending to civicpatch.org: {e}")
-        return MaybeSendToGitHubStep(status="failed", response_text=str(e))
+    return MaybeSendToGitHubStep(
+        status="completed",
+        response_status_code=response.status_code,
+        response_text=response.text,
+    )
