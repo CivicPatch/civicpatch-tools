@@ -86,6 +86,16 @@ def test_blocked_beats_open_pr():
     result = _summary(scrapeable={"j1"}, blocked={"j1"}, to_review={"j1"})
     assert result.buckets[Bucket.BLOCKED] == 1
     assert result.buckets[Bucket.TO_REVIEW] == 0
+    # ...but needs_review_count is orthogonal to bucket exclusivity: the open PR
+    # still counts, even though the bucket-priority breakdown attributes it elsewhere.
+    assert result.needs_review_count == 1
+
+
+@pytest.mark.unit
+def test_needs_review_count_is_the_raw_to_review_set_size():
+    # pin: needs_review_count == len(to_review), independent of scrapeable/blocked
+    result = _summary(scrapeable={"j1", "j2"}, to_review={"j1", "j2", "j3"})
+    assert result.needs_review_count == 3
 
 
 @pytest.mark.unit

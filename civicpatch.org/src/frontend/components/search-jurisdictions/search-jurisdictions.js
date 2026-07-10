@@ -8,6 +8,7 @@ import {
   fetchLocalStatus,
   fetchStateCoverageSummary,
   fetchReviewStats,
+  fetchActiveReviewSession,
 } from "../../api.js";
 import {
   useLocalStorage,
@@ -16,12 +17,12 @@ import {
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
-import "../../components/progress-dashboard/summary-stats.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
 import "../../components/verify-cta/verify-cta.ts";
 import { renderContributionCard } from "../contribution-card/contribution-card.ts";
+import { renderFreshnessWidget } from "../../components/progress-dashboard/freshness-widget.ts";
 
 function SearchJurisdictions() {
   const { user, permissions } = useAuth();
@@ -33,7 +34,6 @@ function SearchJurisdictions() {
   );
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] =
     useState(null);
-  const [selectedJurisdictionName, setSelectedJurisdictionName] = useState("");
   const [selectedCountyOcdid, setSelectedCountyOcdid] = useState(null);
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
@@ -41,6 +41,7 @@ function SearchJurisdictions() {
   const [localStatus, setLocalStatus] = useState({});
   const [toReviewCount, setToReviewCount] = useState(0);
   const [reviewStats, setReviewStats] = useState(null);
+  const [activeSession, setActiveSession] = useState(null);
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -83,7 +84,10 @@ function SearchJurisdictions() {
       return;
     }
     fetchStateCoverageSummary(selectedState)
-      .then((d) => setToReviewCount(d.data?.buckets?.to_review ?? 0))
+      // needs_review_count, not buckets.to_review — the bucket breakdown is
+      // priority-exclusive (blocked wins), so it undercounts jurisdictions that
+      // are both blocked and have an open PR. needs_review_count doesn't.
+      .then((d) => setToReviewCount(d.data?.needs_review_count ?? 0))
       .catch(() => {});
   }, [selectedState]);
 
@@ -99,23 +103,32 @@ function SearchJurisdictions() {
       .catch(() => setReviewStats(null));
   }, [user, selectedState]);
 
+  useEffect(() => {
+    // review-sessions/active requires auth too — same anonymous-visitor skip as
+    // reviewStats above.
+    if (!user || !selectedState) {
+      setActiveSession(null);
+      return;
+    }
+    fetchActiveReviewSession(selectedState)
+      .then((d) => setActiveSession(d.data ?? null))
+      .catch(() => setActiveSession(null));
+  }, [user, selectedState]);
+
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || "").toLowerCase());
     setSelectedCountyOcdid(null);
     setSelectedJurisdictionOcdid(null);
-    setSelectedJurisdictionName("");
   };
 
   const handleCountyChange = (event) => {
     setSelectedCountyOcdid(event.detail.jurisdiction_ocdid);
     setSelectedJurisdictionOcdid(null);
-    setSelectedJurisdictionName("");
   };
 
   const handleSelectJurisdictionChange = (event) => {
-    const { jurisdiction_ocdid, name } = event.detail;
+    const { jurisdiction_ocdid } = event.detail;
     setSelectedJurisdictionOcdid(jurisdiction_ocdid);
-    if (name) setSelectedJurisdictionName(name);
   };
 
   return html`
@@ -129,36 +142,37 @@ function SearchJurisdictions() {
       </hgroup>
       <div class="page-grid">
         <div class="select-col">
-          <civ-select-jurisdiction
-            .selected=${selectedState}
-            .selectedOcdid=${selectedJurisdictionOcdid}
-            .selectedName=${selectedJurisdictionName}
-            @state-change=${handleStateChange}
-            @select-jurisdiction-change=${handleSelectJurisdictionChange}
-          ></civ-select-jurisdiction>
+          <div class="find-representatives">
+            <h3 class="find-representatives__title">States</h3>
+            <civ-select-state
+              .selected=${selectedState}
+              @state-change=${handleStateChange}
+            ></civ-select-state>
 
-          ${selectedState && dashboardData?.states?.[selectedState]
-            ? html`
-                <a
-                  class="browse-municipalities-link"
-                  href="/${selectedState}/local"
-                >
-                  Browse
-                  ${dashboardData.states[selectedState].civicpatch.localities.known}
-                  municipalities →
-                </a>
-              `
-            : ''}
+            ${selectedState && dashboardData?.states?.[selectedState]
+              ? html`
+                  <a
+                    class="browse-municipalities-link"
+                    href="/${selectedState}/local"
+                  >
+                    Browse
+                    ${dashboardData.states[selectedState].civicpatch.localities
+                      .known}
+                    municipalities →
+                  </a>
+                `
+              : ""}
+          </div>
 
           <civ-verify-cta
             .isLoggedIn=${!!user}
             .toReviewCount=${toReviewCount}
+            .state=${selectedState}
+            .hasActiveSession=${activeSession != null}
           ></civ-verify-cta>
 
           ${renderContributionCard({
             isLoggedIn: !!user,
-            state: selectedState,
-            toReviewCount,
             dailyCounts: reviewStats?.daily_counts ?? [],
             streak: reviewStats?.streak ?? 0,
             currentDate: reviewStats?.current_date ?? null,
@@ -177,20 +191,14 @@ function SearchJurisdictions() {
             @on-state-change=${handleStateChange}
             @on-county-change=${handleCountyChange}
           ></browse-map>
+          ${selectedState
+            ? renderFreshnessWidget({
+                stats: dashboardData,
+                state: selectedState,
+              })
+            : ""}
         </div>
       </div>
-
-      ${dashboardData && selectedState
-        ? html`
-            <section>
-              <h4>Progress — ${selectedState.toUpperCase()}</h4>
-              <summary-stats
-                .stats=${dashboardData}
-                .state=${selectedState}
-              ></summary-stats>
-            </section>
-          `
-        : ""}
 
       <div class="below-grid">
         <civ-people-directory

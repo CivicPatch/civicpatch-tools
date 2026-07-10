@@ -1,22 +1,5 @@
 /* ── Header ───────────────────────────────────────────────────────────────── */
 
-.municipalities-page__header {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
-  margin-bottom: 1rem;
-}
-
-.municipalities-page__breadcrumb {
-  color: var(--civ-text-muted);
-}
-
-.municipalities-page__breadcrumb-sep {
-  color: var(--civ-border);
-}
-
 .municipalities-page__title-row {
   display: flex;
   align-items: flex-end;

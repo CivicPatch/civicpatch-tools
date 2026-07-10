@@ -24,6 +24,21 @@
 }
 
 .verify-cta__link {
+  display: block;
+  align-self: stretch;
+  width: 100%;
+  text-align: center;
+  padding: 0.6rem 1.3rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--civ-text);
+  color: var(--civ-bg);
   font-weight: 700;
-  color: var(--civ-text);
+  font-size: var(--text-md);
+  cursor: pointer;
+}
+
+.verify-cta__link:disabled {
+  opacity: 0.6;
+  cursor: default;
 }

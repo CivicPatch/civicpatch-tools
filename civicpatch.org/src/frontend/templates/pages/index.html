@@ -1,119 +1,190 @@
-{% extends "layouts/base.html" %}
-{% block scripts %}<script type="module" src="{{ vite_asset('assets/index.js') }}"></script>{% endblock %}
-{% block styles %}{% for href in vite_css('assets/index.js') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
-{% block content %}
-{% if not missing_env %}
+{% extends "layouts/base.html" %} {% block scripts %}
+<script type="module" src="{{ vite_asset('assets/index.js') }}"></script>
+{% endblock %} {% block styles %}{% for href in vite_css('assets/index.js')
+%}<link rel="stylesheet" href="{{ href }}" />{% endfor %}{% endblock %} {% block
+content %} {% if not missing_env %}
 
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 
-<div class="page-content" style="display: flex; flex-direction: column; gap: 1rem;">
-<civ-search-jurisdictions></civ-search-jurisdictions>
+<div
+  class="page-content"
+  style="display: flex; flex-direction: column; gap: 1rem"
+>
+  <civ-search-jurisdictions></civ-search-jurisdictions>
 
-<section class="blog-preview">
+  <section class="blog-preview">
     <div class="blog-preview__grid">
-        {% if posts %}
-        <div class="blog-preview__posts">
-            <div class="civ-section-label">Updates</div>
-            {% for post in posts %}
-            <article class="blog-preview__item">
-                <time class="blog-preview__date">{{ post.date.strftime('%b %-d, %Y') }}</time>
-                <div class="blog-preview__body">
-                    <a href="/blog/{{ post.slug }}" class="blog-preview__title">{{ post.title }}</a>
-                    {% if post.description %}
-                    <p class="blog-preview__lead">{{ post.description }}</p>
-                    {% endif %}
-                </div>
-            </article>
-            {% endfor %}
-            <a href="/blog" class="blog-preview__view-all">All updates <i class="fa-solid fa-arrow-right"></i></a>
+      {% if posts %}
+      <div class="blog-preview__posts">
+        <div class="civ-section-label">Updates</div>
+        {% for post in posts %}
+        <article class="blog-preview__item">
+          <time class="blog-preview__date"
+            >{{ post.date.strftime('%b %-d, %Y') }}</time
+          >
+          <div class="blog-preview__body">
+            <a href="/blog/{{ post.slug }}" class="blog-preview__title"
+              >{{ post.title }}</a
+            >
+            {% if post.description %}
+            <p class="blog-preview__lead">{{ post.description }}</p>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+        <a href="/blog" class="blog-preview__view-all"
+          >All updates <i class="fa-solid fa-arrow-right"></i
+        ></a>
+      </div>
+      {% endif %}
+      <div
+        class="blog-preview__get-involved {% if not posts %}blog-preview__get-involved--full{% endif %}"
+      >
+        <div class="civ-section-label">How can I help?</div>
+        <div>
+          <p class="blog-preview__gi-section">Share &amp; research</p>
+          <ul class="blog-preview__gi-links">
+            <li>
+              <a
+                href="https://github.com/civicpatch/civicpatch-tools/discussions"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Share ideas or feedback <i class="fa-brands fa-github"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/civicpatch/civicpatch-tools/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Report a bug <i class="fa-brands fa-github"></i
+              ></a>
+            </li>
+            <li>
+              <a href="mailto:michelle@civicpatch.org"
+                >michelle@civicpatch.org <i class="fa-solid fa-envelope"></i
+              ></a>
+              <span class="blog-preview__gi-note"
+                >research &amp; data validation</span
+              >
+            </li>
+          </ul>
         </div>
-        {% endif %}
-        <div class="blog-preview__get-involved {% if not posts %}blog-preview__get-involved--full{% endif %}">
-            <div class="civ-section-label">How can I help?</div>
-            <div>
-                <p class="blog-preview__gi-section">Share &amp; research</p>
-                <ul class="blog-preview__gi-links">
-                    <li><a href="https://github.com/civicpatch/civicpatch-tools/discussions" target="_blank" rel="noopener noreferrer">Share ideas or feedback <i class="fa-brands fa-github"></i></a></li>
-                    <li><a href="https://github.com/civicpatch/civicpatch-tools/issues" target="_blank" rel="noopener noreferrer">Report a bug <i class="fa-brands fa-github"></i></a></li>
-                    <li><a href="mailto:michelle@civicpatch.org">michelle@civicpatch.org <i class="fa-solid fa-envelope"></i></a> <span class="blog-preview__gi-note">research &amp; data validation</span></li>
-                </ul>
-            </div>
-            <div>
-                <p class="blog-preview__gi-section">Data</p>
-                <ul class="blog-preview__gi-links">
-                    <li><a href="https://github.com/civicpatch/open-data" target="_blank" rel="noopener noreferrer">civicpatch/open-data <i class="fa-solid fa-up-right-from-square"></i></a></li>
-                    <li><a href="https://github.com/openstates/people" target="_blank" rel="noopener noreferrer">openstates/people <i class="fa-solid fa-up-right-from-square"></i></a></li>
-                </ul>
-            </div>
-            <div>
-                <p class="blog-preview__gi-section">Support</p>
-                <ul class="blog-preview__gi-links">
-                    <li><a href="https://ko-fi.com/civicpatch" target="_blank" rel="noopener noreferrer">Support on Ko-fi <i class="fa-solid fa-mug-hot"></i></a></li>
-                </ul>
-            </div>
+        <div>
+          <p class="blog-preview__gi-section">Data</p>
+          <ul class="blog-preview__gi-links">
+            <li>
+              <a
+                href="https://github.com/civicpatch/open-data"
+                target="_blank"
+                rel="noopener noreferrer"
+                >civicpatch/open-data
+                <i class="fa-solid fa-up-right-from-square"></i
+              ></a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/openstates/people"
+                target="_blank"
+                rel="noopener noreferrer"
+                >openstates/people
+                <i class="fa-solid fa-up-right-from-square"></i
+              ></a>
+            </li>
+          </ul>
         </div>
+        <div>
+          <p class="blog-preview__gi-section">Support</p>
+          <ul class="blog-preview__gi-links">
+            <li>
+              <a
+                href="https://ko-fi.com/civicpatch"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Support on Ko-fi <i class="fa-solid fa-mug-hot"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<civ-leaderboard></civ-leaderboard>
+  <!--<civ-leaderboard></civ-leaderboard>-->
 </div>
 
-{% endif %}
-{% if missing_env %}
+{% endif %} {% if missing_env %}
 <article class="card">
-    <header>
-        <h3 style="margin-bottom: 0.5em">
-            ⚠️ Environment Setup Needed
-        </h3>
-    </header>
-    <p>
-        Please set up your <code>.env</code> file in the
-        <code>civicpatch/</code> folder.<br />
-        The following environment variables are missing:
-    </p>
-    <ul>
-        {% for var in missing_env %}
-        <li><code>{{ var }}</code></li>
-        {% endfor %}
-    </ul>
+  <header>
+    <h3 style="margin-bottom: 0.5em">⚠️ Environment Setup Needed</h3>
+  </header>
+  <p>
+    Please set up your <code>.env</code> file in the
+    <code>civicpatch/</code> folder.<br />
+    The following environment variables are missing:
+  </p>
+  <ul>
+    {% for var in missing_env %}
+    <li><code>{{ var }}</code></li>
+    {% endfor %}
+  </ul>
 </article>
-{% endif %}
-{% endblock %}
-
-{% block footer %}
+{% endif %} {% endblock %} {% block footer %}
 <footer class="about-footer">
-    <div class="about-footer__inner">
-        <p class="about-footer__tagline">CivicPatch — contact information for local government officials across the U.S.</p>
-        <div class="about-footer__grid">
-            <div class="about-footer__block">
-                <h3>Where is the data stored?</h3>
-                <ul>
-                    <li><a href="https://github.com/civicpatch/open-data">civicpatch/open-data</a></li>
-                    <li><a href="https://github.com/openstates/people">openstates/people</a></li>
-                </ul>
-            </div>
-            <div class="about-footer__block">
-                <h3>Ways to contribute</h3>
-                <ul>
-                    <li><a href="https://github.com/civicpatch/civicpatch-tools/issues">Report issues or suggest features</a></li>
-                    <li><a href="https://ko-fi.com/civicpatch">Support us on Ko-fi</a></li>
-                </ul>
-            </div>
-            <div class="about-footer__block">
-                <h3>Get in touch</h3>
-                <ul>
-                    <li>Project Maintainer: <a href="mailto:michelle@civicpatch.org">michelle@civicpatch.org</a></li>
-                </ul>
-            </div>
-            <div class="about-footer__block">
-                <h3>Explore</h3>
-                <ul>
-                    <li><a href="/blog">Blog</a></li>
-                    <li><a href="/blog/ai-policy">AI Policy</a></li>
-                    <li><a href="https://github.com/orgs/CivicPatch/projects/3">Project board</a></li>
-                </ul>
-            </div>
-        </div>
+  <div class="about-footer__inner">
+    <p class="about-footer__tagline">
+      CivicPatch — contact information for local government officials across the
+      U.S.
+    </p>
+    <div class="about-footer__grid">
+      <div class="about-footer__block">
+        <h3>Where is the data stored?</h3>
+        <ul>
+          <li>
+            <a href="https://github.com/civicpatch/open-data"
+              >civicpatch/open-data</a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/openstates/people">openstates/people</a>
+          </li>
+        </ul>
+      </div>
+      <div class="about-footer__block">
+        <h3>Ways to contribute</h3>
+        <ul>
+          <li>
+            <a href="https://github.com/civicpatch/civicpatch-tools/issues"
+              >Report issues or suggest features</a
+            >
+          </li>
+          <li>
+            <a href="https://ko-fi.com/civicpatch">Support us on Ko-fi</a>
+          </li>
+        </ul>
+      </div>
+      <div class="about-footer__block">
+        <h3>Get in touch</h3>
+        <ul>
+          <li>
+            Project Maintainer:
+            <a href="mailto:michelle@civicpatch.org">michelle@civicpatch.org</a>
+          </li>
+        </ul>
+      </div>
+      <div class="about-footer__block">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/blog/ai-policy">AI Policy</a></li>
+          <li>
+            <a href="https://github.com/orgs/CivicPatch/projects/3"
+              >Project board</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </footer>
 {% endblock %}

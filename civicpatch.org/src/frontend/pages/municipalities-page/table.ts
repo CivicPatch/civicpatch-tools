@@ -8,9 +8,14 @@ import { Municipality } from './municipalities-filter.js';
 export interface MunicipalitiesTableProps {
   municipalities: Municipality[];
   onClearFilters: () => void;
+  canViewJurisdictionPage: boolean;
 }
 
-function renderRow(m: Municipality) {
+function renderRow(m: Municipality, canViewJurisdictionPage: boolean) {
+  const jurisdictionHref = canViewJurisdictionPage
+    ? `/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}`
+    : null;
+
   return html`
     <tr class="municipalities-table__row">
       <td>
@@ -18,7 +23,7 @@ function renderRow(m: Municipality) {
           class="municipalities-table__dot"
           style="background:var(--civ-status-${m.status})"
         ></span>
-        <a href="/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}">${m.name}</a>
+        ${jurisdictionHref ? html`<a href="${jurisdictionHref}">${m.name}</a>` : m.name}
       </td>
       <td>
         <span
@@ -40,13 +45,19 @@ function renderRow(m: Municipality) {
       <td>
         ${m.needs_review
           ? html`<a href="/review">Verify →</a>`
-          : html`<a href="/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}">View →</a>`}
+          : jurisdictionHref
+          ? html`<a href="${jurisdictionHref}">View →</a>`
+          : '—'}
       </td>
     </tr>
   `;
 }
 
-export function renderMunicipalitiesTable({ municipalities, onClearFilters }: MunicipalitiesTableProps) {
+export function renderMunicipalitiesTable({
+  municipalities,
+  onClearFilters,
+  canViewJurisdictionPage,
+}: MunicipalitiesTableProps) {
   if (municipalities.length === 0) {
     return html`
       <div class="municipalities-table__empty">
@@ -69,7 +80,7 @@ export function renderMunicipalitiesTable({ municipalities, onClearFilters }: Mu
           </tr>
         </thead>
         <tbody>
-          ${municipalities.map(renderRow)}
+          ${municipalities.map((m) => renderRow(m, canViewJurisdictionPage))}
         </tbody>
       </table>
     </div>

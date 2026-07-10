@@ -3,7 +3,7 @@ export const STATUS_ORDER = ["fresh", "stale", "gap", "untracked"];
 export const STATUS_LABELS = {
   fresh: "Fresh",
   stale: "Stale",
-  gap: "Not yet scraped",
+  gap: "No data",
   untracked: "Untracked",
 };
 

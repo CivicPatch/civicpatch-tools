@@ -29,22 +29,6 @@
   margin: 0;
 }
 
-.contribution-card__opportunity {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  color: var(--civ-text-muted);
-}
-
-.contribution-card__opportunity-dot {
-  flex-shrink: 0;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-top: 0.35rem;
-  border-radius: 50%;
-  background: var(--civ-accent);
-}
-
 .contribution-card__signin {
   align-self: flex-start;
   font-weight: 700;

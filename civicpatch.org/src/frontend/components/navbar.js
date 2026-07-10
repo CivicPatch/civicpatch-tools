@@ -37,9 +37,12 @@ function activeClass(currentPath, href) {
 // (it doesn't apply) and show a static "Global" badge instead. The badge is
 // presentational only — it never touches the stored app:default-state, so the
 // user's selected state is preserved for when they return to a scoped page.
+// "/" gets an exact match (its own state selector — the "Find Representatives"
+// widget — is page-local and deliberately doesn't write app:default-state)
+// since a prefix match would swallow every route.
 const GLOBAL_ROUTES = ["/activity", "/blog", "/admin"];
 const isGlobalRoute = (currentPath) =>
-  GLOBAL_ROUTES.some((route) => currentPath.startsWith(route));
+  currentPath === "/" || GLOBAL_ROUTES.some((route) => currentPath.startsWith(route));
 
 function renderPublicLinks(currentPath) {
   return html`

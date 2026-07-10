@@ -56,17 +56,42 @@
   gap: 1.25rem;
 }
 
+.map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Find representatives ─────────────────────────────────────────────────── */
+
+.find-representatives {
+  background: var(--civ-surface);
+  border: 1px solid var(--civ-border);
+  border-radius: var(--pico-border-radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.find-representatives__title {
+  margin: 0;
+  font-weight: 700;
+  color: var(--civ-text);
+}
+
 /* ── Browse municipalities link ───────────────────────────────────────────── */
 
 .browse-municipalities-link {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 0.4rem 0.9rem;
+  display: block;
+  align-self: stretch;
+  text-align: center;
+  padding: 0.6rem 1.3rem;
   border-radius: 999px;
   background: var(--civ-text);
   color: var(--civ-bg);
   font-weight: 700;
-  font-size: var(--text-sm);
+  font-size: var(--text-md);
 }
 
 /* ── State progress ────────────────────────────────────────────────────────── */

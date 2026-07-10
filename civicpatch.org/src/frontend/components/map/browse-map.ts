@@ -168,7 +168,10 @@ function BrowseMap(this: HTMLElement, {
       return `<div class="map-tooltip">${header}<div class="map-tooltip__sub">Loading…</div></div>`;
     }
     const reach = Math.round((s.reach_fraction ?? 0) * 100);
-    const toReview = s.buckets?.to_review ?? 0;
+    // needs_review_count, not buckets.to_review — the bucket breakdown is
+    // priority-exclusive (blocked wins), so it undercounts jurisdictions that
+    // are both blocked and have an open PR.
+    const toReview = s.needs_review_count ?? 0;
     return `
       <div class="map-tooltip">
         ${header}
