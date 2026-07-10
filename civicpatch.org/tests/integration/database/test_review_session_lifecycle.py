@@ -99,7 +99,7 @@ async def _create_session(user_id: uuid.UUID) -> uuid.UUID:
 
 
 async def _seed_open_pr(suffix: str) -> tuple[str, str]:
-    """Insert a jurisdiction + request + open pull_request in state zz. Returns (request_id, ocdid)."""
+    """Insert a jurisdiction + request + pipeline_run + open pull_request in state zz. Returns (request_id, ocdid)."""
     ocdid = f"ocd-jurisdiction/country:us/state:zz/place:pool_{suffix}/government"
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -113,6 +113,10 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
+            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
+            (request_id,),
+        )
+        await cur.execute(
             "INSERT INTO pull_requests (request_id, pr_number, status) VALUES (%s, %s, 'open')",
             (request_id, 990000),
         )
@@ -123,6 +127,7 @@ async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute("DELETE FROM pull_requests WHERE request_id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM pipeline_runs WHERE request_id::text = %s", (request_id,))
         await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
@@ -421,4 +426,52 @@ async def test_published_pr_parks_until_park_cleared():
         after, _, _ = await list_open_pull_requests(state_code="zz")
         assert request_id in [r["request_id"] for r in after], "PR returns to the pool once unparked"
     finally:
+        await _cleanup_open_pr(request_id, ocdid)
+
+
+# ── get_review_stats: available_count is per-user, not global ─────────────────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_available_count_excludes_jurisdiction_claimed_by_another_user(test_user):
+    """
+    A jurisdiction another user's active session has already claimed must not
+    count as "available" for this user — otherwise the landing page shows a
+    review as available when clicking through would find nothing free.
+    """
+    from database.review_session_stats import get_review_stats
+
+    request_id, ocdid = await _seed_open_pr("stats")
+    provider_id = f"stats-other-{uuid.uuid4().hex[:8]}"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (provider, provider_user_id, email) VALUES ('test', %s, %s) RETURNING id",
+            (provider_id, f"{provider_id}@test.com"),
+        )
+        row = await cur.fetchone()
+        other_user = row[0]  # type: ignore[index]
+
+    try:
+        other_session = await _create_session(other_user)
+        await _insert_entry(other_session, entry_number=1, status="claimed")
+        async with pool.connection() as conn:
+            await conn.execute(
+                "UPDATE review_session_entries SET jurisdiction_ocdid = %s WHERE review_session_id = %s",
+                (ocdid, other_session),
+            )
+
+        stats = await get_review_stats(str(test_user), _STATE_CODE)
+        assert stats["available_count"] == 0, "Jurisdiction claimed by another user must not count as available"
+
+        stats_for_claimer = await get_review_stats(str(other_user), _STATE_CODE)
+        assert stats_for_claimer["available_count"] == 1, "The claiming user should still see their own claim as available"
+    finally:
+        async with pool.connection() as conn:
+            await conn.execute(
+                "DELETE FROM review_session_entries WHERE review_session_id IN (SELECT id FROM review_sessions WHERE user_id = %s)",
+                (other_user,),
+            )
+            await conn.execute("DELETE FROM review_sessions WHERE user_id = %s", (other_user,))
+            await conn.execute("DELETE FROM users WHERE provider = 'test' AND provider_user_id = %s", (provider_id,))
         await _cleanup_open_pr(request_id, ocdid)

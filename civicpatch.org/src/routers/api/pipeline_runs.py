@@ -42,6 +42,7 @@ from database.pull_requests import (
     update_pipeline_run_pull_request_url,
     update_pull_request_status,
     clear_merge_enqueued,
+    has_open_pr_for_jurisdiction,
 )
 from database.requests import (
     register_request_with_pipeline_run,
@@ -144,6 +145,7 @@ def get_router(api_key_header):
         description="Trigger a new people collector pipeline run.",
         response_model=CreatePipelineRunResponse,
         responses={
+            409: {"model": ErrorResponse, "description": "An open pull request already exists for this jurisdiction"},
             429: {"model": ErrorResponse, "description": "Rate limit exceeded"},
             500: {"model": ErrorResponse, "description": "Internal server error"},
         },
@@ -158,6 +160,12 @@ def get_router(api_key_header):
             return JSONResponse(
                 content=ErrorResponse(error="Local dispatch is not available in production").model_dump(),
                 status_code=400,
+            )
+
+        if await has_open_pr_for_jurisdiction(request.jurisdiction_ocdid):
+            return JSONResponse(
+                content=ErrorResponse(error="An open pull request already exists for this jurisdiction").model_dump(),
+                status_code=409,
             )
 
         try:

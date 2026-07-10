@@ -8,6 +8,8 @@ function JurisdictionSidebar({
   onScrapeClick,
   canStartScrape,
   isJobRunning,
+  hasOpenPr,
+  scrapeError,
   onSave,
 }) {
   if (!jurisdictionData) {
@@ -22,10 +24,12 @@ function JurisdictionSidebar({
         <button
           @click=${onScrapeClick}
           class="primary jurisdiction-sidebar__scrape-btn btn-gradient"
-          ?disabled=${isJobRunning}
+          ?disabled=${isJobRunning || hasOpenPr}
         >
           Scrape for Jurisdiction
         </button>
+        ${hasOpenPr ? html`<p class="jurisdiction-sidebar__scrape-hint">An open pull request already exists for this jurisdiction.</p>` : null}
+        ${scrapeError ? html`<p class="jurisdiction-sidebar__scrape-error">${scrapeError}</p>` : null}
       ` : null}
     </div>
   `;

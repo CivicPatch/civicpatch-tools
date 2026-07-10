@@ -164,7 +164,7 @@ function SearchJurisdictions() {
 
           <civ-verify-cta
             .isLoggedIn=${!!user}
-            .toReviewCount=${toReviewCount}
+            .toReviewCount=${user ? (reviewStats?.available_count ?? 0) : toReviewCount}
             .state=${selectedState}
             .hasActiveSession=${activeSession != null}
           ></civ-verify-cta>

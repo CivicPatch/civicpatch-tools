@@ -1,10 +1,18 @@
-import './verify-cta.css';
-import { html } from 'lit-html';
-import { component, useState } from 'haunted';
-import { shouldRenderVerifyCta } from './verify-cta-visibility.js';
-import { landingUrl, sessionUrl, DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL } from '../../pages/review-routes.js';
-import { useLocalStorage, PERSIST_FOREVER } from '../../hooks/use-local-storage.js';
-import { createReviewSession, navigateToEntry } from '../../api.js';
+import "./verify-cta.css";
+import { html } from "lit-html";
+import { component, useState } from "haunted";
+import { shouldRenderVerifyCta } from "./verify-cta-visibility.js";
+import {
+  landingUrl,
+  sessionUrl,
+  DAILY_GOAL_KEY,
+  DEFAULT_DAILY_GOAL,
+} from "../../pages/review-routes.js";
+import {
+  useLocalStorage,
+  PERSIST_FOREVER,
+} from "../../hooks/use-local-storage.js";
+import { createReviewSession, navigateToEntry } from "../../api.js";
 
 interface VerifyCtaProps {
   isLoggedIn?: boolean;
@@ -13,8 +21,15 @@ interface VerifyCtaProps {
   hasActiveSession?: boolean;
 }
 
-function VerifyCta({ isLoggedIn = false, toReviewCount = 0, state = '', hasActiveSession = false }: VerifyCtaProps) {
-  const [dailyGoal] = useLocalStorage(DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL, { ttl: PERSIST_FOREVER });
+function VerifyCta({
+  isLoggedIn = false,
+  toReviewCount = 0,
+  state = "",
+  hasActiveSession = false,
+}: VerifyCtaProps) {
+  const [dailyGoal] = useLocalStorage(DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL, {
+    ttl: PERSIST_FOREVER,
+  });
   const [starting, setStarting] = useState(false);
 
   if (!shouldRenderVerifyCta({ toReviewCount })) return html``;
@@ -42,10 +57,16 @@ function VerifyCta({ isLoggedIn = false, toReviewCount = 0, state = '', hasActiv
     <div class="verify-cta">
       <p class="verify-cta__count">${toReviewCount}</p>
       <p class="verify-cta__description">
-        ${toReviewCount === 1 ? 'municipality needs' : 'municipalities need'} review before publishing.
+        ${toReviewCount === 1 ? "municipality needs" : "municipalities need"} a
+        review before publishing.
       </p>
       ${isLoggedIn
-        ? html`<button class="verify-cta__link" type="button" ?disabled=${starting} @click=${handleVerifyClick}>
+        ? html`<button
+            class="verify-cta__link"
+            type="button"
+            ?disabled=${starting}
+            @click=${handleVerifyClick}
+          >
             Verify officials <i class="fa-solid fa-arrow-right"></i>
           </button>`
         : html`<a class="verify-cta__link" href="/login">
@@ -56,6 +77,6 @@ function VerifyCta({ isLoggedIn = false, toReviewCount = 0, state = '', hasActiv
 }
 
 customElements.define(
-  'civ-verify-cta',
+  "civ-verify-cta",
   component(VerifyCta as any, { useShadowDOM: false, observedAttributes: [] }),
 );
