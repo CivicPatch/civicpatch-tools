@@ -60,11 +60,21 @@ describe('division OCD-ID', () => {
   });
 
   it('parses recognized division types', () => {
-    expect(parseDivision(`${base}/council_district:1`)).toEqual({ type: 'council_district', value: '1' });
-    expect(parseDivision(`${base}/ward:3`)).toEqual({ type: 'ward', value: '3' });
-    expect(parseDivision(base)).toEqual({ type: 'at_large', value: '' });
-    expect(parseDivision('')).toEqual({ type: 'at_large', value: '' });
-    expect(parseDivision(`${base}/precinct:5`)).toEqual({ type: 'other', value: '' });
+    expect(parseDivision(`${base}/council_district:1`, jurisdiction)).toEqual({ type: 'council_district', value: '1' });
+    expect(parseDivision(`${base}/ward:3`, jurisdiction)).toEqual({ type: 'ward', value: '3' });
+    expect(parseDivision(base, jurisdiction)).toEqual({ type: 'at_large', value: '' });
+    expect(parseDivision('', jurisdiction)).toEqual({ type: 'at_large', value: '' });
+    expect(parseDivision(`${base}/precinct:5`, jurisdiction)).toEqual({ type: 'other', value: '' });
+  });
+
+  it('treats a bare county/state-level division base as at-large, not "other"', () => {
+    const countyJurisdiction = 'ocd-jurisdiction/country:us/state:co/county:pitkin/government';
+    const countyBase = 'ocd-division/country:us/state:co/county:pitkin';
+    expect(parseDivision(countyBase, countyJurisdiction)).toEqual({ type: 'at_large', value: '' });
+
+    const stateJurisdiction = 'ocd-jurisdiction/country:us/state:co/government';
+    const stateBase = 'ocd-division/country:us/state:co';
+    expect(parseDivision(stateBase, stateJurisdiction)).toEqual({ type: 'at_large', value: '' });
   });
 
   it('builds OCD-IDs from type + value', () => {
@@ -75,7 +85,7 @@ describe('division OCD-ID', () => {
 
   it('round-trips recognized divisions through the jurisdiction', () => {
     for (const ocdid of [base, `${base}/council_district:1`, `${base}/ward:3`]) {
-      const { type, value } = parseDivision(ocdid);
+      const { type, value } = parseDivision(ocdid, jurisdiction);
       expect(buildDivisionOcdid(jurisdiction, type, value)).toBe(ocdid);
     }
   });
@@ -83,26 +93,26 @@ describe('division OCD-ID', () => {
 
 describe('buildUpdates', () => {
   it('sends nothing when the draft is unchanged', () => {
-    expect(buildUpdates(denver, toDraft(denver), denver.jurisdiction_ocdid!)).toEqual({});
+    expect(buildUpdates(denver, toDraft(denver, denver.jurisdiction_ocdid), denver.jurisdiction_ocdid!)).toEqual({});
   });
 
   it('sends only the changed top-level field', () => {
-    const draft = { ...toDraft(denver), name: 'Amanda P. Sandoval' };
+    const draft = { ...toDraft(denver, denver.jurisdiction_ocdid), name: 'Amanda P. Sandoval' };
     expect(buildUpdates(denver, draft, denver.jurisdiction_ocdid!)).toEqual({ name: 'Amanda P. Sandoval' });
   });
 
   it('sends a cleared date as null', () => {
-    const draft = { ...toDraft(denver), startDate: { year: '', month: '', day: '' } };
+    const draft = { ...toDraft(denver, denver.jurisdiction_ocdid), startDate: { year: '', month: '', day: '' } };
     expect(buildUpdates(denver, draft, denver.jurisdiction_ocdid!)).toEqual({ start_date: null });
   });
 
   it('does not mark an already-empty date dirty', () => {
     // end_date is null; an untouched empty draft must not appear in updates
-    expect(buildUpdates(denver, toDraft(denver), denver.jurisdiction_ocdid!)).not.toHaveProperty('end_date');
+    expect(buildUpdates(denver, toDraft(denver, denver.jurisdiction_ocdid), denver.jurisdiction_ocdid!)).not.toHaveProperty('end_date');
   });
 
   it('sends office as a whole object with the rebuilt division OCD-ID', () => {
-    const draft = { ...toDraft(denver), divisionType: 'ward' as const, divisionValue: '2' };
+    const draft = { ...toDraft(denver, denver.jurisdiction_ocdid), divisionType: 'ward' as const, divisionValue: '2' };
     expect(buildUpdates(denver, draft, denver.jurisdiction_ocdid!)).toEqual({
       office: { name: 'Council Member', division_ocdid: 'ocd-division/country:us/state:co/place:denver/ward:2' },
     });
@@ -114,11 +124,11 @@ describe('buildUpdates', () => {
       office: { name: 'Trustee', division_ocdid: 'ocd-division/country:us/state:co/place:denver/precinct:5' },
     };
     // toDraft maps precinct -> "other"; an unchanged save must not touch office
-    expect(buildUpdates(precinct, toDraft(precinct), precinct.jurisdiction_ocdid!)).not.toHaveProperty('office');
+    expect(buildUpdates(precinct, toDraft(precinct, precinct.jurisdiction_ocdid), precinct.jurisdiction_ocdid!)).not.toHaveProperty('office');
   });
 
   it('sends an edited multi-value array', () => {
-    const draft = { ...toDraft(denver), phones: ['(720) 337-7701', '(303) 555-0000'] };
+    const draft = { ...toDraft(denver, denver.jurisdiction_ocdid), phones: ['(720) 337-7701', '(303) 555-0000'] };
     expect(buildUpdates(denver, draft, denver.jurisdiction_ocdid!)).toEqual({ phones: ['(720) 337-7701', '(303) 555-0000'] });
   });
 });

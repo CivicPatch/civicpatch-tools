@@ -27,6 +27,7 @@
   align-items: center;
   gap: 0.3rem;
   width: 100%;
+  margin: 0;
   padding: 0;
   border: none;
   background: transparent;
@@ -36,6 +37,10 @@
   letter-spacing: inherit;
   white-space: nowrap;
   text-align: inherit;
+}
+
+.municipalities-table__sort-btn:not(:focus-visible) {
+  box-shadow: none;
 }
 
 .municipalities-table__sort-btn--active {
