@@ -156,7 +156,7 @@ function SearchJurisdictions() {
                     Browse
                     ${dashboardData.states[selectedState].civicpatch.localities
                       .known}
-                    municipalities →
+                    municipalities <i class="fa-solid fa-arrow-right"></i>
                   </a>
                 `
               : ""}

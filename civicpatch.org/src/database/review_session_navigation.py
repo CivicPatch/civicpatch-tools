@@ -50,8 +50,12 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
     Returns the next available open review(s) for this session.
 
     Excludes request_ids currently claimed (in progress) in this session so an in-flight
-    card isn't re-offered. Resolved/published PRs are already out of the pool via
-    AVAILABLE_FOR_REVIEW. The router's UniqueViolation retry handles rare claim collisions.
+    card isn't re-offered, and excludes jurisdictions already claimed by any other
+    session so two reviewers don't race for the same top-ranked candidate (the
+    ordering below is deterministic, so without this they'd otherwise pick the same
+    one almost every time). Resolved/published PRs are already out of the pool via
+    AVAILABLE_FOR_REVIEW. The router's UniqueViolation retry handles the remaining
+    select-then-insert race window.
     """
     await cur.execute(
         f"""
@@ -63,6 +67,11 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
         WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
           AND j.request_id::text != ALL(%s::text[])
+          AND NOT EXISTS (
+              SELECT 1 FROM review_session_entries e
+              WHERE e.jurisdiction_ocdid = r.jurisdiction_ocdid
+                AND e.status = 'claimed'
+          )
         ORDER BY
             jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
             pr.created_at DESC
