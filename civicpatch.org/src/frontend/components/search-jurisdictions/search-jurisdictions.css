@@ -56,6 +56,19 @@
   gap: 1.25rem;
 }
 
+/* ── Browse municipalities link ───────────────────────────────────────────── */
+
+.browse-municipalities-link {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--civ-text);
+  color: var(--civ-bg);
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
 /* ── State progress ────────────────────────────────────────────────────────── */
 
 .state-progress {

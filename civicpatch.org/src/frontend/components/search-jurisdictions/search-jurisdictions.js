@@ -7,6 +7,7 @@ import {
   fetchMapsCoverage,
   fetchLocalStatus,
   fetchStateCoverageSummary,
+  fetchReviewStats,
 } from "../../api.js";
 import {
   useLocalStorage,
@@ -20,6 +21,7 @@ import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
 import "../../components/verify-cta/verify-cta.ts";
+import { renderContributionCard } from "../contribution-card/contribution-card.ts";
 
 function SearchJurisdictions() {
   const { user, permissions } = useAuth();
@@ -38,6 +40,7 @@ function SearchJurisdictions() {
   const [coverageSummary, setCoverageSummary] = useState({});
   const [localStatus, setLocalStatus] = useState({});
   const [toReviewCount, setToReviewCount] = useState(0);
+  const [reviewStats, setReviewStats] = useState(null);
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -84,6 +87,18 @@ function SearchJurisdictions() {
       .catch(() => {});
   }, [selectedState]);
 
+  useEffect(() => {
+    // review-sessions/stats requires auth (AUTHENTICATED route) — skip the call
+    // entirely for anonymous visitors, the common case (see plan §13).
+    if (!user || !selectedState) {
+      setReviewStats(null);
+      return;
+    }
+    fetchReviewStats(selectedState)
+      .then((d) => setReviewStats(d.data ?? null))
+      .catch(() => setReviewStats(null));
+  }, [user, selectedState]);
+
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || "").toLowerCase());
     setSelectedCountyOcdid(null);
@@ -122,10 +137,34 @@ function SearchJurisdictions() {
             @select-jurisdiction-change=${handleSelectJurisdictionChange}
           ></civ-select-jurisdiction>
 
+          ${selectedState && dashboardData?.states?.[selectedState]
+            ? html`
+                <a
+                  class="browse-municipalities-link"
+                  href="/${selectedState}/local"
+                >
+                  Browse
+                  ${dashboardData.states[selectedState].civicpatch.localities.known}
+                  municipalities →
+                </a>
+              `
+            : ''}
+
           <civ-verify-cta
             .isLoggedIn=${!!user}
             .toReviewCount=${toReviewCount}
           ></civ-verify-cta>
+
+          ${renderContributionCard({
+            isLoggedIn: !!user,
+            state: selectedState,
+            toReviewCount,
+            dailyCounts: reviewStats?.daily_counts ?? [],
+            streak: reviewStats?.streak ?? 0,
+            currentDate: reviewStats?.current_date ?? null,
+            allTimeResolved: reviewStats?.all_time_resolved ?? 0,
+            avgSecondsPerReview: reviewStats?.avg_seconds_per_review ?? null,
+          })}
         </div>
 
         <div class="map-col">
