@@ -6,7 +6,7 @@ function CivSelectState({ selected }) {
 
   // Used only for the validation path — we don't have a direct e.target there.
   const emitResetViaHost = () => {
-    const selectEl = this.querySelector('select');
+    const selectEl = this.querySelector("select");
     if (!selectEl) return;
     selectEl.dispatchEvent(
       new CustomEvent("state-change", {
@@ -42,19 +42,27 @@ function CivSelectState({ selected }) {
   }, []);
 
   // Only use selected if it's recognised — avoids a visible flash of bad state.
-  const effectiveSelected = states.some((s) => s.code === selected) ? selected : "";
+  const effectiveSelected = states.some((s) => s.code === selected)
+    ? selected
+    : "";
 
   return html`
     <select .value=${effectiveSelected} @change=${handleChange}>
-      <option value="" ?selected=${effectiveSelected === ""}>— Select a state —</option>
+      <option value="" ?selected=${effectiveSelected === ""}>
+        Select a state
+      </option>
       ${states.map(
         (state) =>
-          html`<option value=${state.code} ?selected=${state.code === effectiveSelected}>${state.name}</option>`,
+          html`<option
+            value=${state.code}
+            ?selected=${state.code === effectiveSelected}
+          >
+            ${state.name}
+          </option>`,
       )}
     </select>
   `;
 }
-
 
 customElements.define(
   "civ-select-state",

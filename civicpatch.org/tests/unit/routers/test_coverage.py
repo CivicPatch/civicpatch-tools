@@ -80,6 +80,7 @@ def test_get_state_summary_returns_coverage(client):
         covered_fresh=5,
         covered_stale=2,
         buckets={b: 0 for b in Bucket},
+        needs_review_count=1,
     )
     with patch(
         "services.coverage.get_state_coverage",

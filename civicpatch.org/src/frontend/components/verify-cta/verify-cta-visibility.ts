@@ -1,9 +1,3 @@
-export function shouldRenderVerifyCta({
-  isLoggedIn,
-  toReviewCount,
-}: {
-  isLoggedIn: boolean;
-  toReviewCount: number;
-}): boolean {
-  return isLoggedIn && toReviewCount > 0;
+export function shouldRenderVerifyCta({ toReviewCount }: { toReviewCount: number }): boolean {
+  return toReviewCount > 0;
 }

@@ -11,10 +11,10 @@ import { test, expect } from "../fixtures/index.js";
 
 test.describe("Review session — Next button disabled", () => {
   test("Next button is disabled when only one PR is available in the session", async ({ authenticatedPage: page }) => {
-    // Switch to TX (seed has exactly 1 open PR there)
-    await page.goto("/");
-    await page.locator(".nav-state-selector select").selectOption("tx");
+    // Switch to TX (seed has exactly 1 open PR there). "/" is a global route
+    // (no state selector) — switch from a state-scoped page instead.
     await page.goto("/review");
+    await page.locator(".nav-state-selector select").selectOption("tx");
 
     // Start the session and confirm the lone TX card loaded
     await page.locator(".review-page__start-btn").click();

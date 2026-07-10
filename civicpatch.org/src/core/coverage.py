@@ -24,6 +24,13 @@ class StateCoverage(BaseModel):
     covered_fresh: int
     covered_stale: int
     buckets: dict[Bucket, int]
+    # Raw count of jurisdictions with an open PR — orthogonal to `buckets`, which
+    # is priority-exclusive (blocked wins over to_review) for the bucket
+    # breakdown's sum-to-scrapeable invariant. A jurisdiction can be both
+    # blocked AND need review; this field answers "how many need review" without
+    # that exclusivity, matching services.coverage.get_municipality_list's
+    # `needs_review` (same get_open_pr_ocdids_by_state signal, unfiltered).
+    needs_review_count: int
 
     @computed_field
     @property
@@ -78,6 +85,7 @@ def summarize_state_coverage(
         covered_fresh=covered_fresh_count,
         covered_stale=covered_stale_count,
         buckets=buckets,
+        needs_review_count=len(to_review),
     )
 
 
