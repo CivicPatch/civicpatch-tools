@@ -63,7 +63,7 @@ test.describe("Municipalities page", () => {
     await expect(nameCells.first()).toContainText("E2E Test City");
     await expect(nameCells.last()).toContainText("E2E Test City 3");
 
-    await page.locator(".municipalities-controls__sort-btn", { hasText: "Name" }).click();
+    await page.locator(".municipalities-table__sort-btn", { hasText: "Municipality" }).click();
 
     await expect(nameCells.first()).toContainText("E2E Test City 3");
     await expect(page).toHaveURL(/[?&]dir=desc(&|$)/);
