@@ -22,6 +22,27 @@
   color: var(--civ-text-muted);
 }
 
+.municipalities-table__sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+  text-align: inherit;
+}
+
+.municipalities-table__sort-btn--active {
+  color: var(--civ-text);
+  font-weight: 700;
+}
+
 .municipalities-table td {
   padding: 0.6rem 0.8rem;
   border-bottom: 1px solid var(--civ-border);
@@ -75,7 +96,12 @@
 }
 
 .municipalities-table__officials {
-  text-align: right;
+  width: 6rem;
+  text-align: center;
+}
+
+.municipalities-table__officials .municipalities-table__sort-btn {
+  justify-content: center;
 }
 
 /* ── Empty state ──────────────────────────────────────────────────────────── */

@@ -2,18 +2,24 @@
 
 .municipalities-controls {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.6rem;
   margin-bottom: 1rem;
 }
 
 .municipalities-controls__search {
-  flex: 1;
-  min-width: 12rem;
+  width: 100%;
+  max-width: 24rem;
 }
 
-/* ── Pills ────────────────────────────────────────────────────────────────── */
+/* ── Filters row (status pills + needs-review) ───────────────────────────── */
+
+.municipalities-controls__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
 
 .municipalities-controls__pills {
   display: flex;
@@ -49,24 +55,18 @@
   font-weight: 700;
 }
 
-/* ── Sort ─────────────────────────────────────────────────────────────────── */
+/* ── Needs-review checkbox ────────────────────────────────────────────────── */
 
-.municipalities-controls__sort {
-  display: flex;
-  gap: 0.3rem;
-  margin-left: auto;
-}
-
-.municipalities-controls__sort-btn {
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--pico-border-radius);
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--civ-text-muted);
+.municipalities-controls__checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: var(--text-sm);
+  color: var(--civ-text);
 }
 
-.municipalities-controls__sort-btn--active {
-  color: var(--civ-text);
-  font-weight: 700;
+.municipalities-controls__checkbox input[type="checkbox"] {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
 }

@@ -349,6 +349,13 @@ async def test_get_active_pipeline_run_jurisdiction_ocdids():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_get_active_pipeline_run_jurisdiction_ocdids_by_state():
+    result = await db_jobs.get_active_pipeline_run_jurisdiction_ocdids_by_state("zz")
+    assert isinstance(result, set)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_get_pipeline_run_status_not_found():
     result = await db_jobs.get_pipeline_run_status(_FAKE_UUID)
     assert result is None
@@ -499,6 +506,13 @@ async def test_upsert_issue_conflict_preserves_pr_opened():
 async def test_get_issue_by_id_not_found():
     result = await db_issues.get_issue_by_id(_FAKE_UUID)
     assert result is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_pending_issue_ocdids_by_state():
+    result = await db_issues.get_pending_issue_ocdids_by_state("zz")
+    assert isinstance(result, set)
 
 
 # ---------------------------------------------------------------------------
