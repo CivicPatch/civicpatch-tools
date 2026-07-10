@@ -177,10 +177,10 @@ function PersonEditModal(host: PersonEditModalHost) {
   const person = host.person;
   const jurisdictionOcdid = host.jurisdictionOcdid;
   const candidates = host.candidates ?? [];
-  const [draft, setDraft] = useState<Draft | null>(person ? toDraft(person) : null);
+  const [draft, setDraft] = useState<Draft | null>(person ? toDraft(person, jurisdictionOcdid) : null);
 
   useEffect(() => {
-    setDraft(person ? toDraft(person) : null);
+    setDraft(person ? toDraft(person, jurisdictionOcdid) : null);
   }, [person?.id]);
 
   if (!person || !draft) return html``;

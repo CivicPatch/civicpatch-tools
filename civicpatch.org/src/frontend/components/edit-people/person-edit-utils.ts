@@ -35,10 +35,16 @@ export function jurisdictionToDivisionBase(jurisdictionOcdid: string | null | un
   return jurisdictionOcdid.replace(/^ocd-jurisdiction/, "ocd-division").replace(/\/government$/, "");
 }
 
-// division_ocdid -> {type, value}. Recognizes council_district / ward; a bare
-// place segment is at-large; anything else (e.g. legacy precinct) is "other".
-export function parseDivision(divisionOcdid: string | null | undefined): Division {
+// division_ocdid -> {type, value}. At-large when it's exactly the
+// jurisdiction's base division (no extra district/ward segment); otherwise
+// recognizes council_district / ward; anything else (e.g. legacy precinct)
+// is "other".
+export function parseDivision(
+  divisionOcdid: string | null | undefined,
+  jurisdictionOcdid: string | null | undefined,
+): Division {
   if (!divisionOcdid) return { type: DIVISION_AT_LARGE, value: "" };
+  if (divisionOcdid === jurisdictionToDivisionBase(jurisdictionOcdid)) return { type: DIVISION_AT_LARGE, value: "" };
 
   const lastSegment = divisionOcdid.split("/").pop() ?? "";
   const [label, value = ""] = lastSegment.split(":");
@@ -89,8 +95,8 @@ export type Draft = {
   linkedId: string; // staged "link to existing record" — applied as `id` on save
 };
 
-export function toDraft(person: Person): Draft {
-  const division = parseDivision(person.office?.division_ocdid);
+export function toDraft(person: Person, jurisdictionOcdid: string | null | undefined): Draft {
+  const division = parseDivision(person.office?.division_ocdid, jurisdictionOcdid);
   return {
     name: person.name ?? "",
     officeName: person.office?.name ?? "",

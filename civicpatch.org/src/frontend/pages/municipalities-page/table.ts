@@ -49,9 +49,7 @@ function renderRow(m: Municipality, jurisdictionHref: string | null) {
         ${m.last_verified_at ? dateStringToFriendly(m.last_verified_at) : '—'}
       </td>
       <td>
-        ${m.needs_review
-          ? html`<a href="/review">Verify <i class="fa-solid fa-arrow-right"></i></a>`
-          : jurisdictionHref
+        ${jurisdictionHref
           ? html`<a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>`
           : '—'}
       </td>

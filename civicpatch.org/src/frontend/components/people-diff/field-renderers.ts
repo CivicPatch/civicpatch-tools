@@ -155,7 +155,7 @@ function renderMultiField(field: FieldSpec, oldRecord: any, newRecord: any, save
 
 function renderDivisionNewSide(field: FieldSpec, newRecord: any, save: Save, jurisdictionOcdid: string | null | undefined) {
   const newOcdid = diffValue(newRecord, field) as string | null | undefined;
-  const division = parseDivision(newOcdid);
+  const division = parseDivision(newOcdid, jurisdictionOcdid);
   const isOther = division.type === DIVISION_OTHER;
   const atLarge = division.type === DIVISION_AT_LARGE;
   const base = jurisdictionOcdid ? jurisdictionToDivisionBase(jurisdictionOcdid) : newOcdid ?? "";
@@ -164,12 +164,11 @@ function renderDivisionNewSide(field: FieldSpec, newRecord: any, save: Save, jur
   return html`
     <div class="people-diff__division">
       <select class="people-diff__division-select" aria-label="Division type"
-        .value=${division.type}
         @change=${(e: Event) => save(buildFieldUpdate(newRecord, field.key, rebuild((e.target as HTMLSelectElement).value, "")))}>
-        ${isOther ? html`<option value=${DIVISION_OTHER} disabled>Custom: ${newOcdid}</option>` : ""}
-        <option value=${DIVISION_AT_LARGE}>At-large (no district)</option>
-        <option value="council_district">Council District</option>
-        <option value="ward">Ward</option>
+        ${isOther ? html`<option value=${DIVISION_OTHER} disabled selected>Custom: ${newOcdid}</option>` : ""}
+        <option value=${DIVISION_AT_LARGE} ?selected=${atLarge}>At-large (no district)</option>
+        <option value="council_district" ?selected=${division.type === "council_district"}>Council District</option>
+        <option value="ward" ?selected=${division.type === "ward"}>Ward</option>
       </select>
       ${atLarge || isOther
         ? ""
