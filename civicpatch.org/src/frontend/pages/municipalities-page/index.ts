@@ -19,7 +19,9 @@ import { renderPaginationControls } from './pagination-controls.js';
 import { parseMunicipalitiesParams, buildMunicipalitiesSearch } from './url-params.js';
 import './municipalities-page.css';
 
-const PAGE_SIZE = 20;
+// Large enough that even the biggest tracked state (MI, ~1,773 municipalities)
+// is only ~18 pages — small enough to list every page number, no ellipsis needed.
+const PAGE_SIZE = 100;
 
 interface MunicipalitiesPageProps {
   state?: string;

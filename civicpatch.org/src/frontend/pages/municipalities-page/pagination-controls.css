@@ -10,6 +10,7 @@
 
 .municipalities-pagination__pages {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.3rem;
 }
 
@@ -30,8 +31,4 @@
   background: var(--civ-text);
   border-color: var(--civ-text);
   color: var(--civ-bg);
-}
-
-.municipalities-pagination__ellipsis {
-  padding: 0.3rem 0.2rem;
 }

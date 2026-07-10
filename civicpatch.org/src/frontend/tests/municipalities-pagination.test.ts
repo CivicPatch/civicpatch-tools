@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { paginate, computePageWindow } from '../pages/municipalities-page/pagination.js';
+import { paginate, pageNumbers } from '../pages/municipalities-page/pagination.js';
 
 const ITEMS = Array.from({ length: 45 }, (_, i) => i + 1);
 
@@ -48,26 +48,9 @@ describe('paginate', () => {
   });
 });
 
-describe('computePageWindow', () => {
-  it('returns every page when there are 7 or fewer total (nothing to collapse)', () => {
-    expect(computePageWindow(1, 3)).toEqual([1, 2, 3]);
-    expect(computePageWindow(4, 7)).toEqual([1, 2, 3, 4, 5, 6, 7]);
-  });
-
-  it('shows the first two, an ellipsis, and the last two when on page 1', () => {
-    expect(computePageWindow(1, 10)).toEqual([1, 2, 'ellipsis', 9, 10]);
-  });
-
-  it('shows both ellipses with a window around a middle page', () => {
-    expect(computePageWindow(5, 10)).toEqual([1, 2, 'ellipsis', 4, 5, 6, 'ellipsis', 9, 10]);
-  });
-
-  it('shows the first two, an ellipsis, and the last two when on the last page', () => {
-    expect(computePageWindow(10, 10)).toEqual([1, 2, 'ellipsis', 9, 10]);
-  });
-
-  it('omits the leading ellipsis once the window reaches page 3', () => {
-    // window = [2,3,4], adjacent to the [1,2] boundary — no gap, no ellipsis needed
-    expect(computePageWindow(3, 10)).toEqual([1, 2, 3, 4, 'ellipsis', 9, 10]);
+describe('pageNumbers', () => {
+  it('returns 1..totalPages in order', () => {
+    expect(pageNumbers(1)).toEqual([1]);
+    expect(pageNumbers(5)).toEqual([1, 2, 3, 4, 5]);
   });
 });
