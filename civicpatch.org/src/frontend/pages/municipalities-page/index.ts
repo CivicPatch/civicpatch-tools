@@ -3,28 +3,34 @@ import { component, useEffect, useState } from 'haunted';
 import { fetchDashboard, fetchMunicipalityList } from '../../api.js';
 import { dateStringToFriendly } from '../../utils/date-utils.js';
 import { jurisdictionOcdidToPath } from '../../components/ocdid-utils.js';
+import {
+  STATUS_FILTER_ALL,
+  filterMunicipalities,
+  sortMunicipalities,
+  computeStatusPillCounts,
+  countNeedsReview,
+  Municipality,
+  SortKey,
+  SortDir,
+} from './municipalities-filter.js';
+import { renderControls } from './controls.js';
 import './municipalities-page.css';
 
 interface MunicipalitiesPageProps {
   state?: string;
 }
 
-interface Municipality {
-  jurisdiction_ocdid: string;
-  name: string;
-  status: string;
-  needs_review: boolean;
-  officials_count: number;
-  last_verified_at: string | null;
-}
-
 function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
   const [municipalities, setMunicipalities] = useState<Municipality[] | null>(null);
   const [cutoff, setCutoff] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const [status, setStatus] = useState<string>(STATUS_FILTER_ALL);
+  const [needsReviewOnly, setNeedsReviewOnly] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>('name');
+  const [sortDir, setSortDir] = useState<SortDir>('asc');
 
-  // One-shot per-state fetch (§8) — client-side search/filter/sort/pagination
-  // (Commits 9–10) all operate on this same in-memory list, no per-interaction
-  // network round-trip.
+  // One-shot per-state fetch (§8) — search/filter/sort below all operate on this
+  // same in-memory list, no per-interaction network round-trip.
   useEffect(() => {
     if (!state) return;
     fetchMunicipalityList(state)
@@ -35,7 +41,31 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
       .catch(() => {});
   }, [state]);
 
+  const handleSortChange = (key: SortKey) => {
+    if (key === sortKey) {
+      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  };
+
   const stateLabel = state.toUpperCase();
+  const all = municipalities ?? [];
+  const filtered = filterMunicipalities(all, { query, status, needsReviewOnly });
+  const sorted = sortMunicipalities(filtered, { key: sortKey, dir: sortDir });
+
+  // Each pill/toggle's count reflects every filter dimension EXCEPT itself, so it
+  // shows what selecting it *would* produce — not the fully-filtered result, which
+  // would collapse every inactive pill to zero.
+  const statusPillCounts = computeStatusPillCounts(
+    filterMunicipalities(all, { query, status: STATUS_FILTER_ALL, needsReviewOnly }),
+  );
+  const needsReviewCount = countNeedsReview(
+    filterMunicipalities(all, { query, status, needsReviewOnly: false }),
+  );
+
+  const isUnfiltered = !query && status === STATUS_FILTER_ALL && !needsReviewOnly;
 
   return html`
     <div class="municipalities-page">
@@ -62,11 +92,27 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
       ${municipalities === null
         ? html`<p>Loading…</p>`
         : html`
+            ${renderControls({
+              query,
+              onQueryChange: setQuery,
+              status,
+              onStatusChange: setStatus,
+              statusPillCounts,
+              needsReviewOnly,
+              onNeedsReviewToggle: () => setNeedsReviewOnly(!needsReviewOnly),
+              needsReviewCount,
+              sortKey,
+              sortDir,
+              onSortChange: handleSortChange,
+            })}
+
             <p class="municipalities-page__count">
-              ${municipalities.length} municipalities
+              ${isUnfiltered
+                ? `${sorted.length} municipalities`
+                : `Showing ${sorted.length} of ${all.length} municipalities`}
             </p>
             <ul class="municipalities-page__list">
-              ${municipalities.map(
+              ${sorted.map(
                 (m) => html`<li>
                   <a href="/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}">${m.name}</a>
                 </li>`,
