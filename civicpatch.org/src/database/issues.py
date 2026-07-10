@@ -45,6 +45,23 @@ async def get_pending_issue_ocdids() -> set[str]:
     return {row[0] for row in rows}
 
 
+async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT r.jurisdiction_ocdid
+            FROM issues pi
+            JOIN requests r ON r.id::text = ANY(pi.request_ids)
+            WHERE pi.status IN (%s, %s)
+              AND r.jurisdiction_ocdid LIKE %s
+            """,
+            (PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED, f"%state:{state_code}%"),
+        )
+        rows = await cur.fetchall()
+    return {row[0] for row in rows}
+
+
 async def resolve_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:

@@ -156,9 +156,6 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
               needsReviewOnly,
               onNeedsReviewToggle: handleNeedsReviewToggle,
               needsReviewCount,
-              sortKey,
-              sortDir,
-              onSortChange: handleSortChange,
             })}
 
             <p class="municipalities-page__count">
@@ -171,6 +168,9 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
               municipalities: pageInfo.pageItems,
               onClearFilters: handleClearFilters,
               canViewJurisdictionPage: permissions.JURISDICTION_PAGE,
+              sortKey,
+              sortDir,
+              onSortChange: handleSortChange,
             })}
             ${renderPaginationControls({
               page,

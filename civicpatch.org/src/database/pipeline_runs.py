@@ -120,6 +120,23 @@ async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
         return {row[0] for row in rows}
 
 
+async def get_active_pipeline_run_jurisdiction_ocdids_by_state(state_code: str) -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT r.jurisdiction_ocdid
+            FROM pipeline_runs j
+            JOIN requests r ON r.id = j.request_id
+            WHERE j.status != ALL(%s)
+            AND r.jurisdiction_ocdid LIKE %s
+            """,
+            (list(TERMINAL_PIPELINE_RUN_STATUSES), f"%state:{state_code}%"),
+        )
+        rows = await cur.fetchall()
+        return {row[0] for row in rows}
+
+
 async def get_active_pipeline_runs(state_code: Optional[str] = None, page: int = 1, per_page: int = 25) -> tuple[list[dict], int]:
     pool = await get_pool()
     offset = (page - 1) * per_page

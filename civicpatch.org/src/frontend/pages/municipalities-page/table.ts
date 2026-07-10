@@ -3,12 +3,22 @@ import { html } from 'lit-html';
 import { STATUS_LABELS } from '../../components/progress-dashboard/status-segments.js';
 import { dateStringToFriendly } from '../../utils/date-utils.js';
 import { jurisdictionOcdidToPath } from '../../components/ocdid-utils.js';
-import { Municipality } from './municipalities-filter.js';
+import { Municipality, SortKey, SortDir } from './municipalities-filter.js';
+
+const SORT_HEADERS: { key: SortKey; label: string; class?: string }[] = [
+  { key: 'name', label: 'Municipality' },
+  { key: 'status', label: 'Status' },
+  { key: 'officials', label: 'Officials', class: 'municipalities-table__officials' },
+  { key: 'last_verified', label: 'Last verified' },
+];
 
 export interface MunicipalitiesTableProps {
   municipalities: Municipality[];
   onClearFilters: () => void;
   canViewJurisdictionPage: boolean;
+  sortKey: SortKey;
+  sortDir: SortDir;
+  onSortChange: (key: SortKey) => void;
 }
 
 function renderRow(m: Municipality, jurisdictionHref: string | null) {
@@ -40,12 +50,34 @@ function renderRow(m: Municipality, jurisdictionHref: string | null) {
       </td>
       <td>
         ${m.needs_review
-          ? html`<a href="/review">Verify →</a>`
+          ? html`<a href="/review">Verify <i class="fa-solid fa-arrow-right"></i></a>`
           : jurisdictionHref
-          ? html`<a href="${jurisdictionHref}">View →</a>`
+          ? html`<a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>`
           : '—'}
       </td>
     </tr>
+  `;
+}
+
+function renderSortHeader(
+  header: (typeof SORT_HEADERS)[number],
+  sortKey: SortKey,
+  sortDir: SortDir,
+  onSortChange: (key: SortKey) => void,
+) {
+  const active = sortKey === header.key;
+  return html`
+    <th class=${header.class ?? ''}>
+      <button
+        type="button"
+        class="municipalities-table__sort-btn${active ? ' municipalities-table__sort-btn--active' : ''}"
+        @click=${() => onSortChange(header.key)}
+      >
+        ${header.label}${active
+          ? html`<i class="fa-solid fa-arrow-${sortDir === 'asc' ? 'up' : 'down'}"></i>`
+          : ''}
+      </button>
+    </th>
   `;
 }
 
@@ -53,6 +85,9 @@ export function renderMunicipalitiesTable({
   municipalities,
   onClearFilters,
   canViewJurisdictionPage,
+  sortKey,
+  sortDir,
+  onSortChange,
 }: MunicipalitiesTableProps) {
   if (municipalities.length === 0) {
     return html`
@@ -68,10 +103,7 @@ export function renderMunicipalitiesTable({
       <table class="municipalities-table">
         <thead>
           <tr>
-            <th>Municipality</th>
-            <th>Status</th>
-            <th>Officials</th>
-            <th>Last verified</th>
+            ${SORT_HEADERS.map((h) => renderSortHeader(h, sortKey, sortDir, onSortChange))}
             <th>Action</th>
           </tr>
         </thead>

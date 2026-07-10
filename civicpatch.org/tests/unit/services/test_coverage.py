@@ -2,7 +2,9 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from services.coverage import get_municipality_list
+from core.coverage import Bucket
+from schemas.common import StateJurisdictionSets
+from services.coverage import get_municipality_list, get_state_coverage
 
 STATE = "wa"
 
@@ -74,3 +76,36 @@ async def test_empty_when_no_municipalities():
         result = await get_municipality_list(STATE)
 
     assert result == []
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_get_state_coverage_scopes_pipeline_and_issue_lookups_by_state():
+    sets = StateJurisdictionSets(
+        total={"a", "b"}, scrapeable={"a", "b"}, covered_fresh={"a"}, covered_stale=set(),
+    )
+    with (
+        patch(
+            "services.coverage.jurisdictions_db.get_state_jurisdiction_sets",
+            new_callable=AsyncMock, return_value=sets,
+        ),
+        patch(
+            "services.coverage.pull_requests_db.get_open_pr_ocdids_by_state",
+            new_callable=AsyncMock, return_value=set(),
+        ) as to_review_mock,
+        patch(
+            "services.coverage.pipeline_runs_db.get_active_pipeline_run_jurisdiction_ocdids_by_state",
+            new_callable=AsyncMock, return_value={"b"},
+        ) as scraping_mock,
+        patch(
+            "services.coverage.issues_db.get_pending_issue_ocdids_by_state",
+            new_callable=AsyncMock, return_value=set(),
+        ) as blocked_mock,
+    ):
+        result = await get_state_coverage(STATE)
+
+    scraping_mock.assert_awaited_once_with(STATE)
+    blocked_mock.assert_awaited_once_with(STATE)
+    to_review_mock.assert_awaited_once_with(STATE)
+    assert result.covered_fresh == 1
+    assert result.buckets[Bucket.SCRAPING] == 1
