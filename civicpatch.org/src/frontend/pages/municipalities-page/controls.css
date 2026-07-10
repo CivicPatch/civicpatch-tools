@@ -1,0 +1,72 @@
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+
+.municipalities-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.municipalities-controls__search {
+  flex: 1;
+  min-width: 12rem;
+}
+
+/* ── Pills ────────────────────────────────────────────────────────────────── */
+
+.municipalities-controls__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.municipalities-controls__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--civ-border);
+  background: var(--civ-surface);
+  color: var(--civ-text);
+  font-size: var(--text-sm);
+}
+
+.municipalities-controls__pill--active {
+  background: var(--civ-text);
+  border-color: var(--civ-text);
+  color: var(--civ-bg);
+}
+
+.municipalities-controls__pill-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.municipalities-controls__pill-count {
+  font-weight: 700;
+}
+
+/* ── Sort ─────────────────────────────────────────────────────────────────── */
+
+.municipalities-controls__sort {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.municipalities-controls__sort-btn {
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--pico-border-radius);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--civ-text-muted);
+  font-size: var(--text-sm);
+}
+
+.municipalities-controls__sort-btn--active {
+  color: var(--civ-text);
+  font-weight: 700;
+}
