@@ -23,6 +23,7 @@ import "../../components/map/browse-map.ts";
 import "../../components/verify-cta/verify-cta.ts";
 import { renderContributionCard } from "../contribution-card/contribution-card.ts";
 import { renderFreshnessWidget } from "../../components/progress-dashboard/freshness-widget.ts";
+import { getNeedsReviewCount } from "../../utils/coverage-utils.js";
 
 function SearchJurisdictions() {
   const { user, permissions } = useAuth();
@@ -84,10 +85,7 @@ function SearchJurisdictions() {
       return;
     }
     fetchStateCoverageSummary(selectedState)
-      // needs_review_count, not buckets.to_review — the bucket breakdown is
-      // priority-exclusive (blocked wins), so it undercounts jurisdictions that
-      // are both blocked and have an open PR. needs_review_count doesn't.
-      .then((d) => setToReviewCount(d.data?.needs_review_count ?? 0))
+      .then((d) => setToReviewCount(getNeedsReviewCount(d.data)))
       .catch(() => {});
   }, [selectedState]);
 

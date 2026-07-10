@@ -11,11 +11,7 @@ export interface MunicipalitiesTableProps {
   canViewJurisdictionPage: boolean;
 }
 
-function renderRow(m: Municipality, canViewJurisdictionPage: boolean) {
-  const jurisdictionHref = canViewJurisdictionPage
-    ? `/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}`
-    : null;
-
+function renderRow(m: Municipality, jurisdictionHref: string | null) {
   return html`
     <tr class="municipalities-table__row">
       <td>
@@ -80,7 +76,14 @@ export function renderMunicipalitiesTable({
           </tr>
         </thead>
         <tbody>
-          ${municipalities.map((m) => renderRow(m, canViewJurisdictionPage))}
+          ${municipalities.map((m) =>
+            renderRow(
+              m,
+              canViewJurisdictionPage
+                ? `/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}`
+                : null,
+            ),
+          )}
         </tbody>
       </table>
     </div>
