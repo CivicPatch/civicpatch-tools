@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
 
+from frontend.vite import vite_asset, vite_css
 from routers.frontend import build_permissions, get_router
 from schemas.common import Identity, Role
 from lib.auth import get_optional_user
@@ -148,6 +149,11 @@ def test_scrape_local_true_for_maintainers_in_dev():
 def permissions_client():
     app = FastAPI()
     templates = Jinja2Templates(directory="src/frontend/templates")
+    # Page templates call vite_asset/vite_css directly (not through base.html) —
+    # main.py registers these as Jinja globals; mirror that here, dev-mode (False),
+    # so tests don't need a real build/manifest.json to render a page template.
+    templates.env.globals["vite_asset"] = lambda path: vite_asset(path, False)
+    templates.env.globals["vite_css"] = lambda path: vite_css(path, False)
     app.include_router(get_router(templates))
     # layouts/base.html resolves CSS/JS via url_for('frontend', path=...) — mount matches
     # main.py's real one so any test rendering a full page template (extends base.html)
