@@ -4,6 +4,7 @@ import { html } from 'lit-html';
 import { ref } from 'lit-html/directives/ref.js';
 import maplibregl from 'maplibre-gl';
 import { fetchStateCoverageSummary } from '../../api.js';
+import { getNeedsReviewCount } from '../../utils/coverage-utils.js';
 import {
   DrillLevel,
   NATIONAL_SOURCE_ID,
@@ -168,10 +169,7 @@ function BrowseMap(this: HTMLElement, {
       return `<div class="map-tooltip">${header}<div class="map-tooltip__sub">Loading…</div></div>`;
     }
     const reach = Math.round((s.reach_fraction ?? 0) * 100);
-    // needs_review_count, not buckets.to_review — the bucket breakdown is
-    // priority-exclusive (blocked wins), so it undercounts jurisdictions that
-    // are both blocked and have an open PR.
-    const toReview = s.needs_review_count ?? 0;
+    const toReview = getNeedsReviewCount(s);
     return `
       <div class="map-tooltip">
         ${header}
