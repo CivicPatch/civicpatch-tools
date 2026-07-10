@@ -13,6 +13,7 @@ import "./scrape-modal/name-config-form.js";
 
 import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } from '../../api.js';
 import { TERMINAL_JOB_STATUSES } from '../../components/job-status.js';
+import { PULL_REQUEST_STATUS } from '../../components/pull-request-card/pull-request-status.js';
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const { loading: authLoading, permissions } = useAuth();
@@ -20,6 +21,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [history, setHistory] = useState(null);
   const [isTriggering, setIsTriggering] = useState(false);
+  const [scrapeError, setScrapeError] = useState(null);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
@@ -48,26 +50,33 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
   const handleScrapeStartClick = async (details) => {
     setScrapeModalOpen(false);
     setIsTriggering(true);
-    const result = await triggerPipelineRun(
-      details.scrapeMode,
-      jurisdictionData.data.id,
-      jurisdictionData.data.name,
-      details.data.url || jurisdictionData.data.url,
-      details.data.sourceUrls,
-    );
-    const now = new Date().toISOString();
-    const newEntry = {
-      request_id: result.request_id,
-      job_status: result.status,
-      job_progress: 0,
-      created_at: now,
-      updated_at: now,
-      pull_request_url: null,
-      pull_request_status: null,
-      branch_name: null,
-      jurisdiction_ocdid: jurisdiction_ocdid,
-    };
-    setHistory(prev => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
+    setScrapeError(null);
+    try {
+      const result = await triggerPipelineRun(
+        details.scrapeMode,
+        jurisdictionData.data.id,
+        jurisdictionData.data.name,
+        details.data.url || jurisdictionData.data.url,
+        details.data.sourceUrls,
+      );
+      const now = new Date().toISOString();
+      const newEntry = {
+        request_id: result.request_id,
+        job_status: result.status,
+        job_progress: 0,
+        created_at: now,
+        updated_at: now,
+        pull_request_url: null,
+        pull_request_status: null,
+        branch_name: null,
+        jurisdiction_ocdid: jurisdiction_ocdid,
+      };
+      setHistory(prev => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
+    } catch (err) {
+      setScrapeError(err.message);
+    } finally {
+      setIsTriggering(false);
+    }
   };
 
   const handleJurisdictionSave = async (formData) => {
@@ -84,6 +93,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
 
   const scrapeStatus = people?.length > 0 ? "Scraped" : "Unscraped";
   const canStartScrape = permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
+  const hasOpenPr = history?.data?.some(j => j.pull_request_status === PULL_REQUEST_STATUS.OPEN) ?? false;
   // Date of the currently-published data: the most recent successful run
   // (covers merged runs too — they're SUCCESS). Same date shown in the history rows.
   const publishedAt = history?.data?.find(
@@ -134,6 +144,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .onScrapeClick=${() => setScrapeModalOpen(true)}
             .canStartScrape=${canStartScrape}
             .isJobRunning=${isJobRunning || isTriggering}
+            .hasOpenPr=${hasOpenPr}
+            .scrapeError=${scrapeError}
             .onSave=${handleJurisdictionSave}
           ></civ-jurisdiction-sidebar>
 

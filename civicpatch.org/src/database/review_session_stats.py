@@ -117,8 +117,16 @@ async def get_review_stats(
                 JOIN pull_requests pr ON pr.request_id = r.id
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM review_session_entries rse
+                      JOIN review_sessions rs ON rs.id = rse.review_session_id
+                      WHERE rse.jurisdiction_ocdid = r.jurisdiction_ocdid
+                        AND rse.status = 'claimed'
+                        AND rs.user_id != %s
+                  )
                 """,
-                (f"%state:{state_code}%",),
+                (f"%state:{state_code}%", user_id),
             )
             available = await cur.fetchone()
 

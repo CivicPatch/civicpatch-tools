@@ -1,3 +1,15 @@
 .jurisdiction-sidebar__scrape-btn {
     margin-top: var(--pico-spacing);
 }
+
+.jurisdiction-sidebar__scrape-hint {
+    color: var(--pico-muted-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.jurisdiction-sidebar__scrape-error {
+    color: var(--pico-del-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}

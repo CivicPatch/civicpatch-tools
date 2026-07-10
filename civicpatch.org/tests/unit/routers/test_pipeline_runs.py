@@ -29,6 +29,10 @@ def client():
 @pytest.mark.unit
 def test_create_job_returns_request_id(client):
     with patch(
+        "routers.api.pipeline_runs.has_open_pr_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=False,
+    ), patch(
         "routers.api.pipeline_runs.register_request_with_pipeline_run",
         new_callable=AsyncMock,
     ), patch(
@@ -50,6 +54,10 @@ def test_create_job_returns_request_id(client):
 @pytest.mark.unit
 def test_create_job_returns_500_on_temporal_error(client):
     with patch(
+        "routers.api.pipeline_runs.has_open_pr_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=False,
+    ), patch(
         "routers.api.pipeline_runs.register_request_with_pipeline_run",
         new_callable=AsyncMock,
     ), patch(
@@ -63,6 +71,21 @@ def test_create_job_returns_500_on_temporal_error(client):
         )
 
     assert response.status_code == 500
+
+
+@pytest.mark.unit
+def test_create_job_returns_409_when_open_pr_exists(client):
+    with patch(
+        "routers.api.pipeline_runs.has_open_pr_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=True,
+    ):
+        response = client.post(
+            "/pipeline_runs/",
+            json={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland"},
+        )
+
+    assert response.status_code == 409
 
 
 @pytest.mark.unit

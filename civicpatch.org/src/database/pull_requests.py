@@ -301,6 +301,23 @@ async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
     return {row[0] for row in rows}
 
 
+async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT 1
+            FROM pull_requests pr
+            JOIN requests r ON r.id = pr.request_id
+            WHERE pr.status = 'open'
+              AND r.jurisdiction_ocdid = %s
+            LIMIT 1
+            """,
+            (jurisdiction_ocdid,),
+        )
+        return (await cur.fetchone()) is not None
+
+
 async def bulk_close_stale_prs(request_ids: List[str]):
     if not request_ids:
         return
