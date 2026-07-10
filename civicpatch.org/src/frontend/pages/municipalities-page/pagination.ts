@@ -22,26 +22,9 @@ export function paginate<T>(items: T[], page: number, pageSize: number): PageRes
   };
 }
 
-export type PageWindowItem = number | 'ellipsis';
-
-function range(start: number, end: number): number[] {
-  if (end < start) return [];
-  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-}
-
-// Always show pages 1-2 and the last 2 pages, plus a small window around the
-// current page — "1 2 … 8 9" rather than a plain sliding window, so it's always
-// clear how far the current page is from either end (matters at ~89 pages, MI).
-export function computePageWindow(page: number, totalPages: number): PageWindowItem[] {
-  if (totalPages <= 7) return range(1, totalPages);
-
-  const middleStart = Math.max(3, page - 1);
-  const middleEnd = Math.min(totalPages - 2, page + 1);
-
-  const items: PageWindowItem[] = [1, 2];
-  if (middleStart > 3) items.push('ellipsis');
-  items.push(...range(middleStart, middleEnd));
-  if (middleEnd < totalPages - 2) items.push('ellipsis');
-  items.push(totalPages - 1, totalPages);
-  return items;
+// At PAGE_SIZE=100, even the largest tracked state (MI, ~1,773 municipalities)
+// is only ~18 pages — small enough to render every page number directly, no
+// windowing/ellipsis needed.
+export function pageNumbers(totalPages: number): number[] {
+  return Array.from({ length: totalPages }, (_, i) => i + 1);
 }

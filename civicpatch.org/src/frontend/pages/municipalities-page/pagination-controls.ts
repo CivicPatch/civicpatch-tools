@@ -1,6 +1,6 @@
 import './pagination-controls.css';
 import { html } from 'lit-html';
-import { PageResult, computePageWindow } from './pagination.js';
+import { PageResult, pageNumbers } from './pagination.js';
 
 export interface PaginationControlsProps {
   page: number;
@@ -23,20 +23,18 @@ export function renderPaginationControls({ page, pageInfo, onPageChange }: Pagin
         >
           Prev
         </button>
-        ${computePageWindow(page, totalPages).map((item) =>
-          item === 'ellipsis'
-            ? html`<span class="municipalities-pagination__ellipsis">…</span>`
-            : html`
-                <button
-                  type="button"
-                  class="municipalities-pagination__page${item === page
-                    ? ' municipalities-pagination__page--active'
-                    : ''}"
-                  @click=${() => onPageChange(item)}
-                >
-                  ${item}
-                </button>
-              `,
+        ${pageNumbers(totalPages).map(
+          (p) => html`
+            <button
+              type="button"
+              class="municipalities-pagination__page${p === page
+                ? ' municipalities-pagination__page--active'
+                : ''}"
+              @click=${() => onPageChange(p)}
+            >
+              ${p}
+            </button>
+          `,
         )}
         <button
           type="button"
