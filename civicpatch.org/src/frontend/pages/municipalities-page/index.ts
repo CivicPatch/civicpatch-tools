@@ -2,7 +2,6 @@ import { html } from 'lit-html';
 import { component, useEffect, useState } from 'haunted';
 import { fetchDashboard, fetchMunicipalityList } from '../../api.js';
 import { dateStringToFriendly } from '../../utils/date-utils.js';
-import { jurisdictionOcdidToPath } from '../../components/ocdid-utils.js';
 import {
   STATUS_FILTER_ALL,
   filterMunicipalities,
@@ -14,7 +13,13 @@ import {
   SortDir,
 } from './municipalities-filter.js';
 import { renderControls } from './controls.js';
+import { renderMunicipalitiesTable } from './table.js';
+import { paginate } from './pagination.js';
+import { renderPaginationControls } from './pagination-controls.js';
+import { parseMunicipalitiesParams, buildMunicipalitiesSearch } from './url-params.js';
 import './municipalities-page.css';
+
+const PAGE_SIZE = 20;
 
 interface MunicipalitiesPageProps {
   state?: string;
@@ -23,14 +28,17 @@ interface MunicipalitiesPageProps {
 function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
   const [municipalities, setMunicipalities] = useState<Municipality[] | null>(null);
   const [cutoff, setCutoff] = useState<string | null>(null);
-  const [query, setQuery] = useState('');
-  const [status, setStatus] = useState<string>(STATUS_FILTER_ALL);
-  const [needsReviewOnly, setNeedsReviewOnly] = useState(false);
-  const [sortKey, setSortKey] = useState<SortKey>('name');
-  const [sortDir, setSortDir] = useState<SortDir>('asc');
 
-  // One-shot per-state fetch (§8) — search/filter/sort below all operate on this
-  // same in-memory list, no per-interaction network round-trip.
+  const initial = parseMunicipalitiesParams(window.location.search);
+  const [query, setQuery] = useState(initial.q);
+  const [status, setStatus] = useState<string>(initial.status);
+  const [needsReviewOnly, setNeedsReviewOnly] = useState(initial.needsReview);
+  const [sortKey, setSortKey] = useState<SortKey>(initial.sortKey);
+  const [sortDir, setSortDir] = useState<SortDir>(initial.sortDir);
+  const [page, setPage] = useState(initial.page);
+
+  // One-shot per-state fetch (§8) — search/filter/sort/pagination below all
+  // operate on this same in-memory list, no per-interaction network round-trip.
   useEffect(() => {
     if (!state) return;
     fetchMunicipalityList(state)
@@ -41,19 +49,52 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
       .catch(() => {});
   }, [state]);
 
-  const handleSortChange = (key: SortKey) => {
-    if (key === sortKey) {
-      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortKey(key);
-      setSortDir('asc');
-    }
+  // Keep the URL in sync with view state (§8.5). replaceState, not pushState —
+  // filter/sort/page changes shouldn't spam browser history one entry per click.
+  useEffect(() => {
+    const search = buildMunicipalitiesSearch({
+      q: query,
+      status,
+      needsReview: needsReviewOnly,
+      sortKey,
+      sortDir,
+      page,
+    });
+    window.history.replaceState({}, '', `${window.location.pathname}${search}`);
+  }, [query, status, needsReviewOnly, sortKey, sortDir, page]);
+
+  // Any filter/sort change resets to page 1 — staying on e.g. page 5 after a
+  // filter narrows the results to 2 pages would show an empty/confusing page.
+  const withPageReset = (fn: () => void) => {
+    fn();
+    setPage(1);
   };
+
+  const handleQueryChange = (value: string) => withPageReset(() => setQuery(value));
+  const handleStatusChange = (value: string) => withPageReset(() => setStatus(value));
+  const handleNeedsReviewToggle = () =>
+    withPageReset(() => setNeedsReviewOnly(!needsReviewOnly));
+  const handleSortChange = (key: SortKey) =>
+    withPageReset(() => {
+      if (key === sortKey) {
+        setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+      } else {
+        setSortKey(key);
+        setSortDir('asc');
+      }
+    });
+  const handleClearFilters = () =>
+    withPageReset(() => {
+      setQuery('');
+      setStatus(STATUS_FILTER_ALL);
+      setNeedsReviewOnly(false);
+    });
 
   const stateLabel = state.toUpperCase();
   const all = municipalities ?? [];
   const filtered = filterMunicipalities(all, { query, status, needsReviewOnly });
   const sorted = sortMunicipalities(filtered, { key: sortKey, dir: sortDir });
+  const pageInfo = paginate(sorted, page, PAGE_SIZE);
 
   // Each pill/toggle's count reflects every filter dimension EXCEPT itself, so it
   // shows what selecting it *would* produce — not the fully-filtered result, which
@@ -68,7 +109,7 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
   const isUnfiltered = !query && status === STATUS_FILTER_ALL && !needsReviewOnly;
 
   return html`
-    <div class="municipalities-page">
+    <main class="municipalities-page page-content">
       <div class="municipalities-page__header">
         <a class="municipalities-page__breadcrumb" href="/">← Map</a>
         <span class="municipalities-page__breadcrumb-sep">/</span>
@@ -94,12 +135,12 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
         : html`
             ${renderControls({
               query,
-              onQueryChange: setQuery,
+              onQueryChange: handleQueryChange,
               status,
-              onStatusChange: setStatus,
+              onStatusChange: handleStatusChange,
               statusPillCounts,
               needsReviewOnly,
-              onNeedsReviewToggle: () => setNeedsReviewOnly(!needsReviewOnly),
+              onNeedsReviewToggle: handleNeedsReviewToggle,
               needsReviewCount,
               sortKey,
               sortDir,
@@ -111,15 +152,14 @@ function MunicipalitiesPage({ state = '' }: MunicipalitiesPageProps) {
                 ? `${sorted.length} municipalities`
                 : `Showing ${sorted.length} of ${all.length} municipalities`}
             </p>
-            <ul class="municipalities-page__list">
-              ${sorted.map(
-                (m) => html`<li>
-                  <a href="/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}">${m.name}</a>
-                </li>`,
-              )}
-            </ul>
+
+            ${renderMunicipalitiesTable({
+              municipalities: pageInfo.pageItems,
+              onClearFilters: handleClearFilters,
+            })}
+            ${renderPaginationControls({ page, pageInfo, onPageChange: setPage })}
           `}
-    </div>
+    </main>
   `;
 }
 

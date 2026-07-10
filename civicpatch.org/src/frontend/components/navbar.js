@@ -13,6 +13,10 @@ import {
   REVIEW_SESSION_PATH,
   landingUrl,
 } from "../pages/review-routes.ts";
+import {
+  municipalitiesUrl,
+  isMunicipalitiesPath,
+} from "../pages/municipalities-page/municipalities-routes.ts";
 import "./search-jurisdictions/select-state.js";
 import "./navbar.css";
 const API_URL = config.apiUrl;
@@ -154,6 +158,13 @@ function Navbar(host) {
     // there.
     if (path === REVIEW_PATH || path === REVIEW_SESSION_PATH) {
       window.location.href = landingUrl(newState);
+      return;
+    }
+    // State is a path segment here (/{state}/local), not a query param — the
+    // default in-place branch below would leave a stale/mismatched path
+    // (/wa/local?state=co) if we didn't navigate instead.
+    if (isMunicipalitiesPath(path)) {
+      window.location.href = municipalitiesUrl(newState);
       return;
     }
     const params = new URLSearchParams(window.location.search);

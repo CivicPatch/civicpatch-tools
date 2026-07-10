@@ -1,0 +1,37 @@
+.municipalities-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+}
+
+.municipalities-pagination__pages {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.municipalities-pagination__pages button {
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--pico-border-radius);
+  border: 1px solid var(--civ-border);
+  background: var(--civ-surface);
+  color: var(--civ-text);
+}
+
+.municipalities-pagination__pages button:disabled {
+  background: var(--civ-surface-2);
+  color: var(--civ-text-muted);
+}
+
+.municipalities-pagination__page--active {
+  background: var(--civ-text);
+  border-color: var(--civ-text);
+  color: var(--civ-bg);
+}
+
+.municipalities-pagination__ellipsis {
+  padding: 0.3rem 0.2rem;
+}
