@@ -1,5 +1,7 @@
 - code: "co"
   name: "Colorado"
+- code: "ma"
+  name: "Massachusetts"
 - code: "me"
   name: "Maine"
 - code: "mi"
