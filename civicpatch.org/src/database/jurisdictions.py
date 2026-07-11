@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import math
 from typing import List
 
@@ -12,6 +13,8 @@ from schemas.common import (
     StateJurisdictionSets,
 )
 from shared.schemas import Person
+
+logger = logging.getLogger(__name__)
 
 
 def jurisdiction_rows(
@@ -78,8 +81,8 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 if not row:
                     return None
                 return {"data": row[0]}
-    except Exception as e:
-        print(f"Error in get_jurisdiction: {e}")
+    except Exception:
+        logger.exception("Error in get_jurisdiction")
         return None
 
 
@@ -101,8 +104,8 @@ async def get_jurisdiction_geom(jurisdiction_ocdid: str):
             if not row:
                 return None
             return row[0]
-    except Exception as e:
-        print(f"Error in get_jurisdiction_geom: {e}")
+    except Exception:
+        logger.exception("Error in get_jurisdiction_geom")
         return None
 
 
@@ -134,8 +137,8 @@ async def get_people_by_geo(lat: float, long: float):
                 people_list.append(person_obj)
 
             return {"jurisdiction_ocdid": first_jurisdiction, "people": people_list}
-    except Exception as e:
-        print(f"Error in get_people_by_geo: {e}")
+    except Exception:
+        logger.exception("Error in get_people_by_geo")
         return []
 
 
@@ -245,8 +248,8 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int | None = Non
                 )
 
             return {"results": results, "buffer_m": buffer_m}
-    except Exception as e:
-        print(f"Error in get_geojson_by_latlong: {e}")
+    except Exception:
+        logger.exception("Error in get_geojson_by_latlong")
         return {"results": [], "buffer_m": buffer_m if "buffer_m" in locals() else None}
 
 
@@ -308,8 +311,8 @@ async def search_jurisdictions(
 
             return total_count, jurisdictions
 
-    except Exception as e:
-        print(f"Database error in get_jurisdictions: {e}")
+    except Exception:
+        logger.exception("Database error in get_jurisdictions")
         return 0, []
 
 
