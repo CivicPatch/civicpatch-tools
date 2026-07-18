@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from psycopg import sql
 import shared.utils.id_utils
+from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 from database.database import get_pool, to_iso
 from lib.github.utils import pull_request_url_to_number
 
@@ -14,8 +15,17 @@ from lib.github.utils import pull_request_url_to_number
 # by setting merge_enqueued_at, which stays set even if the merge later fails — a failed
 # merge raises a merge_failed issue for an admin to dismiss (which clears the park). So a
 # published PR never returns to the review pool on its own, regardless of merge outcome.
+# A reviewer-reported issue (user_reported) also parks its review out of the pool while the
+# issue is live, and it returns once the issue reaches a terminal state — resolved by an
+# admin, or auto-superseded when a newer run for the jurisdiction finishes.
 AVAILABLE_FOR_REVIEW = (
-    "pr.status = 'open' AND pr.merge_enqueued_at IS NULL"
+    "pr.status = 'open' AND pr.merge_enqueued_at IS NULL "
+    "AND NOT EXISTS ("
+    "SELECT 1 FROM issues i "
+    f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
+    "AND pr.request_id::text = ANY(i.request_ids) "
+    f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
+    ")"
 )
 
 
