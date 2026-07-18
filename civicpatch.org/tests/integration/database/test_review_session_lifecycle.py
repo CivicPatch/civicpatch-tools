@@ -16,6 +16,7 @@ from database.review_sessions import end_review_session
 from database.review_session_entries import resolve_entries_for_request
 from database.pull_requests import list_open_pull_requests, set_merge_enqueued, clear_merge_enqueued
 from database.issues import create_user_reported_issue, resolve_issue
+from database.review_session_navigation import navigate_to_entry
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -458,6 +459,28 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
         async with pool.connection() as conn:
             await conn.execute("DELETE FROM issues WHERE %s = ANY(request_ids)", (request_id,))
         await _cleanup_open_pr(request_id, ocdid)
+
+
+# ── navigation: has_next respects the goal cap, not just pool availability ─────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_has_next_false_at_last_entry_within_goal(test_user):
+    """
+    With daily_goal=1 and spare reviewable PRs still in the pool, the only session entry must
+    report has_next=False. Regression: has_next tracked pool availability and ignored the goal
+    cap, so the Next button stayed enabled past the single dot.
+    """
+    req_a, ocdid_a = await _seed_open_pr("goal1a")
+    req_b, ocdid_b = await _seed_open_pr("goal1b")
+    try:
+        session = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=1)
+        result = await navigate_to_entry(session["id"], 1)
+        assert result["total"] == 1, "a goal of 1 yields a single dot"
+        assert result["has_next"] is False, "no next entry past the only slot in the session"
+    finally:
+        await _cleanup_open_pr(req_a, ocdid_a)
+        await _cleanup_open_pr(req_b, ocdid_b)
 
 
 # ── get_review_stats: available_count is per-user, not global ─────────────────
