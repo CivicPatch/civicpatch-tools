@@ -35,6 +35,7 @@ ROW = {
     "author_name": "michelle@civicpatch.org",
     "author_role": "admins",
     "jurisdiction_name": "Seattle city",
+    "pull_request_url": "https://github.com/org/repo/pull/42",
     "summary": "Edited Jane Doe (1 field)",
 }
 
@@ -129,6 +130,23 @@ def test_row_maps_to_entry(client):
     assert entry["author_role"] == "admins"
     assert entry["jurisdiction_name"] == "Seattle city"
     assert entry["changes"]["fields"][0] == {"field": "name", "before": "Jane", "after": "Jane Doe"}
+
+
+@pytest.mark.unit
+def test_pull_request_url_maps_to_entry(client):
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
+        response = client.get("/change_logs", params={"bucket": "activity"})
+
+    assert response.json()["data"][0]["pull_request_url"] == "https://github.com/org/repo/pull/42"
+
+
+@pytest.mark.unit
+def test_pull_request_url_null_when_no_pr(client):
+    row = {**ROW, "pull_request_url": None}
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
+        response = client.get("/change_logs", params={"bucket": "activity"})
+
+    assert response.json()["data"][0]["pull_request_url"] is None
 
 
 @pytest.mark.unit

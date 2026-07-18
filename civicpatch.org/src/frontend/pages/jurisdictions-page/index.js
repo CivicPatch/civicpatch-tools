@@ -171,7 +171,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
         <civ-editable-people-list
           jurisdiction_ocdid=${jurisdiction_ocdid}
           .people=${people}
-          .canDeletePeople=${permissions.DIRECTORY_DELETE}
           .canClosePr=${permissions.PR_CLOSE}
           .onPublished=${() => window.location.reload()}
         ></civ-editable-people-list>

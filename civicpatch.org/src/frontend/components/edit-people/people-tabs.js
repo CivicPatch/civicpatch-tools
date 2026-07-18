@@ -10,7 +10,6 @@ function prTabLabel(pr) {
 }
 
 function getSelectedIndex(pullRequests, selectedPullRequest) {
-  if (selectedPullRequest === "directory") return pullRequests.length + 1;
   if (!selectedPullRequest) return pullRequests.length;
   const idx = pullRequests.findIndex(pr => pr.request_id === selectedPullRequest?.request_id);
   return idx >= 0 ? idx : pullRequests.length;
@@ -22,15 +21,13 @@ function PeopleTabs({ pullRequests = [], selectedPullRequest, loading, onTabClic
   const tabs = [
     ...pullRequests.map(pr => ({ label: prTabLabel(pr) })),
     { label: "Current" },
-    { label: "Directory" },
   ];
 
   const selectedIndex = getSelectedIndex(pullRequests, selectedPullRequest);
 
   const handleTabClick = (idx) => {
     if (idx < pullRequests.length) onTabClick?.(pullRequests[idx]);
-    else if (idx === pullRequests.length) onTabClick?.(null);
-    else onTabClick?.("directory");
+    else onTabClick?.(null);
   };
 
   return html`
