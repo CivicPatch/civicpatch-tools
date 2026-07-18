@@ -15,6 +15,7 @@ from database.review_sessions import create_or_get_review_session, get_active_re
 from database.review_sessions import end_review_session
 from database.review_session_entries import resolve_entries_for_request
 from database.pull_requests import list_open_pull_requests, set_merge_enqueued, clear_merge_enqueued
+from database.issues import create_user_reported_issue, resolve_issue
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -426,6 +427,36 @@ async def test_published_pr_parks_until_park_cleared():
         after, _, _ = await list_open_pull_requests(state_code="zz")
         assert request_id in [r["request_id"] for r in after], "PR returns to the pool once unparked"
     finally:
+        await _cleanup_open_pr(request_id, ocdid)
+
+
+# ── availability pool: a reported issue parks a PR until the issue is resolved ──
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reported_pr_leaves_pool_until_issue_resolved():
+    """
+    Reporting an issue against a review removes its PR from the pool while the issue is live,
+    and it returns once the issue reaches a terminal state (here, an admin resolving it).
+    """
+    request_id, ocdid = await _seed_open_pr("reported")
+    try:
+        before, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id in [r["request_id"] for r in before], "open PR should start in the pool"
+
+        issue_id = await create_user_reported_issue(
+            request_id, "title", "body", "https://github.com/x/y/issues/1", 1, str(uuid.uuid4())
+        )
+        reported, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id not in [r["request_id"] for r in reported], "reported PR must leave the pool"
+
+        await resolve_issue(issue_id)
+        after, _, _ = await list_open_pull_requests(state_code="zz")
+        assert request_id in [r["request_id"] for r in after], "PR returns to the pool once the issue is resolved"
+    finally:
+        pool = await get_pool()
+        async with pool.connection() as conn:
+            await conn.execute("DELETE FROM issues WHERE %s = ANY(request_ids)", (request_id,))
         await _cleanup_open_pr(request_id, ocdid)
 
 
