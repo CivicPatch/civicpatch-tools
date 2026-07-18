@@ -53,6 +53,9 @@ function renderRow(entry) {
         <div class="activity-page__summary">${entry.summary}</div>
         ${renderChange(entry)}
       </td>
+      <td>${entry.pull_request_url
+        ? html`<a href=${entry.pull_request_url} target="_blank" rel="noopener">PR</a>`
+        : html`<span class="activity-page__muted">—</span>`}</td>
       <td class="activity-page__date">${formatDate(entry.created_at)}</td>
     </tr>
   `;
@@ -67,12 +70,13 @@ function renderTable(entries, emptyText) {
           <th>Author</th>
           <th>Jurisdiction</th>
           <th>Change</th>
+          <th>PR</th>
           <th>Date</th>
         </tr>
       </thead>
       <tbody>
         ${entries.length === 0
-          ? html`<tr><td colspan="5" class="activity-page__empty">${emptyText}</td></tr>`
+          ? html`<tr><td colspan="6" class="activity-page__empty">${emptyText}</td></tr>`
           : entries.map(renderRow)}
       </tbody>
     </table>

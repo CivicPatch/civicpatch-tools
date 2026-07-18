@@ -1,40 +1,35 @@
 import { html, component, useEffect, useState } from "haunted";
 import { getColumns } from "./table/columns.js";
-import "../person-image.js";
 import "./people-table.js";
 import "./person-edit-modal.ts";
 import "./action-buttons.js";
 import "./people-tabs.js";
-import "./profile-modal.js";
 import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndEnqueueMerge, closePullRequest, fetchPeopleDirectory, deletePerson, patchPeopleData } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndEnqueueMerge, closePullRequest, patchPeopleData } from "../../api.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { emptyPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
 
 const TAB = {
-  directory: 'directory',
   current: 'current',
   pull_request: 'pull_request',
 };
 
 function activeTabFromSelection(selectedPullRequest) {
-  if (selectedPullRequest === 'directory') return TAB.directory;
   if (selectedPullRequest) return TAB.pull_request;
   return TAB.current;
 }
 
 function updateTabParam(tab) {
   const p = new URLSearchParams(window.location.search);
-  if (tab === 'directory') p.set('tab', 'directory');
-  else if (tab == null) p.set('tab', 'current');
+  if (tab == null) p.set('tab', 'current');
   else p.set('tab', tab.request_id);
   history.replaceState(null, '', `?${p}`);
 }
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople = false, canClosePr = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
   const {
     currentPeople,
     selectedPeople,
@@ -63,15 +58,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     if (status === "merged" || status === "closed") setPrStatus(status);
     else setPrStatus(null);
   }, [selectedPullRequest]);
-  const [profileModal, setProfileModal] = useState({
-    open: false,
-    person: null,
-    searchSuggestions: [],
-  });
   const [resolvedMatches, setResolvedMatches] = useState({});
-  const [directoryPeople, setDirectoryPeople] = useState([]);
-  const [directoryLoading, setDirectoryLoading] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [editingPerson, setEditingPerson] = useState(null);
   const [editingCandidates, setEditingCandidates] = useState([]);
 
@@ -110,9 +97,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       const prs = (data.data || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setPullRequests(prs);
       const tabParam = new URLSearchParams(window.location.search).get('tab');
-      if (tabParam === 'directory') {
-        setSelectedPullRequest('directory');
-      } else if (tabParam === 'current') {
+      if (tabParam === 'current') {
         setSelectedPullRequest(null);
       } else if (tabParam) {
         setSelectedPullRequest(prs.find(pr => pr.request_id === tabParam) ?? (prs.length > 0 ? prs[0] : null));
@@ -136,9 +121,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
     if (selectedPullRequest === undefined) return;
     setPrStatus(null);
     onSourceUrlsChange(activeTab === TAB.pull_request ? selectedPullRequest.sources ?? [] : []);
-    if (activeTab === TAB.directory) {
-      handleFetchDirectory();
-    } else if (activeTab === TAB.current) {
+    if (activeTab === TAB.current) {
       assignPeople(people);
       setReviewData(null);
       setResolvedMatches({});
@@ -146,31 +129,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
       handleSelectedPullRequestData(selectedPullRequest);
     }
   }, [selectedPullRequest]);
-
-  async function handleConfirmDelete() {
-    const person = deleteConfirm;
-    setDeleteConfirm(null);
-    try {
-      await deletePerson(person._id);
-      setDirectoryPeople(prev => prev.filter(p => p._id !== person._id));
-    } catch (err) {
-      setError("Failed to delete person.");
-      console.error(err);
-    }
-  }
-
-  async function handleFetchDirectory() {
-    setDirectoryLoading(true);
-    try {
-      const data = await fetchPeopleDirectory(jurisdiction_ocdid);
-      setDirectoryPeople(data.data ?? []);
-    } catch (err) {
-      setError("Failed to load directory.");
-      console.error(err);
-    } finally {
-      setDirectoryLoading(false);
-    }
-  }
 
   async function handleSelectedPullRequestData(pullRequest) {
     if (!pullRequest) return;
@@ -242,66 +200,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   }
 
 
-  function formatDate(isoString) {
-    if (!isoString) return "—";
-    return isoString.slice(0, 10);
-  }
-
-  function renderDirectoryView() {
-    if (directoryLoading) return html`<p>Loading directory...</p>`;
-    if (!directoryPeople.length) return html`<p>No people found.</p>`;
-    return html`
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th>Name</th>
-            <th>Office</th>
-            <th>Division</th>
-            <th>Updated</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          ${directoryPeople.map(p => html`
-            <tr>
-              <td>
-                <button
-                  type="button"
-                  class="secondary btn-sm"
-                  @click=${() => setProfileModal({ open: true, person: p, existingPerson: null, nameMatches: [], searchSuggestions: [] })}
-                >View</button>
-              </td>
-              <td @click=${() => setProfileModal({ open: true, person: p, existingPerson: null, nameMatches: [], searchSuggestions: [] })} style="cursor:pointer;">
-                <person-image .person=${p}></person-image>
-              </td>
-              <td>${p.name}</td>
-              <td>${p.office?.name ?? "—"}</td>
-              <td>${p.office?.division_ocdid ?? "—"}</td>
-              <td>${formatDate(p.updated_at)}</td>
-              <td>
-                <span class="status-badge status-badge--${p.status ?? 'current'}">
-                  ${p.status ?? 'current'}
-                </span>
-              </td>
-              ${canDeletePeople ? html`
-                <td>
-                  <button
-                    type="button"
-                    class="destructive btn-sm"
-                    @click=${() => setDeleteConfirm(p)}
-                  >Delete</button>
-                </td>
-              ` : html`<td></td>`}
-            </tr>
-          `)}
-        </tbody>
-      </table>
-    `;
-  }
-
   const activeSourceUrlMap = activeTab === TAB.pull_request
     ? buildSourceUrlMap(selectedPullRequest.sources ?? [])
     : new Map();
@@ -316,9 +214,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
   }
 
   function renderContent() {
-    if (activeTab === TAB.directory) {
-      return renderDirectoryView();
-    }
     return html`
       ${activeTab === TAB.pull_request
         ? html`
@@ -376,18 +271,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
 
     ${renderContent()}
 
-    <profile-modal
-      .open=${profileModal.open}
-      .person=${profileModal.person}
-      .existingPerson=${profileModal.existingPerson}
-      .nameMatches=${profileModal.nameMatches ?? []}
-      .searchSuggestions=${profileModal.searchSuggestions ?? []}
-      .jurisdictionOcdid=${profileModal.jurisdictionOcdid ?? jurisdiction_ocdid}
-      .readOnly=${activeTab === TAB.directory}
-      @close=${() =>
-        setProfileModal({ open: false, person: null, existingPerson: null, searchSuggestions: [] })}
-    ></profile-modal>
-
     ${editingPerson ? html`
       <civ-person-edit-modal
         .person=${editingPerson}
@@ -397,22 +280,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canDeletePeople =
         @cancel=${closeEdit}
       ></civ-person-edit-modal>
     ` : ""}
-
-    <civ-modal
-      .title=${"Delete person?"}
-      .content=${deleteConfirm ? html`
-        <div style="display:flex; align-items:center; gap:1rem;">
-          <person-image .person=${deleteConfirm}></person-image>
-          <span>${deleteConfirm.name}</span>
-        </div>
-        <p style="margin-top:1rem;">This cannot be undone.</p>
-      ` : null}
-      .footer=${html`
-        <button type="button" class="secondary btn-sm" @click=${() => setDeleteConfirm(null)}>Cancel</button>
-        <button type="button" class="destructive btn-sm" @click=${handleConfirmDelete}>Delete</button>
-      `}
-      .modalProps=${{ open: !!deleteConfirm, onClose: () => setDeleteConfirm(null) }}
-    ></civ-modal>
   `;
 }
 
