@@ -229,6 +229,9 @@ async def navigate_to_entry(
     # Session length = the goal, capped by what's actually reviewable (done +
     # still-available), and never fewer than where we already are.
     total = max(entry_number, min(daily_goal, resolved_count + avail.available))  # type: ignore[union-attr]
+    # A next entry exists only if the pool can offer one AND we're not already at the end of
+    # the session. total encodes the daily_goal cap that the pool-availability check ignores.
+    has_next = has_next and entry_number < total
 
     return {
         "request_id": request_id,
