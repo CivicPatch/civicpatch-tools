@@ -1,11 +1,11 @@
 import re
 from collections import defaultdict
-from typing import List, Protocol, Dict, Set
+from typing import Dict, List, Protocol, Set
 
 from pydantic import BaseModel
+from shared.schemas import Issue, IssueCode
 
 from . import name_utils
-from shared.schemas import Issue, IssueCode
 
 
 class ReviewInputs(BaseModel):
@@ -39,7 +39,8 @@ def markdown_identities(identities: Dict[str, List[str]]) -> str:
     if not identities:
         return "N/A"
     return "<br>".join(
-        f"{canonical}: {', '.join(aliases)}" for canonical, aliases in identities.items()
+        f"{canonical}: {', '.join(aliases)}"
+        for canonical, aliases in identities.items()
     )
 
 
@@ -56,6 +57,7 @@ def generate_review_table_markdown(rows: List[Dict]) -> str:
 
 
 # ── Identity / name comparison ────────────────────────────────────────────────
+
 
 def _collect_all_canonicals(
     research_canonicals: Set[str],
@@ -113,14 +115,22 @@ def _get_person_id(person) -> str:
     return person.get("id", "")
 
 
-def _check_missing_officials(research_canonicals: Set[str], people_canonicals: Set[str]) -> List[Issue]:
+def _check_missing_officials(
+    research_canonicals: Set[str], people_canonicals: Set[str]
+) -> List[Issue]:
     return [
-        Issue(code=IssueCode.MISSING_OFFICIAL, message=f"Missing official: {name}", person_ids=[])
+        Issue(
+            code=IssueCode.MISSING_OFFICIAL,
+            message=f"Missing official: {name}",
+            person_ids=[],
+        )
         for name in sorted(research_canonicals - people_canonicals)
     ]
 
 
-def _check_extra_officials(people, canonical_map: Dict[str, str], research_canonicals: Set[str]) -> List[Issue]:
+def _check_extra_officials(
+    people, canonical_map: Dict[str, str], research_canonicals: Set[str]
+) -> List[Issue]:
     issues = []
     for person in people:
         if canonical_map[name_utils.get_person_name(person)] in research_canonicals:
@@ -139,7 +149,9 @@ def _check_extra_officials(people, canonical_map: Dict[str, str], research_canon
 def _check_too_few_people(people) -> List[Issue]:
     if len(people) >= MIN_EXPECTED_PEOPLE:
         return []
-    message = f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"
+    message = (
+        f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"
+    )
     return [Issue(code=IssueCode.TOO_FEW_PEOPLE, message=message, person_ids=[])]
 
 
@@ -147,10 +159,16 @@ def _check_duplicate_unique_roles(people, unique_roles: List[str]) -> List[Issue
     unique_roles_set = {r.lower() for r in unique_roles}
     role_to_holders = defaultdict(list)  # role -> [(id, name), ...]
     for person in people:
-        tokens = [t.strip() for t in _get_office_name(person).lower().split(" - ") if t.strip()]
+        tokens = [
+            t.strip()
+            for t in _get_office_name(person).lower().split(" - ")
+            if t.strip()
+        ]
         for token in tokens:
             if token in unique_roles_set:
-                role_to_holders[token].append((_get_person_id(person), name_utils.get_person_name(person)))
+                role_to_holders[token].append(
+                    (_get_person_id(person), name_utils.get_person_name(person))
+                )
     return [
         Issue(
             code=IssueCode.DUPLICATE_UNIQUE_ROLE,
@@ -171,21 +189,34 @@ def _check_division_numbering(people) -> List[Issue]:
     numbers = {n for _, n in entries}
     expected = set(range(min(numbers), max(numbers) + 1))
     return [
-        Issue(code=IssueCode.DIVISION_NUMBERING_GAP, message=f"Missing official with {label} {n}", person_ids=[])
+        Issue(
+            code=IssueCode.DIVISION_NUMBERING_GAP,
+            message=f"Missing {label} {n}",
+            person_ids=[],
+        )
         for n in sorted(expected - numbers)
     ]
 
 
-def build_review_summary(research_people, people, inputs: ReviewInputs | None = None, origin_source: str = "google_gemini") -> dict:
+def build_review_summary(
+    research_people,
+    people,
+    inputs: ReviewInputs | None = None,
+    origin_source: str = "google_gemini",
+) -> dict:
     inputs = inputs or ReviewInputs()
     # Normalize to dicts once so every check reads fields uniformly (the pipeline passes
     # Official objects, open-data passes yaml dicts).
     people = [p if isinstance(p, dict) else p.model_dump() for p in people]
-    research_people = [p if isinstance(p, dict) else p.model_dump() for p in research_people]
+    research_people = [
+        p if isinstance(p, dict) else p.model_dump() for p in research_people
+    ]
 
     all_people = list(research_people) + list(people)
     canonical_map = name_utils.build_canonical_map(all_people, inputs.identities)
-    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
+    research_canonicals = {
+        canonical_map[name_utils.get_person_name(p)] for p in research_people
+    }
     people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
 
     issues: List[Issue] = [
