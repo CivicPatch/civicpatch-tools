@@ -19,11 +19,11 @@ jobs:
   get-date:
     runs-on: ubuntu-latest
     outputs:
-      date-tag: ${{ steps.date.outputs.date-tag }}
+      image-tag: ${{ steps.date.outputs.image-tag }}
     steps:
-      - name: Get Current Date
+      - name: Compute image tag (date + short SHA)
         id: date
-        run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "image-tag=$(date +'%Y-%m-%d')-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
   build:
     needs: [tests, get-date]
@@ -52,7 +52,7 @@ jobs:
           target: production
           tags: |
             ghcr.io/civicpatch/civicpatch-org:latest
-            ghcr.io/civicpatch/civicpatch-org:${{ needs.get-date.outputs.date-tag }}
+            ghcr.io/civicpatch/civicpatch-org:${{ needs.get-date.outputs.image-tag }}
           cache-from: |
             type=gha,scope=api-frontend
             type=gha,scope=api-python
@@ -61,7 +61,7 @@ jobs:
             type=gha,scope=api-python,mode=max
 
   deploy:
-    needs: build
+    needs: [build, get-date]
     runs-on: ubuntu-latest
     steps:
       - name: Generate app token
@@ -79,4 +79,4 @@ jobs:
             -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/CivicPatch/infrastructure/actions/workflows/deploy-civicpatch-org.yml/dispatches \
-            -d '{"ref":"main"}'
+            -d '{"ref":"main","inputs":{"image_tag":"${{ needs.get-date.outputs.image-tag }}"}}'
