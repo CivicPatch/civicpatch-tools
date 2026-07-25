@@ -10,6 +10,7 @@ function JurisdictionSidebar({
   isJobRunning,
   hasOpenPr,
   scrapeError,
+  canEdit,
   onSave,
 }) {
   if (!jurisdictionData) {
@@ -18,7 +19,7 @@ function JurisdictionSidebar({
 
   return html`
     <div>
-      <civ-jurisdiction-detail .data=${jurisdictionData.data} .onSave=${onSave}></civ-jurisdiction-detail>
+      <civ-jurisdiction-detail .data=${jurisdictionData.data} .canEdit=${canEdit} .onSave=${onSave}></civ-jurisdiction-detail>
 
       ${canStartScrape ? html`
         <button

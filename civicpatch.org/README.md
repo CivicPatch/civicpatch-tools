@@ -73,9 +73,9 @@ Stored as a single `users.role` column. The `build_permissions()` function in `r
 
 | Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |
 |---|---|
-| **default** (any signed-in user) | Read-only API access: list jurisdictions, people, pull requests. Read review session stats and active session. Create / navigate / pass / end review sessions. Edit jurisdiction details via PRs. Create / update directory people via PRs. Publish (save & merge) the PR for an entry they are reviewing. View the Activity page (change log of trusted-contributor curation activity). (No Queue / Issues editor pages — those require Contributor+. Cannot close a PR.) |
+| **default** (any signed-in user) | Read-only API access: list jurisdictions, people, pull requests. Read review session stats and active session. Create / navigate / pass / end review sessions. Publish (save & merge) the PR for an entry they are reviewing. View the Activity page (change log of trusted-contributor curation activity). (No Queue / Issues editor pages — those require Contributor+. Cannot close a PR.) |
 | **contributors** | View the Queue page. Delete directory people. Close pull requests. Merge / update pull requests from the Queue. |
-| **maintainers** | Trigger pipeline runs (single + batch). Read & edit role configs (state and locality scope). Read pipeline run details. Resume paused runs. View the Quarantine bucket on the Activity page (changes from untrusted default-role contributors, awaiting spam/profanity review). |
+| **maintainers** | Edit a jurisdiction's published data — both the Current tab's people list and the Jurisdiction Details sidebar — as manual patches opened as PRs. Trigger pipeline runs (single + batch). Read & edit role configs (state and locality scope). Read pipeline run details. Resume paused runs. View the Quarantine bucket on the Activity page (changes from untrusted default-role contributors, awaiting spam/profanity review). |
 | **admins** | View and moderate the Issues page (flag, dismiss, resolve). Manage other users' trust levels (via `/admin`). Cancel pipeline runs. Edit global role config. View queue page errors. All admin-bus endpoints (od_sync, pr_sync, etc.). |
 
 ### Display name onboarding

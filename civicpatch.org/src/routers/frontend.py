@@ -41,6 +41,7 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_issues_page": has_at_least(role, Role.ADMINS),
         "can_view_activity_page": has_at_least(role, Role.DEFAULT),
         "can_view_quarantine": has_at_least(role, Role.MAINTAINERS),
+        "can_edit_jurisdiction_data": has_at_least(role, Role.MAINTAINERS),
         "can_delete_directory_person": has_at_least(role, Role.CONTRIBUTORS),
         "can_close_pull_request": has_at_least(role, Role.CONTRIBUTORS),
         "can_cancel_job": has_at_least(role, Role.ADMINS),

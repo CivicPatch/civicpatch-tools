@@ -5,7 +5,7 @@ import { component, useState } from 'haunted';
 // fields are locked while edits are routed as url-only patches to open-data.
 const OTHER_FIELDS_DISABLED = true;
 
-function JurisdictionDetail({ data, onSave }) {
+function JurisdictionDetail({ data, canEdit = false, onSave }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(data);
   const [isSaving, setIsSaving] = useState(false);
@@ -166,10 +166,12 @@ function JurisdictionDetail({ data, onSave }) {
     <div class="jd-wrap">
       <div class="jd-header">
         <h3>Jurisdiction Details</h3>
-        <button class="btn-toggle" @click=${toggleEditMode}>
-          <i class="fa-solid ${isEditMode ? 'fa-eye' : 'fa-pen'}"></i>
-          ${isEditMode ? 'View' : 'Edit'}
-        </button>
+        ${canEdit ? html`
+          <button class="btn-toggle" @click=${toggleEditMode}>
+            <i class="fa-solid ${isEditMode ? 'fa-eye' : 'fa-pen'}"></i>
+            ${isEditMode ? 'View' : 'Edit'}
+          </button>
+        ` : null}
       </div>
 
       ${isEditMode ? html`

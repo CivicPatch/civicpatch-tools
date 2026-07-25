@@ -116,7 +116,7 @@ def get_router() -> APIRouter:
     async def patch_jurisdiction_data_endpoint(
         request: PatchJurisdictionDataRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
