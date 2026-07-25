@@ -20,9 +20,11 @@ from core.coverage import MapStatus
 from database.coverage import get_local_status_for_state
 from database.database import get_pool
 
-_CUTOFF = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
-_AFTER_CUTOFF = datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
-_BEFORE_CUTOFF = datetime.datetime(2025, 6, 1, tzinfo=datetime.timezone.utc)
+# Freshness is a rolling 3-month window, so fixtures are ages rather than fixed dates —
+# absolute dates would silently age into the wrong bucket as the calendar moves.
+_NOW = datetime.datetime.now(datetime.timezone.utc)
+_FRESH_SCRAPE = _NOW - datetime.timedelta(days=30)
+_STALE_SCRAPE = _NOW - datetime.timedelta(days=120)
 
 
 async def _wipe():
@@ -30,7 +32,6 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        await cur.execute("DELETE FROM state_configs WHERE state = 'zz'")
         await conn.commit()
 
 
@@ -53,13 +54,6 @@ async def _insert_jurisdiction(ocdid, *, url=None, scraped_at=None):
             """,
             (ocdid, data, scraped_at),
         )
-        await cur.execute(
-            """
-            INSERT INTO state_configs (state, min_scraped_at) VALUES ('zz', %s)
-            ON CONFLICT (state) DO UPDATE SET min_scraped_at = EXCLUDED.min_scraped_at
-            """,
-            (_CUTOFF,),
-        )
         await conn.commit()
 
 
@@ -78,8 +72,8 @@ async def _add_person(ocdid):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_has_people_scraped_since_cutoff_is_fresh():
-    await _insert_jurisdiction("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF)
+async def test_has_people_scraped_within_window_is_fresh():
+    await _insert_jurisdiction("zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE)
     await _add_person("zz-fresh")
 
     status = await get_local_status_for_state("zz")
@@ -89,8 +83,8 @@ async def test_has_people_scraped_since_cutoff_is_fresh():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_has_people_scraped_before_cutoff_is_stale():
-    await _insert_jurisdiction("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF)
+async def test_has_people_scraped_before_window_is_stale():
+    await _insert_jurisdiction("zz-stale", url="https://s", scraped_at=_STALE_SCRAPE)
     await _add_person("zz-stale")
 
     status = await get_local_status_for_state("zz")
@@ -101,7 +95,7 @@ async def test_has_people_scraped_before_cutoff_is_stale():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_no_people_with_url_is_gap():
-    await _insert_jurisdiction("zz-gap", url="https://g", scraped_at=_AFTER_CUTOFF)
+    await _insert_jurisdiction("zz-gap", url="https://g", scraped_at=_FRESH_SCRAPE)
 
     status = await get_local_status_for_state("zz")
 

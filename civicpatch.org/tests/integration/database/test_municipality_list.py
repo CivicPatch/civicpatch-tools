@@ -19,8 +19,9 @@ import pytest_asyncio
 from database.coverage import get_municipality_rows_for_state
 from database.database import get_pool
 
-_CUTOFF = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
-_AFTER_CUTOFF = datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
+# Freshness is a rolling 90-day window, so fixtures are ages rather than fixed dates —
+# absolute dates would silently age into the wrong bucket as the calendar moves.
+_FRESH_SCRAPE = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=30)
 
 
 async def _wipe():
@@ -28,7 +29,6 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        await cur.execute("DELETE FROM state_configs WHERE state = 'zz'")
         await conn.commit()
 
 
@@ -51,13 +51,6 @@ async def _insert_jurisdiction(ocdid, *, name, url=None, scraped_at=None):
             """,
             (ocdid, data, scraped_at),
         )
-        await cur.execute(
-            """
-            INSERT INTO state_configs (state, min_scraped_at) VALUES ('zz', %s)
-            ON CONFLICT (state) DO UPDATE SET min_scraped_at = EXCLUDED.min_scraped_at
-            """,
-            (_CUTOFF,),
-        )
         await conn.commit()
 
 
@@ -79,7 +72,7 @@ async def _add_people(ocdid, count):
 @pytest.mark.integration
 async def test_row_shape_for_fresh_municipality():
     await _insert_jurisdiction(
-        "zz-fresh", name="Fresh City", url="https://f", scraped_at=_AFTER_CUTOFF
+        "zz-fresh", name="Fresh City", url="https://f", scraped_at=_FRESH_SCRAPE
     )
     await _add_people("zz-fresh", 3)
 
@@ -91,7 +84,7 @@ async def test_row_shape_for_fresh_municipality():
             "name": "Fresh City",
             "status": "fresh",
             "officials_count": 3,
-            "last_verified_at": _AFTER_CUTOFF.isoformat(),
+            "last_verified_at": _FRESH_SCRAPE.isoformat(),
         }
     ]
 

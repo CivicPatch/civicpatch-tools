@@ -1,5 +1,6 @@
 from core.coverage import classify_map_status
 from database.database import get_pool
+from database.freshness import FRESH_SINCE_SQL
 
 
 async def get_maps_coverage() -> dict:
@@ -10,7 +11,7 @@ async def get_maps_coverage() -> dict:
     State counts are computed directly from j.state.
 
     - `covered`       = has ≥1 current people row (has-data)
-    - `covered_fresh` = covered AND scraped_at >= the state's cutoff
+    - `covered_fresh` = covered AND scraped within the freshness window
     so `stale = covered - covered_fresh` lets the map shade by staleness. The people set
     is pre-aggregated (DISTINCT once) and hash-joined — one pass, not per-row.
     """
@@ -20,10 +21,10 @@ async def get_maps_coverage() -> dict:
         FROM people
         WHERE status = 'current'
     """
-    covered_fresh_filter = """
+    covered_fresh_filter = f"""
         COUNT(*) FILTER (
             WHERE p.jurisdiction_ocdid IS NOT NULL
-              AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)
+              AND j.scraped_at >= {FRESH_SINCE_SQL}
         )::int AS covered_fresh
     """
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -38,7 +39,6 @@ async def get_maps_coverage() -> dict:
             FROM jurisdictions j
             CROSS JOIN LATERAL jsonb_array_elements_text(j.data -> 'parent_ocdids') AS parent_ocdid
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.status = 'current'
               AND j.data ? 'parent_ocdids'
               AND parent_ocdid LIKE '%/county:%'
@@ -56,7 +56,6 @@ async def get_maps_coverage() -> dict:
                 {covered_fresh_filter}
             FROM jurisdictions j
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.status = 'current'
             GROUP BY j.state
             ORDER BY j.state
@@ -96,7 +95,7 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
     file doesn't own. See services.coverage.get_municipality_list, which composes this with
     the open-PR set (the same to_review signal get_state_coverage below already uses).
     """
-    query = """
+    query = f"""
         SELECT
             j.jurisdiction_ocdid,
             j.data->>'name'                                                     AS name,
@@ -104,9 +103,8 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
             j.scraped_at,
             NULLIF(j.data->>'url', '') IS NOT NULL                              AS has_url,
             (j.scraped_at IS NOT NULL
-             AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz)) AS is_fresh
+             AND j.scraped_at >= {FRESH_SINCE_SQL})                             AS is_fresh
         FROM jurisdictions j
-        LEFT JOIN state_configs sc ON sc.state = j.state
         LEFT JOIN (
             SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
             FROM people
@@ -139,23 +137,21 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
 async def get_local_status_for_state(state: str) -> dict[str, str]:
     """ocdid -> map status for every local jurisdiction in `state`.
 
-    Freshness is `scraped_at` vs the state's cutoff (epoch when unset) — the same
-    definition the dashboard uses for "done", not `people.updated_at` (which manual
-    edits bump). The FRESH/STALE/GAP/UNTRACKED call itself lives in core.coverage.
+    Freshness is `scraped_at` vs the rolling window — the same definition the dashboard
+    uses for "done", not `people.updated_at` (which manual edits bump). The
+    FRESH/STALE/GAP/UNTRACKED call itself lives in core.coverage.
     """
-    query = """
+    query = f"""
         SELECT
           j.jurisdiction_ocdid,
           EXISTS (
               SELECT 1 FROM people
               WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
           ) AS has_people,
-          (j.scraped_at IS NOT NULL
-           AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+          (j.scraped_at IS NOT NULL AND j.scraped_at >= {FRESH_SINCE_SQL})
               AS is_fresh,
           NULLIF(j.data->>'url', '') IS NOT NULL AS has_url
         FROM jurisdictions j
-        LEFT JOIN state_configs sc ON sc.state = j.state
         WHERE j.status = 'current'
           AND j.state = %s
     """

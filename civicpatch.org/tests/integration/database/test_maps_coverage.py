@@ -1,7 +1,7 @@
 """Integration test for get_maps_coverage's fresh/scraped/total counts.
 
-Real Postgres: the people pre-agg join + state_configs cutoff + parent_ocdids county
-expansion. Verifies `fresh` (has-data + since cutoff) sits alongside `scraped` (has-data)
+Real Postgres: the people pre-agg join + rolling freshness window + parent_ocdids county
+expansion. Verifies `fresh` (has-data + recently scraped) sits alongside `scraped` (has-data)
 at both state and county level, so the map can shade by staleness.
 
 Run with: mise run tcp-integration
@@ -19,9 +19,11 @@ from database.coverage import get_maps_coverage
 from database.database import get_pool
 
 _COUNTY = "ocd-jurisdiction/country:us/state:zz/county:testcounty/government"
-_CUTOFF = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
-_AFTER_CUTOFF = datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
-_BEFORE_CUTOFF = datetime.datetime(2025, 6, 1, tzinfo=datetime.timezone.utc)
+# Freshness is a rolling 3-month window, so fixtures are ages rather than fixed dates —
+# absolute dates would silently age into the wrong bucket as the calendar moves.
+_NOW = datetime.datetime.now(datetime.timezone.utc)
+_FRESH_SCRAPE = _NOW - datetime.timedelta(days=30)
+_STALE_SCRAPE = _NOW - datetime.timedelta(days=120)
 
 
 async def _wipe():
@@ -29,7 +31,6 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        await cur.execute("DELETE FROM state_configs WHERE state = 'zz'")
         await conn.commit()
 
 
@@ -60,22 +61,15 @@ async def _insert(ocdid, *, scraped_at, people):
                 """,
                 (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
             )
-        await cur.execute(
-            """
-            INSERT INTO state_configs (state, min_scraped_at) VALUES ('zz', %s)
-            ON CONFLICT (state) DO UPDATE SET min_scraped_at = EXCLUDED.min_scraped_at
-            """,
-            (_CUTOFF,),
-        )
         await conn.commit()
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_fresh_sits_alongside_scraped_and_total():
-    await _insert("zz-fresh", scraped_at=_AFTER_CUTOFF, people=True)
-    await _insert("zz-stale", scraped_at=_BEFORE_CUTOFF, people=True)
-    await _insert("zz-nopeople", scraped_at=_AFTER_CUTOFF, people=False)
+    await _insert("zz-fresh", scraped_at=_FRESH_SCRAPE, people=True)
+    await _insert("zz-stale", scraped_at=_STALE_SCRAPE, people=True)
+    await _insert("zz-nopeople", scraped_at=_FRESH_SCRAPE, people=False)
 
     coverage = await get_maps_coverage()
 

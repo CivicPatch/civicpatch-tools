@@ -30,7 +30,6 @@ erDiagram
 
     state_configs {
         text            state               PK
-        timestamptz     min_scraped_at      "default: epoch; freshness floor — fresh iff scraped_at >= this"
     }
 
     synced_files {
@@ -190,7 +189,7 @@ erDiagram
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
-- `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one — the companion admin CRUD relies on this no-delete invariant). `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
+- `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
 - `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
 - `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
