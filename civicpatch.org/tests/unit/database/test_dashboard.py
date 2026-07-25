@@ -28,13 +28,14 @@ def _make_pool(cursor):
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_get_dashboard_shapes_rows_per_state():
-    co_cutoff = datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)
-    tx_cutoff = datetime.datetime(2026, 1, 15, tzinfo=datetime.timezone.utc)
+    # One cutoff for every row: it's the start of the rolling freshness window, which the
+    # query computes once rather than reading per state.
+    cutoff = datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)
     rows = [
         # (state, known, scrapeable, covered_fresh, covered_stale, officials,
         #  status_fresh, status_stale, status_gap, status_untracked, cutoff)
-        ("co", 271, 250, 90, 30, 850, 90, 30, 130, 21, co_cutoff),
-        ("tx", 1221, 900, 300, 100, 3200, 300, 100, 700, 121, tx_cutoff),
+        ("co", 271, 250, 90, 30, 850, 90, 30, 130, 21, cutoff),
+        ("tx", 1221, 900, 300, 100, 3200, 300, 100, 700, 121, cutoff),
     ]
     cur = _make_cursor(rows)
     with patch("database.dashboard.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -46,7 +47,7 @@ async def test_get_dashboard_shapes_rows_per_state():
                 "state": "co",
                 "civicpatch": {
                     "officials": 850,
-                    "cutoff": co_cutoff.isoformat(),
+                    "cutoff": cutoff.isoformat(),
                     "localities": {
                         "known": 271,
                         "scrapeable": 250,
@@ -66,7 +67,7 @@ async def test_get_dashboard_shapes_rows_per_state():
                 "state": "tx",
                 "civicpatch": {
                     "officials": 3200,
-                    "cutoff": tx_cutoff.isoformat(),
+                    "cutoff": cutoff.isoformat(),
                     "localities": {
                         "known": 1221,
                         "scrapeable": 900,

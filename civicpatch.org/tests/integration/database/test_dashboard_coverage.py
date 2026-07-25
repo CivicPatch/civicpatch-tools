@@ -1,9 +1,9 @@
-"""Integration test for get_dashboard's cutoff-based coverage split.
+"""Integration test for get_dashboard's freshness-based coverage split.
 
 `localities` carries `covered_fresh` / `covered_stale` (+ `coverage` = their sum).
 `status_counts` (fresh/stale/gap/untracked) mirrors the homepage's MapStatus taxonomy
-(core/coverage.py's `classify_map_status`), and `cutoff` surfaces `state_configs.min_scraped_at`
-directly. Real Postgres because it's the state_configs join + pre-aggregated people join + FILTERs.
+(core/coverage.py's `classify_map_status`), and `cutoff` surfaces the start of the rolling
+freshness window. Real Postgres because it's the pre-aggregated people join + FILTERs.
 
 Run with: mise run tcp-integration
 Isolation: sentinel state 'zz', cleaned before/after.
@@ -19,9 +19,11 @@ import pytest_asyncio
 from database.dashboard import get_dashboard
 from database.database import get_pool
 
-_CUTOFF = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
-_AFTER_CUTOFF = datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
-_BEFORE_CUTOFF = datetime.datetime(2025, 6, 1, tzinfo=datetime.timezone.utc)
+# Freshness is a rolling 3-month window, so fixtures are ages rather than fixed dates —
+# absolute dates would silently age into the wrong bucket as the calendar moves.
+_NOW = datetime.datetime.now(datetime.timezone.utc)
+_FRESH_SCRAPE = _NOW - datetime.timedelta(days=30)
+_STALE_SCRAPE = _NOW - datetime.timedelta(days=120)
 
 
 async def _wipe():
@@ -29,7 +31,6 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        await cur.execute("DELETE FROM state_configs WHERE state = 'zz'")
         await conn.commit()
 
 
@@ -60,21 +61,14 @@ async def _insert(ocdid, *, url, scraped_at, people=False):
                 """,
                 (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
             )
-        await cur.execute(
-            """
-            INSERT INTO state_configs (state, min_scraped_at) VALUES ('zz', %s)
-            ON CONFLICT (state) DO UPDATE SET min_scraped_at = EXCLUDED.min_scraped_at
-            """,
-            (_CUTOFF,),
-        )
         await conn.commit()
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_localities_split_fresh_stale_and_coverage():
-    await _insert("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF, people=True)
-    await _insert("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF, people=True)
+    await _insert("zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE, people=True)
+    await _insert("zz-stale", url="https://s", scraped_at=_STALE_SCRAPE, people=True)
     await _insert("zz-gap", url="https://n", scraped_at=None, people=False)
 
     data = await get_dashboard()
@@ -89,9 +83,24 @@ async def test_localities_split_fresh_stale_and_coverage():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_never_scraped_with_people_counts_as_stale():
+    # NULL scraped_at = officials arrived via sync, never scraped by us.
+    await _insert("zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE, people=True)
+    await _insert("zz-null", url="https://n", scraped_at=None, people=True)
+
+    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+
+    assert civicpatch["localities"]["covered_stale"] == 1  # zz-null
+    assert civicpatch["status_counts"]["stale"] == 1
+    # every known jurisdiction lands in exactly one status bucket
+    assert sum(civicpatch["status_counts"].values()) == civicpatch["localities"]["known"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_status_counts_and_cutoff():
-    await _insert("zz-fresh", url="https://f", scraped_at=_AFTER_CUTOFF, people=True)
-    await _insert("zz-stale", url="https://s", scraped_at=_BEFORE_CUTOFF, people=True)
+    await _insert("zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE, people=True)
+    await _insert("zz-stale", url="https://s", scraped_at=_STALE_SCRAPE, people=True)
     await _insert("zz-gap", url="https://n", scraped_at=None, people=False)
     await _insert("zz-untracked", url=None, scraped_at=None, people=False)
 
@@ -104,4 +113,8 @@ async def test_status_counts_and_cutoff():
         "gap": 1,         # zz-gap: has a url, no people
         "untracked": 1,   # zz-untracked: no url, no people
     }
-    assert civicpatch["cutoff"] == _CUTOFF.isoformat()
+    # The reported cutoff is what the frontend renders as "Fresh = scraped after X", so it
+    # has to be the same boundary that produced the split above — assert that relationship
+    # rather than an exact timestamp, which is server-computed at query time.
+    cutoff = datetime.datetime.fromisoformat(civicpatch["cutoff"])
+    assert _STALE_SCRAPE < cutoff < _FRESH_SCRAPE

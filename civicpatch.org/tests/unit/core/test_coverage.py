@@ -4,7 +4,7 @@ summarize_state_coverage(total, scrapeable, covered_fresh, covered_stale, blocke
 scraping) -> StateCoverage
   - inputs: seven set[str] of jurisdiction ocdids for ONE state
   - total = all known; scrapeable ⊆ total = has url
-  - covered_fresh = has officials AND scraped since cutoff; covered_stale = has officials but aging
+  - covered_fresh = has officials AND recently scraped; covered_stale = has officials but aging
     (disjoint; both subsets of scrapeable)
   - StateCoverage stores covered_fresh/covered_stale counts; done / reach_fraction / total_fraction
     are computed (done = covered_fresh + covered_stale)
@@ -247,7 +247,7 @@ def test_empty_scrapeable_is_zero_not_division_error():
 
 # ── classify_map_status ──────────────────────────────────────────────────────
 # Two axes per jurisdiction → one of FRESH/STALE/GAP/UNTRACKED:
-#   has people?  →  yes: fresh-since-cutoff splits FRESH vs STALE
+#   has people?  →  yes: recently-scraped splits FRESH vs STALE
 #                   no:  has url splits GAP (scrapeable) vs UNTRACKED
 
 

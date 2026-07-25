@@ -6,6 +6,7 @@ from typing import List
 
 import shared.utils.id_utils
 from database.database import get_pool, to_iso
+from database.freshness import FRESH_SINCE_SQL
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,
@@ -470,20 +471,18 @@ async def get_scraped_at(jurisdiction_ocdid: str) -> datetime.datetime | None:
 
 
 async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
-    # Stale = never scraped, or scraped before the state's freshness cutoff (epoch when the
-    # state has no config row). Only active, url-bearing jurisdictions; never-scraped first.
+    # Stale = never scraped, or last scraped before the rolling freshness window. Only
+    # active, url-bearing jurisdictions; never-scraped first.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
             FROM jurisdictions j
-            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.state = %s
               AND j.status = 'current'
               AND NULLIF(j.data->>'url', '') IS NOT NULL
-              AND (j.scraped_at IS NULL
-                   OR j.scraped_at < COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+              AND (j.scraped_at IS NULL OR j.scraped_at < {FRESH_SINCE_SQL})
             ORDER BY j.scraped_at ASC NULLS FIRST
             """,
             (state,),
@@ -494,24 +493,22 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
 
 async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
     # The per-state coverage sets: all current jurisdictions, the url-bearing subset, and
-    # that subset split by freshness — covered_fresh (has officials, scraped since the cutoff)
-    # vs covered_stale (has officials but aging). Cutoff falls back to epoch when unconfigured.
+    # that subset split by freshness — covered_fresh (has officials, scraped within the
+    # rolling window) vs covered_stale (has officials but aging).
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT
                 j.jurisdiction_ocdid,
                 NULLIF(j.data->>'url', '') IS NOT NULL AS has_url,
-                (j.scraped_at IS NOT NULL
-                 AND j.scraped_at >= COALESCE(sc.min_scraped_at, 'epoch'::timestamptz))
+                (j.scraped_at IS NOT NULL AND j.scraped_at >= {FRESH_SINCE_SQL})
                     AS is_fresh,
                 EXISTS (
                     SELECT 1 FROM people
                     WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
                 ) AS has_people
             FROM jurisdictions j
-            LEFT JOIN state_configs sc ON sc.state = j.state
             WHERE j.state = %s AND j.status = 'current'
             """,
             (state,),
