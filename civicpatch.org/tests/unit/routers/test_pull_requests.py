@@ -268,6 +268,7 @@ OPEN_PR_DB_RESULT = {
     "request_id": TEST_REQUEST_ID,
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
+    "jurisdiction_website_url": "https://oaklandca.gov",
     "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "review_state": None, "number": 42},
     "proposed": [{"name": "Jane Doe"}],
 }
