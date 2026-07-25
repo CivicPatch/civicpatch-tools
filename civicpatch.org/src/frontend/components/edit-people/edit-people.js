@@ -29,7 +29,7 @@ function updateTabParam(tab) {
   history.replaceState(null, '', `?${p}`);
 }
 
-function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
+function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = false, canEditCurrent = false, onSourceUrlsChange = () => {}, onPublished = () => {} }) {
   const {
     currentPeople,
     selectedPeople,
@@ -204,10 +204,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     ? buildSourceUrlMap(selectedPullRequest.sources ?? [])
     : new Map();
 
+  // Editing published data (the Current tab) opens a manual-edit PR, so it is
+  // gated to maintainers. PR tabs stay open to anyone reviewing that PR.
+  const canEdit = activeTab === TAB.pull_request || canEditCurrent;
+
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: openEdit })}
+      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: canEdit ? openEdit : null })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
@@ -228,7 +232,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
             ></civ-review-panel>
           `
         : ""}
-      <civ-people-action-buttons
+      ${canEdit ? html`<civ-people-action-buttons
         .onAdd=${handleAdd}
         .onMerge=${handleMerge}
         .onBulkDelete=${handleBulkDelete}
@@ -241,7 +245,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
         .hasPullRequest=${activeTab === TAB.pull_request}
         .canClosePr=${canClosePr}
         .prStatus=${prStatus}
-      ></civ-people-action-buttons>
+      ></civ-people-action-buttons>` : ""}
       ${isLoading
         ? html`<div
             style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;"

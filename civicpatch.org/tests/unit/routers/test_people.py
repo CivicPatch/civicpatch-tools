@@ -101,6 +101,13 @@ def _default():
     )
 
 
+def _maintainer():
+    return Identity(
+        type="session", provider="github", provider_user_id="u3",
+        email="m@x.com", role=Role.MAINTAINERS, user_id="user-789",
+    )
+
+
 @pytest.mark.unit
 def test_patch_people_data_records_change_log(client):
     # This test previously verified before = DB canonical, after = the full submitted data.
@@ -108,7 +115,7 @@ def test_patch_people_data_records_change_log(client):
     # because the endpoint moved to the patch model (overlay edits onto the main file).
     ocdid = BASE_PERSON["jurisdiction_ocdid"]
     record = AsyncMock()
-    client.app.dependency_overrides[get_optional_user] = _contributor
+    client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
         patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock,
               return_value=(42, "https://github.com/x/pull/42")),
@@ -125,14 +132,14 @@ def test_patch_people_data_records_change_log(client):
     record.assert_awaited_once()
     _, logged_ocdid, user_id, before_arg, after_arg = record.await_args.args
     assert logged_ocdid == ocdid
-    assert user_id == "user-123"
+    assert user_id == "user-789"
     assert [p["name"] for p in before_arg] == ["Original Person"]
     assert [p["name"] for p in after_arg] == ["Renamed Person"]
 
 
 @pytest.mark.unit
 def test_patch_people_data_rejects_invalid_field(client):
-    client.app.dependency_overrides[get_optional_user] = _contributor
+    client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
         patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr,
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
@@ -156,21 +163,18 @@ def test_patch_people_data_rejects_invalid_field(client):
 
 
 @pytest.mark.unit
-def test_patch_people_data_allows_default_role(client):
-    # Default-role reviewers may open a manual-edit PR; the route is AUTHENTICATED,
-    # not contributor-gated.
-    client.app.dependency_overrides[get_optional_user] = _default
-    with (
-        patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock,
-              return_value=(42, "https://github.com/x/pull/42")),
-        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
-              return_value=yaml_dump([BASE_PERSON])),
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-    ):
+@pytest.mark.parametrize("identity", [_default, _contributor])
+def test_patch_people_data_requires_maintainer(client, identity):
+    # Editing published people (the jurisdiction page's Current tab) opens a
+    # manual-edit PR against `main`, so it is gated to maintainers. Reviewing an
+    # existing PR is a separate route (save-and-merge) and stays AUTHENTICATED.
+    client.app.dependency_overrides[get_optional_user] = identity
+    with patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr:
         response = client.patch(
             "/people/data",
             json={"jurisdiction_ocdid": BASE_PERSON["jurisdiction_ocdid"],
                   "data": [{"id": "p-1", "fields": {"name": "Renamed Person"}}]},
         )
 
-    assert response.status_code == 200
+    assert response.status_code == 403
+    mock_pr.assert_not_awaited()

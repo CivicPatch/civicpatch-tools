@@ -146,6 +146,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
             .isJobRunning=${isJobRunning || isTriggering}
             .hasOpenPr=${hasOpenPr}
             .scrapeError=${scrapeError}
+            .canEdit=${permissions.JURISDICTION_DATA_EDIT}
             .onSave=${handleJurisdictionSave}
           ></civ-jurisdiction-sidebar>
 
@@ -172,6 +173,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }) {
           jurisdiction_ocdid=${jurisdiction_ocdid}
           .people=${people}
           .canClosePr=${permissions.PR_CLOSE}
+          .canEditCurrent=${permissions.JURISDICTION_DATA_EDIT}
           .onPublished=${() => window.location.reload()}
         ></civ-editable-people-list>
       ` : null}

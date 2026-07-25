@@ -22,11 +22,29 @@ def _default():
     )
 
 
+def _contributor():
+    return Identity(
+        type="session", provider="github", provider_user_id="u1",
+        email="u@x.com", role=Role.CONTRIBUTORS, user_id="user-123",
+    )
+
+
+def _maintainer():
+    return Identity(
+        type="session", provider="github", provider_user_id="u3",
+        email="m@x.com", role=Role.MAINTAINERS, user_id="user-789",
+    )
+
+
+PATCH_BODY = {
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
+    "url": "https://oakland.gov",
+}
+
+
 @pytest.mark.unit
-def test_patch_jurisdiction_data_allows_default_role(client):
-    # Default-role reviewers may open a jurisdiction-edit PR; the route is
-    # AUTHENTICATED, not contributor-gated.
-    client.app.dependency_overrides[get_optional_user] = _default
+def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
+    client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
         patch(
             "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
@@ -38,15 +56,28 @@ def test_patch_jurisdiction_data_allows_default_role(client):
             new_callable=AsyncMock,
         ) as mock_merge,
     ):
-        response = client.patch(
-            "/jurisdictions/data",
-            json={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland", "url": "https://oakland.gov"},
-        )
+        response = client.patch("/jurisdictions/data", json=PATCH_BODY)
 
     assert response.status_code == 200
     assert response.json()["data"]["pull_request_number"] == 42
     # The opened PR is auto-merged via a background task.
-    mock_merge.assert_awaited_once_with("42", "d@x.com")
+    mock_merge.assert_awaited_once_with("42", "m@x.com")
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("identity", [_default, _contributor])
+def test_patch_jurisdiction_data_requires_maintainer(client, identity):
+    # The Jurisdiction Details sidebar edits published data via an auto-merged PR,
+    # so it is gated to maintainers alongside the Current tab's people edits.
+    client.app.dependency_overrides[get_optional_user] = identity
+    with patch(
+        "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
+        new_callable=AsyncMock,
+    ) as mock_open:
+        response = client.patch("/jurisdictions/data", json=PATCH_BODY)
+
+    assert response.status_code == 403
+    mock_open.assert_not_awaited()
 
 
 @pytest.mark.unit
