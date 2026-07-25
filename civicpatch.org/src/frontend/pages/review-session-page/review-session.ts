@@ -18,7 +18,7 @@ type ReportedIssue = {
 
 type CurrentEntry = {
   request_id: string;
-  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null };
+  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null; website_url?: string | null };
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
@@ -58,7 +58,7 @@ function ReviewSession({
   onAdd, onResetPerson, onPersonSave,
 }: ReviewSessionProps) {
   const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
-  const { ocdid: jurisdictionOcdid, name: jurisdictionName } = jurisdiction ?? {};
+  const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
 
@@ -136,7 +136,16 @@ function ReviewSession({
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
-          ${jurisdictionName ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">${jurisdictionName}</a>` : ""}
+          ${jurisdictionName
+            ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">
+                ${jurisdictionName} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>`
+            : ""}
+          ${jurisdictionWebsiteUrl
+            ? html`<a class="review-page__jurisdiction-website" href=${jurisdictionWebsiteUrl} target="_blank" rel="noopener">
+                ${jurisdictionWebsiteUrl} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>`
+            : ""}
           ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
           ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
           <button class="btn btn-sm secondary" @click=${handleReportIssueOpen}>Report issue</button>

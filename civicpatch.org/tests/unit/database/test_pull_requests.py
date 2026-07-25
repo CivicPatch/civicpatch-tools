@@ -43,6 +43,7 @@ async def test_returns_row_for_open_pr():
         "ocd-jurisdiction/country:us/state:tx/place:austin/government",  # jurisdiction_ocdid
         "Austin",           # jurisdiction_name
         [{"name": "Jane Doe"}],  # data_json
+        "https://austintexas.gov",  # jurisdiction_website_url
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -69,6 +70,7 @@ async def test_returns_row_for_merged_pr():
         "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
         "Oakland",
         [],
+        None,
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):

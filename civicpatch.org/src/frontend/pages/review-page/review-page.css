@@ -324,6 +324,18 @@ review-session-controls {
     text-decoration: underline;
 }
 
+.review-page__jurisdiction-website {
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.review-page__jurisdiction-website:hover {
+    color: var(--pico-primary);
+    text-decoration: underline;
+}
+
 .review-page__dots {
     display: flex;
     flex-wrap: wrap;

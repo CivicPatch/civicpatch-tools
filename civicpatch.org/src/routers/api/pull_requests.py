@@ -287,6 +287,7 @@ def get_router(api_key_header):
                     "ocdid": jurisdiction_ocdid,
                     "name": result["jurisdiction_name"],
                     "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid),
+                    "website_url": result["jurisdiction_website_url"],
                 },
                 "pr": result["pr"],
                 "mode": review_mode_for(scraped_at).value,

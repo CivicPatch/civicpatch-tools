@@ -103,7 +103,8 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
             SELECT pr.url, pr.status, pr.review_state,
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   pr.pr_number
+                   pr.pr_number,
+                   jur.data->>'url' AS jurisdiction_website_url
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -116,7 +117,12 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
             return None
         return {
             "request_id": request_id,
-            "jurisdiction": {"ocdid": row[3], "name": row[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[3])},
+            "jurisdiction": {
+                "ocdid": row[3],
+                "name": row[4],
+                "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[3]),
+                "website_url": row[6],
+            },
             "pr": {"url": row[0], "status": row[1], "review_state": row[2], "number": row[5]},
         }
 
@@ -130,7 +136,8 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             SELECT pr.request_id::text, pr.url, pr.status, pr.review_state, pr.pr_number,
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   COALESCE(r.data_json, '[]'::jsonb) AS data_json
+                   COALESCE(r.data_json, '[]'::jsonb) AS data_json,
+                   jur.data->>'url' AS jurisdiction_website_url
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -145,6 +152,7 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             "request_id": row[0],
             "jurisdiction_ocdid": row[5],
             "jurisdiction_name": row[6],
+            "jurisdiction_website_url": row[8],
             "pr": {"url": row[1], "status": row[2], "review_state": row[3], "number": row[4]},
             "proposed": row[7] if row[7] is not None else [],
         }
