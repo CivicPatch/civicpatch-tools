@@ -56,6 +56,20 @@ export const MARKERS_REQUEST_ID = "00000000-0000-0000-eeee-000000000012";
 const MARKERS_PR_ID = "00000000-0000-0000-eeee-000000000013";
 const MARKERS_PR_NUMBER = 12;
 
+// Read-only fixture — a already-merged PR, the state a card lands in once it has
+// been published. Every other fixture is status='open' with url=NULL, so this is
+// the only one that renders the terminal-status banner, the "View PR" link and
+// the jurisdiction website link, and that hides the publish/save/close actions.
+// Own state (ri) and deep-linked by request_id: a merged PR is out of the review
+// pool, so it is only reachable by link, which is how reviewers reach it too.
+export const READ_ONLY_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
+export const READ_ONLY_REQUEST_ID = "00000000-0000-0000-eeee-000000000014";
+export const READ_ONLY_PR_URL = "https://github.com/civicpatch/open-data/pull/14";
+export const READ_ONLY_WEBSITE_URL = "https://e2e-readonly.example.gov";
+const READ_ONLY_PR_ID = "00000000-0000-0000-eeee-000000000015";
+const READ_ONLY_PR_NUMBER = 14;
+
 // Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
 // fresh/stale/gap/untracked colors deterministically against known OCD IDs.
 export const MAP_FIXTURES = {
@@ -120,9 +134,11 @@ export async function seedE2eFixtures() {
 
     // Pull request — status='open' makes the card appear in the review queue
     // url=NULL so sync_single_pr_state exits early (no GitHub call)
+    // pr_number must be non-zero: the publish/save/close actions all guard on a
+    // truthy pr.number, so a 0 here makes those three buttons silent no-ops.
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, 0, NULL, 'open', NOW(), NOW())
+       VALUES ($1, $2, 1, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
       [TEST_PR_ID, TEST_REQUEST_ID]
     );
@@ -297,6 +313,39 @@ export async function seedE2eFixtures() {
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_PR_NUMBER]
     );
 
+    // Read-only card — merged PR, so the card renders in its terminal state.
+    // `url` on the jurisdiction data is what surfaces as the website link.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'ri', 'current', $2, NOW())
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+      [
+        READ_ONLY_JURISDICTION_OCDID,
+        JSON.stringify({ name: "E2E Read Only City", geoid: "4400014", url: READ_ONLY_WEBSITE_URL }),
+      ]
+    );
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}',
+               '[{"name":"Jane Published","roles":[{"title":"Council Member"}]}]',
+               '{}', NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
+      [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [READ_ONLY_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, 'merged', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_PR_NUMBER, READ_ONLY_PR_URL]
+    );
+
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
     const STALE_DAYS = 200;  // > FRESH_THRESHOLD_DAYS (90)
@@ -358,6 +407,7 @@ export async function teardownE2eFixtures() {
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
+      [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
       await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);
