@@ -23,6 +23,7 @@ export type ReviewApi = {
   fetchReview: (requestId: string) => Promise<any>;
   endReviewSession: (sessionId: string) => Promise<any>;
   fetchPullRequestByRequestId: (requestId: string) => Promise<any>;
+  saveReviewData: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
 };
 
 export type Effects = {
@@ -125,6 +126,22 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string, ent
     return;
   }
   e.dispatch({ type: ActionType.MARK_RESOLVED });
+  await goToEntry(sessionId, entryNumber + 1, stateCode, e);
+}
+
+// Commit without publishing. Unlike a merge there is no background half to poll:
+// the server has written the branch by the time this resolves, so the outcome is
+// known here. A rejection keeps the reviewer on the entry, same as a failed publish.
+export async function saveCurrent(current: CurrentEntry, sessionId: string, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
+  const { pr, request_id, jurisdiction } = current;
+  if (!pr?.number || !request_id) return;
+  try {
+    await e.api.saveReviewData(pr.number, request_id, jurisdiction.ocdid!, people);
+  } catch (err) {
+    e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: errMessage(err) } });
+    return;
+  }
+  e.dispatch({ type: ActionType.MARK_SAVED });
   await goToEntry(sessionId, entryNumber + 1, stateCode, e);
 }
 

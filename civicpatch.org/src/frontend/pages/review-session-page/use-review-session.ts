@@ -6,9 +6,10 @@ import {
   endReviewSession,
   fetchPullRequestByRequestId,
   fetchReviewStats,
+  saveReviewData,
 } from "../../api.js";
 import { reduceReview, initialPageState, ActionType, StateKind } from "./review-state.js";
-import { boot, goToEntry, endSessionAndExit, mergeCurrent, closeCurrent, type Effects } from "./review-actions.js";
+import { boot, goToEntry, endSessionAndExit, mergeCurrent, saveCurrent, closeCurrent, type Effects } from "./review-actions.js";
 import { REQUEST_ID_PARAM } from "../review-routes.js";
 
 export function updateParams(updates: Record<string, string | null | undefined>) {
@@ -27,7 +28,7 @@ export function useReviewSession(
   const [state, dispatch] = useReducer(reduceReview, initialPageState(stateCode));
 
   const effects: Effects = {
-    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByRequestId },
+    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByRequestId, saveReviewData },
     dispatch,
     navigate: deps.navigate ?? ((url) => { window.location.href = url; }),
     setRequestIdParam: (requestId) => updateParams({ [REQUEST_ID_PARAM]: requestId }),
@@ -56,6 +57,7 @@ export function useReviewSession(
     back: () => { if (ready) goToEntry(sessionId, entryNumber - 1, stateCode, effects); },
     navigateTo: (n: number) => { if (ready) goToEntry(sessionId, n, stateCode, effects); },
     merge: (people: any[] | null) => { if (ready && reviewing) mergeCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
+    save: (people: any[]) => { if (ready && reviewing) saveCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
     closePr: () => { if (ready && reviewing) closeCurrent(reviewing.current_entry, sessionId, entryNumber, stateCode, effects); },
     endSession: () => { if (reviewing) endSessionAndExit(reviewing.session?.id ?? null, stateCode, effects); },
   };

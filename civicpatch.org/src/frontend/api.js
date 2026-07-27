@@ -146,6 +146,28 @@ export const saveAndEnqueueMerge = async (pullRequestNumber, request_id, jurisdi
   return res.json();
 };
 
+// Commit the reviewer's edits to the job branch without publishing. The PR stays
+// in the review pool; the session entry is held until the session is released.
+// Throws (with a parsed message) on a validation/save rejection, like the above.
+export const saveReviewData = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ request_id, jurisdiction_ocdid, data: people }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(parseSaveError(body, res.status));
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+};
+
 // The background half: poll until the async merge settles. Resolves on success,
 // throws on a merge error or timeout.
 export const pollMergeStatus = async (pullRequestNumber) => {

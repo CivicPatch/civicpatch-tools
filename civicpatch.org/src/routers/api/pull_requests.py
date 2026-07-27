@@ -72,6 +72,12 @@ class SaveAndMergeRequest(BaseModel):
     data: List[PersonPatch] | None = None
 
 
+class SaveReviewRequest(BaseModel):
+    request_id: str
+    jurisdiction_ocdid: str
+    data: List[PersonPatch]
+
+
 # ──────────────────────────────────────────────
 # Response models
 # ──────────────────────────────────────────────
@@ -84,6 +90,45 @@ class DeleteJobResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     error: str
+
+
+async def _commit_people_patch(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    data: List[PersonPatch],
+    user: Identity,
+    background_tasks: BackgroundTasks,
+) -> bool:
+    """Apply the reviewer's edits to the job branch. Returns False if the GitHub write failed."""
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    data_file_path = f"data/{folder}.yml"
+    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
+    # The branch file is the authoritative base: we diff against it and write back to it,
+    # so untouched entries stay byte-identical and the PR shows only the edited fields.
+    base = await github_service.get_pull_request_file_yaml(
+        request_id, jurisdiction_ocdid, data_file_path
+    )
+    if not isinstance(base, list):
+        base = []
+    try:
+        patched = patch_people(base, data)
+    except PeopleValidationError as exc:
+        raise HTTPException(status_code=422, detail=exc.failures)
+    success = await github_service.update_pull_request_file(
+        branch_name=branch_name,
+        file_path=data_file_path,
+        new_data=patched,
+        commit_message=f"Data update by {user.email}",
+    )
+    if not success:
+        return False
+
+    background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request_id, patched)
+    if user.user_id:
+        await change_logs.record_manual_edits(
+            request_id, jurisdiction_ocdid, user.user_id, base, patched
+        )
+    return True
 
 
 # ──────────────────────────────────────────────
@@ -367,6 +412,30 @@ def get_router(api_key_header):
         await change_logs.record_close(request_id, user_id)
         return {"status": "success"}
 
+    # -- Pull Requests: Save without publishing ---
+    @router.post("/{pull_request_number}/save", include_in_schema=False)
+    async def save_review_endpoint(
+        pull_request_number: str,
+        request: SaveReviewRequest,
+        background_tasks: BackgroundTasks,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.AUTHENTICATED)
+        ),
+    ):
+        if not await _commit_people_patch(
+            request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
+        ):
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
+                status_code=500,
+            )
+
+        # No merge, no parking: the PR stays in AVAILABLE_FOR_REVIEW. The entry is
+        # held by its session (see _allocate_next_review) and returns to the pool
+        # when that session is released.
+        await review_session_entries_db.save_entries_for_request(request.request_id)
+        return {"status": "saved"}
+
     # -- Pull Requests: Save and Merge ---
     @router.post("/{pull_request_number}/save-and-merge", include_in_schema=False)
     async def save_and_merge_endpoint(
@@ -377,37 +446,13 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        if request.data:
-            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
-            data_file_path = f"data/{folder}.yml"
-            branch_name = shared.utils.id_utils.make_job_branch(request.jurisdiction_ocdid, request.request_id)
-            # The branch file is the authoritative base: we diff against it and write back to it,
-            # so untouched entries stay byte-identical and the PR shows only the edited fields.
-            base = await github_service.get_pull_request_file_yaml(
-                request.request_id, request.jurisdiction_ocdid, data_file_path
+        if request.data and not await _commit_people_patch(
+            request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
+        ):
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
+                status_code=500,
             )
-            if not isinstance(base, list):
-                base = []
-            try:
-                patched = patch_people(base, request.data)
-            except PeopleValidationError as exc:
-                raise HTTPException(status_code=422, detail=exc.failures)
-            success = await github_service.update_pull_request_file(
-                branch_name=branch_name,
-                file_path=data_file_path,
-                new_data=patched,
-                commit_message=f"Data update by {user.email}",
-            )
-            if not success:
-                return JSONResponse(
-                    content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
-                    status_code=500,
-                )
-            background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request.request_id, patched)
-            if user.user_id:
-                await change_logs.record_manual_edits(
-                    request.request_id, request.jurisdiction_ocdid, user.user_id, base, patched
-                )
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)

@@ -20,6 +20,7 @@ export const ActionType = {
   SESSION_LOADED: "session_loaded",
   ENTRY_LOADED: "entry_loaded",
   MARK_RESOLVED: "mark_resolved",
+  MARK_SAVED: "mark_saved",
   MARK_FAILED: "mark_failed",
   LOAD_FAILED: "load_failed",
   STATS_LOADED: "stats_loaded",
@@ -80,6 +81,10 @@ export type ReviewState =
       current_entry: CurrentEntry;
       entry_number: number;
       resolved_entry_numbers: Set<number>;
+      // Entries committed to the branch but not published. Session-local like
+      // failed_entries — the server holds the card for the session's lifetime, so
+      // a reload showing them as merely visited is accurate enough.
+      saved_entry_numbers: Set<number>;
       // Entries whose publish was rejected for a reason we caught synchronously
       // (bad input / save error), entry_number -> error message. Drives the red
       // dot + the error banner; session-local (a reload re-encounters it unresolved).
@@ -105,6 +110,7 @@ export type ReviewAction =
   // A subsequent within-session navigation — reuses the current session/resolved.
   | { type: typeof ActionType.ENTRY_LOADED; payload: { current_entry: CurrentEntry; entry_number: number; total: number } }
   | { type: typeof ActionType.MARK_RESOLVED }
+  | { type: typeof ActionType.MARK_SAVED }
   | { type: typeof ActionType.MARK_FAILED; payload: { entry_number: number; message: string } }
   | { type: typeof ActionType.LOAD_FAILED; payload: { message: string } }
   | { type: typeof ActionType.STATS_LOADED; payload: { stats: Stats } };
@@ -115,7 +121,7 @@ export function initialPageState(stateCode: string): PageState {
 
 function reviewingFrom(
   state: PageState,
-  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; total: number; resolved_entry_numbers: Set<number>; failed_entries: Map<number, string> },
+  args: { session: SessionMeta | null; current_entry: CurrentEntry; entry_number: number; total: number; resolved_entry_numbers: Set<number>; saved_entry_numbers: Set<number>; failed_entries: Map<number, string> },
 ): PageState {
   const prevFrontier = state.fsm.kind === StateKind.REVIEWING ? state.fsm.frontier_entry : 0;
   return {
@@ -127,6 +133,7 @@ function reviewingFrom(
       current_entry: args.current_entry,
       entry_number: args.entry_number,
       resolved_entry_numbers: args.resolved_entry_numbers,
+      saved_entry_numbers: args.saved_entry_numbers,
       failed_entries: args.failed_entries,
       frontier_entry: Math.max(prevFrontier, args.entry_number),
       total: args.total,
@@ -149,6 +156,7 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         entry_number: action.payload.entry_number,
         total: action.payload.total,
         resolved_entry_numbers: new Set(action.payload.resolved_entry_numbers),
+        saved_entry_numbers: new Set(),
         failed_entries: new Map(),
       });
 
@@ -160,6 +168,7 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
         entry_number: action.payload.entry_number,
         total: action.payload.total,
         resolved_entry_numbers: fsm.resolved_entry_numbers,
+        saved_entry_numbers: fsm.saved_entry_numbers,
         failed_entries: fsm.failed_entries,
       });
 
@@ -167,11 +176,28 @@ export function reduceReview(state: PageState, action: ReviewAction): PageState 
       if (fsm.kind !== StateKind.REVIEWING) return state;
       const failed = new Map(fsm.failed_entries);
       failed.delete(fsm.entry_number); // a successful (re)publish clears the red flag
+      const saved = new Set(fsm.saved_entry_numbers);
+      saved.delete(fsm.entry_number); // publishing a saved card promotes it out of saved
       return {
         ...state,
         fsm: {
           ...fsm,
           resolved_entry_numbers: new Set([...fsm.resolved_entry_numbers, fsm.entry_number]),
+          saved_entry_numbers: saved,
+          failed_entries: failed,
+        },
+      };
+    }
+
+    case ActionType.MARK_SAVED: {
+      if (fsm.kind !== StateKind.REVIEWING) return state;
+      const failed = new Map(fsm.failed_entries);
+      failed.delete(fsm.entry_number); // a successful save clears an earlier red flag
+      return {
+        ...state,
+        fsm: {
+          ...fsm,
+          saved_entry_numbers: new Set([...fsm.saved_entry_numbers, fsm.entry_number]),
           failed_entries: failed,
         },
       };

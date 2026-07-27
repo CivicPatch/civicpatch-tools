@@ -24,7 +24,7 @@ function ReviewSessionPage() {
 
   const { permissions } = useAuth();
   const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
-  const { fsm, advance, back, navigateTo, merge, closePr, endSession } = useReviewSession(stateCode, {
+  const { fsm, advance, back, navigateTo, merge, save, closePr, endSession } = useReviewSession(stateCode, {
     trackMerge,
     trackClose,
   });
@@ -50,6 +50,7 @@ function ReviewSessionPage() {
   } = useReviewPeople(currentEntry);
 
   const handleMerge = () => merge(dirty ? peoplePatch : null);
+  const handleSave = () => save(peoplePatch);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
   const handleResetPerson = (id: string) => handleReset(id);
 
@@ -61,6 +62,7 @@ function ReviewSessionPage() {
         entryNumber: reviewing.entry_number,
         hasPrev: reviewing.entry_number > 1,
         resolvedEntryNumbers: reviewing.resolved_entry_numbers,
+        savedEntryNumbers: reviewing.saved_entry_numbers,
         failedEntryNumbers: new Set(reviewing.failed_entries.keys()),
         frontierEntry: reviewing.frontier_entry,
         total: reviewing.total,
@@ -90,6 +92,7 @@ function ReviewSessionPage() {
       .currentPeople=${currentPeople}
       .selectedPeople=${selectedPeople}
       .onMerge=${handleMerge}
+      .onSave=${handleSave}
       .onClosePr=${closePr}
       .canClosePr=${permissions.PR_CLOSE}
       .isClosingPr=${isClosingPr}

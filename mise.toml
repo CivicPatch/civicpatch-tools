@@ -166,6 +166,40 @@ run = """
     done
 """
 
+[tasks.grant_role_staging]
+description = "Set a user's trust level by email (staging). Usage: mise run grant_role_staging <email> <role>"
+usage = '''
+arg "<email>"
+arg "<role>"
+'''
+run = """
+    set -eu
+    AUTH="$STAGING_SERVICE_API_KEY"
+    EMAIL="$usage_email"
+    ROLE=$(echo "$usage_role" | tr '[:upper:]' '[:lower:]')
+
+    USERS=$(curl -fsS "https://staging.civicpatch.org/api/admin/users" -H "Authorization: $AUTH")
+    MATCHES=$(echo "$USERS" | jq -c --arg email "$EMAIL" '[.data[] | select(.email == $email)]')
+    COUNT=$(echo "$MATCHES" | jq 'length')
+    if [ "$COUNT" = "0" ]; then
+      echo "User not found: $EMAIL" >&2
+      exit 1
+    fi
+    if [ "$COUNT" != "1" ]; then
+      echo "Note: $EMAIL has $COUNT rows; setting role on all." >&2
+    fi
+
+    BODY=$(jq -nc --arg role "$ROLE" '{role: $role}')
+    echo "$MATCHES" | jq -r '.[].id' | while read -r USER_ID; do
+      curl --fail-with-body -sS -X PUT "https://staging.civicpatch.org/api/admin/users/$USER_ID/role" \
+        -H "Content-Type: application/json" \
+        -H "Authorization: $AUTH" \
+        -d "$BODY" || { echo "Failed: user_id=$USER_ID" >&2; exit 1; }
+      echo
+      echo "Set $EMAIL to role '$ROLE' (user_id=$USER_ID)"
+    done
+"""
+
 
 ###################################################
 ## 🚀✨ Tests                                ✨🚀 ##

@@ -18,6 +18,11 @@ async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
     The timeout check is on the entry's created_at, not the session's — an entry
     older than SESSION_IDLE_TIMEOUT_MINUTES is considered abandoned regardless of
     when its parent session was created.
+
+    'saved' entries are exempt: because this keys on entry age rather than session
+    activity, it would otherwise hand a saved card to another reviewer while the
+    saving session is still live. purge_stale_idle_sessions releases those instead,
+    keyed on the session's own updated_at.
     """
     await cur.execute(
         """
@@ -26,7 +31,7 @@ async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
             SELECT id FROM review_sessions
             WHERE id != %s
         )
-        AND status NOT IN ('resolved')
+        AND status NOT IN ('resolved', 'saved')
         AND created_at < NOW() - %s
         """,
         (
@@ -56,6 +61,11 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
     one almost every time). Resolved/published PRs are already out of the pool via
     AVAILABLE_FOR_REVIEW. The router's UniqueViolation retry handles the remaining
     select-then-insert race window.
+
+    'saved' jurisdictions are held on the same footing as claimed ones: the card was
+    committed to but not published, so it stays with its session until that session
+    is released. The hold is not session-scoped, which is also what stops a session
+    being re-offered its own saved card later in the queue.
     """
     await cur.execute(
         f"""
@@ -70,7 +80,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
           AND NOT EXISTS (
               SELECT 1 FROM review_session_entries e
               WHERE e.jurisdiction_ocdid = r.jurisdiction_ocdid
-                AND e.status = 'claimed'
+                AND e.status IN ('claimed', 'saved')
           )
         ORDER BY
             jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
@@ -99,6 +109,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
         (review_session_id, entry_number, [
             ReviewSessionEntryStatus.CLAIMED,
             ReviewSessionEntryStatus.PASSED,
+            ReviewSessionEntryStatus.SAVED,
             ReviewSessionEntryStatus.RESOLVED,
         ]),
     )
