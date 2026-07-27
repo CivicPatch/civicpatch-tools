@@ -8,13 +8,22 @@ from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES
 #
 #   claimed ──pass_entry──────────────▶ passed
 #      │
+#      ├──save_entries_for_request─────▶ saved      (committed to the branch, not published)
+#      │                                     │
 #      └──resolve_entries_for_request──▶ resolved   (credit signal for stats/streak/goal)
+#                                        ▲
+#              a saved card that is later published promotes to resolved
 #
 #   non-resolved entries are purged (DELETEd) in three places:
 #     • purge_stale_idle_sessions()                      — scheduled sweep (here)
 #     • review_sessions._purge_session_queue(cur, …)     — session end/reset (in caller's txn)
 #     • review_session_navigation._cleanup_stale_entries — pre-allocate (in navigate's txn)
 #   The latter two are cursor-bound: they must run inside their caller's transaction.
+#
+#   'saved' is exempt from _cleanup_stale_entries only. That sweep keys on the
+#   entry's own created_at, so it would release a saved card out from under a
+#   reviewer whose session is still live. The other two purges key on session
+#   state, which is the signal a save is meant to be held against.
 
 
 async def pass_entry(review_session_id: str, entry_number: int) -> None:
@@ -28,6 +37,21 @@ async def pass_entry(review_session_id: str, entry_number: int) -> None:
                 WHERE review_session_id = %s AND entry_number = %s AND status = 'claimed'
                 """,
                 (review_session_id, entry_number),
+            )
+
+
+async def save_entries_for_request(request_id: str) -> None:
+    """Mark the claimed entry holding this request as saved. A no-op if it is already saved."""
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                UPDATE review_session_entries
+                SET status = 'saved'
+                WHERE %s = ANY(request_ids) AND status = 'claimed'
+                """,
+                (request_id,),
             )
 
 

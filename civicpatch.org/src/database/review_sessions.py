@@ -10,6 +10,7 @@ SESSION_IDLE_TIMEOUT_MINUTES = 30
 class ReviewSessionEntryStatus(str):
     CLAIMED = "claimed"
     PASSED = "passed"
+    SAVED = "saved"
     RESOLVED = "resolved"
 
 

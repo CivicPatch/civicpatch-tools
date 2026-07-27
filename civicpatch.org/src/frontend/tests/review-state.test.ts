@@ -24,7 +24,7 @@ function entry(requestId = "req-1"): CurrentEntry {
 }
 
 // A reviewing state at entry `n` with the given resolved set and frontier.
-function reviewing(n: number, resolved: number[] = [], frontier = n): PageState {
+function reviewing(n: number, resolved: number[] = [], frontier = n, saved: number[] = []): PageState {
   return {
     fsm: {
       kind: "reviewing",
@@ -33,6 +33,7 @@ function reviewing(n: number, resolved: number[] = [], frontier = n): PageState 
       current_entry: entry(),
       entry_number: n,
       resolved_entry_numbers: new Set(resolved),
+      saved_entry_numbers: new Set(saved),
       failed_entries: new Map(),
       frontier_entry: frontier,
       total: 10,
@@ -104,6 +105,35 @@ describe("reduceReview", () => {
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect([...next.fsm.resolved_entry_numbers].sort()).toEqual([1, 4]);
     expect(next.fsm.resolved_entry_numbers).not.toBe(beforeSet);
+  });
+
+  it("mark_saved adds the current entry number without crediting it as resolved", () => {
+    const next = reduceReview(reviewing(4, [1]), { type: "mark_saved" });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect([...next.fsm.saved_entry_numbers]).toEqual([4]);
+    expect([...next.fsm.resolved_entry_numbers]).toEqual([1]);
+  });
+
+  it("mark_saved clears a prior failed flag for that entry", () => {
+    const failed = reduceReview(reviewing(2), { type: "mark_failed", payload: { entry_number: 2, message: "phones: bad" } });
+    const next = reduceReview(failed, { type: "mark_saved" });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect(next.fsm.failed_entries.has(2)).toBe(false);
+    expect([...next.fsm.saved_entry_numbers]).toContain(2);
+  });
+
+  it("publishing a saved entry promotes it out of the saved set", () => {
+    const next = reduceReview(reviewing(3, [], 3, [3]), { type: "mark_resolved" });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect([...next.fsm.saved_entry_numbers]).toEqual([]);
+    expect([...next.fsm.resolved_entry_numbers]).toEqual([3]);
+  });
+
+  it("entry_loaded carries saved_entry_numbers across navigation", () => {
+    const saved = reduceReview(reviewing(2), { type: "mark_saved" });
+    const next = reduceReview(saved, { type: "entry_loaded", payload: { current_entry: entry(), entry_number: 3, total: 10 } });
+    if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
+    expect([...next.fsm.saved_entry_numbers]).toEqual([2]);
   });
 
   it("mark_failed records the entry's error message", () => {

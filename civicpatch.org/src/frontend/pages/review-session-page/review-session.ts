@@ -38,6 +38,7 @@ interface ReviewSessionProps {
   selectedPeople: any[];
   resolvedMatches: Record<string, any>;
   onMerge: () => void;
+  onSave: () => void;
   onAdvance: () => void;
   onBack: () => void;
   onNavigateTo: (n: number) => void;
@@ -54,7 +55,7 @@ function ReviewSession({
   progress, hasSession, currentEntry,
   error, isDirty, isClosingPr, canClosePr,
   currentPeople,
-  onMerge, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
+  onMerge, onSave, onAdvance, onBack, onNavigateTo, onEndSession, onClosePr,
   onAdd, onResetPerson, onPersonSave,
 }: ReviewSessionProps) {
   const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
@@ -132,6 +133,7 @@ function ReviewSession({
         .onAdvance=${onAdvance}
         .onClosePr=${onClosePr}
         .onMerge=${onMerge}
+        .onSave=${onSave}
       ></review-session-controls>
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       <div class="review-page__info-row">

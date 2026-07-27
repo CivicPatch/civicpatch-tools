@@ -5,6 +5,7 @@ export interface Progress {
   entryNumber: number;
   hasPrev: boolean;
   resolvedEntryNumbers: Set<number>;
+  savedEntryNumbers: Set<number>;
   failedEntryNumbers: Set<number>;
   frontierEntry: number;
   total: number;
@@ -18,6 +19,7 @@ interface ReviewSessionControlsProps {
   canClosePr: boolean;
   isClosingPr: boolean;
   isDirty: boolean;
+  onSave: () => void;
   onEndSession: () => void;
   onBack: () => void;
   onNavigateTo: (n: number) => void;
@@ -34,6 +36,7 @@ function ReviewSessionControls({
   canClosePr,
   isClosingPr,
   isDirty,
+  onSave,
   onEndSession,
   onBack,
   onNavigateTo,
@@ -41,13 +44,14 @@ function ReviewSessionControls({
   onClosePr,
   onMerge,
 }: ReviewSessionControlsProps) {
-  const { entryNumber, hasPrev, resolvedEntryNumbers, failedEntryNumbers, frontierEntry, total } = progress ?? {};
+  const { entryNumber, hasPrev, resolvedEntryNumbers, savedEntryNumbers, failedEntryNumbers, frontierEntry, total } = progress ?? {};
   const displayMax = hasSession ? total : entryNumber;
 
   function getDotStatus(n: number) {
     if (n === entryNumber) return "current";
     if (failedEntryNumbers.has(n)) return "failed";
     if (resolvedEntryNumbers.has(n)) return "resolved";
+    if (savedEntryNumbers.has(n)) return "saved";
     if (n <= frontierEntry) return "deferred";
     return "future";
   }
@@ -73,6 +77,9 @@ function ReviewSessionControls({
       `}
       <div class="review-page__actions">
         ${isReadOnly ? "" : html`
+        ${isDirty ? html`
+        <button class="btn-sm review-page__save-btn" @click=${onSave}>Save for later</button>
+        ` : ""}
         <button class="btn-sm review-page__merge-btn btn-gradient" @click=${onMerge}>
           ${isDirty ? "Save and Publish" : "Publish"}
         </button>

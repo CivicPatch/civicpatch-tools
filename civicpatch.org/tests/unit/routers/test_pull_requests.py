@@ -262,6 +262,107 @@ def test_save_and_merge_rejects_invalid_field(client):
     mock_update.assert_not_awaited()
 
 
+# ── save (commit without publishing) tests ────────────────────────────────
+
+SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9168085300"]}}]
+
+
+@pytest.mark.unit
+def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
+    """The whole point of /save: it writes the branch but triggers none of the merge machinery."""
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
+        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
+        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "saved"
+    mock_update.assert_awaited_once()
+    mock_change_logs.assert_awaited_once()
+    mock_save.assert_awaited_once_with(TEST_REQUEST_ID)
+
+    mock_enqueue.assert_not_awaited()
+    mock_set_enqueued.assert_not_awaited()
+    mock_resolve.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_save_applies_the_patch_against_the_branch_file(client):
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+        )
+
+    assert response.status_code == 200
+    sent = mock_update.await_args.kwargs["new_data"]
+    assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
+    assert sent[0]["name"] == "Jane Doe"                      # untouched
+    assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
+
+
+@pytest.mark.unit
+def test_save_rejects_invalid_field_without_marking_the_entry(client):
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock) as mock_update,
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            json={
+                "request_id": TEST_REQUEST_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
+            },
+        )
+
+    assert response.status_code == 422
+    mock_update.assert_not_awaited()
+    mock_save.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_save_returns_500_and_does_not_mark_the_entry_when_the_commit_fails(client):
+    with (
+        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=False),
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+        )
+
+    assert response.status_code == 500
+    mock_save.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_save_requires_data(client):
+    response = client.post(
+        f"/pull_requests/{TEST_PR_NUMBER}/save",
+        json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+    )
+    assert response.status_code == 422
+
+
 # ── get_pull_request_by_number tests ──────────────────────────────────────
 
 OPEN_PR_DB_RESULT = {

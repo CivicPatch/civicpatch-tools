@@ -373,6 +373,13 @@ review-session-controls {
     background: var(--pico-del-color);
 }
 
+/* Committed to the branch but not published — a hollow ring, so it reads as
+   started-not-finished next to the solid dot a published entry gets. */
+.review-page__dot--saved {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px var(--pico-success-color);
+}
+
 .review-page__dot--deferred {
     background: var(--pico-muted-border-color);
 }
@@ -406,6 +413,12 @@ review-session-controls {
 
 .review-page__merge-btn {
     border: none;
+}
+
+.review-page__save-btn {
+    --pico-color: var(--pico-primary);
+    --pico-background-color: transparent;
+    --pico-border-color: var(--pico-muted-border-color);
 }
 
 .review-page__end-btn {

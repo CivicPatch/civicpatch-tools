@@ -4,6 +4,7 @@ import {
   goToEntry,
   endSessionAndExit,
   mergeCurrent,
+  saveCurrent,
   closeCurrent,
   buildEntry,
   type Effects,
@@ -21,6 +22,7 @@ function fakeApi(overrides: Partial<ReviewApi> = {}): ReviewApi {
     fetchReview: vi.fn(async () => ({ data: { issues: [] } })),
     endReviewSession: vi.fn(async () => ({ data: null })),
     fetchPullRequestByRequestId: vi.fn(async () => ({ data: null })),
+    saveReviewData: vi.fn(async () => ({ status: "saved" })),
     ...overrides,
   };
 }
@@ -223,6 +225,49 @@ describe("mergeCurrent", () => {
     const e = fakeEffects(fakeApi());
     await mergeCurrent({ ...current, pr: { ...current.pr, number: null } }, "s1", 2, null, STATE, e);
     expect(e.trackMerge).not.toHaveBeenCalled();
+    expect(e.dispatch).not.toHaveBeenCalled();
+  });
+});
+
+describe("saveCurrent", () => {
+  it("commits the edits, marks the entry saved, and advances", async () => {
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const e = fakeEffects(api);
+    const people = [{ id: "p1" }];
+    await saveCurrent(current, "s1", 2, people, STATE, e);
+
+    expect(api.saveReviewData).toHaveBeenCalledWith(123, "req-1", "ocd-x", people);
+    expect(dispatchedTypes(e)).toContain(ActionType.MARK_SAVED);
+    expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
+  });
+
+  it("does not credit the entry as resolved", async () => {
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const e = fakeEffects(api);
+    await saveCurrent(current, "s1", 2, [{ id: "p1" }], STATE, e);
+    expect(dispatchedTypes(e)).not.toContain(ActionType.MARK_RESOLVED);
+  });
+
+  it("flags the entry failed and stays put when the save is rejected", async () => {
+    const api = fakeApi({
+      navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })),
+      saveReviewData: vi.fn(async () => { throw new Error("phones: Invalid phone number"); }),
+    });
+    const e = fakeEffects(api);
+    await saveCurrent(current, "s1", 2, [{ id: "p1" }], STATE, e);
+
+    expect(e.dispatch).toHaveBeenCalledWith({
+      type: ActionType.MARK_FAILED,
+      payload: { entry_number: 2, message: "phones: Invalid phone number" },
+    });
+    expect(dispatchedTypes(e)).not.toContain(ActionType.MARK_SAVED);
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+  });
+
+  it("does nothing without a PR number", async () => {
+    const e = fakeEffects(fakeApi());
+    await saveCurrent({ ...current, pr: { ...current.pr, number: null } }, "s1", 2, [], STATE, e);
+    expect(e.api.saveReviewData).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });
 });
