@@ -5,7 +5,6 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
 import { useReviewSession } from "./use-review-session.js";
-import { useReviewPeople } from "./use-review-people.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
 import "./review-session.js";
@@ -33,26 +32,11 @@ function ReviewSessionPage() {
   const currentEntry = reviewing?.current_entry ?? null;
   const session = reviewing?.session ?? null;
 
-  const {
-    currentPeople,
-    dirty,
-    peoplePatch,
-    selectedPeople,
-    resolvedMatches,
-    handleAdd,
-    handleTableDataChange,
-    handleTableDataReorder,
-    handleBulkDelete,
-    handleMerge: handlePeopleMerge,
-    handleReset,
-    handleResetAll,
-    updatePerson,
-  } = useReviewPeople(currentEntry);
-
-  const handleMerge = () => merge(dirty ? peoplePatch : null);
-  const handleSave = () => save(peoplePatch);
-  const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
-  const handleResetPerson = (id: string) => handleReset(id);
+  // The card owns the reviewer's edits and hands them over when it asks to
+  // publish or save; the page only decides what that does to the session.
+  const handleMerge = (e: CustomEvent) => merge(e.detail.people);
+  const handleSave = (e: CustomEvent) => save(e.detail.people);
+  const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
   const prNumber = currentEntry?.pr?.number;
   const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
@@ -88,27 +72,15 @@ function ReviewSessionPage() {
       .hasSession=${session != null}
       .progress=${progress}
       .error=${publishError}
-      .isDirty=${dirty}
-      .currentPeople=${currentPeople}
-      .selectedPeople=${selectedPeople}
-      .onMerge=${handleMerge}
-      .onSave=${handleSave}
-      .onClosePr=${closePr}
       .canClosePr=${permissions.PR_CLOSE}
       .isClosingPr=${isClosingPr}
-      .onAdvance=${advance}
-      .onBack=${back}
-      .onNavigateTo=${navigateTo}
-      .onEndSession=${endSession}
-      .onTableDataChange=${handleTableDataChange}
-      .onTableReorder=${handleTableDataReorder}
-      .onPeopleMerge=${handlePeopleMerge}
-      .onBulkDelete=${handleBulkDelete}
-      .onReset=${handleResetAll}
-      .onAdd=${handleAdd}
-      .onResetPerson=${handleResetPerson}
-      .onPersonSave=${handlePersonSave}
-      .resolvedMatches=${resolvedMatches}
+      @back=${back}
+      @advance=${advance}
+      @navigate-to=${handleNavigateTo}
+      @end-session=${endSession}
+      @merge=${handleMerge}
+      @save=${handleSave}
+      @close-pr=${closePr}
     ></review-session>`;
   };
 
