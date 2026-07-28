@@ -329,7 +329,8 @@ description = "Run pyright type checker on pipelines"
 
 [tasks.tfe]
 run = "npm test"
-dir = "pipelines/src/frontend"
+dir = "civicpatch.org/src/frontend"
+description = "Run vitest unit tests on civicpatch.org frontend"
 
 ###################################################
 ## 🚀✨ Scripts                             ✨🚀 ##

@@ -56,12 +56,30 @@ test.describe("Review reconcile diff (populated)", () => {
     await officeInput.fill("Mayor");
     await expect(officeInput).not.toHaveClass(/people-diff__input--changed/);
 
-    // Validation surfaces live: a malformed date flags an inline error.
+    // Dates are edited through Year / Month / Day controls, which cannot express a
+    // malformed date. Term start is "2021" on both sides, so it starts unchanged
+    // with the year filled and no month — and Day stays disabled until a month exists.
     const termStartField = mariaRow.locator(".people-diff__field").filter({ hasText: "Term start" }).first();
-    const termStartInput = termStartField.locator("input");
-    await termStartInput.fill("20-24");
-    await expect(termStartInput).toHaveClass(/people-diff__input--error/);
-    await expect(termStartField.locator(".people-diff__field-error")).toContainText("YYYY");
+    await expect(termStartField).toHaveClass(/people-diff__field--same/);
+    await expect(termStartField.locator(".people-diff__date-year")).toHaveValue("2021");
+    const monthSelect = termStartField.locator('select[aria-label="Month"]');
+    const daySelect = termStartField.locator('select[aria-label="Day"]');
+    await expect(monthSelect).toHaveValue("");
+    await expect(daySelect).toBeDisabled();
+
+    // Picking a month round-trips to "2021-03": the field flips to changed and the
+    // old side is struck, and Day becomes selectable.
+    await monthSelect.selectOption("03");
+    await expect(termStartField).toHaveClass(/people-diff__field--changed/);
+    await expect(termStartField.locator(".people-diff__cell--old del")).toHaveText("2021");
+    await expect(daySelect).toBeEnabled();
+
+    // Clearing the month drops back to the bare year — and takes any day with it.
+    await daySelect.selectOption("15");
+    await monthSelect.selectOption("");
+    await expect(termStartField).toHaveClass(/people-diff__field--same/);
+    await expect(daySelect).toBeDisabled();
+    await expect(daySelect).toHaveValue("");
   });
 
   test("links an added person to a removed record", async ({ authenticatedPage: page }) => {

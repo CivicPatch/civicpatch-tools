@@ -2,6 +2,14 @@
 // per-field diff semantics and client-side validation. Rendering and editing
 // live in the component; this module is the functional core (unit-tested alone).
 
+import { type Person } from "../edit-people/person-edit-utils.js";
+
+// Either side of a diff. The old side may be absent (an added person) and the
+// new side may be absent (one the scrape didn't find). Partial because the diff
+// only ever reads field values — it never needs a person to be whole, or to
+// carry an id.
+export type DiffRecord = Partial<Person> | null | undefined;
+
 export type FieldType = "text" | "date" | "multi" | "image";
 
 export interface FieldSpec {
@@ -9,7 +17,7 @@ export interface FieldSpec {
   label: string;
   type: FieldType;
   required?: boolean; // must be non-empty; flagged when empty
-  diff?: boolean;     // default true; false = shown per-side but not compared
+  diff?: boolean; // default true; false = shown per-side but not compared
 }
 
 // Aligned to the Official data model: office is an object, urls (not websites),
@@ -24,7 +32,12 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
   { key: "office.name", label: "Office", type: "text", required: true },
-  { key: "office.division_ocdid", label: "Division", type: "text", required: true },
+  {
+    key: "office.division_ocdid",
+    label: "Division",
+    type: "text",
+    required: true,
+  },
   { key: "start_date", label: "Term start", type: "date" },
   { key: "end_date", label: "Term end", type: "date" },
   { key: "emails", label: "Email", type: "multi" },
@@ -101,7 +114,10 @@ export function multiValueDiff(
 
   const result: MultiValueDiff[] = [];
   for (const value of news) {
-    result.push({ value, status: oldSet.has(normalizeMultiValue(value)) ? "both" : "added" });
+    result.push({
+      value,
+      status: oldSet.has(normalizeMultiValue(value)) ? "both" : "added",
+    });
   }
   for (const value of olds) {
     if (!newSet.has(normalizeMultiValue(value))) {
@@ -111,21 +127,71 @@ export function multiValueDiff(
   return result;
 }
 
-// ── Record-level change (feeds computePeopleDiff's isChanged callback) ───────
+// The whole-field verdict for a multi-value field, collapsing its per-value diff:
+// values on both sides only = same, gains only = added, losses only = cleared,
+// both = changed.
+export function multiValueState(
+  oldValues: string[],
+  newValues: string[],
+): ScalarDiffState {
+  const diff = multiValueDiff(oldValues, newValues);
+  const gained = diff.some((entry) => entry.status === "added");
+  const lost = diff.some((entry) => entry.status === "removed");
+  if (gained && lost) return "changed";
+  if (gained) return "added";
+  if (lost) return "cleared";
+  return "same";
+}
 
-export function recordsDiffer(oldRecord: any, newRecord: any): boolean {
-  for (const field of FIELD_SCHEMA) {
-    if (field.diff === false) continue; // documentation (source_urls) isn't compared
-    const oldValue = diffValue(oldRecord, field);
-    const newValue = diffValue(newRecord, field);
-    if (field.type === "multi") {
-      const diff = multiValueDiff((oldValue as string[]) ?? [], (newValue as string[]) ?? []);
-      if (diff.some((entry) => entry.status !== "both")) return true;
-    } else if (fieldDiffState(oldValue, newValue, field.type) !== "same") {
-      return true;
-    }
+// ── Field- and record-level change ───────────────────────────────────────────
+
+// One field's verdict, dispatching on its type. `diff: false` fields
+// (source_urls) are documentation and never compare.
+export function fieldState(
+  field: FieldSpec,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
+): ScalarDiffState {
+  if (field.diff === false) return "same";
+  const oldValue = diffValue(oldRecord, field);
+  const newValue = diffValue(newRecord, field);
+  if (field.type === "multi") {
+    return multiValueState(
+      (oldValue as string[]) ?? [],
+      (newValue as string[]) ?? [],
+    );
   }
-  return false;
+  return fieldDiffState(oldValue, newValue, field.type);
+}
+
+export type FieldChangeState = Exclude<ScalarDiffState, "same">;
+
+export interface FieldChange {
+  field: FieldSpec;
+  state: FieldChangeState;
+}
+
+// Every field that actually differs, in schema order. Callers that only need
+// "did anything change?" use recordsDiffer, which is this same traversal — so
+// the person-level and field-level answers can never disagree.
+export function changedFields(
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
+): FieldChange[] {
+  const changes: FieldChange[] = [];
+  for (const field of FIELD_SCHEMA) {
+    const state = fieldState(field, oldRecord, newRecord);
+    if (state !== "same") changes.push({ field, state });
+  }
+  return changes;
+}
+
+// Feeds computePeopleDiff's isChanged callback.
+export function recordsDiffer(
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
+): boolean {
+  return changedFields(oldRecord, newRecord).length > 0;
 }
 
 // ── Client-side validation (spec §6 — owned by the client, live) ─────────────
@@ -165,7 +231,13 @@ export function fieldError(field: FieldSpec, record: any): string | null {
   if (field.type === "date") {
     const value = String(diffValue(record, field) ?? "");
     if (!isValidDate(value)) return "Use YYYY, YYYY-MM, or YYYY-MM-DD";
-    if (field.key === "end_date" && !isTermOrderValid(String(getFieldValue(record, "start_date") ?? ""), value)) {
+    if (
+      field.key === "end_date" &&
+      !isTermOrderValid(
+        String(getFieldValue(record, "start_date") ?? ""),
+        value,
+      )
+    ) {
       return "Term end is before term start";
     }
   }
@@ -180,12 +252,21 @@ export function fieldError(field: FieldSpec, record: any): string | null {
 // reviewer keeps the scraped fields). The existing person's name and aliases fold
 // into other_names so the *next* scrape resolves by alias instead of re-proposing
 // the same person.
-export function buildLinkUpdates(added: any, target: any): { id: string; other_names: string[] } {
+export function buildLinkUpdates(
+  added: any,
+  target: any,
+): { id: string; other_names: string[] } {
   // The target's old name and both sides' aliases all become aliases of the
   // linked record — deduped, minus blanks and the added person's own name
   // (which stays the primary name).
-  const candidates = [target?.name, ...(target?.other_names ?? []), ...(added?.other_names ?? [])];
-  const other_names = [...new Set(candidates)].filter((alias) => alias && alias !== added?.name);
+  const candidates = [
+    target?.name,
+    ...(target?.other_names ?? []),
+    ...(added?.other_names ?? []),
+  ];
+  const other_names = [...new Set(candidates)].filter(
+    (alias) => alias && alias !== added?.name,
+  );
   return { id: target.id, other_names };
 }
 

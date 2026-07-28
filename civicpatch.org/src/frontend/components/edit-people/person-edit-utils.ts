@@ -3,6 +3,19 @@
 
 export type DateParts = { year: string; month: string; day: string };
 
+// Presentation constants for the Y/M/D controls, next to the parse/serialize
+// pair they belong with so the modal and the diff can't drift apart.
+export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0"));
+export const padDatePart = (n: number) => String(n).padStart(2, "0");
+
+// A day with no month is meaningless, so clearing the month clears the day.
+export function setDatePart(parts: DateParts, key: keyof DateParts, value: string): DateParts {
+  const next = { ...parts, [key]: value };
+  if (key === "month" && !value) next.day = "";
+  return next;
+}
+
 export const DIVISION_AT_LARGE = "at_large";
 export const DIVISION_OTHER = "other";
 
@@ -54,18 +67,24 @@ export function parseDivision(
   return { type: DIVISION_OTHER, value: "" };
 }
 
-// {type, value} + jurisdiction -> division_ocdid. At-large is just the base.
+// {type, value} + a base division -> division_ocdid. At-large is just the base.
+// Split from buildDivisionOcdid because the diff has to fall back to the person's
+// existing division as the base when it has no jurisdiction to derive one from.
+export function buildDivisionFromBase(base: string, type: DivisionType, value: string): string {
+  if (type === DIVISION_AT_LARGE || type === DIVISION_OTHER) return base;
+  return `${base}/${type}:${value}`;
+}
+
+// {type, value} + jurisdiction -> division_ocdid.
 export function buildDivisionOcdid(
   jurisdictionOcdid: string | null | undefined,
   type: DivisionType,
   value: string,
 ): string {
-  const base = jurisdictionToDivisionBase(jurisdictionOcdid);
-  if (type === DIVISION_AT_LARGE || type === DIVISION_OTHER) return base;
-  return `${base}/${type}:${value}`;
+  return buildDivisionFromBase(jurisdictionToDivisionBase(jurisdictionOcdid), type, value);
 }
 
-export type Office = { name?: string; division_ocdid?: string; [k: string]: unknown };
+export type Office = { name?: string; division_ocdid?: string | null; [k: string]: unknown };
 export type Person = {
   id: string;
   name?: string;
@@ -78,6 +97,10 @@ export type Person = {
   urls?: string[];
   source_urls?: string[];
   jurisdiction_ocdid?: string;
+  // The diff reads both: a stored record carries cdn_image, a freshly scraped
+  // one only image (see diffValue in diff-model).
+  image?: string | null;
+  cdn_image?: string | null;
 };
 
 export type Draft = {

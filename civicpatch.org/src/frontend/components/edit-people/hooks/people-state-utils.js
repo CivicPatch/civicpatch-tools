@@ -8,12 +8,26 @@ export const PERSON_FIELDS = {
 // marks the row dirty and gets submitted, even with no other edits.
 export const TRACKED_FIELDS = ["id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
 
-export function applyUpdate(person, updates, original) {
-  const next = { ...person, ...updates };
-  const changedFields = TRACKED_FIELDS.filter(
-    field => JSON.stringify(next[field]) !== JSON.stringify(original?.[field])
+// Which fields a person has had edited, as field keys. Derived on read from
+// (current, baseline) rather than stamped onto the record, so it cannot go stale.
+export function changedFieldKeys(person, original) {
+  return TRACKED_FIELDS.filter(
+    field => JSON.stringify(person[field]) !== JSON.stringify(original?.[field])
   );
-  return { ...next, _dirty: changedFields.length > 0 || updates._deleted === true, _changes: changedFields };
+}
+
+// Rows can change without any field changing: a reorder, or a merge collapsing
+// two rows into one. Both show up in the id sequence. Only ids the two lists
+// share are compared — an added row has no baseline and is not a reorder.
+export function listChanged(currentPeople, originalPeople) {
+  const currentIds = currentPeople.map(p => p.id);
+  const originalIds = originalPeople.map(p => p.id);
+  const originalIdSet = new Set(originalIds);
+  const shared = new Set(currentIds.filter(id => originalIdSet.has(id)));
+  if (shared.size !== originalIds.length) return true;
+  const currentOrder = currentIds.filter(id => shared.has(id));
+  const originalOrder = originalIds.filter(id => shared.has(id));
+  return currentOrder.join("|") !== originalOrder.join("|");
 }
 
 export function mergeFields(survivor, absorbed) {
@@ -43,7 +57,7 @@ export function mergeFields(survivor, absorbed) {
     merged.office = { ...(merged.office || {}), name: dedupedOfficeNames.join(" - ") };
   }
 
-  return { ...merged, _dirty: true, _changes: TRACKED_FIELDS, _selected: false };
+  return { ...merged, _selected: false };
 }
 
 export function collapseInto(survivor, absorbed, list) {
@@ -55,13 +69,14 @@ export function collapseInto(survivor, absorbed, list) {
 // only their changed fields; new or re-identified rows (id changed) send the whole entry.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
 // entry, and a base person absent from the list is a deletion. Deleted rows are omitted here.
-export function buildPeoplePatch(currentPeople) {
-  return currentPeople.filter(p => !p._deleted).map(toPatchItem);
+export function buildPeoplePatch(currentPeople, changesById) {
+  return currentPeople
+    .filter(p => !p._deleted)
+    .map(p => toPatchItem(p, changesById.get(p.id)));
 }
 
-function toPatchItem(person) {
-  const { _dirty, _changes, _selected, _deleted, _isNew, ...entry } = person;
-  const changes = _changes || [];
+function toPatchItem(person, changes) {
+  const { _selected, _deleted, _isNew, ...entry } = person;
   if (_isNew || changes.includes("id")) {
     return { id: entry.id, fields: entry };
   }
