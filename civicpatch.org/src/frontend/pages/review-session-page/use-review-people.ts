@@ -1,4 +1,4 @@
-import { useState, useEffect } from "haunted";
+import { useEffect } from "haunted";
 import { generatePersonId } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson, resolvePeopleMatches } from "../../components/edit-people/people-editing.js";
@@ -13,8 +13,6 @@ export function useReviewPeople(currentEntry: CurrentEntry | null) {
   const people = usePeopleState({ people: proposed });
   const { assignPeople, addPerson } = people;
 
-  const [resolvedMatches, setResolvedMatches] = useState({});
-
   async function handleAdd() {
     const personId = await generatePersonId();
     addPerson(emptyPerson(personId, jurisdictionOcdid));
@@ -23,19 +21,12 @@ export function useReviewPeople(currentEntry: CurrentEntry | null) {
   useEffect(() => {
     if (!proposed.length || !jurisdictionOcdid) {
       assignPeople([]);
-      setResolvedMatches({});
       return;
     }
     resolvePeopleMatches(jurisdictionOcdid, proposed)
-      .then(({ tagged, matchMap }) => {
-        assignPeople(tagged);
-        setResolvedMatches(matchMap);
-      })
-      .catch(() => {
-        assignPeople(proposed);
-        setResolvedMatches({});
-      });
+      .then(({ tagged }) => assignPeople(tagged))
+      .catch(() => assignPeople(proposed));
   }, [currentEntry?.pr_people]);
 
-  return { ...people, resolvedMatches, handleAdd };
+  return { ...people, handleAdd };
 }

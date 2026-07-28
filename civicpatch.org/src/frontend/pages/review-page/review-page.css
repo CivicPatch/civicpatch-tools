@@ -449,6 +449,13 @@ review-session-controls {
     min-width: 0;
 }
 
+/* The report-issue element groups the button with the list of issues already
+   filed. It must not become a flex item itself, or the two would share one slot
+   in the pr-meta column and lose the gap between them. */
+report-issue-button {
+    display: contents;
+}
+
 .review-page__reported-issues {
     list-style: none;
     margin: 0;
