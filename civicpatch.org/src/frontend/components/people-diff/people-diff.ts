@@ -29,6 +29,9 @@ interface PeopleDiffProps {
   onResetPerson?: (id: string) => void;
   jurisdictionOcdid?: string | null;
   isReadOnly?: boolean;
+  // Which people the reviewer has edited — derived by usePeopleState from the
+  // baseline, so it never lives on the records themselves.
+  dirtyIds: Set<string>;
 }
 
 // "Link to person": an unmatched scraped person is actually one of the removed
@@ -64,10 +67,11 @@ function renderRow(
   jurisdictionOcdid: string | null | undefined,
   linkCandidates: any[],
   issues: Issue[],
+  dirtyIds: Set<string>,
 ) {
   const name = newRecord?.name || oldRecord?.name || DASH;
   const save: Save = (updates) => onPersonSave(newRecord.id, updates);
-  const isDirty = newRecord?._dirty;
+  const isDirty = dirtyIds.has(newRecord?.id);
   const isDeleted = !!newRecord?._deleted;
   // Clear-on-edit: once the reviewer touches (or deletes) a card, its markers
   // are presumed addressed and drop away. Field-less issues render at row level;
@@ -119,7 +123,7 @@ function renderRow(
   `;
 }
 
-function PeopleDiff({ existing, currentPeople, issues = [], onPersonSave, onAdd, onResetPerson, jurisdictionOcdid, isReadOnly = false }: PeopleDiffProps) {
+function PeopleDiff({ existing, currentPeople, issues = [], onPersonSave, onAdd, onResetPerson, jurisdictionOcdid, isReadOnly = false, dirtyIds }: PeopleDiffProps) {
   const [activeFilter, setActiveFilter] = useState<FilterKey>(FILTER_ALL);
 
   const olds = Array.isArray(existing) ? existing : [];
@@ -190,7 +194,7 @@ function PeopleDiff({ existing, currentPeople, issues = [], onPersonSave, onAdd,
         <span>New — editable</span>
       </div>
       <div class="people-diff__rows">
-        ${visible.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid, linkCandidates, issuesByPersonId.get(person?.id) ?? []))}
+        ${visible.map(({ type, person, from }) => renderRow(type, from, person, onPersonSave, onResetPerson, isReadOnly, jurisdictionOcdid, linkCandidates, issuesByPersonId.get(person?.id) ?? [], dirtyIds))}
       </div>
     </div>
   `;

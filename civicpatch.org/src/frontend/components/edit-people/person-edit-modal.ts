@@ -5,6 +5,7 @@ import "../basic/modal.js";
 import "../person-image.js";
 import "./person-edit-modal.css";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
+import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   type DateParts,
   type DivisionType,
@@ -16,15 +17,14 @@ import {
   buildDivisionOcdid,
   toDraft,
   buildUpdates,
+  MONTHS,
+  DAYS,
+  padDatePart,
+  setDatePart,
 } from "./person-edit-utils.js";
 
 export const SAVE_EVENT = "save";
 export const CANCEL_EVENT = "cancel";
-const SOURCE_WINDOW_NAME = "civ-source-viewer";
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0"));
-const pad = (n: number) => String(n).padStart(2, "0");
 
 type Candidate = { id: string; name?: string; office?: { name?: string; division_ocdid?: string } };
 type PersonEditModalHost = HTMLElement & { person?: Person; jurisdictionOcdid: string; candidates?: Candidate[] };
@@ -34,7 +34,7 @@ const replaceAt = (arr: string[], i: number, v: string) => arr.map((x, j) => (j 
 const removeAt = (arr: string[], i: number) => arr.filter((_, j) => j !== i);
 
 function openSource(url: string) {
-  if (url) window.open(url, SOURCE_WINDOW_NAME, "width=900,height=800");
+  if (url) window.open(url, SOURCE_LINK_TARGET, "width=900,height=800");
 }
 
 function renderMultiValue(
@@ -88,12 +88,11 @@ function renderSources(items: string[], onChange: (next: string[]) => void) {
   `;
 }
 
+// Options bind `.selected` (the live property), never `?selected` — the attribute
+// reflects `defaultSelected`, so it stops driving the control once the user has
+// touched it and the select then keeps showing a stale choice.
 function renderDate(label: string, parts: DateParts, onChange: (next: DateParts) => void) {
-  const setPart = (key: keyof DateParts, value: string) => {
-    const next = { ...parts, [key]: value };
-    if (key === "month" && !value) next.day = ""; // a day with no month is meaningless
-    onChange(next);
-  };
+  const setPart = (key: keyof DateParts, value: string) => onChange(setDatePart(parts, key, value));
   return html`
     <div class="person-edit__field">
       ${label}
@@ -101,12 +100,12 @@ function renderDate(label: string, parts: DateParts, onChange: (next: DateParts)
         <input class="year" type="number" min="1900" max="2100" placeholder="Year" aria-label="Year"
           .value=${parts.year} @input=${(e: Event) => setPart("year", inputValue(e))} />
         <select class="month" aria-label="Month" @change=${(e: Event) => setPart("month", inputValue(e))}>
-          <option value="" ?selected=${!parts.month}>—</option>
-          ${MONTHS.map((name, i) => html`<option value=${pad(i + 1)} ?selected=${pad(i + 1) === parts.month}>${name}</option>`)}
+          <option value="" .selected=${!parts.month}>—</option>
+          ${MONTHS.map((name, i) => html`<option value=${padDatePart(i + 1)} .selected=${padDatePart(i + 1) === parts.month}>${name}</option>`)}
         </select>
         <select class="day" aria-label="Day" ?disabled=${!parts.month} @change=${(e: Event) => setPart("day", inputValue(e))}>
-          <option value="" ?selected=${!parts.day}>—</option>
-          ${DAYS.map((d) => html`<option value=${d} ?selected=${d === parts.day}>${String(Number(d))}</option>`)}
+          <option value="" .selected=${!parts.day}>—</option>
+          ${DAYS.map((d) => html`<option value=${d} .selected=${d === parts.day}>${String(Number(d))}</option>`)}
         </select>
       </div>
     </div>
@@ -125,10 +124,10 @@ function renderDivision(person: Person, draft: Draft, jurisdictionOcdid: string,
       <div class="person-edit__division">
         <select aria-label="Division type"
           @change=${(e: Event) => patch({ divisionType: inputValue(e) as DivisionType, divisionValue: "" })}>
-          ${isOther ? html`<option selected disabled>Custom: ${person.office?.division_ocdid}</option>` : ""}
-          <option value=${DIVISION_AT_LARGE} ?selected=${atLarge}>At-large (no district)</option>
-          <option value="council_district" ?selected=${draft.divisionType === "council_district"}>Council District</option>
-          <option value="ward" ?selected=${draft.divisionType === "ward"}>Ward</option>
+          ${isOther ? html`<option disabled .selected=${true}>Custom: ${person.office?.division_ocdid}</option>` : ""}
+          <option value=${DIVISION_AT_LARGE} .selected=${atLarge}>At-large (no district)</option>
+          <option value="council_district" .selected=${draft.divisionType === "council_district"}>Council District</option>
+          <option value="ward" .selected=${draft.divisionType === "ward"}>Ward</option>
         </select>
         ${atLarge || isOther ? "" : html`
           <input type="text" placeholder="required" aria-label="Division value" required

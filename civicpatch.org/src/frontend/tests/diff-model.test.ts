@@ -4,6 +4,9 @@ import {
   diffValue,
   fieldDiffState,
   multiValueDiff,
+  multiValueState,
+  fieldState,
+  changedFields,
   recordsDiffer,
   isValidDate,
   isTermOrderValid,
@@ -140,6 +143,106 @@ describe("recordsDiffer", () => {
 
   it("ignores source_urls (documentation, not diffed)", () => {
     expect(recordsDiffer({ ...base, source_urls: ["a"] }, { ...base, source_urls: ["b", "c"] })).toBe(false);
+  });
+});
+
+describe("multiValueState", () => {
+  it("is same when both sides hold the same values, order-insensitively", () => {
+    expect(multiValueState(["a@x.gov", "b@x.gov"], ["b@x.gov", "a@x.gov"])).toBe("same");
+  });
+
+  it("is added when the new side only gains", () => {
+    expect(multiValueState(["a@x.gov"], ["a@x.gov", "b@x.gov"])).toBe("added");
+  });
+
+  it("is cleared when the new side only loses", () => {
+    expect(multiValueState(["a@x.gov", "b@x.gov"], ["a@x.gov"])).toBe("cleared");
+  });
+
+  it("is changed when it both gains and loses", () => {
+    expect(multiValueState(["a@x.gov"], ["b@x.gov"])).toBe("changed");
+  });
+
+  it("is same for two empty lists", () => {
+    expect(multiValueState([], [])).toBe("same");
+  });
+});
+
+describe("fieldState", () => {
+  const nameField: FieldSpec = { key: "name", label: "Name", type: "text" };
+  const emailField: FieldSpec = { key: "emails", label: "Email", type: "multi" };
+  const sourcesField: FieldSpec = { key: "source_urls", label: "Source urls", type: "multi", diff: false };
+
+  it("dispatches multi fields to the multi-value verdict", () => {
+    expect(fieldState(emailField, { id: "1", emails: [] }, { id: "1", emails: ["a@x.gov"] })).toBe("added");
+  });
+
+  it("dispatches scalar fields to the scalar verdict", () => {
+    expect(fieldState(nameField, { id: "1", name: "Maria" }, { id: "1", name: "Marie" })).toBe("changed");
+  });
+
+  it("is always same for a field marked diff: false", () => {
+    expect(fieldState(sourcesField, { id: "1", source_urls: ["a"] }, { id: "1", source_urls: ["b"] })).toBe("same");
+  });
+
+  it("treats a missing old record as an empty side (an added person)", () => {
+    expect(fieldState(nameField, null, { id: "1", name: "Maria" })).toBe("added");
+  });
+
+  it("treats a missing new record as an empty side (a person the scrape lost)", () => {
+    expect(fieldState(nameField, { id: "1", name: "Maria" }, null)).toBe("cleared");
+  });
+
+  it("compares photos on presence only", () => {
+    expect(fieldState(IMAGE_FIELD, { id: "1", cdn_image: "cdn.jpg" }, { id: "1", image: "raw.jpg" })).toBe("same");
+  });
+});
+
+describe("changedFields", () => {
+  const base = {
+    id: "1",
+    name: "Maria",
+    office: { name: "Mayor", division_ocdid: null },
+    start_date: "2021",
+    end_date: "2025",
+    emails: ["m@x.gov"],
+    phones: [],
+    urls: [],
+    other_names: [],
+    image: "p.jpg",
+  };
+
+  it("is empty for identical records", () => {
+    expect(changedFields(base, { ...base })).toEqual([]);
+  });
+
+  it("reports only the fields that differ, with their state", () => {
+    const changes = changedFields(base, { ...base, end_date: "2027", emails: [] });
+    expect(changes.map((c) => [c.field.key, c.state])).toEqual([
+      ["end_date", "changed"],
+      ["emails", "cleared"],
+    ]);
+  });
+
+  it("returns fields in schema order, not the order they were edited", () => {
+    const changes = changedFields(base, { ...base, emails: [], name: "Marie" });
+    expect(changes.map((c) => c.field.key)).toEqual(["name", "emails"]);
+  });
+
+  it("excludes source_urls even when it differs", () => {
+    const changes = changedFields({ ...base, source_urls: ["a"] }, { ...base, source_urls: ["b"] });
+    expect(changes).toEqual([]);
+  });
+
+  it("reports every populated field of an added person, and no empty ones", () => {
+    const added = { id: "2", name: "Ada", office: { name: "Councilor" }, emails: [], phones: [] };
+    expect(changedFields(null, added).map((c) => c.field.key)).toEqual(["name", "office.name"]);
+  });
+
+  it("agrees with recordsDiffer by construction", () => {
+    const changed = { ...base, name: "Marie" };
+    expect(recordsDiffer(base, changed)).toBe(changedFields(base, changed).length > 0);
+    expect(recordsDiffer(base, { ...base })).toBe(changedFields(base, { ...base }).length > 0);
   });
 });
 

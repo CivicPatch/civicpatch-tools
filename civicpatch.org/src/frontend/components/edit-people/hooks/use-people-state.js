@@ -1,13 +1,31 @@
-import { useState } from 'haunted';
-import { TRACKED_FIELDS, applyUpdate, mergeFields, collapseInto, buildPeoplePatch } from './people-state-utils.js';
+import { useState, useMemo } from 'haunted';
+import { changedFieldKeys, listChanged, mergeFields, collapseInto, buildPeoplePatch } from './people-state-utils.js';
 
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
   const [originalPeople, setOriginalPeople] = useState([]);
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
-  const dirty = currentPeople.some(p => p._dirty);
-  const peoplePatch = buildPeoplePatch(currentPeople);
+
+  // Edits are derived from the baseline, not tracked on the records themselves.
+  // Memoized because this compares every tracked field on every person against
+  // the baseline — it should run per edit, not per render.
+  const { changesById, dirtyIds, dirty, peoplePatch } = useMemo(() => {
+    const originalById = new Map(originalPeople.map(p => [p.id, p]));
+    const changesById = new Map(currentPeople.map(p => [p.id, changedFieldKeys(p, originalById.get(p.id))]));
+    const dirtyIds = new Set(
+      currentPeople.filter(p => p._deleted || changesById.get(p.id).length > 0).map(p => p.id)
+    );
+    return {
+      changesById,
+      dirtyIds,
+      // Field edits and deletions surface in dirtyIds. A reorder changes no field
+      // on anyone — it used to stamp _dirty directly — and a merge drops a row
+      // from the list, so the id sequence is checked separately.
+      dirty: dirtyIds.size > 0 || listChanged(currentPeople, originalPeople),
+      peoplePatch: buildPeoplePatch(currentPeople, changesById),
+    };
+  }, [currentPeople, originalPeople]);
 
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
@@ -16,8 +34,7 @@ export function usePeopleState({ people }) {
 
   function updatePerson(key, updates) {
     setCurrentPeople(current => {
-      const original = originalPeople.find(p => p.id === key);
-      const mapped = current.map(p => p.id === key ? applyUpdate(p, updates, original) : p);
+      const mapped = current.map(p => p.id === key ? { ...p, ...updates } : p);
 
       // When re-iding collapses two existing rows, merge them into the survivor.
       if (updates.id && updates.id !== key) {
@@ -44,7 +61,7 @@ export function usePeopleState({ people }) {
     const keySet = new Set(keys);
     setCurrentPeople(current =>
       current.map(p => keySet.has(p.id)
-        ? { ...p, _deleted: true, _dirty: true, _changes: TRACKED_FIELDS, _selected: false }
+        ? { ...p, _deleted: true, _selected: false }
         : { ...p, _selected: false }
       )
     );
@@ -95,7 +112,7 @@ export function usePeopleState({ people }) {
       // newOrder is the person ids (uuids) in their new position. Rebuild the
       // array in that order; filter(Boolean) drops any id with no current row
       // (defensive — every id comes from `current`, so nothing is dropped).
-      const byId = current.reduce((acc, p) => ({ ...acc, [p.id]: { ...p, _dirty: true } }), {});
+      const byId = current.reduce((acc, p) => ({ ...acc, [p.id]: p }), {});
       return newOrder.map(id => byId[id]).filter(Boolean);
     });
   }
@@ -104,6 +121,8 @@ export function usePeopleState({ people }) {
     currentPeople,
     originalPeople,
     selectedPeople,
+    changesById,
+    dirtyIds,
     dirty,
     peoplePatch,
     assignPeople,

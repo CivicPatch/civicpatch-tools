@@ -50,6 +50,7 @@ function ReviewSession(host: ReviewSessionHost) {
 
   const {
     currentPeople,
+    dirtyIds,
     dirty,
     peoplePatch,
     handleAdd,
@@ -140,6 +141,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .onResetPerson=${handleResetPerson}
         .jurisdictionOcdid=${jurisdictionOcdid}
         .isReadOnly=${is_read_only}
+        .dirtyIds=${dirtyIds}
       ></people-diff>
       ${debugOpen
         ? html`

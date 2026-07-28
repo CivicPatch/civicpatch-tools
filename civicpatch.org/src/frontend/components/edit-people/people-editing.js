@@ -4,7 +4,7 @@
 import { batchResolvePeople } from "../../api.js";
 import { jurisdictionToDivisionBase } from "./person-edit-utils.ts";
 
-const INTERNAL_FIELDS = ["_isNew", "_dirty", "_changes", "_selected", "_deleted"];
+const INTERNAL_FIELDS = ["_isNew", "_selected", "_deleted"];
 
 // A fully-empty new person — only the default division is pre-filled (the
 // jurisdiction base). Both the review/people-diff card and the full editor want
@@ -12,7 +12,6 @@ const INTERNAL_FIELDS = ["_isNew", "_dirty", "_changes", "_selected", "_deleted"
 export function emptyPerson(personId, jurisdictionOcdid) {
   return {
     id: personId,
-    _changes: [],
     _selected: false,
     _deleted: false,
     _isNew: true,
