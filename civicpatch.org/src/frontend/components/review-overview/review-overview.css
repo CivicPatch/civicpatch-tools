@@ -1,0 +1,236 @@
+/* Overview — a photo grid for triaging a whole card at once (spec §4).
+   Two groups, no filter chips: what needs review, and the roster that doesn't. */
+
+.review-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+
+  /* Same semantics as the rail, for the same reason — theme-remapped, and they
+     survive the Catppuccin removal. */
+  --tile-changed: var(--pico-warn-color);
+  --tile-added: var(--pico-ins-color);
+  --tile-cleared: var(--pico-del-color);
+  --tile-issue: var(--pico-info-color);
+}
+
+.review-overview__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.review-overview__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.review-overview__title {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+}
+
+.review-overview__count {
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.review-overview__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.6rem;
+}
+
+/* Tile */
+
+.review-tile {
+  position: relative;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-background-color);
+  overflow: hidden;
+}
+
+.review-tile--changed { border-color: var(--tile-changed); }
+.review-tile--added { border-color: var(--tile-added); }
+.review-tile--removed,
+.review-tile--deleted { border-color: var(--tile-cleared); }
+
+.review-tile--restored {
+  border-color: var(--pico-muted-color);
+  border-style: dashed;
+}
+
+/* The tile is one button carrying the whole identity in its aria-label. Source
+   links are siblings of it, never descendants — a link inside a button is
+   invalid HTML. */
+.review-tile__open {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.review-tile__photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: block;
+}
+
+/* person-image sizes its initials as `calc(size * 0.3)`, so a percentage size
+   resolves against the parent FONT-SIZE and renders them microscopic. The size
+   prop stays a real length and the tile stretches the result here. */
+.review-tile__photo person-image,
+.review-tile__photo person-image > * {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  font-size: 1.9rem !important;
+}
+
+/* Name and office sit on a gradient so they stay legible over any photo, and so
+   the name is always adjacent text — the photo is never the only identity cue. */
+.review-tile__over {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.4rem 0.45rem 0.4rem;
+  background: linear-gradient(
+    to top,
+    rgba(6, 10, 14, 0.92),
+    rgba(6, 10, 14, 0.55) 58%,
+    transparent
+  );
+  color: #fff;
+}
+
+.review-tile__name {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.review-tile--removed .review-tile__name,
+.review-tile--deleted .review-tile__name {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.review-tile__office {
+  font-size: var(--text-xs);
+  opacity: 0.88;
+}
+
+.review-tile__badge {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
+}
+
+.review-tile__badge--issue {
+  background: var(--pico-info-background);
+  border-color: var(--tile-issue);
+  color: var(--tile-issue);
+}
+
+/* Footer — the NAMES of the surviving fields, each in its own state colour, so
+   the tile says what moved and not merely that something did. */
+.review-tile__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.35rem;
+  padding: 0.35rem 0.45rem 0.45rem;
+  font-size: var(--text-xs);
+}
+
+.review-tile__field {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  color: var(--pico-muted-color);
+  width: auto;
+}
+
+.review-tile__field:hover { text-decoration: underline; }
+.review-tile__field--changed { color: var(--tile-changed); font-weight: 700; }
+.review-tile__field--added { color: var(--tile-added); font-weight: 700; }
+.review-tile__field--cleared { color: var(--tile-cleared); font-weight: 700; }
+.review-tile__field--issue { color: var(--tile-issue); font-weight: 700; }
+.review-tile__field--error { color: var(--tile-cleared); font-weight: 700; }
+
+/* A person with nothing to review keeps their place in the roster without
+   spending a card — same reasoning as the rail's strip. */
+.review-overview__faces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.9rem;
+}
+
+.review-face {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.1rem 0.2rem;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  width: auto;
+}
+
+.review-face:hover { color: var(--pico-color); }
+
+/* Ends the To review group, because a new person has surviving fields and lands
+   there — after the face strip it would promise the wrong slot. */
+.review-tile--ghost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 9.5rem;
+  border-style: dashed;
+  color: var(--pico-muted-color);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.review-tile--ghost:hover {
+  border-color: var(--pico-color);
+  color: var(--pico-color);
+}
+
+.review-overview__empty {
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  font-style: italic;
+}

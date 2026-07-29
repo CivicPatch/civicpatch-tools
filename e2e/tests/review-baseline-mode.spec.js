@@ -23,9 +23,9 @@ test.describe("Review baseline mode (first capture)", () => {
     await expect(banner).toBeVisible();
     await expect(banner).toContainText("First capture for E2E Baseline City");
 
-    // people-diff is the editor in both modes; the proposed person renders in it.
+    // Overview is the entry point in both modes; the proposed person is on it.
     await expect(
-      page.locator("people-diff").getByText("Jane Baseline").first()
+      page.locator("review-overview").getByText("Jane Baseline").first()
     ).toBeVisible();
   });
 });

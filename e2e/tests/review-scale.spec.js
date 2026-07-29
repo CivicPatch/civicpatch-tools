@@ -14,40 +14,45 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID } from "../fixtures/db.js";
+import { openDetail, railFor } from "./helpers/review-card.js";
 
 test.describe("Review card at scale", () => {
   test("seeds the composition the layout work needs", async ({
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
-    await expect(page.locator("people-diff")).toBeVisible();
+    await openDetail(page);
 
-    // 35 carried over + 5 added, and the 3 the scrape dropped still get a card.
-    await expect(page.locator(".people-diff__person")).toHaveCount(43);
+    // 35 carried over + 5 added, and the 3 the scrape dropped still get a rail.
+    await expect(page.locator(".review-rail:not(.review-rail--ghost)")).toHaveCount(43);
 
-    const count = (key) =>
-      page.locator(`.people-diff__chip--${key} .people-diff__chip-count`);
-    await expect(count("changed")).toHaveText("10");
-    await expect(count("added")).toHaveText("5");
-    await expect(count("removed")).toHaveText("3");
-    await expect(count("unchanged")).toHaveText("25");
+    // The old chips counted every status; the collapse rule now says the same
+    // thing structurally — 18 people have something to review and 25 collapse
+    // to a one-line strip.
+    await expect(page.locator(".review-rail--strip")).toHaveCount(25);
+    await expect(page.locator(".review-rail--changed")).toHaveCount(10);
+    await expect(page.locator(".review-rail--added")).toHaveCount(5);
+    await expect(page.locator(".review-rail--removed")).toHaveCount(3);
   });
 
   test("carries anchored and person-level issues at density", async ({
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
-    await expect(page.locator("people-diff")).toBeVisible();
+    await openDetail(page);
 
     // A field-anchored issue on two holders — the case the collapse rule's
-    // rule 2 exists for, since office.name is unchanged on both.
+    // rule 2 exists for, since office.name is unchanged on both. In the rail the
+    // issue renders under the field it anchors to.
     await expect(
-      page.locator(".people-diff__issue").filter({ hasText: "council president" }),
+      page.locator(".review-rail__issue").filter({ hasText: "council president" }),
     ).toHaveCount(2);
 
-    // And a person-level one, which anchors to no field.
-    await expect(
-      page.locator(".people-diff__issue").filter({ hasText: "Extra official" }),
-    ).toHaveCount(1);
+    // Its two holders therefore show an Office row they would not otherwise get.
+    for (const name of ["Councillor 09 Scale", "Councillor 21 Scale"]) {
+      await expect(
+        railFor(page, name).locator(".review-rail__field").filter({ hasText: "Office" }),
+      ).toHaveCount(1);
+    }
   });
 });

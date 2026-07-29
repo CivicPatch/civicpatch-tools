@@ -1,108 +1,159 @@
 /**
- * User story: reviewing a re-scrape (reconcile) renders a real per-field diff.
+ * User story: reviewing a re-scrape shows what moved, and lets you edit it.
  *
  * Given a previously-scraped jurisdiction with existing people
  * And a proposed set that changes one, adds one, and drops one
  * When I open its review card
- * Then people-diff shows the changed / added / removed states visually:
- *   - a changed field (office) marked changed
- *   - an added multi value (new email) marked added
- *   - a removed multi value (old phone) struck
- *   - an added-only person row and a removed-only person row
+ * Then the rail shows each person's changed / added / removed state
+ * And only the fields that actually moved
+ * And editing one recomputes the card live
+ *
+ * Rewritten from the people-diff era. That component rendered every field for
+ * every person in an `old | copy | new` grid, so its assertions were about the
+ * two columns — which value sat on which side, and whether the copy arrow moved
+ * one to the other. The rail replaced that with `label | control | was …
+ * Restore` and the collapse rule, so the same claims are now made about which
+ * rows exist at all and what their trailing annotation says.
  */
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { openDetail, railFor, fieldIn } from "./helpers/review-card.js";
+
+const openCard = async (page) => {
+  await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+  await openDetail(page);
+};
 
 test.describe("Review reconcile diff (populated)", () => {
-  test("renders changed / added / removed states", async ({ authenticatedPage: page }) => {
-    await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+  test("shows each person's state, and only the fields that moved", async ({
+    authenticatedPage: page,
+  }) => {
+    await openCard(page);
 
-    // Reconcile mode renders the diff, not the baseline banner.
-    await expect(page.locator("people-diff")).toBeVisible();
-    await expect(page.locator(".review-page__baseline-banner")).toHaveCount(0);
+    // Maria pairs as CHANGED — guards the existing<->new id pairing.
+    const maria = railFor(page, "Maria González");
+    await expect(maria).toHaveClass(/review-rail--changed/);
 
-    // Maria pairs as a single CHANGED row — guards the existing<->new id pairing.
-    const mariaRow = page.locator(".people-diff__person--changed").filter({ hasText: "Maria González" });
-    await expect(mariaRow).toBeVisible();
-
-    // Office changed → editable input carries the new value with changed styling.
-    const officeInput = mariaRow.locator(".people-diff__field").filter({ hasText: "Office" }).first().locator("input");
-    await expect(officeInput).toHaveValue("Council Member");
-    await expect(officeInput).toHaveClass(/people-diff__input--changed/);
-
-    // Added email → an added-styled input with the new value (scoped to Maria).
-    await expect(mariaRow.locator("input.people-diff__input--added")).toHaveValue("mayor@nh.gov");
-
-    // Removed phone → struck on the old side.
+    // Office changed, an email was added, a phone was cleared — and Division is
+    // here for a different reason: the fixture has division_ocdid null on BOTH
+    // sides, so it reads `same` to a pure diff while still blocking publish.
+    // That is rule 3 of the collapse rule (§2), and the row is exactly what
+    // stops the card hiding why publishing fails. Everything else moved by
+    // nothing and is not on screen — which the old view could not do, since it
+    // rendered all eleven fields regardless.
+    await expect(maria.locator(".review-rail__field")).toHaveCount(4);
+    await expect(maria.locator(".review-rail__label")).toHaveText([
+      "Office *",
+      "Division *",
+      "Email",
+      "Phone",
+    ]);
     await expect(
-      mariaRow.locator(".people-diff__value--removed").filter({ hasText: "(555) 010-0101" })
-    ).toBeVisible();
+      fieldIn(maria, "Division").locator(".review-rail__error"),
+    ).toContainText("Required");
 
-    // Added-only and removed-only person rows.
-    await expect(
-      page.locator(".people-diff__person--added").filter({ hasText: "Tom Treasurer" })
-    ).toBeVisible();
-    const bobRemoved = page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" });
-    await expect(bobRemoved).toBeVisible();
+    // The office control carries the new value; the old one is a trailing
+    // annotation rather than a second column.
+    const office = fieldIn(maria, "Office");
+    await expect(office.locator("input")).toHaveValue("Council Member");
+    await expect(office.locator(".review-rail__was")).toContainText("was Mayor");
 
-    // A removed card has no new-side record: old values are struck, the new side
-    // is "—", and there are no editable inputs (consistent with other cards).
-    await expect(bobRemoved.locator(".people-diff__cell--old del").filter({ hasText: "Bob Clerk" })).toBeVisible();
-    await expect(bobRemoved.locator(".people-diff__cell--new input")).toHaveCount(0);
-
-    // Editing round-trips: setting Office back to "Mayor" recomputes the diff live
-    // and clears the changed styling.
-    await officeInput.fill("Mayor");
-    await expect(officeInput).not.toHaveClass(/people-diff__input--changed/);
-
-    // Dates are edited through Year / Month / Day controls, which cannot express a
-    // malformed date. Term start is "2021" on both sides, so it starts unchanged
-    // with the year filled and no month — and Day stays disabled until a month exists.
-    const termStartField = mariaRow.locator(".people-diff__field").filter({ hasText: "Term start" }).first();
-    await expect(termStartField).toHaveClass(/people-diff__field--same/);
-    await expect(termStartField.locator(".people-diff__date-year")).toHaveValue("2021");
-    const monthSelect = termStartField.locator('select[aria-label="Month"]');
-    const daySelect = termStartField.locator('select[aria-label="Day"]');
-    await expect(monthSelect).toHaveValue("");
-    await expect(daySelect).toBeDisabled();
-
-    // Picking a month round-trips to "2021-03": the field flips to changed and the
-    // old side is struck, and Day becomes selectable.
-    await monthSelect.selectOption("03");
-    await expect(termStartField).toHaveClass(/people-diff__field--changed/);
-    await expect(termStartField.locator(".people-diff__cell--old del")).toHaveText("2021");
-    await expect(daySelect).toBeEnabled();
-
-    // Clearing the month drops back to the bare year — and takes any day with it.
-    await daySelect.selectOption("15");
-    await monthSelect.selectOption("");
-    await expect(termStartField).toHaveClass(/people-diff__field--same/);
-    await expect(daySelect).toBeDisabled();
-    await expect(daySelect).toHaveValue("");
+    // Added-only and removed-only people each get their own rail.
+    await expect(railFor(page, "Tom Treasurer")).toHaveClass(/review-rail--added/);
+    await expect(railFor(page, "Bob Clerk")).toHaveClass(/review-rail--removed/);
   });
 
-  test("links an added person to a removed record", async ({ authenticatedPage: page }) => {
-    await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
-    await expect(page.locator("people-diff")).toBeVisible();
+  test("a person the scrape dropped is one decision, not a column of dashes", async ({
+    authenticatedPage: page,
+  }) => {
+    await openCard(page);
 
-    // Tom is an unmatched ADDED card; Bob is an unmatched REMOVED card.
-    const tomAdded = page.locator(".people-diff__person--added").filter({ hasText: "Tom Treasurer" });
-    await expect(tomAdded).toBeVisible();
-    await expect(page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })).toBeVisible();
+    // The old view rendered their every field as `old (struck) → "—"`. §5 says
+    // the card is one decision, so the fields collapse behind an expander.
+    const bob = railFor(page, "Bob Clerk");
+    await expect(bob.locator(".review-rail__banner-title")).toContainText(
+      "Not found in this scrape",
+    );
+    await expect(bob.locator(".review-rail__field")).toHaveCount(0);
+    await expect(bob.locator(".review-rail__restore-person")).toBeVisible();
+  });
 
-    // Link Tom → Bob via the picker on Tom's card (value is Bob's fixture id).
-    await tomAdded.locator(".people-diff__link").selectOption("recon-bob");
+  test("editing recomputes the card live", async ({ authenticatedPage: page }) => {
+    await openCard(page);
+    const maria = railFor(page, "Maria González");
+    const office = fieldIn(maria, "Office");
 
-    // The removed Bob card is gone; Tom now pairs as a single CHANGED row.
-    await expect(page.locator(".people-diff__person--removed").filter({ hasText: "Bob Clerk" })).toHaveCount(0);
-    const linked = page.locator(".people-diff__person--changed").filter({ hasText: "Tom Treasurer" });
-    await expect(linked).toBeVisible();
-    await expect(linked.locator(".people-diff__name")).toHaveText("Tom Treasurer");
+    // Setting Office back to its old value clears the change: the `was`
+    // annotation has nothing left to say and goes away. The row itself stays —
+    // fields never leave a card once shown (§2.1).
+    await office.locator("input").fill("Mayor");
+    await expect(office.locator(".review-rail__was")).toHaveCount(0);
+    await expect(maria.locator(".review-rail__field")).toHaveCount(4);
+  });
 
-    // Old name struck on the old side; folded into other_names so the next scrape matches.
-    await expect(linked.locator(".people-diff__cell--old del").filter({ hasText: "Bob Clerk" })).toBeVisible();
-    const otherNames = linked.locator(".people-diff__field").filter({ hasText: "Other names" }).first();
-    await expect(otherNames.locator("input.people-diff__input--added")).toHaveValue("Bob Clerk");
+  test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
+    await openCard(page);
+    const office = fieldIn(railFor(page, "Maria González"), "Office");
+
+    // Replaces the old copy-arrow: same claim — one click moves the old value
+    // into the control — in the shape the rail uses.
+    await office.locator(".review-rail__restore").click();
+    await expect(office.locator("input")).toHaveValue("Mayor");
+  });
+
+  test("dates are edited through Year / Month / Day, which cannot be malformed", async ({
+    authenticatedPage: page,
+  }) => {
+    await openCard(page);
+    const maria = railFor(page, "Maria González");
+
+    // Term start is "2021" on both sides, so the collapse rule hides it — the
+    // expander is how you reach a field that did not move.
+    await maria.locator(".review-rail__expander").click();
+    const termStart = fieldIn(maria, "Term start").first();
+
+    await expect(termStart.locator(".people-diff__date-year")).toHaveValue("2021");
+    const month = termStart.locator('select[aria-label="Month"]');
+    const day = termStart.locator('select[aria-label="Day"]');
+    await expect(month).toHaveValue("");
+    await expect(day).toBeDisabled();
+
+    // Picking a month round-trips to "2021-03" and the field starts saying so.
+    await month.selectOption("03");
+    await expect(termStart.locator(".review-rail__was")).toContainText("was 2021");
+    await expect(day).toBeEnabled();
+
+    // Clearing the month drops back to the bare year, and takes any day with it.
+    await day.selectOption("15");
+    await month.selectOption("");
+    await expect(day).toBeDisabled();
+    await expect(day).toHaveValue("");
+  });
+
+  test("links an added person to a removed record", async ({
+    authenticatedPage: page,
+  }) => {
+    await openCard(page);
+
+    await expect(railFor(page, "Tom Treasurer")).toHaveClass(/review-rail--added/);
+    await expect(railFor(page, "Bob Clerk")).toHaveClass(/review-rail--removed/);
+
+    // Link Tom → Bob via the picker on Tom's rail (value is Bob's fixture id).
+    await railFor(page, "Tom Treasurer").locator(".review-rail__link").selectOption("recon-bob");
+
+    // Bob's own rail is gone; Tom now pairs as a single CHANGED person.
+    await expect(railFor(page, "Bob Clerk")).toHaveCount(0);
+    const linked = railFor(page, "Tom Treasurer");
+    await expect(linked).toHaveClass(/review-rail--changed/);
+
+    // The old name is folded into other_names so the next scrape matches, and
+    // the name field now says what it was.
+    await expect(fieldIn(linked, "Name").locator(".review-rail__was")).toContainText(
+      "was Bob Clerk",
+    );
+    await expect(
+      fieldIn(linked, "Other names").locator("input").first(),
+    ).toHaveValue("Bob Clerk");
   });
 });

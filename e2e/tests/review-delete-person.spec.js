@@ -18,6 +18,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { openDetail, openOverview, railFor, tileFor } from "./helpers/review-card.js";
 
 const MERGE_ENDPOINT = "**/api/v1/pull_requests/*/save-and-merge";
 const MERGE_STATUS_ENDPOINT = "**/api/v1/pull_requests/*/merge-status";
@@ -44,15 +45,10 @@ async function stubMerge(page) {
 
 async function openReconcileCard(page) {
   await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
-  await expect(page.locator("people-diff")).toBeVisible();
+  await openDetail(page);
 }
 
-// Match on the card's own name header — a name can also appear inside another
-// card's "Link to person" picker, which hasText would happily match.
-const personCard = (page, name) =>
-  page
-    .locator(".people-diff__person")
-    .filter({ has: page.locator(".people-diff__name", { hasText: name }) });
+const personCard = railFor;
 
 const publishedIds = (body) =>
   (body.data ?? []).map((entry) => entry.id);
@@ -67,15 +63,15 @@ test.describe("Delete a person", () => {
     // Maria pairs as CHANGED, so she has a Delete button; Bob is REMOVED
     // (no new-side record) and must not offer one.
     const maria = personCard(page, "Maria González");
-    await expect(maria).toHaveClass(/people-diff__person--changed/);
-    await expect(personCard(page, "Bob Clerk").locator(".people-diff__delete")).toHaveCount(0);
+    await expect(maria).toHaveClass(/review-rail--changed/);
+    await expect(personCard(page, "Bob Clerk").locator(".review-rail__delete")).toHaveCount(0);
 
-    await maria.locator(".people-diff__delete").click();
+    await maria.locator(".review-rail__delete").click();
 
     // The card stays in place as a departing ghost, and Delete gives way to Undo.
-    await expect(maria).toHaveClass(/people-diff__person--deleted/);
-    await expect(maria.locator(".people-diff__undo")).toBeVisible();
-    await expect(maria.locator(".people-diff__delete")).toHaveCount(0);
+    await expect(maria).toHaveClass(/review-rail--deleted/);
+    await expect(maria.locator(".review-rail__restore-person")).toBeVisible();
+    await expect(maria.locator(".review-rail__delete")).toHaveCount(0);
 
     // Deleting is an edit, so the card publishes under the dirty label.
     const publishBtn = page.locator(".review-page__merge-btn");
@@ -94,12 +90,12 @@ test.describe("Delete a person", () => {
     await openReconcileCard(page);
 
     const maria = personCard(page, "Maria González");
-    await maria.locator(".people-diff__delete").click();
-    await expect(maria).toHaveClass(/people-diff__person--deleted/);
+    await maria.locator(".review-rail__delete").click();
+    await expect(maria).toHaveClass(/review-rail--deleted/);
 
-    await maria.locator(".people-diff__undo").click();
-    await expect(maria).toHaveClass(/people-diff__person--changed/);
-    await expect(maria.locator(".people-diff__delete")).toBeVisible();
+    await maria.locator(".review-rail__restore-person").click();
+    await expect(maria).toHaveClass(/review-rail--changed/);
+    await expect(maria.locator(".review-rail__delete")).toBeVisible();
 
     // Undo returns the card to its loaded state, so there is nothing to patch:
     // publishing sends no people at all and the button drops the dirty label.
@@ -115,22 +111,24 @@ test.describe("Delete a person", () => {
     expect(merge.body.data).toBeUndefined();
   });
 
-  test("a deleted person is counted under Removed, not Unchanged", async ({
+  test("a deleted person is classified as departing, not unchanged", async ({
     authenticatedPage: page,
   }) => {
     await openReconcileCard(page);
+    await personCard(page, "Maria González").locator(".review-rail__delete").click();
 
-    const removedChip = page.locator(".people-diff__chip--removed .people-diff__chip-count");
-    // Bob alone to start: the scrape didn't find him.
-    await expect(removedChip).toHaveText("1");
+    // The rail has no filter chips — the collapse rule replaced them — so the
+    // classification is asserted where it is now visible: her card reads as a
+    // departure, and Overview files her under To review rather than in the
+    // Unchanged face strip. Before deletions were folded into the diff she stayed
+    // classified by her fields and landed in the faded group.
+    await expect(personCard(page, "Maria González")).toHaveClass(/review-rail--deleted/);
 
-    await personCard(page, "Maria González").locator(".people-diff__delete").click();
-
-    // Maria joins him. Before deletions were folded into the diff, she stayed
-    // classified by her fields and never reached this chip.
-    await expect(removedChip).toHaveText("2");
-    await page.locator(".people-diff__chip--removed").click();
-    await expect(personCard(page, "Maria González")).toBeVisible();
+    await openOverview(page);
+    await expect(tileFor(page, "Maria González")).toHaveClass(/review-tile--deleted/);
+    await expect(
+      page.locator(".review-overview__faces").getByText("Maria González"),
+    ).toHaveCount(0);
   });
 
   test("a person you are dropping is not offered as a link target", async ({
@@ -141,11 +139,11 @@ test.describe("Delete a person", () => {
     // Tom is the unmatched ADDED card, so he carries the link picker. Bob is the
     // only person the scrape didn't find, so he is the only candidate — one
     // option plus the "Link to person…" placeholder.
-    const linkOptions = personCard(page, "Tom Treasurer").locator(".people-diff__link option");
+    const linkOptions = personCard(page, "Tom Treasurer").locator(".review-rail__link option");
     await expect(linkOptions).toHaveCount(2);
     await expect(linkOptions).toContainText(["Link to person", "Bob Clerk"]);
 
-    await personCard(page, "Maria González").locator(".people-diff__delete").click();
+    await personCard(page, "Maria González").locator(".review-rail__delete").click();
 
     // foldDeletions types a deleted person REMOVED, which is what candidates are
     // drawn from — so without the exclusion Maria would appear here. Linking
@@ -162,8 +160,8 @@ test.describe("Delete a person", () => {
     await openReconcileCard(page);
 
     const tom = personCard(page, "Tom Treasurer");
-    await expect(tom).toHaveClass(/people-diff__person--added/);
-    await tom.locator(".people-diff__delete").click();
+    await expect(tom).toHaveClass(/review-rail--added/);
+    await tom.locator(".review-rail__delete").click();
 
     // Added-then-deleted is a net no-op — there is no database record to drop,
     // so the card has nothing left to say.

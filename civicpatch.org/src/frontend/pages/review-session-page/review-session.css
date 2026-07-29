@@ -1,0 +1,36 @@
+
+/* View tabs (§1.1). Which view is open also lives in ?view=, so a refresh lands
+   where the reviewer was and a link carries the view with it. */
+
+.review-page__views {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  max-width: var(--page-width);
+  width: 100%;
+  margin-inline: auto;
+}
+
+.review-page__view-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.4rem 0.75rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  width: auto;
+}
+
+.review-page__view-tab:hover {
+  color: var(--pico-color);
+}
+
+.review-page__view-tab--on {
+  color: var(--pico-color);
+  border-bottom-color: var(--pico-color);
+}

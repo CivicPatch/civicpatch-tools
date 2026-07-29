@@ -17,6 +17,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
+import { editField } from "./helpers/review-card.js";
 
 const MERGE_ENDPOINT = "**/api/v1/pull_requests/*/save-and-merge";
 const MERGE_STATUS_ENDPOINT = "**/api/v1/pull_requests/*/merge-status";
@@ -79,13 +80,7 @@ test.describe("Publish", () => {
 
     await openFirstCard(page);
 
-    const janeRow = page.locator(".people-diff__person").filter({ hasText: "Jane Smith" });
-    await janeRow
-      .locator(".people-diff__field")
-      .filter({ hasText: "Office" })
-      .first()
-      .locator("input")
-      .fill("Deputy Mayor");
+    await editField(page, "Jane Smith", "Office", "Deputy Mayor");
 
     // A dirty card publishes under a different label — and must send the patch.
     const publishBtn = page.locator(".review-page__merge-btn");

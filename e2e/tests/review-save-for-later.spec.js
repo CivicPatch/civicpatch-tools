@@ -15,6 +15,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
+import { editField } from "./helpers/review-card.js";
 
 const SAVE_ENDPOINT = "**/api/v1/pull_requests/*/save";
 
@@ -28,13 +29,7 @@ async function openFirstCardAndEdit(page) {
   // Save only appears once there is something to save.
   await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
 
-  const janeRow = page.locator(".people-diff__person").filter({ hasText: "Jane Smith" });
-  const officeInput = janeRow
-    .locator(".people-diff__field")
-    .filter({ hasText: "Office" })
-    .first()
-    .locator("input");
-  await officeInput.fill("Deputy Mayor");
+  await editField(page, "Jane Smith", "Office", "Deputy Mayor");
 
   await expect(page.locator(".review-page__save-btn")).toBeVisible();
 }
