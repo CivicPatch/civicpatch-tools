@@ -263,6 +263,34 @@ docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml d
 dir = "e2e"
 env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
 
+[tasks.visual]
+description = "Screenshot every page in both themes and diff against the committed baseline"
+run = """
+set -e
+cd ../civicpatch.org/src/frontend && npm run build
+cd - > /dev/null
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml up db-e2e redis-e2e civicpatch-org-e2e -d --wait
+# The backend caches the Vite manifest at startup, so a rebuild without this
+# serves a stale bundle and every baseline is wrong for the wrong reason.
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml restart civicpatch-org-e2e
+npx playwright test --config=playwright.visual.config.js
+"""
+dir = "e2e"
+env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
+
+[tasks.visual-update]
+description = "Accept the current rendering as the new visual baseline — only when a change is intended"
+run = """
+set -e
+cd ../civicpatch.org/src/frontend && npm run build
+cd - > /dev/null
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml up db-e2e redis-e2e civicpatch-org-e2e -d --wait
+docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml restart civicpatch-org-e2e
+npx playwright test --config=playwright.visual.config.js --update-snapshots
+"""
+dir = "e2e"
+env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
+
 [tasks.e2e-ci]
 description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
 run = """

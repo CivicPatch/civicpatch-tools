@@ -2,7 +2,36 @@
 
 <html>
     <head>
-        <script>(function(){var t=localStorage.getItem('app:theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;})()</script>
+        <script>
+            // Theme before first paint. Must mirror useLocalStorage's read: it
+            // stores {__value, __expiresAt}, so taking the raw string here puts
+            // JSON into data-theme, matches no selector, and paints the default
+            // theme until the navbar hydrates — a flash of the wrong theme,
+            // which is the one thing this script exists to prevent. On pages
+            // where the navbar never upgrades (unauthorized), it never corrects.
+            (function () {
+                var stored = localStorage.getItem("app:theme");
+                var theme = "";
+                if (stored) {
+                    try {
+                        var parsed = JSON.parse(stored);
+                        theme =
+                            parsed && typeof parsed === "object"
+                                ? parsed.__value
+                                : parsed;
+                    } catch (e) {
+                        theme = stored; // written before the envelope existed
+                    }
+                }
+                if (theme !== "dark" && theme !== "light") {
+                    theme = window.matchMedia("(prefers-color-scheme: dark)")
+                        .matches
+                        ? "dark"
+                        : "light";
+                }
+                document.documentElement.dataset.theme = theme;
+            })();
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}civicpatch tool{% endblock %}</title>
 
