@@ -2,10 +2,18 @@
 # Mounts the locally-built frontend assets into the app container so you
 # don't need to rebuild the Docker image after frontend changes.
 #
-# Usage (handled automatically by `mise run e2e`):
+# Usage (handled automatically by `mise run e2e` / `mise run visual`):
 #   docker compose -f docker-compose.e2e.yml -f docker-compose.e2e.local.yml up ...
+#
+# `build` alone is not enough. Vite bundles component CSS and JS, but
+# `css/styles.css`, `css/pico.min.css` and the Jinja templates are served
+# straight off disk — without these mounts they stay frozen at whatever was
+# baked into the image, and a local edit to global CSS or to base.html appears
+# to have no effect at all.
 
 services:
   civicpatch-org-e2e:
     volumes:
       - ./civicpatch.org/src/frontend/build:/app/src/frontend/build:ro
+      - ./civicpatch.org/src/frontend/css:/app/src/frontend/css:ro
+      - ./civicpatch.org/src/frontend/templates:/app/src/frontend/templates:ro

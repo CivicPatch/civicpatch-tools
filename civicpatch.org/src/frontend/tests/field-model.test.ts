@@ -30,7 +30,9 @@ describe("getFieldValue", () => {
   });
 
   it("reads a dotted path", () => {
-    expect(getFieldValue({ office: { name: "Mayor" } }, "office.name")).toBe("Mayor");
+    expect(getFieldValue({ office: { name: "Mayor" } }, "office.name")).toBe(
+      "Mayor",
+    );
   });
 
   it("returns undefined for a missing nested path without throwing", () => {
@@ -40,7 +42,9 @@ describe("getFieldValue", () => {
 
 describe("diffValue", () => {
   it("prefers cdn_image over image for the photo field", () => {
-    expect(diffValue({ image: "raw.jpg", cdn_image: "cdn.jpg" }, IMAGE_FIELD)).toBe("cdn.jpg");
+    expect(
+      diffValue({ image: "raw.jpg", cdn_image: "cdn.jpg" }, IMAGE_FIELD),
+    ).toBe("cdn.jpg");
   });
 
   it("falls back to image when cdn_image is absent (the new side)", () => {
@@ -134,25 +138,44 @@ describe("recordsDiffer", () => {
   });
 
   it("is true when a scalar field differs", () => {
-    expect(recordsDiffer(base, { ...base, office: { name: "Council", division_ocdid: null } })).toBe(true);
+    expect(
+      recordsDiffer(base, {
+        ...base,
+        office: { name: "Council", division_ocdid: null },
+      }),
+    ).toBe(true);
   });
 
   it("is true when a multi field gains a value", () => {
-    expect(recordsDiffer(base, { ...base, emails: ["m@x.gov", "m2@x.gov"] })).toBe(true);
+    expect(
+      recordsDiffer(base, { ...base, emails: ["m@x.gov", "m2@x.gov"] }),
+    ).toBe(true);
   });
 
   it("ignores photo URL differences (presence-only)", () => {
-    expect(recordsDiffer({ ...base, cdn_image: "cdn.jpg" }, { ...base, image: "raw.jpg" })).toBe(false);
+    expect(
+      recordsDiffer(
+        { ...base, cdn_image: "cdn.jpg" },
+        { ...base, image: "raw.jpg" },
+      ),
+    ).toBe(false);
   });
 
   it("ignores source_urls (documentation, not diffed)", () => {
-    expect(recordsDiffer({ ...base, source_urls: ["a"] }, { ...base, source_urls: ["b", "c"] })).toBe(false);
+    expect(
+      recordsDiffer(
+        { ...base, source_urls: ["a"] },
+        { ...base, source_urls: ["b", "c"] },
+      ),
+    ).toBe(false);
   });
 });
 
 describe("multiValueState", () => {
   it("is same when both sides hold the same values, order-insensitively", () => {
-    expect(multiValueState(["a@x.gov", "b@x.gov"], ["b@x.gov", "a@x.gov"])).toBe("same");
+    expect(
+      multiValueState(["a@x.gov", "b@x.gov"], ["b@x.gov", "a@x.gov"]),
+    ).toBe("same");
   });
 
   it("is added when the new side only gains", () => {
@@ -160,7 +183,9 @@ describe("multiValueState", () => {
   });
 
   it("is cleared when the new side only loses", () => {
-    expect(multiValueState(["a@x.gov", "b@x.gov"], ["a@x.gov"])).toBe("cleared");
+    expect(multiValueState(["a@x.gov", "b@x.gov"], ["a@x.gov"])).toBe(
+      "cleared",
+    );
   });
 
   it("is changed when it both gains and loses", () => {
@@ -174,31 +199,68 @@ describe("multiValueState", () => {
 
 describe("fieldState", () => {
   const nameField: FieldSpec = { key: "name", label: "Name", type: "text" };
-  const emailField: FieldSpec = { key: "emails", label: "Email", type: "multi" };
-  const sourcesField: FieldSpec = { key: "source_urls", label: "Source urls", type: "multi", diff: false };
+  const emailField: FieldSpec = {
+    key: "emails",
+    label: "Email",
+    type: "multi",
+  };
+  const sourcesField: FieldSpec = {
+    key: "source_urls",
+    label: "Source urls",
+    type: "multi",
+    diff: false,
+  };
 
   it("dispatches multi fields to the multi-value verdict", () => {
-    expect(fieldState(emailField, { id: "1", emails: [] }, { id: "1", emails: ["a@x.gov"] })).toBe("added");
+    expect(
+      fieldState(
+        emailField,
+        { id: "1", emails: [] },
+        { id: "1", emails: ["a@x.gov"] },
+      ),
+    ).toBe("added");
   });
 
   it("dispatches scalar fields to the scalar verdict", () => {
-    expect(fieldState(nameField, { id: "1", name: "Maria" }, { id: "1", name: "Marie" })).toBe("changed");
+    expect(
+      fieldState(
+        nameField,
+        { id: "1", name: "Maria" },
+        { id: "1", name: "Marie" },
+      ),
+    ).toBe("changed");
   });
 
   it("is always same for a field marked diff: false", () => {
-    expect(fieldState(sourcesField, { id: "1", source_urls: ["a"] }, { id: "1", source_urls: ["b"] })).toBe("same");
+    expect(
+      fieldState(
+        sourcesField,
+        { id: "1", source_urls: ["a"] },
+        { id: "1", source_urls: ["b"] },
+      ),
+    ).toBe("same");
   });
 
   it("treats a missing old record as an empty side (an added person)", () => {
-    expect(fieldState(nameField, null, { id: "1", name: "Maria" })).toBe("added");
+    expect(fieldState(nameField, null, { id: "1", name: "Maria" })).toBe(
+      "added",
+    );
   });
 
   it("treats a missing new record as an empty side (a person the scrape lost)", () => {
-    expect(fieldState(nameField, { id: "1", name: "Maria" }, null)).toBe("cleared");
+    expect(fieldState(nameField, { id: "1", name: "Maria" }, null)).toBe(
+      "cleared",
+    );
   });
 
   it("compares photos on presence only", () => {
-    expect(fieldState(IMAGE_FIELD, { id: "1", cdn_image: "cdn.jpg" }, { id: "1", image: "raw.jpg" })).toBe("same");
+    expect(
+      fieldState(
+        IMAGE_FIELD,
+        { id: "1", cdn_image: "cdn.jpg" },
+        { id: "1", image: "raw.jpg" },
+      ),
+    ).toBe("same");
   });
 });
 
@@ -221,7 +283,11 @@ describe("changedFields", () => {
   });
 
   it("reports only the fields that differ, with their state", () => {
-    const changes = changedFields(base, { ...base, end_date: "2027", emails: [] });
+    const changes = changedFields(base, {
+      ...base,
+      end_date: "2027",
+      emails: [],
+    });
     expect(changes.map((c) => [c.field.key, c.state])).toEqual([
       ["end_date", "changed"],
       ["emails", "cleared"],
@@ -234,30 +300,62 @@ describe("changedFields", () => {
   });
 
   it("excludes source_urls even when it differs", () => {
-    const changes = changedFields({ ...base, source_urls: ["a"] }, { ...base, source_urls: ["b"] });
+    const changes = changedFields(
+      { ...base, source_urls: ["a"] },
+      { ...base, source_urls: ["b"] },
+    );
     expect(changes).toEqual([]);
   });
 
   it("reports every populated field of an added person, and no empty ones", () => {
-    const added = { id: "2", name: "Ada", office: { name: "Councilor" }, emails: [], phones: [] };
-    expect(changedFields(null, added).map((c) => c.field.key)).toEqual(["name", "office.name"]);
+    const added = {
+      id: "2",
+      name: "Ada",
+      office: { name: "Councilor" },
+      emails: [],
+      phones: [],
+    };
+    expect(changedFields(null, added).map((c) => c.field.key)).toEqual([
+      "name",
+      "office.name",
+    ]);
   });
 
   it("agrees with recordsDiffer by construction", () => {
     const changed = { ...base, name: "Marie" };
-    expect(recordsDiffer(base, changed)).toBe(changedFields(base, changed).length > 0);
-    expect(recordsDiffer(base, { ...base })).toBe(changedFields(base, { ...base }).length > 0);
+    expect(recordsDiffer(base, changed)).toBe(
+      changedFields(base, changed).length > 0,
+    );
+    expect(recordsDiffer(base, { ...base })).toBe(
+      changedFields(base, { ...base }).length > 0,
+    );
   });
 });
 
 describe("isRequiredFieldEmpty", () => {
-  const nameField: FieldSpec = { key: "name", label: "Name", type: "text", required: true };
-  const divisionField: FieldSpec = { key: "office.division_ocdid", label: "Division", type: "text", required: true };
-  const emailField: FieldSpec = { key: "emails", label: "Email", type: "multi" };
+  const nameField: FieldSpec = {
+    key: "name",
+    label: "Name",
+    type: "text",
+    required: true,
+  };
+  const divisionField: FieldSpec = {
+    key: "office.division_ocdid",
+    label: "Division",
+    type: "text",
+    required: true,
+  };
+  const emailField: FieldSpec = {
+    key: "emails",
+    label: "Email",
+    type: "multi",
+  };
 
   it("flags an empty required scalar", () => {
     expect(isRequiredFieldEmpty({ name: "" }, nameField)).toBe(true);
-    expect(isRequiredFieldEmpty({ office: { division_ocdid: null } }, divisionField)).toBe(true);
+    expect(
+      isRequiredFieldEmpty({ office: { division_ocdid: null } }, divisionField),
+    ).toBe(true);
   });
 
   it("passes a filled required field", () => {
@@ -299,43 +397,72 @@ describe("isTermOrderValid", () => {
 });
 
 describe("fieldError", () => {
-  const nameField: FieldSpec = { key: "name", label: "Name", type: "text", required: true };
-  const startField: FieldSpec = { key: "start_date", label: "Term start", type: "date" };
-  const endField: FieldSpec = { key: "end_date", label: "Term end", type: "date" };
+  const nameField: FieldSpec = {
+    key: "name",
+    label: "Name",
+    type: "text",
+    required: true,
+  };
+  const startField: FieldSpec = {
+    key: "start_date",
+    label: "Term start",
+    type: "date",
+  };
+  const endField: FieldSpec = {
+    key: "end_date",
+    label: "Term end",
+    type: "date",
+  };
 
   it("flags a required field left empty", () => {
     expect(fieldError(nameField, { name: "" })).toBe("Required");
   });
 
   it("flags a malformed date", () => {
-    expect(fieldError(startField, { start_date: "20-24" })).toBe("Use YYYY, YYYY-MM, or YYYY-MM-DD");
+    expect(fieldError(startField, { start_date: "20-24" })).toBe(
+      "Use YYYY, YYYY-MM, or YYYY-MM-DD",
+    );
   });
 
   it("flags term end before term start", () => {
-    expect(fieldError(endField, { start_date: "2025", end_date: "2021" })).toBe("Term end is before term start");
+    expect(fieldError(endField, { start_date: "2025", end_date: "2021" })).toBe(
+      "Term end is before term start",
+    );
   });
 
   it("returns null for a valid field", () => {
     expect(fieldError(nameField, { name: "Maria" })).toBeNull();
-    expect(fieldError(endField, { start_date: "2021", end_date: "2025" })).toBeNull();
+    expect(
+      fieldError(endField, { start_date: "2021", end_date: "2025" }),
+    ).toBeNull();
   });
 });
 
 describe("buildLinkUpdates", () => {
   it("adopts the target's id", () => {
-    const result = buildLinkUpdates({ id: "new", name: "Bob" }, { id: "old", name: "Robert" });
+    const result = buildLinkUpdates(
+      { id: "new", name: "Bob" },
+      { id: "old", name: "Robert" },
+    );
     expect(result.id).toBe("old");
   });
 
   it("folds the target's old name into other_names as an alias", () => {
-    const result = buildLinkUpdates({ id: "new", name: "Bob Smith" }, { id: "old", name: "Robert Smith" });
+    const result = buildLinkUpdates(
+      { id: "new", name: "Bob Smith" },
+      { id: "old", name: "Robert Smith" },
+    );
     expect(result.other_names).toContain("Robert Smith");
   });
 
   it("keeps both the target's and the added person's existing aliases", () => {
     const added = { id: "new", name: "Bob", other_names: ["Bobby"] };
     const target = { id: "old", name: "Robert", other_names: ["Rob"] };
-    expect(buildLinkUpdates(added, target).other_names).toEqual(["Robert", "Rob", "Bobby"]);
+    expect(buildLinkUpdates(added, target).other_names).toEqual([
+      "Robert",
+      "Rob",
+      "Bobby",
+    ]);
   });
 
   it("drops the added person's own name from the aliases", () => {
@@ -346,18 +473,32 @@ describe("buildLinkUpdates", () => {
 
   it("dedupes aliases", () => {
     const added = { id: "new", name: "Bob", other_names: ["Rob"] };
-    const target = { id: "old", name: "Robert", other_names: ["Rob", "Robert"] };
-    expect(buildLinkUpdates(added, target).other_names).toEqual(["Robert", "Rob"]);
+    const target = {
+      id: "old",
+      name: "Robert",
+      other_names: ["Rob", "Robert"],
+    };
+    expect(buildLinkUpdates(added, target).other_names).toEqual([
+      "Robert",
+      "Rob",
+    ]);
   });
 
   it("handles records with no aliases", () => {
-    const result = buildLinkUpdates({ id: "new", name: "Bob" }, { id: "old", name: "Robert" });
+    const result = buildLinkUpdates(
+      { id: "new", name: "Bob" },
+      { id: "old", name: "Robert" },
+    );
     expect(result.other_names).toEqual(["Robert"]);
   });
 });
 
 describe("indexIssuesByPersonId", () => {
-  const extra: Issue = { code: "extra_official", message: "Extra official: Jane", person_ids: ["p2"] };
+  const extra: Issue = {
+    code: "extra_official",
+    message: "Extra official: Jane",
+    person_ids: ["p2"],
+  };
   const dup: Issue = {
     code: "duplicate_unique_role",
     message: "Role 'mayor' held by multiple officials",
@@ -377,7 +518,11 @@ describe("indexIssuesByPersonId", () => {
   });
 
   it("omits list-level issues (no person_ids)", () => {
-    const missing: Issue = { code: "missing_official", message: "Missing official: Bob", person_ids: [] };
+    const missing: Issue = {
+      code: "missing_official",
+      message: "Dropped official: Bob",
+      person_ids: [],
+    };
     const legacy: Issue = { code: "legacy", message: "Only 2 people found" };
     const byId = indexIssuesByPersonId([missing, legacy]);
     expect(byId.size).toBe(0);
@@ -385,8 +530,15 @@ describe("indexIssuesByPersonId", () => {
 });
 
 describe("foldDeletions", () => {
-  const entry = (type: string, id: string) => ({ type, person: { id }, from: null });
-  const result = (diffEntries: any[], unchangedEntries: any[]) => ({ diffEntries, unchangedEntries });
+  const entry = (type: string, id: string) => ({
+    type,
+    person: { id },
+    from: null,
+  });
+  const result = (diffEntries: any[], unchangedEntries: any[]) => ({
+    diffEntries,
+    unchangedEntries,
+  });
 
   it("leaves everything alone when nothing is deleted", () => {
     const input = result([entry("changed", "a")], [entry("unchanged", "b")]);
@@ -394,28 +546,43 @@ describe("foldDeletions", () => {
   });
 
   it("re-types a deleted existing person as removed", () => {
-    const folded = foldDeletions(result([entry("changed", "a")], []), new Set(["a"]));
+    const folded = foldDeletions(
+      result([entry("changed", "a")], []),
+      new Set(["a"]),
+    );
     expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
   });
 
   it("drops a deleted added person — never in the database, nothing to publish", () => {
-    const folded = foldDeletions(result([entry("added", "a")], []), new Set(["a"]));
+    const folded = foldDeletions(
+      result([entry("added", "a")], []),
+      new Set(["a"]),
+    );
     expect(folded.diffEntries).toEqual([]);
   });
 
   it("moves a deleted unchanged person out of the unchanged bucket", () => {
-    const folded = foldDeletions(result([], [entry("unchanged", "a")]), new Set(["a"]));
+    const folded = foldDeletions(
+      result([], [entry("unchanged", "a")]),
+      new Set(["a"]),
+    );
     expect(folded.unchangedEntries).toEqual([]);
     expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
   });
 
   it("keeps the new-side record, so the card can still offer Undo", () => {
-    const folded = foldDeletions(result([], [entry("unchanged", "a")]), new Set(["a"]));
+    const folded = foldDeletions(
+      result([], [entry("unchanged", "a")]),
+      new Set(["a"]),
+    );
     expect(folded.diffEntries[0].person.id).toBe("a");
   });
 
   it("folds only the deleted people, leaving their neighbours untouched", () => {
-    const input = result([entry("changed", "a"), entry("added", "b")], [entry("unchanged", "c")]);
+    const input = result(
+      [entry("changed", "a"), entry("added", "b")],
+      [entry("unchanged", "c")],
+    );
     const folded = foldDeletions(input, new Set(["a"]));
     expect(folded.diffEntries.map((e) => [e.person.id, e.type])).toEqual([
       ["a", "removed"],
@@ -429,7 +596,10 @@ describe("survivingFields", () => {
   const whole = {
     id: "1",
     name: "Maria",
-    office: { name: "Mayor", division_ocdid: "ocd-division/country:us/state:nh/place:concord" },
+    office: {
+      name: "Mayor",
+      division_ocdid: "ocd-division/country:us/state:nh/place:concord",
+    },
     start_date: "2021",
     end_date: "2025",
     emails: ["m@x.gov"],
@@ -438,7 +608,8 @@ describe("survivingFields", () => {
     other_names: [],
     image: "p.jpg",
   };
-  const keys = (result: { field: FieldSpec }[]) => result.map((s) => s.field.key);
+  const keys = (result: { field: FieldSpec }[]) =>
+    result.map((s) => s.field.key);
 
   it("shows nothing when a complete record is unchanged", () => {
     expect(survivingFields(whole, { ...whole })).toEqual([]);
@@ -452,7 +623,11 @@ describe("survivingFields", () => {
   });
 
   it("shows an unchanged field an issue anchors to — rule 2's whole purpose", () => {
-    const issue: Issue = { code: "duplicate_unique_role", message: "…", field: "office.name" };
+    const issue: Issue = {
+      code: "duplicate_unique_role",
+      message: "…",
+      field: "office.name",
+    };
     const surviving = survivingFields(whole, { ...whole }, [issue]);
     expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
       ["office.name", "same", "issue"],
@@ -467,15 +642,25 @@ describe("survivingFields", () => {
   it("shows a required field empty on BOTH sides — reads `same`, still blocks publish", () => {
     const blank = { ...whole, name: "" };
     const surviving = survivingFields(blank, { ...blank });
-    expect(surviving.map((s) => [s.field.key, s.state, s.reason, s.error])).toEqual([
-      ["name", "same", "error", "Required"],
-    ]);
+    expect(
+      surviving.map((s) => [s.field.key, s.state, s.reason, s.error]),
+    ).toEqual([["name", "same", "error", "Required"]]);
   });
 
   it("prefers error over issue over diff when several apply", () => {
-    const issue: Issue = { code: "duplicate_unique_role", message: "…", field: "office.name" };
-    const surviving = survivingFields(whole, { ...whole, office: { ...whole.office, name: "" } }, [issue]);
-    expect(surviving.map((s) => [s.field.key, s.reason])).toEqual([["office.name", "error"]]);
+    const issue: Issue = {
+      code: "duplicate_unique_role",
+      message: "…",
+      field: "office.name",
+    };
+    const surviving = survivingFields(
+      whole,
+      { ...whole, office: { ...whole.office, name: "" } },
+      [issue],
+    );
+    expect(surviving.map((s) => [s.field.key, s.reason])).toEqual([
+      ["office.name", "error"],
+    ]);
   });
 
   it("never surfaces source_urls — diff: false, and it carries no error", () => {
@@ -487,12 +672,29 @@ describe("survivingFields", () => {
   });
 
   it("shows only the populated fields of an added person, not the whole schema", () => {
-    const added = { id: "2", name: "Tom", office: { name: "Treasurer", division_ocdid: "ocd-division/country:us/state:nh/place:concord" }, emails: ["t@x.gov"] };
-    expect(keys(survivingFields(null, added))).toEqual(["name", "office.name", "office.division_ocdid", "emails"]);
+    const added = {
+      id: "2",
+      name: "Tom",
+      office: {
+        name: "Treasurer",
+        division_ocdid: "ocd-division/country:us/state:nh/place:concord",
+      },
+      emails: ["t@x.gov"],
+    };
+    expect(keys(survivingFields(null, added))).toEqual([
+      "name",
+      "office.name",
+      "office.division_ocdid",
+      "emails",
+    ]);
   });
 
   it("returns fields in schema order, not issue or edit order", () => {
-    const surviving = survivingFields(whole, { ...whole, emails: [], name: "Marie" });
+    const surviving = survivingFields(whole, {
+      ...whole,
+      emails: [],
+      name: "Marie",
+    });
     expect(keys(surviving)).toEqual(["name", "emails"]);
   });
 });

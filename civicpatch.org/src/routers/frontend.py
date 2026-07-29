@@ -142,10 +142,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
         return templates.TemplateResponse("pages/settings.html", {"request": request, "user": user})
 
-    @router.get("/progress", response_class=HTMLResponse, include_in_schema=False)
-    async def progress_page(request: Request):
-        return templates.TemplateResponse("pages/progress.html", {"request": request})
-
     @router.get("/unauthorized", response_class=HTMLResponse, include_in_schema=False)
     async def unauthorized_page(
         request: Request, identity: Optional[Identity] = Depends(get_optional_user)

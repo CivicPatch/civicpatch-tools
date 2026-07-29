@@ -7,7 +7,8 @@ const { Client } = pg;
 // over production found 0 blank of 19,790 — so a fixture with null models a
 // state the pipeline cannot produce. It also blocks publishing, since division
 // is required, which is how this was noticed.
-const RECONCILE_DIVISION = "ocd-division/country:us/state:nh/place:e2e_reconcile";
+const RECONCILE_DIVISION =
+  "ocd-division/country:us/state:nh/place:e2e_reconcile";
 const MARKERS_DIVISION = "ocd-division/country:us/state:me/place:e2e_markers";
 
 // Fixed IDs so teardown can target them precisely
@@ -103,8 +104,17 @@ function buildScaleProposed() {
     carried.push(
       scalePerson(i, {
         image: `https://scale.gov/photo/${i}.jpg`,
-        ...(changed && i % 3 === 0 ? { office: { name: "Council President", division_ocdid: `${SCALE_DIVISION_BASE}/ward:${i}` } } : {}),
-        ...(changed && i % 3 === 1 ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] } : {}),
+        ...(changed && i % 3 === 0
+          ? {
+              office: {
+                name: "Council President",
+                division_ocdid: `${SCALE_DIVISION_BASE}/ward:${i}`,
+              },
+            }
+          : {}),
+        ...(changed && i % 3 === 1
+          ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] }
+          : {}),
         ...(changed && i % 3 === 2 ? { end_date: "2029", phones: [] } : {}),
       }),
     );
@@ -114,7 +124,10 @@ function buildScaleProposed() {
     return {
       id: `scale-n${n}`,
       name: `Newcomer ${n} Scale`,
-      office: { name: "Council Member", division_ocdid: `${SCALE_DIVISION_BASE}/ward:${39 + i}` },
+      office: {
+        name: "Council Member",
+        division_ocdid: `${SCALE_DIVISION_BASE}/ward:${39 + i}`,
+      },
       emails: [`new${i + 1}@scale.gov`],
       phones: [],
       urls: [],
@@ -160,7 +173,8 @@ const MARKERS_PR_NUMBER = 12;
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
 export const READ_ONLY_REQUEST_ID = "00000000-0000-0000-eeee-000000000014";
-export const READ_ONLY_PR_URL = "https://github.com/civicpatch/open-data/pull/14";
+export const READ_ONLY_PR_URL =
+  "https://github.com/civicpatch/open-data/pull/14";
 export const READ_ONLY_WEBSITE_URL = "https://e2e-readonly.example.gov";
 const READ_ONLY_PR_ID = "00000000-0000-0000-eeee-000000000015";
 const READ_ONLY_PR_NUMBER = 14;
@@ -168,10 +182,11 @@ const READ_ONLY_PR_NUMBER = 14;
 // Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
 // fresh/stale/gap/untracked colors deterministically against known OCD IDs.
 export const MAP_FIXTURES = {
-  fresh:     "ocd-jurisdiction/country:us/state:nj/place:e2e_map_fresh/government",
-  stale:     "ocd-jurisdiction/country:us/state:nj/place:e2e_map_stale/government",
-  gap:       "ocd-jurisdiction/country:us/state:nj/place:e2e_map_gap/government",
-  untracked: "ocd-jurisdiction/country:us/state:nj/place:e2e_map_untracked/government",
+  fresh: "ocd-jurisdiction/country:us/state:nj/place:e2e_map_fresh/government",
+  stale: "ocd-jurisdiction/country:us/state:nj/place:e2e_map_stale/government",
+  gap: "ocd-jurisdiction/country:us/state:nj/place:e2e_map_gap/government",
+  untracked:
+    "ocd-jurisdiction/country:us/state:nj/place:e2e_map_untracked/government",
 };
 
 function makeClient() {
@@ -194,7 +209,12 @@ export async function seedE2eFixtures() {
        VALUES ($1, $2, $3, $4, 'contributors')
        ON CONFLICT (provider, provider_user_id)
        DO UPDATE SET email = EXCLUDED.email, role = EXCLUDED.role`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID, "e2e@civicpatch.org", "E2E Test User"]
+      [
+        TEST_USER_PROVIDER,
+        TEST_USER_PROVIDER_ID,
+        "e2e@civicpatch.org",
+        "E2E Test User",
+      ],
     );
 
     // Jurisdiction. scraped_at set (NOW) so the review renders in RECONCILE mode
@@ -204,7 +224,7 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'nj', 'current', '{"name":"E2E Test City","geoid":"0600001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [TEST_JURISDICTION_OCDID]
+      [TEST_JURISDICTION_OCDID],
     );
 
     // Request with proposed people (data_json) and one issue (review_json)
@@ -216,7 +236,7 @@ export async function seedE2eFixtures() {
                '{"issues":[{"type":"missing_email","key":"jane-smith"}]}',
                NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [TEST_REQUEST_ID, TEST_JURISDICTION_OCDID]
+      [TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
     );
 
     // pipeline_runs row required for get_pipeline_run_data_json
@@ -224,7 +244,7 @@ export async function seedE2eFixtures() {
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [TEST_REQUEST_ID]
+      [TEST_REQUEST_ID],
     );
 
     // Pull request — status='open' makes the card appear in the review queue
@@ -235,38 +255,66 @@ export async function seedE2eFixtures() {
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, 1, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [TEST_PR_ID, TEST_REQUEST_ID]
+      [TEST_PR_ID, TEST_REQUEST_ID],
     );
 
     // Second card
     for (const [jOcdid, jName, reqId, prId, prNum, stateCode, geoidPrefix] of [
-      [TEST_JURISDICTION_OCDID_2, "E2E Test City 2", TEST_REQUEST_ID_2, TEST_PR_ID_2, 2, 'nj', '060000'],
-      [TEST_JURISDICTION_OCDID_3, "E2E Test City 3", TEST_REQUEST_ID_3, TEST_PR_ID_3, 3, 'nj', '060000'],
-      [TX_JURISDICTION_OCDID,     "E2E TX City",    TX_REQUEST_ID,      TX_PR_ID,      10, 'tx', '480000'],
+      [
+        TEST_JURISDICTION_OCDID_2,
+        "E2E Test City 2",
+        TEST_REQUEST_ID_2,
+        TEST_PR_ID_2,
+        2,
+        "nj",
+        "060000",
+      ],
+      [
+        TEST_JURISDICTION_OCDID_3,
+        "E2E Test City 3",
+        TEST_REQUEST_ID_3,
+        TEST_PR_ID_3,
+        3,
+        "nj",
+        "060000",
+      ],
+      [
+        TX_JURISDICTION_OCDID,
+        "E2E TX City",
+        TX_REQUEST_ID,
+        TX_PR_ID,
+        10,
+        "tx",
+        "480000",
+      ],
     ]) {
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
          VALUES ($1, $3, 'current', $2, NOW())
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-        [jOcdid, JSON.stringify({ name: jName, geoid: `${geoidPrefix}${prNum}` }), stateCode]
+        [
+          jOcdid,
+          JSON.stringify({ name: jName, geoid: `${geoidPrefix}${prNum}` }),
+          stateCode,
+        ],
       );
       await client.query(
         `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
          VALUES ($1, 'people_collection', $2, '{}', '[]', '{}', NOW(), NOW())
          ON CONFLICT (id) DO NOTHING`,
-        [reqId, jOcdid]
+        [reqId, jOcdid],
       );
       await client.query(
         `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
          VALUES ($1, 'success', 100, NOW(), NOW())
          ON CONFLICT DO NOTHING`,
-        [reqId]
+        [reqId],
       );
       await client.query(
         `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
          VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
          ON CONFLICT (request_id) DO NOTHING`,
-        [prId, reqId, prNum]
+        [prId, reqId, prNum],
       );
     }
 
@@ -276,7 +324,7 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'vt', 'current', '{"name":"E2E Baseline City","geoid":"5000009"}')
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
-      [BASELINE_JURISDICTION_OCDID]
+      [BASELINE_JURISDICTION_OCDID],
     );
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
@@ -284,19 +332,19 @@ export async function seedE2eFixtures() {
                '[{"id":"e2e-jane-baseline","name":"Jane Baseline","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:vt/place:e2e_baseline"},"emails":[],"phones":[],"urls":[],"other_names":[]}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID]
+      [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [BASELINE_REQUEST_ID]
+      [BASELINE_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_PR_NUMBER]
+      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_PR_NUMBER],
     );
 
     // Populated reconcile card — scraped_at set → RECONCILE mode, with existing
@@ -306,64 +354,90 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'nh', 'current', '{"name":"E2E Reconcile City","geoid":"3300001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [RECONCILE_JURISDICTION_OCDID]
+      [RECONCILE_JURISDICTION_OCDID],
     );
     // Existing people: maria will be CHANGED, bob will be REMOVED. The `id` in
     // the JSONB is what computePeopleDiff pairs old<->new on.
     const reconcileExisting = [
       {
-        id: "recon-maria", name: "Maria González",
+        id: "recon-maria",
+        name: "Maria González",
         office: { name: "Mayor", division_ocdid: RECONCILE_DIVISION },
-        emails: ["maria@nh.gov"], phones: ["(555) 010-0101"], urls: [], other_names: [],
-        start_date: "2021", end_date: "2025", cdn_image: "https://cdn.test/maria.jpg",
+        emails: ["maria@nh.gov"],
+        phones: ["(555) 010-0101"],
+        urls: [],
+        other_names: [],
+        start_date: "2021",
+        end_date: "2025",
+        cdn_image: "https://cdn.test/maria.jpg",
       },
       {
-        id: "recon-bob", name: "Bob Clerk",
+        id: "recon-bob",
+        name: "Bob Clerk",
         office: { name: "Clerk", division_ocdid: RECONCILE_DIVISION },
-        emails: ["bob@nh.gov"], phones: [], urls: [], other_names: [],
+        emails: ["bob@nh.gov"],
+        phones: [],
+        urls: [],
+        other_names: [],
       },
     ];
     // people PK is an auto-uuid, so re-seeding can't ON CONFLICT — clear first
     // to keep the row set deterministic if a prior run didn't tear down cleanly.
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [RECONCILE_JURISDICTION_OCDID]);
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
+      RECONCILE_JURISDICTION_OCDID,
+    ]);
     for (const person of reconcileExisting) {
       await client.query(
         `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
          VALUES ($1, $2, 'current', NOW())`,
-        [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)]
+        [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
     // Proposed: maria changed (office + added email + removed phone), tom added.
     const reconcileProposed = [
       {
-        id: "recon-maria", name: "Maria González",
+        id: "recon-maria",
+        name: "Maria González",
         office: { name: "Council Member", division_ocdid: RECONCILE_DIVISION },
-        emails: ["maria@nh.gov", "mayor@nh.gov"], phones: [], urls: [], other_names: [],
-        start_date: "2021", end_date: "2025", image: "https://nh.gov/maria.jpg",
+        emails: ["maria@nh.gov", "mayor@nh.gov"],
+        phones: [],
+        urls: [],
+        other_names: [],
+        start_date: "2021",
+        end_date: "2025",
+        image: "https://nh.gov/maria.jpg",
       },
       {
-        id: "recon-tom", name: "Tom Treasurer",
+        id: "recon-tom",
+        name: "Tom Treasurer",
         office: { name: "Treasurer", division_ocdid: RECONCILE_DIVISION },
-        emails: ["tom@nh.gov"], phones: [], urls: [], other_names: [],
+        emails: ["tom@nh.gov"],
+        phones: [],
+        urls: [],
+        other_names: [],
       },
     ];
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID, JSON.stringify(reconcileProposed)]
+      [
+        RECONCILE_REQUEST_ID,
+        RECONCILE_JURISDICTION_OCDID,
+        JSON.stringify(reconcileProposed),
+      ],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [RECONCILE_REQUEST_ID]
+      [RECONCILE_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER]
+      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER],
     );
 
     // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
@@ -372,41 +446,59 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'ma', 'current', '{"name":"E2E Scale City","geoid":"2500001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [SCALE_JURISDICTION_OCDID]
+      [SCALE_JURISDICTION_OCDID],
     );
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [SCALE_JURISDICTION_OCDID]);
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
+      SCALE_JURISDICTION_OCDID,
+    ]);
     for (const person of buildScaleExisting()) {
       await client.query(
         `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
          VALUES ($1, $2, 'current', NOW())`,
-        [SCALE_JURISDICTION_OCDID, JSON.stringify(person)]
+        [SCALE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
     // Issues too, so the collapse rule's "an anchored issue keeps a field
     // visible" path is exercised at density, not only on a three-person card.
     const scaleReview = {
       issues: [
-        { code: "duplicate_unique_role", message: "Role 'council president' is marked as unique but found in multiple officials: Councillor 09 Scale, Councillor 21 Scale", person_ids: ["scale-p09", "scale-p21"], field: "office.name" },
-        { code: "extra_official", message: "Extra official: Newcomer 05 Scale", person_ids: ["scale-n05"], field: null },
+        {
+          code: "duplicate_unique_role",
+          message:
+            "Role 'council president' is marked as unique but found in multiple officials: Councillor 09 Scale, Councillor 21 Scale",
+          person_ids: ["scale-p09", "scale-p21"],
+          field: "office.name",
+        },
+        {
+          code: "extra_official",
+          message: "Extra official: Newcomer 05 Scale",
+          person_ids: ["scale-n05"],
+          field: null,
+        },
       ],
     };
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
-      [SCALE_REQUEST_ID, SCALE_JURISDICTION_OCDID, JSON.stringify(buildScaleProposed()), JSON.stringify(scaleReview)]
+      [
+        SCALE_REQUEST_ID,
+        SCALE_JURISDICTION_OCDID,
+        JSON.stringify(buildScaleProposed()),
+        JSON.stringify(scaleReview),
+      ],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [SCALE_REQUEST_ID]
+      [SCALE_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_PR_NUMBER]
+      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_PR_NUMBER],
     );
 
     // Duplicate-id card — two proposed people share `dup-shared`.
@@ -415,31 +507,60 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'nm', 'current', '{"name":"E2E Duplicate City","geoid":"3500001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [DUPLICATE_JURISDICTION_OCDID]
+      [DUPLICATE_JURISDICTION_OCDID],
     );
-    const duplicateDivision = "ocd-division/country:us/state:nm/place:e2e_duplicate";
+    const duplicateDivision =
+      "ocd-division/country:us/state:nm/place:e2e_duplicate";
     const duplicateProposed = [
-      { id: "dup-shared", name: "Pat Duplicate", office: { name: "Mayor", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "dup-shared", name: "Pat Duplicate the Second", office: { name: "Clerk", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "dup-unique", name: "Sam Single", office: { name: "Treasurer", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
+      {
+        id: "dup-shared",
+        name: "Pat Duplicate",
+        office: { name: "Mayor", division_ocdid: duplicateDivision },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
+      {
+        id: "dup-shared",
+        name: "Pat Duplicate the Second",
+        office: { name: "Clerk", division_ocdid: duplicateDivision },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
+      {
+        id: "dup-unique",
+        name: "Sam Single",
+        office: { name: "Treasurer", division_ocdid: duplicateDivision },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
     ];
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [DUPLICATE_REQUEST_ID, DUPLICATE_JURISDICTION_OCDID, JSON.stringify(duplicateProposed)]
+      [
+        DUPLICATE_REQUEST_ID,
+        DUPLICATE_JURISDICTION_OCDID,
+        JSON.stringify(duplicateProposed),
+      ],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [DUPLICATE_REQUEST_ID]
+      [DUPLICATE_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_PR_NUMBER]
+      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_PR_NUMBER],
     );
 
     // Issue-markers card — reconcile mode, all proposed render as added cards.
@@ -448,40 +569,85 @@ export async function seedE2eFixtures() {
        VALUES ($1, 'me', 'current', '{"name":"E2E Markers City","geoid":"2300001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [MARKERS_JURISDICTION_OCDID]
+      [MARKERS_JURISDICTION_OCDID],
     );
     // Alice & Bob both hold "Mayor" (the duplicated unique role); Carol is the extra.
     const markersProposed = [
-      { id: "markers-alice", name: "Alice Mayor", office: { name: "Mayor", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "markers-bob", name: "Bob Council", office: { name: "Mayor", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "markers-carol", name: "Carol Extra", office: { name: "Council Member", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
+      {
+        id: "markers-alice",
+        name: "Alice Mayor",
+        office: { name: "Mayor", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
+      {
+        id: "markers-bob",
+        name: "Bob Council",
+        office: { name: "Mayor", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
+      {
+        id: "markers-carol",
+        name: "Carol Extra",
+        office: { name: "Council Member", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+      },
     ];
     // extra_official → row-level marker (Carol); duplicate_unique_role → field-level
     // marker under Office (Alice + Bob); missing_official → list-level (no card marker).
     const markersReview = {
       issues: [
-        { code: "extra_official", message: "Extra official: Carol Extra", person_ids: ["markers-carol"], field: null },
-        { code: "duplicate_unique_role", message: "Role 'mayor' is marked as unique but found in multiple officials: Alice Mayor, Bob Council", person_ids: ["markers-alice", "markers-bob"], field: "office.name" },
-        { code: "missing_official", message: "Missing official: Dave Absent", person_ids: [], field: null },
+        {
+          code: "extra_official",
+          message: "Extra official: Carol Extra",
+          person_ids: ["markers-carol"],
+          field: null,
+        },
+        {
+          code: "duplicate_unique_role",
+          message:
+            "Role 'mayor' is marked as unique but found in multiple officials: Alice Mayor, Bob Council",
+          person_ids: ["markers-alice", "markers-bob"],
+          field: "office.name",
+        },
+        {
+          code: "missing_official",
+          message: "Dropped official: Dave Absent",
+          person_ids: [],
+          field: null,
+        },
       ],
     };
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
-      [MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID, JSON.stringify(markersProposed), JSON.stringify(markersReview)]
+      [
+        MARKERS_REQUEST_ID,
+        MARKERS_JURISDICTION_OCDID,
+        JSON.stringify(markersProposed),
+        JSON.stringify(markersReview),
+      ],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [MARKERS_REQUEST_ID]
+      [MARKERS_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_PR_NUMBER]
+      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_PR_NUMBER],
     );
 
     // Read-only card — merged PR, so the card renders in its terminal state.
@@ -493,8 +659,12 @@ export async function seedE2eFixtures() {
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [
         READ_ONLY_JURISDICTION_OCDID,
-        JSON.stringify({ name: "E2E Read Only City", geoid: "4400014", url: READ_ONLY_WEBSITE_URL }),
-      ]
+        JSON.stringify({
+          name: "E2E Read Only City",
+          geoid: "4400014",
+          url: READ_ONLY_WEBSITE_URL,
+        }),
+      ],
     );
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
@@ -502,44 +672,52 @@ export async function seedE2eFixtures() {
                '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID]
+      [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     );
     await client.query(
       `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
        VALUES ($1, 'success', 100, NOW(), NOW())
        ON CONFLICT DO NOTHING`,
-      [READ_ONLY_REQUEST_ID]
+      [READ_ONLY_REQUEST_ID],
     );
     await client.query(
       `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
        VALUES ($1, $2, $3, $4, 'merged', NOW(), NOW())
        ON CONFLICT (request_id) DO NOTHING`,
-      [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_PR_NUMBER, READ_ONLY_PR_URL]
+      [
+        READ_ONLY_PR_ID,
+        READ_ONLY_REQUEST_ID,
+        READ_ONLY_PR_NUMBER,
+        READ_ONLY_PR_URL,
+      ],
     );
 
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
-    const STALE_DAYS = 200;  // > FRESH_THRESHOLD_DAYS (90)
+    const STALE_DAYS = 200; // > FRESH_THRESHOLD_DAYS (90)
     for (const [ocdid, name, hasUrl, peopleAgeDays] of [
-      [MAP_FIXTURES.fresh,     "E2E Map Fresh",     true,  0],
-      [MAP_FIXTURES.stale,     "E2E Map Stale",     true,  STALE_DAYS],
-      [MAP_FIXTURES.gap,       "E2E Map Gap",       true,  null],
+      [MAP_FIXTURES.fresh, "E2E Map Fresh", true, 0],
+      [MAP_FIXTURES.stale, "E2E Map Stale", true, STALE_DAYS],
+      [MAP_FIXTURES.gap, "E2E Map Gap", true, null],
       [MAP_FIXTURES.untracked, "E2E Map Untracked", false, null],
     ]) {
       const data = hasUrl
-        ? { name, url: `https://example.test/${name.replace(/\s+/g, "-").toLowerCase()}` }
+        ? {
+            name,
+            url: `https://example.test/${name.replace(/\s+/g, "-").toLowerCase()}`,
+          }
         : { name };
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
          VALUES ($1, 'nj', 'current', $2)
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
-        [ocdid, JSON.stringify(data)]
+        [ocdid, JSON.stringify(data)],
       );
       if (peopleAgeDays !== null) {
         await client.query(
           `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
            VALUES ($1, '{"name":"E2E Person"}', 'current', NOW() - ($2 || ' days')::interval)`,
-          [ocdid, peopleAgeDays]
+          [ocdid, peopleAgeDays],
         );
       }
     }
@@ -560,18 +738,22 @@ export async function teardownE2eFixtures() {
            SELECT id FROM users WHERE provider = $1 AND provider_user_id = $2
          )
        )`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
+      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID],
     );
     await client.query(
       `DELETE FROM review_sessions WHERE user_id = (
          SELECT id FROM users WHERE provider = $1 AND provider_user_id = $2
        )`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
+      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID],
     );
     // The reconcile and scale fixtures seed people; clear them before their
     // jurisdiction rows.
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [RECONCILE_JURISDICTION_OCDID]);
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [SCALE_JURISDICTION_OCDID]);
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
+      RECONCILE_JURISDICTION_OCDID,
+    ]);
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
+      SCALE_JURISDICTION_OCDID,
+    ]);
     for (const [prId, reqId, jOcdid] of [
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
@@ -585,17 +767,27 @@ export async function teardownE2eFixtures() {
       [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     ]) {
       await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
-      await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [reqId]);
+      await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [
+        reqId,
+      ]);
       await client.query(`DELETE FROM requests WHERE id = $1`, [reqId]);
-      await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [jOcdid]);
+      await client.query(
+        `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
+        [jOcdid],
+      );
     }
     for (const ocdid of Object.values(MAP_FIXTURES)) {
-      await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [ocdid]);
-      await client.query(`DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`, [ocdid]);
+      await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
+        ocdid,
+      ]);
+      await client.query(
+        `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
+        [ocdid],
+      );
     }
     await client.query(
       `DELETE FROM users WHERE provider = $1 AND provider_user_id = $2`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
+      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID],
     );
   } finally {
     await client.end();
