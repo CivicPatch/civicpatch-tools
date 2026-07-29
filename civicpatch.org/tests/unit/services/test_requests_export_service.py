@@ -2,16 +2,26 @@ import pytest
 from services.people_csv_export import (
     _changed_field_names,
     _extract_fields,
-    _flatten_official,
     _request_to_rows,
 )
 
 pytestmark = pytest.mark.unit
 
 
-def _official(id="abc", name="Jane Doe", office_name="Mayor", office_division="ocd-division/x",
-              phones=None, emails=None, urls=None, source_urls=None,
-              other_names=None, start_date=None, end_date=None, updated_at=None):
+def _official(
+    id="abc",
+    name="Jane Doe",
+    office_name="Mayor",
+    office_division="ocd-division/x",
+    phones=None,
+    emails=None,
+    urls=None,
+    source_urls=None,
+    other_names=None,
+    start_date=None,
+    end_date=None,
+    updated_at=None,
+):
     return {
         "id": id,
         "name": name,
@@ -27,8 +37,13 @@ def _official(id="abc", name="Jane Doe", office_name="Mayor", office_division="o
     }
 
 
-def _request(request_id="req-1", jurisdiction_ocdid="ocd-jurisdiction/x", created_at=None,
-             result_data=None, review_json=None):
+def _request(
+    request_id="req-1",
+    jurisdiction_ocdid="ocd-jurisdiction/x",
+    created_at=None,
+    result_data=None,
+    review_json=None,
+):
     return {
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
@@ -39,6 +54,7 @@ def _request(request_id="req-1", jurisdiction_ocdid="ocd-jurisdiction/x", create
 
 
 # --- _changed_field_names ---
+
 
 def test_changed_field_names_no_changes():
     o = _official(name="Jane Doe", office_name="Mayor", urls=["https://example.com"])
@@ -85,6 +101,7 @@ def test_changed_field_names_multiple_changes():
 
 # --- _extract_fields ---
 
+
 def test_extract_fields_joins_lists():
     o = _official(phones=["555-1234", "555-5678"], emails=["a@b.com", "c@d.com"])
     fields = _extract_fields(o)
@@ -100,7 +117,7 @@ def test_extract_fields_empty_lists():
 
 
 def test_extract_fields_sanitizes_formula_injection():
-    o = _official(name="=HYPERLINK(\"evil.com\")")
+    o = _official(name='=HYPERLINK("evil.com")')
     fields = _extract_fields(o)
     assert fields["name"].startswith("'")
 
@@ -126,6 +143,7 @@ def test_extract_fields_office_from_nested():
 
 
 # --- _request_to_rows (diff classification) ---
+
 
 def test_request_to_rows_added():
     official = _official(id="new-1", name="New Person")
@@ -178,13 +196,15 @@ def test_request_to_rows_review_issues_structured():
     official = _official(id="p-1")
     req = _request(
         result_data=[official],
-        review_json={"issues": [
-            {"code": "missing_official", "message": "Missing official: John"},
-            {"code": "extra_official", "message": "Extra official: Jane"},
-        ]},
+        review_json={
+            "issues": [
+                {"code": "missing_official", "message": "Dropped official: John"},
+                {"code": "extra_official", "message": "Extra official: Jane"},
+            ]
+        },
     )
     rows = _request_to_rows(req, existing_people=[official], include_unchanged=True)
-    assert rows[0]["review_issues"] == "Missing official: John | Extra official: Jane"
+    assert rows[0]["review_issues"] == "Dropped official: John | Extra official: Jane"
 
 
 def test_request_to_rows_mixed():
@@ -197,7 +217,9 @@ def test_request_to_rows_mixed():
     req = _request(result_data=[added, pr_changed, unchanged])
     existing_people = [removed, existing_changed, unchanged]
 
-    rows = _request_to_rows(req, existing_people=existing_people, include_unchanged=False)
+    rows = _request_to_rows(
+        req, existing_people=existing_people, include_unchanged=False
+    )
     statuses = {r["diff_status"] for r in rows}
     assert statuses == {"added", "removed", "changed"}
     assert len(rows) == 3

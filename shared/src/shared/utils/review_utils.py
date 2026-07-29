@@ -121,7 +121,7 @@ def _check_missing_officials(
     return [
         Issue(
             code=IssueCode.MISSING_OFFICIAL,
-            message=f"Missing official: {name}",
+            message=f"Dropped official: {name}",
             person_ids=[],
         )
         for name in sorted(research_canonicals - people_canonicals)

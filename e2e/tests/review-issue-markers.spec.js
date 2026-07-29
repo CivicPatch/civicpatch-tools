@@ -41,16 +41,22 @@ test.describe("Review issue markers", () => {
         .locator(".review-rail__field")
         .filter({ hasText: "Office" });
       await expect(office).toHaveCount(1);
-      await expect(office.locator(".review-rail__issue")).toContainText("marked as unique");
+      await expect(office.locator(".review-rail__issue")).toContainText(
+        "marked as unique",
+      );
     }
 
     // List-level: missing_official has no person_ids → it never becomes a card marker.
     await expect(
-      page.locator(".review-rail__issue").filter({ hasText: "Missing official" }),
+      page
+        .locator(".review-rail__issue")
+        .filter({ hasText: "Dropped official" }),
     ).toHaveCount(0);
   });
 
-  test("clear-on-edit: editing a marked card drops its marker", async ({ authenticatedPage: page }) => {
+  test("clear-on-edit: editing a marked card drops its marker", async ({
+    authenticatedPage: page,
+  }) => {
     await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
     await openDetail(page);
 
