@@ -3,6 +3,7 @@ import { component, useState } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/review-rail/review-rail-list.js";
 import "../../components/review-overview/review-overview.js";
+import "../../components/review/review-modal.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
@@ -11,7 +12,8 @@ import { useReviewPeople } from "./use-review-people.js";
 import { updateParams } from "./use-review-session.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { buildReviewCards, cardFields } from "../../components/review/review-cards.js";
+import { buildReviewCards, cardFields, groupCards, needsReview } from "../../components/review/review-cards.js";
+import { linkCandidatesFrom, railPropsFor } from "../../components/review-rail/rail-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
 type CurrentEntry = {
@@ -65,6 +67,7 @@ function ReviewSession(host: ReviewSessionHost) {
     handleDelete,
     handleUndelete,
     handleRestore,
+    handleUndoRestore,
     updatePerson,
   } = useReviewPeople(currentEntry);
 
@@ -73,10 +76,7 @@ function ReviewSession(host: ReviewSessionHost) {
 
   const requestId = currentEntry?.request_id ?? null;
 
-  // Overview and Detail v2 are reachable at ?view= while the old diff stays the
-  // default. All three render from the same state, so the new views can be
-  // looked at before the specs asserting on the old selectors are rewritten.
-  // Held as state, not read from the URL each render: replaceState does not
+  // Which view is open. Held as state, not read from the URL each render: replaceState does not
   // re-render, and the tab bar (§17 steps 6–7) needs the same handle. The URL is
   // written alongside so a refresh lands where the reviewer was (§1.1), and the
   // initial value comes from it so a shared link opens the right view.
@@ -87,12 +87,6 @@ function ReviewSession(host: ReviewSessionHost) {
     setView(next);
     updateParams({ [VIEW_PARAM]: next });
   };
-
-  // Until the modal lands (§17 step 6), opening a person from Overview switches
-  // to Detail rather than doing nothing — one of the two routes the original
-  // design considered, and it keeps every tile leading somewhere.
-  const handleOpenPerson = (_personId: string, _fieldKey: string | null) =>
-    showView(ReviewView.DETAIL);
 
   // Preview is step 7; until it exists anything that is not Detail reads as
   // Overview, so a stale or hand-typed ?view=preview still renders a card.
@@ -106,6 +100,42 @@ function ReviewSession(host: ReviewSessionHost) {
     issues: review_data?.issues ?? [],
   });
   const frozen = useFrozenFields(requestId, cardFields(cards));
+
+  // The modal walks the set it was opened from — from Overview, the group that
+  // person was in. Stepping from To review into Unchanged would land on someone
+  // with no visible fields, which is a dead end (§6).
+  const [openPerson, setOpenPerson] = useState<{ id: string; field: string | null } | null>(null);
+  const groups = groupCards(cards);
+  const openCard = cards.find((c) => c.personId === openPerson?.id);
+  const walkSet = !openCard
+    ? []
+    : needsReview(openCard)
+      ? groups.toReview
+      : groups.unchanged;
+
+  const handleOpenPerson = (personId: string, fieldKey: string | null) =>
+    setOpenPerson({ id: personId, field: fieldKey });
+
+  // The modal renders the same rail Detail does, so both are built from one
+  // definition — it is the rail mounted with one person, not a second editor.
+  const railFor = (card: (typeof cards)[number]) =>
+    railPropsFor(card, {
+      frozen,
+      dirtyIds,
+      isReadOnly: !!is_read_only,
+      jurisdictionOcdid,
+      linkCandidates: linkCandidatesFrom(cards),
+      // Everything is open in the modal: the reviewer went there to work on this
+      // person, so hiding fields behind an expander would be in the way.
+      expandedIds: new Set(cards.map((c) => c.personId)),
+      onToggleExpand: () => {},
+      onPersonSave: handlePersonSave,
+      onDeletePerson: handleDeletePerson,
+      onUndeletePerson: handleUndelete,
+      onRestorePerson: handleRestore,
+      onResetPerson: handleResetPerson,
+    });
+
 
   // A clean card publishes what the server already has; only send a patch when
   // the reviewer actually changed something.
@@ -212,6 +242,20 @@ function ReviewSession(host: ReviewSessionHost) {
             .onResetPerson=${handleResetPerson}
             .onAdd=${handleAdd}
           ></review-rail-list>`}
+      <review-modal
+        .cards=${walkSet}
+        .openPersonId=${openPerson?.id ?? null}
+        .focusFieldKey=${openPerson?.field ?? null}
+        .rail=${railFor}
+        .deletedIds=${deletedIds}
+        .restoredIds=${restoredIds}
+        .onClose=${() => setOpenPerson(null)}
+        .onPersonSave=${handlePersonSave}
+        .onDelete=${handleDeletePerson}
+        .onUndelete=${handleUndelete}
+        .onRestore=${handleRestore}
+        .onUndoRestore=${handleUndoRestore}
+      ></review-modal>
       ${debugOpen
         ? html`
             <source-content-debug-modal

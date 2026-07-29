@@ -83,14 +83,36 @@ test.describe("Review overview", () => {
     await expect(grid.locator(".review-tile").last()).toHaveClass(/review-tile--ghost/);
   });
 
-  test("opening a person leads somewhere, and the URL remembers the view", async ({
+  test("a tile opens the editor on that person", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // Until the modal lands, a tile switches to Detail rather than doing nothing.
+    // Previously this asserted a switch to Detail, which was the interim route
+    // while the modal did not exist. §6 makes the modal what Overview opens into.
     await tileFor(page, "Councillor 02 Scale").locator(".review-tile__open").click();
-    await expect(page.locator("review-rail-list")).toBeVisible();
+    await expect(page.locator("review-modal dialog")).toBeVisible();
+    await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
+  });
+
+  test("a field name opens the editor focused on that field", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+
+    // Clicking the field name rather than the tile is the difference between
+    // "look at this person" and "fix this" (§4).
+    await tileFor(page, "Councillor 02 Scale")
+      .locator(".review-tile__field", { hasText: "Term end" })
+      .click();
+    await expect(page.locator("review-modal dialog")).toBeVisible();
+  });
+
+  test("switching view writes ?view= so a refresh lands back there", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
     await expect(page).toHaveURL(/view=detail/);
   });
 });

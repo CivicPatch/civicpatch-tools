@@ -207,7 +207,7 @@
   width: auto;
 }
 
-.review-face:hover { color: var(--pico-color); }
+.review-face:hover { color: var(--civ-text); }
 
 /* Ends the To review group, because a new person has surviving fields and lands
    there — after the face strip it would promise the wrong slot. */
@@ -225,8 +225,8 @@
 }
 
 .review-tile--ghost:hover {
-  border-color: var(--pico-color);
-  color: var(--pico-color);
+  border-color: var(--civ-text);
+  color: var(--civ-text);
 }
 
 .review-overview__empty {
