@@ -10,7 +10,7 @@
 // restored with no record, or dropped while reading as unchanged (§12's
 // invariant: published iff they have a record and are not deleted).
 
-import { type DiffRecord } from "../people-diff/diff-model.js";
+import { type DiffRecord } from "./field-model.js";
 
 export interface PersonSnapshot {
   personId: string;

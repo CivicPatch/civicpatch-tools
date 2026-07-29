@@ -103,7 +103,7 @@
 
 .review-modal .review-modal__person--on {
   background: var(--pico-muted-background);
-  color: var(--pico-color);
+  color: var(--civ-text);
   font-weight: 600;
 }
 

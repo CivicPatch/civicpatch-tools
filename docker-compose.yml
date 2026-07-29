@@ -145,7 +145,11 @@ services:
     ports:
       - "7233:7233"
     networks:
-      - civicpatch_net
+      # Pinned: ringpop membership rows in cluster_membership outlive the
+      # container by 2 days, so a reassigned IP makes the next boot try to
+      # gossip with a dead address and fail to join.
+      civicpatch_net:
+        ipv4_address: 172.21.0.250
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "7233"]
       interval: 5s
@@ -187,6 +191,10 @@ services:
 networks:
   civicpatch_net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1
 
 volumes:
   api_civicpatch_org_db_data:

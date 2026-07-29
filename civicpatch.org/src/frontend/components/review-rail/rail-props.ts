@@ -6,9 +6,12 @@
 // reproduce the other's rules.
 
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
-import { type Save } from "../people-diff/field-controls.js";
-import { buildLinkUpdates } from "../people-diff/diff-model.js";
-import { RailStatus, type ReviewCard } from "../review/review-cards.js";
+import { type Save } from "../review/field-controls.js";
+import {
+  buildLinkUpdates,
+  RailStatus,
+  type ReviewCard,
+} from "../review/review-cards.js";
 import { type LinkCandidate, type PersonRailProps } from "./person-rail.js";
 
 export interface RailContext {

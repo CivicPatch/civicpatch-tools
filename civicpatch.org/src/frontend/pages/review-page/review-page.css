@@ -585,3 +585,55 @@ report-issue-button {
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius);
 }
+
+/* View tabs (§1.1). Which view is open also lives in ?view=, so a refresh lands
+   where the reviewer was and a link carries the view with it. */
+
+.review-page__views {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  max-width: var(--page-width);
+  width: 100%;
+  margin-inline: auto;
+}
+
+.review-page__view-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.4rem 0.75rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  width: auto;
+}
+
+.review-page__view-tab:hover {
+  color: var(--civ-text);
+}
+
+/* Named, not read from --pico-color: styles.css overrides that variable to the
+   inverse on every bare button, so the selected tab was rendering white on
+   white — the tab was there, just invisible. */
+.review-page__view-tab--on {
+  color: var(--civ-text);
+  border-bottom-color: var(--civ-text);
+}
+
+/* Two people resolving to one id (§21.8). Loud, because the consequence is
+   silent data loss: one of them is not rendered anywhere on the card. */
+.review-page__duplicate-banner {
+  max-width: var(--page-width);
+  width: 100%;
+  margin-inline: auto;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--pico-del-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-del-background);
+  font-size: var(--text-sm);
+}

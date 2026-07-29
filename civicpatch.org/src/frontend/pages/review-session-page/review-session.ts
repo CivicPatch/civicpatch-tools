@@ -1,8 +1,9 @@
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
 import "../../components/review-checklist/review-checklist.js";
 import "../../components/review-rail/review-rail-list.js";
 import "../../components/review-overview/review-overview.js";
+import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
@@ -10,9 +11,16 @@ import "./review-session-controls.js";
 import "./report-issue-button.js";
 import { useReviewPeople } from "./use-review-people.js";
 import { updateParams } from "./use-review-session.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import {
+  issueChecksKey,
+  toggleCheck,
+  unresolvedIssues,
+  type IssueChecks,
+} from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { buildReviewCards, cardFields, groupCards, needsReview } from "../../components/review/review-cards.js";
+import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, groupCards, needsReview } from "../../components/review/review-cards.js";
 import { linkCandidatesFrom, railPropsFor } from "../../components/review-rail/rail-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
@@ -88,18 +96,44 @@ function ReviewSession(host: ReviewSessionHost) {
     updateParams({ [VIEW_PARAM]: next });
   };
 
-  // Preview is step 7; until it exists anything that is not Detail reads as
-  // Overview, so a stale or hand-typed ?view=preview still renders a card.
-  const isDetail = view === ReviewView.DETAIL;
+  // Ticks are personal progress in this browser, so they persist client-side and
+  // never expire — a card can sit open for days (§8.4).
+  const allIssues = review_data?.issues ?? [];
+  const [issueChecks, setIssueChecks] = useLocalStorage(
+    issueChecksKey(requestId ?? "none"),
+    {},
+    { ttl: PERSIST_FOREVER },
+  ) as [IssueChecks, (next: IssueChecks) => void];
+  const handleToggleIssue = (issue: any) =>
+    setIssueChecks(toggleCheck(issueChecks, issue));
 
   const cards = buildReviewCards({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
     deletedIds,
     restoredIds,
-    issues: review_data?.issues ?? [],
+    // A ticked issue is done, so it stops marking its card — otherwise the tick
+    // would have no effect where the reviewer was actually looking (§8.2).
+    issues: unresolvedIssues(allIssues, issueChecks),
   });
   const frozen = useFrozenFields(requestId, cardFields(cards));
+
+  // Two scraped people resolving to one id collapse into a single diff entry —
+  // last wins — so one of them is on screen nowhere. Everything downstream is
+  // keyed by person id, so keeping both is not an option; saying so is (§21.8).
+  const duplicateIds = duplicateIdsFor({
+    existing: pr_people?.existing ?? [],
+    currentPeople: currentPeople ?? [],
+  });
+
+  // Publish is gated by the same function that fills Preview's banner — one
+  // rule, two consumers, so the button and the banner can never disagree about
+  // whether the card is publishable (§9).
+  const blockers = blockingErrors(cards);
+  const blockerTitle = blockers
+    .map((b) => `${b.name} — ${b.fieldLabel}: ${b.message}`)
+    .join("\n");
+
 
   // The modal walks the set it was opened from — from Overview, the group that
   // person was in. Stepping from To review into Unchanged would land on someone
@@ -174,8 +208,17 @@ function ReviewSession(host: ReviewSessionHost) {
           ${dirty ? html`
           <button class="btn-sm review-page__save-btn" @click=${handleSave}>Save for later</button>
           ` : ""}
-          <button class="btn-sm review-page__merge-btn btn-gradient" @click=${handleMerge}>
-            ${dirty ? "Save and Publish" : "Publish"}
+          <button
+            class="btn-sm review-page__merge-btn btn-gradient"
+            @click=${handleMerge}
+            ?disabled=${blockers.length > 0}
+            title=${blockers.length ? blockerTitle : ""}
+          >
+            ${blockers.length
+              ? `${blockers.length} to fix before publishing`
+              : dirty
+                ? "Save and Publish"
+                : "Publish"}
           </button>
           ${canClosePr ? html`
           <button class="btn-sm destructive" @click=${handleClosePr} ?disabled=${isClosingPr}>
@@ -203,25 +246,53 @@ function ReviewSession(host: ReviewSessionHost) {
           ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
           <report-issue-button .requestId=${requestId}></report-issue-button>
         </div>
-        <civ-review-checklist .reviewData=${review_data}></civ-review-checklist>
+        <!-- Hidden on Preview: that view is the published result, and issues
+             are a property of the review rather than of the roster (§8.3). -->
+        ${view === ReviewView.PREVIEW
+          ? nothing
+          : html`<civ-review-checklist
+              .reviewData=${review_data}
+              .checks=${issueChecks}
+              .onToggleIssue=${handleToggleIssue}
+            ></civ-review-checklist>`}
       </div>
       ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
+      ${duplicateIds.length
+        ? html`<div class="review-page__duplicate-banner">
+            <strong>
+              ${duplicateIds.length} record${duplicateIds.length === 1 ? "" : "s"}
+              share an id with another on this card.
+            </strong>
+            Only one of each pair is shown, and publishing will send only that
+            one. Ids: ${duplicateIds.join(", ")}.
+          </div>`
+        : nothing}
       ${isBaseline
         ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
         : ""}
       <div class="review-page__views" role="tablist" aria-label="Review views">
-        ${[ReviewView.OVERVIEW, ReviewView.DETAIL].map(
-          (key) => html`<button
+        ${[
+          [ReviewView.OVERVIEW, "Overview"],
+          [ReviewView.DETAIL, "Detail"],
+          [ReviewView.PREVIEW, "Preview"],
+        ].map(
+          ([key, label]) => html`<button
             class="review-page__view-tab ${view === key ? "review-page__view-tab--on" : ""}"
             role="tab"
             aria-selected=${view === key}
-            @click=${() => showView(key)}
+            @click=${() => showView(key as ReviewViewKey)}
           >
-            ${key === ReviewView.OVERVIEW ? "Overview" : "Detail"}
+            ${label}
           </button>`,
         )}
       </div>
-      ${!isDetail
+      ${view === ReviewView.PREVIEW
+        ? html`<review-preview
+            .cards=${cards}
+            .jurisdictionOcdid=${jurisdictionOcdid}
+            .onOpenPerson=${handleOpenPerson}
+          ></review-preview>`
+        : view !== ReviewView.DETAIL
         ? html`<review-overview
             .cards=${cards}
             .isReadOnly=${is_read_only}
@@ -247,6 +318,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .openPersonId=${openPerson?.id ?? null}
         .focusFieldKey=${openPerson?.field ?? null}
         .rail=${railFor}
+        .isReadOnly=${!!is_read_only}
         .deletedIds=${deletedIds}
         .restoredIds=${restoredIds}
         .onClose=${() => setOpenPerson(null)}

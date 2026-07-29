@@ -14,7 +14,7 @@ import {
   type FieldSpec,
   type ScalarDiffState,
   type SurvivingField,
-} from "../components/people-diff/diff-model.js";
+} from "../components/review/field-model.js";
 
 const field = (key: string): FieldSpec => ({ key, label: key, type: "text" });
 

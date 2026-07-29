@@ -8,6 +8,7 @@
 // about old records; this module is the only place that pairs them.
 
 import { html, nothing } from "lit-html";
+import "../person-image.js";
 import {
   diffValue,
   type DiffRecord,
@@ -15,10 +16,11 @@ import {
   type FieldSpec,
   type PresentRecord,
   type ScalarDiffState,
-} from "../people-diff/diff-model.js";
+} from "../review/field-model.js";
 import {
   buildFieldUpdate,
   displayScalar,
+  withDisplayImage,
   renderScalarNewSide,
   renderDateNewSide,
   renderDivisionNewSide,
@@ -26,8 +28,8 @@ import {
   renderPhotoNewSide,
   renderMultiList,
   type Save,
-} from "../people-diff/field-controls.js";
-import { multiValueDiff } from "../people-diff/diff-model.js";
+} from "../review/field-controls.js";
+import { multiValueDiff } from "../review/field-model.js";
 
 export const DASH = "—";
 
@@ -57,7 +59,24 @@ export interface RailFieldProps {
 function renderControl(props: RailFieldProps, record: PresentRecord) {
   const { field, oldRecord, state, error, save, isReadOnly, jurisdictionOcdid } = props;
 
+  // Read-only renders every field as its value, never a disabled input (§10) —
+  // but "its value" is not always text. displayScalar on the photo field returns
+  // the image URL, which is not what a reader wants to see.
   if (isReadOnly) {
+    if (field.type === "image") {
+      return html`<person-image
+        .person=${withDisplayImage(record)}
+        .size=${"2.75rem"}
+      ></person-image>`;
+    }
+    if (field.type === "multi") {
+      const list = (diffValue(record, field) as string[]) ?? [];
+      return list.length
+        ? html`<span class="review-rail__readonly"
+            >${list.map((value) => html`<span class="field-control__value">${value}</span>`)}</span
+          >`
+        : DASH;
+    }
     return html`<span class="review-rail__readonly"
       >${displayScalar(field, record) || DASH}</span
     >`;

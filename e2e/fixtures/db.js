@@ -2,6 +2,14 @@ import pg from "pg";
 
 const { Client } = pg;
 
+// Divisions for the fixture people. Real records always carry one —
+// resolve_division is typed `-> str` and always returns a division, and a count
+// over production found 0 blank of 19,790 — so a fixture with null models a
+// state the pipeline cannot produce. It also blocks publishing, since division
+// is required, which is how this was noticed.
+const RECONCILE_DIVISION = "ocd-division/country:us/state:nh/place:e2e_reconcile";
+const MARKERS_DIVISION = "ocd-division/country:us/state:me/place:e2e_markers";
+
 // Fixed IDs so teardown can target them precisely
 const TEST_USER_PROVIDER = "github";
 const TEST_USER_PROVIDER_ID = "test-user-e2e";
@@ -117,6 +125,15 @@ function buildScaleProposed() {
   return [...carried, ...added];
 }
 
+// Duplicate-id fixture (§21.8) — two proposed people resolving to one id, which
+// is what merge manufactures: matching consults aliases, so the next scrape
+// resolves both entries of a merged pair to the survivor. Own state (nm).
+export const DUPLICATE_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:nm/place:e2e_duplicate/government";
+export const DUPLICATE_REQUEST_ID = "00000000-0000-0000-eeee-000000000016";
+const DUPLICATE_PR_ID = "00000000-0000-0000-eeee-000000000017";
+const DUPLICATE_PR_NUMBER = 16;
+
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).
 export const TX_JURISDICTION_OCDID =
@@ -126,7 +143,7 @@ const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
 // Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
 // every proposed person renders as an "added" card. Its review_json carries
-// structured issues that anchor to proposed person ids, exercising people-diff's
+// structured issues that anchor to proposed person ids, exercising the review card's
 // per-card markers. Own state (me) and deep-linked by request_id, like the others.
 export const MARKERS_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:me/place:e2e_markers/government";
@@ -195,7 +212,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"name":"Jane Smith","roles":[{"title":"Council Member"}]}]',
+               '[{"id":"e2e-jane","name":"Jane Smith","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:nj/place:e2e_test"},"emails":[],"phones":[],"urls":[],"other_names":[]}]',
                '{"issues":[{"type":"missing_email","key":"jane-smith"}]}',
                NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
@@ -264,7 +281,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"name":"Jane Baseline","roles":[{"title":"Council Member"}]}]',
+               '[{"id":"e2e-jane-baseline","name":"Jane Baseline","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:vt/place:e2e_baseline"},"emails":[],"phones":[],"urls":[],"other_names":[]}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
       [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID]
@@ -296,13 +313,13 @@ export async function seedE2eFixtures() {
     const reconcileExisting = [
       {
         id: "recon-maria", name: "Maria González",
-        office: { name: "Mayor", division_ocdid: null },
+        office: { name: "Mayor", division_ocdid: RECONCILE_DIVISION },
         emails: ["maria@nh.gov"], phones: ["(555) 010-0101"], urls: [], other_names: [],
         start_date: "2021", end_date: "2025", cdn_image: "https://cdn.test/maria.jpg",
       },
       {
         id: "recon-bob", name: "Bob Clerk",
-        office: { name: "Clerk", division_ocdid: null },
+        office: { name: "Clerk", division_ocdid: RECONCILE_DIVISION },
         emails: ["bob@nh.gov"], phones: [], urls: [], other_names: [],
       },
     ];
@@ -320,13 +337,13 @@ export async function seedE2eFixtures() {
     const reconcileProposed = [
       {
         id: "recon-maria", name: "Maria González",
-        office: { name: "Council Member", division_ocdid: null },
+        office: { name: "Council Member", division_ocdid: RECONCILE_DIVISION },
         emails: ["maria@nh.gov", "mayor@nh.gov"], phones: [], urls: [], other_names: [],
         start_date: "2021", end_date: "2025", image: "https://nh.gov/maria.jpg",
       },
       {
         id: "recon-tom", name: "Tom Treasurer",
-        office: { name: "Treasurer", division_ocdid: null },
+        office: { name: "Treasurer", division_ocdid: RECONCILE_DIVISION },
         emails: ["tom@nh.gov"], phones: [], urls: [], other_names: [],
       },
     ];
@@ -392,6 +409,39 @@ export async function seedE2eFixtures() {
       [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_PR_NUMBER]
     );
 
+    // Duplicate-id card — two proposed people share `dup-shared`.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'nm', 'current', '{"name":"E2E Duplicate City","geoid":"3500001"}', NOW())
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+      [DUPLICATE_JURISDICTION_OCDID]
+    );
+    const duplicateDivision = "ocd-division/country:us/state:nm/place:e2e_duplicate";
+    const duplicateProposed = [
+      { id: "dup-shared", name: "Pat Duplicate", office: { name: "Mayor", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "dup-shared", name: "Pat Duplicate the Second", office: { name: "Clerk", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "dup-unique", name: "Sam Single", office: { name: "Treasurer", division_ocdid: duplicateDivision }, emails: [], phones: [], urls: [], other_names: [] },
+    ];
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
+      [DUPLICATE_REQUEST_ID, DUPLICATE_JURISDICTION_OCDID, JSON.stringify(duplicateProposed)]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [DUPLICATE_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_PR_NUMBER]
+    );
+
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
@@ -402,9 +452,9 @@ export async function seedE2eFixtures() {
     );
     // Alice & Bob both hold "Mayor" (the duplicated unique role); Carol is the extra.
     const markersProposed = [
-      { id: "markers-alice", name: "Alice Mayor", office: { name: "Mayor", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "markers-bob", name: "Bob Council", office: { name: "Mayor", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
-      { id: "markers-carol", name: "Carol Extra", office: { name: "Council Member", division_ocdid: null }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "markers-alice", name: "Alice Mayor", office: { name: "Mayor", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "markers-bob", name: "Bob Council", office: { name: "Mayor", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
+      { id: "markers-carol", name: "Carol Extra", office: { name: "Council Member", division_ocdid: MARKERS_DIVISION }, emails: [], phones: [], urls: [], other_names: [] },
     ];
     // extra_official → row-level marker (Carol); duplicate_unique_role → field-level
     // marker under Office (Alice + Bob); missing_official → list-level (no card marker).
@@ -449,7 +499,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"name":"Jane Published","roles":[{"title":"Council Member"}]}]',
+               '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
       [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID]
@@ -529,6 +579,7 @@ export async function teardownE2eFixtures() {
       [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
       [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_JURISDICTION_OCDID],
+      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
       [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],

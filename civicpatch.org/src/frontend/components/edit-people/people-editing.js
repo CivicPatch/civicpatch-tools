@@ -7,7 +7,7 @@ import { jurisdictionToDivisionBase } from "./person-edit-utils.ts";
 const INTERNAL_FIELDS = ["_isNew", "_selected"];
 
 // A fully-empty new person — only the default division is pre-filled (the
-// jurisdiction base). Both the review/people-diff card and the full editor want
+// jurisdiction base). Both the review card and the full editor want
 // this clean slate; required fields then flag until the reviewer fills them.
 export function emptyPerson(personId, jurisdictionOcdid) {
   return {

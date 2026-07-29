@@ -9,9 +9,16 @@ import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
 import "./review-overview.css";
-import { withDisplayImage } from "../people-diff/field-controls.js";
+import { withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
-import { groupCards, RailStatus, type ReviewCard } from "../review/review-cards.js";
+import {
+  DEPARTING,
+  groupCards,
+  personOf,
+  RailStatus,
+  STATUS_LABEL,
+  type ReviewCard,
+} from "../review/review-cards.js";
 
 interface ReviewOverviewProps {
   cards: ReviewCard[];
@@ -21,19 +28,6 @@ interface ReviewOverviewProps {
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
 }
-
-const DEPARTING = new Set<string>([RailStatus.REMOVED, RailStatus.DELETED]);
-
-const STATUS_LABEL: Record<string, string> = {
-  [RailStatus.CHANGED]: "changed",
-  [RailStatus.ADDED]: "new",
-  [RailStatus.UNCHANGED]: "unchanged",
-  [RailStatus.REMOVED]: "not found in scrape",
-  [RailStatus.DELETED]: "you removed",
-  [RailStatus.RESTORED]: "restored",
-};
-
-const personOf = (card: ReviewCard) => card.newRecord ?? card.oldRecord;
 
 function subtitle(card: ReviewCard): string {
   const record = personOf(card);

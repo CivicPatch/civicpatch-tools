@@ -1,9 +1,12 @@
-// Pure diff model for the people-diff component. No DOM, no I/O — just the
-// per-field diff semantics and client-side validation. Rendering and editing
-// live in the component; this module is the functional core (unit-tested alone).
+// What a field is, and how one field compares between two records. No DOM, no
+// I/O — the functional core, unit-tested alone.
+//
+// Strictly per-FIELD. Anything about a *set* of people — classifying a card,
+// folding deletions into the diff, indexing issues — lives in review-cards.ts.
+// The two lived here together under the name "diff-model" and were two things
+// wearing one name.
 
 import { type Person } from "../edit-people/person-edit-utils.js";
-import { DiffType } from "../../utils/diff-utils.js";
 
 // Either side of a diff. The old side may be absent (an added person) and the
 // new side may be absent (one the scrape didn't find). Partial because the diff
@@ -200,64 +203,6 @@ export function recordsDiffer(
   return changedFields(oldRecord, newRecord).length > 0;
 }
 
-// ── Reviewer deletions, folded into the diff ─────────────────────────────────
-
-export interface DiffEntry {
-  type: string;
-  person: any;
-  from: any;
-}
-
-export interface PeopleDiffResult {
-  diffEntries: DiffEntry[];
-  unchangedEntries: DiffEntry[];
-}
-
-// computePeopleDiff compares two server-shaped lists and knows nothing about the
-// reviewer marking someone for removal — so a deleted person whose fields are
-// otherwise untouched comes back UNCHANGED and hides under that chip instead of
-// appearing under Removed. This folds the decision in afterwards.
-//
-// It stays out of computePeopleDiff because deletion is a review-session state
-// the other two consumers (diff-panel, data-panel) neither have nor want.
-//
-// Deleting someone the scrape *added* is a net no-op — they were never in the
-// database and the patch omits them, so there is nothing to publish and nothing
-// to show. Every other deletion becomes REMOVED. `person` deliberately stays the
-// new-side record: renderRow reads its id to offer Undo.
-export function foldDeletions(
-  { diffEntries, unchangedEntries }: PeopleDiffResult,
-  deletedIds: Set<string>,
-): PeopleDiffResult {
-  if (deletedIds.size === 0) return { diffEntries, unchangedEntries };
-
-  const kept: DiffEntry[] = [];
-  const survives = (entry: DiffEntry) =>
-    !(deletedIds.has(entry.person?.id) && entry.type === DiffType.ADDED);
-
-  for (const entry of diffEntries) {
-    if (!survives(entry)) continue;
-    kept.push(
-      deletedIds.has(entry.person?.id)
-        ? { ...entry, type: DiffType.REMOVED }
-        : entry,
-    );
-  }
-
-  const stillUnchanged: DiffEntry[] = [];
-  for (const entry of unchangedEntries) {
-    if (!deletedIds.has(entry.person?.id)) {
-      stillUnchanged.push(entry);
-      continue;
-    }
-    // An unchanged person the reviewer dropped is a change to the list, so it
-    // moves out of the unchanged bucket entirely.
-    kept.push({ ...entry, type: DiffType.REMOVED });
-  }
-
-  return { diffEntries: kept, unchangedEntries: stillUnchanged };
-}
-
 // ── Client-side validation (spec §6 — owned by the client, live) ─────────────
 
 const DATE_PATTERN = /^\d{4}(-\d{2}(-\d{2})?)?$/;
@@ -308,37 +253,11 @@ export function fieldError(field: FieldSpec, record: DiffRecord): string | null 
   return null;
 }
 
-// ── Linking an added person to an existing record ────────────────────────────
+// ── Reviewer issues ──────────────────────────────────────────────────────────
 
-// "Link to person": an unmatched scraped person (an `added` row) is actually an
-// existing old-side record. The scraped person adopts the existing id, so on
-// publish it overlays that record by id instead of inserting a duplicate (the
-// reviewer keeps the scraped fields). The existing person's name and aliases fold
-// into other_names so the *next* scrape resolves by alias instead of re-proposing
-// the same person.
-export function buildLinkUpdates(
-  added: any,
-  target: any,
-): { id: string; other_names: string[] } {
-  // The target's old name and both sides' aliases all become aliases of the
-  // linked record — deduped, minus blanks and the added person's own name
-  // (which stays the primary name).
-  const candidates = [
-    target?.name,
-    ...(target?.other_names ?? []),
-    ...(added?.other_names ?? []),
-  ];
-  const other_names = [...new Set(candidates)].filter(
-    (alias) => alias && alias !== added?.name,
-  );
-  return { id: target.id, other_names };
-}
-
-// ── Reviewer issues → per-card anchoring ─────────────────────────────────────
-
-// A reviewer-facing issue from build_review_summary. Only person-anchored issues
-// (non-empty person_ids) mark a card; list-level issues stay in the checklist.
-// Legacy migrated issues carry only a message, hence the optionals.
+// A structured issue from the pipeline. The type lives here because the collapse
+// rule reads it; grouping issues BY PERSON is card-level and lives in
+// review-cards.ts.
 export interface Issue {
   code: string;
   message: string;
@@ -399,14 +318,3 @@ export function survivingFields(
 
 // Group person-anchored issues by the card (person id) they mark. One issue can
 // name several holders (e.g. a duplicated unique role), so it lands on each.
-export function indexIssuesByPersonId(issues: Issue[]): Map<string, Issue[]> {
-  const byId = new Map<string, Issue[]>();
-  for (const issue of issues) {
-    for (const id of issue.person_ids ?? []) {
-      const list = byId.get(id) ?? [];
-      list.push(issue);
-      byId.set(id, list);
-    }
-  }
-  return byId;
-}
