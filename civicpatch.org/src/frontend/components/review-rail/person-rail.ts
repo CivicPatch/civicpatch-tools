@@ -14,24 +14,16 @@ import {
   type FieldReason,
   type Issue,
   type SurvivingField,
-} from "../people-diff/diff-model.js";
-import { withDisplayImage, type Save } from "../people-diff/field-controls.js";
+} from "../review/field-model.js";
+import { withDisplayImage, type Save } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { renderRailField } from "./rail-field.js";
-import { RailStatus, type RailStatusKey } from "../review/review-cards.js";
-
-const STATUS_LABEL: Record<RailStatusKey, string> = {
-  [RailStatus.CHANGED]: "changed",
-  [RailStatus.ADDED]: "new",
-  [RailStatus.UNCHANGED]: "unchanged",
-  [RailStatus.REMOVED]: "not found in scrape",
-  [RailStatus.DELETED]: "you removed",
-  [RailStatus.RESTORED]: "restored",
-};
-
-// Both departures read identically — a reviewer scanning wants "who is leaving",
-// and the answer is the same either way. Who caused it is in the banner text.
-const DEPARTING = new Set<string>([RailStatus.REMOVED, RailStatus.DELETED]);
+import {
+  DEPARTING,
+  RailStatus,
+  STATUS_LABEL,
+  type RailStatusKey,
+} from "../review/review-cards.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
   [RailStatus.REMOVED]: {

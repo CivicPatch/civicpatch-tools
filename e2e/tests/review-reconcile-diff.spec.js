@@ -35,23 +35,21 @@ test.describe("Review reconcile diff (populated)", () => {
     const maria = railFor(page, "Maria González");
     await expect(maria).toHaveClass(/review-rail--changed/);
 
-    // Office changed, an email was added, a phone was cleared — and Division is
-    // here for a different reason: the fixture has division_ocdid null on BOTH
-    // sides, so it reads `same` to a pure diff while still blocking publish.
-    // That is rule 3 of the collapse rule (§2), and the row is exactly what
-    // stops the card hiding why publishing fails. Everything else moved by
-    // nothing and is not on screen — which the old view could not do, since it
-    // rendered all eleven fields regardless.
-    await expect(maria.locator(".review-rail__field")).toHaveCount(4);
+    // Office changed, an email was added, a phone was cleared. Nothing else
+    // moved, so nothing else is on screen — which the old view could not do,
+    // since it rendered all eleven fields regardless.
+    //
+    // This briefly asserted a fourth row: the fixture had division_ocdid null on
+    // both sides, which reads `same` to a pure diff but is required, so rule 3
+    // surfaced it. The publish gate then refused to publish the fixture at all,
+    // which is how we noticed the data was impossible — resolve_division always
+    // returns a division. The fixture now carries one.
+    await expect(maria.locator(".review-rail__field")).toHaveCount(3);
     await expect(maria.locator(".review-rail__label")).toHaveText([
       "Office *",
-      "Division *",
       "Email",
       "Phone",
     ]);
-    await expect(
-      fieldIn(maria, "Division").locator(".review-rail__error"),
-    ).toContainText("Required");
 
     // The office control carries the new value; the old one is a trailing
     // annotation rather than a second column.
@@ -89,7 +87,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // fields never leave a card once shown (§2.1).
     await office.locator("input").fill("Mayor");
     await expect(office.locator(".review-rail__was")).toHaveCount(0);
-    await expect(maria.locator(".review-rail__field")).toHaveCount(4);
+    await expect(maria.locator(".review-rail__field")).toHaveCount(3);
   });
 
   test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
@@ -113,7 +111,7 @@ test.describe("Review reconcile diff (populated)", () => {
     await maria.locator(".review-rail__expander").click();
     const termStart = fieldIn(maria, "Term start").first();
 
-    await expect(termStart.locator(".people-diff__date-year")).toHaveValue("2021");
+    await expect(termStart.locator(".field-control__date-year")).toHaveValue("2021");
     const month = termStart.locator('select[aria-label="Month"]');
     const day = termStart.locator('select[aria-label="Day"]');
     await expect(month).toHaveValue("");

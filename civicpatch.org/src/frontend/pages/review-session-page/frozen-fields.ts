@@ -23,7 +23,7 @@
 // reason a field FIRST appeared is the one that sticks (§2.2), while its badge
 // is derived from current state.
 
-import { type FieldReason, type SurvivingField } from "../../components/people-diff/diff-model.js";
+import { type FieldReason, type SurvivingField } from "../../components/review/field-model.js";
 
 // person id -> field key -> why that field first became visible
 export type FrozenFields = Map<string, Map<string, FieldReason>>;

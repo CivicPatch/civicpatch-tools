@@ -8,17 +8,19 @@ import {
   fieldState,
   changedFields,
   recordsDiffer,
-  foldDeletions,
   survivingFields,
   isValidDate,
   isTermOrderValid,
   isRequiredFieldEmpty,
   fieldError,
-  buildLinkUpdates,
-  indexIssuesByPersonId,
   type FieldSpec,
   type Issue,
-} from "../components/people-diff/diff-model.js";
+} from "../components/review/field-model.js";
+import {
+  foldDeletions,
+  buildLinkUpdates,
+  indexIssuesByPersonId,
+} from "../components/review/review-cards.js";
 
 const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
 

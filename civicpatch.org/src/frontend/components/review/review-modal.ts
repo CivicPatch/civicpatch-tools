@@ -13,9 +13,9 @@ import "../basic/modal.js";
 import "../person-image.js";
 import "./review-modal.css";
 import "../review-rail/review-rail.css";
-import { withDisplayImage } from "../people-diff/field-controls.js";
+import { withDisplayImage } from "./field-controls.js";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
-import { RailStatus, type ReviewCard } from "./review-cards.js";
+import { personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
 import {
   takeSnapshot,
   planRevert,
@@ -33,6 +33,7 @@ export interface ReviewModalProps {
   rail: RailFactory;
   deletedIds: Set<string>;
   restoredIds: Set<string>;
+  isReadOnly: boolean;
   onClose: () => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onDelete: (id: string) => void;
@@ -46,21 +47,13 @@ export interface ReviewModalProps {
 // of what a person's row looks like.
 export type RailFactory = (card: ReviewCard) => PersonRailProps;
 
-const STATUS_LABEL: Record<string, string> = {
-  [RailStatus.CHANGED]: "changed",
-  [RailStatus.ADDED]: "new",
-  [RailStatus.UNCHANGED]: "unchanged",
-  [RailStatus.REMOVED]: "not found in scrape",
-  [RailStatus.DELETED]: "you removed",
-  [RailStatus.RESTORED]: "restored",
-};
-
 function ReviewModal(props: ReviewModalProps) {
   const {
     cards,
     openPersonId,
     focusFieldKey,
     rail,
+    isReadOnly,
     deletedIds,
     restoredIds,
     onClose,
@@ -137,7 +130,7 @@ function ReviewModal(props: ReviewModalProps) {
   const canRevert =
     snapshot && !isUnchangedSince(snapshot, card.newRecord, deletedIds, restoredIds);
 
-  const name = (card.newRecord ?? card.oldRecord)?.name || "(unnamed)";
+  const name = personOf(card)?.name || "(unnamed)";
 
   // Rendered inside the body rather than passed as civ-modal's `title`: `title`
   // is a native HTMLElement property, so setting it to anything but a string
@@ -172,7 +165,7 @@ function ReviewModal(props: ReviewModalProps) {
       <nav class="review-modal__people" aria-label="People in this review">
         <div class="review-modal__people-head">${editedCount} of ${cards.length} to review</div>
         ${cards.map((entry) => {
-          const record = entry.newRecord ?? entry.oldRecord;
+          const record = personOf(entry);
           const isOn = entry.personId === card.personId;
           return html`<button
             class="review-modal__person review-modal__person--${entry.status} ${isOn
@@ -206,18 +199,22 @@ function ReviewModal(props: ReviewModalProps) {
     </div>
   `;
 
+  // Read-only opens and navigates, but offers nothing to undo — there is
+  // nothing to have changed, so Revert would be a button that never applies.
   const footer = html`
     <div class="review-modal__foot">
       <span class="review-modal__hint">Alt + ← / → to move between people</span>
       <span>
-        <button
-          class="review-modal__revert"
-          ?disabled=${!canRevert}
-          @click=${revert}
-        >
-          Revert this person
-        </button>
-        <button class="btn-sm" @click=${onClose}>Done</button>
+        ${isReadOnly
+          ? nothing
+          : html`<button
+              class="review-modal__revert"
+              ?disabled=${!canRevert}
+              @click=${revert}
+            >
+              Revert this person
+            </button>`}
+        <button class="btn-sm" @click=${onClose}>${isReadOnly ? "Close" : "Done"}</button>
       </span>
     </div>
   `;

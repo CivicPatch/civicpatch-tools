@@ -3,7 +3,7 @@
 // reviewer types into. That is what makes them reusable by the rail, the modal
 // and (eventually) merge's N-candidate picker, which are not two-column layouts.
 //
-// The `old | copy | new` assembly lives in field-renderers.ts.
+// Pairing a control with an old value is rail-field.ts's job, not theirs.
 
 import { html, nothing } from "lit-html";
 import "./field-controls.css";
@@ -11,11 +11,10 @@ import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   diffValue,
-  normalizeMultiValue,
   type FieldSpec,
   type PresentRecord,
   type ScalarDiffState,
-} from "./diff-model.js";
+} from "./field-model.js";
 import {
   parseDivision,
   jurisdictionToDivisionBase,
@@ -90,8 +89,8 @@ export function renderScalarNewSide(
   { state, error }: NewSideContext,
 ) {
   return html`<input
-    class="people-diff__input people-diff__input--${state} ${error
-      ? "people-diff__input--error"
+    class="field-control__input field-control__input--${state} ${error
+      ? "field-control__input--error"
       : ""}"
     .value=${displayScalar(field, newRecord)}
     @input=${(e: Event) =>
@@ -121,9 +120,9 @@ export function renderDateNewSide(
     save(buildFieldUpdate(newRecord, field.key, serializeDate(next) || null));
   };
   return html`
-    <div class="people-diff__date">
+    <div class="field-control__date">
       <input
-        class="people-diff__date-year"
+        class="field-control__date-year"
         type="number"
         min="1900"
         max="2100"
@@ -169,44 +168,6 @@ export function renderDateNewSide(
   `;
 }
 
-export function renderMultiNewSide(
-  values: string[],
-  oldSet: Set<string>,
-  setValues: (v: string[]) => void,
-  label: string,
-) {
-  return html`
-    <div class="people-diff__multi">
-      ${values.map((value, i) => {
-        const added = !oldSet.has(normalizeMultiValue(value));
-        return html`<div class="people-diff__multi-row">
-          <input
-            class="people-diff__input ${added
-              ? "people-diff__input--added"
-              : ""}"
-            .value=${value}
-            @input=${(e: Event) =>
-              setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
-          />
-          <button
-            class="people-diff__x"
-            title="remove"
-            @click=${() => setValues(values.filter((_, j) => j !== i))}
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>`;
-      })}
-      <button
-        class="people-diff__add"
-        @click=${() => setValues([...values, ""])}
-      >
-        + add ${label}
-      </button>
-    </div>
-  `;
-}
-
 export function renderDivisionNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
@@ -228,9 +189,9 @@ export function renderDivisionNewSide(
     ? (newOcdid ?? "")
     : rebuild(division.type, division.value);
   return html`
-    <div class="people-diff__division">
+    <div class="field-control__division">
       <select
-        class="people-diff__division-select"
+        class="field-control__division-select"
         aria-label="Division type"
         @change=${(e: Event) =>
           save(
@@ -260,7 +221,7 @@ export function renderDivisionNewSide(
       ${atLarge || isOther
         ? ""
         : html`<input
-            class="people-diff__division-input"
+            class="field-control__division-input"
             type="text"
             placeholder="Number"
             aria-label="Division number"
@@ -274,7 +235,7 @@ export function renderDivisionNewSide(
                 ),
               )}
           />`}
-      <small class="people-diff__division-preview">${preview}</small>
+      <small class="field-control__division-preview">${preview}</small>
     </div>
   `;
 }
@@ -283,25 +244,25 @@ export function renderSourceUrlsNewSide(
   values: string[],
   setValues: (v: string[]) => void,
 ) {
-  return html`<div class="people-diff__multi">
+  return html`<div class="field-control__multi">
     ${values.map(
       (value, i) =>
-        html`<div class="people-diff__multi-row">
+        html`<div class="field-control__multi-row">
           <input
-            class="people-diff__input"
+            class="field-control__input"
             .value=${value}
             @input=${(e: Event) =>
               setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
           />
           <a
-            class="people-diff__source-link-btn"
+            class="field-control__source-link-btn"
             href=${ensureUrl(value)}
             target=${SOURCE_LINK_TARGET}
             title="open link"
             ><i class="fa-solid fa-arrow-up-right-from-square"></i
           ></a>
           <button
-            class="people-diff__x"
+            class="field-control__x"
             title="remove"
             @click=${() => setValues(values.filter((_, j) => j !== i))}
           >
@@ -309,23 +270,23 @@ export function renderSourceUrlsNewSide(
           </button>
         </div>`,
     )}
-    <button class="people-diff__add" @click=${() => setValues([...values, ""])}>
+    <button class="field-control__add" @click=${() => setValues([...values, ""])}>
       + add source url
     </button>
   </div>`;
 }
 
 export function sourceLinks(urls: string[]) {
-  return html`<div class="people-diff__source-urls">
+  return html`<div class="field-control__source-urls">
     ${urls.map(
       (url) =>
         html`<a
-          class="people-diff__source-link"
+          class="field-control__source-link"
           href=${ensureUrl(url)}
           target=${SOURCE_LINK_TARGET}
           >${url}
           <i
-            class="fa-solid fa-arrow-up-right-from-square people-diff__source-icon"
+            class="fa-solid fa-arrow-up-right-from-square field-control__source-icon"
           ></i
         ></a>`,
     )}
@@ -345,14 +306,14 @@ export function renderPhotoNewSide(
   save: Save,
   isReadOnly: boolean,
 ) {
-  return html`<div class="people-diff__photo">
+  return html`<div class="field-control__photo">
     <person-image
       .person=${withDisplayImage(newRecord)}
       .size=${"2.75rem"}
     ></person-image>
     ${newRecord.image && !isReadOnly
       ? html`<button
-          class="people-diff__photo-clear"
+          class="field-control__photo-clear"
           @click=${() => save({ image: null, cdn_image: null })}
         >
           Remove photo
@@ -384,20 +345,20 @@ export function renderMultiList(
 ) {
   const values = rows.map((r) => r.value);
   return html`
-    <div class="people-diff__multi">
+    <div class="field-control__multi">
       ${rows.map(
-        (row, i) => html`<div class="people-diff__multi-row">
+        (row, i) => html`<div class="field-control__multi-row">
           <input
-            class="people-diff__input ${row.isNew ? "people-diff__input--added" : ""}"
+            class="field-control__input ${row.isNew ? "field-control__input--added" : ""}"
             .value=${row.value}
             @input=${(e: Event) =>
               setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
           />
           ${row.isNew
-            ? html`<span class="people-diff__provenance">new</span>`
+            ? html`<span class="field-control__provenance">new</span>`
             : nothing}
           <button
-            class="people-diff__x"
+            class="field-control__x"
             title="remove"
             @click=${() => setValues(values.filter((_, j) => j !== i))}
           >
@@ -408,18 +369,18 @@ export function renderMultiList(
       <!-- Dropped values are the record of what the scrape lost, not something to
            edit in place — so they read, and offer to come back, one at a time. -->
       ${dropped.map(
-        (value) => html`<div class="people-diff__multi-row people-diff__multi-row--dropped">
-          <span class="people-diff__value people-diff__value--removed">${value}</span>
-          <span class="people-diff__provenance">dropped</span>
+        (value) => html`<div class="field-control__multi-row field-control__multi-row--dropped">
+          <span class="field-control__value field-control__value--removed">${value}</span>
+          <span class="field-control__provenance">dropped</span>
           <button
-            class="people-diff__restore-value"
+            class="field-control__restore-value"
             @click=${() => setValues([...values, value])}
           >
             Restore
           </button>
         </div>`,
       )}
-      <button class="people-diff__add" @click=${() => setValues([...values, ""])}>
+      <button class="field-control__add" @click=${() => setValues([...values, ""])}>
         + add ${label}
       </button>
     </div>

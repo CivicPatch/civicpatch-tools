@@ -251,7 +251,7 @@
 
 /* The live OCD-ID preview is a full division path — let it wrap instead of
    spilling past the control it belongs to. */
-.review-rail__control .people-diff__division-preview {
+.review-rail__control .field-control__division-preview {
   display: block;
   overflow-wrap: anywhere;
   font-size: var(--text-xs);
@@ -364,7 +364,7 @@
    below the editable ones in their own block so tabbing through the set is not
    interrupted. */
 
-.review-rail__control .people-diff__provenance {
+.review-rail__control .field-control__provenance {
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -372,24 +372,25 @@
   white-space: nowrap;
 }
 
-.review-rail__control .people-diff__multi-row--dropped {
+.review-rail__control .field-control__multi-row--dropped {
   align-items: baseline;
   padding: 0.1rem 0;
 }
 
-.review-rail__control .people-diff__multi-row--dropped .people-diff__value {
+.review-rail__control .field-control__multi-row--dropped .field-control__value {
   flex: 1;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.review-rail .people-diff__restore-value {
+/* Named, not read from --pico-color — see review-modal.css. */
+.review-rail .field-control__restore-value {
   padding: 0 0.35rem;
   font-size: var(--text-sm);
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius);
   background: none;
-  color: var(--pico-color);
+  color: var(--civ-text);
   cursor: pointer;
   width: auto;
   white-space: nowrap;

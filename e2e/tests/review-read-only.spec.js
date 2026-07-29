@@ -54,3 +54,73 @@ test.describe("Review card — read only", () => {
     );
   });
 });
+
+test.describe("Review card — read only across the views", () => {
+  const openReadOnly = async (page) => {
+    await page.goto(`/review/session?request_id=${READ_ONLY_REQUEST_ID}`);
+    await expect(page.locator("review-overview")).toBeVisible();
+  };
+
+  test("all three views stay available — the card is a historical record", async ({
+    authenticatedPage: page,
+  }) => {
+    await openReadOnly(page);
+    await expect(page.locator(".review-page__view-tab")).toHaveCount(3);
+
+    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
+    await expect(page.locator("review-rail-list")).toBeVisible();
+    await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
+    await expect(page.locator("review-preview")).toBeVisible();
+  });
+
+  test("every field renders as its value, never a disabled input", async ({
+    authenticatedPage: page,
+  }) => {
+    await openReadOnly(page);
+    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
+
+    const rail = page.locator(".review-rail").filter({ hasText: "Jane Published" });
+    await rail.locator(".review-rail__expander").click();
+
+    await expect(rail.locator("input")).toHaveCount(0);
+    await expect(rail.locator("select")).toHaveCount(0);
+
+    // The photo is shown as a photo — displayScalar would have printed its URL.
+    await expect(rail.locator("person-image")).not.toHaveCount(0);
+    await expect(
+      rail.locator(".review-rail__field").filter({ hasText: "Email" }),
+    ).toContainText("jane@ri.gov");
+  });
+
+  test("no mutating control is offered on any view", async ({
+    authenticatedPage: page,
+  }) => {
+    await openReadOnly(page);
+    // Overview: no way to add someone to a published card.
+    await expect(page.locator(".review-tile--ghost")).toHaveCount(0);
+
+    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
+    for (const control of [
+      ".review-rail__delete",
+      ".review-rail__reset",
+      ".review-rail__restore-person",
+      ".review-rail__restore",
+      ".review-rail--ghost",
+      ".field-control__add",
+    ]) {
+      await expect(page.locator(control)).toHaveCount(0);
+    }
+  });
+
+  test("the modal opens and navigates, but offers nothing to undo", async ({
+    authenticatedPage: page,
+  }) => {
+    await openReadOnly(page);
+    await page.locator(".review-tile__open").first().click();
+    await expect(page.locator("review-modal dialog")).toBeVisible();
+
+    // Close, not Done — there is nothing to keep — and no Revert at all.
+    await expect(page.locator(".review-modal__revert")).toHaveCount(0);
+    await expect(page.locator("review-modal").getByText("Close")).toBeVisible();
+  });
+});

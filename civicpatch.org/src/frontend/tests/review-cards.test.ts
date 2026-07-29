@@ -3,9 +3,12 @@ import {
   buildReviewCards,
   cardFields,
   groupCards,
+  publishSet,
+  blockingErrors,
+  bySeat,
   RailStatus,
 } from "../components/review/review-cards.js";
-import { type Issue } from "../components/people-diff/diff-model.js";
+import { type Issue } from "../components/review/field-model.js";
 
 const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 
@@ -243,5 +246,78 @@ describe("needsReview / groupCards", () => {
     });
     // Both changed; b carries the issue, so b leads.
     expect(groupCards(cards).toReview.map((c) => c.personId)).toEqual(["b", "a"]);
+  });
+});
+
+describe("publishSet / blockingErrors", () => {
+  it("is everyone with a record, minus those the reviewer dropped", () => {
+    const cards = build({
+      existing: [person("a"), person("gone")],
+      currentPeople: [person("a"), person("b")],
+      deletedIds: new Set(["b"]),
+    });
+    // `gone` has no new-side record so is already absent; `b` was dropped.
+    expect(publishSet(cards).map((c) => c.personId)).toEqual(["a"]);
+  });
+
+  it("includes someone restored — they have a record again", () => {
+    const cards = build({
+      existing: [person("a")],
+      currentPeople: [person("a")],
+      restoredIds: new Set(["a"]),
+    });
+    expect(publishSet(cards).map((c) => c.personId)).toEqual(["a"]);
+  });
+
+  it("finds nothing wrong with a complete record", () => {
+    const cards = build({ existing: [person("a")], currentPeople: [person("a")] });
+    expect(blockingErrors(cards)).toEqual([]);
+  });
+
+  it("reports a required field even though the collapse rule may hide it", () => {
+    // This is the whole point of scanning the schema rather than the visible
+    // rows: a hidden field can still block publishing (§9).
+    const cards = build({
+      existing: [person("a")],
+      currentPeople: [person("a", { name: "" })],
+    });
+    expect(blockingErrors(cards).map((e) => [e.fieldLabel, e.message])).toEqual([
+      ["Name", "Required"],
+    ]);
+  });
+
+  it("ignores errors on someone being dropped", () => {
+    const cards = build({
+      existing: [person("a")],
+      currentPeople: [person("a", { name: "" })],
+      deletedIds: new Set(["a"]),
+    });
+    expect(blockingErrors(cards)).toEqual([]);
+  });
+
+  it("names the person, so the reviewer knows where to go", () => {
+    const cards = build({
+      existing: [person("a")],
+      currentPeople: [person("a", { name: "", office: { name: "", division_ocdid: DIVISION } })],
+    });
+    expect(blockingErrors(cards).map((e) => e.name)).toEqual(["(unnamed)", "(unnamed)"]);
+  });
+});
+
+describe("bySeat", () => {
+  const AT_LARGE = "ocd-division/country:us/state:nh/place:concord";
+  const ward = (n: number) => `${AT_LARGE}/ward:${n}`;
+  const JURIS = "ocd-jurisdiction/country:us/state:nh/place:concord/government";
+
+  it("puts at-large first, then wards in numeric order", () => {
+    const cards = build({
+      currentPeople: [
+        person("w10", { office: { name: "Council", division_ocdid: ward(10) } }),
+        person("w2", { office: { name: "Council", division_ocdid: ward(2) } }),
+        person("mayor", { office: { name: "Mayor", division_ocdid: AT_LARGE } }),
+      ],
+    });
+    // Numeric, not lexical — ward 2 before ward 10.
+    expect(bySeat(cards, JURIS).map((c) => c.personId)).toEqual(["mayor", "w2", "w10"]);
   });
 });

@@ -125,8 +125,8 @@ test.describe("Review rail — multi-value provenance (§5.2)", () => {
     const field = emailField(page);
 
     // One list, not two columns: both addresses are editable rows.
-    await expect(field.locator(".people-diff__multi-row input")).toHaveCount(2);
-    await expect(field.locator(".people-diff__provenance")).toHaveText(["new"]);
+    await expect(field.locator(".field-control__multi-row input")).toHaveCount(2);
+    await expect(field.locator(".field-control__provenance")).toHaveText(["new"]);
   });
 
   test("a value the scrape lost reads as dropped and comes back one at a time", async ({
@@ -140,18 +140,18 @@ test.describe("Review rail — multi-value provenance (§5.2)", () => {
       .locator(".review-rail__field")
       .filter({ hasText: "Phone" });
 
-    const droppedRow = phone.locator(".people-diff__multi-row--dropped");
+    const droppedRow = phone.locator(".field-control__multi-row--dropped");
     await expect(droppedRow).toHaveCount(1);
-    await expect(droppedRow.locator(".people-diff__provenance")).toHaveText("dropped");
+    await expect(droppedRow.locator(".field-control__provenance")).toHaveText("dropped");
     // Not an input — it is the record of what was lost, not something to edit.
     await expect(droppedRow.locator("input")).toHaveCount(0);
 
-    await droppedRow.locator(".people-diff__restore-value").click();
+    await droppedRow.locator(".field-control__restore-value").click();
 
     // Restoring moves that one value into the editable list, and nothing is
     // dropped any more — so the field stops reading as changed.
-    await expect(phone.locator(".people-diff__multi-row--dropped")).toHaveCount(0);
-    await expect(phone.locator(".people-diff__multi-row input")).toHaveCount(1);
+    await expect(phone.locator(".field-control__multi-row--dropped")).toHaveCount(0);
+    await expect(phone.locator(".field-control__multi-row input")).toHaveCount(1);
   });
 
   test("provenance is derived, so retyping a dropped value clears its row", async ({
@@ -164,13 +164,13 @@ test.describe("Review rail — multi-value provenance (§5.2)", () => {
       .locator(".review-rail__field")
       .filter({ hasText: "Phone" });
 
-    await expect(phone.locator(".people-diff__multi-row--dropped")).toHaveCount(1);
+    await expect(phone.locator(".field-control__multi-row--dropped")).toHaveCount(1);
 
     // Type the dropped number back in by hand rather than clicking Restore. If
     // provenance were stamped when a row was made, the dropped row would linger
     // beside its own value.
-    await phone.locator(".people-diff__add").click();
-    await phone.locator(".people-diff__multi-row input").last().fill("(555) 020-0102");
-    await expect(phone.locator(".people-diff__multi-row--dropped")).toHaveCount(0);
+    await phone.locator(".field-control__add").click();
+    await phone.locator(".field-control__multi-row input").last().fill("(555) 020-0102");
+    await expect(phone.locator(".field-control__multi-row--dropped")).toHaveCount(0);
   });
 });
