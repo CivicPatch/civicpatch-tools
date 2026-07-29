@@ -159,6 +159,13 @@
   color: var(--rail-cleared);
 }
 
+/* See review-modal.css: --pico-color is overridden to the inverse on every bare
+   button, so an unfilled button must name its colour rather than read it. */
+.review-rail--ghost:hover {
+  border-color: var(--civ-text);
+  color: var(--civ-text);
+}
+
 /* Add person is an empty slot at the end of the roster rather than a button
    above it: it reads as "there is room for one more" in the same shape as the
    rails it sits among, and it stays out of the way of the actual work. */
@@ -175,11 +182,6 @@
   font-size: var(--text-sm);
   cursor: pointer;
   width: 100%;
-}
-
-.review-rail--ghost:hover {
-  border-color: var(--pico-color);
-  color: var(--pico-color);
 }
 
 .review-rail__ghost-mark {

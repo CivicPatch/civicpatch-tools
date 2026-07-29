@@ -10,11 +10,10 @@
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
 import "./review-rail.css";
-import { type FrozenFields, visibleFields } from "../../pages/review-session-page/frozen-fields.js";
-import { type Save } from "../people-diff/field-controls.js";
+import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonRail } from "./person-rail.js";
-import { RailStatus, type ReviewCard } from "../review/review-cards.js";
-import { buildLinkUpdates } from "../people-diff/diff-model.js";
+import { type ReviewCard } from "../review/review-cards.js";
+import { linkCandidatesFrom, railPropsFor } from "./rail-props.js";
 
 interface ReviewRailListProps {
   cards: ReviewCard[];
@@ -56,17 +55,7 @@ function ReviewRailList({
   // rather than assumed, or expansion leaks from one reviewer's card to the next.
   const expandedIds = expansion.requestId === requestId ? expansion.ids : NO_EXPANSION.ids;
 
-  // Only people the scrape didn't find. Someone the *reviewer* dropped carries
-  // status DELETED rather than REMOVED, so they are already excluded here — which
-  // matters, because linking adopts the target's id and a deleted target would
-  // hand the added person an id already marked for deletion (§21).
-  const linkCandidates = cards
-    .filter((card) => card.status === RailStatus.REMOVED)
-    .map((card) => ({
-      id: card.personId,
-      name: card.oldRecord?.name || "(unnamed)",
-      office: card.oldRecord?.office?.name ?? "",
-    }));
+  const linkCandidates = linkCandidatesFrom(cards);
 
   const toggleExpand = (personId: string) => {
     const ids = new Set(expandedIds);
@@ -83,36 +72,24 @@ function ReviewRailList({
 
   return html`
     <div class="review-rail-list">
-      ${cards.map((card) => {
-        const save: Save = (updates) => onPersonSave(card.personId, updates);
-        return renderPersonRail({
-          status: card.status,
-          oldRecord: card.oldRecord,
-          newRecord: card.newRecord,
-          surviving: card.surviving,
-          frozenReasons: visibleFields(frozen, card.personId),
-          issues: card.issues,
-          isReadOnly,
-          jurisdictionOcdid,
-          isDirty: dirtyIds.has(card.personId),
-          isExpanded: expandedIds.has(card.personId),
-          onToggleExpand: () => toggleExpand(card.personId),
-          onSave: save,
-          onDelete: () => onDeletePerson(card.personId),
-          onUndelete: () => onUndeletePerson(card.personId),
-          // Rebuilding the record needs the old side, which only the card has.
-          onRestore: () => onRestorePerson(card.oldRecord),
-          // Reset is offered only to someone with edits to discard. A card the
-          // reviewer has not touched has nothing to reset to.
-          onReset:
-            dirtyIds.has(card.personId) && card.status !== RailStatus.REMOVED
-              ? () => onResetPerson(card.personId)
-              : null,
-          linkCandidates,
-          onLink: (target: any) =>
-            onPersonSave(card.personId, buildLinkUpdates(card.newRecord, target)),
-        });
-      })}
+      ${cards.map((card) =>
+        renderPersonRail(
+          railPropsFor(card, {
+            frozen,
+            dirtyIds,
+            isReadOnly,
+            jurisdictionOcdid,
+            linkCandidates,
+            expandedIds,
+            onToggleExpand: toggleExpand,
+            onPersonSave,
+            onDeletePerson,
+            onUndeletePerson,
+            onRestorePerson,
+            onResetPerson,
+          }),
+        ),
+      )}
       ${!isReadOnly && onAdd
         ? html`<button class="review-rail review-rail--ghost" @click=${onAdd}>
             <span class="review-rail__ghost-mark">+</span>
