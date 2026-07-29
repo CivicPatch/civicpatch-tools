@@ -1,0 +1,409 @@
+/* Detail v2 — a vertical list of rails (spec §5).
+   Each rail is `identity | fields`, so the field body starts at a fixed x and
+   every control aligns across every person. That alignment is the reason for
+   the layout; today's card grid cannot do it at any width. */
+
+.review-rail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  /* The rail needs identity (11rem) + label (7rem) + control (22rem) + a `was`
+     annotation — about 58rem. Left at full page width the content stopped well
+     short of the edge and the right third read as broken rather than empty. */
+  max-width: min(var(--page-width), 58rem);
+  margin-inline: auto;
+
+  /* State colours (§11.1, axis 1 — what the scrape did) and attention (axis 2).
+     Sourced from pico semantics, which styles.css remaps per theme, so these
+     follow light/dark with no second rule set — and survive the Catppuccin
+     removal, since that layer only feeds these same semantics today. The old
+     diff hardcoded #fef3c7 and could do neither.
+
+     Issue reads info-blue rather than the violet §11.1 names: there is no violet
+     in the editorial palette, and §11.1 is explicit that shape carries the
+     distinction (triangle stops you, circle advises you) with colour as
+     reinforcement. */
+  --rail-changed: var(--pico-warn-color);
+  --rail-changed-bg: color-mix(in srgb, var(--pico-warn-color) 12%, transparent);
+  --rail-added: var(--pico-ins-color);
+  --rail-cleared: var(--pico-del-color);
+  --rail-issue: var(--pico-info-color);
+
+  /* Dense form controls — pico sizes inputs from these, and overriding raw
+     padding loses to its specificity. */
+  --pico-form-element-spacing-vertical: 0.15rem;
+  --pico-form-element-spacing-horizontal: 0.45rem;
+}
+
+.review-rail-list input,
+.review-rail-list select,
+.review-rail-list button {
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* Rail. The identity column is narrower than the body it labels — the body is
+   where the work happens, and a wide identity column pushes every control right
+   without earning it. */
+
+.review-rail {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-background-color);
+}
+
+.review-rail--changed {
+  box-shadow: inset 3px 0 0 var(--rail-changed);
+}
+
+.review-rail--added {
+  box-shadow: inset 3px 0 0 var(--rail-added);
+}
+
+.review-rail--removed,
+.review-rail--deleted {
+  box-shadow: inset 3px 0 0 var(--rail-cleared);
+}
+
+/* A person with nothing to review: one line, laid out across rather than
+   stacked, so the row is as tall as its content. */
+.review-rail--strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.review-rail--strip .review-rail__name {
+  font-weight: 500;
+}
+
+.review-rail--strip .review-rail__status {
+  margin-left: auto;
+}
+
+.review-rail--strip .review-rail-list .review-rail__expander {
+  margin-top: 0;
+}
+
+/* Identity column */
+
+.review-rail__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.review-rail__name {
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.review-rail--removed .review-rail__name,
+.review-rail--deleted .review-rail__name {
+  text-decoration: line-through;
+  color: var(--rail-cleared);
+}
+
+.review-rail__office {
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  overflow-wrap: anywhere;
+}
+
+.review-rail__status {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pico-muted-color);
+}
+
+.review-rail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+/* Scoped under .review-rail deliberately: styles.css styles bare buttons via
+   `button:not(.btn-ghost):not(.secondary):not(…)`, and that chain of :not()s
+   outspecifies a single class — it was painting these #fafafa on a white card,
+   so Restore rendered as an empty box. */
+.review-rail .review-rail__delete,
+.review-rail .review-rail__reset,
+.review-rail .review-rail__restore-person {
+  padding: 0.15rem 0.5rem;
+  font-size: var(--text-sm);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: none;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  width: auto;
+}
+
+.review-rail .review-rail__delete:hover {
+  border-color: var(--rail-cleared);
+  color: var(--rail-cleared);
+}
+
+.review-rail .review-rail__restore-person {
+  border-color: var(--rail-cleared);
+  color: var(--rail-cleared);
+}
+
+/* Add person is an empty slot at the end of the roster rather than a button
+   above it: it reads as "there is room for one more" in the same shape as the
+   rails it sits among, and it stays out of the way of the actual work. */
+.review-rail--ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  border: 1px dashed var(--pico-muted-border-color);
+  background: none;
+  box-shadow: none;
+  color: var(--pico-muted-color);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  width: 100%;
+}
+
+.review-rail--ghost:hover {
+  border-color: var(--pico-color);
+  color: var(--pico-color);
+}
+
+.review-rail__ghost-mark {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Field body */
+
+.review-rail__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+/* `label | control | was … Restore`. One column set for every row, so the
+   controls line up down the whole card.
+
+   The third column is `auto`, not 1fr: `was …` is absent on most rows, and a
+   greedy column reserved a third of the card for nothing. `justify-content:
+   start` stops the row stretching to fill the body. */
+.review-rail__field {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 22rem) auto;
+  justify-content: start;
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.15rem 0.25rem;
+  border-radius: var(--pico-border-radius);
+}
+
+.review-rail__label {
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  padding-top: 0.25rem;
+}
+
+.review-rail__field--changed .review-rail__label {
+  color: var(--rail-changed);
+  font-weight: 600;
+}
+
+.review-rail__field--added .review-rail__label {
+  color: var(--rail-added);
+  font-weight: 600;
+}
+
+.review-rail__field--cleared .review-rail__label {
+  color: var(--rail-cleared);
+  font-weight: 600;
+}
+
+.review-rail__req {
+  color: var(--rail-cleared);
+}
+
+.review-rail__control {
+  min-width: 0;
+}
+
+.review-rail__control input,
+.review-rail__control select {
+  width: 100%;
+  font-size: var(--text-sm);
+}
+
+/* The live OCD-ID preview is a full division path — let it wrap instead of
+   spilling past the control it belongs to. */
+.review-rail__control .people-diff__division-preview {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+}
+
+/* The old value, as a trailing annotation rather than a second column. */
+.review-rail__was {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  padding-top: 0.25rem;
+  min-width: 0;
+}
+
+.review-rail__was-value {
+  text-decoration: line-through;
+  overflow-wrap: anywhere;
+}
+
+.review-rail .review-rail__restore {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--text-sm);
+  color: var(--pico-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  width: auto;
+}
+
+/* Attention (§11.1, axis 2 — what needs a person). Shape carries the
+   distinction so colour is reinforcement: triangle stops you, circle advises. */
+
+.review-rail__error,
+.review-rail__issue {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: var(--text-sm);
+  grid-column: 2 / -1;
+  padding-top: 0.15rem;
+}
+
+.review-rail__error {
+  color: var(--rail-cleared);
+}
+
+.review-rail__issue {
+  color: var(--rail-issue);
+}
+
+.review-rail__resolved {
+  color: var(--rail-added);
+}
+
+/* Expander */
+
+.review-rail-list .review-rail__expander {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0.2rem 0.25rem;
+  margin-top: 0.15rem;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  text-decoration: underline;
+  cursor: pointer;
+  width: auto;
+}
+
+/* Departure banner — one decision, so the fields collapse away (§5). */
+
+.review-rail__banner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-del-background);
+  font-size: var(--text-sm);
+}
+
+.review-rail__banner-title {
+  font-weight: 600;
+  color: var(--rail-cleared);
+}
+
+@media (max-width: 48rem) {
+  .review-rail {
+    grid-template-columns: 1fr;
+  }
+
+  .review-rail__field {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .review-rail__error,
+  .review-rail__issue {
+    grid-column: 1;
+  }
+}
+
+/* Multi-value provenance (§5.2). The published list is the only list; where each
+   value came from is an annotation on its row, and values the scrape dropped sit
+   below the editable ones in their own block so tabbing through the set is not
+   interrupted. */
+
+.review-rail__control .people-diff__provenance {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--pico-muted-color);
+  white-space: nowrap;
+}
+
+.review-rail__control .people-diff__multi-row--dropped {
+  align-items: baseline;
+  padding: 0.1rem 0;
+}
+
+.review-rail__control .people-diff__multi-row--dropped .people-diff__value {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.review-rail .people-diff__restore-value {
+  padding: 0 0.35rem;
+  font-size: var(--text-sm);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: none;
+  color: var(--pico-color);
+  cursor: pointer;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Link to person (§21 Interim) — an unmatched scraped person declaring they are
+   one of the people the scrape didn't find. Replaced by merge eventually. */
+.review-rail .review-rail__link {
+  font-size: var(--text-sm);
+  max-width: 100%;
+  width: auto;
+}
+
+/* An issue anchored to the person rather than a field sits above the field list.
+   Full width, because it is about the whole card. */
+.review-rail__issue--row {
+  grid-column: 1 / -1;
+  padding: 0.2rem 0.25rem;
+}

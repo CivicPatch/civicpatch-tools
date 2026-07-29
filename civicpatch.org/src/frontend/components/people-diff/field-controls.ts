@@ -5,7 +5,8 @@
 //
 // The `old | copy | new` assembly lives in field-renderers.ts.
 
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
+import "./field-controls.css";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
@@ -331,8 +332,14 @@ export function sourceLinks(urls: string[]) {
   </div>`;
 }
 
-// The scraped record carries `image`; person-image reads `cdn_image`, so the new
-// side is shown by aliasing one onto the other.
+// person-image reads `cdn_image`, but a freshly scraped record only carries
+// `image` — so anything showing a person's photo has to resolve the effective
+// one first, or a scraped photo silently falls back to initials.
+export const withDisplayImage = (person: PresentRecord) => ({
+  ...person,
+  cdn_image: person?.cdn_image || person?.image,
+});
+
 export function renderPhotoNewSide(
   newRecord: PresentRecord,
   save: Save,
@@ -340,8 +347,8 @@ export function renderPhotoNewSide(
 ) {
   return html`<div class="people-diff__photo">
     <person-image
-      .person=${{ ...newRecord, cdn_image: newRecord.image }}
-      size="2.75rem"
+      .person=${withDisplayImage(newRecord)}
+      .size=${"2.75rem"}
     ></person-image>
     ${newRecord.image && !isReadOnly
       ? html`<button
@@ -352,4 +359,69 @@ export function renderPhotoNewSide(
         </button>`
       : ""}
   </div>`;
+}
+
+// ── Multi-value, one list with provenance per row (§5.2) ─────────────────────
+//
+// Emails and phones are *sets*, and `old → new` is a pairing — there is nothing
+// to pair, because multiValueDiff normalises and compares as sets by design. So
+// the published list is the only list, and where each value came from is an
+// annotation on its row.
+//
+// Provenance is passed in, not computed here: a merge picker (§21.5) derives it
+// from N candidates rather than two sides, and this control should serve that
+// unchanged.
+export interface MultiRow {
+  value: string;
+  isNew: boolean;
+}
+
+export function renderMultiList(
+  rows: MultiRow[],
+  dropped: string[],
+  setValues: (values: string[]) => void,
+  label: string,
+) {
+  const values = rows.map((r) => r.value);
+  return html`
+    <div class="people-diff__multi">
+      ${rows.map(
+        (row, i) => html`<div class="people-diff__multi-row">
+          <input
+            class="people-diff__input ${row.isNew ? "people-diff__input--added" : ""}"
+            .value=${row.value}
+            @input=${(e: Event) =>
+              setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
+          />
+          ${row.isNew
+            ? html`<span class="people-diff__provenance">new</span>`
+            : nothing}
+          <button
+            class="people-diff__x"
+            title="remove"
+            @click=${() => setValues(values.filter((_, j) => j !== i))}
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>`,
+      )}
+      <!-- Dropped values are the record of what the scrape lost, not something to
+           edit in place — so they read, and offer to come back, one at a time. -->
+      ${dropped.map(
+        (value) => html`<div class="people-diff__multi-row people-diff__multi-row--dropped">
+          <span class="people-diff__value people-diff__value--removed">${value}</span>
+          <span class="people-diff__provenance">dropped</span>
+          <button
+            class="people-diff__restore-value"
+            @click=${() => setValues([...values, value])}
+          >
+            Restore
+          </button>
+        </div>`,
+      )}
+      <button class="people-diff__add" @click=${() => setValues([...values, ""])}>
+        + add ${label}
+      </button>
+    </div>
+  `;
 }

@@ -1,0 +1,169 @@
+/* Styling for the editable field controls (field-controls.ts).
+   Split out of people-diff.css when that component was retired: the controls
+   outlive the two-column diff they were born in, so their CSS travels with them.
+
+   The class prefix is still `people-diff__` — renaming it is a separate,
+   mechanical pass, kept apart from this behavioural change. */
+
+.review-rail-list,
+.review-overview {
+  /* Dense form controls — pico sizes inputs from these, and overriding raw
+     padding loses to its specificity. */
+  --pico-form-element-spacing-vertical: 0.15rem;
+  --pico-form-element-spacing-horizontal: 0.45rem;
+}
+
+.people-diff__add-person {
+  flex-shrink: 0;
+}
+
+/* This is a data-entry surface, so its action buttons read in the content (sans)
+   font — not the monospace chrome the global .btn-sm applies to small buttons. */
+.people-diff__reset,
+.people-diff__delete,
+.people-diff__add-person {
+  font-family: var(--pico-font-family);
+}
+.people-diff__cell--old .people-diff__input,
+.people-diff__cell--new .people-diff__input { font-size: var(--text-sm); }
+
+/* Inputs */
+/* Unified input sizing — shared by scalar inputs, division controls, and multi-value inputs */
+.people-diff__input,
+.people-diff__division-select,
+.people-diff__division-input,
+.people-diff__date-year,
+.people-diff__date select {
+  width: 100%;
+  height: auto;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--pico-form-element-border-color);
+  border-radius: var(--pico-border-radius);
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+/* pico gives selects extra right padding for the arrow + a tall background; keep
+   the arrow but match the input height. */
+/* The unified rule above pins padding at 0.15rem; selects need more vertical
+   room (and right room for the chevron) to match the text inputs visually. */
+.people-diff__division-select,
+.people-diff__date select {
+  padding: 0.48rem 1.5rem 0.48rem 0.4rem;
+  background-position: center right 0.5rem;
+}
+.people-diff__input--changed { border-color: var(--pd-changed-fg); background: var(--pd-changed-bg); }
+.people-diff__input--added { border-color: var(--pico-ins-color); background: var(--pico-ins-background); }
+.people-diff__input--cleared { border-color: var(--pico-del-color); background: var(--pico-del-background); }
+.people-diff__input--error { border-color: var(--pico-del-color); background: var(--pico-del-background); }
+
+/* Multi-value */
+.people-diff__multi { display: flex; flex-direction: column; gap: 0.2rem; }
+.people-diff__multi-row { display: flex; gap: 0.25rem; align-items: stretch; }
+.people-diff__multi-row .people-diff__input { flex: 1; }
+.people-diff__x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  padding: 0;
+  border: 1px solid var(--pico-muted-border-color);
+  background: var(--pico-card-background-color);
+  border-radius: var(--pico-border-radius);
+  color: var(--pico-muted-color);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.people-diff__add {
+  align-self: flex-start;
+  border: 1px dashed var(--pico-muted-border-color);
+  background: transparent;
+  border-radius: var(--pico-border-radius);
+  padding: 0.15rem 0.4rem;
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+  cursor: pointer;
+}
+
+.people-diff__value--removed { text-decoration: line-through; color: var(--pico-del-color); }
+.people-diff__value--added { display: inline-block; background: var(--pico-ins-background); border-radius: var(--pico-border-radius); padding: 0 0.2rem; }
+
+/* Division seat-editor */
+.people-diff__division {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+/* Live OCD-ID for the seat being built — the value actually written on save. */
+.people-diff__division-preview {
+  flex: 1 0 100%;
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+  word-break: break-all;
+}
+
+/* Date — a year box plus optional month/day, since partial dates are the norm */
+.people-diff__date {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.25rem;
+}
+.people-diff__division-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.people-diff__division-input {
+  flex: 0 0 4.5rem;
+}
+
+/* Source URLs */
+.people-diff__source-urls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.people-diff__source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: var(--text-sm);
+  word-break: break-all;
+}
+.people-diff__source-icon {
+  font-size: 0.6rem;
+  color: var(--pico-muted-color);
+  flex-shrink: 0;
+}
+.people-diff__source-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  text-decoration: none;
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+  flex-shrink: 0;
+}
+.people-diff__source-link-btn:hover { background: var(--pico-card-background-color); }
+
+/* Photo */
+.people-diff__photo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.people-diff__photo-clear {
+  border: 1px solid var(--pico-del-color);
+  background: transparent;
+  border-radius: var(--pico-border-radius);
+  padding: 0.15rem 0.4rem;
+  font-size: var(--text-xs);
+  color: var(--pico-del-color);
+  cursor: pointer;
+}
+.people-diff__photo-clear:hover { background: var(--pico-del-background); }

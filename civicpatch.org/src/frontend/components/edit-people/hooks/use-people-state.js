@@ -7,6 +7,12 @@ export function usePeopleState({ people }) {
   // "Drop this person on publish" is a reviewer decision about a record, not a
   // field of it, so it lives beside the list rather than on the row.
   const [deletedIds, setDeletedIds] = useState(new Set());
+  // Someone the scrape didn't find, whom the reviewer restored. It has to be
+  // remembered rather than derived: restoring copies their old record into the
+  // list, which makes them identical on both sides — indistinguishable from a
+  // person nothing happened to. deletedIds can't express it either, since a
+  // scrape-dropped person was never deleted.
+  const [restoredIds, setRestoredIds] = useState(new Set());
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
 
@@ -33,7 +39,9 @@ export function usePeopleState({ people }) {
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
     setOriginalPeople(peopleToAssign); // For tracking changes
-    setDeletedIds(new Set()); // a new baseline carries no decisions
+    // A new baseline carries none of the previous card's decisions.
+    setDeletedIds(new Set());
+    setRestoredIds(new Set());
   }
 
   function updatePerson(key, updates) {
@@ -66,8 +74,28 @@ export function usePeopleState({ people }) {
     setCurrentPeople(current => current.map(p => ({ ...p, _selected: false })));
   }
 
-  function handleRestore(key) {
+  function handleUndelete(key) {
     setDeletedIds(current => {
+      const next = new Set(current);
+      next.delete(key);
+      return next;
+    });
+  }
+
+  // Put back someone the scrape didn't find. Their old record joins the list, so
+  // the publish patch carries them and the backend stops reading their absence
+  // as a deletion. Appended rather than slotted: a scrape-dropped person has no
+  // position in the proposed list to return to.
+  function handleRestore(person) {
+    setCurrentPeople(current =>
+      current.some(p => p.id === person.id) ? current : [...current, { ...person }]
+    );
+    setRestoredIds(current => new Set([...current, person.id]));
+  }
+
+  function handleUndoRestore(key) {
+    setCurrentPeople(current => current.filter(p => p.id !== key));
+    setRestoredIds(current => {
       const next = new Set(current);
       next.delete(key);
       return next;
@@ -93,20 +121,29 @@ export function usePeopleState({ people }) {
     });
   }
 
-  // Reset restores the baseline record, which never carried a deletion — so it
-  // un-deletes too. That was implicit when _deleted lived on the row (the
+  // Reset returns one person to how the card loaded. For someone restored that
+  // means leaving the list again — they had no place in it at load, so
+  // there is no baseline record to return them to.
+  //
+  // Otherwise it restores the baseline record, which never carried a deletion,
+  // so it un-deletes too. That was implicit when _deleted lived on the row (the
   // baseline copy simply had no flag); with a Set it has to be said.
   function handleReset(key) {
+    if (restoredIds.has(key)) {
+      handleUndoRestore(key);
+      return;
+    }
     const original = originalPeople.find(p => p.id === key);
     if (original) {
       setCurrentPeople(current => current.map(p => p.id === key ? { ...original } : p));
-      handleRestore(key);
+      handleUndelete(key);
     }
   }
 
   function handleResetAll() {
     setCurrentPeople([...originalPeople]);
     setDeletedIds(new Set());
+    setRestoredIds(new Set());
   }
 
   function handleTableDataChange(e) {
@@ -136,6 +173,7 @@ export function usePeopleState({ people }) {
     changesById,
     dirtyIds,
     deletedIds,
+    restoredIds,
     dirty,
     peoplePatch,
     assignPeople,
@@ -143,7 +181,9 @@ export function usePeopleState({ people }) {
     updatePerson,
     toggleSelect,
     handleDelete,
+    handleUndelete,
     handleRestore,
+    handleUndoRestore,
     handleBulkDelete,
     handleMerge,
     handleReset,
