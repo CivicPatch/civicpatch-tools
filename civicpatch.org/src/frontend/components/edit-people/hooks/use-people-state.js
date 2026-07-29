@@ -4,6 +4,9 @@ import { changedFieldKeys, listChanged, mergeFields, collapseInto, buildPeoplePa
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
   const [originalPeople, setOriginalPeople] = useState([]);
+  // "Drop this person on publish" is a reviewer decision about a record, not a
+  // field of it, so it lives beside the list rather than on the row.
+  const [deletedIds, setDeletedIds] = useState(new Set());
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
 
@@ -14,7 +17,7 @@ export function usePeopleState({ people }) {
     const originalById = new Map(originalPeople.map(p => [p.id, p]));
     const changesById = new Map(currentPeople.map(p => [p.id, changedFieldKeys(p, originalById.get(p.id))]));
     const dirtyIds = new Set(
-      currentPeople.filter(p => p._deleted || changesById.get(p.id).length > 0).map(p => p.id)
+      currentPeople.filter(p => deletedIds.has(p.id) || changesById.get(p.id).length > 0).map(p => p.id)
     );
     return {
       changesById,
@@ -23,13 +26,14 @@ export function usePeopleState({ people }) {
       // on anyone — it used to stamp _dirty directly — and a merge drops a row
       // from the list, so the id sequence is checked separately.
       dirty: dirtyIds.size > 0 || listChanged(currentPeople, originalPeople),
-      peoplePatch: buildPeoplePatch(currentPeople, changesById),
+      peoplePatch: buildPeoplePatch(currentPeople, changesById, deletedIds),
     };
-  }, [currentPeople, originalPeople]);
+  }, [currentPeople, originalPeople, deletedIds]);
 
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
     setOriginalPeople(peopleToAssign); // For tracking changes
+    setDeletedIds(new Set()); // a new baseline carries no decisions
   }
 
   function updatePerson(key, updates) {
@@ -58,13 +62,16 @@ export function usePeopleState({ people }) {
   }
 
   function handleDelete(keys) {
-    const keySet = new Set(keys);
-    setCurrentPeople(current =>
-      current.map(p => keySet.has(p.id)
-        ? { ...p, _deleted: true, _selected: false }
-        : { ...p, _selected: false }
-      )
-    );
+    setDeletedIds(current => new Set([...current, ...keys]));
+    setCurrentPeople(current => current.map(p => ({ ...p, _selected: false })));
+  }
+
+  function handleRestore(key) {
+    setDeletedIds(current => {
+      const next = new Set(current);
+      next.delete(key);
+      return next;
+    });
   }
 
   function handleBulkDelete() {
@@ -86,15 +93,20 @@ export function usePeopleState({ people }) {
     });
   }
 
+  // Reset restores the baseline record, which never carried a deletion — so it
+  // un-deletes too. That was implicit when _deleted lived on the row (the
+  // baseline copy simply had no flag); with a Set it has to be said.
   function handleReset(key) {
     const original = originalPeople.find(p => p.id === key);
     if (original) {
       setCurrentPeople(current => current.map(p => p.id === key ? { ...original } : p));
+      handleRestore(key);
     }
   }
 
   function handleResetAll() {
     setCurrentPeople([...originalPeople]);
+    setDeletedIds(new Set());
   }
 
   function handleTableDataChange(e) {
@@ -123,6 +135,7 @@ export function usePeopleState({ people }) {
     selectedPeople,
     changesById,
     dirtyIds,
+    deletedIds,
     dirty,
     peoplePatch,
     assignPeople,
@@ -130,6 +143,7 @@ export function usePeopleState({ people }) {
     updatePerson,
     toggleSelect,
     handleDelete,
+    handleRestore,
     handleBulkDelete,
     handleMerge,
     handleReset,

@@ -51,10 +51,13 @@ function ReviewSession(host: ReviewSessionHost) {
   const {
     currentPeople,
     dirtyIds,
+    deletedIds,
     dirty,
     peoplePatch,
     handleAdd,
     handleReset,
+    handleDelete,
+    handleRestore,
     updatePerson,
   } = useReviewPeople(currentEntry);
 
@@ -83,6 +86,9 @@ function ReviewSession(host: ReviewSessionHost) {
 
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
   const handleResetPerson = (id: string) => handleReset(id);
+  // handleDelete takes a list — the jurisdiction table deletes in bulk; the
+  // review card only ever drops the card in front of you.
+  const handleDeletePerson = (id: string) => handleDelete([id]);
 
   return html`
     <main class="review-page">
@@ -139,9 +145,12 @@ function ReviewSession(host: ReviewSessionHost) {
         .onPersonSave=${handlePersonSave}
         .onAdd=${handleAdd}
         .onResetPerson=${handleResetPerson}
+        .onDeletePerson=${handleDeletePerson}
+        .onRestorePerson=${handleRestore}
         .jurisdictionOcdid=${jurisdictionOcdid}
         .isReadOnly=${is_read_only}
         .dirtyIds=${dirtyIds}
+        .deletedIds=${deletedIds}
       ></people-diff>
       ${debugOpen
         ? html`

@@ -34,6 +34,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     currentPeople,
     selectedPeople,
     changesById,
+    deletedIds,
     dirty,
     peoplePatch,
     assignPeople,
@@ -212,7 +213,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: canEdit ? openEdit : null, changesById })}
+      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: canEdit ? openEdit : null, changesById, deletedIds })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;

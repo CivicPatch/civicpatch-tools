@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { buildPeoplePatch, changedFieldKeys, listChanged } from "../components/edit-people/hooks/people-state-utils.js";
 
 const changes = (entries: [string, string[]][]) => new Map(entries);
+const deleted = (...ids: string[]) => new Set(ids);
 
 describe("changedFieldKeys", () => {
   it("names only the fields that differ from the baseline", () => {
@@ -51,42 +52,42 @@ describe("listChanged", () => {
 describe("buildPeoplePatch", () => {
   it("sends only the changed fields for an edited existing person", () => {
     const people = [{ id: "a", name: "Alice", phones: ["x"] }];
-    expect(buildPeoplePatch(people, changes([["a", ["phones"]]]))).toEqual([
+    expect(buildPeoplePatch(people, changes([["a", ["phones"]]]), deleted())).toEqual([
       { id: "a", fields: { phones: ["x"] } },
     ]);
   });
 
   it("sends empty fields for an untouched person", () => {
-    expect(buildPeoplePatch([{ id: "a", name: "Alice" }], changes([["a", []]]))).toEqual([
+    expect(buildPeoplePatch([{ id: "a", name: "Alice" }], changes([["a", []]]), deleted())).toEqual([
       { id: "a", fields: {} },
     ]);
   });
 
   it("sends the whole entry for a new person", () => {
     const person = { id: "new1", name: "Bob", phones: [], _isNew: true };
-    expect(buildPeoplePatch([person], changes([["new1", []]]))).toEqual([
+    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted())).toEqual([
       { id: "new1", fields: { id: "new1", name: "Bob", phones: [] } },
     ]);
   });
 
   it("sends the whole entry when the id changed (re-id)", () => {
     const person = { id: "canonical", name: "Bob" };
-    expect(buildPeoplePatch([person], changes([["canonical", ["id", "name"]]]))).toEqual([
+    expect(buildPeoplePatch([person], changes([["canonical", ["id", "name"]]]), deleted())).toEqual([
       { id: "canonical", fields: { id: "canonical", name: "Bob" } },
     ]);
   });
 
   it("omits deleted people (the backend reads omission as a deletion)", () => {
-    const people = [{ id: "a" }, { id: "b", _deleted: true }];
+    const people = [{ id: "a" }, { id: "b" }];
     expect(
-      buildPeoplePatch(people, changes([["a", []], ["b", []]])).map((p: { id: string }) => p.id)
+      buildPeoplePatch(people, changes([["a", []], ["b", []]]), deleted("b")).map((p: { id: string }) => p.id)
     ).toEqual(["a"]);
   });
 
   it("preserves order", () => {
     const people = [{ id: "c" }, { id: "a" }, { id: "b" }];
     expect(
-      buildPeoplePatch(people, changes([["c", []], ["a", []], ["b", []]])).map((p: { id: string }) => p.id)
+      buildPeoplePatch(people, changes([["c", []], ["a", []], ["b", []]]), deleted()).map((p: { id: string }) => p.id)
     ).toEqual(["c", "a", "b"]);
   });
 });

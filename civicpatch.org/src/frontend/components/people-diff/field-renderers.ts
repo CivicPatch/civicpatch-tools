@@ -11,6 +11,7 @@ import {
   fieldError,
   multiValueState,
   normalizeMultiValue,
+  type DiffRecord,
   type FieldSpec,
 } from "./diff-model.js";
 import {
@@ -88,8 +89,8 @@ function renderOldText(text: string, state: string) {
 
 function renderPairedField(
   field: FieldSpec,
-  oldRecord: any,
-  newRecord: any,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
   save: Save,
   isReadOnly: boolean,
   renderNewSide: NewSideRenderer,
@@ -125,8 +126,8 @@ function renderPairedField(
 
 function renderMultiField(
   field: FieldSpec,
-  oldRecord: any,
-  newRecord: any,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
   save: Save,
   isReadOnly: boolean,
 ) {
@@ -174,8 +175,8 @@ function renderMultiField(
 
 function renderSourceUrlsField(
   field: FieldSpec,
-  oldRecord: any,
-  newRecord: any,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
   save: Save,
   isReadOnly: boolean,
 ) {
@@ -197,8 +198,8 @@ function renderSourceUrlsField(
 
 function renderImageField(
   field: FieldSpec,
-  oldRecord: any,
-  newRecord: any,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
   save: Save,
   isReadOnly: boolean,
 ) {
@@ -219,8 +220,8 @@ function renderImageField(
 
 export function renderField(
   field: FieldSpec,
-  oldRecord: any,
-  newRecord: any,
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
   save: Save,
   isReadOnly: boolean,
   jurisdictionOcdid: string | null | undefined,
