@@ -69,14 +69,14 @@ export function collapseInto(survivor, absorbed, list) {
 // only their changed fields; new or re-identified rows (id changed) send the whole entry.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
 // entry, and a base person absent from the list is a deletion. Deleted rows are omitted here.
-export function buildPeoplePatch(currentPeople, changesById) {
+export function buildPeoplePatch(currentPeople, changesById, deletedIds) {
   return currentPeople
-    .filter(p => !p._deleted)
+    .filter(p => !deletedIds.has(p.id))
     .map(p => toPatchItem(p, changesById.get(p.id)));
 }
 
 function toPatchItem(person, changes) {
-  const { _selected, _deleted, _isNew, ...entry } = person;
+  const { _selected, _isNew, ...entry } = person;
   if (_isNew || changes.includes("id")) {
     return { id: entry.id, fields: entry };
   }

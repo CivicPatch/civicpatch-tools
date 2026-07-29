@@ -8,6 +8,8 @@ import {
   fieldState,
   changedFields,
   recordsDiffer,
+  foldDeletions,
+  survivingFields,
   isValidDate,
   isTermOrderValid,
   isRequiredFieldEmpty,
@@ -377,5 +379,118 @@ describe("indexIssuesByPersonId", () => {
     const legacy: Issue = { code: "legacy", message: "Only 2 people found" };
     const byId = indexIssuesByPersonId([missing, legacy]);
     expect(byId.size).toBe(0);
+  });
+});
+
+describe("foldDeletions", () => {
+  const entry = (type: string, id: string) => ({ type, person: { id }, from: null });
+  const result = (diffEntries: any[], unchangedEntries: any[]) => ({ diffEntries, unchangedEntries });
+
+  it("leaves everything alone when nothing is deleted", () => {
+    const input = result([entry("changed", "a")], [entry("unchanged", "b")]);
+    expect(foldDeletions(input, new Set())).toEqual(input);
+  });
+
+  it("re-types a deleted existing person as removed", () => {
+    const folded = foldDeletions(result([entry("changed", "a")], []), new Set(["a"]));
+    expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
+  });
+
+  it("drops a deleted added person — never in the database, nothing to publish", () => {
+    const folded = foldDeletions(result([entry("added", "a")], []), new Set(["a"]));
+    expect(folded.diffEntries).toEqual([]);
+  });
+
+  it("moves a deleted unchanged person out of the unchanged bucket", () => {
+    const folded = foldDeletions(result([], [entry("unchanged", "a")]), new Set(["a"]));
+    expect(folded.unchangedEntries).toEqual([]);
+    expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
+  });
+
+  it("keeps the new-side record, so the card can still offer Undo", () => {
+    const folded = foldDeletions(result([], [entry("unchanged", "a")]), new Set(["a"]));
+    expect(folded.diffEntries[0].person.id).toBe("a");
+  });
+
+  it("folds only the deleted people, leaving their neighbours untouched", () => {
+    const input = result([entry("changed", "a"), entry("added", "b")], [entry("unchanged", "c")]);
+    const folded = foldDeletions(input, new Set(["a"]));
+    expect(folded.diffEntries.map((e) => [e.person.id, e.type])).toEqual([
+      ["a", "removed"],
+      ["b", "added"],
+    ]);
+    expect(folded.unchangedEntries.map((e) => e.person.id)).toEqual(["c"]);
+  });
+});
+
+describe("survivingFields", () => {
+  const whole = {
+    id: "1",
+    name: "Maria",
+    office: { name: "Mayor", division_ocdid: "ocd-division/country:us/state:nh/place:concord" },
+    start_date: "2021",
+    end_date: "2025",
+    emails: ["m@x.gov"],
+    phones: [],
+    urls: [],
+    other_names: [],
+    image: "p.jpg",
+  };
+  const keys = (result: { field: FieldSpec }[]) => result.map((s) => s.field.key);
+
+  it("shows nothing when a complete record is unchanged", () => {
+    expect(survivingFields(whole, { ...whole })).toEqual([]);
+  });
+
+  it("shows a field that differs, with its diff state", () => {
+    const surviving = survivingFields(whole, { ...whole, end_date: "2027" });
+    expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
+      ["end_date", "changed", "diff"],
+    ]);
+  });
+
+  it("shows an unchanged field an issue anchors to — rule 2's whole purpose", () => {
+    const issue: Issue = { code: "duplicate_unique_role", message: "…", field: "office.name" };
+    const surviving = survivingFields(whole, { ...whole }, [issue]);
+    expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
+      ["office.name", "same", "issue"],
+    ]);
+  });
+
+  it("ignores a person-level issue that anchors to no field", () => {
+    const issue: Issue = { code: "extra_official", message: "…" };
+    expect(survivingFields(whole, { ...whole }, [issue])).toEqual([]);
+  });
+
+  it("shows a required field empty on BOTH sides — reads `same`, still blocks publish", () => {
+    const blank = { ...whole, name: "" };
+    const surviving = survivingFields(blank, { ...blank });
+    expect(surviving.map((s) => [s.field.key, s.state, s.reason, s.error])).toEqual([
+      ["name", "same", "error", "Required"],
+    ]);
+  });
+
+  it("prefers error over issue over diff when several apply", () => {
+    const issue: Issue = { code: "duplicate_unique_role", message: "…", field: "office.name" };
+    const surviving = survivingFields(whole, { ...whole, office: { ...whole.office, name: "" } }, [issue]);
+    expect(surviving.map((s) => [s.field.key, s.reason])).toEqual([["office.name", "error"]]);
+  });
+
+  it("never surfaces source_urls — diff: false, and it carries no error", () => {
+    const surviving = survivingFields(
+      { ...whole, source_urls: ["a"] },
+      { ...whole, source_urls: ["b", "c"] },
+    );
+    expect(keys(surviving)).toEqual([]);
+  });
+
+  it("shows only the populated fields of an added person, not the whole schema", () => {
+    const added = { id: "2", name: "Tom", office: { name: "Treasurer", division_ocdid: "ocd-division/country:us/state:nh/place:concord" }, emails: ["t@x.gov"] };
+    expect(keys(survivingFields(null, added))).toEqual(["name", "office.name", "office.division_ocdid", "emails"]);
+  });
+
+  it("returns fields in schema order, not issue or edit order", () => {
+    const surviving = survivingFields(whole, { ...whole, emails: [], name: "Marie" });
+    expect(keys(surviving)).toEqual(["name", "emails"]);
   });
 });

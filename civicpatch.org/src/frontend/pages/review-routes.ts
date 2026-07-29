@@ -5,6 +5,34 @@
 export const STATE_PARAM = "state";
 export const REQUEST_ID_PARAM = "request_id";
 
+// Which of the review card's three views is open. `view`, not `tab` — the
+// jurisdiction page already uses `?tab=` to mean "which pull request", and the
+// two would read as the same thing in a URL or a log line.
+export const VIEW_PARAM = "view";
+
+export const ReviewView = Object.freeze({
+  OVERVIEW: "overview",
+  DETAIL: "detail",
+  PREVIEW: "preview",
+});
+
+export type ReviewViewKey = (typeof ReviewView)[keyof typeof ReviewView];
+
+const VIEW_KEYS: ReviewViewKey[] = [
+  ReviewView.OVERVIEW,
+  ReviewView.DETAIL,
+  ReviewView.PREVIEW,
+];
+
+// A URL is user-editable and outlives any release, so an unrecognised, removed
+// or absent view falls back to Overview — the entry point for every card (§1)
+// — rather than rendering nothing.
+export function parseReviewView(value: string | null | undefined): ReviewViewKey {
+  return VIEW_KEYS.includes(value as ReviewViewKey)
+    ? (value as ReviewViewKey)
+    : ReviewView.OVERVIEW;
+}
+
 export const REVIEW_PATH = "/review";
 export const REVIEW_SESSION_PATH = "/review/session";
 

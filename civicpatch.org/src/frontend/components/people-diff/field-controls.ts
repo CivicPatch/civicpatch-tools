@@ -12,6 +12,7 @@ import {
   diffValue,
   normalizeMultiValue,
   type FieldSpec,
+  type PresentRecord,
   type ScalarDiffState,
 } from "./diff-model.js";
 import {
@@ -41,7 +42,7 @@ export interface NewSideContext {
 
 export type NewSideRenderer = (
   field: FieldSpec,
-  newRecord: any,
+  newRecord: PresentRecord,
   save: Save,
   context: NewSideContext,
 ) => unknown;
@@ -51,7 +52,7 @@ export type NewSideRenderer = (
 // usePeopleState applies updates with a shallow merge, so `office` (a nested
 // object) is replaced whole; every other field is a top-level value.
 export function buildFieldUpdate(
-  person: any,
+  person: PresentRecord,
   key: string,
   value: unknown,
 ): Record<string, unknown> {
@@ -71,7 +72,7 @@ export function ensureUrl(value: string): string {
 export const inputValue = (e: Event) =>
   (e.target as HTMLInputElement | HTMLSelectElement).value;
 
-export function displayScalar(field: FieldSpec, person: any): string {
+export function displayScalar(field: FieldSpec, person: PresentRecord): string {
   const value = diffValue(person, field);
   if (!value) return "";
   if (field.key === "office.division_ocdid")
@@ -83,7 +84,7 @@ export function displayScalar(field: FieldSpec, person: any): string {
 
 export function renderScalarNewSide(
   field: FieldSpec,
-  newRecord: any,
+  newRecord: PresentRecord,
   save: Save,
   { state, error }: NewSideContext,
 ) {
@@ -108,7 +109,7 @@ export function renderScalarNewSide(
 // options exist and leave selectedIndex at -1 on first render.
 export function renderDateNewSide(
   field: FieldSpec,
-  newRecord: any,
+  newRecord: PresentRecord,
   save: Save,
 ) {
   const parts = parseDate(
@@ -207,7 +208,7 @@ export function renderMultiNewSide(
 
 export function renderDivisionNewSide(
   field: FieldSpec,
-  newRecord: any,
+  newRecord: PresentRecord,
   save: Save,
   jurisdictionOcdid: string | null | undefined,
 ) {
@@ -333,7 +334,7 @@ export function sourceLinks(urls: string[]) {
 // The scraped record carries `image`; person-image reads `cdn_image`, so the new
 // side is shown by aliasing one onto the other.
 export function renderPhotoNewSide(
-  newRecord: any,
+  newRecord: PresentRecord,
   save: Save,
   isReadOnly: boolean,
 ) {

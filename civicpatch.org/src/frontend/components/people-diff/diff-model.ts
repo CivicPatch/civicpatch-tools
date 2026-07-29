@@ -3,12 +3,17 @@
 // live in the component; this module is the functional core (unit-tested alone).
 
 import { type Person } from "../edit-people/person-edit-utils.js";
+import { DiffType } from "../../utils/diff-utils.js";
 
 // Either side of a diff. The old side may be absent (an added person) and the
 // new side may be absent (one the scrape didn't find). Partial because the diff
 // only ever reads field values — it never needs a person to be whole, or to
 // carry an id.
 export type DiffRecord = Partial<Person> | null | undefined;
+
+// A record the caller has already established is present. The row assembly
+// guards on null before reaching for a control, so controls never re-check.
+export type PresentRecord = Partial<Person>;
 
 export type FieldType = "text" | "date" | "multi" | "image";
 
@@ -46,9 +51,10 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "source_urls", label: "Source urls", type: "multi", diff: false },
 ];
 
-export function getFieldValue(person: any, key: string): unknown {
-  if (!key.includes(".")) return person?.[key];
-  let value = person;
+export function getFieldValue(person: DiffRecord, key: string): unknown {
+  if (!key.includes(".")) return (person as Record<string, unknown>)?.[key];
+  // Walking a dotted path is untypeable — the value changes shape each hop.
+  let value: any = person;
   for (const part of key.split(".")) {
     value = value?.[part];
   }
@@ -58,7 +64,7 @@ export function getFieldValue(person: any, key: string): unknown {
 // The value to diff/display for a field. For the photo, the effective URL is
 // cdn_image || image: cdn_image is only ever present on the OLD side (a scrape
 // produces only `image`), so this resolves correctly on either side.
-export function diffValue(person: any, field: FieldSpec): unknown {
+export function diffValue(person: DiffRecord, field: FieldSpec): unknown {
   if (field.type === "image") return person?.cdn_image || person?.image || "";
   return getFieldValue(person, field.key);
 }
@@ -194,6 +200,64 @@ export function recordsDiffer(
   return changedFields(oldRecord, newRecord).length > 0;
 }
 
+// ── Reviewer deletions, folded into the diff ─────────────────────────────────
+
+export interface DiffEntry {
+  type: string;
+  person: any;
+  from: any;
+}
+
+export interface PeopleDiffResult {
+  diffEntries: DiffEntry[];
+  unchangedEntries: DiffEntry[];
+}
+
+// computePeopleDiff compares two server-shaped lists and knows nothing about the
+// reviewer marking someone for removal — so a deleted person whose fields are
+// otherwise untouched comes back UNCHANGED and hides under that chip instead of
+// appearing under Removed. This folds the decision in afterwards.
+//
+// It stays out of computePeopleDiff because deletion is a review-session state
+// the other two consumers (diff-panel, data-panel) neither have nor want.
+//
+// Deleting someone the scrape *added* is a net no-op — they were never in the
+// database and the patch omits them, so there is nothing to publish and nothing
+// to show. Every other deletion becomes REMOVED. `person` deliberately stays the
+// new-side record: renderRow reads its id to offer Undo.
+export function foldDeletions(
+  { diffEntries, unchangedEntries }: PeopleDiffResult,
+  deletedIds: Set<string>,
+): PeopleDiffResult {
+  if (deletedIds.size === 0) return { diffEntries, unchangedEntries };
+
+  const kept: DiffEntry[] = [];
+  const survives = (entry: DiffEntry) =>
+    !(deletedIds.has(entry.person?.id) && entry.type === DiffType.ADDED);
+
+  for (const entry of diffEntries) {
+    if (!survives(entry)) continue;
+    kept.push(
+      deletedIds.has(entry.person?.id)
+        ? { ...entry, type: DiffType.REMOVED }
+        : entry,
+    );
+  }
+
+  const stillUnchanged: DiffEntry[] = [];
+  for (const entry of unchangedEntries) {
+    if (!deletedIds.has(entry.person?.id)) {
+      stillUnchanged.push(entry);
+      continue;
+    }
+    // An unchanged person the reviewer dropped is a change to the list, so it
+    // moves out of the unchanged bucket entirely.
+    kept.push({ ...entry, type: DiffType.REMOVED });
+  }
+
+  return { diffEntries: kept, unchangedEntries: stillUnchanged };
+}
+
 // ── Client-side validation (spec §6 — owned by the client, live) ─────────────
 
 const DATE_PATTERN = /^\d{4}(-\d{2}(-\d{2})?)?$/;
@@ -216,7 +280,7 @@ export function isTermOrderValid(start: string, end: string): boolean {
 
 // A required field with no value is an error. Multi fields count as empty when
 // the list has no entries; scalars when blank after trim.
-export function isRequiredFieldEmpty(record: any, field: FieldSpec): boolean {
+export function isRequiredFieldEmpty(record: DiffRecord, field: FieldSpec): boolean {
   if (!field.required) return false;
   const value = diffValue(record, field);
   if (Array.isArray(value)) return value.length === 0;
@@ -225,7 +289,7 @@ export function isRequiredFieldEmpty(record: any, field: FieldSpec): boolean {
 
 // The single client-side error for a field's value on `record`, or null. Order:
 // required → date format → term ordering (end_date only).
-export function fieldError(field: FieldSpec, record: any): string | null {
+export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
   if (!record) return null;
   if (isRequiredFieldEmpty(record, field)) return "Required";
   if (field.type === "date") {
@@ -280,6 +344,57 @@ export interface Issue {
   message: string;
   person_ids?: string[];
   field?: string | null;
+}
+
+// ── The collapse rule (§2) ───────────────────────────────────────────────────
+
+// Why a field is visible. Ordered by how much it demands of the reviewer, and
+// that order is the precedence when several apply: an errored field is a
+// blocker, an issue is advice, a plain diff is information. §2.2 hangs the
+// resolution rule off this — `error` clears when the condition clears, `issue`
+// when the anchored field is edited or the issue is ticked, `diff` never.
+export type FieldReason = "error" | "issue" | "diff";
+
+export interface SurvivingField {
+  field: FieldSpec;
+  state: ScalarDiffState;
+  reason: FieldReason;
+  error: string | null;
+}
+
+// The fields a card shows before the reviewer expands anything. Everything else
+// hides behind "+ N unchanged fields".
+//
+// Rule 3 (error) is load-bearing and easy to mistake for redundancy: a required
+// field left empty on *both* sides reads `same`, carries no backend issue, and
+// still blocks publish. Without it the card hides the reason publishing fails.
+//
+// `source_urls` never survives — fieldState returns `same` for `diff: false`
+// fields and they carry no error. That falls out of the traversal; no view has
+// to name it.
+export function survivingFields(
+  oldRecord: DiffRecord,
+  newRecord: DiffRecord,
+  issues: Issue[] = [],
+): SurvivingField[] {
+  const anchoredFields = new Set(
+    issues.map((issue) => issue.field).filter(Boolean) as string[],
+  );
+
+  const surviving: SurvivingField[] = [];
+  for (const field of FIELD_SCHEMA) {
+    const state = fieldState(field, oldRecord, newRecord);
+    const error = fieldError(field, newRecord);
+    const reason: FieldReason | null = error
+      ? "error"
+      : anchoredFields.has(field.key)
+        ? "issue"
+        : state !== "same"
+          ? "diff"
+          : null;
+    if (reason) surviving.push({ field, state, reason, error });
+  }
+  return surviving;
 }
 
 // Group person-anchored issues by the card (person id) they mark. One issue can

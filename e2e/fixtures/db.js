@@ -39,6 +39,84 @@ export const RECONCILE_REQUEST_ID = "00000000-0000-0000-eeee-000000000009";
 const RECONCILE_PR_ID = "00000000-0000-0000-eeee-00000000000a";
 const RECONCILE_PR_NUMBER = 5;
 
+// Scale fixture — a realistically-sized council (§20). Every other card here has
+// two or three people, which makes the layout questions the redesign exists to
+// answer unfalsifiable: whether the collapse rule earns its keep, whether the
+// rail becomes an unusable scroll, whether the grid holds at density. Own state
+// (ma) so this large open card stays out of every other spec's review queue.
+export const SCALE_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:ma/place:e2e_scale/government";
+export const SCALE_REQUEST_ID = "00000000-0000-0000-eeee-00000000000f";
+const SCALE_PR_ID = "00000000-0000-0000-eeee-000000000010";
+const SCALE_PR_NUMBER = 8;
+
+const SCALE_DIVISION_BASE = "ocd-division/country:us/state:ma/place:e2e_scale";
+
+// Built rather than written out: 40 near-identical records would bury the four
+// facts that matter (who changed, who is new, who was dropped, who is untouched)
+// in a wall of literals.
+function scalePerson(index, overrides = {}) {
+  const n = String(index).padStart(2, "0");
+  return {
+    id: `scale-p${n}`,
+    name: `Councillor ${n} Scale`,
+    office: {
+      name: "Council Member",
+      division_ocdid: `${SCALE_DIVISION_BASE}/ward:${index}`,
+    },
+    emails: [`ward${index}@scale.gov`],
+    phones: [`(555) 020-01${n}`],
+    urls: [`https://scale.gov/ward/${index}`],
+    other_names: [],
+    source_urls: ["https://scale.gov/council"],
+    start_date: "2023",
+    end_date: "2027",
+    ...overrides,
+  };
+}
+
+const SCALE_EXISTING_COUNT = 38;
+const SCALE_DROPPED = [36, 37, 38]; // in the DB, absent from this scrape
+const SCALE_CHANGED = [2, 5, 9, 13, 18, 21, 26, 30, 33, 35];
+
+function buildScaleExisting() {
+  return Array.from({ length: SCALE_EXISTING_COUNT }, (_, i) =>
+    scalePerson(i + 1, { cdn_image: `https://cdn.test/scale-${i + 1}.jpg` }),
+  );
+}
+
+function buildScaleProposed() {
+  const carried = [];
+  for (let i = 1; i <= SCALE_EXISTING_COUNT; i++) {
+    if (SCALE_DROPPED.includes(i)) continue;
+    // A spread of change shapes, so the collapse rule has something to collapse:
+    // most people are untouched, and the ones that moved moved differently.
+    const changed = SCALE_CHANGED.includes(i);
+    carried.push(
+      scalePerson(i, {
+        image: `https://scale.gov/photo/${i}.jpg`,
+        ...(changed && i % 3 === 0 ? { office: { name: "Council President", division_ocdid: `${SCALE_DIVISION_BASE}/ward:${i}` } } : {}),
+        ...(changed && i % 3 === 1 ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] } : {}),
+        ...(changed && i % 3 === 2 ? { end_date: "2029", phones: [] } : {}),
+      }),
+    );
+  }
+  const added = Array.from({ length: 5 }, (_, i) => {
+    const n = String(i + 1).padStart(2, "0");
+    return {
+      id: `scale-n${n}`,
+      name: `Newcomer ${n} Scale`,
+      office: { name: "Council Member", division_ocdid: `${SCALE_DIVISION_BASE}/ward:${39 + i}` },
+      emails: [`new${i + 1}@scale.gov`],
+      phones: [],
+      urls: [],
+      other_names: [],
+      source_urls: ["https://scale.gov/council"],
+    };
+  });
+  return [...carried, ...added];
+}
+
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).
 export const TX_JURISDICTION_OCDID =
@@ -271,6 +349,49 @@ export async function seedE2eFixtures() {
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER]
     );
 
+    // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
+       VALUES ($1, 'ma', 'current', '{"name":"E2E Scale City","geoid":"2500001"}', NOW())
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+      [SCALE_JURISDICTION_OCDID]
+    );
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [SCALE_JURISDICTION_OCDID]);
+    for (const person of buildScaleExisting()) {
+      await client.query(
+        `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
+         VALUES ($1, $2, 'current', NOW())`,
+        [SCALE_JURISDICTION_OCDID, JSON.stringify(person)]
+      );
+    }
+    // Issues too, so the collapse rule's "an anchored issue keeps a field
+    // visible" path is exercised at density, not only on a three-person card.
+    const scaleReview = {
+      issues: [
+        { code: "duplicate_unique_role", message: "Role 'council president' is marked as unique but found in multiple officials: Councillor 09 Scale, Councillor 21 Scale", person_ids: ["scale-p09", "scale-p21"], field: "office.name" },
+        { code: "extra_official", message: "Extra official: Newcomer 05 Scale", person_ids: ["scale-n05"], field: null },
+      ],
+    };
+    await client.query(
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+       VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
+      [SCALE_REQUEST_ID, SCALE_JURISDICTION_OCDID, JSON.stringify(buildScaleProposed()), JSON.stringify(scaleReview)]
+    );
+    await client.query(
+      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+       VALUES ($1, 'success', 100, NOW(), NOW())
+       ON CONFLICT DO NOTHING`,
+      [SCALE_REQUEST_ID]
+    );
+    await client.query(
+      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
+       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
+       ON CONFLICT (request_id) DO NOTHING`,
+      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_PR_NUMBER]
+    );
+
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
@@ -397,14 +518,17 @@ export async function teardownE2eFixtures() {
        )`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID]
     );
-    // The reconcile fixture seeds people; clear them before its jurisdiction row.
+    // The reconcile and scale fixtures seed people; clear them before their
+    // jurisdiction rows.
     await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [RECONCILE_JURISDICTION_OCDID]);
+    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [SCALE_JURISDICTION_OCDID]);
     for (const [prId, reqId, jOcdid] of [
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
       [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
       [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
       [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
+      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
       [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
