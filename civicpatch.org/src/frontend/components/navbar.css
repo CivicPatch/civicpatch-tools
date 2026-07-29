@@ -79,8 +79,8 @@ nav.nav--logged-out .nav-brand {
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1;
-  color: rgb(var(--catppuccin-yellow));
-  border: 1px solid rgb(var(--catppuccin-yellow));
+  color: rgb(var(--tone-yellow));
+  border: 1px solid rgb(var(--tone-yellow));
   border-radius: 4px;
   padding: 0.2em 0.35em;
   opacity: 0.7;

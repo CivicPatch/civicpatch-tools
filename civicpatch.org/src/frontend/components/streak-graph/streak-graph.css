@@ -110,5 +110,5 @@
 }
 
 .streak-graph__day--active {
-  background: rgba(var(--catppuccin-green), var(--day-opacity, 1));
+  background: rgba(var(--tone-green), var(--day-opacity, 1));
 }

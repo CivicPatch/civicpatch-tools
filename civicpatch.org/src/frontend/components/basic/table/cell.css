@@ -20,13 +20,13 @@ civ-table-cell {
     }
     /* focus: cell selected via keyboard navigation, not yet editing */
     & > div:focus {
-        outline: 2px solid rgb(var(--catppuccin-teal));
+        outline: 2px solid rgb(var(--tone-teal));
         border-radius: var(--pico-border-radius);
     }
 
     /* active edit: a descendant (contenteditable or tag input) has focus */
     & > div:focus-within:not(:focus) {
-        outline: 2px solid rgb(var(--catppuccin-sapphire));
+        outline: 2px solid rgb(var(--tone-sapphire));
         border-radius: var(--pico-border-radius);
     }
 
@@ -61,14 +61,14 @@ civ-table-cell {
     .tag-list button {
         all: unset;
         /* re-apply shared styles after reset */
-        border: 1px solid rgb(var(--catppuccin-surface1));
-        background: rgb(var(--catppuccin-surface0));
+        border: 1px solid rgb(var(--tone-line-mid));
+        background: rgb(var(--tone-line));
         border-radius: 999px;
         padding: 0.1rem 0.5rem;
         font-size: var(--text-sm);
         font-family: inherit;
         line-height: 1;
-        color: var(--_c, rgb(var(--catppuccin-text)));
+        color: var(--_c, rgb(var(--tone-ink)));
         max-width: 200px;
         cursor: pointer;
         display: inline-flex;
@@ -77,8 +77,8 @@ civ-table-cell {
     }
 
     .tag-list button:hover {
-        background: rgba(var(--catppuccin-sapphire), 0.2);
-        border-color: rgb(var(--catppuccin-surface2));
+        background: rgba(var(--tone-sapphire), 0.2);
+        border-color: rgb(var(--tone-line-strong));
     }
 
     .tag-list button span.tag-label {
