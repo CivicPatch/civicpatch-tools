@@ -1,25 +1,8 @@
-/* ── Global ──────────────────────────────────────────────────────────────── */
+/* ── Global ─────────────────────────────────────────────────────────────── */
+/* Tokens live in tokens.css; this file is rules. */
 
-/* ── Color palette ───────────────────────────────────────────────────────── */
-/* All 10 catppuccin accent colors at full opacity.                           */
-/* getSourceColorClass() in utils/source-color-utils.js hashes a URL to one.  */
-
-:root {
-  --color-1: var(--catppuccin-blue);
-  --color-2: var(--catppuccin-mauve);
-  --color-3: var(--catppuccin-yellow);
-  --color-4: var(--catppuccin-pink);
-  --color-5: var(--catppuccin-sky);
-  --color-6: var(--catppuccin-teal);
-  --color-7: var(--catppuccin-lavender);
-  --color-8: var(--catppuccin-green);
-  --color-9: var(--catppuccin-red);
-  --color-10: var(--catppuccin-sapphire);
-
-  /* Shared max content width for the navbar + page containers, so the nav rail
-     and page content align on the same gutters. */
-  --page-width: 1400px;
-}
+/* ── Source-url colour utilities ─────────────────────────────────────────── */
+/* getSourceColorClass() in utils/source-color-utils.js hashes a URL to one. */
 
 .color-1 {
   --_c: var(--color-1);
@@ -65,231 +48,6 @@
 :root,
 :host {
   font-size: 17px;
-  --pico-font-family: "Figtree", sans-serif;
-  --pico-form-element-spacing-vertical: 0.5rem;
-  --pico-form-element-spacing-horizontal: 0.5rem;
-  --pico-border-radius: 3px;
-  --pico-border-width: 0.03rem;
-  --pico-line-height: 1.65;
-  --pico-outline-width: 0.2rem;
-
-  /* ── Type scale ──────────────────────────────────────────────────────── */
-  /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
-  /* Sans-serif: all other UI text                                         */
-  --text-xs: 0.65rem; /* tiny labels, diff metadata, table headers */
-  --text-sm: 0.75rem; /* small metadata, badges, btn-sm */
-  --text-md: 0.875rem; /* body text, card content, items */
-  --text-base: 1rem; /* default paragraph, modal headers */
-  --text-lg: 1.25rem; /* display values, goal numbers */
-  --text-xl: 1.75rem; /* section titles, display headings */
-  --text-2xl: 2rem; /* stat values, hero numbers */
-}
-
-/* ── Light theme ─────────────────────────────────────────────────────────── */
-
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
-  --civ-bg: #fafafa;
-  --civ-surface: #fcfcfc;
-  --civ-surface-2: #f5f5f5;
-  --civ-text: #222222;
-  --civ-text-secondary: #444444;
-  --civ-text-muted: #767676; /* WCAG AA minimum on white */
-  --civ-border: #e0e0e0;
-  --civ-border-strong: #333333;
-  --civ-accent: #f0c840;
-  --civ-accent-border: #d4a800;
-  --civ-accent-text: #111111; /* text on top of accent bg */
-
-  --catppuccin-base: 239, 241, 245;
-  --catppuccin-mantle: 230, 233, 239;
-  --catppuccin-crust: 220, 224, 232;
-  --catppuccin-text: 76, 79, 105;
-  --catppuccin-subtext0: 108, 111, 133;
-  --catppuccin-subtext1: 92, 95, 119;
-  --catppuccin-overlay1: 140, 143, 161;
-  --catppuccin-surface0: 204, 208, 218;
-  --catppuccin-surface1: 188, 192, 204;
-  --catppuccin-surface2: 172, 176, 190;
-  --catppuccin-blue: 30, 102, 245;
-  --catppuccin-red: 210, 15, 57;
-  --catppuccin-green: 64, 160, 43;
-  --catppuccin-yellow: 223, 142, 29;
-  --catppuccin-pink: 234, 118, 203;
-  --catppuccin-mauve: 136, 57, 239;
-  --catppuccin-sky: 4, 165, 229;
-  --catppuccin-teal: 23, 146, 153;
-  --catppuccin-sapphire: 32, 159, 181;
-  --catppuccin-lavender: 114, 135, 253;
-
-  /* Pico overrides — light */
-  --pico-color: var(--civ-text);
-  --pico-background-color: var(--civ-bg);
-  --pico-h1-color: var(--civ-text);
-  --pico-h2-color: var(--civ-text);
-  --pico-h3-color: var(--civ-text);
-  --pico-text-selection-color: rgba(255, 224, 102, 0.35);
-
-  --pico-primary: #111111;
-  --pico-primary-background: #111111;
-  --pico-primary-underline: #111111;
-  --pico-primary-hover: #333333;
-  --pico-primary-hover-background: #333333;
-  --pico-primary-border: #111111;
-  --pico-primary-focus: rgba(17, 17, 17, 0.25);
-  --pico-primary-inverse: #fafafa;
-
-  --pico-secondary-background: #555555;
-  --pico-secondary-inverse: #ffffff;
-  --pico-secondary-hover-background: #333333;
-
-  --pico-muted-color: var(--civ-text-muted);
-  --pico-muted-background: var(--civ-surface-2);
-  --pico-muted-border-color: var(--civ-border);
-
-  --pico-form-element-color: var(--civ-text);
-  --pico-form-element-background-color: var(--civ-surface);
-  --pico-form-element-active-background-color: var(--civ-surface-2);
-  --pico-form-element-active-border-color: var(--civ-border-strong);
-  --pico-form-element-focus-color: var(--civ-border-strong);
-  --pico-form-element-border-color: var(--civ-border);
-
-  --pico-link-color: var(--civ-text);
-  --pico-link-hover-color: var(--civ-text-secondary);
-
-  --pico-ins-color: rgb(var(--catppuccin-green));
-  --pico-ins-background: rgba(var(--catppuccin-green), 0.1);
-  --pico-del-color: rgb(var(--catppuccin-red));
-  --pico-del-background: rgba(var(--catppuccin-red), 0.1);
-  --pico-del-inverse: var(--civ-bg);
-  --pico-info-color: rgb(var(--catppuccin-blue));
-  --pico-info-background: rgba(var(--catppuccin-blue), 0.1);
-  --pico-warn-color: #b35c00;
-  --pico-success-color: rgb(var(--catppuccin-green));
-  --pico-error-color: rgb(var(--catppuccin-red));
-  --pico-warning-color: #b35c00;
-
-  --pico-contrast-background: var(--civ-border-strong);
-  --pico-contrast-inverse: var(--civ-bg);
-  --pico-contrast-hover-background: var(--civ-text-secondary);
-
-  --pico-card-background-color: var(--civ-surface);
-  --pico-card-sectioning-background-color: var(--civ-surface-2);
-  --pico-card-box-shadow: none;
-
-  --civ-gradient-to: #333333;
-
-  --civ-status-fresh: var(--pico-success-color);
-  --civ-status-stale: var(--pico-warning-color);
-  --civ-status-gap: var(--pico-error-color);
-  --civ-status-untracked: var(--civ-text-muted);
-  --civ-status-selected: var(--civ-accent);
-
-  --surface-hover: rgba(0, 0, 0, 0.035);
-}
-
-/* ── Dark theme ──────────────────────────────────────────────────────────── */
-
-:root[data-theme="dark"] {
-  /* ── Editorial palette tokens (Graphite dark) ────────────────────────── */
-  --civ-bg: #111111;
-  --civ-surface: #242424;
-  --civ-surface-2: #1c1c1c;
-  --civ-text: #eeeeee;
-  --civ-text-secondary: #aaaaaa;
-  --civ-text-muted: #aaaaaa; /* WCAG AA on #242424: 7.5:1 */
-  --civ-border: #333333;
-  --civ-border-strong: #eeeeee;
-  --civ-accent: #f0c840; /* same as light */
-  --civ-accent-border: #d4a800;
-  --civ-accent-text: #111111;
-
-  --catppuccin-base: 30, 30, 46;
-  --catppuccin-mantle: 24, 24, 37;
-  --catppuccin-crust: 17, 17, 27;
-  --catppuccin-text: 205, 214, 244;
-  --catppuccin-subtext0: 166, 173, 200;
-  --catppuccin-subtext1: 186, 194, 222;
-  --catppuccin-overlay1: 127, 132, 156;
-  --catppuccin-surface0: 49, 50, 68;
-  --catppuccin-surface1: 69, 71, 90;
-  --catppuccin-surface2: 88, 91, 112;
-  --catppuccin-blue: 137, 180, 250;
-  --catppuccin-red: 243, 139, 168;
-  --catppuccin-green: 166, 227, 161;
-  --catppuccin-yellow: 249, 226, 175;
-  --catppuccin-pink: 245, 194, 231;
-  --catppuccin-mauve: 203, 166, 247;
-  --catppuccin-sky: 137, 220, 235;
-  --catppuccin-teal: 148, 226, 213;
-  --catppuccin-sapphire: 116, 199, 236;
-  --catppuccin-lavender: 180, 190, 254;
-
-  /* Pico overrides — dark */
-  --pico-color: var(--civ-text);
-  --pico-background-color: var(--civ-bg);
-  --pico-h1-color: var(--civ-text);
-  --pico-h2-color: var(--civ-text);
-  --pico-h3-color: var(--civ-text);
-  --pico-text-selection-color: rgba(255, 224, 102, 0.3);
-
-  --pico-primary: #eeeeee;
-  --pico-primary-background: #eeeeee;
-  --pico-primary-underline: #eeeeee;
-  --pico-primary-hover: #cccccc;
-  --pico-primary-hover-background: #cccccc;
-  --pico-primary-border: #eeeeee;
-  --pico-primary-focus: rgba(238, 238, 238, 0.25);
-  --pico-primary-inverse: #111111;
-
-  --pico-secondary-background: #555555;
-  --pico-secondary-inverse: #ffffff;
-  --pico-secondary-hover-background: #777777;
-
-  --pico-muted-color: var(--civ-text-muted);
-  --pico-muted-background: var(--civ-surface-2);
-  --pico-muted-border-color: var(--civ-border);
-
-  --pico-form-element-color: var(--civ-text);
-  --pico-form-element-background-color: var(--civ-surface);
-  --pico-form-element-active-background-color: var(--civ-surface-2);
-  --pico-form-element-active-border-color: var(--civ-border-strong);
-  --pico-form-element-focus-color: var(--civ-border-strong);
-  --pico-form-element-border-color: var(--civ-text-muted);
-
-  --pico-link-color: var(--civ-text);
-  --pico-link-hover-color: var(--civ-text-secondary);
-
-  --pico-ins-color: rgb(var(--catppuccin-green));
-  --pico-ins-background: rgba(var(--catppuccin-green), 0.1);
-  --pico-del-color: rgb(var(--catppuccin-red));
-  --pico-del-background: rgba(var(--catppuccin-red), 0.1);
-  --pico-del-inverse: var(--civ-surface-2);
-  --pico-info-color: rgb(var(--catppuccin-blue));
-  --pico-info-background: rgba(var(--catppuccin-blue), 0.1);
-  --pico-warn-color: #f0c040;
-  --pico-success-color: rgb(var(--catppuccin-green));
-  --pico-error-color: rgb(var(--catppuccin-red));
-  --pico-warning-color: #f0c040;
-
-  --pico-contrast-background: var(--civ-border-strong);
-  --pico-contrast-inverse: var(--civ-bg);
-  --pico-contrast-hover-background: var(--civ-text-secondary);
-
-  --pico-card-background-color: var(--civ-surface);
-  --pico-card-sectioning-background-color: var(--civ-surface-2);
-  --pico-card-box-shadow: none;
-
-  --civ-gradient-to: #333333;
-
-  --civ-status-fresh: var(--pico-success-color);
-  --civ-status-stale: var(--pico-warning-color);
-  --civ-status-gap: var(--pico-error-color);
-  --civ-status-untracked: var(--civ-text-muted);
-  --civ-status-selected: var(--civ-accent);
-
-  --surface-hover: rgba(255, 255, 255, 0.045);
 }
 
 /* ── Body background ─────────────────────────────────────────────────────── */
@@ -325,8 +83,8 @@ input:not(
 }
 
 [type="checkbox"]:checked {
-  --pico-background-color: rgb(var(--catppuccin-sapphire));
-  --pico-border-color: rgb(var(--catppuccin-sapphire));
+  --pico-background-color: rgb(var(--tone-sapphire));
+  --pico-border-color: rgb(var(--tone-sapphire));
 }
 
 [type="submit"]:not(.profile-modal__tab),
@@ -434,67 +192,72 @@ h3 {
 
 button.destructive,
 [type="button"].destructive {
-  --pico-background-color: rgb(var(--catppuccin-red));
-  --pico-border-color: rgb(var(--catppuccin-red));
-  --pico-color: rgb(var(--catppuccin-base));
+  --pico-background-color: rgb(var(--tone-red));
+  --pico-border-color: rgb(var(--tone-red));
+  --pico-color: rgb(var(--tone-bg));
 }
 
 button.destructive:hover,
 button.destructive:active,
 [type="button"].destructive:hover,
 [type="button"].destructive:active {
-  --pico-background-color: rgba(var(--catppuccin-red), 0.8);
-  --pico-border-color: rgba(var(--catppuccin-red), 0.8);
-  --pico-color: rgb(var(--catppuccin-base));
+  --pico-background-color: rgba(var(--tone-red), 0.8);
+  --pico-border-color: rgba(var(--tone-red), 0.8);
+  --pico-color: rgb(var(--tone-bg));
 }
 
 /* ── civ-action-btn ──────────────────────────────────────────────────────
  * Compact outline button for table-row actions. Used in role-config tables
- * and the issues table. !important throughout because Pico's aggressive
- * default `button` styling otherwise re-fills it.
+ * and the issues table.
+ *
+ * This block used to carry `!important` on 24 declarations, on the belief that
+ * the default `button` styling would otherwise re-fill it. It does not: that
+ * rule is an element selector at specificity (0,0,1) and `.civ-action-btn` is a
+ * class at (0,1,0), so it already wins. Verified by removing all 24 — every
+ * screenshot identical.
  */
 .civ-action-btn {
-  font-size: 0.75rem !important;
-  font-weight: 500 !important;
-  padding: 0.2em 0.6em !important;
-  border-radius: 4px !important;
-  border: 1px solid var(--pico-muted-border-color) !important;
-  background: transparent !important;
-  color: var(--pico-muted-color) !important;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  border: 1px solid var(--pico-muted-border-color);
+  background: transparent;
+  color: var(--pico-muted-color);
   cursor: pointer;
-  line-height: 1.4 !important;
+  line-height: 1.4;
   margin-left: 0.25rem;
-  min-height: unset !important;
-  width: auto !important;
+  min-height: unset;
+  width: auto;
   transition: border-color 0.1s, color 0.1s, background 0.1s;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .civ-action-btn:hover {
-  background: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: none !important;
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 [data-theme="dark"] .civ-action-btn:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 button.civ-action-btn:focus-visible {
-  outline: 2px solid var(--pico-primary) !important;
-  outline-offset: 2px !important;
-  box-shadow: none !important;
+  outline: 2px solid var(--pico-primary);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .civ-action-btn--danger {
-  color: var(--pico-del-color) !important;
-  border-color: color-mix(in srgb, var(--pico-del-color) 40%, transparent) !important;
+  color: var(--pico-del-color);
+  border-color: color-mix(in srgb, var(--pico-del-color) 40%, transparent);
 }
 
 .civ-action-btn--danger:hover {
-  border-color: var(--pico-del-color) !important;
-  background: color-mix(in srgb, var(--pico-del-color) 6%, transparent) !important;
-  color: var(--pico-del-color) !important;
+  border-color: var(--pico-del-color);
+  background: color-mix(in srgb, var(--pico-del-color) 6%, transparent);
+  color: var(--pico-del-color);
 }
 
 .btn-icon {

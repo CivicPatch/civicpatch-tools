@@ -1,0 +1,271 @@
+/* Design tokens — every custom property the app defines, and nothing else.
+   Rules live in styles.css and in the component stylesheets; this file only
+   declares values, so "where does this colour come from" has one answer.
+
+   Loaded before styles.css (see layouts/base.html).
+
+   Three tiers:
+     primitives  raw values with no meaning of their own
+     semantic    the roles components speak in
+     component   per-component knobs, defined on the component's own root
+   Component CSS should reference the semantic tier only — never a primitive,
+   never another component's knob. That rule is what keeps a variable system
+   from turning into several hundred loosely-related names. */
+
+/* ── Source-url accent ramp ──────────────────────────────────────────────── */
+/* Ten slots, assigned by position (or by url hash as a fallback) in
+   utils/source-color-utils.js. The slot→hue mapping is stated once, here: a
+   given source keeps its number across components, so the order must not
+   change even if the hues themselves are re-picked. */
+
+:root {
+  --color-1: var(--tone-blue);
+  --color-2: var(--tone-mauve);
+  --color-3: var(--tone-yellow);
+  --color-4: var(--tone-pink);
+  --color-5: var(--tone-sky);
+  --color-6: var(--tone-teal);
+  --color-7: var(--tone-lavender);
+  --color-8: var(--tone-green);
+  --color-9: var(--tone-red);
+  --color-10: var(--tone-sapphire);
+
+  /* Shared max content width for the navbar + page containers, so the nav rail
+     and page content align on the same gutters. */
+  --page-width: 1400px;
+}
+
+:root,
+:host {
+  --pico-font-family: "Figtree", sans-serif;
+  --pico-form-element-spacing-vertical: 0.5rem;
+  --pico-form-element-spacing-horizontal: 0.5rem;
+  --pico-border-radius: 3px;
+  --pico-border-width: 0.03rem;
+  --pico-line-height: 1.65;
+  --pico-outline-width: 0.2rem;
+
+  /* ── Type scale ──────────────────────────────────────────────────────── */
+  /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
+  /* Sans-serif: all other UI text                                         */
+  --text-xs: 0.65rem; /* tiny labels, diff metadata, table headers */
+  --text-sm: 0.75rem; /* small metadata, badges, btn-sm */
+  --text-md: 0.875rem; /* body text, card content, items */
+  --text-base: 1rem; /* default paragraph, modal headers */
+  --text-lg: 1.25rem; /* display values, goal numbers */
+  --text-xl: 1.75rem; /* section titles, display headings */
+  --text-2xl: 2rem; /* stat values, hero numbers */
+}
+
+/* ── Light theme ─────────────────────────────────────────────────────────── */
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
+  --civ-bg: #fafafa;
+  --civ-surface: #fcfcfc;
+  --civ-surface-2: #f5f5f5;
+  --civ-text: #222222;
+  --civ-text-secondary: #444444;
+  --civ-text-muted: #767676; /* WCAG AA minimum on white */
+  --civ-border: #e0e0e0;
+  --civ-border-strong: #333333;
+  --civ-accent: #f0c840;
+  --civ-accent-border: #d4a800;
+  --civ-accent-text: #111111; /* text on top of accent bg */
+
+  /* ── Tones ─────────────────────────────────────────────────────────────
+     Primitives, as `R, G, B` triples so callers can add an alpha:
+     `rgb(var(--tone-red))` / `rgba(var(--tone-red), 0.1)`. Values inherited
+     from the palette these replaced; they are due to be re-picked against
+     contrast requirements, which is why nothing here claims a role. */
+  --tone-bg: 239, 241, 245;
+  --tone-bg-sunken: 230, 233, 239;
+  --tone-bg-deep: 220, 224, 232;
+  --tone-ink: 76, 79, 105;
+  --tone-ink-soft: 108, 111, 133;
+  --tone-ink-mid: 92, 95, 119;
+  --tone-ink-faint: 140, 143, 161;
+  --tone-line: 204, 208, 218;
+  --tone-line-mid: 188, 192, 204;
+  --tone-line-strong: 172, 176, 190;
+  --tone-blue: 30, 102, 245;
+  --tone-red: 210, 15, 57;
+  --tone-green: 64, 160, 43;
+  --tone-yellow: 223, 142, 29;
+  --tone-pink: 234, 118, 203;
+  --tone-mauve: 136, 57, 239;
+  --tone-sky: 4, 165, 229;
+  --tone-teal: 23, 146, 153;
+  --tone-sapphire: 32, 159, 181;
+  --tone-lavender: 114, 135, 253;
+
+  /* Pico overrides — light */
+  --pico-color: var(--civ-text);
+  --pico-background-color: var(--civ-bg);
+  --pico-h1-color: var(--civ-text);
+  --pico-h2-color: var(--civ-text);
+  --pico-h3-color: var(--civ-text);
+  --pico-text-selection-color: rgba(255, 224, 102, 0.35);
+
+  --pico-primary: #111111;
+  --pico-primary-background: #111111;
+  --pico-primary-underline: #111111;
+  --pico-primary-hover: #333333;
+  --pico-primary-hover-background: #333333;
+  --pico-primary-border: #111111;
+  --pico-primary-focus: rgba(17, 17, 17, 0.25);
+  --pico-primary-inverse: #fafafa;
+
+  --pico-secondary-background: #555555;
+  --pico-secondary-inverse: #ffffff;
+  --pico-secondary-hover-background: #333333;
+
+  --pico-muted-color: var(--civ-text-muted);
+  --pico-muted-background: var(--civ-surface-2);
+  --pico-muted-border-color: var(--civ-border);
+
+  --pico-form-element-color: var(--civ-text);
+  --pico-form-element-background-color: var(--civ-surface);
+  --pico-form-element-active-background-color: var(--civ-surface-2);
+  --pico-form-element-active-border-color: var(--civ-border-strong);
+  --pico-form-element-focus-color: var(--civ-border-strong);
+  --pico-form-element-border-color: var(--civ-border);
+
+  --pico-link-color: var(--civ-text);
+  --pico-link-hover-color: var(--civ-text-secondary);
+
+  --pico-ins-color: rgb(var(--tone-green));
+  --pico-ins-background: rgba(var(--tone-green), 0.1);
+  --pico-del-color: rgb(var(--tone-red));
+  --pico-del-background: rgba(var(--tone-red), 0.1);
+  --pico-del-inverse: var(--civ-bg);
+  --pico-info-color: rgb(var(--tone-blue));
+  --pico-info-background: rgba(var(--tone-blue), 0.1);
+  --pico-warn-color: #b35c00;
+  --pico-success-color: rgb(var(--tone-green));
+  --pico-error-color: rgb(var(--tone-red));
+  --pico-warning-color: #b35c00;
+
+  --pico-contrast-background: var(--civ-border-strong);
+  --pico-contrast-inverse: var(--civ-bg);
+  --pico-contrast-hover-background: var(--civ-text-secondary);
+
+  --pico-card-background-color: var(--civ-surface);
+  --pico-card-sectioning-background-color: var(--civ-surface-2);
+  --pico-card-box-shadow: none;
+
+  --civ-gradient-to: #333333;
+
+  --civ-status-fresh: var(--pico-success-color);
+  --civ-status-stale: var(--pico-warning-color);
+  --civ-status-gap: var(--pico-error-color);
+  --civ-status-untracked: var(--civ-text-muted);
+  --civ-status-selected: var(--civ-accent);
+
+  --surface-hover: rgba(0, 0, 0, 0.035);
+}
+
+/* ── Dark theme ──────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] {
+  /* ── Editorial palette tokens (Graphite dark) ────────────────────────── */
+  --civ-bg: #111111;
+  --civ-surface: #242424;
+  --civ-surface-2: #1c1c1c;
+  --civ-text: #eeeeee;
+  --civ-text-secondary: #aaaaaa;
+  --civ-text-muted: #aaaaaa; /* WCAG AA on #242424: 7.5:1 */
+  --civ-border: #333333;
+  --civ-border-strong: #eeeeee;
+  --civ-accent: #f0c840; /* same as light */
+  --civ-accent-border: #d4a800;
+  --civ-accent-text: #111111;
+
+  /* ── Tones — see the light block for the format note ─────────────────── */
+  --tone-bg: 30, 30, 46;
+  --tone-bg-sunken: 24, 24, 37;
+  --tone-bg-deep: 17, 17, 27;
+  --tone-ink: 205, 214, 244;
+  --tone-ink-soft: 166, 173, 200;
+  --tone-ink-mid: 186, 194, 222;
+  --tone-ink-faint: 127, 132, 156;
+  --tone-line: 49, 50, 68;
+  --tone-line-mid: 69, 71, 90;
+  --tone-line-strong: 88, 91, 112;
+  --tone-blue: 137, 180, 250;
+  --tone-red: 243, 139, 168;
+  --tone-green: 166, 227, 161;
+  --tone-yellow: 249, 226, 175;
+  --tone-pink: 245, 194, 231;
+  --tone-mauve: 203, 166, 247;
+  --tone-sky: 137, 220, 235;
+  --tone-teal: 148, 226, 213;
+  --tone-sapphire: 116, 199, 236;
+  --tone-lavender: 180, 190, 254;
+
+  /* Pico overrides — dark */
+  --pico-color: var(--civ-text);
+  --pico-background-color: var(--civ-bg);
+  --pico-h1-color: var(--civ-text);
+  --pico-h2-color: var(--civ-text);
+  --pico-h3-color: var(--civ-text);
+  --pico-text-selection-color: rgba(255, 224, 102, 0.3);
+
+  --pico-primary: #eeeeee;
+  --pico-primary-background: #eeeeee;
+  --pico-primary-underline: #eeeeee;
+  --pico-primary-hover: #cccccc;
+  --pico-primary-hover-background: #cccccc;
+  --pico-primary-border: #eeeeee;
+  --pico-primary-focus: rgba(238, 238, 238, 0.25);
+  --pico-primary-inverse: #111111;
+
+  --pico-secondary-background: #555555;
+  --pico-secondary-inverse: #ffffff;
+  --pico-secondary-hover-background: #777777;
+
+  --pico-muted-color: var(--civ-text-muted);
+  --pico-muted-background: var(--civ-surface-2);
+  --pico-muted-border-color: var(--civ-border);
+
+  --pico-form-element-color: var(--civ-text);
+  --pico-form-element-background-color: var(--civ-surface);
+  --pico-form-element-active-background-color: var(--civ-surface-2);
+  --pico-form-element-active-border-color: var(--civ-border-strong);
+  --pico-form-element-focus-color: var(--civ-border-strong);
+  --pico-form-element-border-color: var(--civ-text-muted);
+
+  --pico-link-color: var(--civ-text);
+  --pico-link-hover-color: var(--civ-text-secondary);
+
+  --pico-ins-color: rgb(var(--tone-green));
+  --pico-ins-background: rgba(var(--tone-green), 0.1);
+  --pico-del-color: rgb(var(--tone-red));
+  --pico-del-background: rgba(var(--tone-red), 0.1);
+  --pico-del-inverse: var(--civ-surface-2);
+  --pico-info-color: rgb(var(--tone-blue));
+  --pico-info-background: rgba(var(--tone-blue), 0.1);
+  --pico-warn-color: #f0c040;
+  --pico-success-color: rgb(var(--tone-green));
+  --pico-error-color: rgb(var(--tone-red));
+  --pico-warning-color: #f0c040;
+
+  --pico-contrast-background: var(--civ-border-strong);
+  --pico-contrast-inverse: var(--civ-bg);
+  --pico-contrast-hover-background: var(--civ-text-secondary);
+
+  --pico-card-background-color: var(--civ-surface);
+  --pico-card-sectioning-background-color: var(--civ-surface-2);
+  --pico-card-box-shadow: none;
+
+  --civ-gradient-to: #333333;
+
+  --civ-status-fresh: var(--pico-success-color);
+  --civ-status-stale: var(--pico-warning-color);
+  --civ-status-gap: var(--pico-error-color);
+  --civ-status-untracked: var(--civ-text-muted);
+  --civ-status-selected: var(--civ-accent);
+
+  --surface-hover: rgba(255, 255, 255, 0.045);
+}

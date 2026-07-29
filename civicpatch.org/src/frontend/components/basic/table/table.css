@@ -10,7 +10,7 @@ civ-table {
 }
 
 civ-table:focus-within {
-  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire));
+  box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--tone-sapphire));
 }
 
 /* ── Table base ─────────────────────────────────────────────────────────── */
@@ -55,11 +55,11 @@ civ-table tr:last-child {
 /* ── Interactive states ─────────────────────────────────────────────────── */
 
 civ-table td:focus-within {
-  background-color: rgb(var(--catppuccin-base));
+  background-color: rgb(var(--tone-bg));
 }
 
 civ-table tr:focus-within {
-  background-color: rgba(var(--catppuccin-teal), 0.1);
+  background-color: rgba(var(--tone-teal), 0.1);
 }
 
 /* ── Drag & drop ────────────────────────────────────────────────────────── */
@@ -156,8 +156,8 @@ civ-table th.col-expand-toggle .col-expand-toggle__btn {
   height: 100%;
   min-height: 2rem;
   cursor: pointer;
-  background: rgb(var(--catppuccin-surface0));
-  border-left: 2px solid rgb(var(--catppuccin-surface1));
+  background: rgb(var(--tone-line));
+  border-left: 2px solid rgb(var(--tone-line-mid));
   color: var(--pico-muted-color);
   font-size: 0.6rem;
   transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
@@ -174,8 +174,8 @@ civ-table th.col-expand-toggle .col-expand-toggle__btn.is-expanded::after {
 }
 
 civ-table th.col-expand-toggle .col-expand-toggle__btn:hover {
-  background: rgb(var(--catppuccin-surface1));
-  border-color: rgb(var(--catppuccin-sapphire));
+  background: rgb(var(--tone-line-mid));
+  border-color: rgb(var(--tone-sapphire));
   color: var(--pico-color);
 }
 
@@ -186,8 +186,8 @@ civ-table th.col-expand-toggle .col-expand-toggle__popover {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  background: rgb(var(--catppuccin-surface0));
-  border: 1px solid rgb(var(--catppuccin-surface2));
+  background: rgb(var(--tone-line));
+  border: 1px solid rgb(var(--tone-line-strong));
   border-radius: var(--pico-border-radius);
   padding: 0.3rem 0.5rem;
   white-space: nowrap;

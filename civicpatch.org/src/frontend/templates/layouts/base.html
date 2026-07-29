@@ -39,6 +39,16 @@
             href="{{ url_for('frontend', path='/css/pico.min.css') }}"
             rel="stylesheet"
         />
+        <!-- Tokens before rules, and both after pico so our values win over
+             its defaults. -->
+        <link
+            href="{{ url_for('frontend', path='/css/tokens.css') }}"
+            rel="stylesheet"
+        />
+        <link
+            href="{{ url_for('frontend', path='/css/elements.css') }}"
+            rel="stylesheet"
+        />
         <link
             href="{{ url_for('frontend', path='/css/styles.css') }}"
             rel="stylesheet"

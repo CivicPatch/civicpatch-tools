@@ -1,0 +1,80 @@
+/* Base styles for bare HTML elements.
+   Rules here replace what a CSS framework used to provide, one element type at a
+   time. Nothing in this file uses `!important` — if a declaration seems to need
+   one, some other rule is more specific than expected and that is worth knowing
+   rather than papering over.
+
+   Loaded after tokens.css and before styles.css, so page and component rules
+   still get the last word. */
+
+/* ── Buttons ─────────────────────────────────────────────────────────────────
+ *
+ * Every button is a filled primary button by default. `styles.css` then opts
+ * specific classes out (.btn-ghost, .secondary, .role-chip, .destructive) by
+ * re-setting the three custom properties below at higher specificity.
+ *
+ * The colours are indirected through custom properties rather than set
+ * directly, and that indirection is load-bearing: it is the only reason an
+ * opt-out can be a three-line variable override instead of having to restate
+ * padding, border and radius.
+ *
+ * The names stay `--pico-*` on purpose. Renaming them belongs to the mechanical
+ * rename pass — do it here and every existing opt-out silently stops being
+ * read, which shows up as a wrongly-filled button rather than as an error.
+ */
+
+[role="button"],
+[type="button"],
+[type="file"]::file-selector-button,
+[type="reset"],
+[type="submit"],
+button {
+  --pico-background-color: var(--pico-primary-background);
+  --pico-border-color: var(--pico-primary-border);
+  --pico-color: var(--pico-primary-inverse);
+
+  padding: var(--pico-form-element-spacing-vertical)
+    var(--pico-form-element-spacing-horizontal);
+  border: var(--pico-border-width) solid var(--pico-border-color);
+  border-radius: var(--pico-border-radius);
+  outline: 0;
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  font-size: 1rem;
+  line-height: var(--pico-line-height);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--pico-transition),
+    border-color var(--pico-transition),
+    color var(--pico-transition),
+    box-shadow var(--pico-transition);
+}
+
+:where(
+  [role="button"],
+  [type="button"],
+  [type="file"]::file-selector-button,
+  [type="reset"],
+  [type="submit"],
+  button
+):is(:hover, :active, :focus) {
+  --pico-background-color: var(--pico-primary-hover-background);
+  --pico-border-color: var(--pico-primary-hover-border);
+  --pico-color: var(--pico-primary-inverse);
+}
+
+/* A submit button fills its form row; every other button hugs its label. */
+button[type="submit"] {
+  width: 100%;
+}
+
+/* A summary styled as a button is still a disclosure control — it spans its
+   container and reads left-aligned, unlike a real button. */
+details summary[role="button"] {
+  width: 100%;
+  text-align: left;
+}

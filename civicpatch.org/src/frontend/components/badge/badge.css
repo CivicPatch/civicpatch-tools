@@ -51,18 +51,18 @@ civ-badge {
 
 
 .civ-badge--global {
-    color: rgb(var(--catppuccin-mauve));
-    border: 1px solid rgba(var(--catppuccin-mauve), 0.4);
+    color: rgb(var(--tone-mauve));
+    border: 1px solid rgba(var(--tone-mauve), 0.4);
 }
 
 .civ-badge--state {
-    color: rgb(var(--catppuccin-green));
-    border: 1px solid rgba(var(--catppuccin-green), 0.4);
+    color: rgb(var(--tone-green));
+    border: 1px solid rgba(var(--tone-green), 0.4);
 }
 
 .civ-badge--locality {
-    color: rgb(var(--catppuccin-yellow));
-    border: 1px solid rgba(var(--catppuccin-yellow), 0.4);
+    color: rgb(var(--tone-yellow));
+    border: 1px solid rgba(var(--tone-yellow), 0.4);
 }
 
 .civ-badge__popover {
