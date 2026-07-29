@@ -17,6 +17,10 @@ const TEST_USER_PROVIDER_ID = "test-user-e2e";
 export const TEST_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test/government";
 export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
+
+// issue_key for the seeded unrecognized_role issue. It is the role name itself —
+// see upsert_issue in database/issues.py, which keys this issue type on the role.
+export const UNRECOGNIZED_ROLE_KEY = "Deputy Vice Chair (e2e)";
 const TEST_PR_ID = "00000000-0000-0000-eeee-000000000002";
 
 export const TEST_JURISDICTION_OCDID_2 =
@@ -721,6 +725,29 @@ export async function seedE2eFixtures() {
         );
       }
     }
+
+    // One `unrecognized_role` issue, so the issues page has a row whose Resolve
+    // button opens the config editor. That modal is the only place
+    // config-editor.css renders, and it holds the largest remaining cluster of
+    // Pico overrides — without this row the visual baseline cannot see it.
+    //
+    // `jurisdictions` on the API response is derived from the request's
+    // jurisdiction_ocdid, so pointing at TEST_REQUEST_ID is what makes the
+    // button appear at all (issue-row.js renders it only when the issue is
+    // unrecognized_role AND carries jurisdictions).
+    await client.query(
+      `INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
+       VALUES ('unrecognized_role', $1, ARRAY[$2], $3, 'pending')
+       ON CONFLICT (issue_type, issue_key) DO UPDATE
+         SET request_ids = EXCLUDED.request_ids,
+             data = EXCLUDED.data,
+             status = EXCLUDED.status`,
+      [
+        UNRECOGNIZED_ROLE_KEY,
+        TEST_REQUEST_ID,
+        JSON.stringify({ person_names: ["Jane Smith"] }),
+      ],
+    );
   } finally {
     await client.end();
   }
@@ -730,6 +757,11 @@ export async function teardownE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
+    await client.query(
+      `DELETE FROM issues WHERE issue_type = 'unrecognized_role' AND issue_key = $1`,
+      [UNRECOGNIZED_ROLE_KEY],
+    );
+
     // Delete in reverse FK order
     await client.query(
       `DELETE FROM review_session_entries
