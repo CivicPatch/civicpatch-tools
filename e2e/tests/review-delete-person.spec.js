@@ -18,7 +18,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, openOverview, railFor, tileFor } from "./helpers/review-card.js";
+import { openDetail, openOverview, railFor, rowFor } from "./helpers/review-card.js";
 
 const MERGE_ENDPOINT = "**/api/v1/pull_requests/*/save-and-merge";
 const MERGE_STATUS_ENDPOINT = "**/api/v1/pull_requests/*/merge-status";
@@ -125,7 +125,7 @@ test.describe("Delete a person", () => {
     await expect(personCard(page, "Maria González")).toHaveClass(/review-rail--deleted/);
 
     await openOverview(page);
-    await expect(tileFor(page, "Maria González")).toHaveClass(/review-tile--deleted/);
+    await expect(rowFor(page, "Maria González")).toHaveClass(/review-row--deleted/);
     await expect(
       page.locator(".review-overview__faces").getByText("Maria González"),
     ).toHaveCount(0);

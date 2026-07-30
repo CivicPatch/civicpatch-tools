@@ -1,9 +1,10 @@
 /**
- * Overview (spec §4) — triage a whole card at a glance, at ?view=overview.
+ * Overview (2026-07-30 spec) — triage a whole card at a glance, at ?view=overview.
  *
- * The collapse rule decides what a tile says, and §3's predicate decides which
- * group a person lands in. Both are shared with the rail, so these assert that
- * the two views agree rather than re-testing the model.
+ * One roster in seat order: status is carried by the card, so position is free.
+ * The collapse rule decides what a card says and `status` decides how it looks —
+ * both shared with the rail, so these assert the views agree rather than
+ * re-testing the model.
  */
 
 import { test, expect } from "../fixtures/index.js";
@@ -14,41 +15,87 @@ const openOverview = async (page, requestId = SCALE_REQUEST_ID) => {
   await expect(page.locator("review-overview")).toBeVisible();
 };
 
-const tileFor = (page, name) =>
+const rowFor = (page, name) =>
   page
-    .locator(".review-tile")
-    .filter({ has: page.locator(".review-tile__name", { hasText: name }) });
+    .locator(".review-row")
+    .filter({ has: page.locator(".review-row__name", { hasText: name }) });
+
+const foldFor = (page, name) =>
+  page
+    .locator(".review-fold")
+    .filter({ has: page.locator(".review-fold__name", { hasText: name }) });
 
 test.describe("Review overview", () => {
-  test("splits the card into what needs review and the roster that doesn't", async ({
+  test("renders one roster in seat order, folding the untouched", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // 10 changed + 5 added + 3 the scrape dropped = 18; the other 25 are untouched.
-    const counts = page.locator(".review-overview__count");
-    await expect(counts).toHaveText(["18", "25"]);
+    // 10 changed + 5 added + 3 the scrape dropped = 18 cards; the other 25 fold.
+    //
+    // This replaced a two-group assertion (counts "18"/"25", 25 faces in a strip).
+    // The groups are gone: grouping moved people to express status, and now the
+    // card expresses it, so seat order survives instead.
+    await expect(page.locator(".review-row:not(.review-row--ghost)")).toHaveCount(18);
+    await expect(page.locator(".review-fold")).toHaveCount(25);
 
-    // Unchanged people are faces, not tiles — the roster reads complete without
-    // spending a card each.
-    await expect(page.locator(".review-overview__faces .review-face")).toHaveCount(25);
-    await expect(tileFor(page, "Councillor 03 Scale")).toHaveCount(0);
+    // An untouched person is still present and still theirs to open — folded, not
+    // dropped from the list.
+    await expect(foldFor(page, "Councillor 03 Scale")).toHaveCount(1);
+    await expect(rowFor(page, "Councillor 03 Scale")).toHaveCount(0);
   });
 
-  test("a tile names the fields that moved, not just that something did", async ({
+  test("seat order is kept, so a fold sits between the cards around it", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // Source urls rides along on every tile: it is a context field, always
-    // visible as the evidence behind the two that moved.
-    const tile = tileFor(page, "Councillor 02 Scale");
-    await expect(tile.locator(".review-tile__field")).toHaveText([
-      "Term end",
-      "Phone",
-      "Source urls",
+    // W1 folds, W2 changed, W3 and W4 fold, W5 changed. Reading the list top to
+    // bottom must give that back — this is the whole point of dropping the groups.
+    const names = await page
+      .locator(".review-row__name, .review-fold__name")
+      .allTextContents();
+    const seats = names.slice(0, 5).map((n) => n.trim());
+
+    expect(seats).toEqual([
+      "Councillor 01 Scale",
+      "Councillor 02 Scale",
+      "Councillor 03 Scale",
+      "Councillor 04 Scale",
+      "Councillor 05 Scale",
     ]);
-    await expect(tile).toHaveClass(/review-tile--changed/);
+  });
+
+  test("a card names the fields that moved, not just that something did", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+
+    // Ranked: contact details ahead of term dates. Source urls is no longer in
+    // this list — it is a context field and renders as a numbered link instead,
+    // so a tag would say the same thing twice.
+    const row = rowFor(page, "Councillor 02 Scale");
+    await expect(row.locator(".review-row__field")).toHaveText(["Phone", "Term end"]);
+    await expect(row).toHaveClass(/review-row--changed/);
+    await expect(row.locator(".review-row__source")).toHaveCount(1);
+  });
+
+  test("the status is named in words, not carried by colour alone", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+
+    // `removed` and `deleted` share a hue, so the badge is the only thing that
+    // separates them — and nothing else names the status now the groups are gone.
+    await expect(
+      rowFor(page, "Councillor 02 Scale").locator(".review-row__badge"),
+    ).toHaveText("Changed");
+    await expect(
+      rowFor(page, "Councillor 36 Scale").locator(".review-row__badge"),
+    ).toHaveText("Not in scrape");
+    await expect(
+      rowFor(page, "Newcomer 01 Scale").locator(".review-row__badge"),
+    ).toHaveText("New");
   });
 
   test("an issue outranks the field's own state", async ({
@@ -56,52 +103,60 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    // Councillor 09 carries duplicate_unique_role, anchored to office.name.
-    //
-    // This asserted a count badge, which the tile no longer has — the footer
-    // names the surviving fields, which is strictly more than a number counting
-    // them. The claim that outlived the badge is the precedence one: the issue
-    // colours the field it is anchored to, ahead of that field's own diff state.
-    const tile = tileFor(page, "Councillor 09 Scale");
-    const office = tile.locator(".review-tile__field").filter({ hasText: "Office" });
-    await expect(office).toHaveClass(/review-tile__field--issue/);
+    // Councillor 09 carries duplicate_unique_role, anchored to office.name. The
+    // issue colours the field it is anchored to, ahead of that field's own diff
+    // state — and the card says so once more in its own chip.
+    const row = rowFor(page, "Councillor 09 Scale");
+    const office = row.locator(".review-row__field").filter({ hasText: "Office" });
+    await expect(office).toHaveClass(/review-row__field--issue/);
+    await expect(row.locator(".review-row__attn")).toContainText("Has an issue");
   });
 
-  test("a departing person is one decision — struck, and no field count", async ({
+  test("a departing person is one decision — struck, and no field list", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    const tile = tileFor(page, "Councillor 36 Scale");
-    await expect(tile).toHaveClass(/review-tile--removed/);
-    // With no new-side record every field reads cleared; a count here would say
+    const row = rowFor(page, "Councillor 36 Scale");
+    await expect(row).toHaveClass(/review-row--removed/);
+    // With no new-side record every field reads cleared; a list here would say
     // "9 things to review" about a card that is one decision.
-    await expect(tile.locator(".review-tile__badge")).toHaveCount(0);
-    await expect(tile.locator(".review-tile__field")).toHaveCount(0);
+    await expect(row.locator(".review-row__field")).toHaveCount(0);
   });
 
-  test("the add-person ghost ends the To review group", async ({
+  test("the add-person ghost is the last thing in the list", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // In that group because a new person has surviving fields and lands there —
-    // after the face strip it would promise the wrong slot.
-    const grid = page.locator(".review-overview__grid");
-    await expect(grid.locator(".review-tile--ghost")).toHaveCount(1);
-    await expect(grid.locator(".review-tile").last()).toHaveClass(/review-tile--ghost/);
+    // This replaced "ends the To review group". There is no group to end: the
+    // ghost is last overall, so adding someone puts their card where it stood and
+    // pushes it down, and the affordance never moves.
+    const list = page.locator(".review-overview__list");
+    await expect(list.locator(".review-row--ghost")).toHaveCount(1);
+    await expect(list.locator("> *").last()).toHaveClass(/review-row--ghost/);
   });
 
-  test("a tile opens the editor on that person", async ({
+  test("a card opens the editor on that person", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // Previously this asserted a switch to Detail, which was the interim route
-    // while the modal did not exist. §6 makes the modal what Overview opens into.
-    await tileFor(page, "Councillor 02 Scale").locator(".review-tile__open").click();
+    await rowFor(page, "Councillor 02 Scale").locator(".review-row__open").click();
     await expect(page.locator("review-modal dialog")).toBeVisible();
     await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
+  });
+
+  test("a folded person opens the editor too", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+
+    // Folding is a display decision, not a loss of reach: an untouched person is
+    // still editable, and the fold is the only way to get to them here.
+    await foldFor(page, "Councillor 03 Scale").locator(".review-fold__open").click();
+    await expect(page.locator("review-modal dialog")).toBeVisible();
+    await expect(page.locator(".review-modal__head")).toContainText("Councillor 03 Scale");
   });
 
   test("a field name opens the editor focused on that field", async ({
@@ -109,10 +164,10 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    // Clicking the field name rather than the tile is the difference between
-    // "look at this person" and "fix this" (§4).
-    await tileFor(page, "Councillor 02 Scale")
-      .locator(".review-tile__field", { hasText: "Term end" })
+    // Clicking the field name rather than the card is the difference between
+    // "look at this person" and "fix this".
+    await rowFor(page, "Councillor 02 Scale")
+      .locator(".review-row__field", { hasText: "Term end" })
       .click();
     await expect(page.locator("review-modal dialog")).toBeVisible();
   });
