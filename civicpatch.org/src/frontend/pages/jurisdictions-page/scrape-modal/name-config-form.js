@@ -29,7 +29,7 @@ function NameConfigForm({ onChange, identities = {} }) {
         (identity) => html`
           <fieldset style="margin-bottom: 1em;">
             <label>${identity}</label>
-            <pico-chips-input
+            <civ-chips-input
               .value=${configs[identity] || []}
               .onChange=${(chips) => {
                 setConfigs((prev) => ({
@@ -38,7 +38,7 @@ function NameConfigForm({ onChange, identities = {} }) {
                 }));
               }}
               placeholder="Add alternate name..."
-            ></pico-chips-input>
+            ></civ-chips-input>
           </fieldset>
         `
       )}

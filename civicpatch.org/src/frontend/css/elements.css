@@ -685,6 +685,12 @@ body {
   margin: 0;
 }
 
+/* Selection highlight. Easy to lose track of — nothing is selected in a
+   screenshot, so the visual baseline cannot see this rule at all. */
+::selection {
+  background-color: var(--pico-text-selection-color);
+}
+
 main {
   display: block;
 }

@@ -28,14 +28,14 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
 
   return html`
     <style>
-      .pico-chips-row {
+      .chips-row {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5em;
         align-items: center;
         margin-bottom: 0.5em;
       }
-      .pico-chip-btn {
+      .chip-btn {
         display: inline-flex;
         align-items: center;
         background: var(--pico-primary-background, #e0e8f3);
@@ -46,7 +46,7 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
         font-weight: 500;
         cursor: pointer;
       }
-      .pico-chip-btn .close-x {
+      .chip-btn .close-x {
         margin-left: 0.5em;
         font-size: 1.1em;
         opacity: 0.7;
@@ -59,10 +59,10 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
         display: flex;
         align-items: center;
       }
-      .pico-chip-btn .close-x:hover {
+      .chip-btn .close-x:hover {
         opacity: 1;
       }
-      .pico-chips-row input[type="text"] {
+      .chips-row input[type="text"] {
         min-width: 100px;
         border: 1px solid var(--pico-muted-border-color, #e0e0e0);
         padding: 0.25em 0.75em;
@@ -70,16 +70,16 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
         outline: none;
         transition: border 0.2s;
       }
-      .pico-chips-row input[type="text"]:focus {
+      .chips-row input[type="text"]:focus {
         border: 1.5px solid var(--pico-primary, #0d6efd);
       }
     </style>
-    <div class="pico-chips-row">
+    <div class="chips-row">
       ${chips.map(
         (chip, i) => html`
           <button
             type="button"
-            class="pico-chip-btn"
+            class="chip-btn"
             @click=${() => handleRemove(i)}
             aria-label="Remove ${chip}"
           >
@@ -101,6 +101,6 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
 }
 
 customElements.define(
-  "pico-chips-input",
+  "civ-chips-input",
   component(PicoChipsInput, { useShadowDOM: false })
 );

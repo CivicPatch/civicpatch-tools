@@ -24,7 +24,7 @@ function JurisdictionSidebar({
       ${canStartScrape ? html`
         <button
           @click=${onScrapeClick}
-          class="primary jurisdiction-sidebar__scrape-btn btn-gradient"
+          class="jurisdiction-sidebar__scrape-btn btn-gradient"
           ?disabled=${isJobRunning || hasOpenPr}
         >
           Scrape for Jurisdiction

@@ -24,7 +24,6 @@
    making them theme-aware means re-encoding each SVG and is its own change. */
 
 :root {
-  --pico-icon-checkbox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(255, 255, 255)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
   --pico-icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   --pico-icon-date: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
 }
@@ -85,7 +84,6 @@
   --pico-accordion-active-summary-color: var(--pico-primary-hover);
   --pico-accordion-open-summary-color: var(--pico-muted-color);
   --pico-block-spacing-vertical: var(--pico-spacing);
-  --pico-modal-overlay-backdrop-filter: blur(0.375rem);
   --pico-nav-element-spacing-vertical: 1rem;
   --pico-nav-element-spacing-horizontal: 0.5rem;
   --pico-nav-link-spacing-vertical: 0.5rem;
@@ -132,12 +130,8 @@
      from the palette these replaced; they are due to be re-picked against
      contrast requirements, which is why nothing here claims a role. */
   --tone-bg: 239, 241, 245;
-  --tone-bg-sunken: 230, 233, 239;
   --tone-bg-deep: 220, 224, 232;
   --tone-ink: 76, 79, 105;
-  --tone-ink-soft: 108, 111, 133;
-  --tone-ink-mid: 92, 95, 119;
-  --tone-ink-faint: 140, 143, 161;
   --tone-line: 204, 208, 218;
   --tone-line-mid: 188, 192, 204;
   --tone-line-strong: 172, 176, 190;
@@ -155,9 +149,6 @@
   /* Pico overrides — light */
   --pico-color: var(--civ-text);
   --pico-background-color: var(--civ-bg);
-  --pico-h1-color: var(--civ-text);
-  --pico-h2-color: var(--civ-text);
-  --pico-h3-color: var(--civ-text);
   --pico-text-selection-color: rgba(255, 224, 102, 0.35);
 
   --pico-primary: #111111;
@@ -171,7 +162,6 @@
 
   --pico-secondary-background: #555555;
   --pico-secondary-inverse: #ffffff;
-  --pico-secondary-hover-background: #333333;
 
   --pico-muted-color: var(--civ-text-muted);
   --pico-muted-background: var(--civ-surface-2);
@@ -184,14 +174,11 @@
   --pico-form-element-focus-color: var(--civ-border-strong);
   --pico-form-element-border-color: var(--civ-border);
 
-  --pico-link-color: var(--civ-text);
-  --pico-link-hover-color: var(--civ-text-secondary);
 
   --pico-ins-color: rgb(var(--tone-green));
   --pico-ins-background: rgba(var(--tone-green), 0.1);
   --pico-del-color: rgb(var(--tone-red));
   --pico-del-background: rgba(var(--tone-red), 0.1);
-  --pico-del-inverse: var(--civ-bg);
   --pico-info-color: rgb(var(--tone-blue));
   --pico-info-background: rgba(var(--tone-blue), 0.1);
   --pico-warn-color: #b35c00;
@@ -199,15 +186,11 @@
   --pico-error-color: rgb(var(--tone-red));
   --pico-warning-color: #b35c00;
 
-  --pico-contrast-background: var(--civ-border-strong);
-  --pico-contrast-inverse: var(--civ-bg);
-  --pico-contrast-hover-background: var(--civ-text-secondary);
 
   --pico-card-background-color: var(--civ-surface);
   --pico-card-sectioning-background-color: var(--civ-surface-2);
   --pico-card-box-shadow: none;
 
-  --civ-gradient-to: #333333;
 
   --civ-status-fresh: var(--pico-success-color);
   --civ-status-stale: var(--pico-warning-color);
@@ -226,9 +209,7 @@
   --pico-secondary-underline: rgba(150, 158, 175, 0.5);
   --pico-secondary-hover-underline: var(--pico-secondary-hover);
   --pico-card-border-color: var(--pico-card-background-color);
-  --pico-modal-overlay-background-color: rgba(7.5, 8.5, 10, 0.75);
   --pico-progress-color: var(--pico-primary-background);
-  --pico-progress-background-color: #202632;
   --pico-contrast-hover: #fff;
   --pico-contrast-underline: rgba(223, 227, 235, 0.5);
   --pico-contrast-hover-underline: var(--pico-contrast-hover);
@@ -254,12 +235,8 @@
 
   /* ── Tones — see the light block for the format note ─────────────────── */
   --tone-bg: 30, 30, 46;
-  --tone-bg-sunken: 24, 24, 37;
   --tone-bg-deep: 17, 17, 27;
   --tone-ink: 205, 214, 244;
-  --tone-ink-soft: 166, 173, 200;
-  --tone-ink-mid: 186, 194, 222;
-  --tone-ink-faint: 127, 132, 156;
   --tone-line: 49, 50, 68;
   --tone-line-mid: 69, 71, 90;
   --tone-line-strong: 88, 91, 112;
@@ -277,9 +254,6 @@
   /* Pico overrides — dark */
   --pico-color: var(--civ-text);
   --pico-background-color: var(--civ-bg);
-  --pico-h1-color: var(--civ-text);
-  --pico-h2-color: var(--civ-text);
-  --pico-h3-color: var(--civ-text);
   --pico-text-selection-color: rgba(255, 224, 102, 0.3);
 
   --pico-primary: #eeeeee;
@@ -293,7 +267,6 @@
 
   --pico-secondary-background: #555555;
   --pico-secondary-inverse: #ffffff;
-  --pico-secondary-hover-background: #777777;
 
   --pico-muted-color: var(--civ-text-muted);
   --pico-muted-background: var(--civ-surface-2);
@@ -306,14 +279,11 @@
   --pico-form-element-focus-color: var(--civ-border-strong);
   --pico-form-element-border-color: var(--civ-text-muted);
 
-  --pico-link-color: var(--civ-text);
-  --pico-link-hover-color: var(--civ-text-secondary);
 
   --pico-ins-color: rgb(var(--tone-green));
   --pico-ins-background: rgba(var(--tone-green), 0.1);
   --pico-del-color: rgb(var(--tone-red));
   --pico-del-background: rgba(var(--tone-red), 0.1);
-  --pico-del-inverse: var(--civ-surface-2);
   --pico-info-color: rgb(var(--tone-blue));
   --pico-info-background: rgba(var(--tone-blue), 0.1);
   --pico-warn-color: #f0c040;
@@ -321,15 +291,11 @@
   --pico-error-color: rgb(var(--tone-red));
   --pico-warning-color: #f0c040;
 
-  --pico-contrast-background: var(--civ-border-strong);
-  --pico-contrast-inverse: var(--civ-bg);
-  --pico-contrast-hover-background: var(--civ-text-secondary);
 
   --pico-card-background-color: var(--civ-surface);
   --pico-card-sectioning-background-color: var(--civ-surface-2);
   --pico-card-box-shadow: none;
 
-  --civ-gradient-to: #333333;
 
   --civ-status-fresh: var(--pico-success-color);
   --civ-status-stale: var(--pico-warning-color);
@@ -348,9 +314,7 @@
   --pico-secondary-underline: rgba(93, 107, 137, 0.5);
   --pico-secondary-hover-underline: var(--pico-secondary-hover);
   --pico-card-border-color: var(--pico-muted-border-color);
-  --pico-modal-overlay-background-color: rgba(232, 234, 237, 0.75);
   --pico-progress-color: var(--pico-primary-background);
-  --pico-progress-background-color: #dfe3eb;
   --pico-contrast-hover: #000;
   --pico-contrast-underline: rgba(24, 28, 37, 0.5);
   --pico-contrast-hover-underline: var(--pico-contrast-hover);
