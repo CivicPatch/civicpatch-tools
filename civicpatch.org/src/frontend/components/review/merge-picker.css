@@ -152,3 +152,28 @@
   letter-spacing: 0.06em;
   color: var(--civ-text-muted);
 }
+
+/* Back to the person this merge started from — the modal stays open on them, so
+   this is a step backwards, never a close. */
+.merge-picker__back {
+  width: auto;
+  padding: 0;
+  margin-bottom: 0.6rem;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  cursor: pointer;
+}
+
+.merge-picker__back:hover {
+  color: var(--civ-text);
+}
+
+.merge-picker__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

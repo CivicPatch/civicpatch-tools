@@ -219,9 +219,27 @@ export function isRequiredFieldEmpty(record: DiffRecord, field: FieldSpec): bool
 
 // The single client-side error for a field's value on `record`, or null. Order:
 // required → date format → term ordering (end_date only).
+// Deliberately permissive. The backend canonicalises with `phonenumbers` and is the
+// authority (shared/schemas.py); this only catches what it would certainly reject, so
+// the reviewer hears about it while typing rather than at Publish.
+function phoneError(values: string[]): string | null {
+  for (const value of values) {
+    const text = String(value ?? "").trim();
+    if (!text) continue;
+    // An extension is not part of the number.
+    const digits = text.split(/\bext\.?\b|\bx\b/i)[0].replace(/\D/g, "");
+    const national = digits.startsWith("1") ? digits.slice(1) : digits;
+    if (national.length !== 10) return `${text} is not a 10-digit US number`;
+  }
+  return null;
+}
+
 export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
   if (!record) return null;
   if (isRequiredFieldEmpty(record, field)) return "Required";
+  if (field.key === "phones") {
+    return phoneError((diffValue(record, field) as string[]) ?? []);
+  }
   if (field.type === "date") {
     const value = String(diffValue(record, field) ?? "");
     if (!isValidDate(value)) return "Use YYYY, YYYY-MM, or YYYY-MM-DD";

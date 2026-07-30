@@ -4,10 +4,12 @@
 // only ever opens with a pair already chosen. Merging drops the absorbed row and
 // there is no undo short of Reset all, so nothing commits until this screen has
 // named the survivor.
+//
+// Content, not a dialog: this is one of the two screens the review modal shows, so
+// merging never stacks a second modal over the person you opened.
 
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
-import "../basic/modal.js";
 import "./merge-picker.css";
 import {
   applyMergePlan,
@@ -31,7 +33,9 @@ interface MergePickerHost extends HTMLElement {
   anchor: ReviewCard | null;
   partner: ReviewCard | null;
   onMerge: (survivorId: string, absorbedId: string, merged: Record<string, unknown>) => void;
-  onClose: () => void;
+  // Back to the person this merge started from — never a close, because the modal
+  // stays open on them.
+  onBack: () => void;
 }
 
 const displayValue = (value: unknown): string => {
@@ -74,7 +78,7 @@ function renderFieldRow(
 }
 
 function MergePicker(host: MergePickerHost) {
-  const { anchor, partner, onMerge, onClose } = host;
+  const { anchor, partner, onMerge, onBack } = host;
   const [edited, setEdited] = useState<MergePlan | null>(null);
 
   if (!anchor || !partner) return nothing;
@@ -105,47 +109,35 @@ function MergePicker(host: MergePickerHost) {
 
   const survivorName = personOf(survivor)?.name || "this record";
   const absorbedName = personOf(absorbed)?.name || "the other record";
-  const content = html`
-      <div class="merge-picker">
-        <h2 class="merge-picker__title">What survives</h2>
-        <p class="merge-picker__survivor">
-          <strong>${survivorName}</strong> survives and keeps their record.
-          <span class="merge-picker__absorbed">${absorbedName} is dropped from the list.</span>
-        </p>
-        ${contested.length
-          ? html`<div class="merge-grid">
-              <div class="merge-grid__head">Field</div>
-              <div class="merge-grid__head">${absorbedName}</div>
-              <div class="merge-grid__head merge-grid__head--centre">Take it?</div>
-              <div class="merge-grid__head">Result</div>
-              ${contested.map((entry) => renderFieldRow(entry, choose))}
-            </div>`
-          : html`<p class="merge-picker__empty">
-              These two records agree on every field.
-            </p>`}
-        ${agreed
-          ? html`<p class="merge-picker__agreed">${agreed} fields already agree.</p>`
-          : nothing}
-      </div>
-    `;
-
-  const footer = html`
-    <button class="secondary" @click=${onClose}>Cancel</button>
-    <button @click=${commit}>Merge into ${survivorName}</button>
-  `;
-
   return html`
-    <div class="merge-picker-host">
-      <civ-modal
-      .content=${content}
-      .footer=${footer}
-      .modalProps=${{
-        open: true,
-        onClose,
-        closeOnBackdropClick: true,
-        ariaLabel: `Merge ${absorbedName} into ${survivorName}`,
-      }}
-      ></civ-modal>
+    <div class="merge-picker">
+      <button class="merge-picker__back" @click=${onBack}>
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        Back to ${survivorName}
+      </button>
+      <h2 class="merge-picker__title">What survives</h2>
+      <p class="merge-picker__survivor">
+        <strong>${survivorName}</strong> survives and keeps their record.
+        <span class="merge-picker__absorbed">${absorbedName} is dropped from the list.</span>
+      </p>
+      ${contested.length
+        ? html`<div class="merge-grid">
+            <div class="merge-grid__head">Field</div>
+            <div class="merge-grid__head">${absorbedName}</div>
+            <div class="merge-grid__head merge-grid__head--centre">Take it?</div>
+            <div class="merge-grid__head">Result</div>
+            ${contested.map((entry) => renderFieldRow(entry, choose))}
+          </div>`
+        : html`<p class="merge-picker__empty">
+            These two records agree on every field.
+          </p>`}
+      ${agreed
+        ? html`<p class="merge-picker__agreed">${agreed} fields already agree.</p>`
+        : nothing}
+      <div class="merge-picker__actions">
+        <button class="btn-sm secondary" @click=${onBack}>Cancel</button>
+        <button class="btn-sm" @click=${commit}>Merge into ${survivorName}</button>
+      </div>
     </div>
   `;
 }

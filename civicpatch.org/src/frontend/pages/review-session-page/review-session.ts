@@ -22,7 +22,6 @@ import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, groupCards, needsReview } from "../../components/review/review-cards.js";
 import { railPropsFor } from "../../components/review-rail/rail-props.js";
-import "../../components/review/merge-picker.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
 type CurrentEntry = {
@@ -215,11 +214,14 @@ function ReviewSession(host: ReviewSessionHost) {
   const handleToggleMerge = (personId: string) =>
     setMergeOpenId((current) => (current === personId ? null : personId));
 
-  // Step 2 is a modal, opened once a pair exists.
+  // Step 2 is the modal's other screen, not a second dialog. Picking a partner from
+  // Detail opens the anchor's modal on it, so merge always has a person behind it
+  // and "back" always has somewhere to go.
   const [mergePair, setMergePair] = useState<{ anchorId: string; partnerId: string } | null>(null);
   const handlePickPartner = (anchorId: string, partnerId: string) => {
     setMergeOpenId(null);
     setMergePair({ anchorId, partnerId });
+    setOpenPerson({ id: anchorId, field: null });
   };
   const closeMergePicker = () => setMergePair(null);
 
@@ -373,15 +375,12 @@ function ReviewSession(host: ReviewSessionHost) {
         .onUnremove=${handleUnremove}
         .onRestore=${handleRestore}
         .onUndoRestore=${handleUndoRestore}
+        .mergePartner=${mergePair
+          ? (cards.find((c) => c.personId === mergePair.partnerId) ?? null)
+          : null}
+        .onMergeBack=${closeMergePicker}
+        .onMerge=${handleMergePeople}
       ></review-modal>
-      ${mergePair
-        ? html`<merge-picker
-            .anchor=${cards.find((c) => c.personId === mergePair.anchorId) ?? null}
-            .partner=${cards.find((c) => c.personId === mergePair.partnerId) ?? null}
-            .onMerge=${handleMergePeople}
-            .onClose=${closeMergePicker}
-          ></merge-picker>`
-        : nothing}
       ${debugOpen
         ? html`
             <source-content-debug-modal

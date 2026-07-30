@@ -10,6 +10,7 @@ import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { ref } from "lit-html/directives/ref.js";
 import "../basic/modal.js";
+import "./merge-picker.js";
 import "./review-modal.css";
 import "../review-rail/review-rail.css";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
@@ -40,7 +41,14 @@ export interface ReviewModalProps {
   onRestore: (person: any) => void;
   onUndoRestore: (id: string) => void;
   // Opens the merge picker anchored on the person in view.
-  onMergeWith?: (personId: string) => void;
+  // Merge is the modal's other screen, not a second dialog. Set means "show it".
+  mergePartner?: ReviewCard | null;
+  onMergeBack?: () => void;
+  onMerge?: (
+    survivorId: string,
+    absorbedId: string,
+    merged: Record<string, unknown>,
+  ) => void;
 }
 
 // The caller already knows how to build a rail for a card (it does so for
@@ -63,7 +71,9 @@ function ReviewModal(props: ReviewModalProps) {
     onUnremove,
     onRestore,
     onUndoRestore,
-    onMergeWith,
+    mergePartner,
+    onMergeBack,
+    onMerge,
   } = props;
 
   const [personId, setPersonId] = useState<string | null>(null);
@@ -221,13 +231,24 @@ function ReviewModal(props: ReviewModalProps) {
     </div>
   `;
 
+  const merging = !!mergePartner && !!onMergeBack && !!onMerge;
+
+  const body = merging
+    ? html`<merge-picker
+        .anchor=${card}
+        .partner=${mergePartner}
+        .onMerge=${onMerge}
+        .onBack=${onMergeBack}
+      ></merge-picker>`
+    : content;
+
   return html`
     <div class="review-modal">
       <!-- Escape and the backdrop behave as Done, not Cancel: discarding on a
            stray Escape is worse than keeping (§6.1). -->
       <civ-modal
-        .content=${content}
-        .footer=${footer}
+        .content=${body}
+        .footer=${merging ? nothing : footer}
         .modalProps=${{
           open: true,
           onClose,

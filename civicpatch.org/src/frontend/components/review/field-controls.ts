@@ -346,6 +346,9 @@ export function renderMultiList(
   // Link fields get an open-in-new-tab affordance per row, the same one source
   // urls already carry — a url you cannot follow is a url you cannot check.
   areLinks = false,
+  // `tel` for phones: the mobile keypad and autocomplete, nothing more. Validation
+  // is the backend's (shared/schemas.py).
+  inputType = "text",
 ) {
   const values = rows.map((r) => r.value);
   return html`
@@ -353,6 +356,7 @@ export function renderMultiList(
       ${rows.map(
         (row, i) => html`<div class="field-control__multi-row">
           <input
+            type=${inputType}
             class="field-control__input ${row.isNew ? "field-control__input--added" : ""}"
             .value=${row.value}
             @input=${(e: Event) =>

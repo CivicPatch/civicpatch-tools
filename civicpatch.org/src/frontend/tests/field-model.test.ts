@@ -653,3 +653,27 @@ describe("survivingFields", () => {
     expect(keys(surviving)).toEqual(["name", "emails", "source_urls"]);
   });
 });
+
+describe("fieldError — phones", () => {
+  const phones = { key: "phones", label: "Phone", type: "multi" } as const;
+
+  it("accepts every layout the backend canonicalises", () => {
+    for (const value of [
+      "(603) 968-4432",
+      "603-968-4432",
+      "6039684432",
+      "+1 603 968 4432",
+      "(603) 968-4432 ext. 12",
+    ]) {
+      expect(fieldError(phones, { phones: [value] })).toBeNull();
+    }
+  });
+
+  it("flags what the backend would certainly reject, before Publish does", () => {
+    expect(fieldError(phones, { phones: ["555-1234"] })).toMatch(/10-digit/);
+  });
+
+  it("ignores blanks — an empty row is not an error", () => {
+    expect(fieldError(phones, { phones: ["", "  "] })).toBeNull();
+  });
+});
