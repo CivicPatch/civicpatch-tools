@@ -1,0 +1,57 @@
+/* Compact outline button for table-row actions.
+   Imported by the pages that use it (issues, roles) rather than living in the
+   global stylesheet — it is a component, not a page or a global default. */
+
+/* ── civ-action-btn ──────────────────────────────────────────────────────
+ * Compact outline button for table-row actions. Used in role-config tables
+ * and the issues table.
+ *
+ * This block used to carry `!important` on 24 declarations, on the belief that
+ * the default `button` styling would otherwise re-fill it. It does not: that
+ * rule is an element selector at specificity (0,0,1) and `.civ-action-btn` is a
+ * class at (0,1,0), so it already wins. Verified by removing all 24 — every
+ * screenshot identical.
+ */
+.civ-action-btn {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  border: 1px solid var(--pico-muted-border-color);
+  background: transparent;
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  line-height: 1.4;
+  margin-left: 0.25rem;
+  min-height: unset;
+  width: auto;
+  transition: border-color 0.1s, color 0.1s, background 0.1s;
+  box-shadow: none;
+}
+
+.civ-action-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .civ-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+button.civ-action-btn:focus-visible {
+  outline: 2px solid var(--pico-primary);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.civ-action-btn--danger {
+  color: var(--pico-del-color);
+  border-color: color-mix(in srgb, var(--pico-del-color) 40%, transparent);
+}
+
+.civ-action-btn--danger:hover {
+  border-color: var(--pico-del-color);
+  background: color-mix(in srgb, var(--pico-del-color) 6%, transparent);
+  color: var(--pico-del-color);
+}

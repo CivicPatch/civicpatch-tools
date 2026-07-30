@@ -35,12 +35,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}civicpatch tool{% endblock %}</title>
 
-        <link
-            href="{{ url_for('frontend', path='/css/pico.min.css') }}"
-            rel="stylesheet"
-        />
-        <!-- Tokens before rules, and both after pico so our values win over
-             its defaults. -->
+        <!-- Tokens before rules: tokens.css declares, elements.css styles bare
+             elements, styles.css holds page and component rules. -->
         <link
             href="{{ url_for('frontend', path='/css/tokens.css') }}"
             rel="stylesheet"

@@ -647,17 +647,47 @@ details[open] > summary::after {
   transform: rotate(0);
 }
 
-/* ── Document base — deliberately NOT here ──────────────────────────────────
+/* ── Document base ───────────────────────────────────────────────────────────
  *
- * The `*`/`:root`/`body`/`main` defaults (box-sizing, base colours, and the
- * font-family that gives the page its typeface) are still supplied by the
- * framework. Duplicating them here changes nothing while it is loaded, so this
- * batch cannot verify them — and adding them anyway moved one page for reasons
- * that did not reproduce under measurement.
+ * `:where()` keeps this at specificity 0 — it is the floor everything else
+ * stands on, and no rule should have to out-specify it. `font-family` here is
+ * what gives the page its typeface; without it the document falls back to the
+ * browser's serif default.
  *
- * They belong in the same change that removes the framework, where the before
- * and after are meaningfully different and the screenshots can judge them.
+ * `--pico-font-size` is deliberately not read: styles.css sets a flat
+ * `:root { font-size }`, which is the knob that actually controls page scale.
  */
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+:where(:host),
+:where(:root) {
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  line-height: var(--pico-line-height);
+  font-family: var(--pico-font-family);
+  text-underline-offset: var(--pico-text-underline-offset);
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  tab-size: 4;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+}
+
+main {
+  display: block;
+}
 
 /* ── Typography ──────────────────────────────────────────────────────────────
  *
@@ -802,70 +832,63 @@ pre > samp {
   line-height: var(--pico-line-height);
 }
 
-/* ── Cards (article) — deferred, like the document base ─────────────────────
+/* ── Cards (article) ─────────────────────────────────────────────────────────
  *
- * `article` is the card primitive and `dialog > article` the modal panel, so the
- * framework's card rules land on a lot of components that style themselves. They
- * are duplicates of what it already supplies, which makes them unverifiable
- * while it is loaded — and adding them shifted the overview grid by ~3%.
+ * `article` is the card primitive, and `dialog > article` is the modal panel —
+ * the same element in both roles, which is why the dialog rules below only
+ * adjust size and overflow rather than restating the look.
  *
- * Deferred to the same change that removes the framework, where the diff is
- * meaningful and can be judged rather than guessed at.
+ * The negative side margins on header/footer are how a sectioning band bleeds to
+ * the card's edge without the card stating its own padding twice.
  */
 
-/* ── Dialog ──────────────────────────────────────────────────────────────────
+article {
+  margin-bottom: var(--pico-block-spacing-vertical);
+  padding: var(--pico-block-spacing-vertical) var(--pico-block-spacing-horizontal);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-background-color);
+  box-shadow: var(--pico-card-box-shadow);
+}
+
+article > footer,
+article > header {
+  margin-right: calc(var(--pico-block-spacing-horizontal) * -1);
+  margin-left: calc(var(--pico-block-spacing-horizontal) * -1);
+  padding: calc(var(--pico-block-spacing-vertical) * 0.66)
+    var(--pico-block-spacing-horizontal);
+  background-color: var(--pico-card-sectioning-background-color);
+}
+
+article > header {
+  margin-top: calc(var(--pico-block-spacing-vertical) * -1);
+  margin-bottom: var(--pico-block-spacing-vertical);
+  border-bottom: var(--pico-border-width) solid var(--pico-card-border-color);
+  border-top-right-radius: var(--pico-border-radius);
+  border-top-left-radius: var(--pico-border-radius);
+}
+
+article > footer {
+  margin-top: var(--pico-block-spacing-vertical);
+  margin-bottom: calc(var(--pico-block-spacing-vertical) * -1);
+  border-top: var(--pico-border-width) solid var(--pico-card-border-color);
+  border-bottom-right-radius: var(--pico-border-radius);
+  border-bottom-left-radius: var(--pico-border-radius);
+}
+
+/* ── Dialog — owned by styles.css, not here ─────────────────────────────────
  *
- * The dialog element is the full-viewport overlay; the article inside it is the
- * panel. styles.css overrides z-index and position for civ-modal and must keep
- * winning — these are element-level, so it does.
+ * styles.css implements modals against native <dialog> semantics: `::backdrop`
+ * for the scrim, `max-width: min(90vw, 32rem)` with `width: max-content`, and a
+ * flex column on `dialog[open] > article` that pins header/footer and scrolls the
+ * body.
  *
- * Skipped: the `.modal-is-opening`/`-closing` animation classes and the
- * `.close`/`rel="prev"` affordances. civ-modal uses none of them.
+ * The framework took the opposite approach — the dialog element *is* the scrim,
+ * stretched with `min-width: 100%` and centring its panel. The two models fight:
+ * transcribing it here made every modal edge-to-edge with no dimming.
+ *
+ * So this file only asserts the native default, and leaves modals to the rules
+ * that actually implement them.
  */
-
-dialog {
-  display: flex;
-  z-index: 999;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  align-items: center;
-  justify-content: center;
-  width: inherit;
-  min-width: 100%;
-  height: inherit;
-  min-height: 100%;
-  padding: 0;
-  border: 0;
-  backdrop-filter: var(--pico-modal-overlay-backdrop-filter);
-  background-color: var(--pico-modal-overlay-background-color);
-  color: var(--pico-color);
-}
-
-dialog > article {
-  width: 100%;
-  max-height: calc(100vh - var(--pico-spacing) * 2);
-  margin: var(--pico-spacing);
-  overflow: auto;
-}
-
-dialog > article > header > * {
-  margin-bottom: 0;
-}
-
-dialog > article > footer {
-  text-align: right;
-}
-
-dialog > article > footer :is([role="button"], button) {
-  margin-bottom: 0;
-}
-
-dialog > article > footer :is([role="button"], button):not(:first-of-type) {
-  margin-left: calc(var(--pico-spacing) * 0.5);
-}
 
 dialog:not([open]),
 dialog[open="false"] {
