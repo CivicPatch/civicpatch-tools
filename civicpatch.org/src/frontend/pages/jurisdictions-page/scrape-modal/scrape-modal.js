@@ -179,7 +179,7 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
                 </fieldset>
               `,
             )}
-            <button class="outline scrape-modal__add-url" @click=${addSourceUrl}>+ Add URL</button>
+            <button class="btn-ghost scrape-modal__add-url" @click=${addSourceUrl}>+ Add URL</button>
           `}
       </div>
     </div>
