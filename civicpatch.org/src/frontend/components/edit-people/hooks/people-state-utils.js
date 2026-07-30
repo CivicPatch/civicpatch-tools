@@ -60,7 +60,17 @@ export function mergeFields(survivor, absorbed) {
   return { ...merged, _selected: false };
 }
 
-export function collapseInto(survivor, absorbed, list) {
+// Ids stop naming a person when a merge or a link collapses two rows into one.
+// A stale entry is not inert: `removedIds` is read when building the publish
+// payload, so an id that later belongs to someone else drops them silently.
+// Returns the same Set when nothing was stale, so callers can skip the update.
+export function pruneIds(ids, livingIds) {
+  const living = livingIds instanceof Set ? livingIds : new Set(livingIds);
+  const kept = [...ids].filter((id) => living.has(id));
+  return kept.length === ids.size ? ids : new Set(kept);
+}
+
+export function mergeInto(survivor, absorbed, list) {
   const merged = mergeFields(survivor, [absorbed]);
   return list.filter(p => p.id !== survivor.id && p.id !== absorbed.id).concat(merged);
 }
@@ -69,9 +79,9 @@ export function collapseInto(survivor, absorbed, list) {
 // only their changed fields; new or re-identified rows (id changed) send the whole entry.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
 // entry, and a base person absent from the list is a deletion. Deleted rows are omitted here.
-export function buildPeoplePatch(currentPeople, changesById, deletedIds) {
+export function buildPeoplePatch(currentPeople, changesById, removedIds) {
   return currentPeople
-    .filter(p => !deletedIds.has(p.id))
+    .filter(p => !removedIds.has(p.id))
     .map(p => toPatchItem(p, changesById.get(p.id)));
 }
 

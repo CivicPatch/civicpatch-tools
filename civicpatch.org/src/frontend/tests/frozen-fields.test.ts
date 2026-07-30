@@ -5,6 +5,7 @@ import {
   isFieldVisible,
   frozenFieldKeys,
   nextFrozen,
+  pruneToLiving,
   EMPTY_FROZEN,
   INITIAL_FROZEN_STATE,
   type FrozenFields,
@@ -156,5 +157,48 @@ describe("nextFrozen", () => {
     const loading = nextFrozen(seeded, CARD_B, []);
     expect(frozenFieldKeys(loading.frozen, "p1")).toEqual([]);
     expect(loading.requestId).toBe(CARD_B);
+  });
+});
+
+describe("pruneToLiving", () => {
+  const frozen = foldVisible(EMPTY_FROZEN, [
+    card("p1", surviving("name", "diff")),
+    card("p2", surviving("emails", "diff")),
+  ]);
+
+  it("drops a person who left the card", () => {
+    const next = pruneToLiving(frozen, new Set(["p1"]));
+    expect(frozenFieldKeys(next, "p1")).toEqual(["name"]);
+    expect(frozenFieldKeys(next, "p2")).toEqual([]);
+  });
+
+  it("returns the same reference when everyone is still there", () => {
+    expect(pruneToLiving(frozen, new Set(["p1", "p2"]))).toBe(frozen);
+  });
+});
+
+describe("nextFrozen prunes absorbed people", () => {
+  const CARD = "req-merge";
+
+  // A merge collapses two rows into one. The absorbed id keeps no entry, so it
+  // cannot resurrect with stale reasons if that id is ever reused.
+  it("drops the absorbed person's frozen set", () => {
+    const before = nextFrozen(INITIAL_FROZEN_STATE, CARD, [
+      card("survivor", surviving("name", "diff")),
+      card("absorbed", surviving("emails", "diff")),
+    ]);
+    const after = nextFrozen(before, CARD, [card("survivor", surviving("name", "diff"))]);
+    expect(frozenFieldKeys(after.frozen, "absorbed")).toEqual([]);
+    expect(frozenFieldKeys(after.frozen, "survivor")).toEqual(["name"]);
+  });
+
+  // The async gap: an empty list means the people have not arrived, not that
+  // everyone left, so it must not wipe what is already frozen.
+  it("keeps everyone while the card is reloading", () => {
+    const seeded = nextFrozen(INITIAL_FROZEN_STATE, CARD, [
+      card("p1", surviving("name", "diff")),
+    ]);
+    const reloading = nextFrozen(seeded, CARD, []);
+    expect(frozenFieldKeys(reloading.frozen, "p1")).toEqual(["name"]);
   });
 });

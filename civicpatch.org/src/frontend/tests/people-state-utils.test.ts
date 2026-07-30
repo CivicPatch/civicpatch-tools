@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
-// @ts-expect-error — people-state-utils.js is plain JS without type declarations
-import { buildPeoplePatch, changedFieldKeys, listChanged } from "../components/edit-people/hooks/people-state-utils.js";
+import { buildPeoplePatch, changedFieldKeys, listChanged, pruneIds } from "../components/edit-people/hooks/people-state-utils.js";
 
 const changes = (entries: [string, string[]][]) => new Map(entries);
 const deleted = (...ids: string[]) => new Set(ids);
@@ -89,5 +88,23 @@ describe("buildPeoplePatch", () => {
     expect(
       buildPeoplePatch(people, changes([["c", []], ["a", []], ["b", []]]), deleted()).map((p: { id: string }) => p.id)
     ).toEqual(["c", "a", "b"]);
+  });
+});
+
+describe("pruneIds", () => {
+  // A merge or a link collapses two rows into one. removedIds is read when
+  // building the publish payload, so an id left behind drops whoever inherits it.
+  it("drops ids that no longer name anyone", () => {
+    const pruned = pruneIds(new Set(["a", "gone"]), new Set(["a", "b"]));
+    expect([...pruned]).toEqual(["a"]);
+  });
+
+  it("returns the same Set when every id is still live", () => {
+    const ids = new Set(["a", "b"]);
+    expect(pruneIds(ids, new Set(["a", "b", "c"]))).toBe(ids);
+  });
+
+  it("accepts a plain list of living ids", () => {
+    expect([...pruneIds(new Set(["a", "gone"]), ["a"])]).toEqual(["a"]);
   });
 });

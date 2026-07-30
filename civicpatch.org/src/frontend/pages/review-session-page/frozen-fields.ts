@@ -63,6 +63,23 @@ export function foldVisible(
   return next ?? frozen;
 }
 
+// A person who left the card takes their frozen set with them. A merge collapses
+// two rows into one, and without this the absorbed id keeps an entry that would
+// resurrect — with the wrong reasons — if that id ever came back. Same reference
+// when nothing was stale, preserving foldVisible's convention.
+export function pruneToLiving(
+  frozen: FrozenFields,
+  livingIds: Set<string>,
+): FrozenFields {
+  let next: FrozenFields | null = null;
+  for (const personId of frozen.keys()) {
+    if (livingIds.has(personId)) continue;
+    if (!next) next = new Map(frozen);
+    next.delete(personId);
+  }
+  return next ?? frozen;
+}
+
 export interface FrozenState {
   requestId: string | null;
   frozen: FrozenFields;
@@ -90,7 +107,14 @@ export function nextFrozen(
   cards: CardFields[],
 ): FrozenState {
   const sameCard = previous.requestId === requestId;
-  const frozen = foldVisible(sameCard ? previous.frozen : EMPTY_FROZEN, cards);
+  const carried = sameCard ? previous.frozen : EMPTY_FROZEN;
+  // An empty list means the people have not arrived yet, not that everyone left,
+  // so pruning waits for a populated one. A merge always leaves a survivor, so
+  // it can never legitimately empty the card.
+  const living = cards.length
+    ? pruneToLiving(carried, new Set(cards.map((card) => card.personId)))
+    : carried;
+  const frozen = foldVisible(living, cards);
   if (sameCard && frozen === previous.frozen) return previous;
   return { requestId, frozen };
 }
