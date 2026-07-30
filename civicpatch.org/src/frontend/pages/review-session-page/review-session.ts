@@ -41,7 +41,7 @@ type CurrentEntry = {
 // people. The card owns those edits, so it also owns the actions that commit
 // them — publishing and saving carry the patch out in the event, and the page
 // decides what that means for the session.
-const MERGE_EVENT = "merge";
+const PUBLISH_EVENT = "publish";
 const SAVE_EVENT = "save";
 const CLOSE_PR_EVENT = "close-pr";
 const END_SESSION_EVENT = "end-session";
@@ -187,9 +187,9 @@ function ReviewSession(host: ReviewSessionHost) {
 
   // A clean card publishes what the server already has; only send a patch when
   // the reviewer actually changed something.
-  const handleMerge = () =>
+  const handlePublish = () =>
     host.dispatchEvent(
-      new CustomEvent(MERGE_EVENT, { detail: { people: dirty ? peoplePatch : null }, bubbles: true, composed: true }),
+      new CustomEvent(PUBLISH_EVENT, { detail: { people: dirty ? peoplePatch : null }, bubbles: true, composed: true }),
     );
 
   const handleSave = () =>
@@ -225,8 +225,6 @@ function ReviewSession(host: ReviewSessionHost) {
 
   // The picker owns the policy — it holds the plan the reviewer edited — so this
   // only carries the result through to the list.
-  // Named for its object because `handleMerge` in this file already means
-  // *publish the pull request* — the collision the vocabulary note warns about.
   const handleMergePeople = (
     survivorId: string,
     absorbedId: string,
@@ -254,8 +252,8 @@ function ReviewSession(host: ReviewSessionHost) {
           <button class="btn-sm review-page__save-btn" @click=${handleSave}>Save for later</button>
           ` : ""}
           <button
-            class="btn-sm review-page__merge-btn btn-gradient"
-            @click=${handleMerge}
+            class="btn-sm review-page__publish-btn btn-gradient"
+            @click=${handlePublish}
             ?disabled=${blockers.length > 0}
             title=${blockers.length ? blockerTitle : ""}
           >

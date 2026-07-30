@@ -34,7 +34,7 @@ function ReviewSessionPage() {
 
   // The card owns the reviewer's edits and hands them over when it asks to
   // publish or save; the page only decides what that does to the session.
-  const handleMerge = (e: CustomEvent) => merge(e.detail.people);
+  const handlePublish = (e: CustomEvent) => merge(e.detail.people);
   const handleSave = (e: CustomEvent) => save(e.detail.people);
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
@@ -78,7 +78,7 @@ function ReviewSessionPage() {
       @advance=${advance}
       @navigate-to=${handleNavigateTo}
       @end-session=${endSession}
-      @merge=${handleMerge}
+      @publish=${handlePublish}
       @save=${handleSave}
       @close-pr=${closePr}
     ></review-session>`;

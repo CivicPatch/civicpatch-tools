@@ -67,7 +67,7 @@ test.describe("Publish gating", () => {
     await rail.locator(".review-rail__expander").click();
     await fieldIn(rail, "Name").first().locator("input").fill("");
 
-    const publish = page.locator(".review-page__merge-btn");
+    const publish = page.locator(".review-page__publish-btn");
     await expect(publish).toBeDisabled();
     await expect(publish).toContainText("to fix before publishing");
 
@@ -86,7 +86,7 @@ test.describe("Publish gating", () => {
 
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview__blockers")).toContainText("Name: Required");
-    await expect(page.locator(".review-page__merge-btn")).toBeDisabled();
+    await expect(page.locator(".review-page__publish-btn")).toBeDisabled();
   });
 
   test("a blocker on someone being dropped does not gate publishing", async ({
@@ -100,10 +100,10 @@ test.describe("Publish gating", () => {
     const rail = railFor(page, "Councillor 02 Scale");
     await rail.locator(".review-rail__expander").click();
     await fieldIn(rail, "Office").first().locator("input").fill("");
-    await expect(page.locator(".review-page__merge-btn")).toBeDisabled();
+    await expect(page.locator(".review-page__publish-btn")).toBeDisabled();
 
     // Dropping them makes the error irrelevant — it is not part of the payload.
     await rail.locator(".review-rail__delete").click();
-    await expect(page.locator(".review-page__merge-btn")).toBeEnabled();
+    await expect(page.locator(".review-page__publish-btn")).toBeEnabled();
   });
 });
