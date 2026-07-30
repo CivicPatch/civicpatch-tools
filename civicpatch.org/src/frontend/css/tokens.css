@@ -62,10 +62,8 @@
   --pico-outline-width: 0.2rem;
 
 
-  /* ── Inherited framework tokens ────────────────────────────────────────────
-     Values that used to come from the CSS framework's own :root. Our rules and
-     component stylesheets reference all of them, so they have to be defined
-     here or they silently resolve to nothing once the framework is dropped. */
+  /* Values inherited from the CSS framework's :root — still referenced, so they
+     have to live somewhere. */
   --pico-spacing: 1rem;
   --pico-block-spacing-horizontal: var(--pico-spacing);
   --pico-typography-spacing-vertical: 1rem;
@@ -76,10 +74,8 @@
   --pico-font-family-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, "Liberation Mono", monospace, var(--pico-font-family-emoji);
   --pico-group-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  /* How heavily a state edge reads. The rail draws a bar down one side and a
-     tile draws a full border — different mechanisms, so the same emphasis needs
-     different weights. Changing "how obvious is added/removed/changed" is these
-     two numbers, in all three views at once. */
+  /* How heavily a state edge reads, in all views at once. Two numbers because a
+     rail draws a side bar and a tile draws a full border. */
   --state-bar-width: 5px;
   --state-border-width: 3px;
 

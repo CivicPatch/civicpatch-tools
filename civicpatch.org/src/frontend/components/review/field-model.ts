@@ -1,21 +1,12 @@
-// What a field is, and how one field compares between two records. No DOM, no
-// I/O — the functional core, unit-tested alone.
-//
-// Strictly per-FIELD. Anything about a *set* of people — classifying a card,
-// folding deletions into the diff, indexing issues — lives in review-cards.ts.
-// The two lived here together under the name "diff-model" and were two things
-// wearing one name.
+// What a field is, and how one compares between two records. No DOM, no I/O.
+// Strictly per-FIELD — anything about a *set* of people lives in review-cards.ts.
 
 import { type Person } from "../edit-people/person-edit-utils.js";
 
-// Either side of a diff. The old side may be absent (an added person) and the
-// new side may be absent (one the scrape didn't find). Partial because the diff
-// only ever reads field values — it never needs a person to be whole, or to
-// carry an id.
+// Either side may be absent: no old = added, no new = the scrape didn't find them.
 export type DiffRecord = Partial<Person> | null | undefined;
 
-// A record the caller has already established is present. The row assembly
-// guards on null before reaching for a control, so controls never re-check.
+// Already established as present — the row assembly guards before reaching here.
 export type PresentRecord = Partial<Person>;
 
 export type FieldType = "text" | "date" | "multi" | "image";
@@ -28,12 +19,8 @@ export interface FieldSpec {
   diff?: boolean; // default true; false = shown per-side but not compared
 }
 
-// Aligned to the Official data model: office is an object, urls (not websites),
-// image (not avatar), start_date/end_date. Jurisdiction is constant across a
-// review (one jurisdiction per PR), so it is not an editable per-row field.
-// Required fields render always; optional fields collapse when unchanged.
-// source_urls is documentation — shown per-side, never diffed (each list has
-// its own sources). Division is edited as a seat-type + number (see component).
+// Aligned to the Official data model. Jurisdiction is constant across a review,
+// so it is not a per-row field.
 export const FIELD_SCHEMA: FieldSpec[] = [
   // Order follows the mockup: photo, identity, office, term, contacts, sources.
   { key: "image", label: "Photo", type: "image" },
@@ -64,9 +51,7 @@ export function getFieldValue(person: DiffRecord, key: string): unknown {
   return value;
 }
 
-// The value to diff/display for a field. For the photo, the effective URL is
-// cdn_image || image: cdn_image is only ever present on the OLD side (a scrape
-// produces only `image`), so this resolves correctly on either side.
+// Photo resolves cdn_image || image — cdn_image only ever exists on the old side.
 export function diffValue(person: DiffRecord, field: FieldSpec): unknown {
   if (field.type === "image") return person?.cdn_image || person?.image || "";
   return getFieldValue(person, field.key);
@@ -87,8 +72,8 @@ export function fieldDiffState(
 ): ScalarDiffState {
   const oldStr = normalizeScalar(oldValue);
   const newStr = normalizeScalar(newValue);
-  // Photos diff on presence only — the URLs aren't comparable (old=CDN copy,
-  // new=raw scrape), so two valid photos are never "changed", just present.
+  // Presence only: old is a CDN copy and new a raw scrape, so the URLs differ
+  // even when the photo has not.
   if (type === "image") {
     if (!!oldStr === !!newStr) return "same";
     return newStr ? "added" : "cleared";
@@ -255,9 +240,7 @@ export function fieldError(field: FieldSpec, record: DiffRecord): string | null 
 
 // ── Reviewer issues ──────────────────────────────────────────────────────────
 
-// A structured issue from the pipeline. The type lives here because the collapse
-// rule reads it; grouping issues BY PERSON is card-level and lives in
-// review-cards.ts.
+// Lives here because the collapse rule reads it; grouping by person is card-level.
 export interface Issue {
   code: string;
   message: string;
@@ -267,24 +250,12 @@ export interface Issue {
 
 // ── The collapse rule (§2) ───────────────────────────────────────────────────
 
-// Why a field is visible. Ordered by how much it demands of the reviewer, and
-// that order is the precedence when several apply: an errored field is a
-// blocker, an issue is advice, a plain diff is information. §2.2 hangs the
-// resolution rule off this — `error` clears when the condition clears, `issue`
-// when the anchored field is edited or the issue is ticked, `diff` never.
+// Ordered by how much it demands of the reviewer, and that order is the
+// precedence when several apply.
 export type FieldReason = "error" | "issue" | "diff" | "context";
 
-// A field that is never compared is context, not a change.
-//
-// `diff: false` already says the two sides are not comparable — source_urls is
-// per-side documentation, so "did it change?" is not a question about it. Two
-// consequences follow from that one fact, and both are derived here rather than
-// tracked by a second flag that could drift out of step:
-//
-//   - it is ALWAYS visible, because it is the evidence the reviewer judges every
-//     other field from, and collapsing it hides that evidence;
-//   - it NEVER makes a person need review, because there is no change in it to
-//     review.
+// A field that is never compared is context, not a change: always visible (it is
+// the evidence), never a reason to review (there is no change in it).
 export const isContextField = (field: FieldSpec) => field.diff === false;
 
 export interface SurvivingField {
@@ -294,16 +265,10 @@ export interface SurvivingField {
   error: string | null;
 }
 
-// The fields a card shows before the reviewer expands anything. Everything else
-// hides behind "+ N unchanged fields".
+// What a card shows before expanding. The error clause is not redundant: a
+// required field empty on BOTH sides reads `same` and still blocks publish.
 //
-// Rule 3 (error) is load-bearing and easy to mistake for redundancy: a required
-// field left empty on *both* sides reads `same`, carries no backend issue, and
-// still blocks publish. Without it the card hides the reason publishing fails.
-//
-// A context field survives with reason `context`: not a task to act on, but the
-// evidence to act from. Ranked last, so a real error or issue on the same field
-// still wins the badge.
+// Ranked last, so a real error or issue on the same field still wins the badge.
 export function survivingFields(
   oldRecord: DiffRecord,
   newRecord: DiffRecord,
@@ -331,5 +296,4 @@ export function survivingFields(
   return surviving;
 }
 
-// Group person-anchored issues by the card (person id) they mark. One issue can
-// name several holders (e.g. a duplicated unique role), so it lands on each.
+// One issue can name several people, so it lands on each of their cards.

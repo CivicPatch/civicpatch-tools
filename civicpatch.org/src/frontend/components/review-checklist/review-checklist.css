@@ -28,8 +28,9 @@
 }
 
 .review-checklist__list {
-  list-style: disc;
-  padding: 0 0 0 1.25rem;
+  /* The items carry checkboxes; a bullet as well is two markers for one list. */
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 

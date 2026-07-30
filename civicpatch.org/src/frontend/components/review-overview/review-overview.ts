@@ -12,6 +12,7 @@ import "./review-overview.css";
 import { withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
+  cardSubtitle,
   DEPARTING,
   groupCards,
   personOf,
@@ -27,13 +28,6 @@ interface ReviewOverviewProps {
   // these by switching to Detail — a tile always leads somewhere.
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
-}
-
-function subtitle(card: ReviewCard): string {
-  const record = personOf(card);
-  const office = record?.office?.name ?? "";
-  const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  return [office, division].filter(Boolean).join(" · ");
 }
 
 // Everything the tile says, in one string, because the tile is a single button
@@ -70,7 +64,7 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
           ></person-image>
           <span class="review-tile__over">
             <span class="review-tile__name">${record?.name || "(unnamed)"}</span>
-            <span class="review-tile__office">${subtitle(card) || nothing}</span>
+            <span class="review-tile__office">${cardSubtitle(card, divisionOcdidToFriendly) || nothing}</span>
           </span>
         </span>
       </button>

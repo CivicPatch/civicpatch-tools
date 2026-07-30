@@ -105,6 +105,7 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       diff.filter((entry) => entry.status === "removed").map((entry) => entry.value),
       (values) => save({ [field.key]: values }),
       field.label.toLowerCase(),
+      field.key === "urls",
     );
   }
   if (field.type === "date") return renderDateNewSide(field, record, save);

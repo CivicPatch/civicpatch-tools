@@ -360,14 +360,17 @@ tbody tr:hover td {
   background: color-mix(in srgb, var(--pico-primary) 8%, transparent);
 }
 
-/* Diff row semantics — shared by all diff tables */
+/* Diff row semantics — shared by all diff tables.
+   The ins/del backgrounds are 10% alpha, which reads as almost nothing across a
+   full table row; mixed at 22% the row is scannable while the text on top stays
+   legible. Same hues as everywhere else, so green and red keep their meaning. */
 tr.row--added td,
 .row--added td {
-  background: var(--pico-ins-background);
+  background: color-mix(in srgb, var(--pico-ins-color) 22%, transparent);
 }
 tr.row--removed td,
 .row--removed td {
-  background: var(--pico-del-background);
+  background: color-mix(in srgb, var(--pico-del-color) 22%, transparent);
 }
 tr.row--unchanged,
 .row--unchanged {

@@ -10,9 +10,16 @@ export const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(
 export const padDatePart = (n: number) => String(n).padStart(2, "0");
 
 // A day with no month is meaningless, so clearing the month clears the day.
+// Date parts cascade: a month is meaningless without a year, and a day without a
+// month. Clearing a part therefore clears everything finer than it, so the record
+// can never hold "March, no year".
 export function setDatePart(parts: DateParts, key: keyof DateParts, value: string): DateParts {
   const next = { ...parts, [key]: value };
   if (key === "month" && !value) next.day = "";
+  if (key === "year" && !value) {
+    next.month = "";
+    next.day = "";
+  }
   return next;
 }
 

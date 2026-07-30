@@ -1,27 +1,11 @@
-/* Base styles for bare HTML elements.
-   Rules here replace what a CSS framework used to provide, one element type at a
-   time. Nothing in this file uses `!important` — if a declaration seems to need
-   one, some other rule is more specific than expected and that is worth knowing
-   rather than papering over.
-
-   Loaded after tokens.css and before styles.css, so page and component rules
-   still get the last word. */
+/* Base styles for bare HTML elements. No `!important` — if a declaration seems
+   to need one, something else is more specific than expected.
+   Loaded after tokens.css, before styles.css. */
 
 /* ── Buttons ─────────────────────────────────────────────────────────────────
- *
- * Every button is a filled primary button by default. `styles.css` then opts
- * specific classes out (.btn-ghost, .secondary, .role-chip, .destructive) by
- * re-setting the three custom properties below at higher specificity.
- *
- * The colours are indirected through custom properties rather than set
- * directly, and that indirection is load-bearing: it is the only reason an
- * opt-out can be a three-line variable override instead of having to restate
- * padding, border and radius.
- *
- * The names stay `--pico-*` on purpose. Renaming them belongs to the mechanical
- * rename pass — do it here and every existing opt-out silently stops being
- * read, which shows up as a wrongly-filled button rather than as an error.
- */
+ * Filled primary by default; styles.css opts classes out by overriding the three
+ * custom properties. Keep the indirection — it is what makes an opt-out three
+ * lines instead of a full restatement. */
 
 [role="button"],
 [type="button"],
@@ -79,16 +63,8 @@ details summary[role="button"] {
   text-align: left;
 }
 /* ── Form controls ───────────────────────────────────────────────────────────
- *
- * Covers what this app renders: text-ish inputs, select, textarea, label,
- * fieldset/legend, checkbox/radio, and one date field. Deliberately absent —
- * because nothing uses them — are search and time fields, `aria-invalid`
- * styling, `[dir=rtl]`, `role="search"`, and switches. Reproducing only what is
- * on screen is the point of doing this by hand.
- *
- * As with buttons, the colour defaults sit in `:where()` at specificity 0 so any
- * component override wins without needing `!important`.
- */
+ * Only what this app renders. Absent because unused: search/time inputs,
+ * aria-invalid, [dir=rtl], role=search, switches. */
 
 input,
 optgroup,
@@ -274,12 +250,8 @@ label[aria-disabled="true"] {
   pointer-events: none;
 }
 
-/* ── Grouped controls ──────────────────────────────────────────────────────────
- *
- * `inline-flex`, not `flex`: a block-level flex container claims its whole line
- * and reflows everything around it. Getting this wrong shifted every page that
- * has a paginator.
- */
+/* ── Grouped controls ────────────────────────────────────────────────────────
+ * `inline-flex`, not `flex` — a block-level flex container claims its whole line. */
 
 [role="group"] {
   display: inline-flex;
@@ -325,16 +297,8 @@ label[aria-disabled="true"] {
 }
 
 /* ── Tables ──────────────────────────────────────────────────────────────────
- *
- * Skipped, because nothing renders them: `.striped`, `tfoot`, and the
- * `<table> ~ <hN>` spacing rule (that one belongs with typography and needs a
- * token nothing references).
- *
- * The header rule works by overriding two variables that the cell rule reads,
- * rather than by restating font-weight and border. That is the same indirection
- * the buttons use, and it is why a component can restyle a header row with a
- * one-line override.
- */
+ * Skipped as unused: .striped, tfoot. The header rule overrides two variables the
+ * cell rule reads, so a component can restyle a header row in one line. */
 
 table {
   margin-top: 0;
@@ -369,13 +333,8 @@ th {
 }
 
 /* ── Links ───────────────────────────────────────────────────────────────────
- *
- * `a:not([role=button])` because a link styled as a button belongs to the button
- * rules above; this is for links that look like links.
- *
- * Skipped: `[role=link]`, breadcrumb navs, and `rel="prev"`/`.close` affordances
- * — none appear in this app.
- */
+ * `:not([role=button])` — a link styled as a button belongs to the button rules.
+ * Skipped as unused: [role=link], breadcrumbs, rel="prev"/.close. */
 
 a {
   --pico-text-decoration: underline;
@@ -455,12 +414,8 @@ a.secondary {
 }
 
 /* ── Nav ─────────────────────────────────────────────────────────────────────
- *
- * The site navbar is its own component with its own stylesheet; these are the
- * bare-element defaults underneath it. Dropdown styling is deliberately absent:
- * ours are `.nav-dropdown`, never the framework's `.dropdown`, so all of that
- * would be dead weight.
- */
+ * Defaults under the navbar component. No dropdown rules — ours are
+ * `.nav-dropdown`, never `.dropdown`. */
 
 nav,
 nav ul {
@@ -560,15 +515,7 @@ textarea {
 }
 
 /* ── Disclosure (details / summary) ──────────────────────────────────────────
- *
- * The `:not([role])` qualifier throughout distinguishes a plain accordion from a
- * summary deliberately styled as a button — only the former takes the accordion
- * colours. Nothing in this app uses `role="button"` on a summary today, but the
- * qualifier is what makes the colour rules safe to leave in place if one appears.
- *
- * Skipped: `[dir=rtl]`, and the `::after` filter tricks for `.contrast` button
- * summaries.
- */
+ * `:not([role])` keeps accordion colours off a summary styled as a button. */
 
 details {
   display: block;
@@ -648,15 +595,8 @@ details[open] > summary::after {
 }
 
 /* ── Document base ───────────────────────────────────────────────────────────
- *
- * `:where()` keeps this at specificity 0 — it is the floor everything else
- * stands on, and no rule should have to out-specify it. `font-family` here is
- * what gives the page its typeface; without it the document falls back to the
- * browser's serif default.
- *
- * `--pico-font-size` is deliberately not read: styles.css sets a flat
- * `:root { font-size }`, which is the knob that actually controls page scale.
- */
+ * `:where()` = specificity 0, the floor everything stands on. `--pico-font-size`
+ * is deliberately unread; styles.css sets a flat `:root { font-size }`. */
 
 *,
 ::after,
@@ -696,15 +636,8 @@ main {
 }
 
 /* ── Typography ──────────────────────────────────────────────────────────────
- *
- * Skipped, all zero-usage: `blockquote`, `mark`, `figure`/`figcaption`,
- * `sub`/`sup`, `abbr`, `kbd`, `samp`, `b`. (`--pico-mark-*` is kept in
- * tokens.css regardless — the settings-page banner reads it directly.)
- *
- * Headings work by overriding `--pico-font-size` and `--pico-line-height` per
- * level, which the shared heading rule then reads. Same variable indirection as
- * everywhere else in this file.
- */
+ * Skipped as unused: blockquote, mark, figure, sub/sup, abbr, kbd, samp, b.
+ * Headings set --pico-font-size/-line-height per level; one shared rule reads them. */
 
 h1,
 h2,
@@ -839,14 +772,8 @@ pre > samp {
 }
 
 /* ── Cards (article) ─────────────────────────────────────────────────────────
- *
- * `article` is the card primitive, and `dialog > article` is the modal panel —
- * the same element in both roles, which is why the dialog rules below only
- * adjust size and overflow rather than restating the look.
- *
- * The negative side margins on header/footer are how a sectioning band bleeds to
- * the card's edge without the card stating its own padding twice.
- */
+ * `article` is the card primitive; `dialog > article` is the modal panel. The
+ * negative side margins let a header/footer band bleed to the card edge. */
 
 article {
   margin-bottom: var(--pico-block-spacing-vertical);
@@ -881,20 +808,9 @@ article > footer {
   border-bottom-left-radius: var(--pico-border-radius);
 }
 
-/* ── Dialog — owned by styles.css, not here ─────────────────────────────────
- *
- * styles.css implements modals against native <dialog> semantics: `::backdrop`
- * for the scrim, `max-width: min(90vw, 32rem)` with `width: max-content`, and a
- * flex column on `dialog[open] > article` that pins header/footer and scrolls the
- * body.
- *
- * The framework took the opposite approach — the dialog element *is* the scrim,
- * stretched with `min-width: 100%` and centring its panel. The two models fight:
- * transcribing it here made every modal edge-to-edge with no dimming.
- *
- * So this file only asserts the native default, and leaves modals to the rules
- * that actually implement them.
- */
+/* ── Dialog ──────────────────────────────────────────────────────────────────
+ * styles.css owns modals (native ::backdrop + sized panel). Only the native
+ * default belongs here — a competing overlay model fights it. */
 
 dialog:not([open]),
 dialog[open="false"] {

@@ -15,7 +15,8 @@ import "./review-modal.css";
 import "../review-rail/review-rail.css";
 import { withDisplayImage } from "./field-controls.js";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
-import { personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
+import { cardSubtitle, personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
+import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
   takeSnapshot,
   planRevert,
@@ -181,7 +182,12 @@ function ReviewModal(props: ReviewModalProps) {
               .person=${withDisplayImage(record)}
               .size=${"1.4rem"}
             ></person-image>
-            <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
+            <span class="review-modal__person-who">
+              <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
+              <span class="review-modal__person-sub"
+                >${cardSubtitle(entry, divisionOcdidToFriendly)}</span
+              >
+            </span>
             <span class="review-modal__person-meta">
               ${entry.issues.length
                 ? html`<span class="review-modal__person-issue">!</span>`

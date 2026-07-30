@@ -1,9 +1,7 @@
 /* The edit modal (spec §6) — the Detail rail mounted with one person, plus a
    sidebar for walking the set it was opened from. */
 
-/* styles.css caps every dialog at 32rem. That cap only started biting when the
-   shell moved to showModal() — before that the dialog was not a real modal box.
-   This modal sizes its own panel, so it opts out. */
+/* styles.css caps dialogs at 32rem; this modal sizes its own panel. */
 .review-modal dialog {
   max-width: none;
 }
@@ -42,10 +40,8 @@
   min-height: 0;
 }
 
-/* The shell's <section> full-bleeds and re-pads itself so a scrollbar can sit at
-   the article edge. This modal scrolls its own body instead, so that padding
-   would stack with the body's and leave a wide dead margin plus an oddly inset
-   scrollbar. Zero it and let the body own its spacing. */
+/* The shell's <section> re-pads for its own scrollbar; this modal scrolls its
+   body instead, so that padding would just stack. */
 .review-modal dialog > article > section {
   margin: 0;
   padding: 0;
@@ -59,9 +55,7 @@
   padding: 0.75rem 1rem;
 }
 
-/* One person, full width: the identity block stacks above the fields and centres,
-   so the photo and name read as the subject of the panel rather than as a column
-   heading beside it. */
+/* One person, full width — identity stacks above the fields and centres. */
 .review-modal__body .review-rail__identity {
   align-items: center;
   text-align: center;
@@ -150,7 +144,23 @@
 .review-modal__person--restored { border-left-color: var(--pico-muted-color); }
 
 .review-modal__person--removed .review-modal__person-name,
-.review-modal__person--deleted .review-modal__person-name {
+.review-modal__person--deleted .review-modal__person-who {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.review-modal__person-sub {
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.review-modal__person-name {
   text-decoration: line-through;
 }
 
@@ -252,12 +262,8 @@
 }
 
 
-/* The record's state, as a badge in the corner rather than a coloured edge.
-   Inside the modal there is exactly one record, so an edge marking "this one" is
-   saying nothing — the badge names the state instead of encoding it as a stripe.
-
-   This restyles the label the rail already renders; adding a second one would
-   put the same fact on screen twice. */
+/* One record in here, so an edge marking "this one" says nothing — restyle the
+   label the rail already renders into a corner badge. */
 
 .review-modal__body .review-rail {
   position: relative;
