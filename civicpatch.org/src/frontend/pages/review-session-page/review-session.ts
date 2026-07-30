@@ -139,6 +139,11 @@ function ReviewSession(host: ReviewSessionHost) {
   // person was in. Stepping from To review into Unchanged would land on someone
   // with no visible fields, which is a dead end (§6).
   const [openPerson, setOpenPerson] = useState<{ id: string; field: string | null } | null>(null);
+  // The modal collapses unchanged fields exactly as Detail does. It has its own
+  // set rather than sharing Detail's: expanding someone in the modal is a
+  // different intent from expanding them in the list, and sharing would make one
+  // silently change the other.
+  const [modalExpanded, setModalExpanded] = useState<Set<string>>(new Set());
   const groups = groupCards(cards);
   const openCard = cards.find((c) => c.personId === openPerson?.id);
   const walkSet = !openCard
@@ -159,10 +164,14 @@ function ReviewSession(host: ReviewSessionHost) {
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
       linkCandidates: linkCandidatesFrom(cards),
-      // Everything is open in the modal: the reviewer went there to work on this
-      // person, so hiding fields behind an expander would be in the way.
-      expandedIds: new Set(cards.map((c) => c.personId)),
-      onToggleExpand: () => {},
+      expandedIds: modalExpanded,
+      onToggleExpand: () => {
+        const next = new Set(modalExpanded);
+        next.has(card.personId)
+          ? next.delete(card.personId)
+          : next.add(card.personId);
+        setModalExpanded(next);
+      },
       onPersonSave: handlePersonSave,
       onDeletePerson: handleDeletePerson,
       onUndeletePerson: handleUndelete,

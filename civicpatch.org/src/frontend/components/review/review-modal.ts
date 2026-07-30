@@ -137,7 +137,7 @@ function ReviewModal(props: ReviewModalProps) {
   // coerces — a template arrived as "[object Object]".
   const head = html`
     <div class="review-modal__head">
-      <span>${name} — ${STATUS_LABEL[card.status] ?? card.status}</span>
+      <span>${name}</span>
       <span class="review-modal__nav">
         <button
           class="review-modal__nav-btn"
@@ -145,7 +145,7 @@ function ReviewModal(props: ReviewModalProps) {
           ?disabled=${index <= 0}
           @click=${() => goTo(cards[index - 1].personId)}
         >
-          ←
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
         </button>
         <span class="review-modal__pos">${index + 1} of ${cards.length}</span>
         <button
@@ -154,7 +154,7 @@ function ReviewModal(props: ReviewModalProps) {
           ?disabled=${index >= cards.length - 1}
           @click=${() => goTo(cards[index + 1].personId)}
         >
-          →
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </button>
       </span>
     </div>
@@ -203,7 +203,6 @@ function ReviewModal(props: ReviewModalProps) {
   // nothing to have changed, so Revert would be a button that never applies.
   const footer = html`
     <div class="review-modal__foot">
-      <span class="review-modal__hint">Alt + ← / → to move between people</span>
       <span>
         ${isReadOnly
           ? nothing

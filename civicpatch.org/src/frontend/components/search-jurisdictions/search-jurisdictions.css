@@ -141,3 +141,15 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* The state selector is the primary choice on this page, so it fills its column
+   rather than sizing to the longest state name. The custom element is inline by
+   default — without `display: block` the width below has nothing to fill. */
+civ-select-state {
+  display: block;
+}
+
+civ-select-state select {
+  width: 100%;
+}

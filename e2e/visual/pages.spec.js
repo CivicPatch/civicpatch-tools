@@ -135,10 +135,25 @@ async function waitForDomQuiet(page, quietMs = 400, timeoutMs = 15_000) {
   );
 }
 
+// Font Awesome arrives via a CDN kit *script*, which injects its CSS and only
+// then loads the font files. `document.fonts.ready` can resolve before any of
+// that starts, so a slow CDN produces a page with every icon missing — which is
+// a tens-of-thousands-of-pixels difference, not a subtle one. Wait for the face
+// to actually be usable, and fail loudly rather than screenshot a page whose
+// icons never arrived.
+async function waitForIconFont(page) {
+  await page.waitForFunction(
+    () => [...document.fonts].some((f) => /Font Awesome/i.test(f.family) && f.status === "loaded"),
+    undefined,
+    { timeout: 20_000 },
+  );
+}
+
 async function settle(page) {
   // Webfonts change every metric on the page. Without this the first run after a
   // cold cache renders in the fallback face and every baseline is wrong.
   await page.evaluate(() => document.fonts.ready);
+  await waitForIconFont(page);
   await page.waitForLoadState("networkidle");
   await waitForDomQuiet(page);
 }

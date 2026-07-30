@@ -1,6 +1,13 @@
 /* The edit modal (spec §6) — the Detail rail mounted with one person, plus a
    sidebar for walking the set it was opened from. */
 
+/* styles.css caps every dialog at 32rem. That cap only started biting when the
+   shell moved to showModal() — before that the dialog was not a real modal box.
+   This modal sizes its own panel, so it opts out. */
+.review-modal dialog {
+  max-width: none;
+}
+
 .review-modal dialog article {
   /* Pinned height: navigating between people must never resize or re-centre the
      dialog. The body scrolls instead. */
@@ -35,10 +42,36 @@
   min-height: 0;
 }
 
+/* The shell's <section> full-bleeds and re-pads itself so a scrollbar can sit at
+   the article edge. This modal scrolls its own body instead, so that padding
+   would stack with the body's and leave a wide dead margin plus an oddly inset
+   scrollbar. Zero it and let the body own its spacing. */
+.review-modal dialog > article > section {
+  margin: 0;
+  padding: 0;
+}
+
 .review-modal__body {
   overflow-y: auto;
+  /* Keep the gesture inside the modal rather than chaining to the page. */
+  overscroll-behavior: contain;
   min-height: 0;
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+/* One person, full width: the identity block stacks above the fields and centres,
+   so the photo and name read as the subject of the panel rather than as a column
+   heading beside it. */
+.review-modal__body .review-rail__identity {
+  align-items: center;
+  text-align: center;
+}
+
+.review-modal__body .review-rail__identity person-image,
+.review-modal__body .review-rail__identity person-image > * {
+  width: 7rem !important;
+  height: 7rem !important;
+  font-size: 2.6rem !important;
 }
 
 /* The rail inside the modal is one person and the full width, so its identity
@@ -64,6 +97,9 @@
   border-right: 1px solid var(--pico-muted-border-color);
   background: var(--pico-card-sectioning-background-color);
   overflow-y: auto;
+  /* Long names ellipsis rather than widening the column — without this the panel
+     grows a horizontal scrollbar and the list becomes a two-axis scroll. */
+  overflow-x: hidden;
   min-height: 0;
 }
 
@@ -213,4 +249,40 @@
     border-bottom: 1px solid var(--pico-muted-border-color);
     max-height: 8rem;
   }
+}
+
+
+/* The record's state, as a badge in the corner rather than a coloured edge.
+   Inside the modal there is exactly one record, so an edge marking "this one" is
+   saying nothing — the badge names the state instead of encoding it as a stripe.
+
+   This restyles the label the rail already renders; adding a second one would
+   put the same fact on screen twice. */
+
+.review-modal__body .review-rail {
+  position: relative;
+  box-shadow: none;
+}
+
+.review-modal__body .review-rail__status {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.review-modal__body .review-rail--changed .review-rail__status {
+  color: var(--rail-changed);
+}
+
+.review-modal__body .review-rail--added .review-rail__status {
+  color: var(--rail-added);
+}
+
+.review-modal__body .review-rail--removed .review-rail__status,
+.review-modal__body .review-rail--deleted .review-rail__status {
+  color: var(--rail-cleared);
 }

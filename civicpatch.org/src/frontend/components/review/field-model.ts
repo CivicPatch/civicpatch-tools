@@ -272,7 +272,20 @@ export interface Issue {
 // blocker, an issue is advice, a plain diff is information. §2.2 hangs the
 // resolution rule off this — `error` clears when the condition clears, `issue`
 // when the anchored field is edited or the issue is ticked, `diff` never.
-export type FieldReason = "error" | "issue" | "diff";
+export type FieldReason = "error" | "issue" | "diff" | "context";
+
+// A field that is never compared is context, not a change.
+//
+// `diff: false` already says the two sides are not comparable — source_urls is
+// per-side documentation, so "did it change?" is not a question about it. Two
+// consequences follow from that one fact, and both are derived here rather than
+// tracked by a second flag that could drift out of step:
+//
+//   - it is ALWAYS visible, because it is the evidence the reviewer judges every
+//     other field from, and collapsing it hides that evidence;
+//   - it NEVER makes a person need review, because there is no change in it to
+//     review.
+export const isContextField = (field: FieldSpec) => field.diff === false;
 
 export interface SurvivingField {
   field: FieldSpec;
@@ -288,9 +301,9 @@ export interface SurvivingField {
 // field left empty on *both* sides reads `same`, carries no backend issue, and
 // still blocks publish. Without it the card hides the reason publishing fails.
 //
-// `source_urls` never survives — fieldState returns `same` for `diff: false`
-// fields and they carry no error. That falls out of the traversal; no view has
-// to name it.
+// A context field survives with reason `context`: not a task to act on, but the
+// evidence to act from. Ranked last, so a real error or issue on the same field
+// still wins the badge.
 export function survivingFields(
   oldRecord: DiffRecord,
   newRecord: DiffRecord,
@@ -310,7 +323,9 @@ export function survivingFields(
         ? "issue"
         : state !== "same"
           ? "diff"
-          : null;
+          : isContextField(field)
+            ? "context"
+            : null;
     if (reason) surviving.push({ field, state, reason, error });
   }
   return surviving;
