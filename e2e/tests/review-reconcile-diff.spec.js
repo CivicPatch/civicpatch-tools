@@ -39,16 +39,22 @@ test.describe("Review reconcile diff (populated)", () => {
     // moved, so nothing else is on screen — which the old view could not do,
     // since it rendered all eleven fields regardless.
     //
-    // This briefly asserted a fourth row: the fixture had division_ocdid null on
-    // both sides, which reads `same` to a pure diff but is required, so rule 3
-    // surfaced it. The publish gate then refused to publish the fixture at all,
-    // which is how we noticed the data was impossible — resolve_division always
-    // returns a division. The fixture now carries one.
-    await expect(maria.locator(".review-rail__field")).toHaveCount(3);
+    // The fourth row is Source urls, and it is not a change: `diff: false` makes
+    // it a context field, always visible as the evidence behind the other three
+    // and never itself a reason to review.
+    //
+    // A different fourth row appeared here once before and was a genuine fault:
+    // the fixture had division_ocdid null on both sides, which reads `same` to a
+    // pure diff but is required, so rule 3 surfaced it. The publish gate then
+    // refused to publish the fixture at all, which is how we noticed the data
+    // was impossible — resolve_division always returns a division. The fixture
+    // now carries one. Naming the rows rather than counting them is what tells
+    // those two cases apart.
     await expect(maria.locator(".review-rail__label")).toHaveText([
       "Office *",
       "Email",
       "Phone",
+      "Source urls",
     ]);
 
     // The office control carries the new value; the old one is a trailing
@@ -87,7 +93,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // fields never leave a card once shown (§2.1).
     await office.locator("input").fill("Mayor");
     await expect(office.locator(".review-rail__was")).toHaveCount(0);
-    await expect(maria.locator(".review-rail__field")).toHaveCount(3);
+    await expect(maria.locator(".review-rail__field")).toHaveCount(4);
   });
 
   test("Restore puts the old value back", async ({ authenticatedPage: page }) => {

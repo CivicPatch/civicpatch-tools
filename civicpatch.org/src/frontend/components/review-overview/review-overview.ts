@@ -99,9 +99,7 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
                       : field.state}"
                   @click=${() =>
                     props.onOpenPerson(card.personId, field.field.key)}
-                >
-                  ${field.field.label}
-                </button>`,
+                >${field.field.label}</button>`,
             )}
           </span>`}
     </div>

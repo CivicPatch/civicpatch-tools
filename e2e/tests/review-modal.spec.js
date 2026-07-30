@@ -21,6 +21,12 @@ const openCardModal = async (page, name) => {
 const modalField = (page, label) =>
   page.locator("review-modal .review-rail__field").filter({ hasText: label });
 
+// Name is unchanged on these people, so the collapse rule hides it. Reaching a
+// field that did not move is exactly what the expander is for — and expansion is
+// keyed per person, so stepping to someone else starts collapsed again.
+const showAllFields = (page) =>
+  page.locator("review-modal .review-rail__expander").click();
+
 test.describe("Review modal", () => {
   test("opens on the person whose tile was clicked", async ({
     authenticatedPage: page,
@@ -43,13 +49,20 @@ test.describe("Review modal", () => {
     ).toHaveCount(0);
   });
 
-  test("shows every field, since you came here to work on this person", async ({
+  test("collapses by the same rule as the rail", async ({
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
-    // The rail collapses to 2 rows; the modal opens them all rather than putting
-    // the reviewer behind an expander.
-    await expect(page.locator("review-modal .review-rail__field")).toHaveCount(11);
+    const fields = page.locator("review-modal .review-rail__field");
+
+    // The modal is the rail mounted with one person, not a second editor, so it
+    // collapses rather than having its own idea of what to show: the two fields
+    // that moved plus the always-visible Source urls. Opening with every field
+    // is reserved for adding a person, who has nothing to collapse.
+    await expect(fields).toHaveCount(3);
+
+    await showAllFields(page);
+    await expect(fields).toHaveCount(11);
   });
 
   test("Prev / Next move through the set and the sidebar follows", async ({
@@ -70,6 +83,7 @@ test.describe("Review modal", () => {
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
+    await showAllFields(page);
     await modalField(page, "Name").locator("input").fill("Renamed Councillor");
 
     await page.locator("review-modal").getByText("Done").click();
@@ -83,6 +97,7 @@ test.describe("Review modal", () => {
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
+    await showAllFields(page);
     const revert = page.locator(".review-modal__revert");
 
     // Nothing to undo yet — offered as disabled rather than as a silent no-op.
@@ -100,10 +115,12 @@ test.describe("Review modal", () => {
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
+    await showAllFields(page);
     await modalField(page, "Name").locator("input").fill("Edited First");
 
     // Move on, edit someone else, then revert them.
     await page.locator('.review-modal__nav-btn[title*="Next"]').click();
+    await showAllFields(page);
     await modalField(page, "Name").locator("input").fill("Edited Second");
     await page.locator(".review-modal__revert").click();
 
