@@ -49,13 +49,12 @@ function tileLabel(card: ReviewCard): string {
 function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
   const record = personOf(card);
   const departing = DEPARTING.has(card.status);
-  // Issues outrank a field count: they are the thing a person has to judge.
+  // A departing person shows no field list. With no new-side record every field
+  // reads `cleared`, so the list would imply nine things to review on a card that
+  // is one decision.
   //
-  // A departing person gets no field count. With no new-side record every field
-  // reads `cleared`, so the count would say "9 things to review" about a card
-  // that is one decision — §4 drops their field list for the same reason.
-  const badge = card.issues.length || (departing ? 0 : card.surviving.length);
-
+  // There is no count badge: the footer names the surviving fields, which is
+  // strictly more information than a number counting them.
   return html`
     <div class="review-tile review-tile--${card.status}">
       <button
@@ -75,14 +74,6 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
           </span>
         </span>
       </button>
-      ${badge
-        ? html`<span
-            class="review-tile__badge ${card.issues.length
-              ? "review-tile__badge--issue"
-              : ""}"
-            >${badge}</span
-          >`
-        : nothing}
       <!-- Departing people show no field list: the card is one decision. -->
       ${departing
         ? nothing

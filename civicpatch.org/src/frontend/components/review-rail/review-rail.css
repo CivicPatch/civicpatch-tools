@@ -58,16 +58,16 @@
 }
 
 .review-rail--changed {
-  box-shadow: inset 3px 0 0 var(--rail-changed);
+  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-changed);
 }
 
 .review-rail--added {
-  box-shadow: inset 3px 0 0 var(--rail-added);
+  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-added);
 }
 
 .review-rail--removed,
 .review-rail--deleted {
-  box-shadow: inset 3px 0 0 var(--rail-cleared);
+  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-cleared);
 }
 
 /* A person with nothing to review: one line, laid out across rather than
