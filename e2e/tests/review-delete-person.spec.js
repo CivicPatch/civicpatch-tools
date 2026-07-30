@@ -74,7 +74,7 @@ test.describe("Delete a person", () => {
     await expect(maria.locator(".review-rail__delete")).toHaveCount(0);
 
     // Deleting is an edit, so the card publishes under the dirty label.
-    const publishBtn = page.locator(".review-page__merge-btn");
+    const publishBtn = page.locator(".review-page__publish-btn");
     await expect(publishBtn).toHaveText(/Save and Publish/);
     await publishBtn.click();
 
@@ -101,7 +101,7 @@ test.describe("Delete a person", () => {
     // publishing sends no people at all and the button drops the dirty label.
     // That is a stronger check than Maria reappearing in a payload — it proves
     // the deletion left no residue anywhere in the state.
-    const publishBtn = page.locator(".review-page__merge-btn");
+    const publishBtn = page.locator(".review-page__publish-btn");
     await expect(publishBtn).not.toHaveText(/Save and Publish/);
     await publishBtn.click();
 
@@ -172,7 +172,7 @@ test.describe("Delete a person", () => {
     // so the card has nothing left to say.
     await expect(personCard(page, "Tom Treasurer")).toHaveCount(0);
 
-    await page.locator(".review-page__merge-btn").click();
+    await page.locator(".review-page__publish-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
     expect(publishedIds(merge.body)).not.toContain("recon-tom");
   });

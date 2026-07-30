@@ -57,7 +57,7 @@ test.describe("Publish", () => {
     });
 
     await openFirstCard(page);
-    await page.locator(".review-page__merge-btn").click();
+    await page.locator(".review-page__publish-btn").click();
 
     await expect.poll(() => mergeBody).not.toBeNull();
     expect(mergeBody.request_id).toBe(FIRST_CARD_REQUEST_ID);
@@ -83,7 +83,7 @@ test.describe("Publish", () => {
     await editField(page, "Jane Smith", "Office", "Deputy Mayor");
 
     // A dirty card publishes under a different label — and must send the patch.
-    const publishBtn = page.locator(".review-page__merge-btn");
+    const publishBtn = page.locator(".review-page__publish-btn");
     await expect(publishBtn).toHaveText(/Save and Publish/);
     await publishBtn.click();
 
@@ -104,7 +104,7 @@ test.describe("Publish", () => {
     );
 
     await openFirstCard(page);
-    await page.locator(".review-page__merge-btn").click();
+    await page.locator(".review-page__publish-btn").click();
 
     await expect(page.locator(".review-page__progress")).toContainText("2");
     await expect(page.locator(".review-page__dot").nth(0)).toHaveClass(
@@ -125,7 +125,7 @@ test.describe("Publish", () => {
     );
 
     await openFirstCard(page);
-    await page.locator(".review-page__merge-btn").click();
+    await page.locator(".review-page__publish-btn").click();
 
     await expect(page.locator(".review-page__progress")).toContainText("1");
     await expect(page.locator(".review-page__error")).toBeVisible();

@@ -30,7 +30,7 @@ test.describe("Review card — read only", () => {
     await expect(banner).toContainText("merged");
 
     // Nothing here can be published, saved or closed again.
-    await expect(page.locator(".review-page__merge-btn")).toHaveCount(0);
+    await expect(page.locator(".review-page__publish-btn")).toHaveCount(0);
     await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Close PR" })).toHaveCount(0);
   });

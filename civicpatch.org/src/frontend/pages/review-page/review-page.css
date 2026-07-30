@@ -411,7 +411,7 @@ review-session-controls {
     --pico-border-color: var(--pico-primary);
 }
 
-.review-page__merge-btn {
+.review-page__publish-btn {
     border: none;
 }
 
