@@ -129,7 +129,8 @@ describe("buildReviewCards — order", () => {
 describe("buildReviewCards — surviving fields and issues", () => {
   it("collapses an unchanged person to nothing", () => {
     const cards = build({ existing: [person("a")], currentPeople: [person("a")] });
-    expect(cards[0].surviving).toEqual([]);
+    // source_urls is always visible, so an unchanged person collapses to it alone.
+    expect(cards[0].surviving.map((s) => s.field.key)).toEqual(["source_urls"]);
   });
 
   it("surfaces only what changed", () => {
@@ -137,7 +138,7 @@ describe("buildReviewCards — surviving fields and issues", () => {
       existing: [person("a")],
       currentPeople: [person("a", { emails: ["x@y.gov"] })],
     });
-    expect(cards[0].surviving.map((s) => s.field.key)).toEqual(["emails"]);
+    expect(cards[0].surviving.map((s) => s.field.key)).toEqual(["emails", "source_urls"]);
   });
 
   it("anchors an issue to its person and keeps its field visible", () => {
@@ -155,6 +156,7 @@ describe("buildReviewCards — surviving fields and issues", () => {
     expect(cards[0].issues).toEqual([issue]);
     expect(cards[0].surviving.map((s) => [s.field.key, s.reason])).toEqual([
       ["office.name", "issue"],
+      ["source_urls", "context"],
     ]);
   });
 

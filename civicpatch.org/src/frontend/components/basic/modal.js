@@ -2,12 +2,20 @@ import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 
-function Modal({
-  title = "",
-  content = null,
-  footer = null,
-  modalProps = {},
-}) {
+// The shared modal shell.
+//
+// Openness is driven imperatively through showModal()/close() rather than by the
+// `open` attribute. That distinction is the whole behaviour of this component: a
+// dialog with the attribute set is NOT modal — it stays in normal flow, gets no
+// ::backdrop, does not trap focus, does not make the page behind inert, and the
+// browser gives it no Escape handling. Every one of those was reported
+// separately as a bug before this was switched over.
+//
+// It also makes click-outside-to-close cheap: a modal dialog fills the viewport,
+// so a click that lands on the dialog itself (rather than the <article> inside
+// it) is by definition outside the panel. No document-level listener, no
+// bounding-box maths.
+function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
   const [open, setOpen] = useState(Boolean(modalProps.open));
   useEffect(() => {
     setOpen(Boolean(modalProps.open));
@@ -21,26 +29,30 @@ function Modal({
     else if (typeof modalProps.modalRef === "object") modalProps.modalRef.value = el;
   };
 
-  // Helper to close and emit event
+  // The parent owns `open`, so closing means telling the parent; the effect below
+  // then does the DOM work.
   function handleClose(e) {
     modalProps.onClose && modalProps.onClose(e);
-    // Emit a DOM event for parent listeners
     if (dialogEl) {
       dialogEl.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
     }
   }
 
-  const onKey = (e) => {
-    if (e.key === "Escape") {
-      handleClose(e);
-    }
-  };
-
   useEffect(() => {
-    if (open && dialogEl && typeof dialogEl.focus === "function") {
-      dialogEl.focus();
-    }
+    if (!dialogEl) return;
+    // showModal() throws if the dialog is already open, and close() on a closed
+    // dialog is a no-op that still fires an event — so both are guarded.
+    if (open && !dialogEl.open) dialogEl.showModal();
+    else if (!open && dialogEl.open) dialogEl.close();
   }, [open]);
+
+  // Escape reaches us as `cancel`. Prevent the default close so the parent stays
+  // the single source of truth for `open` — otherwise the DOM closes while the
+  // parent still thinks the modal is up, and the next open() is a no-op.
+  const onCancel = (e) => {
+    e.preventDefault();
+    handleClose(e);
+  };
 
   const backdropClick = (e) => {
     if (!modalProps.closeOnBackdropClick && modalProps.closeOnBackdropClick !== undefined) return;
@@ -51,11 +63,9 @@ function Modal({
 
   return html`
     <dialog
-      ?open=${open}
-      tabindex="-1"
       aria-label=${modalProps.ariaLabel || title || "Modal"}
       @click=${backdropClick}
-      @keydown=${onKey}
+      @cancel=${onCancel}
       ${ref(setDialogRef)}
     >
       <article @click=${(e) => e.stopPropagation()}>
@@ -67,9 +77,7 @@ function Modal({
             `
           : null}
 
-        <section>
-          ${content}
-        </section>
+        <section>${content}</section>
 
         ${footer
           ? html` <footer>${footer}</footer> `
@@ -83,7 +91,4 @@ function Modal({
   `;
 }
 
-customElements.define(
-  "civ-modal",
-  component(Modal, { useShadowDOM: false }),
-);
+customElements.define("civ-modal", component(Modal, { useShadowDOM: false }));

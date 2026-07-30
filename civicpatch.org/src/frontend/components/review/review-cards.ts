@@ -7,6 +7,7 @@ import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import {
   FIELD_SCHEMA,
   fieldError,
+  isContextField,
   recordsDiffer,
   survivingFields,
   type DiffRecord,
@@ -186,7 +187,10 @@ export const STATUS_ORDER: RailStatusKey[] = [
 // not surfaced.
 export function needsReview(card: ReviewCard): boolean {
   return (
-    card.surviving.length > 0 ||
+    // Context fields are always visible and never a change, so they are not a
+    // reason to review — counting them would put everyone in To review and empty
+    // the roster. See isContextField.
+    card.surviving.some((field) => !isContextField(field.field)) ||
     card.issues.length > 0 ||
     card.status === RailStatus.DELETED
   );

@@ -612,13 +612,15 @@ describe("survivingFields", () => {
     result.map((s) => s.field.key);
 
   it("shows nothing when a complete record is unchanged", () => {
-    expect(survivingFields(whole, { ...whole })).toEqual([]);
+    // Only source_urls, which is always visible by design.
+    expect(keys(survivingFields(whole, { ...whole }))).toEqual(["source_urls"]);
   });
 
   it("shows a field that differs, with its diff state", () => {
     const surviving = survivingFields(whole, { ...whole, end_date: "2027" });
     expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
       ["end_date", "changed", "diff"],
+      ["source_urls", "same", "context"],
     ]);
   });
 
@@ -631,12 +633,13 @@ describe("survivingFields", () => {
     const surviving = survivingFields(whole, { ...whole }, [issue]);
     expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
       ["office.name", "same", "issue"],
+      ["source_urls", "same", "context"],
     ]);
   });
 
   it("ignores a person-level issue that anchors to no field", () => {
     const issue: Issue = { code: "extra_official", message: "…" };
-    expect(survivingFields(whole, { ...whole }, [issue])).toEqual([]);
+    expect(keys(survivingFields(whole, { ...whole }, [issue]))).toEqual(["source_urls"]);
   });
 
   it("shows a required field empty on BOTH sides — reads `same`, still blocks publish", () => {
@@ -644,7 +647,10 @@ describe("survivingFields", () => {
     const surviving = survivingFields(blank, { ...blank });
     expect(
       surviving.map((s) => [s.field.key, s.state, s.reason, s.error]),
-    ).toEqual([["name", "same", "error", "Required"]]);
+    ).toEqual([
+      ["name", "same", "error", "Required"],
+      ["source_urls", "same", "context", null],
+    ]);
   });
 
   it("prefers error over issue over diff when several apply", () => {
@@ -660,15 +666,19 @@ describe("survivingFields", () => {
     );
     expect(surviving.map((s) => [s.field.key, s.reason])).toEqual([
       ["office.name", "error"],
+      ["source_urls", "context"],
     ]);
   });
 
-  it("never surfaces source_urls — diff: false, and it carries no error", () => {
+  it("always surfaces source_urls, even when nothing about it changed", () => {
     const surviving = survivingFields(
       { ...whole, source_urls: ["a"] },
       { ...whole, source_urls: ["b", "c"] },
     );
-    expect(keys(surviving)).toEqual([]);
+    // `diff: false` means it is never *compared*, but `alwaysVisible` means it is
+    // always *shown*: the sources are what a reviewer judges the other fields
+    // from, so collapsing them away hides the evidence.
+    expect(keys(surviving)).toEqual(["source_urls"]);
   });
 
   it("shows only the populated fields of an added person, not the whole schema", () => {
@@ -686,6 +696,7 @@ describe("survivingFields", () => {
       "office.name",
       "office.division_ocdid",
       "emails",
+          "source_urls",
     ]);
   });
 
@@ -695,6 +706,6 @@ describe("survivingFields", () => {
       emails: [],
       name: "Marie",
     });
-    expect(keys(surviving)).toEqual(["name", "emails"]);
+    expect(keys(surviving)).toEqual(["name", "emails", "source_urls"]);
   });
 });
