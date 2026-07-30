@@ -40,7 +40,7 @@ const PAGES = [
     name: "review-modal",
     path: `/review/session?request_id=${SCALE_REQUEST_ID}&view=overview`,
     open: async (page) => {
-      await page.locator(".review-tile__open").first().click();
+      await page.locator(".review-row__open").first().click();
       await page.locator("dialog[open]").waitFor();
     },
   },

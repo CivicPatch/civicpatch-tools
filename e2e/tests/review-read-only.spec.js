@@ -97,7 +97,7 @@ test.describe("Review card — read only across the views", () => {
   }) => {
     await openReadOnly(page);
     // Overview: no way to add someone to a published card.
-    await expect(page.locator(".review-tile--ghost")).toHaveCount(0);
+    await expect(page.locator(".review-row--ghost")).toHaveCount(0);
 
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
     for (const control of [
@@ -116,7 +116,7 @@ test.describe("Review card — read only across the views", () => {
     authenticatedPage: page,
   }) => {
     await openReadOnly(page);
-    await page.locator(".review-tile__open").first().click();
+    await page.locator(".review-row__open").first().click();
     await expect(page.locator("review-modal dialog")).toBeVisible();
 
     // Close, not Done — there is nothing to keep — and no Revert at all.

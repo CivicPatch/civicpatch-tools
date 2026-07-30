@@ -30,11 +30,17 @@ export const railFor = (page, name) =>
     .locator(".review-rail")
     .filter({ has: page.locator(".review-rail__name", { hasText: name }) });
 
-/** One person's Overview tile, matched the same way. */
-export const tileFor = (page, name) =>
+/** One person's Overview card, matched the same way. */
+export const rowFor = (page, name) =>
   page
-    .locator(".review-tile")
-    .filter({ has: page.locator(".review-tile__name", { hasText: name }) });
+    .locator(".review-row")
+    .filter({ has: page.locator(".review-row__name", { hasText: name }) });
+
+/** An untouched person, who folds to a compact row rather than a card. */
+export const foldFor = (page, name) =>
+  page
+    .locator(".review-fold")
+    .filter({ has: page.locator(".review-fold__name", { hasText: name }) });
 
 /** A field row within a rail, by its label. */
 export const fieldIn = (rail, label) =>

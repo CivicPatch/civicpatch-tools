@@ -9,12 +9,12 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID } from "../fixtures/db.js";
-import { openOverview, tileFor, railFor, fieldIn } from "./helpers/review-card.js";
+import { openOverview, rowFor, railFor, fieldIn } from "./helpers/review-card.js";
 
 const openCardModal = async (page, name) => {
   await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
   await expect(page.locator("review-overview")).toBeVisible();
-  await tileFor(page, name).locator(".review-tile__open").click();
+  await rowFor(page, name).locator(".review-row__open").click();
   await expect(page.locator("review-modal dialog")).toBeVisible();
 };
 
@@ -90,7 +90,7 @@ test.describe("Review modal", () => {
     await expect(page.locator("review-modal dialog")).toHaveCount(0);
 
     // Overview already reflects it: the modal edits the same state Detail does.
-    await expect(tileFor(page, "Renamed Councillor")).toBeVisible();
+    await expect(rowFor(page, "Renamed Councillor")).toBeVisible();
   });
 
   test("Revert undoes this person, and only since the modal opened", async ({

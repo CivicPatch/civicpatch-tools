@@ -44,7 +44,7 @@ test.describe("Review preview", () => {
     // very same cards render all three in Detail.
     await expect(page.locator(".review-preview del")).toHaveCount(0);
     await expect(page.locator(".review-preview .review-rail__issue")).toHaveCount(0);
-    await expect(page.locator(".review-preview .review-tile__badge")).toHaveCount(0);
+    await expect(page.locator(".review-preview .review-row__badge")).toHaveCount(0);
   });
 
   test("sorts by seat, at-large first", async ({ authenticatedPage: page }) => {
