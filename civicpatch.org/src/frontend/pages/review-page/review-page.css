@@ -637,3 +637,13 @@ report-issue-button {
   background: var(--pico-del-background);
   font-size: var(--text-sm);
 }
+
+
+/* Keyboard focus has to be visible on the page's primary actions — several of
+   these are styled buttons whose default outline was suppressed. */
+.review-page__start-btn:focus-visible,
+.review-page__gear-btn:focus-visible,
+.review-page__view-tab:focus-visible {
+  outline: var(--pico-outline-width) solid var(--pico-primary-focus);
+  outline-offset: 2px;
+}

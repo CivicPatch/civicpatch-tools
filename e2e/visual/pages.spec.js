@@ -34,6 +34,16 @@ const PAGES = [
   { name: "review-detail", path: `/review/session?request_id=${SCALE_REQUEST_ID}&view=detail` },
   { name: "review-preview", path: `/review/session?request_id=${SCALE_REQUEST_ID}&view=preview` },
   { name: "review-read-only", path: `/review/session?request_id=${READ_ONLY_REQUEST_ID}&view=detail` },
+  // The person-edit modal. Like the config editor it only exists after a click,
+  // and several UX changes target it — without this capture they are unverifiable.
+  {
+    name: "review-modal",
+    path: `/review/session?request_id=${SCALE_REQUEST_ID}&view=overview`,
+    open: async (page) => {
+      await page.locator(".review-tile__open").first().click();
+      await page.locator("dialog[open]").waitFor();
+    },
+  },
   { name: "issues", path: "/issues", role: "admin" },
   // The config editor is a modal, so it needs a click to exist. It is the only
   // place config-editor.css renders, and that file carries the largest cluster
