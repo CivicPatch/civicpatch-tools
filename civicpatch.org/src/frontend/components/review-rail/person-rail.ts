@@ -10,6 +10,7 @@ import "../person-image.js";
 import "./review-rail.css";
 import {
   FIELD_SCHEMA,
+  isContextField,
   type DiffRecord,
   type FieldReason,
   type Issue,
@@ -240,7 +241,14 @@ export function renderPersonRail(props: PersonRailProps) {
   const hiddenCount = FIELD_SCHEMA.length - visibleKeys.size;
   const keys = isExpanded ? new Set(FIELD_SCHEMA.map((f) => f.key)) : visibleKeys;
 
-  if (!departing && visibleKeys.size === 0 && !isExpanded) return renderStrip(props);
+  // Context fields are always visible, so counting them here would mean nobody
+  // ever collapses to a strip — which is what happened once source urls became
+  // always-visible. `needsReview` makes the same exclusion for the same reason.
+  const hasReviewableField = FIELD_SCHEMA.some(
+    (field) => visibleKeys.has(field.key) && !isContextField(field),
+  );
+
+  if (!departing && !hasReviewableField && !isExpanded) return renderStrip(props);
 
   return html`
     <div class="review-rail review-rail--${status}">

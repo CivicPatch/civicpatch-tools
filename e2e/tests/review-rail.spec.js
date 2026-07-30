@@ -63,7 +63,7 @@ test.describe("Review rail (Detail v2)", () => {
     await expect(rail.locator(".review-rail__field")).toHaveCount(11);
   });
 
-  test("a changed person shows only what moved", async ({
+  test("a changed person shows only what moved, plus its evidence", async ({
     authenticatedPage: page,
   }) => {
     await openRail(page, SCALE_REQUEST_ID);
@@ -71,9 +71,15 @@ test.describe("Review rail (Detail v2)", () => {
     // The fixture rotates change shapes by index; 13 is the one that only
     // gained an email. (02 changes its term end AND clears its phone — two
     // fields — which is worth having as the multi-change case below.)
+    //
+    // Two rows, not one: Source urls is a context field (`diff: false`), so it
+    // is always visible as the evidence for the change and never itself a
+    // reason to review. Everything else still hides.
     const rail = railFor(page, "Councillor 13 Scale");
-    await expect(rail.locator(".review-rail__field")).toHaveCount(1);
-    await expect(rail.locator(".review-rail__label")).toContainText("Email");
+    await expect(rail.locator(".review-rail__label")).toHaveText([
+      "Email",
+      "Source urls",
+    ]);
   });
 
   test("the expander reveals the rest and puts them back", async ({
@@ -83,15 +89,16 @@ test.describe("Review rail (Detail v2)", () => {
 
     // 02 changed its term end and cleared its phone, so two rows survive and
     // the other nine hide.
+    // Three rows: the two that moved, plus the always-visible Source urls.
     const rail = railFor(page, "Councillor 02 Scale");
-    await expect(rail.locator(".review-rail__field")).toHaveCount(2);
-    await expect(rail.locator(".review-rail__expander")).toContainText("9 unchanged fields");
+    await expect(rail.locator(".review-rail__field")).toHaveCount(3);
+    await expect(rail.locator(".review-rail__expander")).toContainText("8 unchanged fields");
 
     await rail.locator(".review-rail__expander").click();
     await expect(rail.locator(".review-rail__field")).toHaveCount(11);
 
     await rail.locator(".review-rail__expander").click();
-    await expect(rail.locator(".review-rail__field")).toHaveCount(2);
+    await expect(rail.locator(".review-rail__field")).toHaveCount(3);
   });
 
   test("a person the scrape dropped is one decision, not eleven fields", async ({
@@ -112,11 +119,15 @@ test.describe("Review rail (Detail v2)", () => {
 
 test.describe("Review rail — multi-value provenance (§5.2)", () => {
   // Councillor 13 gained a second email; nothing else about them moved.
+  // The Email row specifically. Councillor 13's rail also carries the
+  // always-visible Source urls row, which is a multi-value field too — matching
+  // every field row would count its inputs as well.
   const emailField = (page) =>
     page
       .locator(".review-rail")
       .filter({ has: page.locator(".review-rail__name", { hasText: "Councillor 13 Scale" }) })
-      .locator(".review-rail__field");
+      .locator(".review-rail__field")
+      .filter({ hasText: "Email" });
 
   test("marks the value the scrape added, and leaves the kept one unmarked", async ({
     authenticatedPage: page,

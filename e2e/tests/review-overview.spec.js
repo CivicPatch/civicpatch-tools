@@ -40,22 +40,31 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
+    // Source urls rides along on every tile: it is a context field, always
+    // visible as the evidence behind the two that moved.
     const tile = tileFor(page, "Councillor 02 Scale");
-    await expect(tile.locator(".review-tile__field")).toHaveText(["Term end", "Phone"]);
+    await expect(tile.locator(".review-tile__field")).toHaveText([
+      "Term end",
+      "Phone",
+      "Source urls",
+    ]);
     await expect(tile).toHaveClass(/review-tile--changed/);
-    await expect(tile.locator(".review-tile__badge")).toHaveText("2");
   });
 
-  test("an issue outranks the field count and colours the badge", async ({
+  test("an issue outranks the field's own state", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
     // Councillor 09 carries duplicate_unique_role, anchored to office.name.
+    //
+    // This asserted a count badge, which the tile no longer has — the footer
+    // names the surviving fields, which is strictly more than a number counting
+    // them. The claim that outlived the badge is the precedence one: the issue
+    // colours the field it is anchored to, ahead of that field's own diff state.
     const tile = tileFor(page, "Councillor 09 Scale");
-    await expect(tile.locator(".review-tile__badge")).toHaveClass(/review-tile__badge--issue/);
-    await expect(tile.locator(".review-tile__badge")).toHaveText("1");
-    await expect(tile.locator(".review-tile__field")).toHaveText(["Office"]);
+    const office = tile.locator(".review-tile__field").filter({ hasText: "Office" });
+    await expect(office).toHaveClass(/review-tile__field--issue/);
   });
 
   test("a departing person is one decision — struck, and no field count", async ({
