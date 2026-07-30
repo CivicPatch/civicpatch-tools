@@ -106,6 +106,7 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       (values) => save({ [field.key]: values }),
       field.label.toLowerCase(),
       field.key === "urls",
+      field.key === "phones" ? "tel" : "text",
     );
   }
   if (field.type === "date") return renderDateNewSide(field, record, save);

@@ -1,0 +1,31 @@
+/**
+ * Merge is the review modal's other screen, not a second dialog.
+ */
+
+import { test, expect } from "../fixtures/index.js";
+import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { railFor } from "./helpers/review-card.js";
+
+test("merge is a screen in one modal, not a second dialog", async ({
+  authenticatedPage: page,
+}) => {
+  await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}&view=detail`);
+  await expect(page.locator("review-rail-list")).toBeVisible();
+
+  const tom = railFor(page, "Tom Treasurer");
+  await tom.locator(".review-rail__merge").click();
+  await tom.locator(".review-rail__merge-faces .review-face", { hasText: "Bob Clerk" }).click();
+
+  await expect(page.locator("merge-picker")).toBeVisible();
+  // The whole point: one dialog, never two stacked.
+  await expect(page.locator("dialog[open]")).toHaveCount(1);
+  // Merge owns its actions, so the person footer is not offering Done underneath.
+  await expect(page.locator(".review-modal__foot")).toHaveCount(0);
+
+  // Back returns to the person the merge started from — the modal never closed.
+  await page.locator(".merge-picker__back").click();
+  await expect(page.locator("merge-picker")).toHaveCount(0);
+  await expect(page.locator("dialog[open]")).toHaveCount(1);
+  await expect(page.locator(".review-modal__head")).toContainText("Tom Treasurer");
+  await expect(page.locator(".review-modal__foot")).toBeVisible();
+});
