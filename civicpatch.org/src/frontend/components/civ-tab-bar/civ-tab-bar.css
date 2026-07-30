@@ -9,7 +9,7 @@
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
     color: var(--pico-muted-color);
-    background: var(--pico-muted-background-color);
+    background: var(--pico-muted-background);
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
     cursor: pointer;

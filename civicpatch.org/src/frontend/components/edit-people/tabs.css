@@ -21,7 +21,7 @@
 }
 
 .status-badge--past {
-    background: var(--pico-muted-background-color);
+    background: var(--pico-muted-background);
     color: var(--pico-muted-color);
     border: 1px solid var(--pico-muted-border-color);
 }

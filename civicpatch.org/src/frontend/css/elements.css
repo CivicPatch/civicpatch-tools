@@ -78,3 +78,824 @@ details summary[role="button"] {
   width: 100%;
   text-align: left;
 }
+/* ── Form controls ───────────────────────────────────────────────────────────
+ *
+ * Covers what this app renders: text-ish inputs, select, textarea, label,
+ * fieldset/legend, checkbox/radio, and one date field. Deliberately absent —
+ * because nothing uses them — are search and time fields, `aria-invalid`
+ * styling, `[dir=rtl]`, `role="search"`, and switches. Reproducing only what is
+ * on screen is the point of doing this by hand.
+ *
+ * As with buttons, the colour defaults sit in `:where()` at specificity 0 so any
+ * component override wins without needing `!important`.
+ */
+
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-size: 1rem;
+  line-height: var(--pico-line-height);
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+:where(input, select, textarea) {
+  --pico-background-color: var(--pico-form-element-background-color);
+  --pico-border-color: var(--pico-form-element-border-color);
+  --pico-color: var(--pico-form-element-color);
+}
+
+input,
+select,
+textarea {
+  border: var(--pico-border-width) solid var(--pico-border-color);
+  border-radius: var(--pico-border-radius);
+  outline: 0;
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  transition:
+    background-color var(--pico-transition),
+    border-color var(--pico-transition),
+    color var(--pico-transition),
+    box-shadow var(--pico-transition);
+}
+
+/* Checkbox and radio keep their native box; everything else gets ours. */
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
+select,
+textarea {
+  appearance: none;
+  padding: var(--pico-form-element-spacing-vertical)
+    var(--pico-form-element-spacing-horizontal);
+}
+
+/* A fixed height keeps inputs and selects on the same baseline even when one of
+   them has no text in it yet. */
+input:not([type="checkbox"], [type="radio"], [type="range"]) {
+  height: calc(
+    1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 +
+      var(--pico-border-width) * 2
+  );
+}
+
+input:not([type="checkbox"], [type="radio"]),
+select,
+textarea {
+  margin-bottom: var(--pico-spacing);
+}
+
+textarea {
+  display: block;
+  resize: vertical;
+}
+
+:where(select, textarea):not([readonly]):is(:active, :focus),
+input:not(
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="checkbox"],
+    [type="radio"],
+    [readonly]
+  ):is(:active, :focus) {
+  --pico-background-color: var(--pico-form-element-active-background-color);
+  --pico-border-color: var(--pico-form-element-active-border-color);
+}
+
+:where(select, textarea):not([readonly]):focus,
+input:not(
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="range"],
+    [type="file"],
+    [readonly]
+  ):focus {
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-form-element-focus-color);
+}
+
+input::placeholder,
+textarea::placeholder,
+select:invalid {
+  color: var(--pico-form-element-placeholder-color);
+  opacity: 1;
+}
+
+/* The chevron is a background image, so the right padding has to leave room for
+   it — otherwise long option text runs underneath. */
+select:not([multiple], [size]) {
+  padding-inline-start: var(--pico-form-element-spacing-horizontal);
+  padding-inline-end: calc(var(--pico-form-element-spacing-horizontal) + 1.5rem);
+  background-image: var(--pico-icon-chevron);
+  background-position: center right 0.75rem;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+}
+
+select[multiple] option:checked {
+  background: var(--pico-form-element-selected-background-color);
+  color: var(--pico-form-element-color);
+}
+
+input[type="date"] {
+  --pico-icon-position: 0.75rem;
+  --pico-icon-width: 1rem;
+  padding-right: calc(var(--pico-icon-width) + var(--pico-icon-position));
+  background-image: var(--pico-icon-date);
+  background-position: center right var(--pico-icon-position);
+  background-size: var(--pico-icon-width) auto;
+  background-repeat: no-repeat;
+}
+
+/* ── Labels, fieldsets ─────────────────────────────────────────────────────── */
+
+fieldset {
+  width: 100%;
+  margin: 0 0 var(--pico-spacing);
+  padding: 0;
+  border: 0;
+}
+
+fieldset legend,
+label {
+  display: block;
+  margin-bottom: calc(var(--pico-spacing) * 0.375);
+  color: var(--pico-color);
+  font-weight: var(--pico-form-label-font-weight, var(--pico-font-weight));
+}
+
+fieldset legend {
+  margin-bottom: calc(var(--pico-spacing) * 0.5);
+}
+
+legend {
+  max-width: 100%;
+  padding: 0;
+  color: inherit;
+  white-space: normal;
+}
+
+label > :where(input, select, textarea) {
+  margin-top: calc(var(--pico-spacing) * 0.25);
+}
+
+/* A label wrapping a tick is a hit target, not a block heading. */
+label:has([type="checkbox"], [type="radio"]) {
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* Helper text under a field: pulled up against the field it describes. */
+:where(input, select, textarea, fieldset) + small {
+  display: block;
+  width: 100%;
+  margin-top: calc(var(--pico-spacing) * -0.75);
+  margin-bottom: var(--pico-spacing);
+  color: var(--pico-muted-color);
+}
+
+/* ── Disabled ──────────────────────────────────────────────────────────────── */
+
+:where(fieldset[disabled]) :is(input, select, textarea),
+input[disabled],
+select[disabled],
+textarea[disabled],
+label[aria-disabled="true"] {
+  opacity: var(--pico-form-element-disabled-opacity);
+  pointer-events: none;
+}
+
+:where(button, [type="submit"], [type="reset"], [type="button"], [role="button"])[disabled],
+:where(fieldset[disabled]) :is(button, [type="submit"], [type="button"], [type="reset"], [role="button"]) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Grouped controls ──────────────────────────────────────────────────────────
+ *
+ * `inline-flex`, not `flex`: a block-level flex container claims its whole line
+ * and reflows everything around it. Getting this wrong shifted every page that
+ * has a paginator.
+ */
+
+[role="group"] {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--pico-spacing);
+  border-radius: var(--pico-border-radius);
+  box-shadow: var(--pico-group-box-shadow, 0 0 0 transparent);
+  vertical-align: middle;
+  transition: box-shadow var(--pico-transition);
+}
+
+[role="group"] > *,
+[role="group"] input:not([type="checkbox"], [type="radio"]),
+[role="group"] select {
+  position: relative;
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+/* Buttons in a group size to their label rather than sharing the row equally,
+   and get roomier horizontal padding. */
+[role="group"] :is([role="button"], [type="button"], [type="reset"], [type="submit"], button) {
+  --pico-form-element-spacing-horizontal: 2rem;
+  width: auto;
+}
+
+/* The group owns the focus ring, so members must not draw their own. */
+[role="group"] :is([role="button"], [type="button"], [type="reset"], [type="submit"], button):focus {
+  box-shadow: none;
+}
+
+/* Interior edges square up so the group reads as one control. */
+[role="group"] > :not(:first-child) {
+  margin-left: calc(var(--pico-border-width) * -1);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+[role="group"] > :not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ── Tables ──────────────────────────────────────────────────────────────────
+ *
+ * Skipped, because nothing renders them: `.striped`, `tfoot`, and the
+ * `<table> ~ <hN>` spacing rule (that one belongs with typography and needs a
+ * token nothing references).
+ *
+ * The header rule works by overriding two variables that the cell rule reads,
+ * rather than by restating font-weight and border. That is the same indirection
+ * the buttons use, and it is why a component can restyle a header row with a
+ * one-line override.
+ */
+
+table {
+  margin-top: 0;
+  margin-bottom: var(--pico-typography-spacing-vertical);
+  color: var(--pico-color);
+  font-style: normal;
+  font-weight: var(--pico-font-weight);
+}
+
+:where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: 0;
+}
+
+thead td,
+thead th {
+  --pico-font-weight: 600;
+  --pico-border-width: 0.1875rem;
+}
+
+td,
+th {
+  padding: calc(var(--pico-spacing) / 2) var(--pico-spacing);
+  border-bottom: var(--pico-border-width) solid var(--pico-table-border-color);
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  text-align: left;
+  text-align: start;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────────
+ *
+ * `a:not([role=button])` because a link styled as a button belongs to the button
+ * rules above; this is for links that look like links.
+ *
+ * Skipped: `[role=link]`, breadcrumb navs, and `rel="prev"`/`.close` affordances
+ * — none appear in this app.
+ */
+
+a {
+  --pico-text-decoration: underline;
+}
+
+:where(a:not([role="button"])) {
+  --pico-color: var(--pico-primary);
+  --pico-background-color: transparent;
+  --pico-underline: var(--pico-primary-underline);
+  outline: 0;
+  background-color: var(--pico-background-color);
+  color: var(--pico-color);
+  text-decoration: var(--pico-text-decoration);
+  text-decoration-color: var(--pico-underline);
+  text-underline-offset: var(--pico-text-underline-offset);
+  transition:
+    background-color var(--pico-transition),
+    color var(--pico-transition),
+    text-decoration var(--pico-transition),
+    box-shadow var(--pico-transition);
+}
+
+/* `aria-current` counts as active: the link to the page you are on should read
+   the same as the one under the cursor. */
+:where(a:not([role="button"])):is(
+    [aria-current]:not([aria-current="false"]),
+    :hover,
+    :active,
+    :focus
+  ) {
+  --pico-color: var(--pico-primary-hover);
+  --pico-underline: var(--pico-primary-hover-underline);
+  --pico-text-decoration: underline;
+}
+
+:where(a:not([role="button"])):focus-visible {
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+}
+
+:where(a:not([role="button"])).secondary {
+  --pico-color: var(--pico-secondary);
+  --pico-underline: var(--pico-secondary-underline);
+}
+
+:where(a:not([role="button"])).secondary:is(
+    [aria-current]:not([aria-current="false"]),
+    :hover,
+    :active,
+    :focus
+  ) {
+  --pico-color: var(--pico-secondary-hover);
+  --pico-underline: var(--pico-secondary-hover-underline);
+}
+
+:where(a:not([role="button"])).contrast {
+  --pico-color: var(--pico-contrast);
+  --pico-underline: var(--pico-contrast-underline);
+}
+
+:where(a:not([role="button"])).contrast:is(
+    [aria-current]:not([aria-current="false"]),
+    :hover,
+    :active,
+    :focus
+  ) {
+  --pico-color: var(--pico-contrast-hover);
+  --pico-underline: var(--pico-contrast-hover-underline);
+}
+
+a[role="button"] {
+  display: inline-block;
+}
+
+a.contrast,
+a.secondary {
+  --pico-text-decoration: underline;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────────────────
+ *
+ * The site navbar is its own component with its own stylesheet; these are the
+ * bare-element defaults underneath it. Dropdown styling is deliberately absent:
+ * ours are `.nav-dropdown`, never the framework's `.dropdown`, so all of that
+ * would be dead weight.
+ */
+
+nav,
+nav ul {
+  display: flex;
+}
+
+nav {
+  justify-content: space-between;
+  overflow: visible;
+}
+
+nav ol,
+nav ul {
+  align-items: center;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav ol:first-of-type,
+nav ul:first-of-type {
+  margin-left: calc(var(--pico-nav-element-spacing-horizontal) * -1);
+}
+
+nav ol:last-of-type,
+nav ul:last-of-type {
+  margin-right: calc(var(--pico-nav-element-spacing-horizontal) * -1);
+}
+
+nav li {
+  display: inline-block;
+  margin: 0;
+  padding: var(--pico-nav-element-spacing-vertical)
+    var(--pico-nav-element-spacing-horizontal);
+}
+
+/* The zero-width space keeps list semantics for screen readers without drawing a
+   bullet — nav lists have their own visual separation. */
+:where(nav li)::before {
+  float: left;
+  content: "\200b";
+}
+
+nav li :where(a) {
+  display: inline-block;
+  margin: calc(var(--pico-nav-link-spacing-vertical) * -1)
+    calc(var(--pico-nav-link-spacing-horizontal) * -1);
+  padding: var(--pico-nav-link-spacing-vertical)
+    var(--pico-nav-link-spacing-horizontal);
+  border-radius: var(--pico-border-radius);
+}
+
+nav li :where(a):not(:hover) {
+  text-decoration: none;
+}
+
+/* Controls in a nav sit on the nav's own rhythm, not the form rhythm. */
+nav li :is([role="button"], [type="button"], button, select),
+nav li input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]) {
+  height: auto;
+  margin-right: inherit;
+  margin-bottom: 0;
+  margin-left: inherit;
+  padding: calc(var(--pico-nav-link-spacing-vertical) - var(--pico-border-width) * 2)
+    var(--pico-nav-link-spacing-horizontal);
+}
+
+aside li,
+aside nav,
+aside ol,
+aside ul {
+  display: block;
+}
+
+aside li a {
+  display: block;
+}
+
+/* ── Misc element affordances ────────────────────────────────────────────────*/
+
+[data-tooltip]:not(a, button, input, [role="button"]) {
+  border-bottom: 1px dotted;
+  text-decoration: none;
+  cursor: help;
+}
+
+[tabindex],
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea {
+  touch-action: manipulation;
+}
+
+/* ── Disclosure (details / summary) ──────────────────────────────────────────
+ *
+ * The `:not([role])` qualifier throughout distinguishes a plain accordion from a
+ * summary deliberately styled as a button — only the former takes the accordion
+ * colours. Nothing in this app uses `role="button"` on a summary today, but the
+ * qualifier is what makes the colour rules safe to leave in place if one appears.
+ *
+ * Skipped: `[dir=rtl]`, and the `::after` filter tricks for `.contrast` button
+ * summaries.
+ */
+
+details {
+  display: block;
+  margin-bottom: var(--pico-spacing);
+}
+
+details summary {
+  line-height: 1rem;
+  list-style-type: none;
+  cursor: pointer;
+  transition: color var(--pico-transition);
+}
+
+details summary:not([role]) {
+  color: var(--pico-accordion-close-summary-color);
+}
+
+/* Three selectors for one job: browsers disagree about how the disclosure
+   triangle is exposed, and the chevron below replaces it. */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::marker {
+  display: none;
+}
+
+details summary::-moz-list-bullet {
+  list-style-type: none;
+}
+
+details summary::after {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin-inline-start: calc(var(--pico-spacing, 1rem) * 0.5);
+  float: right;
+  transform: rotate(-90deg);
+  background-image: var(--pico-icon-chevron);
+  background-position: right center;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+  content: "";
+  transition: transform var(--pico-transition);
+}
+
+details summary:focus {
+  outline: 0;
+}
+
+details summary:focus:not([role]) {
+  color: var(--pico-accordion-active-summary-color);
+}
+
+/* Keyboard focus still gets a visible ring — `:focus` above only removes the
+   default outline for pointer focus. */
+details summary:focus-visible:not([role]) {
+  outline: var(--pico-outline-width) solid var(--pico-primary-focus);
+  outline-offset: calc(var(--pico-spacing, 1rem) * 0.5);
+  color: var(--pico-primary);
+}
+
+details summary[role="button"]::after {
+  height: calc(1rem * var(--pico-line-height, 1.5));
+}
+
+details[open] > summary {
+  margin-bottom: var(--pico-spacing);
+}
+
+details[open] > summary:not([role]):not(:focus) {
+  color: var(--pico-accordion-open-summary-color);
+}
+
+details[open] > summary::after {
+  transform: rotate(0);
+}
+
+/* ── Document base — deliberately NOT here ──────────────────────────────────
+ *
+ * The `*`/`:root`/`body`/`main` defaults (box-sizing, base colours, and the
+ * font-family that gives the page its typeface) are still supplied by the
+ * framework. Duplicating them here changes nothing while it is loaded, so this
+ * batch cannot verify them — and adding them anyway moved one page for reasons
+ * that did not reproduce under measurement.
+ *
+ * They belong in the same change that removes the framework, where the before
+ * and after are meaningfully different and the screenshots can judge them.
+ */
+
+/* ── Typography ──────────────────────────────────────────────────────────────
+ *
+ * Skipped, all zero-usage: `blockquote`, `mark`, `figure`/`figcaption`,
+ * `sub`/`sup`, `abbr`, `kbd`, `samp`, `b`. (`--pico-mark-*` is kept in
+ * tokens.css regardless — the settings-page banner reads it directly.)
+ *
+ * Headings work by overriding `--pico-font-size` and `--pico-line-height` per
+ * level, which the shared heading rule then reads. Same variable indirection as
+ * everywhere else in this file.
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --pico-font-weight: 700;
+  margin-top: 0;
+  margin-bottom: var(--pico-typography-spacing-vertical);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  font-size: var(--pico-font-size);
+  line-height: var(--pico-line-height);
+  font-family: var(--pico-font-family);
+}
+
+h1 { --pico-font-size: 2rem;     --pico-line-height: 1.125; --pico-typography-spacing-top: 3rem; }
+h2 { --pico-font-size: 1.75rem;  --pico-line-height: 1.15;  --pico-typography-spacing-top: 2.625rem; }
+h3 { --pico-font-size: 1.5rem;   --pico-line-height: 1.175; --pico-typography-spacing-top: 2.25rem; }
+h4 { --pico-font-size: 1.25rem;  --pico-line-height: 1.2;   --pico-typography-spacing-top: 1.874rem; }
+h5 { --pico-font-size: 1.125rem; --pico-line-height: 1.225; --pico-typography-spacing-top: 1.6875rem; }
+h6 { --pico-font-size: 1rem;     --pico-line-height: 1.25;  --pico-typography-spacing-top: 1.5rem; }
+
+address,
+dl,
+ol,
+p,
+pre,
+ul {
+  margin-top: 0;
+  margin-bottom: var(--pico-typography-spacing-vertical);
+  color: var(--pico-color);
+  font-style: normal;
+  font-weight: var(--pico-font-weight);
+}
+
+/* A heading following a block of content gets extra room above it — the amount
+   scales with the heading level via the token set above. */
+:where(article, address, dl, figure, form, ol, p, pre, table, ul) ~ :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--pico-typography-spacing-top);
+}
+
+p {
+  margin-bottom: var(--pico-typography-spacing-vertical);
+}
+
+hgroup {
+  margin-bottom: var(--pico-typography-spacing-vertical);
+}
+
+hgroup > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* A trailing line in an hgroup is a subtitle, not another heading. */
+hgroup > :not(:first-child):last-child {
+  --pico-color: var(--pico-muted-color);
+  --pico-font-weight: unset;
+  font-size: 1rem;
+}
+
+:where(ol, ul) li {
+  margin-bottom: calc(var(--pico-typography-spacing-vertical) * 0.25);
+}
+
+:where(dl, ol, ul) :where(dl, ol, ul) {
+  margin: 0;
+  margin-top: calc(var(--pico-typography-spacing-vertical) * 0.25);
+}
+
+ul li {
+  list-style: square;
+}
+
+small {
+  --pico-font-size: 0.875em;
+}
+
+strong {
+  font-weight: bolder;
+}
+
+ins {
+  color: var(--pico-ins-color);
+  text-decoration: none;
+}
+
+del {
+  color: var(--pico-del-color);
+}
+
+hr {
+  height: 0;
+  margin: var(--pico-typography-spacing-vertical) 0;
+  border: 0;
+  border-top: 1px solid var(--pico-muted-border-color);
+  color: inherit;
+}
+
+code,
+kbd,
+pre,
+samp {
+  --pico-font-family: var(--pico-font-family-monospace);
+}
+
+code,
+kbd,
+samp {
+  display: inline-block;
+  padding: 0.375rem;
+}
+
+pre {
+  overflow: auto;
+}
+
+pre code,
+pre samp {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+pre > code,
+pre > samp {
+  display: block;
+  padding: var(--pico-spacing);
+  background: 0 0;
+  line-height: var(--pico-line-height);
+}
+
+/* ── Cards (article) — deferred, like the document base ─────────────────────
+ *
+ * `article` is the card primitive and `dialog > article` the modal panel, so the
+ * framework's card rules land on a lot of components that style themselves. They
+ * are duplicates of what it already supplies, which makes them unverifiable
+ * while it is loaded — and adding them shifted the overview grid by ~3%.
+ *
+ * Deferred to the same change that removes the framework, where the diff is
+ * meaningful and can be judged rather than guessed at.
+ */
+
+/* ── Dialog ──────────────────────────────────────────────────────────────────
+ *
+ * The dialog element is the full-viewport overlay; the article inside it is the
+ * panel. styles.css overrides z-index and position for civ-modal and must keep
+ * winning — these are element-level, so it does.
+ *
+ * Skipped: the `.modal-is-opening`/`-closing` animation classes and the
+ * `.close`/`rel="prev"` affordances. civ-modal uses none of them.
+ */
+
+dialog {
+  display: flex;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  min-width: 100%;
+  height: inherit;
+  min-height: 100%;
+  padding: 0;
+  border: 0;
+  backdrop-filter: var(--pico-modal-overlay-backdrop-filter);
+  background-color: var(--pico-modal-overlay-background-color);
+  color: var(--pico-color);
+}
+
+dialog > article {
+  width: 100%;
+  max-height: calc(100vh - var(--pico-spacing) * 2);
+  margin: var(--pico-spacing);
+  overflow: auto;
+}
+
+dialog > article > header > * {
+  margin-bottom: 0;
+}
+
+dialog > article > footer {
+  text-align: right;
+}
+
+dialog > article > footer :is([role="button"], button) {
+  margin-bottom: 0;
+}
+
+dialog > article > footer :is([role="button"], button):not(:first-of-type) {
+  margin-left: calc(var(--pico-spacing) * 0.5);
+}
+
+dialog:not([open]),
+dialog[open="false"] {
+  display: none;
+}
+
+/* ── Progress ────────────────────────────────────────────────────────────────*/
+
+[type="checkbox"],
+[type="radio"],
+[type="range"],
+progress {
+  accent-color: var(--pico-primary);
+}
+
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+progress::-webkit-progress-bar {
+  border-radius: var(--pico-border-radius);
+  background: 0 0;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: var(--pico-progress-color);
+  transition: inline-size var(--pico-transition);
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--pico-progress-color);
+}
