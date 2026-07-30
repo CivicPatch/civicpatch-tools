@@ -95,7 +95,7 @@ function renderLink(props: PersonRailProps) {
 // `size` has to be a property binding: person-image declares no
 // observedAttributes, so size="3rem" is silently ignored and it falls back to
 // its 2rem default.
-const PHOTO_SIZE = "4.5rem";
+const PHOTO_SIZE = "6.5rem";
 
 function renderIdentity(props: PersonRailProps) {
   const { status, oldRecord, newRecord, isReadOnly } = props;

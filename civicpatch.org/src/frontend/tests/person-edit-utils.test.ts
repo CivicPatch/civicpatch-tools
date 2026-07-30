@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   parseDate,
   serializeDate,
+  setDatePart,
   jurisdictionToDivisionBase,
   parseDivision,
   buildDivisionOcdid,
@@ -130,5 +131,23 @@ describe('buildUpdates', () => {
   it('sends an edited multi-value array', () => {
     const draft = { ...toDraft(denver, denver.jurisdiction_ocdid), phones: ['(720) 337-7701', '(303) 555-0000'] };
     expect(buildUpdates(denver, draft, denver.jurisdiction_ocdid!)).toEqual({ phones: ['(720) 337-7701', '(303) 555-0000'] });
+  });
+});
+
+describe("setDatePart — cascade", () => {
+  const parts = { year: "2021", month: "03", day: "04" };
+
+  it("clears the day when the month is cleared", () => {
+    expect(setDatePart(parts, "month", "")).toEqual({ year: "2021", month: "", day: "" });
+  });
+
+  it("clears month and day when the year is cleared", () => {
+    // A month with no year is not a date anyone can act on — the record should
+    // never be able to hold "March, no year".
+    expect(setDatePart(parts, "year", "")).toEqual({ year: "", month: "", day: "" });
+  });
+
+  it("leaves finer parts alone when a value is set rather than cleared", () => {
+    expect(setDatePart(parts, "year", "2022")).toEqual({ year: "2022", month: "03", day: "04" });
   });
 });

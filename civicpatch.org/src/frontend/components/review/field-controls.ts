@@ -133,6 +133,7 @@ export function renderDateNewSide(
       />
       <select
         aria-label="Month"
+        ?disabled=${!parts.year}
         @change=${(e: Event) => setPart("month", inputValue(e))}
       >
         <option value="" .selected=${!parts.month}>—</option>
@@ -342,6 +343,9 @@ export function renderMultiList(
   dropped: string[],
   setValues: (values: string[]) => void,
   label: string,
+  // Link fields get an open-in-new-tab affordance per row, the same one source
+  // urls already carry — a url you cannot follow is a url you cannot check.
+  areLinks = false,
 ) {
   const values = rows.map((r) => r.value);
   return html`
@@ -356,6 +360,15 @@ export function renderMultiList(
           />
           ${row.isNew
             ? html`<span class="field-control__provenance">new</span>`
+            : nothing}
+          ${areLinks && row.value.trim()
+            ? html`<a
+                class="field-control__source-link-btn"
+                href=${ensureUrl(row.value)}
+                target=${SOURCE_LINK_TARGET}
+                title="Open link"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>`
             : nothing}
           <button
             class="field-control__x"

@@ -28,13 +28,16 @@ interface ReviewPreviewProps {
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
 }
 
-// Identity is already in the card head, and sources are provenance rather than
-// published data (§11.2), so the field list is what remains.
+// Identity is already in the card head, so the field list is what remains.
+//
+// Sources ARE included, unlike the rest of the review apparatus. §11.2 originally
+// excluded them as provenance rather than published data, but that put Preview at
+// odds with the collapse rule, which shows source urls always precisely because
+// they are the evidence behind every other value. Being able to check where a
+// number came from is not review-time overhead; it is part of reading the record.
 const DETAIL_FIELDS = FIELD_SCHEMA.filter(
   (field) =>
-    !["image", "name", "office.name", "office.division_ocdid", "source_urls"].includes(
-      field.key,
-    ),
+    !["image", "name", "office.name", "office.division_ocdid"].includes(field.key),
 );
 
 function values(card: ReviewCard, field: FieldSpec): string[] {
