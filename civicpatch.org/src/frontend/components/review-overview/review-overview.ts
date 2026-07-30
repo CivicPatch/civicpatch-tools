@@ -8,6 +8,7 @@
 import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
+import { renderPersonFace } from "../review/person-face.js";
 import "./review-overview.css";
 import { withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
@@ -34,9 +35,18 @@ interface ReviewOverviewProps {
 // and a screen reader gets its label rather than its parts.
 function tileLabel(card: ReviewCard): string {
   const record = personOf(card);
-  const parts = [record?.name || "unnamed", STATUS_LABEL[card.status] ?? card.status];
-  if (card.issues.length) parts.push(`${card.issues.length} issue${card.issues.length === 1 ? "" : "s"}`);
-  else if (card.surviving.length) parts.push(`${card.surviving.length} field${card.surviving.length === 1 ? "" : "s"} to review`);
+  const parts = [
+    record?.name || "unnamed",
+    STATUS_LABEL[card.status] ?? card.status,
+  ];
+  if (card.issues.length)
+    parts.push(
+      `${card.issues.length} issue${card.issues.length === 1 ? "" : "s"}`,
+    );
+  else if (card.surviving.length)
+    parts.push(
+      `${card.surviving.length} field${card.surviving.length === 1 ? "" : "s"} to review`,
+    );
   return parts.join(", ");
 }
 
@@ -55,7 +65,10 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
         class="review-tile__open"
         aria-label=${tileLabel(card)}
         @click=${() =>
-          props.onOpenPerson(card.personId, card.surviving[0]?.field.key ?? null)}
+          props.onOpenPerson(
+            card.personId,
+            card.surviving[0]?.field.key ?? null,
+          )}
       >
         <span class="review-tile__photo">
           <person-image
@@ -63,8 +76,12 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
             .size=${"6rem"}
           ></person-image>
           <span class="review-tile__over">
-            <span class="review-tile__name">${record?.name || "(unnamed)"}</span>
-            <span class="review-tile__office">${cardSubtitle(card, divisionOcdidToFriendly) || nothing}</span>
+            <span class="review-tile__name"
+              >${record?.name || "(unnamed)"}</span
+            >
+            <span class="review-tile__office"
+              >${cardSubtitle(card, divisionOcdidToFriendly) || nothing}</span
+            >
           </span>
         </span>
       </button>
@@ -73,34 +90,22 @@ function renderTile(card: ReviewCard, props: ReviewOverviewProps) {
         ? nothing
         : html`<span class="review-tile__foot">
             ${card.surviving.map(
-              (field) => html`<button
-                class="review-tile__field review-tile__field--${field.error
-                  ? "error"
-                  : field.reason === "issue"
-                    ? "issue"
-                    : field.state}"
-                @click=${() => props.onOpenPerson(card.personId, field.field.key)}
-              >
-                ${field.field.label}
-              </button>`,
+              (field) =>
+                html`<button
+                  class="review-tile__field review-tile__field--${field.error
+                    ? "error"
+                    : field.reason === "issue"
+                      ? "issue"
+                      : field.state}"
+                  @click=${() =>
+                    props.onOpenPerson(card.personId, field.field.key)}
+                >
+                  ${field.field.label}
+                </button>`,
             )}
           </span>`}
     </div>
   `;
-}
-
-function renderFace(card: ReviewCard, props: ReviewOverviewProps) {
-  const record = personOf(card);
-  return html`<button
-    class="review-face"
-    @click=${() => props.onOpenPerson(card.personId, null)}
-  >
-    <person-image
-      .person=${withDisplayImage(record)}
-      .size=${"1.75rem"}
-    ></person-image>
-    <span>${record?.name || "(unnamed)"}</span>
-  </button>`;
 }
 
 function ReviewOverview(props: ReviewOverviewProps) {
@@ -118,13 +123,18 @@ function ReviewOverview(props: ReviewOverviewProps) {
           ? html`<div class="review-overview__grid">
               ${toReview.map((card) => renderTile(card, props))}
               ${!isReadOnly && onAdd
-                ? html`<button class="review-tile review-tile--ghost" @click=${onAdd}>
+                ? html`<button
+                    class="review-tile review-tile--ghost"
+                    @click=${onAdd}
+                  >
                     <span aria-hidden="true">+</span>
-                    <span>Add a person the scrape missed</span>
+                    <span>Add a person</span>
                   </button>`
                 : nothing}
             </div>`
-          : html`<p class="review-overview__empty">Nothing needs review on this card.</p>`}
+          : html`<p class="review-overview__empty">
+              Nothing needs review on this card.
+            </p>`}
       </section>
 
       ${unchanged.length
@@ -136,7 +146,9 @@ function ReviewOverview(props: ReviewOverviewProps) {
             <!-- A face strip, not tiles — the roster reads complete without
                  spending a card on people with nothing to say. -->
             <div class="review-overview__faces">
-              ${unchanged.map((card) => renderFace(card, props))}
+              ${unchanged.map((card) =>
+                renderPersonFace(card, (id) => props.onOpenPerson(id, null)),
+              )}
             </div>
           </section>`
         : nothing}
@@ -146,5 +158,7 @@ function ReviewOverview(props: ReviewOverviewProps) {
 
 customElements.define(
   "review-overview",
-  component(ReviewOverview as unknown as () => unknown, { useShadowDOM: false }),
+  component(ReviewOverview as unknown as () => unknown, {
+    useShadowDOM: false,
+  }),
 );

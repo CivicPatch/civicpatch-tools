@@ -7,7 +7,7 @@ import "./people-tabs.js";
 import "../basic/modal.js";
 import "../review-panel/review-panel.js";
 import { usePeopleState } from "./hooks/use-people-state.js";
-import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, searchPeople, saveAndEnqueueMerge, closePullRequest, patchPeopleData } from "../../api.js";
+import { fetchPullRequestData, fetchPullRequests, generatePersonId, fetchReview, saveAndEnqueueMerge, closePullRequest, patchPeopleData } from "../../api.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { emptyPerson, resolvePeopleMatches } from "./people-editing.js";
 import "../diff-panel/diff-panel.js";
@@ -60,13 +60,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     if (status === "merged" || status === "closed") setPrStatus(status);
     else setPrStatus(null);
   }, [selectedPullRequest]);
-  const [resolvedMatches, setResolvedMatches] = useState({});
   const [editingPerson, setEditingPerson] = useState(null);
-  const [editingCandidates, setEditingCandidates] = useState([]);
 
   function closeEdit() {
     setEditingPerson(null);
-    setEditingCandidates([]);
   }
 
   function handlePersonSave(e) {
@@ -74,22 +71,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     closeEdit();
   }
 
-  // Existing-record candidates to offer for linking: ambiguous auto-matches, or
-  // name-search hits for new people. Nothing for confident or no-match people.
-  async function openEdit(person) {
+  function openEdit(person) {
     setEditingPerson(person);
-    setEditingCandidates([]);
-    const resolved = resolvedMatches[person.id];
-    if (resolved?.ambiguous) {
-      setEditingCandidates(resolved.person ?? []);
-    } else if (person._isNew && person.name) {
-      try {
-        const result = await searchPeople(jurisdiction_ocdid, person.name);
-        setEditingCandidates(result.data ?? []);
-      } catch {
-        // non-blocking
-      }
-    }
   }
 
   async function handleFetchPullRequests() {
@@ -126,7 +109,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     if (activeTab === TAB.current) {
       assignPeople(people);
       setReviewData(null);
-      setResolvedMatches({});
     } else {
       handleSelectedPullRequestData(selectedPullRequest);
     }
@@ -143,9 +125,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
       const scrapedPeople = data?.data ?? [];
       setReviewData(review?.data || null);
 
-      const { tagged, matchMap } = await resolvePeopleMatches(jurisdiction_ocdid, scrapedPeople);
+      const { tagged } = await resolvePeopleMatches(jurisdiction_ocdid, scrapedPeople);
       if (tagged.length) assignPeople(tagged);
-      setResolvedMatches(matchMap);
     } catch (err) {
       setError("Failed to load pull request data.");
       console.error(err);
@@ -281,7 +262,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
       <civ-person-edit-modal
         .person=${editingPerson}
         .jurisdictionOcdid=${jurisdiction_ocdid}
-        .candidates=${editingCandidates}
         @save=${handlePersonSave}
         @cancel=${closeEdit}
       ></civ-person-edit-modal>

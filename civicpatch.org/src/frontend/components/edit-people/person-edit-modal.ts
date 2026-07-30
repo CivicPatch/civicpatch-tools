@@ -4,7 +4,6 @@ import { component, useState, useEffect } from "haunted";
 import "../basic/modal.js";
 import "../person-image.js";
 import "./person-edit-modal.css";
-import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   type DateParts,
@@ -26,8 +25,7 @@ import {
 export const SAVE_EVENT = "save";
 export const CANCEL_EVENT = "cancel";
 
-type Candidate = { id: string; name?: string; office?: { name?: string; division_ocdid?: string } };
-type PersonEditModalHost = HTMLElement & { person?: Person; jurisdictionOcdid: string; candidates?: Candidate[] };
+type PersonEditModalHost = HTMLElement & { person?: Person; jurisdictionOcdid: string };
 
 const inputValue = (e: Event) => (e.target as HTMLInputElement | HTMLSelectElement).value;
 const replaceAt = (arr: string[], i: number, v: string) => arr.map((x, j) => (j === i ? v : x));
@@ -139,43 +137,9 @@ function renderDivision(person: Person, draft: Draft, jurisdictionOcdid: string,
   `;
 }
 
-function renderLinkSection(candidates: Candidate[], linkedId: string, onLink: (id: string) => void) {
-  const linked = linkedId ? candidates.find((c) => c.id === linkedId) : null;
-  if (linked) {
-    return html`
-      <div class="person-edit__link">
-        <p class="person-edit__link-status">
-          <i class="fa-solid fa-link" style="color:var(--pico-primary)"></i>
-          Will link to <strong>${linked.name}</strong> on save.
-          <button class="btn btn-sm person-edit__add" @click=${() => onLink("")}>Undo</button>
-        </p>
-      </div>
-    `;
-  }
-  return html`
-    <div class="person-edit__link">
-      <p class="person-edit__link-status">
-        <i class="fa-solid fa-link" style="color:var(--pico-primary)"></i>
-        This might already exist — link to an existing record?
-      </p>
-      <ul class="person-edit__link-list">
-        ${candidates.map((c) => html`
-          <li class="person-edit__link-item">
-            <person-image .person=${c} .size=${"1.7rem"}></person-image>
-            <span class="person-edit__link-name">${c.name}</span>
-            <span class="person-edit__link-office">${[c.office?.name, divisionOcdidToFriendly(c.office?.division_ocdid)].filter(Boolean).join(" — ")}</span>
-            <button class="btn btn-sm" @click=${() => onLink(c.id)}>Link</button>
-          </li>
-        `)}
-      </ul>
-    </div>
-  `;
-}
-
 function PersonEditModal(host: PersonEditModalHost) {
   const person = host.person;
   const jurisdictionOcdid = host.jurisdictionOcdid;
-  const candidates = host.candidates ?? [];
   const [draft, setDraft] = useState<Draft | null>(person ? toDraft(person, jurisdictionOcdid) : null);
 
   useEffect(() => {
@@ -203,8 +167,6 @@ function PersonEditModal(host: PersonEditModalHost) {
 
   const content = html`
     <form class="person-edit__form" ${ref(setFormRef)} @submit=${(e: Event) => e.preventDefault()}>
-      ${candidates.length ? renderLinkSection(candidates, draft.linkedId, (id) => patch({ linkedId: id })) : ""}
-
       <div class="person-edit__identity">
         <person-image .person=${person} .size=${"56px"}></person-image>
         <div class="person-edit__identity-grid">

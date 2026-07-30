@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'haunted';
-import { changedFieldKeys, listChanged, mergeFields, mergeInto, buildPeoplePatch, pruneIds } from './people-state-utils.js';
+import { changedFieldKeys, listChanged, mergeFields, buildPeoplePatch, pruneIds } from './people-state-utils.js';
 
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
@@ -45,13 +45,6 @@ export function usePeopleState({ people }) {
   }
 
   function updatePerson(key, updates) {
-    // "Link to person" arrives here disguised as an edit — the rail sends
-    // { id, other_names } down the same path as typing a phone number — so an id
-    // that changed means two rows now share one. Retired when merge lands.
-    if (updates.id && updates.id !== key) {
-      mergeIntoExisting(key, updates);
-      return;
-    }
     // Text fields save on every keystroke, so this must stay a functional
     // update: reading the list from the closure drops a character whenever two
     // edits land in the same frame.
@@ -73,20 +66,6 @@ export function usePeopleState({ people }) {
         return [p];
       })
     );
-  }
-
-  // Adopting another record's id collapses two rows into one. Unlike a keystroke
-  // this cannot arrive twice in a frame, so it reads the list directly — which it
-  // has to, in order to prune the id-keyed sets in the same breath.
-  function mergeIntoExisting(key, updates) {
-    const applied = currentPeople.map(p => p.id === key ? { ...p, ...updates } : p);
-    const survivor = currentPeople.find(p => p.id === updates.id);
-    const absorbed = currentPeople.find(p => p.id === key);
-    if (!survivor || !absorbed) {
-      setCurrentPeople(applied);
-      return;
-    }
-    setPeopleAndPruneIds(mergeInto(survivor, absorbed, applied));
   }
 
   // An id that no longer names anyone must leave every id-keyed set, or it

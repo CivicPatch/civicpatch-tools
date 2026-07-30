@@ -1,0 +1,154 @@
+/* Merge picker — step 2, what survives. Step 1 is inline on the rail. */
+
+/* styles.css caps dialogs at 32rem, which cuts the result column off. The
+   wrapper mirrors review-modal's shape so the selector outranks that cap. */
+.merge-picker-host dialog {
+  max-width: none;
+}
+
+.merge-picker-host dialog article {
+  width: min(58rem, calc(100vw - 2rem));
+  max-width: none;
+}
+
+.merge-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.merge-picker__title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.merge-picker__lede,
+.merge-picker__empty,
+.merge-picker__agreed {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--civ-text-muted);
+}
+
+/* Step 1 — candidates */
+
+.merge-picker__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.merge-picker__candidate {
+  --pico-background-color: transparent;
+  --pico-border-color: var(--civ-border);
+  --pico-color: var(--civ-text);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: baseline;
+  text-align: left;
+  width: 100%;
+}
+
+.merge-picker__candidate:hover {
+  --pico-border-color: var(--civ-border-strong);
+}
+
+.merge-picker__candidate-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.merge-picker__candidate-sub,
+.merge-picker__candidate-status {
+  font-size: 0.75rem;
+  color: var(--civ-text-muted);
+}
+
+/* Step 2 — what survives */
+
+.merge-picker__survivor {
+  margin: 0;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--civ-border);
+  border-left: 3px solid var(--pico-primary);
+  border-radius: 4px;
+  background: var(--civ-surface-2);
+}
+
+.merge-picker__absorbed {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--civ-text-muted);
+}
+
+.merge-grid {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.3rem 0.6rem;
+  align-items: baseline;
+  margin-top: 0.4rem;
+}
+
+.merge-grid__head {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--civ-text-muted);
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--civ-border);
+}
+
+.merge-grid__head--centre {
+  text-align: center;
+}
+
+.merge-grid__label {
+  font-size: 0.8125rem;
+  color: var(--civ-text-secondary);
+}
+
+.merge-grid__candidate,
+.merge-grid__result {
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.merge-grid__result {
+  font-weight: 560;
+}
+
+.merge-grid__choices {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.merge-picker .merge-grid__choice {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  color: var(--pico-muted-color);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+}
+
+.merge-picker .merge-grid__choice[aria-pressed="true"] {
+  border-color: var(--pico-ins-color);
+  background: var(--pico-ins-background);
+  color: var(--pico-ins-color);
+}
+
+.merge-grid__fixed {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--civ-text-muted);
+}

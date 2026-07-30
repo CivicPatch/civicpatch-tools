@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import {
+  canMerge,
   chooseSurvivor,
+  mergeCandidates,
   planMerge,
   setChoice,
   applyMergePlan,
@@ -310,6 +312,40 @@ describe("link behaviour, via mergeCards", () => {
       { id: "old", name: "Robert", other_names: ["Rob", "Robert"] },
     ).other_names;
     expect(aliases).toEqual([...new Set(aliases)]);
+  });
+});
+
+describe("merge candidates", () => {
+  const decided = (id: string, status: string) => card(id, { now: person(id), status });
+
+  // "Drop this person" and "keep parts of this person" are contradictory answers
+  // to the same question, so a card already decided about offers no merge.
+  it("excludes people the reviewer has already decided about", () => {
+    expect(canMerge(decided("a", RailStatus.DELETED))).toBe(false);
+    expect(canMerge(decided("b", RailStatus.RESTORED))).toBe(false);
+  });
+
+  // The carve-out that matters: someone the scrape didn't find is where merge is
+  // most often the right answer, so they stay a candidate.
+  it("keeps people the scrape did not find", () => {
+    expect(canMerge(removed("a"))).toBe(true);
+    expect(canMerge(existing("b"))).toBe(true);
+    expect(canMerge(added("c"))).toBe(true);
+  });
+
+  it("offers everyone else on the card, never the anchor itself", () => {
+    const anchor = existing("a");
+    const ids = mergeCandidates(anchor, [anchor, added("b"), removed("c")]).map((c) => c.personId);
+    expect(ids).toEqual(["b", "c"]);
+  });
+
+  it("drops decided people from the list", () => {
+    const anchor = existing("a");
+    const ids = mergeCandidates(anchor, [
+      added("b"),
+      decided("c", RailStatus.DELETED),
+    ]).map((c) => c.personId);
+    expect(ids).toEqual(["b"]);
   });
 });
 

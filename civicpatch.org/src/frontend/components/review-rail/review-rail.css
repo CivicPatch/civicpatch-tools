@@ -138,6 +138,7 @@
    so Restore rendered as an empty box. */
 .review-rail .review-rail__delete,
 .review-rail .review-rail__reset,
+.review-rail .review-rail__merge,
 .review-rail .review-rail__restore-person {
   padding: 0.15rem 0.5rem;
   font-size: var(--text-sm);
@@ -396,17 +397,34 @@
   white-space: nowrap;
 }
 
-/* Link to person (§21 Interim) — an unmatched scraped person declaring they are
-   one of the people the scrape didn't find. Replaced by merge eventually. */
-.review-rail .review-rail__link {
-  font-size: var(--text-sm);
-  max-width: 100%;
-  width: auto;
-}
-
 /* An issue anchored to the person rather than a field sits above the field list.
    Full width, because it is about the whole card. */
 .review-rail__issue--row {
   grid-column: 1 / -1;
   padding: 0.2rem 0.25rem;
+}
+
+/* Step 1 of a merge, in place — the other people on this card as chips. Sits in
+   the identity column, directly under the button that opens it. */
+
+.review-rail__merge-with {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-sectioning-background-color);
+}
+
+.review-rail__merge-lede {
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+}
+
+.review-rail__merge-faces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.7rem;
 }

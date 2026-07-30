@@ -129,7 +129,7 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(day).toHaveValue("");
   });
 
-  test("links an added person to a removed record", async ({
+  test("merges an added person into the record the scrape didn't find", async ({
     authenticatedPage: page,
   }) => {
     await openCard(page);
@@ -137,10 +137,19 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(railFor(page, "Tom Treasurer")).toHaveClass(/review-rail--added/);
     await expect(railFor(page, "Bob Clerk")).toHaveClass(/review-rail--removed/);
 
-    // Link Tom → Bob via the picker on Tom's rail (value is Bob's fixture id).
-    await railFor(page, "Tom Treasurer").locator(".review-rail__link").selectOption("recon-bob");
+    // Step 1 is in place on the rail: the button opens the other people on this
+    // card, and picking one opens the picker on that pair.
+    const tom = railFor(page, "Tom Treasurer");
+    await tom.locator(".review-rail__merge").click();
+    await tom
+      .locator(".review-rail__merge-faces .review-face", { hasText: "Bob Clerk" })
+      .click();
 
-    // Bob's own rail is gone; Tom now pairs as a single CHANGED person.
+    // Bob survives, because his is the id the database already has — the commit
+    // is worded in his direction even though the scrape's values win by default.
+    await page.locator("merge-picker button", { hasText: "Merge into Bob Clerk" }).click();
+
+    // Bob's own rail is gone; the pair is a single CHANGED person.
     await expect(railFor(page, "Bob Clerk")).toHaveCount(0);
     const linked = railFor(page, "Tom Treasurer");
     await expect(linked).toHaveClass(/review-rail--changed/);
