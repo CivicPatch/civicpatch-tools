@@ -19,7 +19,7 @@ import {
 
 // `deleted` and `restored` are reviewer decisions, not diff verdicts — hence not
 // DiffType values.
-export const RailStatus = Object.freeze({
+export const PersonStatus = Object.freeze({
   CHANGED: "changed",
   ADDED: "added",
   UNCHANGED: "unchanged",
@@ -28,22 +28,22 @@ export const RailStatus = Object.freeze({
   RESTORED: "restored",
 });
 
-export type RailStatusKey = (typeof RailStatus)[keyof typeof RailStatus];
+export type PersonStatusKey = (typeof PersonStatus)[keyof typeof PersonStatus];
 
 // Each label names its actor: "removed" and "deleted" are synonyms in English but
 // mean different things here, so neither bare word is ever UI copy.
-export const STATUS_LABEL: Record<RailStatusKey, string> = {
-  [RailStatus.CHANGED]: "changed",
-  [RailStatus.ADDED]: "new",
-  [RailStatus.UNCHANGED]: "unchanged",
-  [RailStatus.REMOVED]: "not found in scrape",
-  [RailStatus.DELETED]: "you removed",
-  [RailStatus.RESTORED]: "restored",
+export const STATUS_LABEL: Record<PersonStatusKey, string> = {
+  [PersonStatus.CHANGED]: "changed",
+  [PersonStatus.ADDED]: "new",
+  [PersonStatus.UNCHANGED]: "unchanged",
+  [PersonStatus.REMOVED]: "not found in scrape",
+  [PersonStatus.DELETED]: "you removed",
+  [PersonStatus.RESTORED]: "restored",
 };
 
 // Both routes out of the roster. They render identically — who caused it is in
 // the banner, not the styling.
-export const DEPARTING = new Set<string>([RailStatus.REMOVED, RailStatus.DELETED]);
+export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DELETED]);
 
 // "Council President · Ward 9" — shared by Overview's tiles and the modal's list.
 export function cardSubtitle(
@@ -66,7 +66,7 @@ export interface CardsResult {
 
 export interface ReviewCard {
   personId: string;
-  status: RailStatusKey;
+  status: PersonStatusKey;
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
   surviving: SurvivingField[];
@@ -91,13 +91,13 @@ function statusFor(
   personId: string,
   removedIds: Set<string>,
   restoredIds: Set<string>,
-): RailStatusKey {
+): PersonStatusKey {
   // Before the diff verdict: restoring copies the old record back, so they compare
   // identical and would otherwise read `unchanged`.
-  if (restoredIds.has(personId)) return RailStatus.RESTORED;
+  if (restoredIds.has(personId)) return PersonStatus.RESTORED;
   // foldRemovals already re-typed them REMOVED; only the set says who caused it.
-  if (removedIds.has(personId)) return RailStatus.DELETED;
-  return type as RailStatusKey;
+  if (removedIds.has(personId)) return PersonStatus.DELETED;
+  return type as PersonStatusKey;
 }
 
 export function buildReviewCards({
@@ -165,13 +165,13 @@ export function cardFields(cards: ReviewCard[]) {
 // ── Grouping and order (§3) ──────────────────────────────────────────────────
 
 // One constant so every consumer orders the same way.
-export const STATUS_ORDER: RailStatusKey[] = [
-  RailStatus.CHANGED,
-  RailStatus.ADDED,
-  RailStatus.UNCHANGED,
-  RailStatus.REMOVED,
-  RailStatus.RESTORED,
-  RailStatus.DELETED,
+export const STATUS_ORDER: PersonStatusKey[] = [
+  PersonStatus.CHANGED,
+  PersonStatus.ADDED,
+  PersonStatus.UNCHANGED,
+  PersonStatus.REMOVED,
+  PersonStatus.RESTORED,
+  PersonStatus.DELETED,
 ];
 
 // Deletion counts deliberately: otherwise someone marked for removal with nothing
@@ -182,7 +182,7 @@ export function needsReview(card: ReviewCard): boolean {
     // To review. See isContextField.
     card.surviving.some((field) => !isContextField(field.field)) ||
     card.issues.length > 0 ||
-    card.status === RailStatus.DELETED
+    card.status === PersonStatus.DELETED
   );
 }
 
@@ -213,7 +213,7 @@ export function groupCards(cards: ReviewCard[]): GroupedCards {
 // What publishing sends. Mirrors buildPeoplePatch's filter, which is the contract.
 export function publishSet(cards: ReviewCard[]): ReviewCard[] {
   return cards.filter(
-    (card) => card.newRecord != null && card.status !== RailStatus.DELETED,
+    (card) => card.newRecord != null && card.status !== PersonStatus.DELETED,
   );
 }
 

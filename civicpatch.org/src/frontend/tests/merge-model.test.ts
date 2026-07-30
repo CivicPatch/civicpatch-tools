@@ -10,7 +10,7 @@ import {
   mergeCards,
   MergeChoice,
 } from "../components/review/merge-model.js";
-import { RailStatus, type ReviewCard } from "../components/review/review-cards.js";
+import { PersonStatus, type ReviewCard } from "../components/review/review-cards.js";
 
 const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 
@@ -30,7 +30,7 @@ const person = (id: string, over: Record<string, unknown> = {}) => ({
 // `issues` are irrelevant here, so they stay empty.
 const card = (
   personId: string,
-  { old: oldRecord = null, now: newRecord = null, status = RailStatus.CHANGED } : {
+  { old: oldRecord = null, now: newRecord = null, status = PersonStatus.CHANGED } : {
     old?: any;
     now?: any;
     status?: string;
@@ -47,9 +47,9 @@ const card = (
 const existing = (id: string, over: Record<string, unknown> = {}) =>
   card(id, { old: person(id, over), now: person(id, over) });
 const added = (id: string, over: Record<string, unknown> = {}) =>
-  card(id, { now: person(id, over), status: RailStatus.ADDED });
+  card(id, { now: person(id, over), status: PersonStatus.ADDED });
 const removed = (id: string, over: Record<string, unknown> = {}) =>
-  card(id, { old: person(id, over), status: RailStatus.REMOVED });
+  card(id, { old: person(id, over), status: PersonStatus.REMOVED });
 
 describe("chooseSurvivor", () => {
   it("prefers the record already in the database over a scraped one", () => {
@@ -272,8 +272,8 @@ describe("link behaviour, via mergeCards", () => {
   // scraped one adopting its id.
   const link = (added: any, target: any) =>
     mergeCards(
-      card("old", { old: target, status: RailStatus.REMOVED }),
-      card("new", { now: added, status: RailStatus.ADDED }),
+      card("old", { old: target, status: PersonStatus.REMOVED }),
+      card("new", { now: added, status: PersonStatus.ADDED }),
     ) as any;
 
   it("adopts the target's id", () => {
@@ -321,8 +321,8 @@ describe("merge candidates", () => {
   // "Drop this person" and "keep parts of this person" are contradictory answers
   // to the same question, so a card already decided about offers no merge.
   it("excludes people the reviewer has already decided about", () => {
-    expect(canMerge(decided("a", RailStatus.DELETED))).toBe(false);
-    expect(canMerge(decided("b", RailStatus.RESTORED))).toBe(false);
+    expect(canMerge(decided("a", PersonStatus.DELETED))).toBe(false);
+    expect(canMerge(decided("b", PersonStatus.RESTORED))).toBe(false);
   });
 
   // The carve-out that matters: someone the scrape didn't find is where merge is
@@ -343,7 +343,7 @@ describe("merge candidates", () => {
     const anchor = existing("a");
     const ids = mergeCandidates(anchor, [
       added("b"),
-      decided("c", RailStatus.DELETED),
+      decided("c", PersonStatus.DELETED),
     ]).map((c) => c.personId);
     expect(ids).toEqual(["b"]);
   });

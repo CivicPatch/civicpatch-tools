@@ -12,7 +12,7 @@ import {
   type FieldSpec,
   type PresentRecord,
 } from "./field-model.js";
-import { RailStatus, type ReviewCard } from "./review-cards.js";
+import { PersonStatus, type ReviewCard } from "./review-cards.js";
 
 // `keep` — the survivor's value stands. `replace` — the candidate's wins.
 // `both` — union for a list, deduped join for an office name.
@@ -52,7 +52,7 @@ const ALWAYS_UNION = new Set(["other_names", "source_urls"]);
 // A person the reviewer has already decided about is not a candidate: "drop this
 // person" and "keep parts of this person" are contradictory answers to the same
 // question, so those two states simply do not offer it.
-const DECIDED = new Set<string>([RailStatus.DELETED, RailStatus.RESTORED]);
+const DECIDED = new Set<string>([PersonStatus.DELETED, PersonStatus.RESTORED]);
 
 export function canMerge(card: ReviewCard): boolean {
   return !DECIDED.has(card.status);

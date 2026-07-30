@@ -21,26 +21,26 @@ import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { renderRailField } from "./rail-field.js";
 import {
   DEPARTING,
-  RailStatus,
+  PersonStatus,
   STATUS_LABEL,
-  type RailStatusKey,
+  type PersonStatusKey,
   type ReviewCard,
 } from "../review/review-cards.js";
 import { renderPersonFace } from "../review/person-face.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
-  [RailStatus.REMOVED]: {
+  [PersonStatus.REMOVED]: {
     title: "Not found in this scrape.",
     body: "The scraper didn't see them on the source site, so publishing will drop them. Check whether they left office — or whether the scraper missed them.",
   },
-  [RailStatus.DELETED]: {
+  [PersonStatus.DELETED]: {
     title: "You removed this person.",
     body: "Publishing will drop their record.",
   },
 };
 
 export interface PersonRailProps {
-  status: RailStatusKey;
+  status: PersonStatusKey;
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
   surviving: SurvivingField[];
@@ -124,7 +124,7 @@ function renderActions(props: PersonRailProps, departing: boolean) {
   // un-flag, so restoring them rebuilds it from the old side; a reviewer-removed
   // one just loses the flag (§12).
   if (departing) {
-    const restore = status === RailStatus.REMOVED ? onRestore : onUnremove;
+    const restore = status === PersonStatus.REMOVED ? onRestore : onUnremove;
     return html`<div class="review-rail__actions">
       <button class="review-rail__restore-person" @click=${restore}>
         Restore
