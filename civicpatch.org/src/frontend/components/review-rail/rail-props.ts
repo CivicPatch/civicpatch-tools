@@ -7,7 +7,7 @@
 
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { type Save } from "../review/field-controls.js";
-import { RailStatus, type ReviewCard } from "../review/review-cards.js";
+import { PersonStatus, type ReviewCard } from "../review/review-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { type PersonRailProps } from "./person-rail.js";
 
@@ -54,7 +54,7 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
     // Reset is offered only to someone with edits to discard. A card the
     // reviewer has not touched has nothing to reset to.
     onReset:
-      ctx.dirtyIds.has(card.personId) && card.status !== RailStatus.REMOVED
+      ctx.dirtyIds.has(card.personId) && card.status !== PersonStatus.REMOVED
         ? () => ctx.onResetPerson(card.personId)
         : null,
     mergeCandidates: canMerge(card) ? mergeCandidates(card, ctx.cards) : [],

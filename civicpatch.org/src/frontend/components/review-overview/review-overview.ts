@@ -17,7 +17,7 @@ import {
   DEPARTING,
   groupCards,
   personOf,
-  RailStatus,
+  PersonStatus,
   STATUS_LABEL,
   type ReviewCard,
 } from "../review/review-cards.js";

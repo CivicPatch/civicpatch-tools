@@ -6,7 +6,7 @@ import {
   publishSet,
   blockingErrors,
   bySeat,
-  RailStatus,
+  PersonStatus,
 } from "../components/review/review-cards.js";
 import { type Issue } from "../components/review/field-model.js";
 
@@ -50,10 +50,10 @@ describe("buildReviewCards — status", () => {
       ],
     });
     expect(statuses(cards)).toEqual([
-      ["a", RailStatus.CHANGED],
-      ["b", RailStatus.UNCHANGED],
-      ["c", RailStatus.ADDED],
-      ["d", RailStatus.REMOVED],
+      ["a", PersonStatus.CHANGED],
+      ["b", PersonStatus.UNCHANGED],
+      ["c", PersonStatus.ADDED],
+      ["d", PersonStatus.REMOVED],
     ]);
   });
 
@@ -65,7 +65,7 @@ describe("buildReviewCards — status", () => {
     });
     // The scrape found them; the reviewer dropped them. §11.3 keeps the two
     // departures distinct in state even though both read alike on screen.
-    expect(statuses(cards)).toEqual([["a", RailStatus.DELETED]]);
+    expect(statuses(cards)).toEqual([["a", PersonStatus.DELETED]]);
   });
 
   it("drops an added person the reviewer deleted — a net no-op", () => {
@@ -81,7 +81,7 @@ describe("buildReviewCards — status", () => {
       currentPeople: [person("a")],
       restoredIds: new Set(["a"]),
     });
-    expect(statuses(cards)).toEqual([["a", RailStatus.RESTORED]]);
+    expect(statuses(cards)).toEqual([["a", PersonStatus.RESTORED]]);
   });
 
   it("prefers restored over deleted when an id is somehow in both", () => {
@@ -91,7 +91,7 @@ describe("buildReviewCards — status", () => {
       removedIds: new Set(["a"]),
       restoredIds: new Set(["a"]),
     });
-    expect(statuses(cards)).toEqual([["a", RailStatus.RESTORED]]);
+    expect(statuses(cards)).toEqual([["a", PersonStatus.RESTORED]]);
   });
 });
 

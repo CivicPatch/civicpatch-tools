@@ -18,7 +18,7 @@ import {
   blockingErrors,
   bySeat,
   publishSet,
-  RailStatus,
+  PersonStatus,
   type ReviewCard,
 } from "../review/review-cards.js";
 
@@ -87,7 +87,7 @@ function ReviewPreview(props: ReviewPreviewProps) {
   const ordered = bySeat(publishing, jurisdictionOcdid);
   const blockers = blockingErrors(cards ?? []);
 
-  const added = publishing.filter((c) => c.status === RailStatus.ADDED).length;
+  const added = publishing.filter((c) => c.status === PersonStatus.ADDED).length;
   // Everyone with a record who is not being published — the scrape lost them or
   // the reviewer dropped them. Both are "dropped" from the roster's point of view.
   const dropped = (cards ?? []).length - publishing.length;
