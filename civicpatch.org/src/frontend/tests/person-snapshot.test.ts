@@ -27,7 +27,7 @@ describe("takeSnapshot", () => {
 
   it("captures the departure flags, not only the values", () => {
     const snap = takeSnapshot("a", record(), ids("a"), ids());
-    expect(snap.isDeleted).toBe(true);
+    expect(snap.isRemoved).toBe(true);
     expect(snap.isRestored).toBe(false);
   });
 });

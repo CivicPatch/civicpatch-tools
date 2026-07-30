@@ -7,11 +7,7 @@
 
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { type Save } from "../review/field-controls.js";
-import {
-  buildLinkUpdates,
-  RailStatus,
-  type ReviewCard,
-} from "../review/review-cards.js";
+import { RailStatus, type ReviewCard } from "../review/review-cards.js";
 import { type LinkCandidate, type PersonRailProps } from "./person-rail.js";
 
 export interface RailContext {
@@ -23,16 +19,19 @@ export interface RailContext {
   expandedIds: Set<string>;
   onToggleExpand: (personId: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onDeletePerson: (id: string) => void;
-  onUndeletePerson: (id: string) => void;
+  onRemovePerson: (id: string) => void;
+  onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
   onResetPerson: (id: string) => void;
+  // "These two records are one person." Link is this with the merge defaults
+  // untouched; the picker is this with a plan the reviewer edited.
+  onCombine: (survivorId: string, absorbedId: string) => void;
 }
 
 // Only people the scrape didn't find. Someone the *reviewer* dropped carries
 // status DELETED rather than REMOVED, so they are already excluded here — which
-// matters, because linking adopts the target's id and a deleted target would
-// hand the added person an id already marked for deletion (§21).
+// matters, because merging adopts the target's id, and a target the reviewer
+// removed would hand the survivor an id already marked for removal.
 export function linkCandidatesFrom(cards: ReviewCard[]): LinkCandidate[] {
   return cards
     .filter((card) => card.status === RailStatus.REMOVED)
@@ -58,8 +57,8 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
     isExpanded: ctx.expandedIds.has(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),
     onSave: save,
-    onDelete: () => ctx.onDeletePerson(card.personId),
-    onUndelete: () => ctx.onUndeletePerson(card.personId),
+    onRemove: () => ctx.onRemovePerson(card.personId),
+    onUnremove: () => ctx.onUnremovePerson(card.personId),
     // Rebuilding the record needs the old side, which only the card has.
     onRestore: () => ctx.onRestorePerson(card.oldRecord),
     // Reset is offered only to someone with edits to discard. A card the
@@ -69,7 +68,8 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
         ? () => ctx.onResetPerson(card.personId)
         : null,
     linkCandidates: ctx.linkCandidates,
-    onLink: (target: any) =>
-      ctx.onPersonSave(card.personId, buildLinkUpdates(card.newRecord, target)),
+    // The target is the record already in the database, so it survives and keeps
+    // its id — which is what linking always did, now by the shared survivor rule.
+    onLink: (target: any) => ctx.onCombine(target.id, card.personId),
   };
 }

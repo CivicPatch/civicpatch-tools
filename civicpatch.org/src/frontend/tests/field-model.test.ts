@@ -17,8 +17,7 @@ import {
   type Issue,
 } from "../components/review/field-model.js";
 import {
-  foldDeletions,
-  buildLinkUpdates,
+  foldRemovals,
   indexIssuesByPersonId,
 } from "../components/review/review-cards.js";
 
@@ -438,61 +437,6 @@ describe("fieldError", () => {
   });
 });
 
-describe("buildLinkUpdates", () => {
-  it("adopts the target's id", () => {
-    const result = buildLinkUpdates(
-      { id: "new", name: "Bob" },
-      { id: "old", name: "Robert" },
-    );
-    expect(result.id).toBe("old");
-  });
-
-  it("folds the target's old name into other_names as an alias", () => {
-    const result = buildLinkUpdates(
-      { id: "new", name: "Bob Smith" },
-      { id: "old", name: "Robert Smith" },
-    );
-    expect(result.other_names).toContain("Robert Smith");
-  });
-
-  it("keeps both the target's and the added person's existing aliases", () => {
-    const added = { id: "new", name: "Bob", other_names: ["Bobby"] };
-    const target = { id: "old", name: "Robert", other_names: ["Rob"] };
-    expect(buildLinkUpdates(added, target).other_names).toEqual([
-      "Robert",
-      "Rob",
-      "Bobby",
-    ]);
-  });
-
-  it("drops the added person's own name from the aliases", () => {
-    const added = { id: "new", name: "Bob" };
-    const target = { id: "old", name: "Bob", other_names: ["Bob"] };
-    expect(buildLinkUpdates(added, target).other_names).not.toContain("Bob");
-  });
-
-  it("dedupes aliases", () => {
-    const added = { id: "new", name: "Bob", other_names: ["Rob"] };
-    const target = {
-      id: "old",
-      name: "Robert",
-      other_names: ["Rob", "Robert"],
-    };
-    expect(buildLinkUpdates(added, target).other_names).toEqual([
-      "Robert",
-      "Rob",
-    ]);
-  });
-
-  it("handles records with no aliases", () => {
-    const result = buildLinkUpdates(
-      { id: "new", name: "Bob" },
-      { id: "old", name: "Robert" },
-    );
-    expect(result.other_names).toEqual(["Robert"]);
-  });
-});
-
 describe("indexIssuesByPersonId", () => {
   const extra: Issue = {
     code: "extra_official",
@@ -529,7 +473,7 @@ describe("indexIssuesByPersonId", () => {
   });
 });
 
-describe("foldDeletions", () => {
+describe("foldRemovals", () => {
   const entry = (type: string, id: string) => ({
     type,
     person: { id },
@@ -542,11 +486,11 @@ describe("foldDeletions", () => {
 
   it("leaves everything alone when nothing is deleted", () => {
     const input = result([entry("changed", "a")], [entry("unchanged", "b")]);
-    expect(foldDeletions(input, new Set())).toEqual(input);
+    expect(foldRemovals(input, new Set())).toEqual(input);
   });
 
   it("re-types a deleted existing person as removed", () => {
-    const folded = foldDeletions(
+    const folded = foldRemovals(
       result([entry("changed", "a")], []),
       new Set(["a"]),
     );
@@ -554,7 +498,7 @@ describe("foldDeletions", () => {
   });
 
   it("drops a deleted added person — never in the database, nothing to publish", () => {
-    const folded = foldDeletions(
+    const folded = foldRemovals(
       result([entry("added", "a")], []),
       new Set(["a"]),
     );
@@ -562,7 +506,7 @@ describe("foldDeletions", () => {
   });
 
   it("moves a deleted unchanged person out of the unchanged bucket", () => {
-    const folded = foldDeletions(
+    const folded = foldRemovals(
       result([], [entry("unchanged", "a")]),
       new Set(["a"]),
     );
@@ -571,7 +515,7 @@ describe("foldDeletions", () => {
   });
 
   it("keeps the new-side record, so the card can still offer Undo", () => {
-    const folded = foldDeletions(
+    const folded = foldRemovals(
       result([], [entry("unchanged", "a")]),
       new Set(["a"]),
     );
@@ -583,7 +527,7 @@ describe("foldDeletions", () => {
       [entry("changed", "a"), entry("added", "b")],
       [entry("unchanged", "c")],
     );
-    const folded = foldDeletions(input, new Set(["a"]));
+    const folded = foldRemovals(input, new Set(["a"]));
     expect(folded.diffEntries.map((e) => [e.person.id, e.type])).toEqual([
       ["a", "removed"],
       ["b", "added"],

@@ -34,13 +34,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
     currentPeople,
     selectedPeople,
     changesById,
-    deletedIds,
+    removedIds,
     dirty,
     peoplePatch,
     assignPeople,
     addPerson,
     updatePerson,
-    handleBulkDelete,
+    handleBulkRemove,
     handleMerge,
     handleReset,
     handleTableDataChange,
@@ -213,7 +213,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
   function renderTableView() {
     return html`<civ-people-table
       .data=${currentPeople}
-      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: canEdit ? openEdit : null, changesById, deletedIds })}
+      .columns=${getColumns(activeSourceUrlMap, { showOtherNames: activeTab === TAB.current, readOnly: true, onEdit: canEdit ? openEdit : null, changesById, removedIds })}
       @data-change=${handleTableDataChange}
       @reorder=${handleTableDataReorder}
     ></civ-people-table>`;
@@ -237,7 +237,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [], canClosePr = fals
       ${canEdit ? html`<civ-people-action-buttons
         .onAdd=${handleAdd}
         .onMerge=${handleMerge}
-        .onBulkDelete=${handleBulkDelete}
+        .onBulkDelete=${handleBulkRemove}
         .onReset=${activeTab === TAB.pull_request ? () => handleSelectedPullRequestData(selectedPullRequest) : handleReset}
         .onPublish=${activeTab === TAB.pull_request ? handlePublish : handleOpenPR}
         .onClosePR=${handleClosePR}

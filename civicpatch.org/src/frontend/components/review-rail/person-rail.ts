@@ -53,8 +53,8 @@ export interface PersonRailProps {
   isExpanded: boolean;
   onToggleExpand: () => void;
   onSave: Save;
-  onDelete: () => void;
-  onUndelete: () => void;
+  onRemove: () => void;
+  onUnremove: () => void;
   onRestore: () => void;
   onReset: (() => void) | null;
   // §21 Interim: until merge exists, an unmatched scraped person can be declared
@@ -122,13 +122,13 @@ function renderIdentity(props: PersonRailProps) {
 }
 
 function renderActions(props: PersonRailProps, departing: boolean) {
-  const { status, onDelete, onUndelete, onRestore, onReset } = props;
+  const { status, onRemove, onUnremove, onRestore, onReset } = props;
 
   // One button, two operations. A scrape-dropped person has no record to
   // un-flag, so restoring them rebuilds it from the old side; a reviewer-removed
   // one just loses the flag (§12).
   if (departing) {
-    const restore = status === RailStatus.REMOVED ? onRestore : onUndelete;
+    const restore = status === RailStatus.REMOVED ? onRestore : onUnremove;
     return html`<div class="review-rail__actions">
       <button class="review-rail__restore-person" @click=${restore}>
         Restore
@@ -143,7 +143,7 @@ function renderActions(props: PersonRailProps, departing: boolean) {
     ${onReset
       ? html`<button class="review-rail__reset" @click=${onReset}>Reset</button>`
       : nothing}
-    <button class="review-rail__delete" @click=${onDelete}>Remove</button>
+    <button class="review-rail__delete" @click=${onRemove}>Remove</button>
   </div>`;
 }
 

@@ -15,14 +15,14 @@ import { type DiffRecord } from "./field-model.js";
 export interface PersonSnapshot {
   personId: string;
   record: DiffRecord;
-  isDeleted: boolean;
+  isRemoved: boolean;
   isRestored: boolean;
 }
 
 export function takeSnapshot(
   personId: string,
   record: DiffRecord,
-  deletedIds: Set<string>,
+  removedIds: Set<string>,
   restoredIds: Set<string>,
 ): PersonSnapshot {
   return {
@@ -30,7 +30,7 @@ export function takeSnapshot(
     // Copied, not referenced: the live record is mutated by every keystroke, so
     // holding it would make the snapshot track the edits it exists to undo.
     record: record ? { ...record } : record,
-    isDeleted: deletedIds.has(personId),
+    isRemoved: removedIds.has(personId),
     isRestored: restoredIds.has(personId),
   };
 }
@@ -47,17 +47,17 @@ export interface RevertPlan {
 
 export function planRevert(
   snapshot: PersonSnapshot,
-  deletedIds: Set<string>,
+  removedIds: Set<string>,
   restoredIds: Set<string>,
 ): RevertPlan {
-  const isDeleted = deletedIds.has(snapshot.personId);
+  const isRemoved = removedIds.has(snapshot.personId);
   const isRestored = restoredIds.has(snapshot.personId);
   return {
     // usePeopleState merges shallowly, so handing back the whole snapshot record
     // restores every field the reviewer touched in one write.
     updates: snapshot.record ? { ...snapshot.record } : null,
-    delete: snapshot.isDeleted && !isDeleted,
-    undelete: !snapshot.isDeleted && isDeleted,
+    delete: snapshot.isRemoved && !isRemoved,
+    undelete: !snapshot.isRemoved && isRemoved,
     restore: snapshot.isRestored && !isRestored,
     undoRestore: !snapshot.isRestored && isRestored,
   };
@@ -67,12 +67,12 @@ export function planRevert(
 export function isUnchangedSince(
   snapshot: PersonSnapshot,
   record: DiffRecord,
-  deletedIds: Set<string>,
+  removedIds: Set<string>,
   restoredIds: Set<string>,
 ): boolean {
   return (
     JSON.stringify(record ?? null) === JSON.stringify(snapshot.record ?? null) &&
-    deletedIds.has(snapshot.personId) === snapshot.isDeleted &&
+    removedIds.has(snapshot.personId) === snapshot.isRemoved &&
     restoredIds.has(snapshot.personId) === snapshot.isRestored
   );
 }

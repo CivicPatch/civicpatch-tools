@@ -25,10 +25,11 @@ interface ReviewRailListProps {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onDeletePerson: (id: string) => void;
-  onUndeletePerson: (id: string) => void;
+  onRemovePerson: (id: string) => void;
+  onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
   onResetPerson: (id: string) => void;
+  onCombine: (survivorId: string, absorbedId: string) => void;
   onAdd?: () => void;
 }
 
@@ -42,10 +43,11 @@ function ReviewRailList({
   isReadOnly,
   jurisdictionOcdid,
   onPersonSave,
-  onDeletePerson,
-  onUndeletePerson,
+  onRemovePerson,
+  onUnremovePerson,
   onRestorePerson,
   onResetPerson,
+  onCombine,
   onAdd,
 }: ReviewRailListProps) {
   const [expansion, setExpansion] = useState(NO_EXPANSION);
@@ -83,10 +85,11 @@ function ReviewRailList({
             expandedIds,
             onToggleExpand: toggleExpand,
             onPersonSave,
-            onDeletePerson,
-            onUndeletePerson,
+            onRemovePerson,
+            onUnremovePerson,
             onRestorePerson,
             onResetPerson,
+          onCombine,
           }),
         ),
       )}

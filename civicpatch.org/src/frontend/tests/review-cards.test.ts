@@ -30,7 +30,7 @@ const build = (over: Partial<Parameters<typeof buildReviewCards>[0]> = {}) =>
   buildReviewCards({
     existing: [],
     currentPeople: [],
-    deletedIds: new Set(),
+    removedIds: new Set(),
     restoredIds: new Set(),
     issues: [],
     ...over,
@@ -61,7 +61,7 @@ describe("buildReviewCards — status", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
-      deletedIds: new Set(["a"]),
+      removedIds: new Set(["a"]),
     });
     // The scrape found them; the reviewer dropped them. §11.3 keeps the two
     // departures distinct in state even though both read alike on screen.
@@ -69,7 +69,7 @@ describe("buildReviewCards — status", () => {
   });
 
   it("drops an added person the reviewer deleted — a net no-op", () => {
-    const cards = build({ currentPeople: [person("c")], deletedIds: new Set(["c"]) });
+    const cards = build({ currentPeople: [person("c")], removedIds: new Set(["c"]) });
     expect(cards).toEqual([]);
   });
 
@@ -88,7 +88,7 @@ describe("buildReviewCards — status", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
-      deletedIds: new Set(["a"]),
+      removedIds: new Set(["a"]),
       restoredIds: new Set(["a"]),
     });
     expect(statuses(cards)).toEqual([["a", RailStatus.RESTORED]]);
@@ -217,7 +217,7 @@ describe("needsReview / groupCards", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
-      deletedIds: new Set(["a"]),
+      removedIds: new Set(["a"]),
     });
     expect(groupCards(cards).toReview.map((c) => c.personId)).toEqual(["a"]);
   });
@@ -256,7 +256,7 @@ describe("publishSet / blockingErrors", () => {
     const cards = build({
       existing: [person("a"), person("gone")],
       currentPeople: [person("a"), person("b")],
-      deletedIds: new Set(["b"]),
+      removedIds: new Set(["b"]),
     });
     // `gone` has no new-side record so is already absent; `b` was dropped.
     expect(publishSet(cards).map((c) => c.personId)).toEqual(["a"]);
@@ -292,7 +292,7 @@ describe("publishSet / blockingErrors", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a", { name: "" })],
-      deletedIds: new Set(["a"]),
+      removedIds: new Set(["a"]),
     });
     expect(blockingErrors(cards)).toEqual([]);
   });

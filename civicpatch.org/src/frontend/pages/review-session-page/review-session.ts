@@ -22,6 +22,7 @@ import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, groupCards, needsReview } from "../../components/review/review-cards.js";
 import { linkCandidatesFrom, railPropsFor } from "../../components/review-rail/rail-props.js";
+import { mergeCards } from "../../components/review/merge-model.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
 type CurrentEntry = {
@@ -66,17 +67,18 @@ function ReviewSession(host: ReviewSessionHost) {
   const {
     currentPeople,
     dirtyIds,
-    deletedIds,
+    removedIds,
     restoredIds,
     dirty,
     peoplePatch,
     handleAdd,
     handleReset,
-    handleDelete,
-    handleUndelete,
+    handleRemove,
+    handleUnremove,
     handleRestore,
     handleUndoRestore,
     updatePerson,
+    mergePeople,
   } = useReviewPeople(currentEntry);
 
   const [debugOpen, setDebugOpen] = useState(false);
@@ -110,7 +112,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const cards = buildReviewCards({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
-    deletedIds,
+    removedIds,
     restoredIds,
     // A ticked issue is done, so it stops marking its card — otherwise the tick
     // would have no effect where the reviewer was actually looking (§8.2).
@@ -173,10 +175,11 @@ function ReviewSession(host: ReviewSessionHost) {
         setModalExpanded(next);
       },
       onPersonSave: handlePersonSave,
-      onDeletePerson: handleDeletePerson,
-      onUndeletePerson: handleUndelete,
+      onRemovePerson: handleRemovePerson,
+      onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
       onResetPerson: handleResetPerson,
+      onCombine: handleCombine,
     });
 
 
@@ -199,10 +202,20 @@ function ReviewSession(host: ReviewSessionHost) {
     host.dispatchEvent(new CustomEvent(END_SESSION_EVENT, { bubbles: true, composed: true }));
 
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
+
+  // One person, two records. The policy is merge-model's; usePeopleState owns
+  // only what happens to the rows. Link reaches this with the defaults
+  // untouched, and the picker will reach it with an edited plan.
+  const handleCombine = (survivorId: string, absorbedId: string) => {
+    const survivor = cards.find((c) => c.personId === survivorId);
+    const absorbed = cards.find((c) => c.personId === absorbedId);
+    if (!survivor || !absorbed) return;
+    mergePeople(survivorId, absorbedId, mergeCards(survivor, absorbed));
+  };
   const handleResetPerson = (id: string) => handleReset(id);
-  // handleDelete takes a list — the jurisdiction table deletes in bulk; the
+  // handleRemove takes a list — the jurisdiction table deletes in bulk; the
   // review card only ever drops the card in front of you.
-  const handleDeletePerson = (id: string) => handleDelete([id]);
+  const handleRemovePerson = (id: string) => handleRemove([id]);
 
   return html`
     <main class="review-page">
@@ -316,10 +329,11 @@ function ReviewSession(host: ReviewSessionHost) {
             .isReadOnly=${is_read_only}
             .jurisdictionOcdid=${jurisdictionOcdid}
             .onPersonSave=${handlePersonSave}
-            .onDeletePerson=${handleDeletePerson}
-            .onUndeletePerson=${handleUndelete}
+            .onRemovePerson=${handleRemovePerson}
+            .onUnremovePerson=${handleUnremove}
             .onRestorePerson=${handleRestore}
             .onResetPerson=${handleResetPerson}
+            .onCombine=${handleCombine}
             .onAdd=${handleAdd}
           ></review-rail-list>`}
       <review-modal
@@ -328,12 +342,12 @@ function ReviewSession(host: ReviewSessionHost) {
         .focusFieldKey=${openPerson?.field ?? null}
         .rail=${railFor}
         .isReadOnly=${!!is_read_only}
-        .deletedIds=${deletedIds}
+        .removedIds=${removedIds}
         .restoredIds=${restoredIds}
         .onClose=${() => setOpenPerson(null)}
         .onPersonSave=${handlePersonSave}
-        .onDelete=${handleDeletePerson}
-        .onUndelete=${handleUndelete}
+        .onRemove=${handleRemovePerson}
+        .onUnremove=${handleUnremove}
         .onRestore=${handleRestore}
         .onUndoRestore=${handleUndoRestore}
       ></review-modal>

@@ -2,19 +2,19 @@ import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../../ocdid-utils"
 import { getSourceColorClass } from "../../../utils/source-color-utils.js";
 
-const cellCss = (isDeleted, field, changes) => {
-    if (isDeleted) {
+const cellCss = (isRemoved, field, changes) => {
+    if (isRemoved) {
       return "opacity: 0.5; text-decoration: line-through; background-color: var(--pico-del-background);";
     } else if (changes.includes(field)) {
       return "background-color: var(--pico-ins-background);";
     }
     return "";
 }
-export const getColumns = (sourceUrlMap = new Map(), { showOtherNames = false, readOnly = false, onEdit = null, changesById, deletedIds } = {}) => {
+export const getColumns = (sourceUrlMap = new Map(), { showOtherNames = false, readOnly = false, onEdit = null, changesById, removedIds } = {}) => {
     // The table calls customCss(row, field); which fields a person has edited and
     // whether they are being dropped are both derived by usePeopleState and passed
     // in, not carried on the record.
-    const customCss = (person, field) => cellCss(deletedIds.has(person.id), field, changesById.get(person.id));
+    const customCss = (person, field) => cellCss(removedIds.has(person.id), field, changesById.get(person.id));
     const editable = !readOnly;
     return [
         {

@@ -76,7 +76,7 @@ export interface ReviewCard {
 export interface BuildCardsInput {
   existing: any[];
   currentPeople: any[];
-  deletedIds: Set<string>;
+  removedIds: Set<string>;
   restoredIds: Set<string>;
   issues: Issue[];
 }
@@ -89,21 +89,21 @@ function newRecordFor(type: string, person: any): DiffRecord {
 function statusFor(
   type: string,
   personId: string,
-  deletedIds: Set<string>,
+  removedIds: Set<string>,
   restoredIds: Set<string>,
 ): RailStatusKey {
   // Before the diff verdict: restoring copies the old record back, so they compare
   // identical and would otherwise read `unchanged`.
   if (restoredIds.has(personId)) return RailStatus.RESTORED;
-  // foldDeletions already re-typed them REMOVED; only the set says who caused it.
-  if (deletedIds.has(personId)) return RailStatus.DELETED;
+  // foldRemovals already re-typed them REMOVED; only the set says who caused it.
+  if (removedIds.has(personId)) return RailStatus.DELETED;
   return type as RailStatusKey;
 }
 
 export function buildReviewCards({
   existing,
   currentPeople,
-  deletedIds,
+  removedIds,
   restoredIds,
   issues,
 }: BuildCardsInput): ReviewCard[] {
@@ -111,9 +111,9 @@ export function buildReviewCards({
   const news = Array.isArray(currentPeople) ? currentPeople : [];
   const issuesByPersonId = indexIssuesByPersonId(issues);
 
-  const { diffEntries, unchangedEntries } = foldDeletions(
+  const { diffEntries, unchangedEntries } = foldRemovals(
     computePeopleDiff(olds, news, recordsDiffer),
-    deletedIds,
+    removedIds,
   );
 
   // Slot order, so editing never re-sorts the list. People the scrape dropped
@@ -133,7 +133,7 @@ export function buildReviewCards({
     const newRecord = newRecordFor(entry.type, entry.person);
     return {
       personId,
-      status: statusFor(entry.type, personId, deletedIds, restoredIds),
+      status: statusFor(entry.type, personId, removedIds, restoredIds),
       oldRecord: entry.from,
       newRecord,
       surviving: survivingFields(entry.from, newRecord, cardIssues),
@@ -254,7 +254,7 @@ export function bySeat(cards: ReviewCard[], jurisdictionOcdid: string | null | u
   return [...cards].sort((a, b) => seat(a) - seat(b));
 }
 
-// ── Reviewer deletions, folded into the diff ─────────────────────────────────
+// ── Reviewer removals, folded into the diff ──────────────────────────────────
 
 export interface DiffEntry {
   type: string;
@@ -270,23 +270,23 @@ export interface PeopleDiffResult {
   duplicateIds?: string[];
 }
 
-// computePeopleDiff knows nothing about reviewer deletions, so an untouched
-// deleted person comes back UNCHANGED. This folds the decision in afterwards.
+// computePeopleDiff knows nothing about reviewer removals, so an untouched
+// removed person comes back UNCHANGED. This folds the decision in afterwards.
 // Deleting someone the scrape *added* is a net no-op and drops out entirely.
-export function foldDeletions(
+export function foldRemovals(
   { diffEntries, unchangedEntries, duplicateIds }: PeopleDiffResult,
-  deletedIds: Set<string>,
+  removedIds: Set<string>,
 ): PeopleDiffResult {
-  if (deletedIds.size === 0) return { diffEntries, unchangedEntries, duplicateIds };
+  if (removedIds.size === 0) return { diffEntries, unchangedEntries, duplicateIds };
 
   const kept: DiffEntry[] = [];
   const survives = (entry: DiffEntry) =>
-    !(deletedIds.has(entry.person?.id) && entry.type === DiffType.ADDED);
+    !(removedIds.has(entry.person?.id) && entry.type === DiffType.ADDED);
 
   for (const entry of diffEntries) {
     if (!survives(entry)) continue;
     kept.push(
-      deletedIds.has(entry.person?.id)
+      removedIds.has(entry.person?.id)
         ? { ...entry, type: DiffType.REMOVED }
         : entry,
     );
@@ -294,7 +294,7 @@ export function foldDeletions(
 
   const stillUnchanged: DiffEntry[] = [];
   for (const entry of unchangedEntries) {
-    if (!deletedIds.has(entry.person?.id)) {
+    if (!removedIds.has(entry.person?.id)) {
       stillUnchanged.push(entry);
       continue;
     }
@@ -310,22 +310,6 @@ export function foldDeletions(
 
 // An `added` row is actually an existing record: it adopts that id so publish
 // overlays rather than duplicates, and the old name folds into other_names so the
-// next scrape resolves by alias.
-export function buildLinkUpdates(
-  added: any,
-  target: any,
-): { id: string; other_names: string[] } {
-  // Deduped, minus blanks and the added person's own name.
-  const candidates = [
-    target?.name,
-    ...(target?.other_names ?? []),
-    ...(added?.other_names ?? []),
-  ];
-  const other_names = [...new Set(candidates)].filter(
-    (alias) => alias && alias !== added?.name,
-  );
-  return { id: target.id, other_names };
-}
 
 // ── Reviewer issues → per-card anchoring ─────────────────────────────────────
 

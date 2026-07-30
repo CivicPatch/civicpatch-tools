@@ -32,13 +32,13 @@ export interface ReviewModalProps {
   openPersonId: string | null;
   focusFieldKey: string | null;
   rail: RailFactory;
-  deletedIds: Set<string>;
+  removedIds: Set<string>;
   restoredIds: Set<string>;
   isReadOnly: boolean;
   onClose: () => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onDelete: (id: string) => void;
-  onUndelete: (id: string) => void;
+  onRemove: (id: string) => void;
+  onUnremove: (id: string) => void;
   onRestore: (person: any) => void;
   onUndoRestore: (id: string) => void;
 }
@@ -55,12 +55,12 @@ function ReviewModal(props: ReviewModalProps) {
     focusFieldKey,
     rail,
     isReadOnly,
-    deletedIds,
+    removedIds,
     restoredIds,
     onClose,
     onPersonSave,
-    onDelete,
-    onUndelete,
+    onRemove,
+    onUnremove,
     onRestore,
     onUndoRestore,
   } = props;
@@ -78,7 +78,7 @@ function ReviewModal(props: ReviewModalProps) {
     const next = cards.find((c) => c.personId === nextId);
     if (!next) return;
     setPersonId(nextId);
-    setSnapshot(takeSnapshot(nextId, next.newRecord, deletedIds, restoredIds));
+    setSnapshot(takeSnapshot(nextId, next.newRecord, removedIds, restoredIds));
   };
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function ReviewModal(props: ReviewModalProps) {
     }
     setPersonId(openPersonId);
     const opened = cards.find((c) => c.personId === openPersonId);
-    setSnapshot(takeSnapshot(openPersonId, opened?.newRecord, deletedIds, restoredIds));
+    setSnapshot(takeSnapshot(openPersonId, opened?.newRecord, removedIds, restoredIds));
   }, [openPersonId]);
 
   // Focus only on open. Navigating must not move focus, or pressing Next twice
@@ -110,10 +110,10 @@ function ReviewModal(props: ReviewModalProps) {
 
   const revert = () => {
     if (!snapshot || !card) return;
-    const plan = planRevert(snapshot, deletedIds, restoredIds);
+    const plan = planRevert(snapshot, removedIds, restoredIds);
     if (plan.updates) onPersonSave(snapshot.personId, plan.updates);
-    if (plan.delete) onDelete(snapshot.personId);
-    if (plan.undelete) onUndelete(snapshot.personId);
+    if (plan.delete) onRemove(snapshot.personId);
+    if (plan.undelete) onUnremove(snapshot.personId);
     if (plan.restore) onRestore(snapshot.record);
     if (plan.undoRestore) onUndoRestore(snapshot.personId);
   };
@@ -129,7 +129,7 @@ function ReviewModal(props: ReviewModalProps) {
 
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
   const canRevert =
-    snapshot && !isUnchangedSince(snapshot, card.newRecord, deletedIds, restoredIds);
+    snapshot && !isUnchangedSince(snapshot, card.newRecord, removedIds, restoredIds);
 
   const name = personOf(card)?.name || "(unnamed)";
 
