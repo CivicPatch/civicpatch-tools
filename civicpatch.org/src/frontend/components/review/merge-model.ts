@@ -12,7 +12,7 @@ import {
   type FieldSpec,
   type PresentRecord,
 } from "./field-model.js";
-import { type ReviewCard } from "./review-cards.js";
+import { RailStatus, type ReviewCard } from "./review-cards.js";
 
 // `keep` — the survivor's value stands. `replace` — the candidate's wins.
 // `both` — union for a list, deduped join for an office name.
@@ -48,6 +48,20 @@ const OFFICE_NAME_KEY = "office.name";
 // Sources are documentation, never compared; offering a control over provenance
 // only invites fiddling with it.
 const ALWAYS_UNION = new Set(["other_names", "source_urls"]);
+
+// A person the reviewer has already decided about is not a candidate: "drop this
+// person" and "keep parts of this person" are contradictory answers to the same
+// question, so those two states simply do not offer it.
+const DECIDED = new Set<string>([RailStatus.DELETED, RailStatus.RESTORED]);
+
+export function canMerge(card: ReviewCard): boolean {
+  return !DECIDED.has(card.status);
+}
+
+// Everyone else on the card who is still an open question.
+export function mergeCandidates(anchor: ReviewCard, cards: ReviewCard[]): ReviewCard[] {
+  return cards.filter((card) => card.personId !== anchor.personId && canMerge(card));
+}
 
 // ── Survivor ─────────────────────────────────────────────────────────────────
 
@@ -212,7 +226,7 @@ function resolve(entry: MergeFieldPlan): unknown {
 }
 
 // A displaced name is never lost — it becomes an alias, which is what
-// `other_names` is for and what both mergeFields and buildLinkUpdates already do.
+// `other_names` is for, and what mergeFields already does.
 function foldAliases(merged: any, survivorName: unknown, candidateName: unknown): void {
   const primary = String(merged.name ?? "").trim();
   const aliases = unique([
@@ -223,10 +237,9 @@ function foldAliases(merged: any, survivorName: unknown, candidateName: unknown)
   merged.other_names = aliases.filter((alias) => alias && alias !== primary);
 }
 
-// Two records combined with nothing overridden. This is what "link to person"
-// means — the reviewer asserting the pair is one human and accepting the
-// defaults — so link is this call, and merge is this call with a plan the
-// reviewer has edited. One behaviour, one implementation.
+// Two records combined with nothing overridden — the reviewer asserting the pair
+// is one human and accepting the defaults. This is what the retired "link to
+// person" did; merge is this call with a plan the reviewer has edited.
 export function mergeCards(survivor: ReviewCard, candidate: ReviewCard): PresentRecord {
   return applyMergePlan(planMerge(survivor, candidate), survivor, candidate);
 }

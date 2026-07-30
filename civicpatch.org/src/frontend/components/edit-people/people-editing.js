@@ -42,11 +42,9 @@ export async function resolvePeopleMatches(jurisdictionOcdid, people) {
     return copy;
   });
   const resolved = await batchResolvePeople(jurisdictionOcdid, clean);
-  const matchMap = {};
-  const tagged = people.map((person, i) => {
-    const match = resolved.data[i];
-    matchMap[person.id] = match;
-    return { ...person, _isNew: !match?.person };
-  });
-  return { tagged, matchMap };
+  const tagged = people.map((person, i) => ({
+    ...person,
+    _isNew: !resolved.data[i]?.person,
+  }));
+  return { tagged };
 }

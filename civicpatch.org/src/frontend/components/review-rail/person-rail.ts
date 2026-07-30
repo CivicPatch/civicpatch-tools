@@ -23,7 +23,9 @@ import {
   RailStatus,
   STATUS_LABEL,
   type RailStatusKey,
+  type ReviewCard,
 } from "../review/review-cards.js";
+import { renderPersonFace } from "../review/person-face.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
   [RailStatus.REMOVED]: {
@@ -57,40 +59,17 @@ export interface PersonRailProps {
   onUnremove: () => void;
   onRestore: () => void;
   onReset: (() => void) | null;
-  // §21 Interim: until merge exists, an unmatched scraped person can be declared
-  // to be one of the people the scrape didn't find. Empty when there is nobody
-  // to link to — including people the reviewer is dropping, who are excluded
-  // upstream because linking adopts the target's id.
-  linkCandidates: LinkCandidate[];
-  onLink: (target: any) => void;
+  // "This record and another are the same person." Offered on every card the
+  // reviewer has not already decided about; false when nobody else is left to
+  // merge with.
+  // Step 1 of a merge happens in place: the button opens a strip of the other
+  // people on this card, so nothing stacks on top of whatever you are already in.
+  mergeCandidates: ReviewCard[];
+  isMergeOpen: boolean;
+  onToggleMerge: () => void;
+  onPickPartner: (partnerId: string) => void;
 }
 
-export interface LinkCandidate {
-  id: string;
-  name: string;
-  office: string;
-}
-
-function renderLink(props: PersonRailProps) {
-  const { linkCandidates, onLink } = props;
-  const choose = (e: Event) => {
-    const id = (e.target as HTMLSelectElement).value;
-    const target = linkCandidates.find((c) => c.id === id);
-    if (target) onLink(target);
-  };
-  return html`<select
-    class="review-rail__link"
-    aria-label="Link to an existing person"
-    @change=${choose}
-  >
-    <option value="">Link to person…</option>
-    ${linkCandidates.map(
-      (c) => html`<option value=${c.id}>
-        ${c.name}${c.office ? ` — ${c.office}` : ""}
-      </option>`,
-    )}
-  </select>`;
-}
 
 // `size` has to be a property binding: person-image declares no
 // observedAttributes, so size="3rem" is silently ignored and it falls back to
@@ -117,6 +96,22 @@ function renderIdentity(props: PersonRailProps) {
       </div>
       <div class="review-rail__status">${STATUS_LABEL[status]}</div>
       ${isReadOnly ? nothing : renderActions(props, departing)}
+      ${renderMergeCandidates(props)}
+    </div>
+  `;
+}
+
+// Step 1 of a merge, opened by the button directly above it — a strip of the
+// other people on this card, in place, so nothing stacks on top of whatever the
+// reviewer is already in.
+function renderMergeCandidates(props: PersonRailProps) {
+  if (props.isReadOnly || !props.isMergeOpen || !props.mergeCandidates.length) return nothing;
+  return html`
+    <div class="review-rail__merge-with">
+      <span class="review-rail__merge-lede">Which record is the same person?</span>
+      <div class="review-rail__merge-faces">
+        ${props.mergeCandidates.map((card) => renderPersonFace(card, props.onPickPartner))}
+      </div>
     </div>
   `;
 }
@@ -137,13 +132,19 @@ function renderActions(props: PersonRailProps, departing: boolean) {
   }
 
   return html`<div class="review-rail__actions">
-    ${status === RailStatus.ADDED && props.linkCandidates.length
-      ? renderLink(props)
-      : nothing}
     ${onReset
       ? html`<button class="review-rail__reset" @click=${onReset}>Reset</button>`
       : nothing}
     <button class="review-rail__delete" @click=${onRemove}>Remove</button>
+    ${props.mergeCandidates.length
+      ? html`<button
+          class="review-rail__merge"
+          aria-expanded=${props.isMergeOpen}
+          @click=${props.onToggleMerge}
+        >
+          Merge with…
+        </button>`
+      : nothing}
   </div>`;
 }
 

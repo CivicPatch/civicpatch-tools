@@ -1,0 +1,18 @@
+/* One person as a clickable chip — photo plus name. Shared by Overview's
+   unchanged roster and the merge picker. */
+
+.review-face {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.1rem 0.2rem;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  cursor: pointer;
+  width: auto;
+}
+
+.review-face:hover { color: var(--civ-text); }

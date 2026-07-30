@@ -8,14 +8,14 @@
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { type Save } from "../review/field-controls.js";
 import { RailStatus, type ReviewCard } from "../review/review-cards.js";
-import { type LinkCandidate, type PersonRailProps } from "./person-rail.js";
+import { canMerge, mergeCandidates } from "../review/merge-model.js";
+import { type PersonRailProps } from "./person-rail.js";
 
 export interface RailContext {
   frozen: FrozenFields;
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  linkCandidates: LinkCandidate[];
   expandedIds: Set<string>;
   onToggleExpand: (personId: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
@@ -23,24 +23,14 @@ export interface RailContext {
   onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
   onResetPerson: (id: string) => void;
-  // "These two records are one person." Link is this with the merge defaults
-  // untouched; the picker is this with a plan the reviewer edited.
-  onCombine: (survivorId: string, absorbedId: string) => void;
+  // Step 1 of a merge, in place on the rail: which person's strip is open, and
+  // what to do when one of its candidates is picked.
+  cards: ReviewCard[];
+  mergeOpenId: string | null;
+  onToggleMerge: (personId: string) => void;
+  onPickPartner: (anchorId: string, partnerId: string) => void;
 }
 
-// Only people the scrape didn't find. Someone the *reviewer* dropped carries
-// status DELETED rather than REMOVED, so they are already excluded here — which
-// matters, because merging adopts the target's id, and a target the reviewer
-// removed would hand the survivor an id already marked for removal.
-export function linkCandidatesFrom(cards: ReviewCard[]): LinkCandidate[] {
-  return cards
-    .filter((card) => card.status === RailStatus.REMOVED)
-    .map((card) => ({
-      id: card.personId,
-      name: card.oldRecord?.name || "(unnamed)",
-      office: card.oldRecord?.office?.name ?? "",
-    }));
-}
 
 export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
@@ -67,9 +57,9 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
       ctx.dirtyIds.has(card.personId) && card.status !== RailStatus.REMOVED
         ? () => ctx.onResetPerson(card.personId)
         : null,
-    linkCandidates: ctx.linkCandidates,
-    // The target is the record already in the database, so it survives and keeps
-    // its id — which is what linking always did, now by the shared survivor rule.
-    onLink: (target: any) => ctx.onCombine(target.id, card.personId),
+    mergeCandidates: canMerge(card) ? mergeCandidates(card, ctx.cards) : [],
+    isMergeOpen: ctx.mergeOpenId === card.personId,
+    onToggleMerge: () => ctx.onToggleMerge(card.personId),
+    onPickPartner: (partnerId: string) => ctx.onPickPartner(card.personId, partnerId),
   };
 }

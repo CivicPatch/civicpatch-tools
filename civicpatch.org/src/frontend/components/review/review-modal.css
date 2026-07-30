@@ -10,7 +10,7 @@
   /* Pinned height: navigating between people must never resize or re-centre the
      dialog. The body scrolls instead. */
   height: min(78vh, 42rem);
-  width: min(56rem, calc(100vw - 2rem));
+  width: min(68rem, calc(100vw - 2rem));
   max-width: none;
   display: flex;
   flex-direction: column;
@@ -25,26 +25,29 @@
   padding: 0.6rem 0.85rem;
 }
 
-.review-modal dialog article > section {
+/* `[open]` is load-bearing, not decoration: styles.css dresses the shell as
+   `dialog[open] > article > section` (0,2,3), which outranks the same selector
+   written without it — so its full-bleed negative margin, its re-padding and its
+   stable gutter all stayed on, insetting the sidebar and reserving an empty
+   strip at the right edge. */
+.review-modal dialog[open] > article > section {
   flex: 1 1 auto;
   min-height: 0;
   padding: 0;
   margin: 0;
+  /* The body scrolls, not this. */
   overflow: hidden;
+  scrollbar-gutter: auto;
 }
 
 .review-modal__main {
   display: grid;
-  grid-template-columns: 13rem minmax(0, 1fr);
+  /* A fixed track, not minmax(): a range sizes itself to its content, so a card
+     with short office names rendered a narrower sidebar than one with long
+     names. The panel must not change shape as you page through people. */
+  grid-template-columns: 17rem minmax(0, 1fr);
   height: 100%;
   min-height: 0;
-}
-
-/* The shell's <section> re-pads for its own scrollbar; this modal scrolls its
-   body instead, so that padding would just stack. */
-.review-modal dialog > article > section {
-  margin: 0;
-  padding: 0;
 }
 
 .review-modal__body {
@@ -61,8 +64,10 @@
   text-align: center;
 }
 
-.review-modal__body .review-rail__identity person-image,
-.review-modal__body .review-rail__identity person-image > * {
+/* Direct child only: the merge strip also lives in the identity block, and its
+   chip photos are not this photo. */
+.review-modal__body .review-rail__identity > person-image,
+.review-modal__body .review-rail__identity > person-image > * {
   width: 7rem !important;
   height: 7rem !important;
   font-size: 2.6rem !important;
@@ -83,11 +88,22 @@
 
 /* Sidebar */
 
+/* This is a <nav>, and two stylesheets dress every bare <nav> on the site:
+   elements.css (`justify-content: space-between`) and navbar.css (the site
+   header's own rule, unscoped). Everything reset here is one of theirs —
+   `margin-inline: auto` is why the sidebar shrank to its text and centred in its
+   track, which is what made a short office name yield a narrow sidebar. */
 .review-modal__people {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  padding: 0.5rem;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 0;
+  max-width: none;
+  border-bottom: 0;
+  gap: 0;
+  padding: 0.35rem 0 0.5rem;
   border-right: 1px solid var(--pico-muted-border-color);
   background: var(--pico-card-sectioning-background-color);
   overflow-y: auto;
@@ -95,6 +111,7 @@
      grows a horizontal scrollbar and the list becomes a two-axis scroll. */
   overflow-x: hidden;
   min-height: 0;
+  min-width: 0;
 }
 
 .review-modal__people-head {
@@ -114,11 +131,12 @@
   align-items: center;
   gap: 0.4rem;
   width: 100%;
-  padding: 0.22rem 0.4rem;
-  border: 1px solid transparent;
-  /* Status lives on the left edge, matching the tiles and the rails. */
+  /* The status edge is the row's left edge — no inset before it, and only a
+     hair after it, so the list starts where the panel does. */
+  padding: 0.2rem 0.5rem 0.2rem 0.3rem;
+  border: 0;
   border-left: 3px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  border-radius: 0;
   background: none;
   font: inherit;
   font-size: var(--text-sm);
@@ -143,13 +161,20 @@
 .review-modal__person--deleted { border-left-color: var(--pico-del-color); }
 .review-modal__person--restored { border-left-color: var(--pico-muted-color); }
 
-.review-modal__person--removed .review-modal__person-name,
-.review-modal__person--deleted .review-modal__person-who {
+.review-modal__person-who {
   display: flex;
   flex-direction: column;
   flex: 1;
+  /* Without this the row cannot shrink, so the names push the sidebar wider than
+     its track and get clipped instead of ellipsised. */
   min-width: 0;
-  line-height: 1.2;
+  line-height: 1.15;
+}
+
+/* Only the people who are leaving get struck through. */
+.review-modal__person--removed .review-modal__person-name,
+.review-modal__person--deleted .review-modal__person-name {
+  text-decoration: line-through;
 }
 
 .review-modal__person-sub {
@@ -158,10 +183,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.review-modal__person-name {
-  text-decoration: line-through;
 }
 
 .review-modal__person-name {
@@ -226,6 +247,7 @@
    Revert rendered as an empty box. Not a specificity problem: the variable is
    already poisoned by the time any rule reads it. */
 .review-modal .review-modal__revert,
+.review-modal .review-modal__merge,
 .review-modal .review-modal__nav-btn {
   padding: 0.15rem 0.6rem;
   font-size: var(--text-sm);
@@ -238,6 +260,7 @@
 }
 
 .review-modal .review-modal__revert[disabled],
+.review-modal .review-modal__merge[disabled],
 .review-modal .review-modal__nav-btn[disabled] {
   opacity: 0.4;
   cursor: default;

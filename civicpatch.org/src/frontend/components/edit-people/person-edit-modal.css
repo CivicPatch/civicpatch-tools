@@ -54,35 +54,6 @@ dialog[open]:has(.person-edit__form) > article {
   gap: 0.5rem 0.85rem;
 }
 
-/* link section — only rendered when the matcher/name-search found candidates */
-.person-edit__link {
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: rgb(var(--tone-bg-deep));
-  padding: 0.85rem 0.9rem;
-  margin-bottom: 0.6rem;
-}
-.person-edit__link-status {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin: 0 0 0.6rem;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
-}
-.person-edit__link-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
-.person-edit__link-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 0.6rem;
-  border-radius: var(--pico-border-radius);
-  background: rgb(var(--tone-bg));
-}
-.person-edit__link-name { font-weight: 600; font-size: var(--text-sm); }
-.person-edit__link-office { color: var(--pico-muted-color); font-size: var(--text-xs); flex: 1; min-width: 0; }
-.person-edit__link-item button { margin: 0; padding: 0.2rem 0.7rem; flex-shrink: 0; }
-
 .person-edit__division { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
 .person-edit__division select { margin: 0; flex: 1; }
 .person-edit__division input { margin: 0; width: 7rem; }

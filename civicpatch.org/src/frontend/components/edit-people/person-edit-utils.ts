@@ -122,7 +122,6 @@ export type Draft = {
   emails: string[];
   urls: string[];
   sourceUrls: string[];
-  linkedId: string; // staged "link to existing record" — applied as `id` on save
 };
 
 export function toDraft(person: Person, jurisdictionOcdid: string | null | undefined): Draft {
@@ -139,7 +138,6 @@ export function toDraft(person: Person, jurisdictionOcdid: string | null | undef
     emails: person.emails ?? [],
     urls: person.urls ?? [],
     sourceUrls: person.source_urls ?? [],
-    linkedId: "",
   };
 }
 
@@ -165,9 +163,6 @@ export function buildUpdates(person: Person, draft: Draft, jurisdictionOcdid: st
     ? person.office?.division_ocdid ?? ""
     : buildDivisionOcdid(jurisdictionOcdid, draft.divisionType, draft.divisionValue);
   set("office", { ...(person.office ?? {}), name: draft.officeName, division_ocdid }, person.office ?? {});
-
-  // linking just re-points the id; usePeopleState handles the re-ID + collapse
-  if (draft.linkedId && draft.linkedId !== person.id) updates.id = draft.linkedId;
 
   return updates;
 }

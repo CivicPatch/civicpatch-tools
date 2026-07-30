@@ -13,7 +13,7 @@ import "./review-rail.css";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonRail } from "./person-rail.js";
 import { type ReviewCard } from "../review/review-cards.js";
-import { linkCandidatesFrom, railPropsFor } from "./rail-props.js";
+import { railPropsFor } from "./rail-props.js";
 
 interface ReviewRailListProps {
   cards: ReviewCard[];
@@ -29,11 +29,16 @@ interface ReviewRailListProps {
   onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
   onResetPerson: (id: string) => void;
-  onCombine: (survivorId: string, absorbedId: string) => void;
+  mergeOpenId: string | null;
+  onToggleMerge: (personId: string) => void;
+  onPickPartner: (anchorId: string, partnerId: string) => void;
   onAdd?: () => void;
 }
 
-const NO_EXPANSION = { requestId: null as string | null, ids: new Set<string>() };
+const NO_EXPANSION = {
+  requestId: null as string | null,
+  ids: new Set<string>(),
+};
 
 function ReviewRailList({
   cards,
@@ -47,7 +52,9 @@ function ReviewRailList({
   onUnremovePerson,
   onRestorePerson,
   onResetPerson,
-  onCombine,
+  mergeOpenId,
+  onToggleMerge,
+  onPickPartner,
   onAdd,
 }: ReviewRailListProps) {
   const [expansion, setExpansion] = useState(NO_EXPANSION);
@@ -55,9 +62,8 @@ function ReviewRailList({
   // Advancing to the next card is a new card load, and this element is not
   // remounted between them — so the id it was opened for has to be checked
   // rather than assumed, or expansion leaks from one reviewer's card to the next.
-  const expandedIds = expansion.requestId === requestId ? expansion.ids : NO_EXPANSION.ids;
-
-  const linkCandidates = linkCandidatesFrom(cards);
+  const expandedIds =
+    expansion.requestId === requestId ? expansion.ids : NO_EXPANSION.ids;
 
   const toggleExpand = (personId: string) => {
     const ids = new Set(expandedIds);
@@ -81,7 +87,6 @@ function ReviewRailList({
             dirtyIds,
             isReadOnly,
             jurisdictionOcdid,
-            linkCandidates,
             expandedIds,
             onToggleExpand: toggleExpand,
             onPersonSave,
@@ -89,14 +94,17 @@ function ReviewRailList({
             onUnremovePerson,
             onRestorePerson,
             onResetPerson,
-          onCombine,
+            cards,
+            mergeOpenId,
+            onToggleMerge,
+            onPickPartner,
           }),
         ),
       )}
       ${!isReadOnly && onAdd
         ? html`<button class="review-rail review-rail--ghost" @click=${onAdd}>
             <span class="review-rail__ghost-mark">+</span>
-            <span class="review-rail__ghost-label">Add a person the scrape missed</span>
+            <span class="review-rail__ghost-label">Add a person</span>
           </button>`
         : nothing}
     </div>
@@ -105,5 +113,7 @@ function ReviewRailList({
 
 customElements.define(
   "review-rail-list",
-  component(ReviewRailList as unknown as () => unknown, { useShadowDOM: false }),
+  component(ReviewRailList as unknown as () => unknown, {
+    useShadowDOM: false,
+  }),
 );

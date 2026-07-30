@@ -21,8 +21,8 @@ import {
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, groupCards, needsReview } from "../../components/review/review-cards.js";
-import { linkCandidatesFrom, railPropsFor } from "../../components/review-rail/rail-props.js";
-import { mergeCards } from "../../components/review/merge-model.js";
+import { railPropsFor } from "../../components/review-rail/rail-props.js";
+import "../../components/review/merge-picker.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
 type CurrentEntry = {
@@ -165,7 +165,6 @@ function ReviewSession(host: ReviewSessionHost) {
       dirtyIds,
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
-      linkCandidates: linkCandidatesFrom(cards),
       expandedIds: modalExpanded,
       onToggleExpand: () => {
         const next = new Set(modalExpanded);
@@ -179,7 +178,10 @@ function ReviewSession(host: ReviewSessionHost) {
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
       onResetPerson: handleResetPerson,
-      onCombine: handleCombine,
+      cards,
+      mergeOpenId,
+      onToggleMerge: handleToggleMerge,
+      onPickPartner: handlePickPartner,
     });
 
 
@@ -206,11 +208,32 @@ function ReviewSession(host: ReviewSessionHost) {
   // One person, two records. The policy is merge-model's; usePeopleState owns
   // only what happens to the rows. Link reaches this with the defaults
   // untouched, and the picker will reach it with an edited plan.
-  const handleCombine = (survivorId: string, absorbedId: string) => {
-    const survivor = cards.find((c) => c.personId === survivorId);
-    const absorbed = cards.find((c) => c.personId === absorbedId);
-    if (!survivor || !absorbed) return;
-    mergePeople(survivorId, absorbedId, mergeCards(survivor, absorbed));
+  // Step 1 of a merge: which record is the same person? The anchor is the row
+  // the reviewer invoked it from; the picker computes the survivor.
+  // Step 1 lives inline on the rail, so only its open/closed state is held here.
+  const [mergeOpenId, setMergeOpenId] = useState<string | null>(null);
+  const handleToggleMerge = (personId: string) =>
+    setMergeOpenId((current) => (current === personId ? null : personId));
+
+  // Step 2 is a modal, opened once a pair exists.
+  const [mergePair, setMergePair] = useState<{ anchorId: string; partnerId: string } | null>(null);
+  const handlePickPartner = (anchorId: string, partnerId: string) => {
+    setMergeOpenId(null);
+    setMergePair({ anchorId, partnerId });
+  };
+  const closeMergePicker = () => setMergePair(null);
+
+  // The picker owns the policy — it holds the plan the reviewer edited — so this
+  // only carries the result through to the list.
+  // Named for its object because `handleMerge` in this file already means
+  // *publish the pull request* — the collision the vocabulary note warns about.
+  const handleMergePeople = (
+    survivorId: string,
+    absorbedId: string,
+    merged: Record<string, unknown>,
+  ) => {
+    setMergePair(null);
+    mergePeople(survivorId, absorbedId, merged);
   };
   const handleResetPerson = (id: string) => handleReset(id);
   // handleRemove takes a list — the jurisdiction table deletes in bulk; the
@@ -333,7 +356,9 @@ function ReviewSession(host: ReviewSessionHost) {
             .onUnremovePerson=${handleUnremove}
             .onRestorePerson=${handleRestore}
             .onResetPerson=${handleResetPerson}
-            .onCombine=${handleCombine}
+            .mergeOpenId=${mergeOpenId}
+            .onToggleMerge=${handleToggleMerge}
+            .onPickPartner=${handlePickPartner}
             .onAdd=${handleAdd}
           ></review-rail-list>`}
       <review-modal
@@ -351,6 +376,14 @@ function ReviewSession(host: ReviewSessionHost) {
         .onRestore=${handleRestore}
         .onUndoRestore=${handleUndoRestore}
       ></review-modal>
+      ${mergePair
+        ? html`<merge-picker
+            .anchor=${cards.find((c) => c.personId === mergePair.anchorId) ?? null}
+            .partner=${cards.find((c) => c.personId === mergePair.partnerId) ?? null}
+            .onMerge=${handleMergePeople}
+            .onClose=${closeMergePicker}
+          ></merge-picker>`
+        : nothing}
       ${debugOpen
         ? html`
             <source-content-debug-modal

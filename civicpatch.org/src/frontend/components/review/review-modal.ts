@@ -10,10 +10,8 @@ import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { ref } from "lit-html/directives/ref.js";
 import "../basic/modal.js";
-import "../person-image.js";
 import "./review-modal.css";
 import "../review-rail/review-rail.css";
-import { withDisplayImage } from "./field-controls.js";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
 import { cardSubtitle, personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
@@ -41,6 +39,8 @@ export interface ReviewModalProps {
   onUnremove: (id: string) => void;
   onRestore: (person: any) => void;
   onUndoRestore: (id: string) => void;
+  // Opens the merge picker anchored on the person in view.
+  onMergeWith?: (personId: string) => void;
 }
 
 // The caller already knows how to build a rail for a card (it does so for
@@ -63,6 +63,7 @@ function ReviewModal(props: ReviewModalProps) {
     onUnremove,
     onRestore,
     onUndoRestore,
+    onMergeWith,
   } = props;
 
   const [personId, setPersonId] = useState<string | null>(null);
@@ -178,10 +179,6 @@ function ReviewModal(props: ReviewModalProps) {
             })}
             @click=${() => goTo(entry.personId)}
           >
-            <person-image
-              .person=${withDisplayImage(record)}
-              .size=${"1.4rem"}
-            ></person-image>
             <span class="review-modal__person-who">
               <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
               <span class="review-modal__person-sub"

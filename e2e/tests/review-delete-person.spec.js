@@ -131,26 +131,31 @@ test.describe("Delete a person", () => {
     ).toHaveCount(0);
   });
 
-  test("a person you are dropping is not offered as a link target", async ({
+  test("a person you are removing is not offered as a merge candidate", async ({
     authenticatedPage: page,
   }) => {
     await openReconcileCard(page);
 
-    // Tom is the unmatched ADDED card, so he carries the link picker. Bob is the
-    // only person the scrape didn't find, so he is the only candidate — one
-    // option plus the "Link to person…" placeholder.
-    const linkOptions = personCard(page, "Tom Treasurer").locator(".review-rail__link option");
-    await expect(linkOptions).toHaveCount(2);
-    await expect(linkOptions).toContainText(["Link to person", "Bob Clerk"]);
+    // "Are these two the same person" is a question about any pair, so everyone
+    // else on the card starts out a candidate — not just the ones the scrape
+    // failed to find.
+    const tom = personCard(page, "Tom Treasurer");
+    await tom.locator(".review-rail__merge").click();
+    const faces = tom.locator(".review-rail__merge-faces .review-face");
+    const faceFor = (name) => faces.filter({ hasText: name });
+
+    await expect(faces).toHaveCount(2);
+    await expect(faceFor("Maria González")).toHaveCount(1);
+    await expect(faceFor("Bob Clerk")).toHaveCount(1);
 
     await personCard(page, "Maria González").locator(".review-rail__delete").click();
 
-    // foldDeletions types a deleted person REMOVED, which is what candidates are
-    // drawn from — so without the exclusion Maria would appear here. Linking
-    // adopts the target's id, so picking her would hand Tom an id already in
-    // deletedIds and drop him from the publish payload without saying so.
-    await expect(linkOptions).toHaveCount(2);
-    await expect(linkOptions).not.toContainText(["María", "Maria González"]);
+    // "Drop this person" and "keep parts of this person" are contradictory
+    // answers to the same question, so removing her withdraws her from the pool.
+    // Merging adopts the survivor's id, so offering her risks handing Tom an id
+    // already in removedIds and dropping him from the payload without saying so.
+    await expect(faces).toHaveCount(1);
+    await expect(faceFor("Maria González")).toHaveCount(0);
   });
 
   test("deleting an added person removes their card entirely", async ({

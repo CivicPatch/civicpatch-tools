@@ -60,7 +60,7 @@ export function mergeFields(survivor, absorbed) {
   return { ...merged, _selected: false };
 }
 
-// Ids stop naming a person when a merge or a link collapses two rows into one.
+// Ids stop naming a person when a merge collapses two rows into one.
 // A stale entry is not inert: `removedIds` is read when building the publish
 // payload, so an id that later belongs to someone else drops them silently.
 // Returns the same Set when nothing was stale, so callers can skip the update.
@@ -68,11 +68,6 @@ export function pruneIds(ids, livingIds) {
   const living = livingIds instanceof Set ? livingIds : new Set(livingIds);
   const kept = [...ids].filter((id) => living.has(id));
   return kept.length === ids.size ? ids : new Set(kept);
-}
-
-export function mergeInto(survivor, absorbed, list) {
-  const merged = mergeFields(survivor, [absorbed]);
-  return list.filter(p => p.id !== survivor.id && p.id !== absorbed.id).concat(merged);
 }
 
 // Build the publish payload: one patch item per non-deleted person. Existing rows send

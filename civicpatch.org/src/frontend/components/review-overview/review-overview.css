@@ -187,22 +187,6 @@
   gap: 0.45rem 0.9rem;
 }
 
-.review-face {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.1rem 0.2rem;
-  background: none;
-  border: none;
-  font: inherit;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
-  cursor: pointer;
-  width: auto;
-}
-
-.review-face:hover { color: var(--civ-text); }
-
 /* Ends the To review group, because a new person has surviving fields and lands
    there — after the face strip it would promise the wrong slot. */
 .review-tile--ghost {
