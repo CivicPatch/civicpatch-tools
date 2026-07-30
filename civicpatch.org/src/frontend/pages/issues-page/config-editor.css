@@ -72,7 +72,7 @@
     color: var(--pico-muted-color);
     font-style: italic;
     text-align: center;
-    padding: 0.75rem !important;
+    padding: 0.75rem;
 }
 
 .config-editor__add-btn {
@@ -117,43 +117,43 @@ details.config-editor__section > summary {
     display: flex;
     list-style: none;
     padding: 0;
-    margin: 0 !important;       /* Pico sets margin-bottom: var(--pico-spacing) on open summary */
+    margin: 0;       /* Pico sets margin-bottom: var(--pico-spacing) on open summary */
 }
 
 /* Pico overrides summary color via accordion tokens — restore it */
 details.config-editor__section > summary:not([role]),
 details.config-editor__section[open] > summary:not([role]):not(:focus) {
-    color: var(--pico-color) !important;
+    color: var(--pico-color);
 }
 
 details.config-editor__section > summary::-webkit-details-marker { display: none; }
 details.config-editor__section > summary::marker { display: none; }
-details.config-editor__section > summary::after { display: none !important; }
+details.config-editor__section > summary::after { display: none; }
 
 /* Summary = tinted header bar */
-.config-editor__section-title {
-    display: flex !important;
-    align-items: center !important;
+summary.config-editor__section-title {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
-    padding: 0.6rem 0.85rem !important;
-    margin: 0 !important;
+    padding: 0.6rem 0.85rem;
+    margin: 0;
     width: 100%;
     font-size: var(--text-md);
     font-weight: 500;
     cursor: pointer;
-    background: var(--pico-card-sectioning-background-color) !important;
+    background: var(--pico-card-sectioning-background-color);
     border-bottom: 1px solid transparent;
     border-radius: calc(var(--pico-border-radius) - 1px) calc(var(--pico-border-radius) - 1px) 0 0;
     transition: background 0.1s;
     user-select: none;
-    line-height: normal !important;
+    line-height: normal;
 }
 
 details.config-editor__section[open] > summary.config-editor__section-title {
-    border-bottom-color: var(--pico-muted-border-color) !important;
+    border-bottom-color: var(--pico-muted-border-color);
 }
 
-.config-editor__section-title:hover {
+summary.config-editor__section-title:hover {
     background: color-mix(in srgb, var(--civ-border, #e0e0e0) 40%, var(--pico-card-sectioning-background-color));
 }
 
@@ -197,7 +197,7 @@ details.config-editor__section[open] > summary .config-editor__chevron {
     font-weight: 400;
 }
 
-.config-editor__section-title + .config-editor__section-body {
+summary.config-editor__section-title + .config-editor__section-body {
     padding-top: 0.85rem;
 }
 
@@ -219,19 +219,19 @@ details.config-editor__section[open] > summary .config-editor__chevron {
     flex-shrink: 0;
 }
 
-.config-editor__filter-input {
-    border: none !important;
-    background: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    font-size: var(--text-sm) !important;
-    color: var(--pico-color) !important;
+input.config-editor__filter-input {
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    font-size: var(--text-sm);
+    color: var(--pico-color);
     width: 100%;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
-    min-height: unset !important;
-    font-family: inherit !important;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    min-height: unset;
+    font-family: inherit;
 }
 
 /* ── Readonly label ── */
@@ -275,8 +275,8 @@ details.config-editor__section[open] > summary .config-editor__chevron {
     padding: 0;
 }
 
-.config-editor__checkbox-label {
-    flex-direction: row !important;
+label.config-editor__checkbox-label {
+    flex-direction: row;
     align-items: center;
     gap: 0.4rem;
     cursor: pointer;
@@ -316,19 +316,19 @@ civ-role-table {
 }
 
 .config-editor__locality-autocomplete input.autocomplete-input {
-    font-size: var(--text-sm) !important;
-    min-height: unset !important;
+    font-size: var(--text-sm);
+    min-height: unset;
     margin-bottom: 0;
 }
 
 .config-editor__locality-autocomplete button.autocomplete-toggle {
-    min-height: unset !important;
+    min-height: unset;
     min-width: 2.25rem;
     margin-bottom: 0;
-    background-color: var(--pico-form-element-background-color) !important;
-    color: var(--pico-form-element-color) !important;
-    border-color: var(--pico-form-element-border-color) !important;
-    box-shadow: none !important;
+    background-color: var(--pico-form-element-background-color);
+    color: var(--pico-form-element-color);
+    border-color: var(--pico-form-element-border-color);
+    box-shadow: none;
 }
 
 .config-editor__locality-autocomplete .autocomplete-option {

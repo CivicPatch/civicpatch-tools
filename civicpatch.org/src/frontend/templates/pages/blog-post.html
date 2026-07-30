@@ -4,7 +4,7 @@ CivicPatch{% endblock %} {% block scripts %}
 {% endblock %} {% block head %}<meta
   property="og:title"
   content="{{ post.title }}"
-/>{% endblock %} {% block styles %}{% for href in vite_css('assets/index.js')
+/>{% endblock %} {% block styles %}<link rel="stylesheet" href="{{ url_for('frontend', path='/css/blog.css') }}">{% for href in vite_css('assets/index.js')
 %}<link rel="stylesheet" href="{{ href }}" />{% endfor %}{% endblock %}
 {% block main_class %}container-fluid--blog{% endblock %}
 {% block content %}
