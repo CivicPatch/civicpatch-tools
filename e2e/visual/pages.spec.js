@@ -55,7 +55,27 @@ const PAGES = [
   { name: "settings", path: "/settings" },
   { name: "roles", path: "/roles", role: "maintainer" },
   { name: "municipalities", path: "/nj/local" },
+  // The jurisdiction detail page is the catch-all route, reached by folder form.
+  // It is the largest surface the baseline was missing, and the only place
+  // edit-people renders.
+  { name: "jurisdiction", path: "/nj/local/place_e2e_test", role: "maintainer" },
   { name: "blog-list", path: "/blog" },
+  // Interaction states, which no page capture reaches on its own. Forced rather
+  // than driven through a real submit — the point is to put the CSS states on
+  // screen, and a failing OTP round-trip would make the baseline depend on the
+  // error text.
+  {
+    name: "login-disabled-state",
+    path: "/login",
+    open: async (page) => {
+      await page.locator(".email-login__form input").first().waitFor();
+      await page.evaluate(() => {
+        for (const el of document.querySelectorAll(".email-login__form input, .email-login__form button")) {
+          el.disabled = true;
+        }
+      });
+    },
+  },
 ];
 
 // Pages gated above `contributors` need a matching identity, or they render the

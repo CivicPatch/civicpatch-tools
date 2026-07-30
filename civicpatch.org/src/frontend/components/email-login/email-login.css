@@ -24,7 +24,7 @@ civ-email-login {
 }
 
 .email-login__form input:disabled {
-  background-color: var(--pico-muted-background-color);
+  background-color: var(--pico-muted-background);
   color: var(--pico-muted-color);
   cursor: not-allowed;
 }
@@ -55,7 +55,7 @@ button.email-login__reset:hover:not(:disabled) {
 
 .email-login__error {
   color: var(--pico-del-color, #c0392b);
-  background-color: var(--pico-muted-background-color);
+  background-color: var(--pico-muted-background);
   border-left: 3px solid currentColor;
   padding: 0.5rem 0.75rem;
   border-radius: var(--pico-border-radius);

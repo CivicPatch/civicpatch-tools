@@ -12,6 +12,23 @@
    never another component's knob. That rule is what keeps a variable system
    from turning into several hundred loosely-related names. */
 
+/* ── Control icons ───────────────────────────────────────────────────────────
+   Inline SVGs used as `background-image` by the form controls in elements.css.
+   Only the three we actually render are here — a select chevron (35 files), a
+   checkbox tick (5), and the date-field glyph (1). The framework these came from
+   also shipped close/loading/minus/search/time/valid/invalid, none of which
+   appear anywhere in this app.
+
+   The stroke colour is baked into the SVG markup, so these do NOT follow the
+   theme. That is inherited behaviour, kept as-is so the move stays a move;
+   making them theme-aware means re-encoding each SVG and is its own change. */
+
+:root {
+  --pico-icon-checkbox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(255, 255, 255)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  --pico-icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  --pico-icon-date: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+}
+
 /* ── Source-url accent ramp ──────────────────────────────────────────────── */
 /* Ten slots, assigned by position (or by url hash as a fallback) in
    utils/source-color-utils.js. The slot→hue mapping is stated once, here: a
@@ -44,6 +61,41 @@
   --pico-border-width: 0.03rem;
   --pico-line-height: 1.65;
   --pico-outline-width: 0.2rem;
+
+
+  /* ── Inherited framework tokens ────────────────────────────────────────────
+     Values that used to come from the CSS framework's own :root. Our rules and
+     component stylesheets reference all of them, so they have to be defined
+     here or they silently resolve to nothing once the framework is dropped. */
+  --pico-spacing: 1rem;
+  --pico-block-spacing-horizontal: var(--pico-spacing);
+  --pico-typography-spacing-vertical: 1rem;
+  --pico-transition: 0.2s ease-in-out;
+  --pico-font-weight: 400;
+  --pico-font-family-emoji: "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --pico-font-family-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace, var(--pico-font-family-emoji);
+  --pico-group-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  --pico-text-underline-offset: 0.1rem;
+
+  /* Accordion summary colours. Identical in both themes because each resolves
+     through another token that is itself theme-aware. */
+  --pico-accordion-close-summary-color: var(--pico-color);
+  --pico-accordion-active-summary-color: var(--pico-primary-hover);
+  --pico-accordion-open-summary-color: var(--pico-muted-color);
+  --pico-block-spacing-vertical: var(--pico-spacing);
+  --pico-modal-overlay-backdrop-filter: blur(0.375rem);
+  --pico-nav-element-spacing-vertical: 1rem;
+  --pico-nav-element-spacing-horizontal: 0.5rem;
+  --pico-nav-link-spacing-vertical: 0.5rem;
+  --pico-nav-link-spacing-horizontal: 0.5rem;
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+
+  /* Same in both themes, so they live here rather than being stated twice. */
+  --pico-form-element-disabled-opacity: 0.5;
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-table-border-color: var(--pico-muted-border-color);
 
   /* ── Type scale ──────────────────────────────────────────────────────── */
   /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
@@ -163,6 +215,24 @@
   --civ-status-untracked: var(--civ-text-muted);
   --civ-status-selected: var(--civ-accent);
 
+  /* Inherited framework tokens — theme-dependent half. */
+  --pico-contrast: #dfe3eb;
+  --pico-form-element-placeholder-color: #8891a4;
+  --pico-form-element-selected-background-color: #2a3140;
+  --pico-mark-background-color: #014063;
+  --pico-mark-color: #fff;
+  --pico-secondary: #969eaf;
+  --pico-secondary-hover: #b3b9c5;
+  --pico-secondary-underline: rgba(150, 158, 175, 0.5);
+  --pico-secondary-hover-underline: var(--pico-secondary-hover);
+  --pico-card-border-color: var(--pico-card-background-color);
+  --pico-modal-overlay-background-color: rgba(7.5, 8.5, 10, 0.75);
+  --pico-progress-color: var(--pico-primary-background);
+  --pico-progress-background-color: #202632;
+  --pico-contrast-hover: #fff;
+  --pico-contrast-underline: rgba(223, 227, 235, 0.5);
+  --pico-contrast-hover-underline: var(--pico-contrast-hover);
+
   --surface-hover: rgba(0, 0, 0, 0.035);
 }
 
@@ -266,6 +336,24 @@
   --civ-status-gap: var(--pico-error-color);
   --civ-status-untracked: var(--civ-text-muted);
   --civ-status-selected: var(--civ-accent);
+
+  /* Inherited framework tokens — theme-dependent half. */
+  --pico-contrast: #181c25;
+  --pico-form-element-placeholder-color: var(--pico-muted-color);
+  --pico-form-element-selected-background-color: #dfe3eb;
+  --pico-mark-background-color: rgb(252.5, 230.5, 191.5);
+  --pico-mark-color: #0f1114;
+  --pico-secondary: #5d6b89;
+  --pico-secondary-hover: #48536b;
+  --pico-secondary-underline: rgba(93, 107, 137, 0.5);
+  --pico-secondary-hover-underline: var(--pico-secondary-hover);
+  --pico-card-border-color: var(--pico-muted-border-color);
+  --pico-modal-overlay-background-color: rgba(232, 234, 237, 0.75);
+  --pico-progress-color: var(--pico-primary-background);
+  --pico-progress-background-color: #dfe3eb;
+  --pico-contrast-hover: #000;
+  --pico-contrast-underline: rgba(24, 28, 37, 0.5);
+  --pico-contrast-hover-underline: var(--pico-contrast-hover);
 
   --surface-hover: rgba(255, 255, 255, 0.045);
 }

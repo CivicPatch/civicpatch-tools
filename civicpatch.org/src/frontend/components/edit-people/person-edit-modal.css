@@ -127,7 +127,7 @@ dialog[open]:has(.person-edit__form) > article {
   color: var(--pico-muted-color);
 }
 .person-edit__icon-btn:hover {
-  background: var(--pico-muted-background-color);
+  background: var(--pico-muted-background);
   border-color: var(--pico-muted-border-color);
   color: var(--pico-color);
 }
