@@ -22,7 +22,7 @@ test.describe("Review preview", () => {
 
     // 35 carried over + 5 added. The 3 the scrape dropped have no record, so
     // they are already absent — the same filter buildPeoplePatch applies.
-    await expect(page.locator(".review-preview__card")).toHaveCount(40);
+    await expect(page.locator(".review-preview .review-row")).toHaveCount(40);
     await expect(page.locator(".review-preview__bar")).toContainText("40 officials");
     await expect(page.locator(".review-preview__bar")).toContainText("5 new · 3 dropped");
   });
@@ -33,7 +33,7 @@ test.describe("Review preview", () => {
     await railFor(page, "Councillor 02 Scale").locator(".review-rail__delete").click();
 
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
-    await expect(page.locator(".review-preview__card")).toHaveCount(39);
+    await expect(page.locator(".review-preview .review-row")).toHaveCount(39);
     await expect(page.locator(".review-preview__bar")).toContainText("4 dropped");
   });
 
@@ -51,7 +51,7 @@ test.describe("Review preview", () => {
     await openPreview(page, RECONCILE_REQUEST_ID);
     // The reconcile fixture has no divisions at all, so everyone is at-large and
     // the order is stable rather than arbitrary.
-    await expect(page.locator(".review-preview__card")).toHaveCount(2);
+    await expect(page.locator(".review-preview .review-row")).toHaveCount(2);
   });
 });
 

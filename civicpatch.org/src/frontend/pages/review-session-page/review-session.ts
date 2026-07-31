@@ -235,6 +235,13 @@ function ReviewSession(host: ReviewSessionHost) {
     setMergePair(null);
     mergePeople(survivorId, absorbedId, merged);
   };
+  // A new person is empty, so land the reviewer in the editor rather than on a card
+  // with nothing on it.
+  const handleAddPerson = async () => {
+    const personId = await handleAdd();
+    setOpenPerson({ id: personId, field: null });
+  };
+
   const handleResetPerson = (id: string) => handleReset(id);
   // handleRemove takes a list — the jurisdiction table deletes in bulk; the
   // review card only ever drops the card in front of you.
@@ -342,7 +349,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .cards=${cards}
             .isReadOnly=${is_read_only}
             .onOpenPerson=${handleOpenPerson}
-            .onAdd=${handleAdd}
+            .onAdd=${handleAddPerson}
           ></review-overview>`
         : html`<review-rail-list
             .cards=${cards}
@@ -359,7 +366,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .mergeOpenId=${mergeOpenId}
             .onToggleMerge=${handleToggleMerge}
             .onPickPartner=${handlePickPartner}
-            .onAdd=${handleAdd}
+            .onAdd=${handleAddPerson}
           ></review-rail-list>`}
       <review-modal
         .cards=${walkSet}

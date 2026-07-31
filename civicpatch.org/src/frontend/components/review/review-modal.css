@@ -145,6 +145,26 @@
   cursor: pointer;
 }
 
+/* Status tints the row as well as its edge and its name. Declared before :hover
+   and --on so the row you are on still reads as selected rather than as its
+   status; `unchanged` stays plain. */
+.review-modal .review-modal__person--changed {
+  background: color-mix(in srgb, var(--pico-warn-color) 14%, transparent);
+}
+
+.review-modal .review-modal__person--added {
+  background: color-mix(in srgb, var(--pico-ins-color) 14%, transparent);
+}
+
+.review-modal .review-modal__person--removed,
+.review-modal .review-modal__person--deleted {
+  background: color-mix(in srgb, var(--pico-del-color) 14%, transparent);
+}
+
+.review-modal .review-modal__person--restored {
+  background: color-mix(in srgb, var(--pico-muted-color) 12%, transparent);
+}
+
 .review-modal .review-modal__person:hover {
   background: var(--pico-muted-background);
 }
@@ -160,6 +180,26 @@
 .review-modal__person--removed,
 .review-modal__person--deleted { border-left-color: var(--pico-del-color); }
 .review-modal__person--restored { border-left-color: var(--pico-muted-color); }
+
+/* The name carries the status too, not just the edge — the edge is easy to miss
+   when scanning a long sidebar, and `unchanged` stays plain so the ones that
+   matter are the ones that are coloured. */
+.review-modal__person--changed .review-modal__person-name {
+  color: var(--pico-warn-color);
+}
+
+.review-modal__person--added .review-modal__person-name {
+  color: var(--pico-ins-color);
+}
+
+.review-modal__person--removed .review-modal__person-name,
+.review-modal__person--deleted .review-modal__person-name {
+  color: var(--pico-del-color);
+}
+
+.review-modal__person--restored .review-modal__person-name {
+  color: var(--pico-muted-color);
+}
 
 .review-modal__person-who {
   display: flex;

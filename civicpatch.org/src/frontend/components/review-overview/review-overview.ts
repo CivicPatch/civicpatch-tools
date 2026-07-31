@@ -8,10 +8,10 @@ import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
 import "./review-overview.css";
-import { ensureUrl, withDisplayImage } from "../review/field-controls.js";
+import { renderPersonRow } from "../review/person-row.js";
+import { withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   cardSubtitle,
   DEPARTING,
@@ -53,20 +53,15 @@ function rowLabel(card: ReviewCard): string {
   return parts.join(", ");
 }
 
-// Links are siblings of the identity button, never descendants — a link inside a
-// button is invalid HTML.
+// Numbers, not links: a link here would sit above the card's hit area. The sources
+// themselves are one click away, in the editor this card opens.
 function renderSources(card: ReviewCard, sources: SourceMap) {
   const urls = (card.newRecord?.source_urls ?? []).filter(Boolean);
   return urls.map((url: string) => {
     const entry = sources.get(url);
     if (!entry) return nothing;
-    return html`<a
-      class="review-row__source ${entry.colorClass}"
-      href=${ensureUrl(url)}
-      target=${SOURCE_LINK_TARGET}
-      rel="noopener noreferrer"
-      title=${url}
-      >[${entry.number}]</a
+    return html`<span class="review-row__source ${entry.colorClass}" title=${url}
+      >[${entry.number}]</span
     >`;
   });
 }
@@ -89,13 +84,13 @@ function renderFields(card: ReviewCard, props: ReviewOverviewProps) {
   const ranked = visibleFields(card);
   const shown = ranked.slice(0, FIELD_CAP);
   const hidden = ranked.length - shown.length;
+  // Plain text, not buttons: anything interactive here sits above the card's hit
+  // area and punches holes in it. The card opens the person; the tags say why.
   return shown.map(
-    (field) => html`<button
+    (field) => html`<span
       class="review-row__field review-row__field--${fieldClass(field)}"
-      @click=${() => props.onOpenPerson(card.personId, field.field.key)}
-    >
-      ${field.field.label}
-    </button>`,
+      >${field.field.label}</span
+    >`,
   ).concat(
     hidden > 0
       ? [html`<span class="review-row__more">+${hidden} more</span>`]
@@ -108,42 +103,28 @@ function renderRow(
   props: ReviewOverviewProps,
   sources: SourceMap,
 ) {
-  const record = personOf(card);
   const badge = STATUS_BADGE[card.status];
   // The field the card leads with — not surviving[0], which is schema order and
   // would focus a different field from the one the reviewer clicked.
   const firstField = visibleFields(card)[0]?.field.key ?? null;
-  return html`
-    <div class="review-row review-row--${card.status}">
-      <span class="review-row__photo">
-        <person-image
-          .person=${withDisplayImage(record)}
-          .size=${"6rem"}
-        ></person-image>
-      </span>
-      <button
-        class="review-row__open"
-        aria-label=${rowLabel(card)}
-        @click=${() =>
-          props.onOpenPerson(card.personId, firstField)}
-      >
-        <span class="review-row__name">${record?.name || "(unnamed)"}</span>
-        <span class="review-row__sub"
-          >${cardSubtitle(card, divisionOcdidToFriendly) || nothing}</span
-        >
-      </button>
-      <span class="review-row__meta">
-        ${renderAttention(card)}
-        ${badge
-          ? html`<span class="review-row__badge review-row__badge--${card.status}"
-              >${badge}</span
-            >`
-          : nothing}
-        ${renderFields(card, props)} ${renderSources(card, sources)}
-      </span>
-      <i class="fa-solid fa-pen-to-square review-row__hint" aria-hidden="true"></i>
-    </div>
-  `;
+  return renderPersonRow({
+    record: personOf(card),
+    name: personOf(card)?.name || "(unnamed)",
+    subtitle: cardSubtitle(card, divisionOcdidToFriendly) || "",
+    ariaLabel: rowLabel(card),
+    onOpen: () => props.onOpenPerson(card.personId, firstField),
+    modifier: card.status,
+    meta: html`
+      ${renderAttention(card)}
+      ${badge
+        ? html`<span class="review-row__badge review-row__badge--${card.status}"
+            >${badge}</span
+          >`
+        : nothing}
+      ${renderFields(card, props)}
+      <span class="review-row__sources">${renderSources(card, sources)}</span>
+    `,
+  });
 }
 
 function renderFold(card: ReviewCard, props: ReviewOverviewProps) {

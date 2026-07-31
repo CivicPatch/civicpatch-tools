@@ -8,6 +8,56 @@
      padding loses to its specificity. */
   --pico-form-element-spacing-vertical: 0.15rem;
   --pico-form-element-spacing-horizontal: 0.45rem;
+
+  /* One height and one radius for every interactive thing in a field body. A row
+     of controls at four different heights reads as four different kinds of
+     thing. Pinned, not a minimum: pico sizes inputs from its own spacing vars and
+     lands taller than a bare button, so a floor leaves them mismatched. */
+  --control-h: 1.65rem;
+  --control-radius: var(--pico-border-radius);
+
+  /* The tint recipe's inputs. --field-ground must be opaque; a surface that
+     tints itself overrides it with whatever it painted. */
+  --field-tint: 12%;
+  --field-ground: var(--pico-card-background-color);
+
+  /* A focus ring is drawn outside the control's box and takes no layout space,
+     so on a dense grid it lands on top of whatever is next to it. This is the
+     clearance one ring needs, reserved in the gaps — always, not only while
+     focused, or the row would shift the moment you tabbed into it. */
+  --ring-width: 2px;
+  --ring-offset: 2px;
+  --ring-space: calc(var(--ring-width) + var(--ring-offset) + 1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .review-rail-list,
+  .review-overview {
+    --field-tint: 22%;
+  }
+}
+
+[data-theme="dark"] :is(.review-rail-list, .review-overview) {
+  --field-tint: 22%;
+}
+
+[data-theme="light"] :is(.review-rail-list, .review-overview) {
+  --field-tint: 12%;
+}
+
+.field-control__input,
+.field-control__division-select,
+.field-control__division-input,
+.field-control__date-year,
+.field-control__date select,
+.field-control__x,
+.field-control__add,
+.field-control__source-link-btn {
+  height: var(--control-h);
+  padding-block: 0;
+  border-radius: var(--control-radius);
+  box-sizing: border-box;
+  line-height: 1;
 }
 
 /* Inputs */
@@ -35,16 +85,31 @@
   padding: 0.48rem 1.5rem 0.48rem 0.4rem;
   background-position: center right 0.5rem;
 }
-/* The old --pd-changed-* pair died with people-diff.css. Spelled out rather than
-   reintroduced as tokens: the other three states name pico colours directly, and
-   this is the same expression the rail uses for --rail-changed. */
-.field-control__input--changed {
-  border-color: var(--pico-warn-color);
-  background: color-mix(in srgb, var(--pico-warn-color) 12%, transparent);
+/* One tint recipe for all four states: the state names a colour, and the tint is
+   that colour at one strength over a stated ground.
+
+   The ground has to be opaque. Mixing toward `transparent` — which is what
+   `changed` did — composites over whatever is behind the input, so the same class
+   rendered a different colour on a tinted card than on a plain one. Any surface
+   that tints itself sets --field-ground to what it actually painted. */
+.field-control__input--changed { --field-state: var(--pico-warn-color); }
+.field-control__input--added { --field-state: var(--pico-ins-color); }
+.field-control__input--cleared { --field-state: var(--pico-del-color); }
+.field-control__input--error { --field-state: var(--pico-del-color); }
+
+.field-control__input--changed,
+.field-control__input--added,
+.field-control__input--cleared,
+.field-control__input--error {
+  border: 1px solid var(--field-state);
+  background: color-mix(in srgb, var(--field-state) var(--field-tint), var(--field-ground));
 }
-.field-control__input--added { border-color: var(--pico-ins-color); background: var(--pico-ins-background); }
-.field-control__input--cleared { border-color: var(--pico-del-color); background: var(--pico-del-background); }
-.field-control__input--error { border-color: var(--pico-del-color); background: var(--pico-del-background); }
+
+/* Error and cleared share the del colour, so weight is what tells them apart:
+   only one of them stops you publishing. */
+.field-control__input--error {
+  border-width: 2px;
+}
 
 /* Multi-value */
 .field-control__multi { display: flex; flex-direction: column; gap: 0.2rem; }

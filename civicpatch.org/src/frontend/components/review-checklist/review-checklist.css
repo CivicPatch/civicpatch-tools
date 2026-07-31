@@ -83,3 +83,13 @@
   font-size: var(--text-xs);
   color: var(--pico-muted-color);
 }
+
+/* The tint sits behind the check and cross, not instead of them: the icons say
+   which side has the person, the row says whether that is a gain or a loss. */
+.review-checklist__row--gained td {
+  background-color: var(--pico-ins-background);
+}
+
+.review-checklist__row--lost td {
+  background-color: var(--pico-del-background);
+}

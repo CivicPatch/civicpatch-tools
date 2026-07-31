@@ -79,8 +79,10 @@ export function usePeopleState({ people }) {
     setRestoredIds(current => pruneIds(current, living));
   }
 
+  // Appended, not prepended: the review card orders by slot, so a new person
+  // belongs after the roster — right where the add affordance stood.
   function addPerson(newPerson) {
-    setCurrentPeople(current => [newPerson, ...current]);
+    setCurrentPeople(current => [...current, newPerson]);
   }
 
   function toggleSelect(key) {

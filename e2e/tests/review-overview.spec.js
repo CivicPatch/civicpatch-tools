@@ -159,17 +159,29 @@ test.describe("Review overview", () => {
     await expect(page.locator(".review-modal__head")).toContainText("Councillor 03 Scale");
   });
 
-  test("a field name opens the editor focused on that field", async ({
+  test("the whole card is one target — nothing in it opens something else", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // Clicking the field name rather than the card is the difference between
-    // "look at this person" and "fix this".
-    await rowFor(page, "Councillor 02 Scale")
+    // This replaced "a field name opens the editor focused on that field". Field
+    // names and source numbers used to be buttons and links; anything interactive
+    // in the meta row sits above the card's hit area and punches holes in it, so
+    // the card was left with dead zones between the tags. They are plain text now
+    // and the card opens focused on its first ranked field either way.
+    const row = rowFor(page, "Councillor 02 Scale");
+    await expect(row.locator(".review-row__meta button, .review-row__meta a")).toHaveCount(0);
+
+    // Clicking where a tag sits still opens the person: the card's hit area covers
+    // it. A locator click would hang here — playwright waits for the tag itself to
+    // receive the pointer, and the card is deliberately on top — so this clicks the
+    // point, the way a reviewer does.
+    const tag = await row
       .locator(".review-row__field", { hasText: "Term end" })
-      .click();
+      .boundingBox();
+    await page.mouse.click(tag.x + tag.width / 2, tag.y + tag.height / 2);
     await expect(page.locator("review-modal dialog")).toBeVisible();
+    await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
   });
 
   test("switching view writes ?view= so a refresh lands back there", async ({

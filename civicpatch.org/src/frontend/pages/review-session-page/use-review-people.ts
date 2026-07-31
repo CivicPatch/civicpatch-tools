@@ -13,9 +13,12 @@ export function useReviewPeople(currentEntry: CurrentEntry | null) {
   const people = usePeopleState({ people: proposed });
   const { assignPeople, addPerson } = people;
 
-  async function handleAdd() {
+  // Returns the new id so the caller can open the editor on them — adding a person
+  // is the start of filling them in, not an end in itself.
+  async function handleAdd(): Promise<string> {
     const personId = await generatePersonId();
     addPerson(emptyPerson(personId, jurisdictionOcdid));
+    return personId;
   }
 
   useEffect(() => {
