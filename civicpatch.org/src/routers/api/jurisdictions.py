@@ -120,7 +120,7 @@ def get_router() -> APIRouter:
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
-        pull_request_number, pull_request_url_or_error = await jurisdiction_pr_service.open_jurisdiction_url_pr(
+        pull_request_number, pull_request_url_or_error, request_id = await jurisdiction_pr_service.open_jurisdiction_url_pr(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             url=request.url,
             author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=[user.role] if user.role else []),
@@ -132,7 +132,7 @@ def get_router() -> APIRouter:
             jurisdiction_pr_service.merge_jurisdiction_pr,
             str(pull_request_number),
             user.email,
-            request.jurisdiction_ocdid,
+            request_id,
         )
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
 

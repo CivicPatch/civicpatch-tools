@@ -9,8 +9,10 @@ from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
+import database.requests as requests_db
 import services.change_logs as change_logs
-from services.open_data_sync import sync_jurisdictions_by_ocdids
+import services.pull_request_sync as pull_request_sync
+from shared.utils.statuses import PullRequestStatus, SourceRepo
 
 logger = logging.getLogger(__name__)
 
@@ -97,23 +99,29 @@ async def open_jurisdiction_url_pr(
     url: str | None,
     author: PrAuthor,
     user_id: str | None,
-) -> tuple[int, str] | tuple[None, str]:
+) -> tuple[int | None, str, str]:
+    """Returns (pull_request_number, url_or_error, request_id)."""
     state = _extract_state(jurisdiction_ocdid)
     file_path = f"data_source/{state}/local/jurisdictions.yml"
 
+    request_id = id_utils.make_request_id()
+
     raw = await github_service.get_github_file_contents(file_path)
     if not raw:
-        return None, f"Failed to fetch {file_path}"
+        return None, f"Failed to fetch {file_path}", request_id
 
     doc = yaml_load(raw)
     entry = _find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
-        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
+        return (
+            None,
+            f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}",
+            request_id,
+        )
 
     before_url = entry.get("url")
     entry["url"] = url
 
-    request_id = id_utils.make_request_id()
     branch_name = f"civicpatch/jurisdiction-edit/{request_id}"
     result = await open_attributed_pr(
         branch_name=branch_name,
@@ -125,7 +133,22 @@ async def open_jurisdiction_url_pr(
         author=author,
     )
 
-    if result[0] is not None and user_id and before_url != url:
+    pull_request_number, url_or_error = result
+    if pull_request_number is None:
+        return None, url_or_error, request_id
+
+    # Tracked like any other PR so its state can be synced and surfaced. No
+    # pipeline_run: nothing ran.
+    await requests_db.register_jurisdiction_edit_request(
+        request_id=request_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
+        arguments_json={"url": url},
+        pr_number=pull_request_number,
+        pr_url=url_or_error,
+        requested_by_user_id=user_id,
+    )
+
+    if user_id and before_url != url:
         await change_logs.record_jurisdiction_edit(
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
@@ -135,16 +158,19 @@ async def open_jurisdiction_url_pr(
             after_url=url,
         )
 
-    return result
+    return pull_request_number, url_or_error, request_id
 
 
 async def merge_jurisdiction_pr(
-    pull_request_number: str, approved_by: str | None, jurisdiction_ocdid: str
+    pull_request_number: str, approved_by: str | None, request_id: str
 ) -> None:
     # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
+    #
+    # Every call names the jurisdictions repo. A pr_number only means something
+    # inside its own repo, and these helpers default to open-data.
     try:
         mergeable_state = await github_service.get_pull_request_mergeability(
-            pull_request_number
+            pull_request_number, source_repo=SourceRepo.JURISDICTIONS
         )
         if mergeable_state != "clean":
             logger.warning(
@@ -154,7 +180,9 @@ async def merge_jurisdiction_pr(
             )
             return
         merge_error = await github_service.merge_pull_request(
-            pull_request_number, approved_by=approved_by
+            pull_request_number,
+            approved_by=approved_by,
+            source_repo=SourceRepo.JURISDICTIONS,
         )
         if merge_error:
             logger.warning(
@@ -165,16 +193,17 @@ async def merge_jurisdiction_pr(
         logger.exception("Failed to auto-merge jurisdiction PR %s", pull_request_number)
         return
 
-    # This path merges directly rather than through do_merge, so it never reaches
-    # publish_side_effects — without this the edit is only visible after the hourly
-    # od_sync. A sync failure is not a merge failure: the merge stands, and the
-    # hourly run is still the backstop.
+    # Record the merge and run its side effects through the same path every other PR
+    # uses, so the row's status is right and the targeted sync fires. A failure here
+    # is not a merge failure: the merge stands and the hourly od_sync is the backstop.
     try:
-        await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
+        await pull_request_sync.apply_pull_request_status(
+            request_id, PullRequestStatus.MERGED
+        )
     except Exception:
         logger.exception(
-            "Merged jurisdiction PR %s but the targeted sync failed for %s; "
+            "Merged jurisdiction PR %s but recording/syncing it failed for request %s; "
             "the hourly od_sync will pick it up",
             pull_request_number,
-            jurisdiction_ocdid,
+            request_id,
         )

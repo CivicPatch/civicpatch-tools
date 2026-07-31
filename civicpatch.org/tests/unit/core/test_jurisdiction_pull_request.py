@@ -2,6 +2,7 @@ import base64
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from shared.utils.statuses import PullRequestStatus, SourceRepo
 import yaml
 
 from services.jurisdiction_pull_request import (
@@ -12,6 +13,7 @@ from services.jurisdiction_pull_request import (
 )
 from lib.github.pull_requests import PrAuthor
 
+REQUEST_ID = "2026-07-31-abcd"
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 AUTHOR = PrAuthor(name="Test User", email="test@example.com")
 REPO_URL = "https://api.github.com/repos/openstates/jurisdictions"
@@ -240,8 +242,12 @@ async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
             "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
+        patch(
+            "services.jurisdiction_pull_request.requests_db.register_jurisdiction_edit_request",
+            new_callable=AsyncMock,
+        ) as mock_register,
     ):
-        pr_number, pr_url = await open_jurisdiction_url_pr(
+        pr_number, pr_url, request_id = await open_jurisdiction_url_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             url="https://new.example.com",
             author=AUTHOR,
@@ -249,6 +255,8 @@ async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
         )
 
     assert pr_number == 42
+    # Tracked like any other PR, under the id the branch was named for.
+    assert mock_register.await_args.kwargs["request_id"] == request_id
     call_kwargs = mock_open_pr.call_args.kwargs
     assert call_kwargs["file_path"] == "data_source/tx/local/jurisdictions.yml"
     # open-data is the default repo: no explicit repo_url / fork_repo_url passed
@@ -282,6 +290,10 @@ async def test_open_jurisdiction_url_pr_skips_change_log_when_url_unchanged():
             "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
+        patch(
+            "services.jurisdiction_pull_request.requests_db.register_jurisdiction_edit_request",
+            new_callable=AsyncMock,
+        ) as mock_register,
     ):
         await open_jurisdiction_url_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
@@ -311,7 +323,7 @@ async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
             new_callable=AsyncMock,
         ) as mock_open_pr,
     ):
-        pr_number, error = await open_jurisdiction_url_pr(
+        pr_number, error, _request_id = await open_jurisdiction_url_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             url="https://new.example.com",
             author=AUTHOR,
@@ -331,7 +343,7 @@ async def test_open_jurisdiction_url_pr_fetch_fails():
         new_callable=AsyncMock,
         return_value=None,
     ):
-        pr_number, error = await open_jurisdiction_url_pr(
+        pr_number, error, _request_id = await open_jurisdiction_url_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             url="https://new.example.com",
             author=AUTHOR,
@@ -359,16 +371,18 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             return_value=None,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            "services.jurisdiction_pull_request.pull_request_sync.apply_pull_request_status",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com", JURISDICTION_OCDID)
+        await merge_jurisdiction_pr("42", "approver@example.com", REQUEST_ID)
 
-    mock_merge.assert_awaited_once_with("42", approved_by="approver@example.com")
+    mock_merge.assert_awaited_once_with(
+        "42", approved_by="approver@example.com", source_repo=SourceRepo.JURISDICTIONS
+    )
     # This path bypasses do_merge/publish_side_effects, so without this the edit
     # would only appear after the hourly od_sync.
-    mock_sync.assert_awaited_once_with([JURISDICTION_OCDID])
+    mock_sync.assert_awaited_once_with(REQUEST_ID, PullRequestStatus.MERGED)
 
 
 @pytest.mark.unit
@@ -385,11 +399,11 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             new_callable=AsyncMock,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            "services.jurisdiction_pull_request.pull_request_sync.apply_pull_request_status",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com", JURISDICTION_OCDID)
+        await merge_jurisdiction_pr("42", "approver@example.com", REQUEST_ID)
 
     mock_merge.assert_not_called()
     # Nothing merged, so there is nothing new to project into the DB.
