@@ -184,6 +184,32 @@ test.describe("Review overview", () => {
     await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
   });
 
+  test("adding a person lands them last and opens the editor on them", async ({
+    authenticatedPage: page,
+  }) => {
+    await openOverview(page);
+    const before = await page.locator(".review-row:not(.review-row--ghost)").count();
+
+    await page.locator(".review-row--ghost").click();
+
+    // A new person is empty, so the reviewer is put where they can fill them in
+    // rather than left looking at a blank card. This needs the modal to open as
+    // part of a re-render, which is the case civ-modal used to lose.
+    await expect(page.locator("dialog[open]")).toHaveCount(1);
+    await expect(page.locator(".review-modal__head")).toContainText("(unnamed)");
+    await page.keyboard.press("Escape");
+    await expect(page.locator("dialog[open]")).toHaveCount(0);
+
+    // Appended, not prepended: they belong after the roster, where the add
+    // affordance stood. Not *last* overall, though — departing people have no slot
+    // and trail everything (see buildReviewCards), so the new person is the last of
+    // the people still on the roster.
+    await expect(page.locator(".review-row:not(.review-row--ghost)")).toHaveCount(before + 1);
+    const staying =
+      ".review-row:not(.review-row--ghost):not(.review-row--removed):not(.review-row--deleted)";
+    await expect(page.locator(`${staying} .review-row__name`).last()).toHaveText("(unnamed)");
+  });
+
   test("switching view writes ?view= so a refresh lands back there", async ({
     authenticatedPage: page,
   }) => {

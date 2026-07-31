@@ -1,4 +1,4 @@
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useRef } from "haunted";
 import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 
@@ -10,9 +10,13 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
     setOpen(Boolean(modalProps.open));
   }, [modalProps.open]);
 
-  let dialogEl = null;
+  // A ref, not a local: a plain `let` is re-created every render, so an effect can
+  // close over a different binding than the one the ref callback wrote to. When the
+  // caller opens the modal as part of a re-render (adding a person, say), the effect
+  // then sees null, bails, and never fires again because `open` did not change.
+  const dialogRef = useRef(null);
   const setDialogRef = (el) => {
-    dialogEl = el;
+    dialogRef.current = el;
     if (!modalProps.modalRef) return;
     if (typeof modalProps.modalRef === "function") modalProps.modalRef(el);
     else if (typeof modalProps.modalRef === "object") modalProps.modalRef.value = el;
@@ -21,12 +25,14 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
   // The parent owns `open`; closing tells the parent and the effect does the DOM.
   function handleClose(e) {
     modalProps.onClose && modalProps.onClose(e);
+    const dialogEl = dialogRef.current;
     if (dialogEl) {
       dialogEl.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
     }
   }
 
   useEffect(() => {
+    const dialogEl = dialogRef.current;
     if (!dialogEl) return;
     // showModal() throws if already open.
     if (open && !dialogEl.open) dialogEl.showModal();

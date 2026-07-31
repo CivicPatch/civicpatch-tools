@@ -27,6 +27,7 @@ import {
   type ReviewCard,
 } from "../review/review-cards.js";
 import { renderPersonFace } from "../review/person-face.js";
+import { railSummary } from "./rail-summary.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
   [PersonStatus.REMOVED]: {
@@ -75,15 +76,19 @@ export interface PersonRailProps {
 // `size` has to be a property binding: person-image declares no
 // observedAttributes, so size="3rem" is silently ignored and it falls back to
 // its 2rem default.
-const PHOTO_SIZE = "6.5rem";
+//
+// Bigger than it was, but not column-wide: name and office stack under the
+// photo, so a photo that fills the column makes the identity side taller than
+// the fields beside it and a four-field card 300px tall. It cannot be set in
+// CSS — person-image writes width/height as inline styles.
+const PHOTO_SIZE = "7.5rem";
 
 function renderIdentity(props: PersonRailProps) {
-  const { status, oldRecord, newRecord, isReadOnly } = props;
+  const { status, oldRecord, newRecord } = props;
   const record = newRecord ?? oldRecord;
   const name = record?.name || "(unnamed)";
   const office = record?.office?.name ?? "";
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  const departing = DEPARTING.has(status);
 
   return html`
     <div class="review-rail__identity">
@@ -95,8 +100,31 @@ function renderIdentity(props: PersonRailProps) {
       <div class="review-rail__office">
         ${[office, division].filter(Boolean).join(" · ") || nothing}
       </div>
-      <div class="review-rail__status">${STATUS_LABEL[status]}</div>
-      ${isReadOnly ? nothing : renderActions(props, departing)}
+    </div>
+  `;
+}
+
+// The state header: a thin strip across the whole card, tinted with the state
+// colour. It replaces the coloured left bar — a bar disappears the moment the
+// card is taller than the viewport, and a full-width band does not.
+//
+// The person-level controls live here rather than under the photo: they act on
+// the whole card, and the identity column is about who this is.
+function renderHead(props: PersonRailProps) {
+  const { status, surviving, issues, isDirty, isReadOnly } = props;
+  const departing = DEPARTING.has(status);
+
+  // The summary replaces the status label rather than joining it: "changed" next
+  // to "2 fields changed" is the same fact twice, and only one of them tells you
+  // how much work the card holds.
+  return html`
+    <div class="review-rail__head">
+      <div class="review-rail__head-main">
+        <span class="rail-summary"
+          >${railSummary({ status, surviving, issues, isDirty })}</span
+        >
+        ${isReadOnly ? nothing : renderActions(props, departing)}
+      </div>
       ${renderMergeCandidates(props)}
     </div>
   `;
@@ -252,7 +280,7 @@ export function renderPersonRail(props: PersonRailProps) {
 
   return html`
     <div class="review-rail review-rail--${status}">
-      ${renderIdentity(props)}
+      ${renderHead(props)} ${renderIdentity(props)}
       <div class="review-rail__fields">
         ${renderRowIssues(props)}
         ${departing

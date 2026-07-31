@@ -45,20 +45,6 @@
   --field-tint: 12%;
 }
 
-.field-control__input,
-.field-control__division-select,
-.field-control__division-input,
-.field-control__date-year,
-.field-control__date select,
-.field-control__x,
-.field-control__add,
-.field-control__source-link-btn {
-  height: var(--control-h);
-  padding-block: 0;
-  border-radius: var(--control-radius);
-  box-sizing: border-box;
-  line-height: 1;
-}
 
 /* Inputs */
 /* Unified input sizing — shared by scalar inputs, division controls, and multi-value inputs */
@@ -220,3 +206,34 @@
   cursor: pointer;
 }
 .field-control__photo-clear:hover { background: var(--pico-del-background); }
+
+/* Shared control sizing — one height and one radius for everything in a field
+   body, so a row of controls reads as one kind of thing.
+
+   Scoped to the two containers, not written as bare classes: elements.css sizes
+   inputs with `input:not([type="checkbox"], …)`, and that is one class *and* one
+   element, which outranks a lone class. The descendant form is two classes and
+   wins. This is the same reason the block above sets pico's spacing vars rather
+   than overriding padding directly.
+
+   Pinned height rather than a minimum — pico's computed input height lands ~6px
+   taller than a bare button, so a floor would leave them mismatched. Only the
+   block axis and the radius are unified; horizontal padding stays per-control. */
+:is(.review-rail-list, .review-overview)
+  :is(
+    .field-control__input,
+    .field-control__division-select,
+    .field-control__division-input,
+    .field-control__date-year,
+    .field-control__x,
+    .field-control__add,
+    .field-control__photo-clear,
+    .field-control__source-link-btn
+  ),
+:is(.review-rail-list, .review-overview) .field-control__date select {
+  height: var(--control-h);
+  padding-block: 0;
+  border-radius: var(--control-radius);
+  box-sizing: border-box;
+  line-height: 1;
+}
