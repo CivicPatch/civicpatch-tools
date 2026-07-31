@@ -153,7 +153,11 @@ test.describe("Review reconcile diff (populated)", () => {
 
     // Bob survives, because his is the id the database already has — the commit
     // is worded in his direction even though the scrape's values win by default.
-    await page.locator("merge-picker button", { hasText: "Merge into Bob Clerk" }).click();
+    // The commit button lives in the dialog footer now, not inside merge-picker —
+    // inline actions scrolled out of reach on a long field list.
+    await page
+      .locator(".review-modal__foot button", { hasText: "Merge into Bob Clerk" })
+      .click();
 
     // Bob's own rail is gone; the pair is a single CHANGED person.
     await expect(railFor(page, "Bob Clerk")).toHaveCount(0);

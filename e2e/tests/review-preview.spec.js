@@ -40,8 +40,9 @@ test.describe("Review preview", () => {
   test("carries no diff vocabulary", async ({ authenticatedPage: page }) => {
     await openPreview(page);
 
-    // No state colours, no strikethrough, no attention icons — even though the
-    // very same cards render all three in Detail.
+    // No strikethrough, no attention icons, no status badge — even though the very
+    // same cards render all three in Detail. The card background does now carry the
+    // status, which is the one exception: this used to claim "no state colours".
     await expect(page.locator(".review-preview del")).toHaveCount(0);
     await expect(page.locator(".review-preview .review-rail__issue")).toHaveCount(0);
     await expect(page.locator(".review-preview .review-row__badge")).toHaveCount(0);

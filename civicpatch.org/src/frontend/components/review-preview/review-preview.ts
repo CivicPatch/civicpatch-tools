@@ -142,6 +142,10 @@ function renderCard(card: ReviewCard, sources: SourceMap) {
     record,
     name: record?.name || "(unnamed)",
     subtitle: office,
+    // Status tints the card here too. Preview still carries no other diff
+    // vocabulary — no badge, no strikethrough, no attention icon — so the tint is
+    // the one cue, and only ever a background.
+    modifier: card.status,
     meta: renderValues(card, sources),
   });
 }

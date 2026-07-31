@@ -25,7 +25,6 @@
      distinction (triangle stops you, circle advises you) with colour as
      reinforcement. */
   --rail-changed: var(--pico-warn-color);
-  --rail-changed-bg: color-mix(in srgb, var(--pico-warn-color) 12%, transparent);
   --rail-added: var(--pico-ins-color);
   --rail-cleared: var(--pico-del-color);
   --rail-issue: var(--pico-info-color);
@@ -131,10 +130,6 @@
   margin-left: auto;
 }
 
-.review-rail--strip .review-rail-list .review-rail__expander {
-  margin-top: 0;
-}
-
 /* Identity column */
 
 .review-rail__identity {
@@ -224,7 +219,6 @@
   padding: 0.9rem;
   border: 1px dashed var(--pico-muted-border-color);
   background: none;
-  box-shadow: none;
   color: var(--pico-muted-color);
   font-size: var(--text-sm);
   cursor: pointer;
@@ -436,43 +430,6 @@
   .review-rail__issue {
     grid-column: 1;
   }
-}
-
-/* Multi-value provenance (§5.2). The published list is the only list; where each
-   value came from is an annotation on its row, and values the scrape dropped sit
-   below the editable ones in their own block so tabbing through the set is not
-   interrupted. */
-
-.review-rail__control .field-control__provenance {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--pico-muted-color);
-  white-space: nowrap;
-}
-
-.review-rail__control .field-control__multi-row--dropped {
-  align-items: baseline;
-  padding: 0.1rem 0;
-}
-
-.review-rail__control .field-control__multi-row--dropped .field-control__value {
-  flex: 1;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-/* Named, not read from --pico-color — see review-modal.css. */
-.review-rail .field-control__restore-value {
-  padding: 0 0.35rem;
-  font-size: var(--text-sm);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: none;
-  color: var(--civ-text);
-  cursor: pointer;
-  width: auto;
-  white-space: nowrap;
 }
 
 /* An issue anchored to the person rather than a field sits above the field list.

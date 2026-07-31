@@ -4,6 +4,15 @@
    about what the scrape did would be noise. */
 
 .review-preview {
+  /* Same mapping and the same theme-aware mix Overview uses: dark deepens the hue
+     toward black first, because mixing toward it raises luminance and crushes the
+     muted text. */
+  --tile-changed: var(--pico-warn-color);
+  --tile-added: var(--pico-ins-color);
+  --tile-cleared: var(--pico-del-color);
+  --tint-strength: 12%;
+  --tint-shade: 0%;
+
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -117,4 +126,42 @@
   font-size: var(--text-sm);
   color: var(--pico-muted-color);
   font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+  .review-preview {
+    --tint-strength: 42%;
+    --tint-shade: 62%;
+  }
+}
+
+:root[data-theme="dark"] .review-preview {
+  --tint-strength: 42%;
+  --tint-shade: 62%;
+}
+
+:root[data-theme="light"] .review-preview {
+  --tint-strength: 12%;
+  --tint-shade: 0%;
+}
+
+/* Scoped to beat the shell's plain `.review-row` background, which loads later.
+   `removed` and `deleted` are absent on purpose: publishSet excludes anyone with
+   no new-side record, so a departing person never reaches this view. */
+.review-preview .review-row--added {
+  background: color-mix(
+    in srgb,
+    color-mix(in srgb, #000 var(--tint-shade), var(--tile-added))
+      var(--tint-strength),
+    var(--pico-card-background-color)
+  );
+}
+
+.review-preview .review-row--changed {
+  background: color-mix(
+    in srgb,
+    color-mix(in srgb, #000 var(--tint-shade), var(--tile-changed))
+      var(--tint-strength),
+    var(--pico-card-background-color)
+  );
 }

@@ -120,11 +120,28 @@
 /* Provenance sits under everything else it stands behind: pushed to the trailing
    edge of the meta row, and quiet — the number still identifies the page, it just
    stops competing with what changed. */
+/* Raised above the card's stretched hit area so the links are reachable. Only this
+   wrapper is raised — the field tags stay under it, so the card still opens from
+   everywhere except the tags themselves. */
 .review-row__sources {
+  position: relative;
+  z-index: 1;
   margin-left: auto;
   display: inline-flex;
   gap: 0.2rem;
   opacity: 0.6;
+}
+
+.review-row__sources:hover {
+  opacity: 1;
+}
+
+.review-row__source {
+  text-decoration: none;
+}
+
+.review-row__source:hover {
+  text-decoration: underline;
 }
 
 .review-row__source {

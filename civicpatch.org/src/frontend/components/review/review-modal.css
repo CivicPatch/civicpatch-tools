@@ -287,7 +287,6 @@
    Revert rendered as an empty box. Not a specificity problem: the variable is
    already poisoned by the time any rule reads it. */
 .review-modal .review-modal__revert,
-.review-modal .review-modal__merge,
 .review-modal .review-modal__nav-btn {
   padding: 0.15rem 0.6rem;
   font-size: var(--text-sm);
@@ -300,15 +299,9 @@
 }
 
 .review-modal .review-modal__revert[disabled],
-.review-modal .review-modal__merge[disabled],
 .review-modal .review-modal__nav-btn[disabled] {
   opacity: 0.4;
   cursor: default;
-}
-
-.review-modal__hint {
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
 }
 
 @media (max-width: 44rem) {
@@ -324,48 +317,37 @@
   }
 }
 
+/* No modal-specific rule for the state header on purpose: it renders in here
+   exactly as it does in the list. The corner badge that used to stand in for it
+   is gone, along with the `position: relative` that only the badge needed. */
 
-/* One record in here, so an edge marking "this one" says nothing — restyle the
-   summary the rail already renders into a corner badge. It reads "2 fields
-   changed" rather than "changed": the same corner, saying how much work is in
-   the record rather than repeating its state. */
+/* Density.
 
-.review-modal__body .review-rail {
-  position: relative;
-  box-shadow: none;
+   The list is a working surface: you are scanning twenty people for the three
+   that need you, so every row of air costs a person off-screen. In here there is
+   one person, already chosen, and nothing is competing for the space — so the
+   controls get their height back and the text stops being small.
+
+   Same components either way. Only these values differ, and --control-h does most
+   of the work on its own because every control is sized from it. */
+
+.review-modal__body .review-rail-list {
+  --control-h: 2rem;
 }
 
-/* Same reasoning for the state header: in the list it tells you which of twenty
-   people this is, and in here there is only the one. It keeps the actions and
-   drops the colour; the status is the corner badge below. */
-.review-modal__body .review-rail__head {
-  padding: 0;
-  background: none;
-  border-bottom: none;
+.review-modal__body .review-rail__fields {
+  gap: 0.3rem;
 }
 
-.review-modal__body .rail-summary {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-right: 0;
-  padding: 0.1rem 0.5rem;
-  border: 1px solid currentColor;
-  /* Was a 999px pill. Everything else in a field body is --pico-border-radius,
-     and one lone capsule among rounded rectangles reads as a stray part. */
-  border-radius: var(--pico-border-radius);
-  font-weight: 600;
+.review-modal__body .review-rail__field {
+  padding: 0.3rem var(--ring-space);
 }
 
-.review-modal__body .review-rail--changed .rail-summary {
-  color: var(--rail-changed);
+.review-modal__body .review-rail__label {
+  padding-top: 0.45rem;
 }
 
-.review-modal__body .review-rail--added .rail-summary {
-  color: var(--rail-added);
-}
-
-.review-modal__body .review-rail--removed .rail-summary,
-.review-modal__body .review-rail--deleted .rail-summary {
-  color: var(--rail-cleared);
+.review-modal__body .review-rail__control :is(input, select),
+.review-modal__body .field-control__chip {
+  font-size: var(--text-md);
 }
