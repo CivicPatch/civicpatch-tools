@@ -53,92 +53,64 @@
   padding-left: 1.1rem;
 }
 
+/* Same track as Overview: one definition, so the two views cannot drift apart. */
 .review-preview__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 0.7rem;
-}
-
-/* `btn-ghost` is the opt-out styles.css itself provides: its bare-button rule
-   excludes that class, so the card escapes `--pico-color: <inverse>` — which
-   otherwise leaks to the whole subtree and paints every field value #fafafa.
-   That override is a :not() chain with specificity 0,5,1, so no reasonable
-   selector of ours could have reset the variable directly.
-
-   Scoped under .review-preview because `button.btn-ghost` (0,1,1) zeroes
-   padding and border, and this needs them back. */
-.review-preview .review-preview__card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.75rem;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-card-background-color);
-  text-align: left;
-  font: inherit;
-  color: var(--civ-text);
-  cursor: pointer;
-  width: 100%;
-}
-
-.review-preview .review-preview__card:hover {
-  border-color: var(--civ-text);
-}
-
-.review-preview__head {
-  display: flex;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(min(26rem, 100%), 1fr));
   gap: 0.6rem;
-  min-width: 0;
 }
 
-.review-preview__who {
-  display: flex;
-  flex-direction: column;
+/* Icon, then value. No label: it is the value a reader came for, and the label
+   repeated down a column is noise. The name stays for screen readers. */
+.review-preview__value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
   min-width: 0;
+  color: var(--pico-muted-color);
 }
 
-.review-preview__name {
-  font-weight: 700;
-  line-height: 1.2;
+.review-preview__value-text {
+  color: var(--civ-text);
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+/* Preview rows are static, so nothing overlays these — they stay real links. */
+.review-preview__link {
+  color: var(--civ-text);
+  text-decoration: underline;
+  text-underline-offset: 0.1rem;
   overflow-wrap: anywhere;
 }
 
-.review-preview__office {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+.review-preview__link:hover {
+  text-decoration-thickness: 2px;
 }
 
-.review-preview__division {
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
+/* Provenance, not a value: a word rather than an icon, and set apart from the
+   fields it stands behind. */
+.review-preview__value--sources {
+  gap: 0.3rem;
+  padding-left: 0.35rem;
+  border-left: 1px solid var(--pico-muted-border-color);
 }
 
-.review-preview__fields {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.15rem 0.6rem;
-  margin: 0;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--pico-muted-border-color);
-  font-size: var(--text-sm);
-}
-
-.review-preview__fields dt {
-  font-size: var(--text-xs);
+.review-preview__sources-label {
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-size: var(--text-xs);
   color: var(--pico-muted-color);
-  padding-top: 0.1rem;
 }
 
-.review-preview__fields dd {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  overflow-wrap: anywhere;
+/* Number and colour belong to the url, so [2] is the same page on every person. */
+.review-preview__source {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.review-preview__source:hover {
+  text-decoration: underline;
 }
 
 .review-preview__empty {

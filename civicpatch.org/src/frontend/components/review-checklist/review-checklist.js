@@ -19,6 +19,15 @@ function ReviewChecklist({ reviewData, checks = {}, onToggleIssue }) {
 
   if (!reviewData) return html``;
 
+  // Green where the research found someone the data does not have — a gain. Red
+  // where the data has someone the research did not find — a loss. Agreeing on both
+  // sides gets nothing, so only the rows that need a decision are tinted.
+  const rowClass = (row) => {
+    if (row.in_research && !row.in_data) return "review-checklist__row--gained";
+    if (!row.in_research && row.in_data) return "review-checklist__row--lost";
+    return "";
+  };
+
   const renderCheckmark = (value) =>
     value
       ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color);"></i>`
@@ -69,7 +78,7 @@ function ReviewChecklist({ reviewData, checks = {}, onToggleIssue }) {
             </thead>
             <tbody>
               ${reviewData.people_by_source.map(row => html`
-                <tr>
+                <tr class=${rowClass(row)}>
                   <td>${row.name}</td>
                   <td style="text-align: center;">${renderCheckmark(row.in_research)}</td>
                   <td style="text-align: center;">${renderCheckmark(row.in_data)}</td>

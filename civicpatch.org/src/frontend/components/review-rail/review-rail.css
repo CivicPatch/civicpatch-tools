@@ -195,7 +195,9 @@
 .review-rail__fields {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  /* Never tighter than a focus ring needs — see --ring-space in
+     field-controls.css. This is the floor on density, not a stylistic choice. */
+  gap: var(--ring-space);
   min-width: 0;
 }
 
@@ -211,8 +213,15 @@
   justify-content: start;
   gap: 0.5rem;
   align-items: start;
-  padding: 0.15rem 0.25rem;
+  padding: 0.1rem var(--ring-space);
   border-radius: var(--pico-border-radius);
+}
+
+/* Visible focus on every control and button in a rail. The gaps above reserve
+   the clearance this needs. */
+.review-rail :is(input, select, button, a):focus-visible {
+  outline: var(--ring-width) solid var(--pico-primary);
+  outline-offset: var(--ring-offset);
 }
 
 .review-rail__label {
