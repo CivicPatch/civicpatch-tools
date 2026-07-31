@@ -4,10 +4,13 @@
 // wires the real api/dispatch/navigation into them.
 
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { landingUrl } from "../review-routes.js";
 import { ActionType, ReviewMode, type CurrentEntry, type SessionMeta, type ReviewAction } from "./review-state.js";
 
 const errMessage = (err: any) => err?.message ?? String(err);
+
+const jurisdictionUrl = (ocdid: string) => `/${jurisdictionOcdidToPath(ocdid)}`;
 
 const isTerminalStatus = (status: string | null | undefined) =>
   status === PULL_REQUEST_STATUS.MERGED || status === PULL_REQUEST_STATUS.CLOSED;
@@ -83,11 +86,13 @@ async function showStandalonePr(requestId: string, stateCode: string, e: Effects
   await loadFirstEntry(data, null, [], e);
 }
 
-// A deeplink to one of the session's own PRs (e.g. a refresh) stays in session
-// mode; a deeplink to any other PR wins and shows it standalone. With no PR in
-// the URL we resume the active session, falling back to the landing page.
-export async function boot(stateCode: string, requestId: string | null, e: Effects): Promise<void> {
+// `pull_request` names one card and wins over everything: it is a link in from
+// outside, so a session is beside the point. Otherwise `request_id` is where the
+// session left off — one of its own PRs resumes it, any other shows standalone, and
+// with neither we resume the active session or fall back to the landing page.
+export async function boot(stateCode: string, requestId: string | null, pullRequestId: string | null, e: Effects): Promise<void> {
   try {
+    if (pullRequestId != null) return showStandalonePr(pullRequestId, stateCode, e);
     const active = (await e.api.fetchActiveReviewSession(stateCode))?.data;
     if (active && (requestId == null || belongsToSession(active, requestId))) return resumeSession(active, stateCode, e);
     if (requestId != null) return showStandalonePr(requestId, stateCode, e);
@@ -97,7 +102,9 @@ export async function boot(stateCode: string, requestId: string | null, e: Effec
   }
 }
 
-export async function goToEntry(sessionId: string, targetEntry: number, stateCode: string, e: Effects): Promise<void> {
+// No session means no queue, so there is nowhere to step to.
+export async function goToEntry(sessionId: string | null, targetEntry: number, stateCode: string, e: Effects): Promise<void> {
+  if (!sessionId) return;
   e.dispatch({ type: ActionType.NAV_STARTED });
   try {
     const data = (await e.api.navigateToEntry(sessionId, targetEntry))?.data;
@@ -115,7 +122,20 @@ export async function endSessionAndExit(sessionId: string | null, stateCode: str
   e.navigate(landingUrl(stateCode));
 }
 
-export async function mergeCurrent(current: CurrentEntry, sessionId: string, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
+// Publishing or closing ends the PR's life. In a session that means the next entry;
+// standalone there is no next, so it ends the flow back at the jurisdiction page.
+async function advanceOrReturn(
+  current: CurrentEntry,
+  sessionId: string | null,
+  entryNumber: number,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
+  if (sessionId) return goToEntry(sessionId, entryNumber + 1, stateCode, e);
+  e.navigate(jurisdictionUrl(current.jurisdiction.ocdid!));
+}
+
+export async function mergeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
   const { pr, request_id, jurisdiction } = current;
   if (!pr?.number || !request_id) return;
   const result = await e.trackMerge(pr.number, request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? `#${pr.number}`);
@@ -126,13 +146,13 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string, ent
     return;
   }
   e.dispatch({ type: ActionType.MARK_RESOLVED });
-  await goToEntry(sessionId, entryNumber + 1, stateCode, e);
+  await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }
 
 // Commit without publishing. Unlike a merge there is no background half to poll:
 // the server has written the branch by the time this resolves, so the outcome is
 // known here. A rejection keeps the reviewer on the entry, same as a failed publish.
-export async function saveCurrent(current: CurrentEntry, sessionId: string, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
+export async function saveCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
   const { pr, request_id, jurisdiction } = current;
   if (!pr?.number || !request_id) return;
   try {
@@ -142,12 +162,13 @@ export async function saveCurrent(current: CurrentEntry, sessionId: string, entr
     return;
   }
   e.dispatch({ type: ActionType.MARK_SAVED });
+  // Save leaves the PR open, so standalone the reviewer stays on the card.
   await goToEntry(sessionId, entryNumber + 1, stateCode, e);
 }
 
-export async function closeCurrent(current: CurrentEntry, sessionId: string, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
+export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
   const { pr, request_id, jurisdiction } = current;
   if (!pr?.number || !request_id) return;
   e.trackClose(pr.number, request_id, jurisdiction.name ?? `#${pr.number}`);
-  await goToEntry(sessionId, entryNumber + 1, stateCode, e);
+  await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }

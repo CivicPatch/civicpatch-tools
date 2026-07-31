@@ -75,7 +75,6 @@ function ReviewSession(host: ReviewSessionHost) {
     handleRemove,
     handleUnremove,
     handleRestore,
-    handleUndoRestore,
     updatePerson,
     mergePeople,
   } = useReviewPeople(currentEntry);
@@ -374,14 +373,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .focusFieldKey=${openPerson?.field ?? null}
         .rail=${railFor}
         .isReadOnly=${!!is_read_only}
-        .removedIds=${removedIds}
-        .restoredIds=${restoredIds}
         .onClose=${() => setOpenPerson(null)}
-        .onPersonSave=${handlePersonSave}
-        .onRemove=${handleRemovePerson}
-        .onUnremove=${handleUnremove}
-        .onRestore=${handleRestore}
-        .onUndoRestore=${handleUndoRestore}
         .mergePartner=${mergePair
           ? (cards.find((c) => c.personId === mergePair.partnerId) ?? null)
           : null}

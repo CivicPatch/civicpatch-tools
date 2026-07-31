@@ -10,6 +10,7 @@ from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import services.change_logs as change_logs
+from services.open_data_sync import sync_jurisdictions_by_ocdids
 
 logger = logging.getLogger(__name__)
 
@@ -138,7 +139,7 @@ async def open_jurisdiction_url_pr(
 
 
 async def merge_jurisdiction_pr(
-    pull_request_number: str, approved_by: str | None
+    pull_request_number: str, approved_by: str | None, jurisdiction_ocdid: str
 ) -> None:
     # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
     try:
@@ -159,5 +160,21 @@ async def merge_jurisdiction_pr(
             logger.warning(
                 "Jurisdiction PR %s merge failed: %s", pull_request_number, merge_error
             )
+            return
     except Exception:
         logger.exception("Failed to auto-merge jurisdiction PR %s", pull_request_number)
+        return
+
+    # This path merges directly rather than through do_merge, so it never reaches
+    # publish_side_effects — without this the edit is only visible after the hourly
+    # od_sync. A sync failure is not a merge failure: the merge stands, and the
+    # hourly run is still the backstop.
+    try:
+        await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
+    except Exception:
+        logger.exception(
+            "Merged jurisdiction PR %s but the targeted sync failed for %s; "
+            "the hourly od_sync will pick it up",
+            pull_request_number,
+            jurisdiction_ocdid,
+        )

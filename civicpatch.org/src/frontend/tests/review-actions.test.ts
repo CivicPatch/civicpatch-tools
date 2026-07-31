@@ -74,7 +74,7 @@ describe("boot", () => {
       navigateToEntry: vi.fn(async () => ({ data: cardData() })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, null, e);
+    await boot(STATE, null, null, e);
 
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(e.navigate).not.toHaveBeenCalled();
@@ -92,10 +92,34 @@ describe("boot", () => {
       navigateToEntry: vi.fn(async () => ({ data: cardData() })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-1", e);
+    await boot(STATE, "req-1", null, e);
 
     expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
     expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
+  });
+
+  // The jurisdiction page's Review button links with pull_request, which names one
+  // card outright. Answering it with wherever the session was parked would land the
+  // reviewer on a different town — the reason this param is distinct from request_id.
+  it("opens the named pull request standalone, even mid-session", async () => {
+    const api = fakeApi({
+      fetchActiveReviewSession: vi.fn(async () => ({
+        data: activeSession({ session_request_ids: ["req-1", "req-7"] }),
+      })),
+      navigateToEntry: vi.fn(async () => ({ data: cardData({ request_id: "req-1" }) })),
+      fetchPullRequestByRequestId: vi.fn(async () => ({
+        data: cardData({ request_id: "req-7", entry_number: 1, has_next: false }),
+      })),
+    });
+    const e = fakeEffects(api);
+    await boot(STATE, "req-1", "req-7", e);
+
+    expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-7");
+    expect(lastAction(e).payload.current_entry.request_id).toBe("req-7");
+    expect(lastAction(e).payload.session).toBeNull();
+    // The session is beside the point for a link in from outside — not even looked up.
+    expect(api.fetchActiveReviewSession).not.toHaveBeenCalled();
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
   });
 
   it("shows a standalone PR when the deeplink is not part of the active session", async () => {
@@ -104,7 +128,7 @@ describe("boot", () => {
       fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-999", e);
+    await boot(STATE, "req-999", null, e);
 
     expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-999");
     expect(lastAction(e).payload.session).toBeNull();
@@ -115,7 +139,7 @@ describe("boot", () => {
       fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-999", e);
+    await boot(STATE, "req-999", null, e);
 
     expect(lastAction(e).payload.session).toBeNull();
     expect(e.navigate).not.toHaveBeenCalled();
@@ -123,7 +147,7 @@ describe("boot", () => {
 
   it("navigates to the landing when there is no session and no PR", async () => {
     const e = fakeEffects(fakeApi());
-    await boot(STATE, null, e);
+    await boot(STATE, null, null, e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -131,7 +155,7 @@ describe("boot", () => {
   it("falls back to the landing when a standalone deeplink PR is stale (404)", async () => {
     const api = fakeApi({ fetchPullRequestByRequestId: vi.fn(async () => { throw new Error("HTTP 404"); }) });
     const e = fakeEffects(api);
-    await boot(STATE, "req-stale", e);
+    await boot(STATE, "req-stale", null, e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -139,7 +163,7 @@ describe("boot", () => {
   it("reports an error to the reducer when a fetch throws", async () => {
     const api = fakeApi({ fetchActiveReviewSession: vi.fn(async () => { throw new Error("HTTP 500"); }) });
     const e = fakeEffects(api);
-    await boot(STATE, null, e);
+    await boot(STATE, null, null, e);
     const action = lastAction(e);
     expect(action.type).toBe(ActionType.LOAD_FAILED);
     expect(action.payload.message).toBe("HTTP 500");
@@ -194,6 +218,66 @@ const current: CurrentEntry = {
   is_read_only: false,
   has_next: true,
 };
+
+// A deeplinked PR has no session behind it (loadFirstEntry passes session: null).
+// The actions still work — they key off the PR, not the session — but there is no
+// queue to advance into, so a terminal action returns to the jurisdiction page.
+describe("standalone deeplink (no session)", () => {
+  const standalone: CurrentEntry = {
+    ...current,
+    jurisdiction: {
+      ocdid: "ocd-jurisdiction/country:us/state:me/county:cumberland/place:windham/government",
+      name: "Windham town",
+      path: null,
+    },
+  };
+  const jurisdictionPage = "/me/local/county_cumberland__place_windham";
+
+  it("publishes, then returns to the jurisdiction page instead of advancing", async () => {
+    const api = fakeApi();
+    const e = fakeEffects(api);
+    await mergeCurrent(standalone, null, 1, [{ id: "p1" }], STATE, e);
+
+    expect(e.trackMerge).toHaveBeenCalled();
+    expect(dispatchedTypes(e)).toContain(ActionType.MARK_RESOLVED);
+    // The bug this replaces: navigateToEntry("") POSTs to /review-sessions//navigate,
+    // which 405s, so a publish that already succeeded surfaced as LOAD_FAILED.
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(dispatchedTypes(e)).not.toContain(ActionType.LOAD_FAILED);
+    expect(e.navigate).toHaveBeenCalledWith(jurisdictionPage);
+  });
+
+  it("closes, then returns to the jurisdiction page", async () => {
+    const api = fakeApi();
+    const e = fakeEffects(api);
+    await closeCurrent(standalone, null, 1, STATE, e);
+
+    expect(e.trackClose).toHaveBeenCalled();
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(e.navigate).toHaveBeenCalledWith(jurisdictionPage);
+  });
+
+  it("saves and stays put — the PR is still open and still being edited", async () => {
+    const api = fakeApi();
+    const e = fakeEffects(api);
+    await saveCurrent(standalone, null, 1, [{ id: "p1" }], STATE, e);
+
+    expect(api.saveReviewData).toHaveBeenCalled();
+    expect(dispatchedTypes(e)).toContain(ActionType.MARK_SAVED);
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(e.navigate).not.toHaveBeenCalled();
+  });
+
+  it("still reports a rejected publish rather than navigating away", async () => {
+    const api = fakeApi();
+    const e = fakeEffects(api);
+    (e.trackMerge as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
+    await mergeCurrent(standalone, null, 1, [{ id: "p1" }], STATE, e);
+
+    expect(dispatchedTypes(e)).toContain(ActionType.MARK_FAILED);
+    expect(e.navigate).not.toHaveBeenCalled();
+  });
+});
 
 describe("mergeCurrent", () => {
   it("publishes the merge, marks the entry resolved, and advances", async () => {

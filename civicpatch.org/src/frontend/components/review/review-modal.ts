@@ -1,8 +1,8 @@
 // The edit modal (spec §6): the Detail rail mounted with one person, inside the
-// existing <civ-modal> shell, wired to the same onPersonSave.
+// existing <civ-modal> shell, built from the same rail props.
 //
-// Editing behaviour is therefore defined exactly once — this adds navigation and
-// an undo buffer around the rail, not a second editor. §21.3 is why it consumes
+// Editing behaviour is therefore defined exactly once — this adds navigation
+// around the rail, not a second editor. §21.3 is why it consumes
 // <civ-modal> rather than baking the rail into a shell: merge will need an
 // N-column body in the same frame.
 
@@ -24,12 +24,6 @@ import "../review-rail/review-rail.css";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
 import { cardSubtitle, personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
-import {
-  takeSnapshot,
-  planRevert,
-  isUnchangedSince,
-  type PersonSnapshot,
-} from "./person-snapshot.js";
 
 export interface ReviewModalProps {
   // The set the modal was opened from, already narrowed by the caller — from
@@ -39,15 +33,8 @@ export interface ReviewModalProps {
   openPersonId: string | null;
   focusFieldKey: string | null;
   rail: RailFactory;
-  removedIds: Set<string>;
-  restoredIds: Set<string>;
   isReadOnly: boolean;
   onClose: () => void;
-  onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onRemove: (id: string) => void;
-  onUnremove: (id: string) => void;
-  onRestore: (person: any) => void;
-  onUndoRestore: (id: string) => void;
   // Opens the merge picker anchored on the person in view.
   // Merge is the modal's other screen, not a second dialog. Set means "show it".
   mergePartner?: ReviewCard | null;
@@ -71,14 +58,7 @@ function ReviewModal(props: ReviewModalProps) {
     focusFieldKey,
     rail,
     isReadOnly,
-    removedIds,
-    restoredIds,
     onClose,
-    onPersonSave,
-    onRemove,
-    onUnremove,
-    onRestore,
-    onUndoRestore,
     mergePartner,
     onMergeBack,
     onMerge,
@@ -86,34 +66,22 @@ function ReviewModal(props: ReviewModalProps) {
 
   const [personId, setPersonId] = useState<string | null>(null);
   const [mergePlan, setMergePlan] = useState<MergePlan | null>(null);
-  const [snapshot, setSnapshot] = useState<PersonSnapshot | null>(null);
 
   const open = openPersonId !== null;
   const index = cards.findIndex((c) => c.personId === (personId ?? openPersonId));
   const card = cards[index];
 
-  // Re-snapshot on every move, so Revert only ever undoes work on the person in
-  // view — not the reviewer's earlier edits elsewhere (§6.1).
   useEffect(() => {
     setMergePlan(null);
   }, [mergePartner?.personId]);
 
   const goTo = (nextId: string) => {
-    const next = cards.find((c) => c.personId === nextId);
-    if (!next) return;
+    if (!cards.some((c) => c.personId === nextId)) return;
     setPersonId(nextId);
-    setSnapshot(takeSnapshot(nextId, next.newRecord, removedIds, restoredIds));
   };
 
   useEffect(() => {
-    if (!open || !openPersonId) {
-      setPersonId(null);
-      setSnapshot(null);
-      return;
-    }
-    setPersonId(openPersonId);
-    const opened = cards.find((c) => c.personId === openPersonId);
-    setSnapshot(takeSnapshot(openPersonId, opened?.newRecord, removedIds, restoredIds));
+    setPersonId(open ? openPersonId : null);
   }, [openPersonId]);
 
   // Focus only on open. Navigating must not move focus, or pressing Next twice
@@ -132,16 +100,6 @@ function ReviewModal(props: ReviewModalProps) {
     });
   };
 
-  const revert = () => {
-    if (!snapshot || !card) return;
-    const plan = planRevert(snapshot, removedIds, restoredIds);
-    if (plan.updates) onPersonSave(snapshot.personId, plan.updates);
-    if (plan.delete) onRemove(snapshot.personId);
-    if (plan.undelete) onUnremove(snapshot.personId);
-    if (plan.restore) onRestore(snapshot.record);
-    if (plan.undoRestore) onUndoRestore(snapshot.personId);
-  };
-
   // Alt-arrows, because plain arrows have to stay free for the caret.
   const onKey = (e: KeyboardEvent) => {
     if (!e.altKey) return;
@@ -152,8 +110,9 @@ function ReviewModal(props: ReviewModalProps) {
   if (!open || !card) return nothing;
 
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
-  const canRevert =
-    snapshot && !isUnchangedSince(snapshot, card.newRecord, removedIds, restoredIds);
+  // Revert is the rail's own Reset, moved into the footer: one baseline — the
+  // card as it loaded — so reopening cannot strand edits the roster calls dirty.
+  const railProps = rail(card);
 
   const name = personOf(card)?.name || "(unnamed)";
 
@@ -220,7 +179,11 @@ function ReviewModal(props: ReviewModalProps) {
       </nav>
       <div class="review-modal__body" ${ref(focusOnOpen)}>
         ${head}
-        <div class="review-rail-list">${renderPersonRail(rail(card))}</div>
+        <!-- The rail's own Reset is dropped here: the footer is showing the same
+             action, and two identical buttons read as two different ones. -->
+        <div class="review-rail-list">
+          ${renderPersonRail({ ...railProps, onReset: null })}
+        </div>
       </div>
     </div>
   `;
@@ -234,8 +197,8 @@ function ReviewModal(props: ReviewModalProps) {
           ? nothing
           : html`<button
               class="review-modal__revert"
-              ?disabled=${!canRevert}
-              @click=${revert}
+              ?disabled=${!railProps.onReset}
+              @click=${() => railProps.onReset?.()}
             >
               Revert this person
             </button>`}

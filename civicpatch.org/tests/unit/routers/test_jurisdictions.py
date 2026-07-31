@@ -60,8 +60,9 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
 
     assert response.status_code == 200
     assert response.json()["data"]["pull_request_number"] == 42
-    # The opened PR is auto-merged via a background task.
-    mock_merge.assert_awaited_once_with("42", "m@x.com")
+    # The opened PR is auto-merged via a background task, which also needs the
+    # ocdid so it can sync just that jurisdiction rather than wait for the cron.
+    mock_merge.assert_awaited_once_with("42", "m@x.com", PATCH_BODY["jurisdiction_ocdid"])
 
 
 @pytest.mark.unit

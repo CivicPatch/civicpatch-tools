@@ -358,10 +358,17 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             new_callable=AsyncMock,
             return_value=None,
         ) as mock_merge,
+        patch(
+            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            new_callable=AsyncMock,
+        ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com")
+        await merge_jurisdiction_pr("42", "approver@example.com", JURISDICTION_OCDID)
 
     mock_merge.assert_awaited_once_with("42", approved_by="approver@example.com")
+    # This path bypasses do_merge/publish_side_effects, so without this the edit
+    # would only appear after the hourly od_sync.
+    mock_sync.assert_awaited_once_with([JURISDICTION_OCDID])
 
 
 @pytest.mark.unit
@@ -377,7 +384,13 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             "services.jurisdiction_pull_request.github_service.merge_pull_request",
             new_callable=AsyncMock,
         ) as mock_merge,
+        patch(
+            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            new_callable=AsyncMock,
+        ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com")
+        await merge_jurisdiction_pr("42", "approver@example.com", JURISDICTION_OCDID)
 
     mock_merge.assert_not_called()
+    # Nothing merged, so there is nothing new to project into the DB.
+    mock_sync.assert_not_called()

@@ -42,6 +42,8 @@ export const jurisdictionOcdidToFriendly = jurisdiction_ocdid => {
   return toTitleCaseMap(placeValue) || jurisdiction_ocdid;
 };
 
+// The two-letter state code an ocdid belongs to, e.g. "me". Callers building a
+// review-session url need this on its own, without the rest of the path.
 export const jurisdictionOcdidToState = jurisdiction_ocdid => {
   if (!jurisdiction_ocdid) return "";
   return jurisdiction_ocdid.split("/")[2]?.split(":")[1] ?? "";
