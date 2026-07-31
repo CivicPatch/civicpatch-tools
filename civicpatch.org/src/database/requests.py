@@ -4,7 +4,11 @@ from typing import List, Optional
 from psycopg import sql
 
 from database.database import get_pool
-from shared.utils.statuses import PipelineRunStatus, PullRequestStatus
+from shared.utils.statuses import (
+    PipelineRunStatus,
+    PullRequestStatus,
+    RequestType,
+)
 from lib.github.utils import pull_request_url_to_number
 
 
@@ -111,11 +115,61 @@ async def register_foreign_request(
         )
 
 
+async def register_jurisdiction_edit_request(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    arguments_json: dict,
+    pr_number: int,
+    pr_url: str | None,
+    requested_by_user_id: Optional[str] = None,
+):
+    """Track a hand-edited jurisdiction field as a request + pull request.
+
+    No pipeline_run: nothing ran. That keeps it out of the scrape history, which is
+    joined through pipeline_runs, and out of anything that assumes a job produced it.
+    The PR targets the jurisdictions repo; that is derived from the request type
+    (see REQUEST_TYPE_SOURCE_REPO) rather than stored twice.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            """,
+            (
+                request_id,
+                RequestType.JURISDICTION_MANUAL_EDIT,
+                jurisdiction_ocdid,
+                json.dumps(arguments_json),
+                requested_by_user_id,
+            ),
+        )
+        await conn.execute(
+            """
+            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            """,
+            (request_id, pr_url, PullRequestStatus.OPEN, pr_number),
+        )
+
+
 async def get_request_jurisdiction(request_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT jurisdiction_ocdid FROM requests WHERE id::text = %s",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+    return row[0] if row else None
+
+
+async def get_request_type(request_id: str) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT request_type FROM requests WHERE id::text = %s",
             (request_id,),
         )
         row = await cur.fetchone()

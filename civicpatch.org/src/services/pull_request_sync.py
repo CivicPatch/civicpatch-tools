@@ -9,8 +9,8 @@ import database.review_sessions as review_sessions_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
-from services.open_data_sync import sync_people_by_ocdids
-from shared.utils.statuses import PullRequestStatus
+from services.open_data_sync import sync_jurisdictions_by_ocdids, sync_people_by_ocdids
+from shared.utils.statuses import PullRequestStatus, RequestType
 from lib.github.utils import pull_request_url_to_number
 
 logger = logging.getLogger(__name__)
@@ -28,9 +28,18 @@ async def publish_side_effects(request_id: str, status: str) -> None:
     if status != PullRequestStatus.MERGED:
         return
     jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
-    if jurisdiction_ocdid:
-        await sync_people_by_ocdids([jurisdiction_ocdid])
-        await jurisdictions_db.stamp_scraped_at(jurisdiction_ocdid, request_id)
+    if not jurisdiction_ocdid:
+        return
+
+    # A manual jurisdiction edit changed jurisdictions.yml, not the people file, and
+    # nothing was scraped — so it syncs the other side and does not stamp scraped_at.
+    request_type = await requests_db.get_request_type(request_id)
+    if request_type == RequestType.JURISDICTION_MANUAL_EDIT:
+        await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
+        return
+
+    await sync_people_by_ocdids([jurisdiction_ocdid])
+    await jurisdictions_db.stamp_scraped_at(jurisdiction_ocdid, request_id)
 
 
 async def apply_pull_request_status(
@@ -69,7 +78,7 @@ async def sync_single_pr_state(request_id: str):
     pr_number = pull_request_url_to_number(pull_request_url) if pull_request_url else None
     if not pr_number:
         return
-    pr_data = await github_service.get_pull_request(pr_number)
+    pr_data = await github_service.get_pull_request(pr_number, pr_metadata["pr"].get("source_repo"))
     if not pr_data:
         return
     if pr_data.get("merged"):
@@ -187,11 +196,12 @@ async def _close_stale_prs(github_request_ids: set[str]):
         return
     logger.info("sync_open_pr_state: resolving %d stale PR(s)", len(stale_ids))
     for request_id in stale_ids:
-        pr_url = db_open_jobs[request_id]
+        open_pr = db_open_jobs[request_id]
+        pr_url = open_pr["url"]
         pr_number = pull_request_url_to_number(pr_url) if pr_url else None
         status, merged_at = None, None
         if pr_number:
-            pr_data = await github_service.get_pull_request(pr_number)
+            pr_data = await github_service.get_pull_request(pr_number, open_pr["source_repo"])
             if pr_data and pr_data.get("merged"):
                 status, merged_at = PullRequestStatus.MERGED, pr_data.get("merged_at")
             elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:

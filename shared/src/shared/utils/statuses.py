@@ -79,6 +79,50 @@ class PullRequestStatus(StrEnum):
     MERGED = "merged"
 
 
+class RequestType(StrEnum):
+    """What a request asked the system to do.
+
+    Only PEOPLE has a pipeline run behind it. JURISDICTION_MANUAL_EDIT exists so a
+    hand-edited jurisdiction field gets a tracked PR like any other change — but it
+    targets a different repo and must be kept out of the review pool, which is
+    scoped to people PRs.
+    """
+
+    PEOPLE = "people"
+    JURISDICTION_MANUAL_EDIT = "jurisdiction_manual_edit"
+
+
+class SourceRepo(StrEnum):
+    """Which repo a pull request lives in.
+
+    A logical key rather than a url: repo urls come from env and differ per
+    environment, so callers name the repo and resolve the url at read time.
+    """
+
+    OPEN_DATA = "open_data"
+    JURISDICTIONS = "jurisdictions"
+
+
+# Which repo a request's pull request lands in. Derived, not stored: the mapping is
+# 1:1 today, and a second stored copy could only ever disagree with this one.
+#
+# A pr_number is only meaningful inside its own repo, so anything resolving a PR
+# from a stored row looks it up here rather than assuming open-data.
+REQUEST_TYPE_SOURCE_REPO: dict[RequestType, SourceRepo] = {
+    RequestType.PEOPLE: SourceRepo.OPEN_DATA,
+    RequestType.JURISDICTION_MANUAL_EDIT: SourceRepo.JURISDICTIONS,
+}
+
+
+def source_repo_for_request_type(request_type: str | None) -> SourceRepo:
+    """Unknown types fall back to open-data — every request predating this map is
+    a people request, and that is the safe default for anything unrecognised."""
+    try:
+        return REQUEST_TYPE_SOURCE_REPO[RequestType(request_type)]
+    except ValueError:
+        return SourceRepo.OPEN_DATA
+
+
 class ChangeLogType(StrEnum):
     MERGE_REVIEW = "merge_review"
     CLOSE_REVIEW = "close_review"

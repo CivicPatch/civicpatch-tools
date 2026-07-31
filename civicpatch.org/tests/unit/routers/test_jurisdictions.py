@@ -36,6 +36,8 @@ def _maintainer():
     )
 
 
+REQUEST_ID = "2026-07-31-abcd"
+
 PATCH_BODY = {
     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
     "url": "https://oakland.gov",
@@ -49,7 +51,7 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
         patch(
             "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
             new_callable=AsyncMock,
-            return_value=(42, "https://github.com/x/pull/42"),
+            return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
         ),
         patch(
             "services.jurisdiction_pull_request.merge_jurisdiction_pr",
@@ -60,9 +62,9 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
 
     assert response.status_code == 200
     assert response.json()["data"]["pull_request_number"] == 42
-    # The opened PR is auto-merged via a background task, which also needs the
-    # ocdid so it can sync just that jurisdiction rather than wait for the cron.
-    mock_merge.assert_awaited_once_with("42", "m@x.com", PATCH_BODY["jurisdiction_ocdid"])
+    # The opened PR is auto-merged via a background task, which takes the request id
+    # so the merge is recorded against the tracked PR and syncs that jurisdiction.
+    mock_merge.assert_awaited_once_with("42", "m@x.com", REQUEST_ID)
 
 
 @pytest.mark.unit

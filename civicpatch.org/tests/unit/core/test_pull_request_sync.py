@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 
 from services.pull_request_sync import apply_pull_request_status, publish_side_effects
-from shared.utils.statuses import PullRequestStatus
+from shared.utils.statuses import PullRequestStatus, RequestType
 
 REQUEST_ID = "2025-09-25-1a2b"
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
@@ -21,6 +21,11 @@ async def test_merged_syncs_people_and_stamps_scraped_at():
             return_value=JURISDICTION_OCDID,
         ),
         patch(
+            "services.pull_request_sync.requests_db.get_request_type",
+            new_callable=AsyncMock,
+            return_value=RequestType.PEOPLE,
+        ),
+        patch(
             "services.pull_request_sync.sync_people_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
@@ -32,6 +37,41 @@ async def test_merged_syncs_people_and_stamps_scraped_at():
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED)
         mock_sync.assert_called_once_with([JURISDICTION_OCDID])
         mock_stamp.assert_awaited_once_with(JURISDICTION_OCDID, REQUEST_ID)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_merged_jurisdiction_edit_syncs_jurisdictions_not_people():
+    """A manual edit changed jurisdictions.yml and ran no scrape, so syncing people
+    would fetch the wrong file and stamping scraped_at would claim a scrape happened."""
+    with (
+        patch(
+            "services.pull_request_sync.requests_db.get_request_jurisdiction",
+            new_callable=AsyncMock,
+            return_value=JURISDICTION_OCDID,
+        ),
+        patch(
+            "services.pull_request_sync.requests_db.get_request_type",
+            new_callable=AsyncMock,
+            return_value=RequestType.JURISDICTION_MANUAL_EDIT,
+        ),
+        patch(
+            "services.pull_request_sync.sync_jurisdictions_by_ocdids",
+            new_callable=AsyncMock,
+        ) as mock_sync_jurisdictions,
+        patch(
+            "services.pull_request_sync.sync_people_by_ocdids",
+            new_callable=AsyncMock,
+        ) as mock_sync_people,
+        patch(
+            "services.pull_request_sync.jurisdictions_db.stamp_scraped_at",
+            new_callable=AsyncMock,
+        ) as mock_stamp,
+    ):
+        await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED)
+        mock_sync_jurisdictions.assert_awaited_once_with([JURISDICTION_OCDID])
+        mock_sync_people.assert_not_called()
+        mock_stamp.assert_not_called()
 
 
 @pytest.mark.unit
