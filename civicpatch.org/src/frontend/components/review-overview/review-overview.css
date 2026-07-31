@@ -39,12 +39,13 @@
   --tint-shade: 0%;
 }
 
-/* Cards stack full width: a card beside a folded run leaves half a row empty, and
-   pairing them instead makes the card stretch to the run's height. One column of
-   cards wastes nothing and reads straight down in seat order. */
+/* Cards use the space available rather than one massively wide row. min(26rem, 100%),
+   not a bare 26rem: a plain minmax floor holds the track and overflows once the
+   container is narrower than one card. The breakpoint is a consequence of that floor,
+   not a media query. */
 .review-overview__list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(26rem, 100%), 1fr));
   gap: 0.6rem;
 }
 
@@ -129,6 +130,21 @@
   outline-offset: -2px;
 }
 
+/* The button's box is only the name and office, but the photo makes the card
+   taller than that — leaving dead space that belongs to the div and opens
+   nothing. Stretching the hit area over the whole card makes every part of it
+   clickable; the field buttons and source links sit above it. */
+.review-row__open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.review-row__meta {
+  position: relative;
+  z-index: 1;
+}
+
 /* Spans both rows, so the card is photo-height and the text column stacks
    against it. */
 .review-row__photo {
@@ -138,10 +154,6 @@
   width: 6rem;
   aspect-ratio: 1;
   margin-right: 0.7rem;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
 }
 
 .review-row__photo person-image,
@@ -333,6 +345,7 @@
 
 /* Folded people pack several to a row — as many as fit, one when narrow. */
 .review-overview__strip {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
   gap: 0.4rem 0.6rem;
