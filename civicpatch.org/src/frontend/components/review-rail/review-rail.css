@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
-  /* The rail needs identity (11rem) + label (7rem) + control (22rem) + a `was`
+  /* The rail needs identity (12rem) + label (7rem) + control (22rem) + a `was`
      annotation — about 58rem. Left at full page width the content stopped well
      short of the edge and the right third read as broken rather than empty. */
   max-width: min(var(--page-width), 58rem);
@@ -30,6 +30,10 @@
   --rail-cleared: var(--pico-del-color);
   --rail-issue: var(--pico-info-color);
 
+  /* How much of the state colour the header strip carries. Dark needs more of it
+     to read as tinted at all against a dark card. */
+  --head-tint: 14%;
+
   /* Dense form controls — pico sizes inputs from these, and overriding raw
      padding loses to its specificity. */
   --pico-form-element-spacing-vertical: 0.15rem;
@@ -49,25 +53,65 @@
 
 .review-rail {
   display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 0.6rem 0.75rem;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  column-gap: 1rem;
+  /* No padding: the state header spans the card edge to edge, so the two columns
+     below carry their own. */
+  padding: 0;
+  overflow: hidden;
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius);
   background: var(--pico-card-background-color);
+
+  --rail-state: var(--pico-muted-border-color);
 }
 
 .review-rail--changed {
-  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-changed);
+  --rail-state: var(--rail-changed);
 }
 
 .review-rail--added {
-  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-added);
+  --rail-state: var(--rail-added);
 }
 
 .review-rail--removed,
 .review-rail--deleted {
-  box-shadow: inset var(--state-bar-width) 0 0 var(--rail-cleared);
+  --rail-state: var(--rail-cleared);
+}
+
+/* State header — a thin strip across the whole card. This is what replaced the
+   coloured left bar: a bar is only visible while the top of the card is, and a
+   twenty-field card is taller than the viewport. */
+
+.review-rail__head {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background: color-mix(in srgb, var(--rail-state) var(--head-tint), var(--pico-card-background-color));
+  border-bottom: 2px solid var(--rail-state);
+}
+
+.review-rail__head-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* What the card is asking of you — how many fields moved and whether any needs a
+   decision. It replaced the status label, which named the state but never said
+   how much work was in it. */
+.rail-summary {
+  font-size: var(--text-sm);
+  color: var(--pico-muted-color);
+  margin-right: auto;
+}
+
+/* The actions sit at the far end of the strip, away from the status. */
+.review-rail__head-main .review-rail__actions {
+  margin-top: 0;
+  margin-left: auto;
 }
 
 /* A person with nothing to review: one line, laid out across rather than
@@ -98,7 +142,9 @@
   flex-direction: column;
   gap: 0.3rem;
   min-width: 0;
+  padding: 0.6rem 0 0.75rem 0.75rem;
 }
+
 
 .review-rail__name {
   font-weight: 600;
@@ -199,6 +245,7 @@
      field-controls.css. This is the floor on density, not a stylistic choice. */
   gap: var(--ring-space);
   min-width: 0;
+  padding: 0.6rem 0.75rem 0.75rem 0;
 }
 
 /* `label | control | was … Restore`. One column set for every row, so the
@@ -353,9 +400,31 @@
   color: var(--rail-cleared);
 }
 
+@media (prefers-color-scheme: dark) {
+  .review-rail-list {
+    --head-tint: 30%;
+  }
+}
+
+[data-theme="dark"] .review-rail-list {
+  --head-tint: 30%;
+}
+
+[data-theme="light"] .review-rail-list {
+  --head-tint: 14%;
+}
+
 @media (max-width: 48rem) {
   .review-rail {
     grid-template-columns: 1fr;
+  }
+
+  .review-rail__identity {
+    padding: 0.6rem 0.75rem 0;
+  }
+
+  .review-rail__fields {
+    padding: 0.6rem 0.75rem 0.75rem;
   }
 
   .review-rail__field {
@@ -420,7 +489,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-top: 0.4rem;
   padding: 0.5rem 0.6rem;
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius);

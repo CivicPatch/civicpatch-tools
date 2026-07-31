@@ -326,32 +326,46 @@
 
 
 /* One record in here, so an edge marking "this one" says nothing — restyle the
-   label the rail already renders into a corner badge. */
+   summary the rail already renders into a corner badge. It reads "2 fields
+   changed" rather than "changed": the same corner, saying how much work is in
+   the record rather than repeating its state. */
 
 .review-modal__body .review-rail {
   position: relative;
   box-shadow: none;
 }
 
-.review-modal__body .review-rail__status {
+/* Same reasoning for the state header: in the list it tells you which of twenty
+   people this is, and in here there is only the one. It keeps the actions and
+   drops the colour; the status is the corner badge below. */
+.review-modal__body .review-rail__head {
+  padding: 0;
+  background: none;
+  border-bottom: none;
+}
+
+.review-modal__body .rail-summary {
   position: absolute;
   top: 0;
   right: 0;
+  margin-right: 0;
   padding: 0.1rem 0.5rem;
   border: 1px solid currentColor;
-  border-radius: 999px;
-  font-weight: 700;
+  /* Was a 999px pill. Everything else in a field body is --pico-border-radius,
+     and one lone capsule among rounded rectangles reads as a stray part. */
+  border-radius: var(--pico-border-radius);
+  font-weight: 600;
 }
 
-.review-modal__body .review-rail--changed .review-rail__status {
+.review-modal__body .review-rail--changed .rail-summary {
   color: var(--rail-changed);
 }
 
-.review-modal__body .review-rail--added .review-rail__status {
+.review-modal__body .review-rail--added .rail-summary {
   color: var(--rail-added);
 }
 
-.review-modal__body .review-rail--removed .review-rail__status,
-.review-modal__body .review-rail--deleted .review-rail__status {
+.review-modal__body .review-rail--removed .rail-summary,
+.review-modal__body .review-rail--deleted .rail-summary {
   color: var(--rail-cleared);
 }
