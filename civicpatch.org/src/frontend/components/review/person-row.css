@@ -29,13 +29,21 @@
 }
 
 /* Spans both rows, so the card is photo-height and the text column stacks
-   against it. */
+   against it.
+
+   `stretch` rather than the grid's centred default, with a square floor: the
+   photo sets the card's height while the text is short, but a long name or an
+   uncapped meta row makes the text column the taller one — and a centred fixed
+   square then leaves dead space above and below it. Stretching means the photo
+   is always exactly as tall as the card. person-image renders with
+   `object-fit: cover`, so the extra height crops rather than distorts. */
 .review-row__photo {
   grid-column: 1;
   grid-row: 1 / 3;
+  align-self: stretch;
   display: block;
   width: 6rem;
-  aspect-ratio: 1;
+  min-height: 6rem;
   margin-right: 0.7rem;
 }
 

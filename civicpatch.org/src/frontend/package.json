@@ -13,10 +13,11 @@
     "pmtiles": "^4.0.0"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "@vitest/coverage-v8": "^4.1.2",
-    "vitest": "^4.1.2",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vitest": "^4.1.2"
   },
   "scripts": {
     "start": "vite",

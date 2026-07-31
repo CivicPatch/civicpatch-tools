@@ -19,6 +19,13 @@ import {
 } from "../pages/municipalities-page/municipalities-routes.ts";
 import "./search-jurisdictions/select-state.js";
 import "./navbar.css";
+// Font Awesome, self-hosted. It was a CDN kit until that kit started returning
+// a bare 403 to every caller and every page in every environment lost its icons.
+// Imported here because all 12 Vite entries pull the navbar in, and vite_css()
+// links the emitted stylesheet in <head> — so the fonts are hashed, cached, and
+// have no third party in the render path.
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 const API_URL = config.apiUrl;
 
 
