@@ -291,7 +291,8 @@ docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml u
 docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml restart civicpatch-org-e2e
 # See `visual`: restart returns before the app serves.
 until [ "$(curl -s -o /dev/null -w '%{http_code}' "$BASE_URL/login" --max-time 5)" = "200" ]; do sleep 2; done
-npx playwright test --config=playwright.visual.config.js --update-snapshots
+# =all, not the bare flag: on 1.50 the bare form reports pass and writes nothing.
+npx playwright test --config=playwright.visual.config.js --update-snapshots=all
 """
 dir = "e2e"
 env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }

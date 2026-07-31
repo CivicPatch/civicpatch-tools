@@ -11,6 +11,14 @@ import { component, useState, useEffect } from "haunted";
 import { ref } from "lit-html/directives/ref.js";
 import "../basic/modal.js";
 import "./merge-picker.js";
+import {
+  applyMergePlan,
+  chooseSurvivor,
+  planMerge,
+  setChoice,
+  type MergeChoiceKey,
+  type MergePlan,
+} from "./merge-model.js";
 import "./review-modal.css";
 import "../review-rail/review-rail.css";
 import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
@@ -77,6 +85,7 @@ function ReviewModal(props: ReviewModalProps) {
   } = props;
 
   const [personId, setPersonId] = useState<string | null>(null);
+  const [mergePlan, setMergePlan] = useState<MergePlan | null>(null);
   const [snapshot, setSnapshot] = useState<PersonSnapshot | null>(null);
 
   const open = openPersonId !== null;
@@ -85,6 +94,10 @@ function ReviewModal(props: ReviewModalProps) {
 
   // Re-snapshot on every move, so Revert only ever undoes work on the person in
   // view — not the reviewer's earlier edits elsewhere (§6.1).
+  useEffect(() => {
+    setMergePlan(null);
+  }, [mergePartner?.personId]);
+
   const goTo = (nextId: string) => {
     const next = cards.find((c) => c.personId === nextId);
     if (!next) return;
@@ -231,16 +244,58 @@ function ReviewModal(props: ReviewModalProps) {
     </div>
   `;
 
+  // The merge plan lives here, not in merge-picker: its actions belong in the
+  // dialog footer, where they cannot scroll out of reach, and the footer is
+  // rendered from this side of civ-modal.
   const merging = !!mergePartner && !!onMergeBack && !!onMerge;
+
+  // The survivor is computed, never chosen: the reviewer is asserting that two
+  // records are one human, not deciding which id outlives the other.
+  const survivor = merging ? chooseSurvivor(card, mergePartner!) : null;
+  const absorbed = !survivor
+    ? null
+    : survivor.personId === card.personId
+      ? mergePartner!
+      : card;
+  // Derived until the reviewer touches it, so reopening on a different pair
+  // cannot show a stale plan.
+  const plan =
+    survivor && absorbed ? (mergePlan ?? planMerge(survivor, absorbed)) : null;
+
+  const chooseMerge = (fieldKey: string, choice: MergeChoiceKey) => {
+    if (plan) setMergePlan(setChoice(plan, fieldKey, choice));
+  };
+
+  const commitMerge = () => {
+    if (!plan || !survivor || !absorbed || !onMerge) return;
+    onMerge(
+      survivor.personId,
+      absorbed.personId,
+      applyMergePlan(plan, survivor, absorbed) as Record<string, unknown>,
+    );
+  };
+
+  const survivorName = survivor ? (personOf(survivor)?.name ?? "this record") : "";
 
   const body = merging
     ? html`<merge-picker
         .anchor=${card}
-        .partner=${mergePartner}
-        .onMerge=${onMerge}
+        .survivor=${survivor}
+        .absorbed=${absorbed}
+        .plan=${plan}
+        .onChoose=${chooseMerge}
         .onBack=${onMergeBack}
       ></merge-picker>`
     : content;
+
+  const mergeFooter = html`
+    <div class="review-modal__foot">
+      <span>
+        <button class="btn-sm secondary" @click=${onMergeBack}>Cancel</button>
+        <button class="btn-sm" @click=${commitMerge}>Merge into ${survivorName}</button>
+      </span>
+    </div>
+  `;
 
   return html`
     <div class="review-modal">
@@ -248,7 +303,7 @@ function ReviewModal(props: ReviewModalProps) {
            stray Escape is worse than keeping (§6.1). -->
       <civ-modal
         .content=${body}
-        .footer=${merging ? nothing : footer}
+        .footer=${merging ? mergeFooter : footer}
         .modalProps=${{
           open: true,
           onClose,

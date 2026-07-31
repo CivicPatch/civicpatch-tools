@@ -236,9 +236,36 @@ export function renderDivisionNewSide(
                 ),
               )}
           />`}
-      <small class="field-control__division-preview">${preview}</small>
+      <!-- Labelled, not bare: on its own line under the select, a raw OCD-ID
+           reads as a stray string rather than as this control's output. -->
+      <small class="field-control__division-preview">
+        <span class="field-control__division-preview-label">saves as</span>
+        ${preview}
+      </small>
     </div>
   `;
+}
+
+// Adding a value should leave the caret in it: clicking "+ emails" and then
+// having to click the empty chip to type is two gestures for one intent.
+//
+// The new input does not exist yet — setValues goes through the save round-trip
+// and the list re-renders after. lit patches in place, so the container element
+// survives and the new input is its last one, on the next frame.
+function addValueAndFocus(
+  event: Event,
+  values: string[],
+  setValues: (values: string[]) => void,
+) {
+  const container = (event.currentTarget as HTMLElement).closest(
+    ".field-control__chips, .field-control__multi",
+  );
+  setValues([...values, ""]);
+  if (!container) return;
+  requestAnimationFrame(() => {
+    const inputs = container.querySelectorAll<HTMLInputElement>("input");
+    inputs[inputs.length - 1]?.focus();
+  });
 }
 
 export function renderSourceUrlsNewSide(
@@ -271,7 +298,10 @@ export function renderSourceUrlsNewSide(
           </button>
         </div>`,
     )}
-    <button class="field-control__add" @click=${() => setValues([...values, ""])}>
+    <button
+      class="field-control__add"
+      @click=${(e: Event) => addValueAndFocus(e, values, setValues)}
+    >
       + add source url
     </button>
   </div>`;
@@ -323,12 +353,20 @@ export function renderPhotoNewSide(
   </div>`;
 }
 
-// ── Multi-value, one list with provenance per row (§5.2) ─────────────────────
+// ── Multi-value, as chips (§5.2) ─────────────────────────────────────────────
 //
 // Emails and phones are *sets*, and `old → new` is a pairing — there is nothing
 // to pair, because multiValueDiff normalises and compares as sets by design. So
-// the published list is the only list, and where each value came from is an
-// annotation on its row.
+// the published list is the only list.
+//
+// A list of short strings is a list of chips, not a stack of full-width text
+// boxes: three emails cost one line instead of three, and the field stops looking
+// like a form the moment it holds more than one value.
+//
+// Provenance carries no words. `new` and `dropped` named the pipeline rather than
+// the person, so state is the chip itself — an accent and a dot for a value this
+// scrape brought in, dashed and struck for one the source stopped listing, whose
+// only action is to come back. Tooltips carry the sentence for anyone who hovers.
 //
 // Provenance is passed in, not computed here: a merge picker (§21.5) derives it
 // from N candidates rather than two sides, and this control should serve that
@@ -337,6 +375,14 @@ export interface MultiRow {
   value: string;
   isNew: boolean;
 }
+
+// A chip is as wide as the value in it. Floored so an empty chip is still a
+// target, capped so one long url cannot push the row off the card.
+const CHIP_MIN_CHARS = 8;
+const CHIP_MAX_CHARS = 38;
+
+const chipSize = (value: string) =>
+  Math.min(Math.max(value.length, CHIP_MIN_CHARS), CHIP_MAX_CHARS);
 
 export function renderMultiList(
   rows: MultiRow[],
@@ -352,22 +398,22 @@ export function renderMultiList(
 ) {
   const values = rows.map((r) => r.value);
   return html`
-    <div class="field-control__multi">
+    <div class="field-control__chips">
       ${rows.map(
-        (row, i) => html`<div class="field-control__multi-row">
+        (row, i) => html`<span
+          class="field-control__chip"
+          title=${row.isNew ? "Found by this scrape" : nothing}
+        >
           <input
             type=${inputType}
-            class="field-control__input ${row.isNew ? "field-control__input--added" : ""}"
+            size=${chipSize(row.value)}
             .value=${row.value}
             @input=${(e: Event) =>
               setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
           />
-          ${row.isNew
-            ? html`<span class="field-control__provenance">new</span>`
-            : nothing}
           ${areLinks && row.value.trim()
             ? html`<a
-                class="field-control__source-link-btn"
+                class="field-control__chip-link"
                 href=${ensureUrl(row.value)}
                 target=${SOURCE_LINK_TARGET}
                 title="Open link"
@@ -375,30 +421,37 @@ export function renderMultiList(
               ></a>`
             : nothing}
           <button
-            class="field-control__x"
-            title="remove"
+            class="field-control__chip-x"
+            title="Remove"
             @click=${() => setValues(values.filter((_, j) => j !== i))}
           >
             <i class="fa-solid fa-xmark"></i>
           </button>
-        </div>`,
+        </span>`,
       )}
-      <!-- Dropped values are the record of what the scrape lost, not something to
-           edit in place — so they read, and offer to come back, one at a time. -->
+      <!-- What the source stopped listing. Not an input: you are deciding about
+           it, not editing it. The strike is on the value rather than the chip —
+           text-decoration propagates to descendants and a child cannot unset it,
+           so a chip-level line-through scores through the button too. -->
       ${dropped.map(
-        (value) => html`<div class="field-control__multi-row field-control__multi-row--dropped">
-          <span class="field-control__value field-control__value--removed">${value}</span>
-          <span class="field-control__provenance">dropped</span>
+        (value) => html`<span
+          class="field-control__chip field-control__chip--gone"
+          title="Removed by this scrape"
+        >
+          <s>${value}</s>
           <button
-            class="field-control__restore-value"
+            class="field-control__chip-back"
             @click=${() => setValues([...values, value])}
           >
-            Restore
+            <i class="fa-solid fa-rotate-left"></i> Put back
           </button>
-        </div>`,
+        </span>`,
       )}
-      <button class="field-control__add" @click=${() => setValues([...values, ""])}>
-        + add ${label}
+      <button
+        class="field-control__add"
+        @click=${(e: Event) => addValueAndFocus(e, values, setValues)}
+      >
+        <i class="fa-solid fa-plus"></i> ${label}
       </button>
     </div>
   `;

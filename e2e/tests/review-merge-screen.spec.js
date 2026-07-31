@@ -19,13 +19,19 @@ test("merge is a screen in one modal, not a second dialog", async ({
   await expect(page.locator("merge-picker")).toBeVisible();
   // The whole point: one dialog, never two stacked.
   await expect(page.locator("dialog[open]")).toHaveCount(1);
-  // Merge owns its actions, so the person footer is not offering Done underneath.
-  await expect(page.locator(".review-modal__foot")).toHaveCount(0);
+  // The footer is merge's while merging: its own actions, and none of the person
+  // screen's. This asserted the footer was absent entirely, which was true when
+  // merge drew its actions inline — they moved into the footer so they cannot
+  // scroll out of reach.
+  const foot = page.locator(".review-modal__foot");
+  await expect(foot).toContainText("Merge into");
+  await expect(foot).not.toContainText("Revert this person");
+  await expect(foot).not.toContainText("Done");
 
   // Back returns to the person the merge started from — the modal never closed.
   await page.locator(".merge-picker__back").click();
   await expect(page.locator("merge-picker")).toHaveCount(0);
   await expect(page.locator("dialog[open]")).toHaveCount(1);
   await expect(page.locator(".review-modal__head")).toContainText("Tom Treasurer");
-  await expect(page.locator(".review-modal__foot")).toBeVisible();
+  await expect(page.locator(".review-modal__foot")).toContainText("Done");
 });

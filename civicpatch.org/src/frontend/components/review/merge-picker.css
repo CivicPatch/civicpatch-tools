@@ -11,10 +11,19 @@
   max-width: none;
 }
 
+/* This screen replaces .review-modal__main, which is what normally fills the
+   dialog's section — and that section carries no padding of its own, because the
+   person view supplies its own. So the merge screen has to bring both its own
+   inset and its own scrolling, or it sits flush against the dialog edges. */
 .merge-picker {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.85rem 1.1rem 1.1rem;
 }
 
 .merge-picker__title {
@@ -156,6 +165,7 @@
 /* Back to the person this merge started from — the modal stays open on them, so
    this is a step backwards, never a close. */
 .merge-picker__back {
+  align-self: flex-start;
   width: auto;
   padding: 0;
   margin-bottom: 0.6rem;
@@ -169,11 +179,4 @@
 
 .merge-picker__back:hover {
   color: var(--civ-text);
-}
-
-.merge-picker__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1rem;
 }

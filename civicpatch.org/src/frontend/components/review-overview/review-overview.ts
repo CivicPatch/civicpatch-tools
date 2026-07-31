@@ -9,9 +9,10 @@ import { component } from "haunted";
 import "../person-image.js";
 import "./review-overview.css";
 import { renderPersonRow } from "../review/person-row.js";
-import { withDisplayImage } from "../review/field-controls.js";
+import { ensureUrl, withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
+import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   cardSubtitle,
   DEPARTING,
@@ -53,15 +54,22 @@ function rowLabel(card: ReviewCard): string {
   return parts.join(", ");
 }
 
-// Numbers, not links: a link here would sit above the card's hit area. The sources
-// themselves are one click away, in the editor this card opens.
+// Real links, and the only thing on the card that is: checking a source without
+// opening the person is the point of putting them here. They sit above the card's
+// hit area, so the card does not open beneath them — which is why the raised area
+// is exactly the tags and nothing around them.
 function renderSources(card: ReviewCard, sources: SourceMap) {
   const urls = (card.newRecord?.source_urls ?? []).filter(Boolean);
   return urls.map((url: string) => {
     const entry = sources.get(url);
     if (!entry) return nothing;
-    return html`<span class="review-row__source ${entry.colorClass}" title=${url}
-      >[${entry.number}]</span
+    return html`<a
+      class="review-row__source ${entry.colorClass}"
+      href=${ensureUrl(url)}
+      target=${SOURCE_LINK_TARGET}
+      rel="noopener noreferrer"
+      title=${url}
+      >[${entry.number}]</a
     >`;
   });
 }
