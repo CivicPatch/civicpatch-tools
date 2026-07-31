@@ -115,19 +115,12 @@ function renderRow(
   const firstField = visibleFields(card)[0]?.field.key ?? null;
   return html`
     <div class="review-row review-row--${card.status}">
-      <!-- The photo is a redundant mouse target for the identity button beside it:
-           hidden from assistive tech so the row announces once, not twice. -->
-      <button
-        class="review-row__photo"
-        tabindex="-1"
-        aria-hidden="true"
-        @click=${() => props.onOpenPerson(card.personId, null)}
-      >
+      <span class="review-row__photo">
         <person-image
           .person=${withDisplayImage(record)}
           .size=${"6rem"}
         ></person-image>
-      </button>
+      </span>
       <button
         class="review-row__open"
         aria-label=${rowLabel(card)}

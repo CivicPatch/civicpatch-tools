@@ -273,6 +273,9 @@ docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml u
 # The backend caches the Vite manifest at startup, so a rebuild without this
 # serves a stale bundle and every baseline is wrong for the wrong reason.
 docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml restart civicpatch-org-e2e
+# `restart` returns before the app is serving, so without this playwright opens on a
+# dead port and fails on unrelated pages — six captures, six different "errors".
+until [ "$(curl -s -o /dev/null -w '%{http_code}' "$BASE_URL/login" --max-time 5)" = "200" ]; do sleep 2; done
 npx playwright test --config=playwright.visual.config.js
 """
 dir = "e2e"
@@ -286,6 +289,8 @@ cd ../civicpatch.org/src/frontend && npm run build
 cd - > /dev/null
 docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml up db-e2e redis-e2e civicpatch-org-e2e -d --wait
 docker compose -f ../docker-compose.e2e.yml -f ../docker-compose.e2e.local.yml restart civicpatch-org-e2e
+# See `visual`: restart returns before the app serves.
+until [ "$(curl -s -o /dev/null -w '%{http_code}' "$BASE_URL/login" --max-time 5)" = "200" ]; do sleep 2; done
 npx playwright test --config=playwright.visual.config.js --update-snapshots
 """
 dir = "e2e"
