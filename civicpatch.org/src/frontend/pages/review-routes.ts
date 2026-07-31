@@ -3,7 +3,14 @@
 // URLs are built in exactly one place.
 
 export const STATE_PARAM = "state";
+
+// Where the session is: written back on every navigation so the url is shareable.
 export const REQUEST_ID_PARAM = "request_id";
+
+// Which single pull request to open, ignoring any session. Distinct from
+// REQUEST_ID_PARAM because one url naming a card is ambiguous — a refresh mid-session
+// and a link in from the jurisdiction page look identical, and mean opposite things.
+export const PULL_REQUEST_PARAM = "pull_request";
 
 // Which of the review card's three views is open. `view`, not `tab` — the
 // jurisdiction page already uses `?tab=` to mean "which pull request", and the
@@ -43,3 +50,7 @@ export const DEFAULT_DAILY_GOAL = 10;
 
 export const landingUrl = (stateCode: string) => `${REVIEW_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;
 export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;
+
+// One pull request, no session. What the jurisdiction page's Review button links to.
+export const pullRequestUrl = (stateCode: string, requestId: string) =>
+  `${sessionUrl(stateCode)}&${PULL_REQUEST_PARAM}=${encodeURIComponent(requestId)}`;

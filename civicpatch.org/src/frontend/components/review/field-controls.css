@@ -3,7 +3,8 @@
    outlive the two-column diff they were born in, so their CSS travels with them. */
 
 .review-rail-list,
-.review-overview {
+.review-overview,
+.jurisdiction-details__fields {
   /* Dense form controls — pico sizes inputs from these, and overriding raw
      padding loses to its specificity. */
   --pico-form-element-spacing-vertical: 0.15rem;
@@ -32,16 +33,17 @@
 
 @media (prefers-color-scheme: dark) {
   .review-rail-list,
-  .review-overview {
+  .review-overview,
+  .jurisdiction-details__fields {
     --field-tint: 22%;
   }
 }
 
-[data-theme="dark"] :is(.review-rail-list, .review-overview) {
+[data-theme="dark"] :is(.review-rail-list, .review-overview, .jurisdiction-details__fields) {
   --field-tint: 22%;
 }
 
-[data-theme="light"] :is(.review-rail-list, .review-overview) {
+[data-theme="light"] :is(.review-rail-list, .review-overview, .jurisdiction-details__fields) {
   --field-tint: 12%;
 }
 
@@ -62,6 +64,27 @@
   line-height: 1.2;
   box-sizing: border-box;
 }
+/* A field with no control behind it — read-only mode, and fields shown but never
+   edited. The box matches an input exactly, minus a visible border, so plaintext
+   rows and editable rows sit at the same height and their text starts on the same
+   line. `review-rail__readonly` wraps both the scalar and multi cases, so the box
+   lives there and the values inside only stack. */
+.review-rail__readonly {
+  display: block;
+  width: 100%;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.field-control__value {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
 /* pico gives selects extra right padding for the arrow + a tall background; keep
    the arrow but match the input height. */
 /* The unified rule above pins padding at 0.15rem; selects need more vertical

@@ -129,7 +129,10 @@ def get_router() -> APIRouter:
         if pull_request_number is None:
             return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
         background_tasks.add_task(
-            jurisdiction_pr_service.merge_jurisdiction_pr, str(pull_request_number), user.email
+            jurisdiction_pr_service.merge_jurisdiction_pr,
+            str(pull_request_number),
+            user.email,
+            request.jurisdiction_ocdid,
         )
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
 

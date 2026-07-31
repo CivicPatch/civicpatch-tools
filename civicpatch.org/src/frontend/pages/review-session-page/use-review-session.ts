@@ -10,7 +10,7 @@ import {
 } from "../../api.js";
 import { reduceReview, initialPageState, ActionType, StateKind } from "./review-state.js";
 import { boot, goToEntry, endSessionAndExit, mergeCurrent, saveCurrent, closeCurrent, type Effects } from "./review-actions.js";
-import { REQUEST_ID_PARAM } from "../review-routes.js";
+import { REQUEST_ID_PARAM, PULL_REQUEST_PARAM } from "../review-routes.js";
 
 export function updateParams(updates: Record<string, string | null | undefined>) {
   const p = new URLSearchParams(window.location.search);
@@ -38,15 +38,17 @@ export function useReviewSession(
 
   // Load the first card once on mount; stats load in parallel.
   useEffect(() => {
-    const requestIdParam = new URLSearchParams(window.location.search).get(REQUEST_ID_PARAM);
-    boot(stateCode, requestIdParam, effects);
+    const params = new URLSearchParams(window.location.search);
+    boot(stateCode, params.get(REQUEST_ID_PARAM), params.get(PULL_REQUEST_PARAM), effects);
     fetchReviewStats(stateCode)
       .then((res) => dispatch({ type: ActionType.STATS_LOADED, payload: { stats: res.data } }))
       .catch(() => {});
   }, []);
 
   const reviewing = state.fsm.kind === StateKind.REVIEWING ? state.fsm : null;
-  const sessionId = reviewing?.session?.id ?? "";
+  // null, not "", for a standalone deeplink: an empty id builds
+  // /review-sessions//navigate, which 405s.
+  const sessionId = reviewing?.session?.id ?? null;
   const entryNumber = reviewing?.entry_number ?? 0;
   const ready = !!reviewing && !reviewing.busy;
 

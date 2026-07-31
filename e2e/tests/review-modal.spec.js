@@ -93,7 +93,7 @@ test.describe("Review modal", () => {
     await expect(rowFor(page, "Renamed Councillor")).toBeVisible();
   });
 
-  test("Revert undoes this person, and only since the modal opened", async ({
+  test("Revert undoes this person's edits", async ({
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
@@ -111,7 +111,7 @@ test.describe("Review modal", () => {
     await expect(revert).toBeDisabled();
   });
 
-  test("the snapshot is re-taken on each move, so Revert never reaches back", async ({
+  test("Revert reaches the person in view and no one else", async ({
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
@@ -124,8 +124,8 @@ test.describe("Review modal", () => {
     await modalField(page, "Name").locator("input").fill("Edited Second");
     await page.locator(".review-modal__revert").click();
 
-    // The second person is back; the first person's edit is untouched — Revert is
-    // an undo buffer for the person in view, not for the session (§6.1).
+    // The second person is back; the first person's edit is untouched — Revert
+    // resets the person in view, not the session (§6.1).
     await expect(modalField(page, "Name").locator("input")).toHaveValue("Councillor 05 Scale");
     await page.locator('.review-modal__nav-btn[title*="Previous"]').click();
     await expect(modalField(page, "Name").locator("input")).toHaveValue("Edited First");
@@ -139,8 +139,28 @@ test.describe("Review modal", () => {
     await expect(page.locator("review-modal .review-rail")).toHaveClass(/review-rail--deleted/);
 
     // Restoring values while leaving the flag set is §12's impossible state, so
-    // the snapshot carries both.
+    // Revert clears both.
     await page.locator(".review-modal__revert").click();
     await expect(page.locator("review-modal .review-rail")).not.toHaveClass(/review-rail--deleted/);
+  });
+
+  test("Revert survives closing and reopening, as long as the roster reads dirty", async ({
+    authenticatedPage: page,
+  }) => {
+    await openCardModal(page, "Councillor 02 Scale");
+    await showAllFields(page);
+    await modalField(page, "Name").locator("input").fill("Renamed Councillor");
+    await page.locator("review-modal").getByText("Done").click();
+    await expect(page.locator("review-modal dialog")).toHaveCount(0);
+
+    // Revert measures against the card as it loaded, the same baseline that
+    // marks the row dirty — not against the state the modal last opened in.
+    await rowFor(page, "Renamed Councillor").locator(".review-row__open").click();
+    await expect(page.locator("review-modal dialog")).toBeVisible();
+    await showAllFields(page);
+    await expect(page.locator(".review-modal__revert")).toBeEnabled();
+
+    await page.locator(".review-modal__revert").click();
+    await expect(modalField(page, "Name").locator("input")).toHaveValue("Councillor 02 Scale");
   });
 });
