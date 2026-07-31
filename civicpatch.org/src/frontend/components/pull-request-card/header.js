@@ -120,7 +120,10 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
       ${renderStats(stats ?? {})}
     </div>
     <div class="header-item-right">
-      ${createdAt ? html`<span class="pr-card__meta">${new Date(createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>` : ""}
+      <!-- data-visual-volatile: the visual suite masks this. Seeded PRs are created
+           at seed time, so the rendered date is whatever day the run happens on and
+           the baseline would go stale overnight for no code reason. -->
+      ${createdAt ? html`<span class="pr-card__meta" data-visual-volatile>${new Date(createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>` : ""}
       ${renderCloseButton()} ${renderMergeButton()}
     </div>
   </div>`;

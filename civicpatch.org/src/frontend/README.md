@@ -182,6 +182,19 @@ unit tests; add them with the first change you make there.
   hashed filenames until the container restarts. Symptom: a 404 on the JS bundle
   and a blank page that looks exactly like a code regression. Rebuild *and*
   restart `civicpatch-org-e2e`.
+- **A new npm dependency needs installing inside the dev container too.**
+  `docker-compose.yml` mounts your source over `/app` but declares
+  `/app/node_modules` as an anonymous volume, so the container keeps its own
+  dependencies and an `npm install` on the host never reaches the dev server.
+  Symptom: Vite cannot resolve the new import, serves the importing module with
+  an empty MIME type, and the browser reports `NS_ERROR_CORRUPTED_CONTENT` plus
+  a spray of CORS and `@vite/client` errors that have nothing to do with the
+  cause. If the import is in something central like `navbar.js`, every page
+  breaks at once. Fix:
+
+      docker exec civicpatch-tools-api-frontend-1 npm install
+      docker compose restart api-frontend
+
 - **A blank region with no console error** usually means an unimported
   component — see "How a page works".
 - **Comments must stand on their own.** Do not cite a spec, plan, or design doc,

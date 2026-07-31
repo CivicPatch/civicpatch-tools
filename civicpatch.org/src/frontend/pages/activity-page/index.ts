@@ -56,7 +56,9 @@ function renderRow(entry) {
       <td>${entry.pull_request_url
         ? html`<a href=${entry.pull_request_url} target="_blank" rel="noopener">PR</a>`
         : html`<span class="activity-page__muted">—</span>`}</td>
-      <td class="activity-page__date">${formatDate(entry.created_at)}</td>
+      <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
+           the run happens on and would rot the baseline overnight. -->
+      <td class="activity-page__date" data-visual-volatile>${formatDate(entry.created_at)}</td>
     </tr>
   `;
 }

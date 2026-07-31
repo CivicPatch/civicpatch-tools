@@ -15,7 +15,12 @@ import { renderPersonRow } from "../review/person-row.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import { ensureUrl } from "../review/field-controls.js";
-import { FIELD_SCHEMA, diffValue, type FieldSpec } from "../review/field-model.js";
+import {
+  FIELD_SCHEMA,
+  diffValue,
+  type DiffRecord,
+  type FieldSpec,
+} from "../review/field-model.js";
 import { withDisplayImage } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
@@ -44,8 +49,10 @@ const DETAIL_FIELDS = FIELD_SCHEMA.filter(
     !["image", "name", "office.name", "office.division_ocdid"].includes(field.key),
 );
 
-function values(card: ReviewCard, field: FieldSpec): string[] {
-  const value = diffValue(card.newRecord, field);
+// Record in, not card: the published values are all these need, so the jurisdiction
+// page can draw the same cards from a plain person record with no card to wrap it in.
+function values(record: DiffRecord, field: FieldSpec): string[] {
+  const value = diffValue(record, field);
   if (Array.isArray(value)) return value.filter(Boolean).map(String);
   const text = String(value ?? "").trim();
   return text ? [text] : [];
@@ -68,11 +75,11 @@ const SOURCES_KEY = "source_urls";
 
 type SourceMap = Map<string, { number: number; colorClass: string }>;
 
-function sourceMapFor(cards: ReviewCard[]): SourceMap {
+function sourceMapFor(records: DiffRecord[]): SourceMap {
   const seen: { url: string }[] = [];
   const known = new Set<string>();
-  for (const card of cards) {
-    for (const url of card.newRecord?.source_urls ?? []) {
+  for (const record of records) {
+    for (const url of record?.source_urls ?? []) {
       if (url && !known.has(url)) {
         known.add(url);
         seen.push({ url });
@@ -93,8 +100,8 @@ function renderLink(url: string, label: unknown, extraClass = "") {
   >`;
 }
 
-function renderSources(card: ReviewCard, sources: SourceMap) {
-  const urls = (card.newRecord?.source_urls ?? []).filter(Boolean);
+function renderSources(record: DiffRecord, sources: SourceMap) {
+  const urls = (record?.source_urls ?? []).filter(Boolean);
   if (!urls.length) return nothing;
   return html`<span class="review-preview__value review-preview__value--sources">
     <span class="review-preview__sources-label">Sources</span>
@@ -107,9 +114,9 @@ function renderSources(card: ReviewCard, sources: SourceMap) {
   </span>`;
 }
 
-function renderValues(card: ReviewCard, sources: SourceMap) {
+function renderValues(record: DiffRecord, sources: SourceMap) {
   const populated = DETAIL_FIELDS.filter((field) => field.key !== SOURCES_KEY)
-    .map((field) => [field, values(card, field)] as const)
+    .map((field) => [field, values(record, field)] as const)
     .filter(([, list]) => list.length > 0);
 
   return html`
@@ -127,7 +134,7 @@ function renderValues(card: ReviewCard, sources: SourceMap) {
         </span>
       </span>`,
     )}
-    ${renderSources(card, sources)}
+    ${renderSources(record, sources)}
   `;
 }
 
@@ -146,7 +153,7 @@ function renderCard(card: ReviewCard, sources: SourceMap) {
     // vocabulary — no badge, no strikethrough, no attention icon — so the tint is
     // the one cue, and only ever a background.
     modifier: card.status,
-    meta: renderValues(card, sources),
+    meta: renderValues(record, sources),
   });
 }
 
@@ -155,7 +162,7 @@ function ReviewPreview(props: ReviewPreviewProps) {
   const publishing = publishSet(cards ?? []);
   const ordered = bySeat(publishing, jurisdictionOcdid);
   const blockers = blockingErrors(cards ?? []);
-  const sources = sourceMapFor(publishing);
+  const sources = sourceMapFor(publishing.map((card) => card.newRecord));
 
   const added = publishing.filter((c) => c.status === PersonStatus.ADDED).length;
   // Everyone with a record who is not being published — the scrape lost them or

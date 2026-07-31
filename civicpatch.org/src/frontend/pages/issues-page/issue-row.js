@@ -27,7 +27,9 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
       <td class="issues-page__issue-flag">
         <input type="checkbox" .checked=${!!issue.is_flagged} @change=${(e) => onFlag(issue, e.target.checked)} title="Flagged" />
       </td>
-      <td class="issues-page__issue-date">${formatDate(issue.created_at)}</td>
+      <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
+           the run happens on and would rot the baseline overnight. -->
+      <td class="issues-page__issue-date" data-visual-volatile>${formatDate(issue.created_at)}</td>
       <td>
         <div class="issues-page__issue-actions">
           <button class="civ-action-btn" @click=${() => onDetails(issue)}>Details</button>

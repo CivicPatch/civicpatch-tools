@@ -8,6 +8,11 @@ export default defineConfig({
   workers: 1,
   retries: 0,
   reporter: "list",
+  // Not the default `test-results/`: that directory is left root-owned by the
+  // dockerised CI run, so a local run dies in the reporter writing
+  // `.last-run.json` — before reporting a single result. The visual config
+  // already sidesteps this the same way.
+  outputDir: "./behaviour-results",
   use: {
     baseURL: process.env.BASE_URL ?? "http://localhost:8100",
     trace: "on",

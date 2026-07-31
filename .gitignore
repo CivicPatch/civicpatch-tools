@@ -57,3 +57,4 @@ e2e/node_modules/
 # Playwright run artifacts (baselines live in e2e/visual/__screenshots__)
 e2e/visual-results/
 e2e/test-results/
+e2e/behaviour-results/
