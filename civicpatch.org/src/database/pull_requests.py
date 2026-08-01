@@ -6,7 +6,6 @@ from shared.utils.statuses import (
     PipelineIssueStatus,
     PipelineIssueType,
     RequestType,
-    source_repo_for_request_type,
 )
 from database.database import get_pool, to_iso
 from lib.github.utils import pull_request_url_to_number
@@ -24,8 +23,12 @@ from lib.github.utils import pull_request_url_to_number
 # issue is live, and it returns once the issue reaches a terminal state — resolved by an
 # admin, or auto-superseded when a newer run for the jurisdiction finishes.
 AVAILABLE_FOR_REVIEW = (
-    f"r.request_type = '{RequestType.PEOPLE.value}' "
-    "AND pr.status = 'open' AND pr.merge_enqueued_at IS NULL "
+    "pr.status = 'open' AND pr.merge_enqueued_at IS NULL "
+    "AND NOT EXISTS ("
+    "SELECT 1 FROM requests r_kind "
+    "WHERE r_kind.id = pr.request_id "
+    f"AND r_kind.request_type = '{RequestType.JURISDICTION_MANUAL_EDIT.value}'"
+    ") "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
@@ -110,14 +113,13 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    pr.pr_number,
-                   jur.data->>'url' AS jurisdiction_website_url,
-                   r.request_type
+                   jur.data->>'url' AS jurisdiction_website_url
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE pr.request_id = %s
+            WHERE pr.request_id = %s AND r.request_type != %s
             """,
-            (request_id,),
+            (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
         )
         row = await cur.fetchone()
         if not row:
@@ -135,7 +137,6 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
                 "status": row[1],
                 "review_state": row[2],
                 "number": row[5],
-                "source_repo": source_repo_for_request_type(row[7]),
             },
         }
 
@@ -154,9 +155,9 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE pr.request_id::text = %s
+            WHERE pr.request_id::text = %s AND r.request_type != %s
             """,
-            (request_id,),
+            (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
         )
         row = await cur.fetchone()
         if not row:
@@ -299,24 +300,21 @@ async def update_pipeline_run_pull_request_review_state(request_id: str, review_
         )
 
 
-async def get_open_pr_request_ids() -> dict[str, dict]:
+async def get_open_pr_request_ids() -> dict[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.request_id, pr.url, r.request_type
+            SELECT j.request_id, pr.url
             FROM pipeline_runs j
             JOIN requests r ON r.id = j.request_id
             JOIN pull_requests pr ON pr.request_id = r.id
-            WHERE pr.status = 'open' AND r.request_type = %s
+            WHERE pr.status = 'open' AND r.request_type != %s
             """,
-            (RequestType.PEOPLE,),
+            (RequestType.JURISDICTION_MANUAL_EDIT,),
         )
         rows = await cur.fetchall()
-    return {
-        r[0]: {"url": r[1], "source_repo": source_repo_for_request_type(r[2])}
-        for r in rows
-    }
+    return {r[0]: r[1] for r in rows}
 
 
 async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
@@ -328,10 +326,10 @@ async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             WHERE pr.status = 'open'
-              AND r.request_type = %s
+              AND r.request_type != %s
               AND r.jurisdiction_ocdid LIKE %s
             """,
-            (RequestType.PEOPLE, f"%state:{state_code}%"),
+            (RequestType.JURISDICTION_MANUAL_EDIT, f"%state:{state_code}%"),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -346,11 +344,11 @@ async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
             FROM pull_requests pr
             JOIN requests r ON r.id = pr.request_id
             WHERE pr.status = 'open'
-              AND r.request_type = %s
+              AND r.request_type != %s
               AND r.jurisdiction_ocdid = %s
             LIMIT 1
             """,
-            (RequestType.PEOPLE, jurisdiction_ocdid),
+            (RequestType.JURISDICTION_MANUAL_EDIT, jurisdiction_ocdid),
         )
         return (await cur.fetchone()) is not None
 

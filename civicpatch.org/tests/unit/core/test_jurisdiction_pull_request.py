@@ -2,14 +2,14 @@ import base64
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from shared.utils.statuses import PullRequestStatus, SourceRepo
+from shared.utils.statuses import PullRequestStatus
 import yaml
 
 from services.jurisdiction_pull_request import (
     _extract_state,
     merge_jurisdiction_pr,
     open_jurisdiction_edit_pr,
-    open_jurisdiction_url_pr,
+    open_jurisdiction_patch_pr,
 )
 from lib.github.pull_requests import PrAuthor
 
@@ -219,14 +219,14 @@ async def test_open_jurisdiction_edit_pr_fetch_fails():
     assert "Internal Server Error" in error
 
 
-# ── open_jurisdiction_url_pr ──────────────────────────────────────────────────
+# ── open_jurisdiction_patch_pr ──────────────────────────────────────────────────
 
 OPEN_DATA_CONTENT = yaml.dump({"jurisdictions": YAML_ENTRIES}, sort_keys=False, allow_unicode=True)
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
+async def test_open_jurisdiction_patch_pr_patches_url_and_records_change_log():
     with (
         patch(
             "services.jurisdiction_pull_request.github_service.get_github_file_contents",
@@ -247,9 +247,9 @@ async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
             new_callable=AsyncMock,
         ) as mock_register,
     ):
-        pr_number, pr_url, request_id = await open_jurisdiction_url_pr(
+        pr_number, pr_url, request_id = await open_jurisdiction_patch_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
-            url="https://new.example.com",
+            fields={"url": "https://new.example.com"},
             author=AUTHOR,
             user_id="user-1",
         )
@@ -274,7 +274,7 @@ async def test_open_jurisdiction_url_pr_patches_url_and_records_change_log():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_url_pr_skips_change_log_when_url_unchanged():
+async def test_open_jurisdiction_patch_pr_skips_change_log_when_url_unchanged():
     with (
         patch(
             "services.jurisdiction_pull_request.github_service.get_github_file_contents",
@@ -295,9 +295,9 @@ async def test_open_jurisdiction_url_pr_skips_change_log_when_url_unchanged():
             new_callable=AsyncMock,
         ) as mock_register,
     ):
-        await open_jurisdiction_url_pr(
+        await open_jurisdiction_patch_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
-            url="https://old.example.com",
+            fields={"url": "https://old.example.com"},
             author=AUTHOR,
             user_id="user-1",
         )
@@ -307,7 +307,7 @@ async def test_open_jurisdiction_url_pr_skips_change_log_when_url_unchanged():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
+async def test_open_jurisdiction_patch_pr_jurisdiction_not_found():
     content = yaml.dump(
         {"jurisdictions": [{"id": "different-jurisdiction", "name": "Other", "url": "x"}]},
         sort_keys=False,
@@ -323,9 +323,9 @@ async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
             new_callable=AsyncMock,
         ) as mock_open_pr,
     ):
-        pr_number, error, _request_id = await open_jurisdiction_url_pr(
+        pr_number, error, _request_id = await open_jurisdiction_patch_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
-            url="https://new.example.com",
+            fields={"url": "https://new.example.com"},
             author=AUTHOR,
             user_id="user-1",
         )
@@ -337,15 +337,15 @@ async def test_open_jurisdiction_url_pr_jurisdiction_not_found():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_url_pr_fetch_fails():
+async def test_open_jurisdiction_patch_pr_fetch_fails():
     with patch(
         "services.jurisdiction_pull_request.github_service.get_github_file_contents",
         new_callable=AsyncMock,
         return_value=None,
     ):
-        pr_number, error, _request_id = await open_jurisdiction_url_pr(
+        pr_number, error, _request_id = await open_jurisdiction_patch_pr(
             jurisdiction_ocdid=JURISDICTION_OCDID,
-            url="https://new.example.com",
+            fields={"url": "https://new.example.com"},
             author=AUTHOR,
             user_id="user-1",
         )
@@ -377,9 +377,8 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
     ):
         await merge_jurisdiction_pr("42", "approver@example.com", REQUEST_ID)
 
-    mock_merge.assert_awaited_once_with(
-        "42", approved_by="approver@example.com", source_repo=SourceRepo.JURISDICTIONS
-    )
+    # open-data: that is where open_jurisdiction_patch_pr opened it.
+    mock_merge.assert_awaited_once_with("42", approved_by="approver@example.com")
     # This path bypasses do_merge/publish_side_effects, so without this the edit
     # would only appear after the hourly od_sync.
     mock_sync.assert_awaited_once_with(REQUEST_ID, PullRequestStatus.MERGED)

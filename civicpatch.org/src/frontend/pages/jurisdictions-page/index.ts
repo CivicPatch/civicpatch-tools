@@ -17,8 +17,11 @@ import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./officials-editor.js";
 import {
   openPullRequests,
+  peopleEditBlockers,
+  jurisdictionEditBlockers,
   renderOpenPullRequests,
   editingBlockedReason,
+  jurisdictionEditBlockedReason,
   type HistoryEntry,
 } from "./open-pull-requests.js";
 
@@ -56,7 +59,12 @@ function renderDataFlag(data: any) {
 
 // A section, not a disclosure: this is what the record *is*, so it is always on
 // screen. Only scrape history — an archive — stays collapsible.
-function renderDetailsSection(jurisdictionData: any, canEdit: boolean, onSave: (form: any) => Promise<any>) {
+function renderDetailsSection(
+  jurisdictionData: any,
+  canEdit: boolean,
+  onSave: (form: any) => Promise<any>,
+  blockedReason: string | null,
+) {
   const data = jurisdictionData?.data;
 
   return html`
@@ -64,6 +72,11 @@ function renderDetailsSection(jurisdictionData: any, canEdit: boolean, onSave: (
       <div class="jurisdiction-section__head">
         <h2 class="jurisdiction-section__title">Jurisdiction details</h2>
       </div>
+      ${blockedReason
+        ? html`<p class="jurisdiction-section__blocked">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i> ${blockedReason}
+          </p>`
+        : nothing}
       <div class="jurisdiction-details">
         <civ-jurisdiction-details
           .data=${data}
@@ -114,6 +127,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const identities = buildIdentitiesMap(people);
   const entries: HistoryEntry[] = history?.data ?? [];
   const openPrs = openPullRequests(entries);
+  // Blocked independently: each kind only locks the file it already has in flight.
+  const peopleBlockers = peopleEditBlockers(openPrs);
+  const jurisdictionBlockers = jurisdictionEditBlockers(openPrs);
 
   const handleScrapeStartClick = async (details: any) => {
     setScrapeModalOpen(false);
@@ -187,7 +203,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         isScraped: people?.length > 0,
         publishedAt,
         canStartScrape,
-        isScrapeBlocked: openPrs.length > 0,
+        isScrapeBlocked: peopleBlockers.length > 0,
         isJobRunning: !!isJobRunning || isTriggering,
         onScrapeClick: () => setScrapeModalOpen(true),
       })}
@@ -200,16 +216,17 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       <civ-officials-editor
         .people=${people}
         .jurisdictionOcdid=${jurisdiction_ocdid}
-        .canEdit=${!!permissions.JURISDICTION_DATA_EDIT && !openPrs.length}
+        .canEdit=${!!permissions.JURISDICTION_DATA_EDIT && !peopleBlockers.length}
         .isLoading=${peopleLoading}
-        .blockedReason=${editingBlockedReason(openPrs)}
+        .blockedReason=${editingBlockedReason(peopleBlockers)}
         .onPublished=${() => window.location.reload()}
       ></civ-officials-editor>
 
       ${renderDetailsSection(
         jurisdictionData,
-        permissions.JURISDICTION_DATA_EDIT,
+        !!permissions.JURISDICTION_DATA_EDIT && !jurisdictionBlockers.length,
         handleJurisdictionSave,
+        jurisdictionEditBlockedReason(jurisdictionBlockers),
       )}
 
       <details class="jurisdiction-panel" ?open=${!!isJobRunning}>
