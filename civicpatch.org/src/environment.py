@@ -41,7 +41,9 @@ OPTIONAL_ENV_VARS = [
     "FRIENDLY_STORAGE_HOST",
     "TEMPORAL_HOST",
     "TEMPORAL_NAMESPACE",
-    # Only needed to make edits to a jurisdiction
+    # Only needed to make edits to a jurisdiction. Point this at open-data while the
+    # upstream jurisdictions route is being built — the code path stays real, only
+    # the destination is temporary.
     "JURISDICTIONS_REPO_URL",
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",

@@ -14,6 +14,7 @@ from schemas.common import (
     StateJurisdictionSets,
 )
 from shared.schemas import Person
+from shared.utils.statuses import RequestType
 
 logger = logging.getLogger(__name__)
 
@@ -352,14 +353,20 @@ async def get_jurisdiction_history(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.request_id, j.created_at, j.updated_at, j.status, j.progress, pr.url, pr.status
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
+            SELECT r.id::text,
+                   COALESCE(j.created_at, r.created_at),
+                   COALESCE(j.updated_at, r.updated_at),
+                   j.status, j.progress, pr.url, pr.status, r.request_type
+            FROM requests r
+            LEFT JOIN pipeline_runs j ON j.request_id = r.id
             LEFT JOIN pull_requests pr ON pr.request_id = r.id
-            WHERE r.jurisdiction_ocdid = %s AND r.request_type = %s
-            ORDER BY j.created_at DESC;
+            WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
+            ORDER BY COALESCE(j.created_at, r.created_at) DESC;
             """,
-            (jurisdiction_ocdid, "people"),
+            (
+                jurisdiction_ocdid,
+                [RequestType.PEOPLE.value, RequestType.JURISDICTION_MANUAL_EDIT.value],
+            ),
         )
         rows = await cur.fetchall()
         history = []
@@ -376,6 +383,7 @@ async def get_jurisdiction_history(
                     "job_progress": row[4],
                     "pull_request_url": row[5],
                     "pull_request_status": row[6],
+                    "request_type": row[7],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
                 }

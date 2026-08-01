@@ -1,5 +1,6 @@
 import base64
 import logging
+from enum import StrEnum
 
 import environment
 import httpx
@@ -10,11 +11,20 @@ from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import database.requests as requests_db
+import core.jurisdiction_patch as jurisdiction_patch
 import services.change_logs as change_logs
 import services.pull_request_sync as pull_request_sync
-from shared.utils.statuses import PullRequestStatus, SourceRepo
+from shared.utils.statuses import PullRequestStatus
 
 logger = logging.getLogger(__name__)
+
+
+class EditRejection(StrEnum):
+    """A rejected edit that is the caller's mistake, not a server failure. The value
+    doubles as the message shown to them."""
+
+    NO_FIELDS = "No fields to update"
+    NO_CHANGES = "No changes to publish"
 
 
 def _get_jurisdictions_repo_url() -> str:
@@ -39,6 +49,10 @@ async def open_jurisdiction_edit_pr(
     fields: dict,
     author: PrAuthor,
 ) -> tuple[int, str] | tuple[None, str]:
+    """The jurisdictions-repo route. Not yet reachable from the app — the live path
+    is open_jurisdiction_url_pr — but real code, so it can be exercised by pointing
+    JURISDICTIONS_REPO_URL at open-data rather than openstates/jurisdictions.
+    """
     repo_url = _get_jurisdictions_repo_url()
     state = _extract_state(jurisdiction_ocdid)
     file_path = f"data/{state}/local/jurisdictions.yml"
@@ -87,53 +101,48 @@ async def open_jurisdiction_edit_pr(
     )
 
 
-def _find_jurisdiction(doc: dict, jurisdiction_ocdid: str) -> dict | None:
-    for entry in doc.get("jurisdictions", []):
-        if entry.get("id") == jurisdiction_ocdid:
-            return entry
-    return None
-
-
-async def open_jurisdiction_url_pr(
+async def open_jurisdiction_patch_pr(
     jurisdiction_ocdid: str,
-    url: str | None,
+    fields: dict,
     author: PrAuthor,
     user_id: str | None,
 ) -> tuple[int | None, str, str]:
-    """Returns (pull_request_number, url_or_error, request_id)."""
+    """Open a PR patching a jurisdiction's fields, like editing a person: only what
+    was sent is written, and an absent field is left alone rather than cleared.
+
+    Returns (pull_request_number, url_or_error, request_id).
+    """
     state = _extract_state(jurisdiction_ocdid)
     file_path = f"data_source/{state}/local/jurisdictions.yml"
-
     request_id = id_utils.make_request_id()
+
+    patch = jurisdiction_patch.build_patch(fields)
+    if not patch:
+        return None, EditRejection.NO_FIELDS, request_id
 
     raw = await github_service.get_github_file_contents(file_path)
     if not raw:
         return None, f"Failed to fetch {file_path}", request_id
 
     doc = yaml_load(raw)
-    entry = _find_jurisdiction(doc, jurisdiction_ocdid)
+    entry = jurisdiction_patch.find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
-        return (
-            None,
-            f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}",
-            request_id,
-        )
+        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}", request_id
 
-    before_url = entry.get("url")
-    entry["url"] = url
+    before = jurisdiction_patch.current_values(entry, patch)
+    if before == patch:
+        return None, EditRejection.NO_CHANGES, request_id
 
-    branch_name = f"civicpatch/jurisdiction-edit/{request_id}"
-    result = await open_attributed_pr(
-        branch_name=branch_name,
+    changed = ", ".join(sorted(patch))
+    pull_request_number, url_or_error = await open_attributed_pr(
+        branch_name=f"civicpatch/jurisdiction-edit/{request_id}",
         file_path=file_path,
-        content=yaml_dump(doc),
-        commit_message=f"Update url: {jurisdiction_ocdid}",
-        pull_request_title=f"Jurisdiction url edit: {state}/{jurisdiction_ocdid.split('/')[-2]}",
-        pull_request_body=f"Updating url for `{jurisdiction_ocdid}`.",
+        content=yaml_dump(jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, patch)),
+        commit_message=f"Update {changed}: {jurisdiction_ocdid}",
+        pull_request_title=f"Jurisdiction edit: {state}/{jurisdiction_ocdid.split('/')[-2]}",
+        pull_request_body=f"Updating {changed} for `{jurisdiction_ocdid}`.",
         author=author,
     )
-
-    pull_request_number, url_or_error = result
     if pull_request_number is None:
         return None, url_or_error, request_id
 
@@ -142,20 +151,21 @@ async def open_jurisdiction_url_pr(
     await requests_db.register_jurisdiction_edit_request(
         request_id=request_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
-        arguments_json={"url": url},
+        arguments_json=patch,
         pr_number=pull_request_number,
         pr_url=url_or_error,
         requested_by_user_id=user_id,
     )
 
-    if user_id and before_url != url:
+    # The change log records the url specifically, so it only fires when url moved.
+    if user_id and "url" in patch and before.get("url") != patch["url"]:
         await change_logs.record_jurisdiction_edit(
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             jurisdiction_name=entry["name"],
             user_id=user_id,
-            before_url=before_url,
-            after_url=url,
+            before_url=before.get("url"),
+            after_url=patch["url"],
         )
 
     return pull_request_number, url_or_error, request_id
@@ -165,12 +175,10 @@ async def merge_jurisdiction_pr(
     pull_request_number: str, approved_by: str | None, request_id: str
 ) -> None:
     # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
-    #
-    # Every call names the jurisdictions repo. A pr_number only means something
-    # inside its own repo, and these helpers default to open-data.
+    # open-data, not the jurisdictions repo — that is where the PR was opened.
     try:
         mergeable_state = await github_service.get_pull_request_mergeability(
-            pull_request_number, source_repo=SourceRepo.JURISDICTIONS
+            pull_request_number
         )
         if mergeable_state != "clean":
             logger.warning(
@@ -180,9 +188,7 @@ async def merge_jurisdiction_pr(
             )
             return
         merge_error = await github_service.merge_pull_request(
-            pull_request_number,
-            approved_by=approved_by,
-            source_repo=SourceRepo.JURISDICTIONS,
+            pull_request_number, approved_by=approved_by
         )
         if merge_error:
             logger.warning(

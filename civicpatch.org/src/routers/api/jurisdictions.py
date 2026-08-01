@@ -120,14 +120,18 @@ def get_router() -> APIRouter:
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
-        pull_request_number, pull_request_url_or_error, request_id = await jurisdiction_pr_service.open_jurisdiction_url_pr(
+        pull_request_number, pull_request_url_or_error, request_id = await jurisdiction_pr_service.open_jurisdiction_patch_pr(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
-            url=request.url,
+            fields={"url": request.url, "geoid": request.geoid, "population": request.population},
             author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=[user.role] if user.role else []),
             user_id=user.user_id,
         )
         if pull_request_number is None:
-            return JSONResponse({"error": pull_request_url_or_error}, status_code=500)
+            # Nothing to write is the caller's mistake, not a server failure.
+            no_op = pull_request_url_or_error in set(jurisdiction_pr_service.EditRejection)
+            return JSONResponse(
+                {"error": pull_request_url_or_error}, status_code=400 if no_op else 500
+            )
         background_tasks.add_task(
             jurisdiction_pr_service.merge_jurisdiction_pr,
             str(pull_request_number),

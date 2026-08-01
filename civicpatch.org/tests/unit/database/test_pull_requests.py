@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 from database.pull_requests import get_pull_request_data_by_request_id
+from shared.utils.statuses import RequestType
 
 
 def _make_cursor(fetchone_return):
@@ -79,3 +80,20 @@ async def test_returns_row_for_merged_pr():
     assert result is not None
     assert result["pr"]["status"] == "merged"
     assert result["proposed"] == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_lookup_is_scoped_to_people_requests():
+    """The pool filters decide what gets *offered*; this decides what a caller can
+    *ask for*. Without the scope, deeplinking a jurisdiction edit's request_id would
+    resolve as a review card with an empty roster and a Publish button."""
+    cur = _make_cursor(None)
+    with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await get_pull_request_data_by_request_id("req-abc")
+
+    sql, params = cur.execute.await_args.args
+    # Deny-list, not allow-list: request_type defaults to 'scrape' and legacy rows
+    # use other values, so excluding by kind is the only safe direction.
+    assert "r.request_type != %s" in sql
+    assert params[1] == RequestType.JURISDICTION_MANUAL_EDIT

@@ -10,10 +10,8 @@ import shared.utils.id_utils
 from pydantic import BaseModel
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
-import environment
 import lib.cache as cache_service
 from lib.github.auth import _get_github_config, get_default_headers
-from shared.utils.statuses import SourceRepo
 
 
 timeout = httpx.Timeout(60.0)
@@ -37,18 +35,6 @@ class RepoTree(BaseModel):
 ## TODO: Replace bulk sync calls with graphql
 
 logger = logging.getLogger(__name__)
-
-
-def repo_url_for(source_repo: str | None) -> str:
-    """Resolve a stored source_repo key to this environment's url.
-
-    Unknown or missing keys fall back to open-data: every row predating the column
-    is an open-data PR, and that is the safe default for anything unrecognised.
-    """
-    if source_repo == SourceRepo.JURISDICTIONS:
-        return environment.get_env_vars()["JURISDICTIONS_REPO_URL"]
-    _, _, _, open_data_repo_url = _get_github_config()
-    return open_data_repo_url
 
 
 async def trigger_people_job_workflow(
@@ -380,14 +366,10 @@ async def get_pull_request_review_state(pr_number: int) -> str | None:
     return None
 
 
-async def get_pull_request(
-    pull_request_number: str, source_repo: str | None = None
-) -> dict | None:
-    # A PR number only means something within its own repo, so callers holding a
-    # stored row pass its source_repo. The cache key carries it for the same reason.
-    repo_url = repo_url_for(source_repo)
-    url = f"{repo_url}/pulls/{pull_request_number}"
-    cache_key = f"github:pr:{source_repo or SourceRepo.OPEN_DATA}:{pull_request_number}"
+async def get_pull_request(pull_request_number: str) -> dict | None:
+    _, _, _, open_data_repo_url = _get_github_config()
+    url = f"{open_data_repo_url}/pulls/{pull_request_number}"
+    cache_key = f"github:pr:{pull_request_number}"
     return await cached_github_get(url, cache_key)
 
 
@@ -408,9 +390,7 @@ async def close_pull_request(pull_request_number: str) -> bool:
 
 
 async def get_pull_request_mergeability(
-    pull_request_number: str,
-    wait_for_change_from: str | None = None,
-    source_repo: str | None = None,
+    pull_request_number: str, wait_for_change_from: str | None = None
 ) -> str | None:
     """Polls until GitHub has computed mergeability (up to 10 attempts, 2s apart).
     Returns the mergeable_state string ("clean", "dirty", "blocked", etc.)
@@ -418,12 +398,12 @@ async def get_pull_request_mergeability(
 
     If wait_for_change_from is provided, keeps polling until the state differs from
     that value — useful after a branch update to avoid reading a stale result."""
-    repo_url = repo_url_for(source_repo)
+    _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
         for _ in range(10):
             response = await client.get(
-                f"{repo_url}/pulls/{pull_request_number}",
+                f"{open_data_repo_url}/pulls/{pull_request_number}",
                 headers=default_headers,
             )
             if response.status_code != 200:
@@ -440,9 +420,7 @@ async def get_pull_request_mergeability(
 
 
 async def merge_pull_request(
-    pull_request_number: str,
-    approved_by: str | None = None,
-    source_repo: str | None = None,
+    pull_request_number: str, approved_by: str | None = None
 ) -> str | None:
     """Returns None on success, or a GitHub error message string on failure."""
     label = f"Approved by {approved_by}" if approved_by else "Approved by unknown"
@@ -452,13 +430,13 @@ async def merge_pull_request(
         "merge_method": "squash",
     }
 
-    repo_url = repo_url_for(source_repo)
+    _, _, _, open_data_repo_url = _get_github_config()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
         github_message = "Unknown error"
         for attempt in range(2):
             response = await client.put(
-                f"{repo_url}/pulls/{pull_request_number}/merge",
+                f"{open_data_repo_url}/pulls/{pull_request_number}/merge",
                 headers=default_headers,
                 json=data,
             )

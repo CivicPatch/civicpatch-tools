@@ -165,6 +165,27 @@ async def get_request_jurisdiction(request_id: str) -> str | None:
     return row[0] if row else None
 
 
+async def get_open_jurisdiction_edits() -> list[dict]:
+    """Manual edits whose PR is still open, with the patch asked for and the value
+    currently projected — enough to tell whether the edit has landed."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT r.id::text, r.arguments_json, j.data
+            FROM requests r
+            JOIN pull_requests pr ON pr.request_id = r.id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
+            WHERE r.request_type = %s AND pr.status = %s
+            """,
+            (RequestType.JURISDICTION_MANUAL_EDIT, PullRequestStatus.OPEN),
+        )
+        return [
+            {"request_id": r[0], "patch": r[1] or {}, "current": r[2] or {}}
+            for r in await cur.fetchall()
+        ]
+
+
 async def get_request_type(request_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

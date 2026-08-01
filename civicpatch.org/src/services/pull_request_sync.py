@@ -78,7 +78,7 @@ async def sync_single_pr_state(request_id: str):
     pr_number = pull_request_url_to_number(pull_request_url) if pull_request_url else None
     if not pr_number:
         return
-    pr_data = await github_service.get_pull_request(pr_number, pr_metadata["pr"].get("source_repo"))
+    pr_data = await github_service.get_pull_request(pr_number)
     if not pr_data:
         return
     if pr_data.get("merged"):
@@ -196,12 +196,11 @@ async def _close_stale_prs(github_request_ids: set[str]):
         return
     logger.info("sync_open_pr_state: resolving %d stale PR(s)", len(stale_ids))
     for request_id in stale_ids:
-        open_pr = db_open_jobs[request_id]
-        pr_url = open_pr["url"]
+        pr_url = db_open_jobs[request_id]
         pr_number = pull_request_url_to_number(pr_url) if pr_url else None
         status, merged_at = None, None
         if pr_number:
-            pr_data = await github_service.get_pull_request(pr_number, open_pr["source_repo"])
+            pr_data = await github_service.get_pull_request(pr_number)
             if pr_data and pr_data.get("merged"):
                 status, merged_at = PullRequestStatus.MERGED, pr_data.get("merged_at")
             elif pr_data and pr_data.get("state") == PullRequestStatus.CLOSED:

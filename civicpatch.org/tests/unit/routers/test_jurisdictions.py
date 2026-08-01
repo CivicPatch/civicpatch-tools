@@ -49,7 +49,7 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
         patch(
-            "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
+            "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
         ),
@@ -74,7 +74,7 @@ def test_patch_jurisdiction_data_requires_maintainer(client, identity):
     # so it is gated to maintainers alongside the Current tab's people edits.
     client.app.dependency_overrides[get_optional_user] = identity
     with patch(
-        "services.jurisdiction_pull_request.open_jurisdiction_url_pr",
+        "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
         new_callable=AsyncMock,
     ) as mock_open:
         response = client.patch("/jurisdictions/data", json=PATCH_BODY)
