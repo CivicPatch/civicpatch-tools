@@ -22,7 +22,7 @@ import {
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, groupCards, needsReview } from "../../components/review/review-cards.js";
+import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, needsReview } from "../../components/review/review-cards.js";
 import { railPropsFor } from "../../components/review-rail/rail-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
@@ -129,22 +129,24 @@ function ReviewSession(host: ReviewSessionHost) {
   // whether the card is publishable (§9).
   const blockers = blockingErrors(cards);
 
-  // The modal walks the set it was opened from — from Overview, the group that
-  // person was in. Stepping from To review into Unchanged would land on someone
-  // with no visible fields, which is a dead end (§6).
+  // The modal walks the roster in the order the views render it, so stepping
+  // through people matches the list you opened the modal from. groupCards sorts
+  // by status and would step you through a different sequence than the one on
+  // screen (§3, §6).
+  //
+  // It still walks only people in the same state as the one you opened —
+  // stepping from someone with fields to review into someone with none is a
+  // dead end, and needsReview is the same rule the views split on.
   const [openPerson, setOpenPerson] = useState<{ id: string; field: string | null } | null>(null);
   // The modal collapses unchanged fields exactly as Detail does. It has its own
   // set rather than sharing Detail's: expanding someone in the modal is a
   // different intent from expanding them in the list, and sharing would make one
   // silently change the other.
   const [modalExpanded, setModalExpanded] = useState<Set<string>>(new Set());
-  const groups = groupCards(cards);
   const openCard = cards.find((c) => c.personId === openPerson?.id);
   const walkSet = !openCard
     ? []
-    : needsReview(openCard)
-      ? groups.toReview
-      : groups.unchanged;
+    : cards.filter((card) => needsReview(card) === needsReview(openCard));
 
   const handleOpenPerson = (personId: string, fieldKey: string | null) =>
     setOpenPerson({ id: personId, field: fieldKey });

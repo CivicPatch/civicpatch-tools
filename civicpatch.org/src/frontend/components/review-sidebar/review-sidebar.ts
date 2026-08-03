@@ -1,16 +1,15 @@
 import "./review-sidebar.css";
+import "../people-by-source/people-by-source.js";
 import { html } from "lit-html";
 import { component, useEffect } from "haunted";
 import { isChecked, type IssueChecks } from "../review/issue-checks.js";
 import { type Issue } from "../review/field-model.js";
+import { checkedCount } from "./sidebar-model.js";
 import {
-  baselineColumnLabel,
-  checkedCount,
   hasPriorScrape,
   originSourceLabel,
-  sourceRowClass,
   type SourceRow,
-} from "./sidebar-model.js";
+} from "../people-by-source/source-model.js";
 
 // The card's checklist, as a drawer rather than a column in the info row. A tick
 // is personal progress in this browser — never a team signal — which is why the
@@ -64,11 +63,6 @@ function ReviewSidebar(host: ReviewSidebarHost) {
     };
   }, [open]);
 
-  const checkmark = (value: boolean) =>
-    value
-      ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color);"></i>`
-      : html`<i class="fa-solid fa-xmark" style="color: var(--pico-del-color);"></i>`;
-
   const checklistSection = () =>
     issues.length
       ? html`
@@ -88,32 +82,6 @@ function ReviewSidebar(host: ReviewSidebarHost) {
           <p class="review-sidebar__privacy">Only you can see these ticks.</p>
         `
       : html`<p class="review-sidebar__empty">Nothing flagged on this card.</p>`;
-
-  const sourceSection = () =>
-    peopleBySource.length
-      ? html`
-          <table class="review-sidebar__table" role="grid">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>${baselineColumnLabel(originSource)}</th>
-                <th>This scrape</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${peopleBySource.map(
-                (row) => html`
-                  <tr class=${sourceRowClass(row)}>
-                    <td>${row.name}</td>
-                    <td>${checkmark(row.in_research)}</td>
-                    <td>${checkmark(row.in_data)}</td>
-                  </tr>
-                `,
-              )}
-            </tbody>
-          </table>
-        `
-      : html`<p class="review-sidebar__empty">No source comparison for this card.</p>`;
 
   return html`
     <div
@@ -150,7 +118,10 @@ function ReviewSidebar(host: ReviewSidebarHost) {
                 No previous scrape to compare against — the baseline is
                 ${originSourceLabel(originSource)} research.
               </p>`}
-          ${sourceSection()}
+          <civ-people-by-source
+            .rows=${peopleBySource}
+            .originSource=${originSource}
+          ></civ-people-by-source>
         </section>
       </div>
     </aside>

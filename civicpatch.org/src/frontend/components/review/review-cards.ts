@@ -162,17 +162,7 @@ export function cardFields(cards: ReviewCard[]) {
   return cards.map(({ personId, surviving }) => ({ personId, surviving }));
 }
 
-// ── Grouping and order (§3) ──────────────────────────────────────────────────
-
-// One constant so every consumer orders the same way.
-export const STATUS_ORDER: PersonStatusKey[] = [
-  PersonStatus.CHANGED,
-  PersonStatus.ADDED,
-  PersonStatus.UNCHANGED,
-  PersonStatus.REMOVED,
-  PersonStatus.RESTORED,
-  PersonStatus.DELETED,
-];
+// ── What needs a decision (§3) ───────────────────────────────────────────────
 
 // Deletion counts deliberately: otherwise someone marked for removal with nothing
 // else changed would hide in the faded group.
@@ -186,27 +176,6 @@ export function needsReview(card: ReviewCard): boolean {
   );
 }
 
-export interface GroupedCards {
-  toReview: ReviewCard[];
-  unchanged: ReviewCard[];
-}
-
-// Ordered by status, then issues first within each bucket. Sorting is stable in
-// JS, so cards with equal keys keep the slot order buildReviewCards gave them.
-export function groupCards(cards: ReviewCard[]): GroupedCards {
-  const rank = (card: ReviewCard) => {
-    const status = STATUS_ORDER.indexOf(card.status);
-    return status === -1 ? STATUS_ORDER.length : status;
-  };
-  const ordered = [...cards].sort((a, b) => {
-    if (rank(a) !== rank(b)) return rank(a) - rank(b);
-    return Number(b.issues.length > 0) - Number(a.issues.length > 0);
-  });
-  return {
-    toReview: ordered.filter(needsReview),
-    unchanged: ordered.filter((card) => !needsReview(card)),
-  };
-}
 
 // ── The publish set, and what blocks it (§7, §9) ─────────────────────────────
 

@@ -1,0 +1,39 @@
+/* ── Source comparison table ── */
+
+/* table-layout: fixed, or the origin-source label ("Google Gemini") sets its
+   column width and pushes the two check columns off a narrow container's edge.
+   It is drawn in a 24rem drawer as well as a full-width card. */
+.people-by-source {
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    font-size: var(--text-sm);
+}
+
+.people-by-source th,
+.people-by-source td {
+    padding: 0.3rem 0.4rem;
+    overflow-wrap: anywhere;
+}
+
+.people-by-source th:not(:first-child),
+.people-by-source td:not(:first-child) {
+    width: 5rem;
+    text-align: center;
+}
+
+/* The tint sits behind the check and cross, not instead of them: the icons say
+   which side has the person, the row says which way the roster moved. */
+.people-by-source__row--added td {
+    background-color: var(--pico-ins-background);
+}
+
+.people-by-source__row--dropped td {
+    background-color: var(--pico-del-background);
+}
+
+.people-by-source__empty {
+    margin: 0.35rem 0 0;
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+}
