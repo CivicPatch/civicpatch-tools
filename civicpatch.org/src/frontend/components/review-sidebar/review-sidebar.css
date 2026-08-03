@@ -224,11 +224,11 @@ review-sidebar-trigger {
 }
 
 /* The tint sits behind the check and cross, not instead of them: the icons say
-   which side has the person, the row says whether that is a gain or a loss. */
-.review-sidebar__row--gained td {
+   which side has the person, the row says which way the roster moved. */
+.review-sidebar__row--added td {
     background-color: var(--pico-ins-background);
 }
 
-.review-sidebar__row--lost td {
+.review-sidebar__row--dropped td {
     background-color: var(--pico-del-background);
 }

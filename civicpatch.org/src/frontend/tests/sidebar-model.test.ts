@@ -93,14 +93,17 @@ describe("baselineColumnLabel", () => {
 });
 
 describe("sourceRowClass", () => {
-  it("tints a row the research found but the data lacks as a gain", () => {
+  // The same two conditions build_review_summary calls MISSING_OFFICIAL and
+  // EXTRA_OFFICIAL, so the tint has to agree with the checklist sitting above
+  // it: baseline-only is a drop, this-scrape-only is an addition.
+  it("tints a name the baseline had and this scrape lost as dropped", () => {
     expect(sourceRowClass(row({ in_research: true, in_data: false })))
-      .toBe("review-sidebar__row--gained");
+      .toBe("review-sidebar__row--dropped");
   });
 
-  it("tints a row the data has but the research missed as a loss", () => {
+  it("tints a name only this scrape has as added", () => {
     expect(sourceRowClass(row({ in_research: false, in_data: true })))
-      .toBe("review-sidebar__row--lost");
+      .toBe("review-sidebar__row--added");
   });
 
   // Only rows needing a decision are tinted — agreeing on both sides gets
