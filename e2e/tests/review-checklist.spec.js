@@ -5,17 +5,35 @@
  * Ticks are localStorage, scoped to one card and one browser. They are personal
  * progress, never a team signal — which is why they survive a reload, stay
  * available on a read-only card, and say so on screen.
+ *
+ * The checklist lives in a drawer opened from the step-nav, so every test here
+ * opens it first. The trigger is the only thing on screen saying unresolved
+ * issues exist, which is why its count is asserted alongside the list.
+ *
+ * The drawer is one scrolling pane: the ticks, then By source beneath them.
  */
 
 import { test, expect } from "../fixtures/index.js";
 import { MARKERS_REQUEST_ID, READ_ONLY_REQUEST_ID } from "../fixtures/db.js";
 import { openDetail, railFor } from "./helpers/review-card.js";
 
-const items = (page) => page.locator(".review-checklist__item");
+const items = (page) => page.locator(".review-sidebar__item");
+const trigger = (page) => page.locator(".review-sidebar__trigger");
+const count = (page) => page.locator(".review-sidebar__trigger-count");
+
+const openDrawer = async (page) => {
+  await trigger(page).click();
+  await expect(page.locator(".review-sidebar")).toBeVisible();
+};
+
+const closeDrawer = async (page) => {
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".review-sidebar")).toHaveAttribute("inert", "");
+};
 
 const openMarkers = async (page) => {
   await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
-  await expect(page.locator(".review-checklist")).toBeVisible();
+  await expect(trigger(page)).toBeVisible();
 };
 
 test.describe("Issue checklist", () => {
@@ -23,23 +41,23 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
+    await openDrawer(page);
 
     // extra_official (person), duplicate_unique_role (person + field) and
     // missing_official — the last has no person_ids, so it appears ONLY here.
     await expect(items(page)).toHaveCount(3);
-    await expect(page.locator(".review-checklist")).toContainText(
+    await expect(page.locator(".review-sidebar")).toContainText(
       "Dropped official",
     );
-    await expect(page.locator(".review-checklist__progress")).toContainText(
-      "0 of 3",
-    );
+    await expect(count(page)).toContainText("0/3");
   });
 
   test("a tick is personal progress, and says so", async ({
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
-    await expect(page.locator(".review-checklist__privacy")).toContainText(
+    await openDrawer(page);
+    await expect(page.locator(".review-sidebar__privacy")).toContainText(
       "Only you",
     );
   });
@@ -48,28 +66,29 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
+    await openDrawer(page);
     const first = items(page).filter({ hasText: "Extra official" });
     await first.locator("input").check();
-    await expect(first).toHaveClass(/review-checklist__item--done/);
-    await expect(page.locator(".review-checklist__progress")).toContainText(
-      "1 of 3",
-    );
+    await expect(first).toHaveClass(/review-sidebar__item--done/);
+    await expect(count(page)).toContainText("1/3");
 
+    // The count is on the trigger, so a reload proves persistence without
+    // reopening the drawer.
     await page.reload();
-    await expect(page.locator(".review-checklist__progress")).toContainText(
-      "1 of 3",
-    );
+    await expect(count(page)).toContainText("1/3");
   });
 
   test("ticking clears the marker on the card it anchors to", async ({
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
+    // Detail first: once the drawer is open its scrim covers the view tabs.
     await openDetail(page);
 
     const carol = railFor(page, "Carol Extra");
     await expect(carol.locator(".review-rail__issue--row")).toHaveCount(1);
 
+    await openDrawer(page);
     await items(page)
       .filter({ hasText: "Extra official" })
       .locator("input")
@@ -93,6 +112,8 @@ test.describe("Issue checklist", () => {
       .locator(".review-rail__issue")
       .filter({ hasText: "marked as unique" });
     await expect(shared).toHaveCount(2);
+
+    await openDrawer(page);
     await items(page)
       .filter({ hasText: "marked as unique" })
       .locator("input")
@@ -104,34 +125,93 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
+    await openDrawer(page);
     await items(page).first().locator("input").check();
-    await expect(page.locator(".review-checklist__progress")).toContainText(
-      "1 of 3",
-    );
+    await expect(count(page)).toContainText("1/3");
 
     await page.goto(`/review/session?request_id=${READ_ONLY_REQUEST_ID}`);
     await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
-    await expect(page.locator(".review-checklist__progress")).toContainText(
-      "1 of 3",
-    );
+    await expect(count(page)).toContainText("1/3");
   });
 
-  test("stays tickable on a read-only card, and hidden on Preview", async ({
+  test("stays tickable on a read-only card", async ({
     authenticatedPage: page,
   }) => {
-    await openMarkers(page);
-    // Preview is the published result; issues belong to the review (§8.3).
-    await page
-      .locator(".review-page__view-tab", { hasText: "Preview" })
-      .click();
-    await expect(page.locator(".review-checklist")).toHaveCount(0);
-
     // A published card can still be read through and ticked off — the tick is
     // progress in this browser, not a mutation of the card (§8.3, §10).
     await page.goto(`/review/session?request_id=${READ_ONLY_REQUEST_ID}`);
+    await openDrawer(page);
     const readOnlyItems = items(page);
     if (await readOnlyItems.count()) {
       await expect(readOnlyItems.first().locator("input")).toBeEnabled();
     }
+  });
+
+  // Reverses the previous "hidden on Preview" rule. That test verified the
+  // checklist is hidden on Preview (§8.3 — issues belong to the review, not the
+  // published roster). It now verifies the trigger stays available there,
+  // because the trigger is the only signal that unresolved issues exist and
+  // hiding it on the tab where publishing is decided is worse than the reason
+  // for hiding it.
+  test("stays reachable from the Preview tab", async ({
+    authenticatedPage: page,
+  }) => {
+    await openMarkers(page);
+    await page
+      .locator(".review-page__view-tab", { hasText: "Preview" })
+      .click();
+
+    await expect(trigger(page)).toBeVisible();
+    await expect(count(page)).toContainText("0/3");
+
+    await openDrawer(page);
+    await expect(items(page)).toHaveCount(3);
+  });
+
+  test("closes on Escape and returns focus to the trigger", async ({
+    authenticatedPage: page,
+  }) => {
+    await openMarkers(page);
+    await openDrawer(page);
+    await closeDrawer(page);
+    await expect(trigger(page)).toBeFocused();
+  });
+
+  test("shows the source comparison below the checklist, not behind a tab", async ({
+    authenticatedPage: page,
+  }) => {
+    await openMarkers(page);
+    await openDrawer(page);
+
+    // Both are on screen at once — no switching, nothing hidden.
+    await expect(items(page)).toHaveCount(3);
+    await expect(page.locator(".review-sidebar__table")).toBeVisible();
+    await expect(page.locator(".review-sidebar__section-title")).toContainText(
+      "Since last scrape",
+    );
+
+    // Only rows needing a decision are tinted; Alice is on both sides and gets
+    // nothing. Carol is the extra official, Dave the dropped one.
+    await expect(page.locator(".review-sidebar__row--gained")).toHaveCount(1);
+    await expect(page.locator(".review-sidebar__row--lost")).toHaveCount(1);
+  });
+
+  // This fixture has no origin_source, so the collector never had a previous
+  // scrape to compare against — the table is a first capture and says so.
+  test("says what the baseline is when there was no previous scrape", async ({
+    authenticatedPage: page,
+  }) => {
+    await openMarkers(page);
+    await openDrawer(page);
+
+    await expect(page.locator(".review-sidebar__note")).toContainText(
+      "No previous scrape",
+    );
+    await expect(page.locator(".review-sidebar__table thead")).toContainText(
+      "Research",
+    );
+    await expect(page.locator(".review-sidebar__table thead")).toContainText(
+      "This scrape",
+    );
   });
 });

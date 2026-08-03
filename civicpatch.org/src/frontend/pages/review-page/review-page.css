@@ -272,7 +272,8 @@
 
 /* the component host dissolves so its .review-page__header child becomes a direct
    flex item of .review-page — otherwise position:sticky is trapped inside the host */
-review-session-controls {
+review-session-controls,
+review-session-actions {
     display: contents;
 }
 
@@ -483,11 +484,6 @@ report-issue-button {
     color: var(--pico-primary-inverse);
 }
 
-.review-page__info-row > civ-review-checklist {
-    flex: 1 1 20rem;
-    min-width: 0;
-}
-
 .review-page__left-col {
     display: flex;
     flex-direction: column;
@@ -576,13 +572,20 @@ report-issue-button {
     color: #fff;
 }
 
+/* A first capture has no previous state to fall back on, so publishing it is
+   the one irreversible thing on this page — it reads as a warning rather than
+   as the muted aside it used to be. Tinted with color-mix rather than a
+   --pico-warn-background, which does not exist; the same technique
+   review-overview uses for its state tints. */
 .review-page__baseline-banner {
-    text-align: center;
-    padding: 0.75rem 1rem;
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    padding: 0.55rem 0.7rem;
     font-size: var(--text-sm);
-    color: var(--pico-muted-color);
-    background: var(--pico-card-background-color);
-    border: 1px solid var(--pico-muted-border-color);
+    color: var(--civ-text);
+    background: color-mix(in srgb, var(--pico-warn-color) 14%, var(--pico-card-background-color));
+    border: 1px solid var(--pico-warn-color);
     border-radius: var(--pico-border-radius);
 }
 

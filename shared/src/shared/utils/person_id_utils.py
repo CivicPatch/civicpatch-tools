@@ -6,6 +6,41 @@ from shared.utils.email_utils import normalize_email
 from shared.utils.name_utils import best_identity_match, build_canonical_map
 
 
+def _unmatched(person: dict, duplicate_match: bool = False) -> dict:
+    return {
+        "id": person.get("id") or str(uuid.uuid4()),
+        "person": None,
+        "ambiguous": False,
+        "duplicate_match": duplicate_match,
+    }
+
+
+def _resolution(person: dict, matches: List[Person], claimed_ids: set) -> dict:
+    if not matches:
+        return _unmatched(person)
+    if len(matches) > 1:
+        return {
+            "id": ":".join(m.id for m in matches),
+            "person": matches,
+            "ambiguous": True,
+            "duplicate_match": False,
+        }
+    # Two entries resolving to one existing person means the source listed an
+    # official twice, or one of them matched wrongly. Handing out the id again
+    # would be worse than either: every consumer keys people by id, so the pair
+    # collapses into a single record and one person's data is dropped without
+    # ever being shown. The later entry keeps an identity of its own instead,
+    # which surfaces it as a new person for a reviewer to judge.
+    if matches[0].id in claimed_ids:
+        return _unmatched(person, duplicate_match=True)
+    return {
+        "id": matches[0].id,
+        "person": matches[0],
+        "ambiguous": False,
+        "duplicate_match": False,
+    }
+
+
 def resolve_people_ids(
     people_to_resolve: List[dict],
     people: List[Person],
@@ -13,30 +48,14 @@ def resolve_people_ids(
 ) -> List[dict]:
     canonical_map = build_canonical_map(people, identities)
     results = []
+    claimed_ids: set[str] = set()
     for p in people_to_resolve:
         matches = resolve_person_id(
             p.get("name"), p.get("email"), people, canonical_map, identities
         )
-        if not matches:
-            results.append(
-                {
-                    "id": p.get("id") or str(uuid.uuid4()),
-                    "person": None,
-                    "ambiguous": False,
-                }
-            )
-        elif len(matches) == 1:
-            results.append(
-                {"id": matches[0].id, "person": matches[0], "ambiguous": False}
-            )
-        else:
-            results.append(
-                {
-                    "id": ":".join(m.id for m in matches),
-                    "person": matches,
-                    "ambiguous": True,
-                }
-            )
+        result = _resolution(p, matches, claimed_ids)
+        claimed_ids.add(result["id"])
+        results.append(result)
     return results
 
 

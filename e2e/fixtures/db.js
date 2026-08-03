@@ -629,6 +629,14 @@ export async function seedE2eFixtures() {
           field: null,
         },
       ],
+      // The drawer's since-last-scrape table, matching the issues above:
+      // Carol is the extra official (this scrape only), Dave the dropped one
+      // (baseline only), Alice appears on both sides and needs no decision.
+      people_by_source: [
+        { name: "Carol Extra", in_research: false, in_data: true },
+        { name: "Dave Absent", in_research: true, in_data: false },
+        { name: "Alice Mayor", in_research: true, in_data: true },
+      ],
     };
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)

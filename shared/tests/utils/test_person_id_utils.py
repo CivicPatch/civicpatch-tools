@@ -185,3 +185,69 @@ def test_resolve_people_ids_multiple_people():
     )
     assert results[0]["id"] == "id-a"
     assert results[1]["id"] == "id-b"
+
+
+def test_resolve_people_ids_never_hands_out_the_same_id_twice():
+    # A source page that lists one official twice — under two committees, say —
+    # sends two entries that resolve to the same existing person. Reusing the id
+    # would collapse the pair downstream, where people are keyed by id, and drop
+    # one of them without ever showing it.
+    person = make_person("Ruben Gutierrez, Jr.", id="abc-123")
+    identities = {"Ruben Gutierrez, Jr.": []}
+
+    results = resolve_people_ids(
+        [
+            {"id": None, "name": "Ruben Gutierrez, Jr.", "email": None},
+            {"id": None, "name": "Ruben Gutierrez, Jr.", "email": None},
+        ],
+        [person],
+        identities,
+    )
+
+    assert results[0]["id"] == "abc-123"
+    assert results[0]["duplicate_match"] is False
+    assert results[1]["id"] != "abc-123"
+    assert results[1]["duplicate_match"] is True
+    # The second is not claimed to be the existing person, because it is not
+    # known to be — a reviewer decides.
+    assert results[1]["person"] is None
+
+
+def test_resolve_people_ids_collision_via_alias():
+    # Merging records the absorbed name as an alias, so a later scrape returning
+    # both names resolves both to the survivor. Same collision, different route.
+    person = make_person("Robert Smith", id="survivor-1")
+    identities = {"Robert Smith": ["Bob Smith"]}
+
+    results = resolve_people_ids(
+        [
+            {"id": None, "name": "Robert Smith", "email": None},
+            {"id": None, "name": "Bob Smith", "email": None},
+        ],
+        [person],
+        identities,
+    )
+
+    assert results[0]["id"] == "survivor-1"
+    assert results[1]["id"] != "survivor-1"
+    assert results[1]["duplicate_match"] is True
+
+
+def test_resolve_people_ids_distinct_people_keep_their_matches():
+    # The guard must not fire on ordinary batches: two different officials each
+    # matching their own record both keep the id they matched.
+    person_a = make_person("Ruben Gutierrez, Jr.", id="id-a")
+    person_b = make_person("Ricardo Richie Rangel, Jr.", id="id-b")
+    identities = {"Ruben Gutierrez, Jr.": [], "Ricardo Richie Rangel, Jr.": []}
+
+    results = resolve_people_ids(
+        [
+            {"id": None, "name": "Ruben Gutierrez, Jr.", "email": None},
+            {"id": None, "name": "Ricardo Richie Rangel, Jr.", "email": None},
+        ],
+        [person_a, person_b],
+        identities,
+    )
+
+    assert [r["id"] for r in results] == ["id-a", "id-b"]
+    assert all(r["duplicate_match"] is False for r in results)

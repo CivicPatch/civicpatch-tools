@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { component } from "haunted";
+import "../../components/review-sidebar/review-sidebar-trigger.js";
 
 export interface Progress {
   entryNumber: number;
@@ -22,14 +23,22 @@ const BACK_EVENT = "back";
 const ADVANCE_EVENT = "advance";
 const NAVIGATE_TO_EVENT = "navigate-to";
 
+// The checklist trigger rides in here rather than in .review-page__actions
+// because the step-nav is the only part of the header that stays sticky below
+// 768px — the header itself becomes `display: contents` and the action buttons
+// drop into normal flow and scroll away. The trigger is the drawer's only
+// affordance, so it cannot be allowed to scroll off. Two forwarded numbers, no
+// checklist logic.
 type ReviewSessionControlsHost = HTMLElement & {
   progress: Progress;
   hasSession: boolean;
   hasNext: boolean;
+  checklistDone: number;
+  checklistTotal: number;
 };
 
 function ReviewSessionControls(host: ReviewSessionControlsHost) {
-  const { progress, hasSession, hasNext } = host;
+  const { progress, hasSession, hasNext, checklistDone, checklistTotal } = host;
   const { entryNumber, hasPrev, resolvedEntryNumbers, savedEntryNumbers, failedEntryNumbers, frontierEntry, total } = progress ?? {};
   const displayMax = hasSession ? total : entryNumber;
 
@@ -53,9 +62,19 @@ function ReviewSessionControls(host: ReviewSessionControlsHost) {
       new CustomEvent(NAVIGATE_TO_EVENT, { detail: { entry_number: entry }, bubbles: true, composed: true }),
     );
 
-  // A deeplinked card has no queue to step through, but the empty nav still
-  // holds the header's left column so the actions stay right-aligned.
-  if (!hasSession) return html`<div class="review-page__step-nav"></div>`;
+  const checklistTrigger = html`
+    <review-sidebar-trigger
+      .done=${checklistDone}
+      .total=${checklistTotal}
+    ></review-sidebar-trigger>
+  `;
+
+  // A deeplinked card has no queue to step through, but the nav still holds the
+  // header's left column so the actions stay right-aligned — and it still needs
+  // the checklist trigger, since arriving from a PR link is a normal way in.
+  if (!hasSession) {
+    return html`<div class="review-page__step-nav">${checklistTrigger}</div>`;
+  }
 
   return html`
     <div class="review-page__step-nav">
@@ -72,6 +91,7 @@ function ReviewSessionControls(host: ReviewSessionControlsHost) {
         })}
       </div>
       <button class="btn-sm review-page__next-btn" @click=${handleAdvance} ?disabled=${!hasNext}>Next <i class="fa-solid fa-arrow-right"></i></button>
+      ${checklistTrigger}
     </div>
   `;
 }
