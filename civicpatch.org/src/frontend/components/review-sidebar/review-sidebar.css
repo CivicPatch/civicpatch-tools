@@ -199,36 +199,3 @@ review-sidebar-trigger {
     font-size: var(--text-xs);
     color: var(--pico-muted-color);
 }
-
-/* ── Source table ── */
-
-/* table-layout: fixed, or the origin-source label ("Google Gemini") sets its
-   column width and pushes the two check columns off the drawer's edge. */
-.review-sidebar__table {
-    table-layout: fixed;
-    width: 100%;
-    margin: 0;
-    font-size: var(--text-sm);
-}
-
-.review-sidebar__table th,
-.review-sidebar__table td {
-    padding: 0.3rem 0.4rem;
-    overflow-wrap: anywhere;
-}
-
-.review-sidebar__table th:not(:first-child),
-.review-sidebar__table td:not(:first-child) {
-    width: 5rem;
-    text-align: center;
-}
-
-/* The tint sits behind the check and cross, not instead of them: the icons say
-   which side has the person, the row says which way the roster moved. */
-.review-sidebar__row--added td {
-    background-color: var(--pico-ins-background);
-}
-
-.review-sidebar__row--dropped td {
-    background-color: var(--pico-del-background);
-}

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   buildReviewCards,
   cardFields,
-  groupCards,
+  needsReview,
   publishSet,
   blockingErrors,
   bySeat,
@@ -183,26 +183,24 @@ describe("cardFields", () => {
   });
 });
 
-describe("needsReview / groupCards", () => {
+describe("needsReview", () => {
   const changed = (id: string) => ({
     existing: [person(id)],
     currentPeople: [person(id, { emails: ["x@y.gov"] })],
   });
 
-  it("puts a person with surviving fields in To review", () => {
-    const { toReview, unchanged } = groupCards(build(changed("a")));
-    expect(toReview.map((c) => c.personId)).toEqual(["a"]);
-    expect(unchanged).toEqual([]);
+  const only = (cards: ReturnType<typeof build>) => cards[0];
+
+  it("is true for a person with surviving fields", () => {
+    expect(needsReview(only(build(changed("a"))))).toBe(true);
   });
 
-  it("puts an untouched person in Unchanged", () => {
+  it("is false for an untouched person", () => {
     const cards = build({ existing: [person("a")], currentPeople: [person("a")] });
-    const { toReview, unchanged } = groupCards(cards);
-    expect(toReview).toEqual([]);
-    expect(unchanged.map((c) => c.personId)).toEqual(["a"]);
+    expect(needsReview(only(cards))).toBe(false);
   });
 
-  it("puts a person carrying only a row-level issue in To review", () => {
+  it("is true for a person carrying only a row-level issue", () => {
     // No field moved and nothing is deleted — the issue is the whole reason.
     const issue: Issue = { code: "extra_official", message: "…", person_ids: ["a"] };
     const cards = build({
@@ -210,44 +208,16 @@ describe("needsReview / groupCards", () => {
       currentPeople: [person("a")],
       issues: [issue],
     });
-    expect(groupCards(cards).toReview.map((c) => c.personId)).toEqual(["a"]);
+    expect(needsReview(only(cards))).toBe(true);
   });
 
-  it("puts a person who is only deleted in To review — the one decision on the card", () => {
+  it("is true for a person who is only deleted — the one decision on the card", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
       removedIds: new Set(["a"]),
     });
-    expect(groupCards(cards).toReview.map((c) => c.personId)).toEqual(["a"]);
-  });
-
-  it("orders by status: changed, added, unchanged, removed", () => {
-    const cards = build({
-      existing: [person("gone"), person("same"), person("chg")],
-      currentPeople: [
-        person("same"),
-        person("chg", { emails: ["x@y.gov"] }),
-        person("new"),
-      ],
-    });
-    const { toReview, unchanged } = groupCards(cards);
-    expect(toReview.map((c) => c.personId)).toEqual(["chg", "new", "gone"]);
-    expect(unchanged.map((c) => c.personId)).toEqual(["same"]);
-  });
-
-  it("puts issue-carrying cards first within their bucket", () => {
-    const issue: Issue = { code: "extra_official", message: "…", person_ids: ["b"] };
-    const cards = build({
-      existing: [person("a"), person("b")],
-      currentPeople: [
-        person("a", { emails: ["a@y.gov"] }),
-        person("b", { emails: ["b@y.gov"] }),
-      ],
-      issues: [issue],
-    });
-    // Both changed; b carries the issue, so b leads.
-    expect(groupCards(cards).toReview.map((c) => c.personId)).toEqual(["b", "a"]);
+    expect(needsReview(only(cards))).toBe(true);
   });
 });
 

@@ -58,11 +58,3 @@
 .review-popover::backdrop {
     background: rgba(0, 0, 0, 0.4);
 }
-
-.row-extra td {
-    background-color: var(--pico-ins-background);
-}
-
-.row-missing td {
-    background-color: var(--pico-del-background);
-}

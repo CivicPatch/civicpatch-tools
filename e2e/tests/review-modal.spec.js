@@ -65,18 +65,23 @@ test.describe("Review modal", () => {
     await expect(fields).toHaveCount(11);
   });
 
-  test("Prev / Next move through the set and the sidebar follows", async ({
+  test("Prev / Next move through the set in the order the roster is listed", async ({
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
-    await expect(page.locator(".review-modal__pos")).toContainText("3 of 18");
+    // The walk order is the roster's own, so stepping through the modal matches
+    // the list you opened it from rather than a status-sorted sequence. The
+    // overview is still mounted behind the modal, so it can be read here.
+    const rosterNames = await page.locator(".review-row__name").allTextContents();
+    await expect(page.locator(".review-modal__pos")).toContainText("1 of 18");
 
     await page.locator('.review-modal__nav-btn[title*="Next"]').click();
-    await expect(page.locator(".review-modal__pos")).toContainText("4 of 18");
-    await expect(page.locator(".review-modal__person--on")).toContainText("Councillor 05 Scale");
+    await expect(page.locator(".review-modal__pos")).toContainText("2 of 18");
+    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[1]);
 
     await page.locator('.review-modal__nav-btn[title*="Previous"]').click();
-    await expect(page.locator(".review-modal__pos")).toContainText("3 of 18");
+    await expect(page.locator(".review-modal__pos")).toContainText("1 of 18");
+    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[0]);
   });
 
   test("edits apply live and survive closing — Done keeps, it does not commit", async ({

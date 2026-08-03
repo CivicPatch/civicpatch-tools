@@ -185,7 +185,7 @@ test.describe("Issue checklist", () => {
 
     // Both are on screen at once — no switching, nothing hidden.
     await expect(items(page)).toHaveCount(3);
-    await expect(page.locator(".review-sidebar__table")).toBeVisible();
+    await expect(page.locator(".people-by-source")).toBeVisible();
     await expect(page.locator(".review-sidebar__section-title")).toContainText(
       "Since last scrape",
     );
@@ -194,9 +194,9 @@ test.describe("Issue checklist", () => {
     // official and reads as added, Dave the dropped one and reads as dropped.
     // Alice is on both sides and gets nothing.
     const rowFor = (name) =>
-      page.locator(".review-sidebar__table tbody tr").filter({ hasText: name });
-    await expect(rowFor("Carol Extra")).toHaveClass(/review-sidebar__row--added/);
-    await expect(rowFor("Dave Absent")).toHaveClass(/review-sidebar__row--dropped/);
+      page.locator(".people-by-source tbody tr").filter({ hasText: name });
+    await expect(rowFor("Carol Extra")).toHaveClass(/people-by-source__row--added/);
+    await expect(rowFor("Dave Absent")).toHaveClass(/people-by-source__row--dropped/);
     await expect(rowFor("Alice Mayor")).toHaveClass(/^$/);
   });
 
@@ -211,10 +211,10 @@ test.describe("Issue checklist", () => {
     await expect(page.locator(".review-sidebar__note")).toContainText(
       "No previous scrape",
     );
-    await expect(page.locator(".review-sidebar__table thead")).toContainText(
+    await expect(page.locator(".people-by-source thead")).toContainText(
       "Research",
     );
-    await expect(page.locator(".review-sidebar__table thead")).toContainText(
+    await expect(page.locator(".people-by-source thead")).toContainText(
       "This scrape",
     );
   });

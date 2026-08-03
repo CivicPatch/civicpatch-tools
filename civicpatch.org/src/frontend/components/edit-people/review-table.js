@@ -1,19 +1,9 @@
-import { html, component, useState, useEffect } from 'haunted';
+import { html, component } from 'haunted';
+// The same comparison the review drawer draws. Shared so the two cannot disagree
+// about which direction is a gain — they did, once.
+import '../people-by-source/people-by-source.ts';
 
-const ORIGIN_SOURCE_LABELS = {
-  google_gemini: "Google Gemini",
-  existing: "Existing",
-};
-
-function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeople }) {
-  const researchLabel = ORIGIN_SOURCE_LABELS[reviewData?.origin_source] ?? "Research";
-
-  function renderCheckmark(value) {
-    return value
-      ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color, #4caf50);"></i>`
-      : html`<i class="fa-solid fa-xmark" style="color: var(--pico-del-color, #e53935);"></i>`;
-  }
-
+function ReviewTable({ reviewData }) {
   function renderIssues() {
     if (!reviewData?.issues?.length) return '';
     return html`
@@ -32,36 +22,10 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
   }
 
   function renderTable() {
-    if (!reviewData?.people_by_source?.length) {
-      return html`<p>No data to display.</p>`;
-    }
-
-    return html`
-      <table role="grid">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th style="text-align: center;">${researchLabel}</th>
-            <th style="text-align: center;">Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${reviewData.people_by_source.map(row => html`
-            <tr class=${getRowClass(row)}>
-              <td>${row.name}</td>
-              <td style="text-align: center;">${renderCheckmark(row.in_research)}</td>
-              <td style="text-align: center;">${renderCheckmark(row.in_data)}</td>
-            </tr>
-          `)}
-        </tbody>
-      </table>
-    `;
-  }
-
-  function getRowClass(row) {
-    if (!row.in_research && row.in_data) return 'row-extra';
-    if (row.in_research && !row.in_data) return 'row-missing';
-    return '';
+    return html`<civ-people-by-source
+      .rows=${reviewData?.people_by_source ?? []}
+      .originSource=${reviewData?.origin_source ?? null}
+    ></civ-people-by-source>`;
   }
 
   if (!reviewData) {
@@ -79,8 +43,5 @@ function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeopl
 
 customElements.define(
   'civ-review-table',
-  component(ReviewTable, {
-    useShadowDOM: false,
-    observedAttributes: ['jurisdiction_ocdid', 'branch_name']
-  })
+  component(ReviewTable, { useShadowDOM: false })
 );
