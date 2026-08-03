@@ -165,12 +165,18 @@ test.describe("Review overview", () => {
     await openOverview(page);
 
     // This replaced "a field name opens the editor focused on that field". Field
-    // names and source numbers used to be buttons and links; anything interactive
-    // in the meta row sits above the card's hit area and punches holes in it, so
-    // the card was left with dead zones between the tags. They are plain text now
-    // and the card opens focused on its first ranked field either way.
+    // names used to be buttons; anything interactive in the meta row sits above
+    // the card's hit area and punches holes in it, so the card was left with dead
+    // zones between the tags. They are plain text now and the card opens focused
+    // on its first ranked field either way.
+    //
+    // Source numbers are the one deliberate exception, raised above the hit area
+    // so a reviewer can check a source without opening the person.
     const row = rowFor(page, "Councillor 02 Scale");
-    await expect(row.locator(".review-row__meta button, .review-row__meta a")).toHaveCount(0);
+    await expect(row.locator(".review-row__meta button")).toHaveCount(0);
+    await expect(
+      row.locator(".review-row__meta a:not(.review-row__source)"),
+    ).toHaveCount(0);
 
     // Clicking where a tag sits still opens the person: the card's hit area covers
     // it. A locator click would hang here — playwright waits for the tag itself to

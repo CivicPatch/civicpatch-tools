@@ -190,10 +190,14 @@ test.describe("Issue checklist", () => {
       "Since last scrape",
     );
 
-    // Only rows needing a decision are tinted; Alice is on both sides and gets
-    // nothing. Carol is the extra official, Dave the dropped one.
-    await expect(page.locator(".review-sidebar__row--gained")).toHaveCount(1);
-    await expect(page.locator(".review-sidebar__row--lost")).toHaveCount(1);
+    // The tints have to agree with the checklist above them: Carol is the extra
+    // official and reads as added, Dave the dropped one and reads as dropped.
+    // Alice is on both sides and gets nothing.
+    const rowFor = (name) =>
+      page.locator(".review-sidebar__table tbody tr").filter({ hasText: name });
+    await expect(rowFor("Carol Extra")).toHaveClass(/review-sidebar__row--added/);
+    await expect(rowFor("Dave Absent")).toHaveClass(/review-sidebar__row--dropped/);
+    await expect(rowFor("Alice Mayor")).toHaveClass(/^$/);
   });
 
   // This fixture has no origin_source, so the collector never had a previous

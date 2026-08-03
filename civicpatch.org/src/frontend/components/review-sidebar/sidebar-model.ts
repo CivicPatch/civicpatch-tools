@@ -49,11 +49,19 @@ export interface SourceRow {
   in_data: boolean;
 }
 
-// Green where the research found someone the data does not have — a gain. Red
-// where the data has someone the research did not find — a loss. Agreeing on
-// both sides gets nothing, so only rows needing a decision are tinted.
+// Which way the roster moved, in the diff convention: red for a name that was
+// in the baseline and is not in this scrape, green for one that has appeared.
+// Agreeing on both sides needs no decision, so it gets no tint.
+//
+// `in_research` is the BASELINE, not a fresh discovery — which is what the old
+// mapping got backwards, painting a dropped official green while the checklist
+// three lines above called them dropped. build_review_summary names these same
+// two conditions MISSING_OFFICIAL and EXTRA_OFFICIAL; the tints follow it.
+//
+// Green is direction, not approval: an extra official is still an issue someone
+// has to decide about.
 export function sourceRowClass(row: SourceRow): string {
-  if (row.in_research && !row.in_data) return "review-sidebar__row--gained";
-  if (!row.in_research && row.in_data) return "review-sidebar__row--lost";
+  if (row.in_research && !row.in_data) return "review-sidebar__row--dropped";
+  if (!row.in_research && row.in_data) return "review-sidebar__row--added";
   return "";
 }
