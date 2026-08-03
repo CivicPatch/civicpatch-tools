@@ -1,13 +1,15 @@
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
-import "../../components/review-checklist/review-checklist.js";
 import "../../components/review-rail/review-rail-list.js";
 import "../../components/review-overview/review-overview.js";
 import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
+import "../../components/review-sidebar/review-sidebar.js";
+import { checkedCount } from "../../components/review-sidebar/sidebar-model.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
+import "./review-session-actions.js";
 import "./report-issue-button.js";
 import { useReviewPeople } from "./use-review-people.js";
 import { updateParams } from "./use-review-session.js";
@@ -35,15 +37,6 @@ type CurrentEntry = {
   is_read_only: boolean;
   has_next: boolean;
 };
-
-// One entry under review: what it is, and the reviewer's working copy of its
-// people. The card owns those edits, so it also owns the actions that commit
-// them — publishing and saving carry the patch out in the event, and the page
-// decides what that means for the session.
-const PUBLISH_EVENT = "publish";
-const SAVE_EVENT = "save";
-const CLOSE_PR_EVENT = "close-pr";
-const END_SESSION_EVENT = "end-session";
 
 // Everything else the card needs is derived from `currentEntry`; these are the
 // things only the page can know.
@@ -107,6 +100,11 @@ function ReviewSession(host: ReviewSessionHost) {
   const handleToggleIssue = (issue: any) =>
     setIssueChecks(toggleCheck(issueChecks, issue));
 
+  // The drawer is transient — the trigger lives outside it, so the page holds
+  // the one boolean. Deliberately not persisted: landing on a card with a scrim
+  // already up would be worse than reopening it.
+  const [checklistOpen, setChecklistOpen] = useState(false);
+
   const cards = buildReviewCards({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
@@ -130,10 +128,6 @@ function ReviewSession(host: ReviewSessionHost) {
   // rule, two consumers, so the button and the banner can never disagree about
   // whether the card is publishable (§9).
   const blockers = blockingErrors(cards);
-  const blockerTitle = blockers
-    .map((b) => `${b.name} — ${b.fieldLabel}: ${b.message}`)
-    .join("\n");
-
 
   // The modal walks the set it was opened from — from Overview, the group that
   // person was in. Stepping from To review into Unchanged would land on someone
@@ -182,24 +176,6 @@ function ReviewSession(host: ReviewSessionHost) {
       onPickPartner: handlePickPartner,
     });
 
-
-  // A clean card publishes what the server already has; only send a patch when
-  // the reviewer actually changed something.
-  const handlePublish = () =>
-    host.dispatchEvent(
-      new CustomEvent(PUBLISH_EVENT, { detail: { people: dirty ? peoplePatch : null }, bubbles: true, composed: true }),
-    );
-
-  const handleSave = () =>
-    host.dispatchEvent(
-      new CustomEvent(SAVE_EVENT, { detail: { people: peoplePatch }, bubbles: true, composed: true }),
-    );
-
-  const handleClosePr = () =>
-    host.dispatchEvent(new CustomEvent(CLOSE_PR_EVENT, { bubbles: true, composed: true }));
-
-  const handleEndSession = () =>
-    host.dispatchEvent(new CustomEvent(END_SESSION_EVENT, { bubbles: true, composed: true }));
 
   const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
 
@@ -253,34 +229,42 @@ function ReviewSession(host: ReviewSessionHost) {
           .progress=${progress}
           .hasSession=${hasSession}
           .hasNext=${has_next}
+          .checklistDone=${checkedCount(allIssues, issueChecks)}
+          .checklistTotal=${allIssues.length}
+          @checklist-open=${() => setChecklistOpen(true)}
         ></review-session-controls>
-        <div class="review-page__actions">
-          ${is_read_only ? "" : html`
-          ${dirty ? html`
-          <button class="btn-sm review-page__save-btn" @click=${handleSave}>Save for later</button>
-          ` : ""}
-          <button
-            class="btn-sm review-page__publish-btn btn-gradient"
-            @click=${handlePublish}
-            ?disabled=${blockers.length > 0}
-            title=${blockers.length ? blockerTitle : ""}
-          >
-            ${blockers.length
-              ? `${blockers.length} to fix before publishing`
-              : dirty
-                ? "Save and Publish"
-                : "Publish"}
-          </button>
-          ${canClosePr ? html`
-          <button class="btn-sm destructive" @click=${handleClosePr} ?disabled=${isClosingPr}>
-            ${isClosingPr ? "Closing..." : "Close PR"}
-          </button>
-          ` : ""}
-          `}
-          <button class="btn-sm review-page__end-btn" @click=${handleEndSession}>${hasSession ? "End session" : "Exit"}</button>
-        </div>
+        <review-session-actions
+          .isReadOnly=${!!is_read_only}
+          .dirty=${dirty}
+          .peoplePatch=${peoplePatch}
+          .blockers=${blockers}
+          .canClosePr=${canClosePr}
+          .isClosingPr=${isClosingPr}
+          .hasSession=${hasSession}
+        ></review-session-actions>
       </div>
+      <!-- Notices come before the jurisdiction, not after it: each one changes
+           what publishing this card will do, so it has to be read before the
+           card is. -->
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
+      ${duplicateIds.length
+        ? html`<div class="review-page__duplicate-banner">
+            <strong>
+              ${duplicateIds.length} record${duplicateIds.length === 1 ? "" : "s"}
+              share an id with another on this card.
+            </strong>
+            Only one of each pair is shown, and publishing will send only that
+            one. Ids: ${duplicateIds.join(", ")}.
+          </div>`
+        : nothing}
+      ${isBaseline
+        ? html`<div class="review-page__baseline-banner">
+            <strong>First capture for ${jurisdictionName ?? "this jurisdiction"}.</strong>
+            Nothing to compare against yet — publishing creates these records for
+            the first time.
+          </div>`
+        : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName
@@ -297,30 +281,7 @@ function ReviewSession(host: ReviewSessionHost) {
           ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
           <report-issue-button .requestId=${requestId}></report-issue-button>
         </div>
-        <!-- Hidden on Preview: that view is the published result, and issues
-             are a property of the review rather than of the roster (§8.3). -->
-        ${view === ReviewView.PREVIEW
-          ? nothing
-          : html`<civ-review-checklist
-              .reviewData=${review_data}
-              .checks=${issueChecks}
-              .onToggleIssue=${handleToggleIssue}
-            ></civ-review-checklist>`}
       </div>
-      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
-      ${duplicateIds.length
-        ? html`<div class="review-page__duplicate-banner">
-            <strong>
-              ${duplicateIds.length} record${duplicateIds.length === 1 ? "" : "s"}
-              share an id with another on this card.
-            </strong>
-            Only one of each pair is shown, and publishing will send only that
-            one. Ids: ${duplicateIds.join(", ")}.
-          </div>`
-        : nothing}
-      ${isBaseline
-        ? html`<div class="review-page__baseline-banner">First capture for ${jurisdictionName ?? "this jurisdiction"} — nothing to compare against yet. Publishing creates these records for the first time.</div>`
-        : ""}
       <div class="review-page__views" role="tablist" aria-label="Review views">
         ${[
           [ReviewView.OVERVIEW, "Overview"],
@@ -367,6 +328,15 @@ function ReviewSession(host: ReviewSessionHost) {
             .onPickPartner=${handlePickPartner}
             .onAdd=${handleAddPerson}
           ></review-rail-list>`}
+      <review-sidebar
+        .issues=${allIssues}
+        .checks=${issueChecks}
+        .peopleBySource=${review_data?.people_by_source ?? []}
+        .originSource=${review_data?.origin_source ?? null}
+        .open=${checklistOpen}
+        @close=${() => setChecklistOpen(false)}
+        @toggle-issue=${(e: CustomEvent) => handleToggleIssue(e.detail.issue)}
+      ></review-sidebar>
       <review-modal
         .cards=${walkSet}
         .openPersonId=${openPerson?.id ?? null}
