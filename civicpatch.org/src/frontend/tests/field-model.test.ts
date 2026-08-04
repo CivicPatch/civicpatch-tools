@@ -497,12 +497,12 @@ describe("foldRemovals", () => {
     expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
   });
 
-  it("drops a deleted added person — never in the database, nothing to publish", () => {
+  it("re-types a deleted added person as removed, rather than dropping them", () => {
     const folded = foldRemovals(
       result([entry("added", "a")], []),
       new Set(["a"]),
     );
-    expect(folded.diffEntries).toEqual([]);
+    expect(folded.diffEntries.map((e) => e.type)).toEqual(["removed"]);
   });
 
   it("moves a deleted unchanged person out of the unchanged bucket", () => {

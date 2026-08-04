@@ -81,11 +81,6 @@ export interface BuildCardsInput {
   issues: Issue[];
 }
 
-// No new-side record means their fields read old → empty.
-function newRecordFor(type: string, person: any): DiffRecord {
-  return type === DiffType.REMOVED ? null : person;
-}
-
 function statusFor(
   type: string,
   personId: string,
@@ -130,10 +125,13 @@ export function buildReviewCards({
   return ordered.map((entry) => {
     const personId = entry.person?.id;
     const cardIssues = issuesByPersonId.get(personId) ?? [];
-    const newRecord = newRecordFor(entry.type, entry.person);
+    const status = statusFor(entry.type, personId, removedIds, restoredIds);
+    // Only the scrape dropping someone leaves no new-side record. A reviewer
+    // removal is a decision about a row that is still in the list.
+    const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
     return {
       personId,
-      status: statusFor(entry.type, personId, removedIds, restoredIds),
+      status,
       oldRecord: entry.from,
       newRecord,
       surviving: survivingFields(entry.from, newRecord, cardIssues),
@@ -241,35 +239,27 @@ export interface PeopleDiffResult {
 
 // computePeopleDiff knows nothing about reviewer removals, so an untouched
 // removed person comes back UNCHANGED. This folds the decision in afterwards.
-// Deleting someone the scrape *added* is a net no-op and drops out entirely.
+// Every removed person keeps a card — including one the scrape added, whose
+// record is still in the list and whose removal is undoable.
 export function foldRemovals(
   { diffEntries, unchangedEntries, duplicateIds }: PeopleDiffResult,
   removedIds: Set<string>,
 ): PeopleDiffResult {
   if (removedIds.size === 0) return { diffEntries, unchangedEntries, duplicateIds };
 
+  const isRemoved = (entry: DiffEntry) => removedIds.has(entry.person?.id);
   const kept: DiffEntry[] = [];
-  const survives = (entry: DiffEntry) =>
-    !(removedIds.has(entry.person?.id) && entry.type === DiffType.ADDED);
+  const stillUnchanged: DiffEntry[] = [];
 
   for (const entry of diffEntries) {
-    if (!survives(entry)) continue;
-    kept.push(
-      removedIds.has(entry.person?.id)
-        ? { ...entry, type: DiffType.REMOVED }
-        : entry,
-    );
+    kept.push(isRemoved(entry) ? { ...entry, type: DiffType.REMOVED } : entry);
   }
 
-  const stillUnchanged: DiffEntry[] = [];
+  // An unchanged person the reviewer dropped is a change to the list, so they
+  // move out of the unchanged bucket entirely.
   for (const entry of unchangedEntries) {
-    if (!removedIds.has(entry.person?.id)) {
-      stillUnchanged.push(entry);
-      continue;
-    }
-    // An unchanged person the reviewer dropped is a change to the list, so it
-    // moves out of the unchanged bucket entirely.
-    kept.push({ ...entry, type: DiffType.REMOVED });
+    if (isRemoved(entry)) kept.push({ ...entry, type: DiffType.REMOVED });
+    else stillUnchanged.push(entry);
   }
 
   return { diffEntries: kept, unchangedEntries: stillUnchanged, duplicateIds };

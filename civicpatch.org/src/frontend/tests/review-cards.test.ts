@@ -68,9 +68,9 @@ describe("buildReviewCards — status", () => {
     expect(statuses(cards)).toEqual([["a", PersonStatus.DELETED]]);
   });
 
-  it("drops an added person the reviewer deleted — a net no-op", () => {
+  it("keeps a card for an added person the reviewer deleted", () => {
     const cards = build({ currentPeople: [person("c")], removedIds: new Set(["c"]) });
-    expect(cards).toEqual([]);
+    expect(statuses(cards)).toEqual([["c", PersonStatus.DELETED]]);
   });
 
   it("marks someone restored, who would otherwise read as unchanged", () => {
@@ -105,6 +105,20 @@ describe("buildReviewCards — records", () => {
   it("gives an added person no old record", () => {
     const cards = build({ currentPeople: [person("c")] });
     expect(cards[0].oldRecord).toBeNull();
+  });
+
+  // A reviewer removal is a decision about a row that is still in the list, so
+  // the record has to survive it — with no old side to fall back on, nulling the
+  // new one would leave an unnamed card nobody could identify or restore.
+  it("keeps the record of an added person the reviewer deleted", () => {
+    const cards = build({ currentPeople: [person("c")], removedIds: new Set(["c"]) });
+    expect(cards[0].newRecord).toMatchObject({ id: "c", name: "Person c" });
+  });
+
+  it("still clears the new record when the scrape dropped someone the reviewer did not", () => {
+    const cards = build({ existing: [person("a")], currentPeople: [] });
+    expect(cards[0].status).toBe(PersonStatus.REMOVED);
+    expect(cards[0].newRecord).toBeNull();
   });
 });
 
