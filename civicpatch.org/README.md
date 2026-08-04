@@ -69,6 +69,10 @@ default  <  contributors  <  maintainers  <  admins
 
 Stored as a single `users.role` column. The `build_permissions()` function in `routers/frontend.py` maps the ladder to frontend capabilities; backend routes enforce the same boundaries via `require_route_access(category, required_role)`. Keep both in sync when changing permissions — see the CLAUDE.md note.
 
+### Public (no sign-in)
+
+Viewing a jurisdiction page is open to everyone — its data (people, jurisdiction history) is served unauthenticated, and every action on the page is gated by its own permission. This also makes the jurisdiction links on the Municipalities page and the locality-gaps widget visible to signed-out visitors, since both only lead here.
+
 ### What each level adds
 
 | Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |

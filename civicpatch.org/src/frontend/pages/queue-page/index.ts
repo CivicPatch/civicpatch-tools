@@ -157,7 +157,7 @@ function QueuePage() {
 
   return html`
     <main class="queue-page page-content">
-      ${permissions.QUEUE_PAGE_ERRORS ? html`
+      ${permissions.can_view_queue_page_errors ? html`
         <div class="queue-page__filters">
           <div class="queue-page__filters-right">
             <a class="btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>
@@ -177,7 +177,7 @@ function QueuePage() {
           .perPage=${activePipelineRunsPerPage}
           .onPageChange=${(p: number) => { setAjParamsInUrl(p, activePipelineRunsPerPage); setActivePipelineRunsPage(p); }}
           .onPerPageChange=${handleActivePipelineRunsPerPageChange}
-          .canCancel=${permissions.CANCEL_JOB}
+          .canCancel=${permissions.can_cancel_job}
           .onCancel=${handleCancel}
         ></queue-active-pipeline-runs>
         <queue-pr-list

@@ -167,7 +167,7 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
             ${renderMunicipalitiesTable({
               municipalities: pageInfo.pageItems,
               onClearFilters: handleClearFilters,
-              canViewJurisdictionPage: permissions.JURISDICTION_PAGE,
+              canViewJurisdictionPage: permissions.can_view_jurisdiction_page,
               sortKey,
               sortDir,
               onSortChange: handleSortChange,

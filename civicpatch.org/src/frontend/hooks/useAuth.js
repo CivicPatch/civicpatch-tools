@@ -1,35 +1,12 @@
 import { useState, useEffect } from "haunted";
 
-const DEFAULT_PERMISSIONS = {
-  JURISDICTION_PAGE: false,
-  JURISDICTION_PAGE_SCRAPE_REMOTE: false,
-  JURISDICTION_PAGE_SCRAPE_LOCAL: false,
-  JURISDICTION_DATA_EDIT: false,
-  PR_CLOSE: false,
-  CANCEL_JOB: false,
-  CONFIG_WRITE: false,
-  CONFIG_GLOBAL_WRITE: false,
-};
+// Fallback for an unreachable server only — signed-out users get real
+// permissions, since some capabilities are public.
+const DENY_ALL = {};
 
 // Module-level cache
 let cachedAuth = null;
 let cachedPromise = null;
-
-function toPermissions(permissions) {
-  return {
-    QUEUE_PAGE: permissions["can_view_queue_page"],
-    QUEUE_PAGE_ERRORS: permissions["can_view_queue_page_errors"],
-    ISSUES_PAGE: permissions["can_view_issues_page"],
-    JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
-    JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
-    JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"],
-    JURISDICTION_DATA_EDIT: permissions["can_edit_jurisdiction_data"],
-    PR_CLOSE: permissions["can_close_pull_request"],
-    CANCEL_JOB: permissions["can_cancel_job"],
-    CONFIG_WRITE: permissions["can_write_config"],
-    CONFIG_GLOBAL_WRITE: permissions["can_write_global_config"],
-  }
-}
 
 async function fetchAuth() {
   if (cachedAuth) return cachedAuth;
@@ -39,24 +16,17 @@ async function fetchAuth() {
     .then(async res => {
       if (res.ok) {
         const data = await res.json();
-        if (data.authenticated) {
-          cachedAuth = {
-            user: data.data,
-            permissions: {
-              ...DEFAULT_PERMISSIONS,
-              ...toPermissions(data.data.permissions)
-            }
-          };
-        } else {
-          cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
-        }
+        cachedAuth = {
+          user: data.authenticated ? data.data : null,
+          permissions: data.data.permissions,
+        };
       } else {
-        cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
+        cachedAuth = { user: null, permissions: DENY_ALL };
       }
       return cachedAuth;
     })
     .catch(() => {
-      cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
+      cachedAuth = { user: null, permissions: DENY_ALL };
       return cachedAuth;
     })
     .finally(() => {
@@ -73,7 +43,7 @@ async function fetchAuth() {
 export function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [permissions, setPermissions] = useState(DEFAULT_PERMISSIONS);
+  const [permissions, setPermissions] = useState(DENY_ALL);
 
   useEffect(() => {
     let cancelled = false;

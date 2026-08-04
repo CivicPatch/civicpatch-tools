@@ -11,7 +11,7 @@ function LocalityGaps({ stats, state }) {
   const [page, setPage] = useState(1);
   const [jurisdictions, setJurisdictions] = useState([]);
 
-  if (!permissions.JURISDICTION_PAGE) return html``;
+  if (!permissions.can_view_jurisdiction_page) return html``;
   if (!stats || !stats.states || !stats.states[state]) return html``;
 
   const notScraped = stats.states[state].locality_gaps.not_yet_scraped;
