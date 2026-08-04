@@ -72,7 +72,7 @@ function ReviewSessionPage() {
       .hasSession=${session != null}
       .progress=${progress}
       .error=${publishError}
-      .canClosePr=${permissions.PR_CLOSE}
+      .canClosePr=${permissions.can_close_pull_request}
       .isClosingPr=${isClosingPr}
       @back=${back}
       @advance=${advance}

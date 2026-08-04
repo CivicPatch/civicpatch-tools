@@ -420,8 +420,7 @@ export function renderMultiList(
           </button>
         </span>`;
         if (!areLinks || !row.value.trim()) return chip;
-        // Beside the field rather than inside its border, the way source urls
-        // carry it: the chip is the value, the arrow acts on it.
+        // Beside the field, not inside its border — as source urls do it.
         return html`<span class="field-control__chip-linked">
           ${chip}
           <a

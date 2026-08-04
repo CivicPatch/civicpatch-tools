@@ -457,6 +457,31 @@ report-issue-button {
     display: contents;
 }
 
+/* Report-issue modal */
+
+/* The global dialog is `width: max-content`, which for a textarea resolves to its
+   ~20-column intrinsic size. State a width instead of shrink-wrapping. */
+dialog[open]:has(.report-issue-modal__form) {
+    width: min(92vw, 34rem);
+    max-width: min(92vw, 34rem);
+}
+
+.report-issue-modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.report-issue-modal__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+.report-issue-modal__textarea {
+    width: 100%;
+    resize: vertical;
+}
+
 .review-page__reported-issues {
     list-style: none;
     margin: 0;

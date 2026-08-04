@@ -119,7 +119,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   if (authLoading) {
     return html`<p>Checking authentication...</p>`;
   }
-  if (!permissions.JURISDICTION_PAGE) {
+  if (!permissions.can_view_jurisdiction_page) {
     return html`<p>You must be logged in to view this page.</p>`;
   }
 
@@ -193,7 +193,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
     (!!effectiveStatus && !TERMINAL_JOB_STATUSES.has(effectiveStatus));
 
   const canStartScrape =
-    permissions.JURISDICTION_PAGE_SCRAPE_REMOTE || permissions.JURISDICTION_PAGE_SCRAPE_LOCAL;
+    permissions.can_scrape_remote || permissions.can_scrape_local;
 
   return html`
     <main class="jurisdiction-page page-content">
@@ -216,7 +216,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       <civ-officials-editor
         .people=${people}
         .jurisdictionOcdid=${jurisdiction_ocdid}
-        .canEdit=${!!permissions.JURISDICTION_DATA_EDIT && !peopleBlockers.length}
+        .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
         .isLoading=${peopleLoading}
         .blockedReason=${editingBlockedReason(peopleBlockers)}
         .onPublished=${() => window.location.reload()}
@@ -224,7 +224,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
 
       ${renderDetailsSection(
         jurisdictionData,
-        !!permissions.JURISDICTION_DATA_EDIT && !jurisdictionBlockers.length,
+        !!permissions.can_edit_jurisdiction_data && !jurisdictionBlockers.length,
         handleJurisdictionSave,
         jurisdictionEditBlockedReason(jurisdictionBlockers),
       )}
@@ -243,7 +243,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
             .jobStatus=${jobStatus}
             .isConnected=${isConnected}
             .sseError=${sseError}
-            .canCancel=${permissions.CANCEL_JOB}
+            .canCancel=${permissions.can_cancel_job}
             .onCancel=${handleCancelJob}
           ></civ-history-list>
         </div>
@@ -259,8 +259,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
               closeOnBackdropClick: true,
             }}
             .identities=${identities}
-            .canScrapeRemote=${permissions.JURISDICTION_PAGE_SCRAPE_REMOTE}
-            .canScrapeLocal=${permissions.JURISDICTION_PAGE_SCRAPE_LOCAL}
+            .canScrapeRemote=${permissions.can_scrape_remote}
+            .canScrapeLocal=${permissions.can_scrape_local}
           ></civ-scrape-modal>`
         : nothing}
     </main>

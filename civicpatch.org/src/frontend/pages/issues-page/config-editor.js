@@ -306,8 +306,8 @@ function ConfigEditor(host) {
   }, []);
 
   useEffect(() => {
-    if (permissions.CONFIG_WRITE && globalTerms === null && !globalError) loadGlobal();
-  }, [permissions.CONFIG_WRITE]);
+    if (permissions.can_write_config && globalTerms === null && !globalError) loadGlobal();
+  }, [permissions.can_write_config]);
 
   useEffect(() => {
     if (!stateCode) { setStateTerms(null); setStateOcdid(null); return; }
@@ -548,13 +548,13 @@ function ConfigEditor(host) {
     ocdid: null,
     reload: loadGlobal,
     editor: globalEditor, filter: globalFilter, setFilter: setGlobalFilter,
-    editable: permissions.CONFIG_GLOBAL_WRITE, open: true,
+    editable: permissions.can_write_global_config, open: true,
   });
 
   const content = html`
-    ${permissions.CONFIG_WRITE && stateCode ? localitySection : null}
-    ${permissions.CONFIG_WRITE && stateCode ? stateSection : null}
-    ${permissions.CONFIG_WRITE ? globalSection : null}
+    ${permissions.can_write_config && stateCode ? localitySection : null}
+    ${permissions.can_write_config && stateCode ? stateSection : null}
+    ${permissions.can_write_config ? globalSection : null}
     ${reorderToast ? html`<div class="config-editor__toast" role="status" aria-live="polite">${reorderToast}</div>` : null}
     ${errorState ? html`
       <civ-confirm-modal

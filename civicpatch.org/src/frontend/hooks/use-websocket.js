@@ -9,16 +9,14 @@ const WS_URL = config.apiUrl.replace(/^http/, "ws") + "/ws";
  * @param {object} [options] - { autoConnect: bool }
  * @returns {{ data, isConnected, error }}
  */
-// The socket lives in the effect closure, never in state. Holding it in state
-// puts its identity in the dep array, so opening one re-runs the effect that
-// opened it — teardown, `onclose`, reopen, forever.
+// Socket stays in the effect closure: in state its identity lands in the dep
+// array, so opening one re-runs the effect that opened it.
 export function useWebSocket(topic, options = {}) {
   const [data, setData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState(null);
   const autoConnect = !!options.autoConnect;
 
-  // Only what defines the connection belongs here.
   useEffect(() => {
     if (!autoConnect || !topic) return;
 

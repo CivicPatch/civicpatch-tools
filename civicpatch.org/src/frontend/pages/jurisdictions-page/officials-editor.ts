@@ -66,9 +66,7 @@ function OfficialsEditor({
   } = state;
 
   const [openPerson, setOpenPerson] = useState<OpenPerson | null>(null);
-  // Collapsed rather than expanded: the rail hides fields with nothing to review,
-  // and here nothing is ever a diff — so tracking who to expand means every person
-  // the set has not seen arrives with everything hidden. Expanded is the default.
+  // Collapsed, not expanded: nothing here is ever a diff, so expanded is the default.
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
   // The write is a PR: the endpoint returns once it is *enqueued*, then Temporal
   // merges it and syncs open-data back into the DB. Reloading on enqueue lands on
@@ -132,8 +130,7 @@ function OfficialsEditor({
         setCollapsedIds(next);
       },
       onPersonSave: handlePersonSave,
-      // handleRemove takes a list; the rail removes one person at a time. Passing
-      // it raw spreads the id into its characters.
+      // handleRemove takes a list; passing an id raw spreads it into characters.
       onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
