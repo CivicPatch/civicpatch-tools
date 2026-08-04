@@ -15,6 +15,7 @@ import "../../components/review-rail/review-rail.css";
 import "../../components/review/field-controls.css";
 import { renderScalarNewSide } from "../../components/review/field-controls.js";
 import { type FieldSpec } from "../../components/review/field-model.js";
+import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };
 
@@ -52,7 +53,7 @@ function renderRow(label: string, control: unknown) {
 function renderReadOnly(row: ReadOnlyRow) {
   if (!row.value) return nothing;
   const control = row.href
-    ? html`<a class="review-rail__readonly" href=${row.href} target="_blank" rel="noopener noreferrer"
+    ? html`<a class="review-rail__readonly" href=${row.href} target=${SOURCE_LINK_TARGET} rel="noopener noreferrer"
         >${row.value}</a
       >`
     : html`<span class="review-rail__readonly">${row.value}</span>`;
@@ -109,7 +110,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
     ? renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
         setUrl(String((updates as any).url ?? "")), { state: "same", error: null })
     : data.url
-      ? html`<a class="review-rail__readonly" href=${data.url} target="_blank" rel="noopener noreferrer"
+      ? html`<a class="review-rail__readonly" href=${data.url} target=${SOURCE_LINK_TARGET} rel="noopener noreferrer"
           >${data.url}</a
         >`
       : html`<span class="review-rail__readonly">—</span>`;

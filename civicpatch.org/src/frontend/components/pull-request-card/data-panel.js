@@ -2,6 +2,7 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils";
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
+import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const DataPanel = ({ entry }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);
@@ -36,7 +37,7 @@ const DataPanel = ({ entry }) => {
 
     const urlLinks = sourceUrls.map(
       (url, i) =>
-        html`<a class="source-link" href=${url} target="_blank" rel="noopener"
+        html`<a class="source-link" href=${url} target=${SOURCE_LINK_TARGET} rel="noopener"
           >[${i}]</a
         >`,
     );

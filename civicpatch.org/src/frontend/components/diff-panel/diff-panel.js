@@ -3,6 +3,7 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
+import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const FIELDS = [
   { key: "name",                  label: "Name" },
@@ -54,7 +55,7 @@ const DiffPanel = ({ data }) => {
   function renderSourceLinks(person) {
     const urls = person?.source_urls;
     if (!urls?.length) return "";
-    return urls.map((url, i) => html`<a class="source-link" href=${url} target="_blank" rel="noopener">[${i + 1}]</a>`);
+    return urls.map((url, i) => html`<a class="source-link" href=${url} target=${SOURCE_LINK_TARGET} rel="noopener">[${i + 1}]</a>`);
   }
 
   function renderAdded(person) {

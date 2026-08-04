@@ -8,7 +8,7 @@
 import { html, nothing } from "lit-html";
 import "./field-controls.css";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
-import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
+import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   diffValue,
   type FieldSpec,
@@ -389,8 +389,8 @@ export function renderMultiList(
   dropped: string[],
   setValues: (values: string[]) => void,
   label: string,
-  // Link fields get an open-in-new-tab affordance per row, the same one source
-  // urls already carry — a url you cannot follow is a url you cannot check.
+  // Link fields get an open-in-new-tab affordance per row — a url you cannot
+  // follow is a url you cannot check.
   areLinks = false,
   // `tel` for phones: the mobile keypad and autocomplete, nothing more. Validation
   // is the backend's (shared/schemas.py).
@@ -426,7 +426,7 @@ export function renderMultiList(
           <a
             class="field-control__chip-link"
             href=${ensureUrl(row.value)}
-            target=${SOURCE_LINK_TARGET}
+            target=${PERSON_LINK_TARGET}
             title="Open link"
             ><i class="fa-solid fa-arrow-up-right-from-square"></i
           ></a>
