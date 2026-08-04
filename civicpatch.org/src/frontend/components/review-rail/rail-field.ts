@@ -175,7 +175,8 @@ export function renderRailField(props: RailFieldProps) {
           ? html` <span class="review-rail__req">*</span>`
           : nothing}
       </div>
-      <div class="review-rail__control">
+      <!-- review-modal's focusOnOpen finds the field to focus by this attribute. -->
+      <div class="review-rail__control" data-field=${field.key}>
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
       ${renderWas(props)} ${renderAttention(props)}
