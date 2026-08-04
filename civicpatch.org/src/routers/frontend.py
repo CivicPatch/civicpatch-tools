@@ -34,7 +34,9 @@ def build_permissions(identity: Optional[Identity]) -> dict:
     return {
         "can_view_queue_page": has_at_least(role, Role.CONTRIBUTORS),
         "can_view_queue_page_errors": has_at_least(role, Role.ADMINS),
-        "can_view_jurisdiction_page": has_at_least(role, Role.DEFAULT),
+        # Public: everything the page reads (people, jurisdiction history) is already
+        # unauthenticated, and every action on it is gated by its own permission.
+        "can_view_jurisdiction_page": True,
         "can_scrape_local": not _is_production and has_at_least(role, Role.MAINTAINERS),
         "can_scrape_remote": has_at_least(role, Role.MAINTAINERS),
         "can_view_reviews_page": has_at_least(role, Role.DEFAULT),

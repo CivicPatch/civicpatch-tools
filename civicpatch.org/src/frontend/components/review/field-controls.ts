@@ -399,8 +399,8 @@ export function renderMultiList(
   const values = rows.map((r) => r.value);
   return html`
     <div class="field-control__chips">
-      ${rows.map(
-        (row, i) => html`<span
+      ${rows.map((row, i) => {
+        const chip = html`<span
           class="field-control__chip"
           title=${row.isNew ? "Found by this scrape" : nothing}
         >
@@ -411,15 +411,6 @@ export function renderMultiList(
             @input=${(e: Event) =>
               setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
           />
-          ${areLinks && row.value.trim()
-            ? html`<a
-                class="field-control__chip-link"
-                href=${ensureUrl(row.value)}
-                target=${SOURCE_LINK_TARGET}
-                title="Open link"
-                ><i class="fa-solid fa-arrow-up-right-from-square"></i
-              ></a>`
-            : nothing}
           <button
             class="field-control__chip-x"
             title="Remove"
@@ -427,8 +418,21 @@ export function renderMultiList(
           >
             <i class="fa-solid fa-xmark"></i>
           </button>
-        </span>`,
-      )}
+        </span>`;
+        if (!areLinks || !row.value.trim()) return chip;
+        // Beside the field rather than inside its border, the way source urls
+        // carry it: the chip is the value, the arrow acts on it.
+        return html`<span class="field-control__chip-linked">
+          ${chip}
+          <a
+            class="field-control__chip-link"
+            href=${ensureUrl(row.value)}
+            target=${SOURCE_LINK_TARGET}
+            title="Open link"
+            ><i class="fa-solid fa-arrow-up-right-from-square"></i
+          ></a>
+        </span>`;
+      })}
       <!-- What the source stopped listing. Not an input: you are deciding about
            it, not editing it. The strike is on the value rather than the chip —
            text-decoration propagates to descendants and a child cannot unset it,

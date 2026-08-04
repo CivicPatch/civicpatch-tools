@@ -212,6 +212,14 @@
   text-overflow: ellipsis;
 }
 
+/* A link chip and its arrow travel together when the row wraps. */
+.field-control__chip-linked {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+}
+
 /* The buttons must keep their full width while the value gives way. */
 .field-control__chip-x,
 .field-control__chip-back,
@@ -294,7 +302,7 @@
 .field-control__division-preview {
   flex: 1 0 100%;
   width: 100%;
-  padding-top: 0.25rem;
+  padding-top: 0.5rem;
   font-size: var(--text-xs);
   color: var(--pico-muted-color);
   word-break: break-all;

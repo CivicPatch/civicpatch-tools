@@ -161,13 +161,16 @@ async def filter_existing_person_ids(ids: list[str]) -> list[str]:
     return [row[0] for row in rows]
 
 
+# `past` means the person is no longer in the open-data file (see mark-past in
+# upsert). Returning them puts people in the editor who are absent from the base
+# it publishes against, which fails validation for everyone on the page.
 async def get_jurisdiction_people(jurisdiction_ocdid: str) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
                 SELECT data FROM people
-                WHERE jurisdiction_ocdid = %s
+                WHERE jurisdiction_ocdid = %s AND status = 'current'
             """,
             (jurisdiction_ocdid,),
         )
