@@ -67,7 +67,10 @@ function OfficialsEditor({
   } = state;
 
   const [openPerson, setOpenPerson] = useState<OpenPerson | null>(null);
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  // Collapsed rather than expanded: the rail hides fields with nothing to review,
+  // and here nothing is ever a diff — so tracking who to expand means every person
+  // the set has not seen arrives with everything hidden. Expanded is the default.
+  const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
   // The write is a PR: the endpoint returns once it is *enqueued*, then Temporal
   // merges it and syncs open-data back into the DB. Reloading on enqueue lands on
   // stale data and reads as "nothing happened", so the button says which half it
@@ -92,18 +95,10 @@ function OfficialsEditor({
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
 
-  // The rail collapses cards with nothing to review. Here nothing is ever a diff,
-  // so that rule would hide every field on every person — and you opened this
-  // person precisely to edit them. Expand whoever is opened.
-  const openPersonExpanded = (id: string, field: string | null = null) => {
-    setExpandedIds(new Set(expandedIds).add(id));
-    setOpenPerson({ id, field });
-  };
-
   const handleAdd = async () => {
     const personId = await generatePersonId();
     addPerson(emptyPerson(personId, jurisdictionOcdid));
-    openPersonExpanded(personId);
+    setOpenPerson({ id: personId, field: null });
   };
 
   const handlePublish = async () => {
@@ -131,11 +126,11 @@ function OfficialsEditor({
       dirtyIds,
       isReadOnly: !canEdit,
       jurisdictionOcdid,
-      expandedIds,
+      isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {
-        const next = new Set(expandedIds);
+        const next = new Set(collapsedIds);
         next.has(card.personId) ? next.delete(card.personId) : next.add(card.personId);
-        setExpandedIds(next);
+        setCollapsedIds(next);
       },
       onPersonSave: handlePersonSave,
       onRemovePerson: handleRemove,
@@ -177,7 +172,7 @@ function OfficialsEditor({
       isLoading,
       blockedReason,
       actions,
-      onOpenPerson: canEdit ? (id: string) => openPersonExpanded(id) : null,
+      onOpenPerson: canEdit ? (id: string) => setOpenPerson({ id, field: null }) : null,
     })}
 
     ${publishError

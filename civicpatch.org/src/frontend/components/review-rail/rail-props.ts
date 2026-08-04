@@ -16,7 +16,10 @@ export interface RailContext {
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  expandedIds: Set<string>;
+  // A predicate, not a set: a page whose default is "expanded" has no set to
+  // keep in sync with the roster, so a person it has never seen cannot arrive
+  // collapsed.
+  isExpanded: (personId: string) => boolean;
   onToggleExpand: (personId: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onRemovePerson: (id: string) => void;
@@ -44,7 +47,7 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     isDirty: ctx.dirtyIds.has(card.personId),
-    isExpanded: ctx.expandedIds.has(card.personId),
+    isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),
     onSave: save,
     onRemove: () => ctx.onRemovePerson(card.personId),

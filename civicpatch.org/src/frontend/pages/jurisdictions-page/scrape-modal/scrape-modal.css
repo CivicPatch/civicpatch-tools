@@ -1,3 +1,11 @@
+/* The global dialog is `width: max-content`, which for a text input resolves to
+   its ~20-character intrinsic size — so a full URL renders in a 213px box. State
+   a width instead of shrink-wrapping. */
+dialog[open]:has(.scrape-modal__body) {
+    width: min(92vw, 44rem);
+    max-width: min(92vw, 44rem);
+}
+
 .scrape-modal__body {
     display: flex;
     flex-direction: column;
@@ -71,6 +79,13 @@
 
 .scrape-modal__url-section fieldset[role="group"] {
     margin: 0;
+}
+
+/* elements.css means group buttons to size to their label, but its `width: auto`
+   loses to the `flex: 1 1 auto` on group children — so Reset/Delete grow and eat
+   the URL. Give the row back to the input. */
+.scrape-modal__url-section fieldset[role="group"] button {
+    flex: 0 0 auto;
 }
 
 .scrape-modal__add-url {
