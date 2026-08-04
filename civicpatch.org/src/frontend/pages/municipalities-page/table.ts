@@ -21,6 +21,11 @@ export interface MunicipalitiesTableProps {
   onSortChange: (key: SortKey) => void;
 }
 
+function renderActions(jurisdictionHref: string | null) {
+  if (!jurisdictionHref) return '—';
+  return html`<a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>`;
+}
+
 function renderRow(m: Municipality, jurisdictionHref: string | null) {
   return html`
     <tr class="municipalities-table__row">
@@ -48,11 +53,7 @@ function renderRow(m: Municipality, jurisdictionHref: string | null) {
       <td style=${m.status === 'stale' ? 'color:var(--civ-status-stale)' : ''}>
         ${m.last_verified_at ? dateStringToFriendly(m.last_verified_at) : '—'}
       </td>
-      <td>
-        ${jurisdictionHref
-          ? html`<a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>`
-          : '—'}
-      </td>
+      <td>${renderActions(jurisdictionHref)}</td>
     </tr>
   `;
 }

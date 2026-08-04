@@ -49,7 +49,8 @@ def test_permissions_unauthenticated():
     p = build_permissions(None)
     assert p["can_view_queue_page"] is False
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is False
+    # Viewing a jurisdiction is public — signing in adds actions, not visibility.
+    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_local"] is False
     assert p["can_scrape_remote"] is False
     assert p["can_view_reviews_page"] is False

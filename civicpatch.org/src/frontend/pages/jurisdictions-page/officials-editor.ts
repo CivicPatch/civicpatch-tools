@@ -62,7 +62,6 @@ function OfficialsEditor({
     handleRemove,
     handleUnremove,
     handleRestore,
-    handleUndoRestore,
     handleResetAll,
   } = state;
 
@@ -133,7 +132,9 @@ function OfficialsEditor({
         setCollapsedIds(next);
       },
       onPersonSave: handlePersonSave,
-      onRemovePerson: handleRemove,
+      // handleRemove takes a list; the rail removes one person at a time. Passing
+      // it raw spreads the id into its characters.
+      onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
       onResetPerson: (id: string) => updatePerson(id, published.find((p) => p.id === id) ?? {}),
@@ -185,14 +186,7 @@ function OfficialsEditor({
       .focusFieldKey=${openPerson?.field ?? null}
       .rail=${railFor}
       .isReadOnly=${!canEdit}
-      .removedIds=${removedIds}
-      .restoredIds=${restoredIds}
       .onClose=${() => setOpenPerson(null)}
-      .onPersonSave=${handlePersonSave}
-      .onRemove=${handleRemove}
-      .onUnremove=${handleUnremove}
-      .onRestore=${handleRestore}
-      .onUndoRestore=${handleUndoRestore}
     ></review-modal>
   `;
 }

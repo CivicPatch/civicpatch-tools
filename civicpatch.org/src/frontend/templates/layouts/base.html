@@ -69,7 +69,7 @@
         <script src="{{ url_for('frontend', path='/assets/env.js') }}"></script>
 
         {% if not is_production %}
-        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="{{ vite_asset('@vite/client') }}"></script>
         {% endif %}
 
         {% block scripts %}{% endblock %}
