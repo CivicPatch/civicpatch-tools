@@ -159,7 +159,7 @@ function ReviewSession(host: ReviewSessionHost) {
       dirtyIds,
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
-      expandedIds: modalExpanded,
+      isExpanded: (id: string) => modalExpanded.has(id),
       onToggleExpand: () => {
         const next = new Set(modalExpanded);
         next.has(card.personId)

@@ -87,7 +87,7 @@ function ReviewRailList({
             dirtyIds,
             isReadOnly,
             jurisdictionOcdid,
-            expandedIds,
+            isExpanded: (id: string) => expandedIds.has(id),
             onToggleExpand: toggleExpand,
             onPersonSave,
             onRemovePerson,
