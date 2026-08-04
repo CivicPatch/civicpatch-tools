@@ -1,4 +1,4 @@
-// A single named browser target for every source-url link and popup, so that
-// opening a source from the diff, the edit modal or anywhere else lands in the
-// same window instead of spawning one per surface.
+// Named browser targets, so repeat clicks reuse one window per kind rather than
+// spawning a tab per surface. Sources and a person's own links stay separate.
 export const SOURCE_LINK_TARGET = "civicpatch-source";
+export const PERSON_LINK_TARGET = "civicpatch-person-link";

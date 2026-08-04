@@ -10,7 +10,7 @@
 import { html, nothing } from "lit-html";
 import "./review-preview.css";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
+import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import { ensureUrl } from "../review/field-controls.js";
 import {
   FIELD_SCHEMA,
@@ -69,11 +69,11 @@ function values(record: DiffRecord, field: FieldSpec): string[] {
   return text ? [text] : [];
 }
 
-function renderLink(url: string, label: unknown, extraClass = "") {
+function renderLink(url: string, label: unknown, target: string, extraClass = "") {
   return html`<a
     class="review-preview__link ${extraClass}"
     href=${ensureUrl(url)}
-    target=${SOURCE_LINK_TARGET}
+    target=${target}
     rel="noopener noreferrer"
     title=${url}
     >${label}</a
@@ -88,7 +88,12 @@ function renderSources(record: DiffRecord, sources: SourceMap) {
     ${urls.map((url: string) => {
       const entry = sources.get(url);
       return entry
-        ? renderLink(url, `[${entry.number}]`, `review-preview__source ${entry.colorClass}`)
+        ? renderLink(
+            url,
+            `[${entry.number}]`,
+            SOURCE_LINK_TARGET,
+            `review-preview__source ${entry.colorClass}`,
+          )
         : nothing;
     })}
   </span>`;
@@ -109,7 +114,7 @@ export function renderValues(record: DiffRecord, sources: SourceMap) {
         <span class="visually-hidden">${field.label}</span>
         <span class="review-preview__value-text">
           ${field.key === "urls"
-            ? list.map((url) => renderLink(url, url))
+            ? list.map((url) => renderLink(url, url, PERSON_LINK_TARGET))
             : list.join(", ")}
         </span>
       </span>`,
