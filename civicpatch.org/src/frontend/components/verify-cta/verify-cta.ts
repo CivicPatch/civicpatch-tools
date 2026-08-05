@@ -5,13 +5,13 @@ import { shouldRenderVerifyCta } from "./verify-cta-visibility.js";
 import {
   landingUrl,
   sessionUrl,
-  DAILY_GOAL_KEY,
   DEFAULT_DAILY_GOAL,
 } from "../../pages/review-routes.js";
 import {
   useLocalStorage,
   PERSIST_FOREVER,
 } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { createReviewSession, navigateToEntry } from "../../api.js";
 
 interface VerifyCtaProps {
@@ -27,7 +27,7 @@ function VerifyCta({
   state = "",
   hasActiveSession = false,
 }: VerifyCtaProps) {
-  const [dailyGoal] = useLocalStorage(DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL, {
+  const [dailyGoal] = useLocalStorage(STORAGE_KEYS.DAILY_GOAL, DEFAULT_DAILY_GOAL, {
     ttl: PERSIST_FOREVER,
   });
   const [starting, setStarting] = useState(false);

@@ -14,6 +14,7 @@ import {
   useLocalStorage,
   PERSIST_FOREVER,
 } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
@@ -27,7 +28,7 @@ import { getNeedsReviewCount } from "../../utils/coverage-utils.js";
 
 function SearchJurisdictions() {
   const { user, permissions } = useAuth();
-  const [defaultState] = useLocalStorage("app:default-state", "", {
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
     ttl: PERSIST_FOREVER,
   });
   const [selectedState, setSelectedState] = useState(

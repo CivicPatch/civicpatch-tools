@@ -43,9 +43,8 @@ export function parseReviewView(value: string | null | undefined): ReviewViewKey
 export const REVIEW_PATH = "/review";
 export const REVIEW_SESSION_PATH = "/review/session";
 
-// Daily-goal localStorage key, shared by anywhere that can start a review
-// session (the /review landing page, and the homepage's Verify CTA).
-export const DAILY_GOAL_KEY = "review_daily_goal";
+// Shared by anywhere that can start a review session (the /review landing page,
+// and the homepage's Verify CTA). The key itself lives in STORAGE_KEYS.
 export const DEFAULT_DAILY_GOAL = 10;
 
 export const landingUrl = (stateCode: string) => `${REVIEW_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;

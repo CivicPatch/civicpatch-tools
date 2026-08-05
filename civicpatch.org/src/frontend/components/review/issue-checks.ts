@@ -6,11 +6,14 @@
 // client-side and stay available on a read-only card.
 
 import { type Issue } from "./field-model.js";
-
-export const ISSUE_CHECKS_KEY_PREFIX = "review:issue-checks:";
+import { ISSUE_CHECKS_PREFIX } from "../../utils/storage-keys.js";
 
 export const issueChecksKey = (requestId: string) =>
-  `${ISSUE_CHECKS_KEY_PREFIX}${requestId}`;
+  `${ISSUE_CHECKS_PREFIX}${requestId}`;
+
+// A card can sit open for days, which is the requirement (§8.4). Weeks is not —
+// past that the ticks describe a card the reviewer no longer remembers.
+export const ISSUE_CHECKS_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 // Keyed by CONTENT, not by position or person.
 //

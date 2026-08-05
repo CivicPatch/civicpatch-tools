@@ -13,11 +13,12 @@ import "./review-session-actions.js";
 import "./report-issue-button.js";
 import { useReviewPeople } from "./use-review-people.js";
 import { updateParams } from "./use-review-session.js";
-import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { useLocalStorage } from "../../hooks/use-local-storage.js";
 import {
   issueChecksKey,
   toggleCheck,
   unresolvedIssues,
+  ISSUE_CHECKS_TTL_MS,
   type IssueChecks,
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
@@ -89,13 +90,14 @@ function ReviewSession(host: ReviewSessionHost) {
     updateParams({ [VIEW_PARAM]: next });
   };
 
-  // Ticks are personal progress in this browser, so they persist client-side and
-  // never expire — a card can sit open for days (§8.4).
+  // Ticks are personal progress in this browser, so they persist client-side.
+  // Unlike the app's other stored values there is one key per card, so they age
+  // out rather than accumulating forever.
   const allIssues = review_data?.issues ?? [];
   const [issueChecks, setIssueChecks] = useLocalStorage(
     issueChecksKey(requestId ?? "none"),
     {},
-    { ttl: PERSIST_FOREVER },
+    { ttl: ISSUE_CHECKS_TTL_MS },
   ) as [IssueChecks, (next: IssueChecks) => void];
   const handleToggleIssue = (issue: any) =>
     setIssueChecks(toggleCheck(issueChecks, issue));
