@@ -37,7 +37,7 @@ const DataPanel = ({ entry }) => {
 
     const urlLinks = sourceUrls.map(
       (url, i) =>
-        html`<a class="source-link" href=${url} target=${SOURCE_LINK_TARGET} rel="noopener"
+        html`<a class="source-link" href=${url} target=${SOURCE_LINK_TARGET}
           >[${i}]</a
         >`,
     );

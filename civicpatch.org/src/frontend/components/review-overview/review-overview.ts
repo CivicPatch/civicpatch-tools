@@ -67,7 +67,6 @@ function renderSources(card: ReviewCard, sources: SourceMap) {
       class="review-row__source ${entry.colorClass}"
       href=${ensureUrl(url)}
       target=${SOURCE_LINK_TARGET}
-      rel="noopener noreferrer"
       title=${url}
       >[${entry.number}]</a
     >`;
