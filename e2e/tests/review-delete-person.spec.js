@@ -7,8 +7,9 @@
  * And publishing omits them, which the backend reads as a deletion
  * But Undo brings them back, and publishing carries them again
  *
- * And when I delete a person this scrape *added*, their card goes away
- * entirely — they were never in the database, so there is nothing to drop.
+ * And when I delete a person this scrape *added*, their card stays and reads as
+ * departing too — the removal is undoable, and their absence from the payload
+ * is the whole of it, since there was never a database record to drop.
  *
  * Deletion is held beside the people list (usePeopleState's deletedIds), not as
  * a field on the record, so nothing about it is visible in the patch except the
@@ -158,7 +159,7 @@ test.describe("Delete a person", () => {
     await expect(faceFor("Maria González")).toHaveCount(0);
   });
 
-  test("deleting an added person removes their card entirely", async ({
+  test("deleting an added person keeps an undoable card, but drops them from the payload", async ({
     authenticatedPage: page,
   }) => {
     const merge = await stubMerge(page);
@@ -168,9 +169,10 @@ test.describe("Delete a person", () => {
     await expect(tom).toHaveClass(/review-rail--added/);
     await tom.locator(".review-rail__delete").click();
 
-    // Added-then-deleted is a net no-op — there is no database record to drop,
-    // so the card has nothing left to say.
-    await expect(personCard(page, "Tom Treasurer")).toHaveCount(0);
+    // Added-then-deleted is a net no-op in the payload, but the row is still in
+    // the list and the removal is undoable, so the card stays as a ghost.
+    await expect(tom).toHaveClass(/review-rail--deleted/);
+    await expect(tom.locator(".review-rail__restore-person")).toBeVisible();
 
     await page.locator(".review-page__publish-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
