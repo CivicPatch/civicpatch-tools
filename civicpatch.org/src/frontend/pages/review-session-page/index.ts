@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component } from "haunted";
-import { useLocalStorage } from "../../hooks/use-local-storage.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
@@ -11,14 +12,12 @@ import "./review-session.js";
 import "../../components/publish-log/index.js";
 import "../review-page/review-page.css";
 
-const DEFAULT_STATE_KEY = "app:default-state";
-
 function getStateFromUrl() {
   return (new URLSearchParams(window.location.search).get(STATE_PARAM) || "").toLowerCase();
 }
 
 function ReviewSessionPage() {
-  const [defaultState] = useLocalStorage(DEFAULT_STATE_KEY, "");
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const { permissions } = useAuth();

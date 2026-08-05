@@ -2,21 +2,20 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { createReviewSession, navigateToEntry, fetchReviewStats, fetchActiveReviewSession } from "../../api.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { sessionUrl, STATE_PARAM, DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL } from "../review-routes.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
+import { sessionUrl, STATE_PARAM, DEFAULT_DAILY_GOAL } from "../review-routes.js";
 import { DEFAULT_STATS } from "../review-session-page/review-state.js";
 import "./review-landing.js";
 import "./review-page.css";
-
-const DEFAULT_STATE_KEY = "app:default-state";
 
 function getStateFromUrl() {
   return (new URLSearchParams(window.location.search).get(STATE_PARAM) || "").toLowerCase();
 }
 
 function ReviewPage() {
-  const [defaultState] = useLocalStorage(DEFAULT_STATE_KEY, "");
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
-  const [dailyGoal, setDailyGoal] = useLocalStorage(DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL, { ttl: PERSIST_FOREVER });
+  const [dailyGoal, setDailyGoal] = useLocalStorage(STORAGE_KEYS.DAILY_GOAL, DEFAULT_DAILY_GOAL, { ttl: PERSIST_FOREVER });
 
   const [stats, setStats] = useState(DEFAULT_STATS);
   const [error, setError] = useState(null);

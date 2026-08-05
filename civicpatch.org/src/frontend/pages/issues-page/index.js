@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { fetchJobIssues, fetchIssueCounts, flagIssue } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
@@ -58,7 +59,7 @@ function setIssuesParamsInUrl(page, perPage, tags, sortDesc) {
 function IssuesPage() {
   const { permissions } = useAuth();
 
-  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const [issues, setIssues] = useState([]);
@@ -79,7 +80,7 @@ function IssuesPage() {
   const [prToast, setPrToast] = useState(null);
 
   const [openSections, setOpenSections] = useLocalStorage(
-    "issues-page:open-sections",
+    STORAGE_KEYS.ISSUES_OPEN_SECTIONS,
     { issues: true },
     { ttl: PERSIST_FOREVER },
   );

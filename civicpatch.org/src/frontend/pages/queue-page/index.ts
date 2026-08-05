@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
 import { config } from "../../assets/config.js";
 import {
@@ -60,8 +61,8 @@ function setAjParamsInUrl(page: number, perPage: number): void {
 
 function QueuePage() {
   const { permissions } = useAuth();
-  const [defaultState] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
-  const [defaultView, setDefaultView] = useLocalStorage("app:queue-view", "quick", { ttl: PERSIST_FOREVER });
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
+  const [defaultView, setDefaultView] = useLocalStorage(STORAGE_KEYS.QUEUE_VIEW, "quick", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [queueSummary, setQueueSummary] = useState<any>(null);
   const [pullRequests, setPullRequests] = useState<PrItem[]>([]);

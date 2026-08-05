@@ -7,6 +7,7 @@ import {
   PERSIST_FOREVER,
 } from "../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
+import { useStorageSweep } from "../hooks/use-storage-sweep.js";
 import {
   STATE_PARAM,
   REVIEW_PATH,
@@ -131,9 +132,13 @@ function Navbar(host) {
   }
   const isAuthed = userData?.authenticated;
   const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
-  const [stateCode, setStateCode] = useLocalStorage("app:default-state", "", {
+  const [stateCode, setStateCode] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
     ttl: PERSIST_FOREVER,
   });
+
+  // Here because the navbar is the only component on every page, not because
+  // sweeping is navigation's business.
+  useStorageSweep();
 
   // Native <details> dropdowns don't light-dismiss; close any open one when a
   // click lands outside it (the contains() check skips the summary that just
@@ -198,7 +203,7 @@ function Navbar(host) {
   document.documentElement.dataset.theme = resolvedTheme;
   const toggleTheme = () =>
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  const onLogoutClick = () => localStorage.removeItem("app:default-state");
+  const onLogoutClick = () => localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
   const summary = useSummary(canViewQueue, stateCode);
   const currentPath = window.location.pathname;
   return html`

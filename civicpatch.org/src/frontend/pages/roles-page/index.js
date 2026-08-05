@@ -1,10 +1,11 @@
 import { html } from "lit-html";
 import { component } from "haunted";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import "../issues-page/config-editor.js";
 
 function RolesPage() {
-  const [stateCode] = useLocalStorage("app:default-state", "", { ttl: PERSIST_FOREVER });
+  const [stateCode] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
 
   return html`
     <main class="page-content">
