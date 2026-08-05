@@ -74,7 +74,6 @@ function renderLink(url: string, label: unknown, target: string, extraClass = ""
     class="review-preview__link ${extraClass}"
     href=${ensureUrl(url)}
     target=${target}
-    rel="noopener noreferrer"
     title=${url}
     >${label}</a
   >`;
