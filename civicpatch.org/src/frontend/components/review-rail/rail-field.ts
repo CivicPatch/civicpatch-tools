@@ -11,12 +11,14 @@ import { html, nothing } from "lit-html";
 import "../person-image.js";
 import {
   diffValue,
+  isContextField,
   type DiffRecord,
   type FieldReason,
   type FieldSpec,
   type PresentRecord,
   type ScalarDiffState,
 } from "../review/field-model.js";
+import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   buildFieldUpdate,
   displayScalar,
@@ -24,7 +26,6 @@ import {
   renderScalarNewSide,
   renderDateNewSide,
   renderDivisionNewSide,
-  renderSourceUrlsNewSide,
   renderPhotoNewSide,
   renderMultiList,
   type FocusRef,
@@ -38,11 +39,24 @@ export const DASH = "—";
 // copy and the new side a raw scrape URL, so there is nothing meaningful to put
 // back — the field diffs on presence only.
 const PHOTO_KEY = "image";
+const DIVISION_KEY = "office.division_ocdid";
+
+// A field that renders several controls has to hang its label on the set — the
+// label is "Term start", but no one input is that; they are its year and month.
+const groupsControls = (field: FieldSpec) =>
+  field.type === "multi" || field.type === "date" || field.key === DIVISION_KEY;
 
 // Multi-value fields carry provenance on each row (§5.2 — `new` / unmarked /
 // `dropped`), so a field-level "was" would encode the same fact twice, which is
 // audit finding 4.
 const CARRIES_OWN_PROVENANCE = new Set(["emails", "phones", "urls", "other_names", "source_urls"]);
+
+// Which multi-value fields are followable, and in whose window. A person's links
+// and the sources they were read from deliberately do not share a tab.
+const LINK_TARGETS: Record<string, string> = {
+  urls: PERSON_LINK_TARGET,
+  source_urls: SOURCE_LINK_TARGET,
+};
 
 export interface RailFieldProps {
   field: FieldSpec;
@@ -86,14 +100,8 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       >${displayScalar(field, record) || DASH}</span
     >`;
   }
-  if (field.key === "office.division_ocdid")
+  if (field.key === DIVISION_KEY)
     return renderDivisionNewSide(field, record, save, jurisdictionOcdid, focusRef);
-  if (field.key === "source_urls")
-    return renderSourceUrlsNewSide(
-      (diffValue(record, field) as string[]) ?? [],
-      (values) => save({ source_urls: values }),
-      focusRef,
-    );
   if (field.type === "image") return renderPhotoNewSide(record, save, isReadOnly);
   if (field.type === "multi") {
     // Derived every render from (current, old) rather than stamped when a row is
@@ -104,17 +112,20 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       (diffValue(oldRecord, field) as string[]) ?? [],
       (diffValue(record, field) as string[]) ?? [],
     );
-    return renderMultiList(
-      diff
+    return renderMultiList({
+      rows: diff
         .filter((entry) => entry.status !== "removed")
         .map((entry) => ({ value: entry.value, isNew: entry.status === "added" })),
-      diff.filter((entry) => entry.status === "removed").map((entry) => entry.value),
-      (values) => save({ [field.key]: values }),
-      field.label.toLowerCase(),
-      field.key === "urls",
-      field.key === "phones" ? "tel" : "text",
+      // A context field is never compared, so it has nothing to have dropped.
+      dropped: isContextField(field)
+        ? []
+        : diff.filter((entry) => entry.status === "removed").map((entry) => entry.value),
+      setValues: (values) => save({ [field.key]: values }),
+      label: field.label.toLowerCase(),
+      linkTarget: LINK_TARGETS[field.key] ?? null,
+      inputType: field.key === "phones" ? "tel" : "text",
       focusRef,
-    );
+    });
   }
   if (field.type === "date") return renderDateNewSide(field, record, save, focusRef);
   return renderScalarNewSide(field, record, save, { state, error }, focusRef);
@@ -175,6 +186,8 @@ function renderAttention(props: RailFieldProps) {
 
 export function renderRailField(props: RailFieldProps) {
   const { field, newRecord, state } = props;
+  // Read-only renders values, not controls, so there is no set to name.
+  const grouped = !props.isReadOnly && groupsControls(field);
   return html`
     <div class="review-rail__field review-rail__field--${state}">
       <div class="review-rail__label">
@@ -182,7 +195,11 @@ export function renderRailField(props: RailFieldProps) {
           ? html` <span class="review-rail__req">*</span>`
           : nothing}
       </div>
-      <div class="review-rail__control">
+      <div
+        class="review-rail__control"
+        role=${grouped ? "group" : nothing}
+        aria-label=${grouped ? field.label : nothing}
+      >
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
       ${renderWas(props)} ${renderAttention(props)}

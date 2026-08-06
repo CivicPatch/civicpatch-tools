@@ -27,7 +27,13 @@ services:
       - "8004:8004"
     volumes:
       - ./civicpatch.org/src/frontend:/app
+      # Keeps host node_modules out of the container — the image builds its own,
+      # for the container's platform.
       - /app/node_modules
+    # Installed on start, not only at image build. The volume above outlives
+    # `compose up`, so a dependency added since it was created is otherwise
+    # invisible to the container while resolving fine on the host.
+    command: sh -c "npm install && npm start"
     networks:
       - civicpatch_net
   civicpatch-org-db:

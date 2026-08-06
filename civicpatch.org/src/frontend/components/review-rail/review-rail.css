@@ -294,6 +294,17 @@
   min-width: 0;
 }
 
+/* A field rendering several controls carries `role="group"` so its label names
+   the set. That is an ARIA annotation only — it must not also opt into pico's
+   input-group component (elements.css), whose `margin-bottom: --pico-spacing`
+   put a 1rem gap under every grouped field. */
+.review-rail__control[role="group"] {
+  display: block;
+  width: auto;
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
 .review-rail__control input,
 .review-rail__control select {
   width: 100%;

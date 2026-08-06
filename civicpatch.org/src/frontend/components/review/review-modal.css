@@ -347,7 +347,6 @@
   padding-top: 0.45rem;
 }
 
-.review-modal__body .review-rail__control :is(input, select),
-.review-modal__body .field-control__chip {
+.review-modal__body .review-rail__control :is(input, select) {
   font-size: var(--text-md);
 }
