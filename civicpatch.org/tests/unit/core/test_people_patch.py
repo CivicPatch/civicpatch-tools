@@ -6,8 +6,10 @@ from core.people_patch import (
     PeopleValidationError,
     PersonPatch,
     apply_people_patch,
+    patch_people,
     validate_and_normalize,
 )
+from shared.utils.official_fields import OFFICIAL_FIELD_ORDER
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 pytestmark = pytest.mark.unit
@@ -192,3 +194,58 @@ def test_only_edited_field_moves_end_to_end():
         if line[:1] in "+-" and not line.startswith(("+++", "---"))
     ]
     assert changed == ["-  phones: []", "+  phones:", "+  - (202) 555-0143"]
+
+
+# ── patch_people: every written person lands in Official field order ──────
+
+OFFICIAL_KEYS = list(OFFICIAL_FIELD_ORDER)
+
+
+def _out_of_order(pid):
+    # What the frontend's Add builds: id first, then the rest.
+    entry = {
+        **_valid(pid),
+        "other_names": [],
+        "start_date": None,
+        "end_date": None,
+        "image": None,
+        "cdn_image": None,
+    }
+    return {"id": entry.pop("id"), **entry}
+
+
+def test_new_person_is_written_in_official_order():
+    new = _out_of_order("d")
+    people = patch_people([], [PersonPatch(id="d", fields=new)])
+    assert list(people[0]) == OFFICIAL_KEYS
+
+
+def test_untouched_base_person_is_reordered_too():
+    base = [_out_of_order("a")]
+    people = patch_people(base, [PersonPatch(id="a", fields={})])
+    assert list(people[0]) == OFFICIAL_KEYS
+
+
+def test_reordering_does_not_normalize_untouched_values():
+    # Order is the only thing patch_people imposes: the non-canonical phone was not edited,
+    # so it must survive verbatim even though its key moved.
+    base = [_out_of_order("a")]
+    base[0]["phones"] = ["9168085300"]
+    people = patch_people(base, [PersonPatch(id="a", fields={"name": "Alice B."})])
+    assert people[0]["phones"] == ["9168085300"]
+    assert list(people[0]) == OFFICIAL_KEYS
+
+
+def test_already_ordered_file_only_moves_the_edited_line():
+    base = yaml_load(yaml_dump([_valid("a"), _valid("b")]))
+    before = yaml_dump(base)
+    edits = [
+        PersonPatch(id="a", fields={}),
+        PersonPatch(id="b", fields={"phones": ["(202) 555-0143"]}),
+    ]
+    after = yaml_dump(patch_people(base, edits))
+    changed = [
+        line for line in difflib.unified_diff(before.splitlines(), after.splitlines(), n=0)
+        if line[:1] in "+-" and not line.startswith(("+++", "---"))
+    ]
+    assert changed == ["-  - (916) 808-5300", "+  - (202) 555-0143"]

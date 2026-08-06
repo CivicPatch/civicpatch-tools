@@ -6,6 +6,7 @@
 // Pairing a control with an old value is rail-field.ts's job, not theirs.
 
 import { html, nothing } from "lit-html";
+import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
@@ -32,6 +33,22 @@ import {
 } from "../edit-people/person-edit-utils.js";
 
 export type Save = (updates: Record<string, unknown>) => void;
+
+// A callback ref, not a `Ref` object: only the template that renders a control
+// knows when it exists, and the call is that signal.
+export type FocusRef = (el?: Element) => void;
+
+// Which field asked for focus, and the ref that takes it. The rail decides
+// which row it lands on; the control decides which of its elements holds it.
+export interface FieldFocus {
+  key: string;
+  attach: FocusRef;
+}
+
+// `nothing` in an element position is a no-op, so a control that was not asked
+// for gets no ref at all.
+export const attachFocus = (focusRef: FocusRef | null) =>
+  focusRef ? ref(focusRef) : nothing;
 
 // Verdicts the surrounding row already computed, for controls that style
 // themselves by them. Only the plain input does.
@@ -87,8 +104,10 @@ export function renderScalarNewSide(
   newRecord: PresentRecord,
   save: Save,
   { state, error }: NewSideContext,
+  focusRef: FocusRef | null,
 ) {
   return html`<input
+    ${attachFocus(focusRef)}
     class="field-control__input field-control__input--${state} ${error
       ? "field-control__input--error"
       : ""}"
@@ -111,6 +130,7 @@ export function renderDateNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
   save: Save,
+  focusRef: FocusRef | null,
 ) {
   const parts = parseDate(
     diffValue(newRecord, field) as string | null | undefined,
@@ -122,6 +142,7 @@ export function renderDateNewSide(
   return html`
     <div class="field-control__date">
       <input
+        ${attachFocus(focusRef)}
         class="field-control__date-year"
         type="number"
         min="1900"
@@ -174,6 +195,7 @@ export function renderDivisionNewSide(
   newRecord: PresentRecord,
   save: Save,
   jurisdictionOcdid: string | null | undefined,
+  focusRef: FocusRef | null,
 ) {
   const newOcdid = diffValue(newRecord, field) as string | null | undefined;
   const division = parseDivision(newOcdid, jurisdictionOcdid);
@@ -192,6 +214,7 @@ export function renderDivisionNewSide(
   return html`
     <div class="field-control__division">
       <select
+        ${attachFocus(focusRef)}
         class="field-control__division-select"
         aria-label="Division type"
         @change=${(e: Event) =>
@@ -246,64 +269,51 @@ export function renderDivisionNewSide(
   `;
 }
 
-// Adding a value should leave the caret in it: clicking "+ emails" and then
-// having to click the empty chip to type is two gestures for one intent.
-//
-// The new input does not exist yet — setValues goes through the save round-trip
-// and the list re-renders after. lit patches in place, so the container element
-// survives and the new input is its last one, on the next frame.
-function addValueAndFocus(
-  event: Event,
-  values: string[],
-  setValues: (values: string[]) => void,
-) {
-  const container = (event.currentTarget as HTMLElement).closest(
-    ".field-control__chips, .field-control__multi",
-  );
-  setValues([...values, ""]);
-  if (!container) return;
-  requestAnimationFrame(() => {
-    const inputs = container.querySelectorAll<HTMLInputElement>("input");
-    inputs[inputs.length - 1]?.focus();
-  });
-}
+// Every multi-value list renders one more row than it holds, and that trailing
+// empty row is how a value gets added — so there is no button, and nothing to
+// focus that does not exist yet. Writing at index === length appends, which is
+// what turns the empty row into a real value on its first keystroke.
+const withValueAt = (values: string[], i: number, value: string) => {
+  const next = [...values];
+  next[i] = value;
+  return next;
+};
 
 export function renderSourceUrlsNewSide(
   values: string[],
   setValues: (v: string[]) => void,
+  focusRef: FocusRef | null,
 ) {
   return html`<div class="field-control__multi">
-    ${values.map(
-      (value, i) =>
-        html`<div class="field-control__multi-row">
-          <input
-            class="field-control__input"
-            .value=${value}
-            @input=${(e: Event) =>
-              setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
-          />
-          <a
-            class="field-control__source-link-btn"
-            href=${ensureUrl(value)}
-            target=${SOURCE_LINK_TARGET}
-            title="open link"
-            ><i class="fa-solid fa-arrow-up-right-from-square"></i
-          ></a>
-          <button
-            class="field-control__x"
-            title="remove"
-            @click=${() => setValues(values.filter((_, j) => j !== i))}
-          >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>`,
-    )}
-    <button
-      class="field-control__add"
-      @click=${(e: Event) => addValueAndFocus(e, values, setValues)}
-    >
-      + add source url
-    </button>
+    ${[...values, ""].map((value, i) => {
+      const isDraft = i === values.length;
+      return html`<div class="field-control__multi-row">
+        <input
+          ${attachFocus(i === 0 ? focusRef : null)}
+          class="field-control__input"
+          aria-label=${isDraft ? "Add source url" : nothing}
+          placeholder=${isDraft ? "+ add source url" : nothing}
+          .value=${value}
+          @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
+        />
+        ${isDraft
+          ? nothing
+          : html`<a
+                class="field-control__action"
+                href=${ensureUrl(value)}
+                target=${SOURCE_LINK_TARGET}
+                title="open link"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>
+              <button
+                class="field-control__action field-control__action--remove"
+                title="remove"
+                @click=${() => setValues(values.filter((_, j) => j !== i))}
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>`}
+      </div>`;
+    })}
   </div>`;
 }
 
@@ -395,67 +405,69 @@ export function renderMultiList(
   // `tel` for phones: the mobile keypad and autocomplete, nothing more. Validation
   // is the backend's (shared/schemas.py).
   inputType = "text",
+  focusRef: FocusRef | null = null,
 ) {
   const values = rows.map((r) => r.value);
   return html`
     <div class="field-control__chips">
-      ${rows.map((row, i) => {
-        const chip = html`<span
-          class="field-control__chip"
-          title=${row.isNew ? "Found by this scrape" : nothing}
-        >
-          <input
-            type=${inputType}
-            size=${chipSize(row.value)}
-            .value=${row.value}
-            @input=${(e: Event) =>
-              setValues(values.map((v, j) => (j === i ? inputValue(e) : v)))}
-          />
-          <button
-            class="field-control__chip-x"
-            title="Remove"
-            @click=${() => setValues(values.filter((_, j) => j !== i))}
+      ${[...rows, { value: "", isNew: false }].map((row, i) => {
+        const isDraft = i === values.length;
+        const hint = `+ add ${label}`;
+        // The chip is the value and nothing else. Everything you can do to it
+        // sits beside it, so one row shape serves every multi-value field.
+        return html`<span class="field-control__chip-row">
+          <span
+            class="field-control__chip ${isDraft ? "field-control__chip--draft" : ""}"
+            title=${row.isNew ? "Found by this scrape" : nothing}
           >
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </span>`;
-        if (!areLinks || !row.value.trim()) return chip;
-        // Beside the field, not inside its border — as source urls do it.
-        return html`<span class="field-control__chip-linked">
-          ${chip}
-          <a
-            class="field-control__chip-link"
-            href=${ensureUrl(row.value)}
-            target=${PERSON_LINK_TARGET}
-            title="Open link"
-            ><i class="fa-solid fa-arrow-up-right-from-square"></i
-          ></a>
+            <input
+              ${attachFocus(i === 0 ? focusRef : null)}
+              type=${inputType}
+              size=${chipSize(isDraft ? hint : row.value)}
+              aria-label=${isDraft ? `Add ${label}` : nothing}
+              placeholder=${isDraft ? hint : nothing}
+              .value=${row.value}
+              @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
+            />
+          </span>
+          ${areLinks && row.value.trim()
+            ? html`<a
+                class="field-control__action"
+                href=${ensureUrl(row.value)}
+                target=${PERSON_LINK_TARGET}
+                title="Open link"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>`
+            : nothing}
+          ${isDraft
+            ? nothing
+            : html`<button
+                class="field-control__action field-control__action--remove"
+                title="Remove"
+                @click=${() => setValues(values.filter((_, j) => j !== i))}
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>`}
         </span>`;
       })}
       <!-- What the source stopped listing. Not an input: you are deciding about
-           it, not editing it. The strike is on the value rather than the chip —
-           text-decoration propagates to descendants and a child cannot unset it,
-           so a chip-level line-through scores through the button too. -->
+           it, not editing it. -->
       ${dropped.map(
-        (value) => html`<span
-          class="field-control__chip field-control__chip--gone"
-          title="Removed by this scrape"
-        >
-          <s>${value}</s>
+        (value) => html`<span class="field-control__chip-row">
+          <span
+            class="field-control__chip field-control__chip--gone"
+            title="Removed by this scrape"
+          >
+            <s>${value}</s>
+          </span>
           <button
-            class="field-control__chip-back"
+            class="field-control__action field-control__action--restore"
             @click=${() => setValues([...values, value])}
           >
             <i class="fa-solid fa-rotate-left"></i> Put back
           </button>
         </span>`,
       )}
-      <button
-        class="field-control__add"
-        @click=${(e: Event) => addValueAndFocus(e, values, setValues)}
-      >
-        <i class="fa-solid fa-plus"></i> ${label}
-      </button>
     </div>
   `;
 }

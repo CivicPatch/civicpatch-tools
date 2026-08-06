@@ -27,6 +27,7 @@ import {
   renderSourceUrlsNewSide,
   renderPhotoNewSide,
   renderMultiList,
+  type FocusRef,
   type Save,
 } from "../review/field-controls.js";
 import { multiValueDiff } from "../review/field-model.js";
@@ -54,10 +55,14 @@ export interface RailFieldProps {
   save: Save;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
+  // Non-null on the one field the view opened on, so the control it belongs to
+  // can take focus. The rail picks the row; the control picks the element.
+  focusRef: FocusRef | null;
 }
 
 function renderControl(props: RailFieldProps, record: PresentRecord) {
-  const { field, oldRecord, state, error, save, isReadOnly, jurisdictionOcdid } = props;
+  const { field, oldRecord, state, error, save, isReadOnly, jurisdictionOcdid, focusRef } =
+    props;
 
   // Read-only renders every field as its value, never a disabled input (§10) —
   // but "its value" is not always text. displayScalar on the photo field returns
@@ -82,11 +87,12 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
     >`;
   }
   if (field.key === "office.division_ocdid")
-    return renderDivisionNewSide(field, record, save, jurisdictionOcdid);
+    return renderDivisionNewSide(field, record, save, jurisdictionOcdid, focusRef);
   if (field.key === "source_urls")
     return renderSourceUrlsNewSide(
       (diffValue(record, field) as string[]) ?? [],
       (values) => save({ source_urls: values }),
+      focusRef,
     );
   if (field.type === "image") return renderPhotoNewSide(record, save, isReadOnly);
   if (field.type === "multi") {
@@ -107,10 +113,11 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       field.label.toLowerCase(),
       field.key === "urls",
       field.key === "phones" ? "tel" : "text",
+      focusRef,
     );
   }
-  if (field.type === "date") return renderDateNewSide(field, record, save);
-  return renderScalarNewSide(field, record, save, { state, error });
+  if (field.type === "date") return renderDateNewSide(field, record, save, focusRef);
+  return renderScalarNewSide(field, record, save, { state, error }, focusRef);
 }
 
 // `was 2025 · Restore`. Absent when there is nothing to say: no old value, an
@@ -175,8 +182,7 @@ export function renderRailField(props: RailFieldProps) {
           ? html` <span class="review-rail__req">*</span>`
           : nothing}
       </div>
-      <!-- review-modal's focusOnOpen finds the field to focus by this attribute. -->
-      <div class="review-rail__control" data-field=${field.key}>
+      <div class="review-rail__control">
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
       ${renderWas(props)} ${renderAttention(props)}

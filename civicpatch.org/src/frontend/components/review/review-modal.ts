@@ -7,7 +7,7 @@
 // N-column body in the same frame.
 
 import { html, nothing } from "lit-html";
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useCallback } from "haunted";
 import { ref } from "lit-html/directives/ref.js";
 import "../basic/modal.js";
 import "./merge-picker.js";
@@ -85,20 +85,18 @@ function ReviewModal(props: ReviewModalProps) {
   }, [openPersonId]);
 
   // Focus only on open. Navigating must not move focus, or pressing Next twice
-  // fails — the second press lands on a control instead of the button. The
-  // target may be an <input> OR a <select> (Division), so both are candidates.
-  const focusOnOpen = (el: Element | undefined) => {
-    if (!el || !focusFieldKey) return;
-    queueMicrotask(() => {
-      const row = (el as HTMLElement).querySelector(
-        `.review-rail__field [data-field="${focusFieldKey}"]`,
-      );
-      const control = (row ?? (el as HTMLElement).querySelector(".review-rail__field")) as
-        | HTMLElement
-        | null;
-      control?.querySelector<HTMLElement>("input, select")?.focus();
-    });
-  };
+  // fails — the second press lands on a control instead of the button. lit keys
+  // refs by callback identity, so memoising on the open is what makes "only on
+  // open" true: a fresh closure would re-fire on every render, and the controls
+  // save on `input`, so every keystroke would snap focus back here.
+  const focusOnOpen = useCallback(
+    (el?: Element) => {
+      // Element parts commit while the fragment is still detached, where
+      // focus() is a no-op.
+      if (el instanceof HTMLElement) queueMicrotask(() => el.focus());
+    },
+    [openPersonId, focusFieldKey],
+  );
 
   // Alt-arrows, because plain arrows have to stay free for the caret.
   const onKey = (e: KeyboardEvent) => {
@@ -177,12 +175,16 @@ function ReviewModal(props: ReviewModalProps) {
           </button>`;
         })}
       </nav>
-      <div class="review-modal__body" ${ref(focusOnOpen)}>
+      <div class="review-modal__body">
         ${head}
         <!-- The rail's own Reset is dropped here: the footer is showing the same
              action, and two identical buttons read as two different ones. -->
         <div class="review-rail-list">
-          ${renderPersonRail({ ...railProps, onReset: null })}
+          ${renderPersonRail({
+            ...railProps,
+            onReset: null,
+            focusField: focusFieldKey ? { key: focusFieldKey, attach: focusOnOpen } : null,
+          })}
         </div>
       </div>
     </div>
