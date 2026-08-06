@@ -132,94 +132,27 @@
   border-width: 2px;
 }
 
-/* Multi-value — still rows for source urls, which are long enough that a chip
-   would be a full-width chip. Everything else is chips, below. */
+/* Multi-value — one full-width row per value, then what you can do to it. One
+   layout for every multi field: values are as long as urls, and a control sized
+   to its content truncates the ones most worth reading. */
 .field-control__multi { display: flex; flex-direction: column; gap: 0.2rem; }
 .field-control__multi-row { display: flex; gap: 0.25rem; align-items: stretch; }
 .field-control__multi-row .field-control__input { flex: 1; }
 
-/* Chips */
-
-.field-control__chips {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  /* Each chip needs focus-ring clearance on both sides, not one. */
-  gap: calc(var(--ring-space) * 2);
-}
-
-.field-control__chip {
+/* A dropped value is shown, not edited, so its box is a span — same metrics as
+   an input, minus the caret. */
+span.field-control__input {
   display: inline-flex;
   align-items: center;
-  gap: 0.15rem;
-  height: var(--control-h);
-  padding: 0 0.45rem;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--control-radius);
-  background: var(--pico-card-background-color);
-  font-size: var(--text-sm);
-  box-sizing: border-box;
-}
-
-/* The chip is the control; its input is only the text inside it. Left unstyled
-   the input takes pico's form-element height and makes the chip taller than
-   every other control in the row. */
-.field-control__chip input {
-  height: auto;
-  width: auto;
-  min-width: 2rem;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font-size: inherit;
-  line-height: 1;
-  color: inherit;
-}
-
-.field-control__chip input:focus {
-  outline: none;
-}
-
-.field-control__chip:focus-within {
-  border-color: var(--pico-primary);
-  box-shadow: 0 0 0 var(--ring-width) color-mix(in srgb, var(--pico-primary) 35%, transparent);
-}
-
-/* The source stopped listing it. */
-.field-control__chip--gone {
-  border-style: dashed;
-  background: none;
-  color: var(--pico-muted-color);
-}
-
-.field-control__chip--gone s {
-  opacity: 0.85;
-}
-
-/* The chip's height is pinned to --control-h, so a value longer than the chip has
-   to clip. Wrapping puts a second line where there is no room for one and it
-   renders outside the chip — which is what `overflow-wrap: anywhere` did here. */
-.field-control__chip {
-  max-width: 100%;
   overflow: hidden;
 }
 
-.field-control__chip s {
+span.field-control__input s {
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-/* A chip and its actions travel together when the row wraps. The chip holds the
-   value; open-link and remove sit outside its border, so every multi-value row
-   is one shape — value, then what you can do to it. */
-.field-control__chip-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  max-width: 100%;
+  opacity: 0.85;
 }
 
 /* Field actions — everything you can do to a value, beside it: open its link,
@@ -262,22 +195,31 @@
 .field-control__action--restore {
   color: var(--pico-primary);
 }
+
+/* Holds an absent action's place, so the trailing empty row lines up with the
+   values above it. Same width as an icon-only action. */
+.field-control__action-spacer {
+  flex: none;
+  min-width: 1.5rem;
+}
 /* The empty row every list ends in — where a new value is typed. It has to read
    as a slot rather than as a value someone blanked, so it is inset instead of
-   raised. Not dashed: dashed is spoken for by --gone, in this same container. */
-.field-control__chip--draft {
-  border-color: transparent;
+   raised. Not dashed: dashed already means the source stopped listing it. */
+.field-control__input--draft {
+  /* Muted, not absent: the fill alone is 1.06:1 against the card, so a
+     transparent border left the control with no discernible boundary. */
+  border-color: var(--pico-muted-color);
   background: var(--pico-muted-background);
   color: var(--pico-muted-color);
 }
 
-.field-control__chip--draft input::placeholder {
+.field-control__input--draft::placeholder {
   color: inherit;
   opacity: 1;
 }
 
-.field-control__chip--draft:focus-within {
-  border-color: var(--pico-primary);
+.field-control__input--draft:focus {
+  border-color: var(--pico-form-element-border-color);
   background: var(--pico-card-background-color);
   color: var(--civ-text);
 }
@@ -297,6 +239,11 @@
 .field-control__division-preview {
   flex: 1 0 100%;
   width: 100%;
+  /* elements.css treats any `small` after a control as helper text and gives it
+     a full --pico-spacing below (and a negative margin above). This is not
+     helper text, it is the control's output, and the trailing margin was
+     opening a gap under every division row. It sets its own spacing. */
+  margin: 0;
   padding-top: 0.5rem;
   font-size: var(--text-xs);
   color: var(--pico-muted-color);

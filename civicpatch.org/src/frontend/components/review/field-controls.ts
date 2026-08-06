@@ -108,6 +108,7 @@ export function renderScalarNewSide(
 ) {
   return html`<input
     ${attachFocus(focusRef)}
+    aria-label=${field.label}
     class="field-control__input field-control__input--${state} ${error
       ? "field-control__input--error"
       : ""}"
@@ -148,12 +149,12 @@ export function renderDateNewSide(
         min="1900"
         max="2100"
         placeholder="Year"
-        aria-label="Year"
+        aria-label=${`${field.label} year`}
         .value=${parts.year}
         @input=${(e: Event) => setPart("year", inputValue(e))}
       />
       <select
-        aria-label="Month"
+        aria-label=${`${field.label} month`}
         ?disabled=${!parts.year}
         @change=${(e: Event) => setPart("month", inputValue(e))}
       >
@@ -169,7 +170,7 @@ export function renderDateNewSide(
         )}
       </select>
       <select
-        aria-label="Day"
+        aria-label=${`${field.label} day`}
         ?disabled=${!parts.month}
         @change=${(e: Event) => setPart("day", inputValue(e))}
       >
@@ -279,44 +280,6 @@ const withValueAt = (values: string[], i: number, value: string) => {
   return next;
 };
 
-export function renderSourceUrlsNewSide(
-  values: string[],
-  setValues: (v: string[]) => void,
-  focusRef: FocusRef | null,
-) {
-  return html`<div class="field-control__multi">
-    ${[...values, ""].map((value, i) => {
-      const isDraft = i === values.length;
-      return html`<div class="field-control__multi-row">
-        <input
-          ${attachFocus(i === 0 ? focusRef : null)}
-          class="field-control__input"
-          aria-label=${isDraft ? "Add source url" : nothing}
-          placeholder=${isDraft ? "+ add source url" : nothing}
-          .value=${value}
-          @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
-        />
-        ${isDraft
-          ? nothing
-          : html`<a
-                class="field-control__action"
-                href=${ensureUrl(value)}
-                target=${SOURCE_LINK_TARGET}
-                title="open link"
-                ><i class="fa-solid fa-arrow-up-right-from-square"></i
-              ></a>
-              <button
-                class="field-control__action field-control__action--remove"
-                title="remove"
-                @click=${() => setValues(values.filter((_, j) => j !== i))}
-              >
-                <i class="fa-solid fa-xmark"></i>
-              </button>`}
-      </div>`;
-    })}
-  </div>`;
-}
-
 export function sourceLinks(urls: string[]) {
   return html`<div class="field-control__source-urls">
     ${urls.map(
@@ -369,14 +332,14 @@ export function renderPhotoNewSide(
 // to pair, because multiValueDiff normalises and compares as sets by design. So
 // the published list is the only list.
 //
-// A list of short strings is a list of chips, not a stack of full-width text
-// boxes: three emails cost one line instead of three, and the field stops looking
-// like a form the moment it holds more than one value.
+// One row per value, at full width. Values that are chips elsewhere are a
+// stack here because urls are values too, and a control sized to its content
+// truncates exactly the field most in need of being read in full.
 //
 // Provenance carries no words. `new` and `dropped` named the pipeline rather than
-// the person, so state is the chip itself — an accent and a dot for a value this
-// scrape brought in, dashed and struck for one the source stopped listing, whose
-// only action is to come back. Tooltips carry the sentence for anyone who hovers.
+// the person, so state is the row itself — struck and dashed for a value the
+// source stopped listing, whose only action is to come back. Tooltips carry the
+// sentence for anyone who hovers.
 //
 // Provenance is passed in, not computed here: a merge picker (§21.5) derives it
 // from N candidates rather than two sides, and this control should serve that
@@ -386,87 +349,104 @@ export interface MultiRow {
   isNew: boolean;
 }
 
-// A chip is as wide as the value in it. Floored so an empty chip is still a
-// target, capped so one long url cannot push the row off the card.
-const CHIP_MIN_CHARS = 8;
-const CHIP_MAX_CHARS = 38;
+export interface MultiListProps {
+  rows: MultiRow[];
+  // Values the source stopped listing. Empty for fields that are never compared.
+  dropped: string[];
+  setValues: (values: string[]) => void;
+  // Names the trailing empty row: "+ add email".
+  label: string;
+  // Non-null makes every row followable — a url you cannot follow is a url you
+  // cannot check. Which window it opens in is the caller's: source links and
+  // person links deliberately do not share one.
+  linkTarget: string | null;
+  // `tel` for phones: the mobile keypad and autocomplete, nothing more.
+  // Validation is the backend's (shared/schemas.py).
+  inputType: string;
+  focusRef: FocusRef | null;
+}
 
-const chipSize = (value: string) =>
-  Math.min(Math.max(value.length, CHIP_MIN_CHARS), CHIP_MAX_CHARS);
+// Named after the value they act on, not after themselves: a card holds several
+// of each, and "Remove" three times over says nothing about which. `title` stays
+// for the pointer tooltip — as an accessible name it is too weak to rely on,
+// since it never surfaces on touch.
+const renderLinkAction = (value: string, target: string) => html`<a
+  class="field-control__action"
+  href=${ensureUrl(value)}
+  target=${target}
+  aria-label=${`Open ${value}`}
+  title="Open link"
+  ><i class="fa-solid fa-arrow-up-right-from-square"></i
+></a>`;
 
-export function renderMultiList(
-  rows: MultiRow[],
-  dropped: string[],
-  setValues: (values: string[]) => void,
-  label: string,
-  // Link fields get an open-in-new-tab affordance per row — a url you cannot
-  // follow is a url you cannot check.
-  areLinks = false,
-  // `tel` for phones: the mobile keypad and autocomplete, nothing more. Validation
-  // is the backend's (shared/schemas.py).
-  inputType = "text",
-  focusRef: FocusRef | null = null,
-) {
-  const values = rows.map((r) => r.value);
+const renderRemoveAction = (value: string, remove: () => void) => html`<button
+  class="field-control__action field-control__action--remove"
+  aria-label=${`Remove ${value}`}
+  title="Remove"
+  @click=${remove}
+>
+  <i class="fa-solid fa-xmark"></i>
+</button>`;
+
+// An action a row does not have still holds its place, so every input in a
+// field is one width — otherwise the trailing empty row runs wider than the
+// values above it, which reads as a different kind of control.
+const ACTION_SPACER = html`<span
+  class="field-control__action-spacer"
+  aria-hidden="true"
+></span>`;
+
+// Shown, not edited: you are deciding about it, not changing it. `--cleared` is
+// the same language a scalar field uses when the scrape emptied it.
+const renderDroppedRow = (value: string, restore: () => void) => html`<div
+  class="field-control__multi-row"
+>
+  <span
+    class="field-control__input field-control__input--cleared"
+    title="Removed by this scrape"
+    ><s>${value}</s></span
+  >
+  <button
+    class="field-control__action field-control__action--restore"
+    aria-label=${`Put back ${value}`}
+    @click=${restore}
+  >
+    <i class="fa-solid fa-rotate-left"></i> Put back
+  </button>
+</div>`;
+
+export function renderMultiList(props: MultiListProps) {
+  const { rows, dropped, setValues, label, linkTarget, inputType, focusRef } = props;
+  const values = rows.map((row) => row.value);
   return html`
-    <div class="field-control__chips">
+    <div class="field-control__multi">
       ${[...rows, { value: "", isNew: false }].map((row, i) => {
         const isDraft = i === values.length;
-        const hint = `+ add ${label}`;
-        // The chip is the value and nothing else. Everything you can do to it
-        // sits beside it, so one row shape serves every multi-value field.
-        return html`<span class="field-control__chip-row">
-          <span
-            class="field-control__chip ${isDraft ? "field-control__chip--draft" : ""}"
+        return html`<div class="field-control__multi-row">
+          <input
+            ${attachFocus(i === 0 ? focusRef : null)}
+            class="field-control__input ${isDraft ? "field-control__input--draft" : ""}"
+            type=${inputType}
             title=${row.isNew ? "Found by this scrape" : nothing}
-          >
-            <input
-              ${attachFocus(i === 0 ? focusRef : null)}
-              type=${inputType}
-              size=${chipSize(isDraft ? hint : row.value)}
-              aria-label=${isDraft ? `Add ${label}` : nothing}
-              placeholder=${isDraft ? hint : nothing}
-              .value=${row.value}
-              @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
-            />
-          </span>
-          ${areLinks && row.value.trim()
-            ? html`<a
-                class="field-control__action"
-                href=${ensureUrl(row.value)}
-                target=${PERSON_LINK_TARGET}
-                title="Open link"
-                ><i class="fa-solid fa-arrow-up-right-from-square"></i
-              ></a>`
-            : nothing}
-          ${isDraft
+            aria-label=${isDraft ? `Add ${label}` : `${label} ${i + 1}`}
+            placeholder=${isDraft ? `+ add ${label}` : nothing}
+            .value=${row.value}
+            @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
+          />
+          ${!linkTarget
             ? nothing
-            : html`<button
-                class="field-control__action field-control__action--remove"
-                title="Remove"
-                @click=${() => setValues(values.filter((_, j) => j !== i))}
-              >
-                <i class="fa-solid fa-xmark"></i>
-              </button>`}
-        </span>`;
+            : isDraft || !row.value.trim()
+              ? ACTION_SPACER
+              : renderLinkAction(row.value, linkTarget)}
+          ${isDraft
+            ? ACTION_SPACER
+            : renderRemoveAction(row.value, () =>
+                setValues(values.filter((_, j) => j !== i)),
+              )}
+        </div>`;
       })}
-      <!-- What the source stopped listing. Not an input: you are deciding about
-           it, not editing it. -->
-      ${dropped.map(
-        (value) => html`<span class="field-control__chip-row">
-          <span
-            class="field-control__chip field-control__chip--gone"
-            title="Removed by this scrape"
-          >
-            <s>${value}</s>
-          </span>
-          <button
-            class="field-control__action field-control__action--restore"
-            @click=${() => setValues([...values, value])}
-          >
-            <i class="fa-solid fa-rotate-left"></i> Put back
-          </button>
-        </span>`,
+      ${dropped.map((value) =>
+        renderDroppedRow(value, () => setValues([...values, value])),
       )}
     </div>
   `;
