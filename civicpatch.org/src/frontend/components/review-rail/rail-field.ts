@@ -12,6 +12,7 @@ import "../person-image.js";
 import {
   diffValue,
   isContextField,
+  valueError,
   type DiffRecord,
   type FieldReason,
   type FieldSpec,
@@ -56,6 +57,14 @@ const CARRIES_OWN_PROVENANCE = new Set(["emails", "phones", "urls", "other_names
 const LINK_TARGETS: Record<string, string> = {
   urls: PERSON_LINK_TARGET,
   source_urls: SOURCE_LINK_TARGET,
+};
+
+// For the soft keyboard, not for validation — format is checked in field-model,
+// where it can also block Publish. Notably absent: `url`, which demands a scheme
+// and would reject the scheme-less values the scrapers legitimately produce.
+const INPUT_TYPES: Record<string, string> = {
+  phones: "tel",
+  emails: "email",
 };
 
 export interface RailFieldProps {
@@ -115,7 +124,11 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
     return renderMultiList({
       rows: diff
         .filter((entry) => entry.status !== "removed")
-        .map((entry) => ({ value: entry.value, isNew: entry.status === "added" })),
+        .map((entry) => ({
+          value: entry.value,
+          isNew: entry.status === "added",
+          isInvalid: !!valueError(field, entry.value),
+        })),
       // A context field is never compared, so it has nothing to have dropped.
       dropped: isContextField(field)
         ? []
@@ -123,7 +136,7 @@ function renderControl(props: RailFieldProps, record: PresentRecord) {
       setValues: (values) => save({ [field.key]: values }),
       label: field.label.toLowerCase(),
       linkTarget: LINK_TARGETS[field.key] ?? null,
-      inputType: field.key === "phones" ? "tel" : "text",
+      inputType: INPUT_TYPES[field.key] ?? "text",
       focusRef,
     });
   }
