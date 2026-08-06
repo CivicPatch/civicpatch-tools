@@ -217,28 +217,51 @@ export function isRequiredFieldEmpty(record: DiffRecord, field: FieldSpec): bool
   return normalizeScalar(value) === "";
 }
 
-// The single client-side error for a field's value on `record`, or null. Order:
-// required → date format → term ordering (end_date only).
-// Deliberately permissive. The backend canonicalises with `phonenumbers` and is the
-// authority (shared/schemas.py); this only catches what it would certainly reject, so
-// the reviewer hears about it while typing rather than at Publish.
-function phoneError(values: string[]): string | null {
-  for (const value of values) {
-    const text = String(value ?? "").trim();
-    if (!text) continue;
+// Scheme-less is valid: the scrapers legitimately produce "cityofx.gov/council",
+// and ensureUrl supplies a scheme for the link affordance. So this asks only for
+// something dot-separated with no whitespace in it.
+const urlError = (text: string) =>
+  /^\S+\.\S{2,}$/.test(text) ? null : `${text} is not a valid url`;
+
+// Per-value format checks, by field. Deliberately permissive: the backend
+// canonicalises and is the authority (shared/schemas.py), so this catches only
+// what it would certainly reject — the reviewer hears about it while typing
+// rather than at Publish. A field with no entry here has no format to violate.
+const VALUE_ERRORS: Record<string, (text: string) => string | null> = {
+  phones: (text) => {
     // An extension is not part of the number.
     const digits = text.split(/\bext\.?\b|\bx\b/i)[0].replace(/\D/g, "");
     const national = digits.startsWith("1") ? digits.slice(1) : digits;
-    if (national.length !== 10) return `${text} is not a 10-digit US number`;
-  }
-  return null;
+    return national.length === 10 ? null : `${text} is not a 10-digit US number`;
+  },
+  emails: (text) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? null : `${text} is not a valid email`,
+  urls: urlError,
+  source_urls: urlError,
+};
+
+// One value of a multi-value field, or null if it is fine. Exported because the
+// rail marks the offending row rather than the whole field — one definition of
+// valid, read by both the row and `fieldError` below.
+export function valueError(field: FieldSpec, value: string): string | null {
+  const text = String(value ?? "").trim();
+  if (!text) return null;
+  return VALUE_ERRORS[field.key]?.(text) ?? null;
 }
+
+// The single client-side error for a field's value on `record`, or null. Order:
+// required → value format → date format → term ordering (end_date only).
 
 export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
   if (!record) return null;
   if (isRequiredFieldEmpty(record, field)) return "Required";
-  if (field.key === "phones") {
-    return phoneError((diffValue(record, field) as string[]) ?? []);
+  if (field.type === "multi") {
+    const values = (diffValue(record, field) as string[]) ?? [];
+    for (const value of values) {
+      const error = valueError(field, value);
+      if (error) return error;
+    }
+    return null;
   }
   if (field.type === "date") {
     const value = String(diffValue(record, field) ?? "");

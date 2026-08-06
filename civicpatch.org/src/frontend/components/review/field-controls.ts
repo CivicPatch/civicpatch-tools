@@ -347,6 +347,9 @@ export function renderPhotoNewSide(
 export interface MultiRow {
   value: string;
   isNew: boolean;
+  // Checked outside, like provenance — the control renders the verdict rather
+  // than deciding it, so a merge picker can pass its own.
+  isInvalid: boolean;
 }
 
 export interface MultiListProps {
@@ -420,12 +423,14 @@ export function renderMultiList(props: MultiListProps) {
   const values = rows.map((row) => row.value);
   return html`
     <div class="field-control__multi">
-      ${[...rows, { value: "", isNew: false }].map((row, i) => {
+      ${[...rows, { value: "", isNew: false, isInvalid: false }].map((row, i) => {
         const isDraft = i === values.length;
         return html`<div class="field-control__multi-row">
           <input
             ${attachFocus(i === 0 ? focusRef : null)}
-            class="field-control__input ${isDraft ? "field-control__input--draft" : ""}"
+            class="field-control__input ${isDraft ? "field-control__input--draft" : ""} ${row.isInvalid
+              ? "field-control__input--error"
+              : ""}"
             type=${inputType}
             title=${row.isNew ? "Found by this scrape" : nothing}
             aria-label=${isDraft ? `Add ${label}` : `${label} ${i + 1}`}

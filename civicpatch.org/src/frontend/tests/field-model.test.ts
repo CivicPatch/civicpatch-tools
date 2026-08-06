@@ -13,6 +13,7 @@ import {
   isTermOrderValid,
   isRequiredFieldEmpty,
   fieldError,
+  valueError,
   type FieldSpec,
   type Issue,
 } from "../components/review/field-model.js";
@@ -22,6 +23,14 @@ import {
 } from "../components/review/review-cards.js";
 
 const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
+const EMAILS_FIELD: FieldSpec = { key: "emails", label: "Email", type: "multi" };
+const URLS_FIELD: FieldSpec = { key: "urls", label: "Links", type: "multi" };
+const PHONES_FIELD: FieldSpec = { key: "phones", label: "Phone", type: "multi" };
+const OTHER_NAMES_FIELD: FieldSpec = {
+  key: "other_names",
+  label: "Other names",
+  type: "multi",
+};
 
 describe("getFieldValue", () => {
   it("reads a top-level key", () => {
@@ -434,6 +443,51 @@ describe("fieldError", () => {
     expect(
       fieldError(endField, { start_date: "2021", end_date: "2025" }),
     ).toBeNull();
+  });
+
+  it("reports the first badly formatted value in a multi field", () => {
+    expect(fieldError(EMAILS_FIELD, { emails: ["a@b.gov", "nope"] })).toBe(
+      "nope is not a valid email",
+    );
+  });
+});
+
+describe("valueError", () => {
+  it("accepts a well-formed email and rejects one without a domain", () => {
+    expect(valueError(EMAILS_FIELD, "mayor@city.gov")).toBeNull();
+    expect(valueError(EMAILS_FIELD, "mayor@city")).toBe(
+      "mayor@city is not a valid email",
+    );
+  });
+
+  // The scrapers produce these and ensureUrl supplies the scheme, so demanding
+  // one here would flag good data.
+  it("accepts a url with no scheme", () => {
+    expect(valueError(URLS_FIELD, "cityofx.gov/council")).toBeNull();
+    expect(valueError(URLS_FIELD, "https://cityofx.gov/council")).toBeNull();
+  });
+
+  it("rejects a url with whitespace in it", () => {
+    expect(valueError(URLS_FIELD, "city of x.gov")).toBe(
+      "city of x.gov is not a valid url",
+    );
+  });
+
+  it("passes a 10-digit phone and flags a short one", () => {
+    expect(valueError(PHONES_FIELD, "(509) 555-0123")).toBeNull();
+    expect(valueError(PHONES_FIELD, "555-0123")).toBe(
+      "555-0123 is not a 10-digit US number",
+    );
+  });
+
+  // An empty row is the trailing "add" slot, not a mistake.
+  it("ignores blank values", () => {
+    expect(valueError(EMAILS_FIELD, "")).toBeNull();
+    expect(valueError(EMAILS_FIELD, "   ")).toBeNull();
+  });
+
+  it("has no opinion about a field with no format", () => {
+    expect(valueError(OTHER_NAMES_FIELD, "Maria de la Cruz")).toBeNull();
   });
 });
 
