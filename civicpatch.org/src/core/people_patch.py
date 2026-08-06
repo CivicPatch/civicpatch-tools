@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ValidationError
 from shared.schemas import Official
+from shared.utils.official_fields import order_official_fields
 
 
 class PersonPatch(BaseModel):
@@ -68,7 +69,8 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
 
 
 # Produce the people to write from a base file and a set of edits: overlay, validate,
-# normalize. Pure — the caller (router) owns fetching the base and writing the result.
+# normalize, order. Pure — the caller (router) owns fetching the base and writing the result.
 # Raises PeopleValidationError if any edited person is invalid.
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
-    return validate_and_normalize(apply_people_patch(base, edits), edits)
+    patched = validate_and_normalize(apply_people_patch(base, edits), edits)
+    return [order_official_fields(person) for person in patched]

@@ -16,7 +16,8 @@ import {
   type Issue,
   type SurvivingField,
 } from "../review/field-model.js";
-import { withDisplayImage, type Save } from "../review/field-controls.js";
+import { focusedKey } from "./rail-focus.js";
+import { withDisplayImage, type FieldFocus, type Save } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { renderRailField } from "./rail-field.js";
 import {
@@ -70,6 +71,9 @@ export interface PersonRailProps {
   isMergeOpen: boolean;
   onToggleMerge: () => void;
   onPickPartner: (partnerId: string) => void;
+  // The field to open with the caret in, if any. Null everywhere the rail is a
+  // list — only the modal opens on a field.
+  focusField: FieldFocus | null;
 }
 
 
@@ -209,8 +213,11 @@ function renderRowIssues(props: PersonRailProps) {
 function renderFields(props: PersonRailProps, keys: Set<string>) {
   const { oldRecord, newRecord, surviving, issues, isReadOnly, jurisdictionOcdid, onSave } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
+  const fields = FIELD_SCHEMA.filter((field) => keys.has(field.key));
+  const focus = props.focusField;
+  const focusKey = focusedKey(fields, focus);
 
-  return FIELD_SCHEMA.filter((field) => keys.has(field.key)).map((field) => {
+  return fields.map((field) => {
     const current = survivingByKey.get(field.key);
     return renderRailField({
       field,
@@ -227,6 +234,7 @@ function renderFields(props: PersonRailProps, keys: Set<string>) {
       save: onSave,
       isReadOnly,
       jurisdictionOcdid,
+      focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });
 }

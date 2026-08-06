@@ -153,7 +153,7 @@
   align-items: center;
   gap: 0.15rem;
   height: var(--control-h);
-  padding: 0 0.15rem 0 0.45rem;
+  padding: 0 0.45rem;
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--control-radius);
   background: var(--pico-card-background-color);
@@ -212,79 +212,74 @@
   text-overflow: ellipsis;
 }
 
-/* A link chip and its arrow travel together when the row wraps. */
-.field-control__chip-linked {
+/* A chip and its actions travel together when the row wraps. The chip holds the
+   value; open-link and remove sit outside its border, so every multi-value row
+   is one shape — value, then what you can do to it. */
+.field-control__chip-row {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   max-width: 100%;
 }
 
-/* The buttons must keep their full width while the value gives way. */
-.field-control__chip-x,
-.field-control__chip-back,
-.field-control__chip-link {
-  flex: none;
-}
-
-.field-control__chip-x,
-.field-control__chip-back,
-.field-control__chip-link {
+/* Field actions — everything you can do to a value, beside it: open its link,
+   remove it, put it back. One class, so removing a chip and removing a source
+   url are drawn as the same act. Full control height keeps them targets; they
+   must keep their width while the value gives way. */
+.field-control__action {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.25rem;
-  height: calc(var(--control-h) - 0.4rem);
+  flex: none;
+  height: var(--control-h);
+  min-width: 1.5rem;
   width: auto;
   padding: 0 0.3rem;
-  border: none;
+  border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--control-radius);
-  background: none;
+  background: var(--pico-card-background-color);
   color: var(--pico-muted-color);
   font-size: var(--text-xs);
   line-height: 1;
   text-decoration: none;
+  box-sizing: border-box;
   cursor: pointer;
 }
 
-.field-control__chip-x:hover {
+.field-control__action:hover {
+  border-color: var(--pico-primary);
+  color: var(--pico-primary);
+}
+
+/* Removing is the destructive one, so it is the only one that goes red. */
+.field-control__action--remove:hover {
+  border-color: var(--pico-del-color);
   background: var(--pico-del-background);
   color: var(--pico-del-color);
 }
 
-.field-control__chip-back {
+.field-control__action--restore {
   color: var(--pico-primary);
 }
-.field-control__x {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  padding: 0;
-  border: 1px solid var(--pico-muted-border-color);
-  background: var(--pico-card-background-color);
-  border-radius: var(--pico-border-radius);
+/* The empty row every list ends in — where a new value is typed. It has to read
+   as a slot rather than as a value someone blanked, so it is inset instead of
+   raised. Not dashed: dashed is spoken for by --gone, in this same container. */
+.field-control__chip--draft {
+  border-color: transparent;
+  background: var(--pico-muted-background);
   color: var(--pico-muted-color);
-  font-size: var(--text-xs);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.field-control__add {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  align-self: flex-start;
-  width: auto;
-  border: 1px dashed var(--pico-muted-border-color);
-  background: transparent;
-  padding-inline: 0.5rem;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
-  cursor: pointer;
 }
 
-.field-control__add:hover {
+.field-control__chip--draft input::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+.field-control__chip--draft:focus-within {
   border-color: var(--pico-primary);
-  color: var(--pico-primary);
+  background: var(--pico-card-background-color);
+  color: var(--civ-text);
 }
 
 /* Division seat-editor */
@@ -350,19 +345,6 @@
   color: var(--pico-muted-color);
   flex-shrink: 0;
 }
-.field-control__source-link-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  text-decoration: none;
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
-  flex-shrink: 0;
-}
-.field-control__source-link-btn:hover { background: var(--pico-card-background-color); }
 
 /* Photo */
 .field-control__photo {
@@ -399,10 +381,7 @@
     .field-control__division-select,
     .field-control__division-input,
     .field-control__date-year,
-    .field-control__x,
-    .field-control__add,
-    .field-control__photo-clear,
-    .field-control__source-link-btn
+    .field-control__photo-clear
   ),
 :is(.review-rail-list, .review-overview) .field-control__date select {
   height: var(--control-h);

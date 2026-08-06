@@ -108,7 +108,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
   // keystroke, so it edits local state and Save commits.
   const website = canEdit
     ? renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
-        setUrl(String((updates as any).url ?? "")), { state: "same", error: null })
+        setUrl(String((updates as any).url ?? "")), { state: "same", error: null }, null)
     : data.url
       ? html`<a class="review-rail__readonly" href=${data.url} target=${SOURCE_LINK_TARGET}
           >${data.url}</a

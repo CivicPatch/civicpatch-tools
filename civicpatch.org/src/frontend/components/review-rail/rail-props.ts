@@ -60,6 +60,8 @@ export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProp
       ctx.dirtyIds.has(card.personId) && card.status !== PersonStatus.REMOVED
         ? () => ctx.onResetPerson(card.personId)
         : null,
+    // Only the modal opens on a field; it sets this over the props it is handed.
+    focusField: null,
     mergeCandidates: canMerge(card) ? mergeCandidates(card, ctx.cards) : [],
     isMergeOpen: ctx.mergeOpenId === card.personId,
     onToggleMerge: () => ctx.onToggleMerge(card.personId),
