@@ -13,7 +13,7 @@ import { expect } from "@playwright/test";
 /** Switch to Detail via the tab a reviewer would use. */
 export async function openDetail(page) {
   await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
-  await expect(page.locator("review-rail-list")).toBeVisible();
+  await expect(page.locator("person-editor-list")).toBeVisible();
 }
 
 export async function openOverview(page) {
@@ -22,13 +22,13 @@ export async function openOverview(page) {
 }
 
 /**
- * One person's rail, matched on their name header — a name can also appear in
+ * One person's editor, matched on their name header — a name can also appear in
  * another card's picker, which a bare hasText would happily match.
  */
-export const railFor = (page, name) =>
+export const editorFor = (page, name) =>
   page
-    .locator(".review-rail")
-    .filter({ has: page.locator(".review-rail__name", { hasText: name }) });
+    .locator(".person-editor")
+    .filter({ has: page.locator(".person-editor__name", { hasText: name }) });
 
 /** One person's Overview card, matched the same way. */
 export const rowFor = (page, name) =>
@@ -42,9 +42,9 @@ export const foldFor = (page, name) =>
     .locator(".review-fold")
     .filter({ has: page.locator(".review-fold__name", { hasText: name }) });
 
-/** A field row within a rail, by its label. */
-export const fieldIn = (rail, label) =>
-  rail.locator(".review-rail__field").filter({ hasText: label });
+/** A field row within a person editor, by its label. */
+export const fieldIn = (editor, label) =>
+  editor.locator(".person-editor__field").filter({ hasText: label });
 
 /**
  * Type into one person's field, from wherever the card currently is. Collapsed
@@ -53,8 +53,8 @@ export const fieldIn = (rail, label) =>
  */
 export async function editField(page, name, label, value) {
   await openDetail(page);
-  const rail = railFor(page, name);
-  const expander = rail.locator(".review-rail__expander");
-  if (await fieldIn(rail, label).count() === 0) await expander.click();
-  await fieldIn(rail, label).first().locator("input").first().fill(value);
+  const editor = editorFor(page, name);
+  const expander = editor.locator(".person-editor__expander");
+  if (await fieldIn(editor, label).count() === 0) await expander.click();
+  await fieldIn(editor, label).first().locator("input").first().fill(value);
 }

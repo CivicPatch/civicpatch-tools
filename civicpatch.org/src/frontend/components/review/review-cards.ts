@@ -1,5 +1,5 @@
 // One card per person: what happened to them, and which fields survive the
-// collapse rule. Pure — the rail and useFrozenFields read the same answer.
+// collapse rule. Pure — the editor and useFrozenFields read the same answer.
 
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import {

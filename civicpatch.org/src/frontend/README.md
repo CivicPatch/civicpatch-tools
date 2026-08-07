@@ -81,12 +81,12 @@ thing — this is the map:
 |---|---|
 | `components/review/` | **The shared model.** `review-cards.ts` (one card per person), `field-model.ts` (`FIELD_SCHEMA`, the collapse rule), `field-controls.ts`, `merge-model.ts`. Pure. Every view below reads from it. |
 | `components/review-overview/` | **Overview tab** — triage a whole card at a glance. One list in seat order; untouched people fold to a compact row. |
-| `components/review-rail/` | **Detail tab** — the editor. `review-rail-list` → `person-rail` → `rail-field`, one field per row as `label │ control │ was … Restore`. |
+| `components/person-editor/` | **Detail tab** — the editor. `person-editor-list` → `person-editor` → `editor-field`, one field per row as `label │ control │ was … Restore`. Also mounted by the review modal and the jurisdiction page. |
 | `components/review-preview/` | **Preview tab** — the published result, *not* a diff. Deliberately carries no diff vocabulary: no state colours, no strikethrough, no attention icons. |
 | `components/review-checklist/` | The complete index of a card's issues. |
 | `pages/review-page/` | The review **landing** page — pick a jurisdiction, see stats. |
 | `pages/review-session-page/` | The review **session** — owns the card under review, the tab bar, and the frozen-field set the three views must agree on. |
-| `components/review-panel/` | **Legacy (v1).** `civ-review-table` + `civ-diff-panel`, used by the jurisdiction page and PR cards. Superseded by the rail; still live, do not extend. |
+| `components/review-panel/` | **Legacy (v1).** `civ-review-table` + `civ-diff-panel`, used by the jurisdiction page and PR cards. Superseded by the person editor; still live, do not extend. |
 
 The three tabs share the **card model** but each owns its own presentation. When
 changing what a card *means*, change `components/review/`; when changing how one

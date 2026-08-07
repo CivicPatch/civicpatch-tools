@@ -1,4 +1,4 @@
-/* Merge picker — step 2, what survives. Step 1 is inline on the rail. */
+/* Merge picker — step 2, what survives. Step 1 is inline on the editor. */
 
 /* styles.css caps dialogs at 32rem, which cuts the result column off. The
    wrapper mirrors review-modal's shape so the selector outranks that cap. */

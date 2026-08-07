@@ -15,7 +15,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { MARKERS_REQUEST_ID, READ_ONLY_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, railFor } from "./helpers/review-card.js";
+import { openDetail, editorFor } from "./helpers/review-card.js";
 
 const items = (page) => page.locator(".review-sidebar__item");
 const trigger = (page) => page.locator(".review-sidebar__trigger");
@@ -85,8 +85,8 @@ test.describe("Issue checklist", () => {
     // Detail first: once the drawer is open its scrim covers the view tabs.
     await openDetail(page);
 
-    const carol = railFor(page, "Carol Extra");
-    await expect(carol.locator(".review-rail__issue--row")).toHaveCount(1);
+    const carol = editorFor(page, "Carol Extra");
+    await expect(carol.locator(".person-editor__issue--row")).toHaveCount(1);
 
     await openDrawer(page);
     await items(page)
@@ -96,7 +96,7 @@ test.describe("Issue checklist", () => {
 
     // The tick has to take effect where the reviewer was looking, not only in
     // the list they ticked it from (§8.2).
-    await expect(carol.locator(".review-rail__issue--row")).toHaveCount(0);
+    await expect(carol.locator(".person-editor__issue--row")).toHaveCount(0);
   });
 
   test("one tick clears both holders of a shared-message issue", async ({
@@ -109,7 +109,7 @@ test.describe("Issue checklist", () => {
     // by content means one tick correctly resolves both anchors. Scoped by the
     // message — Carol's row-level marker carries the same base class.
     const shared = page
-      .locator(".review-rail__issue")
+      .locator(".person-editor__issue")
       .filter({ hasText: "marked as unique" });
     await expect(shared).toHaveCount(2);
 

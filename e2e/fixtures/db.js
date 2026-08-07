@@ -55,7 +55,7 @@ const RECONCILE_PR_NUMBER = 5;
 // Scale fixture — a realistically-sized council (§20). Every other card here has
 // two or three people, which makes the layout questions the redesign exists to
 // answer unfalsifiable: whether the collapse rule earns its keep, whether the
-// rail becomes an unusable scroll, whether the grid holds at density. Own state
+// editor becomes an unusable scroll, whether the grid holds at density. Own state
 // (ma) so this large open card stays out of every other spec's review queue.
 export const SCALE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ma/place:e2e_scale/government";

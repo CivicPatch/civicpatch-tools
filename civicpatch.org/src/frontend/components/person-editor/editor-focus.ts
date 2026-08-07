@@ -1,7 +1,7 @@
-// Which row of a rail takes the caret when a view opens on a field.
+// Which row of a person editor takes the caret when a view opens on a field.
 //
-// The caller names a field, but the rail decides what is on screen — the two
-// derive their visible sets separately — so a field the rail is not showing
+// The caller names a field, but the editor decides what is on screen — the two
+// derive their visible sets separately — so a field the editor is not showing
 // falls back to the first row rather than focusing nothing.
 
 import { type FieldSpec } from "../review/field-model.js";

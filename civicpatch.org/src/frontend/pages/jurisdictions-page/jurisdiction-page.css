@@ -265,10 +265,10 @@
   border-top: 1px solid var(--civ-border);
 }
 
-/* ── Details fields — rail idiom ──────────────────────────────────────────── */
+/* ── Details fields — editor idiom ──────────────────────────────────────────── */
 
 /* Control sizing comes from field-controls.css, which this container opts into
-   alongside the rail. Only the stacking margin is ours — elements.css gives every
+   alongside the editor. Only the stacking margin is ours — elements.css gives every
    input a bottom margin, which on a field grid is a gap under one row. */
 .jurisdiction-details__fields {
   display: flex;
@@ -276,18 +276,18 @@
   gap: 0.35rem;
 }
 
-/* One height for everything in a row, from the same token the rail uses — an
+/* One height for everything in a row, from the same token the editor uses — an
    input and a plaintext value at different heights is what made these rows read
    as two kinds of thing. elements.css sizes inputs from a line-height calc that
    lands taller, and its `input:not(...)` selector outranks a bare class, so this
    pins the height rather than restating padding. */
-.jurisdiction-details__fields .review-rail__control :is(input, select) {
+.jurisdiction-details__fields .person-editor__control :is(input, select) {
   height: var(--control-h);
   margin: 0;
   line-height: 1.25;
 }
 
-.jurisdiction-details__fields .review-rail__readonly {
+.jurisdiction-details__fields .person-editor__readonly {
   display: flex;
   align-items: center;
   min-height: var(--control-h);

@@ -21,7 +21,7 @@ import {
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
 import { buildReviewCards, type ReviewCard } from "../../components/review/review-cards.js";
-import { railPropsFor } from "../../components/review-rail/rail-props.js";
+import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderOfficialsCards } from "./officials-section.js";
 
@@ -117,8 +117,8 @@ function OfficialsEditor({
 
   // No scrape diff here, so nothing is frozen and there is no merge picker: both
   // exist to reconcile a proposal against the published record.
-  const railFor = (card: ReviewCard) =>
-    railPropsFor(card, {
+  const editorFor = (card: ReviewCard) =>
+    personEditorPropsFor(card, {
       frozen: EMPTY_FROZEN,
       dirtyIds,
       isReadOnly: !canEdit,
@@ -135,7 +135,7 @@ function OfficialsEditor({
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
       onResetPerson: (id: string) => updatePerson(id, published.find((p) => p.id === id) ?? {}),
-      // No merge here yet. The rail hides the button when there are no candidates,
+      // No merge here yet. The editor hides the button when there are no candidates,
       // and an empty list is how that is said — better than rendering a control
       // whose handler does nothing.
       cards: [],
@@ -181,7 +181,7 @@ function OfficialsEditor({
       .cards=${cards}
       .openPersonId=${openPerson?.id ?? null}
       .focusFieldKey=${openPerson?.field ?? null}
-      .rail=${railFor}
+      .editor=${editorFor}
       .isReadOnly=${!canEdit}
       .onClose=${() => setOpenPerson(null)}
     ></review-modal>

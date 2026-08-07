@@ -1,4 +1,4 @@
-// One person, as a rail: a fixed-width identity column and a field body (§5).
+// One person, editable: a fixed-width identity column and a field body (§5).
 //
 // Only the frozen visible fields render, plus an expander for the rest. The
 // frozen set is passed in rather than computed here — three views have to agree
@@ -7,7 +7,7 @@
 
 import { html, nothing } from "lit-html";
 import "../person-image.js";
-import "./review-rail.css";
+import "./person-editor.css";
 import {
   FIELD_SCHEMA,
   isContextField,
@@ -16,10 +16,10 @@ import {
   type Issue,
   type SurvivingField,
 } from "../review/field-model.js";
-import { focusedKey } from "./rail-focus.js";
+import { focusedKey } from "./editor-focus.js";
 import { withDisplayImage, type FieldFocus, type Save } from "../review/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
-import { renderRailField } from "./rail-field.js";
+import { renderEditorField } from "./editor-field.js";
 import {
   DEPARTING,
   PersonStatus,
@@ -28,7 +28,7 @@ import {
   type ReviewCard,
 } from "../review/review-cards.js";
 import { renderPersonFace } from "../review/person-face.js";
-import { railSummary } from "./rail-summary.js";
+import { editorSummary } from "./editor-summary.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
   [PersonStatus.REMOVED]: {
@@ -41,7 +41,7 @@ const BANNER: Record<string, { title: string; body: string }> = {
   },
 };
 
-export interface PersonRailProps {
+export interface PersonEditorProps {
   status: PersonStatusKey;
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
@@ -71,7 +71,7 @@ export interface PersonRailProps {
   isMergeOpen: boolean;
   onToggleMerge: () => void;
   onPickPartner: (partnerId: string) => void;
-  // The field to open with the caret in, if any. Null everywhere the rail is a
+  // The field to open with the caret in, if any. Null everywhere the editor is a
   // list — only the modal opens on a field.
   focusField: FieldFocus | null;
 }
@@ -87,7 +87,7 @@ export interface PersonRailProps {
 // CSS — person-image writes width/height as inline styles.
 const PHOTO_SIZE = "7.5rem";
 
-function renderIdentity(props: PersonRailProps) {
+function renderIdentity(props: PersonEditorProps) {
   const { status, oldRecord, newRecord } = props;
   const record = newRecord ?? oldRecord;
   const name = record?.name || "(unnamed)";
@@ -95,13 +95,13 @@ function renderIdentity(props: PersonRailProps) {
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
 
   return html`
-    <div class="review-rail__identity">
+    <div class="person-editor__identity">
       <person-image
         .person=${withDisplayImage(record)}
         .size=${PHOTO_SIZE}
       ></person-image>
-      <div class="review-rail__name">${name}</div>
-      <div class="review-rail__office">
+      <div class="person-editor__name">${name}</div>
+      <div class="person-editor__office">
         ${[office, division].filter(Boolean).join(" · ") || nothing}
       </div>
     </div>
@@ -114,7 +114,7 @@ function renderIdentity(props: PersonRailProps) {
 //
 // The person-level controls live here rather than under the photo: they act on
 // the whole card, and the identity column is about who this is.
-function renderHead(props: PersonRailProps) {
+function renderHead(props: PersonEditorProps) {
   const { status, surviving, issues, isDirty, isReadOnly } = props;
   const departing = DEPARTING.has(status);
 
@@ -122,10 +122,10 @@ function renderHead(props: PersonRailProps) {
   // to "2 fields changed" is the same fact twice, and only one of them tells you
   // how much work the card holds.
   return html`
-    <div class="review-rail__head">
-      <div class="review-rail__head-main">
-        <span class="rail-summary"
-          >${railSummary({ status, surviving, issues, isDirty })}</span
+    <div class="person-editor__head">
+      <div class="person-editor__head-main">
+        <span class="editor-summary"
+          >${editorSummary({ status, surviving, issues, isDirty })}</span
         >
         ${isReadOnly ? nothing : renderActions(props, departing)}
       </div>
@@ -137,19 +137,19 @@ function renderHead(props: PersonRailProps) {
 // Step 1 of a merge, opened by the button directly above it — a strip of the
 // other people on this card, in place, so nothing stacks on top of whatever the
 // reviewer is already in.
-function renderMergeCandidates(props: PersonRailProps) {
+function renderMergeCandidates(props: PersonEditorProps) {
   if (props.isReadOnly || !props.isMergeOpen || !props.mergeCandidates.length) return nothing;
   return html`
-    <div class="review-rail__merge-with">
-      <span class="review-rail__merge-lede">Which record is the same person?</span>
-      <div class="review-rail__merge-faces">
+    <div class="person-editor__merge-with">
+      <span class="person-editor__merge-lede">Which record is the same person?</span>
+      <div class="person-editor__merge-faces">
         ${props.mergeCandidates.map((card) => renderPersonFace(card, props.onPickPartner))}
       </div>
     </div>
   `;
 }
 
-function renderActions(props: PersonRailProps, departing: boolean) {
+function renderActions(props: PersonEditorProps, departing: boolean) {
   const { status, onRemove, onUnremove, onRestore, onReset } = props;
 
   // One button, two operations. A scrape-dropped person has no record to
@@ -157,21 +157,21 @@ function renderActions(props: PersonRailProps, departing: boolean) {
   // one just loses the flag (§12).
   if (departing) {
     const restore = status === PersonStatus.REMOVED ? onRestore : onUnremove;
-    return html`<div class="review-rail__actions">
-      <button class="review-rail__restore-person" @click=${restore}>
+    return html`<div class="person-editor__actions">
+      <button class="person-editor__restore-person" @click=${restore}>
         Restore
       </button>
     </div>`;
   }
 
-  return html`<div class="review-rail__actions">
+  return html`<div class="person-editor__actions">
     ${onReset
-      ? html`<button class="review-rail__reset" @click=${onReset}>Reset</button>`
+      ? html`<button class="person-editor__reset" @click=${onReset}>Reset</button>`
       : nothing}
-    <button class="review-rail__delete" @click=${onRemove}>Remove</button>
+    <button class="person-editor__delete" @click=${onRemove}>Remove</button>
     ${props.mergeCandidates.length
       ? html`<button
-          class="review-rail__merge"
+          class="person-editor__merge"
           aria-expanded=${props.isMergeOpen}
           @click=${props.onToggleMerge}
         >
@@ -183,15 +183,15 @@ function renderActions(props: PersonRailProps, departing: boolean) {
 
 // A departing person is one decision, not eleven fields. Their details stay
 // available behind the expander rather than being spent by default.
-function renderBanner(props: PersonRailProps) {
+function renderBanner(props: PersonEditorProps) {
   const { status, isExpanded, onToggleExpand } = props;
   const copy = BANNER[status];
   return html`
-    <div class="review-rail__banner">
-      <span class="review-rail__banner-title">${copy.title}</span>
+    <div class="person-editor__banner">
+      <span class="person-editor__banner-title">${copy.title}</span>
       <span>${copy.body}</span>
     </div>
-    <button class="review-rail__expander" @click=${onToggleExpand}>
+    <button class="person-editor__expander" @click=${onToggleExpand}>
       ${isExpanded ? "Hide their details" : "Show their details"}
     </button>
   `;
@@ -199,18 +199,18 @@ function renderBanner(props: PersonRailProps) {
 
 // Issues that anchor to no field belong to the person, so they sit above the
 // field list rather than under any row.
-function renderRowIssues(props: PersonRailProps) {
+function renderRowIssues(props: PersonEditorProps) {
   if (props.isDirty) return nothing;
   return props.issues
     .filter((issue) => !issue.field)
     .map(
-      (issue) => html`<div class="review-rail__issue review-rail__issue--row">
+      (issue) => html`<div class="person-editor__issue person-editor__issue--row">
         <i class="fa-solid fa-circle-exclamation"></i><span>${issue.message}</span>
       </div>`,
     );
 }
 
-function renderFields(props: PersonRailProps, keys: Set<string>) {
+function renderFields(props: PersonEditorProps, keys: Set<string>) {
   const { oldRecord, newRecord, surviving, issues, isReadOnly, jurisdictionOcdid, onSave } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
   const fields = FIELD_SCHEMA.filter((field) => keys.has(field.key));
@@ -219,7 +219,7 @@ function renderFields(props: PersonRailProps, keys: Set<string>) {
 
   return fields.map((field) => {
     const current = survivingByKey.get(field.key);
-    return renderRailField({
+    return renderEditorField({
       field,
       oldRecord,
       newRecord,
@@ -248,28 +248,28 @@ function renderFields(props: PersonRailProps, keys: Set<string>) {
 //
 // It stays in slot order and stays expandable, so §5's one ungrouped list is
 // intact — it just stops spending a card on people with nothing to say.
-function renderStrip(props: PersonRailProps) {
+function renderStrip(props: PersonEditorProps) {
   const { status, oldRecord, newRecord, onToggleExpand } = props;
   const record = newRecord ?? oldRecord;
   const office = record?.office?.name ?? "";
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
   return html`
-    <div class="review-rail review-rail--strip review-rail--${status}">
+    <div class="person-editor person-editor--strip person-editor--${status}">
       <person-image
         .person=${withDisplayImage(record)}
         .size=${"2.75rem"}
       ></person-image>
-      <span class="review-rail__name">${record?.name || "(unnamed)"}</span>
-      <span class="review-rail__office">
+      <span class="person-editor__name">${record?.name || "(unnamed)"}</span>
+      <span class="person-editor__office">
         ${[office, division].filter(Boolean).join(" · ") || nothing}
       </span>
-      <span class="review-rail__status">${STATUS_LABEL[status]}</span>
-      <button class="review-rail__expander" @click=${onToggleExpand}>Show fields</button>
+      <span class="person-editor__status">${STATUS_LABEL[status]}</span>
+      <button class="person-editor__expander" @click=${onToggleExpand}>Show fields</button>
     </div>
   `;
 }
 
-export function renderPersonRail(props: PersonRailProps) {
+export function renderPersonEditor(props: PersonEditorProps) {
   const { status, frozenReasons, isExpanded, onToggleExpand } = props;
   const departing = DEPARTING.has(status);
 
@@ -287,16 +287,16 @@ export function renderPersonRail(props: PersonRailProps) {
   if (!departing && !hasReviewableField && !isExpanded) return renderStrip(props);
 
   return html`
-    <div class="review-rail review-rail--${status}">
+    <div class="person-editor person-editor--${status}">
       ${renderHead(props)} ${renderIdentity(props)}
-      <div class="review-rail__fields">
+      <div class="person-editor__fields">
         ${renderRowIssues(props)}
         ${departing
           ? renderBanner(props)
           : nothing}
         ${departing && !isExpanded ? nothing : renderFields(props, keys)}
         ${!departing && hiddenCount > 0
-          ? html`<button class="review-rail__expander" @click=${onToggleExpand}>
+          ? html`<button class="person-editor__expander" @click=${onToggleExpand}>
               ${isExpanded
                 ? "Hide unchanged fields"
                 : `+ ${hiddenCount} unchanged field${hiddenCount === 1 ? "" : "s"}`}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { railSummary, type RailSummaryInput } from "../components/review-rail/rail-summary.js";
+import { editorSummary, type EditorSummaryInput } from "../components/person-editor/editor-summary.js";
 import { PersonStatus } from "../components/review/review-cards.js";
 import {
   type Issue,
@@ -24,7 +24,7 @@ const surviving = (
 
 const issue = (message: string): Issue => ({ code: "duplicate", message });
 
-const input = (over: Partial<RailSummaryInput> = {}): RailSummaryInput => ({
+const input = (over: Partial<EditorSummaryInput> = {}): EditorSummaryInput => ({
   status: PersonStatus.CHANGED,
   surviving: [],
   issues: [],
@@ -32,9 +32,9 @@ const input = (over: Partial<RailSummaryInput> = {}): RailSummaryInput => ({
   ...over,
 });
 
-describe("railSummary", () => {
+describe("editorSummary", () => {
   it("counts only the fields that moved", () => {
-    const result = railSummary(
+    const result = editorSummary(
       input({
         surviving: [
           surviving("name", "changed"),
@@ -47,7 +47,7 @@ describe("railSummary", () => {
   });
 
   it("says field, not fields, for one", () => {
-    expect(railSummary(input({ surviving: [surviving("name", "changed")] }))).toBe(
+    expect(editorSummary(input({ surviving: [surviving("name", "changed")] }))).toBe(
       "1 field changed",
     );
   });
@@ -55,14 +55,14 @@ describe("railSummary", () => {
   // Context fields are always on screen and never a change; counting them would
   // report work on a card that has none.
   it("does not count context fields as changes", () => {
-    const result = railSummary(
+    const result = editorSummary(
       input({ surviving: [surviving("source_urls", "changed", { isContext: true })] }),
     );
     expect(result).toBe("No changes");
   });
 
   it("describes a new person rather than counting their fields", () => {
-    const result = railSummary(
+    const result = editorSummary(
       input({
         status: PersonStatus.ADDED,
         surviving: [surviving("name", "added"), surviving("office.name", "added")],
@@ -77,15 +77,15 @@ describe("railSummary", () => {
       surviving: [surviving("name", "changed")],
       issues: [issue("Check whether they left office")],
     });
-    expect(railSummary(removed)).toBe("Not found in this scrape");
+    expect(editorSummary(removed)).toBe("Not found in this scrape");
 
-    expect(railSummary({ ...removed, status: PersonStatus.DELETED })).toBe(
+    expect(editorSummary({ ...removed, status: PersonStatus.DELETED })).toBe(
       "You removed this person",
     );
   });
 
   it("adds what needs a decision, counting errors and issues together", () => {
-    const result = railSummary(
+    const result = editorSummary(
       input({
         surviving: [surviving("name", "changed"), surviving("emails", "changed", { error: "Bad" })],
         issues: [issue("Possible duplicate")],
@@ -102,10 +102,10 @@ describe("railSummary", () => {
       issues: [issue("Possible duplicate")],
       isDirty: true,
     });
-    expect(railSummary(dirty)).toBe("1 field changed · 1 thing to check");
+    expect(editorSummary(dirty)).toBe("1 field changed · 1 thing to check");
   });
 
   it("says so when there is nothing to review", () => {
-    expect(railSummary(input({ surviving: [surviving("name", "same")] }))).toBe("No changes");
+    expect(editorSummary(input({ surviving: [surviving("name", "same")] }))).toBe("No changes");
   });
 });

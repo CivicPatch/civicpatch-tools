@@ -1,4 +1,4 @@
-/* The edit modal (spec §6) — the Detail rail mounted with one person, plus a
+/* The edit modal (spec §6) — the Detail editor mounted with one person, plus a
    sidebar for walking the set it was opened from. */
 
 /* styles.css caps dialogs at 32rem; this modal sizes its own panel. */
@@ -59,27 +59,27 @@
 }
 
 /* One person, full width — identity stacks above the fields and centres. */
-.review-modal__body .review-rail__identity {
+.review-modal__body .person-editor__identity {
   align-items: center;
   text-align: center;
 }
 
 /* Direct child only: the merge strip also lives in the identity block, and its
    chip photos are not this photo. */
-.review-modal__body .review-rail__identity > person-image,
-.review-modal__body .review-rail__identity > person-image > * {
+.review-modal__body .person-editor__identity > person-image,
+.review-modal__body .person-editor__identity > person-image > * {
   width: 7rem !important;
   height: 7rem !important;
   font-size: 2.6rem !important;
 }
 
-/* The rail inside the modal is one person and the full width, so its identity
+/* The editor inside the modal is one person and the full width, so its identity
    column stacks above the fields rather than beside them. */
-.review-modal__body .review-rail-list {
+.review-modal__body .person-editor-list {
   max-width: none;
 }
 
-.review-modal__body .review-rail {
+.review-modal__body .person-editor {
   border: none;
   padding: 0;
   grid-template-columns: 1fr;
@@ -331,22 +331,22 @@
    Same components either way. Only these values differ, and --control-h does most
    of the work on its own because every control is sized from it. */
 
-.review-modal__body .review-rail-list {
+.review-modal__body .person-editor-list {
   --control-h: 2rem;
 }
 
-.review-modal__body .review-rail__fields {
+.review-modal__body .person-editor__fields {
   gap: 0.3rem;
 }
 
-.review-modal__body .review-rail__field {
+.review-modal__body .person-editor__field {
   padding: 0.3rem var(--ring-space);
 }
 
-.review-modal__body .review-rail__label {
+.review-modal__body .person-editor__label {
   padding-top: 0.45rem;
 }
 
-.review-modal__body .review-rail__control :is(input, select) {
+.review-modal__body .person-editor__control :is(input, select) {
   font-size: var(--text-md);
 }

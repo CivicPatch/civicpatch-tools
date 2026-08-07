@@ -241,7 +241,7 @@ const VALUE_ERRORS: Record<string, (text: string) => string | null> = {
 };
 
 // One value of a multi-value field, or null if it is fine. Exported because the
-// rail marks the offending row rather than the whole field — one definition of
+// editor marks the offending row rather than the whole field — one definition of
 // valid, read by both the row and `fieldError` below.
 export function valueError(field: FieldSpec, value: string): string | null {
   const text = String(value ?? "").trim();

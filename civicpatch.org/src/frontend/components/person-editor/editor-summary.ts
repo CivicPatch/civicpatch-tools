@@ -8,7 +8,7 @@
 import { isContextField, type Issue, type SurvivingField } from "../review/field-model.js";
 import { PersonStatus, type PersonStatusKey } from "../review/review-cards.js";
 
-export interface RailSummaryInput {
+export interface EditorSummaryInput {
   status: PersonStatusKey;
   surviving: SurvivingField[];
   issues: Issue[];
@@ -33,12 +33,12 @@ function changedFieldCount(surviving: SurvivingField[]): number {
   return surviving.filter((entry) => entry.state !== "same" && !isContextField(entry.field)).length;
 }
 
-function attentionCount(input: RailSummaryInput): number {
+function attentionCount(input: EditorSummaryInput): number {
   const errors = input.surviving.filter((entry) => entry.error).length;
   return errors + (input.isDirty ? 0 : input.issues.length);
 }
 
-export function railSummary(input: RailSummaryInput): string {
+export function editorSummary(input: EditorSummaryInput): string {
   const departure = DEPARTURE_SUMMARY[input.status];
   if (departure) return departure;
 

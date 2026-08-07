@@ -9,7 +9,7 @@
   max-width: var(--page-width);
   margin-inline: auto;
 
-  /* Same semantics as the rail, theme-remapped. */
+  /* Same semantics as the editor, theme-remapped. */
   --tile-changed: var(--pico-warn-color);
   --tile-added: var(--pico-ins-color);
   --tile-cleared: var(--pico-del-color);

@@ -19,7 +19,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, openOverview, railFor, rowFor } from "./helpers/review-card.js";
+import { openDetail, openOverview, editorFor, rowFor } from "./helpers/review-card.js";
 
 const MERGE_ENDPOINT = "**/api/v1/pull_requests/*/save-and-merge";
 const MERGE_STATUS_ENDPOINT = "**/api/v1/pull_requests/*/merge-status";
@@ -49,7 +49,7 @@ async function openReconcileCard(page) {
   await openDetail(page);
 }
 
-const personCard = railFor;
+const personCard = editorFor;
 
 const publishedIds = (body) =>
   (body.data ?? []).map((entry) => entry.id);
@@ -64,15 +64,15 @@ test.describe("Delete a person", () => {
     // Maria pairs as CHANGED, so she has a Delete button; Bob is REMOVED
     // (no new-side record) and must not offer one.
     const maria = personCard(page, "Maria González");
-    await expect(maria).toHaveClass(/review-rail--changed/);
-    await expect(personCard(page, "Bob Clerk").locator(".review-rail__delete")).toHaveCount(0);
+    await expect(maria).toHaveClass(/person-editor--changed/);
+    await expect(personCard(page, "Bob Clerk").locator(".person-editor__delete")).toHaveCount(0);
 
-    await maria.locator(".review-rail__delete").click();
+    await maria.locator(".person-editor__delete").click();
 
     // The card stays in place as a departing ghost, and Delete gives way to Undo.
-    await expect(maria).toHaveClass(/review-rail--deleted/);
-    await expect(maria.locator(".review-rail__restore-person")).toBeVisible();
-    await expect(maria.locator(".review-rail__delete")).toHaveCount(0);
+    await expect(maria).toHaveClass(/person-editor--deleted/);
+    await expect(maria.locator(".person-editor__restore-person")).toBeVisible();
+    await expect(maria.locator(".person-editor__delete")).toHaveCount(0);
 
     // Deleting is an edit, so the card publishes under the dirty label.
     const publishBtn = page.locator(".review-page__publish-btn");
@@ -91,12 +91,12 @@ test.describe("Delete a person", () => {
     await openReconcileCard(page);
 
     const maria = personCard(page, "Maria González");
-    await maria.locator(".review-rail__delete").click();
-    await expect(maria).toHaveClass(/review-rail--deleted/);
+    await maria.locator(".person-editor__delete").click();
+    await expect(maria).toHaveClass(/person-editor--deleted/);
 
-    await maria.locator(".review-rail__restore-person").click();
-    await expect(maria).toHaveClass(/review-rail--changed/);
-    await expect(maria.locator(".review-rail__delete")).toBeVisible();
+    await maria.locator(".person-editor__restore-person").click();
+    await expect(maria).toHaveClass(/person-editor--changed/);
+    await expect(maria.locator(".person-editor__delete")).toBeVisible();
 
     // Undo returns the card to its loaded state, so there is nothing to patch:
     // publishing sends no people at all and the button drops the dirty label.
@@ -116,14 +116,14 @@ test.describe("Delete a person", () => {
     authenticatedPage: page,
   }) => {
     await openReconcileCard(page);
-    await personCard(page, "Maria González").locator(".review-rail__delete").click();
+    await personCard(page, "Maria González").locator(".person-editor__delete").click();
 
-    // The rail has no filter chips — the collapse rule replaced them — so the
+    // The editor has no filter chips — the collapse rule replaced them — so the
     // classification is asserted where it is now visible: her card reads as a
     // departure, and Overview files her under To review rather than in the
     // Unchanged face strip. Before deletions were folded into the diff she stayed
     // classified by her fields and landed in the faded group.
-    await expect(personCard(page, "Maria González")).toHaveClass(/review-rail--deleted/);
+    await expect(personCard(page, "Maria González")).toHaveClass(/person-editor--deleted/);
 
     await openOverview(page);
     await expect(rowFor(page, "Maria González")).toHaveClass(/review-row--deleted/);
@@ -141,15 +141,15 @@ test.describe("Delete a person", () => {
     // else on the card starts out a candidate — not just the ones the scrape
     // failed to find.
     const tom = personCard(page, "Tom Treasurer");
-    await tom.locator(".review-rail__merge").click();
-    const faces = tom.locator(".review-rail__merge-faces .review-face");
+    await tom.locator(".person-editor__merge").click();
+    const faces = tom.locator(".person-editor__merge-faces .review-face");
     const faceFor = (name) => faces.filter({ hasText: name });
 
     await expect(faces).toHaveCount(2);
     await expect(faceFor("Maria González")).toHaveCount(1);
     await expect(faceFor("Bob Clerk")).toHaveCount(1);
 
-    await personCard(page, "Maria González").locator(".review-rail__delete").click();
+    await personCard(page, "Maria González").locator(".person-editor__delete").click();
 
     // "Drop this person" and "keep parts of this person" are contradictory
     // answers to the same question, so removing her withdraws her from the pool.
@@ -166,13 +166,13 @@ test.describe("Delete a person", () => {
     await openReconcileCard(page);
 
     const tom = personCard(page, "Tom Treasurer");
-    await expect(tom).toHaveClass(/review-rail--added/);
-    await tom.locator(".review-rail__delete").click();
+    await expect(tom).toHaveClass(/person-editor--added/);
+    await tom.locator(".person-editor__delete").click();
 
     // Added-then-deleted is a net no-op in the payload, but the row is still in
     // the list and the removal is undoable, so the card stays as a ghost.
-    await expect(tom).toHaveClass(/review-rail--deleted/);
-    await expect(tom.locator(".review-rail__restore-person")).toBeVisible();
+    await expect(tom).toHaveClass(/person-editor--deleted/);
+    await expect(tom.locator(".person-editor__restore-person")).toBeVisible();
 
     await page.locator(".review-page__publish-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();

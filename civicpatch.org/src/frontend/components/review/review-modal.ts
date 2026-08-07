@@ -1,9 +1,9 @@
-// The edit modal (spec §6): the Detail rail mounted with one person, inside the
-// existing <civ-modal> shell, built from the same rail props.
+// The edit modal (spec §6): the Detail editor mounted with one person, inside the
+// existing <civ-modal> shell, built from the same editor props.
 //
 // Editing behaviour is therefore defined exactly once — this adds navigation
-// around the rail, not a second editor. §21.3 is why it consumes
-// <civ-modal> rather than baking the rail into a shell: merge will need an
+// around the person editor, not a second one. §21.3 is why it consumes
+// <civ-modal> rather than baking the editor into a shell: merge will need an
 // N-column body in the same frame.
 
 import { html, nothing } from "lit-html";
@@ -20,8 +20,8 @@ import {
   type MergePlan,
 } from "./merge-model.js";
 import "./review-modal.css";
-import "../review-rail/review-rail.css";
-import { renderPersonRail, type PersonRailProps } from "../review-rail/person-rail.js";
+import "../person-editor/person-editor.css";
+import { renderPersonEditor, type PersonEditorProps } from "../person-editor/person-editor.js";
 import { cardSubtitle, personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 
@@ -32,7 +32,7 @@ export interface ReviewModalProps {
   cards: ReviewCard[];
   openPersonId: string | null;
   focusFieldKey: string | null;
-  rail: RailFactory;
+  editor: EditorFactory;
   isReadOnly: boolean;
   onClose: () => void;
   // Opens the merge picker anchored on the person in view.
@@ -46,17 +46,17 @@ export interface ReviewModalProps {
   ) => void;
 }
 
-// The caller already knows how to build a rail for a card (it does so for
+// The caller already knows how to build a person editor for a card (it does so for
 // Detail), so it hands that over rather than this rebuilding it — one definition
 // of what a person's row looks like.
-export type RailFactory = (card: ReviewCard) => PersonRailProps;
+export type EditorFactory = (card: ReviewCard) => PersonEditorProps;
 
 function ReviewModal(props: ReviewModalProps) {
   const {
     cards,
     openPersonId,
     focusFieldKey,
-    rail,
+    editor,
     isReadOnly,
     onClose,
     mergePartner,
@@ -108,9 +108,9 @@ function ReviewModal(props: ReviewModalProps) {
   if (!open || !card) return nothing;
 
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
-  // Revert is the rail's own Reset, moved into the footer: one baseline — the
+  // Revert is the editor's own Reset, moved into the footer: one baseline — the
   // card as it loaded — so reopening cannot strand edits the roster calls dirty.
-  const railProps = rail(card);
+  const editorProps = editor(card);
 
   const name = personOf(card)?.name || "(unnamed)";
 
@@ -177,11 +177,11 @@ function ReviewModal(props: ReviewModalProps) {
       </nav>
       <div class="review-modal__body">
         ${head}
-        <!-- The rail's own Reset is dropped here: the footer is showing the same
+        <!-- The editor's own Reset is dropped here: the footer is showing the same
              action, and two identical buttons read as two different ones. -->
-        <div class="review-rail-list">
-          ${renderPersonRail({
-            ...railProps,
+        <div class="person-editor-list">
+          ${renderPersonEditor({
+            ...editorProps,
             onReset: null,
             focusField: focusFieldKey ? { key: focusFieldKey, attach: focusOnOpen } : null,
           })}
@@ -199,8 +199,8 @@ function ReviewModal(props: ReviewModalProps) {
           ? nothing
           : html`<button
               class="review-modal__revert"
-              ?disabled=${!railProps.onReset}
-              @click=${() => railProps.onReset?.()}
+              ?disabled=${!editorProps.onReset}
+              @click=${() => editorProps.onReset?.()}
             >
               Revert this person
             </button>`}

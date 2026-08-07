@@ -3,7 +3,7 @@
  *
  * One roster in seat order: status is carried by the card, so position is free.
  * The collapse rule decides what a card says and `status` decides how it looks —
- * both shared with the rail, so these assert the views agree rather than
+ * both shared with the editor, so these assert the views agree rather than
  * re-testing the model.
  */
 
