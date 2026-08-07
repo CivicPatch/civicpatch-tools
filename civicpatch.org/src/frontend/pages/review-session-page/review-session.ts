@@ -1,6 +1,6 @@
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
-import "../../components/review-rail/review-rail-list.js";
+import "../../components/person-editor/person-editor-list.js";
 import "../../components/review-overview/review-overview.js";
 import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
@@ -24,7 +24,7 @@ import {
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, needsReview } from "../../components/review/review-cards.js";
-import { railPropsFor } from "../../components/review-rail/rail-props.js";
+import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
 type CurrentEntry = {
@@ -153,10 +153,10 @@ function ReviewSession(host: ReviewSessionHost) {
   const handleOpenPerson = (personId: string, fieldKey: string | null) =>
     setOpenPerson({ id: personId, field: fieldKey });
 
-  // The modal renders the same rail Detail does, so both are built from one
-  // definition — it is the rail mounted with one person, not a second editor.
-  const railFor = (card: (typeof cards)[number]) =>
-    railPropsFor(card, {
+  // The modal renders the same editor Detail does, so both are built from one
+  // definition — it is the person editor mounted with one person, not a second one.
+  const editorFor = (card: (typeof cards)[number]) =>
+    personEditorPropsFor(card, {
       frozen,
       dirtyIds,
       isReadOnly: !!is_read_only,
@@ -188,7 +188,7 @@ function ReviewSession(host: ReviewSessionHost) {
   // untouched, and the picker will reach it with an edited plan.
   // Step 1 of a merge: which record is the same person? The anchor is the row
   // the reviewer invoked it from; the picker computes the survivor.
-  // Step 1 lives inline on the rail, so only its open/closed state is held here.
+  // Step 1 lives inline on the editor, so only its open/closed state is held here.
   const [mergeOpenId, setMergeOpenId] = useState<string | null>(null);
   const handleToggleMerge = (personId: string) =>
     setMergeOpenId((current) => (current === personId ? null : personId));
@@ -315,7 +315,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .onOpenPerson=${handleOpenPerson}
             .onAdd=${handleAddPerson}
           ></review-overview>`
-        : html`<review-rail-list
+        : html`<person-editor-list
             .cards=${cards}
             .frozen=${frozen}
             .requestId=${requestId}
@@ -331,7 +331,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .onToggleMerge=${handleToggleMerge}
             .onPickPartner=${handlePickPartner}
             .onAdd=${handleAddPerson}
-          ></review-rail-list>`}
+          ></person-editor-list>`}
       <review-sidebar
         .issues=${allIssues}
         .checks=${issueChecks}
@@ -345,7 +345,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .cards=${walkSet}
         .openPersonId=${openPerson?.id ?? null}
         .focusFieldKey=${openPerson?.field ?? null}
-        .rail=${railFor}
+        .editor=${editorFor}
         .isReadOnly=${!!is_read_only}
         .onClose=${() => setOpenPerson(null)}
         .mergePartner=${mergePair

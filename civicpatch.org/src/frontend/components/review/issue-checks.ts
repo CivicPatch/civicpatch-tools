@@ -46,7 +46,7 @@ export function toggleCheck(checks: IssueChecks, issue: Issue): IssueChecks {
   return next;
 }
 
-// Every field a ticked issue anchors to, so the rail can mark those rows
+// Every field a ticked issue anchors to, so the editor can mark those rows
 // resolved without each row re-deriving the rule.
 export function resolvedFieldKeys(issues: Issue[], checks: IssueChecks): Set<string> {
   const keys = new Set<string>();

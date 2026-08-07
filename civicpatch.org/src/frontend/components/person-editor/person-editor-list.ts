@@ -1,4 +1,4 @@
-// Detail v2 — the list of rails (spec §5).
+// Detail v2 — the list of editors (spec §5).
 //
 // Ungrouped: one list in slot order. Unlike Overview, this is a surface you work
 // top to bottom, so To Review / Unchanged headings would only add scrolling.
@@ -9,13 +9,13 @@
 
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
-import "./review-rail.css";
+import "./person-editor.css";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
-import { renderPersonRail } from "./person-rail.js";
+import { renderPersonEditor } from "./person-editor.js";
 import { type ReviewCard } from "../review/review-cards.js";
-import { railPropsFor } from "./rail-props.js";
+import { personEditorPropsFor } from "./editor-props.js";
 
-interface ReviewRailListProps {
+interface PersonEditorListProps {
   cards: ReviewCard[];
   frozen: FrozenFields;
   // Expansion is per card, so it resets when the reviewer moves on. §21.4 also
@@ -40,7 +40,7 @@ const NO_EXPANSION = {
   ids: new Set<string>(),
 };
 
-function ReviewRailList({
+function PersonEditorList({
   cards,
   frozen,
   requestId,
@@ -56,7 +56,7 @@ function ReviewRailList({
   onToggleMerge,
   onPickPartner,
   onAdd,
-}: ReviewRailListProps) {
+}: PersonEditorListProps) {
   const [expansion, setExpansion] = useState(NO_EXPANSION);
 
   // Advancing to the next card is a new card load, and this element is not
@@ -73,16 +73,16 @@ function ReviewRailList({
   };
 
   if (!cards.length) {
-    return html`<div class="review-rail-list">
-      <p class="review-rail__empty">No people to review.</p>
+    return html`<div class="person-editor-list">
+      <p class="person-editor__empty">No people to review.</p>
     </div>`;
   }
 
   return html`
-    <div class="review-rail-list">
+    <div class="person-editor-list">
       ${cards.map((card) =>
-        renderPersonRail(
-          railPropsFor(card, {
+        renderPersonEditor(
+          personEditorPropsFor(card, {
             frozen,
             dirtyIds,
             isReadOnly,
@@ -102,9 +102,9 @@ function ReviewRailList({
         ),
       )}
       ${!isReadOnly && onAdd
-        ? html`<button class="review-rail review-rail--ghost" @click=${onAdd}>
-            <span class="review-rail__ghost-mark">+</span>
-            <span class="review-rail__ghost-label">Add a person</span>
+        ? html`<button class="person-editor person-editor--ghost" @click=${onAdd}>
+            <span class="person-editor__ghost-mark">+</span>
+            <span class="person-editor__ghost-label">Add a person</span>
           </button>`
         : nothing}
     </div>
@@ -112,8 +112,8 @@ function ReviewRailList({
 }
 
 customElements.define(
-  "review-rail-list",
-  component(ReviewRailList as unknown as () => unknown, {
+  "person-editor-list",
+  component(PersonEditorList as unknown as () => unknown, {
     useShadowDOM: false,
   }),
 );

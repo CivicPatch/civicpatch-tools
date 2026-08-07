@@ -1,17 +1,17 @@
-// Building one person's rail props, in one place.
+// Building one person's editor props, in one place.
 //
-// Detail renders a list of rails and the modal renders exactly one, and they
-// must agree about what a person's row is — the modal is the rail mounted with a
-// one-person list, not a second editor (§6). Extracted here so neither has to
+// Detail renders a list of editors and the modal renders exactly one, and they
+// must agree about what a person's row is — the modal is the editor mounted with a
+// one-person list, not a second one (§6). Extracted here so neither has to
 // reproduce the other's rules.
 
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { type Save } from "../review/field-controls.js";
 import { PersonStatus, type ReviewCard } from "../review/review-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
-import { type PersonRailProps } from "./person-rail.js";
+import { type PersonEditorProps } from "./person-editor.js";
 
-export interface RailContext {
+export interface EditorContext {
   frozen: FrozenFields;
   dirtyIds: Set<string>;
   isReadOnly: boolean;
@@ -26,7 +26,7 @@ export interface RailContext {
   onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
   onResetPerson: (id: string) => void;
-  // Step 1 of a merge, in place on the rail: which person's strip is open, and
+  // Step 1 of a merge, in place on the editor: which person's strip is open, and
   // what to do when one of its candidates is picked.
   cards: ReviewCard[];
   mergeOpenId: string | null;
@@ -35,7 +35,7 @@ export interface RailContext {
 }
 
 
-export function railPropsFor(card: ReviewCard, ctx: RailContext): PersonRailProps {
+export function personEditorPropsFor(card: ReviewCard, ctx: EditorContext): PersonEditorProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
   return {
     status: card.status,

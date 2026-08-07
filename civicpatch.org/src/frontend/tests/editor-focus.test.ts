@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { focusedKey } from "../components/review-rail/rail-focus.js";
+import { focusedKey } from "../components/person-editor/editor-focus.js";
 import { type FieldSpec } from "../components/review/field-model.js";
 
 const FIELDS: FieldSpec[] = [
@@ -21,7 +21,7 @@ describe("focusedKey", () => {
     expect(focusedKey(FIELDS, { key: "start_date" })).toBe("name");
   });
 
-  it("is null when the rail is showing no fields at all", () => {
+  it("is null when the editor is showing no fields at all", () => {
     expect(focusedKey([], { key: "name" })).toBe(null);
   });
 });

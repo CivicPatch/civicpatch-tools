@@ -1,6 +1,6 @@
-// Jurisdiction fields, in the rail's idiom.
+// Jurisdiction fields, in the editor's idiom.
 //
-// Same row shape as a person's rail field (label / control) and the same input
+// Same row shape as a person's editor field (label / control) and the same input
 // control, so a field looks and behaves the same wherever you meet it. What
 // differs is the save: a person's edits accumulate and publish together, while a
 // jurisdiction url patch is its own PR — so it commits on an explicit Save rather
@@ -11,7 +11,7 @@
 
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import "../../components/review-rail/review-rail.css";
+import "../../components/person-editor/person-editor.css";
 import "../../components/review/field-controls.css";
 import { renderScalarNewSide } from "../../components/review/field-controls.js";
 import { type FieldSpec } from "../../components/review/field-model.js";
@@ -43,9 +43,9 @@ function readOnlyRows(data: any): ReadOnlyRow[] {
 
 function renderRow(label: string, control: unknown) {
   return html`
-    <div class="review-rail__field">
-      <div class="review-rail__label">${label}</div>
-      <div class="review-rail__control">${control}</div>
+    <div class="person-editor__field">
+      <div class="person-editor__label">${label}</div>
+      <div class="person-editor__control">${control}</div>
     </div>
   `;
 }
@@ -53,10 +53,10 @@ function renderRow(label: string, control: unknown) {
 function renderReadOnly(row: ReadOnlyRow) {
   if (!row.value) return nothing;
   const control = row.href
-    ? html`<a class="review-rail__readonly" href=${row.href} target=${SOURCE_LINK_TARGET}
+    ? html`<a class="person-editor__readonly" href=${row.href} target=${SOURCE_LINK_TARGET}
         >${row.value}</a
       >`
-    : html`<span class="review-rail__readonly">${row.value}</span>`;
+    : html`<span class="person-editor__readonly">${row.value}</span>`;
   return renderRow(row.label, control);
 }
 
@@ -70,7 +70,7 @@ function renderList(title: string, rows: [string, unknown][][]) {
       ${rows.map(
         (entry) => html`<div class="jurisdiction-details__group-item">
           ${entry.map(([label, value]) =>
-            value ? renderRow(label, html`<span class="review-rail__readonly">${value}</span>`) : nothing,
+            value ? renderRow(label, html`<span class="person-editor__readonly">${value}</span>`) : nothing,
           )}
         </div>`,
       )}
@@ -104,16 +104,16 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
     }
   };
 
-  // The rail's scalar control saves on input; here that would open a PR per
+  // The editor's scalar control saves on input; here that would open a PR per
   // keystroke, so it edits local state and Save commits.
   const website = canEdit
     ? renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
         setUrl(String((updates as any).url ?? "")), { state: "same", error: null }, null)
     : data.url
-      ? html`<a class="review-rail__readonly" href=${data.url} target=${SOURCE_LINK_TARGET}
+      ? html`<a class="person-editor__readonly" href=${data.url} target=${SOURCE_LINK_TARGET}
           >${data.url}</a
         >`
-      : html`<span class="review-rail__readonly">—</span>`;
+      : html`<span class="person-editor__readonly">—</span>`;
 
   const terms = (data.term ?? []).map((t: any) => [
     ["Duration", t.duration ? `${t.duration} years` : null],

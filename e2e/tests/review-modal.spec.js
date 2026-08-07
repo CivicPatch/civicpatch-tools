@@ -1,15 +1,15 @@
 /**
- * The edit modal (spec §6) — the Detail rail mounted with one person.
+ * The edit modal (spec §6) — the Detail editor mounted with one person.
  *
  * Opened from Overview, because Detail's fields are already editable inline.
- * What is worth asserting here is the behaviour around the rail rather than the
- * rail itself: which set it walks, that edits apply live, and that Revert undoes
+ * What is worth asserting here is the behaviour around the editor rather than the
+ * editor itself: which set it walks, that edits apply live, and that Revert undoes
  * only the person in view.
  */
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID } from "../fixtures/db.js";
-import { openOverview, rowFor, railFor, fieldIn } from "./helpers/review-card.js";
+import { openOverview, rowFor, editorFor, fieldIn } from "./helpers/review-card.js";
 
 const openCardModal = async (page, name) => {
   await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
@@ -19,13 +19,13 @@ const openCardModal = async (page, name) => {
 };
 
 const modalField = (page, label) =>
-  page.locator("review-modal .review-rail__field").filter({ hasText: label });
+  page.locator("review-modal .person-editor__field").filter({ hasText: label });
 
 // Name is unchanged on these people, so the collapse rule hides it. Reaching a
 // field that did not move is exactly what the expander is for — and expansion is
 // keyed per person, so stepping to someone else starts collapsed again.
 const showAllFields = (page) =>
-  page.locator("review-modal .review-rail__expander").click();
+  page.locator("review-modal .person-editor__expander").click();
 
 test.describe("Review modal", () => {
   test("opens on the person whose tile was clicked", async ({
@@ -49,13 +49,13 @@ test.describe("Review modal", () => {
     ).toHaveCount(0);
   });
 
-  test("collapses by the same rule as the rail", async ({
+  test("collapses by the same rule as the editor", async ({
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
-    const fields = page.locator("review-modal .review-rail__field");
+    const fields = page.locator("review-modal .person-editor__field");
 
-    // The modal is the rail mounted with one person, not a second editor, so it
+    // The modal is the editor mounted with one person, not a second editor, so it
     // collapses rather than having its own idea of what to show: the two fields
     // that moved plus the always-visible Source urls. Opening with every field
     // is reserved for adding a person, who has nothing to collapse.
@@ -140,13 +140,13 @@ test.describe("Review modal", () => {
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
-    await page.locator("review-modal .review-rail__delete").click();
-    await expect(page.locator("review-modal .review-rail")).toHaveClass(/review-rail--deleted/);
+    await page.locator("review-modal .person-editor__delete").click();
+    await expect(page.locator("review-modal .person-editor")).toHaveClass(/person-editor--deleted/);
 
     // Restoring values while leaving the flag set is §12's impossible state, so
     // Revert clears both.
     await page.locator(".review-modal__revert").click();
-    await expect(page.locator("review-modal .review-rail")).not.toHaveClass(/review-rail--deleted/);
+    await expect(page.locator("review-modal .person-editor")).not.toHaveClass(/person-editor--deleted/);
   });
 
   test("Revert survives closing and reopening, as long as the roster reads dirty", async ({

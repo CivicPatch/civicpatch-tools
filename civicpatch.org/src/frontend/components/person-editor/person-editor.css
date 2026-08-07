@@ -1,14 +1,14 @@
-/* Detail v2 — a vertical list of rails (spec §5).
-   Each rail is `identity | fields`, so the field body starts at a fixed x and
+/* Detail v2 — a vertical list of editors (spec §5).
+   Each editor is `identity | fields`, so the field body starts at a fixed x and
    every control aligns across every person. That alignment is the reason for
    the layout; today's card grid cannot do it at any width. */
 
-.review-rail-list {
+.person-editor-list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
-  /* The rail needs identity (12rem) + label (7rem) + control (22rem) + a `was`
+  /* The editor needs identity (12rem) + label (7rem) + control (22rem) + a `was`
      annotation — about 58rem. Left at full page width the content stopped well
      short of the edge and the right third read as broken rather than empty. */
   max-width: min(var(--page-width), 58rem);
@@ -24,10 +24,10 @@
      in the editorial palette, and §11.1 is explicit that shape carries the
      distinction (triangle stops you, circle advises you) with colour as
      reinforcement. */
-  --rail-changed: var(--pico-warn-color);
-  --rail-added: var(--pico-ins-color);
-  --rail-cleared: var(--pico-del-color);
-  --rail-issue: var(--pico-info-color);
+  --editor-changed: var(--pico-warn-color);
+  --editor-added: var(--pico-ins-color);
+  --editor-cleared: var(--pico-del-color);
+  --editor-issue: var(--pico-info-color);
 
   /* How much of the state colour the header strip carries. Dark needs more of it
      to read as tinted at all against a dark card. */
@@ -39,18 +39,18 @@
   --pico-form-element-spacing-horizontal: 0.45rem;
 }
 
-.review-rail-list input,
-.review-rail-list select,
-.review-rail-list button {
+.person-editor-list input,
+.person-editor-list select,
+.person-editor-list button {
   margin: 0;
   line-height: 1.25;
 }
 
-/* Rail. The identity column is narrower than the body it labels — the body is
+/* Editor. The identity column is narrower than the body it labels — the body is
    where the work happens, and a wide identity column pushes every control right
    without earning it. */
 
-.review-rail {
+.person-editor {
   display: grid;
   grid-template-columns: 12rem minmax(0, 1fr);
   column-gap: 1rem;
@@ -62,37 +62,37 @@
   border-radius: var(--pico-border-radius);
   background: var(--pico-card-background-color);
 
-  --rail-state: var(--pico-muted-border-color);
+  --editor-state: var(--pico-muted-border-color);
 }
 
-.review-rail--changed {
-  --rail-state: var(--rail-changed);
+.person-editor--changed {
+  --editor-state: var(--editor-changed);
 }
 
-.review-rail--added {
-  --rail-state: var(--rail-added);
+.person-editor--added {
+  --editor-state: var(--editor-added);
 }
 
-.review-rail--removed,
-.review-rail--deleted {
-  --rail-state: var(--rail-cleared);
+.person-editor--removed,
+.person-editor--deleted {
+  --editor-state: var(--editor-cleared);
 }
 
 /* State header — a thin strip across the whole card. This is what replaced the
    coloured left bar: a bar is only visible while the top of the card is, and a
    twenty-field card is taller than the viewport. */
 
-.review-rail__head {
+.person-editor__head {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
   padding: 0.35rem 0.75rem;
-  background: color-mix(in srgb, var(--rail-state) var(--head-tint), var(--pico-card-background-color));
-  border-bottom: 2px solid var(--rail-state);
+  background: color-mix(in srgb, var(--editor-state) var(--head-tint), var(--pico-card-background-color));
+  border-bottom: 2px solid var(--editor-state);
 }
 
-.review-rail__head-main {
+.person-editor__head-main {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -101,38 +101,38 @@
 /* What the card is asking of you — how many fields moved and whether any needs a
    decision. It replaced the status label, which named the state but never said
    how much work was in it. */
-.rail-summary {
+.editor-summary {
   font-size: var(--text-sm);
   color: var(--pico-muted-color);
   margin-right: auto;
 }
 
 /* The actions sit at the far end of the strip, away from the status. */
-.review-rail__head-main .review-rail__actions {
+.person-editor__head-main .person-editor__actions {
   margin-top: 0;
   margin-left: auto;
 }
 
 /* A person with nothing to review: one line, laid out across rather than
    stacked, so the row is as tall as its content. */
-.review-rail--strip {
+.person-editor--strip {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.35rem 0.75rem;
 }
 
-.review-rail--strip .review-rail__name {
+.person-editor--strip .person-editor__name {
   font-weight: 500;
 }
 
-.review-rail--strip .review-rail__status {
+.person-editor--strip .person-editor__status {
   margin-left: auto;
 }
 
 /* Identity column */
 
-.review-rail__identity {
+.person-editor__identity {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -141,46 +141,46 @@
 }
 
 
-.review-rail__name {
+.person-editor__name {
   font-weight: 600;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
-.review-rail--removed .review-rail__name,
-.review-rail--deleted .review-rail__name {
+.person-editor--removed .person-editor__name,
+.person-editor--deleted .person-editor__name {
   text-decoration: line-through;
-  color: var(--rail-cleared);
+  color: var(--editor-cleared);
 }
 
-.review-rail__office {
+.person-editor__office {
   font-size: var(--text-sm);
   color: var(--pico-muted-color);
   overflow-wrap: anywhere;
 }
 
-.review-rail__status {
+.person-editor__status {
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--pico-muted-color);
 }
 
-.review-rail__actions {
+.person-editor__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
   margin-top: 0.15rem;
 }
 
-/* Scoped under .review-rail deliberately: styles.css styles bare buttons via
+/* Scoped under .person-editor deliberately: styles.css styles bare buttons via
    `button:not(.btn-ghost):not(.secondary):not(…)`, and that chain of :not()s
    outspecifies a single class — it was painting these #fafafa on a white card,
    so Restore rendered as an empty box. */
-.review-rail .review-rail__delete,
-.review-rail .review-rail__reset,
-.review-rail .review-rail__merge,
-.review-rail .review-rail__restore-person {
+.person-editor .person-editor__delete,
+.person-editor .person-editor__reset,
+.person-editor .person-editor__merge,
+.person-editor .person-editor__restore-person {
   padding: 0.15rem 0.5rem;
   font-size: var(--text-sm);
   border: 1px solid var(--pico-muted-border-color);
@@ -191,27 +191,27 @@
   width: auto;
 }
 
-.review-rail .review-rail__delete:hover {
-  border-color: var(--rail-cleared);
-  color: var(--rail-cleared);
+.person-editor .person-editor__delete:hover {
+  border-color: var(--editor-cleared);
+  color: var(--editor-cleared);
 }
 
-.review-rail .review-rail__restore-person {
-  border-color: var(--rail-cleared);
-  color: var(--rail-cleared);
+.person-editor .person-editor__restore-person {
+  border-color: var(--editor-cleared);
+  color: var(--editor-cleared);
 }
 
 /* See review-modal.css: --pico-color is overridden to the inverse on every bare
    button, so an unfilled button must name its colour rather than read it. */
-.review-rail--ghost:hover {
+.person-editor--ghost:hover {
   border-color: var(--civ-text);
   color: var(--civ-text);
 }
 
 /* Add person is an empty slot at the end of the roster rather than a button
    above it: it reads as "there is room for one more" in the same shape as the
-   rails it sits among, and it stays out of the way of the actual work. */
-.review-rail--ghost {
+   editors it sits among, and it stays out of the way of the actual work. */
+.person-editor--ghost {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,14 +225,14 @@
   width: 100%;
 }
 
-.review-rail__ghost-mark {
+.person-editor__ghost-mark {
   font-size: 1.1rem;
   line-height: 1;
 }
 
 /* Field body */
 
-.review-rail__fields {
+.person-editor__fields {
   display: flex;
   flex-direction: column;
   /* Never tighter than a focus ring needs — see --ring-space in
@@ -248,7 +248,7 @@
    The third column is `auto`, not 1fr: `was …` is absent on most rows, and a
    greedy column reserved a third of the card for nothing. `justify-content:
    start` stops the row stretching to fill the body. */
-.review-rail__field {
+.person-editor__field {
   display: grid;
   grid-template-columns: 7rem minmax(0, 22rem) auto;
   justify-content: start;
@@ -258,39 +258,39 @@
   border-radius: var(--pico-border-radius);
 }
 
-/* Visible focus on every control and button in a rail. The gaps above reserve
+/* Visible focus on every control and button in a person editor. The gaps above reserve
    the clearance this needs. */
-.review-rail :is(input, select, button, a):focus-visible {
+.person-editor :is(input, select, button, a):focus-visible {
   outline: var(--ring-width) solid var(--pico-primary);
   outline-offset: var(--ring-offset);
 }
 
-.review-rail__label {
+.person-editor__label {
   font-size: var(--text-sm);
   color: var(--pico-muted-color);
   padding-top: 0.25rem;
 }
 
-.review-rail__field--changed .review-rail__label {
-  color: var(--rail-changed);
+.person-editor__field--changed .person-editor__label {
+  color: var(--editor-changed);
   font-weight: 600;
 }
 
-.review-rail__field--added .review-rail__label {
-  color: var(--rail-added);
+.person-editor__field--added .person-editor__label {
+  color: var(--editor-added);
   font-weight: 600;
 }
 
-.review-rail__field--cleared .review-rail__label {
-  color: var(--rail-cleared);
+.person-editor__field--cleared .person-editor__label {
+  color: var(--editor-cleared);
   font-weight: 600;
 }
 
-.review-rail__req {
-  color: var(--rail-cleared);
+.person-editor__req {
+  color: var(--editor-cleared);
 }
 
-.review-rail__control {
+.person-editor__control {
   min-width: 0;
 }
 
@@ -298,22 +298,22 @@
    the set. That is an ARIA annotation only — it must not also opt into pico's
    input-group component (elements.css), whose `margin-bottom: --pico-spacing`
    put a 1rem gap under every grouped field. */
-.review-rail__control[role="group"] {
+.person-editor__control[role="group"] {
   display: block;
   width: auto;
   margin-bottom: 0;
   box-shadow: none;
 }
 
-.review-rail__control input,
-.review-rail__control select {
+.person-editor__control input,
+.person-editor__control select {
   width: 100%;
   font-size: var(--text-sm);
 }
 
 /* The live OCD-ID preview is a full division path — let it wrap instead of
    spilling past the control it belongs to. */
-.review-rail__control .field-control__division-preview {
+.person-editor__control .field-control__division-preview {
   display: block;
   overflow-wrap: anywhere;
   font-size: var(--text-xs);
@@ -321,7 +321,7 @@
 }
 
 /* The old value, as a trailing annotation rather than a second column. */
-.review-rail__was {
+.person-editor__was {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -332,12 +332,12 @@
   min-width: 0;
 }
 
-.review-rail__was-value {
+.person-editor__was-value {
   text-decoration: line-through;
   overflow-wrap: anywhere;
 }
 
-.review-rail .review-rail__restore {
+.person-editor .person-editor__restore {
   background: none;
   border: none;
   padding: 0;
@@ -351,8 +351,8 @@
 /* Attention (§11.1, axis 2 — what needs a person). Shape carries the
    distinction so colour is reinforcement: triangle stops you, circle advises. */
 
-.review-rail__error,
-.review-rail__issue {
+.person-editor__error,
+.person-editor__issue {
   display: flex;
   align-items: baseline;
   gap: 0.3rem;
@@ -361,21 +361,21 @@
   padding-top: 0.15rem;
 }
 
-.review-rail__error {
-  color: var(--rail-cleared);
+.person-editor__error {
+  color: var(--editor-cleared);
 }
 
-.review-rail__issue {
-  color: var(--rail-issue);
+.person-editor__issue {
+  color: var(--editor-issue);
 }
 
-.review-rail__resolved {
-  color: var(--rail-added);
+.person-editor__resolved {
+  color: var(--editor-added);
 }
 
 /* Expander */
 
-.review-rail-list .review-rail__expander {
+.person-editor-list .person-editor__expander {
   align-self: flex-start;
   background: none;
   border: none;
@@ -390,7 +390,7 @@
 
 /* Departure banner — one decision, so the fields collapse away (§5). */
 
-.review-rail__banner {
+.person-editor__banner {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -400,52 +400,52 @@
   font-size: var(--text-sm);
 }
 
-.review-rail__banner-title {
+.person-editor__banner-title {
   font-weight: 600;
-  color: var(--rail-cleared);
+  color: var(--editor-cleared);
 }
 
 @media (prefers-color-scheme: dark) {
-  .review-rail-list {
+  .person-editor-list {
     --head-tint: 30%;
   }
 }
 
-[data-theme="dark"] .review-rail-list {
+[data-theme="dark"] .person-editor-list {
   --head-tint: 30%;
 }
 
-[data-theme="light"] .review-rail-list {
+[data-theme="light"] .person-editor-list {
   --head-tint: 14%;
 }
 
 @media (max-width: 48rem) {
-  .review-rail {
+  .person-editor {
     grid-template-columns: 1fr;
   }
 
-  .review-rail__identity {
+  .person-editor__identity {
     padding: 0.6rem 0.75rem 0;
   }
 
-  .review-rail__fields {
+  .person-editor__fields {
     padding: 0.6rem 0.75rem 0.75rem;
   }
 
-  .review-rail__field {
+  .person-editor__field {
     grid-template-columns: 1fr;
     gap: 0.15rem;
   }
 
-  .review-rail__error,
-  .review-rail__issue {
+  .person-editor__error,
+  .person-editor__issue {
     grid-column: 1;
   }
 }
 
 /* An issue anchored to the person rather than a field sits above the field list.
    Full width, because it is about the whole card. */
-.review-rail__issue--row {
+.person-editor__issue--row {
   grid-column: 1 / -1;
   padding: 0.2rem 0.25rem;
 }
@@ -453,7 +453,7 @@
 /* Step 1 of a merge, in place — the other people on this card as chips. Sits in
    the identity column, directly under the button that opens it. */
 
-.review-rail__merge-with {
+.person-editor__merge-with {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -463,12 +463,12 @@
   background: var(--pico-card-sectioning-background-color);
 }
 
-.review-rail__merge-lede {
+.person-editor__merge-lede {
   font-size: var(--text-xs);
   color: var(--pico-muted-color);
 }
 
-.review-rail__merge-faces {
+.person-editor__merge-faces {
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem 0.7rem;

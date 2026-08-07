@@ -4,17 +4,17 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
-import { railFor } from "./helpers/review-card.js";
+import { editorFor } from "./helpers/review-card.js";
 
 test("merge is a screen in one modal, not a second dialog", async ({
   authenticatedPage: page,
 }) => {
   await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}&view=detail`);
-  await expect(page.locator("review-rail-list")).toBeVisible();
+  await expect(page.locator("person-editor-list")).toBeVisible();
 
-  const tom = railFor(page, "Tom Treasurer");
-  await tom.locator(".review-rail__merge").click();
-  await tom.locator(".review-rail__merge-faces .review-face", { hasText: "Bob Clerk" }).click();
+  const tom = editorFor(page, "Tom Treasurer");
+  await tom.locator(".person-editor__merge").click();
+  await tom.locator(".person-editor__merge-faces .review-face", { hasText: "Bob Clerk" }).click();
 
   await expect(page.locator("merge-picker")).toBeVisible();
   // The whole point: one dialog, never two stacked.

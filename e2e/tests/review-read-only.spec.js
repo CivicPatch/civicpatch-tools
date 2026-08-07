@@ -68,7 +68,7 @@ test.describe("Review card — read only across the views", () => {
     await expect(page.locator(".review-page__view-tab")).toHaveCount(3);
 
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
-    await expect(page.locator("review-rail-list")).toBeVisible();
+    await expect(page.locator("person-editor-list")).toBeVisible();
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator("review-preview")).toBeVisible();
   });
@@ -79,16 +79,16 @@ test.describe("Review card — read only across the views", () => {
     await openReadOnly(page);
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
 
-    const rail = page.locator(".review-rail").filter({ hasText: "Jane Published" });
-    await rail.locator(".review-rail__expander").click();
+    const editor = page.locator(".person-editor").filter({ hasText: "Jane Published" });
+    await editor.locator(".person-editor__expander").click();
 
-    await expect(rail.locator("input")).toHaveCount(0);
-    await expect(rail.locator("select")).toHaveCount(0);
+    await expect(editor.locator("input")).toHaveCount(0);
+    await expect(editor.locator("select")).toHaveCount(0);
 
     // The photo is shown as a photo — displayScalar would have printed its URL.
-    await expect(rail.locator("person-image")).not.toHaveCount(0);
+    await expect(editor.locator("person-image")).not.toHaveCount(0);
     await expect(
-      rail.locator(".review-rail__field").filter({ hasText: "Email" }),
+      editor.locator(".person-editor__field").filter({ hasText: "Email" }),
     ).toContainText("jane@ri.gov");
   });
 
@@ -101,11 +101,11 @@ test.describe("Review card — read only across the views", () => {
 
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
     for (const control of [
-      ".review-rail__delete",
-      ".review-rail__reset",
-      ".review-rail__restore-person",
-      ".review-rail__restore",
-      ".review-rail--ghost",
+      ".person-editor__delete",
+      ".person-editor__reset",
+      ".person-editor__restore-person",
+      ".person-editor__restore",
+      ".person-editor--ghost",
       ".field-control__add",
     ]) {
       await expect(page.locator(control)).toHaveCount(0);

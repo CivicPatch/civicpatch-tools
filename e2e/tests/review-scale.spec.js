@@ -3,7 +3,7 @@
  *
  * Every other fixture here holds two or three people, which makes the questions
  * the redesign exists to answer unfalsifiable: does the collapse rule earn its
- * keep, does the rail become an unusable scroll, does the grid hold at density.
+ * keep, does the editor become an unusable scroll, does the grid hold at density.
  * This card is 38 existing against 40 proposed — 3 dropped, 5 added, 10 changed,
  * 25 untouched.
  *
@@ -14,7 +14,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, railFor } from "./helpers/review-card.js";
+import { openDetail, editorFor } from "./helpers/review-card.js";
 
 test.describe("Review card at scale", () => {
   test("seeds the composition the layout work needs", async ({
@@ -23,16 +23,16 @@ test.describe("Review card at scale", () => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
     await openDetail(page);
 
-    // 35 carried over + 5 added, and the 3 the scrape dropped still get a rail.
-    await expect(page.locator(".review-rail:not(.review-rail--ghost)")).toHaveCount(43);
+    // 35 carried over + 5 added, and the 3 the scrape dropped still get a person editor.
+    await expect(page.locator(".person-editor:not(.person-editor--ghost)")).toHaveCount(43);
 
     // The old chips counted every status; the collapse rule now says the same
     // thing structurally — 18 people have something to review and 25 collapse
     // to a one-line strip.
-    await expect(page.locator(".review-rail--strip")).toHaveCount(25);
-    await expect(page.locator(".review-rail--changed")).toHaveCount(10);
-    await expect(page.locator(".review-rail--added")).toHaveCount(5);
-    await expect(page.locator(".review-rail--removed")).toHaveCount(3);
+    await expect(page.locator(".person-editor--strip")).toHaveCount(25);
+    await expect(page.locator(".person-editor--changed")).toHaveCount(10);
+    await expect(page.locator(".person-editor--added")).toHaveCount(5);
+    await expect(page.locator(".person-editor--removed")).toHaveCount(3);
   });
 
   test("carries anchored and person-level issues at density", async ({
@@ -42,16 +42,16 @@ test.describe("Review card at scale", () => {
     await openDetail(page);
 
     // A field-anchored issue on two holders — the case the collapse rule's
-    // rule 2 exists for, since office.name is unchanged on both. In the rail the
+    // rule 2 exists for, since office.name is unchanged on both. In the editor the
     // issue renders under the field it anchors to.
     await expect(
-      page.locator(".review-rail__issue").filter({ hasText: "council president" }),
+      page.locator(".person-editor__issue").filter({ hasText: "council president" }),
     ).toHaveCount(2);
 
     // Its two holders therefore show an Office row they would not otherwise get.
     for (const name of ["Councillor 09 Scale", "Councillor 21 Scale"]) {
       await expect(
-        railFor(page, name).locator(".review-rail__field").filter({ hasText: "Office" }),
+        editorFor(page, name).locator(".person-editor__field").filter({ hasText: "Office" }),
       ).toHaveCount(1);
     }
   });

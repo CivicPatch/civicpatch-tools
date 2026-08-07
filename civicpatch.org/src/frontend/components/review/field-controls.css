@@ -2,7 +2,7 @@
    Split out of people-diff.css when that component was retired: the controls
    outlive the two-column diff they were born in, so their CSS travels with them. */
 
-.review-rail-list,
+.person-editor-list,
 .review-overview,
 .jurisdiction-details__fields {
   /* Dense form controls — pico sizes inputs from these, and overriding raw
@@ -32,18 +32,18 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .review-rail-list,
+  .person-editor-list,
   .review-overview,
   .jurisdiction-details__fields {
     --field-tint: 22%;
   }
 }
 
-[data-theme="dark"] :is(.review-rail-list, .review-overview, .jurisdiction-details__fields) {
+[data-theme="dark"] :is(.person-editor-list, .review-overview, .jurisdiction-details__fields) {
   --field-tint: 22%;
 }
 
-[data-theme="light"] :is(.review-rail-list, .review-overview, .jurisdiction-details__fields) {
+[data-theme="light"] :is(.person-editor-list, .review-overview, .jurisdiction-details__fields) {
   --field-tint: 12%;
 }
 
@@ -67,9 +67,9 @@
 /* A field with no control behind it — read-only mode, and fields shown but never
    edited. The box matches an input exactly, minus a visible border, so plaintext
    rows and editable rows sit at the same height and their text starts on the same
-   line. `review-rail__readonly` wraps both the scalar and multi cases, so the box
+   line. `person-editor__readonly` wraps both the scalar and multi cases, so the box
    lives there and the values inside only stack. */
-.review-rail__readonly {
+.person-editor__readonly {
   display: block;
   width: 100%;
   padding: 0.15rem 0.4rem;
@@ -322,7 +322,7 @@ span.field-control__input s {
    Pinned height rather than a minimum — pico's computed input height lands ~6px
    taller than a bare button, so a floor would leave them mismatched. Only the
    block axis and the radius are unified; horizontal padding stays per-control. */
-:is(.review-rail-list, .review-overview)
+:is(.person-editor-list, .review-overview)
   :is(
     .field-control__input,
     .field-control__division-select,
@@ -330,7 +330,7 @@ span.field-control__input s {
     .field-control__date-year,
     .field-control__photo-clear
   ),
-:is(.review-rail-list, .review-overview) .field-control__date select {
+:is(.person-editor-list, .review-overview) .field-control__date select {
   height: var(--control-h);
   padding-block: 0;
   border-radius: var(--control-radius);

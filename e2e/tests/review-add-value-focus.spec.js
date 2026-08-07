@@ -15,7 +15,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, railFor, fieldIn } from "./helpers/review-card.js";
+import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
 
 test.describe("Adding a multi-value entry", () => {
   test("puts the caret in the chip it just created", async ({
@@ -24,7 +24,7 @@ test.describe("Adding a multi-value entry", () => {
     await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
     await openDetail(page);
 
-    const emails = fieldIn(railFor(page, "Maria González"), "Email");
+    const emails = fieldIn(editorFor(page, "Maria González"), "Email");
     const chipInputs = emails.locator(".field-control__chip input");
     const before = await chipInputs.count();
 

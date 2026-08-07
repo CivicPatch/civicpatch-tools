@@ -1,6 +1,6 @@
 // Step 2 of a merge: what does the merged record contain?
 //
-// Step 1 — which record is the same person — happens inline on the rail, so this
+// Step 1 — which record is the same person — happens inline on the editor, so this
 // only ever opens with a pair already chosen. Merging drops the absorbed row and
 // there is no undo short of Reset all, so nothing commits until this screen has
 // named the survivor.

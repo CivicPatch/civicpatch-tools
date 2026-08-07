@@ -33,7 +33,7 @@ const REASON_RANK: Record<string, number> = {
 export const FIELD_CAP = 6;
 
 // Word, not colour alone — nothing else names the status now that the list is one
-// roster, and `removed` / `deleted` share a hue. "Removed" echoes the rail's own
+// roster, and `removed` / `deleted` share a hue. "Removed" echoes the editor's own
 // Remove button, so the reviewer sees back the verb they pressed.
 export const STATUS_BADGE: Partial<Record<string, string>> = {
   [PersonStatus.CHANGED]: "Changed",

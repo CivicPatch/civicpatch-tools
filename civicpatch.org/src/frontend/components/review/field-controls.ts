@@ -1,9 +1,9 @@
 // The editable control for one field, and nothing else. Nothing here knows that
 // a diff has two sides — each control takes a single record and renders what the
-// reviewer types into. That is what makes them reusable by the rail, the modal
+// reviewer types into. That is what makes them reusable by the editor, the modal
 // and (eventually) merge's N-candidate picker, which are not two-column layouts.
 //
-// Pairing a control with an old value is rail-field.ts's job, not theirs.
+// Pairing a control with an old value is editor-field.ts's job, not theirs.
 
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
@@ -38,7 +38,7 @@ export type Save = (updates: Record<string, unknown>) => void;
 // knows when it exists, and the call is that signal.
 export type FocusRef = (el?: Element) => void;
 
-// Which field asked for focus, and the ref that takes it. The rail decides
+// Which field asked for focus, and the ref that takes it. The editor decides
 // which row it lands on; the control decides which of its elements holds it.
 export interface FieldFocus {
   key: string;

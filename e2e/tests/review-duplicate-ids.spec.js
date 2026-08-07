@@ -31,13 +31,13 @@ test.describe("Duplicate person ids", () => {
     await page.goto(`/review/session?request_id=${DUPLICATE_REQUEST_ID}`);
     await openDetail(page);
 
-    // Three proposed people, two sharing an id, so two rails.
-    await expect(page.locator(".review-rail:not(.review-rail--ghost)")).toHaveCount(2);
-    await expect(page.locator(".review-rail__name").filter({ hasText: "Sam Single" })).toBeVisible();
+    // Three proposed people, two sharing an id, so two editors.
+    await expect(page.locator(".person-editor:not(.person-editor--ghost)")).toHaveCount(2);
+    await expect(page.locator(".person-editor__name").filter({ hasText: "Sam Single" })).toBeVisible();
 
     // Last wins, so the first of the pair is the one that vanished.
     await expect(
-      page.locator(".review-rail__name").filter({ hasText: "Pat Duplicate the Second" }),
+      page.locator(".person-editor__name").filter({ hasText: "Pat Duplicate the Second" }),
     ).toBeVisible();
   });
 

@@ -9,7 +9,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID, RECONCILE_REQUEST_ID } from "../fixtures/db.js";
-import { openDetail, railFor, fieldIn } from "./helpers/review-card.js";
+import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
 
 const openPreview = async (page, requestId = SCALE_REQUEST_ID) => {
   await page.goto(`/review/session?request_id=${requestId}&view=preview`);
@@ -30,7 +30,7 @@ test.describe("Review preview", () => {
   test("drops someone the reviewer removed, live", async ({ authenticatedPage: page }) => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
     await openDetail(page);
-    await railFor(page, "Councillor 02 Scale").locator(".review-rail__delete").click();
+    await editorFor(page, "Councillor 02 Scale").locator(".person-editor__delete").click();
 
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview .review-row")).toHaveCount(39);
@@ -44,7 +44,7 @@ test.describe("Review preview", () => {
     // same cards render all three in Detail. The card background does now carry the
     // status, which is the one exception: this used to claim "no state colours".
     await expect(page.locator(".review-preview del")).toHaveCount(0);
-    await expect(page.locator(".review-preview .review-rail__issue")).toHaveCount(0);
+    await expect(page.locator(".review-preview .person-editor__issue")).toHaveCount(0);
     await expect(page.locator(".review-preview .review-row__badge")).toHaveCount(0);
   });
 
@@ -64,9 +64,9 @@ test.describe("Publish gating", () => {
     await openDetail(page);
 
     // Clear a required field on someone being published.
-    const rail = railFor(page, "Councillor 02 Scale");
-    await rail.locator(".review-rail__expander").click();
-    await fieldIn(rail, "Name").first().locator("input").fill("");
+    const editor = editorFor(page, "Councillor 02 Scale");
+    await editor.locator(".person-editor__expander").click();
+    await fieldIn(editor, "Name").first().locator("input").fill("");
 
     const publish = page.locator(".review-page__publish-btn");
     await expect(publish).toBeDisabled();
@@ -81,9 +81,9 @@ test.describe("Publish gating", () => {
   }) => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
     await openDetail(page);
-    const rail = railFor(page, "Councillor 02 Scale");
-    await rail.locator(".review-rail__expander").click();
-    await fieldIn(rail, "Name").first().locator("input").fill("");
+    const editor = editorFor(page, "Councillor 02 Scale");
+    await editor.locator(".person-editor__expander").click();
+    await fieldIn(editor, "Name").first().locator("input").fill("");
 
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview__blockers")).toContainText("Name: Required");
@@ -96,15 +96,15 @@ test.describe("Publish gating", () => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
     await openDetail(page);
     // Office rather than Name: clearing the name would invalidate the locator
-    // that finds this rail, since it matches on the name header. Office is
+    // that finds this editor, since it matches on the name header. Office is
     // unchanged on this person, so the collapse rule hides it until expanded.
-    const rail = railFor(page, "Councillor 02 Scale");
-    await rail.locator(".review-rail__expander").click();
-    await fieldIn(rail, "Office").first().locator("input").fill("");
+    const editor = editorFor(page, "Councillor 02 Scale");
+    await editor.locator(".person-editor__expander").click();
+    await fieldIn(editor, "Office").first().locator("input").fill("");
     await expect(page.locator(".review-page__publish-btn")).toBeDisabled();
 
     // Dropping them makes the error irrelevant — it is not part of the payload.
-    await rail.locator(".review-rail__delete").click();
+    await editor.locator(".person-editor__delete").click();
     await expect(page.locator(".review-page__publish-btn")).toBeEnabled();
   });
 });
