@@ -70,6 +70,15 @@ def _duplicate_errors(entry: dict) -> list[dict]:
     return errors
 
 
+# Also a submission rule rather than a data-model one, and for the same reason: a scrape
+# that found no source must still produce a record, but a person published through the
+# editor is unverifiable without one. FIELD_SCHEMA marks it required on the client.
+def _missing_source_errors(entry: dict) -> list[dict]:
+    if any(str(url).strip() for url in entry.get("source_urls") or []):
+        return []
+    return [{"field": "source_urls", "message": "At least one source url is required"}]
+
+
 def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> list[dict]:
     people = []
     failures = []
@@ -82,9 +91,9 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
             continue
         # Against the normalized entry, so two spellings of one phone number are caught
         # after canonicalization rather than read as two numbers.
-        duplicates = _duplicate_errors(normalized)
-        if duplicates:
-            failures.extend(_person_errors(edit, entry, duplicates))
+        errors = _duplicate_errors(normalized) + _missing_source_errors(normalized)
+        if errors:
+            failures.extend(_person_errors(edit, entry, errors))
             people.append(entry)
             continue
         edited = {key: normalized[key] for key in edit.fields if key in normalized}

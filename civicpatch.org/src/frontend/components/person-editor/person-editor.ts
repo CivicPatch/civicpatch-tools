@@ -280,8 +280,12 @@ export function renderPersonEditor(props: PersonEditorProps) {
   // Context fields are always visible, so counting them here would mean nobody
   // ever collapses to a strip — which is what happened once source urls became
   // always-visible. `needsReview` makes the same exclusion for the same reason.
+  // An errored context field is the exception: it blocks publish, so folding it
+  // into a one-line strip would hide the reason the button is disabled.
   const hasReviewableField = FIELD_SCHEMA.some(
-    (field) => visibleKeys.has(field.key) && !isContextField(field),
+    (field) =>
+      visibleKeys.has(field.key) &&
+      (!isContextField(field) || frozenReasons.get(field.key) === "error"),
   );
 
   if (!departing && !hasReviewableField && !isExpanded) return renderStrip(props);

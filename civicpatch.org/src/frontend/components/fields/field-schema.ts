@@ -52,7 +52,9 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "emails", label: "Email", type: "multi" },
   { key: "phones", label: "Phone", type: "multi" },
   { key: "urls", label: "Links", type: "multi" },
-  { key: "source_urls", label: "Source urls", type: "multi", diff: false },
+  // Required: a published record with no source is unverifiable. Never compared
+  // (`diff: false`) — it is the evidence, not a change.
+  { key: "source_urls", label: "Source urls", type: "multi", required: true, diff: false },
 ];
 
 export function getFieldValue(person: DiffRecord, key: string): unknown {

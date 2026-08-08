@@ -8,7 +8,7 @@ import {
   bySeat,
   PersonStatus,
 } from "../components/people/person-cards.js";
-import { type Issue } from "../components/fields/field-model.js";
+import { isContextField, type Issue } from "../components/fields/field-model.js";
 
 const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 
@@ -23,6 +23,8 @@ const person = (id: string, over: Record<string, unknown> = {}) => ({
   phones: [],
   urls: [],
   other_names: [],
+  // Required, so a fixture standing in for a publishable person needs one.
+  source_urls: ["https://x.gov/council"],
   ...over,
 });
 
@@ -212,6 +214,15 @@ describe("needsReview", () => {
   it("is false for an untouched person", () => {
     const cards = build({ existing: [person("a")], currentPeople: [person("a")] });
     expect(needsReview(only(cards))).toBe(false);
+  });
+
+  // source_urls is a context field, so it is excluded from the count — but an
+  // empty one blocks publish, and a card that folds away cannot be fixed.
+  it("is true when only a context field is in error", () => {
+    const noSources = { existing: [person("a", { source_urls: [] })], currentPeople: [person("a", { source_urls: [] })] };
+    const card = only(build(noSources));
+    expect(card.surviving.every((field) => isContextField(field.field))).toBe(true);
+    expect(needsReview(card)).toBe(true);
   });
 
   it("is true for a person carrying only a row-level issue", () => {

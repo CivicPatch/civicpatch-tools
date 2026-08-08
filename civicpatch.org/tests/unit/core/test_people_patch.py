@@ -119,7 +119,7 @@ def _valid(pid, name="Alice", phones=None):
         "urls": [],
         "office": {"name": "Mayor", "division_ocdid": None},
         "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:x/government",
-        "source_urls": [],
+        "source_urls": ["https://x.gov/council"],
         "updated_at": "2025-11-18T19:49:42+00:00",
         "id": pid,
     }
@@ -188,6 +188,23 @@ def test_blank_entries_are_not_duplicates():
     entry = _valid("a")
     entry["other_names"] = ["", "  "]
     assert validate_and_normalize([entry], [PersonPatch(id="a", fields={"other_names": entry["other_names"]})])
+
+
+# A published record with no source is unverifiable. Enforced here rather than on
+# `Official` because the pipelines build that too, and a scrape that found no source
+# must still produce a record.
+def test_person_with_no_source_url_is_rejected():
+    entry = _valid("a")
+    entry["source_urls"] = []
+    failure = _fails(entry, {"source_urls": []})[0]
+    assert (failure["id"], failure["field"]) == ("a", "source_urls")
+    assert "source url" in failure["message"]
+
+
+def test_blank_source_url_does_not_count_as_a_source():
+    entry = _valid("a")
+    entry["source_urls"] = ["   "]
+    assert _fails(entry, {"source_urls": ["   "]})[0]["field"] == "source_urls"
 
 
 def test_distinct_values_pass():

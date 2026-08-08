@@ -707,6 +707,8 @@ describe("survivingFields", () => {
     urls: [],
     other_names: [],
     image: "p.jpg",
+    // Required, so a "whole" record needs one to actually be whole.
+    source_urls: ["https://x.gov/council"],
   };
   const keys = (result: { field: FieldSpec }[]) =>
     result.map((s) => s.field.key);

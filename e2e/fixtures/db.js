@@ -371,6 +371,7 @@ export async function seedE2eFixtures() {
         phones: ["(555) 010-0101"],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
         start_date: "2021",
         end_date: "2025",
         cdn_image: "https://cdn.test/maria.jpg",
@@ -383,6 +384,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
     ];
     // people PK is an auto-uuid, so re-seeding can't ON CONFLICT — clear first
@@ -407,6 +409,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
         start_date: "2021",
         end_date: "2025",
         image: "https://nh.gov/maria.jpg",
@@ -419,6 +422,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
     ];
     await client.query(
@@ -524,6 +528,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
       {
         id: "dup-shared",
@@ -533,6 +538,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
       {
         id: "dup-unique",
@@ -542,6 +548,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
     ];
     await client.query(
@@ -585,6 +592,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
       {
         id: "markers-bob",
@@ -594,6 +602,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
       {
         id: "markers-carol",
@@ -603,6 +612,7 @@ export async function seedE2eFixtures() {
         phones: [],
         urls: [],
         other_names: [],
+        source_urls: ["https://example.gov/roster"],
       },
     ];
     // extra_official → row-level marker (Carol); duplicate_unique_role → field-level
