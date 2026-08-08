@@ -1,4 +1,4 @@
-import "./search-jurisdictions.css";
+import "./home-page.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import {
@@ -22,11 +22,11 @@ import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
 import "../../components/verify-cta/verify-cta.ts";
-import { renderContributionCard } from "../contribution-card/contribution-card.ts";
+import { renderContributionCard } from "../../components/contribution-card/contribution-card.ts";
 import { renderFreshnessWidget } from "../../components/progress-dashboard/freshness-widget.ts";
 import { getNeedsReviewCount } from "../../utils/coverage-utils.js";
 
-function SearchJurisdictions() {
+function HomePage() {
   const { user, permissions } = useAuth();
   const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
     ttl: PERSIST_FOREVER,
@@ -210,8 +210,8 @@ function SearchJurisdictions() {
 }
 
 customElements.define(
-  "civ-search-jurisdictions",
-  component(SearchJurisdictions, {
+  "home-page",
+  component(HomePage, {
     useShadowDOM: false,
     observedAttributes: [],
   }),

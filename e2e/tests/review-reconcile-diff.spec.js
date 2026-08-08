@@ -54,7 +54,7 @@ test.describe("Review reconcile diff (populated)", () => {
       "Office *",
       "Email",
       "Phone",
-      "Source urls",
+      "Source urls *",
     ]);
 
     // The office control carries the new value; the old one is a trailing

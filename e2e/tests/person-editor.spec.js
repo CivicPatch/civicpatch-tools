@@ -75,10 +75,11 @@ test.describe("Review editor (Detail v2)", () => {
     // Two rows, not one: Source urls is a context field (`diff: false`), so it
     // is always visible as the evidence for the change and never itself a
     // reason to review. Everything else still hides.
+    // Source urls carries the required marker, same as Name and Office.
     const editor = editorFor(page, "Councillor 13 Scale");
     await expect(editor.locator(".person-editor__label")).toHaveText([
       "Email",
-      "Source urls",
+      "Source urls *",
     ]);
   });
 
