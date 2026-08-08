@@ -1,0 +1,93 @@
+/* Layout */
+
+.jurisdiction-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Officials get the wider column; metadata is reference material and sits beside them.
+   minmax(0, …) on both so a long url in the aside cannot push the grid wider. */
+.jurisdiction-modal__body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  min-height: 0;
+}
+
+/* Only the officials scroll — the search bar and the metadata stay put. min-height:0
+   because a grid item will not shrink below its content, and overflow never engages. */
+.jurisdiction-modal__officials {
+  min-height: 0;
+  max-height: min(55vh, 32rem);
+  overflow-y: auto;
+  /* Hitting the end of the list must not start scrolling the modal, then the page. */
+  overscroll-behavior: contain;
+}
+
+.jurisdiction-modal__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+/* Side by side needs width the phone does not have; stack rather than squeeze. */
+@media (max-width: 46rem) {
+  .jurisdiction-modal__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.jurisdiction-modal__where {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+}
+
+.jurisdiction-modal__status {
+  margin: 0;
+  color: var(--civ-text-secondary);
+}
+
+/* Footer */
+
+.jurisdiction-modal__link {
+  margin-inline-end: auto;
+  font-weight: 600;
+}
+
+/* The dropdown must escape the scrolling results area, or suggestions clip behind it. */
+.jurisdiction-modal .autocomplete-dropdown {
+  z-index: 120;
+}
+
+/* dialog[open] is width:max-content globally, so a modal's width is whatever its content
+   happens to be. Officials rows want a predictable, readable measure. */
+dialog[open]:has(.jurisdiction-modal) {
+  width: min(94vw, 56rem);
+  max-width: none;
+}
+
+/* The shared dialog section reserves a scrollbar gutter, but here the inner body is the
+   only thing that scrolls — so that gutter is dead space beside the real scrollbar. */
+dialog[open]:has(.jurisdiction-modal) > article > section {
+  scrollbar-gutter: auto;
+}
+
+/* Details */
+
+.jurisdiction-modal__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* Stacked label-over-value: the aside is too narrow for the page's side-by-side rows. */
+.jurisdiction-modal__aside .person-editor__field {
+  display: block;
+}
+
+.jurisdiction-modal__aside .person-editor__control {
+  overflow-wrap: anywhere;
+}

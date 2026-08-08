@@ -549,6 +549,12 @@ dialog[open]::backdrop {
   background: rgba(0, 0, 0, 0.45);
 }
 
+/* showModal() blocks interaction with the page behind but not scrolling, so arrow keys
+   and the wheel fall through to the document. Lock it while any dialog is open. */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
 dialog[open] > article {
   margin: 0;
   width: 100%;
@@ -571,6 +577,9 @@ dialog[open] > article > section {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  /* Stop scroll chaining: reaching the end of the modal must not hand the wheel to the
+     page behind it. */
+  overscroll-behavior: contain;
   scrollbar-gutter: stable;
   /* full-bleed to the article edges and re-pad (like header/footer) so the
      scrollbar sits at the edge with content padded clear of it */

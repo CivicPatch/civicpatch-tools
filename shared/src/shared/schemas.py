@@ -1,7 +1,7 @@
 import re
 from datetime import datetime, timezone
 from decimal import Decimal
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import List, Optional
 from urllib.parse import urlparse
 
@@ -141,6 +141,14 @@ class JobConfig(BaseModel):
     pipeline_run_cost_limit: Decimal  # in USD
 
 
+class JurisdictionLevel(StrEnum):
+    # Values mirror open-data's data_source/<state>/<level>/ directory names, which are
+    # also stored verbatim in jurisdictions.level.
+    STATE = "state"
+    COUNTIES = "counties"
+    LOCAL = "local"
+
+
 class JurisdictionId(BaseModel):
     country: str
     state: str
@@ -150,6 +158,16 @@ class JurisdictionId(BaseModel):
     place: Optional[str] = None
     jurisdiction_type: str
     output_type: str
+
+    @property
+    def level(self) -> JurisdictionLevel:
+        # A place under a county is still local — the county segment locates it, it does
+        # not make it a county. Derived, not stored, so it cannot drift from the parts.
+        if self.place:
+            return JurisdictionLevel.LOCAL
+        if self.county:
+            return JurisdictionLevel.COUNTIES
+        return JurisdictionLevel.STATE
 
 
 class JurisdictionEntry(BaseModel):

@@ -25,6 +25,7 @@ erDiagram
         text            level               "idx, default: 'local'"
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
         text            search_text         "idx: GIN to_tsvector('simple',_), GIN gin_trgm_ops; default: ''; name+display_name+state code+state name, maintained by sync"
+        text_array      parent_ocdids       "idx: GIN; default: '{}'; ancestry most-specific-first, incl. the implied state; maintained by sync"
         timestamptz_null scraped_at          "idx: (state, scraped_at); last *scraped*, stamped on job-PR merge"
         timestamptz_null updated_at
     }

@@ -712,3 +712,31 @@ export const setDisplayName = async (displayName) => {
 };
 
 
+
+// Nationwide jurisdiction typeahead. Each call aborts the previous one: with a debounce
+// plus variable latency, a slow response for "sea" can otherwise land after "seattle"
+// and overwrite it with stale results.
+let jurisdictionSearchController = null;
+
+export const searchJurisdictions = async (query, { page = 1, limit = 10 } = {}) => {
+  jurisdictionSearchController?.abort();
+  jurisdictionSearchController = new AbortController();
+
+  const params = new URLSearchParams({ q: query, page, limit });
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, {
+    credentials: "include",
+    signal: jurisdictionSearchController.signal,
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+// One jurisdiction's open-data fields plus its scraped_at freshness stamp.
+export const fetchJurisdiction = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};

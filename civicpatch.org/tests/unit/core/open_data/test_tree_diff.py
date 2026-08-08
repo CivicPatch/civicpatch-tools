@@ -14,7 +14,7 @@ Unchanged paths (same sha in both) appear in neither list.
 
 import pytest
 
-from core.tree_diff import diff_tree
+from core.open_data.tree_diff import diff_tree
 
 
 @pytest.mark.unit

@@ -1,15 +1,7 @@
 import "./home-page.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import {
-  fetchPeople,
-  fetchDashboard,
-  fetchMapsCoverage,
-  fetchLocalStatus,
-  fetchStateCoverageSummary,
-  fetchReviewStats,
-  fetchActiveReviewSession,
-} from "../../api.js";
+import { fetchPeople, fetchDashboard, fetchMapsCoverage } from "../../api.js";
 import {
   useLocalStorage,
   PERSIST_FOREVER,
@@ -24,7 +16,11 @@ import "../../components/map/browse-map.ts";
 import "../../components/verify-cta/verify-cta.ts";
 import { renderContributionCard } from "../../components/contribution-card/contribution-card.ts";
 import { renderFreshnessWidget } from "../../components/progress-dashboard/freshness-widget.ts";
-import { getNeedsReviewCount } from "../../utils/coverage-utils.js";
+import "../../components/jurisdiction-search/jurisdiction-search.ts";
+import "../../components/jurisdiction-modal/jurisdiction-modal.ts";
+import { useJurisdictionModal } from "./use-jurisdiction-modal.ts";
+import { useStateCoverage } from "./use-state-coverage.ts";
+import { useReviewProgress } from "./use-review-progress.ts";
 
 function HomePage() {
   const { user, permissions } = useAuth();
@@ -40,10 +36,13 @@ function HomePage() {
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
   const [coverageSummary, setCoverageSummary] = useState({});
-  const [localStatus, setLocalStatus] = useState({});
-  const [toReviewCount, setToReviewCount] = useState(0);
-  const [reviewStats, setReviewStats] = useState(null);
-  const [activeSession, setActiveSession] = useState(null);
+  const { localStatus, toReviewCount } = useStateCoverage(selectedState);
+  const { reviewStats, activeSession } = useReviewProgress(user, selectedState);
+  const {
+    selection: searchSelection,
+    open: openJurisdiction,
+    close: handleModalClose,
+  } = useJurisdictionModal();
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -70,50 +69,6 @@ function HomePage() {
     return () => document.removeEventListener("state-select", handler);
   }, []);
 
-  useEffect(() => {
-    if (!selectedState) {
-      setLocalStatus({});
-      return;
-    }
-    fetchLocalStatus(selectedState)
-      .then((d) => setLocalStatus(d.data ?? {}))
-      .catch(() => {});
-  }, [selectedState]);
-
-  useEffect(() => {
-    if (!selectedState) {
-      setToReviewCount(0);
-      return;
-    }
-    fetchStateCoverageSummary(selectedState)
-      .then((d) => setToReviewCount(getNeedsReviewCount(d.data)))
-      .catch(() => {});
-  }, [selectedState]);
-
-  useEffect(() => {
-    // review-sessions/stats requires auth (AUTHENTICATED route) — skip the call
-    // entirely for anonymous visitors, the common case (see plan §13).
-    if (!user || !selectedState) {
-      setReviewStats(null);
-      return;
-    }
-    fetchReviewStats(selectedState)
-      .then((d) => setReviewStats(d.data ?? null))
-      .catch(() => setReviewStats(null));
-  }, [user, selectedState]);
-
-  useEffect(() => {
-    // review-sessions/active requires auth too — same anonymous-visitor skip as
-    // reviewStats above.
-    if (!user || !selectedState) {
-      setActiveSession(null);
-      return;
-    }
-    fetchActiveReviewSession(selectedState)
-      .then((d) => setActiveSession(d.data ?? null))
-      .catch(() => setActiveSession(null));
-  }, [user, selectedState]);
-
   const handleStateChange = (event) => {
     setSelectedState((event.detail.state || "").toLowerCase());
     setSelectedCountyOcdid(null);
@@ -125,13 +80,20 @@ function HomePage() {
     setSelectedJurisdictionOcdid(null);
   };
 
+  // Clicking a local jurisdiction on the map is the same intent as picking one from
+  // search, so it opens the same modal rather than only filling the directory below.
   const handleSelectJurisdictionChange = (event) => {
     const { jurisdiction_ocdid } = event.detail;
     setSelectedJurisdictionOcdid(jurisdiction_ocdid);
+    if (jurisdiction_ocdid) openJurisdiction({ jurisdiction_ocdid });
   };
 
+  // A search hit opens the modal rather than filtering the page: the browse flow below
+  // stays where it was, and the answer is not somewhere the reader has to hunt for.
+  const handleSearchSelect = (event) => openJurisdiction(event.detail);
+
   return html`
-    <div class="search-page">
+    <div class="home-page">
       <hgroup>
         <h1>Find your local representatives</h1>
         <p>
@@ -139,10 +101,21 @@ function HomePage() {
           U.S.
         </p>
       </hgroup>
-      <div class="page-grid">
-        <div class="select-col">
-          <div class="find-representatives">
-            <h3 class="find-representatives__title">States</h3>
+      <div class="home-page__grid">
+        <div class="home-page__select-col">
+          <div class="home-page__finder">
+            <h3 class="home-page__finder-title">
+              Find your representatives
+            </h3>
+
+            <civ-jurisdiction-search
+              @jurisdiction-select=${handleSearchSelect}
+            ></civ-jurisdiction-search>
+
+            <p class="home-page__finder-or">
+              <span>or browse by state</span>
+            </p>
+
             <civ-select-state
               .selected=${selectedState}
               @state-change=${handleStateChange}
@@ -151,7 +124,7 @@ function HomePage() {
             ${selectedState && dashboardData?.states?.[selectedState]
               ? html`
                   <a
-                    class="browse-municipalities-link"
+                    class="home-page__browse-link"
                     href="/${selectedState}/local"
                   >
                     Browse
@@ -165,7 +138,9 @@ function HomePage() {
 
           <civ-verify-cta
             .isLoggedIn=${!!user}
-            .toReviewCount=${user ? (reviewStats?.available_count ?? 0) : toReviewCount}
+            .toReviewCount=${user
+              ? (reviewStats?.available_count ?? 0)
+              : toReviewCount}
             .state=${selectedState}
             .hasActiveSession=${activeSession != null}
           ></civ-verify-cta>
@@ -180,7 +155,7 @@ function HomePage() {
           })}
         </div>
 
-        <div class="map-col">
+        <div class="home-page__map-col">
           <browse-map
             .state=${selectedState || ""}
             .selectedOcdid=${selectedJurisdictionOcdid || ""}
@@ -199,7 +174,16 @@ function HomePage() {
         </div>
       </div>
 
-      <div class="below-grid">
+      ${searchSelection
+        ? html`<civ-jurisdiction-modal
+            .jurisdictionOcdid=${searchSelection.jurisdiction_ocdid}
+            .displayName=${searchSelection.display_name || ""}
+            .parentNames=${searchSelection.parent_names || []}
+            @close-jurisdiction=${handleModalClose}
+          ></civ-jurisdiction-modal>`
+        : ""}
+
+      <div class="home-page__below">
         <civ-people-directory
           .local=${people}
           .jurisdictionSelected=${!!selectedJurisdictionOcdid}
