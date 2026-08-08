@@ -167,8 +167,9 @@ export function cardFields(cards: PersonCard[]) {
 export function needsReview(card: PersonCard): boolean {
   return (
     // Context fields are always visible, so counting them would put everyone in
-    // To review. See isContextField.
-    card.surviving.some((field) => !isContextField(field.field)) ||
+    // To review — unless one carries an error, which blocks publish and so
+    // cannot be allowed to fold away unseen.
+    card.surviving.some((field) => !isContextField(field.field) || field.error) ||
     card.issues.length > 0 ||
     card.status === PersonStatus.DELETED
   );

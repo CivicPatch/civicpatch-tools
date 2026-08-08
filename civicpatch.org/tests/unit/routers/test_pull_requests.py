@@ -201,7 +201,7 @@ BASE_PERSON = {
     "urls": [],
     "office": {"name": "Mayor", "division_ocdid": None},
     "jurisdiction_ocdid": TEST_OCDID,
-    "source_urls": [],
+    "source_urls": ["https://x.gov/council"],
     "updated_at": "2025-11-18T19:49:42+00:00",
     "id": "p1",
 }
