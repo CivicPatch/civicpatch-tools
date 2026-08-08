@@ -2,7 +2,7 @@ import urllib.parse
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
@@ -30,6 +30,23 @@ class PatchJurisdictionDataRequest(BaseModel):
     url: str | None = None
     geoid: str | None = None
     population: int | None = None
+
+    # Mirrors urlError in field-validation.ts, so the reviewer is told the same thing
+    # while typing as they would be on Save. Rejects rather than canonicalizing:
+    # url_utils.format_url would silently prepend a scheme to a typo. Clearing the
+    # website is allowed, so only a non-empty value is judged.
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, v):
+        if v is None or not v.strip():
+            return v
+        url = v.strip()
+        if not url.startswith(("http://", "https://")):
+            raise ValueError(f"Website must start with 'http://' or 'https://', got: '{url}'")
+        parsed = urllib.parse.urlparse(url)
+        if not parsed.netloc or "." not in parsed.netloc or " " in url:
+            raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
+        return url
 
 def get_router() -> APIRouter:
     router = APIRouter()

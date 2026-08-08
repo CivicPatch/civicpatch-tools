@@ -14,7 +14,7 @@ import { component, useState, useEffect } from "haunted";
 import "../../components/person-editor/person-editor.css";
 import "../../components/review/field-controls.css";
 import { renderScalarNewSide } from "../../components/review/field-controls.js";
-import { type FieldSpec } from "../../components/review/field-model.js";
+import { urlError, type FieldSpec } from "../../components/review/field-model.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };
@@ -91,6 +91,9 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
   if (!data) return html`<p>Loading jurisdiction data…</p>`;
 
   const dirty = (url ?? "") !== (data.url ?? "");
+  // Clearing the website is allowed, so only a non-empty value is judged. Same
+  // rule the person editor applies to a person's urls.
+  const websiteError = url.trim() ? urlError(url.trim()) : null;
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -107,8 +110,13 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
   // The editor's scalar control saves on input; here that would open a PR per
   // keystroke, so it edits local state and Save commits.
   const website = canEdit
-    ? renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
-        setUrl(String((updates as any).url ?? "")), { state: "same", error: null }, null)
+    ? html`${renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
+        setUrl(String((updates as any).url ?? "")), { state: "same", error: websiteError }, null)}
+      ${websiteError
+        ? html`<div class="person-editor__error">
+            <i class="fa-solid fa-triangle-exclamation"></i><span>${websiteError}</span>
+          </div>`
+        : nothing}`
     : data.url
       ? html`<a class="person-editor__readonly" href=${data.url} target=${SOURCE_LINK_TARGET}
           >${data.url}</a
@@ -143,7 +151,12 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
       ${canEdit && dirty
         ? html`<div class="jurisdiction-details__actions">
             <button class="btn-quiet" @click=${() => setUrl(data.url ?? "")}>Discard</button>
-            <button class="btn-primary" ?disabled=${isSaving} @click=${handleSave}>
+            <button
+              class="btn-primary"
+              ?disabled=${isSaving || !!websiteError}
+              title=${websiteError ?? ""}
+              @click=${handleSave}
+            >
               ${isSaving ? "Opening PR…" : "Save website"}
             </button>
           </div>`

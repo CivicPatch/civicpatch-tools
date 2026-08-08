@@ -155,6 +155,47 @@ def test_validate_raises_failures_keyed_by_id():
     assert exc.value.failures[0]["field"] == "phones"
 
 
+def _fails(entry, fields):
+    with pytest.raises(PeopleValidationError) as exc:
+        validate_and_normalize([entry], [PersonPatch(id=entry["id"], fields=fields)])
+    return exc.value.failures
+
+
+def test_duplicate_email_names_the_person_and_field():
+    entry = _valid("a")
+    entry["emails"] = ["mayor@x.gov", "mayor@x.gov"]
+    failure = _fails(entry, {"emails": entry["emails"]})[0]
+    assert (failure["id"], failure["name"], failure["field"]) == ("a", "Alice", "emails")
+    assert "listed twice" in failure["message"]
+
+
+# Case alone is not a second value — the same rule rowError applies in the editor.
+def test_duplicate_ignores_case():
+    entry = _valid("a")
+    entry["emails"] = ["Mayor@X.gov", "mayor@x.gov"]
+    assert _fails(entry, {"emails": entry["emails"]})[0]["field"] == "emails"
+
+
+# Two spellings of one number canonicalize to the same value, so the check has to run
+# after Official has normalized them or it reads them as two numbers.
+def test_duplicate_phone_is_caught_after_canonicalization():
+    entry = _valid("a", phones=["(916) 808-5300", "916-808-5300"])
+    assert _fails(entry, {"phones": entry["phones"]})[0]["field"] == "phones"
+
+
+# Blank rows are dropped or tolerated by Official, so two of them are not a duplicate.
+def test_blank_entries_are_not_duplicates():
+    entry = _valid("a")
+    entry["other_names"] = ["", "  "]
+    assert validate_and_normalize([entry], [PersonPatch(id="a", fields={"other_names": entry["other_names"]})])
+
+
+def test_distinct_values_pass():
+    entry = _valid("a")
+    entry["emails"] = ["mayor@x.gov", "clerk@x.gov"]
+    assert validate_and_normalize([entry], [PersonPatch(id="a", fields={"emails": entry["emails"]})])
+
+
 # The headline guarantee, end-to-end on real YAML: editing one field changes only that line.
 # Nulls are explicit `null` (the canonical form the manager emits), so they round-trip
 # untouched — only the edited field's line moves.

@@ -14,6 +14,7 @@ import {
   isRequiredFieldEmpty,
   fieldError,
   valueError,
+  rowError,
   type FieldSpec,
   type Issue,
 } from "../components/review/field-model.js";
@@ -25,6 +26,12 @@ import {
 const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
 const EMAILS_FIELD: FieldSpec = { key: "emails", label: "Email", type: "multi" };
 const URLS_FIELD: FieldSpec = { key: "urls", label: "Links", type: "multi" };
+const SOURCE_URLS_FIELD: FieldSpec = {
+  key: "source_urls",
+  label: "Source urls",
+  type: "multi",
+  diff: false,
+};
 const PHONES_FIELD: FieldSpec = { key: "phones", label: "Phone", type: "multi" };
 const OTHER_NAMES_FIELD: FieldSpec = {
   key: "other_names",
@@ -460,17 +467,34 @@ describe("valueError", () => {
     );
   });
 
-  // The scrapers produce these and ensureUrl supplies the scheme, so demanding
-  // one here would flag good data.
-  it("accepts a url with no scheme", () => {
-    expect(valueError(URLS_FIELD, "cityofx.gov/council")).toBeNull();
+  // Official.validate_urls rejects a scheme-less url, so accepting one here only
+  // moves the failure to Publish.
+  it("rejects a url with no scheme", () => {
+    expect(valueError(URLS_FIELD, "cityofx.gov/council")).toBe(
+      "cityofx.gov/council must start with http:// or https://",
+    );
     expect(valueError(URLS_FIELD, "https://cityofx.gov/council")).toBeNull();
+    expect(valueError(URLS_FIELD, "http://cityofx.gov")).toBeNull();
   });
 
   it("rejects a url with whitespace in it", () => {
-    expect(valueError(URLS_FIELD, "city of x.gov")).toBe(
-      "city of x.gov is not a valid url",
+    expect(valueError(URLS_FIELD, "https://city of x.gov")).toBe(
+      "https://city of x.gov cannot contain spaces",
     );
+  });
+
+  it("rejects a host with no domain", () => {
+    expect(valueError(URLS_FIELD, "https://localhost/council")).toBe(
+      "https://localhost/council needs a domain, like example.gov",
+    );
+  });
+
+  // source_urls carries the same rule — one definition, two fields.
+  it("applies the url rule to source urls too", () => {
+    expect(valueError(SOURCE_URLS_FIELD, "cityofx.gov/minutes")).toBe(
+      "cityofx.gov/minutes must start with http:// or https://",
+    );
+    expect(valueError(SOURCE_URLS_FIELD, "https://cityofx.gov/minutes")).toBeNull();
   });
 
   it("passes a 10-digit phone and flags a short one", () => {
@@ -488,6 +512,84 @@ describe("valueError", () => {
 
   it("has no opinion about a field with no format", () => {
     expect(valueError(OTHER_NAMES_FIELD, "Maria de la Cruz")).toBeNull();
+  });
+});
+
+describe("rowError — duplicates and blanks", () => {
+  const emails = EMAILS_FIELD;
+  const record = { name: "Maria Vega" };
+
+  it("flags the second copy, not the first", () => {
+    const values = ["a@x.gov", "a@x.gov"];
+    expect(rowError(emails, values, 0, record)).toBeNull();
+    expect(rowError(emails, values, 1, record)).toBe("a@x.gov is listed twice");
+  });
+
+  // normalizeMultiValue is what the diff compares by, so the two agree about
+  // whether case alone makes a second value.
+  it("treats case and surrounding space as the same value", () => {
+    const values = ["a@x.gov", " A@X.GOV "];
+    expect(rowError(emails, values, 1, record)).toMatch(/listed twice/);
+  });
+
+  it("flags a blank email but not a blank phone", () => {
+    expect(rowError(emails, ["", "a@x.gov"], 0, record)).toBe("Remove the empty row");
+    expect(rowError(PHONES_FIELD, [""], 0, record)).toBeNull();
+    expect(rowError(URLS_FIELD, [""], 0, record)).toBeNull();
+  });
+
+  it("flags an other name that is already the name", () => {
+    expect(rowError(OTHER_NAMES_FIELD, ["maria vega"], 0, record)).toBe(
+      "maria vega is already the name",
+    );
+    expect(rowError(OTHER_NAMES_FIELD, ["Maria V."], 0, record)).toBeNull();
+  });
+
+  // A record with no name yet — every other name would otherwise match "".
+  it("says nothing about other names when there is no name", () => {
+    expect(rowError(OTHER_NAMES_FIELD, ["Maria V."], 0, {})).toBeNull();
+  });
+
+  it("blocks publish through fieldError, not just the row", () => {
+    expect(fieldError(emails, { emails: ["a@x.gov", "a@x.gov"] })).toBe(
+      "a@x.gov is listed twice",
+    );
+    expect(fieldError(emails, { emails: ["a@x.gov", "b@x.gov"] })).toBeNull();
+  });
+});
+
+describe("valueError — division", () => {
+  const DIVISION_FIELD: FieldSpec = {
+    key: "office.division_ocdid",
+    label: "Division",
+    type: "text",
+    required: true,
+  };
+  const BASE = "ocd-division/country:us/state:co/place:denver";
+
+  // Changing the type select saves before anything is typed, so this is one
+  // click away — and it reads back as a valid-looking Council District.
+  it("flags a district type with no number", () => {
+    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:`)).toBe(
+      "Enter a council district number",
+    );
+    expect(valueError(DIVISION_FIELD, `${BASE}/ward:`)).toBe("Enter a ward number");
+  });
+
+  it("flags a number with whitespace in it", () => {
+    expect(valueError(DIVISION_FIELD, `${BASE}/ward:Ward 3`)).toBe(
+      "ward number cannot contain spaces",
+    );
+  });
+
+  it("accepts a district number, including a lettered one", () => {
+    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:3`)).toBeNull();
+    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:3a`)).toBeNull();
+  });
+
+  // At-large is the bare base — no district segment to have a value.
+  it("has no opinion about an at-large division", () => {
+    expect(valueError(DIVISION_FIELD, BASE)).toBeNull();
   });
 });
 

@@ -1,3 +1,9 @@
+import {
+  DIVISION_COUNCIL_DISTRICT,
+  DIVISION_WARD,
+  PLACE_LABEL,
+} from "./edit-people/person-edit-utils.ts";
+
 export const divisionOcdidToFriendly = (division_ocdid) => {
   if (!division_ocdid) return "";
 
@@ -14,11 +20,11 @@ export const divisionOcdidToFriendly = (division_ocdid) => {
   }
 
   switch (label) {
-    case "council_district":
+    case DIVISION_COUNCIL_DISTRICT:
       return `[D${value}]`;
-    case "ward":
+    case DIVISION_WARD:
       return `[W${value}]`;
-    case "place":
+    case PLACE_LABEL:
       return "";
     default:
       return `${label} ${value}`

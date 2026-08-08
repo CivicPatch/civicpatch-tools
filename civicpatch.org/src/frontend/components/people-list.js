@@ -2,6 +2,10 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import "./basic/table/table.js";
 import "./person-image.js";
+import {
+  DIVISION_COUNCIL_DISTRICT,
+  DIVISION_WARD,
+} from "./edit-people/person-edit-utils.ts";
 
 function PeopleList({ local = [], jurisdictionSelected = false }) {
   const people = local;
@@ -14,8 +18,8 @@ function PeopleList({ local = [], jurisdictionSelected = false }) {
   const getSubdivisionLabel = (person) => {
     const divisionOcdid = person.office?.division_ocdid || "";
     for (const part of divisionOcdid.split("/")) {
-      if (part.startsWith("council_district:")) return `District ${part.split(":")[1]}`;
-      if (part.startsWith("ward:")) return `Ward ${part.split(":")[1]}`;
+      if (part.startsWith(`${DIVISION_COUNCIL_DISTRICT}:`)) return `District ${part.split(":")[1]}`;
+      if (part.startsWith(`${DIVISION_WARD}:`)) return `Ward ${part.split(":")[1]}`;
     }
   };
 
