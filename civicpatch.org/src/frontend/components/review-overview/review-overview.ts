@@ -8,8 +8,8 @@ import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
 import "./review-overview.css";
-import { renderPersonRow } from "../review/person-row.js";
-import { ensureUrl, withDisplayImage } from "../review/field-controls.js";
+import { renderPersonRow } from "../people/person-row.js";
+import { ensureUrl, withDisplayImage } from "../fields/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
@@ -19,9 +19,9 @@ import {
   personOf,
   PersonStatus,
   STATUS_LABEL,
-  type ReviewCard,
-} from "../review/review-cards.js";
-import { type SurvivingField } from "../review/field-model.js";
+  type PersonCard,
+} from "../people/person-cards.js";
+import { type SurvivingField } from "../fields/field-model.js";
 import {
   ATTENTION_COPY,
   attentionOf,
@@ -35,7 +35,7 @@ import {
 } from "./overview-model.js";
 
 interface ReviewOverviewProps {
-  cards: ReviewCard[];
+  cards: PersonCard[];
   isReadOnly: boolean;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
@@ -43,7 +43,7 @@ interface ReviewOverviewProps {
 
 // Everything the row says, in one string: the identity area is a single button and
 // a screen reader gets its label rather than its parts.
-function rowLabel(card: ReviewCard): string {
+function rowLabel(card: PersonCard): string {
   const parts = [
     personOf(card)?.name || "unnamed",
     STATUS_LABEL[card.status] ?? card.status,
@@ -58,7 +58,7 @@ function rowLabel(card: ReviewCard): string {
 // opening the person is the point of putting them here. They sit above the card's
 // hit area, so the card does not open beneath them — which is why the raised area
 // is exactly the tags and nothing around them.
-function renderSources(card: ReviewCard, sources: SourceMap) {
+function renderSources(card: PersonCard, sources: SourceMap) {
   const urls = (card.newRecord?.source_urls ?? []).filter(Boolean);
   return urls.map((url: string) => {
     const entry = sources.get(url);
@@ -73,7 +73,7 @@ function renderSources(card: ReviewCard, sources: SourceMap) {
   });
 }
 
-function renderAttention(card: ReviewCard) {
+function renderAttention(card: PersonCard) {
   const attention = attentionOf(card);
   if (!attention) return nothing;
   const { icon, label } = ATTENTION_COPY[attention];
@@ -82,7 +82,7 @@ function renderAttention(card: ReviewCard) {
   </span>`;
 }
 
-function renderFields(card: ReviewCard, props: ReviewOverviewProps) {
+function renderFields(card: PersonCard, props: ReviewOverviewProps) {
   // A departing person shows no field list: with no new-side record every field
   // reads cleared, so the list would imply nine things to review on one decision.
   if (DEPARTING.has(card.status)) return nothing;
@@ -106,7 +106,7 @@ function renderFields(card: ReviewCard, props: ReviewOverviewProps) {
 }
 
 function renderRow(
-  card: ReviewCard,
+  card: PersonCard,
   props: ReviewOverviewProps,
   sources: SourceMap,
 ) {
@@ -134,7 +134,7 @@ function renderRow(
   });
 }
 
-function renderFold(card: ReviewCard, props: ReviewOverviewProps) {
+function renderFold(card: PersonCard, props: ReviewOverviewProps) {
   const record = personOf(card);
   return html`
     <span class="review-fold">

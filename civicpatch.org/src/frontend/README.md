@@ -79,7 +79,9 @@ thing — this is the map:
 
 | directory | what it is |
 |---|---|
-| `components/review/` | **The shared model.** `review-cards.ts` (one card per person), `field-model.ts` (`FIELD_SCHEMA`, the collapse rule), `field-controls.ts`, `merge-model.ts`. Pure. Every view below reads from it. |
+| `components/fields/` | **What a field is.** `field-schema.ts` (`FIELD_SCHEMA`, predicates, `diffValue`), `field-validation.ts` (is a value publishable), `field-model.ts` (how a field compares + the collapse rule), `field-controls.ts` (the input for one field). Pure. The bottom of the stack — it knows nothing about people. |
+| `components/people/` | **A person, composed of fields.** `person-cards.ts` (`PersonCard` — one person's before/after, what moved, what needs attention), `person-row.ts` (a person, compactly). Shared by the review flow *and* the jurisdiction page. |
+| `components/review/` | **Reconciling a scrape proposal** — and only that. `merge-model.ts`, `merge-picker.ts`, `person-face.ts`, `issue-checks.ts`, `review-modal.ts`. Depends on `people/` and `fields/`, never the reverse. |
 | `components/review-overview/` | **Overview tab** — triage a whole card at a glance. One list in seat order; untouched people fold to a compact row. |
 | `components/person-editor/` | **Detail tab** — the editor. `person-editor-list` → `person-editor` → `editor-field`, one field per row as `label │ control │ was … Restore`. Also mounted by the review modal and the jurisdiction page. |
 | `components/review-preview/` | **Preview tab** — the published result, *not* a diff. Deliberately carries no diff vocabulary: no state colours, no strikethrough, no attention icons. |

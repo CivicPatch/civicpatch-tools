@@ -4,8 +4,8 @@
 // encodes a decision from the spec rather than a rendering detail.
 
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { PersonStatus, type ReviewCard } from "../review/review-cards.js";
-import { isContextField, type SurvivingField } from "../review/field-model.js";
+import { PersonStatus, type PersonCard } from "../people/person-cards.js";
+import { isContextField, type SurvivingField } from "../fields/field-model.js";
 
 // Who they are in the government, then how to reach them, then the rest. Schema
 // order buries both behind Photo and Name.
@@ -60,7 +60,7 @@ export function byRank(a: SurvivingField, b: SurvivingField): number {
 
 // Attention is its own axis: an error blocks publishing whichever field it sits on,
 // and outranks an issue. Derived, never stored.
-export function attentionOf(card: ReviewCard): "error" | "issue" | null {
+export function attentionOf(card: PersonCard): "error" | "issue" | null {
   if (card.surviving.some((field) => field.error)) return "error";
   if (card.surviving.some((field) => field.reason === "issue")) return "issue";
   return null;
@@ -69,7 +69,7 @@ export function attentionOf(card: ReviewCard): "error" | "issue" | null {
 // The list the card actually shows: context fields render as numbered links, and
 // the rest are ranked. Opening the card must focus the field a reviewer sees
 // first, so both come from here.
-export function visibleFields(card: ReviewCard): SurvivingField[] {
+export function visibleFields(card: PersonCard): SurvivingField[] {
   return card.surviving
     .filter((field) => !isContextField(field.field))
     .sort(byRank);
@@ -84,7 +84,7 @@ export type SourceMap = Map<string, { number: number; colorClass: string }>;
 
 // One map for the whole review card, so a url keeps its number and colour on every
 // person who cites it.
-export function sourceMapFor(cards: ReviewCard[]): SourceMap {
+export function sourceMapFor(cards: PersonCard[]): SourceMap {
   const seen: { url: string }[] = [];
   const known = new Set<string>();
   for (const card of cards) {
@@ -100,12 +100,12 @@ export function sourceMapFor(cards: ReviewCard[]): SourceMap {
 
 export interface Run {
   folded: boolean;
-  cards: ReviewCard[];
+  cards: PersonCard[];
 }
 
 // Consecutive untouched people share one strip, which is what keeps seat order: the
 // strip sits exactly where those seats fall between the cards.
-export function runsOf(cards: ReviewCard[]): Run[] {
+export function runsOf(cards: PersonCard[]): Run[] {
   return cards.reduce<Run[]>((runs, card) => {
     const folded = card.status === PersonStatus.UNCHANGED;
     const last = runs[runs.length - 1];

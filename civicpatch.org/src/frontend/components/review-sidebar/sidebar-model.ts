@@ -1,5 +1,5 @@
 import { isChecked, type IssueChecks } from "../review/issue-checks.js";
-import { type Issue } from "../review/field-model.js";
+import { type Issue } from "../fields/field-model.js";
 
 // The checklist's pure rules — the decisions that can be wrong, kept where
 // vitest can reach them. It runs in a node environment, so anything asserting on

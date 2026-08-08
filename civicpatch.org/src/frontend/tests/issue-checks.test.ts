@@ -7,7 +7,7 @@ import {
   resolvedFieldKeys,
   unresolvedIssues,
 } from "../components/review/issue-checks.js";
-import { type Issue } from "../components/review/field-model.js";
+import { type Issue } from "../components/fields/field-model.js";
 
 const issue = (over: Partial<Issue> = {}): Issue => ({
   code: "extra_official",

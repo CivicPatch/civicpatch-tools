@@ -3,7 +3,7 @@ import "../people-by-source/people-by-source.js";
 import { html } from "lit-html";
 import { component, useEffect } from "haunted";
 import { isChecked, type IssueChecks } from "../review/issue-checks.js";
-import { type Issue } from "../review/field-model.js";
+import { type Issue } from "../fields/field-model.js";
 import { checkedCount } from "./sidebar-model.js";
 import {
   hasPriorScrape,

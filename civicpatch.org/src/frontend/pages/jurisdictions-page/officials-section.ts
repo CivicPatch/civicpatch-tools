@@ -6,18 +6,18 @@
 
 import { html, nothing } from "lit-html";
 import "../../components/person-image.js";
-import "../../components/review/person-row.css";
-import { renderPersonRow } from "../../components/review/person-row.js";
+import "../../components/people/person-row.css";
+import { renderPersonRow } from "../../components/people/person-row.js";
 import {
   renderValues,
   sourceMapFor,
   type SourceMap,
 } from "../../components/review-preview/preview-values.js";
 import { divisionOcdidToFriendly } from "../../components/ocdid-utils.js";
-import { type ReviewCard } from "../../components/review/review-cards.js";
+import { type PersonCard } from "../../components/people/person-cards.js";
 
 export interface OfficialsCardsProps {
-  cards: ReviewCard[];
+  cards: PersonCard[];
   isLoading: boolean;
   blockedReason: string | null;
   actions?: unknown;
@@ -25,7 +25,7 @@ export interface OfficialsCardsProps {
 }
 
 function renderCard(
-  card: ReviewCard,
+  card: PersonCard,
   sources: SourceMap,
   onOpenPerson: ((personId: string) => void) | null,
 ) {

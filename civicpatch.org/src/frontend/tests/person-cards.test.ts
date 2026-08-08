@@ -1,14 +1,14 @@
 import { describe, it, expect } from "vitest";
 import {
-  buildReviewCards,
+  buildPersonCards,
   cardFields,
   needsReview,
   publishSet,
   blockingErrors,
   bySeat,
   PersonStatus,
-} from "../components/review/review-cards.js";
-import { type Issue } from "../components/review/field-model.js";
+} from "../components/people/person-cards.js";
+import { type Issue } from "../components/fields/field-model.js";
 
 const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 
@@ -26,8 +26,8 @@ const person = (id: string, over: Record<string, unknown> = {}) => ({
   ...over,
 });
 
-const build = (over: Partial<Parameters<typeof buildReviewCards>[0]> = {}) =>
-  buildReviewCards({
+const build = (over: Partial<Parameters<typeof buildPersonCards>[0]> = {}) =>
+  buildPersonCards({
     existing: [],
     currentPeople: [],
     removedIds: new Set(),
@@ -39,7 +39,7 @@ const build = (over: Partial<Parameters<typeof buildReviewCards>[0]> = {}) =>
 const statuses = (cards: { personId: string; status: string }[]) =>
   cards.map((c) => [c.personId, c.status]);
 
-describe("buildReviewCards — status", () => {
+describe("buildPersonCards — status", () => {
   it("classifies changed, added, removed and unchanged", () => {
     const cards = build({
       existing: [person("a"), person("b"), person("d")],
@@ -95,7 +95,7 @@ describe("buildReviewCards — status", () => {
   });
 });
 
-describe("buildReviewCards — records", () => {
+describe("buildPersonCards — records", () => {
   it("gives a scrape-dropped person no new record, so their fields read as cleared", () => {
     const cards = build({ existing: [person("a")], currentPeople: [] });
     expect(cards[0].newRecord).toBeNull();
@@ -122,7 +122,7 @@ describe("buildReviewCards — records", () => {
   });
 });
 
-describe("buildReviewCards — order", () => {
+describe("buildPersonCards — order", () => {
   it("keeps each card in its currentPeople slot, so editing never re-sorts", () => {
     const cards = build({
       existing: [person("a"), person("b")],
@@ -140,7 +140,7 @@ describe("buildReviewCards — order", () => {
   });
 });
 
-describe("buildReviewCards — surviving fields and issues", () => {
+describe("buildPersonCards — surviving fields and issues", () => {
   it("collapses an unchanged person to nothing", () => {
     const cards = build({ existing: [person("a")], currentPeople: [person("a")] });
     // source_urls is always visible, so an unchanged person collapses to it alone.

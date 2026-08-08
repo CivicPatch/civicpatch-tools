@@ -8,11 +8,11 @@
 import { html } from "lit-html";
 import "./person-face.css";
 import "../person-image.js";
-import { personOf, type ReviewCard } from "./review-cards.js";
-import { withDisplayImage } from "./field-controls.js";
+import { personOf, type PersonCard } from "../people/person-cards.js";
+import { withDisplayImage } from "../fields/field-controls.js";
 
 export function renderPersonFace(
-  card: ReviewCard,
+  card: PersonCard,
   onPick: (personId: string) => void,
   size = "1.75rem",
 ) {

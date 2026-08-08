@@ -23,7 +23,7 @@ import {
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { blockingErrors, buildReviewCards, cardFields, duplicateIdsFor, needsReview } from "../../components/review/review-cards.js";
+import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 
@@ -107,7 +107,7 @@ function ReviewSession(host: ReviewSessionHost) {
   // already up would be worse than reopening it.
   const [checklistOpen, setChecklistOpen] = useState(false);
 
-  const cards = buildReviewCards({
+  const cards = buildPersonCards({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
     removedIds,

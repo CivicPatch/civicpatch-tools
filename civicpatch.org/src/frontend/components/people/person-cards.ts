@@ -11,7 +11,7 @@ import {
   type DiffRecord,
   type Issue,
   type SurvivingField,
-} from "./field-model.js";
+} from "../fields/field-model.js";
 import {
   parseDivision,
   DIVISION_AT_LARGE,
@@ -47,7 +47,7 @@ export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DEL
 
 // "Council President · Ward 9" — shared by Overview's tiles and the modal's list.
 export function cardSubtitle(
-  card: ReviewCard,
+  card: PersonCard,
   toFriendlyDivision: (ocdid: string) => string,
 ): string {
   const record = personOf(card);
@@ -57,14 +57,14 @@ export function cardSubtitle(
 }
 
 // The new side is live; someone the scrape didn't find has only the old side.
-export const personOf = (card: ReviewCard) => card.newRecord ?? card.oldRecord;
+export const personOf = (card: PersonCard) => card.newRecord ?? card.oldRecord;
 
 export interface CardsResult {
-  cards: ReviewCard[];
+  cards: PersonCard[];
   duplicateIds: string[];
 }
 
-export interface ReviewCard {
+export interface PersonCard {
   personId: string;
   status: PersonStatusKey;
   oldRecord: DiffRecord;
@@ -95,13 +95,13 @@ function statusFor(
   return type as PersonStatusKey;
 }
 
-export function buildReviewCards({
+export function buildPersonCards({
   existing,
   currentPeople,
   removedIds,
   restoredIds,
   issues,
-}: BuildCardsInput): ReviewCard[] {
+}: BuildCardsInput): PersonCard[] {
   const olds = Array.isArray(existing) ? existing : [];
   const news = Array.isArray(currentPeople) ? currentPeople : [];
   const issuesByPersonId = indexIssuesByPersonId(issues);
@@ -156,7 +156,7 @@ export function duplicateIdsFor({
 }
 
 // The shape useFrozenFields folds.
-export function cardFields(cards: ReviewCard[]) {
+export function cardFields(cards: PersonCard[]) {
   return cards.map(({ personId, surviving }) => ({ personId, surviving }));
 }
 
@@ -164,7 +164,7 @@ export function cardFields(cards: ReviewCard[]) {
 
 // Deletion counts deliberately: otherwise someone marked for removal with nothing
 // else changed would hide in the faded group.
-export function needsReview(card: ReviewCard): boolean {
+export function needsReview(card: PersonCard): boolean {
   return (
     // Context fields are always visible, so counting them would put everyone in
     // To review. See isContextField.
@@ -178,7 +178,7 @@ export function needsReview(card: ReviewCard): boolean {
 // ── The publish set, and what blocks it (§7, §9) ─────────────────────────────
 
 // What publishing sends. Mirrors buildPeoplePatch's filter, which is the contract.
-export function publishSet(cards: ReviewCard[]): ReviewCard[] {
+export function publishSet(cards: PersonCard[]): PersonCard[] {
   return cards.filter(
     (card) => card.newRecord != null && card.status !== PersonStatus.DELETED,
   );
@@ -193,7 +193,7 @@ export interface BlockingError {
 
 // Scans the schema, not the screen: a collapsed field can still block publishing.
 // Publish set only — an empty required field on someone being dropped is moot.
-export function blockingErrors(cards: ReviewCard[]): BlockingError[] {
+export function blockingErrors(cards: PersonCard[]): BlockingError[] {
   const errors: BlockingError[] = [];
   for (const card of publishSet(cards)) {
     for (const field of FIELD_SCHEMA) {
@@ -211,8 +211,8 @@ export function blockingErrors(cards: ReviewCard[]): BlockingError[] {
 }
 
 // Seat order, at-large first — how a published roster reads.
-export function bySeat(cards: ReviewCard[], jurisdictionOcdid: string | null | undefined) {
-  const seat = (card: ReviewCard) => {
+export function bySeat(cards: PersonCard[], jurisdictionOcdid: string | null | undefined) {
+  const seat = (card: PersonCard) => {
     const division = parseDivision(card.newRecord?.office?.division_ocdid, jurisdictionOcdid);
     if (division.type === DIVISION_AT_LARGE) return -1;
     const value = Number.parseInt(division.value, 10);
@@ -274,7 +274,7 @@ export function foldRemovals(
 
 // Declared in field-model.ts (the collapse rule reads it); re-exported here so
 // consumers have one import site.
-export { type Issue } from "./field-model.js";
+export { type Issue } from "../fields/field-model.js";
 
 export function indexIssuesByPersonId(issues: Issue[]): Map<string, Issue[]> {
   const byId = new Map<string, Issue[]>();

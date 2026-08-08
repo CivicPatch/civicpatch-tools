@@ -20,7 +20,7 @@ import {
 } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
-import { blockingErrors, buildReviewCards, type ReviewCard } from "../../components/review/review-cards.js";
+import { blockingErrors, buildPersonCards, type PersonCard } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderOfficialsCards } from "./officials-section.js";
@@ -91,7 +91,7 @@ function OfficialsEditor({
     assignPeople(published);
   }, [people]);
 
-  const cards: ReviewCard[] = buildReviewCards({
+  const cards: PersonCard[] = buildPersonCards({
     existing: published,
     currentPeople: currentPeople ?? [],
     removedIds,
@@ -135,7 +135,7 @@ function OfficialsEditor({
 
   // No scrape diff here, so nothing is frozen and there is no merge picker: both
   // exist to reconcile a proposal against the published record.
-  const editorFor = (card: ReviewCard) =>
+  const editorFor = (card: PersonCard) =>
     personEditorPropsFor(card, {
       frozen: EMPTY_FROZEN,
       dirtyIds,

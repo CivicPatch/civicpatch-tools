@@ -6,8 +6,8 @@
 // reproduce the other's rules.
 
 import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
-import { type Save } from "../review/field-controls.js";
-import { PersonStatus, type ReviewCard } from "../review/review-cards.js";
+import { type Save } from "../fields/field-controls.js";
+import { PersonStatus, type PersonCard } from "../people/person-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { type PersonEditorProps } from "./person-editor.js";
 
@@ -28,14 +28,14 @@ export interface EditorContext {
   onResetPerson: (id: string) => void;
   // Step 1 of a merge, in place on the editor: which person's strip is open, and
   // what to do when one of its candidates is picked.
-  cards: ReviewCard[];
+  cards: PersonCard[];
   mergeOpenId: string | null;
   onToggleMerge: (personId: string) => void;
   onPickPartner: (anchorId: string, partnerId: string) => void;
 }
 
 
-export function personEditorPropsFor(card: ReviewCard, ctx: EditorContext): PersonEditorProps {
+export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): PersonEditorProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
   return {
     status: card.status,

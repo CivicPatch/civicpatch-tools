@@ -12,8 +12,8 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-row.css";
-import { withDisplayImage } from "./field-controls.js";
-import { type DiffRecord } from "./field-model.js";
+import { withDisplayImage } from "../fields/field-controls.js";
+import { type DiffRecord } from "../fields/field-model.js";
 
 export interface PersonRowProps {
   record: DiffRecord;

@@ -5,8 +5,8 @@
 // scanning twenty people is actually looking for, so it replaces the label in the
 // state header rather than sitting beside it.
 
-import { isContextField, type Issue, type SurvivingField } from "../review/field-model.js";
-import { PersonStatus, type PersonStatusKey } from "../review/review-cards.js";
+import { isContextField, type Issue, type SurvivingField } from "../fields/field-model.js";
+import { PersonStatus, type PersonStatusKey } from "../people/person-cards.js";
 
 export interface EditorSummaryInput {
   status: PersonStatusKey;

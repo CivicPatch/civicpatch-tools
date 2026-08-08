@@ -4,7 +4,7 @@
 // derive their visible sets separately — so a field the editor is not showing
 // falls back to the first row rather than focusing nothing.
 
-import { type FieldSpec } from "../review/field-model.js";
+import { type FieldSpec } from "../fields/field-model.js";
 
 // Takes the key alone, not the whole FieldFocus: the ref that comes with it is
 // the caller's business, not this rule's.
