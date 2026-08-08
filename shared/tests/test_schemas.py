@@ -1,7 +1,8 @@
 import pytest
 from pydantic import ValidationError
 
-from shared.schemas import Issue, IssueCode, Official
+from shared.schemas import Issue, IssueCode, JurisdictionLevel, Official
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
 def make_official(**overrides):
@@ -82,3 +83,40 @@ class TestIssue:
     def test_rejects_unknown_code(self):
         with pytest.raises(ValidationError):
             Issue(code="not_a_real_code", message="x")
+
+
+class TestJurisdictionLevel:
+    """JurisdictionId.level — which data_source/<state>/<level>/ slice an ocdid belongs to.
+
+    Derived from county/place rather than stored, so it cannot drift from the parts it
+    is computed from.
+    """
+
+    def test_place_under_state_is_local(self):
+        parsed = parse_jurisdiction_ocdid(
+            "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+        )
+        assert parsed.level is JurisdictionLevel.LOCAL
+
+    def test_place_under_county_is_still_local(self):
+        # The county segment locates the place; it does not make it a county.
+        parsed = parse_jurisdiction_ocdid(
+            "ocd-jurisdiction/country:us/state:mi/county:calhoun/place:albion/government"
+        )
+        assert parsed.level is JurisdictionLevel.LOCAL
+
+    def test_county_without_a_place_is_counties(self):
+        parsed = parse_jurisdiction_ocdid(
+            "ocd-jurisdiction/country:us/state:wa/county:king/government"
+        )
+        assert parsed.level is JurisdictionLevel.COUNTIES
+
+    def test_state_only_is_state(self):
+        parsed = parse_jurisdiction_ocdid(
+            "ocd-jurisdiction/country:us/state:wa/government"
+        )
+        assert parsed.level is JurisdictionLevel.STATE
+
+    def test_level_is_the_open_data_directory_name(self):
+        # Interpolated straight into a repo path, so the string value is the contract.
+        assert f"{JurisdictionLevel.COUNTIES}" == "counties"

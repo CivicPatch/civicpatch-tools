@@ -5,6 +5,11 @@ import math
 from typing import List
 
 import shared.utils.id_utils
+from core.jurisdiction_search import (
+    build_parent_ocdids,
+    build_search_text,
+    state_jurisdiction_ocdid,
+)
 from database.database import get_pool, to_iso
 from database.freshness import FRESH_SINCE_SQL
 from psycopg import sql
@@ -13,6 +18,7 @@ from schemas.common import (
     PeoplePipelineRunHistory,
     StateJurisdictionSets,
 )
+from schemas.jurisdictions import JurisdictionSearchResult
 from shared.schemas import Person
 from shared.utils.statuses import RequestType
 
@@ -20,11 +26,178 @@ logger = logging.getLogger(__name__)
 
 
 def jurisdiction_rows(
-    entries: list[dict[str, str]], state: str, level: str, updated_at
+    entries: list[dict[str, str]],
+    state: str,
+    level: str,
+    updated_at,
+    state_name: str | None = None,
 ):
     return [
-        (entry["id"], state, level, json.dumps(entry), updated_at) for entry in entries
+        (
+            entry["id"],
+            state,
+            level,
+            json.dumps(entry),
+            updated_at,
+            build_search_text(entry, state, state_name),
+            build_parent_ocdids(entry, state, level),
+        )
+        for entry in entries
     ]
+
+
+# Tier 1 — exact token match with prefixes, via the FTS index. The two-argument
+# to_tsvector('simple', …) must match the index expression exactly; the one-argument form
+# resolves against a GUC, misses the index, and silently sequential-scans.
+_SEARCH_MATCH_CLAUSE = """
+    FROM jurisdictions j
+    WHERE to_tsvector('simple', j.search_text) @@ to_tsquery('simple', %s)
+      AND j.status = 'current'
+      AND j.level = ANY(%s)
+"""
+
+# Tier 2 — trigram fallback for typos, one indexed condition per token, ANDed.
+# Operand order is load-bearing: `a %> b` is word_similarity(b, a), so the indexed column
+# must be on the LEFT. Reversed, it plans a sequential scan and returns nothing.
+def _fuzzy_match_clause(token_count: int) -> sql.Composed:
+    # Composed via psycopg.sql so only the *number* of conditions varies; every token is
+    # still bound as a parameter, and nothing user-supplied reaches the SQL text.
+    conditions = sql.SQL(" AND ").join(
+        [sql.SQL("j.search_text %%> %s")] * token_count
+    )
+    return sql.SQL(
+        """
+        FROM jurisdictions j
+        WHERE {conditions}
+          AND j.status = 'current'
+          AND j.level = ANY(%s)
+        """
+    ).format(conditions=conditions)
+
+_SEARCH_SELECT_LIST = """
+    SELECT
+        j.jurisdiction_ocdid,
+        j.level,
+        j.data->>'name',
+        j.data->>'display_name',
+        (j.data->>'population')::bigint,
+        -- Names resolved here rather than stored, so a renamed parent is correct
+        -- immediately. Which parents, and their order, was settled at sync time.
+        (SELECT array_agg(parent_row.data->>'name' ORDER BY parent.ord)
+           FROM unnest(j.parent_ocdids) WITH ORDINALITY AS parent(ocdid, ord)
+           JOIN jurisdictions parent_row
+             ON parent_row.jurisdiction_ocdid = parent.ocdid)
+"""
+
+# jurisdiction_ocdid breaks ties so paging is stable: without a total order a row can
+# appear on two pages or none.
+_SEARCH_ORDER = """
+    ORDER BY (j.data->>'population')::bigint DESC NULLS LAST, j.jurisdiction_ocdid
+    LIMIT %s OFFSET %s;
+"""
+
+# Counted separately rather than with count(*) OVER (): a window count only rides back
+# attached to rows, so a page past the end would report a total of 0.
+_SEARCH_COUNT_QUERY = f"SELECT count(*) {_SEARCH_MATCH_CLAUSE};"
+_SEARCH_QUERY = f"{_SEARCH_SELECT_LIST}{_SEARCH_MATCH_CLAUSE}{_SEARCH_ORDER}"
+
+
+def _fuzzy_count_query(token_count: int) -> sql.Composed:
+    return sql.SQL("SELECT count(*) {}").format(_fuzzy_match_clause(token_count))
+
+
+def _fuzzy_page_query(token_count: int) -> sql.Composed:
+    # Ordered by population like tier 1, not by similarity: every hit already cleared the
+    # same threshold on every token, so there is no meaningful gradient left between them,
+    # and a stable total order is what keeps paging coherent.
+    return sql.SQL("{select}{match}{order}").format(
+        select=sql.SQL(_SEARCH_SELECT_LIST),
+        match=_fuzzy_match_clause(token_count),
+        order=sql.SQL(_SEARCH_ORDER),
+    )
+
+
+def _search_result(row) -> JurisdictionSearchResult:
+    return JurisdictionSearchResult(
+        jurisdiction_ocdid=row[0],
+        level=row[1],
+        name=row[2],
+        display_name=row[3],
+        population=row[4],
+        parent_names=row[5] or [],
+    )
+
+
+async def search_jurisdictions_by_text(
+    tsquery: str, levels: list[str], limit: int, skip: int = 0
+) -> tuple[int, list[JurisdictionSearchResult]]:
+    # levels must be a list, not any Sequence: psycopg adapts only list to a PG array —
+    # a tuple becomes a composite ("malformed array literal") and a set cannot adapt.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(_SEARCH_COUNT_QUERY, (tsquery, levels))
+        count_row = await cur.fetchone()
+        total_items = count_row[0] if count_row else 0
+
+        await cur.execute(_SEARCH_QUERY, (tsquery, levels, limit, skip))
+        results = await cur.fetchall()
+
+    return total_items, [_search_result(row) for row in results]
+
+
+async def search_jurisdictions_fuzzy(
+    tokens: list[str], levels: list[str], limit: int, skip: int = 0
+) -> tuple[int, list[JurisdictionSearchResult]]:
+    if not tokens:
+        return 0, []
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(_fuzzy_count_query(len(tokens)), (*tokens, levels))
+        count_row = await cur.fetchone()
+        total_items = count_row[0] if count_row else 0
+
+        await cur.execute(
+            _fuzzy_page_query(len(tokens)), (*tokens, levels, limit, skip)
+        )
+        results = await cur.fetchall()
+
+    return total_items, [_search_result(row) for row in results]
+
+
+async def get_states_with_names() -> list[dict[str, str]]:
+    # The level='state' rows ARE the state list — they sync from open-data like every
+    # other jurisdiction, which is what lets shared/config/states.yml go away.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT state, data->>'name'
+            FROM jurisdictions
+            WHERE level = 'state' AND status = 'current'
+            ORDER BY data->>'name';
+            """,
+        )
+        results = await cur.fetchall()
+
+    return [{"code": code, "name": name} for code, name in results if code and name]
+
+
+async def get_state_names() -> dict[str, str]:
+    # For search_text, which embeds the state's display name. Safe to read mid-sync
+    # because level_ordered_batches stores the state group first.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT state, data->>'name'
+            FROM jurisdictions
+            WHERE level = 'state' AND status = 'current';
+            """,
+        )
+        results = await cur.fetchall()
+
+    return {state: name for state, name in results if state and name}
 
 
 async def get_states() -> List[str]:
@@ -52,7 +225,8 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                     SELECT
                         j.data,
                         ST_X(ST_Centroid(g.geom)) AS lon,
-                        ST_Y(ST_Centroid(g.geom)) AS lat
+                        ST_Y(ST_Centroid(g.geom)) AS lat,
+                        j.scraped_at
                     FROM jurisdictions j
                     LEFT JOIN geo g ON j.data->>'geoid' = g.geoid
                     WHERE j.jurisdiction_ocdid = %s AND j.status = 'current'
@@ -63,17 +237,21 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 row = await cur.fetchone()
                 if not row:
                     return None
-                data, lon, lat = row[0], row[1], row[2]
+                data, lon, lat, scraped_at = row[0], row[1], row[2], row[3]
                 center = (
                     {"lat": float(lat), "lng": float(lon)}
                     if lon is not None and lat is not None
                     else None
                 )
-                return {"data": data, "geo_center": center}
+                return {
+                    "data": data,
+                    "geo_center": center,
+                    "scraped_at": to_iso(scraped_at),
+                }
             else:
                 await cur.execute(
                     """
-                    SELECT data FROM jurisdictions
+                    SELECT data, scraped_at FROM jurisdictions
                     WHERE jurisdiction_ocdid = %s AND status = 'current'
                     LIMIT 1;
                     """,
@@ -82,7 +260,9 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 row = await cur.fetchone()
                 if not row:
                     return None
-                return {"data": row[0]}
+                # scraped_at is DB metadata, not an open-data field, so it rides beside
+                # `data` rather than being folded into it.
+                return {"data": row[0], "scraped_at": to_iso(row[1])}
     except Exception:
         logger.exception("Error in get_jurisdiction")
         return None
@@ -423,13 +603,16 @@ async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
 
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
-        INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, updated_at)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO jurisdictions
+            (jurisdiction_ocdid, state, level, data, updated_at, search_text, parent_ocdids)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (jurisdiction_ocdid)
         DO UPDATE SET
             level = EXCLUDED.level,
             data = EXCLUDED.data,
             updated_at = EXCLUDED.updated_at,
+            search_text = EXCLUDED.search_text,
+            parent_ocdids = EXCLUDED.parent_ocdids,
             status = 'current'
     """
     pool = await get_pool()

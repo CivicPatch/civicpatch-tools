@@ -11,8 +11,14 @@ import environment
 import lib.github.api as github_service
 import shared.utils.id_utils
 import yaml
-from core.sync_paths import classify_path
-from core.tree_diff import TreeDiff, diff_tree
+from core.open_data.paths import (
+    SyncFileKind,
+    classify_path,
+    jurisdiction_path_parts,
+    jurisdictions_file_path,
+    level_ordered_batches,
+)
+from core.open_data.tree_diff import TreeDiff, diff_tree
 from database.synced_files import get_synced_file_shas
 
 logger = logging.getLogger(__name__)
@@ -30,11 +36,9 @@ def get_current_tree(
 
     for candidate_path, candidate_sha in tree.entries.items():
         path_type = classify_path(candidate_path)
-        if path_type is None:
-            continue
-        elif path_type == "jurisdictions":
+        if path_type is SyncFileKind.JURISDICTIONS:
             jurisdictions[candidate_path] = candidate_sha
-        elif path_type == "people":
+        elif path_type is SyncFileKind.PEOPLE:
             people[candidate_path] = candidate_sha
 
     return jurisdictions, people
@@ -48,14 +52,43 @@ def get_stored_tree(
 
     for candidate_path, candidate_sha in synced_files.items():
         path_type = classify_path(candidate_path)
-        if path_type is None:
-            continue
-        elif path_type == "jurisdictions":
+        if path_type is SyncFileKind.JURISDICTIONS:
             jurisdictions[candidate_path] = candidate_sha
-        elif path_type == "people":
+        elif path_type is SyncFileKind.PEOPLE:
             people[candidate_path] = candidate_sha
 
     return jurisdictions, people
+
+
+async def _sync_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
+    # Reading state names here is safe because level_ordered_batches runs the state group
+    # first: any state file in this same diff is already stored before the levels that
+    # embed its display name are built.
+    state_names = await jurisdictions_db.get_state_names()
+
+    rows, synced, slice_keep = [], [], {}
+    for path, content in await asyncio.gather(*[fetch(p) for p in paths]):
+        if content is None:
+            logger.warning("od_sync: no content for %s; skipping this run", path)
+            continue
+        entries = (yaml.safe_load(content) or {}).get("jurisdictions", [])
+        state, level = jurisdiction_path_parts(path)
+        rows.extend(
+            jurisdictions_db.jurisdiction_rows(
+                entries, state, level, now, state_names.get(state)
+            )
+        )
+        slice_keep[(state, level)] = [
+            e["id"] for e in entries if e.get("id")
+        ]  # the authoritative list for this (state, level) file
+        synced.append(path)
+    await jurisdictions_db.bulk_update_jurisdictions(rows)
+
+    # within-list removal: a jurisdiction no longer in a synced file's (state, level) list
+    for (state, level), keep in slice_keep.items():
+        await jurisdictions_db.deactivate_jurisdictions_not_in(state, level, keep)
+
+    return synced
 
 
 # path -> sha: list[path]
@@ -68,24 +101,9 @@ async def sync_jurisdictions(diffs: TreeDiff) -> list[str]:
             content = await github_service.get_github_file_contents(path)
         return path, content
 
-    rows, synced, slice_keep = [], [], {}
-    for path, content in await asyncio.gather(*[_fetch(p) for p in diffs.changed]):
-        if content is None:
-            logger.warning("od_sync: no content for %s; skipping this run", path)
-            continue
-        entries = (yaml.safe_load(content) or {}).get("jurisdictions", [])
-        state, level = path.split("/")[1], path.split("/")[2]
-        rows.extend(jurisdictions_db.jurisdiction_rows(entries, state, level, now))
-        slice_keep[(state, level)] = [
-            e["id"] for e in entries if e.get("id")
-        ]  # the authoritative list for this (state, level) file
-        synced.append(path)
-    await jurisdictions_db.bulk_update_jurisdictions(rows)
-
-    # within-list removal: a jurisdiction no longer in a synced file's (state, level) list
-    for (state, level), keep in slice_keep.items():
-        await jurisdictions_db.deactivate_jurisdictions_not_in(state, level, keep)
-
+    synced = []
+    for batch in level_ordered_batches(diffs.changed):
+        synced.extend(await _sync_jurisdiction_level(batch, now, _fetch))
     return synced
 
 
@@ -176,14 +194,10 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
 
 
 async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids):
-    states = {
-        shared.utils.id_utils.parse_jurisdiction_ocdid(o).state
-        for o in jurisdiction_ocdids
-    }
-    paths = [
-        os.path.join("data_source", s, "local", "jurisdictions.yml") for s in states
-    ]
-    await sync_jurisdictions(TreeDiff(changed=paths, deleted=[]))
+    # The ocdid says which level it is, so a county or state id refreshes its own file
+    # rather than the state's local list. sync_jurisdictions orders the batches.
+    paths = {jurisdictions_file_path(o) for o in jurisdiction_ocdids}
+    await sync_jurisdictions(TreeDiff(changed=sorted(paths), deleted=[]))
 
 
 async def sync_by_ocdids(jurisdiction_ocdids: list[str]):

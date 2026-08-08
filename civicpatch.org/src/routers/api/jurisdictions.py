@@ -9,20 +9,81 @@ import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_issue_resolution as pipeline_issue_resolution_service
 import services.role_config as role_config_service
 import database.jurisdictions as database
-import shared.utils.config_utils as config_utils
+import lib.cache as cache_service
 from lib.auth import require_route_access
 from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, Role, RouteCategory
+from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from schemas.jurisdictions import (
     DeleteRoleRequest,
     ExcludeRoleRequest,
     IncludeExclusionRequest,
+    JurisdictionSearchResponse,
     JurisdictionsByOcdidsRequest,
+    PaginationLinks,
     ReorderGlobalRolesRequest,
     ReorderScopeRolesRequest,
     SetGlobalRolesRequest,
     SetScopeRolesRequest,
 )
+from shared.schemas import JurisdictionLevel
+
+# Typeahead returns a short list plus the true match count; refinement narrows it rather
+# than paging. MAX caps what a caller can ask for.
+DEFAULT_SEARCH_LIMIT = 10
+MAX_SEARCH_LIMIT = 50
+
+# State rows exist to supply state names to search_text; they are never results.
+# Annotated list[str] because list is invariant — list[JurisdictionLevel] is not a
+# list[str], even though every JurisdictionLevel is one.
+SEARCHABLE_LEVELS: list[str] = [JurisdictionLevel.LOCAL, JurisdictionLevel.COUNTIES]
+
+SEARCH_PATH = "/api/v1/jurisdictions/search"
+
+# Jurisdictions change only on sync, so a short TTL is enough and no invalidation is
+# wired up: a query-keyed cache has unbounded cardinality and no single key to drop.
+# Accepted cost is up to this many seconds of staleness after a sync.
+SEARCH_CACHE_TTL_SECONDS = 60
+
+
+def _normalized_query(query: str) -> str:
+    # Same tokenizer the search itself uses, so "Seattle, WA" and "seattle  wa" share a
+    # cache entry. Used for the links too — keying on one spelling while embedding
+    # another would serve a hit whose next/prev pointed at a different search.
+    return " ".join(build_fuzzy_tokens(query))
+
+
+def _search_cache_key(query: str, limit: int, page: int) -> str:
+    return f"jurisdiction_search:{query}:{limit}:{page}"
+
+
+def _search_link(query: str, limit: int, page: int) -> str:
+    # q is carried through: a next/prev link without it would page a different search.
+    params = urllib.parse.urlencode({"q": query, "limit": limit, "page": page})
+    return f"{SEARCH_PATH}?{params}"
+
+
+def _search_links(
+    query: str, limit: int, page: int, next_skip: int, total_items: int
+) -> PaginationLinks:
+    return PaginationLinks(
+        prev=_search_link(query, limit, page - 1) if page > 1 else "",
+        next=_search_link(query, limit, page + 1) if next_skip < total_items else "",
+        **{"self": _search_link(query, limit, page)},
+    )
+
+
+def _empty_search_response(
+    query: str, limit: int, page: int
+) -> JurisdictionSearchResponse:
+    return JurisdictionSearchResponse(
+        total_items=0,
+        page=page,
+        total_pages=0,
+        limit=limit,
+        data=[],
+        links=_search_links(query, limit, page, 0, 0),
+    )
 
 
 class PatchJurisdictionDataRequest(BaseModel):
@@ -63,6 +124,7 @@ def get_router() -> APIRouter:
 
         response = {
             "data": jurisdiction_data["data"],
+            "scraped_at": jurisdiction_data.get("scraped_at"),
         }
 
         if with_geom:
@@ -82,9 +144,8 @@ def get_router() -> APIRouter:
         return {"jurisdictions": candidates}
 
     @router.get("/states")
-    async def get_jurisdiction_states_endpoint(
-    ):
-        states = config_utils.get_states()
+    async def get_jurisdiction_states_endpoint():
+        states = await database.get_states_with_names()
 
         return {"total_items": len(states), "data": states}
     
@@ -262,6 +323,56 @@ def get_router() -> APIRouter:
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
         return {"data": {"ok": True}}
+
+    @router.get("/search")
+    async def search_jurisdictions_endpoint(
+        q: str = "",
+        limit: int = Query(DEFAULT_SEARCH_LIMIT, ge=1, le=MAX_SEARCH_LIMIT),
+        page: int = Query(1, ge=1),
+    ) -> JurisdictionSearchResponse:
+        # Nationwide, unlike /{state}/search. The typeahead only ever asks for page 1 and
+        # renders "top 10 of 121", but the results are a real paged collection so other
+        # /api/v1 consumers can walk the whole set.
+        normalized = _normalized_query(q)
+        tsquery = build_tsquery(q)
+        if not tsquery:
+            return _empty_search_response(normalized, limit, page)
+
+        cache_key = _search_cache_key(normalized, limit, page)
+        cached = await cache_service.get_cached(cache_key)
+        if cached:
+            return JurisdictionSearchResponse(**cached)
+
+        skip = (page - 1) * limit
+        total_items, results = await database.search_jurisdictions_by_text(
+            tsquery, SEARCHABLE_LEVELS, limit, skip
+        )
+        # Tier 2 only when tier 1 found nothing at all, never merged in. The tiers are
+        # scored differently, so mixing them would make ranking incoherent — and because
+        # the switch keys off the total rather than this page, every page of a given
+        # query is served by the same tier.
+        if total_items == 0:
+            total_items, results = await database.search_jurisdictions_fuzzy(
+                build_fuzzy_tokens(q), SEARCHABLE_LEVELS, limit, skip
+            )
+        response = JurisdictionSearchResponse(
+            total_items=total_items,
+            page=page,
+            total_pages=(total_items + limit - 1) // limit,
+            limit=limit,
+            data=results,
+            links=_search_links(
+                normalized, limit, page, skip + len(results), total_items
+            ),
+        )
+        # by_alias so the cached dict round-trips: PaginationLinks stores the field as
+        # self_link but is populated by its "self" alias.
+        await cache_service.set_cached(
+            cache_key,
+            response.model_dump(mode="json", by_alias=True),
+            SEARCH_CACHE_TTL_SECONDS,
+        )
+        return response
 
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(

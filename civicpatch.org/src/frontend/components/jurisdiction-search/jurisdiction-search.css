@@ -1,0 +1,59 @@
+/* Search box */
+
+/* Sits in the narrow left column beside the map, so it fills its column rather than
+   sizing to content, and takes no font bump — that was sized for a full-width rail. */
+.jurisdiction-search {
+  position: relative;
+  display: block;
+}
+
+/* Result rows */
+
+.jurisdiction-search__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.jurisdiction-search__name {
+  display: block;
+  font-weight: 600;
+}
+
+/* Secondary text tracks the row's own colour. A fixed muted grey survives hover and
+   keyboard-selected — which flip the row to a dark background — and goes unreadable. */
+.jurisdiction-search__where {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: var(--text-sm);
+  color: currentColor;
+  opacity: 0.7;
+}
+
+.jurisdiction-search__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--text-sm);
+  color: currentColor;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+/* Reads `level`, a real column — never the name's last word. */
+.jurisdiction-search__level {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The custom element is inline by default; without this the block inside has nothing
+   to fill and the input collapses to content width in the flex column. */
+civ-jurisdiction-search {
+  display: block;
+}

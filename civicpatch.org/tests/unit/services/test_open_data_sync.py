@@ -11,7 +11,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import yaml
-from core.tree_diff import TreeDiff
+from core.open_data.tree_diff import TreeDiff
 from lib.github.api import RepoTree
 from services.open_data_sync import sync_all, sync_jurisdictions, sync_people
 
@@ -83,6 +83,12 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
             new_callable=AsyncMock,
             side_effect=lambda p: content,
         )
+        _patch(
+            stack,
+            "jurisdictions_db.get_state_names",
+            new_callable=AsyncMock,
+            return_value={},
+        )
         bulk = _patch(
             stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
         )
@@ -119,6 +125,12 @@ async def test_sync_jurisdictions_scopes_deactivation_per_level():
             new_callable=AsyncMock,
             side_effect=lambda p: contents[p],
         )
+        _patch(
+            stack,
+            "jurisdictions_db.get_state_names",
+            new_callable=AsyncMock,
+            return_value={},
+        )
         bulk = _patch(
             stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
         )
@@ -129,8 +141,11 @@ async def test_sync_jurisdictions_scopes_deactivation_per_level():
         )
         await sync_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
 
-    # each row carries its file's level (not a hardcoded "local")
-    levels = {row[0]: row[2] for row in bulk.await_args.args[0]}
+    # each row carries its file's level (not a hardcoded "local"). Rows arrive across one
+    # bulk call per level group, so collect from every call rather than just the last.
+    levels = {
+        row[0]: row[2] for call in bulk.await_args_list for row in call.args[0]
+    }
     assert levels == {"ocd-seattle": "local", "ocd-wa-gov": "state"}
     # one scoped deactivation per file — the state file does not touch the local slice
     calls = {(c.args[0], c.args[1]): c.args[2] for c in deact.await_args_list}
@@ -138,6 +153,51 @@ async def test_sync_jurisdictions_scopes_deactivation_per_level():
         ("wa", "local"): ["ocd-seattle"],
         ("wa", "state"): ["ocd-wa-gov"],
     }
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_sync_jurisdictions_writes_state_level_before_dependent_levels():
+    # A dependent row's search_text embeds its state's display name, read back from the
+    # stored level='state' row — so the state file must be written first, whatever order
+    # the diff tree listed the paths in.
+    contents = {
+        "data_source/wa/local/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-seattle"}]}
+        ),
+        "data_source/wa/counties/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-king"}]}
+        ),
+        "data_source/wa/state/jurisdictions.yml": yaml.dump(
+            {"jurisdictions": [{"id": "ocd-wa-gov"}]}
+        ),
+    }
+    with ExitStack() as stack:
+        _patch(
+            stack,
+            "github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            side_effect=lambda p: contents[p],
+        )
+        _patch(
+            stack,
+            "jurisdictions_db.get_state_names",
+            new_callable=AsyncMock,
+            return_value={},
+        )
+        bulk = _patch(
+            stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
+        )
+        _patch(
+            stack,
+            "jurisdictions_db.deactivate_jurisdictions_not_in",
+            new_callable=AsyncMock,
+        )
+        # local listed first — ordering must come from the level, not the input order
+        await sync_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
+
+    written_levels = [call.args[0][0][2] for call in bulk.await_args_list]
+    assert written_levels == ["state", "counties", "local"]
 
 
 # ── sync_all ─────────────────────────────────────────────────────────────────
@@ -156,6 +216,12 @@ def _patch_sync_all(stack, tree, stored, contents):
         side_effect=lambda path: contents.get(path),
     )
     _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
+    _patch(
+        stack,
+        "jurisdictions_db.get_state_names",
+        new_callable=AsyncMock,
+        return_value={},
+    )
     _patch(stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock)
     _patch(
         stack,

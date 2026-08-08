@@ -69,7 +69,9 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
             `
           : null}
 
-        <section>${content}</section>
+        <!-- tabindex so the scrolling region is keyboard-reachable: arrow keys only
+             scroll a focused element, and a bare <section> cannot take focus. -->
+        <section tabindex="0">${content}</section>
 
         ${footer
           ? html` <footer>${footer}</footer> `

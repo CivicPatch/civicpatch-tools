@@ -3,9 +3,20 @@
   width: 100%;
 }
 
+/* `.grid` was Pico's and went with it, leaving this fieldset in normal flow — the input
+   fell back to its default ~20ch width and the toggle looked oversized beside it. Flex
+   restores the intent: input fills, toggle hugs its caret. */
 .autocomplete-wrapper fieldset.grid {
+  display: flex;
   margin-bottom: 0;
   gap: 0;
+  padding: 0;
+  border: 0;
+}
+
+.autocomplete-wrapper .autocomplete-input {
+  flex: 1;
+  min-width: 0;
 }
 
 /* Focus ring on the whole input+button group, not just the input */
@@ -16,9 +27,13 @@
 }
 
 .autocomplete-input {
+  margin-bottom: 0;
+}
+
+/* Square only against the toggle; on its own the input keeps its normal corners. */
+.autocomplete-wrapper fieldset.grid:has(.autocomplete-toggle) .autocomplete-input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  margin-bottom: 0;
 }
 
 /* Suppress individual focus ring — the fieldset:focus-within handles it */
@@ -30,8 +45,8 @@
 .autocomplete-toggle {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding: 0.5rem 0.75rem;
-  min-width: 3rem;
+  padding: 0.5rem 0.6rem;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;

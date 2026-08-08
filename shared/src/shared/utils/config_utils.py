@@ -141,10 +141,6 @@ def get_keywords() -> List[str]:
     return list(role_keywords | designation_keywords | set(governance_keywords()) | set(extra_keywords))
 
 
-def get_states() -> List[dict]:
-    return _load_config_file('states.yml')
-
-
 def merge_role_configs(*configs: RoleConfig) -> RoleConfig:
     roles: Dict[str, RoleEntry] = {}
     for cfg in configs:

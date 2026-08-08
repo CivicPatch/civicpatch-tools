@@ -1,4 +1,4 @@
-.search-page {
+.home-page {
   /* width/centering comes from the shared .page-content rail on the page */
   display: flex;
   flex-direction: column;
@@ -7,14 +7,14 @@
 
 /* ── Masthead ──────────────────────────────────────────────────────────────── */
 
-.search-page hgroup {
+.home-page hgroup {
   /* No top padding: the navbar + main's row gap already separate this from the nav.
        A top pad here just stacks on those and over-pads. */
   padding-block: 0 1rem;
   border-bottom: 2px solid var(--civ-border-strong);
 }
 
-.search-page hgroup::before {
+.home-page hgroup::before {
   content: "United States";
   display: block;
   font-family: "Space Grotesk", sans-serif;
@@ -26,7 +26,7 @@
   margin-bottom: 0.3rem;
 }
 
-.search-page hgroup h1 {
+.home-page hgroup h1 {
   color: var(--civ-text);
   font-family: "Space Grotesk", sans-serif;
   font-size: var(--text-2xl);
@@ -35,7 +35,7 @@
   letter-spacing: -0.03em;
 }
 
-.search-page hgroup p {
+.home-page hgroup p {
   color: var(--civ-text-secondary);
   font-size: var(--text-md);
   margin: 0;
@@ -43,20 +43,20 @@
 
 /* ── Grid: selector left, map right ───────────────────────────────────────── */
 
-.page-grid {
+.home-page__grid {
   display: grid;
   gap: 1.25rem;
   grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
   align-items: start;
 }
 
-.select-col {
+.home-page__select-col {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-.map-col {
+.home-page__map-col {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -64,7 +64,7 @@
 
 /* ── Find representatives ─────────────────────────────────────────────────── */
 
-.find-representatives {
+.home-page__finder {
   background: var(--civ-surface);
   border: 1px solid var(--civ-border);
   border-radius: var(--pico-border-radius);
@@ -74,15 +74,33 @@
   gap: 0.75rem;
 }
 
-.find-representatives__title {
+.home-page__finder-title {
   margin: 0;
   font-weight: 700;
   color: var(--civ-text);
 }
 
+/* Searching and picking a state are alternatives, not steps — one card with a rule
+   between them says that; two stacked cards would read as a sequence. */
+.home-page__finder-or {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+}
+
+.home-page__finder-or::before,
+.home-page__finder-or::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--civ-border);
+}
+
 /* ── Browse municipalities link ───────────────────────────────────────────── */
 
-.browse-municipalities-link {
+.home-page__browse-link {
   display: block;
   align-self: stretch;
   text-align: center;
@@ -94,50 +112,18 @@
   font-size: var(--text-md);
 }
 
-/* ── State progress ────────────────────────────────────────────────────────── */
-
-.state-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.state-progress h3 {
-  margin: 0;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--civ-text-muted);
-}
-
 /* ── Below grid ────────────────────────────────────────────────────────────── */
 
-.below-grid {
+.home-page__below {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.not-scraped {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.not-scraped__heading {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--civ-text-muted);
-  margin: 0;
-}
-
 /* ── Responsive ────────────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-  .page-grid {
+  .home-page__grid {
     grid-template-columns: 1fr;
   }
 }

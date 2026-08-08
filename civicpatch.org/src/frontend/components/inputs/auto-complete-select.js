@@ -16,13 +16,25 @@ const debounce = (func, delay) => {
   };
 };
 
+// Below this, a query matches most of the corpus and the result is noise. Callers that
+// filter an already-loaded list rather than hitting an API can pass 0.
+export const DEFAULT_MIN_QUERY_LENGTH = 2;
+
 // --- Component Definition ---
-function AutocompleteSelect({ 
-  disabled, 
+function AutocompleteSelect({
+  disabled,
   optionsMetadata = {},
-  options = [], 
+  options = [],
   label = 'Search', inputValue = '',
+  placeholder = '',
   pageSize = 25,
+  minQueryLength = DEFAULT_MIN_QUERY_LENGTH,
+  // A caret says "there is a list to open". True for a picker over a pre-loaded set;
+  // false for a search, where nothing exists until you type and the button would only
+  // ever reveal an empty dropdown.
+  showToggle = true,
+  // Rows are richer than a single string for some callers, so let them render their own.
+  renderOption = (item) => item.label,
 }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -44,10 +56,13 @@ function AutocompleteSelect({
 
   const triggerParentFetch = (input, page = 1) => {
     const query = input || '';
-    this.dispatchEvent(new CustomEvent('fetch-suggestions', { 
-      detail: { query, page, pageSize }, 
-      bubbles: true, 
-      composed: true 
+    // An empty query is a legitimate "show me everything" for callers with a small
+    // fixed list; it is only a partial query that is too short to be worth a request.
+    if (query.length > 0 && query.length < minQueryLength) return;
+    this.dispatchEvent(new CustomEvent('fetch-suggestions', {
+      detail: { query, page, pageSize },
+      bubbles: true,
+      composed: true
     }));
     setActiveIndex(-1);
     setCurrentPage(page);
@@ -74,6 +89,11 @@ function AutocompleteSelect({
       composed: true 
     }));
   };
+
+  // A real record range. The previous string read `${page}-${total_pages}`, rendering
+  // "Showing 1-6 of 126" — which looks like records 1–6 but meant page 1 of 6.
+  const firstShown = options.length ? (currentPage - 1) * pageSize + 1 : 0;
+  const lastShown = (currentPage - 1) * pageSize + options.length;
 
   const hasPrevPage = optionsMetadata?.links?.prev;
   const hasNextPage = optionsMetadata?.links?.next;
@@ -178,6 +198,7 @@ function AutocompleteSelect({
           aria-autocomplete="both" 
           aria-expanded=${isListOpen ? 'true' : 'false'}
           aria-label=${label}
+          placeholder=${placeholder}
           .value=${inputValue}
           @input=${handleInput}
           @keydown=${handleKeyDown}
@@ -185,8 +206,8 @@ function AutocompleteSelect({
           ${ref(setInputElement)}
         >
         
-        <button 
-          type="button" 
+        ${!showToggle ? '' : html`<button
+          type="button"
           class="autocomplete-toggle"
           aria-label="Toggle suggestions list" 
           aria-expanded=${isListOpen ? 'true' : 'false'}
@@ -194,7 +215,7 @@ function AutocompleteSelect({
           @click=${handleButtonClick}
         >
           <i class="fa-solid fa-caret-down autocomplete-toggle__icon${isListOpen ? ' autocomplete-toggle__icon--open' : ''}"></i>
-        </button>
+        </button>`}
       </fieldset>
       
       ${isListOpen && options.length > 0 ? html`
@@ -212,7 +233,7 @@ function AutocompleteSelect({
                 @mouseover=${() => setActiveIndex(index)}
                 class="autocomplete-option ${index === activeIndex ? 'active' : ''}"
               >
-                ${item.label}
+                ${renderOption(item)}
               </li>
             `)}
           </ul>
@@ -220,7 +241,7 @@ function AutocompleteSelect({
           ${optionsMetadata?.total_items > pageSize ? html`
             <div class="autocomplete-pagination">
               <span class="autocomplete-pagination-info">
-                Showing ${optionsMetadata?.page}-${optionsMetadata?.total_pages} of ${optionsMetadata?.total_items}
+                ${firstShown}–${lastShown} of ${optionsMetadata?.total_items}
               </span>
               <div class="autocomplete-pagination-controls">
                 <button 

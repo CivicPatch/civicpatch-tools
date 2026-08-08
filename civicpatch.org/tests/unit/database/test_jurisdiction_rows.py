@@ -1,11 +1,14 @@
 """Unit tests for jurisdiction_rows — shapes parsed jurisdiction entries (the list under
 the `jurisdictions:` key of a jurisdictions.yml) into the rows bulk_update_jurisdictions stores:
 
-    (jurisdiction_ocdid, state, level, <entry serialized as JSON>, updated_at)
+    (jurisdiction_ocdid, state, level, <entry serialized as JSON>, updated_at, search_text)
 
 state and level come from the file's PATH (data_source/<state>/<level>/jurisdictions.yml);
 updated_at is passed in (the sync stamps now()). Both are the same for every row in a call —
 unlike people_rows, where each person carried its own jurisdiction_ocdid. Pure function.
+
+search_text is delegated to core.jurisdiction_search.build_search_text, which owns the
+format and is tested there; these tests only assert it reaches the row.
 """
 
 import json
@@ -34,7 +37,7 @@ _UPDATED_AT = "2026-06-18T00:00:00+00:00"
 def test_one_entry_returns_one_row():
     rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
     assert len(rows) == 1
-    ocdid, _state, _level, _data, updated_at = rows[0]
+    ocdid, _state, _level, _data, updated_at, _search, _parents = rows[0]
     assert ocdid == _ENTRY["id"]
     assert updated_at == _UPDATED_AT
 
@@ -42,7 +45,7 @@ def test_one_entry_returns_one_row():
 @pytest.mark.unit
 def test_state_and_level_arg_returns_in_row():
     rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
-    _ocdid, state, level, _data, _updated = rows[0]
+    _ocdid, state, level, _data, _updated, _search, _parents = rows[0]
     assert state == "tx"  # from the arg, not the entry (the entry has no state/level)
     assert level == "local"
 
@@ -64,3 +67,17 @@ def test_multiple_entries_returns_multiple_rows():
 @pytest.mark.unit
 def test_empty_entries_returns_empty_list():
     assert jurisdiction_rows([], "tx", "local", _UPDATED_AT) == []
+
+
+@pytest.mark.unit
+def test_state_name_arg_reaches_search_text():
+    rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT, "Texas")
+    assert rows[0][5] == "houston city tx texas"
+
+
+@pytest.mark.unit
+def test_search_text_is_populated_without_a_state_name():
+    # Never NULL/empty: an empty search_text matches nothing, so a row that reached the
+    # DB that way would be silently unsearchable rather than loudly broken.
+    rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
+    assert rows[0][5] == "houston city tx"
