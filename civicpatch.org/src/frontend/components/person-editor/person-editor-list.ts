@@ -12,11 +12,11 @@ import { component, useState } from "haunted";
 import "./person-editor.css";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonEditor } from "./person-editor.js";
-import { type ReviewCard } from "../review/review-cards.js";
+import { type PersonCard } from "../people/person-cards.js";
 import { personEditorPropsFor } from "./editor-props.js";
 
 interface PersonEditorListProps {
-  cards: ReviewCard[];
+  cards: PersonCard[];
   frozen: FrozenFields;
   // Expansion is per card, so it resets when the reviewer moves on. §21.4 also
   // wants it invalidated by identity-changing actions — that lands with merge.

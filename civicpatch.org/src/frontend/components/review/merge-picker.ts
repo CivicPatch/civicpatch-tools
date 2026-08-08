@@ -19,7 +19,7 @@ import {
   type MergeFieldPlan,
   type MergePlan,
 } from "./merge-model.js";
-import { personOf, type ReviewCard } from "./review-cards.js";
+import { personOf, type PersonCard } from "../people/person-cards.js";
 
 const CHOICE_LABEL: Record<string, string> = {
   [MergeChoice.KEEP]: "Keep",
@@ -28,9 +28,9 @@ const CHOICE_LABEL: Record<string, string> = {
 };
 
 interface MergePickerHost extends HTMLElement {
-  anchor: ReviewCard | null;
-  survivor: ReviewCard | null;
-  absorbed: ReviewCard | null;
+  anchor: PersonCard | null;
+  survivor: PersonCard | null;
+  absorbed: PersonCard | null;
   plan: MergePlan | null;
   onChoose: (fieldKey: string, choice: MergeChoiceKey) => void;
   // Back to the person this merge started from — never a close, because the modal

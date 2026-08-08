@@ -15,7 +15,7 @@ import {
   type FieldSpec,
   type ScalarDiffState,
   type SurvivingField,
-} from "../components/review/field-model.js";
+} from "../components/fields/field-model.js";
 
 const field = (key: string): FieldSpec => ({ key, label: key, type: "text" });
 

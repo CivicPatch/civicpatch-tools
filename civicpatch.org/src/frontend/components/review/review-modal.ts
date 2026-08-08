@@ -22,14 +22,14 @@ import {
 import "./review-modal.css";
 import "../person-editor/person-editor.css";
 import { renderPersonEditor, type PersonEditorProps } from "../person-editor/person-editor.js";
-import { cardSubtitle, personOf, STATUS_LABEL, type ReviewCard } from "./review-cards.js";
+import { cardSubtitle, personOf, STATUS_LABEL, type PersonCard } from "../people/person-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 
 export interface ReviewModalProps {
   // The set the modal was opened from, already narrowed by the caller — from
   // Overview that is the group the person was in. Stepping out of it would land
   // on someone with no visible fields, which is a dead end (§6).
-  cards: ReviewCard[];
+  cards: PersonCard[];
   openPersonId: string | null;
   focusFieldKey: string | null;
   editor: EditorFactory;
@@ -37,7 +37,7 @@ export interface ReviewModalProps {
   onClose: () => void;
   // Opens the merge picker anchored on the person in view.
   // Merge is the modal's other screen, not a second dialog. Set means "show it".
-  mergePartner?: ReviewCard | null;
+  mergePartner?: PersonCard | null;
   onMergeBack?: () => void;
   onMerge?: (
     survivorId: string,
@@ -49,7 +49,7 @@ export interface ReviewModalProps {
 // The caller already knows how to build a person editor for a card (it does so for
 // Detail), so it hands that over rather than this rebuilding it — one definition
 // of what a person's row looks like.
-export type EditorFactory = (card: ReviewCard) => PersonEditorProps;
+export type EditorFactory = (card: PersonCard) => PersonEditorProps;
 
 function ReviewModal(props: ReviewModalProps) {
   const {

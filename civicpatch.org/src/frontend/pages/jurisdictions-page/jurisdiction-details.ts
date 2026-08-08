@@ -12,9 +12,9 @@
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import "../../components/person-editor/person-editor.css";
-import "../../components/review/field-controls.css";
-import { renderScalarNewSide } from "../../components/review/field-controls.js";
-import { urlError, type FieldSpec } from "../../components/review/field-model.js";
+import "../../components/fields/field-controls.css";
+import { renderScalarNewSide } from "../../components/fields/field-controls.js";
+import { urlError, type FieldSpec } from "../../components/fields/field-model.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };

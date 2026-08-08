@@ -13,8 +13,8 @@ import {
   type DiffRecord,
   type FieldSpec,
   type PresentRecord,
-} from "./field-model.js";
-import { PersonStatus, type ReviewCard } from "./review-cards.js";
+} from "../fields/field-model.js";
+import { PersonStatus, type PersonCard } from "../people/person-cards.js";
 
 // `keep` — the survivor's value stands. `replace` — the candidate's wins.
 // `both` — union for a list, deduped join for an office name.
@@ -56,12 +56,12 @@ const ALWAYS_UNION = new Set(["other_names", "source_urls"]);
 // question, so those two states simply do not offer it.
 const DECIDED = new Set<string>([PersonStatus.DELETED, PersonStatus.RESTORED]);
 
-export function canMerge(card: ReviewCard): boolean {
+export function canMerge(card: PersonCard): boolean {
   return !DECIDED.has(card.status);
 }
 
 // Everyone else on the card who is still an open question.
-export function mergeCandidates(anchor: ReviewCard, cards: ReviewCard[]): ReviewCard[] {
+export function mergeCandidates(anchor: PersonCard, cards: PersonCard[]): PersonCard[] {
   return cards.filter((card) => card.personId !== anchor.personId && canMerge(card));
 }
 
@@ -69,19 +69,19 @@ export function mergeCandidates(anchor: ReviewCard, cards: ReviewCard[]): Review
 
 // The record a card is currently editing. A person the scrape didn't find has
 // only an old side.
-export function liveRecord(card: ReviewCard): DiffRecord {
+export function liveRecord(card: PersonCard): DiffRecord {
   return card.newRecord ?? card.oldRecord;
 }
 
 // First match wins. Scraped ids are ephemeral — resolve_people_ids mints a fresh
 // uuid4 for anything it cannot match — so a record already in the database
 // always outranks one that is not.
-export function chooseSurvivor(a: ReviewCard, b: ReviewCard): ReviewCard {
-  const inDatabase = (card: ReviewCard) => card.oldRecord != null;
+export function chooseSurvivor(a: PersonCard, b: PersonCard): PersonCard {
+  const inDatabase = (card: PersonCard) => card.oldRecord != null;
   if (inDatabase(a) !== inDatabase(b)) return inDatabase(a) ? a : b;
 
   // Both durable (or neither): prefer the one this scrape still matched.
-  const matched = (card: ReviewCard) => card.newRecord != null;
+  const matched = (card: PersonCard) => card.newRecord != null;
   if (matched(a) !== matched(b)) return matched(a) ? a : b;
 
   return a; // caller passes them in frozen order, so `a` is the earlier row
@@ -159,7 +159,7 @@ function defaultChoice(
   return isEmpty(candidateValue) ? MergeChoice.KEEP : MergeChoice.REPLACE;
 }
 
-export function planMerge(survivor: ReviewCard, candidate: ReviewCard): MergePlan {
+export function planMerge(survivor: PersonCard, candidate: PersonCard): MergePlan {
   const survivorRecord = liveRecord(survivor);
   const candidateRecord = liveRecord(candidate);
 
@@ -241,7 +241,7 @@ function foldAliases(merged: any, survivorName: unknown, candidateName: unknown)
 // Two records combined with nothing overridden — the reviewer asserting the pair
 // is one human and accepting the defaults. This is what the retired "link to
 // person" did; merge is this call with a plan the reviewer has edited.
-export function mergeCards(survivor: ReviewCard, candidate: ReviewCard): PresentRecord {
+export function mergeCards(survivor: PersonCard, candidate: PersonCard): PresentRecord {
   return applyMergePlan(planMerge(survivor, candidate), survivor, candidate);
 }
 
@@ -249,8 +249,8 @@ export function mergeCards(survivor: ReviewCard, candidate: ReviewCard): Present
 // dropped by the caller — publish reads its absence as a deletion.
 export function applyMergePlan(
   plan: MergePlan,
-  survivor: ReviewCard,
-  candidate: ReviewCard,
+  survivor: PersonCard,
+  candidate: PersonCard,
 ): PresentRecord {
   const survivorRecord = (liveRecord(survivor) ?? {}) as any;
   const candidateRecord = (liveRecord(candidate) ?? {}) as any;

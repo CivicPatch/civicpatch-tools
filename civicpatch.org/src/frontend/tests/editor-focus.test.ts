@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { focusedKey } from "../components/person-editor/editor-focus.js";
-import { type FieldSpec } from "../components/review/field-model.js";
+import { type FieldSpec } from "../components/fields/field-model.js";
 
 const FIELDS: FieldSpec[] = [
   { key: "name", label: "Name", type: "text", required: true },

@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { editorSummary, type EditorSummaryInput } from "../components/person-editor/editor-summary.js";
-import { PersonStatus } from "../components/review/review-cards.js";
+import { PersonStatus } from "../components/people/person-cards.js";
 import {
   type Issue,
   type ScalarDiffState,
   type SurvivingField,
-} from "../components/review/field-model.js";
+} from "../components/fields/field-model.js";
 
 // `diff: false` is what makes a field context — always visible, never a change.
 const field = (key: string, isContext = false) =>

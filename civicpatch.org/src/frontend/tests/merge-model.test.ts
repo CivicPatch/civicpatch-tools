@@ -10,7 +10,7 @@ import {
   mergeCards,
   MergeChoice,
 } from "../components/review/merge-model.js";
-import { PersonStatus, type ReviewCard } from "../components/review/review-cards.js";
+import { PersonStatus, type PersonCard } from "../components/people/person-cards.js";
 
 const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 
@@ -35,9 +35,9 @@ const card = (
     now?: any;
     status?: string;
   },
-): ReviewCard => ({
+): PersonCard => ({
   personId,
-  status: status as ReviewCard["status"],
+  status: status as PersonCard["status"],
   oldRecord,
   newRecord,
   surviving: [],

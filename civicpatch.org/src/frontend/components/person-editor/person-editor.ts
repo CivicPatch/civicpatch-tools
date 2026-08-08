@@ -15,9 +15,9 @@ import {
   type FieldReason,
   type Issue,
   type SurvivingField,
-} from "../review/field-model.js";
+} from "../fields/field-model.js";
 import { focusedKey } from "./editor-focus.js";
-import { withDisplayImage, type FieldFocus, type Save } from "../review/field-controls.js";
+import { withDisplayImage, type FieldFocus, type Save } from "../fields/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { renderEditorField } from "./editor-field.js";
 import {
@@ -25,8 +25,8 @@ import {
   PersonStatus,
   STATUS_LABEL,
   type PersonStatusKey,
-  type ReviewCard,
-} from "../review/review-cards.js";
+  type PersonCard,
+} from "../people/person-cards.js";
 import { renderPersonFace } from "../review/person-face.js";
 import { editorSummary } from "./editor-summary.js";
 
@@ -67,7 +67,7 @@ export interface PersonEditorProps {
   // merge with.
   // Step 1 of a merge happens in place: the button opens a strip of the other
   // people on this card, so nothing stacks on top of whatever you are already in.
-  mergeCandidates: ReviewCard[];
+  mergeCandidates: PersonCard[];
   isMergeOpen: boolean;
   onToggleMerge: () => void;
   onPickPartner: (partnerId: string) => void;

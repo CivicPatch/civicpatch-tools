@@ -5,7 +5,7 @@
 // looked at this", never "this card was vetted". That is why it can persist
 // client-side and stay available on a read-only card.
 
-import { type Issue } from "./field-model.js";
+import { type Issue } from "../fields/field-model.js";
 import { ISSUE_CHECKS_PREFIX } from "../../utils/storage-keys.js";
 
 export const issueChecksKey = (requestId: string) =>

@@ -21,7 +21,7 @@ import {
   type FieldSpec,
   type PresentRecord,
   type ScalarDiffState,
-} from "../review/field-model.js";
+} from "../fields/field-model.js";
 import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   buildFieldUpdate,
@@ -34,8 +34,8 @@ import {
   renderMultiList,
   type FocusRef,
   type Save,
-} from "../review/field-controls.js";
-import { multiValueDiff } from "../review/field-model.js";
+} from "../fields/field-controls.js";
+import { multiValueDiff } from "../fields/field-model.js";
 
 export const DASH = "—";
 

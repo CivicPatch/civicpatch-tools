@@ -4,7 +4,7 @@ import {
   checkedCount,
 } from "../components/review-sidebar/sidebar-model.js";
 import { issueKey, type IssueChecks } from "../components/review/issue-checks.js";
-import { type Issue } from "../components/review/field-model.js";
+import { type Issue } from "../components/fields/field-model.js";
 
 const issue = (code: string, message: string): Issue => ({ code, message }) as Issue;
 

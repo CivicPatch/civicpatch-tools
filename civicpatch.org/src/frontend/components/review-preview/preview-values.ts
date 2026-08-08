@@ -2,7 +2,7 @@
 //
 // Record-level, not card-level: the jurisdiction page draws the same values from
 // a plain person record with no diff card around it. Preview passes
-// `card.newRecord`; nothing here knows what a ReviewCard is.
+// `card.newRecord`; nothing here knows what a PersonCard is.
 //
 // Split out of review-preview.ts so a consumer can have the values without
 // registering the <review-preview> element.
@@ -11,13 +11,13 @@ import { html, nothing } from "lit-html";
 import "./review-preview.css";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
-import { ensureUrl } from "../review/field-controls.js";
+import { ensureUrl } from "../fields/field-controls.js";
 import {
   FIELD_SCHEMA,
   diffValue,
   type DiffRecord,
   type FieldSpec,
-} from "../review/field-model.js";
+} from "../fields/field-model.js";
 
 // Identity is already in the card head, so the field list is what remains.
 //

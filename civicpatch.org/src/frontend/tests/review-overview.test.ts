@@ -9,9 +9,9 @@ import {
 import {
   PersonStatus,
   type PersonStatusKey,
-  type ReviewCard,
-} from "../components/review/review-cards.js";
-import { FIELD_SCHEMA, type SurvivingField } from "../components/review/field-model.js";
+  type PersonCard,
+} from "../components/people/person-cards.js";
+import { FIELD_SCHEMA, type SurvivingField } from "../components/fields/field-model.js";
 
 const spec = (key: string) => {
   const found = FIELD_SCHEMA.find((field) => field.key === key);
@@ -35,7 +35,7 @@ const surviving = (
   return base.error ? { ...base, reason: "error" } : base;
 };
 
-const card = (over: Partial<ReviewCard> = {}): ReviewCard =>
+const card = (over: Partial<PersonCard> = {}): PersonCard =>
   ({
     personId: "p",
     status: PersonStatus.CHANGED,
@@ -44,7 +44,7 @@ const card = (over: Partial<ReviewCard> = {}): ReviewCard =>
     surviving: [],
     issues: [],
     ...over,
-  }) as ReviewCard;
+  }) as PersonCard;
 
 describe("byRank — what a reviewer sees first", () => {
   it("puts an error ahead of an issue, and both ahead of a plain diff", () => {

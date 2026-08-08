@@ -11,7 +11,7 @@ import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
 import "./review-preview.css";
-import { renderPersonRow } from "../review/person-row.js";
+import { renderPersonRow } from "../people/person-row.js";
 import { renderValues, sourceMapFor, type SourceMap } from "./preview-values.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
@@ -19,18 +19,18 @@ import {
   bySeat,
   publishSet,
   PersonStatus,
-  type ReviewCard,
-} from "../review/review-cards.js";
+  type PersonCard,
+} from "../people/person-cards.js";
 
 interface ReviewPreviewProps {
-  cards: ReviewCard[];
+  cards: PersonCard[];
   jurisdictionOcdid: string | null | undefined;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
 }
 
 // Not clickable: this is the published record, so the values are plain selectable
 // text you can copy field by field. Nothing here opens an editor.
-function renderCard(card: ReviewCard, sources: SourceMap) {
+function renderCard(card: PersonCard, sources: SourceMap) {
   const record = card.newRecord;
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
   const office = [record?.office?.name, division].filter(Boolean).join(" · ");

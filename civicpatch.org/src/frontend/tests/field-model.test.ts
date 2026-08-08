@@ -17,11 +17,11 @@ import {
   rowError,
   type FieldSpec,
   type Issue,
-} from "../components/review/field-model.js";
+} from "../components/fields/field-model.js";
 import {
   foldRemovals,
   indexIssuesByPersonId,
-} from "../components/review/review-cards.js";
+} from "../components/people/person-cards.js";
 
 const IMAGE_FIELD: FieldSpec = { key: "image", label: "Photo", type: "image" };
 const EMAILS_FIELD: FieldSpec = { key: "emails", label: "Email", type: "multi" };
