@@ -28,6 +28,8 @@ import {
   padDatePart,
   DIVISION_AT_LARGE,
   DIVISION_OTHER,
+  DIVISION_COUNCIL_DISTRICT,
+  DIVISION_WARD,
   type DateParts,
   type DivisionType,
 } from "../edit-people/person-edit-utils.js";
@@ -236,12 +238,14 @@ export function renderDivisionNewSide(
           At-large (no district)
         </option>
         <option
-          value="council_district"
-          .selected=${division.type === "council_district"}
+          value=${DIVISION_COUNCIL_DISTRICT}
+          .selected=${division.type === DIVISION_COUNCIL_DISTRICT}
         >
           Council District
         </option>
-        <option value="ward" .selected=${division.type === "ward"}>Ward</option>
+        <option value=${DIVISION_WARD} .selected=${division.type === DIVISION_WARD}>
+          Ward
+        </option>
       </select>
       ${atLarge || isOther
         ? ""

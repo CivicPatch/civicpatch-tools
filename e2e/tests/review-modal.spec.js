@@ -18,8 +18,11 @@ const openCardModal = async (page, name) => {
   await expect(page.locator("review-modal dialog")).toBeVisible();
 };
 
-const modalField = (page, label) =>
-  page.locator("review-modal .person-editor__field").filter({ hasText: label });
+// By accessible name, not by row: `hasText` is a case-insensitive *substring*
+// match, so filtering rows on "Name" also catches "Other names" and the input
+// lookup resolves to two.
+const modalNameInput = (page) =>
+  page.locator("review-modal").getByLabel("Name", { exact: true });
 
 // Name is unchanged on these people, so the collapse rule hides it. Reaching a
 // field that did not move is exactly what the expander is for — and expansion is
@@ -89,7 +92,7 @@ test.describe("Review modal", () => {
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
     await showAllFields(page);
-    await modalField(page, "Name").locator("input").fill("Renamed Councillor");
+    await modalNameInput(page).fill("Renamed Councillor");
 
     await page.locator("review-modal").getByText("Done").click();
     await expect(page.locator("review-modal dialog")).toHaveCount(0);
@@ -108,11 +111,11 @@ test.describe("Review modal", () => {
     // Nothing to undo yet — offered as disabled rather than as a silent no-op.
     await expect(revert).toBeDisabled();
 
-    await modalField(page, "Name").locator("input").fill("Renamed Councillor");
+    await modalNameInput(page).fill("Renamed Councillor");
     await expect(revert).toBeEnabled();
 
     await revert.click();
-    await expect(modalField(page, "Name").locator("input")).toHaveValue("Councillor 02 Scale");
+    await expect(modalNameInput(page)).toHaveValue("Councillor 02 Scale");
     await expect(revert).toBeDisabled();
   });
 
@@ -121,19 +124,19 @@ test.describe("Review modal", () => {
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
     await showAllFields(page);
-    await modalField(page, "Name").locator("input").fill("Edited First");
+    await modalNameInput(page).fill("Edited First");
 
     // Move on, edit someone else, then revert them.
     await page.locator('.review-modal__nav-btn[title*="Next"]').click();
     await showAllFields(page);
-    await modalField(page, "Name").locator("input").fill("Edited Second");
+    await modalNameInput(page).fill("Edited Second");
     await page.locator(".review-modal__revert").click();
 
     // The second person is back; the first person's edit is untouched — Revert
     // resets the person in view, not the session (§6.1).
-    await expect(modalField(page, "Name").locator("input")).toHaveValue("Councillor 05 Scale");
+    await expect(modalNameInput(page)).toHaveValue("Councillor 05 Scale");
     await page.locator('.review-modal__nav-btn[title*="Previous"]').click();
-    await expect(modalField(page, "Name").locator("input")).toHaveValue("Edited First");
+    await expect(modalNameInput(page)).toHaveValue("Edited First");
   });
 
   test("Revert restores a deletion made inside the modal, not just values", async ({
@@ -154,7 +157,7 @@ test.describe("Review modal", () => {
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
     await showAllFields(page);
-    await modalField(page, "Name").locator("input").fill("Renamed Councillor");
+    await modalNameInput(page).fill("Renamed Councillor");
     await page.locator("review-modal").getByText("Done").click();
     await expect(page.locator("review-modal dialog")).toHaveCount(0);
 
@@ -166,6 +169,6 @@ test.describe("Review modal", () => {
     await expect(page.locator(".review-modal__revert")).toBeEnabled();
 
     await page.locator(".review-modal__revert").click();
-    await expect(modalField(page, "Name").locator("input")).toHaveValue("Councillor 02 Scale");
+    await expect(modalNameInput(page)).toHaveValue("Councillor 02 Scale");
   });
 });

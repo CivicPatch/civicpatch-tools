@@ -49,6 +49,27 @@ def _field_errors(exc: ValidationError) -> list[dict]:
     ]
 
 
+def _person_errors(edit: PersonPatch, entry: dict, errors: list[dict]) -> list[dict]:
+    return [{"id": edit.id, "name": entry.get("name"), **err} for err in errors]
+
+
+# A submission rule, not a data-model one: `Official` is also built by the pipelines
+# (person_to_official), where a scrape that saw the same email twice has no user to alert
+# and must not fail. Blank keys are falsy, so two empty rows are not a duplicate.
+def _duplicate_errors(entry: dict) -> list[dict]:
+    errors = []
+    for field, values in entry.items():
+        if not isinstance(values, list):
+            continue
+        seen = set()
+        for value in values:
+            key = str(value).strip().lower()
+            if key and key in seen:
+                errors.append({"field": field, "message": f"'{value}' is listed twice"})
+            seen.add(key)
+    return errors
+
+
 def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> list[dict]:
     people = []
     failures = []
@@ -56,9 +77,14 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
         try:
             normalized = Official.model_validate(entry).model_dump()
         except ValidationError as exc:
-            failures.extend(
-                {"id": edit.id, "name": entry.get("name"), **err} for err in _field_errors(exc)
-            )
+            failures.extend(_person_errors(edit, entry, _field_errors(exc)))
+            people.append(entry)
+            continue
+        # Against the normalized entry, so two spellings of one phone number are caught
+        # after canonicalization rather than read as two numbers.
+        duplicates = _duplicate_errors(normalized)
+        if duplicates:
+            failures.extend(_person_errors(edit, entry, duplicates))
             people.append(entry)
             continue
         edited = {key: normalized[key] for key in edit.fields if key in normalized}

@@ -122,6 +122,17 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   // The Email row specifically. Councillor 13's editor also carries the
   // always-visible Source urls row, which is a multi-value field too — matching
   // every field row would count its inputs as well.
+  // Every list renders one more row than it holds — the trailing empty one is how
+  // a value is added — so counting inputs without excluding it counts a value
+  // that is not there.
+  const valueInputs = (field) =>
+    field.locator("input.field-control__input:not(.field-control__input--draft)");
+
+  // The row for a value the scrape stopped listing: shown struck through, with a
+  // Put back action instead of an input.
+  const droppedRow = (field) =>
+    field.locator(".field-control__multi-row:has(.field-control__input--cleared)");
+
   const emailField = (page) =>
     page
       .locator(".person-editor")
@@ -135,12 +146,12 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
     await openEditor(page, SCALE_REQUEST_ID);
     const field = emailField(page);
 
-    // One list, not two columns: both addresses are editable chips.
-    await expect(field.locator(".field-control__chip input")).toHaveCount(2);
-    // Provenance is a marker on the chip the scrape added; the kept one carries
+    // One list, not two columns: both addresses are editable rows.
+    await expect(valueInputs(field)).toHaveCount(2);
+    // Provenance is a marker on the row the scrape added; the kept one carries
     // none, so exactly one is marked.
     await expect(
-      field.locator('.field-control__chip[title="Found by this scrape"]'),
+      field.locator('input[title="Found by this scrape"]'),
     ).toHaveCount(1);
   });
 
@@ -155,19 +166,19 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
       .locator(".person-editor__field")
       .filter({ hasText: "Phone" });
 
-    const droppedChip = phone.locator(".field-control__chip--gone");
-    await expect(droppedChip).toHaveCount(1);
+    const dropped = droppedRow(phone);
+    await expect(dropped).toHaveCount(1);
     // Struck through, so it reads as what the scrape stopped listing.
-    await expect(droppedChip.locator("s")).toHaveCount(1);
+    await expect(dropped.locator("s")).toHaveCount(1);
     // Not an input — it is the record of what was lost, not something to edit.
-    await expect(droppedChip.locator("input")).toHaveCount(0);
+    await expect(dropped.locator("input")).toHaveCount(0);
 
-    await droppedChip.locator(".field-control__chip-back").click();
+    await dropped.locator(".field-control__action--restore").click();
 
     // Restoring moves that one value into the editable list, and nothing is
     // dropped any more — so the field stops reading as changed.
-    await expect(phone.locator(".field-control__chip--gone")).toHaveCount(0);
-    await expect(phone.locator(".field-control__chip input")).toHaveCount(1);
+    await expect(droppedRow(phone)).toHaveCount(0);
+    await expect(valueInputs(phone)).toHaveCount(1);
   });
 
   test("provenance is derived, so retyping a dropped value clears its chip", async ({
@@ -180,13 +191,13 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
       .locator(".person-editor__field")
       .filter({ hasText: "Phone" });
 
-    await expect(phone.locator(".field-control__chip--gone")).toHaveCount(1);
+    await expect(droppedRow(phone)).toHaveCount(1);
 
     // Type the dropped number back in by hand rather than clicking Put back. If
-    // provenance were stamped when a chip was made, the dropped chip would
-    // linger beside its own value.
-    await phone.locator(".field-control__add").click();
-    await phone.locator(".field-control__chip input").last().fill("(555) 020-0102");
-    await expect(phone.locator(".field-control__chip--gone")).toHaveCount(0);
+    // provenance were stamped when a row was made, the dropped row would linger
+    // beside its own value. Typing into the trailing empty row is the add — there
+    // is no button.
+    await phone.locator("input.field-control__input--draft").fill("(555) 020-0102");
+    await expect(droppedRow(phone)).toHaveCount(0);
   });
 });

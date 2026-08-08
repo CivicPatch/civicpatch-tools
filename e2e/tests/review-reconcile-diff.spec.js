@@ -118,8 +118,10 @@ test.describe("Review reconcile diff (populated)", () => {
     const termStart = fieldIn(maria, "Term start").first();
 
     await expect(termStart.locator(".field-control__date-year")).toHaveValue("2021");
-    const month = termStart.locator('select[aria-label="Month"]');
-    const day = termStart.locator('select[aria-label="Day"]');
+    // Each select is named for the field it belongs to, not the part alone — a
+    // card holds several dates, and a bare "Month" would not say whose.
+    const month = termStart.locator('select[aria-label="Term start month"]');
+    const day = termStart.locator('select[aria-label="Term start day"]');
     await expect(month).toHaveValue("");
     await expect(day).toBeDisabled();
 

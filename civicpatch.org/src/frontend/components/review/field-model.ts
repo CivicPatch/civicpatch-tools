@@ -1,69 +1,30 @@
-// What a field is, and how one compares between two records. No DOM, no I/O.
+// How one field compares between two records, and which fields survive the
+// collapse rule. No DOM, no I/O.
+//
 // Strictly per-FIELD — anything about a *set* of people lives in review-cards.ts.
+// What a field *is* lives in field-schema.ts; whether a value is publishable
+// lives in field-validation.ts. Both are re-exported here so consumers keep one
+// import site (the same reason review-cards.ts re-exports Issue).
 
-import { type Person } from "../edit-people/person-edit-utils.js";
+import {
+  FIELD_SCHEMA,
+  diffValue,
+  isContextField,
+  isMulti,
+  normalizeMultiValue,
+  normalizeScalar,
+  type DiffRecord,
+  type FieldSpec,
+  type FieldType,
+} from "./field-schema.js";
+import { fieldError } from "./field-validation.js";
 
-// Either side may be absent: no old = added, no new = the scrape didn't find them.
-export type DiffRecord = Partial<Person> | null | undefined;
-
-// Already established as present — the row assembly guards before reaching here.
-export type PresentRecord = Partial<Person>;
-
-export type FieldType = "text" | "date" | "multi" | "image";
-
-export interface FieldSpec {
-  key: string; // dotted path into a person record, e.g. "office.name"
-  label: string;
-  type: FieldType;
-  required?: boolean; // must be non-empty; flagged when empty
-  diff?: boolean; // default true; false = shown per-side but not compared
-}
-
-// Aligned to the Official data model. Jurisdiction is constant across a review,
-// so it is not a per-row field.
-export const FIELD_SCHEMA: FieldSpec[] = [
-  // Order follows the mockup: photo, identity, office, term, contacts, sources.
-  { key: "image", label: "Photo", type: "image" },
-  { key: "name", label: "Name", type: "text", required: true },
-  { key: "other_names", label: "Other names", type: "multi" },
-  { key: "office.name", label: "Office", type: "text", required: true },
-  {
-    key: "office.division_ocdid",
-    label: "Division",
-    type: "text",
-    required: true,
-  },
-  { key: "start_date", label: "Term start", type: "date" },
-  { key: "end_date", label: "Term end", type: "date" },
-  { key: "emails", label: "Email", type: "multi" },
-  { key: "phones", label: "Phone", type: "multi" },
-  { key: "urls", label: "Links", type: "multi" },
-  { key: "source_urls", label: "Source urls", type: "multi", diff: false },
-];
-
-export function getFieldValue(person: DiffRecord, key: string): unknown {
-  if (!key.includes(".")) return (person as Record<string, unknown>)?.[key];
-  // Walking a dotted path is untypeable — the value changes shape each hop.
-  let value: any = person;
-  for (const part of key.split(".")) {
-    value = value?.[part];
-  }
-  return value;
-}
-
-// Photo resolves cdn_image || image — cdn_image only ever exists on the old side.
-export function diffValue(person: DiffRecord, field: FieldSpec): unknown {
-  if (field.type === "image") return person?.cdn_image || person?.image || "";
-  return getFieldValue(person, field.key);
-}
+export * from "./field-schema.js";
+export * from "./field-validation.js";
 
 // ── Scalar field diff (text / date / image) ─────────────────────────────────
 
 export type ScalarDiffState = "same" | "changed" | "added" | "cleared";
-
-function normalizeScalar(value: unknown): string {
-  return String(value ?? "").trim();
-}
 
 export function fieldDiffState(
   oldValue: unknown,
@@ -90,10 +51,6 @@ export type MultiValueStatus = "both" | "added" | "removed";
 export interface MultiValueDiff {
   value: string;
   status: MultiValueStatus;
-}
-
-export function normalizeMultiValue(value: string): string {
-  return value.trim().toLowerCase();
 }
 
 // New values first (in their given order), then old-only values flagged removed.
@@ -149,7 +106,7 @@ export function fieldState(
   if (field.diff === false) return "same";
   const oldValue = diffValue(oldRecord, field);
   const newValue = diffValue(newRecord, field);
-  if (field.type === "multi") {
+  if (isMulti(field)) {
     return multiValueState(
       (oldValue as string[]) ?? [],
       (newValue as string[]) ?? [],
@@ -188,97 +145,6 @@ export function recordsDiffer(
   return changedFields(oldRecord, newRecord).length > 0;
 }
 
-// ── Client-side validation (spec §6 — owned by the client, live) ─────────────
-
-const DATE_PATTERN = /^\d{4}(-\d{2}(-\d{2})?)?$/;
-
-export function isValidDate(value: string): boolean {
-  return value === "" || DATE_PATTERN.test(value);
-}
-
-function padDate(value: string): string {
-  const [year, month = "01", day = "01"] = value.split("-");
-  return `${year}-${month}-${day}`;
-}
-
-// True when the term ordering is acceptable. Indeterminate inputs (empty or
-// malformed) are not flagged here — invalid format is its own check.
-export function isTermOrderValid(start: string, end: string): boolean {
-  if (!start || !end || !isValidDate(start) || !isValidDate(end)) return true;
-  return padDate(start) <= padDate(end);
-}
-
-// A required field with no value is an error. Multi fields count as empty when
-// the list has no entries; scalars when blank after trim.
-export function isRequiredFieldEmpty(record: DiffRecord, field: FieldSpec): boolean {
-  if (!field.required) return false;
-  const value = diffValue(record, field);
-  if (Array.isArray(value)) return value.length === 0;
-  return normalizeScalar(value) === "";
-}
-
-// Scheme-less is valid: the scrapers legitimately produce "cityofx.gov/council",
-// and ensureUrl supplies a scheme for the link affordance. So this asks only for
-// something dot-separated with no whitespace in it.
-const urlError = (text: string) =>
-  /^\S+\.\S{2,}$/.test(text) ? null : `${text} is not a valid url`;
-
-// Per-value format checks, by field. Deliberately permissive: the backend
-// canonicalises and is the authority (shared/schemas.py), so this catches only
-// what it would certainly reject — the reviewer hears about it while typing
-// rather than at Publish. A field with no entry here has no format to violate.
-const VALUE_ERRORS: Record<string, (text: string) => string | null> = {
-  phones: (text) => {
-    // An extension is not part of the number.
-    const digits = text.split(/\bext\.?\b|\bx\b/i)[0].replace(/\D/g, "");
-    const national = digits.startsWith("1") ? digits.slice(1) : digits;
-    return national.length === 10 ? null : `${text} is not a 10-digit US number`;
-  },
-  emails: (text) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? null : `${text} is not a valid email`,
-  urls: urlError,
-  source_urls: urlError,
-};
-
-// One value of a multi-value field, or null if it is fine. Exported because the
-// editor marks the offending row rather than the whole field — one definition of
-// valid, read by both the row and `fieldError` below.
-export function valueError(field: FieldSpec, value: string): string | null {
-  const text = String(value ?? "").trim();
-  if (!text) return null;
-  return VALUE_ERRORS[field.key]?.(text) ?? null;
-}
-
-// The single client-side error for a field's value on `record`, or null. Order:
-// required → value format → date format → term ordering (end_date only).
-
-export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
-  if (!record) return null;
-  if (isRequiredFieldEmpty(record, field)) return "Required";
-  if (field.type === "multi") {
-    const values = (diffValue(record, field) as string[]) ?? [];
-    for (const value of values) {
-      const error = valueError(field, value);
-      if (error) return error;
-    }
-    return null;
-  }
-  if (field.type === "date") {
-    const value = String(diffValue(record, field) ?? "");
-    if (!isValidDate(value)) return "Use YYYY, YYYY-MM, or YYYY-MM-DD";
-    if (
-      field.key === "end_date" &&
-      !isTermOrderValid(
-        String(getFieldValue(record, "start_date") ?? ""),
-        value,
-      )
-    ) {
-      return "Term end is before term start";
-    }
-  }
-  return null;
-}
-
 // ── Reviewer issues ──────────────────────────────────────────────────────────
 
 // Lives here because the collapse rule reads it; grouping by person is card-level.
@@ -294,10 +160,6 @@ export interface Issue {
 // Ordered by how much it demands of the reviewer, and that order is the
 // precedence when several apply.
 export type FieldReason = "error" | "issue" | "diff" | "context";
-
-// A field that is never compared is context, not a change: always visible (it is
-// the evidence), never a reason to review (there is no change in it).
-export const isContextField = (field: FieldSpec) => field.diff === false;
 
 export interface SurvivingField {
   field: FieldSpec;

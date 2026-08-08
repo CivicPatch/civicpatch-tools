@@ -67,6 +67,45 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
     mock_merge.assert_awaited_once_with("42", "m@x.com", REQUEST_ID)
 
 
+# The Website field is patched into the jurisdictions repo, so it never passes through
+# `Official` and gets none of the people validation. Rejects rather than canonicalizing:
+# silently prepending a scheme would publish a typo.
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "url", ["oakland.gov", "https://oakland", "https://oak land.gov", "ftp://oakland.gov"]
+)
+def test_patch_jurisdiction_data_rejects_a_malformed_url(client, url):
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with patch(
+        "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
+        new_callable=AsyncMock,
+    ) as mock_open:
+        response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": url})
+
+    assert response.status_code == 422
+    mock_open.assert_not_awaited()
+
+
+# Clearing the website is a legitimate edit, so an empty value is not a malformed one.
+@pytest.mark.unit
+def test_patch_jurisdiction_data_allows_clearing_the_url(client):
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with (
+        patch(
+            "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
+            new_callable=AsyncMock,
+            return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
+        ),
+        patch(
+            "services.jurisdiction_pull_request.merge_jurisdiction_pr",
+            new_callable=AsyncMock,
+        ),
+    ):
+        response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": ""})
+
+    assert response.status_code == 200
+
+
 @pytest.mark.unit
 @pytest.mark.parametrize("identity", [_default, _contributor])
 def test_patch_jurisdiction_data_requires_maintainer(client, identity):

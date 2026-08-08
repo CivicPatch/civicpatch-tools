@@ -106,7 +106,9 @@ test.describe("Review card — read only across the views", () => {
       ".person-editor__restore-person",
       ".person-editor__restore",
       ".person-editor--ghost",
-      ".field-control__add",
+      // Adding a value is the trailing empty row, not a button — read-only
+      // renders values as text, so there is no row to type into.
+      ".field-control__input--draft",
     ]) {
       await expect(page.locator(control)).toHaveCount(0);
     }

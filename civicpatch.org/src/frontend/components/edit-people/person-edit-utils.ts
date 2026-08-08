@@ -23,14 +23,29 @@ export function setDatePart(parts: DateParts, key: keyof DateParts, value: strin
   return next;
 }
 
+// DivisionType values — what a seat represents. `at_large` and `other` are ours
+// alone and never appear in an ocdid; the two below double as segment labels,
+// which is what lets parseDivision return the label as a type.
 export const DIVISION_AT_LARGE = "at_large";
 export const DIVISION_OTHER = "other";
+export const DIVISION_COUNCIL_DISTRICT = "council_district";
+export const DIVISION_WARD = "ward";
+
+// A segment label, not a DivisionType. A division ending at the place segment
+// carries no district, so the seat covers the whole jurisdiction.
+export const PLACE_LABEL = "place";
 
 export type DivisionType =
   | typeof DIVISION_AT_LARGE
-  | "council_district"
-  | "ward"
+  | typeof DIVISION_COUNCIL_DISTRICT
+  | typeof DIVISION_WARD
   | typeof DIVISION_OTHER;
+
+// The types that take a value. at-large and other are the base division alone.
+export const DISTRICT_TYPES: readonly string[] = [
+  DIVISION_COUNCIL_DISTRICT,
+  DIVISION_WARD,
+];
 
 export type Division = { type: DivisionType; value: string };
 
@@ -69,8 +84,9 @@ export function parseDivision(
   const lastSegment = divisionOcdid.split("/").pop() ?? "";
   const [label, value = ""] = lastSegment.split(":");
 
-  if (label === "council_district" || label === "ward") return { type: label, value };
-  if (label === "place") return { type: DIVISION_AT_LARGE, value: "" };
+  if (label === DIVISION_COUNCIL_DISTRICT || label === DIVISION_WARD)
+    return { type: label, value };
+  if (label === PLACE_LABEL) return { type: DIVISION_AT_LARGE, value: "" };
   return { type: DIVISION_OTHER, value: "" };
 }
 

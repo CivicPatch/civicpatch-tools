@@ -8,6 +8,8 @@
 import {
   FIELD_SCHEMA,
   getFieldValue,
+  isImage,
+  isMulti,
   type DiffRecord,
   type FieldSpec,
   type PresentRecord,
@@ -101,12 +103,11 @@ function unique(values: string[]): string[] {
   return [...new Set(values)];
 }
 
-const isMulti = (field: FieldSpec) => field.type === "multi";
 
 // A photo is stored as a CDN copy on the old side and a raw scrape URL on the
 // new one, so the comparable value is whichever is present.
 function readValue(record: DiffRecord, field: FieldSpec): unknown {
-  if (field.type === "image") {
+  if (isImage(field)) {
     return (record as any)?.cdn_image || (record as any)?.image || "";
   }
   return getFieldValue(record, field.key);
@@ -256,7 +257,7 @@ export function applyMergePlan(
   const merged: any = { ...survivorRecord, id: plan.survivorId };
 
   for (const entry of plan.fields) {
-    if (entry.field.type === "image") {
+    if (isImage(entry.field)) {
       // The old side's value is a CDN copy of a URL the scrape no longer serves,
       // so a replaced photo is written raw and the stale copy dropped.
       const value = resolve(entry);

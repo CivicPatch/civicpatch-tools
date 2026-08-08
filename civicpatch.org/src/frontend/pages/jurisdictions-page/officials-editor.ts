@@ -20,7 +20,7 @@ import {
 } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
-import { buildReviewCards, type ReviewCard } from "../../components/review/review-cards.js";
+import { blockingErrors, buildReviewCards, type ReviewCard } from "../../components/review/review-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderOfficialsCards } from "./officials-section.js";
@@ -37,6 +37,16 @@ interface OfficialsEditorProps {
 interface OpenPerson {
   id: string;
   field: string | null;
+}
+
+type PublishStage = "idle" | "opening" | "merging";
+
+// Blockers outrank the stage copy: a card with errors never reaches "Opening PR…".
+function publishLabel(blockerCount: number, stage: PublishStage): string {
+  if (blockerCount) return `${blockerCount} to fix before publishing`;
+  if (stage === "opening") return "Opening PR…";
+  if (stage === "merging") return "Publishing…";
+  return "Publish changes";
 }
 
 function OfficialsEditor({
@@ -72,7 +82,7 @@ function OfficialsEditor({
   // merges it and syncs open-data back into the DB. Reloading on enqueue lands on
   // stale data and reads as "nothing happened", so the button says which half it
   // is in and only reloads once the merge has actually settled.
-  const [publishStage, setPublishStage] = useState<"idle" | "opening" | "merging">("idle");
+  const [publishStage, setPublishStage] = useState<PublishStage>("idle");
   const [publishError, setPublishError] = useState<string | null>(null);
   const isPublishing = publishStage !== "idle";
 
@@ -88,6 +98,14 @@ function OfficialsEditor({
     restoredIds,
     issues: [],
   });
+
+  // The same rule the review session publishes by, so the two pages cannot
+  // disagree about whether a roster is publishable (§9). The per-field badges are
+  // already on screen; this is what stops the button.
+  const blockers = blockingErrors(cards);
+  const blockerTitle = blockers
+    .map((blocker) => `${blocker.name} — ${blocker.fieldLabel}: ${blocker.message}`)
+    .join("\n");
 
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
@@ -152,12 +170,13 @@ function OfficialsEditor({
         ${dirty
           ? html`
               <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleResetAll}>Discard</button>
-              <button class="btn-primary" ?disabled=${isPublishing} @click=${handlePublish}>
-                ${publishStage === "opening"
-                  ? "Opening PR…"
-                  : publishStage === "merging"
-                    ? "Publishing…"
-                    : "Publish changes"}
+              <button
+                class="btn-primary"
+                ?disabled=${isPublishing || blockers.length > 0}
+                title=${blockers.length ? blockerTitle : ""}
+                @click=${handlePublish}
+              >
+                ${publishLabel(blockers.length, publishStage)}
               </button>
             `
           : nothing}

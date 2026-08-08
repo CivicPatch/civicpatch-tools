@@ -3,6 +3,10 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
 import "../person-image.js";
+import {
+    DIVISION_COUNCIL_DISTRICT,
+    DIVISION_WARD,
+} from "../edit-people/person-edit-utils.js";
 
 interface Office {
     name: string;
@@ -27,8 +31,8 @@ interface PeopleDirectoryProps {
 function subdivisionLabel(person: Person): string | null {
     const ocdid = person.office?.division_ocdid ?? "";
     for (const part of ocdid.split("/")) {
-        if (part.startsWith("council_district:")) return `District ${part.split(":")[1]}`;
-        if (part.startsWith("ward:")) return `Ward ${part.split(":")[1]}`;
+        if (part.startsWith(`${DIVISION_COUNCIL_DISTRICT}:`)) return `District ${part.split(":")[1]}`;
+        if (part.startsWith(`${DIVISION_WARD}:`)) return `Ward ${part.split(":")[1]}`;
     }
     return null;
 }
