@@ -236,7 +236,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane","name":"Jane Smith","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:nj/place:e2e_test"},"emails":[],"phones":[],"urls":[],"other_names":[]}]',
+               '[{"id":"e2e-jane","name":"Jane Smith","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:nj/place:e2e_test"},"emails":[],"phones":[],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"]}]',
                '{"issues":[{"type":"missing_email","key":"jane-smith"}]}',
                NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
@@ -333,7 +333,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane-baseline","name":"Jane Baseline","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:vt/place:e2e_baseline"},"emails":[],"phones":[],"urls":[],"other_names":[]}]',
+               '[{"id":"e2e-jane-baseline","name":"Jane Baseline","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:vt/place:e2e_baseline"},"emails":[],"phones":[],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"]}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
       [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
@@ -691,7 +691,7 @@ export async function seedE2eFixtures() {
     await client.query(
       `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
+               '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
                '{}', NOW(), NOW())
        ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
       [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],

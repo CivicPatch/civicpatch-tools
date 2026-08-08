@@ -18,7 +18,7 @@ import {
   municipalitiesUrl,
   isMunicipalitiesPath,
 } from "../pages/municipalities-page/municipalities-routes.ts";
-import "./search-jurisdictions/select-state.js";
+import "./select-state/select-state.js";
 import "./navbar.css";
 // Font Awesome, self-hosted. It was a CDN kit until that kit started returning
 // a bare 403 to every caller and every page in every environment lost its icons.
