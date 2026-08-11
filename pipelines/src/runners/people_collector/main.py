@@ -1,43 +1,45 @@
 import asyncio
-import traceback
 import logging
+import traceback
 
 import httpx
-
-from runners.engine import run_pipeline, PipelineRunError
+from pipelines_environment import get_env_vars
+from runners.engine import PipelineRunError, run_pipeline
 from runners.people_collector.schemas import (
-  PipelineRunConfig,
-  PipelineStatus,
-  PeopleCollectorData,
-  PeopleCollectorContext,
+    PeopleCollectorContext,
+    PeopleCollectorData,
+    PipelineRunConfig,
+    PipelineStatus,
 )
 from runners.people_collector.transitions.main import TRANSITION_MAP
 from services.civicpatch_api import resolve_role_config
 from shared.utils import data_path_utils
 from shared.utils.url_utils import same_domain, same_url
-from pipelines_environment import get_env_vars
 from utils import log_utils
 from utils.log_utils import PipelineRunLogger
-from utils.url_utils import resolve_redirect
 
 logger = logging.getLogger(__name__)
 
 
-def initialize_pipeline_run(request_id, jurisdiction_ocdid: str, config: PipelineRunConfig) -> tuple[PeopleCollectorContext, PipelineRunLogger]:
+def initialize_pipeline_run(
+    request_id, jurisdiction_ocdid: str, config: PipelineRunConfig
+) -> tuple[PeopleCollectorContext, PipelineRunLogger]:
     pipeline_run_logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     context = PeopleCollectorContext(
         request_id=request_id,
         current_state=PipelineStatus.INIT,
         data=PeopleCollectorData(
-          jurisdiction_ocdid=jurisdiction_ocdid,
-          config=config,
-          role_config=None,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            config=config,
+            role_config=None,
         ),
     )
     return context, pipeline_run_logger
 
 
-async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunConfig) -> PeopleCollectorContext:
+async def start(
+    request_id: str, jurisdiction_ocdid: str, config: PipelineRunConfig
+) -> PeopleCollectorContext:
     """Entry point for people collector. Logs errors and re-raises."""
     resolved_url = await resolve_redirect(config.url)
     if not same_url(config.url, resolved_url):
@@ -46,12 +48,16 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunCon
             logger.info("Domain redirected: %s -> %s", config.url, resolved_url)
         config = config.model_copy(update={"url": resolved_url})
 
-    context, pipeline_run_logger = initialize_pipeline_run(request_id, jurisdiction_ocdid, config)
+    context, pipeline_run_logger = initialize_pipeline_run(
+        request_id, jurisdiction_ocdid, config
+    )
     context.data.role_config = await resolve_role_config(jurisdiction_ocdid)
     env = get_env_vars()
 
     try:
-        async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=120.0) as api_client:
+        async with httpx.AsyncClient(
+            headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=120.0
+        ) as api_client:
             return await run_pipeline(
                 context,
                 pipeline_run_logger,
@@ -72,6 +78,7 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: PipelineRunCon
 
 async def start_threaded(request_id, jurisdiction_ocdid, config):
     """For API: Run the start coroutine in a separate thread."""
+
     def run_start():
         asyncio.run(start(request_id, jurisdiction_ocdid, config))
 
@@ -80,7 +87,9 @@ async def start_threaded(request_id, jurisdiction_ocdid, config):
 
 def persist_context(context: PeopleCollectorContext):
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-    context_file_path = data_path_utils.get_pipeline_run_context_file_path(jurisdiction_ocdid)
+    context_file_path = data_path_utils.get_pipeline_run_context_file_path(
+        jurisdiction_ocdid
+    )
     serialized_data = context.model_dump_json(indent=4, ensure_ascii=False)
     with open(context_file_path, "w") as f:
         f.write(serialized_data)

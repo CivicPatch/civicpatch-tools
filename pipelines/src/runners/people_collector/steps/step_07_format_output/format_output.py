@@ -4,6 +4,7 @@ from typing import List
 
 import httpx
 import services.civicpatch_api
+import shared.utils.data_path_utils as data_path_utils
 import utils.log_utils as log_utils
 import utils.people_utils as people_utils
 from domain.models import Official
@@ -12,22 +13,23 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
 )
-import shared.utils.data_path_utils as data_path_utils
 
 
-async def format_output(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> FormatOutputStep:
+async def format_output(
+    context: PeopleCollectorContext, api_client: httpx.AsyncClient
+) -> FormatOutputStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
 
-    assert context.data.merge_records_across_llms_step is not None, "should never happen — merge_records_across_llms_step is required before format_output"
+    assert context.data.merge_records_across_llms_step is not None, (
+        "should never happen — merge_records_across_llms_step is required before format_output"
+    )
     data = context.data.merge_records_across_llms_step.people
 
-    people = [people_utils.person_to_official(person) for person in data]
+    sorted_people = people_utils.sort_people(data, context.data.role_config)
+    people = [people_utils.person_to_official(person) for person in sorted_people]
 
-    filtered_people = [
-        person for person in people
-        if len(person.name.split()) >= 2
-    ]
+    filtered_people = [person for person in people if len(person.name.split()) >= 2]
 
     image_map = _get_image_map(context.data.jurisdiction_ocdid, logger)
     for person in filtered_people:
@@ -48,8 +50,14 @@ async def format_output(context: PeopleCollectorContext, api_client: httpx.Async
         person.id = resolved_person.get("id") or ""
         existing = resolved_person.get("person")
         if existing and not resolved_person.get("ambiguous"):
-            existing_name = existing.get("name") if isinstance(existing, dict) else existing.name
-            existing_other_names = (existing.get("other_names") if isinstance(existing, dict) else existing.other_names) or []
+            existing_name = (
+                existing.get("name") if isinstance(existing, dict) else existing.name
+            )
+            existing_other_names = (
+                existing.get("other_names")
+                if isinstance(existing, dict)
+                else existing.other_names
+            ) or []
             person.other_names = _merge_forward_other_names(
                 person.name, person.other_names, existing_name, existing_other_names
             )
@@ -71,7 +79,11 @@ def _merge_forward_other_names(
     Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
     """
     # A renamed entity keeps both names as aliases; existing aliases always carry forward.
-    renamed_variants = [person_name, existing_name] if existing_name and existing_name != person_name else []
+    renamed_variants = (
+        [person_name, existing_name]
+        if existing_name and existing_name != person_name
+        else []
+    )
     existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
     return list(dict.fromkeys(person_other_names + renamed_variants + existing_aliases))
 

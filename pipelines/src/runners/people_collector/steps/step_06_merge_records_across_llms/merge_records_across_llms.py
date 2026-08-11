@@ -1,14 +1,15 @@
-from typing import List, Dict
-from utils import people_utils
-from shared.utils import name_utils
-from domain.models import Person
-from runners.people_collector.schemas import (
-    PeopleCollectorContext,
-    MergeRecordsAcrossLLMsStep,
-)
 from collections import Counter
 from datetime import datetime, timezone
+from typing import Dict, List
+
 import runners.people_collector.steps.step_06_merge_records_across_llms.field_mergers as field_mergers
+from domain.models import Person
+from runners.people_collector.schemas import (
+    MergeRecordsAcrossLLMsStep,
+    PeopleCollectorContext,
+)
+from shared.utils import name_utils
+from utils import people_utils
 
 # --- Types ---
 
@@ -18,14 +19,21 @@ GroupByLLM = Dict[str, List[Person]]
 
 # --- Main entry point ---
 
-def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAcrossLLMsStep:
+
+def merge_records_across_llms(
+    context: PeopleCollectorContext,
+) -> MergeRecordsAcrossLLMsStep:
     """Merge records across all LLMs to produce a unified list of Person objects."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-    assert context.data.merge_records_within_llm_step is not None, "should never happen — merge_records_within_llm_step is required before merge_records_across_llms"
-    people_by_llm: Dict[str, List[Person]] = context.data.merge_records_within_llm_step.people_by_llm
+    assert context.data.merge_records_within_llm_step is not None, (
+        "should never happen — merge_records_within_llm_step is required before merge_records_across_llms"
+    )
+    records: Dict[str, List[Person]] = (
+        context.data.merge_records_within_llm_step.records
+    )
     identity_names = _resolve_identity_names(context)
 
-    groups = group_records_across_llms(identity_names, people_by_llm)
+    groups = group_records_across_llms(identity_names, records)
     groups = merge_weak_tie_groups(groups)
     merged_people = _merge_groups(groups, jurisdiction_ocdid)
 
@@ -36,8 +44,11 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
 
 # --- Helpers for main ---
 
+
 def _resolve_identity_names(context: PeopleCollectorContext) -> Dict[str, List[str]]:
-    assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before merge_records_across_llms"
+    assert context.data.research_municipality_step is not None, (
+        "should never happen — research_municipality_step is required before merge_records_across_llms"
+    )
     return context.data.research_municipality_step.identities
 
 
@@ -61,6 +72,7 @@ def _merge_groups(
 
 # --- Grouping ---
 
+
 def group_records_across_llms(
     identity_names: Dict[str, List[str]],
     people_by_llm: Dict[str, List[Person]],
@@ -70,9 +82,7 @@ def group_records_across_llms(
     Returns a list of groups, each mapping LLM -> List[Person].
     """
     all_people: List[PersonWithSource] = [
-        (person, llm)
-        for llm, people in people_by_llm.items()
-        for person in people
+        (person, llm) for llm, people in people_by_llm.items() for person in people
     ]
 
     if not all_people:
@@ -93,11 +103,13 @@ def group_records_across_llms(
 
 # --- Merging ---
 
+
 def merge_weak_tie_groups(groups: List[GroupByLLM]) -> List[GroupByLLM]:
     """
     Merge last-name-only groups into full-name groups when they share the same
     last name and at least one (role, designation) pair.
     """
+
     def flat_people(group: GroupByLLM) -> List[Person]:
         return [p for people in group.values() for p in people]
 
@@ -111,8 +123,8 @@ def merge_weak_tie_groups(groups: List[GroupByLLM]) -> List[GroupByLLM]:
     def role_designation_pairs(group: GroupByLLM) -> set:
         result = set()
         for p in flat_people(group):
-            for r in (p.roles or []):
-                for d in (p.designations or [""]):
+            for r in p.roles or []:
+                for d in p.designations or [""]:
                     result.add((r, d))
         return result
 
@@ -163,17 +175,23 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
         name=canonical_name,
         other_names=other_names,
         roles=field_mergers.merge_field_to_list([p.roles for p in group if p.roles]),
-        designations=field_mergers.merge_field_to_list([p.designations for p in group if p.designations]),
+        designations=field_mergers.merge_field_to_list(
+            [p.designations for p in group if p.designations]
+        ),
         emails=field_mergers.merge_field_to_list([p.emails for p in group if p.emails]),
         phones=field_mergers.merge_field_to_list([p.phones for p in group if p.phones]),
         urls=merge_urls([p.urls for p in group if p.urls]),
-        start_date=field_mergers.merge_field("start_date", [p.start_date for p in group if p.start_date]),
-        end_date=field_mergers.merge_field("end_date", [p.end_date for p in group if p.end_date]),
+        start_date=field_mergers.merge_field(
+            "start_date", [p.start_date for p in group if p.start_date]
+        ),
+        end_date=field_mergers.merge_field(
+            "end_date", [p.end_date for p in group if p.end_date]
+        ),
         image=image[0][0] if image else "",
         cdn_image="",
         jurisdiction_ocdid=jurisdiction_ocdid,
         source_urls=list(source_urls),
-        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        updated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
     )
 
 

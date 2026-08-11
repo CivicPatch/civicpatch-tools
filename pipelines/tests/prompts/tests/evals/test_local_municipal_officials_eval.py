@@ -1,24 +1,35 @@
 import asyncio
+import os
+import pathlib
 import time
+from typing import List, cast
+
+import phonenumbers
 import pytest
 import pytest_asyncio
-from utils import merge_utils, cost_utils
-from services.open_router.llm import run_prompt as run_together_prompt
-from services.open_router.prompts import municipality_officials_prompt as make_together_prompt
-from runners.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
-import phonenumbers
-from typing import cast, List
-import pathlib
-import yaml
-import os
-from shared.utils import name_utils
 import utils.merge_utils
 import utils.people_utils
-from eval_utils import PROVIDER_COMPARISON, make_provider_client, write_comparison_report
+import yaml
+from eval_utils import (
+    PROVIDER_COMPARISON,
+    make_provider_client,
+    write_comparison_report,
+)
+from runners.people_collector.schemas import (
+    PeopleArrayLLMResponseSchema,
+    RawLLMPersonRecord,
+)
+from services.open_router.llm import run_prompt as run_together_prompt
+from services.open_router.prompts import (
+    municipality_officials_prompt as make_together_prompt,
+)
+from shared.utils import name_utils
+from utils import cost_utils
 
 pytestmark = pytest.mark.evals
 
-def score_cases(actual: List[RawLLMPerson], expected: List[RawLLMPerson]):
+
+def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRecord]):
     scores = []
     # Build a lookup for actual people by normalized name
     actual_by_norm_name = {
@@ -37,7 +48,7 @@ def score_cases(actual: List[RawLLMPerson], expected: List[RawLLMPerson]):
                     "designations": 0.0,
                     "email": 0.0,
                     "phone": 0.0,
-                    "url": 0.0
+                    "url": 0.0,
                 },
                 "actual": {
                     "name": "",
@@ -45,7 +56,7 @@ def score_cases(actual: List[RawLLMPerson], expected: List[RawLLMPerson]):
                     "designations": [],
                     "email": "",
                     "phone": "",
-                    "url": ""
+                    "url": "",
                 },
                 "expected": {
                     "name": e_person.name,
@@ -53,14 +64,15 @@ def score_cases(actual: List[RawLLMPerson], expected: List[RawLLMPerson]):
                     "designations": e_person.designations,
                     "email": e_person.email,
                     "phone": e_person.phone,
-                    "url": e_person.url
+                    "url": e_person.url,
                 },
-                "person_name": e_person.name
+                "person_name": e_person.name,
             }
         scores.append(score)
     return scores
 
-def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
+
+def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
     score = {}
     actual_vals = {}
     expected_vals = {}
@@ -76,16 +88,22 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
     actual_roles = utils.people_utils.normalize_roles(actual.roles)
     expected_roles = utils.people_utils.normalize_roles(expected.roles)
     matching_roles = set(actual_roles) & set(expected_roles)
-    score["roles"] = len(matching_roles) / len(expected_roles) if expected_roles else 1.0
+    score["roles"] = (
+        len(matching_roles) / len(expected_roles) if expected_roles else 1.0
+    )
     actual_vals["roles"] = actual.roles
     expected_vals["roles"] = expected.roles
 
     # designations
-    has_district_or_ward = any("district" in d.lower() or "ward" in d.lower() for d in expected.designations)
+    has_district_or_ward = any(
+        "district" in d.lower() or "ward" in d.lower() for d in expected.designations
+    )
     if not expected.designations or not has_district_or_ward:
         score["designations"] = 1.0
     else:
-        score["designations"] = len(set(actual.designations) & set(expected.designations)) / len(expected.designations)
+        score["designations"] = len(
+            set(actual.designations) & set(expected.designations)
+        ) / len(expected.designations)
     actual_vals["designations"] = actual.designations
     expected_vals["designations"] = expected.designations
 
@@ -95,8 +113,12 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
     expected_vals["email"] = expected.email
 
     # phone
-    actual_phone_parsed = phonenumbers.parse(actual.phone, "US") if actual.phone else None
-    expected_phone_parsed = phonenumbers.parse(expected.phone, "US") if expected.phone else None
+    actual_phone_parsed = (
+        phonenumbers.parse(actual.phone, "US") if actual.phone else None
+    )
+    expected_phone_parsed = (
+        phonenumbers.parse(expected.phone, "US") if expected.phone else None
+    )
     score["phone"] = 1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
     actual_vals["phone"] = actual.phone
     expected_vals["phone"] = expected.phone
@@ -110,8 +132,9 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
         "scores": score,
         "actual": actual_vals,
         "expected": expected_vals,
-        "person_name": expected.name
+        "person_name": expected.name,
     }
+
 
 def aggregate(scores):
     """
@@ -132,7 +155,9 @@ def aggregate(scores):
         for score in case_scores:
             all_keys.update(score["scores"].keys())
         for key in all_keys:
-            case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
+            case_aggregate[key] = sum(
+                score["scores"].get(key, 0.0) for score in case_scores
+            ) / len(case_scores)
         case_aggregates.append(case_aggregate)
 
     # Aggregate scores across all cases
@@ -141,9 +166,12 @@ def aggregate(scores):
 
     final_aggregate = {}
     for key in case_aggregates[0].keys():
-        final_aggregate[key] = sum(case[key] for case in case_aggregates) / len(case_aggregates)
+        final_aggregate[key] = sum(case[key] for case in case_aggregates) / len(
+            case_aggregates
+        )
 
     return final_aggregate
+
 
 async def _run_single_case(model_client, case, ocdid):
     run_prompt = model_client["run_prompt"]
@@ -160,11 +188,15 @@ async def _run_single_case(model_client, case, ocdid):
         content=case["input"],
         **extra_kwargs,
     )
-    expected = [RawLLMPerson(**person) for person in case["expected"]["people"]]
+    expected = [RawLLMPersonRecord(**person) for person in case["expected"]["people"]]
     actual = cast(PeopleArrayLLMResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
-    with open(f"{case_path}/{model_client['name']}-actual.yml", 'w', encoding='utf-8') as f:
-        yaml_output = yaml.safe_dump(PeopleArrayLLMResponseSchema.model_dump(actual), sort_keys=False)
+    with open(
+        f"{case_path}/{model_client['name']}-actual.yml", "w", encoding="utf-8"
+    ) as f:
+        yaml_output = yaml.safe_dump(
+            PeopleArrayLLMResponseSchema.model_dump(actual), sort_keys=False
+        )
         f.write(yaml_output)
 
     case_scores = score_cases(actual.people, expected)
@@ -176,17 +208,26 @@ async def _run_single_case(model_client, case, ocdid):
         for score in case_scores:
             all_keys.update(score["scores"].keys())
         for key in all_keys:
-            case_aggregate[key] = sum(score["scores"].get(key, 0.0) for score in case_scores) / len(case_scores)
+            case_aggregate[key] = sum(
+                score["scores"].get(key, 0.0) for score in case_scores
+            ) / len(case_scores)
 
     return case["id"], case_aggregate, case_scores
 
 
 @pytest.mark.asyncio
-async def run_eval(model_client, cases, ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government"):
-    results = await asyncio.gather(*[_run_single_case(model_client, case, ocdid) for case in cases])
+async def run_eval(
+    model_client,
+    cases,
+    ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government",
+):
+    results = await asyncio.gather(
+        *[_run_single_case(model_client, case, ocdid) for case in cases]
+    )
     per_case_scores = [(case_id, agg) for case_id, agg, _ in results]
     scores = [case_scores for _, _, case_scores in results]
     return aggregate(scores), per_case_scores
+
 
 @pytest_asyncio.fixture
 def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials"):
@@ -207,7 +248,7 @@ def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials")
         if not input_path.exists() or not expected_path.exists():
             raise ValueError(f"Missing input.txt or expected.yml in {case_dir}")
 
-        with open(expected_path, 'r', encoding='utf-8') as f:
+        with open(expected_path, "r", encoding="utf-8") as f:
             expected_content = yaml.safe_load(f)
 
         case = {
@@ -242,14 +283,20 @@ async def model_client(request):
             "name": f"open_router-{provider}",
             "run_prompt": run_together_prompt,
             "make_prompt": make_together_prompt,
-            "extra_kwargs": {"model_type": "STANDARD", "provider_order": [provider], "allow_fallbacks": False},
+            "extra_kwargs": {
+                "model_type": "STANDARD",
+                "provider_order": [provider],
+                "allow_fallbacks": False,
+            },
         }
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
+
 def _active_providers():
     only = os.environ.get("EVAL_PROVIDER")
     return [p for p in PROVIDER_COMPARISON if not only or p.split(":", 1)[1] == only]
+
 
 @pytest.mark.parametrize("model_client", _active_providers(), indirect=True)
 @pytest.mark.asyncio
@@ -275,8 +322,12 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
         # Load the actual and expected people for this case
         # You need to reload the actual/expected people to get the details for reporting
         case = next(c for c in load_eval_cases if c["id"] == case_id)
-        expected_people = [RawLLMPerson(**person) for person in case["expected"]["people"]]
-        actual_path = os.path.join(case["case_path"], f"{model_client['name']}-actual.yml")
+        expected_people = [
+            RawLLMPersonRecord(**person) for person in case["expected"]["people"]
+        ]
+        actual_path = os.path.join(
+            case["case_path"], f"{model_client['name']}-actual.yml"
+        )
         if os.path.exists(actual_path):
             with open(actual_path, "r", encoding="utf-8") as f:
                 actual_people = yaml.safe_load(f).get("people", [])
@@ -285,12 +336,14 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
 
         # Hallucination check: expected empty but model returned people
         if not expected_people and actual_people:
-            failed.append({
-                "person": None,
-                "field": "hallucination",
-                "expected": [],
-                "actual": [p.get("name") for p in actual_people],
-            })
+            failed.append(
+                {
+                    "person": None,
+                    "field": "hallucination",
+                    "expected": [],
+                    "actual": [p.get("name") for p in actual_people],
+                }
+            )
 
         # Build lookup for actual people by normalized name
         actual_by_norm_name = {
@@ -304,31 +357,56 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                 actual_val = a_person.get(key, "") if a_person else ""
                 expected_val = getattr(e_person, key, "")
                 # Treat null and '' as equal
-                if (actual_val is None or actual_val == "") and (expected_val is None or expected_val == ""):
+                if (actual_val is None or actual_val == "") and (
+                    expected_val is None or expected_val == ""
+                ):
                     score = 1.0
                 elif key == "name":
-                    score = 1.0 if norm_name == name_utils.normalize_name(actual_val) else 0.0
+                    score = (
+                        1.0
+                        if norm_name == name_utils.normalize_name(actual_val)
+                        else 0.0
+                    )
                 elif key == "roles":
-                    actual_roles = utils.people_utils.normalize_roles(a_person.get("roles", []))
-                    expected_roles = utils.people_utils.normalize_roles(getattr(e_person, "roles", []))
+                    actual_roles = utils.people_utils.normalize_roles(
+                        a_person.get("roles", [])
+                    )
+                    expected_roles = utils.people_utils.normalize_roles(
+                        getattr(e_person, "roles", [])
+                    )
                     matching_roles = set(actual_roles) & set(expected_roles)
-                    score = len(matching_roles) / len(expected_roles) if expected_roles else 1.0
+                    score = (
+                        len(matching_roles) / len(expected_roles)
+                        if expected_roles
+                        else 1.0
+                    )
                 elif key == "designations":
                     actual_designations = a_person.get("designations", [])
                     expected_designations = getattr(e_person, "designations", [])
-                    has_district_or_ward = any(d in ["district", "ward"] for d in expected_designations)
+                    has_district_or_ward = any(
+                        d in ["district", "ward"] for d in expected_designations
+                    )
                     if not expected_designations or not has_district_or_ward:
                         score = 1.0
                     else:
-                        score = len(set(actual_designations) & set(expected_designations)) / len(expected_designations)
+                        score = len(
+                            set(actual_designations) & set(expected_designations)
+                        ) / len(expected_designations)
                 elif key == "email":
-
                     score = 1.0 if actual_val == expected_val else 0.0
                 elif key == "phone":
                     try:
-                        actual_phone_parsed = phonenumbers.parse(actual_val, "US") if actual_val else None
-                        expected_phone_parsed = phonenumbers.parse(expected_val, "US") if expected_val else None
-                        score = 1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
+                        actual_phone_parsed = (
+                            phonenumbers.parse(actual_val, "US") if actual_val else None
+                        )
+                        expected_phone_parsed = (
+                            phonenumbers.parse(expected_val, "US")
+                            if expected_val
+                            else None
+                        )
+                        score = (
+                            1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
+                        )
                     except Exception:
                         score = 0.0
                 elif key == "url":
@@ -337,20 +415,24 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                     score = 0.0
 
                 if score < threshold:
-                    failed.append({
-                        "person": e_person.name,
-                        "field": key,
-                        "expected": expected_val,
-                        "actual": actual_val,
-                    })
+                    failed.append(
+                        {
+                            "person": e_person.name,
+                            "field": key,
+                            "expected": expected_val,
+                            "actual": actual_val,
+                        }
+                    )
 
         if failed:
-            failed_cases.append({
-                "model_client": model_client["name"],
-                "case_number": idx,
-                "case_id": case_id,
-                "failures": failed
-            })
+            failed_cases.append(
+                {
+                    "model_client": model_client["name"],
+                    "case_number": idx,
+                    "case_id": case_id,
+                    "failures": failed,
+                }
+            )
 
     aggregate_failures = []
     aggregate_failed_cases = {}
@@ -358,25 +440,29 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     for field, threshold in thresholds.items():
         actual_score = report.get(field, 0.0)
         if actual_score < threshold:
-            aggregate_failures.append({
-                "field": field,
-                "actual": actual_score,
-                "threshold": threshold
-            })
+            aggregate_failures.append(
+                {"field": field, "actual": actual_score, "threshold": threshold}
+            )
             # Collect all failed field instances across all cases
             field_failures = []
             for idx, (case_id, case_aggregate) in enumerate(per_case_scores):
                 # Reload expected and actual people for this case
                 case = next(c for c in load_eval_cases if c["id"] == case_id)
-                expected_people = [RawLLMPerson(**person) for person in case["expected"]["people"]]
-                actual_path = os.path.join(case["case_path"], f"{model_client['name']}-actual.yml")
+                expected_people = [
+                    RawLLMPersonRecord(**person)
+                    for person in case["expected"]["people"]
+                ]
+                actual_path = os.path.join(
+                    case["case_path"], f"{model_client['name']}-actual.yml"
+                )
                 if os.path.exists(actual_path):
                     with open(actual_path, "r", encoding="utf-8") as f:
                         actual_people = yaml.safe_load(f).get("people", [])
                 else:
                     actual_people = []
                 actual_by_norm_name = {
-                    name_utils.normalize_name(a.get("name", "")): a for a in actual_people
+                    name_utils.normalize_name(a.get("name", "")): a
+                    for a in actual_people
                 }
                 for e_person in expected_people:
                     norm_name = name_utils.normalize_name(e_person.name)
@@ -384,30 +470,60 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                     actual_val = a_person.get(field, "") if a_person else ""
                     expected_val = getattr(e_person, field, "")
                     # Treat null and '' as equal
-                    if (actual_val is None or actual_val == "") and (expected_val is None or expected_val == ""):
+                    if (actual_val is None or actual_val == "") and (
+                        expected_val is None or expected_val == ""
+                    ):
                         score = 1.0
                     elif field == "name":
-                        score = 1.0 if norm_name == name_utils.normalize_name(actual_val) else 0.0
+                        score = (
+                            1.0
+                            if norm_name == name_utils.normalize_name(actual_val)
+                            else 0.0
+                        )
                     elif field == "roles":
-                        actual_roles = utils.people_utils.normalize_roles(a_person.get("roles", []))
-                        expected_roles = utils.people_utils.normalize_roles(getattr(e_person, "roles", []))
+                        actual_roles = utils.people_utils.normalize_roles(
+                            a_person.get("roles", [])
+                        )
+                        expected_roles = utils.people_utils.normalize_roles(
+                            getattr(e_person, "roles", [])
+                        )
                         matching_roles = set(actual_roles) & set(expected_roles)
-                        score = len(matching_roles) / len(expected_roles) if expected_roles else 1.0
+                        score = (
+                            len(matching_roles) / len(expected_roles)
+                            if expected_roles
+                            else 1.0
+                        )
                     elif field == "designations":
                         actual_designations = a_person.get("designations", [])
                         expected_designations = getattr(e_person, "designations", [])
-                        has_district_or_ward = any(d in ["district", "ward"] for d in expected_designations)
+                        has_district_or_ward = any(
+                            d in ["district", "ward"] for d in expected_designations
+                        )
                         if not expected_designations or not has_district_or_ward:
                             score = 1.0
                         else:
-                            score = len(set(actual_designations) & set(expected_designations)) / len(expected_designations)
+                            score = len(
+                                set(actual_designations) & set(expected_designations)
+                            ) / len(expected_designations)
                     elif field == "email":
                         score = 1.0 if actual_val == expected_val else 0.0
                     elif field == "phone":
                         try:
-                            actual_phone_parsed = phonenumbers.parse(actual_val, "US") if actual_val else None
-                            expected_phone_parsed = phonenumbers.parse(expected_val, "US") if expected_val else None
-                            score = 1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
+                            actual_phone_parsed = (
+                                phonenumbers.parse(actual_val, "US")
+                                if actual_val
+                                else None
+                            )
+                            expected_phone_parsed = (
+                                phonenumbers.parse(expected_val, "US")
+                                if expected_val
+                                else None
+                            )
+                            score = (
+                                1.0
+                                if actual_phone_parsed == expected_phone_parsed
+                                else 0.0
+                            )
                         except Exception:
                             score = 0.0
                     elif field == "url":
@@ -416,12 +532,14 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                         score = 0.0
 
                     if score < threshold:
-                        field_failures.append({
-                            "case_id": case_id,
-                            "person": e_person.name,
-                            "expected": expected_val,
-                            "actual": actual_val
-                        })
+                        field_failures.append(
+                            {
+                                "case_id": case_id,
+                                "person": e_person.name,
+                                "expected": expected_val,
+                                "actual": actual_val,
+                            }
+                        )
             aggregate_failed_cases[field] = field_failures
 
     # Write full report to file
@@ -439,17 +557,21 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     os.makedirs(evals_dir, exist_ok=True)
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump({
-            "cost_summary": cost_summary,
-            "aggregated_report": report,
-            "aggregate_failures": aggregate_failures,
-            "aggregate_failed_cases": aggregate_failed_cases,
-            "per_case_scores": [
-                {"case_id": case_id, "scores": case_aggregate}
-                for case_id, case_aggregate in per_case_scores
-            ],
-            "failed_cases": failed_cases
-        }, f, sort_keys=False)
+        yaml.safe_dump(
+            {
+                "cost_summary": cost_summary,
+                "aggregated_report": report,
+                "aggregate_failures": aggregate_failures,
+                "aggregate_failed_cases": aggregate_failed_cases,
+                "per_case_scores": [
+                    {"case_id": case_id, "scores": case_aggregate}
+                    for case_id, case_aggregate in per_case_scores
+                ],
+                "failed_cases": failed_cases,
+            },
+            f,
+            sort_keys=False,
+        )
     print(f"Saved evaluation report to {report_path}")
 
     # Assert thresholds
@@ -459,9 +581,16 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     assert report["email"] >= thresholds["email"]
     assert report["phone"] >= thresholds["phone"]
     assert report["url"] >= thresholds["url"]
-    assert len([c for c in failed_cases if any(f["field"] == "hallucination" for f in c["failures"])]) == 0, \
-        "Model returned people when expected empty"
-
+    assert (
+        len(
+            [
+                c
+                for c in failed_cases
+                if any(f["field"] == "hallucination" for f in c["failures"])
+            ]
+        )
+        == 0
+    ), "Model returned people when expected empty"
 
 
 async def _run_provider(client, cases):
@@ -482,8 +611,12 @@ async def _run_provider(client, cases):
 @pytest.mark.asyncio
 async def test_provider_comparison(load_eval_cases):
     """Runs all providers concurrently and writes one report per provider."""
-    clients = [make_provider_client(p, make_together_prompt) for p in PROVIDER_COMPARISON]
-    results = await asyncio.gather(*[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True)
+    clients = [
+        make_provider_client(p, make_together_prompt) for p in PROVIDER_COMPARISON
+    ]
+    results = await asyncio.gather(
+        *[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True
+    )
 
     evals_dir = "tests/prompts/tests/evals/municipal_officials"
     os.makedirs(evals_dir, exist_ok=True)
@@ -504,14 +637,18 @@ async def test_provider_comparison(load_eval_cases):
         }
         report_path = os.path.join(evals_dir, f"{client['name']}-eval-report.yml")
         with open(report_path, "w", encoding="utf-8") as f:
-            yaml.safe_dump({
-                "cost_summary": cost_summary,
-                "aggregated_report": result["report"],
-                "per_case_scores": [
-                    {"case_id": case_id, "scores": case_aggregate}
-                    for case_id, case_aggregate in result["per_case_scores"]
-                ],
-            }, f, sort_keys=False)
+            yaml.safe_dump(
+                {
+                    "cost_summary": cost_summary,
+                    "aggregated_report": result["report"],
+                    "per_case_scores": [
+                        {"case_id": case_id, "scores": case_aggregate}
+                        for case_id, case_aggregate in result["per_case_scores"]
+                    ],
+                },
+                f,
+                sort_keys=False,
+            )
         print(f"Saved provider comparison report to {report_path}")
         comparison[client["name"]] = {
             "elapsed_seconds": result["elapsed_seconds"],

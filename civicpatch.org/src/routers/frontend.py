@@ -3,7 +3,7 @@ import os
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from database.jurisdictions import get_jurisdiction
@@ -34,8 +34,6 @@ def build_permissions(identity: Optional[Identity]) -> dict:
     return {
         "can_view_queue_page": has_at_least(role, Role.CONTRIBUTORS),
         "can_view_queue_page_errors": has_at_least(role, Role.ADMINS),
-        # Public: its data is unauthenticated and each action is gated separately.
-        "can_view_jurisdiction_page": True,
         "can_scrape_local": not _is_production and has_at_least(role, Role.MAINTAINERS),
         "can_scrape_remote": has_at_least(role, Role.MAINTAINERS),
         "can_view_reviews_page": has_at_least(role, Role.DEFAULT),
@@ -87,64 +85,57 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     async def queue_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/queue.html", {"request": request, "user": user})
 
     @router.get("/review", response_class=HTMLResponse, include_in_schema=False)
     async def review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_reviews_page"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/review.html", {"request": request, "user": user})
 
     @router.get("/review/session", response_class=HTMLResponse, include_in_schema=False)
     async def review_session_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_reviews_page"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/review-session.html", {"request": request, "user": user})
 
     @router.get("/issues", response_class=HTMLResponse, include_in_schema=False)
     async def issues_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_issues_page"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
 
     @router.get("/activity", response_class=HTMLResponse, include_in_schema=False)
     async def activity_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/activity.html", {"request": request, "user": user})
 
     @router.get("/roles", response_class=HTMLResponse, include_in_schema=False)
     async def roles_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_write_config"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/roles.html", {"request": request, "user": user})
 
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/admin.html", {"request": request, "user": user})
 
     @router.get("/settings", response_class=HTMLResponse, include_in_schema=False)
     async def settings_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"]:
-            return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
+            return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/settings.html", {"request": request, "user": user})
-
-    @router.get("/unauthorized", response_class=HTMLResponse, include_in_schema=False)
-    async def unauthorized_page(
-        request: Request, identity: Optional[Identity] = Depends(get_optional_user)
-    ):
-        user = _build_user_dict(identity)
-        return templates.TemplateResponse("pages/unauthorized.html", {"request": request, "user": user})
 
     @router.get("/blog", response_class=HTMLResponse, include_in_schema=False)
     async def blog_list(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):

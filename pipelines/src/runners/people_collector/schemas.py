@@ -1,11 +1,13 @@
-from pydantic import BaseModel, Field, ConfigDict
-from typing import List, Optional, Dict, TypeAlias
 from enum import Enum
-from domain.models import Person, Official
+from typing import Dict, List, Optional, TypeAlias
+
+from domain.models import Official, Person
 from domain.pipeline_run_context import PipelineRunContext
+from pydantic import BaseModel, ConfigDict, Field
 from shared.schemas import Issue, PipelineRunConfig
 from shared.utils.config_utils import RoleConfig
 from shared.utils.statuses import PipelineRunStatus
+
 
 class ProgressState(BaseModel):
     required_data: int
@@ -13,15 +15,17 @@ class ProgressState(BaseModel):
     has_target_role: bool = False
     has_target_designations: bool = False
 
+
 class LinkStatus(Enum):
     PENDING = "pending"
     SCRAPED = "scraped"
     PREPROCESSED = "preprocessed"
     PREPROCESSED_NO_CONTENT = "preprocessed_no_content"
     PROCESSED_IRRELEVANT = "processed_irrelevant"
-    PROCESSED_HEURISTICS_FAIL  = "processed_heuristics_fail"
+    PROCESSED_HEURISTICS_FAIL = "processed_heuristics_fail"
     DONE = "done"
     ERROR = "error"
+
 
 class Link(BaseModel):
     url: str
@@ -30,20 +34,25 @@ class Link(BaseModel):
     num_references: int = 0
     comment: Optional[str] = None
     text: Optional[str] = None
-    failure_reason: Optional[str] = None  # NavigationFailureReason value, set when status=ERROR
+    failure_reason: Optional[str] = (
+        None  # NavigationFailureReason value, set when status=ERROR
+    )
     failure_source: Optional[str] = None  # raw Playwright/Chromium detail string
-    visit_order: Optional[int] = None     # 1 = first page scraped, 2 = second, etc.
+    visit_order: Optional[int] = None  # 1 = first page scraped, 2 = second, etc.
+
 
 class LinkFrontier(BaseModel):
     """Encapsulates the link dict and pending queue so they always stay in sync."""
+
     model_config = ConfigDict(frozen=True)
 
-    links: Dict[str, "Link"] = {}   # canonical_url(link.url) → Link
-    queue: List[str] = []            # canonical URLs of PENDING links, priority-sorted
+    links: Dict[str, "Link"] = {}  # canonical_url(link.url) → Link
+    queue: List[str] = []  # canonical URLs of PENDING links, priority-sorted
 
     @classmethod
     def from_urls(cls, urls: List[str]) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url, format_url
+
         links = {}
         queue = []
         for url in urls:
@@ -57,6 +66,7 @@ class LinkFrontier(BaseModel):
 
     def get(self, url: str) -> Optional["Link"]:
         from shared.utils.url_utils import canonical_url
+
         return self.links.get(canonical_url(url))
 
     def status_of(self, url: str) -> Optional["LinkStatus"]:
@@ -85,39 +95,53 @@ class LinkFrontier(BaseModel):
 
     def add(self, urls: List[str]) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url, format_url
+
         new_links = dict(self.links)
         new_queue = list(self.queue)
         for url in urls:
             key = canonical_url(url)
             if key not in new_links:
-                new_links[key] = Link(url=format_url(url), status=LinkStatus.PENDING.value)
+                new_links[key] = Link(
+                    url=format_url(url), status=LinkStatus.PENDING.value
+                )
                 new_queue.append(key)
         return self.model_copy(update={"links": new_links, "queue": new_queue})
 
     def dequeue(self, url: str) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url
+
         key = canonical_url(url)
         return self.model_copy(update={"queue": [k for k in self.queue if k != key]})
 
     def update_link(self, lookup_url: str, **updates) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url
+
         key = canonical_url(lookup_url)
         if key not in self.links:
             return self
-        return self.model_copy(update={"links": {**self.links, key: self.links[key].model_copy(update=updates)}})
+        return self.model_copy(
+            update={
+                "links": {**self.links, key: self.links[key].model_copy(update=updates)}
+            }
+        )
 
     def mark_status(self, url: str, status: "LinkStatus", **extra) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url
+
         key = canonical_url(url)
         if key not in self.links:
             return self
         new_link = self.links[key].model_copy(update={"status": status.value, **extra})
         new_links = {**self.links, key: new_link}
-        new_queue = [k for k in self.queue if k != key] if status != LinkStatus.PENDING else self.queue
+        new_queue = (
+            [k for k in self.queue if k != key]
+            if status != LinkStatus.PENDING
+            else self.queue
+        )
         return self.model_copy(update={"links": new_links, "queue": new_queue})
 
 
-class RawLLMPerson(BaseModel):
+class RawLLMPersonRecord(BaseModel):
     name: str
     roles: List[str]
     designations: List[str]
@@ -130,17 +154,21 @@ class RawLLMPerson(BaseModel):
     end_date: Optional[str] = None
     image: Optional[str] = None
 
+
 class PeopleArrayLLMResponseSchema(BaseModel):
-    people: List[RawLLMPerson]
+    people: List[RawLLMPersonRecord]
     # thought: str
+
 
 class RelevantPageResponseSchema(BaseModel):
     is_relevant: bool
     relevant_urls: List[str] = []
 
+
 class UnrecognizedRole(BaseModel):
     role: str
     person_name: str
+
 
 class ExcludedPerson(BaseModel):
     name: str
@@ -148,33 +176,40 @@ class ExcludedPerson(BaseModel):
     designations: List[str] = []
     source_urls: List[str] = []
 
-class LLMPerson(RawLLMPerson):
+
+class LLMPersonRecord(RawLLMPersonRecord):
     source_url: str
+
 
 OtherNamesByCanonicalName: TypeAlias = Dict[
     str, List[str]
 ]  # Canonical name to other names found while scraping
-PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
-RecordsByLLM: TypeAlias = Dict[str, PeopleByName]
+PeopleByName: TypeAlias = Dict[str, List[LLMPersonRecord]]
 
 PipelineStatus = PipelineRunStatus
+
 
 class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
     designations: List[str]
 
+
 class ResearchMunicipalityLLMSchema(BaseModel):
     people: List[ResearchedPerson]
 
+
 class ResearchMunicipalityStep(BaseModel):
-    expected_count: int = 0         # how many officials the pipeline expects to find
+    expected_count: int = 0  # how many officials the pipeline expects to find
     target_designations: List[str] = []  # geographic designations to look for
     known_roles: list[str] = []
-    identities: dict[str, list[str]] = {}  # canonical name to list of other names/aliases
+    identities: dict[
+        str, list[str]
+    ] = {}  # canonical name to list of other names/aliases
     source_urls: list[str] = []
     notes: Optional[str] = None
     origin_source: str = "google_gemini"
+
 
 class PreprocessPageContentStep(BaseModel):
     elapsed_times: List[int] = []
@@ -183,38 +218,48 @@ class PreprocessPageContentStep(BaseModel):
 
 
 class ProcessPageContentStep(BaseModel):
-    raw_records_by_llm: RecordsByLLM
-    records_by_llm: RecordsByLLM
+    records: PeopleByName
     progress: ProgressState = ProgressState(
-        required_data=0, current_data=0, has_target_role=False, has_target_designations=False
+        required_data=0,
+        current_data=0,
+        has_target_role=False,
+        has_target_designations=False,
     )
 
+
 class MergeRecordsWithinLLMStep(BaseModel):
-    people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
+    records: List[Person]  # LLM Names to list of Person records
     unrecognized_roles: List[UnrecognizedRole] = []
     excluded_people: List[ExcludedPerson] = []
+
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
 
+
 class FormatOutputStep(BaseModel):
     officials: List[Official]
+
 
 class ReviewOutputStep(BaseModel):
     issues: List[Issue]
     people_by_source: List[dict]
     origin_source: str = "google_gemini"
 
+
 class FindJurisdictionUrlStep(BaseModel):
     discovered_url: Optional[str] = None
 
+
 class OfficialJurisdictionUrlResponseSchema(BaseModel):
     is_official_jurisdiction_url: bool
+
 
 class MaybeSendToGitHubStep(BaseModel):
     status: str
     response_status_code: Optional[int] = None
     response_text: Optional[str] = None
+
 
 class PeopleCollectorData(BaseModel):
     jurisdiction_ocdid: str
@@ -239,6 +284,7 @@ class PeopleCollectorData(BaseModel):
     issues: list[dict] = []
     error_step: Optional[str] = None
     error_detail: Optional[dict] = None
+
 
 class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PipelineStatus]):
     pass
