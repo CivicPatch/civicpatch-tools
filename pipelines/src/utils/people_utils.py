@@ -1,16 +1,19 @@
-from typing import List, Dict
+from typing import Dict, List
+
 import shared.utils.config_utils as config_utils
-from domain.models import Person, Official, Office
+from domain.models import Office, Official, Person
 from runners.people_collector.schemas import ResearchedPerson
-from utils.role_utils import fuzzy_match_role
 from utils.designation_utils import (
+    designations_without_division,
+    division_ocdid_to_designation,
+    extract_designation_value,
     generic_sort_key,
     get_designation_priority,
-    extract_designation_value,
-    designations_without_division,
     resolve_division,
-    division_ocdid_to_designation,
 )
+from utils.role_utils import fuzzy_match_role
+
+UNRANKED = float("inf")
 
 
 def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
@@ -20,7 +23,8 @@ def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
         for name in [entry.role] + entry.aliases
     }
     return [
-        person for person in people
+        person
+        for person in people
         if any(r.strip().lower() in valid_roles for r in person.roles)
     ]
 
@@ -51,7 +55,7 @@ def normalize_roles(roles: List[str], role_config=None) -> List[str]:
                 expanded_roles.append(part)
 
     for role in expanded_roles:
-        role_lower = role.lower().replace('-', ' ')
+        role_lower = role.lower().replace("-", " ")
 
         # Drop anything that matches a known designation
         if designation_aliases.get(role_lower):
@@ -110,8 +114,7 @@ def sort_roles(roles: List[str], role_config=None) -> List[str]:
     role_priority = get_role_priority(role_config)
     designation_priority = get_designation_priority()
     return sorted(
-        roles,
-        key=lambda r: generic_sort_key(r, role_priority, designation_priority)
+        roles, key=lambda r: generic_sort_key(r, role_priority, designation_priority)
     )
 
 
@@ -121,33 +124,36 @@ def sort_people(people: List[Person], role_config=None) -> List[Person]:
 
     def person_sort_key(person: Person):
         role_priorities = [
-            role_priority.get(role.lower().strip(), 9999)
-            for role in person.roles
-        ] if person.roles else [9999]
-        min_role_priority = min(role_priorities)
+            role_priority.get(role.lower().strip(), UNRANKED) for role in person.roles
+        ]
 
-        designation_priorities = [
-            designation_priority.get(designation.lower().split()[0], 9999)
-            for designation in person.designations if designation
-        ] if person.designations else [9999]
-        min_designation_priority = min(designation_priorities)
+        designation_priorities = []
+        designation_numbers = []
+        for designation in person.designations:
+            words = designation.lower().split()
+            if not words:
+                continue
+            designation_priorities.append(designation_priority.get(words[0], UNRANKED))
+            number = extract_designation_value(designation)
+            if number is not None:
+                designation_numbers.append(number)
 
-        designation_numbers = [
-            extract_designation_value(designation)
-            for designation in person.designations if designation
-        ] if person.designations else [None]
-        min_designation_number = min([n for n in designation_numbers if n is not None], default=9999)
-
-        return (min_role_priority, min_designation_priority, min_designation_number)
+        return (
+            min(role_priorities, default=UNRANKED),
+            min(designation_priorities, default=UNRANKED),
+            min(designation_numbers, default=UNRANKED),
+        )
 
     return sorted(people, key=person_sort_key)
 
 
 def person_to_official(person: Person) -> Official:
-    office_names = list(dict.fromkeys(person.roles + designations_without_division(person.designations)))
+    office_names = list(
+        dict.fromkeys(person.roles + designations_without_division(person.designations))
+    )
     office_name = " - ".join(office_names) if office_names else "Unknown Office"
     return Official(
-        id="", # to be filled in later after resolving with API
+        id="",  # to be filled in later after resolving with API
         name=person.name,
         other_names=person.other_names,
         phones=person.phones,
@@ -157,7 +163,9 @@ def person_to_official(person: Person) -> Official:
         end_date=person.end_date or None,
         office=Office(
             name=office_name.title(),
-            division_ocdid=resolve_division(person.jurisdiction_ocdid, person.designations),
+            division_ocdid=resolve_division(
+                person.jurisdiction_ocdid, person.designations
+            ),
         ),
         image=person.image,
         jurisdiction_ocdid=person.jurisdiction_ocdid,
@@ -172,7 +180,9 @@ def official_to_person(official: Official) -> Person:
         name=official.name,
         other_names=official.other_names,
         roles=office_name_to_roles(official.office.name),
-        designations=division_ocdid_to_designation(official.office.division_ocdid, official.jurisdiction_ocdid),
+        designations=division_ocdid_to_designation(
+            official.office.division_ocdid, official.jurisdiction_ocdid
+        ),
         phones=official.phones,
         emails=official.emails,
         urls=official.urls,

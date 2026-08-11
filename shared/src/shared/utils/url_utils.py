@@ -1,5 +1,17 @@
 from urllib.parse import urlparse, urlunparse
 
+
+def is_valid_url(url: str):
+    """
+    Validates a URL by checking its scheme and netloc.
+    """
+    try:
+        result = urlparse(url)
+        return all([result.scheme in ("http", "https"), result.netloc])
+    except Exception:
+        return False
+
+
 def format_url(url: str):
     """
     Formats a URL into a canonical form for storage:
@@ -20,6 +32,7 @@ def format_url(url: str):
     )
     return urlunparse(normalized)
 
+
 def canonical_url(url: str) -> str:
     """
     Returns the canonical form of a URL for use as a dict key.
@@ -27,7 +40,10 @@ def canonical_url(url: str) -> str:
     Two URLs are equivalent iff their canonical forms are equal.
     """
     parsed = urlparse(format_url(url).rstrip("/"))
-    return urlunparse(parsed._replace(scheme="https", netloc=parsed.netloc.removeprefix("www."))).lower()
+    return urlunparse(
+        parsed._replace(scheme="https", netloc=parsed.netloc.removeprefix("www."))
+    ).lower()
+
 
 def same_url(url1: str, url2: str) -> bool:
     """
@@ -35,6 +51,7 @@ def same_url(url1: str, url2: str) -> bool:
     Treats http/https and www/non-www as equivalent.
     """
     return canonical_url(url1) == canonical_url(url2)
+
 
 def url_in_text(url: str, text: str) -> bool:
     """
@@ -44,8 +61,13 @@ def url_in_text(url: str, text: str) -> bool:
     text_lower = text.lower()
     if url_lower in text_lower:
         return True
-    www_variant = url_lower.replace("://", "://www.", 1) if "://www." not in url_lower else url_lower.replace("://www.", "://", 1)
+    www_variant = (
+        url_lower.replace("://", "://www.", 1)
+        if "://www." not in url_lower
+        else url_lower.replace("://www.", "://", 1)
+    )
     return www_variant in text_lower
+
 
 def extract_domain(url: str):
     """
@@ -57,6 +79,7 @@ def extract_domain(url: str):
         return parsed_url.netloc.lower()
     except Exception:
         return None
+
 
 def same_domain(domain: str, url: str) -> bool:
     """
@@ -78,21 +101,20 @@ def same_domain(domain: str, url: str) -> bool:
 
     return core_base_host == core_link_host
 
+
 def format_url_to_folder(url: str):
     """
     Formats a URL to be used as a folder name by replacing special characters with underscores.
     """
-    return url.replace("https://", "").replace("http://", "").replace("/", "_").replace(":", "_").replace(".", "_").lower()
+    return (
+        url.replace("https://", "")
+        .replace("http://", "")
+        .replace("/", "_")
+        .replace(":", "_")
+        .replace(".", "_")
+        .lower()
+    )
 
-def is_valid_url(url: str) -> bool:
-    """
-    Validates a URL by checking its scheme and netloc.
-    """
-    try:
-        result = urlparse(url)
-        return all([result.scheme in ("http", "https"), result.netloc])
-    except Exception:
-        return False
-    
+
 def get_path(url: str) -> str:
     return urlparse(url).path

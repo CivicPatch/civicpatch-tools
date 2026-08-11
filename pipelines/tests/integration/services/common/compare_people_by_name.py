@@ -1,11 +1,12 @@
-
-from runners.people_collector.schemas import RawLLMPerson
 from typing import List
+
+from runners.people_collector.schemas import RawLLMPersonRecord
 from utils.merge_utils import same_name
 
+
 def compare_people_by_name(
-    people_found: List[RawLLMPerson],
-    expected_people: List[RawLLMPerson],
+    people_found: List[RawLLMPersonRecord],
+    expected_people: List[RawLLMPersonRecord],
     ignore_fields: List[str] = None,
 ):
     """Helper to compare two lists of people by name, ignoring order, fields, and case.
@@ -30,7 +31,9 @@ def compare_people_by_name(
         if not any(same_name(expected_name, found_name) for found_name in found_names):
             assert False, f"Expected person not found: {expected_name}"
     for found_name in found_names:
-        if not any(same_name(found_name, expected_name) for expected_name in expected_names):
+        if not any(
+            same_name(found_name, expected_name) for expected_name in expected_names
+        ):
             assert False, f"Unexpected person found: {found_name}"
 
     for name, expected_person in expected_dict.items():
@@ -40,7 +43,9 @@ def compare_people_by_name(
             if same_name(name, found_name):
                 found_person = candidate
                 break
-        assert found_person is not None, f"Expected person not found for comparison: {name}"
+        assert found_person is not None, (
+            f"Expected person not found for comparison: {name}"
+        )
         for field in expected_person.model_fields:
             if field in ignore_fields or field == "name":
                 continue

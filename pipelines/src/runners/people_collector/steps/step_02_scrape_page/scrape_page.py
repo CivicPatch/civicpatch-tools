@@ -1,24 +1,48 @@
 import os
-from shared.utils import data_path_utils, url_utils, config_utils
+from typing import Literal
+
 import runners.people_collector.steps.step_02_scrape_page.browser as browser
 from runners.people_collector.schemas import (
-    PeopleCollectorContext, Link, LinkFrontier, LinkStatus, PipelineStatus
+    Link,
+    LinkFrontier,
+    LinkStatus,
+    PeopleCollectorContext,
+    PipelineStatus,
 )
-from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError
+from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
+    NavigationError,
+)
+from shared.utils import config_utils, data_path_utils, url_utils
 from utils import log_utils
 
 
-async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> tuple[LinkFrontier, str]:
+async def scrape_page(
+    context: PeopleCollectorContext, link_to_scrape: Link
+) -> tuple[LinkFrontier, str]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}")
+    logger.info(
+        f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}"
+    )
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
-    visit_order = sum(1 for l in context.data.frontier.links.values() if l.visit_order is not None) + 1
+    visit_order = (
+        sum(
+            1 for l in context.data.frontier.links.values() if l.visit_order is not None
+        )
+        + 1
+    )
     frontier = context.data.frontier.dequeue(link_to_scrape.url)
 
     try:
         image_directory = data_path_utils.get_images_path(jurisdiction_ocdid)
-        html_content, final_url = await browser.scrape(logger, link_to_scrape.url, { "image_directory": image_directory, "accordion_keywords": config_utils.governance_keywords() })
+        html_content, final_url = await browser.scrape(
+            logger,
+            link_to_scrape.url,
+            {
+                "image_directory": image_directory,
+                "accordion_keywords": config_utils.governance_keywords(),
+            },
+        )
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")
@@ -41,7 +65,19 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
 
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
-        failure_reason = e.reason.value if isinstance(e, NavigationError) else None
+        failure_reason: (
+            Literal[
+                "navigation_failure_net_timeout",
+                "navigation_failure_net_dns_failure",
+                "navigation_failure_net_connection_refused",
+                "navigation_failure_net_aborted",
+                "navigation_failure_http_403",
+                "navigation_failure_http_429",
+                "navigation_failure_http_5xx",
+                "navigation_failure_unknown",
+            ]
+            | None
+        ) = e.reason.value if isinstance(e, NavigationError) else None
         failure_source = e.source if isinstance(e, NavigationError) else None
         frontier = frontier.update_link(
             link_to_scrape.url,
