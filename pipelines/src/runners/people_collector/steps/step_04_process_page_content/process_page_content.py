@@ -117,10 +117,6 @@ async def process_page_content(
         "should never happen — research_municipality_step is required before process_page_content"
     )
 
-    assert context.data.role_config is not None, (
-        "should never happen — role_config is required before process_page_content"
-    )
-
     research = context.data.research_municipality_step
     taxonomy = build_taxonomy(context.data.role_config)
     known_roles = research.known_roles

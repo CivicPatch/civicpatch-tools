@@ -1,10 +1,9 @@
 import os
 from decimal import Decimal, InvalidOperation
-from typing import Callable, Dict, List, Optional
+from typing import Dict, List, Optional
 
 import yaml
 from shared.schemas import JobConfig, RoleConfig, RoleDefinition
-from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 # In-memory cache for config files
 _config_cache = {}
@@ -142,31 +141,3 @@ def get_keywords() -> List[str]:
         | set(governance_keywords())
         | set(extra_keywords)
     )
-
-
-def merge_role_configs(*configs: RoleConfig) -> RoleConfig:
-    roles: Dict[str, RoleDefinition] = {}
-    for cfg in configs:
-        for entry in cfg.roles:
-            roles[entry.role.lower()] = entry
-    return RoleConfig(roles=list(roles.values()))
-
-
-def load_role_config_for_jurisdiction(
-    jurisdiction_ocdid: str,
-    fetch_remote: Callable[[str], Optional[str]],
-) -> RoleConfig:
-    folder = jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    state, output_type, locality = folder.split("/")
-    paths = [
-        f"data_source/{output_type}/config.yml",
-        f"data_source/{state}/config.yml",
-        f"data_source/{state}/{output_type}/config.yml",
-        f"data_source/{state}/{output_type}/{locality}/config.yml",
-    ]
-    configs = []
-    for path in paths:
-        raw = fetch_remote(path)
-        if raw is not None:
-            configs.append(RoleConfig.model_validate(yaml.safe_load(raw)))
-    return merge_role_configs(*configs)

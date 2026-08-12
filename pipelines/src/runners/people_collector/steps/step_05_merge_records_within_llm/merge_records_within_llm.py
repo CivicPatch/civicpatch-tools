@@ -33,10 +33,6 @@ def merge_records_within_llm(
         "should never happen — research_municipality_step is required before merge_records_within_llm"
     )
 
-    assert context.data.role_config is not None, (
-        "should never happen - role_config is set before merge_records_within_llm"
-    )
-
     taxonomy = build_taxonomy(context.data.role_config)
 
     records = context.data.process_page_content_step.records
