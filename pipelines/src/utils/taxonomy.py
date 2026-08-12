@@ -1,8 +1,8 @@
 from typing import NamedTuple
 
 from rapidfuzz import fuzz, process
+from shared.schemas import RoleConfig
 from shared.utils import config_utils
-from shared.utils.config_utils import RoleConfig
 
 FUZZY_SCORE_CUTOFF = 85
 UNRANKED = float("inf")

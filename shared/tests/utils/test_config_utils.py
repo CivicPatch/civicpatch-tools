@@ -1,13 +1,12 @@
+from shared.schemas import RoleConfig, RoleDefinition
 from shared.utils.config_utils import (
-    RoleConfig,
-    RoleEntry,
     load_role_config_for_jurisdiction,
     merge_role_configs,
 )
 
 
 def _make_config(roles=None) -> RoleConfig:
-    return RoleConfig(roles=[RoleEntry(**r) for r in (roles or [])])
+    return RoleConfig(roles=[RoleDefinition(**r) for r in (roles or [])])
 
 
 # --- merge_role_configs ---

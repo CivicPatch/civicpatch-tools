@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, patch
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
 from schemas.common import Identity, Role
-from shared.utils.config_utils import RoleConfig, RoleEntry
+from shared.schemas import RoleConfig, RoleDefinition
 
 
 def _identity(role: Role) -> Identity:
@@ -38,7 +38,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin"
 
 @pytest.mark.unit
 def test_get_global_config_happy():
-    config = RoleConfig(roles=[RoleEntry(role="Mayor", is_unique=False, aliases=["mayor"])])
+    config = RoleConfig(roles=[RoleDefinition(role="Mayor", is_unique=False, aliases=["mayor"])])
     with patch("services.role_config.load_global_config", new_callable=AsyncMock, return_value=config):
         response = _client(Role.MAINTAINERS).get("/jurisdictions/config/global")
 
@@ -79,7 +79,7 @@ def test_put_global_config_forbidden_for_maintainer():
 
 @pytest.mark.unit
 def test_get_jurisdiction_config_happy():
-    per_level = {"global": RoleConfig(roles=[RoleEntry(role="Mayor", aliases=[])])}
+    per_level = {"global": RoleConfig(roles=[RoleDefinition(role="Mayor", aliases=[])])}
     with patch(
         "services.role_config.load_role_config_per_level",
         new_callable=AsyncMock,
@@ -89,7 +89,7 @@ def test_get_jurisdiction_config_happy():
 
     assert response.status_code == 200
     roles = response.json()["data"]["roles"]
-    assert any(r["role"] == "Mayor" and r["source"] == "global" for r in roles)
+    assert any(r["role"] == "Mayor" and r["scope"] == "global" for r in roles)
 
 
 @pytest.mark.unit

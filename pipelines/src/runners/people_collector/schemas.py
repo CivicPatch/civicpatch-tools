@@ -4,8 +4,7 @@ from typing import Dict, List, Optional, TypeAlias
 from domain.models import Official, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
-from shared.schemas import Issue, PipelineRunConfig
-from shared.utils.config_utils import RoleConfig
+from shared.schemas import Issue, PipelineRunConfig, RoleConfig
 from shared.utils.statuses import PipelineRunStatus
 
 

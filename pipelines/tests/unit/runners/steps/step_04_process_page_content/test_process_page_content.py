@@ -22,12 +22,12 @@ from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
     has_role_and_contact_info,
 )
-from shared.utils.config_utils import RoleConfig, RoleEntry
+from shared.schemas import RoleConfig, RoleDefinition
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from utils.taxonomy import build_taxonomy
 
 _ROLE_TAXONOMY = build_taxonomy(
-    RoleConfig(roles=[RoleEntry(role="mayor"), RoleEntry(role="council")])
+    RoleConfig(roles=[RoleDefinition(role="mayor"), RoleDefinition(role="council")])
 )
 
 

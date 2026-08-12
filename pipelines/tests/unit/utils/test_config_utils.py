@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch
-from shared.utils.config_utils import get_role_alias_map, RoleEntry
+from shared.schemas import RoleDefinition
+from shared.utils.config_utils import get_role_alias_map
 
 pytestmark = pytest.mark.unit
 
@@ -8,8 +9,8 @@ pytestmark = pytest.mark.unit
 @patch('shared.utils.config_utils.get_role_configs')
 def test_get_role_alias_map_basic(mock_get_role_configs):
     mock_get_role_configs.return_value = [
-        RoleEntry(role="Mayor", aliases=["Head of City", "City Leader"]),
-        RoleEntry(role="Council Member", aliases=["CM", "Board Member"]),
+        RoleDefinition(role="Mayor", aliases=["Head of City", "City Leader"]),
+        RoleDefinition(role="Council Member", aliases=["CM", "Board Member"]),
     ]
     result = get_role_alias_map()
     assert result == {
@@ -31,7 +32,7 @@ def test_get_role_alias_map_empty(mock_get_role_configs):
 @patch('shared.utils.config_utils.get_role_configs')
 def test_get_role_alias_map_case_insensitive(mock_get_role_configs):
     mock_get_role_configs.return_value = [
-        RoleEntry(role="Mayor", aliases=["Head of City"]),
+        RoleDefinition(role="Mayor", aliases=["Head of City"]),
     ]
     result = get_role_alias_map()
     assert result["mayor"] == "Mayor"

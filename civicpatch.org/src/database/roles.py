@@ -7,8 +7,7 @@ import json
 from enum import Enum
 
 from database.database import get_pool
-from schemas.jurisdictions import RoleEntryData
-from shared.utils.config_utils import RoleConfig, RoleEntry
+from shared.schemas import RoleConfig, RoleDefinition
 
 
 class TermOp(str, Enum):
@@ -32,7 +31,9 @@ def _state_ocdid_from_ocdid(ocdid: str) -> str | None:
     return None
 
 
-async def _fetch_terms_at_scope(cur, jurisdiction_ocdid: str | None) -> list[RoleEntry]:
+async def _fetch_terms_at_scope(
+    cur, jurisdiction_ocdid: str | None
+) -> list[RoleDefinition]:
     """Fetch all role_terms at a single scope, with active aliases."""
     await cur.execute(
         """
@@ -51,7 +52,7 @@ async def _fetch_terms_at_scope(cur, jurisdiction_ocdid: str | None) -> list[Rol
         (jurisdiction_ocdid,),
     )
     return [
-        RoleEntry(role=value, is_unique=is_unique, aliases=aliases)
+        RoleDefinition(role=value, is_unique=is_unique, aliases=aliases)
         for value, is_unique, aliases in await cur.fetchall()
     ]
 
@@ -88,7 +89,7 @@ async def get_global_config() -> RoleConfig:
 
 
 def classify_term_op(
-    entry: RoleEntryData,
+    entry: RoleDefinition,
     term_exists: bool,
     existing_is_unique: bool | None = None,
 ) -> tuple[TermOp, str | None]:
@@ -113,7 +114,7 @@ def diff_aliases(existing: set[str], incoming: list[str]) -> tuple[set[str], set
 
 
 def build_event_payload(
-    entry: RoleEntryData,
+    entry: RoleDefinition,
     aliases_added: set[str],
     aliases_removed: set[str],
 ) -> dict:
@@ -182,7 +183,7 @@ async def _emit_change_log(
 
 async def replace_roles_at_scope(
     jurisdiction_ocdid: str | None,
-    entries: list[RoleEntryData],
+    entries: list[RoleDefinition],
     user_id: str | None,
 ) -> None:
     """Replace all role_terms at a given scope. Emits one change_log per

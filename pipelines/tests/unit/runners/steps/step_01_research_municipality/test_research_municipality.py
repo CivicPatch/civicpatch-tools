@@ -1,14 +1,14 @@
 import pytest
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import _known_roles_from_db
-from shared.utils.config_utils import RoleConfig, RoleEntry
+from shared.schemas import RoleConfig, RoleDefinition
 from utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
 
 _ROLE_CONFIG = RoleConfig(roles=[
-    RoleEntry(role="Mayor"),
-    RoleEntry(role="Council Member"),
-    RoleEntry(role="Council President"),
+    RoleDefinition(role="Mayor"),
+    RoleDefinition(role="Council Member"),
+    RoleDefinition(role="Council President"),
 ])
 
 _TAXONOMY = build_taxonomy(_ROLE_CONFIG)

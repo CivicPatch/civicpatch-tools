@@ -6,7 +6,6 @@ from typing import List, Optional
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, field_validator
-
 from shared.utils.phone_utils import normalize_phone_number
 
 
@@ -38,7 +37,9 @@ class Official(BaseModel):
             return v
         patterns = [r"^\d{4}$", r"^\d{4}-\d{2}$", r"^\d{4}-\d{2}-\d{2}$"]
         if not any(re.match(p, v) for p in patterns):
-            raise ValueError("Start date must be in format YYYY, YYYY-MM, or YYYY-MM-DD")
+            raise ValueError(
+                "Start date must be in format YYYY, YYYY-MM, or YYYY-MM-DD"
+            )
         return v
 
     @field_validator("end_date")
@@ -62,7 +63,9 @@ class Official(BaseModel):
             try:
                 canonical = normalize_phone_number(phone)
             except ValueError as e:
-                raise ValueError(f"Invalid phone number: '{phone}' (phonenumbers failed to parse)") from e
+                raise ValueError(
+                    f"Invalid phone number: '{phone}' (phonenumbers failed to parse)"
+                ) from e
             if not canonical:
                 raise ValueError(f"Invalid phone number: '{phone}'")
             normalized.append(canonical)
@@ -74,7 +77,9 @@ class Official(BaseModel):
         email_pattern = r"^[^@]+@[^@]+$"
         for email in v:
             if not re.match(email_pattern, email):
-                raise ValueError(f"Email must be in format 'anything@anything', got: '{email}'")
+                raise ValueError(
+                    f"Email must be in format 'anything@anything', got: '{email}'"
+                )
         return v
 
     @field_validator("urls", "source_urls")
@@ -85,10 +90,14 @@ class Official(BaseModel):
             if not url or not url.strip():
                 continue
             if not url.startswith(("http://", "https://")):
-                raise ValueError(f"Website must start with 'http://' or 'https://', got: '{url}'")
+                raise ValueError(
+                    f"Website must start with 'http://' or 'https://', got: '{url}'"
+                )
             parsed = urlparse(url)
             if not parsed.netloc or "." not in parsed.netloc:
-                raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
+                raise ValueError(
+                    f"Website must be a valid URL with a domain, got: '{url}'"
+                )
             cleaned.append(url)
         return cleaned
 
@@ -98,7 +107,9 @@ class Official(BaseModel):
         datetime_pattern = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$"
         if not re.match(datetime_pattern, v):
             expected_format = datetime.now(timezone.utc).isoformat(timespec="seconds")
-            raise ValueError(f"DateTime must be in format '{expected_format}', got: '{v}'")
+            raise ValueError(
+                f"DateTime must be in format '{expected_format}', got: '{v}'"
+            )
         try:
             datetime.fromisoformat(v)
         except ValueError:
@@ -110,10 +121,14 @@ class Official(BaseModel):
     def validate_source_urls(cls, v):
         for url in v:
             if not url.startswith(("http://", "https://")):
-                raise ValueError(f"Source URL must start with 'http://' or 'https://', got: '{url}'")
+                raise ValueError(
+                    f"Source URL must start with 'http://' or 'https://', got: '{url}'"
+                )
             parsed = urlparse(url)
             if not parsed.netloc or "." not in parsed.netloc:
-                raise ValueError(f"Source URL must be a valid URL with a domain, got: '{url}'")
+                raise ValueError(
+                    f"Source URL must be a valid URL with a domain, got: '{url}'"
+                )
         return v
 
 
@@ -211,3 +226,13 @@ class Issue(BaseModel):
     # "office.name" — absent for whole-row / list-level issues.
     person_ids: List[str] = []
     field: Optional[str] = None
+
+
+class RoleDefinition(BaseModel):
+    role: str
+    is_unique: bool = False
+    aliases: List[str] = []
+
+
+class RoleConfig(BaseModel):
+    roles: List[RoleDefinition] = []

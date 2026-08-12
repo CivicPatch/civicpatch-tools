@@ -5,7 +5,7 @@ from runners.people_collector.schemas import LLMPersonRecord
 from runners.people_collector.steps.step_05_merge_records_within_llm.normalize import (
     normalize_record,
 )
-from shared.utils.config_utils import RoleConfig
+from shared.schemas import RoleConfig
 from utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
