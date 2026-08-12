@@ -150,15 +150,8 @@ erDiagram
 
     roles {
         uuid            id                  PK
-        text            key                 "unique; slug identity, never renamed"
-        timestamptz     created_at
-    }
-
-    role_entries {
-        uuid            id                  PK
-        uuid            role_id             FK  "idx; unique: (role_id, scope) NULLS NOT DISTINCT"
+        text            label               "unique: (label, scope) NULLS NOT DISTINCT"
         text_null       scope               "idx; NULL=global, state ocdid=state, place ocdid=local"
-        text_null       label               "NULL = inherit from a broader scope"
         text_null       status              "check: active|candidate|rejected; NULL = inherit"
         bool_null       is_unique           "NULL = inherit"
         int_null        priority            "NULL = inherit"
@@ -179,8 +172,8 @@ erDiagram
     change_log_types ||--o{ change_logs : "type"
     users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
     jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
+    roles ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
-    roles ||--o{ role_entries : "role_id (ON DELETE CASCADE)"
 ```
 
 **Notes:**
@@ -189,7 +182,7 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
-- `roles` / `role_entries` replaced `role_terms` / `role_aliases` in migration 106. `roles` is the concept and owns nothing but identity, so a rename (#2476) is one `UPDATE` with no FK churn; `role_entries` is what one scope says about a role, and a NULL column means "inherit from a broader scope" — which is why a city that renames its body writes one row carrying a `label` and nothing else. Resolution reads the rows for a role where `scope IN (NULL, state, place)`: scalars take the most-specific non-null value, `aliases` are **unioned** across scopes rather than overridden. `role_entries_global_complete` enforces that the global row carries a `label` and `status`, so resolution always terminates with something renderable instead of needing a fallback — revisit it under #2470, which removes the global scope. The old `kind: canonical|exclusion` became `status`, since all three exclusion rows were real offices (city attorney, city manager, city secretary) excluded as appointed rather than elected — a policy about scope, not a fact about vocabulary. The retired `exclude_role` / `include_role` change-log types stay in `change_log_types`: existing `change_logs` rows FK to them.
+- `roles` replaced `role_terms` / `role_aliases` in migration 106. `label` is the identity (no separate `roles` table — rename is one `UPDATE` with no FK churn); a NULL column means "inherit from a broader scope" — which is why a city that renames its body writes one row carrying a `label` and nothing else. Resolution reads the rows for a role where `scope IN (NULL, state, place)`: scalars take the most-specific non-null value, `aliases` are **unioned** across scopes rather than overridden. `roles_global_complete` enforces that the global row carries a `label` and `status`, so resolution always terminates with something renderable instead of needing a fallback — revisit it under #2470, which removes the global scope. The old `kind: canonical|exclusion` became `status`, since all three exclusion rows were real offices (city attorney, city manager, city secretary) excluded as appointed rather than elected — a policy about scope, not a fact about vocabulary. The retired `exclude_role` / `include_role` change-log types stay in `change_log_types`: existing `change_logs` rows FK to them.
 - `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
 - `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key

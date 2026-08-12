@@ -21,7 +21,7 @@ from database.roles import (
     reorder_roles_at_scope,
     replace_roles_at_scope,
 )
-from shared.schemas import RoleDefinition
+from shared.schemas import RoleConfig, Role
 
 _SCOPE = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 
@@ -29,8 +29,7 @@ _SCOPE = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 async def _wipe_scope():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # role_aliases cascade via role_terms FK
-        await cur.execute("DELETE FROM role_terms WHERE jurisdiction_ocdid = %s", (_SCOPE,))
+        await cur.execute("DELETE FROM roles WHERE scope = %s", (_SCOPE,))
         await cur.execute("DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_SCOPE,))
         await conn.commit()
 
@@ -43,10 +42,8 @@ async def clean_scope():
 
 
 def _entry(role, aliases=None, is_unique=False):
-    # cast to satisfy Literal["canonical","exclusion"] at the model boundary;
-    # the model raises on anything else via its Literal validation anyway.
-    return RoleDefinition.model_validate({
-        "role": role,
+    return Role.model_validate({
+        "label": role,
         "is_unique": is_unique,
         "aliases": aliases or [],
     })
@@ -68,7 +65,7 @@ async def _change_log_types():
 
 async def _canonical_order(ocdid=_SCOPE):
     local = await _locality_config(ocdid)
-    return [r.role for r in local.roles]
+    return [r.key for r in local.roles]
 
 
 async def _reorder_logs():
@@ -97,9 +94,9 @@ async def test_add_roles_round_trip():
         None,
     )
     local = await _locality_config()
-    names = {r.role for r in local.roles}
+    names = {r.key for r in local.roles}
     assert {"Mayor", "Council Member"} <= names
-    mayor = next(r for r in local.roles if r.role == "Mayor")
+    mayor = next(r for r in local.roles if r.key == "Mayor")
     assert "mayor" in mayor.aliases
 
 
@@ -122,7 +119,7 @@ async def test_removed_role_is_deleted():
     await replace_roles_at_scope(_SCOPE, [_entry("Mayor")], None)
 
     local = await _locality_config()
-    names = {r.role for r in local.roles}
+    names = {r.key for r in local.roles}
     assert "Mayor" in names
     assert "Clerk" not in names
     assert "delete_role" in {r[0] for r in await _change_log_types()}
@@ -135,7 +132,7 @@ async def test_alias_sync_adds_and_disables():
     await replace_roles_at_scope(_SCOPE, [_entry("Mayor", ["mayor", "the mayor"])], None)
 
     local = await _locality_config()
-    mayor = next(r for r in local.roles if r.role == "Mayor")
+    mayor = next(r for r in local.roles if r.key == "Mayor")
     assert "mayor" in mayor.aliases
     assert "the mayor" in mayor.aliases
     assert "hizzoner" not in mayor.aliases
@@ -150,7 +147,7 @@ async def test_delete_role_hard_deletes_and_emits_log():
     await delete_role("Mayor", _SCOPE, None)
 
     local = await _locality_config()
-    assert "Mayor" not in {r.role for r in local.roles}
+    assert "Mayor" not in {r.key for r in local.roles}
     assert "delete_role" in {r[0] for r in await _change_log_types()}
 
 
@@ -179,7 +176,7 @@ async def test_replace_handles_mixed_ops_in_one_call():
     )
 
     local = await _locality_config()
-    by_value = {r.role: r for r in local.roles}
+    by_value = {r.key: r for r in local.roles}
 
     assert "Mayor" in by_value
     assert "Clerk" not in by_value

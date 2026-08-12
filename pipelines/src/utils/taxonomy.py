@@ -24,7 +24,7 @@ class Taxonomy(NamedTuple):
 
 
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
-    role_entries = config_utils.get_role_configs(role_config)
+    roles = config_utils.get_role_configs(role_config)
     designations = config_utils.get_designations()
     role_aliases = _keyed_aliases(config_utils.get_role_alias_map(role_config))
     designation_aliases = _keyed_aliases(config_utils.get_designation_alias_map())
@@ -33,7 +33,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
         role_aliases=role_aliases,
         designation_aliases=designation_aliases,
         role_priority={
-            lookup_key(entry.role): i for i, entry in enumerate(role_entries)
+            entry.label: i for i, entry in enumerate(roles)
         },
         designation_priority={
             lookup_key(name): i for i, name in enumerate(designations)
@@ -68,8 +68,7 @@ def _fuzzy_match(label_key: str, aliases: dict[str, str]) -> str | None:
 
 
 def role_sort_key(role: str, taxonomy: Taxonomy) -> tuple:
-    role_key = lookup_key(role)
-    return (taxonomy.role_priority.get(role_key, UNRANKED), role_key)
+    return (taxonomy.role_priority.get(role, UNRANKED), role)
 
 
 def _value_sort_key(rest: str) -> tuple[int, int, str]:
@@ -122,18 +121,49 @@ def sort_designations(designations: list[str], taxonomy: Taxonomy) -> list[str]:
 
 
 WORD_TO_NUMBER = {
-    "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
-    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
-    "first": "1", "second": "2", "third": "3", "fourth": "4", "fifth": "5",
-    "sixth": "6", "seventh": "7", "eighth": "8", "ninth": "9", "tenth": "10",
-    "eleventh": "11", "twelfth": "12", "thirteenth": "13", "fourteenth": "14",
-    "fifteenth": "15", "sixteenth": "16", "seventeenth": "17", "eighteenth": "18",
-    "nineteenth": "19", "twentieth": "20",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9",
+    "ten": "10",
+    "first": "1",
+    "second": "2",
+    "third": "3",
+    "fourth": "4",
+    "fifth": "5",
+    "sixth": "6",
+    "seventh": "7",
+    "eighth": "8",
+    "ninth": "9",
+    "tenth": "10",
+    "eleventh": "11",
+    "twelfth": "12",
+    "thirteenth": "13",
+    "fourteenth": "14",
+    "fifteenth": "15",
+    "sixteenth": "16",
+    "seventeenth": "17",
+    "eighteenth": "18",
+    "nineteenth": "19",
+    "twentieth": "20",
 }
 
 _ROMAN_MAP = {
-    "i": "1", "ii": "2", "iii": "3", "iv": "4", "v": "5",
-    "vi": "6", "vii": "7", "viii": "8", "ix": "9", "x": "10",
+    "i": "1",
+    "ii": "2",
+    "iii": "3",
+    "iv": "4",
+    "v": "5",
+    "vi": "6",
+    "vii": "7",
+    "viii": "8",
+    "ix": "9",
+    "x": "10",
 }
 
 
@@ -218,7 +248,11 @@ def _apply_matches(
         return [" ".join(_normalize_word(w) for w in words)]
 
     # single keyword at end with prefix: "North Ward" → "Ward North", "Council District 3" → "District 3"
-    if len(matches) == 1 and matches[0]["start"] > 0 and matches[0]["end"] == len(words):
+    if (
+        len(matches) == 1
+        and matches[0]["start"] > 0
+        and matches[0]["end"] == len(words)
+    ):
         prefix = " ".join(words[: matches[0]["start"]])
         return [_format_type_content(matches[0]["type"], prefix)]
 

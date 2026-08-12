@@ -1,13 +1,13 @@
 from typing import List, Literal, Optional
 
 from pydantic import BaseModel, Field
-from shared.schemas import RoleDefinition
+from shared.schemas import Role
 
 Scope = Literal["global", "state", "locality"]
 WritableScope = Literal["state", "locality"]  # global has its own endpoints
 
 
-class ScopedRole(RoleDefinition):
+class ScopedRole(Role):
     scope: Scope
 
 
@@ -22,12 +22,12 @@ class MergedRoleConfigResponse(BaseModel):
 class SetScopeRolesRequest(BaseModel):
     ocdid: str
     scope: WritableScope
-    roles: List[RoleDefinition]
+    roles: List[Role]
     issue_id: Optional[str] = None
 
 
 class SetGlobalRolesRequest(BaseModel):
-    roles: List[RoleDefinition]
+    roles: List[Role]
 
 
 class ReorderGlobalRolesRequest(BaseModel):

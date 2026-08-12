@@ -18,7 +18,7 @@ from runners.people_collector.steps.step_05_merge_records_within_llm.merge_recor
     merge_records_within_llm,
     merge_weak_tie_groups_within_llm,
 )
-from shared.schemas import RoleConfig, RoleDefinition
+from shared.schemas import RoleConfig, Role
 from utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -32,11 +32,11 @@ EMPTY_ROLE_CONFIG = RoleConfig(roles=[])
 # with the roles the fixtures actually use.
 ROLE_CONFIG = RoleConfig(
     roles=[
-        RoleDefinition(role="Mayor", is_unique=True),
-        RoleDefinition(role="Mayor Pro Tempore", is_unique=True),
-        RoleDefinition(role="Council Member"),
-        RoleDefinition(role="Commissioner"),
-        RoleDefinition(role="Treasurer", is_unique=True),
+        Role(label="Mayor", is_unique=True),
+        Role(label="Mayor Pro Tempore", is_unique=True),
+        Role(label="Council Member"),
+        Role(label="Commissioner"),
+        Role(label="Treasurer", is_unique=True),
     ]
 )
 

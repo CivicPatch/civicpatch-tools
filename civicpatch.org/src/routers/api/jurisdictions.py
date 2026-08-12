@@ -222,7 +222,14 @@ def get_router() -> APIRouter:
     ):
         config = await role_config_service.load_global_config()
         roles = [
-            {"role": r.role, "is_unique": r.is_unique, "aliases": r.aliases}
+            {
+                "role": r.label,
+                "label": r.label,
+                "status": r.status,
+                "is_unique": r.is_unique,
+                "priority": r.priority,
+                "aliases": r.aliases,
+            }
             for r in config.roles
         ]
         return {"data": {"roles": roles}}
