@@ -148,24 +148,21 @@ erDiagram
         timestamptz     created_at          "idx: created_at DESC, default: now()"
     }
 
-    role_terms {
+    roles {
         uuid            id                  PK
-        text            value               "unique: (value, jurisdiction_ocdid)"
-        text            kind                "check: canonical|exclusion — CLEANUP TBD, see notes"
-        text_null       jurisdiction_ocdid  "NULL=global, state ocdid=state, place ocdid=local"
-        text_null       display_name
-        bool            is_unique
-        int             priority
+        text            key                 "unique; slug identity, never renamed"
         timestamptz     created_at
     }
 
-    role_aliases {
+    role_entries {
         uuid            id                  PK
-        uuid            term_id             FK  "unique: (term_id, value) WHERE disabled_at IS NULL"
-        text            value               "idx: value WHERE disabled_at IS NULL"
-        text            source              "check: curated|confirmed|learned"
-        real_null       confidence
-        timestamptz_null disabled_at
+        uuid            role_id             FK  "idx; unique: (role_id, scope) NULLS NOT DISTINCT"
+        text_null       scope               "idx; NULL=global, state ocdid=state, place ocdid=local"
+        text_null       label               "NULL = inherit from a broader scope"
+        text_null       status              "check: active|candidate|rejected; NULL = inherit"
+        bool_null       is_unique           "NULL = inherit"
+        int_null        priority            "NULL = inherit"
+        text_array      aliases             "idx: GIN; this scope's contribution, unioned on read"
         timestamptz     created_at
     }
 
@@ -183,7 +180,7 @@ erDiagram
     users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
     jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
-    role_terms ||--o{ role_aliases : "term_id (ON DELETE CASCADE)"
+    roles ||--o{ role_entries : "role_id (ON DELETE CASCADE)"
 ```
 
 **Notes:**
@@ -192,7 +189,7 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
-- **`role_terms.kind` — CLEANUP TBD.** Exclusions were removed from the codebase; every term is now a role. The column is still `NOT NULL` with no default, so the INSERT in `database/roles.py` writes the literal `'canonical'` — that literal is the only remaining `kind` mention in Python. Dropping it needs a migration that (a) decides what to do with the pre-existing `kind = 'exclusion'` rows, which are now readable as ordinary roles, and (b) removes the `role_terms_kind_check` constraint. No index keys off `kind`. The retired `exclude_role` / `include_role` change-log types are left in `change_log_types` for the same reason: existing `change_logs` rows FK to them.
+- `roles` / `role_entries` replaced `role_terms` / `role_aliases` in migration 106. `roles` is the concept and owns nothing but identity, so a rename (#2476) is one `UPDATE` with no FK churn; `role_entries` is what one scope says about a role, and a NULL column means "inherit from a broader scope" — which is why a city that renames its body writes one row carrying a `label` and nothing else. Resolution reads the rows for a role where `scope IN (NULL, state, place)`: scalars take the most-specific non-null value, `aliases` are **unioned** across scopes rather than overridden. `role_entries_global_complete` enforces that the global row carries a `label` and `status`, so resolution always terminates with something renderable instead of needing a fallback — revisit it under #2470, which removes the global scope. The old `kind: canonical|exclusion` became `status`, since all three exclusion rows were real offices (city attorney, city manager, city secretary) excluded as appointed rather than elected — a policy about scope, not a fact about vocabulary. The retired `exclude_role` / `include_role` change-log types stay in `change_log_types`: existing `change_logs` rows FK to them.
 - `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
 - `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key
