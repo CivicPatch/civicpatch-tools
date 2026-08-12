@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import leaderboard as leaderboard_router
 
@@ -12,7 +12,7 @@ MOCK_IDENTITY = Identity(
     provider="system",
     provider_user_id="test-user",
     email="test@civicpatch.org",
-    teams=[Role.DEFAULT],
+    teams=[UserRole.DEFAULT],
     user_id="user-id-123",
 )
 

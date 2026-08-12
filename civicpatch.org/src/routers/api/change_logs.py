@@ -5,15 +5,15 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 import database.change_logs as database
 from lib.auth import get_optional_user
 from schemas.change_logs import ChangeLogBucket, ChangeLogEntry
-from schemas.common import Identity, Role, has_at_least
+from schemas.common import Identity, UserRole, has_at_least
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 # The activity bucket is visible to any logged-in user (route mount enforces
 # AUTHENTICATED). The quarantine bucket — which surfaces unreviewed content
 # from untrusted authors — is additionally gated to MAINTAINERS+ here.
 _BUCKET_ROLES = {
-    ChangeLogBucket.QUARANTINE: [Role.DEFAULT.value],
-    ChangeLogBucket.ACTIVITY: [Role.CONTRIBUTORS.value, Role.MAINTAINERS.value, Role.ADMINS.value],
+    ChangeLogBucket.QUARANTINE: [UserRole.DEFAULT.value],
+    ChangeLogBucket.ACTIVITY: [UserRole.CONTRIBUTORS.value, UserRole.MAINTAINERS.value, UserRole.ADMINS.value],
 }
 
 
@@ -40,7 +40,7 @@ def get_router() -> APIRouter:
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         if bucket == ChangeLogBucket.QUARANTINE and not has_at_least(
-            identity.role if identity else None, Role.MAINTAINERS
+            identity.role if identity else None, UserRole.MAINTAINERS
         ):
             raise HTTPException(status_code=403, detail="Quarantine is restricted")
         offset = (page - 1) * per_page

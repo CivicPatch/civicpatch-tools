@@ -10,11 +10,11 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from shared.schemas import Role, RoleConfig
 
 
-def _identity(role: Role) -> Identity:
+def _identity(role: UserRole) -> Identity:
     return Identity(
         type="cookie",
         provider="supabase",
@@ -24,7 +24,7 @@ def _identity(role: Role) -> Identity:
     )
 
 
-def _client(role: Role) -> TestClient:
+def _client(role: UserRole) -> TestClient:
     app = FastAPI()
     app.dependency_overrides[get_optional_user] = lambda: _identity(role)
     app.include_router(jurisdictions_router.get_router(), prefix="/jurisdictions")
@@ -39,22 +39,31 @@ _OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin"
 
 @pytest.mark.unit
 def test_get_global_config_happy():
-    config = RoleConfig(roles=[Role(role="Mayor", is_unique=False, aliases=["mayor"])])
+    config = RoleConfig(roles=[Role(label="Mayor", is_unique=False, aliases=["mayor"])])
     with patch(
         "services.role_config.load_global_config",
         new_callable=AsyncMock,
         return_value=config,
     ):
-        response = _client(Role.MAINTAINERS).get("/jurisdictions/config/global")
+        response = _client(UserRole.MAINTAINERS).get("/jurisdictions/config/global")
 
     assert response.status_code == 200
     roles = response.json()["data"]["roles"]
-    assert roles == [{"role": "Mayor", "is_unique": False, "aliases": ["mayor"]}]
+    assert roles == [
+        {
+            "role": "Mayor",
+            "label": "Mayor",
+            "status": None,
+            "is_unique": False,
+            "priority": None,
+            "aliases": ["mayor"],
+        }
+    ]
 
 
 @pytest.mark.unit
 def test_get_global_config_forbidden_below_maintainer():
-    response = _client(Role.CONTRIBUTORS).get("/jurisdictions/config/global")
+    response = _client(UserRole.CONTRIBUTORS).get("/jurisdictions/config/global")
     assert response.status_code == 403
 
 
@@ -63,11 +72,11 @@ def test_get_global_config_forbidden_below_maintainer():
 
 @pytest.mark.unit
 def test_put_global_config_happy():
-    body = {"roles": [{"role": "Mayor", "aliases": ["mayor"]}]}
+    body = {"roles": [{"label": "Mayor", "aliases": ["mayor"]}]}
     with patch(
         "services.role_config.set_global_roles", new_callable=AsyncMock
     ) as mock_set:
-        response = _client(Role.ADMINS).put("/jurisdictions/config/global", json=body)
+        response = _client(UserRole.ADMINS).put("/jurisdictions/config/global", json=body)
 
     assert response.status_code == 200
     assert response.json()["data"] == {"ok": True}
@@ -77,7 +86,7 @@ def test_put_global_config_happy():
 @pytest.mark.unit
 def test_put_global_config_forbidden_for_maintainer():
     body = {"roles": []}
-    response = _client(Role.MAINTAINERS).put("/jurisdictions/config/global", json=body)
+    response = _client(UserRole.MAINTAINERS).put("/jurisdictions/config/global", json=body)
     assert response.status_code == 403
 
 
@@ -86,19 +95,19 @@ def test_put_global_config_forbidden_for_maintainer():
 
 @pytest.mark.unit
 def test_get_jurisdiction_config_happy():
-    per_level = {"global": RoleConfig(roles=[Role(role="Mayor", aliases=[])])}
+    per_level = {"global": RoleConfig(roles=[Role(label="Mayor", aliases=[])])}
     with patch(
         "services.role_config.load_role_config_per_level",
         new_callable=AsyncMock,
         return_value=per_level,
     ):
-        response = _client(Role.MAINTAINERS).get(
+        response = _client(UserRole.MAINTAINERS).get(
             "/jurisdictions/config", params={"ocdid": _OCDID}
         )
 
     assert response.status_code == 200
     roles = response.json()["data"]["roles"]
-    assert any(r["role"] == "Mayor" and r["scope"] == "global" for r in roles)
+    assert any(r["label"] == "Mayor" and r["scope"] == "global" for r in roles)
 
 
 @pytest.mark.unit
@@ -108,7 +117,7 @@ def test_get_jurisdiction_config_invalid_ocdid_is_400():
         new_callable=AsyncMock,
         side_effect=ValueError("bad ocdid"),
     ):
-        response = _client(Role.MAINTAINERS).get(
+        response = _client(UserRole.MAINTAINERS).get(
             "/jurisdictions/config", params={"ocdid": "garbage"}
         )
 
@@ -120,11 +129,11 @@ def test_get_jurisdiction_config_invalid_ocdid_is_400():
 
 @pytest.mark.unit
 def test_put_jurisdiction_config_happy_calls_set_scope_roles():
-    body = {"ocdid": _OCDID, "scope": "locality", "roles": [{"role": "Mayor"}]}
+    body = {"ocdid": _OCDID, "scope": "locality", "roles": [{"label": "Mayor"}]}
     with patch(
         "services.role_config.set_scope_roles", new_callable=AsyncMock
     ) as mock_set:
-        response = _client(Role.MAINTAINERS).put("/jurisdictions/config", json=body)
+        response = _client(UserRole.MAINTAINERS).put("/jurisdictions/config", json=body)
 
     assert response.status_code == 200
     assert response.json()["data"] == {"ok": True}
@@ -136,7 +145,7 @@ def test_put_jurisdiction_config_with_issue_id_routes_to_resolution():
     body = {
         "ocdid": _OCDID,
         "scope": "locality",
-        "roles": [{"role": "Mayor"}],
+        "roles": [{"label": "Mayor"}],
         "issue_id": "issue-1",
     }
     with (
@@ -148,7 +157,7 @@ def test_put_jurisdiction_config_with_issue_id_routes_to_resolution():
             "services.role_config.set_scope_roles", new_callable=AsyncMock
         ) as mock_set,
     ):
-        response = _client(Role.MAINTAINERS).put("/jurisdictions/config", json=body)
+        response = _client(UserRole.MAINTAINERS).put("/jurisdictions/config", json=body)
 
     assert response.status_code == 200
     mock_resolve.assert_awaited_once()
@@ -163,7 +172,7 @@ def test_put_jurisdiction_config_runtime_error_is_409():
         new_callable=AsyncMock,
         side_effect=RuntimeError("conflict"),
     ):
-        response = _client(Role.MAINTAINERS).put("/jurisdictions/config", json=body)
+        response = _client(UserRole.MAINTAINERS).put("/jurisdictions/config", json=body)
 
     assert response.status_code == 409
 
@@ -177,7 +186,7 @@ def test_reorder_global_config_happy():
     with patch(
         "services.role_config.reorder_roles", new_callable=AsyncMock
     ) as mock_reorder:
-        response = _client(Role.ADMINS).put(
+        response = _client(UserRole.ADMINS).put(
             "/jurisdictions/config/global/reorder", json=body
         )
 
@@ -189,7 +198,7 @@ def test_reorder_global_config_happy():
 @pytest.mark.unit
 def test_reorder_global_config_forbidden_for_maintainer():
     body = {"role_order": ["Mayor"]}
-    response = _client(Role.MAINTAINERS).put(
+    response = _client(UserRole.MAINTAINERS).put(
         "/jurisdictions/config/global/reorder", json=body
     )
     assert response.status_code == 403
@@ -208,7 +217,7 @@ def test_reorder_jurisdiction_config_happy():
     with patch(
         "services.role_config.reorder_roles", new_callable=AsyncMock
     ) as mock_reorder:
-        response = _client(Role.MAINTAINERS).put(
+        response = _client(UserRole.MAINTAINERS).put(
             "/jurisdictions/config/reorder", json=body
         )
 
@@ -225,7 +234,7 @@ def test_reorder_jurisdiction_config_set_mismatch_is_409():
         new_callable=AsyncMock,
         side_effect=RuntimeError("Reorder set mismatch"),
     ):
-        response = _client(Role.MAINTAINERS).put(
+        response = _client(UserRole.MAINTAINERS).put(
             "/jurisdictions/config/reorder", json=body
         )
 

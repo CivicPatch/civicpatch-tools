@@ -39,7 +39,7 @@ import lib.storage as storage_service
 import lib.temporal.client as temporal_client
 from lib.temporal.types import MergeRequest
 from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, ReportReviewIssueRequest, Role, RouteCategory
+from schemas.common import Identity, ReportReviewIssueRequest, UserRole, RouteCategory
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -219,7 +219,7 @@ def get_router(api_key_header):
     async def post_job_pull_request_data_endpoint(
         request: PostJobPullRequestDataRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)),
     ):
         user_name = user.email
         file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
@@ -392,7 +392,7 @@ def get_router(api_key_header):
         pull_request_number: str,
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
         success = await github_service.close_pull_request(
@@ -493,7 +493,7 @@ def get_router(api_key_header):
         pull_request_number: str,
         request_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
         merge_error = await github_service.merge_pull_request(
@@ -515,7 +515,7 @@ def get_router(api_key_header):
     async def update_pull_request_branch_endpoint(
         pull_request_number: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
         error = await github_service.update_pull_request_branch(

@@ -8,7 +8,7 @@ from psycopg.errors import UniqueViolation
 
 from lib.auth import get_user
 from routers.api import user as user_router
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 
 
 USER_IDENTITY = Identity(
@@ -16,7 +16,7 @@ USER_IDENTITY = Identity(
     provider="supabase",
     provider_user_id="user-uuid",
     email="alice@example.com",
-    role=Role.CONTRIBUTORS.value,
+    role=UserRole.CONTRIBUTORS.value,
     user_id="11111111-2222-3333-4444-555555555555",
 )
 

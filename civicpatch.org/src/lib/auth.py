@@ -6,7 +6,7 @@ from fastapi.security import APIKeyCookie, APIKeyHeader
 
 import database.users as database
 import environment
-from schemas.common import Identity, Role, RouteCategory, has_at_least
+from schemas.common import Identity, UserRole, RouteCategory, has_at_least
 import lib.auth_session as session_service
 
 logger = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         provider=cast(str, user.get("provider")),
         provider_user_id=cast(str, user.get("provider_user_id")),
         email=user.get("email"),
-        role=user.get("role", Role.DEFAULT.value),
+        role=user.get("role", UserRole.DEFAULT.value),
         user_id=user.get("id"),
     )
 
@@ -112,7 +112,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
     provider_user_id = session["provider_user_id"]
     user_row = await database.get_user(provider, provider_user_id)
     # Trust the DB role over the session-cached role — session can be stale after a grant.
-    role = (user_row.get("role") if user_row else None) or session.get("role") or Role.DEFAULT.value
+    role = (user_row.get("role") if user_row else None) or session.get("role") or UserRole.DEFAULT.value
 
     return Identity(
         type="cookie",
@@ -138,7 +138,7 @@ async def get_optional_user(
 
 
 def require_route_access(
-    category: RouteCategory, required_role: Optional[Role] = None
+    category: RouteCategory, required_role: Optional[UserRole] = None
 ):
     async def _dependency(
         identity: Optional[Identity] = Depends(get_optional_user),
@@ -197,7 +197,7 @@ async def get_ws_user(websocket: WebSocket) -> Optional[Identity]:
     provider = session["provider"]
     provider_user_id = session["provider_user_id"]
     user_row = await database.get_user(provider, provider_user_id)
-    role = (user_row.get("role") if user_row else None) or session.get("role") or Role.DEFAULT.value
+    role = (user_row.get("role") if user_row else None) or session.get("role") or UserRole.DEFAULT.value
     return Identity(
         type="cookie",
         provider=provider,
