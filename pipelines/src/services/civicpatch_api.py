@@ -5,13 +5,9 @@ import httpx
 from domain.models import Official
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from services.github_config_service import make_github_fetcher
-from shared.schemas import RoleDefinition
 from shared.utils.config_utils import (
     RoleConfig,
-    load_role_config_for_jurisdiction,
 )
-from shared.utils.github_urls import derive_raw_base_url
 from utils.request_utils import with_retry
 
 SERVER_SOURCE = os.getenv("CIVICPATCH_SERVER_SOURCE")
@@ -115,8 +111,6 @@ async def update_pipeline_run_status(
     error_type: Optional[str] = None,
     error_detail: Optional[dict] = None,
 ):
-    MAX_RETRIES = 3
-
     async def _update():
         env = get_env_vars()
         data = {
@@ -135,7 +129,7 @@ async def update_pipeline_run_status(
         response.raise_for_status()
         return response
 
-    return await with_retry(logger, MAX_RETRIES, _update)
+    return await with_retry(logger, _update)
 
 
 async def submit_job_artifacts(
@@ -176,10 +170,11 @@ async def get_current_people(
     return await search_people(client, jurisdiction_ocdid, state="current")
 
 
-async def get_role_config(jurisdiction_ocdid: str) -> Optional[dict]:
+async def get_role_config(logger, jurisdiction_ocdid: str) -> RoleConfig:
     """Fetch the merged role config response from the backend API."""
     env = get_env_vars()
-    try:
+
+    async def _fetch():
         async with httpx.AsyncClient(
             headers={"Authorization": env["SERVICE_API_KEY"]},
             timeout=10,
@@ -190,33 +185,10 @@ async def get_role_config(jurisdiction_ocdid: str) -> Optional[dict]:
             )
             response.raise_for_status()
             return response.json()
-    except Exception:
-        return None
 
+    response = await with_retry(logger, max_retries=3, func=_fetch)
 
-async def resolve_role_config(jurisdiction_ocdid: str) -> Optional[RoleConfig]:
-    """Fetch merged role config from the backend API, GitHub fallback on failure."""
-    raw = await get_role_config(jurisdiction_ocdid)
-    if raw:
-        roles_data = raw.get("data", {}).get("roles", [])
-        return RoleConfig(
-            roles=[
-                RoleDefinition(
-                    role=r["role"],
-                    is_unique=r.get("is_unique", False),
-                    aliases=r.get("aliases", []),
-                )
-                for r in roles_data
-            ]
-        )
-
-    # Fallback to GitHub if backend unreachable
-    env = get_env_vars()
-    fetch_remote = make_github_fetcher(derive_raw_base_url(env["OPEN_DATA_REPO_URL"]))
-    try:
-        return load_role_config_for_jurisdiction(jurisdiction_ocdid, fetch_remote)
-    except Exception:
-        return None
+    return RoleConfig.model_validate(response["data"])
 
 
 async def search_people(
@@ -255,8 +227,6 @@ async def fetch_pipeline_run_status(
 async def fetch_pipeline_run_config(
     client: httpx.AsyncClient, logger, request_id: str
 ) -> dict:
-    MAX_RETRIES = 5
-
     async def _fetch():
         env = get_env_vars()
         resp = await client.get(
@@ -265,7 +235,7 @@ async def fetch_pipeline_run_config(
         resp.raise_for_status()
         return resp.json()
 
-    return await with_retry(logger, MAX_RETRIES, _fetch)
+    return await with_retry(logger, _fetch)
 
 
 async def batch_resolve_people(

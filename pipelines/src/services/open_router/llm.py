@@ -1,13 +1,13 @@
 import asyncio
-import time
 import json
-import requests
-from utils.request_utils import with_retry
-from utils.log_utils import get_pipeline_run_logger
-from utils import cost_utils
-from pipelines_environment import get_env_vars
+import time
 
-MAX_RETRIES = 5
+import requests
+from pipelines_environment import get_env_vars
+from utils import cost_utils
+from utils.log_utils import get_pipeline_run_logger
+from utils.request_utils import with_retry
+
 BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 # Conservative limit: DeepSeek V3/V3.2 context is 128k–164k tokens.
 # We cap at 120k to leave headroom for the system prompt and response.
@@ -29,6 +29,7 @@ def _get_semaphore() -> asyncio.Semaphore:
         _SEMAPHORE_CACHE[loop_id] = asyncio.Semaphore(20)
     return _SEMAPHORE_CACHE[loop_id]
 
+
 MODELS_BY_TYPE = {
     "CHEAP": {},
     "STANDARD": {
@@ -40,15 +41,16 @@ MODELS_BY_TYPE = {
 
 
 async def run_prompt(
-        request_id,
-        jurisdiction_ocdid: str,
-        prompt,
-        response_schema=None,
-        content="",
-        model_type="STANDARD",
-        provider_order=None,
-        allow_fallbacks=True,
-        seed=None):
+    request_id,
+    jurisdiction_ocdid: str,
+    prompt,
+    response_schema=None,
+    content="",
+    model_type="STANDARD",
+    provider_order=None,
+    allow_fallbacks=True,
+    seed=None,
+):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
     logger.debug(f"Prompt: \n{prompt}")
@@ -93,22 +95,27 @@ async def run_prompt(
                 "HTTP-Referer": "https://civicpatch.org",
                 "X-Title": "CivicPatch",
             },
-            data=json.dumps({
-                "model": model,
-                "messages": messages,
-                "temperature": 0.2,
-                "top_p": 1.0,
-                "response_format": response_format,
-                **({"seed": seed} if seed is not None else {}),
-                "provider": {
-                    "order": provider_order or ["AtlasCloud", "SiliconFlow", "Google"],
-                    "allow_fallbacks": False,
-                    "data_collection": "deny",
-                },
-            }),
+            data=json.dumps(
+                {
+                    "model": model,
+                    "messages": messages,
+                    "temperature": 0.2,
+                    "top_p": 1.0,
+                    "response_format": response_format,
+                    **({"seed": seed} if seed is not None else {}),
+                    "provider": {
+                        "order": provider_order
+                        or ["AtlasCloud", "SiliconFlow", "Google"],
+                        "allow_fallbacks": False,
+                        "data_collection": "deny",
+                    },
+                }
+            ),
         )
         if not resp.ok:
-            logger.error(f"OpenRouter error {resp.status_code} for model={model} provider_order={provider_order}: {resp.text}")
+            logger.error(
+                f"OpenRouter error {resp.status_code} for model={model} provider_order={provider_order}: {resp.text}"
+            )
         resp.raise_for_status()
         body = resp.json()
 
@@ -123,10 +130,16 @@ async def run_prompt(
                 f"Body: {body} | "
                 f"Headers: {dict(resp.headers)}"
             )
-            raise ValueError(f"OpenRouter response missing 'choices'. Full body: {body}")
+            raise ValueError(
+                f"OpenRouter response missing 'choices'. Full body: {body}"
+            )
         response_text = choices[0]["message"]["content"]
         logger.debug(f"OpenRouter raw response: {response_text}")
-        response = response_schema.model_validate_json(response_text) if response_schema else json.loads(response_text)
+        response = (
+            response_schema.model_validate_json(response_text)
+            if response_schema
+            else json.loads(response_text)
+        )
 
         usage = body.get("usage", {})
         cost_utils.add_llm_cost(
@@ -151,7 +164,7 @@ async def run_prompt(
             return await loop.run_in_executor(None, execute)
 
     start_time = time.time()
-    result = await with_retry(logger, MAX_RETRIES, execute_async)
+    result = await with_retry(logger, execute_async)
     end_time = time.time()
     logger.info(f"open_router LLM call took {end_time - start_time:.2f} seconds")
     return result

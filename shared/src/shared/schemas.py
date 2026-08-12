@@ -236,3 +236,18 @@ class RoleDefinition(BaseModel):
 
 class RoleConfig(BaseModel):
     roles: List[RoleDefinition] = []
+
+
+class RoleStatus(str, Enum):
+    ACTIVE = "active"
+    CANDIDATE = "candidate"
+    REJECTED = "rejected"
+
+
+class ResolvedRole(BaseModel):
+    key: str
+    label: str
+    status: RoleStatus
+    is_unique: bool
+    priority: int
+    aliases: list[str]

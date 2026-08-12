@@ -13,7 +13,7 @@ from runners.people_collector.schemas import (
 )
 from runners.people_collector.transitions.main import TRANSITION_MAP
 from services.browser import resolve_redirect
-from services.civicpatch_api import resolve_role_config
+from services.civicpatch_api import get_role_config
 from shared.utils import data_path_utils
 from shared.utils.url_utils import same_domain, same_url
 from utils import log_utils
@@ -52,7 +52,9 @@ async def start(
     context, pipeline_run_logger = initialize_pipeline_run(
         request_id, jurisdiction_ocdid, config
     )
-    context.data.role_config = await resolve_role_config(jurisdiction_ocdid)
+    context.data.role_config = await get_role_config(
+        pipeline_run_logger, jurisdiction_ocdid
+    )
     env = get_env_vars()
 
     try:
