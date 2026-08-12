@@ -1,7 +1,7 @@
 import pytest
 
 from services.role_config import build_merged_response, _scope_to_ocdid
-from shared.schemas import RoleConfig, RoleDefinition
+from shared.schemas import RoleConfig, Role
 
 
 def _cfg(*entries):
@@ -14,11 +14,11 @@ def _cfg(*entries):
 @pytest.mark.unit
 def test_merge_keeps_distinct_roles_with_their_scope():
     per_level = {
-        "global": _cfg(RoleDefinition(role="Mayor", aliases=["mayor"])),
-        "state": _cfg(RoleDefinition(role="Recorder", aliases=["recorder"])),
-        "locality": _cfg(RoleDefinition(role="Alderman", aliases=[])),
+        "global": _cfg(Role(label="Mayor", aliases=["mayor"])),
+        "state": _cfg(Role(label="Recorder", aliases=["recorder"])),
+        "locality": _cfg(Role(label="Alderman", aliases=[])),
     }
-    by_role = {r.role: r for r in build_merged_response(per_level).roles}
+    by_role = {r.label: r for r in build_merged_response(per_level).roles}
     assert set(by_role) == {"Mayor", "Recorder", "Alderman"}
     assert by_role["Mayor"].scope == "global"
     assert by_role["Recorder"].scope == "state"
@@ -28,8 +28,8 @@ def test_merge_keeps_distinct_roles_with_their_scope():
 @pytest.mark.unit
 def test_locality_overrides_global_for_same_role():
     per_level = {
-        "global": _cfg(RoleDefinition(role="Mayor", aliases=["mayor"], is_unique=False)),
-        "locality": _cfg(RoleDefinition(role="Mayor", aliases=["da mayor"], is_unique=True)),
+        "global": _cfg(Role(label="Mayor", aliases=["mayor"], is_unique=False)),
+        "locality": _cfg(Role(label="Mayor", aliases=["da mayor"], is_unique=True)),
     }
     merged = build_merged_response(per_level)
     assert len(merged.roles) == 1
@@ -41,9 +41,9 @@ def test_locality_overrides_global_for_same_role():
 @pytest.mark.unit
 def test_precedence_locality_over_state_over_global():
     per_level = {
-        "global": _cfg(RoleDefinition(role="Clerk", aliases=["g"])),
-        "state": _cfg(RoleDefinition(role="Clerk", aliases=["s"])),
-        "locality": _cfg(RoleDefinition(role="Clerk", aliases=["l"])),
+        "global": _cfg(Role(label="Clerk", aliases=["g"])),
+        "state": _cfg(Role(label="Clerk", aliases=["s"])),
+        "locality": _cfg(Role(label="Clerk", aliases=["l"])),
     }
     merged = build_merged_response(per_level)
     assert len(merged.roles) == 1
@@ -54,8 +54,8 @@ def test_precedence_locality_over_state_over_global():
 @pytest.mark.unit
 def test_merge_dedups_case_insensitively():
     per_level = {
-        "global": _cfg(RoleDefinition(role="Mayor", aliases=[])),
-        "locality": _cfg(RoleDefinition(role="mayor", aliases=[])),  # different case, same role
+        "global": _cfg(Role(label="Mayor", aliases=[])),
+        "locality": _cfg(Role(label="mayor", aliases=[])),  # different case, same role
     }
     merged = build_merged_response(per_level)
     assert len(merged.roles) == 1
@@ -64,8 +64,8 @@ def test_merge_dedups_case_insensitively():
 
 @pytest.mark.unit
 def test_merge_tolerates_missing_levels():
-    merged = build_merged_response({"global": _cfg(RoleDefinition(role="Mayor", aliases=[]))})
-    assert [r.role for r in merged.roles] == ["Mayor"]
+    merged = build_merged_response({"global": _cfg(Role(label="Mayor", aliases=[]))})
+    assert [r.label for r in merged.roles] == ["Mayor"]
 
 
 @pytest.mark.unit

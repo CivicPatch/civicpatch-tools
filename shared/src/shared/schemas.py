@@ -228,16 +228,6 @@ class Issue(BaseModel):
     field: Optional[str] = None
 
 
-class RoleDefinition(BaseModel):
-    role: str
-    is_unique: bool = False
-    aliases: List[str] = []
-
-
-class RoleConfig(BaseModel):
-    roles: List[RoleDefinition] = []
-
-
 class RoleStatus(str, Enum):
     ACTIVE = "active"
     CANDIDATE = "candidate"
@@ -245,9 +235,20 @@ class RoleStatus(str, Enum):
 
 
 class ResolvedRole(BaseModel):
-    key: str
     label: str
     status: RoleStatus
     is_unique: bool
     priority: int
     aliases: list[str]
+
+
+class Role(BaseModel):
+    label: str
+    status: RoleStatus | None = None
+    is_unique: bool | None = None
+    priority: int | None = None
+    aliases: List[str] = []
+
+
+class RoleConfig(BaseModel):
+    roles: List[Role] = []

@@ -3,7 +3,7 @@ from decimal import Decimal, InvalidOperation
 from typing import Dict, List, Optional
 
 import yaml
-from shared.schemas import JobConfig, RoleConfig, RoleDefinition
+from shared.schemas import JobConfig, RoleConfig, Role
 
 # In-memory cache for config files
 _config_cache = {}
@@ -33,7 +33,7 @@ def get_data_config():
 
 def get_role_configs(
     role_config_override: Optional[RoleConfig] = None,
-) -> List[RoleDefinition]:
+) -> List[Role]:
     if role_config_override is not None:
         return [entry for entry in role_config_override.roles]
     return []
@@ -46,7 +46,7 @@ def get_designations():
 def get_role_names(role_config_override: Optional[RoleConfig] = None) -> List[str]:
     names = []
     for entry in get_role_configs(role_config_override):
-        names.append(entry.role)
+        names.append(entry.label)
         names.extend(entry.aliases)
     return names
 
@@ -66,9 +66,7 @@ def get_designation_alias_map() -> Dict[str, str]:
 
 def get_unique_roles(role_config_override: Optional[RoleConfig] = None) -> List[str]:
     return [
-        entry.role
-        for entry in get_role_configs(role_config_override)
-        if entry.is_unique
+        entry.label for entry in get_role_configs(role_config_override) if entry.is_unique
     ]
 
 
@@ -105,9 +103,9 @@ def get_role_alias_map(
 ) -> Dict[str, str]:
     alias_map = {}
     for entry in get_role_configs(role_config_override):
-        alias_map[entry.role.lower()] = entry.role
+        alias_map[entry.label.lower()] = entry.label
         for alias in entry.aliases:
-            alias_map[alias.lower()] = entry.role
+            alias_map[alias.lower()] = entry.label
     return alias_map
 
 

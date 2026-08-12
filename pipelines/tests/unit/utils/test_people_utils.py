@@ -1,6 +1,6 @@
 import pytest
 from domain.models import Person
-from shared.schemas import RoleConfig, RoleDefinition
+from shared.schemas import RoleConfig, Role
 from utils import taxonomy as taxonomy
 from utils.people_utils import sort_people
 from utils.taxonomy import Taxonomy
@@ -10,14 +10,14 @@ pytestmark = pytest.mark.unit
 EMPTY = taxonomy.build_taxonomy(RoleConfig(roles=[]))
 
 _MAYOR_COUNCIL = taxonomy.build_taxonomy(
-    RoleConfig(roles=[RoleDefinition(role="Mayor"), RoleDefinition(role="Council Member")])
+    RoleConfig(roles=[Role(label="Mayor"), Role(label="Council Member")])
 )
 
 _VICE_CHAIR = taxonomy.build_taxonomy(
     RoleConfig(
         roles=[
-            RoleDefinition(
-                role="Vice Chair",
+            Role(
+                label="Vice Chair",
                 aliases=[
                     "council vice chair",
                     "council vice chairman",
@@ -33,8 +33,8 @@ _VICE_CHAIR = taxonomy.build_taxonomy(
 _SELECT_BOARD = taxonomy.build_taxonomy(
     RoleConfig(
         roles=[
-            RoleDefinition(
-                role="Select Board Vice Chair",
+            Role(
+                label="Select Board Vice Chair",
                 aliases=[
                     "select board vice chairman",
                     "select board vice chairwoman",
@@ -51,7 +51,7 @@ _SELECT_BOARD = taxonomy.build_taxonomy(
 _SORT_TAXONOMY = Taxonomy(
     role_aliases={},
     designation_aliases={"seat": "seat", "ward": "ward", "at large": "at-large"},
-    role_priority={"mayor": 0, "council": 1, "seat": 2},
+    role_priority={"Mayor": 0, "Council": 1, "Seat": 2},
     designation_priority={"seat": 0, "ward": 1, "at large": 2},
 )
 

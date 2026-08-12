@@ -8,7 +8,7 @@ from database.roles import (
     diff_aliases,
     reorder_validation_error,
 )
-from shared.schemas import RoleDefinition
+from shared.schemas import RoleConfig, Role
 
 
 # Pure helpers — unit-tested directly, no DB.
@@ -40,22 +40,22 @@ def test_state_ocdid_from_bare_country_is_none():
 # ── classify_term_op ────────────────────────────────────────────────────
 
 
-def _entry(role: str) -> RoleDefinition:
-    return RoleDefinition.model_validate({
-        "role": role, "is_unique": False, "aliases": [],
+def _entry(role: str) -> Role:
+    return Role.model_validate({
+        "label": role, "is_unique": False, "aliases": [],
     })
 
 
 @pytest.mark.unit
 def test_classify_new_term_is_add():
-    op, log = classify_term_op(_entry("Mayor"), term_exists=False)
+    op, log = classify_term_op(_entry("Mayor"), None)
     assert op == TermOp.ADD
     assert log == "add_role"
 
 
 @pytest.mark.unit
 def test_classify_unchanged_term_is_no_change():
-    op, log = classify_term_op(_entry("Mayor"), term_exists=True)
+    op, log = classify_term_op(_entry("Mayor"), _entry("Mayor"))
     assert op == TermOp.NO_CHANGE
     assert log is None
 
@@ -63,9 +63,9 @@ def test_classify_unchanged_term_is_no_change():
 # ── classify_term_op: is_unique edits ───────────────────────────────────
 
 
-def _unique_entry(role: str, *, is_unique: bool) -> RoleDefinition:
-    return RoleDefinition.model_validate({
-        "role": role, "is_unique": is_unique, "aliases": [],
+def _unique_entry(role: str, *, is_unique: bool) -> Role:
+    return Role.model_validate({
+        "label": role, "is_unique": is_unique, "aliases": [],
     })
 
 
@@ -73,8 +73,7 @@ def _unique_entry(role: str, *, is_unique: bool) -> RoleDefinition:
 def test_classify_is_unique_change_is_edit():
     op, log = classify_term_op(
         _unique_entry("Mayor", is_unique=True),
-        term_exists=True,
-        existing_is_unique=False,
+        _unique_entry("Mayor", is_unique=False),
     )
     assert op == TermOp.EDIT
     assert log == "edit_role"
@@ -84,11 +83,37 @@ def test_classify_is_unique_change_is_edit():
 def test_classify_same_is_unique_is_no_change():
     op, log = classify_term_op(
         _unique_entry("Mayor", is_unique=True),
-        term_exists=True,
-        existing_is_unique=True,
+        _unique_entry("Mayor", is_unique=True),
     )
     assert op == TermOp.NO_CHANGE
     assert log is None
+
+
+@pytest.mark.unit
+def test_classify_label_change_is_edit():
+    entry = Role.model_validate({"label": "City Commissioner", "is_unique": False, "aliases": []})
+    existing = Role.model_validate({"label": "Council Member", "is_unique": False, "aliases": []})
+    op, log = classify_term_op(entry, existing)
+    assert op == TermOp.EDIT
+    assert log == "edit_role"
+
+
+@pytest.mark.unit
+def test_classify_status_change_is_edit():
+    entry = Role.model_validate({"label": "City Manager", "status": "active", "is_unique": False, "aliases": []})
+    existing = Role.model_validate({"label": "City Manager", "status": "rejected", "is_unique": False, "aliases": []})
+    op, log = classify_term_op(entry, existing)
+    assert op == TermOp.EDIT
+    assert log == "edit_role"
+
+
+@pytest.mark.unit
+def test_classify_priority_change_is_edit():
+    entry = Role.model_validate({"label": "Mayor", "is_unique": True, "priority": 5, "aliases": []})
+    existing = Role.model_validate({"label": "Mayor", "is_unique": True, "priority": 10, "aliases": []})
+    op, log = classify_term_op(entry, existing)
+    assert op == TermOp.EDIT
+    assert log == "edit_role"
 
 
 # ── build_event_payload ─────────────────────────────────────────────────
@@ -119,26 +144,26 @@ def test_payload_omits_empty_alias_deltas():
 
 @pytest.mark.unit
 def test_diff_aliases_no_change():
-    assert diff_aliases({"a", "b"}, ["a", "b"]) == (set(), set())
+    assert diff_aliases(["a", "b"], ["a", "b"]) == (set(), set())
 
 
 @pytest.mark.unit
 def test_diff_aliases_pure_add():
-    to_disable, to_add = diff_aliases(set(), ["a", "b"])
+    to_disable, to_add = diff_aliases([], ["a", "b"])
     assert to_disable == set()
     assert to_add == {"a", "b"}
 
 
 @pytest.mark.unit
 def test_diff_aliases_pure_remove():
-    to_disable, to_add = diff_aliases({"a", "b"}, [])
+    to_disable, to_add = diff_aliases(["a", "b"], [])
     assert to_disable == {"a", "b"}
     assert to_add == set()
 
 
 @pytest.mark.unit
 def test_diff_aliases_mixed():
-    to_disable, to_add = diff_aliases({"a", "b"}, ["b", "c"])
+    to_disable, to_add = diff_aliases(["a", "b"], ["b", "c"])
     assert to_disable == {"a"}
     assert to_add == {"c"}
 
@@ -146,7 +171,7 @@ def test_diff_aliases_mixed():
 @pytest.mark.unit
 def test_diff_aliases_dedups_incoming():
     """Incoming list with duplicates is treated as a set."""
-    _, to_add = diff_aliases(set(), ["a", "a", "b"])
+    _, to_add = diff_aliases([], ["a", "a", "b"])
     assert to_add == {"a", "b"}
 
 

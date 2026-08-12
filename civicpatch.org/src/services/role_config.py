@@ -3,7 +3,7 @@ import logging
 import database.roles as db_roles
 from schemas.jurisdictions import (
     MergedRoleConfigResponse,
-    RoleDefinition,
+    Role,
     ScopedRole,
     SetScopeRolesRequest,
 )
@@ -23,9 +23,11 @@ def build_merged_response(per_level: dict[str, RoleConfig]) -> MergedRoleConfigR
     seen: dict[str, ScopedRole] = {}
     for level in SCOPE_ORDER:
         for entry in per_level.get(level, RoleConfig()).roles:
-            seen[entry.role.lower()] = ScopedRole(
-                role=entry.role,
+            seen[entry.label.lower()] = ScopedRole(
+                label=entry.label,
+                status=entry.status,
                 is_unique=entry.is_unique,
+                priority=entry.priority,
                 aliases=entry.aliases,
                 scope=level,
             )
@@ -38,7 +40,7 @@ async def load_global_config() -> RoleConfig:
 
 
 async def set_global_roles(
-    entries: list[RoleDefinition], user_id: str | None = None
+    entries: list[Role], user_id: str | None = None
 ) -> None:
     """Replace global roles in the DB and write change_logs."""
     await db_roles.replace_roles_at_scope(None, entries, user_id)
