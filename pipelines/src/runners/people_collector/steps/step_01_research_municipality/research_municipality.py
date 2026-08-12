@@ -16,8 +16,9 @@ from shared.utils import config_utils
 from shared.utils.name_utils import person_list_to_identities
 from shared.schemas import Person
 from utils import people_utils, log_utils
-from utils import designation_utils
+from utils import divisions
 from utils.request_utils import with_retry
+from utils.taxonomy import Taxonomy, build_taxonomy
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 MAX_RETRIES = 5 # flakyLLM call
@@ -45,12 +46,12 @@ async def _step_from_gemini(context: PeopleCollectorContext, logger) -> Research
         logger, MAX_RETRIES,
         func=lambda: research_with_llm(context, prompt)
     )
-    role_configs = config_utils.get_role_configs(context.data.role_config)
-    target_people = people_utils.filter_people_by_roles(role_configs, people)
+    taxonomy = build_taxonomy(context.data.role_config)
+    target_people = people_utils.filter_people_by_roles(people, taxonomy)
 
     return ResearchMunicipalityStep(
         expected_count=len(target_people),
-        target_designations=designation_utils.filter_geographic_designations(
+        target_designations=divisions.filter_geographic_designations(
             [d for p in target_people for d in p.designations + p.roles]
         ),
         known_roles=_known_roles(target_people),
@@ -67,22 +68,22 @@ def _step_from_db(config, jurisdiction_ocdid: str, existing: list, role_config=N
         target_designations=list({
             d
             for p in existing
-            for d in designation_utils.division_ocdid_to_designation(
+            for d in divisions.division_ocdid_to_designation(
                 (p.get("office") or {}).get("division_ocdid"), jurisdiction_ocdid
             )
         }),
-        known_roles=_known_roles_from_db(existing, role_config),
+        known_roles=_known_roles_from_db(existing, build_taxonomy(role_config)),
         identities=person_list_to_identities(existing_people),
         source_urls=_source_urls(config, existing_people),
         origin_source="existing",
     )
 
 
-def _known_roles_from_db(existing: list, role_config=None) -> List[str]:
+def _known_roles_from_db(existing: list, taxonomy: Taxonomy) -> List[str]:
     seen = []
     for p in existing:
         office_name = (p.get("office") or {}).get("name") or ""
-        for role in people_utils.office_name_to_roles(office_name, role_config):
+        for role in people_utils.office_name_to_roles(office_name, taxonomy):
             if role not in seen:
                 seen.append(role)
     return seen

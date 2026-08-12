@@ -60,18 +60,17 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
 
     # ── Role taxonomy events ────────────────────────────────────────────
     role = c.get("role", "?")
-    kind = c.get("kind", "canonical")
-    label = "role" if kind == "canonical" else "exclusion"
 
     if type_ == "add_role":
-        return f"Added {label} '{role}'{_alias_summary(c)}"
+        return f"Added role '{role}'{_alias_summary(c)}"
     if type_ == "edit_role":
-        return f"Edited {label} '{role}'{_alias_summary(c)}"
+        return f"Edited role '{role}'{_alias_summary(c)}"
     if type_ == "delete_role":
-        return f"Removed {label} '{role}'"
+        return f"Removed role '{role}'"
+    # Retired event types — kept so existing change_log rows still render.
     if type_ == "exclude_role":
         return f"Excluded role '{role}'"
     if type_ == "include_role":
-        return f"Included exclusion '{role}' as role"
+        return f"Included '{role}' as role"
 
     return type_

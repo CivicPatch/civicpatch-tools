@@ -2,14 +2,17 @@ import os
 from typing import List, Optional
 
 import httpx
-from fastapi import Request
-
 from domain.models import Official
+from fastapi import Request
+from pipelines_environment import get_env_vars
 from services.github_config_service import make_github_fetcher
-from shared.utils.config_utils import RoleConfig, RoleEntry, load_role_config_for_jurisdiction
+from shared.utils.config_utils import (
+    RoleConfig,
+    RoleEntry,
+    load_role_config_for_jurisdiction,
+)
 from shared.utils.github_urls import derive_raw_base_url
 from utils.request_utils import with_retry
-from pipelines_environment import get_env_vars
 
 SERVER_SOURCE = os.getenv("CIVICPATCH_SERVER_SOURCE")
 
@@ -31,7 +34,8 @@ async def get_me(request: Request) -> dict:
         try:
             async with httpx.AsyncClient(timeout=10) as client:
                 response = await client.get(
-                    f"{env['CIVICPATCH_ORG_URL']}/api/v1/me", cookies=_get_cookies(request)
+                    f"{env['CIVICPATCH_ORG_URL']}/api/v1/me",
+                    cookies=_get_cookies(request),
                 )
                 response.raise_for_status()
                 return response.json()
@@ -86,7 +90,9 @@ async def register_pipeline_run(
     response.raise_for_status()
 
 
-async def get_jurisdiction_info(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> dict:
+async def get_jurisdiction_info(
+    client: httpx.AsyncClient, jurisdiction_ocdid: str
+) -> dict:
     env = get_env_vars()
     response = await client.post(
         f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/by-ocdids",
@@ -100,7 +106,12 @@ async def get_jurisdiction_info(client: httpx.AsyncClient, jurisdiction_ocdid: s
 
 
 async def update_pipeline_run_status(
-    client: httpx.AsyncClient, logger, request_id: str, jurisdiction_ocdid: str, status: str, progress: int,
+    client: httpx.AsyncClient,
+    logger,
+    request_id: str,
+    jurisdiction_ocdid: str,
+    status: str,
+    progress: int,
     error_type: Optional[str] = None,
     error_detail: Optional[dict] = None,
 ):
@@ -128,7 +139,11 @@ async def update_pipeline_run_status(
 
 
 async def submit_job_artifacts(
-    client: httpx.AsyncClient, request_id: str, jurisdiction_ocdid: str, zip_file_path: str, pipeline_run_status: str
+    client: httpx.AsyncClient,
+    request_id: str,
+    jurisdiction_ocdid: str,
+    zip_file_path: str,
+    pipeline_run_status: str,
 ):
     env = get_env_vars()
     data = {
@@ -155,7 +170,9 @@ async def submit_job_artifacts(
     return response
 
 
-async def get_current_people(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> List[dict]:
+async def get_current_people(
+    client: httpx.AsyncClient, jurisdiction_ocdid: str
+) -> List[dict]:
     return await search_people(client, jurisdiction_ocdid, state="current")
 
 
@@ -188,7 +205,6 @@ async def resolve_role_config(jurisdiction_ocdid: str) -> Optional[RoleConfig]:
                     role=r["role"],
                     is_unique=r.get("is_unique", False),
                     aliases=r.get("aliases", []),
-                    kind=r.get("kind", "canonical"),
                 )
                 for r in roles_data
             ]
@@ -223,21 +239,29 @@ async def search_people(
     return response.json().get("data", [])
 
 
-async def fetch_pipeline_run_status(client: httpx.AsyncClient, request_id: str) -> Optional[str]:
+async def fetch_pipeline_run_status(
+    client: httpx.AsyncClient, request_id: str
+) -> Optional[str]:
     env = get_env_vars()
-    resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/status")
+    resp = await client.get(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/status"
+    )
     if resp.status_code == 404:
         return None
     resp.raise_for_status()
     return resp.json().get("status")
 
 
-async def fetch_pipeline_run_config(client: httpx.AsyncClient, logger, request_id: str) -> dict:
+async def fetch_pipeline_run_config(
+    client: httpx.AsyncClient, logger, request_id: str
+) -> dict:
     MAX_RETRIES = 5
 
     async def _fetch():
         env = get_env_vars()
-        resp = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config")
+        resp = await client.get(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{request_id}/config"
+        )
         resp.raise_for_status()
         return resp.json()
 

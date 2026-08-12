@@ -1,7 +1,6 @@
 import pytest
 
 from database.roles import (
-    TermKind,
     TermOp,
     _state_ocdid_from_ocdid,
     build_event_payload,
@@ -41,51 +40,22 @@ def test_state_ocdid_from_bare_country_is_none():
 # ── classify_term_op ────────────────────────────────────────────────────
 
 
-def _entry(role: str, *, kind: str = "canonical") -> RoleEntryData:
+def _entry(role: str) -> RoleEntryData:
     return RoleEntryData.model_validate({
-        "role": role, "is_unique": False, "aliases": [], "kind": kind,
+        "role": role, "is_unique": False, "aliases": [],
     })
 
 
 @pytest.mark.unit
-def test_classify_new_canonical_is_add():
-    op, log = classify_term_op(_entry("Mayor"), existing_kind=None)
+def test_classify_new_term_is_add():
+    op, log = classify_term_op(_entry("Mayor"), term_exists=False)
     assert op == TermOp.ADD
     assert log == "add_role"
 
 
 @pytest.mark.unit
-def test_classify_new_exclusion_is_add():
-    """Adding an exclusion is the same op as adding a canonical — kind goes in payload."""
-    op, log = classify_term_op(_entry("City Hall", kind="exclusion"), existing_kind=None)
-    assert op == TermOp.ADD
-    assert log == "add_role"
-
-
-@pytest.mark.unit
-def test_classify_canonical_to_exclusion_is_flip():
-    op, log = classify_term_op(_entry("Mayor", kind="exclusion"), existing_kind=TermKind.CANONICAL)
-    assert op == TermOp.FLIP_KIND
-    assert log == "exclude_role"
-
-
-@pytest.mark.unit
-def test_classify_exclusion_to_canonical_is_flip():
-    op, log = classify_term_op(_entry("Mayor"), existing_kind=TermKind.EXCLUSION)
-    assert op == TermOp.FLIP_KIND
-    assert log == "include_role"
-
-
-@pytest.mark.unit
-def test_classify_unchanged_canonical_is_no_change():
-    op, log = classify_term_op(_entry("Mayor"), existing_kind=TermKind.CANONICAL)
-    assert op == TermOp.NO_CHANGE
-    assert log is None
-
-
-@pytest.mark.unit
-def test_classify_unchanged_exclusion_is_no_change():
-    op, log = classify_term_op(_entry("City Hall", kind="exclusion"), existing_kind=TermKind.EXCLUSION)
+def test_classify_unchanged_term_is_no_change():
+    op, log = classify_term_op(_entry("Mayor"), term_exists=True)
     assert op == TermOp.NO_CHANGE
     assert log is None
 
@@ -93,9 +63,9 @@ def test_classify_unchanged_exclusion_is_no_change():
 # ── classify_term_op: is_unique edits ───────────────────────────────────
 
 
-def _unique_entry(role: str, *, is_unique: bool, kind: str = "canonical") -> RoleEntryData:
+def _unique_entry(role: str, *, is_unique: bool) -> RoleEntryData:
     return RoleEntryData.model_validate({
-        "role": role, "is_unique": is_unique, "aliases": [], "kind": kind,
+        "role": role, "is_unique": is_unique, "aliases": [],
     })
 
 
@@ -103,7 +73,7 @@ def _unique_entry(role: str, *, is_unique: bool, kind: str = "canonical") -> Rol
 def test_classify_is_unique_change_is_edit():
     op, log = classify_term_op(
         _unique_entry("Mayor", is_unique=True),
-        existing_kind=TermKind.CANONICAL,
+        term_exists=True,
         existing_is_unique=False,
     )
     assert op == TermOp.EDIT
@@ -114,7 +84,7 @@ def test_classify_is_unique_change_is_edit():
 def test_classify_same_is_unique_is_no_change():
     op, log = classify_term_op(
         _unique_entry("Mayor", is_unique=True),
-        existing_kind=TermKind.CANONICAL,
+        term_exists=True,
         existing_is_unique=True,
     )
     assert op == TermOp.NO_CHANGE
@@ -125,15 +95,9 @@ def test_classify_same_is_unique_is_no_change():
 
 
 @pytest.mark.unit
-def test_payload_includes_kind():
+def test_payload_is_just_the_role_when_aliases_unchanged():
     payload = build_event_payload(_entry("Mayor"), set(), set())
-    assert payload == {"role": "Mayor", "kind": "canonical"}
-
-
-@pytest.mark.unit
-def test_payload_includes_kind_for_exclusion():
-    payload = build_event_payload(_entry("City Hall", kind="exclusion"), set(), set())
-    assert payload == {"role": "City Hall", "kind": "exclusion"}
+    assert payload == {"role": "Mayor"}
 
 
 @pytest.mark.unit

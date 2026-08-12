@@ -11,6 +11,7 @@ from runners.people_collector.schemas import (
 )
 from shared.utils import config_utils, name_utils, url_utils
 from shared.utils.url_utils import canonical_url
+from utils.taxonomy import Taxonomy, resolve_role
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -241,36 +242,39 @@ def mark_link_as_terminating_status(
 
 
 def has_role_and_contact_info(
-    known_roles: list[str], records: List[LLMPersonRecord]
+    taxonomy: Taxonomy, records: List[LLMPersonRecord]
 ) -> bool:
     # Will need to parse these
     # maybe add role configs
     # if not any(r.strip().lower() in known_roles for p in records for r in p.roles if r):
     #    return False
-    if not any(p.roles and len(p.roles) > 0 for p in records):
+    if not any(resolve_role(label, taxonomy) for p in records for label in p.roles):
         return False
-    if not any(p.phone or p.email for p in records):
-        return False
-    contact_types = {
-        f
-        for p in records
-        for f, v in (
-            ("image", p.image),
-            ("url", p.url),
-            ("phone", p.phone),
-            ("email", p.email),
-        )
-        if v
-    }
-    return len(contact_types) >= 3
+    if any(p.phone or p.email for p in records):
+        return True
+    # contact_types = {
+    #    f
+    #    for p in records
+    #    for f, v in (
+    #        ("image", p.image),
+    #        ("url", p.url),
+    #        ("phone", p.phone),
+    #        ("email", p.email),
+    #    )
+    #    if v
+    # }
+    # return len(contact_types) >= 3
+    urls = {p.url for p in records if p.url}
+    images = {p.image for p in records if p.image}
+    return len(urls) > 1 or len(images) > 1
 
 
 def extract_websites_from_processed_data(
-    logger, roles: List[str], records: PeopleByName
+    logger, taxonomy: Taxonomy, records: PeopleByName
 ) -> List[str]:
     found_websites = []
     for person_name, person_list in records.items():
-        if has_role_and_contact_info(roles, person_list):
+        if has_role_and_contact_info(taxonomy, person_list):
             logger.debug(
                 f"Skipping adding websites for person with role and contact info: {person_name}"
             )
@@ -285,12 +289,17 @@ def extract_websites_from_processed_data(
 
 
 def update_website_links(
-    logger, domain, roles, frontier: LinkFrontier, records: PeopleByName
+    logger,
+    domain,
+    taxonomy: Taxonomy,
+    role_names: List[str],
+    frontier: LinkFrontier,
+    records: PeopleByName,
 ) -> LinkFrontier:
-    found_websites = extract_websites_from_processed_data(logger, roles, records)
+    found_websites = extract_websites_from_processed_data(logger, taxonomy, records)
     names, designations = extract_names_and_designations(records)
     return add_relevant_urls(
-        found_websites, frontier, domain, names, designations + roles, logger
+        found_websites, frontier, domain, names, designations + role_names, logger
     )
 
 
@@ -299,9 +308,10 @@ def update_links(
     frontier: LinkFrontier,
     processed_page: Link,
     logger,
-    roles: List[str],
+    taxonomy: Taxonomy,
+    role_names: List[str],
     records: PeopleByName,
 ) -> LinkFrontier:
     """Mark processed page as DONE and add new website links from LLM records."""
     frontier = frontier.mark_status(processed_page.url, LinkStatus.DONE)
-    return update_website_links(logger, domain, roles, frontier, records)
+    return update_website_links(logger, domain, taxonomy, role_names, frontier, records)

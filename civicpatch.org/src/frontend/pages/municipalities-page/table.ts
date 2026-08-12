@@ -15,18 +15,12 @@ const SORT_HEADERS: { key: SortKey; label: string; class?: string }[] = [
 export interface MunicipalitiesTableProps {
   municipalities: Municipality[];
   onClearFilters: () => void;
-  canViewJurisdictionPage: boolean;
   sortKey: SortKey;
   sortDir: SortDir;
   onSortChange: (key: SortKey) => void;
 }
 
-function renderActions(jurisdictionHref: string | null) {
-  if (!jurisdictionHref) return '—';
-  return html`<a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>`;
-}
-
-function renderRow(m: Municipality, jurisdictionHref: string | null) {
+function renderRow(m: Municipality, jurisdictionHref: string) {
   return html`
     <tr class="municipalities-table__row">
       <td>
@@ -34,7 +28,7 @@ function renderRow(m: Municipality, jurisdictionHref: string | null) {
           class="municipalities-table__dot"
           style="background:var(--civ-status-${m.status})"
         ></span>
-        ${jurisdictionHref ? html`<a href="${jurisdictionHref}">${m.name}</a>` : m.name}
+        <a href="${jurisdictionHref}">${m.name}</a>
       </td>
       <td>
         <span
@@ -53,7 +47,9 @@ function renderRow(m: Municipality, jurisdictionHref: string | null) {
       <td style=${m.status === 'stale' ? 'color:var(--civ-status-stale)' : ''}>
         ${m.last_verified_at ? dateStringToFriendly(m.last_verified_at) : '—'}
       </td>
-      <td>${renderActions(jurisdictionHref)}</td>
+      <td>
+        <a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>
+      </td>
     </tr>
   `;
 }
@@ -83,7 +79,6 @@ function renderSortHeader(
 export function renderMunicipalitiesTable({
   municipalities,
   onClearFilters,
-  canViewJurisdictionPage,
   sortKey,
   sortDir,
   onSortChange,
@@ -108,12 +103,7 @@ export function renderMunicipalitiesTable({
         </thead>
         <tbody>
           ${municipalities.map((m) =>
-            renderRow(
-              m,
-              canViewJurisdictionPage
-                ? `/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}`
-                : null,
-            ),
+            renderRow(m, `/${jurisdictionOcdidToPath(m.jurisdiction_ocdid)}`),
           )}
         </tbody>
       </table>

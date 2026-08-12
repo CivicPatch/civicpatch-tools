@@ -1,147 +1,44 @@
-from typing import Dict, List
+from typing import List
 
-import shared.utils.config_utils as config_utils
 from domain.models import Office, Official, Person
 from runners.people_collector.schemas import ResearchedPerson
-from utils.designation_utils import (
+from utils.divisions import (
     designations_without_division,
     division_ocdid_to_designation,
-    extract_designation_value,
-    generic_sort_key,
-    get_designation_priority,
     resolve_division,
 )
-from utils.role_utils import fuzzy_match_role
-
-UNRANKED = float("inf")
-
-
-def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
-    valid_roles = {
-        name.strip().lower()
-        for entry in role_configs
-        for name in [entry.role] + entry.aliases
-    }
-    return [
-        person
-        for person in people
-        if any(r.strip().lower() in valid_roles for r in person.roles)
-    ]
+from utils.taxonomy import (
+    Taxonomy,
+    designation_sort_key,
+    resolve_role,
+    role_sort_key,
+)
 
 
-def normalize_roles(roles: List[str], role_config=None) -> List[str]:
-    """
-    Normalize roles using configured aliases.
-    Tries progressively shorter suffixes to handle location prefixes
-    like "Seattle City Councilmember" -> "city councilmember" -> "council member".
-
-    Strings that match a known designation are dropped — they belong in designations.
-    """
-    if not roles:
-        return []
-
-    role_aliases = config_utils.get_role_alias_map(role_config)
-    designation_aliases = config_utils.get_designation_alias_map()
-    excluded = config_utils.get_excluded_role_names(role_config)
-    seen: dict[str, str] = {}
-
-    expanded_roles = []
-    for role in roles:
-        if not role:
-            continue
-        for part in str(role).split("/"):
-            part = part.strip()
-            if part:
-                expanded_roles.append(part)
-
-    for role in expanded_roles:
-        role_lower = role.lower().replace("-", " ")
-
-        # Drop anything that matches a known designation
-        if designation_aliases.get(role_lower):
-            continue
-
-        # Drop explicitly excluded roles
-        if role_lower in excluded:
-            continue
-
-        # Try exact match first
-        direct_match = role_aliases.get(role_lower)
-        if direct_match:
-            seen[direct_match.lower()] = direct_match
-            continue
-
-        # Try progressively shorter suffixes
-        # "Seattle City Councilmember" -> "City Councilmember" -> "Councilmember"
-        words = role_lower.split()
-        matched = False
-        for i in range(1, len(words)):
-            suffix = " ".join(words[i:])
-            suffix_match = role_aliases.get(suffix)
-            if suffix_match:
-                seen[suffix_match.lower()] = suffix_match
-                matched = True
-                break
-
-        if not matched:
-            fuzzy = fuzzy_match_role(role_lower, role_aliases)
-            if fuzzy and fuzzy.lower() not in excluded:
-                seen[fuzzy.lower()] = fuzzy
-            else:
-                seen.setdefault(role.lower(), role)
-
-    return sort_roles(list(seen.values()), role_config)
+def filter_people_by_roles(
+    people: List[ResearchedPerson], taxonomy: Taxonomy
+) -> List[ResearchedPerson]:
+    return [p for p in people if any(resolve_role(r, taxonomy) for r in p.roles)]
 
 
-def office_name_to_roles(office_name: str, role_config=None) -> List[str]:
+def office_name_to_roles(office_name: str, taxonomy: Taxonomy) -> List[str]:
     if not office_name or office_name == "Unknown Office":
         return []
     parts = [p.strip() for p in office_name.split(" - ") if p.strip()]
-    role_alias_map = config_utils.get_role_alias_map(role_config)
-    if not role_alias_map:
-        return parts
-    return [p for p in parts if role_alias_map.get(p.lower())]
+    return [p for p in parts if resolve_role(p, taxonomy)]
 
 
-def get_role_priority(role_config=None) -> Dict[str, int]:
-    return {
-        entry.role.lower(): idx
-        for idx, entry in enumerate(config_utils.get_role_configs(role_config))
-    }
-
-
-def sort_roles(roles: List[str], role_config=None) -> List[str]:
-    role_priority = get_role_priority(role_config)
-    designation_priority = get_designation_priority()
-    return sorted(
-        roles, key=lambda r: generic_sort_key(r, role_priority, designation_priority)
-    )
-
-
-def sort_people(people: List[Person], role_config=None) -> List[Person]:
-    role_priority = get_role_priority(role_config)
-    designation_priority = get_designation_priority()
-
+def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
     def person_sort_key(person: Person):
-        role_priorities = [
-            role_priority.get(role.lower().strip(), UNRANKED) for role in person.roles
-        ]
-
-        designation_priorities = []
-        designation_numbers = []
-        for designation in person.designations:
-            words = designation.lower().split()
-            if not words:
-                continue
-            designation_priorities.append(designation_priority.get(words[0], UNRANKED))
-            number = extract_designation_value(designation)
-            if number is not None:
-                designation_numbers.append(number)
-
         return (
-            min(role_priorities, default=UNRANKED),
-            min(designation_priorities, default=UNRANKED),
-            min(designation_numbers, default=UNRANKED),
+            min(
+                (role_sort_key(role, taxonomy) for role in person.roles),
+                default=role_sort_key("", taxonomy),
+            ),
+            min(
+                (designation_sort_key(d, taxonomy) for d in person.designations),
+                default=designation_sort_key("", taxonomy),
+            ),
         )
 
     return sorted(people, key=person_sort_key)
@@ -162,7 +59,7 @@ def person_to_official(person: Person) -> Official:
         start_date=person.start_date or None,
         end_date=person.end_date or None,
         office=Office(
-            name=office_name.title(),
+            name=office_name,
             division_ocdid=resolve_division(
                 person.jurisdiction_ocdid, person.designations
             ),
@@ -175,11 +72,11 @@ def person_to_official(person: Person) -> Official:
     )
 
 
-def official_to_person(official: Official) -> Person:
+def official_to_person(official: Official, taxonomy: Taxonomy) -> Person:
     return Person(
         name=official.name,
         other_names=official.other_names,
-        roles=office_name_to_roles(official.office.name),
+        roles=office_name_to_roles(official.office.name, taxonomy),
         designations=division_ocdid_to_designation(
             official.office.division_ocdid, official.jurisdiction_ocdid
         ),

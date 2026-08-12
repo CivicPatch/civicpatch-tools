@@ -1,7 +1,6 @@
 import { html } from "lit-html";
 import { component, useEffect, useState } from "haunted";
 import { fetchDashboard, fetchMunicipalityList } from "../../api.js";
-import { useAuth } from "../../hooks/useAuth.js";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import {
   STATUS_FILTER_ALL,
@@ -32,7 +31,6 @@ interface MunicipalitiesPageProps {
 }
 
 function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
-  const { permissions } = useAuth();
   const [municipalities, setMunicipalities] = useState<Municipality[] | null>(
     null,
   );
@@ -167,7 +165,6 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
             ${renderMunicipalitiesTable({
               municipalities: pageInfo.pageItems,
               onClearFilters: handleClearFilters,
-              canViewJurisdictionPage: permissions.can_view_jurisdiction_page,
               sortKey,
               sortDir,
               onSortChange: handleSortChange,

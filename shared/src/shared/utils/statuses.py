@@ -16,7 +16,6 @@ class PipelineRunStatus(StrEnum):
     PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
     PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
     MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
-    MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
     FORMAT_OUTPUT = "FORMAT_OUTPUT"
     CLEANUP = "CLEANUP"
     REVIEW_OUTPUT = "REVIEW_OUTPUT"
@@ -44,7 +43,10 @@ class PipelineIssueStatus(StrEnum):
     SUPERSEDED = "superseded"
 
 
-TERMINAL_PIPELINE_ISSUE_STATUSES = (PipelineIssueStatus.RESOLVED, PipelineIssueStatus.SUPERSEDED)
+TERMINAL_PIPELINE_ISSUE_STATUSES = (
+    PipelineIssueStatus.RESOLVED,
+    PipelineIssueStatus.SUPERSEDED,
+)
 
 
 class PipelineRunErrorType(StrEnum):
@@ -103,6 +105,4 @@ class ChangeLogType(StrEnum):
     ADD_ROLE = "add_role"
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"
-    EXCLUDE_ROLE = "exclude_role"
-    INCLUDE_ROLE = "include_role"
     REORDER_ROLES = "reorder_roles"

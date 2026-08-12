@@ -20,24 +20,23 @@ def build_merged_response(per_level: dict[str, RoleConfig]) -> MergedRoleConfigR
                 role=entry.role,
                 is_unique=entry.is_unique,
                 aliases=entry.aliases,
-                kind=entry.kind,
                 source=level,
             )
     return MergedRoleConfigResponse(roles=list(seen.values()))
 
 
 async def load_global_config() -> RoleConfig:
-    """Read global roles + exclusions from the DB."""
+    """Read global roles from the DB."""
     return await db_roles.get_global_config()
 
 
 async def set_global_roles(entries: list[RoleEntryData], user_id: str | None = None) -> None:
-    """Replace global roles + exclusions in the DB and write change_logs."""
+    """Replace global roles in the DB and write change_logs."""
     await db_roles.replace_roles_at_scope(None, entries, user_id)
 
 
 async def set_scope_roles(req: SetScopeRolesRequest, user_id: str | None = None) -> None:
-    """Replace scope-level roles + exclusions in the DB and write change_logs."""
+    """Replace scope-level roles in the DB and write change_logs."""
     scope_ocdid = _scope_to_ocdid(req.scope, req.ocdid)
     await db_roles.replace_roles_at_scope(scope_ocdid, req.roles, user_id)
 
@@ -55,26 +54,10 @@ async def reorder_roles(
 
 
 async def delete_role(role_value: str, scope: str, ocdid: str, user_id: str | None = None) -> None:
-    """Hard-delete a role with no exclusion created."""
+    """Hard-delete a role."""
     scope_ocdid = _scope_to_ocdid(scope, ocdid)
     await db_roles.delete_role(role_value, scope_ocdid, user_id)
 
-
-async def exclude_role(role_value: str, scope: str, ocdid: str, user_id: str | None = None) -> None:
-    """Move a role to role_exclusions."""
-    scope_ocdid = _scope_to_ocdid(scope, ocdid)
-    await db_roles.exclude_role(role_value, scope_ocdid, user_id)
-
-
-async def include_role(
-    exclusion_value: str,
-    scope: str,
-    ocdid: str,
-    user_id: str | None = None,
-) -> None:
-    """Move an exclusion back to canonical role. Aliases stay attached."""
-    scope_ocdid = _scope_to_ocdid(scope, ocdid)
-    await db_roles.include_role(exclusion_value, scope_ocdid, user_id)
 
 
 def _scope_to_ocdid(scope: str, ocdid: str) -> str | None:

@@ -4,7 +4,6 @@ from typing import Dict, List
 
 import runners.people_collector.steps.step_05_merge_records_within_llm.field_mergers as field_mergers
 from runners.people_collector.schemas import (
-    ExcludedPerson,
     LLMPersonRecord,
     MergeRecordsWithinLLMStep,
     PeopleCollectorContext,
@@ -14,8 +13,9 @@ from runners.people_collector.schemas import (
 from runners.people_collector.steps.step_05_merge_records_within_llm.normalize import (
     normalize_record,
 )
-from shared.utils import config_utils, name_utils
+from shared.utils import name_utils
 from utils import log_utils
+from utils.taxonomy import Taxonomy, build_taxonomy, resolve_role
 
 
 def merge_records_within_llm(
@@ -37,16 +37,16 @@ def merge_records_within_llm(
         "should never happen - role_config is set before merge_records_within_llm"
     )
 
+    taxonomy = build_taxonomy(context.data.role_config)
+
     records = context.data.process_page_content_step.records
     all_records = [record for group in records.values() for record in group]
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
 
     identities = context.data.research_municipality_step.identities
-    roles_to_keep = set(
-        r.lower() for r in config_utils.get_role_names(context.data.role_config)
-    )
+
     all_unrecognized: List[UnrecognizedRole] = []
-    all_excluded: List[ExcludedPerson] = []
+    all_excluded: List[Person] = []
 
     # Use name_utils to map every record's name to a canonical name
     canonical_map = name_utils.build_canonical_map(
@@ -65,33 +65,26 @@ def merge_records_within_llm(
     for canonical_name, group in groups.items():
         raw_roles = list({r for record in group for r in (record.roles or [])})
         merged_person = merge_llm_people_to_person(
-            logger, context.data.role_config, canonical_name, group, jurisdiction_ocdid
+            logger, taxonomy, canonical_name, group, jurisdiction_ocdid
         )
 
-        if raw_roles and not merged_person.roles:
-            raw_designations = list(
-                {d for record in group for d in (record.designations or [])}
-            )
+        if raw_roles and not any(
+            resolve_role(r, taxonomy) for r in merged_person.roles
+        ):
             logger.info(
-                f"Excluded person: {canonical_name} — all roles excluded: {raw_roles}"
+                f"Excluded person: {canonical_name} — no known role in {raw_roles}"
             )
-            all_excluded.append(
-                ExcludedPerson(
-                    name=canonical_name,
-                    roles=raw_roles,
-                    designations=raw_designations,
-                    source_urls=merged_person.source_urls,
-                )
-            )
+            all_excluded.append(merged_person)
         else:
             kept_people.append(merged_person)
 
-    for person in kept_people:
-        unknown = [r for r in person.roles if r.lower() not in roles_to_keep]
-        for role in unknown:
-            all_unrecognized.append(
-                UnrecognizedRole(role=role, person_name=person.name)
-            )
+    # over both lists — an excluded person's label is what triage needs to see
+    for person in kept_people + all_excluded:
+        for role in person.roles:
+            if not resolve_role(role, taxonomy):
+                all_unrecognized.append(
+                    UnrecognizedRole(role=role, person_name=person.name)
+                )
 
     return MergeRecordsWithinLLMStep(
         records=kept_people,
@@ -181,7 +174,7 @@ def get_source_urls(person_records: list[LLMPersonRecord], person: Person) -> li
 
 def merge_llm_people_to_person(
     logger: log_utils.PipelineRunLogger,
-    role_config: config_utils.RoleConfig,
+    taxonomy: Taxonomy,
     canonical_name: str,
     records: List[LLMPersonRecord],
     jurisdiction_ocdid: str,
@@ -190,7 +183,7 @@ def merge_llm_people_to_person(
     Merge a list of LLMPersonRecord objects into a single Person object.
     """
     # Normalize records
-    records = [normalize_record(logger, role_config, r) for r in records]
+    records = [normalize_record(logger, taxonomy, r) for r in records]
 
     # Use helper functions to merge fields
     image = field_mergers.merge_field([r.image for r in records if r.image is not None])

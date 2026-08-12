@@ -37,6 +37,7 @@ from shared.utils import (
     url_utils,
 )
 from utils import log_utils, merge_utils
+from utils.taxonomy import Taxonomy, build_taxonomy, lookup_key, resolve_role
 
 
 @dataclass
@@ -92,16 +93,15 @@ async def _process_with_llm_in_chunks(
     return all_found
 
 
-def _collect_all_roles(
-    role_config: config_utils.RoleConfig, people_by_name: Dict
-) -> set[str]:
-    # TBD: normalize and keep only role configs
-    return {
-        r.strip().lower()
-        for p_list in people_by_name.values()
-        for p in p_list
-        for r in p.roles
-    }
+def _resolved_roles(taxonomy: Taxonomy, records: PeopleByName) -> set[str]:
+    found = set()
+    for group in records.values():
+        for record in group:
+            for label in record.roles:
+                canonical = resolve_role(label, taxonomy)
+                if canonical:
+                    found.add(lookup_key(canonical))
+    return found
 
 
 async def process_page_content(
@@ -117,7 +117,12 @@ async def process_page_content(
         "should never happen — research_municipality_step is required before process_page_content"
     )
 
+    assert context.data.role_config is not None, (
+        "should never happen — role_config is required before process_page_content"
+    )
+
     research = context.data.research_municipality_step
+    taxonomy = build_taxonomy(context.data.role_config)
     known_roles = research.known_roles
     role_names = config_utils.get_role_names(context.data.role_config)
     setup_data = ProcessingSetup(
@@ -143,7 +148,7 @@ async def process_page_content(
     )
 
     updated_progress = calculate_progress(
-        context.data.role_config, current_step.progress, updated_records, setup_data
+        taxonomy, current_step.progress, updated_records, setup_data
     )
 
     if heuristics_passed:
@@ -152,6 +157,7 @@ async def process_page_content(
             frontier,
             page_to_process,
             logger,
+            taxonomy,
             role_names,
             updated_records,
         )
@@ -335,7 +341,7 @@ async def process_with_llm(
 
 
 def calculate_progress(
-    role_config: config_utils.RoleConfig,
+    taxonomy: Taxonomy,
     progress: ProgressState,
     records: PeopleByName,
     setup_data: ProcessingSetup,
@@ -345,15 +351,11 @@ def calculate_progress(
     num_target_designations = len(setup_data.target_designations)
 
     valid_people = [
-        p for p in records.values() if has_role_and_contact_info(setup_data.roles, p)
+        p for p in records.values() if has_role_and_contact_info(taxonomy, p)
     ]
     max_people_count = len(valid_people)
 
-    if (
-        setup_data.target_role
-        and setup_data.target_role.strip().lower()
-        in _collect_all_roles(role_config, records)
-    ):
+    if lookup_key(setup_data.target_role) in _resolved_roles(taxonomy, records):
         has_target_role = True
 
     if num_target_designations == 0:

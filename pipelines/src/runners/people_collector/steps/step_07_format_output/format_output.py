@@ -13,6 +13,7 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
 )
+from utils.taxonomy import build_taxonomy
 
 
 async def format_output(
@@ -21,12 +22,13 @@ async def format_output(
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {PipelineStatus.FORMAT_OUTPUT} Formatting output data.")
 
-    assert context.data.merge_records_across_llms_step is not None, (
-        "should never happen — merge_records_across_llms_step is required before format_output"
+    assert context.data.merge_records_within_llm_step is not None, (
+        "should never happen — merge_records_within_llm step is required before format_output"
     )
-    data = context.data.merge_records_across_llms_step.people
+    data = context.data.merge_records_within_llm_step.records
 
-    sorted_people = people_utils.sort_people(data, context.data.role_config)
+    taxonomy = build_taxonomy(context.data.role_config)
+    sorted_people = people_utils.sort_people(data, taxonomy)
     people = [people_utils.person_to_official(person) for person in sorted_people]
 
     filtered_people = [person for person in people if len(person.name.split()) >= 2]

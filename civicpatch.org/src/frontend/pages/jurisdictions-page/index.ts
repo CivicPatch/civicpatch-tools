@@ -96,7 +96,9 @@ function renderDetailsSection(
 }
 
 function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: JurisdictionPageProps) {
-  const { loading: authLoading, permissions } = useAuth();
+  // Public page — nothing waits on permissions; each action gates itself and
+  // appears once they land.
+  const { permissions } = useAuth();
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [history, setHistory] = useState<{ data: HistoryEntry[] } | null>(null);
@@ -114,14 +116,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const { data: jobStatus, isConnected, error: sseError } = useWebSocket(wsTopic, {
     autoConnect: !!wsTopic,
   });
-
-  // Guards after all hooks (hooks must not be called conditionally)
-  if (authLoading) {
-    return html`<p>Checking authentication...</p>`;
-  }
-  if (!permissions.can_view_jurisdiction_page) {
-    return html`<p>You must be logged in to view this page.</p>`;
-  }
 
   const jurisdictionData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
   const identities = buildIdentitiesMap(people);

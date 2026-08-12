@@ -12,6 +12,7 @@ from runners.people_collector.schemas import (
     PipelineStatus,
 )
 from runners.people_collector.transitions.main import TRANSITION_MAP
+from services.browser import resolve_redirect
 from services.civicpatch_api import resolve_role_config
 from shared.utils import data_path_utils
 from shared.utils.url_utils import same_domain, same_url

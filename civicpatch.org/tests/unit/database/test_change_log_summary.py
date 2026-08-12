@@ -42,48 +42,36 @@ def test_review_events():
 
 def test_add_role_canonical():
     assert (
-        summarize_change_log("add_role", {"role": "Mayor", "kind": "canonical"})
+        summarize_change_log("add_role", {"role": "Mayor"})
         == "Added role 'Mayor'"
     )
 
 
-def test_add_role_exclusion_labels_correctly():
-    assert (
-        summarize_change_log("add_role", {"role": "City Hall", "kind": "exclusion"})
-        == "Added exclusion 'City Hall'"
-    )
-
-
 def test_edit_role_summarizes_alias_deltas():
-    payload = {"role": "Mayor", "kind": "canonical", "aliases_added": ["hizzoner"], "aliases_removed": ["a", "b"]}
+    payload = {"role": "Mayor", "aliases_added": ["hizzoner"], "aliases_removed": ["a", "b"]}
     assert summarize_change_log("edit_role", payload) == "Edited role 'Mayor' (+1 alias, -2 aliases)"
 
 
 def test_edit_role_no_alias_changes():
     assert (
-        summarize_change_log("edit_role", {"role": "Mayor", "kind": "canonical"})
+        summarize_change_log("edit_role", {"role": "Mayor"})
         == "Edited role 'Mayor'"
     )
 
 
-def test_delete_role_includes_kind_label():
-    assert (
-        summarize_change_log("delete_role", {"role": "City Hall", "kind": "exclusion"})
-        == "Removed exclusion 'City Hall'"
-    )
-
-
 def test_exclude_role():
+    """Retired event type — existing change_log rows must still render."""
     assert (
-        summarize_change_log("exclude_role", {"role": "Mayor", "kind": "exclusion"})
+        summarize_change_log("exclude_role", {"role": "Mayor"})
         == "Excluded role 'Mayor'"
     )
 
 
 def test_include_role():
+    """Retired event type — existing change_log rows must still render."""
     assert (
-        summarize_change_log("include_role", {"role": "City Hall", "kind": "canonical"})
-        == "Included exclusion 'City Hall' as role"
+        summarize_change_log("include_role", {"role": "City Hall"})
+        == "Included 'City Hall' as role"
     )
 
 

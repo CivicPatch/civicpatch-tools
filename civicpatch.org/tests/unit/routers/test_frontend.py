@@ -49,8 +49,6 @@ def test_permissions_unauthenticated():
     p = build_permissions(None)
     assert p["can_view_queue_page"] is False
     assert p["can_view_queue_page_errors"] is False
-    # Viewing a jurisdiction is public — signing in adds actions, not visibility.
-    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_local"] is False
     assert p["can_scrape_remote"] is False
     assert p["can_view_reviews_page"] is False
@@ -64,7 +62,6 @@ def test_permissions_default_role():
     p = build_permissions(DEFAULT)
     assert p["can_view_queue_page"] is False  # Contributors+ only
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_local"] is False
     assert p["can_scrape_remote"] is False
     assert p["can_view_reviews_page"] is True
@@ -78,7 +75,6 @@ def test_permissions_contributor_role():
     p = build_permissions(CONTRIBUTOR)
     assert p["can_view_queue_page"] is True  # introduced at Contributor
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is False
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
@@ -93,7 +89,6 @@ def test_permissions_maintainer_role():
     p = build_permissions(MAINTAINER)
     assert p["can_view_queue_page"] is True
     assert p["can_view_queue_page_errors"] is False
-    assert p["can_view_jurisdiction_page"] is True
     assert p["can_scrape_remote"] is True
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False  # Admin-only
