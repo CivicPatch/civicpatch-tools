@@ -62,10 +62,10 @@ async def _fetch_terms_for_scope() -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT value, kind, is_unique FROM role_terms WHERE jurisdiction_ocdid = %s ORDER BY value",
+            "SELECT value, is_unique FROM role_terms WHERE jurisdiction_ocdid = %s ORDER BY value",
             (_SCOPE,),
         )
-        return [{"value": r[0], "kind": r[1], "is_unique": r[2]} for r in await cur.fetchall()]
+        return [{"value": r[0], "is_unique": r[1]} for r in await cur.fetchall()]
 
 
 async def _fetch_change_log_types() -> list[str]:
@@ -89,12 +89,12 @@ async def test_put_config_add_canonical_role(client):
     response = client.put("/api/v1/jurisdictions/config", json={
         "ocdid": _SCOPE,
         "scope": "locality",
-        "roles": [{"role": "Mayor", "is_unique": True, "aliases": ["mayor"], "kind": "canonical"}],
+        "roles": [{"role": "Mayor", "is_unique": True, "aliases": ["mayor"]}],
     })
     assert response.status_code == 200, response.text
 
     terms = await _fetch_terms_for_scope()
-    assert terms == [{"value": "Mayor", "kind": "canonical", "is_unique": True}]
+    assert terms == [{"value": "Mayor", "is_unique": True}]
     assert "add_role" in await _fetch_change_log_types()
 
 
@@ -106,13 +106,13 @@ async def test_put_config_edit_is_unique_emits_edit_role(client):
     client.put("/api/v1/jurisdictions/config", json={
         "ocdid": _SCOPE,
         "scope": "locality",
-        "roles": [{"role": "Mayor", "is_unique": False, "aliases": [], "kind": "canonical"}],
+        "roles": [{"role": "Mayor", "is_unique": False, "aliases": []}],
     })
 
     response = client.put("/api/v1/jurisdictions/config", json={
         "ocdid": _SCOPE,
         "scope": "locality",
-        "roles": [{"role": "Mayor", "is_unique": True, "aliases": [], "kind": "canonical"}],
+        "roles": [{"role": "Mayor", "is_unique": True, "aliases": []}],
     })
     assert response.status_code == 200, response.text
 
@@ -121,49 +121,7 @@ async def test_put_config_edit_is_unique_emits_edit_role(client):
     assert "edit_role" in await _fetch_change_log_types()
 
 
-# ── POST /config/exclude /include /delete — surgical endpoints ──────────
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_post_exclude_flips_kind(client):
-    client.put("/api/v1/jurisdictions/config", json={
-        "ocdid": _SCOPE,
-        "scope": "locality",
-        "roles": [{"role": "City Hall", "is_unique": False, "aliases": [], "kind": "canonical"}],
-    })
-
-    response = client.post("/api/v1/jurisdictions/config/exclude", json={
-        "role": "City Hall",
-        "scope": "locality",
-        "ocdid": _SCOPE,
-    })
-    assert response.status_code == 200, response.text
-
-    terms = await _fetch_terms_for_scope()
-    assert terms == [{"value": "City Hall", "kind": "exclusion", "is_unique": False}]
-    assert "exclude_role" in await _fetch_change_log_types()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_post_include_flips_kind_back(client):
-    client.put("/api/v1/jurisdictions/config", json={
-        "ocdid": _SCOPE,
-        "scope": "locality",
-        "roles": [{"role": "City Hall", "is_unique": False, "aliases": [], "kind": "exclusion"}],
-    })
-
-    response = client.post("/api/v1/jurisdictions/config/include", json={
-        "value": "City Hall",
-        "scope": "locality",
-        "ocdid": _SCOPE,
-    })
-    assert response.status_code == 200, response.text
-
-    terms = await _fetch_terms_for_scope()
-    assert terms[0]["kind"] == "canonical"
-    assert "include_role" in await _fetch_change_log_types()
+# ── POST /config/delete — surgical endpoint ─────────────────────────────
 
 
 @pytest.mark.asyncio
@@ -172,7 +130,7 @@ async def test_post_delete_removes_term(client):
     client.put("/api/v1/jurisdictions/config", json={
         "ocdid": _SCOPE,
         "scope": "locality",
-        "roles": [{"role": "Mayor", "is_unique": False, "aliases": [], "kind": "canonical"}],
+        "roles": [{"role": "Mayor", "is_unique": False, "aliases": []}],
     })
 
     response = client.post("/api/v1/jurisdictions/config/delete", json={
@@ -191,15 +149,15 @@ async def test_post_delete_removes_term(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_config_returns_kind_field(client):
+async def test_get_config_round_trips_saved_roles(client):
     """Catches drift between what the DB layer emits and what the wire schema
-    expects (e.g. when we renamed include → kind, a missing field would 500)."""
+    expects — a field the schema requires but the query omits would 500."""
     client.put("/api/v1/jurisdictions/config", json={
         "ocdid": _SCOPE,
         "scope": "locality",
         "roles": [
-            {"role": "Mayor", "is_unique": False, "aliases": [], "kind": "canonical"},
-            {"role": "City Hall", "is_unique": False, "aliases": [], "kind": "exclusion"},
+            {"role": "Mayor", "is_unique": True, "aliases": ["mayor"]},
+            {"role": "Clerk", "is_unique": False, "aliases": []},
         ],
     })
 
@@ -208,5 +166,6 @@ async def test_get_config_returns_kind_field(client):
 
     roles = response.json()["data"]["roles"]
     by_value = {r["role"]: r for r in roles}
-    assert by_value["Mayor"]["kind"] == "canonical"
-    assert by_value["City Hall"]["kind"] == "exclusion"
+    assert by_value["Mayor"]["is_unique"] is True
+    assert by_value["Mayor"]["aliases"] == ["mayor"]
+    assert by_value["Clerk"]["is_unique"] is False

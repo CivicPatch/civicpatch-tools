@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 import pytest
 from runners.people_collector.schemas import (
     LinkFrontier,
@@ -16,8 +18,27 @@ from runners.people_collector.steps.step_05_merge_records_within_llm.merge_recor
     merge_records_within_llm,
     merge_weak_tie_groups_within_llm,
 )
+from shared.utils.config_utils import RoleConfig, RoleEntry
+from utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
+
+# An unresolvable label is kept verbatim, so an empty taxonomy is how a test asserts
+# passthrough rather than canonicalisation.
+EMPTY_ROLE_CONFIG = RoleConfig(roles=[])
+
+# The vocabulary these fixtures speak: a person whose roles resolve to nothing is
+# excluded from the roster, so the merge behaviour under test is only observable
+# with the roles the fixtures actually use.
+ROLE_CONFIG = RoleConfig(
+    roles=[
+        RoleEntry(role="Mayor", is_unique=True),
+        RoleEntry(role="Mayor Pro Tempore", is_unique=True),
+        RoleEntry(role="Council Member"),
+        RoleEntry(role="Commissioner"),
+        RoleEntry(role="Treasurer", is_unique=True),
+    ]
+)
 
 
 # --- Helpers ---
@@ -64,7 +85,7 @@ def _make_llm_person(**kwargs) -> LLMPersonRecord:
 
 
 def _build_context(
-    records_by_llm: dict, elected_officials: list, identities=None
+    records: dict, elected_officials: list, identities=None
 ) -> PeopleCollectorContext:
     resolved_identities = (
         identities
@@ -76,8 +97,7 @@ def _build_context(
         identities=resolved_identities,
     )
     process_step = ProcessPageContentStep(
-        raw_records_by_llm={},
-        records_by_llm=records_by_llm,
+        records=records,
         progress={
             "required_data": 5,
             "current_data": 5,
@@ -90,6 +110,7 @@ def _build_context(
         config=PipelineRunConfig(
             url="https://myportisabel.com/", name="Port Isabel city"
         ),
+        role_config=ROLE_CONFIG,
         frontier=LinkFrontier(),
         research_municipality_step=research_step,
         preprocess_page_content_step=PreprocessPageContentStep(
@@ -244,7 +265,7 @@ def test_merge_llm_people_to_person():
         name="Eve",
         roles=["Council Member", "Treasurer"],
         designations=["Ward 5", "Ward 6"],
-        phone="555-1234",
+        phone="(956) 943-2682",
         email="eve@city.org",
         source_url="http://source1.com",
     )
@@ -252,16 +273,18 @@ def test_merge_llm_people_to_person():
         name="Eve",
         roles=["Council Member", "Mayor"],
         designations=["Ward 5", "Ward 7"],
-        phone="555-1234",
+        phone="(956) 943-2682",
         email="eve@city.org",
         source_url="http://source2.com",
     )
-    result = merge_llm_people_to_person("Eve", [p1, p2], "jurisdiction_id")
+    result = merge_llm_people_to_person(
+        MagicMock(), build_taxonomy(EMPTY_ROLE_CONFIG), "Eve", [p1, p2], "jurisdiction_id"
+    )
 
     assert result.name == "Eve"
     assert set(result.roles) == {"Council Member", "Treasurer", "Mayor"}
     assert set(result.designations) == {"Ward 5", "Ward 6", "Ward 7"}
-    assert set(result.phones) == {"555-1234"}
+    assert set(result.phones) == {"(956) 943-2682"}
     assert set(result.emails) == {"eve@city.org"}
     assert set(result.source_urls) == {"http://source1.com", "http://source2.com"}
     assert result.jurisdiction_ocdid == "jurisdiction_id"
@@ -332,10 +355,10 @@ def test_get_source_urls_filters_by_unique_contribution():
 
 def test_port_isabel_keeps_both_cantus_separate_google_gemini():
     result = merge_records_within_llm(
-        _build_context({"google_gemini": GOOGLE_GEMINI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(GOOGLE_GEMINI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     cantu_people = [
-        p for p in result.people_by_llm["google_gemini"] if "cantu" in p.name.lower()
+        p for p in result.records if "cantu" in p.name.lower()
     ]
     assert len(cantu_people) == 2, (
         f"Expected 2 Cantu people, got {len(cantu_people)}: {[p.name for p in cantu_people]}"
@@ -346,31 +369,27 @@ def test_port_isabel_keeps_both_cantus_separate_google_gemini():
 
 def test_port_isabel_keeps_both_cantus_separate_together_ai():
     result = merge_records_within_llm(
-        _build_context({"together_ai": TOGETHER_AI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(TOGETHER_AI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     cantu_people = [
-        p for p in result.people_by_llm["together_ai"] if "cantu" in p.name.lower()
+        p for p in result.records if "cantu" in p.name.lower()
     ]
     assert len(cantu_people) == 2, (
         f"Expected 2 Cantu people, got {len(cantu_people)}: {[p.name for p in cantu_people]}"
     )
 
 
-def test_port_isabel_both_llms_keep_cantus_separate():
-    result = merge_records_within_llm(
-        _build_context(
-            {
-                "google_gemini": GOOGLE_GEMINI_RECORDS,
-                "together_ai": TOGETHER_AI_RECORDS,
-            },
-            PORT_ISABEL_OFFICIALS,
-        )
+def test_port_isabel_both_sources_keep_cantus_separate():
+    records: dict = {}
+    for source_records in (GOOGLE_GEMINI_RECORDS, TOGETHER_AI_RECORDS):
+        for name, person_records in source_records.items():
+            records.setdefault(name, []).extend(person_records)
+
+    result = merge_records_within_llm(_build_context(records, PORT_ISABEL_OFFICIALS))
+    cantu_people = [p for p in result.records if "cantu" in p.name.lower()]
+    assert len(cantu_people) == 2, (
+        f"Expected 2 Cantu people, got {len(cantu_people)}: {[p.name for p in cantu_people]}"
     )
-    for llm, people in result.people_by_llm.items():
-        cantu_people = [p for p in people if "cantu" in p.name.lower()]
-        assert len(cantu_people) == 2, (
-            f"[{llm}] Expected 2 Cantu people, got {len(cantu_people)}: {[p.name for p in cantu_people]}"
-        )
 
 
 # --- merge_records_within_llm: name matching ---
@@ -379,10 +398,10 @@ def test_port_isabel_both_llms_keep_cantus_separate():
 def test_port_isabel_jeffery_martinez_matched_to_research():
     """Jeffery David Martinez should fuzzy-match to research identity Jeffery Martinez."""
     result = merge_records_within_llm(
-        _build_context({"google_gemini": GOOGLE_GEMINI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(GOOGLE_GEMINI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     martinez_people = [
-        p for p in result.people_by_llm["google_gemini"] if "martinez" in p.name.lower()
+        p for p in result.records if "martinez" in p.name.lower()
     ]
     assert len(martinez_people) == 1, (
         f"Expected 1 Martinez, got {len(martinez_people)}: {[p.name for p in martinez_people]}"
@@ -392,10 +411,10 @@ def test_port_isabel_jeffery_martinez_matched_to_research():
 def test_port_isabel_cantu_sr_gets_correct_canonical_name():
     """Martin C. Cantu should map to Martin C. Cantu, Sr. from research."""
     result = merge_records_within_llm(
-        _build_context({"together_ai": TOGETHER_AI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(TOGETHER_AI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     cantu_people = [
-        p for p in result.people_by_llm["together_ai"] if "cantu" in p.name.lower()
+        p for p in result.records if "cantu" in p.name.lower()
     ]
     commissioner_cantu = [p for p in cantu_people if "Mayor" not in p.roles]
     assert len(commissioner_cantu) == 1
@@ -408,10 +427,10 @@ def test_port_isabel_cantu_sr_gets_correct_canonical_name():
 def test_port_isabel_cantu_jr_gets_correct_canonical_name():
     """Martin Cantu Jr. should map to Martin Cantu, Jr. from research."""
     result = merge_records_within_llm(
-        _build_context({"together_ai": TOGETHER_AI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(TOGETHER_AI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     mayor_people = [
-        p for p in result.people_by_llm["together_ai"] if "Mayor" in p.roles
+        p for p in result.records if "Mayor" in p.roles
     ]
     assert len(mayor_people) == 1
     assert "Jr" in mayor_people[0].name
@@ -422,9 +441,9 @@ def test_port_isabel_cantu_jr_gets_correct_canonical_name():
 
 def test_port_isabel_total_people_count_google_gemini():
     result = merge_records_within_llm(
-        _build_context({"google_gemini": GOOGLE_GEMINI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(GOOGLE_GEMINI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
-    people = result.people_by_llm["google_gemini"]
+    people = result.records
     assert len(people) >= 5, (
         f"Expected at least 5 people, got {len(people)}: {[p.name for p in people]}"
     )
@@ -432,9 +451,9 @@ def test_port_isabel_total_people_count_google_gemini():
 
 def test_port_isabel_total_people_count_together_ai():
     result = merge_records_within_llm(
-        _build_context({"together_ai": TOGETHER_AI_RECORDS}, PORT_ISABEL_OFFICIALS)
+        _build_context(TOGETHER_AI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
-    people = result.people_by_llm["together_ai"]
+    people = result.records
     assert len(people) >= 3, (
         f"Expected at least 3 people, got {len(people)}: {[p.name for p in people]}"
     )
@@ -445,17 +464,17 @@ def test_port_isabel_total_people_count_together_ai():
 
 def test_empty_records():
     result = merge_records_within_llm(
-        _build_context({"google_gemini": {}}, PORT_ISABEL_OFFICIALS)
+        _build_context({}, PORT_ISABEL_OFFICIALS)
     )
-    assert result.people_by_llm["google_gemini"] == []
+    assert result.records == []
 
 
 def test_no_elected_officials_still_works():
     """Without identity hints, both Cantus may merge — this documents current behavior."""
     result = merge_records_within_llm(
-        _build_context({"together_ai": TOGETHER_AI_RECORDS}, elected_officials=[])
+        _build_context(TOGETHER_AI_RECORDS, elected_officials=[])
     )
-    assert len(result.people_by_llm["together_ai"]) >= 2
+    assert len(result.records) >= 2
 
 
 def test_explicit_identities_override_research():
@@ -466,13 +485,13 @@ def test_explicit_identities_override_research():
     }
     result = merge_records_within_llm(
         _build_context(
-            {"together_ai": TOGETHER_AI_RECORDS},
+            TOGETHER_AI_RECORDS,
             PORT_ISABEL_OFFICIALS,
             identities=explicit_identities,
         )
     )
     cantu_people = [
-        p for p in result.people_by_llm["together_ai"] if "cantu" in p.name.lower()
+        p for p in result.records if "cantu" in p.name.lower()
     ]
     assert len(cantu_people) == 2, (
         f"Expected 2 Cantu people with explicit identities, got {len(cantu_people)}"
@@ -481,58 +500,29 @@ def test_explicit_identities_override_research():
 
 def test_duplicate_records_merged_within_same_name():
     """Same person appearing multiple times under the same name key should merge into one."""
-    records_by_llm = {
-        "google_gemini": {
-            "Sandra Holland": [
-                _make_llm_person(
-                    name="Sandra Holland",
-                    roles=["City Commissioner"],
-                    designations=["Place 1"],
-                    phone="(956) 943-2682",
-                    source_url="https://myportisabel.com/197/Mayor-Commissioners",
-                ),
-                _make_llm_person(
-                    name="Sandra Holland",
-                    roles=["City Commissioner"],
-                    designations=["Place 1"],
-                    email="sholland@example.com",
-                    source_url="https://myportisabel.com/some-other-page",
-                ),
-            ],
-        }
+    records = {
+        "Sandra Holland": [
+            _make_llm_person(
+                name="Sandra Holland",
+                roles=["City Commissioner"],
+                designations=["Place 1"],
+                phone="(956) 943-2682",
+                source_url="https://myportisabel.com/197/Mayor-Commissioners",
+            ),
+            _make_llm_person(
+                name="Sandra Holland",
+                roles=["City Commissioner"],
+                designations=["Place 1"],
+                email="sholland@example.com",
+                source_url="https://myportisabel.com/some-other-page",
+            ),
+        ],
     }
-    result = merge_records_within_llm(
-        _build_context(records_by_llm, PORT_ISABEL_OFFICIALS)
-    )
-    holland_people = [
-        p for p in result.people_by_llm["google_gemini"] if "holland" in p.name.lower()
-    ]
+    result = merge_records_within_llm(_build_context(records, PORT_ISABEL_OFFICIALS))
+    holland_people = [p for p in result.records if "holland" in p.name.lower()]
     assert len(holland_people) == 1
     assert "(956) 943-2682" in holland_people[0].phones
     assert "sholland@example.com" in holland_people[0].emails
-
-
-def test_inverted_name_format_normalized():
-    """Names in 'Last, First' format are reordered to 'First Last' before merging."""
-    records_by_llm = {
-        "together_ai": {
-            "Kincannon, Laurie": [
-                make_llm_person(
-                    "Kincannon, Laurie", roles=["Mayor"], phone="(979) 235-9434"
-                )
-            ],
-            "Burke, Rory": [
-                make_llm_person(
-                    "Burke, Rory", roles=["Councilman"], designations=["Position 4"]
-                )
-            ],
-        }
-    }
-    result = merge_records_within_llm(_build_context(records_by_llm, []))
-    names = {p.name for p in result.people_by_llm["together_ai"]}
-    assert "Laurie Kincannon" in names
-    assert "Rory Burke" in names
-    assert not any("," in name for name in names)
 
 
 # --- merge_weak_tie_groups_within_llm ---

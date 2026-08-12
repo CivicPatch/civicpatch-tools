@@ -1,17 +1,14 @@
 import { html } from 'lit-html';
 import { component, useState, useEffect } from 'haunted';
-import { useAuth } from '../../hooks/useAuth.js';
 import { fetchJurisdictionsByOcdids } from '../../api.js';
 import { Pagination } from '../pagination/index.js';
 
 const PAGE_SIZE = 25;
 
 function LocalityGaps({ stats, state }) {
-  const { permissions } = useAuth();
   const [page, setPage] = useState(1);
   const [jurisdictions, setJurisdictions] = useState([]);
 
-  if (!permissions.can_view_jurisdiction_page) return html``;
   if (!stats || !stats.states || !stats.states[state]) return html``;
 
   const notScraped = stats.states[state].locality_gaps.not_yet_scraped;

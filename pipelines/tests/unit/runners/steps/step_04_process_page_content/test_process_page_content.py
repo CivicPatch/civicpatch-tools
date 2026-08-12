@@ -6,6 +6,8 @@ from runners.people_collector.schemas import (
     LinkFrontier,
     LinkStatus,
     LLMPersonRecord,
+    PeopleArrayLLMResponseSchema,
+    RawLLMPersonRecord,
     RelevantPageResponseSchema,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
@@ -14,13 +16,19 @@ from runners.people_collector.steps.step_04_process_page_content.heuristics impo
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     _split_content_into_chunks,
     check_page_relevance,
-    normalize_record,
+    process_with_llm,
 )
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
     has_role_and_contact_info,
 )
+from shared.utils.config_utils import RoleConfig, RoleEntry
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
+from utils.taxonomy import build_taxonomy
+
+_ROLE_TAXONOMY = build_taxonomy(
+    RoleConfig(roles=[RoleEntry(role="mayor"), RoleEntry(role="council")])
+)
 
 
 def make_frontier(*links: Link) -> LinkFrontier:
@@ -58,7 +66,6 @@ def dummy_logger():
 
 def test_has_role_and_contact_info_with_valid_contact_info_and_role():
     """Test when there are at least two different types of contact info and a matching role."""
-    roles = ["mayor", "council"]
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -81,12 +88,11 @@ def test_has_role_and_contact_info_with_valid_contact_info_and_role():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == True
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
 
 
-def test_has_role_and_contact_info_with_insufficient_contact_info():
-    """Test when there is only one type of contact info across all records."""
-    roles = ["mayor", "council"]
+def test_has_role_and_contact_info_with_only_a_phone():
+    """A phone or email on any record is enough, even if nothing else is known."""
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -109,12 +115,11 @@ def test_has_role_and_contact_info_with_insufficient_contact_info():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == False
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
 
 
 def test_has_role_and_contact_info_with_no_matching_role():
     """Test when there is no matching role."""
-    roles = ["mayor", "council"]
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -137,20 +142,19 @@ def test_has_role_and_contact_info_with_no_matching_role():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == False
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == False
 
 
-def test_has_role_and_contact_info_with_multiple_contact_info_same_type():
-    """Test when there are multiple records with the same type of contact info."""
-    roles = ["mayor", "council"]
+def test_has_role_and_contact_info_with_distinct_urls_but_no_phone_or_email():
+    """Without a phone or email, more than one distinct url still counts."""
     records = [
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
             roles=["mayor"],
-            phone="123-456-7890",
+            phone=None,
             email=None,
-            url=None,
+            url="https://example.com/john",
             designations=[],
             source_url="test",
         ),
@@ -158,19 +162,45 @@ def test_has_role_and_contact_info_with_multiple_contact_info_same_type():
             name="Jane Doe",
             other_names=[],
             roles=["mayor"],
-            phone="987-654-3210",
+            phone=None,
             email=None,
-            url=None,
+            url="https://example.com/jane",
             designations=[],
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == False
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
+
+
+def test_has_role_and_contact_info_with_one_shared_url_and_no_phone_or_email():
+    """A single url shared across the group is not enough on its own."""
+    records = [
+        LLMPersonRecord(
+            name="John Doe",
+            other_names=[],
+            roles=["mayor"],
+            phone=None,
+            email=None,
+            url="https://example.com/council",
+            designations=[],
+            source_url="test",
+        ),
+        LLMPersonRecord(
+            name="Jane Doe",
+            other_names=[],
+            roles=["mayor"],
+            phone=None,
+            email=None,
+            url="https://example.com/council",
+            designations=[],
+            source_url="test",
+        ),
+    ]
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == False
 
 
 def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
     """Test when there are exactly two different types of contact info."""
-    roles = ["mayor", "council"]
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -193,12 +223,11 @@ def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == True
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
 
 
 def test_has_role_and_contact_info_with_no_contact_info():
     """Test when there is no contact info."""
-    roles = ["mayor", "council"]
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -221,19 +250,17 @@ def test_has_role_and_contact_info_with_no_contact_info():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == False
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == False
 
 
 def test_has_role_and_contact_info_with_no_records():
     """Test when there are no records."""
-    roles = ["mayor", "council"]
     records = []
-    assert has_role_and_contact_info(roles, records) == False
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == False
 
 
 def test_has_role_and_contact_info_with_three_contact_info_types():
     """Test when there are three different types of contact info."""
-    roles = ["mayor", "council"]
     records = [
         LLMPersonRecord(
             name="John Doe",
@@ -256,7 +283,7 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
             source_url="test",
         ),
     ]
-    assert has_role_and_contact_info(roles, records) == True
+    assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
 
 
 def test_check_page_heuristics_returns_true_with_empty_records():
@@ -513,68 +540,6 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
     )
 
 
-def test_normalize_record_strips_whitespace_from_email():
-    record = LLMPersonRecord(
-        name="John Doe",
-        other_names=[],
-        roles=["mayor"],
-        phone=None,
-        email="john @example.com",
-        url=None,
-        designations=[],
-        source_url="test",
-    )
-    result = normalize_record(dummy_logger(), record)
-    assert result.email == "john@example.com"
-
-
-def test_normalize_record_strips_internal_whitespace_from_email():
-    record = LLMPersonRecord(
-        name="John Doe",
-        other_names=[],
-        roles=["mayor"],
-        phone=None,
-        email="john@ example .com",
-        url=None,
-        designations=[],
-        source_url="test",
-    )
-    result = normalize_record(dummy_logger(), record)
-    assert result.email == "john@example.com"
-
-
-def test_normalize_record_moves_url_from_email_to_url_when_url_empty():
-    record = LLMPersonRecord(
-        name="John Doe",
-        other_names=[],
-        roles=["mayor"],
-        phone=None,
-        email="https://example.com/contact",
-        url=None,
-        designations=[],
-        source_url="test",
-    )
-    result = normalize_record(dummy_logger(), record)
-    assert result.email is None
-    assert result.url == "https://example.com/contact"
-
-
-def test_normalize_record_clears_url_from_email_when_url_already_set():
-    record = LLMPersonRecord(
-        name="John Doe",
-        other_names=[],
-        roles=["mayor"],
-        phone=None,
-        email="https://example.com/contact-form",
-        url="https://example.com/bio",
-        designations=[],
-        source_url="test",
-    )
-    result = normalize_record(dummy_logger(), record)
-    assert result.email is None
-    assert result.url == "https://example.com/bio"
-
-
 def test_check_page_heuristics_passes_with_compound_phone_in_text():
     records = [
         LLMPersonRecord(
@@ -593,21 +558,6 @@ def test_check_page_heuristics_passes_with_compound_phone_in_text():
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
         is True
     )
-
-
-def test_normalize_record_with_compound_phone_takes_first():
-    record = LLMPersonRecord(
-        name="Alice Boroughman",
-        other_names=[],
-        roles=["mayor"],
-        phone="856-358-2509 or 856-358-4010 Ext. 112",
-        email=None,
-        url=None,
-        designations=[],
-        source_url="http://example.com",
-    )
-    result = normalize_record(dummy_logger(), record)
-    assert result.phone == "(856) 358-2509"
 
 
 def test_add_relevant_urls_includes_same_domain():
@@ -898,3 +848,32 @@ def test_split_content_into_chunks_overlap_carries_context():
     assert len(chunks) > 1
     # The tail of chunk 0 should appear somewhere in chunk 1 (overlap)
     assert chunks[0][-100:].strip() in chunks[1]
+
+
+@pytest.mark.asyncio
+async def test_process_with_llm_reorders_inverted_names():
+    """Names in 'Last, First' format are reordered at ingest, before grouping."""
+    llm_response = PeopleArrayLLMResponseSchema(
+        people=[
+            RawLLMPersonRecord(
+                name="Kincannon, Laurie", roles=["Mayor"], designations=[]
+            ),
+            RawLLMPersonRecord(
+                name="Burke, Rory", roles=["Councilman"], designations=["Position 4"]
+            ),
+        ]
+    )
+
+    with patch(
+        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        new=AsyncMock(return_value=llm_response),
+    ):
+        records = await process_with_llm(
+            "https://city.gov/council",
+            "test-request",
+            "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government",
+            "page content",
+            "prompt",
+        )
+
+    assert [r.name for r in records] == ["Laurie Kincannon", "Rory Burke"]

@@ -170,13 +170,6 @@ class UnrecognizedRole(BaseModel):
     person_name: str
 
 
-class ExcludedPerson(BaseModel):
-    name: str
-    roles: List[str]
-    designations: List[str] = []
-    source_urls: List[str] = []
-
-
 class LLMPersonRecord(RawLLMPersonRecord):
     source_url: str
 
@@ -230,11 +223,7 @@ class ProcessPageContentStep(BaseModel):
 class MergeRecordsWithinLLMStep(BaseModel):
     records: List[Person]  # LLM Names to list of Person records
     unrecognized_roles: List[UnrecognizedRole] = []
-    excluded_people: List[ExcludedPerson] = []
-
-
-class MergeRecordsAcrossLLMsStep(BaseModel):
-    people: List[Person]
+    excluded_people: List[Person] = []
 
 
 class FormatOutputStep(BaseModel):
@@ -275,7 +264,6 @@ class PeopleCollectorData(BaseModel):
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
     process_page_content_step: Optional[ProcessPageContentStep] = None
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
-    merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     format_output_step: Optional[FormatOutputStep] = None
     review_output_step: Optional[ReviewOutputStep] = None
     find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None

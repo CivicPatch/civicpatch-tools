@@ -1,20 +1,17 @@
 import os
-import yaml
-from typing import Callable, Dict, List, Literal, Optional
 from decimal import Decimal, InvalidOperation
+from typing import Callable, Dict, List, Optional
+
+import yaml
 from pydantic import BaseModel
 from shared.schemas import JobConfig
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
-
-
-RoleKind = Literal["canonical", "exclusion"]
 
 
 class RoleEntry(BaseModel):
     role: str
     is_unique: bool = False
     aliases: List[str] = []
-    kind: RoleKind = "canonical"
 
 
 class RoleConfig(BaseModel):
@@ -36,7 +33,7 @@ def _load_config_file(filename: str, key: str = None, default=None):
     if cache_key in _config_cache:
         return _config_cache[cache_key]
     file_path = os.path.join(get_config_path(), filename)
-    with open(file_path, 'r') as config_file:
+    with open(file_path, "r") as config_file:
         config_data = yaml.safe_load(config_file)
     result = config_data if key is None else config_data.get(key, default)
     _config_cache[cache_key] = result
@@ -44,17 +41,19 @@ def _load_config_file(filename: str, key: str = None, default=None):
 
 
 def get_data_config():
-    return _load_config_file('data.yml', 'data', {})
+    return _load_config_file("data.yml", "data", {})
 
 
-def get_role_configs(role_config_override: Optional[RoleConfig] = None) -> List[RoleEntry]:
+def get_role_configs(
+    role_config_override: Optional[RoleConfig] = None,
+) -> List[RoleEntry]:
     if role_config_override is not None:
-        return [entry for entry in role_config_override.roles if entry.kind == "canonical"]
+        return [entry for entry in role_config_override.roles]
     return []
 
 
 def get_designations():
-    return _load_config_file('designations.yml', 'designations', {})
+    return _load_config_file("designations.yml", "designations", {})
 
 
 def get_role_names(role_config_override: Optional[RoleConfig] = None) -> List[str]:
@@ -78,48 +77,45 @@ def get_designation_alias_map() -> Dict[str, str]:
     return alias_map
 
 
-def get_excluded_role_names(role_config_override: Optional[RoleConfig] = None) -> set:
-    if role_config_override is None:
-        return set()
-    names = set()
-    for entry in role_config_override.roles:
-        if entry.kind == "exclusion":
-            names.add(entry.role.lower())
-            names.update(a.lower() for a in entry.aliases)
-    return names
-
-
 def get_unique_roles(role_config_override: Optional[RoleConfig] = None) -> List[str]:
-    return [entry.role for entry in get_role_configs(role_config_override) if entry.is_unique]
+    return [
+        entry.role
+        for entry in get_role_configs(role_config_override)
+        if entry.is_unique
+    ]
 
 
 def search_keywords(type="local") -> Dict[str, List[str]]:
-    return _load_config_file('search.yml').get('keywords', {})
+    return _load_config_file("search.yml").get("keywords", {})
 
 
 def governance_keywords() -> List[str]:
-    return _load_config_file('keywords.yml', 'keywords', [])
+    return _load_config_file("keywords.yml", "keywords", [])
 
 
 def load_job_config(logger=None) -> JobConfig:
-    config = _load_config_file('pipeline.yml')
+    config = _load_config_file("pipeline.yml")
     if os.getenv("PIPELINE_RUN_COST_LIMIT"):
         try:
             pipeline_run_cost_limit_string = os.getenv("PIPELINE_RUN_COST_LIMIT")
             if pipeline_run_cost_limit_string:
                 if logger is not None:
-                    logger.info(f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}")
+                    logger.info(
+                        f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}"
+                    )
                 pipeline_run_cost_limit = Decimal(pipeline_run_cost_limit_string)
-                config['pipeline_run_cost_limit'] = pipeline_run_cost_limit
+                config["pipeline_run_cost_limit"] = pipeline_run_cost_limit
         except (ValueError, InvalidOperation):
             pass
     return JobConfig(
-        max_pages=config.get('max_pages'),
-        pipeline_run_cost_limit=config.get('pipeline_run_cost_limit')
+        max_pages=config.get("max_pages"),
+        pipeline_run_cost_limit=config.get("pipeline_run_cost_limit"),
     )
 
 
-def get_role_alias_map(role_config_override: Optional[RoleConfig] = None) -> Dict[str, str]:
+def get_role_alias_map(
+    role_config_override: Optional[RoleConfig] = None,
+) -> Dict[str, str]:
     alias_map = {}
     for entry in get_role_configs(role_config_override):
         alias_map[entry.role.lower()] = entry.role
@@ -129,16 +125,35 @@ def get_role_alias_map(role_config_override: Optional[RoleConfig] = None) -> Dic
 
 
 def get_keywords() -> List[str]:
-    role_keywords = set(get_role_alias_map().keys()) | set(get_role_alias_map().values())
-    designation_keywords = set(get_designation_alias_map().keys()) | set(get_designation_alias_map().values())
+    role_keywords = set(get_role_alias_map().keys()) | set(
+        get_role_alias_map().values()
+    )
+    designation_keywords = set(get_designation_alias_map().keys()) | set(
+        get_designation_alias_map().values()
+    )
     extra_keywords = [
-        "title", "email", "phone", "contact", "address",
-        "start date", "elected at", "end date", "term expires",
+        "title",
+        "email",
+        "phone",
+        "contact",
+        "address",
+        "start date",
+        "elected at",
+        "end date",
+        "term expires",
         "current term",
-        "committee", "board",
-        "township", "village", "city"
+        "committee",
+        "board",
+        "township",
+        "village",
+        "city",
     ]
-    return list(role_keywords | designation_keywords | set(governance_keywords()) | set(extra_keywords))
+    return list(
+        role_keywords
+        | designation_keywords
+        | set(governance_keywords())
+        | set(extra_keywords)
+    )
 
 
 def merge_role_configs(*configs: RoleConfig) -> RoleConfig:

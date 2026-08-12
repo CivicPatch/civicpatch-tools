@@ -151,11 +151,11 @@ erDiagram
     role_terms {
         uuid            id                  PK
         text            value               "unique: (value, jurisdiction_ocdid)"
-        text            kind                "check: canonical|exclusion"
+        text            kind                "check: canonical|exclusion — CLEANUP TBD, see notes"
         text_null       jurisdiction_ocdid  "NULL=global, state ocdid=state, place ocdid=local"
-        text_null       display_name        "only meaningful for canonical"
-        bool            is_unique           "only meaningful for canonical"
-        int             priority            "only meaningful for canonical"
+        text_null       display_name
+        bool            is_unique
+        int             priority
         timestamptz     created_at
     }
 
@@ -192,6 +192,7 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
+- **`role_terms.kind` — CLEANUP TBD.** Exclusions were removed from the codebase; every term is now a role. The column is still `NOT NULL` with no default, so the INSERT in `database/roles.py` writes the literal `'canonical'` — that literal is the only remaining `kind` mention in Python. Dropping it needs a migration that (a) decides what to do with the pre-existing `kind = 'exclusion'` rows, which are now readable as ordinary roles, and (b) removes the `role_terms_kind_check` constraint. No index keys off `kind`. The retired `exclude_role` / `include_role` change-log types are left in `change_log_types` for the same reason: existing `change_logs` rows FK to them.
 - `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
 - `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key

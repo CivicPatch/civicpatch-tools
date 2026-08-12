@@ -24,9 +24,6 @@ from runners.people_collector.steps.step_04_process_page_content.process_page_co
 from runners.people_collector.steps.step_05_merge_records_within_llm.merge_records_within_llm import (
     merge_records_within_llm,
 )
-from runners.people_collector.steps.step_06_merge_records_across_llms.merge_records_across_llms import (
-    merge_records_across_llms,
-)
 from runners.people_collector.steps.step_07_format_output.format_output import (
     format_output,
 )
@@ -98,7 +95,7 @@ async def research_municipality_transition(
     )
     source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
-        logger.info("Source URLs provided.")
+        logger.info(f"Source URLs provided: {source_urls}")
         next_context = _next_context(
             next_context, frontier=next_context.data.frontier.add(source_urls)
         )
@@ -276,21 +273,6 @@ async def merge_records_within_llm_transition(
         context,
         progress=progress,
         merge_records_within_llm_step=result,
-    ), PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
-
-
-async def merge_records_across_llms_transition(
-    _: JobConfig,
-    logger: PipelineRunLogger,
-    context: PeopleCollectorContext,
-    _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = merge_records_across_llms(context)
-    progress = calculate_progress_percentage(context.data, 7)
-    return _next_context(
-        context,
-        progress=progress,
-        merge_records_across_llms_step=result,
     ), PipelineStatus.FORMAT_OUTPUT
 
 
@@ -501,7 +483,6 @@ TRANSITION_MAP = {
     PipelineStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
     PipelineStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
     PipelineStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
-    PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
     PipelineStatus.FORMAT_OUTPUT: format_output_transition,
     PipelineStatus.CLEANUP: cleanup_transition,
     PipelineStatus.REVIEW_OUTPUT: review_output_transition,

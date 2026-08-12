@@ -1,15 +1,20 @@
 import json
 import logging
+
 import httpx
 import pytest
+from runners.people_collector.schemas import (
+    FormatOutputStep,
+    MergeRecordsWithinLLMStep,
+    PipelineStatus,
+)
 from runners.people_collector.steps.step_07_format_output.format_output import (
-    format_output,
+    _get_image_map,
     _maybe_add_fallback_url,
     _merge_forward_other_names,
-    _get_image_map,
     _swap_local_image,
+    format_output,
 )
-from runners.people_collector.schemas import PipelineStatus, FormatOutputStep, MergeRecordsAcrossLLMsStep
 from tests.factories.official import official_factory
 from tests.factories.person import person_factory
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
@@ -22,29 +27,41 @@ AUSTIN_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 
 
 def test__maybe_add_fallback_url():
-    person = official_factory(name="John Doe", urls=[], source_urls=["https://example.com/john_doe"])
+    person = official_factory(
+        name="John Doe", urls=[], source_urls=["https://example.com/john_doe"]
+    )
     updated_person = _maybe_add_fallback_url(person)
     assert updated_person.urls == ["https://example.com/john_doe"]
 
-    person_with_url = official_factory(name="Jane Smith", urls=["https://example.com/jane_smith"], source_urls=["https://example.com/city_council"])
+    person_with_url = official_factory(
+        name="Jane Smith",
+        urls=["https://example.com/jane_smith"],
+        source_urls=["https://example.com/city_council"],
+    )
     updated_person_with_url = _maybe_add_fallback_url(person_with_url)
     assert updated_person_with_url.urls == ["https://example.com/jane_smith"]
 
+
 @pytest.mark.asyncio
 async def test_format_output(httpx_mock):
-    httpx_mock.add_response(
-        status_code=200,
-        json={"resolved_people": []}
-    )
+    httpx_mock.add_response(status_code=200, json={"resolved_people": []})
 
     people = [
-        person_factory(name="John Doe", urls=[], source_urls=["https://example.com/john_doe"]),
-        person_factory(name="Jane Smith", urls=[], source_urls=["https://example.com/jane_smith"]),
+        person_factory(
+            name="John Doe", urls=[], source_urls=["https://example.com/john_doe"]
+        ),
+        person_factory(
+            name="Jane Smith", urls=[], source_urls=["https://example.com/jane_smith"]
+        ),
     ]
 
-    context = pipeline_run_context_factory({
-        PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(people=people),
-    })
+    context = pipeline_run_context_factory(
+        {
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM: MergeRecordsWithinLLMStep(
+                records=people
+            ),
+        }
+    )
 
     async with httpx.AsyncClient() as api_client:
         output = await format_output(context, api_client)
@@ -68,9 +85,9 @@ def test_merge_forward_preserves_existing_human_aliases():
         existing_name="Robert Smith",
         existing_other_names=["Bobby"],  # a human-added alias on the entity
     )
-    assert "Bobby" in result          # the guard: existing alias survives
-    assert "Robert Smith" in result   # renamed → old name kept as alias
-    assert "Bob Smith" in result      # new name folded in too
+    assert "Bobby" in result  # the guard: existing alias survives
+    assert "Robert Smith" in result  # renamed → old name kept as alias
+    assert "Bob Smith" in result  # new name folded in too
 
 
 def test_merge_forward_carries_aliases_even_when_name_unchanged():
@@ -106,8 +123,11 @@ def test_merge_forward_no_existing_match_is_a_noop():
 
 # ── _get_image_map ────────────────────────────────────────────
 
+
 def test_get_image_map_returns_empty_when_data_source_missing():
-    result = _get_image_map("ocd-jurisdiction/country:us/state:xx/place:nowhere/government", logger)
+    result = _get_image_map(
+        "ocd-jurisdiction/country:us/state:xx/place:nowhere/government", logger
+    )
     assert result == {}
 
 
@@ -124,7 +144,9 @@ def test_get_image_map_reads_file(tmp_path, monkeypatch):
     monkeypatch.setenv("APP_ROOT", str(tmp_path))
     images_dir = tmp_path / "data_source" / "tx" / "local" / "place_austin" / "images"
     images_dir.mkdir(parents=True)
-    (images_dir / "image_map.json").write_text(json.dumps({"abc123.png": "https://example.gov/abc123.png"}))
+    (images_dir / "image_map.json").write_text(
+        json.dumps({"abc123.png": "https://example.gov/abc123.png"})
+    )
 
     result = _get_image_map(AUSTIN_OCDID, logger)
     assert result == {"abc123.png": "https://example.gov/abc123.png"}
@@ -132,11 +154,14 @@ def test_get_image_map_reads_file(tmp_path, monkeypatch):
 
 # ── _swap_local_image ─────────────────────────────────────────
 
+
 def test_swap_local_image_sets_cdn_image_and_original_url():
     official = official_factory(name="Alice")
     official.image = "local://abc123.png"
 
-    result = _swap_local_image(official, {"abc123.png": "https://example.gov/alice.png"})
+    result = _swap_local_image(
+        official, {"abc123.png": "https://example.gov/alice.png"}
+    )
 
     assert result.image == "https://example.gov/alice.png"
     assert result.cdn_image == "local://abc123.png"

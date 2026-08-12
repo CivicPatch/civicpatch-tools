@@ -44,7 +44,7 @@ def test_get_global_config_happy():
 
     assert response.status_code == 200
     roles = response.json()["data"]["roles"]
-    assert roles == [{"role": "Mayor", "is_unique": False, "aliases": ["mayor"], "kind": "canonical"}]
+    assert roles == [{"role": "Mayor", "is_unique": False, "aliases": ["mayor"]}]
 
 
 @pytest.mark.unit

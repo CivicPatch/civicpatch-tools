@@ -7,14 +7,10 @@ class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
 
 
-RoleKind = Literal["canonical", "exclusion"]
-
-
 class RoleEntryWithSource(BaseModel):
     role: str
     is_unique: bool
     aliases: List[str]
-    kind: RoleKind = "canonical"
     source: Literal["global", "state", "locality"]
 
 
@@ -26,7 +22,6 @@ class RoleEntryData(BaseModel):
     role: str
     is_unique: bool = False
     aliases: List[str] = []
-    kind: RoleKind = "canonical"
 
 
 class SetScopeRolesRequest(BaseModel):
@@ -42,37 +37,30 @@ class SetGlobalRolesRequest(BaseModel):
 
 class ReorderGlobalRolesRequest(BaseModel):
     role_order: List[str]  # canonical role values, desired order (priority 0..N)
-    moved_roles: List[str] = []  # values the user actively moved (for the audit summary)
+    moved_roles: List[
+        str
+    ] = []  # values the user actively moved (for the audit summary)
 
 
 class ReorderScopeRolesRequest(BaseModel):
     ocdid: str
     scope: Literal["state", "locality"]
     role_order: List[str]  # canonical role values, desired order (priority 0..N)
-    moved_roles: List[str] = []  # values the user actively moved (for the audit summary)
+    moved_roles: List[
+        str
+    ] = []  # values the user actively moved (for the audit summary)
 
 
 class RoleScopeRequest(BaseModel):
     """Base for operations targeting a single role at a given scope."""
+
     role: str
     scope: Literal["global", "state", "locality"]
     ocdid: str = ""  # ignored for global scope
 
 
-class ExcludeRoleRequest(RoleScopeRequest):
-    pass
-
-
 class DeleteRoleRequest(RoleScopeRequest):
     pass
-
-
-class IncludeExclusionRequest(BaseModel):
-    """Move an exclusion pattern back to roles."""
-    value: str
-    scope: Literal["global", "state", "locality"]
-    ocdid: str = ""  # ignored for global scope
-    is_unique: bool = False
 
 
 class JurisdictionSearchResult(BaseModel):
