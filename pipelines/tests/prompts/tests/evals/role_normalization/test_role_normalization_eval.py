@@ -5,7 +5,7 @@ from typing import Optional
 import pytest
 import yaml
 from pydantic import BaseModel
-from shared.utils.config_utils import RoleConfig
+from shared.schemas import RoleConfig
 from utils import people_utils
 
 CASES_PATH = Path(__file__).parent / "cases.yml"

@@ -8,7 +8,7 @@ from database.roles import (
     diff_aliases,
     reorder_validation_error,
 )
-from schemas.jurisdictions import RoleEntryData
+from shared.schemas import RoleDefinition
 
 
 # Pure helpers — unit-tested directly, no DB.
@@ -40,8 +40,8 @@ def test_state_ocdid_from_bare_country_is_none():
 # ── classify_term_op ────────────────────────────────────────────────────
 
 
-def _entry(role: str) -> RoleEntryData:
-    return RoleEntryData.model_validate({
+def _entry(role: str) -> RoleDefinition:
+    return RoleDefinition.model_validate({
         "role": role, "is_unique": False, "aliases": [],
     })
 
@@ -63,8 +63,8 @@ def test_classify_unchanged_term_is_no_change():
 # ── classify_term_op: is_unique edits ───────────────────────────────────
 
 
-def _unique_entry(role: str, *, is_unique: bool) -> RoleEntryData:
-    return RoleEntryData.model_validate({
+def _unique_entry(role: str, *, is_unique: bool) -> RoleDefinition:
+    return RoleDefinition.model_validate({
         "role": role, "is_unique": is_unique, "aliases": [],
     })
 

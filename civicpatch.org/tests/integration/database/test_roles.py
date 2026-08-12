@@ -21,7 +21,7 @@ from database.roles import (
     reorder_roles_at_scope,
     replace_roles_at_scope,
 )
-from schemas.jurisdictions import RoleEntryData
+from shared.schemas import RoleDefinition
 
 _SCOPE = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 
@@ -45,7 +45,7 @@ async def clean_scope():
 def _entry(role, aliases=None, is_unique=False):
     # cast to satisfy Literal["canonical","exclusion"] at the model boundary;
     # the model raises on anything else via its Literal validation anyway.
-    return RoleEntryData.model_validate({
+    return RoleDefinition.model_validate({
         "role": role,
         "is_unique": is_unique,
         "aliases": aliases or [],

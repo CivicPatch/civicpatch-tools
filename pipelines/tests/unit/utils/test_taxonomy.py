@@ -1,5 +1,5 @@
 import pytest
-from shared.utils.config_utils import RoleConfig
+from shared.schemas import RoleConfig
 from utils.taxonomy import (
     Taxonomy,
     build_taxonomy,

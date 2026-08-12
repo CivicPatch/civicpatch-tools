@@ -3,20 +3,8 @@ from decimal import Decimal, InvalidOperation
 from typing import Callable, Dict, List, Optional
 
 import yaml
-from pydantic import BaseModel
-from shared.schemas import JobConfig
+from shared.schemas import JobConfig, RoleConfig, RoleDefinition
 from shared.utils.id_utils import jurisdiction_ocdid_to_folder
-
-
-class RoleEntry(BaseModel):
-    role: str
-    is_unique: bool = False
-    aliases: List[str] = []
-
-
-class RoleConfig(BaseModel):
-    roles: List[RoleEntry] = []
-
 
 # In-memory cache for config files
 _config_cache = {}
@@ -46,7 +34,7 @@ def get_data_config():
 
 def get_role_configs(
     role_config_override: Optional[RoleConfig] = None,
-) -> List[RoleEntry]:
+) -> List[RoleDefinition]:
     if role_config_override is not None:
         return [entry for entry in role_config_override.roles]
     return []
@@ -157,7 +145,7 @@ def get_keywords() -> List[str]:
 
 
 def merge_role_configs(*configs: RoleConfig) -> RoleConfig:
-    roles: Dict[str, RoleEntry] = {}
+    roles: Dict[str, RoleDefinition] = {}
     for cfg in configs:
         for entry in cfg.roles:
             roles[entry.role.lower()] = entry

@@ -6,9 +6,9 @@ from domain.models import Official
 from fastapi import Request
 from pipelines_environment import get_env_vars
 from services.github_config_service import make_github_fetcher
+from shared.schemas import RoleDefinition
 from shared.utils.config_utils import (
     RoleConfig,
-    RoleEntry,
     load_role_config_for_jurisdiction,
 )
 from shared.utils.github_urls import derive_raw_base_url
@@ -201,7 +201,7 @@ async def resolve_role_config(jurisdiction_ocdid: str) -> Optional[RoleConfig]:
         roles_data = raw.get("data", {}).get("roles", [])
         return RoleConfig(
             roles=[
-                RoleEntry(
+                RoleDefinition(
                     role=r["role"],
                     is_unique=r.get("is_unique", False),
                     aliases=r.get("aliases", []),
