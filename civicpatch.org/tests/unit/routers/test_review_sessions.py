@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 from psycopg.errors import UniqueViolation
 
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import review_sessions as review_sessions_router
 
@@ -17,7 +17,7 @@ MOCK_IDENTITY = Identity(
 )
 
 
-def _user_at(role: Role) -> Identity:
+def _user_at(role: UserRole) -> Identity:
     """Cookie-style identity at a specific trust level, for gate tests."""
     return Identity(
         type="cookie",
@@ -193,7 +193,7 @@ def test_get_active_session_requires_state_code(client):
 def test_review_session_writes_allow_default_role(method, url, body):
     """Default-level signed-in users may run review sessions; the write routes
     must not 403 them."""
-    client = _client_as(_user_at(Role.DEFAULT))
+    client = _client_as(_user_at(UserRole.DEFAULT))
     kwargs = {"json": body} if body is not None else {}
     with (
         patch(

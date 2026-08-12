@@ -5,7 +5,7 @@ from lib.auth import require_route_access
 from pydantic import BaseModel
 from typing import Optional
 import uuid
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, UserRole, RouteCategory
 
 import database.people as database
 import database.jurisdictions as jurisdictions_db
@@ -84,7 +84,7 @@ def get_router() -> APIRouter:
     @router.delete("/{person_id}")
     async def delete_person_endpoint(
         person_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)),
     ):
         await database.delete_person(person_id)
         return {"data": None}
@@ -139,7 +139,7 @@ def get_router() -> APIRouter:
     @router.patch("/data")
     async def patch_people_data_endpoint(
         request: OpenPrRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.MAINTAINERS)),
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
     ):
         folder_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(request.jurisdiction_ocdid)
         file_path = f"data/{folder_path}.yml"

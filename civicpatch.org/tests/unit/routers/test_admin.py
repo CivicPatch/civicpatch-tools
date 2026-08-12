@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 import lib.supabase_auth as supabase_auth_service
 from lib.auth import get_optional_user
 from routers.api import admin as admin_router
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 
 
 ADMIN_IDENTITY = Identity(
@@ -16,7 +16,7 @@ ADMIN_IDENTITY = Identity(
     provider="supabase",
     provider_user_id="admin-uuid",
     email="admin@example.com",
-    role=Role.ADMINS.value,
+    role=UserRole.ADMINS.value,
 )
 
 NON_ADMIN_IDENTITY = Identity(
@@ -24,7 +24,7 @@ NON_ADMIN_IDENTITY = Identity(
     provider="supabase",
     provider_user_id="user-uuid",
     email="user@example.com",
-    role=Role.CONTRIBUTORS.value,
+    role=UserRole.CONTRIBUTORS.value,
 )
 
 TARGET_USER_ID = "11111111-2222-3333-4444-555555555555"
@@ -162,7 +162,7 @@ def test_set_user_role_rejects_self_edit_from_session_caller():
         provider="supabase",
         provider_user_id="self-uuid",
         email="self@example.com",
-        role=Role.ADMINS.value,
+        role=UserRole.ADMINS.value,
         user_id=TARGET_USER_ID,
     )
     with (

@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pull_requests as pull_requests_router
 from services.pull_request_merge import do_merge
@@ -20,7 +20,7 @@ MOCK_IDENTITY = Identity(
 )
 
 
-def _user_at(role: Role) -> Identity:
+def _user_at(role: UserRole) -> Identity:
     """Cookie-style identity at a specific trust level, for gate tests."""
     return Identity(
         type="cookie",
@@ -635,7 +635,7 @@ def test_do_merge_unexpected_exception_writes_error():
 
 # ── Auth gates on write routes ──────────────────────────────────────────────
 #
-# These routes require (TEAM_REQUIRED, Role.CONTRIBUTORS). The default-level
+# These routes require (TEAM_REQUIRED, UserRole.CONTRIBUTORS). The default-level
 # (signed-in but no elevation) user must be rejected with 403; the auth-ladder
 # cascade is proven separately in test_auth.py, so here we just pin the gate
 # floor. save-and-merge is intentionally absent — reviewers (default role) may
@@ -655,7 +655,7 @@ def test_do_merge_unexpected_exception_writes_error():
 def test_pull_request_writes_reject_default_role(method, url):
     """Default-level users (just-signed-in, no elevation) must be 403'd from
     every write route that mutates PR state."""
-    client = _client_as(_user_at(Role.DEFAULT))
+    client = _client_as(_user_at(UserRole.DEFAULT))
     kwargs = {} if method == "delete" else {"json": {}}
     response = getattr(client, method)(url, **kwargs)
     assert response.status_code == 403
@@ -665,7 +665,7 @@ def test_pull_request_writes_reject_default_role(method, url):
 def test_save_and_merge_allows_default_role():
     """A default-role reviewer may publish (save & merge) the PR they're
     reviewing — the route is AUTHENTICATED, not contributor-gated."""
-    client = _client_as(_user_at(Role.DEFAULT))
+    client = _client_as(_user_at(UserRole.DEFAULT))
     with (
         patch("lib.redis.set", new_callable=AsyncMock),
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
@@ -684,7 +684,7 @@ def test_save_and_merge_allows_default_role():
 def test_report_review_issue_allows_default_role():
     """A default-role reviewer may file a GitHub issue while reviewing — the
     route is AUTHENTICATED, not contributor-gated."""
-    client = _client_as(_user_at(Role.DEFAULT))
+    client = _client_as(_user_at(UserRole.DEFAULT))
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
@@ -747,7 +747,7 @@ def test_report_review_issue_401_when_user_id_missing():
         provider="supabase",
         provider_user_id="sb-test",
         email="test@example.com",
-        role=Role.DEFAULT.value,
+        role=UserRole.DEFAULT.value,
         user_id=None,
     )
     client = _client_as(identity)
@@ -776,7 +776,7 @@ def test_get_reported_issues_returns_data(client):
 def test_get_reported_issues_allows_default_role():
     """Reviewers (default role) can see issues they've already filed for this
     request — read-only, same gate as the POST that creates them."""
-    client = _client_as(_user_at(Role.DEFAULT))
+    client = _client_as(_user_at(UserRole.DEFAULT))
     with patch(
         "database.issues.get_user_reported_issues_for_request",
         new_callable=AsyncMock,

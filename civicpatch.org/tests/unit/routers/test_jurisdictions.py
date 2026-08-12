@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from schemas.jurisdictions import JurisdictionSearchResult
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
@@ -35,21 +35,21 @@ def client():
 def _default():
     return Identity(
         type="session", provider="github", provider_user_id="u2",
-        email="d@x.com", role=Role.DEFAULT, user_id="user-456",
+        email="d@x.com", role=UserRole.DEFAULT, user_id="user-456",
     )
 
 
 def _contributor():
     return Identity(
         type="session", provider="github", provider_user_id="u1",
-        email="u@x.com", role=Role.CONTRIBUTORS, user_id="user-123",
+        email="u@x.com", role=UserRole.CONTRIBUTORS, user_id="user-123",
     )
 
 
 def _maintainer():
     return Identity(
         type="session", provider="github", provider_user_id="u3",
-        email="m@x.com", role=Role.MAINTAINERS, user_id="user-789",
+        email="m@x.com", role=UserRole.MAINTAINERS, user_id="user-789",
     )
 
 

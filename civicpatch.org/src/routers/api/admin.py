@@ -13,7 +13,7 @@ from schemas.common import (
     Identity,
     InviteUserRequest,
     PendingInvite,
-    Role,
+    UserRole,
     RouteCategory,
     SetRoleRequest,
     UserWithRole,
@@ -28,7 +28,7 @@ def get_router() -> APIRouter:
     @router.post("/od_sync", include_in_schema=False)
     async def od_sync_endpoint(
         request: OdSyncRequestSchema,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         if request.jurisdiction_ocdids:
             await temporal_client.start_targeted_od_sync(request.jurisdiction_ocdids)
@@ -40,14 +40,14 @@ def get_router() -> APIRouter:
     @router.post("/pr_sync", include_in_schema=False)
     async def pr_sync_endpoint(
         background_tasks: BackgroundTasks,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         background_tasks.add_task(pr_sync.sync_open_pr_state)
         return {"status": "running"}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)
     async def clear_dashboard_cache_endpoint(
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         await cache_service.invalidate("dashboard_data")
         return {"status": "ok"}
@@ -56,7 +56,7 @@ def get_router() -> APIRouter:
     async def list_users_endpoint(
         limit: int = 100,
         offset: int = 0,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         rows = await users_db.list_users(limit=limit, offset=offset)
         return {"data": [UserWithRole(**row) for row in rows]}
@@ -65,7 +65,7 @@ def get_router() -> APIRouter:
     async def set_user_role_endpoint(
         user_id: UUID,
         payload: SetRoleRequest,
-        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         user_id_str = str(user_id)
         # Reject self-edits from session/user-key callers. SERVICE_API_KEY carries
@@ -83,7 +83,7 @@ def get_router() -> APIRouter:
     async def invite_user_endpoint(
         payload: InviteUserRequest,
         client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         try:
             await client.auth.admin.invite_user_by_email(payload.email)
@@ -97,7 +97,7 @@ def get_router() -> APIRouter:
     @router.get("/users/pending", include_in_schema=False)
     async def list_pending_invites_endpoint(
         client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         # per_page=100 fits our scale (small team); revisit if total users grows past that.
         try:
@@ -120,7 +120,7 @@ def get_router() -> APIRouter:
     async def resend_invite_endpoint(
         user_id: UUID,
         client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         try:
             user_response = await client.auth.admin.get_user_by_id(str(user_id))
@@ -140,7 +140,7 @@ def get_router() -> APIRouter:
     async def revoke_invite_endpoint(
         user_id: UUID,
         client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)),
+        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
     ):
         try:
             await client.auth.admin.delete_user(str(user_id))

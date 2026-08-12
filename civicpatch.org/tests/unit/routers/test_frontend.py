@@ -8,25 +8,25 @@ from fastapi.templating import Jinja2Templates
 
 from frontend.vite import vite_asset, vite_css
 from routers.frontend import build_permissions, get_router
-from schemas.common import Identity, Role
+from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 
 
-_LADDER_ORDER = [Role.DEFAULT, Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS]
+_LADDER_ORDER = [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS]
 
 
-def _identity(*roles: Role) -> Identity:
+def _identity(*roles: UserRole) -> Identity:
     """Build an Identity at the highest level in `roles`.
 
     The vararg signature preserves call-site compatibility from the pre-ladder
-    days — callers used to pass `(Role.CONTRIBUTORS, Role.DEFAULT)` for a flat
+    days — callers used to pass `(UserRole.CONTRIBUTORS, UserRole.DEFAULT)` for a flat
     set; now the highest of those collapses to a single role.
     """
     if roles:
         highest = max(roles, key=_LADDER_ORDER.index)
         role_value = highest.value
     else:
-        role_value = Role.DEFAULT.value
+        role_value = UserRole.DEFAULT.value
     return Identity(
         type="session",
         provider="github",
@@ -36,10 +36,10 @@ def _identity(*roles: Role) -> Identity:
     )
 
 
-DEFAULT = _identity(Role.DEFAULT)
-CONTRIBUTOR = _identity(Role.CONTRIBUTORS, Role.DEFAULT)
-MAINTAINER = _identity(Role.MAINTAINERS, Role.DEFAULT)
-ADMIN = _identity(Role.ADMINS, Role.DEFAULT)
+DEFAULT = _identity(UserRole.DEFAULT)
+CONTRIBUTOR = _identity(UserRole.CONTRIBUTORS, UserRole.DEFAULT)
+MAINTAINER = _identity(UserRole.MAINTAINERS, UserRole.DEFAULT)
+ADMIN = _identity(UserRole.ADMINS, UserRole.DEFAULT)
 
 
 # ── build_permissions ─────────────────────────────────────────────────────────

@@ -47,7 +47,7 @@ from lib.middleware import require_display_name
 from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
 from routers.frontend import get_router as frontend_router
 from routers.sso import get_router as auth_router
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, UserRole, RouteCategory
 from schemas.ws import SubscribeMessage
 
 # Set up logger at the top of your file
@@ -144,7 +144,7 @@ app.include_router(
     prefix="/api/admin",
     tags=["admin"],
     dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS))
+        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS))
     ],
 )
 app.include_router(

@@ -9,7 +9,7 @@ import pytest
 from fastapi import HTTPException
 
 from lib.auth import require_route_access
-from schemas.common import Identity, Role, RouteCategory
+from schemas.common import Identity, UserRole, RouteCategory
 
 
 def _service_identity() -> Identity:
@@ -47,7 +47,7 @@ async def test_public_allows_anonymous():
 @pytest.mark.unit
 async def test_public_allows_signed_in_user():
     dep = require_route_access(RouteCategory.PUBLIC)
-    identity = _user_identity(Role.DEFAULT.value)
+    identity = _user_identity(UserRole.DEFAULT.value)
     result = await dep(identity=identity)
     assert result is identity
 
@@ -68,7 +68,7 @@ async def test_authenticated_rejects_anonymous():
 async def test_authenticated_allows_default_user():
     """A signed-in user at the default level still passes AUTHENTICATED."""
     dep = require_route_access(RouteCategory.AUTHENTICATED)
-    identity = _user_identity(Role.DEFAULT.value)
+    identity = _user_identity(UserRole.DEFAULT.value)
     assert (await dep(identity=identity)) is identity
 
 
@@ -87,7 +87,7 @@ async def test_service_allows_service_api_key():
 async def test_service_rejects_human_admin():
     """Even an admin user can't reach a SERVICE-gated route via cookie."""
     dep = require_route_access(RouteCategory.SERVICE)
-    identity = _user_identity(Role.ADMINS.value)
+    identity = _user_identity(UserRole.ADMINS.value)
     with pytest.raises(HTTPException) as exc:
         await dep(identity=identity)
     assert exc.value.status_code == 403
@@ -109,7 +109,7 @@ async def test_service_rejects_anonymous():
 async def test_service_key_bypasses_team_check_for_admins():
     """SERVICE_API_KEY identity has no role but bypasses every TEAM_REQUIRED gate,
     including the most privileged. This is how `mise run grant_role` works."""
-    dep = require_route_access(RouteCategory.TEAM_REQUIRED, Role.ADMINS)
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
     identity = _service_identity()
     assert (await dep(identity=identity)) is identity
 
@@ -124,14 +124,14 @@ async def test_service_key_bypasses_team_check_with_no_required_role():
 
 # ── TEAM_REQUIRED — full ladder matrix ───────────────────────────────────────
 
-LADDER = [Role.DEFAULT, Role.CONTRIBUTORS, Role.MAINTAINERS, Role.ADMINS]
+LADDER = [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS]
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
 @pytest.mark.parametrize("caller_role", LADDER)
 @pytest.mark.parametrize("required_role", LADDER)
-async def test_team_required_ladder_cascade(caller_role: Role, required_role: Role):
+async def test_team_required_ladder_cascade(caller_role: UserRole, required_role: UserRole):
     """For every (caller, required) pair, callers at-or-above the required level pass."""
     dep = require_route_access(RouteCategory.TEAM_REQUIRED, required_role)
     identity = _user_identity(caller_role.value)
@@ -147,7 +147,7 @@ async def test_team_required_ladder_cascade(caller_role: Role, required_role: Ro
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_team_required_rejects_anonymous():
-    dep = require_route_access(RouteCategory.TEAM_REQUIRED, Role.DEFAULT)
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.DEFAULT)
     with pytest.raises(HTTPException) as exc:
         await dep(identity=None)
     assert exc.value.status_code == 403
@@ -159,7 +159,7 @@ async def test_team_required_no_role_passes_authenticated_user():
     """`require_route_access(TEAM_REQUIRED, None)` collapses to AUTHENTICATED for
     non-service callers — any signed-in user passes, anonymous does not."""
     dep = require_route_access(RouteCategory.TEAM_REQUIRED, None)
-    identity = _user_identity(Role.DEFAULT.value)
+    identity = _user_identity(UserRole.DEFAULT.value)
     assert (await dep(identity=identity)) is identity
 
     with pytest.raises(HTTPException):
@@ -173,7 +173,7 @@ async def test_team_required_no_role_passes_authenticated_user():
 async def test_unknown_role_string_cannot_elevate_via_team_check():
     """Defense-in-depth: even if a user somehow had an unknown role string
     stored, they can't elevate above default via the ladder check."""
-    dep = require_route_access(RouteCategory.TEAM_REQUIRED, Role.CONTRIBUTORS)
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
     identity = _user_identity("super_admin_hacker")
     with pytest.raises(HTTPException) as exc:
         await dep(identity=identity)

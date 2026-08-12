@@ -20,7 +20,7 @@ class ReviewMode(str, Enum):
     RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful
 
 
-class Role(str, Enum):
+class UserRole(str, Enum):
     DEFAULT = "default"
     CONTRIBUTORS = "contributors"
     MAINTAINERS = "maintainers"
@@ -30,10 +30,10 @@ class Role(str, Enum):
 # Trust ladder: a user holds one level; permissions cascade downward.
 # admins > maintainers > contributors > default. Higher rank = more powers.
 _ROLE_RANK: dict[str, int] = {
-    Role.DEFAULT.value: 0,
-    Role.CONTRIBUTORS.value: 1,
-    Role.MAINTAINERS.value: 2,
-    Role.ADMINS.value: 3,
+    UserRole.DEFAULT.value: 0,
+    UserRole.CONTRIBUTORS.value: 1,
+    UserRole.MAINTAINERS.value: 2,
+    UserRole.ADMINS.value: 3,
 }
 
 
@@ -43,7 +43,7 @@ def role_rank(role: str | None) -> int:
     return _ROLE_RANK.get(role, 0)
 
 
-def has_at_least(user_role: str | None, required: Role) -> bool:
+def has_at_least(user_role: str | None, required: UserRole) -> bool:
     return role_rank(user_role) >= role_rank(required.value)
 
 
@@ -103,7 +103,7 @@ class UserWithRole(BaseModel):
 
 
 class SetRoleRequest(BaseModel):
-    role: Role
+    role: UserRole
 
 
 class InviteUserRequest(BaseModel):
