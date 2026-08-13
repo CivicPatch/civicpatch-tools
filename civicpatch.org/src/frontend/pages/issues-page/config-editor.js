@@ -7,8 +7,6 @@ import {
   fetchGlobalConfig,
   putGlobalConfig,
   fetchJurisdictionForState,
-  excludeRole,
-  includeExclusion,
   deleteRole,
 } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -16,6 +14,7 @@ import "../../components/basic/modal.js";
 import "../../components/badge/badge.js";
 import "../../components/inputs/auto-complete-select.js";
 import "../../components/role-reorder/role-reorder.ts";
+import "../../components/jurisdiction-search/jurisdiction-search.ts";
 import {
   ALERT_MODE,
   DANGER_VARIANT,
@@ -25,8 +24,11 @@ const SCOPE_GLOBAL = "global";
 const SCOPE_STATE = "state";
 const SCOPE_LOCALITY = "locality";
 
-const KIND_CANONICAL = "canonical";
-const KIND_EXCLUSION = "exclusion";
+const STATUS_ACTIVE = "active";
+const STATUS_CANDIDATE = "candidate";
+const STATUS_REJECTED = "rejected";
+
+const STATUS_OPTIONS = [STATUS_ACTIVE, STATUS_CANDIDATE, STATUS_REJECTED];
 
 function parseAliases(text) {
   return text
@@ -46,57 +48,61 @@ function seedState(jurisdictions) {
   return j?.state || j?.jurisdiction_path?.split("/")[0] || "";
 }
 
-// One editor per scope; tracks which entry is being edited/added and of what kind.
 function useTermEditor() {
+  const [isAdding, setIsAdding] = useState(false);
   const [editingValue, setEditingValue] = useState(null);
-  const [editingKind, setEditingKind] = useState(KIND_CANONICAL);
   const [editName, setEditName] = useState("");
+  const [editStatus, setEditStatus] = useState(STATUS_ACTIVE);
   const [editUnique, setEditUnique] = useState(false);
   const [editAliases, setEditAliases] = useState("");
-  const [addingKind, setAddingKind] = useState(null); // null | "canonical" | "exclusion"
   const [addName, setAddName] = useState("");
+  const [addStatus, setAddStatus] = useState(STATUS_ACTIVE);
   const [addUnique, setAddUnique] = useState(false);
   const [addAliases, setAddAliases] = useState("");
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
   const openEdit = (term) => {
-    setEditingValue(term.role);
-    setEditingKind(term.kind || KIND_CANONICAL);
-    setEditName(term.role);
+    setIsAdding(false);
+    setEditingValue(term.label || term.role);
+    setEditName(term.label || term.role);
+    setEditStatus(term.status || STATUS_ACTIVE);
     setEditUnique(term.is_unique);
     setEditAliases((term.aliases || []).join("\n"));
-    setAddingKind(null);
     setSaveError(null);
   };
 
-  const openAdd = (kind) => {
-    setAddingKind(kind);
+  const openAdd = () => {
+    setIsAdding(true);
     setEditingValue(null);
     setAddName("");
+    setAddStatus(STATUS_ACTIVE);
     setAddUnique(false);
     setAddAliases("");
     setSaveError(null);
   };
 
   const reset = () => {
+    setIsAdding(false);
     setEditingValue(null);
-    setAddingKind(null);
     setSaveError(null);
   };
 
   return {
+    isAdding,
     editingValue,
-    editingKind,
     editName,
     setEditName,
+    editStatus,
+    setEditStatus,
     editUnique,
     setEditUnique,
     editAliases,
     setEditAliases,
-    addingKind,
     addName,
     setAddName,
+    addStatus,
+    setAddStatus,
     addUnique,
     setAddUnique,
     addAliases,
@@ -111,32 +117,24 @@ function useTermEditor() {
   };
 }
 
-// Renders one table — either the canonical roles or the exclusions for a scope.
-function TermTable({
-  terms,
-  kind,
-  scope,
-  editable,
-  editor,
-  onSave,
-  onExclude,
-  onInclude,
-  onDelete,
-}) {
+function TermTable({ terms, scope, editable, editor, onSave, onDelete }) {
   const [aliasModal, setAliasModal] = useState(null);
   const [confirmState, setConfirmState] = useState(null);
   const {
+    isAdding,
     editingValue,
-    editingKind,
     editName,
     setEditName,
+    editStatus,
+    setEditStatus,
     editUnique,
     setEditUnique,
     editAliases,
     setEditAliases,
-    addingKind,
     addName,
     setAddName,
+    addStatus,
+    setAddStatus,
     addUnique,
     setAddUnique,
     addAliases,
@@ -149,14 +147,13 @@ function TermTable({
     reset,
   } = editor;
 
-  // Edit / Add still flow through PUT (batched diff). Single-row actions use surgical endpoints.
   const handleSaveEdit = () => {
     onSave(
       {
         type: "edit",
         value: editingValue,
-        kind: editingKind,
-        name: editName.trim(),
+        label: editName.trim(),
+        status: editStatus,
         is_unique: editUnique,
         aliases: parseAliases(editAliases),
       },
@@ -170,8 +167,8 @@ function TermTable({
     onSave(
       {
         type: "add",
-        kind: addingKind,
-        name: addName.trim(),
+        label: addName.trim(),
+        status: addStatus,
         is_unique: addUnique,
         aliases: parseAliases(addAliases),
       },
@@ -180,56 +177,49 @@ function TermTable({
     );
   };
 
-  const handleExclude = (term) =>
-    setConfirmState({
-      message: `Exclude "${term.role}" from ${scope}? It will move to the Exclusions list.`,
-      confirmLabel: "Exclude",
-      onConfirm: () => onExclude(term.role),
-    });
-
-  const handleInclude = (term) =>
-    setConfirmState({
-      message: `Include "${term.role}" in ${scope}? It will move to the Roles list.`,
-      confirmLabel: "Include",
-      onConfirm: () => onInclude(term.role),
-    });
-
   const handleDelete = (term) => {
-    const label = kind === KIND_CANONICAL ? "role" : "exclusion";
+    const name = term.label || term.role;
     setConfirmState({
-      message: `Remove ${label} "${term.role}" from ${scope}? This cannot be undone.`,
+      message: `Remove role "${name}" from ${scope}? This cannot be undone.`,
       confirmLabel: "Remove",
       variant: DANGER_VARIANT,
-      onConfirm: () => onDelete(term.role),
+      onConfirm: () => onDelete(name),
     });
   };
 
-  const isEditingThisKind = editingValue !== null && editingKind === kind;
-  const isAddingThisKind = addingKind === kind;
-  const showsUnique = kind === KIND_CANONICAL;
+  const statusBadge = (status) => {
+    if (!status || status === STATUS_ACTIVE) return "";
+    if (status === STATUS_CANDIDATE) return " (candidate)";
+    if (status === STATUS_REJECTED) return " (rejected)";
+    return "";
+  };
 
-  const formContent = isEditingThisKind
+  const editing = editingValue !== null;
+  const adding = isAdding;
+
+  const formContent = editing
     ? html`
         <div class="config-editor__edit-form">
+          <label>Label <input type="text" readonly .value=${editName} /></label>
           <label
-            >${showsUnique ? "Role" : "Pattern"}
-            <input
-              type="text"
-              readonly
-              .value=${editName}
-              title="Rename isn't supported yet — use Remove + Add to change the name."
-            />
+            >Status
+            <select
+              .value=${editStatus}
+              @change=${(e) => setEditStatus(e.target.value)}
+            >
+              ${STATUS_OPTIONS.map(
+                (s) => html`<option value=${s}>${s}</option>`,
+              )}
+            </select>
           </label>
-          ${showsUnique
-            ? html`<label class="config-editor__checkbox-label"
-                ><input
-                  type="checkbox"
-                  ?checked=${editUnique}
-                  @change=${(e) => setEditUnique(e.target.checked)}
-                />
-                Unique</label
-              >`
-            : null}
+          <label class="config-editor__checkbox-label"
+            ><input
+              type="checkbox"
+              ?checked=${editUnique}
+              @change=${(e) => setEditUnique(e.target.checked)}
+            />
+            Unique</label
+          >
           <label
             >Aliases (one per line)<br /><textarea
               rows="5"
@@ -242,48 +232,59 @@ function TermTable({
             : null}
         </div>
       `
-    : isAddingThisKind
-      ? html`
-          <div class="config-editor__edit-form">
-            <label
-              >${showsUnique ? "Role" : "Pattern"}
-              <input
-                type="text"
-                .value=${addName}
-                @input=${(e) => setAddName(e.target.value)}
-            /></label>
-            ${showsUnique
-              ? html`<label class="config-editor__checkbox-label"
-                  ><input
-                    type="checkbox"
-                    ?checked=${addUnique}
-                    @change=${(e) => setAddUnique(e.target.checked)}
-                  />
-                  Unique</label
-                >`
-              : null}
-            <label
-              >Aliases (one per line)<br /><textarea
-                rows="5"
-                .value=${addAliases}
-                @input=${(e) => setAddAliases(e.target.value)}
-              ></textarea>
-            </label>
-            ${saveError
-              ? html`<p class="config-editor__error">${saveError}</p>`
-              : null}
-          </div>
-        `
-      : null;
+    : html``;
 
-  const formFooter = isEditingThisKind
+  const addFormContent = adding
+    ? html`
+        <div class="config-editor__edit-form">
+          <label
+            >Label
+            <input
+              type="text"
+              .value=${addName}
+              @input=${(e) => setAddName(e.target.value)}
+          /></label>
+          <label
+            >Status
+            <select
+              .value=${addStatus}
+              @change=${(e) => setAddStatus(e.target.value)}
+            >
+              ${STATUS_OPTIONS.map(
+                (s) => html`<option value=${s}>${s}</option>`,
+              )}
+            </select>
+          </label>
+          <label class="config-editor__checkbox-label"
+            ><input
+              type="checkbox"
+              ?checked=${addUnique}
+              @change=${(e) => setAddUnique(e.target.checked)}
+            />
+            Unique</label
+          >
+          <label
+            >Aliases (one per line)<br /><textarea
+              rows="5"
+              .value=${addAliases}
+              @input=${(e) => setAddAliases(e.target.value)}
+            ></textarea>
+          </label>
+          ${saveError
+            ? html`<p class="config-editor__error">${saveError}</p>`
+            : null}
+        </div>
+      `
+    : html``;
+
+  const formFooter = editing
     ? html`
         <button class="btn btn-sm" @click=${handleSaveEdit} ?disabled=${saving}>
           Save
         </button>
         <button class="btn btn-sm secondary" @click=${reset}>Cancel</button>
       `
-    : isAddingThisKind
+    : adding
       ? html`
           <button
             class="btn btn-sm"
@@ -296,18 +297,15 @@ function TermTable({
         `
       : null;
 
-  const formTitle = isEditingThisKind
-    ? `Edit: ${editingValue}`
-    : kind === KIND_CANONICAL
-      ? "Add role"
-      : "Add exclusion";
+  const formTitle = editing ? `Edit: ${editingValue}` : "Add role";
 
   return html`
     <table class="config-editor__table">
       <thead>
         <tr>
-          <th>${showsUnique ? "Role" : "Pattern"}</th>
-          ${showsUnique ? html`<th>Unique</th>` : null}
+          <th>Role</th>
+          <th>Status</th>
+          <th>Unique</th>
           <th>Aliases</th>
           ${editable ? html`<th></th>` : null}
         </tr>
@@ -315,17 +313,16 @@ function TermTable({
       <tbody>
         ${terms.length === 0
           ? html`<tr>
-              <td colspan=${showsUnique ? 4 : 3} class="config-editor__empty">
-                No ${kind === KIND_CANONICAL ? "roles" : "exclusions"} yet.
+              <td colspan=${editable ? 5 : 4} class="config-editor__empty">
+                No roles yet.
               </td>
             </tr>`
           : terms.map(
               (t) => html`
                 <tr>
-                  <td>${t.role}</td>
-                  ${showsUnique
-                    ? html`<td>${t.is_unique ? "Yes" : "No"}</td>`
-                    : null}
+                  <td>${t.label || t.role}</td>
+                  <td>${t.status || STATUS_ACTIVE}${statusBadge(t.status)}</td>
+                  <td>${t.is_unique ? "Yes" : "No"}</td>
                   <td
                     class=${t.aliases?.length > 1
                       ? "config-editor__alias-clickable"
@@ -343,19 +340,6 @@ function TermTable({
                           >
                             Edit
                           </button>
-                          ${kind === KIND_CANONICAL
-                            ? html`<button
-                                class="civ-action-btn"
-                                @click=${() => handleExclude(t)}
-                              >
-                                Exclude
-                              </button>`
-                            : html`<button
-                                class="civ-action-btn"
-                                @click=${() => handleInclude(t)}
-                              >
-                                Include
-                              </button>`}
                           <button
                             class="civ-action-btn civ-action-btn--danger"
                             @click=${() => handleDelete(t)}
@@ -371,18 +355,15 @@ function TermTable({
       </tbody>
     </table>
     ${editable
-      ? html`<button
-          class="config-editor__add-btn"
-          @click=${() => openAdd(kind)}
-        >
-          + Add ${kind === KIND_CANONICAL ? "role" : "exclusion"}
+      ? html`<button class="config-editor__add-btn" @click=${() => openAdd()}>
+          + Add role
         </button>`
       : null}
-    ${formContent
+    ${editing || adding
       ? html`
           <civ-modal
             .title=${formTitle}
-            .content=${formContent}
+            .content=${editing ? formContent : addFormContent}
             .footer=${formFooter}
             .modalProps=${{ open: true, onClose: reset }}
           ></civ-modal>
@@ -391,7 +372,7 @@ function TermTable({
     ${aliasModal
       ? html`
           <civ-modal
-            .title=${"Aliases: " + aliasModal.role}
+            .title=${"Aliases: " + (aliasModal.label || aliasModal.role)}
             .content=${html`<ul>
               ${aliasModal.aliases.map((a) => html`<li>${a}</li>`)}
             </ul>`}
@@ -447,16 +428,12 @@ function ConfigEditor(host) {
   const [localityOcdid, setLocalityOcdid] = useState(firstOcdid || null);
   const [localityTerms, setLocalityTerms] = useState(null);
   const [localityError, setLocalityError] = useState(null);
-  const [localityOptions, setLocalityOptions] = useState([]);
-  const [localityOptionsMetadata, setLocalityOptionsMetadata] = useState({});
-  const [localityInputValue, setLocalityInputValue] = useState("");
   const localityEditor = useTermEditor();
 
   const [localityFilter, setLocalityFilter] = useState("");
   const [stateFilter, setStateFilter] = useState("");
   const [globalFilter, setGlobalFilter] = useState("");
 
-  // Which scope (if any) is currently in drag-to-reorder mode. null = none.
   const [reorderingScope, setReorderingScope] = useState(null);
   const [reorderToast, setReorderToast] = useState(null);
   const [errorState, setErrorState] = useState(null);
@@ -535,54 +512,10 @@ function ConfigEditor(host) {
   }, [stateCode]);
 
   useEffect(() => {
-    if (!stateCode) {
-      setLocalityOptions([]);
-      setLocalityTerms(null);
-      setLocalityInputValue("");
-      return;
-    }
-    fetchLocalitySuggestions("");
-  }, [stateCode]);
-
-  const fetchLocalitySuggestions = ({
-    query = "",
-    page = 1,
-    pageSize = 25,
-  } = {}) => {
-    if (!stateCode) return;
-    const params = new URLSearchParams({
-      search_string: query,
-      limit: pageSize,
-      page,
-    });
-    fetch(`/api/v1/jurisdictions/${stateCode}/search?${params}`, {
-      credentials: "include",
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        setLocalityOptions(
-          (data.data || []).map((j) => ({
-            label: j.name,
-            value: j.jurisdiction_ocdid || j.id,
-          })),
-        );
-        setLocalityOptionsMetadata({
-          total_items: data.total_items,
-          total_pages: data.total_pages,
-          page: data.page,
-          limit: data.limit,
-          links: data.links,
-        });
-      })
-      .catch(() => {});
-  };
-
-  useEffect(() => {
-    setReorderingScope(null); // a scope switch invalidates an in-progress reorder
+    setReorderingScope(null);
     if (localityOcdid) loadLocalityConfig(localityOcdid);
   }, [localityOcdid]);
 
-  // PUT-based batch save (Edit / Add). Rebuilds the full term list and ships it.
   const makeBatchSave = (scope, ocdid, terms, reload, editor) => {
     return async (op, reset, setSaveError) => {
       editor.setSaving(true);
@@ -590,35 +523,37 @@ function ConfigEditor(host) {
       try {
         let updated;
         if (op.type === "edit") {
-          updated = terms.map((t) =>
-            t.role === op.value
-              ? {
-                  role: op.name,
-                  is_unique: op.is_unique,
-                  aliases: op.aliases,
-                  kind: op.kind,
-                }
-              : {
-                  role: t.role,
-                  is_unique: t.is_unique,
-                  aliases: t.aliases,
-                  kind: t.kind,
-                },
-          );
+          updated = terms.map((t) => {
+            const name = t.label || t.role;
+            if (name === op.value) {
+              return {
+                label: op.label,
+                status: op.status,
+                is_unique: op.is_unique,
+                aliases: op.aliases,
+              };
+            }
+            return {
+              label: name,
+              status: t.status || STATUS_ACTIVE,
+              is_unique: t.is_unique,
+              aliases: t.aliases,
+            };
+          });
         } else {
           // add
           updated = [
             ...terms.map((t) => ({
-              role: t.role,
+              label: t.label || t.role,
+              status: t.status || STATUS_ACTIVE,
               is_unique: t.is_unique,
               aliases: t.aliases,
-              kind: t.kind,
             })),
             {
-              role: op.name,
+              label: op.label,
+              status: op.status,
               is_unique: op.is_unique,
               aliases: op.aliases,
-              kind: op.kind,
             },
           ];
         }
@@ -637,25 +572,6 @@ function ConfigEditor(host) {
     };
   };
 
-  // Surgical single-row endpoints — atomic kind flips / hard deletes.
-  const makeExclude = (scope, ocdid, reload) => async (role) => {
-    try {
-      await excludeRole(role, scope, ocdid || "");
-      reload();
-    } catch (e) {
-      console.error("Exclude failed:", e);
-      setErrorState(`Exclude failed: ${e.message}`);
-    }
-  };
-  const makeInclude = (scope, ocdid, reload) => async (value) => {
-    try {
-      await includeExclusion(value, scope, ocdid || "");
-      reload();
-    } catch (e) {
-      console.error("Include failed:", e);
-      setErrorState(`Include failed: ${e.message}`);
-    }
-  };
   const makeDelete = (scope, ocdid, reload) => async (role) => {
     try {
       await deleteRole(role, scope, ocdid || "");
@@ -684,16 +600,10 @@ function ConfigEditor(host) {
     } = params;
 
     const filtered = (terms ?? []).filter((t) =>
-      t.role.toLowerCase().includes(filter.toLowerCase()),
+      (t.label || t.role).toLowerCase().includes(filter.toLowerCase()),
     );
-    const canonicals = filtered.filter(
-      (t) => (t.kind || KIND_CANONICAL) === KIND_CANONICAL,
-    );
-    const exclusions = filtered.filter((t) => t.kind === KIND_EXCLUSION);
 
     const batchSave = makeBatchSave(scope, ocdid, terms || [], reload, editor);
-    const exclude = makeExclude(scope, ocdid, reload);
-    const include = makeInclude(scope, ocdid, reload);
     const remove = makeDelete(scope, ocdid, reload);
 
     return html`
@@ -715,10 +625,6 @@ function ConfigEditor(host) {
             ? html`
                 ${jurisdictions.length > 0
                   ? html`
-                      <!-- Modal mode (e.g. opened from an issue's Resolve button):
-                     restrict the picker to the jurisdictions the issue is
-                     tagged for. A single tagged jurisdiction gets auto-picked
-                     and the dropdown is hidden entirely. -->
                       ${jurisdictions.length === 1
                         ? null
                         : html`
@@ -746,23 +652,16 @@ function ConfigEditor(host) {
                           `}
                     `
                   : html`
-                      <!-- Inline mode (/roles page): full state-wide search. -->
-                      <div class="config-editor__locality-autocomplete">
-                        <civ-autocomplete-select
-                          .options=${localityOptions}
-                          .optionsMetadata=${localityOptionsMetadata}
-                          .inputValue=${localityInputValue}
-                          .pageSize=${25}
-                          @fetch-suggestions=${(e) =>
-                            fetchLocalitySuggestions(e.detail)}
-                          @input-change=${(e) => {
-                            setLocalityInputValue(e.detail.value);
-                          }}
-                          @item-selected=${(e) => {
+                      <div class="config-editor__locality-search">
+                        <civ-jurisdiction-search
+                          .state=${stateCode}
+                          .level=${`local`}
+                          .placeholder=${`Search for a city in ${stateCode.toUpperCase()}`}
+                          @jurisdiction-select=${(e) => {
                             localityEditor.reset();
-                            setLocalityOcdid(e.detail.value);
+                            setLocalityOcdid(e.detail.jurisdiction_ocdid);
                           }}
-                        ></civ-autocomplete-select>
+                        ></civ-jurisdiction-search>
                       </div>
                     `}
               `
@@ -792,7 +691,7 @@ function ConfigEditor(host) {
                   : html`
                       <div class="config-editor__subsection-header">
                         <p class="config-editor__subsection-label">Roles</p>
-                        ${editable && canonicals.length > 1
+                        ${editable && filtered.length > 1
                           ? html`
                               <button
                                 class="btn btn-sm secondary"
@@ -811,7 +710,7 @@ function ConfigEditor(host) {
                 ${reorderingScope === scope
                   ? html`
                       <civ-role-reorder
-                        .roles=${canonicals}
+                        .roles=${filtered}
                         .scope=${scope}
                         .ocdid=${ocdid}
                         @reordered=${() => {
@@ -824,30 +723,11 @@ function ConfigEditor(host) {
                     `
                   : html`
                       <civ-term-table
-                        .terms=${canonicals}
-                        .kind=${KIND_CANONICAL}
+                        .terms=${filtered}
                         .scope=${scope}
                         .editable=${editable}
                         .editor=${editor}
                         .onSave=${batchSave}
-                        .onExclude=${exclude}
-                        .onInclude=${include}
-                        .onDelete=${remove}
-                      ></civ-term-table>
-                    `}
-                ${reorderingScope === scope
-                  ? null
-                  : html`
-                      <p class="config-editor__subsection-label">Exclusions</p>
-                      <civ-term-table
-                        .terms=${exclusions}
-                        .kind=${KIND_EXCLUSION}
-                        .scope=${scope}
-                        .editable=${editable}
-                        .editor=${editor}
-                        .onSave=${batchSave}
-                        .onExclude=${exclude}
-                        .onInclude=${include}
                         .onDelete=${remove}
                       ></civ-term-table>
                     `}

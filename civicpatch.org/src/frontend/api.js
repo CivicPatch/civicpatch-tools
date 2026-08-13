@@ -264,28 +264,6 @@ export const reorderRoles = async ({ scope, ocdid, roleOrder, movedRoles }) => {
   return res.json();
 };
 
-export const excludeRole = async (role, scope, ocdid) => {
-  const res = await fetch(`/api/v1/jurisdictions/config/exclude`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ role, scope, ocdid }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const includeExclusion = async (value, scope, ocdid) => {
-  const res = await fetch(`/api/v1/jurisdictions/config/include`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ value, scope, ocdid }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const deleteRole = async (role, scope, ocdid) => {
   const res = await fetch(`/api/v1/jurisdictions/config/delete`, {
     method: "POST",
@@ -585,14 +563,15 @@ export const putGlobalConfig = async (roles) => {
 };
 
 export const fetchJurisdictionForState = async (stateCode) => {
-  const params = new URLSearchParams({ limit: 1 });
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/${stateCode}/search?${params}`, { credentials: "include" });
+  const params = new URLSearchParams({ limit: 1, state: stateCode });
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchAllJurisdictionsForState = async (stateCode) => {
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/${stateCode}/search`, { credentials: "include" });
+  const params = new URLSearchParams({ state: stateCode });
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
@@ -718,11 +697,17 @@ export const setDisplayName = async (displayName) => {
 // and overwrite it with stale results.
 let jurisdictionSearchController = null;
 
-export const searchJurisdictions = async (query, { page = 1, limit = 10 } = {}) => {
+/**
+ * @param {string} query
+ * @param {{ page?: number; limit?: number; state?: string; level?: string }} [opts]
+ */
+export const searchJurisdictions = async (query, { page = 1, limit = 10, state, level } = {}) => {
   jurisdictionSearchController?.abort();
   jurisdictionSearchController = new AbortController();
 
   const params = new URLSearchParams({ q: query, page, limit });
+  if (state) params.set("state", state);
+  if (level) params.set("level", level);
   const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, {
     credentials: "include",
     signal: jurisdictionSearchController.signal,

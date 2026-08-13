@@ -6,7 +6,7 @@ import { reorderRoles } from "../../api.js";
 import { moveUp, moveDown, moveToTop, applyDrop } from "./reorder-utils.js";
 
 interface RoleTerm {
-  role: string;
+  label: string;
   is_unique?: boolean;
   aliases?: string[];
 }
@@ -39,7 +39,7 @@ function RoleReorder(host: RoleReorderHost) {
   const reorderTo = (next: RoleTerm[], roleValue: string) => {
     setOrder(next);
     setMovedRoleValues(new Set(movedRoleValues).add(roleValue));
-    const position = next.findIndex((r) => r.role === roleValue) + 1;
+    const position = next.findIndex((r) => r.label === roleValue) + 1;
     setAnnounce(`${roleValue} moved to position ${position} of ${next.length}`);
   };
 
@@ -51,7 +51,7 @@ function RoleReorder(host: RoleReorderHost) {
   const handleDrop = (toIndex: number) => {
     if (dragIndex === null) return;
     const moved = order[dragIndex];
-    reorderTo(applyDrop(order, dragIndex, toIndex), moved.role);
+    reorderTo(applyDrop(order, dragIndex, toIndex), moved.label);
     clearDrag();
   };
 
@@ -59,7 +59,7 @@ function RoleReorder(host: RoleReorderHost) {
     setSaving(true);
     setError(null);
     try {
-      await reorderRoles({ scope, ocdid, roleOrder: order.map((r) => r.role), movedRoles: [...movedRoleValues] });
+      await reorderRoles({ scope, ocdid, roleOrder: order.map((r) => r.label), movedRoles: [...movedRoleValues] });
       host.dispatchEvent(new CustomEvent(REORDERED_EVENT, { bubbles: true, composed: true }));
     } catch (e) {
       setError((e as Error).message);
@@ -71,7 +71,7 @@ function RoleReorder(host: RoleReorderHost) {
   const rows = order.map((term, i) => {
     const showDrop = dragIndex !== null && dragOverIndex === i && dragIndex !== i;
     const dropClass = showDrop ? (dragIndex < i ? " role-reorder__row--drop-after" : " role-reorder__row--drop-before") : "";
-    const movedClass = movedRoleValues.has(term.role) ? " role-reorder__row--moved" : "";
+    const movedClass = movedRoleValues.has(term.label) ? " role-reorder__row--moved" : "";
     return html`
       <li
         class="role-reorder__row${dragIndex === i ? " role-reorder__row--dragging" : ""}${dropClass}${movedClass}"
@@ -82,14 +82,14 @@ function RoleReorder(host: RoleReorderHost) {
         @dragend=${clearDrag}
       >
         <span class="role-reorder__handle" aria-hidden="true"><i class="fa-solid fa-grip-vertical"></i></span>
-        <span class="role-reorder__name">${term.role}</span>
+        <span class="role-reorder__name">${term.label}</span>
         <span class="role-reorder__buttons">
-          <button class="civ-action-btn" title="Move up" aria-label=${`Move ${term.role} up`}
-            ?disabled=${i === 0} @click=${() => reorderTo(moveUp(order, i), term.role)}><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
-          <button class="civ-action-btn" title="Move down" aria-label=${`Move ${term.role} down`}
-            ?disabled=${i === order.length - 1} @click=${() => reorderTo(moveDown(order, i), term.role)}><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
-          <button class="civ-action-btn" title="Move to top" aria-label=${`Move ${term.role} to top`}
-            ?disabled=${i === 0} @click=${() => reorderTo(moveToTop(order, i), term.role)}><i class="fa-solid fa-angles-up" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move up" aria-label=${`Move ${term.label} up`}
+            ?disabled=${i === 0} @click=${() => reorderTo(moveUp(order, i), term.label)}><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move down" aria-label=${`Move ${term.label} down`}
+            ?disabled=${i === order.length - 1} @click=${() => reorderTo(moveDown(order, i), term.label)}><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move to top" aria-label=${`Move ${term.label} to top`}
+            ?disabled=${i === 0} @click=${() => reorderTo(moveToTop(order, i), term.label)}><i class="fa-solid fa-angles-up" aria-hidden="true"></i></button>
         </span>
       </li>
     `;
