@@ -36,7 +36,16 @@ const friendlyName = (result: SearchResult) =>
 const levelLabel = (level: string) =>
   level === "counties" ? "County" : "Local";
 
-function JurisdictionSearch(this: HTMLElement) {
+type JurisdictionSearchHost = HTMLElement & {
+  state?: string;
+  level?: string;
+  placeholder?: string;
+};
+
+function JurisdictionSearch(this: JurisdictionSearchHost) {
+  const hostState = this.state;
+  const hostLevel = this.level;
+  const hostPlaceholder = this.placeholder || PLACEHOLDER;
   const [results, setResults] = useState<SearchResult[]>([]);
   const [metadata, setMetadata] = useState<SearchMetadata | null>(null);
   const [query, setQuery] = useState("");
@@ -51,6 +60,7 @@ function JurisdictionSearch(this: HTMLElement) {
       const body = await searchJurisdictions(detail.query, {
         page: detail.page,
         limit: PAGE_SIZE,
+        state: hostState,
       });
       setResults(body.data);
       setMetadata(body);
@@ -81,7 +91,7 @@ function JurisdictionSearch(this: HTMLElement) {
 
   const renderOption = (option: { result: SearchResult }) => {
     const { result } = option;
-    const parents = result.parent_names.join(", ");
+    const parents = (result.parent_names || []).join(", ");
     return html`
       <div class="jurisdiction-search__row">
         <span>
@@ -104,7 +114,7 @@ function JurisdictionSearch(this: HTMLElement) {
     <div class="jurisdiction-search">
       <civ-autocomplete-select
         .label=${"Search by location"}
-        .placeholder=${PLACEHOLDER}
+        .placeholder=${hostPlaceholder}
         .showToggle=${false}
         .options=${options}
         .optionsMetadata=${metadata ?? {}}

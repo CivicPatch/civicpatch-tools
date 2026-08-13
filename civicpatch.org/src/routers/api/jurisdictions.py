@@ -16,6 +16,7 @@ from schemas.common import Identity, UserRole, RouteCategory
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from schemas.jurisdictions import (
     DeleteRoleRequest,
+    JurisdictionSearchResult,
     JurisdictionSearchResponse,
     JurisdictionsByOcdidsRequest,
     PaginationLinks,
@@ -311,12 +312,45 @@ def get_router() -> APIRouter:
     @router.get("/search")
     async def search_jurisdictions_endpoint(
         q: str = "",
+        state: str = "",
+        level: str = "",
         limit: int = Query(DEFAULT_SEARCH_LIMIT, ge=1, le=MAX_SEARCH_LIMIT),
         page: int = Query(1, ge=1),
     ) -> JurisdictionSearchResponse:
-        # Nationwide, unlike /{state}/search. The typeahead only ever asks for page 1 and
-        # renders "top 10 of 121", but the results are a real paged collection so other
-        # /api/v1 consumers can walk the whole set.
+        # `level` limits the jurisdiction level(s), e.g. "local" or "local,counties".
+        # Defaults to both local and counties when empty.
+        levels = [l.strip() for l in level.split(",") if l.strip()] if level else SEARCHABLE_LEVELS
+
+        # A `state` filter scopes the search to a single state (used by the
+        # config editor's locality picker). Without it, searches nationwide.
+        if state:
+            total_items, jurisdictions = await database.search_jurisdictions(
+                state, q, limit, (page - 1) * limit
+            )
+            results = [
+                JurisdictionSearchResult(
+                    jurisdiction_ocdid=j["jurisdiction_ocdid"],
+                    level="local",
+                    name=j.get("name", ""),
+                    display_name=j.get("display_name"),
+                    population=j.get("population"),
+                    parent_names=j.get("parent_ocdids", []),
+                )
+                for j in jurisdictions
+            ]
+            return JurisdictionSearchResponse(
+                total_items=total_items,
+                page=page,
+                total_pages=(total_items + limit - 1) // limit if limit > 0 else 1,
+                limit=limit,
+                data=results,
+                links=PaginationLinks.model_validate({
+                    "prev": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page - 1})}" if page > 1 else "",
+                    "next": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page + 1})}" if (page * limit) < total_items else "",
+                    "self": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page})}",
+                })
+            )
+
         normalized = _normalized_query(q)
         tsquery = build_tsquery(q)
         if not tsquery:
@@ -329,15 +363,11 @@ def get_router() -> APIRouter:
 
         skip = (page - 1) * limit
         total_items, results = await database.search_jurisdictions_by_text(
-            tsquery, SEARCHABLE_LEVELS, limit, skip
+            tsquery, levels, limit, skip
         )
-        # Tier 2 only when tier 1 found nothing at all, never merged in. The tiers are
-        # scored differently, so mixing them would make ranking incoherent — and because
-        # the switch keys off the total rather than this page, every page of a given
-        # query is served by the same tier.
         if total_items == 0:
             total_items, results = await database.search_jurisdictions_fuzzy(
-                build_fuzzy_tokens(q), SEARCHABLE_LEVELS, limit, skip
+                build_fuzzy_tokens(q), levels, limit, skip
             )
         response = JurisdictionSearchResponse(
             total_items=total_items,
@@ -345,12 +375,8 @@ def get_router() -> APIRouter:
             total_pages=(total_items + limit - 1) // limit,
             limit=limit,
             data=results,
-            links=_search_links(
-                normalized, limit, page, skip + len(results), total_items
-            ),
+            links=_search_links(normalized, limit, page, skip + len(results), total_items),
         )
-        # by_alias so the cached dict round-trips: PaginationLinks stores the field as
-        # self_link but is populated by its "self" alias.
         await cache_service.set_cached(
             cache_key,
             response.model_dump(mode="json", by_alias=True),
@@ -358,43 +384,6 @@ def get_router() -> APIRouter:
         )
         return response
 
-    @router.get("/{state}/search")
-    async def get_jurisdictions_search_endpoint(
-        state: str,
-        search_string: str = "",
-        limit: int = 0,
-        page: int = 1,
-    ):
-        skip = (page - 1) * limit
-
-        total_items, jurisdictions = await database.search_jurisdictions(
-            state, search_string, limit, skip
-        )
-
-        next_skip = skip + len(jurisdictions)
-        next_link = ""
-        prev_link = ""
-
-        if page > 1:
-            query_params = urllib.parse.urlencode({"limit": limit, "page": page - 1})
-            prev_link = f"/api/v1/jurisdictions/{state}/search?{query_params}"
-
-        if next_skip < total_items:
-            query_params = urllib.parse.urlencode({"limit": limit, "page": page + 1})
-            next_link = f"/api/v1/jurisdictions/{state}/search?{query_params}"
-
-        self_query_params = urllib.parse.urlencode({"limit": limit, "page": page})
-        self_link = f"/api/v1/jurisdictions/{state}/search?{self_query_params}"
-
-        return {
-            "total_items": total_items,
-            "page": page,
-            "total_pages": (total_items + limit - 1) // limit if limit > 0 else 1,
-            "limit": limit,
-            "data": jurisdictions,
-            "links": {"prev": prev_link, "next": next_link, "self": self_link},  # TODO!
-        }
-    
     @router.get("/history")
     async def get_jurisdiction_history_endpoint(
         jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction")
