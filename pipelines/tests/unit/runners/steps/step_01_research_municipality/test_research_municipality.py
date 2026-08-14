@@ -6,9 +6,9 @@ from utils.taxonomy import build_taxonomy
 pytestmark = pytest.mark.unit
 
 _ROLE_CONFIG = RoleConfig(roles=[
-    Role(label="Mayor"),
-    Role(label="Council Member"),
-    Role(label="Council President"),
+    Role(id="mayor", label="Mayor"),
+    Role(id="council-member", label="Council Member"),
+    Role(id="council-president", label="Council President"),
 ])
 
 _TAXONOMY = build_taxonomy(_ROLE_CONFIG)

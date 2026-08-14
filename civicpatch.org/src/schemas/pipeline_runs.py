@@ -93,14 +93,6 @@ class SubmitPipelineRunArtifactsResponse(BaseModel):
     jurisdiction_ocdid: str
 
 
-# ── POST /api/v1/pipeline_runs/issues/{issue_id}/resolve ─────────────────────
-
-class ResolveIssueRequest(BaseModel):
-    scope: Optional[Literal["global", "state", "locality"]] = None
-    state: Optional[str] = None
-    locality: Optional[str] = None
-
-
 # ── PATCH /api/v1/pipeline_runs/issues/{issue_id}/flag ───────────────────────
 
 class FlagPipelineIssueRequest(BaseModel):

@@ -1,61 +1,10 @@
-from typing import List, Literal, Optional
+from typing import List
 
 from pydantic import BaseModel, Field
-from shared.schemas import Role
-
-Scope = Literal["global", "state", "locality"]
-WritableScope = Literal["state", "locality"]  # global has its own endpoints
-
-
-class ScopedRole(Role):
-    scope: Scope
 
 
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
-
-
-class MergedRoleConfigResponse(BaseModel):
-    roles: List[ScopedRole]
-
-
-class SetScopeRolesRequest(BaseModel):
-    ocdid: str
-    scope: WritableScope
-    roles: List[Role]
-    issue_id: Optional[str] = None
-
-
-class SetGlobalRolesRequest(BaseModel):
-    roles: List[Role]
-
-
-class ReorderGlobalRolesRequest(BaseModel):
-    role_order: List[str]  # canonical role values, desired order (priority 0..N)
-    moved_roles: List[
-        str
-    ] = []  # values the user actively moved (for the audit summary)
-
-
-class ReorderScopeRolesRequest(BaseModel):
-    ocdid: str
-    scope: Literal["state", "locality"]
-    role_order: List[str]  # canonical role values, desired order (priority 0..N)
-    moved_roles: List[
-        str
-    ] = []  # values the user actively moved (for the audit summary)
-
-
-class RoleScopeRequest(BaseModel):
-    """Base for operations targeting a single role at a given scope."""
-
-    role: str
-    scope: Literal["global", "state", "locality"]
-    ocdid: str = ""  # ignored for global scope
-
-
-class DeleteRoleRequest(RoleScopeRequest):
-    pass
 
 
 class JurisdictionSearchResult(BaseModel):

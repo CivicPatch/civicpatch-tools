@@ -52,9 +52,7 @@ async def start(
     context, pipeline_run_logger = initialize_pipeline_run(
         request_id, jurisdiction_ocdid, config
     )
-    context.data.role_config = await get_role_config(
-        pipeline_run_logger, jurisdiction_ocdid
-    )
+    context.data.role_config = await get_role_config(pipeline_run_logger)
     env = get_env_vars()
 
     try:

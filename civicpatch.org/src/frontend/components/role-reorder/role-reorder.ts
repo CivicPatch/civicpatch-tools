@@ -5,42 +5,43 @@ import { component, useState } from "haunted";
 import { reorderRoles } from "../../api.js";
 import { moveUp, moveDown, moveToTop, applyDrop } from "./reorder-utils.js";
 
-interface RoleTerm {
+// What this component needs from each role, not the whole API shape: `id` is
+// what the reorder call sends and what tracks a moved row, `label` is what the
+// row renders. Callers pass richer objects; the extra fields are ignored.
+interface ReorderableRole {
+  id: string;
   label: string;
-  is_unique?: boolean;
-  aliases?: string[];
 }
 
 type RoleReorderHost = HTMLElement & {
-  roles?: RoleTerm[];
-  scope?: "global" | "state" | "locality";
-  ocdid?: string | null;
+  roles?: ReorderableRole[];
 };
 
 export const REORDERED_EVENT = "reordered";
 export const CANCEL_EVENT = "cancel";
 
 function RoleReorder(host: RoleReorderHost) {
-  const scope = host.scope ?? "global";
-  const ocdid = host.ocdid ?? null;
-  const [order, setOrder] = useState<RoleTerm[]>([...(host.roles ?? [])]);
+  const [order, setOrder] = useState<ReorderableRole[]>([...(host.roles ?? [])]);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [announce, setAnnounce] = useState("");
-  // Roles the user has actively moved — tinted so the pending diff is visible.
-  // Tracks moved roles, not shifted indexes (one move shifts everything below it).
-  const [movedRoleValues, setMovedRoleValues] = useState<Set<string>>(new Set());
+  // Ids of roles the user has actively moved — tinted so the pending diff is
+  // visible. Tracks moved roles, not shifted indexes (one move shifts
+  // everything below it). Ids, not labels: the reorder API keys on id.
+  const [movedRoleIds, setMovedRoleIds] = useState<Set<string>>(new Set());
 
   const handleCancel = () =>
     host.dispatchEvent(new CustomEvent(CANCEL_EVENT, { bubbles: true, composed: true }));
 
-  const reorderTo = (next: RoleTerm[], roleValue: string) => {
+  // Takes the role, not one field of it: tracking keys on id, the announcement
+  // reads out the label.
+  const reorderTo = (next: ReorderableRole[], moved: ReorderableRole) => {
     setOrder(next);
-    setMovedRoleValues(new Set(movedRoleValues).add(roleValue));
-    const position = next.findIndex((r) => r.label === roleValue) + 1;
-    setAnnounce(`${roleValue} moved to position ${position} of ${next.length}`);
+    setMovedRoleIds(new Set(movedRoleIds).add(moved.id));
+    const position = next.findIndex((r) => r.id === moved.id) + 1;
+    setAnnounce(`${moved.label} moved to position ${position} of ${next.length}`);
   };
 
   const clearDrag = () => {
@@ -50,8 +51,7 @@ function RoleReorder(host: RoleReorderHost) {
 
   const handleDrop = (toIndex: number) => {
     if (dragIndex === null) return;
-    const moved = order[dragIndex];
-    reorderTo(applyDrop(order, dragIndex, toIndex), moved.label);
+    reorderTo(applyDrop(order, dragIndex, toIndex), order[dragIndex]);
     clearDrag();
   };
 
@@ -59,7 +59,7 @@ function RoleReorder(host: RoleReorderHost) {
     setSaving(true);
     setError(null);
     try {
-      await reorderRoles({ scope, ocdid, roleOrder: order.map((r) => r.label), movedRoles: [...movedRoleValues] });
+      await reorderRoles({ roleOrder: order.map((r) => r.id), movedRoles: [...movedRoleIds] });
       host.dispatchEvent(new CustomEvent(REORDERED_EVENT, { bubbles: true, composed: true }));
     } catch (e) {
       setError((e as Error).message);
@@ -68,10 +68,10 @@ function RoleReorder(host: RoleReorderHost) {
     }
   };
 
-  const rows = order.map((term, i) => {
+  const rows = order.map((role, i) => {
     const showDrop = dragIndex !== null && dragOverIndex === i && dragIndex !== i;
     const dropClass = showDrop ? (dragIndex < i ? " role-reorder__row--drop-after" : " role-reorder__row--drop-before") : "";
-    const movedClass = movedRoleValues.has(term.label) ? " role-reorder__row--moved" : "";
+    const movedClass = movedRoleIds.has(role.id) ? " role-reorder__row--moved" : "";
     return html`
       <li
         class="role-reorder__row${dragIndex === i ? " role-reorder__row--dragging" : ""}${dropClass}${movedClass}"
@@ -82,14 +82,14 @@ function RoleReorder(host: RoleReorderHost) {
         @dragend=${clearDrag}
       >
         <span class="role-reorder__handle" aria-hidden="true"><i class="fa-solid fa-grip-vertical"></i></span>
-        <span class="role-reorder__name">${term.label}</span>
+        <span class="role-reorder__name">${role.label}</span>
         <span class="role-reorder__buttons">
-          <button class="civ-action-btn" title="Move up" aria-label=${`Move ${term.label} up`}
-            ?disabled=${i === 0} @click=${() => reorderTo(moveUp(order, i), term.label)}><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
-          <button class="civ-action-btn" title="Move down" aria-label=${`Move ${term.label} down`}
-            ?disabled=${i === order.length - 1} @click=${() => reorderTo(moveDown(order, i), term.label)}><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
-          <button class="civ-action-btn" title="Move to top" aria-label=${`Move ${term.label} to top`}
-            ?disabled=${i === 0} @click=${() => reorderTo(moveToTop(order, i), term.label)}><i class="fa-solid fa-angles-up" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move up" aria-label=${`Move ${role.label} up`}
+            ?disabled=${i === 0} @click=${() => reorderTo(moveUp(order, i), role)}><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move down" aria-label=${`Move ${role.label} down`}
+            ?disabled=${i === order.length - 1} @click=${() => reorderTo(moveDown(order, i), role)}><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></button>
+          <button class="civ-action-btn" title="Move to top" aria-label=${`Move ${role.label} to top`}
+            ?disabled=${i === 0} @click=${() => reorderTo(moveToTop(order, i), role)}><i class="fa-solid fa-angles-up" aria-hidden="true"></i></button>
         </span>
       </li>
     `;

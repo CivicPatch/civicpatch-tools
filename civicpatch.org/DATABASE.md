@@ -149,16 +149,23 @@ erDiagram
     }
 
     roles {
-        uuid            id                  PK
-        text            label               "unique: (label, scope) NULLS NOT DISTINCT"
-        text_null       scope               "idx; NULL=global, state ocdid=state, place ocdid=local"
-        text_null       status              "check: active|candidate|rejected; NULL = inherit"
-        bool_null       is_unique           "NULL = inherit"
-        int_null        priority            "NULL = inherit"
-        text_array      aliases             "idx: GIN; this scope's contribution, unioned on read"
+        text            id                  PK "SLUG, not a uuid: council-member. Immune to label renames. check: id <> ''"
+        text            label               "unique idx: (lower(label)); display name, renameable"
+        text            status              "check: active|candidate|excluded|inactive"
+        bool            is_unique           "default: false"
+        int_null        priority            "NULL = unranked, sorts last"
         timestamptz     created_at
     }
 
+    role_aliases {
+        uuid            id                  PK
+        text            role_id             FK  "idx; ON UPDATE CASCADE, ON DELETE CASCADE"
+        text            label               "unique idx: (lower(label)) — across ALL roles"
+        text            status              "check: active|candidate, default: candidate"
+        timestamptz     created_at
+    }
+
+    roles ||--o{ role_aliases : "role_id"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"
@@ -182,7 +189,17 @@ erDiagram
 - `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
 - `people` has no FK to `requests` — it is updated independently when a PR is merged
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
-- `roles` replaced `role_terms` / `role_aliases` in migration 106. `label` is the identity (no separate `roles` table — rename is one `UPDATE` with no FK churn); a NULL column means "inherit from a broader scope" — which is why a city that renames its body writes one row carrying a `label` and nothing else. Resolution reads the rows for a role where `scope IN (NULL, state, place)`: scalars take the most-specific non-null value, `aliases` are **unioned** across scopes rather than overridden. `roles_global_complete` enforces that the global row carries a `label` and `status`, so resolution always terminates with something renderable instead of needing a fallback — revisit it under #2470, which removes the global scope. The old `kind: canonical|exclusion` became `status`, since all three exclusion rows were real offices (city attorney, city manager, city secretary) excluded as appointed rather than elected — a policy about scope, not a fact about vocabulary. The retired `exclude_role` / `include_role` change-log types stay in `change_log_types`: existing `change_logs` rows FK to them.
+- `roles` replaced `role_terms` / `role_aliases` in migration 106, and migration 109 **flattened it**: the `scope` column (NULL=global / state ocdid / place ocdid) is gone, along with per-scope resolution, alias unioning, and the `roles_global_complete` check. It carried 24 global rows and 1 scoped test row while costing the promotion trap — promoting a role was DELETE + INSERT, minting a new uuid and breaking any FK pointing at it. One flat list, `unique (lower(label))`. #2470 and #2471 ask for *more* hierarchy and are inverted by this; see `.scratch/2026-08-12-plan-flat-roles.md`.
+- **`roles.id` is a slug, not a uuid** — `council-member`, derived from `label` at creation. Migration 109 swapped the uuid for it. Read that carefully: `id` is a uuid in every other domain table, and this schema's other text-PK tables name the column for its content (`geoid`, `path`, `type`), so `roles.id` matches neither convention. It is named `id` so Phase 2's FK reads `posts.role_id` rather than `posts.role_slug`.
+- The consequence of that choice: unlike a uuid, this id is *derived*, so it can be **wrong**. Mint "Concil Member", fix the label to "Council Member", and the id stays `concil-member` — a rename moves `label` and deliberately leaves `id`, which is what keeps published references resolving. Phase 2's `posts.role_id` should use `ON UPDATE CASCADE` so correcting a mis-derived id stays one statement.
+- `core.role_taxonomy.slugify_label` must reproduce migration 109's backfill expression exactly (`trim(both '-' from lower(regexp_replace(label, '[^a-zA-Z0-9]+', '-', 'g')))`), or a role minted by the app and one minted by the migration would disagree.
+- **Slugging is lossy, so the PK is a stricter constraint than `unique (lower(label))`.** Same lowercase label ⟹ same slug, but not the reverse: `Council/Member` and `Council Member` are two distinct labels that reduce to one id. The label index therefore catches nothing the PK doesn't — it is kept as documentation of intent, not for coverage. `core.role_taxonomy.slug_conflict_error` rejects such a pair before the write so the message can name both labels; the PK is the concurrency backstop.
+- `roles_id_not_empty` exists because `NOT NULL` does not cover `''`: a label of pure punctuation slugs to the empty string, which would otherwise insert silently as published identity. `schemas.roles.RoleInput` rejects such a label at the API boundary; the check covers any other writer.
+- **Labels and aliases share one case-insensitive namespace, and no index can enforce it.** `roles_label_lower_uq` spans `roles`, `role_aliases_label_lower_uq` spans `role_aliases`, and a unique index cannot span both — so nothing at the schema level stops one role claiming another's *label* as an alias. That matters because `get_role_alias_map` lets the last role written win, making the owner depend on priority order (a reorder could silently flip it). `core.role_taxonomy.name_conflict_error` enforces the cross-table half before the write. A role restating *its own* label as an alias is allowed: it resolves to itself, and seeded rows do it (`Select Board Member`, `Deputy Mayor Pro Tempore`).
+- `roles.status`: each value is a distinct matcher behaviour — `active` matches; `candidate` matches and flags for #2471's triage; `excluded` matches so the label can be *knowingly dropped* (an exclusion like `Webmaster`, dormant since `/config/exclude` and `/config/include` were removed); `inactive` is not matched at all, and is what removal sets, so the row and any seat history survive. `active` is the only value in use today. **`shared.utils.config_utils.get_role_configs` filters to `active` and is the only reader** — before it, `status` had zero readers, which was not harmless: an `excluded` role was matched as an ordinary one. The filter is blunter than the design above, though: it makes `excluded` invisible rather than match-then-drop, so an excluded label falls through to `unrecognized_role`. The vocabulary went `kind: canonical|exclusion` → `status: …|rejected` → `status: …|excluded`; the last step realigns it with the `exclude_role` / `include_role` change-log types, which are permanent because existing `change_logs` rows FK to them.
+- `role_aliases` was a `roles.aliases text[]` between migrations 106 and 110. The array could not express either thing the table exists for: a per-alias approval state (an alias must not match until approved), and uniqueness *across* roles — nothing stopped one string aliasing two roles, which makes the matcher's answer arbitrary. `role_aliases_label_lower_uq` is deliberately global, not per-role.
+- `role_aliases.status` defaults to `candidate`, but every alias written through `PUT /api/v1/roles` is set `active`: a maintainer typing one *is* the approval. The default is aimed at a future auto-mint path, which is the case approval was designed for. `get_roles` returns only `active` aliases, so the wire shape stays `aliases: ["…"]` and the pipeline cannot accidentally match an unapproved one.
+- `roles.priority` stays nullable on purpose: `ORDER BY priority NULLS LAST` treats NULL as a real state (unranked, sorts to the end), which `NOT NULL DEFAULT 0` would collapse into "ranked first". **`PUT /api/v1/roles/reorder` is its only writer**, and it keys on `id`; `RoleInput` deliberately has no `priority` field. Two reasons: reorder is ADMINS-only while the upsert is MAINTAINERS, so accepting it on the upsert would bypass that gate — and an omitted field would read as "clear it", which flattened every role's ordering on any save.
 - `synced_files` is keyed by repo path (e.g. `data/tx/local/place_austin.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs (both `jurisdictions.yml` and people files)
 - `jurisdictions.scraped_at` is "last *scraped*" — stamped on job-PR merge, **not** bumped by manual people edits (so hand-corrected jurisdictions don't read as freshly scraped)
 - `users.provider` + `users.provider_user_id` form a unique constraint; `id` is the actual primary key

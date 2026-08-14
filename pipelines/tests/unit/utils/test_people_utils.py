@@ -10,13 +10,14 @@ pytestmark = pytest.mark.unit
 EMPTY = taxonomy.build_taxonomy(RoleConfig(roles=[]))
 
 _MAYOR_COUNCIL = taxonomy.build_taxonomy(
-    RoleConfig(roles=[Role(label="Mayor"), Role(label="Council Member")])
+    RoleConfig(roles=[Role(id="mayor", label="Mayor"), Role(id="council-member", label="Council Member")])
 )
 
 _VICE_CHAIR = taxonomy.build_taxonomy(
     RoleConfig(
         roles=[
             Role(
+                id="vice-chair",
                 label="Vice Chair",
                 aliases=[
                     "council vice chair",
@@ -34,6 +35,7 @@ _SELECT_BOARD = taxonomy.build_taxonomy(
     RoleConfig(
         roles=[
             Role(
+                id="select-board-vice-chair",
                 label="Select Board Vice Chair",
                 aliases=[
                     "select board vice chairman",

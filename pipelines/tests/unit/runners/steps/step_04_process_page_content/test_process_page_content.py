@@ -27,7 +27,7 @@ from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from utils.taxonomy import build_taxonomy
 
 _ROLE_TAXONOMY = build_taxonomy(
-    RoleConfig(roles=[Role(label="mayor"), Role(label="council")])
+    RoleConfig(roles=[Role(id="mayor", label="mayor"), Role(id="council", label="council")])
 )
 
 

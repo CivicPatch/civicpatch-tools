@@ -228,15 +228,14 @@ export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
   return res.json();
 };
 
-export const fetchJurisdictionConfig = async (ocdid) => {
-  const params = new URLSearchParams({ ocdid });
-  const res = await fetch(`/api/v1/jurisdictions/config?${params}`, { credentials: "include" });
+export const fetchRoles = async () => {
+  const res = await fetch(`${API_URL}/api/v1/roles`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const putJurisdictionConfig = async (body) => {
-  const res = await fetch(`/api/v1/jurisdictions/config`, {
+export const putRoles = async (body) => {
+  const res = await fetch(`${API_URL}/api/v1/roles`, {
     method: "PUT",
     credentials: "include",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
@@ -246,30 +245,22 @@ export const putJurisdictionConfig = async (body) => {
   return res.json();
 };
 
-export const reorderRoles = async ({ scope, ocdid, roleOrder, movedRoles }) => {
-  const isGlobal = scope === "global";
-  const url = isGlobal
-    ? `/api/v1/jurisdictions/config/global/reorder`
-    : `/api/v1/jurisdictions/config/reorder`;
-  const body = isGlobal
-    ? { role_order: roleOrder, moved_roles: movedRoles }
-    : { ocdid, scope, role_order: roleOrder, moved_roles: movedRoles };
-  const res = await fetch(url, {
+export const reorderRoles = async ({ roleOrder, movedRoles }) => {
+  const res = await fetch(`${API_URL}/api/v1/roles/reorder`, {
     method: "PUT",
     credentials: "include",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ role_order: roleOrder, moved_roles: movedRoles }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const deleteRole = async (role, scope, ocdid) => {
-  const res = await fetch(`/api/v1/jurisdictions/config/delete`, {
-    method: "POST",
+export const deleteRole = async (roleId) => {
+  const res = await fetch(`${API_URL}/api/v1/roles/${encodeURIComponent(roleId)}`, {
+    method: "DELETE",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ role, scope, ocdid }),
+    headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
@@ -541,23 +532,6 @@ export const fetchSummary = async (stateCode) => {
   if (stateCode) params.set("state_code", stateCode);
   const query = params.toString() ? `?${params}` : "";
   const res = await fetch(`${API_URL}/api/v1/summary${query}`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchGlobalConfig = async () => {
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/config/global`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const putGlobalConfig = async (roles) => {
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/config/global`, {
-    method: "PUT",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ roles }),
-  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

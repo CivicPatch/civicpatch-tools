@@ -1,315 +1,195 @@
 """Database queries for the role taxonomy (roles).
 
-roles holds what each scope says about a role — its label, status,
-uniqueness, priority, and aliases as a text[] array. `label` is the identity;
-no separate `roles` table.
+One flat list — migration 109 dropped `roles.scope`, so there is no inheritance
+to resolve. `id` is a slug ("council-member"), derived from `label` on insert
+and immutable after. Removal sets `status='inactive'`; nothing is hard-deleted.
 
-Inheritance lives in the data model: NULL on a scoped roles field
-means "inherit from the broader scope". Resolution folds per-field in
-core/role_resolution.py (pending).
+The decisions live in `core.role_taxonomy`; this module owns the SQL and the
+transaction around it.
 """
 
 import json
-from enum import Enum
 
+from core.role_taxonomy import (
+    RoleOp,
+    build_event_payload,
+    change_log_type,
+    classify_role_op,
+    diff_aliases,
+    name_conflict_error,
+    reorder_validation_error,
+    slug_conflict_error,
+    slugify_label,
+)
 from database.database import get_pool
-from shared.schemas import Role, RoleConfig
+from schemas.roles import RoleInput
+from shared.schemas import Role, RoleAliasStatus, RoleStatus
 
 
-class TermOp(str, Enum):
-    ADD = "add"  # insert a new role_entry row
-    EDIT = "edit"  # UPDATE existing entry's tracked fields (label, status, is_unique, priority)
-    # NO_CHANGE: entry row stays as-is. Common case — the PUT sent the same
-    # values for all tracked fields. The shell still updates the aliases array
-    # for this entry because the incoming `aliases:` list can differ from what's
-    # currently in roles.aliases.
-    NO_CHANGE = "no_change"
-
-
-def _state_ocdid_from_ocdid(ocdid: str) -> str | None:
-    """Derive the state-level OCDID for a given place OCDID. Must produce the
-    same form as services.role_config._scope_to_ocdid("state", ...) so the keys
-    match across writes/reads."""
-    parts = ocdid.split("/")
-    for i, p in enumerate(parts):
-        if p.startswith("state:"):
-            return "/".join(parts[: i + 1] + [parts[-1]])
-    return None
-
-
-async def _fetch_roles_at_scope(cur, scope: str | None) -> list[Role]:
-    """Fetch all roles at a single scope."""
+async def _fetch_roles(cur) -> list[Role]:
+    """Every role with only its *approved* aliases — a candidate alias must not
+    reach the matcher. Takes a cursor so upsert_roles can read inside its own
+    transaction rather than through a second connection."""
     await cur.execute(
         """
-        SELECT label, status, is_unique, priority, aliases
-        FROM roles
-        WHERE scope IS NOT DISTINCT FROM %s
-        ORDER BY priority NULLS LAST, label
+        SELECT r.id, r.label, r.status, r.is_unique, r.priority,
+               COALESCE(
+                   array_agg(a.label ORDER BY a.label) FILTER (WHERE a.id IS NOT NULL),
+                   '{}'
+               )
+        FROM roles r
+        LEFT JOIN role_aliases a ON a.role_id = r.id AND a.status = %s
+        GROUP BY r.id, r.label, r.status, r.is_unique, r.priority
+        ORDER BY r.priority NULLS LAST, r.label
         """,
-        (scope,),
+        (RoleAliasStatus.ACTIVE,),
     )
     return [
-        Role(label=label, status=status, is_unique=is_unique, priority=priority, aliases=aliases)
-        for label, status, is_unique, priority, aliases in await cur.fetchall()
+        Role(
+            id=id,
+            label=label,
+            status=status,
+            is_unique=is_unique,
+            priority=priority,
+            aliases=aliases,
+        )
+        for id, label, status, is_unique, priority, aliases in await cur.fetchall()
     ]
 
 
-async def get_role_config_per_level(ocdid: str) -> dict[str, RoleConfig]:
-    """Return (global, state, locality) RoleConfigs for a given ocdid."""
-    state_ocdid = _state_ocdid_from_ocdid(ocdid)
+async def get_roles() -> list[Role]:
+    """Every role, ordered.
 
+    Inactive and excluded roles are included: filtering those is the caller's
+    decision, since the admin UI needs to see them and the pipeline does not.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        result: dict[str, RoleConfig] = {
-            "global": RoleConfig(roles=await _fetch_roles_at_scope(cur, None)),
-        }
-        if state_ocdid:
-            result["state"] = RoleConfig(
-                roles=await _fetch_roles_at_scope(cur, state_ocdid)
-            )
-        if "/place:" in ocdid or "/county:" in ocdid:
-            result["locality"] = RoleConfig(
-                roles=await _fetch_roles_at_scope(cur, ocdid)
-            )
-    return result
-
-
-async def get_global_config() -> RoleConfig:
-    """Fetch all global roles."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        roles = await _fetch_roles_at_scope(cur, None)
-    return RoleConfig(roles=roles)
-
-
-# ── Pure decision helpers (functional core) ─────────────────────────────
-
-
-def classify_term_op(
-    entry: Role,
-    existing: Role | None,
-) -> tuple[TermOp, str | None]:
-    """Pure: classify what should happen to a single role_entry row.
-    Aliases are handled separately by diff_aliases.
-
-    Compares all four tracked fields (label, status, is_unique, priority) —
-    the bug that closed this function to only is_unique meant renaming a
-    city's label returned NO_CHANGE and wrote nothing.
-
-    Returns (op, change_log_type). change_log_type is None when op is NO_CHANGE
-    (no role_entry write fires for this entry; alias-only changes still get
-    logged separately as edit_role by the shell).
-    """
-    if existing is None:
-        return (TermOp.ADD, "add_role")
-    if (
-        entry.label != existing.label
-        or entry.status != existing.status
-        or entry.is_unique != existing.is_unique
-        or entry.priority != existing.priority
-    ):
-        return (TermOp.EDIT, "edit_role")
-    return (TermOp.NO_CHANGE, None)
-
-
-def diff_aliases(existing: list[str], incoming: list[str]) -> tuple[set[str], set[str]]:
-    """Pure: (removed, added) given current and desired alias lists.
-
-    Existing aliases come from the roles.aliases text[] column (a list
-    in Python). Returns sets for the change_log payload.
-    """
-    return set(existing) - set(incoming), set(incoming) - set(existing)
-
-
-def build_event_payload(
-    entry: Role,
-    aliases_added: set[str],
-    aliases_removed: set[str],
-) -> dict:
-    """Pure: build the JSONB payload for a single role_entry's change_log event."""
-    payload: dict = {"role": entry.label}
-    if aliases_added:
-        payload["aliases_added"] = sorted(aliases_added)
-    if aliases_removed:
-        payload["aliases_removed"] = sorted(aliases_removed)
-    return payload
-
-
-def reorder_validation_error(current: list[str], requested: list[str]) -> str | None:
-    """Pure: a reorder must be a permutation of the scope's current canonical
-    values. Returns an error message if it isn't (duplicate, missing, or
-    unexpected role), else None. A stale client gets a clear 409 instead of
-    silently dropping a role's priority."""
-    if len(requested) != len(set(requested)):
-        return "Reorder contains duplicate roles."
-    missing = set(current) - set(requested)
-    extra = set(requested) - set(current)
-    if missing or extra:
-        return f"Reorder set mismatch (missing: {sorted(missing)}, unexpected: {sorted(extra)})."
-    return None
-
-
-# ── Imperative shell ────────────────────────────────────────────────────
+        return await _fetch_roles(cur)
 
 
 async def _emit_change_log(
     cur,
     log_type: str,
-    jurisdiction_ocdid: str | None,
     payload: dict,
     user_id: str | None,
 ):
     await cur.execute(
-        "INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id) VALUES (%s, %s, %s, %s)",
-        (log_type, jurisdiction_ocdid, json.dumps(payload), user_id),
+        "INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id) VALUES (%s, NULL, %s, %s)",
+        (log_type, json.dumps(payload), user_id),
     )
 
 
-async def replace_roles_at_scope(
-    jurisdiction_ocdid: str | None,
-    entries: list[Role],
-    user_id: str | None,
-) -> None:
-    """Replace all roles at a given scope. Emits one change_log per
-    affected entry — alias deltas fold into the entry's event payload.
+async def _sync_aliases(
+    cur,
+    role_id: str,
+    existing: list[str],
+    incoming: list[str],
+) -> tuple[set[str], set[str]]:
+    """Bring one role's aliases in line with the submitted list, returning
+    (added, removed) for the change_log.
 
-    Aliases are written wholesale as the text[] array on roles.
+    Submitted aliases land approved: a maintainer typing one *is* the approval.
+    `candidate` is for a future auto-mint path, which is the case approval was
+    designed for.
+    """
+    added, removed = diff_aliases(existing, incoming)
+    for alias in sorted(removed):
+        await cur.execute(
+            "DELETE FROM role_aliases WHERE role_id = %s AND lower(label) = lower(%s)",
+            (role_id, alias),
+        )
+    for alias in sorted(added):
+        await cur.execute(
+            "INSERT INTO role_aliases (role_id, label, status) VALUES (%s, %s, %s)",
+            (role_id, alias, RoleAliasStatus.ACTIVE),
+        )
+    return added, removed
+
+
+async def upsert_roles(entries: list[RoleInput], user_id: str | None) -> None:
+    """Add or update the submitted roles, one change_log per affected row.
+
+    Absence is NOT removal — a label missing from `entries` is left alone.
+    Removal is deactivate_role.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
-            # Read existing entries for this scope, keyed by label.
-            await cur.execute(
-                """
-                SELECT label, id, status, is_unique, priority, aliases
-                FROM roles
-                WHERE scope IS NOT DISTINCT FROM %s
-                """,
-                (jurisdiction_ocdid,),
-            )
-            existing_by_label: dict[str, dict] = {}
-            for row in await cur.fetchall():
-                existing_by_label[row[0]] = {
-                    "id": row[1],
-                    "status": row[2],
-                    "is_unique": row[3],
-                    "priority": row[4],
-                    "aliases": row[5],
-                }
+            stored_by_label = {role.label: role for role in await _fetch_roles(cur)}
 
-            # Removals: entries in existing but not in incoming.
-            incoming_labels = {e.label for e in entries}
-            for label in set(existing_by_label) - incoming_labels:
-                await cur.execute(
-                    "DELETE FROM roles WHERE id = %s",
-                    (existing_by_label[label]["id"],),
-                )
-                await _emit_change_log(
-                    cur,
-                    "delete_role",
-                    jurisdiction_ocdid,
-                    {"role": label},
-                    user_id,
-                )
+            # Pre-flight, before any write: these are the conflicts the DB would
+            # raise as a bare UniqueViolation (a 500), plus the label-vs-alias
+            # one it cannot see at all. Checked here so the message can name
+            # both sides. The indexes stay as the concurrency backstop.
+            name_error = name_conflict_error(entries, stored_by_label)
+            if name_error:
+                raise RuntimeError(name_error)
+            slug_error = slug_conflict_error(entries, stored_by_label)
+            if slug_error:
+                raise RuntimeError(slug_error)
 
-            # Adds and edits.
             for entry in entries:
-                existing_entry = existing_by_label.get(entry.label)
-                existing_role = (
-                    Role(
-                        label=entry.label,
-                        status=existing_entry["status"],
-                        is_unique=existing_entry["is_unique"],
-                        priority=existing_entry["priority"],
-                        aliases=existing_entry["aliases"],
-                    )
-                    if existing_entry
-                    else None
-                )
+                stored = stored_by_label.get(entry.label)
+                op = classify_role_op(entry, stored)
 
-                op, log_type = classify_term_op(entry, existing_role)
-
-                if op == TermOp.ADD:
+                if stored is None:
+                    role_id = slugify_label(entry.label)
+                    # priority is left NULL, which `ORDER BY priority NULLS LAST`
+                    # reads as unranked — a new role sorts last until someone
+                    # reorders.
                     await cur.execute(
                         """
-                        INSERT INTO roles (label, scope, status, is_unique, priority, aliases)
-                        VALUES (%s, %s, %s, %s, %s, %s)
+                        INSERT INTO roles (id, label, status, is_unique)
+                        VALUES (%s, %s, %s, %s)
                         """,
-                        (
-                            entry.label,
-                            jurisdiction_ocdid,
-                            entry.status,
-                            entry.is_unique,
-                            entry.priority,
-                            entry.aliases,
-                        ),
+                        (role_id, entry.label, entry.status, entry.is_unique),
                     )
-                elif op == TermOp.EDIT:
-                    assert existing_entry is not None
-                    await cur.execute(
-                        """
-                        UPDATE roles
-                        SET label = %s, status = %s, is_unique = %s, priority = %s, aliases = %s
-                        WHERE id = %s
-                        """,
-                        (
-                            entry.label,
-                            entry.status,
-                            entry.is_unique,
-                            entry.priority,
-                            entry.aliases,
-                            existing_entry["id"],
-                        ),
-                    )
-                else:  # NO_CHANGE — aliases may still differ
-                    assert existing_entry is not None
-                    if existing_entry["aliases"] != entry.aliases:
+                else:
+                    role_id = stored.id
+                    if op is RoleOp.EDIT:
+                        # `label` is absent because lookup matched on it, so it
+                        # is already correct; `priority` because reorder_roles
+                        # owns it; `id` because it must survive everything.
                         await cur.execute(
-                            "UPDATE roles SET aliases = %s WHERE id = %s",
-                            (entry.aliases, existing_entry["id"]),
+                            "UPDATE roles SET status = %s, is_unique = %s WHERE id = %s",
+                            (entry.status, entry.is_unique, role_id),
                         )
 
-                # Compute alias diffs for the change_log regardless of op.
-                existing_aliases = existing_entry["aliases"] if existing_entry else []
-                added, removed = diff_aliases(existing_aliases, entry.aliases)
-                payload = build_event_payload(entry, added, removed)
+                added, removed = await _sync_aliases(
+                    cur, role_id, stored.aliases if stored else [], entry.aliases
+                )
 
-                if log_type is not None:
+                if op is not RoleOp.NO_CHANGE or added or removed:
                     await _emit_change_log(
-                        cur, log_type, jurisdiction_ocdid, payload, user_id
-                    )
-                elif added or removed:
-                    await _emit_change_log(
-                        cur, "edit_role", jurisdiction_ocdid, payload, user_id
+                        cur,
+                        change_log_type(op),
+                        build_event_payload(entry.label, added, removed),
+                        user_id,
                     )
 
         await conn.commit()
 
 
-async def reorder_roles_at_scope(
-    jurisdiction_ocdid: str | None,
+async def reorder_roles(
     role_order: list[str],
     user_id: str | None,
     moved_roles: list[str] | None = None,
 ) -> None:
-    """Set role_entry priority = position in role_order at a scope.
-    role_order must be a permutation of the scope's current role labels.
-    moved_roles names the labels the user actively moved (folded into the
-    change_log so the summary can list them, not just the furthest shift).
-    Emits one reorder_roles change_log; an unchanged order writes nothing."""
+    """Set priority = position in role_order. role_order must be a permutation
+    of the current role *ids*. moved_roles names the ids the user actively moved
+    (folded into the change_log so the summary can list them, not just the
+    furthest shift). Emits one reorder_roles change_log; an unchanged order
+    writes nothing."""
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
-                """
-                SELECT label
-                FROM roles
-                WHERE scope IS NOT DISTINCT FROM %s
-                ORDER BY priority NULLS LAST, label
-                """,
-                (jurisdiction_ocdid,),
+                "SELECT id, label FROM roles ORDER BY priority NULLS LAST, label"
             )
-            before = [row[0] for row in await cur.fetchall()]
+            rows = await cur.fetchall()
+            before = [row[0] for row in rows]
+            label_by_id = {row[0]: row[1] for row in rows}
 
             error = reorder_validation_error(before, role_order)
             if error:
@@ -318,48 +198,52 @@ async def reorder_roles_at_scope(
             if before == role_order:
                 return  # nothing moved — don't write a phantom event
 
-            for position, label in enumerate(role_order):
+            for position, role_id in enumerate(role_order):
                 await cur.execute(
-                    """
-                    UPDATE roles SET priority = %s
-                    WHERE label = %s AND scope IS NOT DISTINCT FROM %s
-                    """,
-                    (position, label, jurisdiction_ocdid),
+                    "UPDATE roles SET priority = %s WHERE id = %s",
+                    (position, role_id),
                 )
 
-            payload: dict = {"before": before, "after": role_order}
+            # The payload is stored in labels, not ids: change_log_summary
+            # renders it straight into the activity feed, where "moved Council
+            # Member" reads and "moved council-member" does not.
+            payload: dict = {
+                "before": [label_by_id[role_id] for role_id in before],
+                "after": [label_by_id[role_id] for role_id in role_order],
+            }
             requested = set(role_order)
-            valid_moved = [role for role in (moved_roles or []) if role in requested]
+            valid_moved = [
+                label_by_id[role_id]
+                for role_id in (moved_roles or [])
+                if role_id in requested
+            ]
             if valid_moved:
                 payload["moved"] = valid_moved
-            await _emit_change_log(
-                cur, "reorder_roles", jurisdiction_ocdid, payload, user_id
-            )
+            await _emit_change_log(cur, "reorder_roles", payload, user_id)
         await conn.commit()
 
 
-async def delete_role(
-    label: str, jurisdiction_ocdid: str | None, user_id: str | None
-) -> None:
-    """Hard-delete a role_entry. Does nothing if no matching entry exists."""
+async def deactivate_role(role_id: str, user_id: str | None) -> bool:
+    """Deactivate a role by id. Returns False if it does not exist or was
+    already inactive — either way there is nothing to log.
+
+    Logged as `delete_role`: the user's action is unchanged, only the storage
+    consequence is, and adding a change_log type needs its own migration.
+    """
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
                 """
-                DELETE FROM roles
-                WHERE label = %s AND scope IS NOT DISTINCT FROM %s
-                RETURNING id
+                UPDATE roles SET status = %s
+                WHERE id = %s AND status <> %s
+                RETURNING label
                 """,
-                (label, jurisdiction_ocdid),
+                (RoleStatus.INACTIVE, role_id, RoleStatus.INACTIVE),
             )
-            if await cur.fetchone() is None:
-                return  # nothing to delete; don't log a phantom event
-            await _emit_change_log(
-                cur,
-                "delete_role",
-                jurisdiction_ocdid,
-                {"role": label},
-                user_id,
-            )
+            row = await cur.fetchone()
+            if row is None:
+                return False
+            await _emit_change_log(cur, "delete_role", {"role": row[0]}, user_id)
         await conn.commit()
+        return True

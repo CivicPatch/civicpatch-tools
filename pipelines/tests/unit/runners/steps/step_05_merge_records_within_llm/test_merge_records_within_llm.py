@@ -32,11 +32,11 @@ EMPTY_ROLE_CONFIG = RoleConfig(roles=[])
 # with the roles the fixtures actually use.
 ROLE_CONFIG = RoleConfig(
     roles=[
-        Role(label="Mayor", is_unique=True),
-        Role(label="Mayor Pro Tempore", is_unique=True),
-        Role(label="Council Member"),
-        Role(label="Commissioner"),
-        Role(label="Treasurer", is_unique=True),
+        Role(id="mayor", label="Mayor", is_unique=True),
+        Role(id="mayor-pro-tempore", label="Mayor Pro Tempore", is_unique=True),
+        Role(id="council-member", label="Council Member"),
+        Role(id="commissioner", label="Commissioner"),
+        Role(id="treasurer", label="Treasurer", is_unique=True),
     ]
 )
 
