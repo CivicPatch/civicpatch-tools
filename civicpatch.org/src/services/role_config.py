@@ -1,98 +1,34 @@
 import logging
 
 import database.roles as db_roles
-from schemas.jurisdictions import (
-    MergedRoleConfigResponse,
-    Role,
-    ScopedRole,
-    SetScopeRolesRequest,
-)
-from shared.schemas import RoleConfig
+from schemas.roles import RoleInput
+from shared.schemas import Role
 
 logger = logging.getLogger(__name__)
 
-SCOPE_ORDER = ("global", "state", "locality")
+
+async def load_roles() -> list[Role]:
+    return await db_roles.get_roles()
 
 
-async def load_role_config_per_level(ocdid: str) -> dict[str, RoleConfig]:
-    """Read role config from the DB at each scope level for a given ocdid."""
-    return await db_roles.get_role_config_per_level(ocdid)
+async def set_roles(entries: list[RoleInput], user_id: str | None = None) -> None:
+    """Add or update the submitted roles and write change_logs.
 
-
-def build_merged_response(per_level: dict[str, RoleConfig]) -> MergedRoleConfigResponse:
-    seen: dict[str, ScopedRole] = {}
-    for level in SCOPE_ORDER:
-        for entry in per_level.get(level, RoleConfig()).roles:
-            seen[entry.label.lower()] = ScopedRole(
-                label=entry.label,
-                status=entry.status,
-                is_unique=entry.is_unique,
-                priority=entry.priority,
-                aliases=entry.aliases,
-                scope=level,
-            )
-    return MergedRoleConfigResponse(roles=list(seen.values()))
-
-
-async def load_global_config() -> RoleConfig:
-    """Read global roles from the DB."""
-    return await db_roles.get_global_config()
-
-
-async def set_global_roles(
-    entries: list[Role], user_id: str | None = None
-) -> None:
-    """Replace global roles in the DB and write change_logs."""
-    await db_roles.replace_roles_at_scope(None, entries, user_id)
-
-
-async def set_scope_roles(
-    req: SetScopeRolesRequest, user_id: str | None = None
-) -> None:
-    """Replace scope-level roles in the DB and write change_logs."""
-    scope_ocdid = _scope_to_ocdid(req.scope, req.ocdid)
-    await db_roles.replace_roles_at_scope(scope_ocdid, req.roles, user_id)
+    Absence is not removal — see `db_roles.upsert_roles`. Removal is
+    `deactivate_role`.
+    """
+    await db_roles.upsert_roles(entries, user_id)
 
 
 async def reorder_roles(
-    scope: str,
-    ocdid: str | None,
     role_order: list[str],
     moved_roles: list[str] | None = None,
     user_id: str | None = None,
 ) -> None:
-    """Set canonical role priority by position for a scope (global/state/locality)."""
-    scope_ocdid = _scope_to_ocdid(scope, ocdid or "")
-    await db_roles.reorder_roles_at_scope(scope_ocdid, role_order, user_id, moved_roles)
+    """Set canonical role priority by position."""
+    await db_roles.reorder_roles(role_order, user_id, moved_roles)
 
 
-async def delete_role(
-    role_value: str, scope: str, ocdid: str, user_id: str | None = None
-) -> None:
-    """Hard-delete a role."""
-    scope_ocdid = _scope_to_ocdid(scope, ocdid)
-    await db_roles.delete_role(role_value, scope_ocdid, user_id)
-
-
-def _scope_to_ocdid(scope: str, ocdid: str) -> str | None:
-    """Derive the DB jurisdiction_ocdid from a scope + full ocdid pair.
-
-    Produces full OCDIDs that round-trip through parse_jurisdiction_ocdid —
-    state/county scope keys include the jurisdiction_type suffix (e.g.
-    `/government`), not just the prefix.
-
-    global   → None (DB sentinel for global scope)
-    state    → ocd-jurisdiction/country:us/state:tx/government
-    county   → ocd-jurisdiction/country:us/state:tx/county:travis/government
-    locality → the full ocdid as-is
-    """
-    if scope == "global":
-        return None
-    if scope in ("state", "county"):
-        prefix = "state:" if scope == "state" else "county:"
-        parts = ocdid.split("/")
-        for i, p in enumerate(parts):
-            if p.startswith(prefix):
-                return "/".join(parts[: i + 1] + [parts[-1]])
-        # Shouldn't happen for valid ocdids, but fall through to locality
-    return ocdid
+async def deactivate_role(role_id: str, user_id: str | None = None) -> bool:
+    """Deactivate a role. Returns False if it does not exist or was already inactive."""
+    return await db_roles.deactivate_role(role_id, user_id)

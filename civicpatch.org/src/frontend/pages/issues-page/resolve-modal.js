@@ -18,8 +18,6 @@ function getModalTitle(issue, detailsOnly) {
 function ResolveModal(host) {
   const issue = host.issue;
   const detailsOnly = host.hasAttribute("details-only");
-  const [modalState, setModalState] = useState((issue?.states || [])[0] || "");
-  const [modalLocality, setModalLocality] = useState("");
   const [modalDetails, setModalDetails] = useState(null);
   const [showAllDetails, setShowAllDetails] = useState(false);
   const [debugTab, setDebugTab] = useState(0);
@@ -33,18 +31,6 @@ function ResolveModal(host) {
       .then((r) => setModalDetails(r.data || []))
       .catch(() => setModalDetails([]));
   }, []);
-
-  // Auto-fill locality when the current state has exactly one jurisdiction —
-  // the most common case for unrecognized_role issues flagged in a single
-  // place. Multi-locality states still require an explicit pick.
-  useEffect(() => {
-    const matches = (issue?.jurisdictions || []).filter((j) => j.state === modalState);
-    if (matches.length === 1) {
-      setModalLocality(matches[0].locality);
-    } else {
-      setModalLocality("");
-    }
-  }, [modalState, issue?.jurisdictions]);
 
   const detail = modalDetails?.[0] ?? null;
 
@@ -84,15 +70,8 @@ function ResolveModal(host) {
   const handleClose = () => dispatch("modal-close", {});
 
   const handleSubmit = async () => {
-    const body = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE
-      ? {
-          scope: "locality",
-          ...(modalState ? { state: modalState } : {}),
-          ...(modalLocality ? { locality: modalLocality } : {}),
-        }
-      : {};
     try {
-      const result = await resolveReviewIssue(issue.id, body);
+      const result = await resolveReviewIssue(issue.id);
       dispatch("issue-resolved", {
         issue_id: issue.id,
         pull_request_url: result?.data?.pull_request_url || null,
@@ -131,33 +110,19 @@ function ResolveModal(host) {
     </div>
   ` : null;
 
-  const unrecognizedRoleForm = html`
-    <div class="issues-page__resolve-role-form">
-      ${(issue.states || []).length ? html`
+  // The state/locality pickers that used to live here are gone with migration
+  // 109: the taxonomy is one flat global list, so resolving has nothing to
+  // target. "Seen in" stays — it is context for the decision, not an input.
+  const unrecognizedRoleForm = (issue.states || []).length
+    ? html`
+      <div class="issues-page__resolve-role-form">
         <p class="issues-page__modal-meta">
           Seen in:
           ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
         </p>
-      ` : null}
-      <label>
-        State
-        <select @change=${(e) => setModalState(e.target.value)}>
-          ${(issue.states || []).map((s) => html`
-            <option value=${s} ?selected=${s === modalState}>${s.toUpperCase()}</option>
-          `)}
-        </select>
-      </label>
-      <label>
-        Locality
-        <select @change=${(e) => setModalLocality(e.target.value)}>
-          <option value="">— select —</option>
-          ${(issue.jurisdictions || []).filter((j) => j.state === modalState).map((j) => html`
-            <option value=${j.locality} ?selected=${j.locality === modalLocality}>${j.locality || j.folder}</option>
-          `)}
-        </select>
-      </label>
-    </div>
-  `;
+      </div>
+    `
+    : null;
 
   // Domain change info — shown when the issue data carries a URL change
   const domainChangeExtras = data.original_url ? html`

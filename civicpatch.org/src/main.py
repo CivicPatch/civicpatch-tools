@@ -16,6 +16,7 @@ import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.pull_requests as api_pull_requests_router
 import routers.api.requests as api_requests_router
 import routers.api.review_sessions as api_review_sessions_router
+import routers.api.roles as api_roles_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
@@ -195,6 +196,13 @@ app.include_router(
     prefix="/api/v1/data",
     tags=["data"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
+)
+
+app.include_router(
+    api_roles_router.get_router(),
+    prefix="/api/v1/roles",
+    tags=["roles"],
+    # Dependencies set within router
 )
 
 app.include_router(

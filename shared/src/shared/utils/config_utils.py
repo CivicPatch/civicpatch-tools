@@ -3,7 +3,7 @@ from decimal import Decimal, InvalidOperation
 from typing import Dict, List, Optional
 
 import yaml
-from shared.schemas import JobConfig, RoleConfig, Role
+from shared.schemas import JobConfig, RoleConfig, Role, RoleStatus
 
 # In-memory cache for config files
 _config_cache = {}
@@ -34,9 +34,21 @@ def get_data_config():
 def get_role_configs(
     role_config_override: Optional[RoleConfig] = None,
 ) -> List[Role]:
-    if role_config_override is not None:
-        return [entry for entry in role_config_override.roles]
-    return []
+    """Only `active` roles. Every taxonomy consumer funnels through here, so
+    this is the one place that decides what the matcher can see.
+
+    `inactive` is a removed role. `excluded` and `candidate` are matchable by
+    design — excluded so a known non-role label can be knowingly dropped,
+    candidate so triage has something to show — but neither path exists yet, and
+    treating them as ordinary roles (which is what happened before this filter)
+    is worse than not matching them at all.
+    """
+    if role_config_override is None:
+        return []
+    return [
+        entry for entry in role_config_override.roles
+        if entry.status == RoleStatus.ACTIVE
+    ]
 
 
 def get_designations():

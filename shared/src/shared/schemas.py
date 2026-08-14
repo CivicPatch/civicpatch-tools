@@ -231,20 +231,28 @@ class Issue(BaseModel):
 class RoleStatus(str, Enum):
     ACTIVE = "active"
     CANDIDATE = "candidate"
-    REJECTED = "rejected"
+    # "this label is not a role" — an exclusion the matcher must still see in
+    # order to knowingly drop the label. Not the same as inactive.
+    EXCLUDED = "excluded"
+    # what removal sets. Not matched at all; the row survives so seat history
+    # does.
+    INACTIVE = "inactive"
 
 
-class ResolvedRole(BaseModel):
-    label: str
-    status: RoleStatus
-    is_unique: bool
-    priority: int
-    aliases: list[str]
+class RoleAliasStatus(str, Enum):
+    ACTIVE = "active"
+    # submitted but unapproved — stored, never matched.
+    CANDIDATE = "candidate"
 
 
 class Role(BaseModel):
+    # id is a slug ("council-member"), not a uuid — stable identity, immutable
+    # through a label rename. label is display only.
+    id: str
     label: str
-    status: RoleStatus | None = None
+    # not optional: the column is NOT NULL, and `get_role_configs` filters on
+    # this, so a None would silently decide whether the role matches.
+    status: RoleStatus = RoleStatus.ACTIVE
     is_unique: bool | None = None
     priority: int | None = None
     aliases: List[str] = []

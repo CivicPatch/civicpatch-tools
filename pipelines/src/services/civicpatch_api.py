@@ -170,8 +170,10 @@ async def get_current_people(
     return await search_people(client, jurisdiction_ocdid, state="current")
 
 
-async def get_role_config(logger, jurisdiction_ocdid: str) -> RoleConfig:
-    """Fetch the merged role config response from the backend API."""
+async def get_role_config(logger) -> RoleConfig:
+    """Fetch the role taxonomy from the backend API. It is one flat global list
+    — migration 109 dropped per-jurisdiction scoping, so there is nothing to
+    key the request on."""
     env = get_env_vars()
 
     async def _fetch():
@@ -179,10 +181,7 @@ async def get_role_config(logger, jurisdiction_ocdid: str) -> RoleConfig:
             headers={"Authorization": env["SERVICE_API_KEY"]},
             timeout=10,
         ) as client:
-            response = await client.get(
-                f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/config",
-                params={"ocdid": jurisdiction_ocdid},
-            )
+            response = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/roles")
             response.raise_for_status()
             return response.json()
 

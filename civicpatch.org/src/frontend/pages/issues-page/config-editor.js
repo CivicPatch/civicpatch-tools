@@ -1,34 +1,27 @@
 import "./config-editor.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import {
-  fetchJurisdictionConfig,
-  putJurisdictionConfig,
-  fetchGlobalConfig,
-  putGlobalConfig,
-  fetchJurisdictionForState,
-  deleteRole,
-} from "../../api.js";
+import { fetchRoles, putRoles, deleteRole } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 import "../../components/badge/badge.js";
-import "../../components/inputs/auto-complete-select.js";
 import "../../components/role-reorder/role-reorder.ts";
-import "../../components/jurisdiction-search/jurisdiction-search.ts";
 import {
   ALERT_MODE,
   DANGER_VARIANT,
 } from "../../components/confirm-modal/confirm-modal.ts";
 
-const SCOPE_GLOBAL = "global";
-const SCOPE_STATE = "state";
-const SCOPE_LOCALITY = "locality";
-
 const STATUS_ACTIVE = "active";
 const STATUS_CANDIDATE = "candidate";
-const STATUS_REJECTED = "rejected";
+const STATUS_EXCLUDED = "excluded";
+const STATUS_INACTIVE = "inactive";
 
-const STATUS_OPTIONS = [STATUS_ACTIVE, STATUS_CANDIDATE, STATUS_REJECTED];
+const STATUS_OPTIONS = [
+  STATUS_ACTIVE,
+  STATUS_CANDIDATE,
+  STATUS_EXCLUDED,
+  STATUS_INACTIVE,
+];
 
 function parseAliases(text) {
   return text
@@ -64,8 +57,8 @@ function useTermEditor() {
 
   const openEdit = (term) => {
     setIsAdding(false);
-    setEditingValue(term.label || term.role);
-    setEditName(term.label || term.role);
+    setEditingValue(term.label);
+    setEditName(term.label);
     setEditStatus(term.status || STATUS_ACTIVE);
     setEditUnique(term.is_unique);
     setEditAliases((term.aliases || []).join("\n"));
@@ -117,7 +110,7 @@ function useTermEditor() {
   };
 }
 
-function TermTable({ terms, scope, editable, editor, onSave, onDelete }) {
+function TermTable({ terms, editable, editor, onSave, onDelete }) {
   const [aliasModal, setAliasModal] = useState(null);
   const [confirmState, setConfirmState] = useState(null);
   const {
@@ -178,20 +171,17 @@ function TermTable({ terms, scope, editable, editor, onSave, onDelete }) {
   };
 
   const handleDelete = (term) => {
-    const name = term.label || term.role;
     setConfirmState({
-      message: `Remove role "${name}" from ${scope}? This cannot be undone.`,
+      message: `Remove role "${term.label}"? It stops matching, but is kept so any seat history survives.`,
       confirmLabel: "Remove",
       variant: DANGER_VARIANT,
-      onConfirm: () => onDelete(name),
+      onConfirm: () => onDelete(term.id),
     });
   };
 
   const statusBadge = (status) => {
     if (!status || status === STATUS_ACTIVE) return "";
-    if (status === STATUS_CANDIDATE) return " (candidate)";
-    if (status === STATUS_REJECTED) return " (rejected)";
-    return "";
+    return ` (${status})`;
   };
 
   const editing = editingValue !== null;
@@ -320,7 +310,7 @@ function TermTable({ terms, scope, editable, editor, onSave, onDelete }) {
           : terms.map(
               (t) => html`
                 <tr>
-                  <td>${t.label || t.role}</td>
+                  <td>${t.label}</td>
                   <td>${t.status || STATUS_ACTIVE}${statusBadge(t.status)}</td>
                   <td>${t.is_unique ? "Yes" : "No"}</td>
                   <td
@@ -372,7 +362,7 @@ function TermTable({ terms, scope, editable, editor, onSave, onDelete }) {
     ${aliasModal
       ? html`
           <civ-modal
-            .title=${"Aliases: " + (aliasModal.label || aliasModal.role)}
+            .title=${"Aliases: " + aliasModal.label}
             .content=${html`<ul>
               ${aliasModal.aliases.map((a) => html`<li>${a}</li>`)}
             </ul>`}
@@ -410,31 +400,15 @@ customElements.define(
 
 function ConfigEditor(host) {
   const jurisdictions = host.jurisdictions || [];
-  const firstOcdid = jurisdictions[0]?.jurisdiction_ocdid;
   const inline = Boolean(host.inline);
   const { permissions } = useAuth();
 
-  const stateCode = inline ? host.stateCode || "" : seedState(jurisdictions);
+  const [terms, setTerms] = useState(null);
+  const [loadError, setLoadError] = useState(null);
+  const editor = useTermEditor();
 
-  const [globalTerms, setGlobalTerms] = useState(null);
-  const [globalError, setGlobalError] = useState(null);
-  const globalEditor = useTermEditor();
-
-  const [stateOcdid, setStateOcdid] = useState(firstOcdid || null);
-  const [stateTerms, setStateTerms] = useState(null);
-  const [stateError, setStateError] = useState(null);
-  const stateEditor = useTermEditor();
-
-  const [localityOcdid, setLocalityOcdid] = useState(firstOcdid || null);
-  const [localityTerms, setLocalityTerms] = useState(null);
-  const [localityError, setLocalityError] = useState(null);
-  const localityEditor = useTermEditor();
-
-  const [localityFilter, setLocalityFilter] = useState("");
-  const [stateFilter, setStateFilter] = useState("");
-  const [globalFilter, setGlobalFilter] = useState("");
-
-  const [reorderingScope, setReorderingScope] = useState(null);
+  const [filter, setFilter] = useState("");
+  const [reordering, setReordering] = useState(false);
   const [reorderToast, setReorderToast] = useState(null);
   const [errorState, setErrorState] = useState(null);
 
@@ -448,348 +422,137 @@ function ConfigEditor(host) {
       new CustomEvent(name, { detail, bubbles: true, composed: true }),
     );
 
-  const loadGlobal = () => {
-    setGlobalTerms(null);
-    setGlobalError(null);
-    fetchGlobalConfig()
-      .then((r) => setGlobalTerms(r.data?.roles || []))
-      .catch((e) => setGlobalError(e.message));
-  };
-
-  const loadStateConfig = (ocdid) => {
-    if (!ocdid) return;
-    setStateTerms(null);
-    setStateError(null);
-    fetchJurisdictionConfig(ocdid)
-      .then((r) => {
-        const terms = r.data?.roles || [];
-        setStateTerms(terms.filter((t) => t.scope === SCOPE_STATE));
-      })
-      .catch((e) => setStateError(e.message));
-  };
-
-  const loadLocalityConfig = (ocdid) => {
-    if (!ocdid) return;
-    setLocalityTerms(null);
-    setLocalityError(null);
-    fetchJurisdictionConfig(ocdid)
-      .then((r) => {
-        const terms = r.data?.roles || [];
-        setLocalityTerms(terms.filter((t) => t.scope === SCOPE_LOCALITY));
-      })
-      .catch((e) => setLocalityError(e.message));
+  const load = () => {
+    setTerms(null);
+    setLoadError(null);
+    fetchRoles()
+      .then((r) => setTerms(r.data?.roles || []))
+      .catch((e) => setLoadError(e.message));
   };
 
   useEffect(() => {
-    if (firstOcdid) {
-      loadStateConfig(firstOcdid);
-      loadLocalityConfig(firstOcdid);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (permissions.can_write_config && globalTerms === null && !globalError)
-      loadGlobal();
+    if (permissions.can_write_config && terms === null && !loadError) load();
   }, [permissions.can_write_config]);
 
-  useEffect(() => {
-    if (!stateCode) {
-      setStateTerms(null);
-      setStateOcdid(null);
-      return;
+  // The taxonomy is one flat global list, so a save sends every role back —
+  // absence is not removal, but an edit still has to carry the others through.
+  const handleSave = async (op, reset, setSaveError) => {
+    editor.setSaving(true);
+    setSaveError(null);
+    try {
+      const asPayload = (t) => ({
+        label: t.label,
+        status: t.status || STATUS_ACTIVE,
+        is_unique: t.is_unique,
+        aliases: t.aliases,
+      });
+      const edited = {
+        label: op.label,
+        status: op.status,
+        is_unique: op.is_unique,
+        aliases: op.aliases,
+      };
+      const updated =
+        op.type === "edit"
+          ? (terms || []).map((t) => (t.label === op.value ? edited : asPayload(t)))
+          : [...(terms || []).map(asPayload), edited];
+
+      await putRoles({ roles: updated });
+      load();
+      reset();
+    } catch (e) {
+      setSaveError(e.message);
+    } finally {
+      editor.setSaving(false);
     }
-    fetchJurisdictionForState(stateCode)
-      .then((r) => {
-        const ocdid = r?.data?.[0]?.jurisdiction_ocdid;
-        setStateOcdid(ocdid || null);
-        if (ocdid) loadStateConfig(ocdid);
-        else
-          setStateError(
-            `No jurisdictions found for ${stateCode.toUpperCase()}`,
-          );
-      })
-      .catch((e) => setStateError(e.message));
-  }, [stateCode]);
-
-  useEffect(() => {
-    setReorderingScope(null);
-    if (localityOcdid) loadLocalityConfig(localityOcdid);
-  }, [localityOcdid]);
-
-  const makeBatchSave = (scope, ocdid, terms, reload, editor) => {
-    return async (op, reset, setSaveError) => {
-      editor.setSaving(true);
-      setSaveError(null);
-      try {
-        let updated;
-        if (op.type === "edit") {
-          updated = terms.map((t) => {
-            const name = t.label || t.role;
-            if (name === op.value) {
-              return {
-                label: op.label,
-                status: op.status,
-                is_unique: op.is_unique,
-                aliases: op.aliases,
-              };
-            }
-            return {
-              label: name,
-              status: t.status || STATUS_ACTIVE,
-              is_unique: t.is_unique,
-              aliases: t.aliases,
-            };
-          });
-        } else {
-          // add
-          updated = [
-            ...terms.map((t) => ({
-              label: t.label || t.role,
-              status: t.status || STATUS_ACTIVE,
-              is_unique: t.is_unique,
-              aliases: t.aliases,
-            })),
-            {
-              label: op.label,
-              status: op.status,
-              is_unique: op.is_unique,
-              aliases: op.aliases,
-            },
-          ];
-        }
-        if (scope === SCOPE_GLOBAL) {
-          await putGlobalConfig(updated);
-        } else {
-          await putJurisdictionConfig({ ocdid, scope, roles: updated });
-        }
-        reload();
-        reset();
-      } catch (e) {
-        setSaveError(e.message);
-      } finally {
-        editor.setSaving(false);
-      }
-    };
   };
 
-  const makeDelete = (scope, ocdid, reload) => async (role) => {
+  const handleDelete = async (roleId) => {
     try {
-      await deleteRole(role, scope, ocdid || "");
-      reload();
+      await deleteRole(roleId);
+      load();
     } catch (e) {
       console.error("Remove failed:", e);
       setErrorState(`Remove failed: ${e.message}`);
     }
   };
 
-  const renderSection = (params) => {
-    const {
-      scope,
-      badge,
-      label,
-      terms,
-      error,
-      loading,
-      ocdid,
-      reload,
-      editor,
-      filter,
-      setFilter,
-      editable,
-      open,
-    } = params;
+  const filtered = (terms ?? []).filter((t) =>
+    t.label.toLowerCase().includes(filter.toLowerCase()),
+  );
 
-    const filtered = (terms ?? []).filter((t) =>
-      (t.label || t.role).toLowerCase().includes(filter.toLowerCase()),
-    );
+  const loading = terms === null && !loadError;
 
-    const batchSave = makeBatchSave(scope, ocdid, terms || [], reload, editor);
-    const remove = makeDelete(scope, ocdid, reload);
-
-    return html`
-      <details class="config-editor__section" ?open=${open}>
-        <summary class="config-editor__section-title">
-          <civ-badge .label=${badge} .variant=${badge}></civ-badge>
-          ${label
-            ? html`<span class="config-editor__section-label">${label}</span>`
-            : null}
-          ${terms !== null
-            ? html`<span class="config-editor__role-count"
-                >${terms.length}</span
-              >`
-            : null}
-          <i class="fa-solid fa-chevron-down config-editor__chevron"></i>
-        </summary>
-        <div class="config-editor__section-body">
-          ${scope === SCOPE_LOCALITY
-            ? html`
-                ${jurisdictions.length > 0
-                  ? html`
-                      ${jurisdictions.length === 1
-                        ? null
-                        : html`
-                            <label class="config-editor__locality-picker">
-                              Jurisdiction
-                              <select
-                                @change=${(e) => {
-                                  localityEditor.reset();
-                                  setLocalityOcdid(e.target.value);
-                                }}
-                              >
-                                ${jurisdictions.map(
-                                  (j) => html`
-                                    <option
-                                      value=${j.jurisdiction_ocdid}
-                                      ?selected=${j.jurisdiction_ocdid ===
-                                      localityOcdid}
-                                    >
-                                      ${j.name || j.jurisdiction_ocdid}
-                                    </option>
-                                  `,
-                                )}
-                              </select>
-                            </label>
-                          `}
-                    `
-                  : html`
-                      <div class="config-editor__locality-search">
-                        <civ-jurisdiction-search
-                          .state=${stateCode}
-                          .level=${`local`}
-                          .placeholder=${`Search for a city in ${stateCode.toUpperCase()}`}
-                          @jurisdiction-select=${(e) => {
-                            localityEditor.reset();
-                            setLocalityOcdid(e.detail.jurisdiction_ocdid);
-                          }}
-                        ></civ-jurisdiction-search>
-                      </div>
-                    `}
-              `
-            : null}
-          ${error ? html`<p class="config-editor__error">${error}</p>` : null}
-          ${loading ? html`<div>Loading…</div>` : null}
-          ${terms !== null
-            ? html`
-                ${reorderingScope === scope
-                  ? null
-                  : html`
-                      <div class="config-editor__filter">
-                        <i
-                          class="fa-solid fa-magnifying-glass config-editor__filter-icon"
-                        ></i>
-                        <input
-                          type="text"
-                          class="config-editor__filter-input"
-                          placeholder="Filter…"
-                          .value=${filter}
-                          @input=${(e) => setFilter(e.target.value)}
-                        />
-                      </div>
-                    `}
-                ${reorderingScope === scope
-                  ? null
-                  : html`
-                      <div class="config-editor__subsection-header">
-                        <p class="config-editor__subsection-label">Roles</p>
-                        ${editable && filtered.length > 1
-                          ? html`
-                              <button
-                                class="btn btn-sm secondary"
-                                ?disabled=${filter.length > 0}
-                                title=${filter.length > 0
-                                  ? "Clear the filter to reorder"
-                                  : "Reorder roles by priority"}
-                                @click=${() => setReorderingScope(scope)}
-                              >
-                                Reorder
-                              </button>
-                            `
-                          : null}
-                      </div>
-                    `}
-                ${reorderingScope === scope
-                  ? html`
-                      <civ-role-reorder
-                        .roles=${filtered}
-                        .scope=${scope}
-                        .ocdid=${ocdid}
-                        @reordered=${() => {
-                          setReorderingScope(null);
-                          reload();
-                          showReorderToast();
-                        }}
-                        @cancel=${() => setReorderingScope(null)}
-                      ></civ-role-reorder>
-                    `
-                  : html`
-                      <civ-term-table
-                        .terms=${filtered}
-                        .scope=${scope}
-                        .editable=${editable}
-                        .editor=${editor}
-                        .onSave=${batchSave}
-                        .onDelete=${remove}
-                      ></civ-term-table>
-                    `}
-              `
-            : null}
-        </div>
-      </details>
-    `;
-  };
-
-  const localitySection = renderSection({
-    scope: SCOPE_LOCALITY,
-    badge: "locality",
-    label: null,
-    terms: localityTerms,
-    error: localityError,
-    loading: localityTerms === null && !localityError && localityOcdid,
-    ocdid: localityOcdid,
-    reload: () => loadLocalityConfig(localityOcdid),
-    editor: localityEditor,
-    filter: localityFilter,
-    setFilter: setLocalityFilter,
-    editable: true,
-    open: true,
-  });
-
-  const stateSection = renderSection({
-    scope: SCOPE_STATE,
-    badge: "state",
-    label: stateCode ? stateCode.toUpperCase() : null,
-    terms: stateTerms,
-    error: stateError,
-    loading: stateTerms === null && !stateError && stateCode,
-    ocdid: stateOcdid,
-    reload: () => loadStateConfig(stateOcdid),
-    editor: stateEditor,
-    filter: stateFilter,
-    setFilter: setStateFilter,
-    editable: true,
-    open: true,
-  });
-
-  const globalSection = renderSection({
-    scope: SCOPE_GLOBAL,
-    badge: "global",
-    label: null,
-    terms: globalTerms,
-    error: globalError,
-    loading: globalTerms === null && !globalError,
-    ocdid: null,
-    reload: loadGlobal,
-    editor: globalEditor,
-    filter: globalFilter,
-    setFilter: setGlobalFilter,
-    editable: permissions.can_write_global_config,
-    open: true,
-  });
+  const rolesSection = html`
+    <div class="config-editor__section-body">
+      ${loadError
+        ? html`<p class="config-editor__error">${loadError}</p>`
+        : null}
+      ${loading ? html`<div>Loading…</div>` : null}
+      ${terms !== null
+        ? html`
+            ${reordering
+              ? html`
+                  <civ-role-reorder
+                    .roles=${filtered}
+                    @reordered=${() => {
+                      setReordering(false);
+                      load();
+                      showReorderToast();
+                    }}
+                    @cancel=${() => setReordering(false)}
+                  ></civ-role-reorder>
+                `
+              : html`
+                  <div class="config-editor__filter">
+                    <i
+                      class="fa-solid fa-magnifying-glass config-editor__filter-icon"
+                    ></i>
+                    <input
+                      type="text"
+                      class="config-editor__filter-input"
+                      placeholder="Filter…"
+                      .value=${filter}
+                      @input=${(e) => setFilter(e.target.value)}
+                    />
+                  </div>
+                  <div class="config-editor__subsection-header">
+                    <p class="config-editor__subsection-label">
+                      Roles
+                      <span class="config-editor__role-count"
+                        >${terms.length}</span
+                      >
+                    </p>
+                    ${permissions.can_write_global_config && filtered.length > 1
+                      ? html`
+                          <button
+                            class="btn btn-sm secondary"
+                            ?disabled=${filter.length > 0}
+                            title=${filter.length > 0
+                              ? "Clear the filter to reorder"
+                              : "Reorder roles by priority"}
+                            @click=${() => setReordering(true)}
+                          >
+                            Reorder
+                          </button>
+                        `
+                      : null}
+                  </div>
+                  <civ-term-table
+                    .terms=${filtered}
+                    .editable=${permissions.can_write_config}
+                    .editor=${editor}
+                    .onSave=${handleSave}
+                    .onDelete=${handleDelete}
+                  ></civ-term-table>
+                `}
+          `
+        : null}
+    </div>
+  `;
 
   const content = html`
-    ${permissions.can_write_config && stateCode ? localitySection : null}
-    ${permissions.can_write_config && stateCode ? stateSection : null}
-    ${permissions.can_write_config ? globalSection : null}
+    ${permissions.can_write_config ? rolesSection : null}
     ${reorderToast
       ? html`<div class="config-editor__toast" role="status" aria-live="polite">
           ${reorderToast}

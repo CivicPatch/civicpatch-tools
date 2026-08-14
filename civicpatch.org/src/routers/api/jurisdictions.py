@@ -6,8 +6,6 @@ from pydantic import BaseModel, field_validator
 
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
-import services.pipeline_issue_resolution as pipeline_issue_resolution_service
-import services.role_config as role_config_service
 import database.jurisdictions as database
 import lib.cache as cache_service
 from lib.auth import require_route_access
@@ -15,15 +13,10 @@ from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, UserRole, RouteCategory
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from schemas.jurisdictions import (
-    DeleteRoleRequest,
     JurisdictionSearchResult,
     JurisdictionSearchResponse,
     JurisdictionsByOcdidsRequest,
     PaginationLinks,
-    ReorderGlobalRolesRequest,
-    ReorderScopeRolesRequest,
-    SetGlobalRolesRequest,
-    SetScopeRolesRequest,
 )
 from shared.schemas import JurisdictionLevel
 
@@ -216,98 +209,6 @@ def get_router() -> APIRouter:
             request_id,
         )
         return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
-
-    @router.get("/config/global")
-    async def get_global_config_endpoint(
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        config = await role_config_service.load_global_config()
-        roles = [
-            {
-                "role": r.label,
-                "label": r.label,
-                "status": r.status,
-                "is_unique": r.is_unique,
-                "priority": r.priority,
-                "aliases": r.aliases,
-            }
-            for r in config.roles
-        ]
-        return {"data": {"roles": roles}}
-
-    @router.put("/config/global")
-    async def put_global_config_endpoint(
-        body: SetGlobalRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
-    ):
-        try:
-            await role_config_service.set_global_roles(body.roles, user_id=user.user_id)
-        except RuntimeError as e:
-            return JSONResponse({"error": str(e)}, status_code=409)
-        return {"data": {"ok": True}}
-
-    @router.get("/config")
-    async def get_jurisdiction_config_endpoint(
-        ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        try:
-            per_level = await role_config_service.load_role_config_per_level(ocdid)
-        except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
-        return {"data": role_config_service.build_merged_response(per_level).model_dump()}
-
-    @router.put("/config")
-    async def put_jurisdiction_config_endpoint(
-        body: SetScopeRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        try:
-            if body.issue_id:
-                await pipeline_issue_resolution_service.resolve_via_config_db(body, user_id=user.user_id, issue_id=body.issue_id)
-                return {"data": {"ok": True}}
-            await role_config_service.set_scope_roles(body, user_id=user.user_id)
-        except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
-        except RuntimeError as e:
-            return JSONResponse({"error": str(e)}, status_code=409)
-        return {"data": {"ok": True}}
-
-    @router.put("/config/global/reorder")
-    async def reorder_global_config_endpoint(
-        body: ReorderGlobalRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
-    ):
-        try:
-            await role_config_service.reorder_roles("global", None, body.role_order, body.moved_roles, user_id=user.user_id)
-        except RuntimeError as e:
-            return JSONResponse({"error": str(e)}, status_code=409)
-        return {"data": {"ok": True}}
-
-    @router.put("/config/reorder")
-    async def reorder_jurisdiction_config_endpoint(
-        body: ReorderScopeRolesRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        try:
-            await role_config_service.reorder_roles(body.scope, body.ocdid, body.role_order, body.moved_roles, user_id=user.user_id)
-        except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
-        except RuntimeError as e:
-            return JSONResponse({"error": str(e)}, status_code=409)
-        return {"data": {"ok": True}}
-
-
-    @router.post("/config/delete")
-    async def delete_role_endpoint(
-        body: DeleteRoleRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        try:
-            await role_config_service.delete_role(body.role, body.scope, body.ocdid, user_id=user.user_id)
-        except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid jurisdiction OCD ID")
-        return {"data": {"ok": True}}
 
     @router.get("/search")
     async def search_jurisdictions_endpoint(
