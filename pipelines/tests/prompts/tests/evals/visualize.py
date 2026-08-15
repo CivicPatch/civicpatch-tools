@@ -18,7 +18,9 @@ import pathlib
 import yaml
 
 EVALS = pathlib.Path("tests/prompts/tests/evals")
-OUTPUT = pathlib.Path("../.scratch/2026-08-15-eval-dashboard.html")
+# Sits with the reports it is built from, and is regenerated on every eval run — it is the
+# same kind of artifact as comparison.yml, not a scratch document.
+OUTPUT = EVALS / "dashboard.html"
 
 
 def _load(path: pathlib.Path) -> dict:
@@ -62,9 +64,9 @@ def read_officials() -> list[dict]:
 
 
 def _from_failed_cases(name: str, directory: pathlib.Path) -> list[dict]:
-    """relevant_page and find_jurisdiction_url both report a failed-case list and nothing
-    else, so pass/total is the most that can honestly be derived. They gain real
-    precision/recall only once their scorers move to dispositions."""
+    """A failed-case list yields only pass/total. Reports that also carry an `accuracy`
+    block get real precision/recall instead — relevant_page does since 2.0d,
+    find_jurisdiction_url does not yet."""
     rows = []
     comparison = _load(directory / "comparison.yml").get("providers") or {}
     for path in sorted(directory.glob("*-eval-report.yml")):
@@ -72,6 +74,23 @@ def _from_failed_cases(name: str, directory: pathlib.Path) -> list[dict]:
         report = _load(path)
         if "failed_cases" not in report:
             continue
+        cost = (report.get("cost_summary") or {}).get("total_cost_usd")
+        seconds = (report.get("cost_summary") or {}).get("elapsed_seconds")
+        for field, counts in (report.get("accuracy") or {}).items():
+            rows.append(
+                {
+                    "eval": name,
+                    "provider": provider.replace("open_router-", ""),
+                    "metric": field,
+                    "f1": counts.get("f1"),
+                    "correct": counts.get("correct"),
+                    "missing": counts.get("missing"),
+                    "spurious": counts.get("spurious"),
+                    "wrong": counts.get("wrong"),
+                    "cost": cost,
+                    "seconds": seconds,
+                }
+            )
         summary = comparison.get(provider, {})
         failed = len(report["failed_cases"])
         passed = summary.get("passed_cases")
@@ -211,18 +230,30 @@ Converging those scorers onto dispositions is what would make these columns comp
 </main>"""
 
 
+def write_dashboard(output: pathlib.Path = OUTPUT) -> int:
+    """Render whatever reports exist. Returns the row count, 0 if there was nothing to read.
+
+    Split from main() so the evals' conftest can call it on session finish — the dashboard
+    is only useful if it is current, and remembering to regenerate it by hand is exactly the
+    step that gets skipped.
+    """
+    rows = collect()
+    if not rows:
+        return 0
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(render(rows), encoding="utf-8")
+    return len(rows)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output", type=pathlib.Path, default=OUTPUT)
     args = parser.parse_args()
-    rows = collect()
-    if not rows:
+    count = write_dashboard(args.output)
+    if not count:
         print("No eval reports found — run the evals first.")
         return
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(render(rows), encoding="utf-8")
-    print(f"Wrote {args.output.resolve()} from {len(rows)} row(s) across "
-          f"{len({r['eval'] for r in rows})} eval(s)")
+    print(f"Wrote {args.output.resolve()} from {count} row(s)")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,11 @@
 import pytest
-from shared.schemas import RoleConfig
+from shared.schemas import Role, RoleConfig, RoleStatus
 from utils.taxonomy import (
     Taxonomy,
     build_taxonomy,
     lookup_key,
     normalize_designations,
+    normalize_roles,
     resolve_role,
     sort_designations,
 )
@@ -134,3 +135,48 @@ def test_sort_designations_priority_and_numeric():
 def test_sort_designations_no_priority():
     designations = ["Ward 2", "Ward 1", "Ward 10"]
     assert sort_designations(designations, _UNRANKED) == ["Ward 1", "Ward 2", "Ward 10"]
+
+
+# --- excluded roles: match, then drop ---
+
+_EXCLUSION_CONFIG = RoleConfig(
+    roles=[
+        Role(id="mayor", label="Mayor", aliases=["mayor"]),
+        Role(
+            id="city-hall",
+            label="City Hall",
+            status=RoleStatus.EXCLUDED,
+            aliases=["city hall", "cityhall"],
+        ),
+    ]
+)
+_WITH_EXCLUSIONS = build_taxonomy(_EXCLUSION_CONFIG)
+
+
+@pytest.mark.parametrize("label", ["City Hall", "city hall", "CITYHALL"])
+def test_excluded_labels_are_dropped(label):
+    assert normalize_roles([label], _WITH_EXCLUSIONS) == []
+
+
+def test_excluded_label_is_not_a_role():
+    """An exclusion must never resolve to a role — it is a known non-role, which is a
+    different answer from 'unknown'."""
+    assert resolve_role("City Hall", _WITH_EXCLUSIONS) is None
+
+
+def test_unknown_labels_still_pass_through():
+    """The fallback an exclusion has to bypass: a genuinely new role must survive verbatim
+    so it can be triaged rather than silently lost."""
+    assert normalize_roles(["Harbourmaster"], _WITH_EXCLUSIONS) == ["Harbourmaster"]
+
+
+def test_exclusion_does_not_suppress_real_roles_in_the_same_label():
+    assert normalize_roles(["Mayor/City Hall"], _WITH_EXCLUSIONS) == ["Mayor"]
+
+
+def test_no_exclusions_configured_changes_nothing():
+    """Production has zero excluded roles today, so this path must be inert until one is
+    marked — otherwise landing it would silently change scraping."""
+    plain = build_taxonomy(RoleConfig(roles=[Role(id="mayor", label="Mayor", aliases=["mayor"])]))
+    assert plain.excluded_keys == frozenset()
+    assert normalize_roles(["City Hall"], plain) == ["City Hall"]

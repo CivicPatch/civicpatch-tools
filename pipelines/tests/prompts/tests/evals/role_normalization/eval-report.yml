@@ -1,13 +1,13 @@
 summary:
   total: 27
-  correct: 26
-  false_positives: 1
+  correct: 27
+  false_positives: 0
   false_negatives: 0
   wrong_matches: 0
-  pct_correct: 96.3
-  precision: 0.9629629629629629
+  pct_correct: 100.0
+  precision: 1.0
   recall: 1.0
-  f1: 0.9811320754716981
+  f1: 1.0
 dispositions:
 - raw_string: Mayor
   expected: Mayor
@@ -26,9 +26,8 @@ dispositions:
   disposition: correct
 - raw_string: City Hall
   expected: DROP
-  actual:
-  - City Hall
-  disposition: false_positive
+  actual: []
+  disposition: correct
 - raw_string: City Recorder
   expected: Recorder
   actual:

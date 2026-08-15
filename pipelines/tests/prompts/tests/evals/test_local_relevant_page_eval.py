@@ -10,7 +10,9 @@ from typing import cast
 import pathlib
 import yaml
 import os
+from accuracy import as_report
 from eval_utils import PROVIDER_COMPARISON, make_provider_client, write_comparison_report
+from utils.dispositions import Disposition, classify_membership, tally
 
 pytestmark = [pytest.mark.evals_relevant]
 
@@ -33,6 +35,28 @@ def score_page(actual: dict, expected: dict):
     score["relevant_urls"] = len(matching_urls) / len(expected_urls) if expected_urls else 1.0
 
     return score
+
+
+def page_dispositions(actual: dict, expected: dict) -> dict[str, list[Disposition]]:
+    """Classify one page, alongside the scores above rather than replacing them.
+
+    `relevant_urls` is scored as recall over the expected set, so a link the fixture never
+    listed costs nothing — the prompt asks for 3-20 URLs while 9 of 16 cases expect exactly
+    one, and no number here can currently see that gap. Membership dispositions make the
+    over-return visible without changing what the test gates on.
+    """
+    return {
+        "relevant_urls": classify_membership(
+            actual.get("relevant_urls") or [], expected.get("relevant_urls") or []
+        ),
+        # A boolean has no "missing" state — it is answered or it disagrees. Recording it as
+        # correct/wrong_match keeps it in the same table as everything else.
+        "is_relevant": [
+            Disposition.correct
+            if actual.get("is_relevant") == expected.get("is_relevant")
+            else Disposition.wrong_match
+        ],
+    }
 
 
 async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government"):
@@ -166,7 +190,7 @@ def _score_case(model_client, case, case_scores, actual_output):
     return failed
 
 
-def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds):
+def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions=()):
     llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
     cost_summary = {
         "model": llm_costs[0]["model"] if llm_costs else None,
@@ -175,11 +199,25 @@ def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds):
         "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
         "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
     }
+    merged: dict[str, list] = {}
+    for page in dispositions:
+        for field, found in page.items():
+            merged.setdefault(field, []).extend(found)
+    accuracy = as_report({field: tally(found) for field, found in merged.items()})
+
     evals_dir = "tests/prompts/tests/evals/relevant_page"
     os.makedirs(evals_dir, exist_ok=True)
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump({"cost_summary": cost_summary, "failed_cases": failed_cases}, f, sort_keys=False)
+        yaml.safe_dump(
+            {
+                "cost_summary": cost_summary,
+                "accuracy": accuracy,
+                "failed_cases": failed_cases,
+            },
+            f,
+            sort_keys=False,
+        )
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
 
@@ -197,7 +235,9 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
     elapsed_seconds = round(time.time() - start_time, 2)
 
     failed_cases = []
+    dispositions = []
     for case, (case_scores, actual_output) in zip(load_eval_cases, results):
+        dispositions.append(page_dispositions(actual_output, case["expected"]["page"]))
         failed = _score_case(model_client, case, case_scores, actual_output)
         if failed:
             failed_cases.append({
@@ -207,7 +247,7 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
             })
             print(f"[{model_client['name']}] Case '{case['id']}' failed: {failed}")
 
-    _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds)
+    _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions)
     assert not failed_cases, f"Some cases failed: {failed_cases}"
 
 
@@ -220,12 +260,14 @@ async def _run_provider(client, cases):
     elapsed_seconds = round(time.time() - start_time, 2)
 
     failed_cases = []
+    dispositions = []
     for case, (case_scores, actual_output) in zip(cases, results):
+        dispositions.append(page_dispositions(actual_output, case["expected"]["page"]))
         failed = _score_case(client, case, case_scores, actual_output)
         if failed:
             failed_cases.append({"model_client": client["name"], "case_id": case["id"], "failures": failed})
 
-    return client, failed_cases, ocdid, elapsed_seconds
+    return client, failed_cases, ocdid, elapsed_seconds, dispositions
 
 
 @pytest.mark.asyncio
@@ -242,8 +284,8 @@ async def test_provider_comparison(load_eval_cases):
             failures[provider_client["name"]] = repr(result)
             print(f"PROVIDER FAILED: {provider_client['name']}: {result!r}", flush=True)
             continue
-        client, failed_cases, ocdid, elapsed_seconds = result
-        cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds)
+        client, failed_cases, ocdid, elapsed_seconds, dispositions = result
+        cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds, dispositions)
         comparison[client["name"]] = {
             "elapsed_seconds": elapsed_seconds,
             "cost_usd": cost_summary["total_cost_usd"],

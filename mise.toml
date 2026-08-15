@@ -476,6 +476,7 @@ docker compose exec -T civicpatch-org-db psql -U civicpatch -d development_db \
 [tasks.evals-report]
 description = "Render one HTML dashboard from the eval reports already on disk (no LLM calls)"
 run = "PYTHONPATH=src:tests/prompts/tests/evals uv run python tests/prompts/tests/evals/visualize.py"
+# Also regenerated automatically at the end of every eval run — see the evals conftest.
 dir = "pipelines"
 
 [tasks.evals-audit]
