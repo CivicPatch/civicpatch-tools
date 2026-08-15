@@ -51,6 +51,29 @@ def get_role_configs(
     ]
 
 
+def get_excluded_role_aliases(
+    role_config_override: Optional[RoleConfig] = None,
+) -> List[str]:
+    """Labels and aliases of `excluded` roles — terms a matcher must recognize precisely so
+    it can knowingly drop them.
+
+    Deliberately separate from `get_role_configs`, which decides what may be matched *as a
+    role*. An excluded term must never resolve to one; it must resolve to nothing at all,
+    which is a different answer from "unknown". Unknown labels are passed through verbatim
+    so a genuinely new role is not lost, and that fallback is exactly what an exclusion has
+    to bypass.
+    """
+    if role_config_override is None:
+        return []
+    names = []
+    for entry in role_config_override.roles:
+        if entry.status != RoleStatus.EXCLUDED:
+            continue
+        names.append(entry.label)
+        names.extend(entry.aliases)
+    return names
+
+
 def get_designations():
     return _load_config_file("designations.yml", "designations", {})
 

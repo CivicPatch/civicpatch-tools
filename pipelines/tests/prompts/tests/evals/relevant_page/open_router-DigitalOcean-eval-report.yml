@@ -1,21 +1,27 @@
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 139.17
-  total_input_tokens: 76998
-  total_output_tokens: 1905
-  total_cost_usd: 0.00571371
+  elapsed_seconds: 55.39
+  total_input_tokens: 79254
+  total_output_tokens: 2136
+  total_cost_usd: 0.0059109
+accuracy:
+  relevant_urls:
+    correct: 23
+    missing: 1
+    spurious: 84
+    wrong: 0
+    precision: 0.21495327102803738
+    recall: 0.9583333333333334
+    f1: 0.3511450381679389
+  is_relevant:
+    correct: 15
+    missing: 0
+    spurious: 0
+    wrong: 1
+    precision: 0.9375
+    recall: 0.9375
+    f1: 0.9375
 failed_cases:
-- model_client: open_router-DigitalOcean
-  case_id: gatesville_ordinance_vote_records
-  failures:
-  - field: relevant_urls
-    expected:
-    - https://gatesvilletx.com/government/index.php
-    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
-    actual:
-    - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
-    score: 0.5
-    threshold: 0.75
 - model_client: open_router-DigitalOcean
   case_id: raisin_township_clerk
   failures:
@@ -25,23 +31,13 @@ failed_cases:
     score: 0.0
     threshold: 1.0
 - model_client: open_router-DigitalOcean
-  case_id: san_saba_airport_advisory_irrelevant
+  case_id: san_antonio
   failures:
   - field: relevant_urls
     expected:
-    - https://sansabatexas.com/government/
-    - https://sansabatexas.com/city-hall/city-council/
-    - https://sansabatexas.com/city-hall/
+    - https://www.sa.gov/Government/Officials
+    - https://www.sa.gov/Directory/Departments
     actual:
-    - https://sansabatexas.com/boards-commissions/
-    - https://sansabatexas.com/boards-commissions/keep-san-saba-beautiful/
-    - https://sansabatexas.com/city-hall/administration/
-    - https://sansabatexas.com/boards-commissions/utilities-streets/
-    - https://sansabatexas.com/boards-commissions/eco-development/
-    - https://sansabatexas.com/boards-commissions/planning-zoning/
-    - https://sansabatexas.com/government/
-    - https://sansabatexas.com/city-hall/department-heads/
-    - https://sansabatexas.com/boards-commissions/parks/
-    - https://sansabatexas.com/city-hall/city-council/
-    score: 0.6666666666666666
+    - https://www.sa.gov/Government/Officials
+    score: 0.5
     threshold: 0.75

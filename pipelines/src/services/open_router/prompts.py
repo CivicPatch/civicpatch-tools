@@ -47,15 +47,20 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles
     Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you
     are almost certainly including noise — re-evaluate and cut.
 
-    Keep a link only if its anchor text or surrounding context clearly refers to:
+    You MUST include every link whose anchor text or surrounding context refers to any of
+    the following. These are not candidates to weigh against each other — if a link matches,
+    it goes in the list, however many other links the page has and however much navigation
+    surrounds it:
     - A governing body or elected role (e.g. "Township Board", "City Council", "Mayor",
-      "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+      "City Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
     - A broad government directory or index page (e.g. "Government", "City Hall",
       "Our Government", "Administration") that is likely a hub linking to governance pages
     - A staff or personnel directory that may list elected officials (e.g. "Staff Directory",
       "Directory", "Elected Officials")
 
-    If a link does not clearly match one of the above, discard it.
+    A link that matches one of those and is left out is the single worst outcome here —
+    the crawler cannot reach a page it was never told about. If a link does not match any
+    of the above, discard it.
     Do not include links to municipal services (library, parks, fire, utilities),
     news or announcements, or non-municipal external domains.
 
@@ -77,9 +82,12 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles
       serving primary governing officials — whether a full roster or a dedicated page for a
       single official. Ask: "Does this page exist to show who currently holds a primary
       governing role?" If the answer is no, set is_relevant to false.
-      If `known_roles` are provided and the page is dedicated to a person in one of those
-      roles (i.e., the page heading or title names that role), treat it as relevant even if
-      a non-voting deputy or assistant also appears on the same page.
+      If `known_roles` are provided, the page heading or title names one of those roles, and
+      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the
+      heading and that person's details alone — a shared site-wide navigation menu is not
+      the page's purpose no matter how much of the content it occupies, and a page whose own
+      heading names an elected role is a page about that role, not an index. A non-voting
+      deputy or assistant appearing alongside does not change it.
       The following are NOT relevant regardless of what names appear in them:
       - News and announcements feeds — even if a post lists newly elected council members by name and ward
       - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is

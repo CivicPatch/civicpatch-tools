@@ -1,9 +1,26 @@
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 105.18
-  total_input_tokens: 77030
-  total_output_tokens: 23986
-  total_cost_usd: 0.01750028
+  elapsed_seconds: 113.7
+  total_input_tokens: 79286
+  total_output_tokens: 26340
+  total_cost_usd: 0.01847524
+accuracy:
+  relevant_urls:
+    correct: 22
+    missing: 2
+    spurious: 24
+    wrong: 0
+    precision: 0.4782608695652174
+    recall: 0.9166666666666666
+    f1: 0.6285714285714286
+  is_relevant:
+    correct: 16
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
 failed_cases:
 - model_client: open_router-AtlasCloud
   case_id: quitaque_council
@@ -11,9 +28,7 @@ failed_cases:
   - field: relevant_urls
     expected:
     - https://quitaque.us/cityofficials.html
-    actual:
-    - https://quitaque.us/phonenumbers.html
-    - https://quitaque.us/contact.html
+    actual: []
     score: 0.0
     threshold: 0.75
 - model_client: open_router-AtlasCloud
@@ -24,9 +39,9 @@ failed_cases:
     - https://www.sa.gov/Government/Officials
     - https://www.sa.gov/Directory/Departments
     actual:
-    - https://www.sa.gov/Government
+    - https://www.sanantonio.gov/Council/Find-My-Council-Member
     - https://www.sa.gov/Government/Officials
     - https://www.sa.gov/Directory
-    - https://www.sanantonio.gov/Council/Find-My-Council-Member
+    - https://www.sa.gov/Government
     score: 0.5
     threshold: 0.75

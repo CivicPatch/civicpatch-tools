@@ -21,6 +21,8 @@ class Taxonomy(NamedTuple):
     designation_aliases: dict[str, str]  # key -> canonical designation name
     role_priority: dict[str, int]  # canonical role -> sort index
     designation_priority: dict[str, int]
+    # Keys of `excluded` roles: known non-roles to drop rather than pass through.
+    excluded_keys: frozenset[str] = frozenset()
 
 
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
@@ -32,6 +34,10 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
     return Taxonomy(
         role_aliases=role_aliases,
         designation_aliases=designation_aliases,
+        excluded_keys=frozenset(
+            lookup_key(name)
+            for name in config_utils.get_excluded_role_aliases(role_config)
+        ),
         role_priority={
             entry.label: i for i, entry in enumerate(roles)
         },
@@ -284,13 +290,21 @@ def normalize_designations(designations: list[str], taxonomy: Taxonomy) -> list[
 
 def normalize_roles(labels: list[str], taxonomy: Taxonomy) -> list[str]:
     """Resolve each label to its canonical role, keeping unresolved labels verbatim.
-    Designations are dropped — they belong in designations."""
+    Designations are dropped — they belong in designations.
+
+    An `excluded` label is dropped too, and that is why the check has to live here rather
+    than in resolve_role: resolve_role answers "is this a known role", and an exclusion is
+    correctly not one. But unknown labels fall through to `or part` and survive verbatim,
+    so a term we have explicitly marked as not-a-role would be published as one.
+    """
     resolved: dict[str, str] = {}
     for label in labels:
         if not label:
             continue
         for part in _split_on_slash(str(label)):
             if is_designation(part, taxonomy):
+                continue
+            if lookup_key(part) in taxonomy.excluded_keys:
                 continue
             name = resolve_role(part, taxonomy) or part
             resolved.setdefault(lookup_key(name), name)
