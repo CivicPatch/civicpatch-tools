@@ -1,0 +1,23 @@
+people:
+- name: Mike Siegel
+  roles:
+  - Council Member
+  designations:
+  - District 7
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: 'local://dcf614330879.png?Portrait of Council Member Mike Siegel '
+- name: Mike Siegel
+  roles:
+  - Council Member
+  designations:
+  - District 7
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: 'local://dcf614330879.png?Portrait of Council Member Mike Siegel '

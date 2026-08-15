@@ -167,7 +167,9 @@ if large:
     print(f"[large mode] content chars: {len(content)}")
 
 payload = {
-    "model": "deepseek/deepseek-v3.2",
+    # Keep in step with MODELS_BY_TYPE["STANDARD"] in services/open_router/llm.py —
+    # this probe exists to test what the pipeline actually calls.
+    "model": "deepseek/deepseek-v4-flash",
     "messages": [
         {"role": "system", "content": "Extract officials from the provided content."},
         {"role": "user", "content": content},

@@ -13,6 +13,24 @@ BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 # We cap at 120k to leave headroom for the system prompt and response.
 _MAX_INPUT_TOKENS = 120_000
 _CHARS_PER_TOKEN = 4
+# Bounds a degenerate repetition loop. Unset, the ceiling is the provider's
+# max_completion_tokens (393,216 on v4-flash): one observed loop echoed an image URL's
+# query string for 92,669 chars and took 734 SECONDS before failing JSON validation — then
+# retried, 5 times over.
+#
+# Sized off real traffic, not the cap: the largest genuine response across 88 recorded
+# runs is 3,314 chars (~828 tokens) and the median is 953 chars. 4,096 is ~5x the largest
+# real answer while cutting that 734s runaway to roughly 130s.
+# It does not make a looping call succeed — it makes it fail fast and cheap.
+_MAX_OUTPUT_TOKENS = 4_096
+# Scrapes keep 0.2. Extraction gains nothing from sampling diversity, but two things here
+# depend on it: with_retry treats a malformed-JSON ValidationError as retryable, which only
+# helps if the retry can draw a different sample, and greedy decoding is *more* prone to the
+# degenerate repetition loop we already hit once. Evals pin this to 0 — same page, same
+# answer — and production should only follow once that is measured, not assumed. Note 0
+# does not buy determinism outright: v4-flash is MoE behind dynamic batching, so expert
+# routing shifts with whatever else is in the batch.
+_DEFAULT_TEMPERATURE = 0.2
 _SEMAPHORE_CACHE: dict = {}
 
 
@@ -33,9 +51,9 @@ def _get_semaphore() -> asyncio.Semaphore:
 MODELS_BY_TYPE = {
     "CHEAP": {},
     "STANDARD": {
-        "model": "deepseek/deepseek-v3.2",
-        "input_cost": 0.26 / 1000000,
-        "output_cost": 0.38 / 1000000,
+        "model": "deepseek/deepseek-v4-flash",
+        "input_cost": 0.14 / 1000000,
+        "output_cost": 0.28 / 1000000,
     },
 }
 
@@ -50,6 +68,7 @@ async def run_prompt(
     provider_order=None,
     allow_fallbacks=True,
     seed=None,
+    temperature: float = _DEFAULT_TEMPERATURE,
 ):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
@@ -99,13 +118,30 @@ async def run_prompt(
                 {
                     "model": model,
                     "messages": messages,
-                    "temperature": 0.2,
+                    "temperature": temperature,
                     "top_p": 1.0,
+                    "max_tokens": _MAX_OUTPUT_TOKENS,
                     "response_format": response_format,
                     **({"seed": seed} if seed is not None else {}),
                     "provider": {
-                        "order": provider_order
-                        or ["AtlasCloud", "SiliconFlow", "Google"],
+                        # Every provider here must support `structured_outputs` — we send
+                        # json_schema with strict=True, and allow_fallbacks is False, so a
+                        # provider that only does `response_format` (json_object) makes
+                        # OpenRouter return 404 "No endpoints found" rather than routing on.
+                        # Google (no v4-flash endpoint) and SiliconFlow (no
+                        # structured_outputs) were both dropped for that reason.
+                        # DigitalOcean first, AtlasCloud as fallback. Measured 2026-08-15
+                        # across three runs: roles 0.976-1.000 and district 1.000 for both,
+                        # so they are equivalent on what the taxonomy model needs, and
+                        # DigitalOcean is 2.7x cheaper ($0.0079 vs $0.0213 per eval run).
+                        # AtlasCloud is materially better on contact fields (8 missing
+                        # values vs 66), which is why it stays as the fallback.
+                        #
+                        # DeepInfra removed: 109 missing values and a flat 0.000 on both
+                        # start_date and end_date across every run. allow_fallbacks is
+                        # False, so anything left in this list is a provider we can land on
+                        # — leaving it here meant production silently used it.
+                        "order": provider_order or ["DigitalOcean", "AtlasCloud"],
                         "allow_fallbacks": False,
                         "data_collection": "deny",
                     },

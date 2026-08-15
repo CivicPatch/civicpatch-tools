@@ -1,0 +1,66 @@
+people:
+- name: Laurie Kincannon
+  roles:
+  - Mayor
+  designations: []
+  phone: (979) 235-9434
+  email: mayor@westcolumbiatx.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Rory Burke
+  roles:
+  - Council Member
+  designations:
+  - Position 4
+  phone: (979) 344-0262
+  email: councilpos4@westcolumbiatx.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Robert Thomas
+  roles:
+  - Council Member
+  designations:
+  - Position 1
+  phone: (832) 573-2611
+  email: rlt2644@yahoo.com
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Daniel Carreon
+  roles:
+  - Council Member
+  designations:
+  - Position 2
+  phone: null
+  email: councilpos2@westcolumbiatx.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Chris Gilbert
+  roles:
+  - Council Member
+  designations:
+  - Position 3
+  phone: null
+  email: councilpos3@westcolumbiatx.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Lauren Buchanan
+  roles:
+  - Council Member
+  designations:
+  - Position 5
+  phone: (979) 635-1658
+  email: councilpos5@westcolumbiatx.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null

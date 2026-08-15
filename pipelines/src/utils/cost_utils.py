@@ -30,9 +30,25 @@ llm_model_prices = {
             'output_cost_per_1m': Decimal('1.50')
         }
     },
-    # open_router prices are per (model, provider) — fetched 2026-04-14
+    # open_router prices are per (model, provider)
     # Key is the model alias sent in the request (not the versioned slug OpenRouter returns)
+    #
+    # An unlisted (model, provider) pair costs Decimal('0.0') — see _model_prices below.
+    # That is silent, so a model bump without a matching entry here reports zero spend
+    # rather than failing. Requests run with allow_fallbacks=True and v4-flash has 19
+    # endpoints, so a fallback to an unlisted provider goes uncosted; only the ones we
+    # deliberately route to are listed.
     'open_router': {
+        # v4-flash prices from OpenRouter's endpoint catalogue, read 2026-08-14.
+        # These are the providers in llm.py's order — all support structured_outputs,
+        # which strict json_schema requires. SiliconFlow is deliberately absent: it is
+        # cheaper ($0.13/$0.28) but only does response_format, so it 404s.
+        'deepseek/deepseek-v4-flash': {
+            'DigitalOcean':{'input_cost_per_1m': Decimal('0.07'),  'output_cost_per_1m': Decimal('0.17')},
+            'DeepInfra':   {'input_cost_per_1m': Decimal('0.09'),  'output_cost_per_1m': Decimal('0.18')},
+            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.14'),  'output_cost_per_1m': Decimal('0.28')},
+        },
+        # Retained so historical runs still cost out — fetched 2026-04-14
         'deepseek/deepseek-v3.2': {
             'AtlasCloud':  {'input_cost_per_1m': Decimal('0.26'),  'output_cost_per_1m': Decimal('0.38')},
             'SiliconFlow': {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('0.42')},
@@ -87,6 +103,18 @@ class LLMCost(BaseModel):
     @property
     def total_cost(self) -> Decimal:
         return self.input_cost + self.output_cost
+
+
+def reset_cost_tracker(jurisdiction_ocdid: str):
+    """Drop a jurisdiction's accumulated costs.
+
+    `log_costs` already does this at the end of a pipeline run, but anything that measures
+    several runs in one process has to do it itself. The provider comparison did not, and
+    since every provider uses the same eval ocdid, each report inherited the tally of every
+    provider before it — the second provider's input tokens read as exactly double the
+    first's for byte-identical work.
+    """
+    _COSTS_BY_JURISDICTION.pop(jurisdiction_ocdid, None)
 
 
 def get_cost_tracker(jurisdiction_ocdid: str):

@@ -2,22 +2,24 @@ people:
 - name: Michael Pye
   roles:
   - Mayor
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Bobby Hanson
   roles:
@@ -26,9 +28,9 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Darrell Grintz
   roles:
@@ -37,9 +39,9 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2027'
   image: null
 - name: Billy Wayne Martin
   roles:
@@ -48,9 +50,9 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2027'
   image: null
 - name: Charles Wrenn
   roles:
@@ -59,7 +61,7 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2027'
   image: null

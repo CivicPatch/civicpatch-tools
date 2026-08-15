@@ -1,10 +1,10 @@
 people:
-- name: Mayor Bob Harris
+- name: Bob Harris
   roles:
   - Mayor
   designations: []
   phone: null
-  email: bob.harris@anytown.gov
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -15,7 +15,7 @@ people:
   designations:
   - Place 3
   phone: null
-  email: dana.ellis@anytown.gov
+  email: null
   url: null
   start_date: null
   end_date: null

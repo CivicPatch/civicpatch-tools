@@ -97,13 +97,23 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles
     return prompt
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(known_roles: List[str], state: str = "", county: str | None = None):
+def municipality_officials_prompt(
+    known_roles: List[str],
+    state: str = "",
+    county: str | None = None,
+    current_date: str | None = None,
+):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
+
+    `current_date` is an argument because the prompt asks for *currently serving*
+    officials: reading the clock in here made the prompt a function of wall-time, so the
+    same input produced a different prompt every day and evals silently drifted as terms
+    expired. Production leaves it None and gets today; evals pin it.
     """
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
-    current_date = datetime.now().strftime("%Y-%m-%d")
+    current_date = current_date or datetime.now().strftime("%Y-%m-%d")
 
     roles_hint_str = ""
     if known_roles:

@@ -4,7 +4,7 @@ people:
   - Mayor
   designations: []
   phone: null
-  email: mayorbentley@meadowlakestx.us
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -15,7 +15,7 @@ people:
   designations:
   - Place 1
   phone: null
-  email: shawm1949@gmail.com
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -26,7 +26,7 @@ people:
   designations:
   - Place 2
   phone: null
-  email: bpeskin@meadowlakestx.us
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -34,11 +34,10 @@ people:
 - name: Carolyn Richmond
   roles:
   - Council Member
-  - Mayor Pro-Tem
   designations:
   - Place 3
   phone: null
-  email: crichmond@meadowlakestx.us
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -49,7 +48,7 @@ people:
   designations:
   - Place 4
   phone: null
-  email: bjohnson@meadowlakestx.us
+  email: null
   url: null
   start_date: null
   end_date: null
@@ -57,11 +56,10 @@ people:
 - name: Garrett Wood
   roles:
   - Council Member
-  - Mayor
   designations:
   - Place 5
   phone: null
-  email: gwood@meadowlakestx.us
+  email: null
   url: null
   start_date: null
   end_date: null

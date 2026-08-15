@@ -2,7 +2,7 @@ people:
   - name: Kirk Watson
     phone: (512) 978-2100
     email: null
-    urls: https://www.austintexas.gov/email/mayorwatson
+    url: https://www.austintexas.gov/email/mayorwatson
     start_date: null
     end_date: null
     roles: [Mayor]

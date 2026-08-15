@@ -3,33 +3,9 @@ people:
   roles:
   - Mayor
   designations: []
-  phone: null
+  phone: (325) 625-5114
   email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Tracy Rankin
-  roles:
-  - Council Member
-  designations:
-  - Place 1
-  - Ward North
-  phone: null
-  email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Sharlene T. Hetzel
-  roles:
-  - Council Member
-  designations:
-  - Place 2
-  - Ward West
-  phone: null
-  email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -39,9 +15,9 @@ people:
   designations:
   - Place 3
   - Ward East
-  phone: null
+  phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -51,9 +27,33 @@ people:
   designations:
   - Place 4
   - Ward South
-  phone: null
+  phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: null
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  designations:
+  - Place 2
+  - Ward West
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: null
+- name: Tracy Rankin
+  roles:
+  - Council Member
+  designations:
+  - Place 1
+  - Ward North
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null

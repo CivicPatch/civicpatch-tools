@@ -213,7 +213,8 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
 
 
 async def _run_provider(client, cases):
-    ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example/{client['name']}/government"
+    # Provider in the place slug, not its own segment — see the note in the officials eval.
+    ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example_{client['name']}/government"
     start_time = time.time()
     results = await asyncio.gather(*[run_eval(client, case, ocdid) for case in cases])
     elapsed_seconds = round(time.time() - start_time, 2)
@@ -235,9 +236,11 @@ async def test_provider_comparison(load_eval_cases):
 
     evals_dir = "tests/prompts/tests/evals/relevant_page"
     comparison = {}
-    for result in results:
+    failures = {}
+    for provider_client, result in zip(clients, results):
         if isinstance(result, Exception):
-            print(f"Provider failed: {result}")
+            failures[provider_client["name"]] = repr(result)
+            print(f"PROVIDER FAILED: {provider_client['name']}: {result!r}", flush=True)
             continue
         client, failed_cases, ocdid, elapsed_seconds = result
         cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds)
@@ -248,4 +251,5 @@ async def test_provider_comparison(load_eval_cases):
             "passed_cases": len(load_eval_cases) - len(failed_cases),
         }
 
-    write_comparison_report(evals_dir, comparison)
+    write_comparison_report(evals_dir, comparison, failures)
+    assert not failures, f"Providers failed: {failures}"

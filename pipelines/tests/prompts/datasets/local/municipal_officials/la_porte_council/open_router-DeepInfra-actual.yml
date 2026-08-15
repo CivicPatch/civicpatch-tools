@@ -1,0 +1,99 @@
+people:
+- name: Rick Helton
+  roles:
+  - Mayor
+  designations: []
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
+- name: Brandon Lunsford
+  roles:
+  - Council Member
+  designations:
+  - At-Large A
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
+- name: Brent McCaulley
+  roles:
+  - Council Member
+  designations:
+  - At-Large B
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
+- name: Mandi Williams
+  roles:
+  - Council Member
+  designations:
+  - District 1
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
+- name: Chuck Engelken
+  roles:
+  - Council Member
+  designations:
+  - District 2
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
+- name: Bill Bentley
+  roles:
+  - Council Member
+  designations:
+  - District 3
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
+- name: Robert Guerra
+  roles:
+  - Council Member
+  designations:
+  - District 4
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
+- name: Jay Martin
+  roles:
+  - Council Member
+  designations:
+  - District 5
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
+- name: Robbie McLarrin
+  roles:
+  - Council Member
+  designations:
+  - District 6
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6491
