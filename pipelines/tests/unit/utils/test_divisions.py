@@ -9,6 +9,7 @@ pytestmark = pytest.mark.unit
 
 _MIXED_CONFIGS = {
     "district": {"has_geographic_area": True},
+    "ward": {"has_geographic_area": True},
     "at-large": {"has_geographic_area": False},
 }
 
@@ -54,6 +55,24 @@ def test_designations_without_division(monkeypatch, designations, expected):
             "ocd-jurisdiction/country:us/state:xy/place:charlie/government",
             ["district"],  # no value → falls back to base
             "ocd-division/country:us/state:xy/place:charlie",
+        ),
+        # council_district is the slug for a district at every level — a county's
+        # commissioner district included.
+        (
+            "ocd-jurisdiction/country:us/state:xy/county:delta/government",
+            ["district 3"],
+            "ocd-division/country:us/state:xy/county:delta/council_district:3",
+        ),
+        (
+            "ocd-jurisdiction/country:us/state:xy/county:delta/place:foxtrot/government",
+            ["district 3"],
+            "ocd-division/country:us/state:xy/county:delta/place:foxtrot/council_district:3",
+        ),
+        # ward is never renamed, at any level.
+        (
+            "ocd-jurisdiction/country:us/state:xy/county:delta/government",
+            ["ward 2"],
+            "ocd-division/country:us/state:xy/county:delta/ward:2",
         ),
     ],
 )

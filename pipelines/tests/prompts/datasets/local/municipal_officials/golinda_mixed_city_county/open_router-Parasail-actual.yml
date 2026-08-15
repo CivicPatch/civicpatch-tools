@@ -5,17 +5,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Lisa Faulkner
-  roles:
-  - Administrative Assistant
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -25,7 +15,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -35,7 +25,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -45,7 +35,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -55,7 +45,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -65,110 +55,7 @@ people:
   designations: []
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Justin Anderson
-  roles:
-  - City Attorney for Golinda
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Gary Cunha
-  roles:
-  - Municipal Court Judge for Golinda
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Paul Estrada
-  roles:
-  - Code Enforcement
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Cindy Bunch
-  roles:
-  - Municipal Court Clerk
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Jay Elliott
-  roles:
-  - County Judge/Falls County
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Nita Wuebker
-  roles:
-  - County Commissioner - precinct 4
-  designations:
-  - Precinct 4
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Bill Shipp
-  roles:
-  - City Building Inspector
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Jeremy Hack
-  roles:
-  - Falls County Septic Inspector
-  designations: []
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Judge M. Elliott
-  roles:
-  - JP, Precinct 4 Falls County
-  designations:
-  - Precinct 4
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Jerry Wood
-  roles:
-  - Constable Precinct 4 Falls County
-  designations:
-  - Precinct 4
-  phone: (254) 881-7333
-  email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null

@@ -1,7 +1,32 @@
 cost_summary:
-  model: deepseek/deepseek-v3.2
-  elapsed_seconds: 15.0
-  total_input_tokens: 80438
-  total_output_tokens: 2208
-  total_cost_usd: 0.02175292
-failed_cases: []
+  model: deepseek/deepseek-v4-flash
+  elapsed_seconds: 105.18
+  total_input_tokens: 77030
+  total_output_tokens: 23986
+  total_cost_usd: 0.01750028
+failed_cases:
+- model_client: open_router-AtlasCloud
+  case_id: quitaque_council
+  failures:
+  - field: relevant_urls
+    expected:
+    - https://quitaque.us/cityofficials.html
+    actual:
+    - https://quitaque.us/phonenumbers.html
+    - https://quitaque.us/contact.html
+    score: 0.0
+    threshold: 0.75
+- model_client: open_router-AtlasCloud
+  case_id: san_antonio
+  failures:
+  - field: relevant_urls
+    expected:
+    - https://www.sa.gov/Government/Officials
+    - https://www.sa.gov/Directory/Departments
+    actual:
+    - https://www.sa.gov/Government
+    - https://www.sa.gov/Government/Officials
+    - https://www.sa.gov/Directory
+    - https://www.sanantonio.gov/Council/Find-My-Council-Member
+    score: 0.5
+    threshold: 0.75

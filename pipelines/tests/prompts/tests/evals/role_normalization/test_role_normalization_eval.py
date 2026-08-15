@@ -1,12 +1,12 @@
-from enum import Enum
 from pathlib import Path
 from typing import Optional
 
 import pytest
 import yaml
 from pydantic import BaseModel
-from shared.schemas import RoleConfig
-from utils import people_utils
+from shared.schemas import RoleConfig, RoleStatus
+from utils.dispositions import Disposition, Tally, tally
+from utils.taxonomy import build_taxonomy, normalize_roles
 
 CASES_PATH = Path(__file__).parent / "cases.yml"
 TAXONOMY_PATH = Path(__file__).parent / "taxonomy.yml"
@@ -27,26 +27,11 @@ class EvalCase(BaseModel):
     expected: str
 
 
-class Disposition(str, Enum):
-    correct = "correct"
-    false_positive = "false_positive"
-    false_negative = "false_negative"
-    wrong_match = "wrong_match"
-
-
 class Outcome(BaseModel):
     case: EvalCase
     actual: list[str]
     disposition: Disposition
     confidence: Optional[float] = None
-
-
-class EvalReport(BaseModel):
-    total: int
-    correct: int
-    false_positives: int
-    false_negatives: int
-    by_disposition: dict[Disposition, int]
 
 
 def parse_cases(raw: list[dict]) -> list[EvalCase]:
@@ -57,7 +42,7 @@ def validate_cases(cases: list[EvalCase], taxonomy: RoleConfig) -> None:
     """Every case label must be consistent with the fixture taxonomy.
 
     - a canonical label must name a real (active) role in the taxonomy
-    - DROP must correspond to an actual exclusion (kind: exclusion) entry
+    - DROP must correspond to an actual exclusion (status: excluded) entry
     - NEW must match no canonical, alias, or exclusion — so passthrough is the
       truthful expectation, not a missing-from-fixture accident
 
@@ -68,16 +53,18 @@ def validate_cases(cases: list[EvalCase], taxonomy: RoleConfig) -> None:
     canonicals = set()      # active canonical role names (for the expected-label check)
     known = set()           # lowercased canonical + alias strings of active roles
     exclusions = set()      # lowercased role + alias strings of exclusion entries
+    # Migration 109 flattened the taxonomy: `kind: canonical|exclusion` became a
+    # four-value `status`, and `role` split into `id` (slug) + `label` (display).
     for entry in taxonomy.roles:
-        if entry.kind == "canonical":
-            canonicals.add(entry.role)
-            known.add(entry.role.lower())
-            for alias in entry.aliases:
-                known.add(alias.lower())
-        else:
-            exclusions.add(entry.role.lower())
+        if entry.status == RoleStatus.EXCLUDED:
+            exclusions.add(entry.label.lower())
             for alias in entry.aliases:
                 exclusions.add(alias.lower())
+        else:
+            canonicals.add(entry.label)
+            known.add(entry.label.lower())
+            for alias in entry.aliases:
+                known.add(alias.lower())
 
     errors: list[str] = []
     for c in cases:
@@ -128,17 +115,11 @@ def score_case(case: EvalCase, actual: list[str]) -> Outcome:
     return Outcome(case=case, actual=actual, disposition=disposition)
 
 
-def summarize(outcomes: list[Outcome]) -> EvalReport:
-    by_disposition: dict[Disposition, int] = {d: 0 for d in Disposition}
-    for outcome in outcomes:
-        by_disposition[outcome.disposition] += 1
-    return EvalReport(
-        total=len(outcomes),
-        correct=by_disposition[Disposition.correct],
-        false_positives=by_disposition[Disposition.false_positive],
-        false_negatives=by_disposition[Disposition.false_negative],
-        by_disposition=by_disposition,
-    )
+def summarize(outcomes: list[Outcome]) -> Tally:
+    """Counting moved to `utils.dispositions.tally` — this file used to carry its own copy
+    of the enum and the counter. Sharing them is what lets one dashboard read every eval,
+    and it brings precision/recall/f1 along for free."""
+    return tally(outcome.disposition for outcome in outcomes)
 
 
 def _load_yaml(path: Path):
@@ -159,17 +140,19 @@ def load_taxonomy(path: Path) -> RoleConfig:
 REPORT_PATH = Path(__file__).parent / "eval-report.yml"
 
 
-def build_report_data(report: EvalReport, outcomes: list[Outcome]) -> dict:
+def build_report_data(report: Tally, outcomes: list[Outcome]) -> dict:
+    total = len(outcomes)
     return {
         "summary": {
-            "total": report.total,
+            "total": total,
             "correct": report.correct,
-            "false_positives": report.false_positives,
-            "false_negatives": report.false_negatives,
-            "wrong_matches": report.by_disposition[Disposition.wrong_match],
-            "pct_correct": round(report.correct / report.total * 100, 1)
-            if report.total
-            else 0,
+            "false_positives": report.false_positive,
+            "false_negatives": report.false_negative,
+            "wrong_matches": report.wrong_match,
+            "pct_correct": round(report.correct / total * 100, 1) if total else 0,
+            "precision": report.precision,
+            "recall": report.recall,
+            "f1": report.f1,
         },
         "dispositions": [
             {
@@ -187,13 +170,12 @@ def build_report_data(report: EvalReport, outcomes: list[Outcome]) -> dict:
 def test_role_normalization_eval():
     taxonomy: RoleConfig = load_taxonomy(TAXONOMY_PATH)
     cases: list[EvalCase] = load_cases(CASES_PATH, taxonomy)
+    # normalize_roles moved to taxonomy.py and now takes a built Taxonomy rather than a
+    # RoleConfig keyword. Same breakage the officials eval had; neither was caught because
+    # evals are not part of `mise run tpipes`.
+    matcher = build_taxonomy(taxonomy)
     outcomes: list[Outcome] = [
-        score_case(
-            case,
-            actual=people_utils.normalize_roles(
-                [case.raw_string], role_config=taxonomy
-            ),
-        )
+        score_case(case, actual=normalize_roles([case.raw_string], matcher))
         for case in cases
     ]
     report = summarize(outcomes)
@@ -201,4 +183,4 @@ def test_role_normalization_eval():
     REPORT_PATH.write_text(
         yaml.dump(data, default_flow_style=False, sort_keys=False), encoding="utf-8"
     )
-    assert report.false_positives == 0, report.by_disposition
+    assert report.false_positive == 0, report.model_dump()

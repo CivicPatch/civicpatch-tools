@@ -1,0 +1,35 @@
+# Role aliases for eval scoring ONLY. Not the production taxonomy — that lives in the
+# database and is reached through the API.
+#
+# Why a fixture and not the real thing: the eval asks whether the LLM returns the same
+# answer for the same input, so the yardstick has to hold still. Pointing it at the live
+# taxonomy would move every score whenever someone edited an alias in the admin UI.
+#
+# It is also load-bearing for the *expected* side. The golden data is itself inconsistent —
+# across the 15 cases one role is written "Council Member" (34), "Council" (7),
+# "Councilman" (3) and "Councilmember" (1) — so without this, a perfect model cannot score
+# 1.0. Both sides are normalised through the same taxonomy, which collapses those.
+#
+# Only morphological variants of the SAME title belong here. Titles that merely name a
+# similar body do not: Alderman is kept separate from Council Member because a Board of
+# Aldermen is its own institution, and the board_of_aldermen case exists to check we say so.
+
+roles:
+  Council Member:
+    - Councilmember
+    - Councilman
+    - Councilwoman
+    - Councilperson
+    # Bare "Council" appears as a role in golinda_mixed_city_county and
+    # vacant_positions_council. It is not a title, but it is what the fixture says, and
+    # dropping it would score those people 0 for a naming defect in the golden data.
+    - Council
+
+  Mayor Pro Tem:
+    - Mayor Pro-Tem
+    - Mayor Pro Tempore
+    - Mayor Pro-Tempore
+
+  Alderman:
+    - Alderwoman
+    - Alderperson

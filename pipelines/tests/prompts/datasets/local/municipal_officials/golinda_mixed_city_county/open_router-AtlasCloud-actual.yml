@@ -3,19 +3,9 @@ people:
   roles:
   - Mayor
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Lisa Faulkner
-  roles:
-  - Administrative Assistant
-  designations: []
-  phone: 254-881-7333
-  email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -23,9 +13,9 @@ people:
   roles:
   - Mayor Pro Tem
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -33,9 +23,9 @@ people:
   roles:
   - Council
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -43,9 +33,9 @@ people:
   roles:
   - Council
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -53,9 +43,9 @@ people:
   roles:
   - Council
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -63,9 +53,9 @@ people:
   roles:
   - Council
   designations: []
-  phone: 254-881-7333
+  phone: (254) 881-7333
   email: cityofgolinda@gmail.com
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null

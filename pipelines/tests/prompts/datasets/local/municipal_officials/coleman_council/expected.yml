@@ -8,7 +8,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Beau Brudney
   roles:
   - Council Member
@@ -20,7 +20,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Monte Sides
   roles:
   - Council Member
@@ -32,7 +32,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Sharlene T. Hetzel
   roles:
   - Council Member
@@ -45,7 +45,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 - name: Tracy Rankin
   roles:
   - Council Member
@@ -57,7 +57,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+  image: null
 thought: 'The content includes a structured listing of the City Council members with
   a photo and explicit roles: a Mayor and four Council Members specified by their
   wards (Places 1-4). Contact phone is given for all council members. No emails or

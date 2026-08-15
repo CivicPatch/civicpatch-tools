@@ -9,25 +9,24 @@ people:
   start_date: null
   end_date: null
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Tracy Rankin
+- name: Sharlene T. Hetzel
   roles:
   - Council Member
   designations:
-  - Place 1
-  - Ward North
+  - Place 2
+  - Ward West
   phone: (325) 625-5114
   email: null
   url: null
   start_date: null
   end_date: null
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Sharlene T. Hetzel
+- name: Tracy Rankin
   roles:
   - Council Member
-  - Mayor Pro-Tem
   designations:
-  - Place 2
-  - Ward West
+  - Place 1
+  - Ward North
   phone: (325) 625-5114
   email: null
   url: null

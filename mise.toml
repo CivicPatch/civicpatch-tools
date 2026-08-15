@@ -223,15 +223,20 @@ description = "Run pipelines integration tests inside Docker (requires spaCy, Pl
 run = "docker compose -f pipelines/docker-compose-files/docker-compose.integration-tests.yml run --rm pipelines-integration-tests"
 
 [tasks.evalsm]
-run = "uv run pytest tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
+# -s disables pytest's stdout capture. Without it the run is silent for minutes:
+# both the per-case progress lines and PipelineRunLogger's retry warnings go to stdout,
+# and pytest buffers them until the test ends.
+run = "uv run pytest -s tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
 dir = "pipelines"
 
 [tasks.evalsr]
-run = "uv run pytest tests/prompts/tests/evals/test_local_relevant_page_eval.py"
+# -s: see the note on evalsm
+run = "uv run pytest -s tests/prompts/tests/evals/test_local_relevant_page_eval.py"
 dir = "pipelines"
 
 [tasks.evals]
-run = "uv run pytest -m evals tests/prompts"
+# -s: see the note on evalsm
+run = "uv run pytest -s -m evals tests/prompts"
 dir = "pipelines"
 
 [tasks.evalsd]
@@ -467,3 +472,13 @@ docker compose exec -T civicpatch-org-db psql -U civicpatch -d development_db \
     ORDER BY jurisdiction_ocdid;
   "
 """
+
+[tasks.evals-report]
+description = "Render one HTML dashboard from the eval reports already on disk (no LLM calls)"
+run = "PYTHONPATH=src:tests/prompts/tests/evals uv run python tests/prompts/tests/evals/visualize.py"
+dir = "pipelines"
+
+[tasks.evals-audit]
+description = "Flag fixture defects by cross-provider agreement (no LLM calls)"
+run = "PYTHONPATH=src:tests/prompts/tests/evals uv run python tests/prompts/tests/evals/audit_fixtures.py"
+dir = "pipelines"

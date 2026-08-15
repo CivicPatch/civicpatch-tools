@@ -7,8 +7,6 @@ from typing import List, cast
 import phonenumbers
 import pytest
 import pytest_asyncio
-import utils.merge_utils
-import utils.people_utils
 import yaml
 from eval_utils import (
     PROVIDER_COMPARISON,
@@ -20,13 +18,72 @@ from runners.people_collector.schemas import (
     RawLLMPersonRecord,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
-from services.open_router.prompts import (
-    municipality_officials_prompt as make_together_prompt,
-)
+from services.open_router.prompts import municipality_officials_prompt
+from shared.schemas import Role, RoleConfig
 from shared.utils import name_utils
 from utils import cost_utils
+from accuracy import (
+    as_report,
+    build_eval_taxonomy,
+    case_dispositions,
+    merge_dispositions,
+    summarize,
+)
+from utils.taxonomy import (
+    Taxonomy,
+    build_taxonomy,
+    normalize_designations,
+    normalize_roles,
+)
 
 pytestmark = pytest.mark.evals
+
+ROLE_ALIASES_PATH = pathlib.Path("tests/prompts/datasets/local/role_aliases.yml")
+
+# The prompt asks for *currently serving* officials, so its answer depends on the date it
+# is run. Pinned here, because otherwise the fixtures rot: 9 of 62 expected people have
+# terms that have now ended (board_of_aldermen 3/5, mixed_current_past 3/6,
+# redundant_place_role 3/6), and a model correctly applying today's date would be marked
+# wrong for excluding them. Must sit in [latest expected start_date, earliest expected
+# end_date) = ["2025-05", "2026").
+EVAL_CURRENT_DATE = "2025-09-01"
+
+
+def make_together_prompt(known_roles):
+    return municipality_officials_prompt(known_roles, current_date=EVAL_CURRENT_DATE)
+
+
+EVAL_TAXONOMY = build_eval_taxonomy()
+
+# F1 floors on the disposition scoring — "is this provider fit to run in production", not a
+# quality target. A provider below one of these is unfit, which is why DeepInfra's 0.000 on
+# both dates is meant to fail rather than be accommodated.
+#
+# Two tiers, because roles and district are what the posts/memberships model is built on
+# and everything else is supporting detail. That is a priority ordering, not a claim the
+# rest does not matter — every field is gated.
+#
+# Numbers carry headroom for run-to-run drift, measured 2026-08-15 across two identical
+# runs: roles 0.027, designations 0.077, url 0.154, end_date 0.133, image 0.500. A
+# threshold set tighter than its drift will flap for reasons that have nothing to do with
+# the prompt. `image` is deliberately loose for exactly that reason; tighten it only after
+# temperature and seed are pinned.
+ACCURACY_THRESHOLDS = {
+    # Tier 1 — what the product is built on. Measured 0.976–0.992 and 0.977–1.000.
+    "roles": 0.94,
+    "district": 0.92,
+    # Tier 2 — gated, with room. Measured across all three providers 2026-08-15.
+    "person": 0.94,
+    "designations_other": 0.75,
+    "email": 0.60,
+    "phone": 0.50,
+    "url": 0.55,
+    # Extracting none of the twelve dates that exist is a real 0.0, not "unmeasured".
+    # DeepInfra does exactly that and is meant to fail here.
+    "start_date": 0.50,
+    "end_date": 0.50,
+    "image": 0.70,
+}
 
 
 def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRecord]):
@@ -42,6 +99,11 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
             score = score_case(a_person, e_person)
         else:
             score = {
+                # A person the model failed to return at all scores 0 on every dimension
+                # it was expected to carry. Omitting a key here is not neutral — aggregate()
+                # averages over the people that carry it, so a dropped key inflates that
+                # dimension. The precision keys are deliberately absent: there is no answer
+                # to be precise about, and the misses are already counted by recall.
                 "scores": {
                     "name": 0.0,
                     "roles": 0.0,
@@ -49,6 +111,14 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                     "email": 0.0,
                     "phone": 0.0,
                     "url": 0.0,
+                    # recall-only: a missed person still counts as a miss for any value
+                    # they were expected to carry, but must not invent a denominator for
+                    # the ones they weren't.
+                    **{
+                        f: 0.0
+                        for f in ("start_date", "end_date", "image")
+                        if getattr(e_person, f, None)
+                    },
                 },
                 "actual": {
                     "name": "",
@@ -57,6 +127,9 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                     "email": "",
                     "phone": "",
                     "url": "",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
                 },
                 "expected": {
                     "name": e_person.name,
@@ -65,11 +138,28 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                     "email": e_person.email,
                     "phone": e_person.phone,
                     "url": e_person.url,
+                    "start_date": e_person.start_date,
+                    "end_date": e_person.end_date,
+                    "image": e_person.image,
                 },
                 "person_name": e_person.name,
             }
         scores.append(score)
     return scores
+
+
+def _set_precision(score: dict, key: str, actual_values, expected_values) -> None:
+    """Share of what the model returned that was actually wanted.
+
+    `roles` and `designations` are recall — matched over *expected* — so over-generation is
+    free: four roles for a one-role person still scores 1.0. Omitted when the model
+    returned nothing, since precision is undefined over an empty answer and recall already
+    rewards a correct absence.
+    """
+    if not actual_values:
+        return
+    matching = set(actual_values) & set(expected_values)
+    score[key] = len(matching) / len(set(actual_values))
 
 
 def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
@@ -85,25 +175,38 @@ def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
     expected_vals["name"] = expected.name
 
     # roles (set match)
-    actual_roles = utils.people_utils.normalize_roles(actual.roles)
-    expected_roles = utils.people_utils.normalize_roles(expected.roles)
+    actual_roles = normalize_roles(actual.roles, EVAL_TAXONOMY)
+    expected_roles = normalize_roles(expected.roles, EVAL_TAXONOMY)
     matching_roles = set(actual_roles) & set(expected_roles)
     score["roles"] = (
         len(matching_roles) / len(expected_roles) if expected_roles else 1.0
     )
+    _set_precision(score, "roles_precision", actual_roles, expected_roles)
     actual_vals["roles"] = actual.roles
     expected_vals["roles"] = expected.roles
 
-    # designations
-    has_district_or_ward = any(
-        "district" in d.lower() or "ward" in d.lower() for d in expected.designations
-    )
-    if not expected.designations or not has_district_or_ward:
+    # designations — scored whenever any are expected. There used to be an exemption for
+    # cases without "district"/"ward", which handed a free 1.0 to 19 of the 40 people who
+    # have designations (Position, Place, At-Large). It had no basis: the prompt always
+    # lists the designation vocabulary and gives normalization examples ("Posn. 2" →
+    # "Position 2"), so these are asked for explicitly. They are also exactly the
+    # non-geographic residue that distinguishes seats in `posts`.
+    #
+    # Normalized like roles, and for the same reason: raw string equality made every
+    # provider lose the same case on a hyphen. Fixtures say "At-Large", every model returns
+    # "At Large" — which is what the prompt asks for ("City-Wide" → "At Large") and what
+    # designations.yml lists as the alias. The models were right and the scorer was wrong.
+    actual_designations = normalize_designations(actual.designations, EVAL_TAXONOMY)
+    expected_designations = normalize_designations(expected.designations, EVAL_TAXONOMY)
+    if not expected_designations:
         score["designations"] = 1.0
     else:
         score["designations"] = len(
-            set(actual.designations) & set(expected.designations)
-        ) / len(expected.designations)
+            set(actual_designations) & set(expected_designations)
+        ) / len(expected_designations)
+    _set_precision(
+        score, "designations_precision", actual_designations, expected_designations
+    )
     actual_vals["designations"] = actual.designations
     expected_vals["designations"] = expected.designations
 
@@ -128,6 +231,26 @@ def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
     actual_vals["url"] = actual.url
     expected_vals["url"] = expected.url
 
+    # start_date / end_date / image — previously not scored at all, which hid the largest
+    # difference between providers: measured 2026-08-14, AtlasCloud extracted 100% of
+    # start_dates while DeepInfra and Parasail extracted 0%, yet DeepInfra scored *higher*
+    # overall. Plain equality is fair — when a model does extract a date it matches the
+    # fixture's format exactly ("2025-05", "2025-01-06"). str() because YAML parses a full
+    # date into datetime.date but leaves a partial "2025-05" a string.
+    #
+    # RECALL ONLY: the key is omitted when nothing is expected, so these measure "of the
+    # values that exist, how many did you get". Scoring a correct absence as 1.0 buries the
+    # signal — only 12 of 62 people have a start_date, so a model extracting NONE of them
+    # still scored 0.77. aggregate() divides by how many scores carry the key.
+    for field in ("start_date", "end_date", "image"):
+        expected_value = getattr(expected, field) or ""
+        if not expected_value:
+            continue
+        actual_value = getattr(actual, field) or ""
+        score[field] = 1.0 if str(actual_value) == str(expected_value) else 0.0
+        actual_vals[field] = getattr(actual, field)
+        expected_vals[field] = getattr(expected, field)
+
     return {
         "scores": score,
         "actual": actual_vals,
@@ -145,7 +268,12 @@ def aggregate(scores):
     if not scores:
         return {}
 
-    # Aggregate scores for each case
+    # Aggregate scores for each case.
+    #
+    # A dimension is averaged over the people that CARRY it, not over everyone. Most fields
+    # are present on every person so nothing changes for them; the recall-only ones
+    # (start_date, end_date, image) are omitted where nothing is expected, and counting
+    # those absences as successes is what let a model extracting zero dates score 0.77.
     case_aggregates = []
     for case_scores in scores:
         if not case_scores:
@@ -155,39 +283,65 @@ def aggregate(scores):
         for score in case_scores:
             all_keys.update(score["scores"].keys())
         for key in all_keys:
-            case_aggregate[key] = sum(
-                score["scores"].get(key, 0.0) for score in case_scores
-            ) / len(case_scores)
+            present = [s["scores"][key] for s in case_scores if key in s["scores"]]
+            if present:
+                case_aggregate[key] = sum(present) / len(present)
         case_aggregates.append(case_aggregate)
 
-    # Aggregate scores across all cases
+    # Aggregate across cases — same rule, since a whole case may carry no dates at all.
     if not case_aggregates:
         return {}
 
     final_aggregate = {}
-    for key in case_aggregates[0].keys():
-        final_aggregate[key] = sum(case[key] for case in case_aggregates) / len(
-            case_aggregates
-        )
+    for key in {k for case in case_aggregates for k in case}:
+        present = [case[key] for case in case_aggregates if key in case]
+        final_aggregate[key] = sum(present) / len(present)
 
     return final_aggregate
+
+
+def _progress(name: str, message: str) -> None:
+    """Cases run concurrently under asyncio.gather, so a bare print says nothing about how
+    far along the run is. Every line carries the provider, a done/total count and elapsed
+    seconds, and flushes — pytest buffers otherwise and you see the lot at the end."""
+    done, total = _PROGRESS[name]
+    elapsed = time.time() - _RUN_STARTED_AT
+    print(f"[{elapsed:6.1f}s] {name:26} {done:>2}/{total:<2} {message}", flush=True)
+
+
+_PROGRESS: dict = {}
+_RUN_STARTED_AT = time.time()
 
 
 async def _run_single_case(model_client, case, ocdid):
     run_prompt = model_client["run_prompt"]
     make_prompt = model_client["make_prompt"]
     extra_kwargs = model_client.get("extra_kwargs", {})
+    name = model_client["name"]
+
+    _progress(name, f"START  {case['id']}")
+    started = time.time()
 
     known_roles = case["expected"].get("known_roles", [])
     prompt = make_prompt(known_roles)
-    response = await run_prompt(
-        "run-eval",
-        ocdid,
-        prompt,
-        response_schema=PeopleArrayLLMResponseSchema,
-        content=case["input"],
-        **extra_kwargs,
-    )
+    try:
+        response = await run_prompt(
+            "run-eval",
+            ocdid,
+            prompt,
+            response_schema=PeopleArrayLLMResponseSchema,
+            content=case["input"],
+            **extra_kwargs,
+        )
+    except Exception as exc:
+        # Surface which case died and why. gather() would otherwise report one exception
+        # for the whole batch with no indication of which provider or case produced it.
+        _PROGRESS[name][0] += 1
+        _progress(name, f"FAILED {case['id']} after {time.time() - started:.1f}s: {exc!r}")
+        raise
+
+    _PROGRESS[name][0] += 1
+    _progress(name, f"done   {case['id']} in {time.time() - started:.1f}s")
     expected = [RawLLMPersonRecord(**person) for person in case["expected"]["people"]]
     actual = cast(PeopleArrayLLMResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
@@ -204,15 +358,20 @@ async def _run_single_case(model_client, case, ocdid):
     if not expected and actual.people:
         case_aggregate["hallucination"] = 0.0
     else:
+        # Same present-keys rule as aggregate(). This used to default a missing key to 0.0
+        # and divide by everyone, so the per-case breakdown in each report diluted the
+        # recall-only dimensions while the overall report did not — the two numbers
+        # disagreed for the same run.
         all_keys = set()
         for score in case_scores:
             all_keys.update(score["scores"].keys())
         for key in all_keys:
-            case_aggregate[key] = sum(
-                score["scores"].get(key, 0.0) for score in case_scores
-            ) / len(case_scores)
+            present = [s["scores"][key] for s in case_scores if key in s["scores"]]
+            if present:
+                case_aggregate[key] = sum(present) / len(present)
 
-    return case["id"], case_aggregate, case_scores
+    dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)
+    return case["id"], case_aggregate, case_scores, dispositions
 
 
 @pytest.mark.asyncio
@@ -221,12 +380,25 @@ async def run_eval(
     cases,
     ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government",
 ):
+    name = model_client["name"]
+    _PROGRESS[name] = [0, len(cases)]
+    batch_started = time.time()
+    # Costs key on the ocdid, which every provider shares, so without this each report
+    # carries the previous providers' tokens too and cost ranking becomes run order.
+    cost_utils.reset_cost_tracker(ocdid)
+    _progress(name, f"dispatching {len(cases)} cases concurrently")
+
     results = await asyncio.gather(
         *[_run_single_case(model_client, case, ocdid) for case in cases]
     )
-    per_case_scores = [(case_id, agg) for case_id, agg, _ in results]
-    scores = [case_scores for _, _, case_scores in results]
-    return aggregate(scores), per_case_scores
+
+    _progress(name, f"ALL DONE in {time.time() - batch_started:.1f}s")
+    per_case_scores = [(case_id, agg) for case_id, agg, _, _ in results]
+    scores = [case_scores for _, _, case_scores, _ in results]
+    # Dispositions are counted across every person in the run, not averaged per case —
+    # precision has no meaning inside one case that produced nothing.
+    accuracy = summarize(merge_dispositions([d for _, _, _, d in results]))
+    return aggregate(scores), per_case_scores, accuracy
 
 
 @pytest_asyncio.fixture
@@ -302,10 +474,17 @@ def _active_providers():
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     start_time = time.time()
-    report, per_case_scores = await run_eval(model_client, load_eval_cases)
+    report, per_case_scores, accuracy = await run_eval(model_client, load_eval_cases)
     elapsed_seconds = round(time.time() - start_time, 2)
     print("Final aggregated report:", report)
 
+    # Every field is gated. The tiers below say how much room each one gets, not whether it
+    # matters — see ACCURACY_THRESHOLDS for the split.
+    #
+    # A 0.0 threshold means "report it, don't gate on it". The precision dimensions stay
+    # there because raising them also means teaching the per-case failure loop below to
+    # compute them — it reads each key off the record, and neither exists there, so it
+    # scores them a silent 1.0 (as it already does for `hallucination`).
     thresholds = {
         "name": 0.80,
         "roles": 0.90,
@@ -313,6 +492,11 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
         "email": 0.80,
         "phone": 0.80,
         "url": 0.0,
+        "start_date": 0.0,
+        "end_date": 0.0,
+        "image": 0.0,
+        "roles_precision": 0.0,
+        "designations_precision": 0.0,
         "hallucination": 1.0,
     }
 
@@ -368,12 +552,8 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                         else 0.0
                     )
                 elif key == "roles":
-                    actual_roles = utils.people_utils.normalize_roles(
-                        a_person.get("roles", [])
-                    )
-                    expected_roles = utils.people_utils.normalize_roles(
-                        getattr(e_person, "roles", [])
-                    )
+                    actual_roles = normalize_roles(a_person.get("roles", []), EVAL_TAXONOMY)
+                    expected_roles = normalize_roles(getattr(e_person, "roles", []), EVAL_TAXONOMY)
                     matching_roles = set(actual_roles) & set(expected_roles)
                     score = (
                         len(matching_roles) / len(expected_roles)
@@ -381,12 +561,13 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                         else 1.0
                     )
                 elif key == "designations":
-                    actual_designations = a_person.get("designations", [])
-                    expected_designations = getattr(e_person, "designations", [])
-                    has_district_or_ward = any(
-                        d in ["district", "ward"] for d in expected_designations
+                    actual_designations = normalize_designations(
+                        a_person.get("designations", []), EVAL_TAXONOMY
                     )
-                    if not expected_designations or not has_district_or_ward:
+                    expected_designations = normalize_designations(
+                        getattr(e_person, "designations", []), EVAL_TAXONOMY
+                    )
+                    if not expected_designations:
                         score = 1.0
                     else:
                         score = len(
@@ -481,12 +662,8 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                             else 0.0
                         )
                     elif field == "roles":
-                        actual_roles = utils.people_utils.normalize_roles(
-                            a_person.get("roles", [])
-                        )
-                        expected_roles = utils.people_utils.normalize_roles(
-                            getattr(e_person, "roles", [])
-                        )
+                        actual_roles = normalize_roles(a_person.get("roles", []), EVAL_TAXONOMY)
+                        expected_roles = normalize_roles(getattr(e_person, "roles", []), EVAL_TAXONOMY)
                         matching_roles = set(actual_roles) & set(expected_roles)
                         score = (
                             len(matching_roles) / len(expected_roles)
@@ -494,12 +671,13 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
                             else 1.0
                         )
                     elif field == "designations":
-                        actual_designations = a_person.get("designations", [])
-                        expected_designations = getattr(e_person, "designations", [])
-                        has_district_or_ward = any(
-                            d in ["district", "ward"] for d in expected_designations
+                        actual_designations = normalize_designations(
+                            a_person.get("designations", []), EVAL_TAXONOMY
                         )
-                        if not expected_designations or not has_district_or_ward:
+                        expected_designations = normalize_designations(
+                            getattr(e_person, "designations", []), EVAL_TAXONOMY
+                        )
+                        if not expected_designations:
                             score = 1.0
                         else:
                             score = len(
@@ -581,6 +759,28 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     assert report["email"] >= thresholds["email"]
     assert report["phone"] >= thresholds["phone"]
     assert report["url"] >= thresholds["url"]
+    # .get(): conditionally scored, so the key is absent when no case supplied a
+    # denominator — nothing expected (dates, image) or nothing returned (precision).
+    assert report.get("start_date", 1.0) >= thresholds["start_date"]
+    assert report.get("end_date", 1.0) >= thresholds["end_date"]
+    assert report.get("image", 1.0) >= thresholds["image"]
+    assert report.get("roles_precision", 1.0) >= thresholds["roles_precision"]
+    assert report.get("designations_precision", 1.0) >= thresholds["designations_precision"]
+
+    # Accuracy gates. Reported before asserting so a failure shows the whole picture rather
+    # than only the first field that tripped.
+    print("Accuracy (disposition scoring):", as_report(accuracy))
+    below = [
+        f"{field}: F1={accuracy[field].f1:.3f} < {floor:.2f} "
+        f"(correct={accuracy[field].correct} missing={accuracy[field].false_negative} "
+        f"spurious={accuracy[field].false_positive} wrong={accuracy[field].wrong_match})"
+        for field, floor in ACCURACY_THRESHOLDS.items()
+        # f1 is None only when a field had no comparisons at all — nothing wanted and
+        # nothing produced, which is unjudgeable. Producing nothing where something *was*
+        # wanted scores a real 0.0 and fails here; see Tally.f1 for why that needed care.
+        if accuracy[field].f1 is not None and accuracy[field].f1 < floor
+    ]
+    assert not below, "Accuracy below threshold:\n  " + "\n  ".join(below)
     assert (
         len(
             [
@@ -594,14 +794,20 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
 
 
 async def _run_provider(client, cases):
-    ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example/{client['name']}/government"
+    # The provider goes in the place slug, not a segment of its own. Costs key on the
+    # ocdid and the three providers run concurrently, so they do need distinct ones — but
+    # `.../place:example/{provider}/government` is not a valid ocdid: id_utils requires
+    # every middle segment to be `label:value`. It parsed until a209e141e added state and
+    # county parsing, and has raised on the first case of every provider ever since.
+    ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example_{client['name']}/government"
     start_time = time.time()
-    report, per_case_scores = await run_eval(client, cases, ocdid)
+    report, per_case_scores, accuracy = await run_eval(client, cases, ocdid)
     elapsed_seconds = round(time.time() - start_time, 2)
     llm_costs = cost_utils.get_cost_tracker(ocdid)["llm_costs"]
     return {
         "client": client,
         "report": report,
+        "accuracy": accuracy,
         "per_case_scores": per_case_scores,
         "elapsed_seconds": elapsed_seconds,
         "llm_costs": llm_costs,
@@ -622,11 +828,15 @@ async def test_provider_comparison(load_eval_cases):
     os.makedirs(evals_dir, exist_ok=True)
 
     comparison = {}
-    for result in results:
+    failures = {}
+    for client, result in zip(clients, results):
         if isinstance(result, Exception):
-            print(f"Provider failed: {result}")
+            # Record it, don't just print. An all-failed run used to leave
+            # `providers: {}` in comparison.yml with no indication that anything had gone
+            # wrong — it read as "no data" rather than "everything blew up".
+            failures[client["name"]] = repr(result)
+            print(f"PROVIDER FAILED: {client['name']}: {result!r}", flush=True)
             continue
-        client = result["client"]
         llm_costs = result["llm_costs"]
         cost_summary = {
             "model": llm_costs[0]["model"] if llm_costs else None,
@@ -640,6 +850,7 @@ async def test_provider_comparison(load_eval_cases):
             yaml.safe_dump(
                 {
                     "cost_summary": cost_summary,
+                    "accuracy": as_report(result["accuracy"]),
                     "aggregated_report": result["report"],
                     "per_case_scores": [
                         {"case_id": case_id, "scores": case_aggregate}
@@ -653,7 +864,15 @@ async def test_provider_comparison(load_eval_cases):
         comparison[client["name"]] = {
             "elapsed_seconds": result["elapsed_seconds"],
             "cost_usd": cost_summary["total_cost_usd"],
+            # F1 on the two dimensions the product depends on, first — the overall figure
+            # is dominated by contact fields and ranks providers differently.
+            "f1_roles": result["accuracy"]["roles"].f1,
+            "f1_district": result["accuracy"]["district"].f1,
             **result["report"],
         }
 
-    write_comparison_report(evals_dir, comparison)
+    write_comparison_report(evals_dir, comparison, failures)
+
+    # Without this the test passes when every provider dies — which is exactly what it did
+    # while the ocdid above was invalid: 45 cases raised, nothing ran, green in 0.18s.
+    assert not failures, f"Providers failed: {failures}"

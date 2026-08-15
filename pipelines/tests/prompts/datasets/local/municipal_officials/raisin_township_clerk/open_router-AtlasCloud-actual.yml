@@ -8,14 +8,4 @@ people:
   url: https://raisinchartertownship.com/clerk
   start_date: null
   end_date: null
-  image: local://2105ede652ed.png
-- name: Sarah Simpkins
-  roles:
-  - Deputy Clerk
-  designations: []
-  phone: 517-423-3162
-  email: deputyclerk@raisintownship.com
-  url: null
-  start_date: null
-  end_date: null
-  image: data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=
+  image: null

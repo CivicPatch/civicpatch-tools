@@ -1,0 +1,60 @@
+people:
+- name: Beau Brudney
+  roles:
+  - Council Member
+  designations:
+  - Place 3
+  - Ward East
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - Place 4
+  - Ward South
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  - Mayor Pro-Tem
+  designations:
+  - Place 2
+  - Ward West
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Tracy Rankin
+  roles:
+  - Council Member
+  designations:
+  - Place 1
+  - Ward North
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null

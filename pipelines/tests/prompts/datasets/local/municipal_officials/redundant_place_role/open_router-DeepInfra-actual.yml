@@ -1,0 +1,66 @@
+people:
+- name: Mark Bentley
+  roles:
+  - Mayor
+  designations: []
+  phone: null
+  email: mayorbentley@meadowlakestx.us
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null
+- name: Mike Shaw
+  roles:
+  - Council Member
+  designations:
+  - Place 1
+  phone: null
+  email: shawm1949@gmail.com
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null
+- name: Barbara Peskin
+  roles:
+  - Council Member
+  designations:
+  - Place 2
+  phone: null
+  email: bpeskin@meadowlakestx.us
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null
+- name: Carolyn Richmond
+  roles:
+  - Council Member
+  designations:
+  - Place 3
+  phone: null
+  email: crichmond@meadowlakestx.us
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null
+- name: Bruce Johnson
+  roles:
+  - Council Member
+  designations:
+  - Place 4
+  phone: null
+  email: bjohnson@meadowlakestx.us
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null
+- name: Garrett Wood
+  roles:
+  - Council Member
+  designations:
+  - Place 5
+  phone: null
+  email: gwood@meadowlakestx.us
+  url: https://meadowlakestexas.org/government/city_council.php
+  start_date: null
+  end_date: null
+  image: null

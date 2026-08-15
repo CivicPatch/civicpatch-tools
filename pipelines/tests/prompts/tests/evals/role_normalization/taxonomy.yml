@@ -3,19 +3,29 @@
 # controls the taxonomy and varies the INPUTS, so a failure points at matcher logic,
 # not at production config drift.
 #
-# `kind: exclusion` marks a term to actively suppress (drop) — used here to exercise
+# `status: excluded` marks a term to actively suppress (drop) — used here to exercise
 # the DROP disposition without depending on the global designation map.
+#
+# Shape follows migration 109's flattening: `role` split into `id` (a stable slug) and
+# `label` (display only), and `kind: canonical|exclusion` became `status`. Anything
+# without an explicit status defaults to active.
 roles:
-  - role: Mayor
+  - id: mayor
+    label: Mayor
     aliases: [mayor]
-  - role: Council Member
+  - id: council-member
+    label: Council Member
     aliases: [council member, councilmember, city councilmember, councilperson]
-  - role: Mayor Pro-Tem
+  - id: mayor-pro-tem
+    label: Mayor Pro-Tem
     aliases: [mayor pro tem, mayor pro-tem]
-  - role: Recorder
+  - id: recorder
+    label: Recorder
     aliases: [recorder, city recorder]
-  - role: Clerk
+  - id: clerk
+    label: Clerk
     aliases: [clerk, city clerk, town clerk, municipal clerk]
-  - role: City Hall
-    kind: exclusion
+  - id: city-hall
+    label: City Hall
+    status: excluded
     aliases: [city hall]
