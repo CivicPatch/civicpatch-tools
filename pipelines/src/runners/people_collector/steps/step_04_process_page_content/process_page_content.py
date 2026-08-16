@@ -96,7 +96,7 @@ async def _process_with_llm_in_chunks(
 
 def _names_a_seat(parsed: ParsedLabel) -> bool:
     """Whether the label points at a particular seat — a division or a seat marker."""
-    return bool(parsed.division or parsed.seats)
+    return bool(parsed.division or parsed.other_designations)
 
 
 def _resolved_roles(taxonomy: Taxonomy, records: PeopleByName) -> set[str]:

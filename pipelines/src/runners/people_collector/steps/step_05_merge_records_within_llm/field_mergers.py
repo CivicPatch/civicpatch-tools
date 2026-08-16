@@ -5,7 +5,7 @@ from runners.people_collector.schemas import LLMPersonRecord
 
 
 def merge_labels(records: List[LLMPersonRecord]) -> List[str]:
-    """Unique raw labels across records — one per seat the person was seen holding."""
+    """Unique raw labels across records — one per office the person was seen holding."""
     unique_labels = set()
     for record in records:
         if record.label:

@@ -60,6 +60,23 @@ MODELS_BY_TYPE = {
 }
 
 
+def _require_every_property(schema):
+    """Strict structured output requires every property to appear in `required`; pydantic
+    omits any field carrying a default. Providers then skip those keys entirely — measured
+    2026-08-16, that returned 0 of 35 emails across the eval corpus, and 6 of 6 once fixed.
+    Nullability still comes from the field type, so this changes what is emitted, not what
+    is allowed."""
+    if isinstance(schema, dict):
+        if schema.get("type") == "object" and "properties" in schema:
+            schema["required"] = list(schema["properties"])
+        for value in schema.values():
+            _require_every_property(value)
+    elif isinstance(schema, list):
+        for item in schema:
+            _require_every_property(item)
+    return schema
+
+
 async def run_prompt(
     request_id,
     jurisdiction_ocdid: str,
@@ -99,7 +116,7 @@ async def run_prompt(
             "json_schema": {
                 "name": response_schema.__name__,
                 "strict": True,
-                "schema": response_schema.model_json_schema(),
+                "schema": _require_every_property(response_schema.model_json_schema()),
             },
         }
         if response_schema

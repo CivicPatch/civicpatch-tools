@@ -139,7 +139,7 @@ def test_sort_people_priority_and_numeric():
 
 
 def test_sort_people_uses_the_highest_priority_of_several_labels():
-    """One label per seat, so a person holding two sorts by the highest-priority one."""
+    """One label per office, so a person holding two sorts by the highest-priority one."""
     people = [
         _person("Alice", ["Council Ward 1"]),
         _person("Bob", ["Council Ward 2", "Mayor At-Large"]),

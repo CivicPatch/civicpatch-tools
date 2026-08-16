@@ -1,11 +1,9 @@
 people:
 - name: Susan bunch
-  roles:
-  - Clerk
-  designations: []
+  label: Clerk
   phone: null
   email: clerk@raisintownship.com
-  url: https://raisinchartertownship.com/clerk
+  url: null
   start_date: null
   end_date: null
   image: local://2105ede652ed.png

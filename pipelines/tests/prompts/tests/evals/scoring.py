@@ -14,7 +14,7 @@ from accuracy import (
     _districts,
     _first_value,
     _roles,
-    _seats,
+    _other_designations,
     build_eval_taxonomy,
     group_by_name,
     normalize_field,
@@ -31,7 +31,7 @@ def _parse(records: List[RawLLMPersonRecord]) -> List[ParsedLabel]:
 
 def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRecord]):
     scores = []
-    # Grouped, not indexed: one person holding two seats is two records, and a
+    # Grouped, not indexed: one person holding two offices is two records, and a
     # `{name: person}` lookup would keep only the last of them.
     actual_by_name = group_by_name(actual)
     for norm_name, expected_records in group_by_name(expected).items():
@@ -79,7 +79,7 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                     "name": e_person.name,
                     "labels": [r.label for r in expected_records],
                     "roles": _roles(expected_parsed),
-                    "designations": _districts(expected_parsed) + _seats(expected_parsed),
+                    "designations": _districts(expected_parsed) + _other_designations(expected_parsed),
                     "email": e_person.email,
                     "phone": e_person.phone,
                     "url": e_person.url,
@@ -143,12 +143,12 @@ def score_case(
     # have designations (Position, Place, At-Large). It had no basis: the prompt always
     # lists the designation vocabulary and gives normalization examples ("Posn. 2" →
     # "Position 2"), so these are asked for explicitly. They are also exactly the
-    # non-geographic residue that distinguishes seats in `posts`.
+    # non-geographic residue that distinguishes offices in `posts`.
     #
-    # Divisions and seats together, as one bag, so this number stays comparable with the
+    # Divisions and the rest together, as one bag, so this number stays comparable with the
     # history already recorded. `accuracy.py` is where the two are reported apart.
-    actual_designations = _districts(actual_parsed) + _seats(actual_parsed)
-    expected_designations = _districts(expected_parsed) + _seats(expected_parsed)
+    actual_designations = _districts(actual_parsed) + _other_designations(actual_parsed)
+    expected_designations = _districts(expected_parsed) + _other_designations(expected_parsed)
     if not expected_designations:
         score["designations"] = 1.0
     else:

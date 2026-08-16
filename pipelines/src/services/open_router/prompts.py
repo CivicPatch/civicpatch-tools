@@ -1,9 +1,18 @@
 from datetime import datetime
 from typing import List
 
-def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []):
-    jurisdiction_line = f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
-    known_roles_line = f"    Known elected roles for this municipality: {', '.join(known_roles)}\n" if known_roles else ""
+
+def relevant_page_prompt(
+    page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []
+):
+    jurisdiction_line = (
+        f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
+    )
+    known_roles_line = (
+        f"    Known elected roles for this municipality: {', '.join(known_roles)}\n"
+        if known_roles
+        else ""
+    )
     prompt = f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials**
     of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
@@ -103,6 +112,7 @@ def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles
     """
     return prompt
 
+
 # Note: Claude Sonnet 4.6 Generated prompt
 def municipality_officials_prompt(
     known_roles: List[str],
@@ -122,11 +132,17 @@ def municipality_officials_prompt(
 
     roles_hint_str = ""
     if known_roles:
-        roles_hint_str = "- Known elected roles for this municipality: " + ", ".join(known_roles) + "."
+        roles_hint_str = (
+            "- Known elected roles for this municipality: "
+            + ", ".join(known_roles)
+            + "."
+        )
 
     jurisdiction_parts = [f"{county} County" if county else None, state]
     jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)
-    jurisdiction_line = f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
+    jurisdiction_line = (
+        f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
+    )
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
@@ -144,7 +160,7 @@ def municipality_officials_prompt(
       the role's duties rather than the person's biography
     - A page section clearly labeled with a governing body name (e.g. "City Council
       Members", "Board of Aldermen") that lists names as headings or line items —
-      even if no contact info, titles, or other details are present; take the title
+      even if no contact info, roles, or other details are present; infer the role
       from the section heading
     Do NOT extract officials mentioned only in news articles, event summaries,
     meeting notes, or scattered references.
@@ -176,8 +192,8 @@ def municipality_officials_prompt(
     - If none found, use null.
 
     label:
-    - Everything the page uses to identify which office this person holds, joined with " - ".
-      Collect both parts:
+    - Everything the page uses to identify which office this person holds, written as one
+      label. Collect both parts:
         * the title — what the office is called: "Mayor", "Council Member", "Alderman",
           "Commissioner", "Supervisor", "Clerk"
         * which one — the district, ward, place or number, when a body has several:
@@ -188,15 +204,10 @@ def municipality_officials_prompt(
       title is in the section heading, the page title, or the body's description of itself.
       Collect the title from wherever the page states it:
         "Place 3 (East Ward)" under a "City Council" section
-            -> "Council Member - Place 3 (East Ward)"
+            -> "Council Member Place 3 (East Ward)"
         "District 1" on a page describing "one councilperson per district"
-            -> "Councilperson - District 1"
+            -> "Council Member District 1"
     - If the page states no title anywhere, give the rest alone: "District 6".
-    - " - " joins the parts of ONE office, never two. A person holding two offices gets two
-      records, one label each:
-        "Place 2 (West Ward) and Mayor Pro-Tem: Sharlene Hetzel"
-            -> record 1 label: "Council Member - Place 2 (West Ward)"
-            -> record 2 label: "Mayor Pro-Tem"
     {roles_hint_str}
 
     phone:
@@ -233,10 +244,9 @@ def municipality_officials_prompt(
 
     STEP 3 - ADDITIONAL RULES
     - Only extract information explicitly present in the content. Do not guess or fabricate.
-      Exception: taking a title from a governing body section heading, page title, or description
+      Exception: inferring a role from a governing body section heading, page title, or description
       is permitted — this is the one case where inference is required rather than direct extraction.
-    - One entry per person per label. If the same person appears more than once with the same
-      label, merge those into one record; if their labels differ, emit one record per label.
+    - One entry per person. If the same person appears more than once, merge into one record.
     - All details must refer to the official's current term.
 
     STEP 4 - RETURN JSON

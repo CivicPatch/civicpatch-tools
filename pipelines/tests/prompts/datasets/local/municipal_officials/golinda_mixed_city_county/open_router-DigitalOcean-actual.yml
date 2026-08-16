@@ -1,60 +1,48 @@
 people:
 - name: Joyce Farar
-  roles:
-  - Mayor
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Mayor
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
 - name: Bobby Farney
-  roles:
-  - Mayor Pro Tem
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Mayor Pro Tem
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
 - name: Wanda Ray
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Council
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
 - name: Michael Reed
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Council
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
 - name: Joe M Farney
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Council
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
 - name: Billy Elkins
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: cityofgolinda@gmail.com
+  label: Council
+  phone: (254) 881-7333
+  email: null
   url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null

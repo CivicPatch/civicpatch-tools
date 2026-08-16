@@ -137,7 +137,7 @@ class Person(BaseModel):
 
     name: str
     other_names: List[str] = []
-    # Raw labels, one per seat, verbatim from the page. Decomposition into role +
+    # Raw labels, one per office, verbatim from the page. Decomposition into role +
     # division + leftover happens in cp.org, not here.
     labels: List[str] = []
     phones: List[str] = []

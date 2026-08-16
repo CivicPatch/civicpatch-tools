@@ -35,7 +35,7 @@ _TAXONOMY = build_taxonomy(
 
 
 @pytest.mark.parametrize(
-    "label, role, division, seats, leftover",
+    "label, role, division, other_designations, leftover",
     [
         # Plain role, no designation: the division is the jurisdiction's own.
         ("Mayor", "Mayor", _BASE, [], ""),
@@ -81,11 +81,11 @@ _TAXONOMY = build_taxonomy(
         ("", None, _BASE, [], ""),
     ],
 )
-def test_parse_label(label, role, division, seats, leftover):
+def test_parse_label(label, role, division, other_designations, leftover):
     parsed = parse_label(label, _TAXONOMY)
     assert parsed.role == role
     assert division_ocdid(parsed, _JURISDICTION) == division
-    assert parsed.seats == seats
+    assert parsed.other_designations == other_designations
     assert parsed.leftover == leftover
 
 
@@ -131,7 +131,7 @@ def test_parse_label_keeps_the_losing_role():
     becomes a second post is not the parser's call."""
     parsed = parse_label("Council Member - Place 2 and Council President", _TAXONOMY)
     assert "Council Member" in parsed.roles
-    assert parsed.seats == ["Place 2"]
+    assert parsed.other_designations == ["Place 2"]
 
 
 def test_parse_label_names_one_role_once():
@@ -152,7 +152,7 @@ def test_parse_label_prefers_a_cardinal_before_the_key_to_a_stopword_after_it():
     as the ward's value and `ward:west` was lost."""
     parsed = parse_label("Place 2 (West Ward) and Mayor Pro-Tem", _TAXONOMY)
     assert division_ocdid(parsed, _JURISDICTION) == f"{_BASE}/ward:west"
-    assert parsed.seats == ["Place 2"]
+    assert parsed.other_designations == ["Place 2"]
 
 
 def test_parse_label_never_fabricates_a_division_from_trailing_text():

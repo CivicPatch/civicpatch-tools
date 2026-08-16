@@ -30,10 +30,10 @@ def office_name_to_labels(office_name: str) -> List[str]:
 
 
 def _sortable_designations(parsed: ParsedLabel) -> List[str]:
-    """Seat markers plus the division — both order a roster, so both sort."""
+    """The non-area designations plus the division — both order a roster, so both sort."""
     if not parsed.division:
-        return parsed.seats
-    return parsed.seats + [f"{parsed.division.designation} {parsed.division.value}"]
+        return parsed.other_designations
+    return parsed.other_designations + [f"{parsed.division.designation} {parsed.division.value}"]
 
 
 def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
