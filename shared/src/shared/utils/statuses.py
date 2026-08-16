@@ -58,6 +58,8 @@ class PipelineRunErrorType(StrEnum):
 
 
 class PipelineIssueType(StrEnum):
+    # TBD remove: the pipeline stopped emitting these 2026-08-16 — `parse_label` recovers
+    # `unmatched` from the raw label instead. Kept until the existing rows are drained.
     UNRECOGNIZED_ROLE = "unrecognized_role"
     # A queued merge failed; the PR stays parked (merge_enqueued_at kept) out of the review
     # pool until an admin dismisses this issue, which clears the park.

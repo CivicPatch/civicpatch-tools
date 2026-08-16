@@ -43,9 +43,12 @@ designations:
     aliases: []
   at-large:
     is_unique: false
+    # The only keyword that means something on its own: "at-large" *is* the answer, where
+    # "ward" without a value is just a word. Everything else needs a value to be a
+    # designation at all.
+    is_valueless: true
     aliases: 
       - citywide
       - city-wide
       - at large
       - city wide
-      - city

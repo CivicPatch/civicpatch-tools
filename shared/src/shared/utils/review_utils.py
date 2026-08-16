@@ -11,7 +11,6 @@ from . import name_utils
 class ReviewInputs(BaseModel):
     identities: Dict[str, List[str]] = {}
     unique_roles: List[str] = []
-    unrecognized_roles: List[dict] = []
 
 
 MIN_EXPECTED_PEOPLE = 3

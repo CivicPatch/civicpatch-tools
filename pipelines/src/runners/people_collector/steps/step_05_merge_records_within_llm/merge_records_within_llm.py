@@ -8,7 +8,6 @@ from runners.people_collector.schemas import (
     MergeRecordsWithinLLMStep,
     PeopleCollectorContext,
     Person,
-    UnrecognizedRole,
 )
 from runners.people_collector.steps.step_05_merge_records_within_llm.normalize import (
     normalize_record,
@@ -42,7 +41,6 @@ def merge_records_within_llm(
 
     identities = context.data.research_municipality_step.identities
 
-    all_unrecognized: List[UnrecognizedRole] = []
     all_excluded: List[Person] = []
 
     # Use name_utils to map every record's name to a canonical name
@@ -75,17 +73,8 @@ def merge_records_within_llm(
         else:
             kept_people.append(merged_person)
 
-    # over both lists — an excluded person's label is what triage needs to see
-    for person in kept_people + all_excluded:
-        for label in person.labels:
-            if not parse_label(label, taxonomy).role:
-                all_unrecognized.append(
-                    UnrecognizedRole(role=label, person_name=person.name)
-                )
-
     return MergeRecordsWithinLLMStep(
         records=kept_people,
-        unrecognized_roles=all_unrecognized,
         excluded_people=all_excluded,
     )
 

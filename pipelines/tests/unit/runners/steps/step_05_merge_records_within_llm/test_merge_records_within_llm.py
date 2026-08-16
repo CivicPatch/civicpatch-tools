@@ -599,3 +599,4 @@ class TestMergeWeakTieGroupsWithinLlm:
         result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" not in result
         assert len(result["Marty C Smith Jr"]) == 2
+

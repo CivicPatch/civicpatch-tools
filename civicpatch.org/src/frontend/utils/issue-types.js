@@ -1,4 +1,6 @@
 export const ISSUE_TYPE = {
+  // TBD remove: the pipeline stopped emitting these 2026-08-16; kept until the existing
+  // rows are drained. Drop the resolve-modal form and issue-row branch with it.
   UNRECOGNIZED_ROLE:       "unrecognized_role",
   PIPELINE_ERROR:          "pipeline_error",
   NO_INFO:                 "no_info",

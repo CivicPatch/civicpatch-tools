@@ -18,16 +18,9 @@ def review_output(context: PeopleCollectorContext) -> ReviewOutputStep:
     assert context.data.format_output_step is not None, "should never happen — format_output_step is required before review_output"
     officials = context.data.format_output_step.officials
 
-    merge_step = context.data.merge_records_within_llm_step
-    unrecognized_roles = (
-        [{"role": r.role, "person_name": r.person_name} for r in merge_step.unrecognized_roles]
-        if merge_step else []
-    )
-
     inputs = ReviewInputs(
         identities=research_step.identities if research_step else {},
         unique_roles=config_utils.get_unique_roles(context.data.role_config),
-        unrecognized_roles=unrecognized_roles,
     )
 
     result = build_review_summary(research_people, officials, inputs, origin_source)
