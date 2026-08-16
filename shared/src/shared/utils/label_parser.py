@@ -1,7 +1,8 @@
-"""Raw label -> (role, division, leftover).
+"""Raw label -> role, division, other designations, leftover.
 
-One whole label in, three parts out. The order is deliberate: resolve the role, resolve the
-division, and whatever is left stays raw. Nothing is invented and nothing is discarded — text
+A longest-match gazetteer cascade: match spans against the known alias tables, consume what
+matched, and let the next pass see only what survives. Designations run before roles because
+they are a closed vocabulary requiring a value, so they are the hardest to be wrong about. Nothing is invented and nothing is discarded — text
 the parser cannot classify survives as `leftover` so it can become a candidate later, rather
 than being dropped the way `normalize_designations` drops "(North)" today.
 
@@ -65,9 +66,9 @@ class ParsedLabel(BaseModel):
     # usually one area under two names ("District 1 (East Ward)"), and the loser is kept
     # because the local name is still evidence for matching records.
     divisions: List[Division] = []
-    # Seat identifiers that are not geographic — "Place 3", "Position 2", "At-Large A".
-    # These name a seat within a body, so they belong on `posts.label`, not the division.
-    seats: List[str] = []
+    # Designations that name no area — "Place 3", "Position 2", "At-Large A". They pick out
+    # one office within a body, so they belong on `posts.label`, not the division.
+    other_designations: List[str] = []
     # Raw, in original case, with the matched spans removed.
     leftover: str = ""
 
@@ -161,7 +162,7 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
 
     used: set = set()
     divisions: List[Division] = []
-    seats: List[str] = []
+    other_designations: List[str] = []
 
     found = _find_alias(words, designation_aliases)
     while found:
@@ -176,7 +177,7 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
                 if found_division not in divisions:
                     divisions.append(found_division)
             else:
-                seats.append(f"{canonical.title()} {value.title()}")
+                other_designations.append(f"{canonical.title()} {value.title()}")
         used.update(words[i].token for i in span)
         found = _find_alias(words, designation_aliases, start=max(span) + 1)
 
@@ -194,7 +195,7 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         roles=roles,
         division=_primary_division(divisions),
         divisions=divisions,
-        seats=seats,
+        other_designations=other_designations,
         leftover=_leftover(label, used),
     )
 

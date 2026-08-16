@@ -1,34 +1,42 @@
 run:
-  timestamp: '2026-08-16T16:52:54+00:00'
-  prompt_sha256: 0cbc27d97f00
-  prompt_file: _prompts/0cbc27d97f00.txt
+  timestamp: '2026-08-16T21:27:45+00:00'
+  prompt_sha256: bc0a307918ed
+  prompt_file: _prompts/bc0a307918ed.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - DigitalOcean
-  elapsed_seconds: 88.15
-  total_input_tokens: 4308
-  total_output_tokens: 497
-  total_cost_usd: 0.00038605
+  elapsed_seconds: 78.24
+  total_input_tokens: 99014
+  total_output_tokens: 5530
+  total_cost_usd: 0.00787108
 accuracy:
   person:
-    correct: 5
+    correct: 62
     missing: 0
-    spurious: 0
+    spurious: 1
     wrong: 0
-    precision: 1.0
+    precision: 0.9841269841269841
     recall: 1.0
-    f1: 1.0
+    f1: 0.992
+  primary_role:
+    correct: 59
+    missing: 3
+    spurious: 3
+    wrong: 0
+    precision: 0.9516129032258065
+    recall: 0.9516129032258065
+    f1: 0.9516129032258065
   roles:
-    correct: 6
-    missing: 0
+    correct: 62
+    missing: 3
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    recall: 0.9538461538461539
+    f1: 0.9763779527559056
   district:
-    correct: 4
+    correct: 21
     missing: 0
     spurious: 0
     wrong: 0
@@ -36,7 +44,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   designations_other:
-    correct: 4
+    correct: 17
     missing: 0
     spurious: 0
     wrong: 0
@@ -44,70 +52,505 @@ accuracy:
     recall: 1.0
     f1: 1.0
   email:
-    correct: 0
-    missing: 0
+    correct: 21
+    missing: 12
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 0.6363636363636364
+    f1: 0.7777777777777778
   phone:
-    correct: 0
-    missing: 5
+    correct: 30
+    missing: 20
     spurious: 0
     wrong: 0
-    precision: null
-    recall: 0.0
-    f1: 0.0
+    precision: 1.0
+    recall: 0.6
+    f1: 0.75
   url:
-    correct: 5
+    correct: 47
+    missing: 7
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 0.8703703703703703
+    f1: 0.9306930693069307
+  start_date:
+    correct: 12
     missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
     recall: 1.0
     f1: 1.0
-  start_date:
-    correct: 0
-    missing: 0
-    spurious: 0
-    wrong: 0
-    precision: null
-    recall: null
-    f1: null
   end_date:
-    correct: 0
+    correct: 12
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   image:
-    correct: 0
+    correct: 14
     missing: 0
-    spurious: 5
+    spurious: 1
     wrong: 0
-    precision: 0.0
-    recall: null
-    f1: 0.0
+    precision: 0.9333333333333333
+    recall: 1.0
+    f1: 0.9655172413793104
 aggregated_report:
+  image: 1.0
   roles_precision: 1.0
-  email: 1.0
-  name: 1.0
-  phone: 0.0
+  url: 0.8461538461538461
   designations: 1.0
+  end_date: 1.0
+  phone: 0.7076923076923076
+  name: 1.0
   designations_precision: 1.0
-  url: 1.0
-  roles: 1.0
+  start_date: 1.0
+  roles: 0.9794871794871796
+  email: 0.8461538461538461
 per_case_scores:
+- case_id: austin_city_manager_staff
+  scores: {}
+- case_id: austin_council
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    designations_precision: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: austin_district7_council_member
+  scores:
+    image: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    end_date: 1.0
+    designations_precision: 1.0
+    name: 1.0
+    phone: 1.0
+    start_date: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: board_of_aldermen
+  scores:
+    image: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    end_date: 1.0
+    phone: 0.2
+    name: 1.0
+    start_date: 1.0
+    roles: 1.0
+    email: 1.0
 - case_id: coleman_council
   scores:
     roles_precision: 1.0
-    email: 1.0
-    name: 1.0
-    phone: 0.0
-    designations: 1.0
-    designations_precision: 1.0
     url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    designations_precision: 1.0
+    roles: 0.9
+    email: 1.0
+- case_id: golinda_mixed_city_county
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
     roles: 1.0
+    email: 0.0
+- case_id: inverted_name_format
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    designations_precision: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: la_porte_council
+  scores:
+    image: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 0.0
+    name: 1.0
+    designations_precision: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: mixed_current_past
+  scores:
+    roles_precision: 1.0
+    url: 0.0
+    designations: 1.0
+    phone: 0.0
+    name: 1.0
+    roles: 1.0
+    email: 0.0
+- case_id: nav_links_no_names
+  scores: {}
+- case_id: placeholder_name_council
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    designations_precision: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: raisin_township_clerk
+  scores:
+    roles_precision: 1.0
+    url: 0.0
+    designations: 1.0
+    phone: 0.0
+    name: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: raisin_township_supervisor
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    roles: 1.0
+    email: 1.0
+- case_id: redundant_place_role
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    end_date: 1.0
+    phone: 1.0
+    name: 1.0
+    designations_precision: 1.0
+    start_date: 1.0
+    roles: 0.8333333333333334
+    email: 1.0
+- case_id: vacant_positions_council
+  scores:
+    roles_precision: 1.0
+    url: 1.0
+    designations: 1.0
+    phone: 1.0
+    name: 1.0
+    roles: 1.0
+    email: 1.0
+mismatches:
+  board_of_aldermen:
+  - person: Abelardo Gonzalez
+    field: person
+    expected_label: ''
+    actual_label: Alderman
+    expected: "\u2014"
+    actual: present
+  - person: Christi Burnias
+    field: phone
+    expected_label: Alderwoman
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Javier Vera
+    field: phone
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Mark A. Johnson
+    field: phone
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Peter Harris
+    field: phone
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  coleman_council:
+  - person: Sharlene T. Hetzel
+    field: primary_role
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Mayor Pro Tem
+    actual:
+    - Council Member
+  - person: Sharlene T. Hetzel
+    field: roles
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Council Member
+    - Mayor Pro Tem
+    actual:
+    - Council Member
+  golinda_mixed_city_county:
+  - person: Billy Elkins
+    field: email
+    expected_label: Council
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  - person: Bobby Farney
+    field: email
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  - person: Joe M Farney
+    field: email
+    expected_label: Council
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  - person: Joyce Farar
+    field: email
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  - person: Michael Reed
+    field: email
+    expected_label: Council
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  - person: Wanda Ray
+    field: email
+    expected_label: Council
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    actual: "\u2014"
+  la_porte_council:
+  - person: Bill Bentley
+    field: phone
+    expected_label: Council Member District 3
+    actual_label: Council Member District 3
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Brandon Lunsford
+    field: phone
+    expected_label: Council Member At-Large A
+    actual_label: Council Member At-Large A
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Brent McCaulley
+    field: phone
+    expected_label: Council Member At-Large B
+    actual_label: Council Member At-Large B
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Chuck Engelken
+    field: phone
+    expected_label: Council Member District 2
+    actual_label: Council Member District 2
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Jay Martin
+    field: phone
+    expected_label: Council Member District 5
+    actual_label: Council Member District 5
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Mandi Williams
+    field: phone
+    expected_label: Council Member District 1
+    actual_label: Council Member District 1
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Rick Helton
+    field: phone
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Robbie McLarrin
+    field: phone
+    expected_label: Council Member District 6
+    actual_label: Council Member District 6
+    expected: (281) 471-5021
+    actual: "\u2014"
+  - person: Robert Guerra
+    field: phone
+    expected_label: Council Member District 4
+    actual_label: Council Member District 4
+    expected: (281) 471-5021
+    actual: "\u2014"
+  mixed_current_past:
+  - person: Al Stephens
+    field: email
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Al Stephens
+    field: phone
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Al Stephens
+    field: url
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: url
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: url
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: url
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: url
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  - person: Michael Pye
+    field: email
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Michael Pye
+    field: phone
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Michael Pye
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://cityofleonard.net/page/city_council
+    actual: "\u2014"
+  raisin_township_clerk:
+  - person: Susan Bunch
+    field: phone
+    expected_label: Clerk
+    actual_label: Clerk
+    expected: (517) 423-3162
+    actual: "\u2014"
+  - person: Susan Bunch
+    field: url
+    expected_label: Clerk
+    actual_label: Clerk
+    expected: https://raisinchartertownship.com/clerk
+    actual: "\u2014"
+  - person: Susan Bunch
+    field: image
+    expected_label: Clerk
+    actual_label: Clerk
+    expected: "\u2014"
+    actual: local://2105ede652ed.png
+  redundant_place_role:
+  - person: Carolyn Richmond
+    field: primary_role
+    expected_label: Council Member Place 3, Mayor Pro-Tem
+    actual_label: Council Member Place 3
+    expected:
+    - Mayor Pro Tem
+    actual:
+    - Council Member
+  - person: Carolyn Richmond
+    field: roles
+    expected_label: Council Member Place 3, Mayor Pro-Tem
+    actual_label: Council Member Place 3
+    expected:
+    - Council Member
+    - Mayor Pro Tem
+    actual:
+    - Council Member
+  - person: Garrett Wood
+    field: primary_role
+    expected_label: Council Member Place 5, Mayor
+    actual_label: Council Member Place 5
+    expected:
+    - Mayor
+    actual:
+    - Council Member
+  - person: Garrett Wood
+    field: roles
+    expected_label: Council Member Place 5, Mayor
+    actual_label: Council Member Place 5
+    expected:
+    - Council Member
+    - Mayor
+    actual:
+    - Council Member

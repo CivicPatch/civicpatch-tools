@@ -1,61 +1,49 @@
 people:
 - name: Michael Pye
-  roles:
-  - Mayor
-  designations: []
+  label: Mayor
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Al Stephens
-  roles:
-  - Mayor Pro Tem
-  designations: []
+  label: Mayor Pro Tem
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Bobby Hanson
-  roles:
-  - Council Member
-  designations: []
+  label: Council Member
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Darrell Grintz
-  roles:
-  - Council Member
-  designations: []
+  label: Council Member
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Billy Wayne Martin
-  roles:
-  - Council Member
-  designations: []
+  label: Council Member
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null
 - name: Charles Wrenn
-  roles:
-  - Council Member
-  designations: []
+  label: Council Member
   phone: null
   email: null
-  url: https://www.cityofleonard.net/page/city_council
+  url: null
   start_date: null
   end_date: null
   image: null

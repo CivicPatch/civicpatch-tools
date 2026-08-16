@@ -1,64 +1,47 @@
 people:
 - name: Mark Bentley
-  roles:
-  - Mayor
-  designations: []
-  phone: null
+  label: Mayor
+  phone: 830-693-2951
   email: mayorbentley@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2024'
   end_date: '2026'
   image: null
 - name: Mike Shaw
-  roles:
-  - Council Member
-  designations:
-  - Place 1
-  phone: null
+  label: Council Member Place 1
+  phone: 830-693-2951
   email: shawm1949@gmail.com
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2024'
   end_date: '2026'
   image: null
 - name: Barbara Peskin
-  roles:
-  - Council Member
-  designations:
-  - Place 2
-  phone: null
+  label: Council Member Place 2
+  phone: 830-693-2951
   email: bpeskin@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2025'
   end_date: '2027'
   image: null
 - name: Carolyn Richmond
-  roles:
-  - Council Member
-  designations:
-  - Place 3
-  phone: null
+  label: Council Member Place 3
+  phone: 830-693-2951
   email: crichmond@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2024'
   end_date: '2026'
   image: null
 - name: Bruce Johnson
-  roles:
-  - Council Member
-  designations:
-  - Place 4
-  phone: null
+  label: Council Member Place 4
+  phone: 830-693-2951
   email: bjohnson@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2025'
   end_date: '2027'
   image: null
 - name: Garrett Wood
-  roles:
-  - Council Member
-  designations:
-  - Place 5
-  phone: null
+  label: Council Member Place 5
+  phone: 830-693-2951
   email: gwood@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
   start_date: '2025'

@@ -120,6 +120,21 @@ def read_officials() -> list[dict]:
     return rows
 
 
+def read_mismatches(directory: pathlib.Path) -> dict[str, dict]:
+    """Per-person expected/actual, by provider then case.
+
+    Latest run only — each report is overwritten in place, so history holds the aggregate
+    while this holds the detail behind the newest one.
+    """
+    out: dict[str, dict] = {}
+    for report_path in sorted(directory.glob("*-eval-report.yml")):
+        provider = report_path.name.removesuffix("-eval-report.yml").replace("open_router-", "")
+        rows = load(report_path).get("mismatches") or {}
+        if rows:
+            out[provider] = rows
+    return out
+
+
 def read_pass_fail(name: str) -> list[dict]:
     """relevant_page and find_jurisdiction_url: a failed-case list, plus accuracy if present."""
     rows = []

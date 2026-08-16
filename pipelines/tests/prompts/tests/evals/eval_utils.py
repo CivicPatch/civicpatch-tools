@@ -61,6 +61,25 @@ def make_provider_client(param, make_prompt_fn):
     }
 
 
+def _prune_provider_reports(evals_dir: str, providers) -> None:
+    """Delete reports for providers this eval no longer runs.
+
+    A dropped provider's report otherwise sits in the directory forever and the dashboard
+    renders it as a live column — DeepInfra was dropped from both the comparison and
+    production routing on 2026-08-15 and still showed up as a third provider. Same orphan
+    problem as the prompt archive.
+
+    A provider that failed this run still counts as participating: erasing its last good
+    numbers because one run errored would lose the only record of what it used to score.
+    """
+    keep = set(providers)
+    if not keep:
+        return
+    for path in pathlib.Path(evals_dir).glob("*-eval-report.yml"):
+        if path.name.removesuffix("-eval-report.yml") not in keep:
+            path.unlink()
+
+
 def write_comparison_report(evals_dir, comparison, failures):
     """`failures` is written even when empty so an all-failed run explains itself:
     `providers: {}` alone reads as "no data" rather than "every provider blew up"."""
@@ -71,6 +90,7 @@ def write_comparison_report(evals_dir, comparison, failures):
             {"providers": comparison, "failures": failures}, f, sort_keys=False
         )
     print(f"Saved comparison report to {comparison_path}")
+    _prune_provider_reports(evals_dir, set(comparison) | set(failures))
 
 
 _LABEL = re.compile(r"^[ \t]*[A-Z][A-Za-z][A-Za-z /]{1,40}:[ \t]*$")
@@ -130,6 +150,25 @@ def record_run(evals_dir: str, prompt: str) -> dict:
 HISTORY_DEPTH = 5
 
 
+def _prune_prompt_archive(evals_dir: str, runs: list) -> None:
+    """Drop archived prompts that no surviving run points at.
+
+    Retention follows HISTORY_DEPTH rather than a policy of its own — a prompt is worth
+    keeping exactly as long as a run references it. Without this every tweak leaves a file
+    behind: 17 accumulated in one afternoon of iterating on the officials prompt, of which
+    one was live, and `visualize` then diffs against whichever it finds.
+
+    Never prunes on an empty history: that state means "no runs recorded yet", not "nothing
+    is referenced", and deleting the archive there would take the current prompt with it.
+    """
+    referenced = {run.get("prompt_sha256") for run in runs}
+    if not referenced:
+        return
+    for path in (pathlib.Path(evals_dir) / "_prompts").glob("*.txt"):
+        if path.stem not in referenced:
+            path.unlink()
+
+
 def record_history(
     evals_dir: str,
     provider: str,
@@ -171,3 +210,4 @@ def record_history(
     runs.extend(mine[-HISTORY_DEPTH:])
     runs.sort(key=lambda r: (r.get("provider") or "", r.get("timestamp") or ""))
     path.write_text(yaml.safe_dump({"runs": runs}, sort_keys=False), encoding="utf-8")
+    _prune_prompt_archive(evals_dir, runs)

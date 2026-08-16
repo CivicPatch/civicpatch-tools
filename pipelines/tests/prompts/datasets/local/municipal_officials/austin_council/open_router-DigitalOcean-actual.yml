@@ -1,8 +1,6 @@
 people:
 - name: Kirk Watson
-  roles:
-  - Mayor
-  designations: []
+  label: Mayor
   phone: 512-978-2100
   email: null
   url: https://www.austintexas.gov/email/mayorwatson
@@ -10,10 +8,7 @@ people:
   end_date: null
   image: null
 - name: Natasha Harper-Madison
-  roles:
-  - Council Member
-  designations:
-  - District 1
+  label: Council Member District 1
   phone: 512-978-2101
   email: null
   url: https://www.austintexas.gov/district1
@@ -21,10 +16,7 @@ people:
   end_date: null
   image: null
 - name: Vanessa Fuentes
-  roles:
-  - Council Member
-  designations:
-  - District 2
+  label: Council Member District 2
   phone: 512-978-2102
   email: null
   url: https://www.austintexas.gov/district2
@@ -32,10 +24,7 @@ people:
   end_date: null
   image: null
 - name: "Jos\xE9 Vel\xE1squez"
-  roles:
-  - Council Member
-  designations:
-  - District 3
+  label: Council Member District 3
   phone: 512-978-2103
   email: null
   url: https://www.austintexas.gov/district3
@@ -43,10 +32,7 @@ people:
   end_date: null
   image: null
 - name: "Jos\xE9 \"Chito\" Vela"
-  roles:
-  - Council Member
-  designations:
-  - District 4
+  label: Council Member District 4
   phone: 512-978-2104
   email: null
   url: https://www.austintexas.gov/district4
@@ -54,10 +40,7 @@ people:
   end_date: null
   image: null
 - name: Ryan Alter
-  roles:
-  - Council Member
-  designations:
-  - District 5
+  label: Council Member District 5
   phone: 512-978-2105
   email: null
   url: https://www.austintexas.gov/district5
@@ -65,10 +48,7 @@ people:
   end_date: null
   image: null
 - name: Krista Laine
-  roles:
-  - Council Member
-  designations:
-  - District 6
+  label: Council Member District 6
   phone: 512-978-2106
   email: null
   url: https://www.austintexas.gov/district6
@@ -76,10 +56,7 @@ people:
   end_date: null
   image: null
 - name: Mike Siegel
-  roles:
-  - Council Member
-  designations:
-  - District 7
+  label: Council Member District 7
   phone: 512-978-2107
   email: null
   url: https://www.austintexas.gov/district7
@@ -87,10 +64,7 @@ people:
   end_date: null
   image: null
 - name: Paige Ellis
-  roles:
-  - Council Member
-  designations:
-  - District 8
+  label: Council Member District 8
   phone: 512-978-2108
   email: null
   url: https://www.austintexas.gov/district8
@@ -98,10 +72,7 @@ people:
   end_date: null
   image: null
 - name: Zohaib "Zo" Qadri
-  roles:
-  - Council Member
-  designations:
-  - District 9
+  label: Council Member District 9
   phone: 512-978-2109
   email: null
   url: https://www.austintexas.gov/district9
@@ -109,10 +80,7 @@ people:
   end_date: null
   image: null
 - name: Marc Duchen
-  roles:
-  - Council Member
-  designations:
-  - District 10
+  label: Council Member District 10
   phone: 512-978-2110
   email: null
   url: https://www.austintexas.gov/district10

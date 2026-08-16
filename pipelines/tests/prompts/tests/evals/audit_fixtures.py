@@ -18,7 +18,7 @@ import pathlib
 import sys
 
 import yaml
-from accuracy import _districts, _roles, _seats, build_eval_taxonomy, normalize_field
+from accuracy import _districts, _other_designations, _roles, build_eval_taxonomy, normalize_field
 from eval_utils import PROVIDER_COMPARISON
 from shared.utils import name_utils
 from shared.utils.label_parser import ParsedLabel, parse_label
@@ -122,7 +122,7 @@ def audit(roots: list[pathlib.Path]) -> list[dict]:
 
 
 def _grouped_labels(people: list[dict]) -> dict[str, list[str]]:
-    """All of one person's labels, keyed by normalized name. A person holding two seats is
+    """All of one person's labels, keyed by normalized name. A person holding two offices is
     two records, so a `{name: person}` comprehension would keep only the last."""
     grouped: dict[str, list[str]] = {}
     for person in people:
@@ -132,7 +132,7 @@ def _grouped_labels(people: list[dict]) -> dict[str, list[str]]:
 
 
 def audit_sets(roots: list[pathlib.Path]) -> list[dict]:
-    """Same rule for what a label decomposes into, so two spellings of one seat are not
+    """Same rule for what a label decomposes into, so two spellings of one office are not
     reported as a disagreement — only a genuine difference in role, division or seat is."""
     taxonomy = build_eval_taxonomy()
     candidates = []
@@ -151,7 +151,7 @@ def audit_sets(roots: list[pathlib.Path]) -> list[dict]:
             for field, decompose in (
                 ("roles", _roles),
                 ("district", _districts),
-                ("designations_other", _seats),
+                ("designations_other", _other_designations),
             ):
                 produced = [
                     tuple(sorted(decompose(_parse(labels, taxonomy)))) for labels in present

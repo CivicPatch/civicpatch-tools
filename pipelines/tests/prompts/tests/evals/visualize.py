@@ -22,6 +22,7 @@ import pathlib
 from accuracy import GATE_THRESHOLDS
 from dashboard_data import (
     DATASET_DIRS,
+    read_mismatches,
     EVAL_DIRS,
     PRIORITY,
     WIDE_SWING,
@@ -374,6 +375,10 @@ def _modal_payload() -> str:
                 for r in read_history(directory)
             ],
             "prompts": {sha: v["text"] for sha, v in versions.items()},
+            # Fetched on demand rather than inlined: 15 pages of markdown would dwarf the
+            # rest of the document, and the server root is already set so this resolves.
+            "dataset": DATASET_DIRS.get(name, ""),
+            "mismatches": read_mismatches(directory),
         }
     return json.dumps(payload)
 
@@ -397,6 +402,18 @@ margin:2.4rem 0 .6rem;font-weight:700}
 .sub2{font-size:.8rem;color:var(--faint);margin:.9rem 0 .35rem;font-weight:600;
 font-family:ui-monospace,Menlo,monospace}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.35rem 1.1rem}
+.bmain{flex:1;min-width:0;overflow:auto}
+.bcase{border:1px solid var(--line);border-radius:8px;margin:0 0 .5rem;overflow:hidden}
+.bcase.on{border-color:var(--p2)}
+.bch{display:flex;justify-content:space-between;width:100%;gap:.6rem;padding:.45rem .6rem;
+background:none;border:0;color:var(--fg);font:inherit;font-size:.82rem;cursor:pointer;text-align:left}
+.bch:hover{background:var(--track)}
+.bcm{font-size:.76rem;margin:0}
+.bcm td,.bcm th{padding:.2rem .5rem;vertical-align:top}
+.bcf{color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+.bce{color:var(--ok)}
+.bca{color:var(--bad)}
+#binput{max-height:22rem;overflow:auto}
 .card.pad{padding:1rem 1.1rem}
 .vrow{display:flex;align-items:center;gap:.9rem;padding:.72rem 0;border-top:1px solid var(--line);flex-wrap:wrap}
 .vrow:first-child{border-top:0}
@@ -473,7 +490,19 @@ width:1.9rem;height:1.9rem;cursor:pointer;flex:0 0 auto}
 .dlgbar button:hover{color:var(--fg);border-color:var(--muted)}
 .bwarn{margin:0;padding:.55rem 1rem;font-size:.8rem;color:var(--faint);font-weight:500;
 border-bottom:1px solid var(--line);background:var(--bg);line-height:1.5}
-.bwrap{display:flex;align-items:stretch;max-height:min(62vh,640px)}
+.bwrap{display:flex;align-items:stretch;max-height:min(62vh,640px);position:relative;overflow:hidden}
+/* Slides in over the case list rather than pushing it: the list is what you came from, and
+   animating width reflows every table inside it on each frame. */
+#bdetail{position:absolute;top:0;right:0;bottom:0;width:min(62%,44rem);background:var(--card);
+border-left:1px solid var(--line);overflow:auto;transform:translateX(101%);
+transition:transform .22s ease;will-change:transform}
+#bdetail.open{transform:translateX(0)}
+@media(prefers-reduced-motion:reduce){#bdetail{transition:none}}
+.bdclose{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;
+align-items:center;gap:.6rem;padding:.4rem .6rem;background:var(--card);
+border-bottom:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.bdclose button{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;padding:.1rem .4rem}
+.bdclose button:hover{color:var(--fg)}
 .bside{flex:0 0 15.5rem;border-right:1px solid var(--line);overflow-y:auto;padding:.5rem}
 .bgroup{margin-bottom:.5rem;border:1px solid transparent;border-radius:8px}
 .bgroup.on{border-color:var(--line);background:var(--bg)}
@@ -496,7 +525,7 @@ padding:.28rem .5rem .28rem 1rem;color:var(--muted);font-size:.8rem;border-radiu
 
 SCRIPT = """
 const DATA = __DATA__;
-let current = {eval: null, sha: null, ts: null, prov: null, metric: null};
+let current = {eval: null, sha: null, ts: null, prov: null, metric: null, case: null};
 
 // Runs grouped by prompt version, newest first. Grouping rather than listing flat is the
 // point: nine runs of one prompt is one entry with nine data points under it, so the
@@ -531,7 +560,8 @@ function render() {
   document.getElementById('bmeta').textContent =
     `${current.eval} · ${runs.length} run(s) · ${text.split('\\n').length} lines`
     + (current.metric ? ` · column shows ${current.metric}` : '');
-  document.getElementById('btext').textContent = text;
+  renderCases();
+  renderDetail();
 
   document.querySelectorAll('#bside .bghead, #bside .brun').forEach(b =>
     b.addEventListener('click', e => {
@@ -551,13 +581,72 @@ document.querySelectorAll('a.dot').forEach(a => {
     if (!dlg || !dlg.showModal || !DATA[a.dataset.eval]) return;
     e.preventDefault();
     current = {eval: a.dataset.eval, sha: a.dataset.sha, ts: a.dataset.ts,
-               prov: a.dataset.prov, metric: a.dataset.metric};
+               prov: a.dataset.prov, metric: a.dataset.metric, case: null};
     render();
     dlg.showModal();
   });
 });
+function cell(v) {
+  const s = Array.isArray(v) ? (v.length ? v.join(', ') : '—') : (v === '' ? '—' : String(v));
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+}
+
+// Expected vs actual per case, above the prompt. The dispositions say a value is wrong;
+// this says which value, for which person.
+function renderCases() {
+  const byCase = (DATA[current.eval].mismatches || {})[current.prov] || {};
+  const names = Object.keys(byCase).sort();
+  const el = document.getElementById('bcases');
+  if (!names.length) {
+    el.innerHTML = '<p class="bwarn">No recorded mismatches for ' + (current.prov || 'this provider')
+      + ' on the latest run.</p>';
+    return;
+  }
+  el.innerHTML = '<p class="bwarn">Latest run only — pick a case to see the prompt and the page '
+    + 'it was scored against.</p>' + names.map(name => `
+    <div class="bcase${name === current.case ? ' on' : ''}">
+      <button class="bch" data-case="${name}">
+        <span>${name}</span><span class="bgn">${byCase[name].length}</span>
+      </button>
+      <table class="dt bcm"><thead><tr><th></th><th>field</th><th>expected</th><th>actual</th></tr></thead>
+      <tbody>${byCase[name].map(r => `<tr><th>${cell(r.person)}</th>
+        <td class="bcf">${cell(r.field)}</td>
+        <td class="bce">${cell(r.expected)}</td>
+        <td class="bca">${cell(r.actual)}</td></tr>`).join('')}</tbody></table>
+    </div>`).join('');
+  el.querySelectorAll('.bch').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault();
+    current.case = current.case === b.dataset.case ? null : b.dataset.case;
+    render();
+  }));
+}
+
+async function renderDetail() {
+  const detail = document.getElementById('bdetail');
+  detail.classList.toggle('open', !!current.case);
+  detail.setAttribute('aria-hidden', current.case ? 'false' : 'true');
+  if (!current.case) return;
+  detail.scrollTop = 0;
+  document.getElementById('bdname').textContent = current.case;
+  document.getElementById('btext').textContent =
+    DATA[current.eval].prompts[current.sha] || '(not archived)';
+  const input = document.getElementById('binput');
+  document.getElementById('bihead').textContent = `Case input — ${current.case}/input.md`;
+  input.textContent = 'loading…';
+  const url = `${DATA[current.eval].dataset}/${current.case}/input.md`;
+  try {
+    const res = await fetch(url);
+    input.textContent = res.ok ? await res.text() : `(${res.status} fetching ${url})`;
+  } catch (err) {
+    input.textContent = `(cannot fetch ${url} — open the dashboard with "mise run evals-serve")`;
+  }
+}
+
 const browser = document.getElementById('browser');
 if (browser) browser.addEventListener('click', e => { if (e.target === browser) browser.close(); });
+
+const detailClose = document.getElementById('bdx');
+if (detailClose) detailClose.addEventListener('click', () => { current.case = null; render(); });
 """
 
 MODAL = """
@@ -566,9 +655,21 @@ MODAL = """
     <div><code id="bsha">—</code><span class="pvm" id="bmeta"></span></div>
     <button value="close" aria-label="Close">&#10005;</button>
   </form>
-  <p class="bwarn">System prompt only. Each run sends this once per case, with that case&rsquo;s page
-  content as the user message; <code>&lt;injected per case&gt;</code> marks the block that varies.</p>
-  <div class="bwrap"><aside class="bside" id="bside"></aside><pre id="btext"></pre></div>
+  <div class="bwrap">
+    <aside class="bside" id="bside"></aside>
+    <div class="bmain">
+      <section id="bcases"></section>
+      <section id="bdetail" aria-hidden="true">
+        <div class="bdclose"><span id="bdname"></span>
+          <button type="button" id="bdx" aria-label="Close case">&#10005;</button></div>
+        <p class="bwarn">System prompt, sent once per case with that case&rsquo;s page content as
+        the user message; <code>&lt;injected per case&gt;</code> marks the block that varies.</p>
+        <pre id="btext"></pre>
+        <p class="bwarn" id="bihead">Case input</p>
+        <pre id="binput"></pre>
+      </section>
+    </div>
+  </div>
 </dialog>"""
 
 

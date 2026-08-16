@@ -26,6 +26,7 @@ from accuracy import (
     GATE_THRESHOLDS as ACCURACY_THRESHOLDS,
     as_report,
     case_dispositions,
+    case_mismatches,
     merge_dispositions,
     summarize,
 )
@@ -123,7 +124,8 @@ async def _run_single_case(model_client, case, ocdid):
                 case_aggregate[key] = sum(present) / len(present)
 
     dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)
-    return case["id"], case_aggregate, case_scores, dispositions
+    mismatches = case_mismatches(actual.people, expected, EVAL_TAXONOMY)
+    return case["id"], case_aggregate, case_scores, dispositions, mismatches
 
 
 @pytest.mark.asyncio
@@ -145,15 +147,18 @@ async def run_eval(
     )
 
     _progress(name, f"ALL DONE in {time.time() - batch_started:.1f}s")
-    per_case_scores = [(case_id, agg) for case_id, agg, _, _ in results]
-    scores = [case_scores for _, _, case_scores, _ in results]
+    per_case_scores = [(case_id, agg) for case_id, agg, _, _, _ in results]
+    scores = [case_scores for _, _, case_scores, _, _ in results]
     # Dispositions are counted across every person in the run, not averaged per case —
     # precision has no meaning inside one case that produced nothing.
-    accuracy = summarize(merge_dispositions([d for _, _, _, d in results]))
+    accuracy = summarize(merge_dispositions([d for _, _, _, d, _ in results]))
     # The per-person scores are returned, not discarded. Rebuilding them from the saved
     # -actual.yml was a second scoring implementation that silently drifted from this one.
-    case_scores_by_id = {case_id: case_scores for case_id, _, case_scores, _ in results}
-    return aggregate(scores), per_case_scores, accuracy, case_scores_by_id
+    case_scores_by_id = {case_id: case_scores for case_id, _, case_scores, _, _ in results}
+    # Per-person expected/actual, so the dashboard can show *what* differed rather than only
+    # that something did. Keyed by case; empty entries dropped to keep the report readable.
+    mismatches = {case_id: rows for case_id, _, _, _, rows in results if rows}
+    return aggregate(scores), per_case_scores, accuracy, case_scores_by_id, mismatches
 
 
 @pytest_asyncio.fixture
@@ -227,7 +232,9 @@ async def _run_provider(client, cases):
     # county parsing, and has raised on the first case of every provider ever since.
     ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example_{client['name']}/government"
     start_time = time.time()
-    report, per_case_scores, accuracy, case_scores_by_id = await run_eval(client, cases, ocdid)
+    report, per_case_scores, accuracy, case_scores_by_id, mismatches = await run_eval(
+        client, cases, ocdid
+    )
     elapsed_seconds = round(time.time() - start_time, 2)
     llm_costs = cost_utils.get_cost_tracker(ocdid)["llm_costs"]
     return {
@@ -236,6 +243,7 @@ async def _run_provider(client, cases):
         "accuracy": accuracy,
         "per_case_scores": per_case_scores,
         "case_scores_by_id": case_scores_by_id,
+        "mismatches": mismatches,
         "elapsed_seconds": elapsed_seconds,
         "llm_costs": llm_costs,
     }
@@ -312,6 +320,7 @@ async def test_provider_comparison(load_eval_cases):
                         {"case_id": case_id, "scores": case_aggregate}
                         for case_id, case_aggregate in result["per_case_scores"]
                     ],
+                    "mismatches": result["mismatches"],
                 },
                 f,
                 sort_keys=False,

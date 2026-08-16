@@ -24,15 +24,7 @@ people:
   end_date: "2027"
   image: null
 - name: Carolyn Richmond
-  label: Council Member Place 3
-  phone: null
-  email: crichmond@meadowlakestx.us
-  url: https://meadowlakestexas.org/government/city_council.php
-  start_date: "2024"
-  end_date: "2026"
-  image: null
-- name: Carolyn Richmond
-  label: Mayor Pro-Tem
+  label: Council Member Place 3, Mayor Pro-Tem
   phone: null
   email: crichmond@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
@@ -48,15 +40,7 @@ people:
   end_date: "2027"
   image: null
 - name: Garrett Wood
-  label: Council Member Place 5
-  phone: null
-  email: gwood@meadowlakestx.us
-  url: https://meadowlakestexas.org/government/city_council.php
-  start_date: "2025"
-  end_date: "2027"
-  image: null
-- name: Garrett Wood
-  label: Mayor
+  label: Council Member Place 5, Mayor
   phone: null
   email: gwood@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php

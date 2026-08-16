@@ -1,8 +1,6 @@
 people:
 - name: Mark Bentley
-  roles:
-  - Mayor
-  designations: []
+  label: Mayor
   phone: null
   email: mayorbentley@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
@@ -10,10 +8,7 @@ people:
   end_date: '2026'
   image: null
 - name: Mike Shaw
-  roles:
-  - Council Member
-  designations:
-  - Place 1
+  label: Council Member Place 1
   phone: null
   email: shawm1949@gmail.com
   url: https://meadowlakestexas.org/government/city_council.php
@@ -21,10 +16,7 @@ people:
   end_date: '2026'
   image: null
 - name: Barbara Peskin
-  roles:
-  - Council Member
-  designations:
-  - Place 2
+  label: Council Member Place 2
   phone: null
   email: bpeskin@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
@@ -32,11 +24,7 @@ people:
   end_date: '2027'
   image: null
 - name: Carolyn Richmond
-  roles:
-  - Council Member
-  - Mayor Pro-Tem
-  designations:
-  - Place 3
+  label: Council Member Place 3
   phone: null
   email: crichmond@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
@@ -44,10 +32,7 @@ people:
   end_date: '2026'
   image: null
 - name: Bruce Johnson
-  roles:
-  - Council Member
-  designations:
-  - Place 4
+  label: Council Member Place 4
   phone: null
   email: bjohnson@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php
@@ -55,11 +40,7 @@ people:
   end_date: '2027'
   image: null
 - name: Garrett Wood
-  roles:
-  - Council Member
-  - Mayor
-  designations:
-  - Place 5
+  label: Council Member Place 5
   phone: null
   email: gwood@meadowlakestx.us
   url: https://meadowlakestexas.org/government/city_council.php

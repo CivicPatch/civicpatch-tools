@@ -1,36 +1,57 @@
 run:
-  timestamp: '2026-08-16T02:25:44+00:00'
-  prompt_sha256: e6431d3c6017
-  prompt_file: _prompts/e6431d3c6017.txt
+  timestamp: '2026-08-16T21:35:42+00:00'
+  prompt_sha256: 962c93a9a841
+  prompt_file: _prompts/962c93a9a841.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 67.0
+  elapsed_seconds: 71.79
   total_input_tokens: 79254
-  total_output_tokens: 1768
-  total_cost_usd: 0.00584834
+  total_output_tokens: 1887
+  total_cost_usd: 0.00586857
 accuracy:
   relevant_urls:
-    correct: 24
-    missing: 0
-    spurious: 63
+    correct: 22
+    missing: 2
+    spurious: 69
     wrong: 0
-    precision: 0.27586206896551724
-    recall: 1.0
-    f1: 0.43243243243243246
+    precision: 0.24175824175824176
+    recall: 0.9166666666666666
+    f1: 0.3826086956521739
   is_relevant:
-    correct: 15
+    correct: 16
     missing: 0
     spurious: 0
-    wrong: 1
-    precision: 0.9375
-    recall: 0.9375
-    f1: 0.9375
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
 failed_cases:
 - model_client: open_router-DigitalOcean
-  case_id: raisin_township_clerk
+  case_id: san_antonio
   failures:
-  - field: is_relevant
-    expected: true
-    actual: false
-    score: 0.0
-    threshold: 1.0
+  - field: relevant_urls
+    expected:
+    - https://www.sa.gov/Government/Officials
+    - https://www.sa.gov/Directory
+    actual:
+    - https://www.sa.gov/Directory/Departments
+    - https://www.sa.gov/Government
+    - https://www.sa.gov/Government/Officials
+    score: 0.5
+    threshold: 0.75
+- model_client: open_router-DigitalOcean
+  case_id: san_saba_airport_advisory_irrelevant
+  failures:
+  - field: relevant_urls
+    expected:
+    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/city-council/
+    - https://sansabatexas.com/city-hall/
+    actual:
+    - https://sansabatexas.com/government/
+    - https://sansabatexas.com/city-hall/department-heads/
+    - https://sansabatexas.com/boards-commissions/
+    - https://sansabatexas.com/city-hall/administration/
+    - https://sansabatexas.com/city-hall/city-council/
+    score: 0.6666666666666666
+    threshold: 0.75

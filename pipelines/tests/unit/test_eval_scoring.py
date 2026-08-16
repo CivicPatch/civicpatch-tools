@@ -89,7 +89,7 @@ def test_no_cases_yields_nothing():
 
 # --- label decomposition ---
 #
-# The model returns one record per label now, so a person holding two seats arrives as two
+# The model returns one record per label now, so a person holding two offices arrives as two
 # records sharing a name, and the three set dimensions are derived from the label rather
 # than read off the record.
 
@@ -107,7 +107,7 @@ def _dispositions(actual, expected):
     return case_dispositions(actual, expected, EVAL_TAXONOMY)
 
 
-def test_both_labels_of_a_two_seat_person_are_scored():
+def test_both_labels_of_a_two_office_person_are_scored():
     """A `{name: person}` lookup keeps only the last record, silently dropping a label."""
     records = [
         _record("Sharlene T. Hetzel", "Council Member Place 2 (West Ward)"),
@@ -127,20 +127,16 @@ def test_a_dropped_second_label_is_a_missing_role():
     assert sorted(d.value for d in found["roles"]) == ["correct", "false_negative"]
 
 
-def test_a_merged_label_still_gets_the_published_role_right():
-    """Two offices in one label is an extractor that failed to split. It costs a `roles`
-    miss, but the role the product publishes is the highest-priority one and that is recovered — so
-    the gated dimension passes and the defect stays visible in the report-only one."""
-    found = _dispositions(
-        [_record("Sharlene T. Hetzel", "Council Member - Place 2 (West Ward) and Mayor Pro-Tem")],
-        [
-            _record("Sharlene T. Hetzel", "Council Member - Place 2 (West Ward)"),
-            _record("Sharlene T. Hetzel", "Mayor Pro-Tem"),
-        ],
-    )
+def test_a_label_naming_two_offices_yields_both_roles():
+    """Was: a merged label cost a `roles` miss. Now one label per person is the contract, so
+    a second office lives inside the same string and both roles must come out of it — the
+    published one being the highest-priority."""
+    merged = [
+        _record("Sharlene T. Hetzel", "Council Member Place 2 (West Ward) and Mayor Pro-Tem")
+    ]
+    found = _dispositions(merged, merged)
     assert [d.value for d in found["primary_role"]] == ["correct"]
-    assert sorted(d.value for d in found["roles"]) == ["correct", "false_negative"]
-    # The seat was never in doubt; it is scored by its own dimensions either way.
+    assert sorted(d.value for d in found["roles"]) == ["correct", "correct"]
     assert [d.value for d in found["district"]] == ["correct"]
     assert [d.value for d in found["designations_other"]] == ["correct"]
 

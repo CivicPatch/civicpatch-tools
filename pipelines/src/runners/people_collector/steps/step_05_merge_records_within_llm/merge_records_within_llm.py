@@ -113,7 +113,7 @@ def merge_weak_tie_groups_within_llm(
         for r in records:
             parsed = parse_label(r.label, taxonomy)
             area = parsed.division.value if parsed.division else ""
-            result.add((parsed.role or "", area, tuple(parsed.seats)))
+            result.add((parsed.role or "", area, tuple(parsed.other_designations)))
         return result
 
     weak_keys = [k for k in groups if is_last_name_only(k)]

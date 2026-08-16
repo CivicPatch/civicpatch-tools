@@ -77,6 +77,56 @@ runs:
     san_antonio: 0.0
     san_saba_airport_advisory_irrelevant: 1.0
   prompt_file: _prompts/962c93a9a841.txt
+- timestamp: '2026-08-16T21:26:15+00:00'
+  provider: open_router-AtlasCloud
+  prompt_sha256: 962c93a9a841
+  cost_usd: 0.01860516
+  elapsed_seconds: 78.79
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.6388888888888888
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 0.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+- timestamp: '2026-08-16T21:35:42+00:00'
+  provider: open_router-AtlasCloud
+  prompt_sha256: 962c93a9a841
+  cost_usd: 0.01867684
+  elapsed_seconds: 69.39
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.6666666666666666
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
 - timestamp: '2026-08-16T02:08:21+00:00'
   provider: open_router-DigitalOcean
   prompt_sha256: 962c93a9a841
@@ -155,3 +205,53 @@ runs:
     san_antonio: 1.0
     san_saba_airport_advisory_irrelevant: 1.0
   prompt_file: _prompts/962c93a9a841.txt
+- timestamp: '2026-08-16T21:26:15+00:00'
+  provider: open_router-DigitalOcean
+  prompt_sha256: 962c93a9a841
+  cost_usd: 0.00590801
+  elapsed_seconds: 78.34
+  scores:
+    is_relevant: 0.9375
+    relevant_urls: 0.359375
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 0.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 0.0
+- timestamp: '2026-08-16T21:35:42+00:00'
+  provider: open_router-DigitalOcean
+  prompt_sha256: 962c93a9a841
+  cost_usd: 0.00586857
+  elapsed_seconds: 71.79
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.3826086956521739
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 0.0
+    san_saba_airport_advisory_irrelevant: 0.0

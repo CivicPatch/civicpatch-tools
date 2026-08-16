@@ -16,8 +16,8 @@ him, without the eval reporting anything.
 Position hides which half is failing; measured 2026-08-15, all of the loss was in the
 non-geographic half.
 
-The three set fields are no longer read off the record. The model now returns one label per
-seat, verbatim, and this module decomposes it — so a difference in wording that decomposes
+The set fields are no longer read off the record. The model now returns one label per
+person, verbatim, and this module decomposes it — so a difference in wording that decomposes
 the same way ("Councilman Pos. 4" vs "Council Member Position 4") stops counting as an
 error, and the eval measures the components the product actually stores.
 
@@ -71,10 +71,10 @@ GATE_THRESHOLDS = {
     "person": 0.87,
     "url": 0.74,
     "designations_other": 0.67,
-    # Report only — see above. `roles` joins them: every role a person holds, so a label
-    # carrying two offices that should have been two records shows up here as a miss. Worth
-    # watching — it caught two prompt regressions on 2026-08-16 — but not worth failing a
-    # run over, since the secondary role is not published.
+    # Report only — see above. `roles` joins them: every role in the label, so a dropped
+    # secondary office shows here while `primary_role` stays green. Worth watching — it
+    # caught two prompt regressions on 2026-08-16 — but not worth failing a run over, since
+    # only the highest-priority role is published.
     "roles": 0.0,
     "email": 0.0,
     "phone": 0.0,
@@ -134,20 +134,15 @@ def normalize_field(field: str, value) -> str:
 
 
 def _roles(parsed: list[ParsedLabel]) -> list[str]:
-    return [p.role for p in parsed if p.role]
+    """Every role, not just each label's winner: one label per person means a second office
+    lives inside the same string, and reading only `role` would hide it from both sides."""
+    return [role for p in parsed for role in p.roles]
 
 
 def _primary_role(parsed: list[ParsedLabel], taxonomy: Taxonomy) -> list[str]:
-    """The single role this person is published under — the highest-priority one they hold.
-
-    Gated in place of `roles` because it is what the product actually shows: migration 111
-    orders the taxonomy so the highest-priority role usurps the rest. Judging the full set instead
-    charges a miss for a secondary role nobody sees, which is how an extractor that merged
-    "Council Member - Place 2 (West Ward) and Mayor Pro-Tem" into one label lost a point for
-    a seat that `district` and `designations_other` had already scored correctly.
-
-    A list of nought or one, so `classify_membership` handles it like the other set fields.
-    """
+    """The role this person is published under, since migration 111 has the highest-priority
+    one usurp the rest. A list of nought or one, so `classify_membership` handles it like the
+    other set fields."""
     roles = _roles(parsed)
     if not roles:
         return []
@@ -160,12 +155,12 @@ def _districts(parsed: list[ParsedLabel]) -> list[str]:
     return [f"{p.division.designation}:{p.division.value}" for p in parsed if p.division]
 
 
-def _seats(parsed: list[ParsedLabel]) -> list[str]:
-    return [seat for p in parsed for seat in p.seats]
+def _other_designations(parsed: list[ParsedLabel]) -> list[str]:
+    return [d for p in parsed for d in p.other_designations]
 
 
 def group_by_name(people) -> dict[str, list]:
-    """One person, all their labels. A person holding two seats is two records now, so the
+    """One person, all their labels. A person holding two offices is two records now, so the
     old `{name: person}` comprehension silently kept the last and dropped a label."""
     grouped: dict[str, list] = defaultdict(list)
     for person in people:
@@ -206,7 +201,7 @@ def case_dispositions(actual, expected, taxonomy) -> dict[str, list[Disposition]
             _districts(actual_parsed), _districts(expected_parsed)
         )
         found["designations_other"] += classify_membership(
-            _seats(actual_parsed), _seats(expected_parsed)
+            _other_designations(actual_parsed), _other_designations(expected_parsed)
         )
         for field in SCALAR_FIELDS:
             disposition = classify_value(
@@ -216,6 +211,52 @@ def case_dispositions(actual, expected, taxonomy) -> dict[str, list[Disposition]
             if disposition is not None:
                 found[field].append(disposition)
     return found
+
+
+def case_mismatches(actual, expected, taxonomy) -> list[dict]:
+    """Per-person expected/actual for every dimension that did not match.
+
+    The dispositions say *that* a value is wrong; the dashboard has to show *what*. Built
+    from the same grouping and the same comparators, so a row here cannot disagree with the
+    tally it sits under. The label goes on every row because it is what makes the rest
+    diagnosable — a wrong `district` is almost always a label the model read differently.
+    """
+    rows: list[dict] = []
+    actual_by_name, expected_by_name = group_by_name(actual), group_by_name(expected)
+    for key in sorted(set(actual_by_name) | set(expected_by_name)):
+        actual_records = actual_by_name.get(key, [])
+        expected_records = expected_by_name.get(key, [])
+        name = (expected_records or actual_records)[0].name
+        labels = {
+            "expected_label": " | ".join(r.label for r in expected_records),
+            "actual_label": " | ".join(r.label for r in actual_records),
+        }
+        if not expected_records or not actual_records:
+            rows.append({
+                "person": name, "field": PERSON_FIELD, **labels,
+                "expected": "present" if expected_records else "—",
+                "actual": "present" if actual_records else "—",
+            })
+            continue
+        actual_parsed = [parse_label(r.label or "", taxonomy) for r in actual_records]
+        expected_parsed = [parse_label(r.label or "", taxonomy) for r in expected_records]
+        for field, extract in (
+            ("primary_role", lambda p: _primary_role(p, taxonomy)),
+            ("roles", _roles),
+            ("district", _districts),
+            ("designations_other", _other_designations),
+        ):
+            got, want = sorted(set(extract(actual_parsed))), sorted(set(extract(expected_parsed)))
+            if got != want:
+                rows.append({"person": name, "field": field, **labels,
+                             "expected": want, "actual": got})
+        for field in SCALAR_FIELDS:
+            got = normalize_field(field, _first_value(actual_records, field))
+            want = normalize_field(field, _first_value(expected_records, field))
+            if got != want:
+                rows.append({"person": name, "field": field, **labels,
+                             "expected": want or "—", "actual": got or "—"})
+    return rows
 
 
 def merge_dispositions(per_case) -> dict[str, list[Disposition]]:

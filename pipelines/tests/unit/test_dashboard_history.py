@@ -83,3 +83,101 @@ def test_case_changes_ignores_cases_absent_from_the_earlier_run():
         {"timestamp": "2026-08-15T11:00:00", "cases": {"a": 1.0, "brand_new": 0.0}},
     ])
     assert "no case changed" in html
+
+
+# --- prompt archive pruning ---
+#
+# Deleting files, so the guards matter more than the happy path.
+
+
+def _history(tmp_path, *shas):
+    import yaml
+
+    (tmp_path / "history.yml").write_text(
+        yaml.safe_dump({"runs": [{"provider": "p", "prompt_sha256": s} for s in shas]}),
+        encoding="utf-8",
+    )
+
+
+def _archive(tmp_path, *shas):
+    (tmp_path / "_prompts").mkdir(exist_ok=True)
+    for sha in shas:
+        (tmp_path / "_prompts" / f"{sha}.txt").write_text("x", encoding="utf-8")
+
+
+def _remaining(tmp_path):
+    return sorted(p.stem for p in (tmp_path / "_prompts").glob("*.txt"))
+
+
+def test_prune_drops_archives_no_run_references(tmp_path):
+    from eval_utils import _prune_prompt_archive
+    import yaml
+
+    _archive(tmp_path, "live01", "dead01", "dead02")
+    runs = [{"provider": "p", "prompt_sha256": "live01"}]
+    _prune_prompt_archive(str(tmp_path), runs)
+    assert _remaining(tmp_path) == ["live01"]
+
+
+def test_prune_keeps_every_referenced_archive(tmp_path):
+    """History spans providers and prompt versions — all of them are still diffable."""
+    from eval_utils import _prune_prompt_archive
+
+    _archive(tmp_path, "aaa111", "bbb222")
+    runs = [
+        {"provider": "a", "prompt_sha256": "aaa111"},
+        {"provider": "b", "prompt_sha256": "bbb222"},
+    ]
+    _prune_prompt_archive(str(tmp_path), runs)
+    assert _remaining(tmp_path) == ["aaa111", "bbb222"]
+
+
+def test_prune_does_nothing_on_an_empty_history(tmp_path):
+    """No runs means "nothing recorded yet", not "nothing referenced" — pruning there would
+    delete the prompt the current run just archived."""
+    from eval_utils import _prune_prompt_archive
+
+    _archive(tmp_path, "aaa111")
+    _prune_prompt_archive(str(tmp_path), [])
+    assert _remaining(tmp_path) == ["aaa111"]
+
+
+def test_prune_survives_a_missing_archive_directory(tmp_path):
+    from eval_utils import _prune_prompt_archive
+
+    _prune_prompt_archive(str(tmp_path), [{"prompt_sha256": "aaa111"}])
+
+
+def _reports(tmp_path, *providers):
+    for provider in providers:
+        (tmp_path / f"{provider}-eval-report.yml").write_text("accuracy: {}", encoding="utf-8")
+
+
+def _report_names(tmp_path):
+    return sorted(p.name.removesuffix("-eval-report.yml") for p in tmp_path.glob("*-eval-report.yml"))
+
+
+def test_prune_drops_reports_for_providers_no_longer_compared(tmp_path):
+    from eval_utils import _prune_provider_reports
+
+    _reports(tmp_path, "open_router-AtlasCloud", "open_router-DeepInfra")
+    _prune_provider_reports(str(tmp_path), {"open_router-AtlasCloud"})
+    assert _report_names(tmp_path) == ["open_router-AtlasCloud"]
+
+
+def test_prune_keeps_a_provider_that_failed_this_run(tmp_path):
+    """It still participates — erasing its last good numbers because one run errored would
+    lose the only record of what it scored."""
+    from eval_utils import _prune_provider_reports
+
+    _reports(tmp_path, "open_router-AtlasCloud", "open_router-DigitalOcean")
+    _prune_provider_reports(str(tmp_path), {"open_router-AtlasCloud", "open_router-DigitalOcean"})
+    assert _report_names(tmp_path) == ["open_router-AtlasCloud", "open_router-DigitalOcean"]
+
+
+def test_prune_does_nothing_when_no_provider_participated(tmp_path):
+    from eval_utils import _prune_provider_reports
+
+    _reports(tmp_path, "open_router-AtlasCloud")
+    _prune_provider_reports(str(tmp_path), set())
+    assert _report_names(tmp_path) == ["open_router-AtlasCloud"]
