@@ -1,32 +1,34 @@
 run:
-  timestamp: '2026-08-16T00:26:17+00:00'
-  prompt_sha256: ad4643849556
-  prompt_file: _prompts/ad4643849556.txt
+  timestamp: '2026-08-16T16:52:54+00:00'
+  prompt_sha256: 0cbc27d97f00
+  prompt_file: _prompts/0cbc27d97f00.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 137.08
-  total_input_tokens: 99314
-  total_output_tokens: 5604
-  total_cost_usd: 0.00790466
+  providers:
+  - DigitalOcean
+  elapsed_seconds: 88.15
+  total_input_tokens: 4308
+  total_output_tokens: 497
+  total_cost_usd: 0.00038605
 accuracy:
   person:
-    correct: 58
-    missing: 4
-    spurious: 2
-    wrong: 0
-    precision: 0.9666666666666667
-    recall: 0.9354838709677419
-    f1: 0.9508196721311475
-  roles:
-    correct: 59
-    missing: 2
+    correct: 5
+    missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.9672131147540983
-    f1: 0.9833333333333333
+    recall: 1.0
+    f1: 1.0
+  roles:
+    correct: 6
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   district:
-    correct: 21
+    correct: 4
     missing: 0
     spurious: 0
     wrong: 0
@@ -34,208 +36,78 @@ accuracy:
     recall: 1.0
     f1: 1.0
   designations_other:
-    correct: 17
-    missing: 6
-    spurious: 0
-    wrong: 0
-    precision: 1.0
-    recall: 0.7391304347826086
-    f1: 0.85
-  email:
-    correct: 22
-    missing: 7
-    spurious: 1
-    wrong: 0
-    precision: 0.9565217391304348
-    recall: 0.7586206896551724
-    f1: 0.8461538461538461
-  phone:
-    correct: 27
-    missing: 19
-    spurious: 0
-    wrong: 0
-    precision: 1.0
-    recall: 0.5869565217391305
-    f1: 0.7397260273972602
-  url:
-    correct: 49
-    missing: 1
-    spurious: 0
-    wrong: 0
-    precision: 1.0
-    recall: 0.98
-    f1: 0.98989898989899
-  start_date:
-    correct: 8
+    correct: 4
     missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
     recall: 1.0
     f1: 1.0
-  end_date:
-    correct: 7
-    missing: 1
+  email:
+    correct: 0
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: null
+    recall: null
+    f1: null
+  phone:
+    correct: 0
+    missing: 5
+    spurious: 0
+    wrong: 0
+    precision: null
+    recall: 0.0
+    f1: 0.0
+  url:
+    correct: 5
+    missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.875
-    f1: 0.9333333333333333
-  image:
-    correct: 10
-    missing: 1
-    spurious: 2
+    recall: 1.0
+    f1: 1.0
+  start_date:
+    correct: 0
+    missing: 0
+    spurious: 0
     wrong: 0
-    precision: 0.8333333333333334
-    recall: 0.9090909090909091
-    f1: 0.8695652173913043
+    precision: null
+    recall: null
+    f1: null
+  end_date:
+    correct: 0
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: null
+    recall: null
+    f1: null
+  image:
+    correct: 0
+    missing: 0
+    spurious: 5
+    wrong: 0
+    precision: 0.0
+    recall: null
+    f1: 0.0
 aggregated_report:
-  designations_precision: 1.0
-  end_date: 0.6666666666666666
-  phone: 0.6153846153846154
-  name: 0.9384615384615385
-  image: 0.6666666666666666
-  roles: 0.917948717948718
-  designations: 0.8615384615384615
   roles_precision: 1.0
-  start_date: 0.7333333333333334
-  url: 0.9230769230769231
-  email: 0.7692307692307693
+  email: 1.0
+  name: 1.0
+  phone: 0.0
+  designations: 1.0
+  designations_precision: 1.0
+  url: 1.0
+  roles: 1.0
 per_case_scores:
-- case_id: austin_city_manager_staff
-  scores: {}
-- case_id: austin_council
-  scores:
-    designations_precision: 1.0
-    phone: 1.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: austin_district7_council_member
-  scores:
-    designations_precision: 1.0
-    end_date: 1.0
-    phone: 1.0
-    name: 1.0
-    image: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    start_date: 1.0
-    url: 1.0
-    email: 0.0
-- case_id: board_of_aldermen
-  scores:
-    end_date: 0.0
-    phone: 0.0
-    name: 0.2
-    image: 0.0
-    roles: 0.2
-    designations: 0.2
-    roles_precision: 1.0
-    start_date: 0.2
-    url: 0.0
-    email: 0.0
 - case_id: coleman_council
   scores:
-    designations_precision: 1.0
+    roles_precision: 1.0
+    email: 1.0
+    name: 1.0
     phone: 0.0
-    name: 1.0
-    roles: 0.9
     designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: golinda_mixed_city_county
-  scores:
-    phone: 0.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: inverted_name_format
-  scores:
     designations_precision: 1.0
-    phone: 1.0
-    name: 1.0
-    roles: 0.8333333333333334
-    designations: 1.0
-    roles_precision: 1.0
     url: 1.0
-    email: 1.0
-- case_id: la_porte_council
-  scores:
-    designations_precision: 1.0
-    phone: 1.0
-    name: 1.0
-    image: 1.0
     roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: mixed_current_past
-  scores:
-    phone: 0.0
-    name: 1.0
-    roles: 1.0
-    designations: 0.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 0.0
-- case_id: nav_links_no_names
-  scores: {}
-- case_id: placeholder_name_council
-  scores:
-    designations_precision: 1.0
-    phone: 1.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: raisin_township_clerk
-  scores:
-    phone: 0.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: raisin_township_supervisor
-  scores:
-    phone: 1.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: redundant_place_role
-  scores:
-    designations_precision: 1.0
-    end_date: 1.0
-    phone: 1.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    start_date: 1.0
-    url: 1.0
-    email: 1.0
-- case_id: vacant_positions_council
-  scores:
-    phone: 1.0
-    name: 1.0
-    roles: 1.0
-    designations: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    email: 1.0

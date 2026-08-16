@@ -85,3 +85,150 @@ def test_no_cases_yields_nothing():
     from scoring import failing_people
 
     assert failing_people({}, {"name": 1.0}) == []
+
+
+# --- label decomposition ---
+#
+# The model returns one record per label now, so a person holding two seats arrives as two
+# records sharing a name, and the three set dimensions are derived from the label rather
+# than read off the record.
+
+
+def _record(name, label, **fields):
+    from runners.people_collector.schemas import RawLLMPersonRecord
+
+    return RawLLMPersonRecord(name=name, label=label, **fields)
+
+
+def _dispositions(actual, expected):
+    from accuracy import case_dispositions
+    from scoring import EVAL_TAXONOMY
+
+    return case_dispositions(actual, expected, EVAL_TAXONOMY)
+
+
+def test_both_labels_of_a_two_seat_person_are_scored():
+    """A `{name: person}` lookup keeps only the last record, silently dropping a label."""
+    records = [
+        _record("Sharlene T. Hetzel", "Council Member Place 2 (West Ward)"),
+        _record("Sharlene T. Hetzel", "Mayor Pro-Tem"),
+    ]
+    found = _dispositions(records, records)
+    assert len(found["person"]) == 1
+    assert [d.value for d in found["roles"]] == ["correct", "correct"]
+
+
+def test_a_dropped_second_label_is_a_missing_role():
+    expected = [
+        _record("Sharlene T. Hetzel", "Council Member Place 2 (West Ward)"),
+        _record("Sharlene T. Hetzel", "Mayor Pro-Tem"),
+    ]
+    found = _dispositions(expected[:1], expected)
+    assert sorted(d.value for d in found["roles"]) == ["correct", "false_negative"]
+
+
+def test_a_merged_label_still_gets_the_published_role_right():
+    """Two offices in one label is an extractor that failed to split. It costs a `roles`
+    miss, but the role the product publishes is the highest-priority one and that is recovered — so
+    the gated dimension passes and the defect stays visible in the report-only one."""
+    found = _dispositions(
+        [_record("Sharlene T. Hetzel", "Council Member - Place 2 (West Ward) and Mayor Pro-Tem")],
+        [
+            _record("Sharlene T. Hetzel", "Council Member - Place 2 (West Ward)"),
+            _record("Sharlene T. Hetzel", "Mayor Pro-Tem"),
+        ],
+    )
+    assert [d.value for d in found["primary_role"]] == ["correct"]
+    assert sorted(d.value for d in found["roles"]) == ["correct", "false_negative"]
+    # The seat was never in doubt; it is scored by its own dimensions either way.
+    assert [d.value for d in found["district"]] == ["correct"]
+    assert [d.value for d in found["designations_other"]] == ["correct"]
+
+
+def test_primary_role_is_the_highest_priority_one_not_the_first():
+    found = _dispositions(
+        [_record("A", "Mayor Pro-Tem"), _record("A", "Council Member - Place 2")],
+        [_record("A", "Council Member - Place 2"), _record("A", "Mayor Pro-Tem")],
+    )
+    assert [d.value for d in found["primary_role"]] == ["correct"]
+
+
+def test_a_wrong_primary_role_is_still_caught():
+    """The lenience is only about secondary roles — getting the published one wrong fails."""
+    found = _dispositions(
+        [_record("A", "Council Member - Place 2")],
+        [_record("A", "Mayor")],
+    )
+    assert sorted(d.value for d in found["primary_role"]) == [
+        "false_negative",
+        "false_positive",
+    ]
+
+
+def test_division_and_seat_are_counted_apart():
+    """Both come out of one label, and only the division half becomes a division_ocdid."""
+    records = [_record("Beau Brudney", "Council Member Place 3 (East Ward)")]
+    found = _dispositions(records, records)
+    assert [d.value for d in found["district"]] == ["correct"]
+    assert [d.value for d in found["designations_other"]] == ["correct"]
+
+
+def test_different_wording_that_decomposes_the_same_is_correct():
+    """What the old two-bag scorer punished: the model's phrasing, not its answer."""
+    found = _dispositions(
+        [_record("Rory Burke", "Council Member Position 4")],
+        [_record("Rory Burke", "Councilman Pos. 4")],
+    )
+    assert [d.value for d in found["roles"]] == ["correct"]
+    assert [d.value for d in found["designations_other"]] == ["correct"]
+
+
+@pytest.mark.parametrize(
+    "field, produced, fixture",
+    [
+        # Formats the pipeline collapses before storing, so the eval must too.
+        ("phone", "(512) 978-2100", "512-978-2100"),
+        ("phone", "512.978.2100", "(512) 978-2100"),
+        ("email", "  Todd.Day@RanchoViejoTx.gov ", "todd.day@ranchoviejotx.gov"),
+        ("url", "https://www.laportetx.gov/691/Mayor", "http://laportetx.gov/691/Mayor"),
+        ("url", "https://laportetx.gov/691/Mayor/", "https://laportetx.gov/691/Mayor"),
+    ],
+)
+def test_normalize_field_matches_what_the_app_stores(field, produced, fixture):
+    from accuracy import normalize_field
+
+    assert normalize_field(field, produced) == normalize_field(field, fixture)
+
+
+def test_normalize_field_leaves_fields_the_app_does_not_normalize_alone():
+    from accuracy import normalize_field
+
+    assert normalize_field("start_date", "2025-05") == "2025-05"
+    assert normalize_field("image", " local://a.png ") == "local://a.png"
+
+
+def test_normalize_field_is_empty_for_absent_values():
+    from accuracy import normalize_field
+
+    assert normalize_field("phone", None) == ""
+    assert normalize_field("url", "") == ""
+
+
+def test_normalize_field_keeps_an_unparseable_phone_from_matching_a_real_one():
+    from accuracy import normalize_field
+
+    assert normalize_field("phone", "call city hall") != normalize_field(
+        "phone", "(512) 978-2100"
+    )
+
+
+def test_a_contact_detail_on_one_record_answers_for_the_person():
+    """Contact details belong to the person, so a second record's null must not erase it."""
+    found = _dispositions(
+        [
+            _record("Sharlene T. Hetzel", "Mayor Pro-Tem"),
+            _record("Sharlene T. Hetzel", "Council Member Place 2", phone="(325) 625-5114"),
+        ],
+        [_record("Sharlene T. Hetzel", "Mayor Pro-Tem", phone="325-625-5114")],
+    )
+    assert [d.value for d in found["phone"]] == ["correct"]

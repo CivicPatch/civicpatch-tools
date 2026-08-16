@@ -2,11 +2,8 @@ from typing import List
 
 from domain.models import Office, Official, Person
 from runners.people_collector.schemas import ResearchedPerson
-from shared.utils.divisions import (
-    designations_without_division,
-    division_ocdid_to_designation,
-    resolve_division,
-)
+from shared.utils.divisions import division_ocdid_to_designation
+from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
 from shared.utils.taxonomy import (
     Taxonomy,
     designation_sort_key,
@@ -21,22 +18,38 @@ def filter_people_by_roles(
     return [p for p in people if any(resolve_role(r, taxonomy) for r in p.roles)]
 
 
-def office_name_to_roles(office_name: str, taxonomy: Taxonomy) -> List[str]:
+def office_name_to_labels(office_name: str) -> List[str]:
+    """Split a rendered office name back into the labels it was joined from.
+
+    Every part is kept, not just the ones resolving to a role: an unrecognised label is
+    exactly what the candidate path needs to see.
+    """
     if not office_name or office_name == "Unknown Office":
         return []
-    parts = [p.strip() for p in office_name.split(" - ") if p.strip()]
-    return [p for p in parts if resolve_role(p, taxonomy)]
+    return [p.strip() for p in office_name.split(" - ") if p.strip()]
+
+
+def _sortable_designations(parsed: ParsedLabel) -> List[str]:
+    """Seat markers plus the division — both order a roster, so both sort."""
+    if not parsed.division:
+        return parsed.seats
+    return parsed.seats + [f"{parsed.division.designation} {parsed.division.value}"]
 
 
 def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
     def person_sort_key(person: Person):
+        parsed = [parse_label(label, taxonomy) for label in person.labels]
         return (
             min(
-                (role_sort_key(role, taxonomy) for role in person.roles),
+                (role_sort_key(p.role or "", taxonomy) for p in parsed),
                 default=role_sort_key("", taxonomy),
             ),
             min(
-                (designation_sort_key(d, taxonomy) for d in person.designations),
+                (
+                    designation_sort_key(d, taxonomy)
+                    for p in parsed
+                    for d in _sortable_designations(p)
+                ),
                 default=designation_sort_key("", taxonomy),
             ),
         )
@@ -44,11 +57,15 @@ def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
     return sorted(people, key=person_sort_key)
 
 
-def person_to_official(person: Person) -> Official:
-    office_names = list(
-        dict.fromkeys(person.roles + designations_without_division(person.designations))
-    )
+def person_to_official(person: Person, taxonomy: Taxonomy) -> Official:
+    parsed = [parse_label(label, taxonomy) for label in person.labels]
+    office_names = list(dict.fromkeys(label for label in person.labels if label))
     office_name = " - ".join(office_names) if office_names else "Unknown Office"
+    # A person sits in at most one division; the first label naming one decides it.
+    located = next((p for p in parsed if p.division), None)
+    resolved_division = division_ocdid(
+        located or ParsedLabel(), person.jurisdiction_ocdid
+    )
     return Official(
         id="",  # to be filled in later after resolving with API
         name=person.name,
@@ -60,9 +77,7 @@ def person_to_official(person: Person) -> Official:
         end_date=person.end_date or None,
         office=Office(
             name=office_name,
-            division_ocdid=resolve_division(
-                person.jurisdiction_ocdid, person.designations
-            ),
+            division_ocdid=resolved_division,
         ),
         image=person.image,
         jurisdiction_ocdid=person.jurisdiction_ocdid,
@@ -76,8 +91,8 @@ def official_to_person(official: Official, taxonomy: Taxonomy) -> Person:
     return Person(
         name=official.name,
         other_names=official.other_names,
-        roles=office_name_to_roles(official.office.name, taxonomy),
-        designations=division_ocdid_to_designation(
+        labels=office_name_to_labels(official.office.name)
+        + division_ocdid_to_designation(
             official.office.division_ocdid, official.jurisdiction_ocdid
         ),
         phones=official.phones,

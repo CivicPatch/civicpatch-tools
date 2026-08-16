@@ -5,9 +5,7 @@ known_roles:
 - Trustee
 people:
 - name: Susan Bunch
-  roles:
-  - Clerk
-  designations: []
+  label: Clerk
   phone: 517-423-3162
   email: clerk@raisintownship.com
   url: https://raisinchartertownship.com/clerk

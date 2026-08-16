@@ -1,5 +1,9 @@
 import pytest
+from unittest.mock import MagicMock
+
 from runners.people_collector.schemas import LLMPersonRecord
+from shared.schemas import Role, RoleConfig, RoleStatus
+from shared.utils.taxonomy import build_taxonomy
 from utils.merge_utils import (
     append_to_people_by_name,
     are_names_similar,
@@ -12,6 +16,31 @@ from utils.merge_utils import (
 
 pytestmark = pytest.mark.unit
 
+# `is_weakly_tied` resolves labels through the taxonomy rather than comparing raw strings,
+# so the roles these tests use have to exist in it.
+_TAXONOMY = build_taxonomy(
+    RoleConfig(
+        roles=[
+            Role(
+                id="mayor",
+                label="Mayor",
+                status=RoleStatus.ACTIVE,
+                aliases=[],
+                priority=10,
+                is_unique=True,
+            ),
+            Role(
+                id="council",
+                label="Council",
+                status=RoleStatus.ACTIVE,
+                aliases=[],
+                priority=500,
+                is_unique=False,
+            ),
+        ]
+    )
+)
+
 
 def test_normalize_name():
     assert normalize_name("John Doe") == "John Doe"
@@ -23,8 +52,7 @@ def test_append_to_people_by_name():
         "John Doe": [
             LLMPersonRecord(
                 name="John Doe",
-                roles=[],
-                designations=[],
+                label="",
                 phone_number=None,
                 email=None,
                 website=None,
@@ -37,8 +65,7 @@ def test_append_to_people_by_name():
     new_people = [
         LLMPersonRecord(
             name="Johnny Doe",
-            roles=[],
-            designations=[],
+            label="",
             phone_number=None,
             email=None,
             website=None,
@@ -70,8 +97,7 @@ def test_group_people_by_name_basic():
     people_to_link = [
         LLMPersonRecord(
             name="John Doe",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -81,8 +107,7 @@ def test_group_people_by_name_basic():
         ),
         LLMPersonRecord(
             name="Jane Smith",
-            roles=["Council"],
-            designations=[],
+            label="Council",
             phone_number=None,
             email=None,
             website=None,
@@ -106,8 +131,7 @@ def test_group_people_by_name_with_known_mappings():
     people_to_link = [
         LLMPersonRecord(
             name="J. Doe",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -117,8 +141,7 @@ def test_group_people_by_name_with_known_mappings():
         ),
         LLMPersonRecord(
             name="Johnny",
-            roles=["Council"],
-            designations=[],
+            label="Council",
             phone_number=None,
             email=None,
             website=None,
@@ -142,8 +165,7 @@ def test_group_people_by_name_with_existing_people():
         "John Doe": [
             LLMPersonRecord(
                 name="John Doe",
-                roles=["Existing"],
-                designations=[],
+                label="Existing",
                 phone_number=None,
                 email=None,
                 website=None,
@@ -156,8 +178,7 @@ def test_group_people_by_name_with_existing_people():
     people_to_link = [
         LLMPersonRecord(
             name="John Doe",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -181,8 +202,7 @@ def test_group_people_by_name_similarity_matching():
         "John Doe": [
             LLMPersonRecord(
                 name="John Doe",
-                roles=["Existing"],
-                designations=[],
+                label="Existing",
                 phone_number=None,
                 email=None,
                 website=None,
@@ -195,8 +215,7 @@ def test_group_people_by_name_similarity_matching():
     people_to_link = [
         LLMPersonRecord(
             name="Jon Doe",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -223,8 +242,7 @@ def test_group_people_by_name_deduplication():
     people_to_link = [
         LLMPersonRecord(
             name="John Doe",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -234,8 +252,7 @@ def test_group_people_by_name_deduplication():
         ),
         LLMPersonRecord(
             name="Johnny",
-            roles=["Council"],
-            designations=[],
+            label="Council",
             phone_number=None,
             email=None,
             website=None,
@@ -245,8 +262,7 @@ def test_group_people_by_name_deduplication():
         ),
         LLMPersonRecord(
             name="John Doe",
-            roles=["Deputy"],
-            designations=[],
+            label="Deputy",
             phone_number=None,
             email=None,
             website=None,
@@ -282,8 +298,7 @@ def test_group_people_by_name_complex_scenario():
         "Jane Doe": [
             LLMPersonRecord(
                 name="Jane Doe",
-                roles=["Existing"],
-                designations=[],
+                label="Existing",
                 phone_number=None,
                 email=None,
                 website=None,
@@ -296,8 +311,7 @@ def test_group_people_by_name_complex_scenario():
     people_to_link = [
         LLMPersonRecord(
             name="John Smith",
-            roles=["Mayor"],
-            designations=[],
+            label="Mayor",
             phone_number=None,
             email=None,
             website=None,
@@ -307,8 +321,7 @@ def test_group_people_by_name_complex_scenario():
         ),
         LLMPersonRecord(
             name="J. Smith",
-            roles=["Council"],
-            designations=[],
+            label="Council",
             phone_number=None,
             email=None,
             website=None,
@@ -318,8 +331,7 @@ def test_group_people_by_name_complex_scenario():
         ),
         LLMPersonRecord(
             name="Jane Doe",
-            roles=["Deputy"],
-            designations=[],
+            label="Deputy",
             phone_number=None,
             email=None,
             website=None,
@@ -329,8 +341,7 @@ def test_group_people_by_name_complex_scenario():
         ),
         LLMPersonRecord(
             name="Bob Johnson",
-            roles=["Clerk"],
-            designations=[],
+            label="Clerk",
             phone_number=None,
             email=None,
             website=None,
@@ -432,17 +443,15 @@ def test_is_weakly_tied_llm_person():
 
     person1 = Dummy()
     person1.name = "John Doe"
-    person1.roles = ["Mayor"]
+    person1.label = "Mayor"
     person1.email = ["john@example.com"]
-    person1.designations = []
 
     person2 = Dummy()
     person2.name = "Johnathan Doe"
-    person2.roles = ["Mayor"]
+    person2.label = "Mayor"
     person2.email = ["john@example.com"]
-    person2.designations = []
 
-    assert is_weakly_tied({}, person1, person2) == True
+    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == True
 
 
 def test_is_weakly_tied_person():
@@ -451,16 +460,14 @@ def test_is_weakly_tied_person():
 
     person1 = Dummy()
     person1.name = "Jane Smith"
-    person1.roles = ["Council"]
+    person1.label = "Council Seat 2"
     person1.emails = ["jane@example.com"]
-    person1.designations = ["Seat 2"]
 
     person2 = Dummy()
     person2.name = "Janet Smith"
-    person2.roles = ["Council"]
+    person2.label = "Council Seat 2"
     person2.emails = ["jane@example.com"]
-    person2.designations = ["Seat 2"]
-    assert is_weakly_tied({}, person1, person2) == True
+    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == True
 
 
 def test_is_not_weakly_tied_different_roles_and_emails():
@@ -469,14 +476,14 @@ def test_is_not_weakly_tied_different_roles_and_emails():
 
     person1 = Dummy()
     person1.name = "Alice Johnson"
-    person1.roles = ["Mayor"]
+    person1.label = "Mayor"
     person1.emails = ["alice@example.com"]
 
     person2 = Dummy()
     person2.name = "Bob Johnson"
-    person2.roles = ["Council"]
+    person2.label = "Council"
     person2.emails = ["bob@example.com"]
-    assert is_weakly_tied({}, person1, person2) == False
+    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == False
 
 
 def test_is_weakly_tied_same_identity():
@@ -484,21 +491,19 @@ def test_is_weakly_tied_same_identity():
     identity_names = {"John Doe": ["John Doe", "Johnny", "J. Doe"]}
     record1 = LLMPersonRecord(
         name="Johnny",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="J. Doe",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
 
 
 def test_is_weakly_tied_different_identity():
@@ -506,21 +511,19 @@ def test_is_weakly_tied_different_identity():
     identity_names = {"John Doe": ["Johnny"], "Jane Smith": ["J. Smith"]}
     record1 = LLMPersonRecord(
         name="Johnny",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="J. Smith",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == False
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
 
 
 def test_is_weakly_tied_name_overlap():
@@ -528,21 +531,19 @@ def test_is_weakly_tied_name_overlap():
     identity_names = {}
     record1 = LLMPersonRecord(
         name="John Doe",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="Jon Doe",
-        roles=[],
+        label="",
         email=None,
         url=None,
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == False
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
 
 
 def test_is_weakly_tied_matching_designations():
@@ -550,21 +551,19 @@ def test_is_weakly_tied_matching_designations():
     identity_names = {}
     record1 = LLMPersonRecord(
         name="John Doe",
-        roles=["Mayor"],
+        label="Mayor",
         email=None,
         url=None,
-        designations=["Mayor"],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="Jon Doe",
-        roles=["Mayor"],
+        label="Mayor",
         email=None,
         url=None,
-        designations=["Mayor"],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
 
 
 def test_is_weakly_tied_email_overlap():
@@ -572,21 +571,19 @@ def test_is_weakly_tied_email_overlap():
     identity_names = {}
     record1 = LLMPersonRecord(
         name="John Doe",
-        roles=[],
+        label="",
         email="john@example.com",
         url=None,
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="Jon Doe",
-        roles=[],
+        label="",
         email="john@example.com",
         url=None,
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
 
 
 def test_is_weakly_tied_url_overlap():
@@ -594,21 +591,19 @@ def test_is_weakly_tied_url_overlap():
     identity_names = {}
     record1 = LLMPersonRecord(
         name="Abigail Doe",
-        roles=[],
+        label="",
         email=None,
         url="http://example.com",
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="Abby Doe",
-        roles=[],
+        label="",
         email=None,
         url="http://example.com",
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied({}, record1, record2) == False
+    assert is_weakly_tied({}, record1, record2, _TAXONOMY, MagicMock()) == False
 
 
 def test_is_weakly_tied_no_overlap():
@@ -616,21 +611,19 @@ def test_is_weakly_tied_no_overlap():
     identity_names = {}
     record1 = LLMPersonRecord(
         name="John Doe",
-        roles=["Mayor"],
+        label="Mayor",
         email=None,
         url="http://example.com",
-        designations=[],
         source_url="test",
     )
     record2 = LLMPersonRecord(
         name="Jane Smith",
-        roles=["Council"],
+        label="Council",
         email=None,
         url="http://example.org",
-        designations=[],
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2) == False
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
 
 
 import pytest

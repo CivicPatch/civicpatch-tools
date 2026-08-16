@@ -10,26 +10,36 @@ built twice.
 
 from typing import List
 
-import phonenumbers
-from accuracy import build_eval_taxonomy
+from accuracy import (
+    _districts,
+    _first_value,
+    _roles,
+    _seats,
+    build_eval_taxonomy,
+    group_by_name,
+    normalize_field,
+)
 from runners.people_collector.schemas import RawLLMPersonRecord
-from shared.utils import name_utils
-from shared.utils.taxonomy import normalize_designations, normalize_roles
+from shared.utils.label_parser import ParsedLabel, parse_label
 
 EVAL_TAXONOMY = build_eval_taxonomy()
 
 
+def _parse(records: List[RawLLMPersonRecord]) -> List[ParsedLabel]:
+    return [parse_label(record.label or "", EVAL_TAXONOMY) for record in records]
+
+
 def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRecord]):
     scores = []
-    # Build a lookup for actual people by normalized name
-    actual_by_norm_name = {
-        name_utils.normalize_name(a_person.name): a_person for a_person in actual
-    }
-    for e_person in expected:
-        norm_name = name_utils.normalize_name(e_person.name)
-        a_person = actual_by_norm_name.get(norm_name)
-        if a_person:
-            score = score_case(a_person, e_person)
+    # Grouped, not indexed: one person holding two seats is two records, and a
+    # `{name: person}` lookup would keep only the last of them.
+    actual_by_name = group_by_name(actual)
+    for norm_name, expected_records in group_by_name(expected).items():
+        actual_records = actual_by_name.get(norm_name)
+        e_person = expected_records[0]
+        expected_parsed = _parse(expected_records)
+        if actual_records:
+            score = score_case(actual_records, expected_records)
         else:
             score = {
                 # A person the model failed to return at all scores 0 on every dimension
@@ -50,11 +60,12 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                     **{
                         f: 0.0
                         for f in ("start_date", "end_date", "image")
-                        if getattr(e_person, f, None)
+                        if _first_value(expected_records, f)
                     },
                 },
                 "actual": {
                     "name": "",
+                    "labels": [],
                     "roles": [],
                     "designations": [],
                     "email": "",
@@ -66,14 +77,15 @@ def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRec
                 },
                 "expected": {
                     "name": e_person.name,
-                    "roles": e_person.roles,
-                    "designations": e_person.designations,
+                    "labels": [r.label for r in expected_records],
+                    "roles": _roles(expected_parsed),
+                    "designations": _districts(expected_parsed) + _seats(expected_parsed),
                     "email": e_person.email,
                     "phone": e_person.phone,
                     "url": e_person.url,
-                    "start_date": e_person.start_date,
-                    "end_date": e_person.end_date,
-                    "image": e_person.image,
+                    "start_date": _first_value(expected_records, "start_date"),
+                    "end_date": _first_value(expected_records, "end_date"),
+                    "image": _first_value(expected_records, "image"),
                 },
                 "person_name": e_person.name,
             }
@@ -95,28 +107,36 @@ def _set_precision(score: dict, key: str, actual_values, expected_values) -> Non
     score[key] = len(matching) / len(set(actual_values))
 
 
-def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
+def score_case(
+    actual_records: List[RawLLMPersonRecord],
+    expected_records: List[RawLLMPersonRecord],
+):
     score = {}
     actual_vals = {}
     expected_vals = {}
+    actual, expected = actual_records[0], expected_records[0]
+    actual_parsed, expected_parsed = _parse(actual_records), _parse(expected_records)
 
-    # name (normalized)
-    actual_name_norm = name_utils.normalize_name(actual.name)
-    expected_name_norm = name_utils.normalize_name(expected.name)
-    score["name"] = 1.0 if actual_name_norm == expected_name_norm else 0.0
+    # Grouped by normalized name upstream, so reaching here is itself the match.
+    score["name"] = 1.0
     actual_vals["name"] = actual.name
     expected_vals["name"] = expected.name
 
+    # The raw labels are carried through unscored: when a role or designation scores 0, the
+    # text it was derived from is what makes the failure diagnosable without a re-run.
+    actual_vals["labels"] = [r.label for r in actual_records]
+    expected_vals["labels"] = [r.label for r in expected_records]
+
     # roles (set match)
-    actual_roles = normalize_roles(actual.roles, EVAL_TAXONOMY)
-    expected_roles = normalize_roles(expected.roles, EVAL_TAXONOMY)
+    actual_roles = _roles(actual_parsed)
+    expected_roles = _roles(expected_parsed)
     matching_roles = set(actual_roles) & set(expected_roles)
     score["roles"] = (
-        len(matching_roles) / len(expected_roles) if expected_roles else 1.0
+        len(matching_roles) / len(set(expected_roles)) if expected_roles else 1.0
     )
     _set_precision(score, "roles_precision", actual_roles, expected_roles)
-    actual_vals["roles"] = actual.roles
-    expected_vals["roles"] = expected.roles
+    actual_vals["roles"] = actual_roles
+    expected_vals["roles"] = expected_roles
 
     # designations — scored whenever any are expected. There used to be an exemption for
     # cases without "district"/"ward", which handed a free 1.0 to 19 of the 40 people who
@@ -125,44 +145,31 @@ def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
     # "Position 2"), so these are asked for explicitly. They are also exactly the
     # non-geographic residue that distinguishes seats in `posts`.
     #
-    # Normalized like roles, and for the same reason: raw string equality made every
-    # provider lose the same case on a hyphen. Fixtures say "At-Large", every model returns
-    # "At Large" — which is what the prompt asks for ("City-Wide" → "At Large") and what
-    # designations.yml lists as the alias. The models were right and the scorer was wrong.
-    actual_designations = normalize_designations(actual.designations, EVAL_TAXONOMY)
-    expected_designations = normalize_designations(expected.designations, EVAL_TAXONOMY)
+    # Divisions and seats together, as one bag, so this number stays comparable with the
+    # history already recorded. `accuracy.py` is where the two are reported apart.
+    actual_designations = _districts(actual_parsed) + _seats(actual_parsed)
+    expected_designations = _districts(expected_parsed) + _seats(expected_parsed)
     if not expected_designations:
         score["designations"] = 1.0
     else:
         score["designations"] = len(
             set(actual_designations) & set(expected_designations)
-        ) / len(expected_designations)
+        ) / len(set(expected_designations))
     _set_precision(
         score, "designations_precision", actual_designations, expected_designations
     )
-    actual_vals["designations"] = actual.designations
-    expected_vals["designations"] = expected.designations
+    actual_vals["designations"] = actual_designations
+    expected_vals["designations"] = expected_designations
 
-    # email
-    score["email"] = 1.0 if (actual.email or "") == (expected.email or "") else 0.0
-    actual_vals["email"] = actual.email
-    expected_vals["email"] = expected.email
-
-    # phone
-    actual_phone_parsed = (
-        phonenumbers.parse(actual.phone, "US") if actual.phone else None
-    )
-    expected_phone_parsed = (
-        phonenumbers.parse(expected.phone, "US") if expected.phone else None
-    )
-    score["phone"] = 1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
-    actual_vals["phone"] = actual.phone
-    expected_vals["phone"] = expected.phone
-
-    # url
-    score["url"] = 1.0 if (actual.url or "") == (expected.url or "") else 0.0
-    actual_vals["url"] = actual.url
-    expected_vals["url"] = expected.url
+    # email / phone / url — through the app's normalizers, not raw strings. See
+    # `_FIELD_NORMALIZERS`: the pipeline canonicalizes all three before storing them, so
+    # scoring the raw form fails values the product would have accepted.
+    for field in ("email", "phone", "url"):
+        actual_value = normalize_field(field, _first_value(actual_records, field))
+        expected_value = normalize_field(field, _first_value(expected_records, field))
+        score[field] = 1.0 if actual_value == expected_value else 0.0
+        actual_vals[field] = getattr(actual, field)
+        expected_vals[field] = getattr(expected, field)
 
     # start_date / end_date / image — previously not scored at all, which hid the largest
     # difference between providers: measured 2026-08-14, AtlasCloud extracted 100% of
@@ -176,13 +183,13 @@ def score_case(actual: RawLLMPersonRecord, expected: RawLLMPersonRecord):
     # signal — only 12 of 62 people have a start_date, so a model extracting NONE of them
     # still scored 0.77. aggregate() divides by how many scores carry the key.
     for field in ("start_date", "end_date", "image"):
-        expected_value = getattr(expected, field) or ""
+        expected_value = _first_value(expected_records, field)
         if not expected_value:
             continue
-        actual_value = getattr(actual, field) or ""
-        score[field] = 1.0 if str(actual_value) == str(expected_value) else 0.0
-        actual_vals[field] = getattr(actual, field)
-        expected_vals[field] = getattr(expected, field)
+        actual_value = _first_value(actual_records, field)
+        score[field] = 1.0 if actual_value == expected_value else 0.0
+        actual_vals[field] = actual_value
+        expected_vals[field] = expected_value
 
     return {
         "scores": score,

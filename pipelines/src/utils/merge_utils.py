@@ -10,6 +10,8 @@ from runners.people_collector.schemas import (
     OtherNamesByCanonicalName,
     PeopleByName,
 )
+from shared.utils.taxonomy import Taxonomy, normalize_designations, resolve_role
+from utils.log_utils import PipelineRunLogger
 
 NAME_SIMILARITY_THRESHOLD = 4
 
@@ -254,10 +256,31 @@ def matched_identity(identity_names: Dict[str, List[str]], name: str) -> str | N
     return None
 
 
+def office_keys(labels: set[str], taxonomy: Taxonomy) -> set[str]:
+    """What raw labels resolve to, for comparing two records.
+
+    Transient by design: the resolved form is never stored or submitted — cp.org owns
+    parsing. It exists so "Council Ward 3" and "Ward 3" still compare equal now that the
+    LLM no longer normalizes them for us.
+    """
+    keys = set()
+    for label in labels:
+        if not label:
+            continue
+        role = resolve_role(label, taxonomy)
+        if role:
+            keys.add(role)
+        for designation in normalize_designations([label], taxonomy):
+            keys.add(designation)
+    return keys
+
+
 def is_weakly_tied(
     identity_names: Dict[str, List[str]],
     record1: LLMPersonRecord | Person,
     record2: LLMPersonRecord | Person,
+    taxonomy: Taxonomy,
+    logger: PipelineRunLogger,
 ) -> bool:
     """
     Determine if two records are weakly tied based on shared attributes or if they are explicitly marked as separate identities.
@@ -277,12 +300,15 @@ def is_weakly_tied(
     if not has_name_overlap(record1.name, record2.name):
         return False
 
-    # Check for matching designations
-    if set(record1.designations) & set(record2.designations):
-        return True
-
-    # Check for matching roles
-    if set(record1.roles) & set(record2.roles):
+    # Check for a shared office. Labels arrive raw, so compare what they resolve to rather
+    # than the strings themselves.
+    shared_office = office_keys(
+        to_field_set_from_record(record1, ["labels", "label"]), taxonomy
+    ) & office_keys(to_field_set_from_record(record2, ["labels", "label"]), taxonomy)
+    if shared_office:
+        logger.debug(
+            f"Weakly tied '{record1.name}' and '{record2.name}' on {sorted(shared_office)}"
+        )
         return True
 
     # Check for overlapping email addresses

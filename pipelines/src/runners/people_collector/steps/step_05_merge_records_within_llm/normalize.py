@@ -1,11 +1,10 @@
 from runners.people_collector.schemas import LLMPersonRecord
 from shared.utils import email_utils, phone_utils, url_utils
 from utils.log_utils import PipelineRunLogger
-from shared.utils.taxonomy import Taxonomy, normalize_designations, normalize_roles
 
 
 def normalize_record(
-    logger: PipelineRunLogger, taxonomy: Taxonomy, record: LLMPersonRecord
+    logger: PipelineRunLogger, record: LLMPersonRecord
 ) -> LLMPersonRecord:
     normalized_phone = (
         phone_utils.normalize_first_phone(record.phone) if record.phone else None
@@ -22,8 +21,8 @@ def normalize_record(
 
     return LLMPersonRecord(
         name=record.name,
-        roles=normalize_roles(record.roles, taxonomy),
-        designations=normalize_designations(record.designations, taxonomy),
+        # Verbatim: normalizing here is what 2.2 removed — cp.org parses.
+        label=record.label,
         phone=normalized_phone,
         email=normalized_email,
         url=record.url,

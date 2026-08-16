@@ -137,8 +137,9 @@ class Person(BaseModel):
 
     name: str
     other_names: List[str] = []
-    roles: List[str] = []
-    designations: List[str] = []
+    # Raw labels, one per seat, verbatim from the page. Decomposition into role +
+    # division + leftover happens in cp.org, not here.
+    labels: List[str] = []
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []

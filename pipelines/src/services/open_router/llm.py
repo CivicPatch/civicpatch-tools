@@ -68,7 +68,6 @@ async def run_prompt(
     content="",
     model_type="STANDARD",
     provider_order=None,
-    allow_fallbacks=True,
     seed=None,
     temperature: float = _DEFAULT_TEMPERATURE,
 ):

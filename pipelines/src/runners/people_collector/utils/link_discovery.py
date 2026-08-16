@@ -11,7 +11,8 @@ from runners.people_collector.schemas import (
 )
 from shared.utils import config_utils, name_utils, url_utils
 from shared.utils.url_utils import canonical_url
-from shared.utils.taxonomy import Taxonomy, resolve_role
+from shared.utils.label_parser import parse_label
+from shared.utils.taxonomy import Taxonomy
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -154,10 +155,10 @@ def extract_names_and_designations(
             seen_names.add(normalized)
             names.append(name)
         for person in person_list:
-            for d in person.designations or []:
-                if d and d not in seen_designations:
-                    seen_designations.add(d)
-                    designations.append(d)
+            # The raw label is the search term: it is the text the page itself used.
+            if person.label and person.label not in seen_designations:
+                seen_designations.add(person.label)
+                designations.append(person.label)
     return names, designations
 
 
@@ -244,11 +245,9 @@ def mark_link_as_terminating_status(
 def has_role_and_contact_info(
     taxonomy: Taxonomy, records: List[LLMPersonRecord]
 ) -> bool:
-    # Will need to parse these
-    # maybe add role configs
-    # if not any(r.strip().lower() in known_roles for p in records for r in p.roles if r):
-    #    return False
-    if not any(resolve_role(label, taxonomy) for p in records for label in p.roles):
+    # Parse rather than resolve the whole string: a raw label like "Council Member - Place 3"
+    # resolves to nothing, which would drop every page in a district-based jurisdiction.
+    if not any(parse_label(p.label, taxonomy).role for p in records):
         return False
     if any(p.phone or p.email for p in records):
         return True
