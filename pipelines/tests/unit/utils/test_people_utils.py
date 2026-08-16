@@ -1,9 +1,9 @@
 import pytest
 from domain.models import Person
 from shared.schemas import RoleConfig, Role
-from utils import taxonomy as taxonomy
+from shared.utils import taxonomy as taxonomy
 from utils.people_utils import sort_people
-from utils.taxonomy import Taxonomy
+from shared.utils.taxonomy import Taxonomy
 
 pytestmark = pytest.mark.unit
 

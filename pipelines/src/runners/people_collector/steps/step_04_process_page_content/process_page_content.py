@@ -37,7 +37,7 @@ from shared.utils import (
     url_utils,
 )
 from utils import log_utils, merge_utils
-from utils.taxonomy import Taxonomy, build_taxonomy, lookup_key, resolve_role
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key, resolve_role
 
 
 @dataclass

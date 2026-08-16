@@ -13,9 +13,10 @@ from runners.people_collector.schemas import (
 )
 from shared.schemas import Person
 from shared.utils.name_utils import person_list_to_identities
-from utils import divisions, log_utils, people_utils
+from shared.utils import divisions
+from utils import log_utils, people_utils
 from utils.request_utils import with_retry
-from utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
@@ -60,7 +61,7 @@ async def _step_from_gemini(
 
     return ResearchMunicipalityStep(
         expected_count=len(target_people),
-        target_designations=divisions.filter_geographic_designations(
+        target_designations=divisions.filter_divisions(
             [d for p in target_people for d in p.designations + p.roles]
         ),
         known_roles=_known_roles(target_people),

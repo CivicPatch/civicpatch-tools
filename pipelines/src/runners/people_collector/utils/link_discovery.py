@@ -11,7 +11,7 @@ from runners.people_collector.schemas import (
 )
 from shared.utils import config_utils, name_utils, url_utils
 from shared.utils.url_utils import canonical_url
-from utils.taxonomy import Taxonomy, resolve_role
+from shared.utils.taxonomy import Taxonomy, resolve_role
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.

@@ -15,7 +15,7 @@ from runners.people_collector.steps.step_05_merge_records_within_llm.normalize i
 )
 from shared.utils import name_utils
 from utils import log_utils
-from utils.taxonomy import Taxonomy, build_taxonomy, resolve_role
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, resolve_role
 
 
 def merge_records_within_llm(

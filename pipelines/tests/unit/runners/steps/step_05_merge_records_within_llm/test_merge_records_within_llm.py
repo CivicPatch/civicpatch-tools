@@ -19,7 +19,7 @@ from runners.people_collector.steps.step_05_merge_records_within_llm.merge_recor
     merge_weak_tie_groups_within_llm,
 )
 from shared.schemas import RoleConfig, Role
-from utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
 
