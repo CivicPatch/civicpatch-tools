@@ -142,6 +142,7 @@ async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> 
         return
     rows = []
     for issue in issues:
+        # TBD remove with the issue type: nothing emits these since 2026-08-16.
         if issue_type == PipelineIssueType.UNRECOGNIZED_ROLE:
             issue_key = issue["role"]
             data = json.dumps({"person_names": [issue.get("person_name", "")]})

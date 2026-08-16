@@ -1,10 +1,10 @@
-"""Raw label -> role, division, other designations, leftover.
+"""Raw label -> role, division, other designations, unmatched text.
 
 A longest-match gazetteer cascade: match spans against the known alias tables, consume what
 matched, and let the next pass see only what survives. Designations run before roles because
 they are a closed vocabulary requiring a value, so they are the hardest to be wrong about. Nothing is invented and nothing is discarded — text
-the parser cannot classify survives as `leftover` so it can become a candidate later, rather
-than being dropped the way `normalize_designations` drops "(North)" today.
+the parser cannot classify survives as `unmatched` so triage can act on it later, rather than being dropped the way `normalize_designations` drops
+"(North)" today.
 
 Lives in `shared` because cp.org does the decomposing; the pipeline calls it transiently to
 make crawl/keep decisions and throws the result away.
@@ -69,8 +69,11 @@ class ParsedLabel(BaseModel):
     # Designations that name no area — "Place 3", "Position 2", "At-Large A". They pick out
     # one office within a body, so they belong on `posts.label`, not the division.
     other_designations: List[str] = []
-    # Raw, in original case, with the matched spans removed.
-    leftover: str = ""
+    # Text that matched no alias, in original case — vocabulary we do not have yet. Named
+    # for what the parser established, not for what happens next: triage promotes some to a
+    # role or a post and marks others `excluded` ("City Attorney" is not a role we are
+    # missing), and the text alone cannot say which. Empty means the label was understood.
+    unmatched: List[str] = []
 
 
 class _Word(BaseModel):
@@ -83,7 +86,7 @@ def _words(label: str) -> List[_Word]:
 
     One token can yield two keys ("At-Large" -> "at", "large") because `lookup_key` turns
     hyphens into spaces, so the mapping is many-to-one and the token index is what lets
-    leftover be rebuilt from the untouched original text.
+    unmatched be rebuilt from the untouched original text.
     """
     words: List[_Word] = []
     for index, token in enumerate(label.split()):
@@ -115,44 +118,59 @@ def _value_index(
     """Index of the single word acting as the designation's value, if there is one.
 
     Exactly one word: "Ward 3" and "Ward East" are divisions, "Ward 3 President" is not —
-    trailing text belongs to the role or to leftover, never to the identifier.
+    trailing text belongs to the role or to unmatched, never to the identifier.
 
     Either side of the key, because "3rd Ward" and "North Ward" are as real as "Ward 3".
-    The before case is deliberately narrow — a number or a cardinal direction, both closed
-    sets. Anything looser swallows the tail of a role: "Council Member At-Large" would read
-    "Member" as the value.
-
-    That narrowness is also why before wins the tie. The after rule accepts any word that is
-    not a known alias, so a conjunction reads as a value: "Place 2 (West Ward) and Mayor
-    Pro-Tem" yielded `ward:and` and lost `ward:west`, on real model output. Preferring the
-    closed-set side prefers the evidence we can actually trust.
+    Before wins the tie: "Place 2 (West Ward) and Mayor Pro-Tem" would otherwise read the
+    conjunction as the value, which cost `ward:west` on real model output.
     """
     before = first - 1
-    if before >= 0:
-        key = words[before].key
-        if normalize_word(key).isdigit() or key in _CARDINALS:
-            return before
+    if before >= 0 and _is_value(words[before].key):
+        return before
 
     after = last + 1
     if after < len(words):
         key = words[after].key
-        if key not in aliases and key not in taxonomy.role_aliases:
+        if _is_value(key) and key not in aliases and key not in taxonomy.role_aliases:
             return after
     return None
 
 
-def _leftover(label: str, used_tokens: set) -> str:
-    """Unmatched original tokens, in order and in original case.
+def _is_value(key: str) -> bool:
+    """A number, a cardinal direction, or a single letter — the three closed sets a real
+    designation value comes from ("Ward 3", "District IV", "North Ward", "At-Large A").
 
-    Tokens that are pure punctuation are dropped: a separator left behind by removing what
+    Deliberately closed. Accepting any word instead read "District Attorney" as
+    `district:attorney` and published it as an OCD division id for a county prosecutor.
+    """
+    return (
+        normalize_word(key).isdigit()
+        or key in _CARDINALS
+        or (len(key) == 1 and key.isalpha())
+    )
+
+
+def _unmatched(label: str, used_tokens: set) -> List[str]:
+    """Contiguous runs of unmatched original tokens, in order and in original case.
+
+    Runs rather than one joined string: "Foo Ward 3 Bar" leaves two unrelated fragments, and
+    joining them would produce one nonsense term instead of two real ones.
+
+    Pure punctuation ends a run without joining it: a separator left behind by removing what
     it separated ("Council Member - Place 3" -> "-") is not surviving text.
     """
-    kept = [
-        token
-        for index, token in enumerate(label.split())
-        if index not in used_tokens and _EDGE_PUNCTUATION.sub("", token)
-    ]
-    return " ".join(kept)
+    runs: List[str] = []
+    current: List[str] = []
+    for index, token in enumerate(label.split()):
+        if index not in used_tokens and _EDGE_PUNCTUATION.sub("", token):
+            current.append(token)
+            continue
+        if current:
+            runs.append(" ".join(current))
+            current = []
+    if current:
+        runs.append(" ".join(current))
+    return runs
 
 
 def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
@@ -178,6 +196,11 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
                     divisions.append(found_division)
             else:
                 other_designations.append(f"{canonical.title()} {value.title()}")
+        elif not configs.get(canonical, {}).get("is_valueless"):
+            # A keyword with no valid value is not a designation. Leaving the tokens
+            # unconsumed sends them to `unmatched`, where an unknown office belongs.
+            found = _find_alias(words, designation_aliases, start=last + 1)
+            continue
         used.update(words[i].token for i in span)
         found = _find_alias(words, designation_aliases, start=max(span) + 1)
 
@@ -196,7 +219,7 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         division=_primary_division(divisions),
         divisions=divisions,
         other_designations=other_designations,
-        leftover=_leftover(label, used),
+        unmatched=_unmatched(label, used),
     )
 
 

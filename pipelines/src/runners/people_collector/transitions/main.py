@@ -48,7 +48,7 @@ from runners.people_collector.utils.links import (
     get_next_link_with_status,
 )
 from shared.schemas import JobConfig
-from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
+from shared.utils.statuses import PipelineRunErrorType
 from shared.utils.url_utils import same_domain
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -317,11 +317,7 @@ async def review_output_transition(
     if not officials and context.data.find_jurisdiction_url_step is None:
         return context, PipelineStatus.FIND_JURISDICTION_URL
 
-    error_type, issues = _collect_pipeline_heuristics(
-        officials,
-        context.data.role_config,
-        context.data.merge_records_within_llm_step,
-    )
+    error_type, issues = _collect_pipeline_heuristics(officials)
 
     if error_type:
         return _next_context(
@@ -458,22 +454,13 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     return int(combined_progress * 100)
 
 
-def _collect_pipeline_heuristics(
-    officials, role_config, merge_step
-) -> tuple[str | None, list[dict]]:
+def _collect_pipeline_heuristics(officials) -> tuple[str | None, list[dict]]:
+    """Unrecognized roles used to be raised here. The raw label now crosses the boundary in
+    the Record itself, so `parse_label` recovers `unmatched` wherever it is needed — a
+    separate channel only duplicated it, one row per term, closable."""
     if not officials:
         return PipelineRunErrorType.NO_INFO, []
-
-    issues = []
-    for ur in merge_step.unrecognized_roles if merge_step else []:
-        issues.append(
-            {
-                "type": PipelineIssueType.UNRECOGNIZED_ROLE,
-                "data": {"role": ur.role, "person_name": ur.person_name},
-            }
-        )
-
-    return None, issues
+    return None, []
 
 
 TRANSITION_MAP = {

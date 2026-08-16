@@ -165,11 +165,6 @@ class RelevantPageResponseSchema(BaseModel):
     relevant_urls: List[str] = []
 
 
-class UnrecognizedRole(BaseModel):
-    role: str
-    person_name: str
-
-
 class LLMPersonRecord(RawLLMPersonRecord):
     source_url: str
 
@@ -222,7 +217,6 @@ class ProcessPageContentStep(BaseModel):
 
 class MergeRecordsWithinLLMStep(BaseModel):
     records: List[Person]  # LLM Names to list of Person records
-    unrecognized_roles: List[UnrecognizedRole] = []
     excluded_people: List[Person] = []
 
 
