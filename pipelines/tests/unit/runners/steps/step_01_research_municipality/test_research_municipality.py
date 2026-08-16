@@ -1,7 +1,7 @@
 import pytest
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import _known_roles_from_db
 from shared.schemas import RoleConfig, Role
-from utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
 

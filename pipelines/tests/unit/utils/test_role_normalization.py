@@ -6,7 +6,7 @@ import yaml
 from pydantic import BaseModel
 from shared.schemas import RoleConfig, RoleStatus
 from utils.dispositions import Disposition, Tally, tally
-from utils.taxonomy import build_taxonomy, normalize_roles
+from shared.utils.taxonomy import build_taxonomy, normalize_roles
 
 CASES_PATH = Path(__file__).parent / "role_normalization" / "cases.yml"
 TAXONOMY_PATH = Path(__file__).parent / "role_normalization" / "taxonomy.yml"

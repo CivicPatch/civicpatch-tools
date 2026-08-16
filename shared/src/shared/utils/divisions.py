@@ -27,18 +27,13 @@ def division_ocdid_to_designation(
     return [f"{canonical.title()} {value.upper() if len(value) == 1 else value}"]
 
 
-def filter_geographic_designations(designations: List[str]) -> List[str]:
-    designation_configs = config_utils.get_designations()
-    result = []
-    for d in designations:
-        cleaned = d.strip().lower() if d else ""
-        if not cleaned:
-            continue
-        if designation_configs.get(cleaned.split()[0], {}).get(
-            "has_geographic_area", False
-        ):
-            result.append(cleaned)
-    return result
+def filter_divisions(designations: List[str]) -> List[str]:
+    configs = config_utils.get_designations()
+    return [
+        d.strip().lower()
+        for d in designations
+        if d and is_division(d.strip(), configs)
+    ]
 
 
 def format_division(
@@ -48,14 +43,16 @@ def format_division(
     return f"{division_base}/{key}:{designation_value}"
 
 
-def _is_division(designation: str, configs: dict) -> bool:
+def is_division(designation: str, configs: dict) -> bool:
+    # A division keyword always carries a value ("ward 3", "district 5"); at-large is the
+    # only valueless keyword and is not a division, so it needs no special case.
     key, _, value = designation.lower().partition(" ")
-    return configs.get(key, {}).get("has_geographic_area", False) and bool(value)
+    return configs.get(key, {}).get("is_division", False) and bool(value)
 
 
 def designations_without_division(designations: List[str]) -> List[str]:
     configs = config_utils.get_designations()
-    return [d for d in designations if not _is_division(d, configs)]
+    return [d for d in designations if not is_division(d, configs)]
 
 
 def resolve_division(jurisdiction_ocdid: str, designations: List[str]) -> str:
@@ -63,7 +60,7 @@ def resolve_division(jurisdiction_ocdid: str, designations: List[str]) -> str:
     configs = config_utils.get_designations()
     division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
     for d in designations:
-        if _is_division(d, configs):
+        if is_division(d, configs):
             key, _, value = d.lower().partition(" ")
             return format_division(division_base, key, value)
     return division_base

@@ -2,12 +2,12 @@ from typing import List
 
 from domain.models import Office, Official, Person
 from runners.people_collector.schemas import ResearchedPerson
-from utils.divisions import (
+from shared.utils.divisions import (
     designations_without_division,
     division_ocdid_to_designation,
     resolve_division,
 )
-from utils.taxonomy import (
+from shared.utils.taxonomy import (
     Taxonomy,
     designation_sort_key,
     resolve_role,

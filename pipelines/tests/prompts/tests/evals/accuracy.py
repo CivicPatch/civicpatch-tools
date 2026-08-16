@@ -11,7 +11,7 @@ false positives were invisible. That is what let all three providers extract
 `Abelardo Gonzalez` from an email address, against a fixture that deliberately excludes
 him, without the eval reporting anything.
 
-`district` vs `designations_other` — only designations with `has_geographic_area` become a
+`district` vs `designations_other` — only designations with `is_division` become a
 `division_ocdid`, and those are the ones we publish. Scoring them together with Place and
 Position hides which half is failing; measured 2026-08-15, all of the loss was in the
 non-geographic half.
@@ -26,8 +26,8 @@ import yaml
 from shared.schemas import Role, RoleConfig
 from shared.utils import name_utils
 from utils.dispositions import Disposition, Tally, classify_membership, classify_value, tally
-from utils.divisions import designations_without_division, filter_geographic_designations
-from utils.taxonomy import Taxonomy, build_taxonomy, normalize_designations, normalize_roles
+from shared.utils.divisions import designations_without_division, filter_divisions
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, normalize_designations, normalize_roles
 
 ROLE_ALIASES_PATH = pathlib.Path("tests/prompts/datasets/local/role_aliases.yml")
 # F1 floors on the disposition scoring — "would a regression here be visible", not "is this
@@ -105,7 +105,7 @@ def _same_phone(actual: str, expected: str) -> bool:
 
 
 def _district(designations, taxonomy) -> list[str]:
-    return filter_geographic_designations(normalize_designations(designations or [], taxonomy))
+    return filter_divisions(normalize_designations(designations or [], taxonomy))
 
 
 def _other_designations(designations, taxonomy) -> list[str]:

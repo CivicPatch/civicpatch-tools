@@ -1,6 +1,6 @@
 import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus
-from utils.taxonomy import (
+from shared.utils.taxonomy import (
     Taxonomy,
     build_taxonomy,
     lookup_key,
@@ -57,7 +57,6 @@ def test_resolve_role_negative_unknown(role):
     assert resolve_role(role, _TAXONOMY) is None
 
 
-pytestmark = pytest.mark.unit
 
 
 # --- normalize_designations ---
@@ -91,6 +90,14 @@ _DESIGNATIONS = build_taxonomy(RoleConfig(roles=[]))
         (["First Ward"], ["Ward 1"]),
         (["Seat 1 District 2"], ["District 2", "Seat 1"]),
         (["Place 3, District 2"], ["Place 3", "District 2"]),
+        # Position abbreviations. "Posn. 2" is the case 2.1c was named for: "posn" and
+        # "pos." were aliases but "posn." was neither, so the trailing period broke it.
+        (["Posn. 2"], ["Position 2"]),
+        (["Posn 2"], ["Position 2"]),
+        (["Psn 5"], ["Position 5"]),
+        (["Pos 3"], ["Position 3"]),
+        (["Pos. 3"], ["Position 3"]),
+        (["Position No. 4"], ["Position 4"]),
         ([], []),
         ([None, ""], []),
     ],

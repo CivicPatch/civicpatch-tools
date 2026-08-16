@@ -14,7 +14,7 @@ import phonenumbers
 from accuracy import build_eval_taxonomy
 from runners.people_collector.schemas import RawLLMPersonRecord
 from shared.utils import name_utils
-from utils.taxonomy import normalize_designations, normalize_roles
+from shared.utils.taxonomy import normalize_designations, normalize_roles
 
 EVAL_TAXONOMY = build_eval_taxonomy()
 

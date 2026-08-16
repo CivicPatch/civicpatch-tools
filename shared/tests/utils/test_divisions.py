@@ -1,16 +1,16 @@
 import pytest
-from utils.divisions import (
+from shared.utils.divisions import (
     designations_without_division,
     division_ocdid_to_designation,
+    filter_divisions,
     resolve_division,
 )
 
-pytestmark = pytest.mark.unit
 
 _MIXED_CONFIGS = {
-    "district": {"has_geographic_area": True},
-    "ward": {"has_geographic_area": True},
-    "at-large": {"has_geographic_area": False},
+    "district": {"is_division": True},
+    "ward": {"is_division": True},
+    "at-large": {"is_division": False},
 }
 
 
@@ -28,9 +28,48 @@ _MIXED_CONFIGS = {
 )
 def test_designations_without_division(monkeypatch, designations, expected):
     monkeypatch.setattr(
-        "utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
+        "shared.utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
     )
     assert designations_without_division(designations) == expected
+
+
+@pytest.mark.parametrize(
+    "designations, expected",
+    [
+        (["district 1"], ["district 1"]),
+        (["District 3"], ["district 3"]),
+        (["district"], []),  # no value → not geographic
+        (["at-large"], []),
+        (["at-large", "district 2"], ["district 2"]),
+        (["unknown 5"], []),
+        ([], []),
+    ],
+)
+def test_filter_divisions(monkeypatch, designations, expected):
+    monkeypatch.setattr(
+        "shared.utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
+    )
+    assert filter_divisions(designations) == expected
+
+
+@pytest.mark.parametrize(
+    "designations",
+    [
+        ["district"],
+        ["ward"],
+        ["district 1"],
+        ["at-large", "district 2", "seat 1"],
+    ],
+)
+def test_the_two_division_predicates_partition_their_input(monkeypatch, designations):
+    # A valueless geographic keyword ("district") used to land in both buckets.
+    monkeypatch.setattr(
+        "shared.utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
+    )
+    geographic = {d.lower() for d in filter_divisions(designations)}
+    non_geographic = {d.lower() for d in designations_without_division(designations)}
+    assert not geographic & non_geographic
+    assert geographic | non_geographic == {d.lower() for d in designations}
 
 
 @pytest.mark.parametrize(
@@ -80,7 +119,7 @@ def test_resolve_division(
     monkeypatch, jurisdiction_ocdid, designations, expected_division
 ):
     monkeypatch.setattr(
-        "utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
+        "shared.utils.divisions.config_utils.get_designations", lambda: _MIXED_CONFIGS
     )
     assert resolve_division(jurisdiction_ocdid, designations) == expected_division
 

@@ -13,7 +13,7 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
 )
-from utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import build_taxonomy
 
 
 async def format_output(

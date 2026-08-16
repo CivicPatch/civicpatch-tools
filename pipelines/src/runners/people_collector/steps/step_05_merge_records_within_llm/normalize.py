@@ -1,7 +1,7 @@
 from runners.people_collector.schemas import LLMPersonRecord
 from shared.utils import email_utils, phone_utils, url_utils
 from utils.log_utils import PipelineRunLogger
-from utils.taxonomy import Taxonomy, normalize_designations, normalize_roles
+from shared.utils.taxonomy import Taxonomy, normalize_designations, normalize_roles
 
 
 def normalize_record(

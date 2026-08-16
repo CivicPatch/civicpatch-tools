@@ -21,7 +21,7 @@ import yaml
 from accuracy import _same_phone, build_eval_taxonomy
 from eval_utils import PROVIDER_COMPARISON
 from shared.utils import name_utils
-from utils.taxonomy import normalize_designations, normalize_roles
+from shared.utils.taxonomy import normalize_designations, normalize_roles
 
 CASES = pathlib.Path("tests/prompts/datasets/local/municipal_officials")
 FIELDS = ("phone", "email", "url", "image", "start_date", "end_date")

@@ -32,7 +32,7 @@ from accuracy import (
     merge_dispositions,
     summarize,
 )
-from utils.taxonomy import (
+from shared.utils.taxonomy import (
     Taxonomy,
     build_taxonomy,
     normalize_designations,

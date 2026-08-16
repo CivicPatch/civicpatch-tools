@@ -24,7 +24,7 @@ from runners.people_collector.utils.link_discovery import (
 )
 from shared.schemas import RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
-from utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import build_taxonomy
 
 _ROLE_TAXONOMY = build_taxonomy(
     RoleConfig(roles=[Role(id="mayor", label="mayor"), Role(id="council", label="council")])
