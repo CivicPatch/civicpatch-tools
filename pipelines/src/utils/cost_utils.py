@@ -17,14 +17,6 @@ llm_model_prices = {
             # So 500 municipalities free before it starts costing anything
             # 'with_search': 
         },
-        'gemini-2.5-flash-preview-09-2025': {
-            'input_cost_per_1m': Decimal('0.30'),
-            'output_cost_per_1m': Decimal('2.50')
-        },
-        'gemini-2.5-flash-lite': {
-            'input_cost_per_1m': Decimal('0.10'),
-            'output_cost_per_1m': Decimal('0.40')
-        },
         'gemini-3.1-flash-lite-preview': {
             'input_cost_per_1m': Decimal('0.25'),
             'output_cost_per_1m': Decimal('1.50')
@@ -35,9 +27,9 @@ llm_model_prices = {
     #
     # An unlisted (model, provider) pair costs Decimal('0.0') — see _model_prices below.
     # That is silent, so a model bump without a matching entry here reports zero spend
-    # rather than failing. Requests run with allow_fallbacks=True and v4-flash has 19
-    # endpoints, so a fallback to an unlisted provider goes uncosted; only the ones we
-    # deliberately route to are listed.
+    # rather than failing. Requests pin allow_fallbacks=False and name their providers, so
+    # the routed provider is always one of the ones listed here — but only while this list
+    # and llm.py's `order` agree.
     'open_router': {
         # v4-flash prices from OpenRouter's endpoint catalogue, read 2026-08-14.
         # These are the providers in llm.py's order — all support structured_outputs,
@@ -47,12 +39,6 @@ llm_model_prices = {
             'DigitalOcean':{'input_cost_per_1m': Decimal('0.07'),  'output_cost_per_1m': Decimal('0.17')},
             'DeepInfra':   {'input_cost_per_1m': Decimal('0.09'),  'output_cost_per_1m': Decimal('0.18')},
             'AtlasCloud':  {'input_cost_per_1m': Decimal('0.14'),  'output_cost_per_1m': Decimal('0.28')},
-        },
-        # Retained so historical runs still cost out — fetched 2026-04-14
-        'deepseek/deepseek-v3.2': {
-            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.26'),  'output_cost_per_1m': Decimal('0.38')},
-            'SiliconFlow': {'input_cost_per_1m': Decimal('0.27'),  'output_cost_per_1m': Decimal('0.42')},
-            'Google':      {'input_cost_per_1m': Decimal('0.56'),  'output_cost_per_1m': Decimal('1.68')},
         },
     }
 }

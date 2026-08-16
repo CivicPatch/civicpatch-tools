@@ -4,4 +4,12 @@ page:
   is_relevant: false
   relevant_urls:
   - https://www.sa.gov/Government/Officials
-  - https://www.sa.gov/Directory/Departments
+  - https://www.sa.gov/Directory
+  thoughts: The homepage is not itself an officials roster, so is_relevant is false. The
+    two links worth crawling are the elected-officials page and the staff directory.
+    Corrected 2026-08-15 from https://www.sa.gov/Directory/Departments, whose anchor text
+    is "Departments" — not one of the prompt's qualifying anchors, and a departments
+    listing is municipal services, which the prompt explicitly excludes. Both remaining
+    providers refused it and AtlasCloud returned https://www.sa.gov/Directory instead,
+    whose anchor is literally "Directory", one of the named examples. The fixture recorded
+    the wrong URL for the right intent.

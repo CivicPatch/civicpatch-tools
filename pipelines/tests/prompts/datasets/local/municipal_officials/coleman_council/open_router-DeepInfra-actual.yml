@@ -5,19 +5,7 @@ people:
   designations: []
   phone: null
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: null
-- name: Sharlene T. Hetzel
-  roles:
-  - Council Member
-  designations:
-  - Place 2
-  - Ward West
-  phone: null
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -29,7 +17,20 @@ people:
   - Ward North
   phone: null
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  - Mayor Pro-Tem
+  designations:
+  - Place 2
+  - Ward West
+  phone: null
+  email: null
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -41,7 +42,7 @@ people:
   - Ward East
   phone: null
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -53,7 +54,7 @@ people:
   - Ward South
   phone: null
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null

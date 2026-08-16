@@ -1,0 +1,18 @@
+
+    Find the official government website for this jurisdiction: Harrison city, Clare County, Michigan
+
+    Return the homepage URL of the official local government website
+    (city hall, township, village, borough, etc.) specifically for Harrison city, Clare County, Michigan.
+    Do not return news sites, Wikipedia, county portals, or unofficial directories.
+
+    Return a JSON object:
+    ```json
+    { "url": "https://..." }
+    ```
+    If you cannot find any official government website, return:
+    ```json
+    { "url": null }
+    ```
+
+    IMPORTANT: Return only valid JSON. Do not include any other text.
+    

@@ -53,7 +53,6 @@ markers = [
     "live: hits real external URLs; never run in CI",
     "evals: mark a test related to evaluations",
     "evals_relevant: mark a test related to relevant page evaluation",
-    "evals_roles: mark a test for the role-normalization eval (offline, no LLM)",
     "contracts: mark a test related to contracts",
 ]
 

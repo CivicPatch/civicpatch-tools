@@ -1,7 +1,6 @@
 import asyncio
 import time
 import pytest
-import pytest_asyncio
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import relevant_page_prompt as make_together_prompt
 from runners.people_collector.schemas import RelevantPageResponseSchema
@@ -11,7 +10,13 @@ import pathlib
 import yaml
 import os
 from accuracy import as_report
-from eval_utils import PROVIDER_COMPARISON, make_provider_client, write_comparison_report
+from eval_utils import (
+    PROVIDER_COMPARISON,
+    make_provider_client,
+    record_history,
+    record_run,
+    write_comparison_report,
+)
 from utils.dispositions import Disposition, classify_membership, tally
 
 pytestmark = [pytest.mark.evals_relevant]
@@ -140,27 +145,6 @@ def load_eval_cases():
     return _eval_cases
 
 
-@pytest_asyncio.fixture
-async def model_client(request):
-    if request.param == "open_router":
-        return {
-            "name": "open_router",
-            "run_prompt": run_together_prompt,
-            "make_prompt": make_together_prompt,
-            "extra_kwargs": {"model_type": "STANDARD"},
-        }
-    elif request.param.startswith("open_router:"):
-        provider = request.param.split(":", 1)[1]
-        return {
-            "name": f"open_router-{provider}",
-            "run_prompt": run_together_prompt,
-            "make_prompt": make_together_prompt,
-            "extra_kwargs": {"model_type": "STANDARD", "provider_order": [provider], "allow_fallbacks": False},
-        }
-    else:
-        raise ValueError(f"Unknown model client: {request.param}")
-
-
 def _score_case(model_client, case, case_scores, actual_output):
     thresholds = {"relevant_urls": 0.75}
     expected_page = case["expected"]["page"]
@@ -190,7 +174,7 @@ def _score_case(model_client, case, case_scores, actual_output):
     return failed
 
 
-def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions=()):
+def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions=(), case_ids=()):
     llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
     cost_summary = {
         "model": llm_costs[0]["model"] if llm_costs else None,
@@ -207,10 +191,29 @@ def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispo
 
     evals_dir = "tests/prompts/tests/evals/relevant_page"
     os.makedirs(evals_dir, exist_ok=True)
+    # Placeholders, not empty strings: page_url, jurisdiction_name and known_roles are all
+    # interpolated per case, and passing "" blanked the URL line and dropped the other two
+    # blocks entirely — so the archived text was missing structure every real call sends.
+    # Archive the template with what varies marked. Same fix as the officials eval.
+    run = record_run(
+        evals_dir,
+        make_together_prompt(
+            "<page url, per case>", "<jurisdiction, per case>", ["<known roles, per case>"]
+        ),
+    )
+    record_history(
+        evals_dir,
+        model_client["name"],
+        run,
+        {field: counts["f1"] for field, counts in accuracy.items()},
+        cost_summary,
+        {cid: 0.0 if cid in {f["case_id"] for f in failed_cases} else 1.0 for cid in case_ids},
+    )
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
         yaml.safe_dump(
             {
+                "run": run,
                 "cost_summary": cost_summary,
                 "accuracy": accuracy,
                 "failed_cases": failed_cases,
@@ -220,36 +223,6 @@ def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispo
         )
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
-
-
-def _active_providers():
-    only = os.environ.get("EVAL_PROVIDER")
-    return [p for p in PROVIDER_COMPARISON if not only or p.split(":", 1)[1] == only]
-
-@pytest.mark.parametrize("model_client", _active_providers(), indirect=True)
-@pytest.mark.asyncio
-async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
-    eval_ocdid = "ocd-jurisdiction/country:us/state:tx/place:example/government"
-    start_time = time.time()
-    results = await asyncio.gather(*[run_eval(model_client, case) for case in load_eval_cases])
-    elapsed_seconds = round(time.time() - start_time, 2)
-
-    failed_cases = []
-    dispositions = []
-    for case, (case_scores, actual_output) in zip(load_eval_cases, results):
-        dispositions.append(page_dispositions(actual_output, case["expected"]["page"]))
-        failed = _score_case(model_client, case, case_scores, actual_output)
-        if failed:
-            failed_cases.append({
-                "model_client": model_client["name"],
-                "case_id": case["id"],
-                "failures": failed,
-            })
-            print(f"[{model_client['name']}] Case '{case['id']}' failed: {failed}")
-
-    _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions)
-    assert not failed_cases, f"Some cases failed: {failed_cases}"
-
 
 
 async def _run_provider(client, cases):
@@ -279,13 +252,16 @@ async def test_provider_comparison(load_eval_cases):
     evals_dir = "tests/prompts/tests/evals/relevant_page"
     comparison = {}
     failures = {}
+    all_failed: list[dict] = []
     for provider_client, result in zip(clients, results):
         if isinstance(result, Exception):
             failures[provider_client["name"]] = repr(result)
             print(f"PROVIDER FAILED: {provider_client['name']}: {result!r}", flush=True)
             continue
         client, failed_cases, ocdid, elapsed_seconds, dispositions = result
-        cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds, dispositions)
+        cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds, dispositions,
+                                     [c['id'] for c in load_eval_cases])
+        all_failed.extend(failed_cases)
         comparison[client["name"]] = {
             "elapsed_seconds": elapsed_seconds,
             "cost_usd": cost_summary["total_cost_usd"],
@@ -294,4 +270,15 @@ async def test_provider_comparison(load_eval_cases):
         }
 
     write_comparison_report(evals_dir, comparison, failures)
+
+    # Without this the test passes when every provider dies, leaving `providers: {}` that
+    # reads as "no data" rather than "everything blew up".
     assert not failures, f"Providers failed: {failures}"
+
+    # Case failures are collected across providers into one message rather than one red test
+    # each, which is what the per-provider parametrization used to buy.
+    assert not all_failed, "Cases failed:\n  " + "\n  ".join(
+        f'{c["model_client"]} {c["case_id"]}: '
+        + ", ".join(f'{f["field"]} {f.get("score", 0):.2f}' for f in c["failures"])
+        for c in all_failed
+    )

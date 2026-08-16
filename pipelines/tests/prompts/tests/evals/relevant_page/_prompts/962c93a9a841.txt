@@ -1,0 +1,99 @@
+
+    Your task is to determine if the provided content contains information about the **currently serving main officials**
+    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.
+
+    Page URL: <page url, per case>
+    Target jurisdiction: <jurisdiction, per case>
+    Known elected roles for this municipality: <known roles, per case>
+
+    The URL may help you identify which links belong to the municipality's domain(s) when selecting
+    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.
+    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.
+
+    ---
+
+    ## Relevant content
+
+    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)
+      for the main officials of the municipality.
+    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.
+
+    ## Irrelevant content
+
+    - Pages about auxiliary committees, department heads, or other non-elected staff.
+      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.
+      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members
+      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.
+    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,
+      Fire District, Library Board) — even if they contain a structured roster of named board members.
+      These are separate legal entities, not the primary governing body of the municipality.
+    ---
+
+    ## Steps for selecting relevant_urls
+
+    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of
+    whether `is_relevant` is true or false — the crawler uses these links to discover further
+    officials pages even when the current page is already relevant. Evaluate each link primarily
+    by its **anchor text and surrounding context** on the page — not by URL structure alone,
+    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)
+    where the slug is the only meaningful signal.
+
+    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you
+    are almost certainly including noise — re-evaluate and cut.
+
+    You MUST include every link whose anchor text or surrounding context refers to any of
+    the following. These are not candidates to weigh against each other — if a link matches,
+    it goes in the list, however many other links the page has and however much navigation
+    surrounds it:
+    - A governing body or elected role (e.g. "Township Board", "City Council", "Mayor",
+      "City Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+    - A broad government directory or index page (e.g. "Government", "City Hall",
+      "Our Government", "Administration") that is likely a hub linking to governance pages
+    - A staff or personnel directory that may list elected officials (e.g. "Staff Directory",
+      "Directory", "Elected Officials")
+
+    A link that matches one of those and is left out is the single worst outcome here —
+    the crawler cannot reach a page it was never told about. If a link does not match any
+    of the above, discard it.
+    Do not include links to municipal services (library, parks, fire, utilities),
+    news or announcements, or non-municipal external domains.
+
+    ---
+
+    ## Output Format
+
+    Return a JSON object with the following fields:
+    {
+        "relevant_urls": ["https://example.com/council", "https://example.com/directory/departments"],
+        "is_relevant": true/false,
+    }
+
+    ---
+
+    ## Critical rules
+
+    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently
+      serving primary governing officials — whether a full roster or a dedicated page for a
+      single official. Ask: "Does this page exist to show who currently holds a primary
+      governing role?" If the answer is no, set is_relevant to false.
+      If `known_roles` are provided, the page heading or title names one of those roles, and
+      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the
+      heading and that person's details alone — a shared site-wide navigation menu is not
+      the page's purpose no matter how much of the content it occupies, and a page whose own
+      heading names an elected role is a page about that role, not an index. A non-voting
+      deputy or assistant appearing alongside does not change it.
+      The following are NOT relevant regardless of what names appear in them:
+      - News and announcements feeds — even if a post lists newly elected council members by name and ward
+      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is
+        titled "City Council" or lives at a city council URL; read the body content, not the title
+      - Historical rosters (e.g., "Past Mayors", "Mayor History") — even if the most recent entry is current
+      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee
+      The test is always the page's purpose, not its content patterns.
+    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,
+      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.
+    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
+    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
+    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.
+    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
+    

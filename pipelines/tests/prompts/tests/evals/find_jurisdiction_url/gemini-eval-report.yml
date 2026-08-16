@@ -1,7 +1,18 @@
+run:
+  timestamp: '2026-08-15T23:42:59+00:00'
+  prompt_sha256: 2f5553c8a7d9
+  prompt_file: _prompts/2f5553c8a7d9.txt
 cost_summary:
   model: gemini-3.1-flash-lite-preview
-  elapsed_seconds: 22.48
+  elapsed_seconds: 27.69
   total_input_tokens: 540
-  total_output_tokens: 65
-  total_cost_usd: 0.0002325
-failed_cases: []
+  total_output_tokens: 54
+  total_cost_usd: 0.000216
+total_cases: 3
+passed_cases: 2
+failed_cases:
+- case_id: milton_township_mi
+  failures:
+  - field: found
+    expected: https://miltontownshipmi.gov/
+    actual: null

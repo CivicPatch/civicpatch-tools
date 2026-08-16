@@ -1,1 +1,11 @@
-people: []
+people:
+- name: T.C. Broadnax
+  roles:
+  - City Manager
+  designations: []
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: local://b306fc6ea5a3.png

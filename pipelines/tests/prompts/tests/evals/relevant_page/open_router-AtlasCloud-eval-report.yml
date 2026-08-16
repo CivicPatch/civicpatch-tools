@@ -1,18 +1,22 @@
+run:
+  timestamp: '2026-08-16T02:25:44+00:00'
+  prompt_sha256: e6431d3c6017
+  prompt_file: _prompts/e6431d3c6017.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 113.7
+  elapsed_seconds: 89.64
   total_input_tokens: 79286
-  total_output_tokens: 26340
-  total_cost_usd: 0.01847524
+  total_output_tokens: 25635
+  total_cost_usd: 0.01827784
 accuracy:
   relevant_urls:
     correct: 22
     missing: 2
-    spurious: 24
+    spurious: 28
     wrong: 0
-    precision: 0.4782608695652174
+    precision: 0.44
     recall: 0.9166666666666666
-    f1: 0.6285714285714286
+    f1: 0.5945945945945946
   is_relevant:
     correct: 16
     missing: 0
@@ -36,12 +40,12 @@ failed_cases:
   failures:
   - field: relevant_urls
     expected:
+    - https://www.sa.gov/Directory
     - https://www.sa.gov/Government/Officials
-    - https://www.sa.gov/Directory/Departments
     actual:
+    - https://www.sa.gov/Government/Agendas
     - https://www.sanantonio.gov/Council/Find-My-Council-Member
     - https://www.sa.gov/Government/Officials
-    - https://www.sa.gov/Directory
     - https://www.sa.gov/Government
     score: 0.5
     threshold: 0.75

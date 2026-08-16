@@ -28,13 +28,14 @@ pytestmark = pytest.mark.unit
 EVALS = pathlib.Path("tests/prompts/tests/evals")
 EVAL_MODULES = [
     EVALS / "accuracy.py",
+    EVALS / "scoring.py",
     EVALS / "eval_utils.py",
     EVALS / "audit_fixtures.py",
+    EVALS / "dashboard_data.py",
     EVALS / "visualize.py",
     EVALS / "test_local_municipal_officials_eval.py",
     EVALS / "test_local_relevant_page_eval.py",
     EVALS / "test_find_jurisdiction_url_eval.py",
-    EVALS / "role_normalization/test_role_normalization_eval.py",
 ]
 
 
@@ -59,11 +60,12 @@ def test_eval_module_imports(module_path):
 
 def test_role_normalization_fixtures_validate():
     """The migration-109 break: `taxonomy.yml` still used `role:`/`kind:` against a `Role`
-    model requiring `id`/`label`, and nothing noticed."""
+    model requiring `id`/`label`, and nothing noticed. The test that consumes these now
+    lives in tests/unit, so a break there fails directly — this only guards the fixtures."""
     # imported lazily: needs the sys.path fixture above
     from shared.schemas import RoleConfig
 
-    directory = EVALS / "role_normalization"
+    directory = pathlib.Path("tests/unit/utils/role_normalization")
     taxonomy = RoleConfig.model_validate(
         yaml.safe_load((directory / "taxonomy.yml").read_text(encoding="utf-8"))
     )
