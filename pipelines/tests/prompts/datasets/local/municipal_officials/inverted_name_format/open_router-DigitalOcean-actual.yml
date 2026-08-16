@@ -1,5 +1,5 @@
 people:
-- name: Laurie Kincannon
+- name: Kincannon, Laurie
   roles:
   - Mayor
   designations: []
@@ -9,9 +9,9 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Rory Burke
+- name: Burke, Rory
   roles:
-  - Council Member
+  - Councilman
   designations:
   - Position 4
   phone: (979) 344-0262
@@ -20,9 +20,9 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Robert Thomas
+- name: Thomas, Robert
   roles:
-  - Council Member
+  - Councilman
   designations:
   - Position 1
   phone: (832) 573-2611
@@ -31,9 +31,9 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Daniel Carreon
+- name: Carreon, Daniel
   roles:
-  - Council Member
+  - Council Position
   designations:
   - Position 2
   phone: null
@@ -42,9 +42,9 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Chris Gilbert
+- name: Gilbert, Chris
   roles:
-  - Council Member
+  - Councilman
   designations:
   - Position 3
   phone: null
@@ -53,9 +53,9 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Lauren Buchanan
+- name: Buchanan, Lauren
   roles:
-  - Council Member
+  - Council
   designations:
   - Position 5
   phone: (979) 635-1658

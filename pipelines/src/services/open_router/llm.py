@@ -48,13 +48,15 @@ def _get_semaphore() -> asyncio.Semaphore:
     return _SEMAPHORE_CACHE[loop_id]
 
 
+# Only `model` is read. The per-token costs that used to sit here were never consulted —
+# cost_utils owns pricing, keyed by (model, provider), because the price depends on which
+# provider OpenRouter routes to and a single number here cannot express that.
+#
+# A "CHEAP" tier used to exist as an empty dict, which was worse than absent: model_type
+# falls back to STANDARD only when the key is *missing*, so asking for CHEAP returned {}
+# and raised KeyError on the next line.
 MODELS_BY_TYPE = {
-    "CHEAP": {},
-    "STANDARD": {
-        "model": "deepseek/deepseek-v4-flash",
-        "input_cost": 0.14 / 1000000,
-        "output_cost": 0.28 / 1000000,
-    },
+    "STANDARD": {"model": "deepseek/deepseek-v4-flash"},
 }
 
 
@@ -130,18 +132,21 @@ async def run_prompt(
                         # OpenRouter return 404 "No endpoints found" rather than routing on.
                         # Google (no v4-flash endpoint) and SiliconFlow (no
                         # structured_outputs) were both dropped for that reason.
-                        # DigitalOcean first, AtlasCloud as fallback. Measured 2026-08-15
-                        # across three runs: roles 0.976-1.000 and district 1.000 for both,
-                        # so they are equivalent on what the taxonomy model needs, and
-                        # DigitalOcean is 2.7x cheaper ($0.0079 vs $0.0213 per eval run).
-                        # AtlasCloud is materially better on contact fields (8 missing
-                        # values vs 66), which is why it stays as the fallback.
+                        # One order for every prompt — nothing passes provider_order in
+                        # production, so this is the single routing decision.
                         #
-                        # DeepInfra removed: 109 missing values and a flat 0.000 on both
-                        # start_date and end_date across every run. allow_fallbacks is
-                        # False, so anything left in this list is a provider we can land on
-                        # — leaving it here meant production silently used it.
-                        "order": provider_order or ["DigitalOcean", "AtlasCloud"],
+                        # AtlasCloud leads on recall, which is what the pipeline is bounded
+                        # by. Measured 2026-08-15: on relevant_page it returns every wanted
+                        # link (recall 1.000, 1 failing case) against DigitalOcean's 0.875
+                        # and 4 — and DigitalOcean returned *zero* links for one page. That
+                        # step runs first and decides which pages the extractor ever sees,
+                        # so a link it never returns is a page nothing downstream can
+                        # recover. On officials it misses 6 values to DigitalOcean's 63.
+                        #
+                        # DigitalOcean is 2.7x cheaper and equivalent on roles and district
+                        # (0.976-0.992 and 1.000 for both), which is why it led until
+                        # relevant_page was measured. It stays as the fallback.
+                        "order": provider_order or ["AtlasCloud", "DigitalOcean"],
                         "allow_fallbacks": False,
                         "data_collection": "deny",
                     },

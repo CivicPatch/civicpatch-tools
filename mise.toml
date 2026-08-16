@@ -243,10 +243,6 @@ dir = "pipelines"
 run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
-[tasks.evals_roles]
-description = "Run the role-normalization eval (offline, no LLM)"
-run = "uv run pytest tests/prompts/tests/evals/role_normalization/"
-dir = "pipelines"
 
 [tasks.e2e-install]
 description = "Install e2e dependencies and Playwright browsers (run once)"
@@ -482,4 +478,25 @@ dir = "pipelines"
 [tasks.evals-audit]
 description = "Flag fixture defects by cross-provider agreement (no LLM calls)"
 run = "PYTHONPATH=src:tests/prompts/tests/evals uv run python tests/prompts/tests/evals/audit_fixtures.py"
+dir = "pipelines"
+
+[tasks.evals-serve]
+# file:// is awkward — editors show HTML as source rather than rendering it, and a browser
+# tab opened before a regeneration serves the stale copy. Serving it sidesteps both.
+# 8200 avoids the ports already in use here (8000, 8100-8102, 8123).
+description = "Regenerate the eval dashboard and serve it at http://localhost:8200"
+run = """
+PYTHONPATH=src:tests/prompts/tests/evals uv run python tests/prompts/tests/evals/visualize.py
+# Served from tests/prompts, not the evals dir: the dashboard links each failing case to
+# its datasets/local/<case>/input.md, and a root inside tests/evals would put those outside
+# the served tree (http.server blocks the traversal).
+cd tests/prompts
+URL=http://localhost:8200/tests/evals/dashboard.html
+echo ""
+echo "  Dashboard: $URL"
+echo "  Ctrl-C to stop"
+echo ""
+(command -v xdg-open >/dev/null 2>&1 && sleep 1 && xdg-open "$URL" >/dev/null 2>&1 &)
+uv run python -m http.server 8200 --bind 127.0.0.1
+"""
 dir = "pipelines"

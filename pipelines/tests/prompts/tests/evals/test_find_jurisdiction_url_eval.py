@@ -10,6 +10,7 @@ import services.google_gemini.llm as gemini_llm
 from services.google_gemini.llm import FIND_JURISDICTION_URL_MODEL_FALLBACKS
 import services.google_gemini.prompts as gemini_prompts
 from shared.utils.url_utils import same_domain
+from eval_utils import record_history, record_run
 from utils import cost_utils
 
 pytestmark = [pytest.mark.evals]
@@ -69,7 +70,16 @@ async def run_eval(case):
     return score_case(actual, expected), actual
 
 
-def _write_report(failed_cases, case_ocdids, elapsed_seconds):
+def _sample_prompt() -> str:
+    """The prompt is per-jurisdiction, so record the one the first case produced — the
+    template is what changes between runs, not the substituted name."""
+    case = _eval_cases[0]["expected"]
+    return gemini_prompts.find_jurisdiction_url_prompt(
+        case["jurisdiction_ocdid"], case.get("municipality_name", "")
+    )
+
+
+def _write_report(failed_cases, case_ocdids, elapsed_seconds, total_cases):
     all_costs = []
     for ocdid in case_ocdids:
         all_costs.extend(cost_utils.get_cost_tracker(ocdid)["llm_costs"])
@@ -81,9 +91,35 @@ def _write_report(failed_cases, case_ocdids, elapsed_seconds):
         "total_cost_usd": float(sum(c["total_cost"] for c in all_costs)),
     }
     os.makedirs(EVALS_DIR, exist_ok=True)
+    run = record_run(EVALS_DIR, _sample_prompt())
+    record_history(
+        EVALS_DIR,
+        MODEL_NAME,
+        run,
+        {"cases_passed": (total_cases - len(failed_cases)) / total_cases if total_cases else None},
+        cost_summary,
+        {
+            c["id"]: 0.0 if c["id"] in {f["case_id"] for f in failed_cases} else 1.0
+            for c in _eval_cases
+        },
+    )
     report_path = os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump({"cost_summary": cost_summary, "failed_cases": failed_cases}, f, sort_keys=False)
+        # total_cases is recorded because the report cannot be read without it. This eval
+        # has no provider-comparison test and so writes no comparison.yml, which is where
+        # every other eval's case count lives — leaving a fully passing run indistinguishable
+        # from one that ran nothing at all.
+        yaml.safe_dump(
+            {
+                "run": run,
+                "cost_summary": cost_summary,
+                "total_cases": total_cases,
+                "passed_cases": total_cases - len(failed_cases),
+                "failed_cases": failed_cases,
+            },
+            f,
+            sort_keys=False,
+        )
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
 
@@ -114,5 +150,5 @@ async def test_find_jurisdiction_url_eval():
             print(f"Case '{case['id']}' failed: {failures}")
 
     case_ocdids = [c["expected"]["jurisdiction_ocdid"] for c in _eval_cases]
-    _write_report(failed_cases, case_ocdids, elapsed_seconds)
+    _write_report(failed_cases, case_ocdids, elapsed_seconds, len(_eval_cases))
     assert not failed_cases, f"Some cases failed: {failed_cases}"
