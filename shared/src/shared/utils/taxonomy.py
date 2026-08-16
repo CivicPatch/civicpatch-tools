@@ -227,7 +227,7 @@ def _format_type_content(designation_type: str, text: str) -> str:
     return f"{designation_type.title()} {suffix}"
 
 
-def _normalize_word(word: str) -> str:
+def normalize_word(word: str) -> str:
     """Ordinals and roman numerals become digits; everything else passes through."""
     w = word.lower()
     if w.endswith(("st", "nd", "rd", "th")) or w in _ROMAN_MAP:
@@ -251,7 +251,7 @@ def _apply_matches(
             ):
                 return [f"{aliases[lookup_key(words[1])].title()} {first_normalized}"]
         # fallback: normalize ordinals/romans in place, keep everything else as-is
-        return [" ".join(_normalize_word(w) for w in words)]
+        return [" ".join(normalize_word(w) for w in words)]
 
     # single keyword at end with prefix: "North Ward" → "Ward North", "Council District 3" → "District 3"
     if (

@@ -29,7 +29,9 @@ async def format_output(
 
     taxonomy = build_taxonomy(context.data.role_config)
     sorted_people = people_utils.sort_people(data, taxonomy)
-    people = [people_utils.person_to_official(person) for person in sorted_people]
+    people = [
+        people_utils.person_to_official(person, taxonomy) for person in sorted_people
+    ]
 
     filtered_people = [person for person in people if len(person.name.split()) >= 2]
 

@@ -18,13 +18,18 @@ import pathlib
 import sys
 
 import yaml
-from accuracy import _same_phone, build_eval_taxonomy
+from accuracy import _districts, _roles, _seats, build_eval_taxonomy, normalize_field
 from eval_utils import PROVIDER_COMPARISON
 from shared.utils import name_utils
-from shared.utils.taxonomy import normalize_designations, normalize_roles
+from shared.utils.label_parser import ParsedLabel, parse_label
+from shared.utils.taxonomy import Taxonomy
 
 CASES = pathlib.Path("tests/prompts/datasets/local/municipal_officials")
 FIELDS = ("phone", "email", "url", "image", "start_date", "end_date")
+
+
+def _parse(labels: list[str], taxonomy: Taxonomy) -> list[ParsedLabel]:
+    return [parse_label(label, taxonomy) for label in labels]
 
 # Only the providers currently under comparison. Old runs leave `-actual.yml` behind for
 # providers since dropped, and those were produced by a different prompt and model — folding
@@ -34,11 +39,9 @@ CURRENT = [f"open_router-{p.split(':', 1)[1]}" for p in PROVIDER_COMPARISON]
 
 def _matches(field: str, produced: str, fixture: str) -> bool:
     """The scorer's equality, not string equality. Compare raw and every `austin_council`
-    phone looks like a defect — `(512) 978-2100` against `512-978-2100` — when the scorer
-    parses both through libphonenumber and calls them equal."""
-    if field == "phone" and produced and fixture:
-        return _same_phone(produced, fixture)
-    return produced == fixture
+    phone looks like a defect — `(512) 978-2100` against `512-978-2100` — when both sides
+    normalize to one value and the scorer calls them equal."""
+    return normalize_field(field, produced) == normalize_field(field, fixture)
 
 
 def _people(path: pathlib.Path) -> list[dict] | None:
@@ -60,6 +63,22 @@ def _samples(case: pathlib.Path, roots: list[pathlib.Path]) -> list[list[dict]]:
     return [s for s in found if s is not None]
 
 
+def _merged_contacts(people: list[dict]) -> dict[str, dict]:
+    """One dict per person, each contact field taking the first record that carries it.
+
+    Contact details belong to the person, not the seat, but they are repeated on every
+    record — so a second record with a null phone must not erase the first record's.
+    """
+    merged: dict[str, dict] = {}
+    for person in people:
+        key = name_utils.normalize_name(person.get("name", ""))
+        into = merged.setdefault(key, {"name": person.get("name")})
+        for field in FIELDS:
+            if not into.get(field):
+                into[field] = person.get(field)
+    return merged
+
+
 def _unanimous(values: list[str]) -> str | None:
     """The one value every sample produced, or None if they disagreed at all."""
     return values[0] if values and len(set(values)) == 1 else None
@@ -75,12 +94,8 @@ def audit(roots: list[pathlib.Path]) -> list[dict]:
         if len(samples) < 2:
             continue
         source = (case / "input.md").read_text(encoding="utf-8", errors="ignore")
-        by_name = [
-            {name_utils.normalize_name(p.get("name", "")): p for p in sample}
-            for sample in samples
-        ]
-        for person in expected:
-            key = name_utils.normalize_name(person.get("name", ""))
+        by_name = [_merged_contacts(sample) for sample in samples]
+        for key, person in _merged_contacts(expected).items():
             present = [s[key] for s in by_name if key in s]
             if len(present) < len(samples):
                 continue
@@ -106,44 +121,51 @@ def audit(roots: list[pathlib.Path]) -> list[dict]:
     return candidates
 
 
+def _grouped_labels(people: list[dict]) -> dict[str, list[str]]:
+    """All of one person's labels, keyed by normalized name. A person holding two seats is
+    two records, so a `{name: person}` comprehension would keep only the last."""
+    grouped: dict[str, list[str]] = {}
+    for person in people:
+        key = name_utils.normalize_name(person.get("name", ""))
+        grouped.setdefault(key, []).append(person.get("label") or "")
+    return grouped
+
+
 def audit_sets(roots: list[pathlib.Path]) -> list[dict]:
-    """Same rule for roles and designations, normalized through the eval's own taxonomy so
-    `At Large` and `At-Large` are not reported as a disagreement."""
+    """Same rule for what a label decomposes into, so two spellings of one seat are not
+    reported as a disagreement — only a genuine difference in role, division or seat is."""
     taxonomy = build_eval_taxonomy()
     candidates = []
     for case in sorted(CASES.iterdir()):
         if not case.is_dir() or not (case / "expected.yml").exists():
             continue
-        expected = _people(case / "expected.yml") or []
+        expected = _grouped_labels(_people(case / "expected.yml") or [])
         samples = _samples(case, roots)
         if len(samples) < 2:
             continue
-        by_name = [
-            {name_utils.normalize_name(p.get("name", "")): p for p in sample}
-            for sample in samples
-        ]
-        for person in expected:
-            key = name_utils.normalize_name(person.get("name", ""))
+        by_name = [_grouped_labels(sample) for sample in samples]
+        for key, wanted_labels in expected.items():
             present = [s[key] for s in by_name if key in s]
             if len(present) < len(samples):
                 continue
-            for field, normalize in (
-                ("roles", normalize_roles),
-                ("designations", normalize_designations),
+            for field, decompose in (
+                ("roles", _roles),
+                ("district", _districts),
+                ("designations_other", _seats),
             ):
                 produced = [
-                    tuple(sorted(normalize(p.get(field) or [], taxonomy))) for p in present
+                    tuple(sorted(decompose(_parse(labels, taxonomy)))) for labels in present
                 ]
                 agreed = _unanimous(produced)
                 if agreed is None:
                     continue
-                wanted = tuple(sorted(normalize(person.get(field) or [], taxonomy)))
+                wanted = tuple(sorted(decompose(_parse(wanted_labels, taxonomy))))
                 if agreed == wanted:
                     continue
                 candidates.append(
                     {
                         "case": case.name,
-                        "person": person.get("name"),
+                        "person": key,
                         "field": field,
                         "fixture": list(wanted),
                         "all_samples_say": list(agreed),

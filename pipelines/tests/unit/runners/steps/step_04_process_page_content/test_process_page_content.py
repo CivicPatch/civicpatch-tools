@@ -70,21 +70,19 @@ def test_has_role_and_contact_info_with_valid_contact_info_and_role():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone="123-456-7890",
             email="john@example.com",
             url=None,
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["council"],
+            label="council",
             phone=None,
             email=None,
             url="http://example.com",
-            designations=[],
             source_url="test",
         ),
     ]
@@ -97,21 +95,19 @@ def test_has_role_and_contact_info_with_only_a_phone():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone="123-456-7890",
             email=None,
             url=None,
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["council"],
+            label="council",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="test",
         ),
     ]
@@ -124,21 +120,19 @@ def test_has_role_and_contact_info_with_no_matching_role():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["teacher"],
+            label="teacher",
             phone="123-456-7890",
             email="john@example.com",
             url=None,
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["engineer"],
+            label="engineer",
             phone=None,
             email=None,
             url="http://example.com",
-            designations=[],
             source_url="test",
         ),
     ]
@@ -151,21 +145,19 @@ def test_has_role_and_contact_info_with_distinct_urls_but_no_phone_or_email():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url="https://example.com/john",
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url="https://example.com/jane",
-            designations=[],
             source_url="test",
         ),
     ]
@@ -178,21 +170,19 @@ def test_has_role_and_contact_info_with_one_shared_url_and_no_phone_or_email():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url="https://example.com/council",
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url="https://example.com/council",
-            designations=[],
             source_url="test",
         ),
     ]
@@ -205,21 +195,19 @@ def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone="123-456-7890",
             email=None,
             url="https://example.com",
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email="jane@example.com",
             url=None,
-            designations=[],
             source_url="test",
         ),
     ]
@@ -232,21 +220,19 @@ def test_has_role_and_contact_info_with_no_contact_info():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="test",
         ),
     ]
@@ -265,21 +251,19 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
         LLMPersonRecord(
             name="John Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone="123-456-7890",
             email="john@example.com",
             url=None,
-            designations=[],
             source_url="test",
         ),
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email=None,
             url="http://example.com",
-            designations=[],
             source_url="test",
         ),
     ]
@@ -298,11 +282,10 @@ def test_check_page_heuristics_returns_true_with_nonempty_records():
         LLMPersonRecord(
             name="Laura Palmer",
             other_names=[],
-            roles=["mayor"],
+            label="mayor Ward 8",
             phone="555-9999",
             email="laura@palmer.com",
             url="http://palmer.com/laura",
-            designations=["Ward 8"],
             source_url="http://palmer.com",
         )
     ]
@@ -317,11 +300,10 @@ def test_check_page_heuristics_returns_false_if_input_text_empty():
         LLMPersonRecord(
             name="Laura Palmer",
             other_names=[],
-            roles=["mayor"],
+            label="mayor Ward 8",
             phone="555-9999",
             email="laura@palmer.com",
             url="http://palmer.com/laura",
-            designations=["Ward 8"],
             source_url="http://palmer.com",
         )
     ]
@@ -337,11 +319,10 @@ def test_check_page_heuristics_returns_false_if_phone_not_in_text():
         LLMPersonRecord(
             name="Pat NoPhoneInText",
             other_names=[],
-            roles=["council"],
+            label="council Ward 2",
             phone="555-0000",
             email="pat@nophone.com",
             url="http://nophone.com/pat",
-            designations=["Ward 2"],
             source_url="http://nophone.com",
         )
     ]
@@ -358,11 +339,10 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
         LLMPersonRecord(
             name="Alex NoEmailInText",
             other_names=[],
-            roles=["mayor"],
+            label="mayor Ward 3",
             phone="555-5678",
             email="alex@noemail.com",
             url="http://noemail.com/alex",
-            designations=["Ward 3"],
             source_url="http://noemail.com",
         )
     ]
@@ -379,11 +359,10 @@ def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source()
         LLMPersonRecord(
             name="Alexandria Inocencio",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone=None,
             email="alexandria.inocencio@cityofdilleytx.com",
             url=None,
-            designations=[],
             source_url="http://cityofdilleytx.com",
         )
     ]
@@ -399,11 +378,10 @@ def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore
         LLMPersonRecord(
             name="Alfredo Macedo",
             other_names=[],
-            roles=["council member"],
+            label="council member",
             phone=None,
             email="amacedo_84@hotmail.com",
             url=None,
-            designations=[],
             source_url="http://cityofmcgregor.com",
         )
     ]
@@ -421,11 +399,10 @@ def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
         LLMPersonRecord(
             name="Joseph Smith",
             other_names=[],
-            roles=["council member"],
+            label="council member District 1",
             phone=None,
             email="district1@ci.lamesa.tx.us",
             url=None,
-            designations=["District 1"],
             source_url="http://ci.lamesa.tx.us",
         )
     ]
@@ -441,11 +418,10 @@ def test_check_page_heuristics_does_not_match_email_without_at_sign():
         LLMPersonRecord(
             name="Jane Doe",
             other_names=[],
-            roles=["council member"],
+            label="council member",
             phone=None,
             email="notanemail",
             url=None,
-            designations=[],
             source_url="http://example.com",
         )
     ]
@@ -462,11 +438,10 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
         LLMPersonRecord(
             name="Mario D'Agostino",
             other_names=[],
-            roles=["council"],
+            label="council",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="http://example.com",
         )
     ]
@@ -483,11 +458,10 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_name():
         LLMPersonRecord(
             name="Mario D\u2019Agostino",
             other_names=[],
-            roles=["council"],
+            label="council",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="http://example.com",
         )
     ]
@@ -504,11 +478,10 @@ def test_check_page_heuristics_matches_name_split_across_lines():
         LLMPersonRecord(
             name="Martin Mattessich",
             other_names=[],
-            roles=["council"],
+            label="council",
             phone=None,
             email=None,
             url=None,
-            designations=[],
             source_url="http://example.com",
         )
     ]
@@ -524,11 +497,10 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
         LLMPersonRecord(
             name="Jamie NoUrlInText",
             other_names=[],
-            roles=["council"],
+            label="council Ward 4",
             phone="555-8765",
             email="jamie@nourl.com",
             url="http://nourl.com/jamie",
-            designations=["Ward 4"],
             source_url="http://nourl.com",
         )
     ]
@@ -545,11 +517,10 @@ def test_check_page_heuristics_passes_with_compound_phone_in_text():
         LLMPersonRecord(
             name="Alice Boroughman",
             other_names=[],
-            roles=["mayor"],
+            label="mayor",
             phone="856-358-2509 or 856-358-4010 Ext. 112",
             email=None,
             url=None,
-            designations=[],
             source_url="http://example.com",
         )
     ]
@@ -741,7 +712,6 @@ def test_add_relevant_urls_name_match_beats_designation_match():
         frontier,
         domain="https://cityofbaycity.org",
         names=["Susan Reardon"],
-        designations=["Position 4"],
     )
     assert (
         pending_in_queue_order(result)[0].url
@@ -768,7 +738,6 @@ def test_add_relevant_urls_role_hint_in_url_beats_more_references():
         [],
         frontier,
         domain="https://cityofbaycity.org",
-        designations=["Council Member"],
     )
     assert (
         pending_in_queue_order(result)[0].url
@@ -856,10 +825,10 @@ async def test_process_with_llm_reorders_inverted_names():
     llm_response = PeopleArrayLLMResponseSchema(
         people=[
             RawLLMPersonRecord(
-                name="Kincannon, Laurie", roles=["Mayor"], designations=[]
+                name="Kincannon, Laurie", label="Mayor"
             ),
             RawLLMPersonRecord(
-                name="Burke, Rory", roles=["Councilman"], designations=["Position 4"]
+                name="Burke, Rory", label="Councilman Position 4"
             ),
         ]
     )

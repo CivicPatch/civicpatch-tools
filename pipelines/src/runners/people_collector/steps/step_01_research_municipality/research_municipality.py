@@ -16,7 +16,7 @@ from shared.utils.name_utils import person_list_to_identities
 from shared.utils import divisions
 from utils import log_utils, people_utils
 from utils.request_utils import with_retry
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, resolve_role
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
@@ -97,8 +97,9 @@ def _known_roles_from_db(existing: list, taxonomy: Taxonomy) -> List[str]:
     seen = []
     for p in existing:
         office_name = (p.get("office") or {}).get("name") or ""
-        for role in people_utils.office_name_to_roles(office_name, taxonomy):
-            if role not in seen:
+        for label in people_utils.office_name_to_labels(office_name):
+            role = resolve_role(label, taxonomy)
+            if role and role not in seen:
                 seen.append(role)
     return seen
 

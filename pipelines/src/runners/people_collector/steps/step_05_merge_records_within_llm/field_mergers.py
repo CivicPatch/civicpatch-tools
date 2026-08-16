@@ -4,26 +4,13 @@ from typing import List
 from runners.people_collector.schemas import LLMPersonRecord
 
 
-def merge_roles(records: List[LLMPersonRecord]) -> List[str]:
-    unique_roles = set()
+def merge_labels(records: List[LLMPersonRecord]) -> List[str]:
+    """Unique raw labels across records — one per seat the person was seen holding."""
+    unique_labels = set()
     for record in records:
-        for role in record.roles:
-            if role:
-                unique_roles.add(role)
-    return list(unique_roles)
-
-
-def merge_designations(records: List[LLMPersonRecord]) -> List[str]:
-    """
-    Collect a set of unique designations from all records.
-    """
-
-    unique_designations = set()
-    for record in records:
-        for designation in record.designations:
-            if designation:
-                unique_designations.add(designation)
-    return list(unique_designations)
+        if record.label:
+            unique_labels.add(record.label)
+    return list(unique_labels)
 
 
 def merge_field(values: List[str]) -> str:

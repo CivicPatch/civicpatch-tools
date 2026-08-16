@@ -142,8 +142,9 @@ class LinkFrontier(BaseModel):
 
 class RawLLMPersonRecord(BaseModel):
     name: str
-    roles: List[str]
-    designations: List[str]
+    # The label beside the name, verbatim — one record per label. Not decomposed into
+    # role + designation: cp.org owns that, and splitting here loses which went with which.
+    label: str
 
     phone: Optional[str] = None
     email: Optional[str] = None

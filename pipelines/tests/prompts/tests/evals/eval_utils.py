@@ -55,7 +55,6 @@ def make_provider_client(param, make_prompt_fn):
         "extra_kwargs": {
             "model_type": "STANDARD",
             "provider_order": [provider],
-            "allow_fallbacks": True,
             "temperature": EVAL_TEMPERATURE,
             "seed": EVAL_SEED,
         },

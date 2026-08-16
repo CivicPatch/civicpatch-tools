@@ -5,9 +5,7 @@ known_roles:
 - Trustee
 people:
 - name: Deb Brousseau
-  roles:
-  - Supervisor
-  designations: []
+  label: Supervisor
   phone: 517-662-5213
   email: supervisor@raisintownship.com
   url: https://raisinchartertownship.com/supervisor

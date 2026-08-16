@@ -37,7 +37,8 @@ from shared.utils import (
     url_utils,
 )
 from utils import log_utils, merge_utils
-from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key, resolve_role
+from shared.utils.label_parser import ParsedLabel, parse_label
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 
 
 @dataclass
@@ -93,14 +94,18 @@ async def _process_with_llm_in_chunks(
     return all_found
 
 
+def _names_a_seat(parsed: ParsedLabel) -> bool:
+    """Whether the label points at a particular seat — a division or a seat marker."""
+    return bool(parsed.division or parsed.seats)
+
+
 def _resolved_roles(taxonomy: Taxonomy, records: PeopleByName) -> set[str]:
     found = set()
     for group in records.values():
         for record in group:
-            for label in record.roles:
-                canonical = resolve_role(label, taxonomy)
-                if canonical:
-                    found.add(lookup_key(canonical))
+            canonical = parse_label(record.label, taxonomy).role
+            if canonical:
+                found.add(lookup_key(canonical))
     return found
 
 
@@ -361,8 +366,7 @@ def calculate_progress(
             p_list
             for p_list in valid_people
             if any(
-                p.designations and any(d.strip() for d in p.designations)
-                for p in p_list
+                _names_a_seat(parse_label(p.label, taxonomy)) for p in p_list
             )
         ]
         if len(people_with_designations) >= num_target_designations:

@@ -15,7 +15,8 @@ from runners.people_collector.steps.step_05_merge_records_within_llm.normalize i
 )
 from shared.utils import name_utils
 from utils import log_utils
-from shared.utils.taxonomy import Taxonomy, build_taxonomy, resolve_role
+from shared.utils.label_parser import parse_label
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 
 def merge_records_within_llm(
@@ -54,21 +55,21 @@ def merge_records_within_llm(
     for record in all_records:
         groups[canonical_map.get(record.name, record.name)].append(record)
 
-    groups = merge_weak_tie_groups_within_llm(groups)
+    groups = merge_weak_tie_groups_within_llm(groups, taxonomy)
 
     # Merge each group into a Person
     kept_people: List[Person] = []
     for canonical_name, group in groups.items():
-        raw_roles = list({r for record in group for r in (record.roles or [])})
+        raw_labels = list({record.label for record in group if record.label})
         merged_person = merge_llm_people_to_person(
             logger, taxonomy, canonical_name, group, jurisdiction_ocdid
         )
 
-        if raw_roles and not any(
-            resolve_role(r, taxonomy) for r in merged_person.roles
+        if raw_labels and not any(
+            parse_label(label, taxonomy).role for label in merged_person.labels
         ):
             logger.info(
-                f"Excluded person: {canonical_name} — no known role in {raw_roles}"
+                f"Excluded person: {canonical_name} — no known role in {raw_labels}"
             )
             all_excluded.append(merged_person)
         else:
@@ -76,10 +77,10 @@ def merge_records_within_llm(
 
     # over both lists — an excluded person's label is what triage needs to see
     for person in kept_people + all_excluded:
-        for role in person.roles:
-            if not resolve_role(role, taxonomy):
+        for label in person.labels:
+            if not parse_label(label, taxonomy).role:
                 all_unrecognized.append(
-                    UnrecognizedRole(role=role, person_name=person.name)
+                    UnrecognizedRole(role=label, person_name=person.name)
                 )
 
     return MergeRecordsWithinLLMStep(
@@ -91,10 +92,11 @@ def merge_records_within_llm(
 
 def merge_weak_tie_groups_within_llm(
     groups: Dict[str, List[LLMPersonRecord]],
+    taxonomy: Taxonomy,
 ) -> Dict[str, List[LLMPersonRecord]]:
     """
     Merge last-name-only canonical groups into full-name groups when they share
-    the same last name and at least one (role, designation) pair.
+    the same last name and at least one office.
     """
 
     def is_last_name_only(name: str) -> bool:
@@ -104,12 +106,14 @@ def merge_weak_tie_groups_within_llm(
         parsed = name_utils.parse_name(name)
         return parsed.last.lower() if parsed.last else name.split()[-1].lower()
 
-    def role_designation_pairs(records: List[LLMPersonRecord]) -> set:
+    def office_keys(records: List[LLMPersonRecord]) -> set:
+        """(role, area, designations) per record. Parsed, not compared raw, so two
+        spellings of one office still match; the parse is discarded after the merge."""
         result = set()
         for r in records:
-            for role in r.roles or []:
-                for desig in r.designations or [""]:
-                    result.add((role, desig))
+            parsed = parse_label(r.label, taxonomy)
+            area = parsed.division.value if parsed.division else ""
+            result.add((parsed.role or "", area, tuple(parsed.seats)))
         return result
 
     weak_keys = [k for k in groups if is_last_name_only(k)]
@@ -118,15 +122,15 @@ def merge_weak_tie_groups_within_llm(
     for wk in weak_keys:
         if wk not in result:
             continue
-        weak_pairs = role_designation_pairs(result[wk])
-        if not weak_pairs:
+        weak_office_keys = office_keys(result[wk])
+        if not weak_office_keys:
             continue
         for sk in list(result):
             if sk == wk or is_last_name_only(sk):
                 continue
             if parsed_last_name(sk) != wk.lower():
                 continue
-            if not weak_pairs & role_designation_pairs(result[sk]):
+            if not weak_office_keys & office_keys(result[sk]):
                 continue
             result[sk] = result[sk] + result[wk]
             del result[wk]
@@ -141,7 +145,7 @@ def get_source_urls(person_records: list[LLMPersonRecord], person: Person) -> li
     Only one source_url per unique value, tiebreaking by first record.
     """
     field_map = [
-        ("roles", "roles"),
+        ("labels", "label"),
         # ('divisions', 'divisions'),
         ("phones", "phone"),
         ("emails", "email"),
@@ -179,12 +183,11 @@ def merge_llm_people_to_person(
     Merge a list of LLMPersonRecord objects into a single Person object.
     """
     # Normalize records
-    records = [normalize_record(logger, taxonomy, r) for r in records]
+    records = [normalize_record(logger, r) for r in records]
 
     # Use helper functions to merge fields
     image = field_mergers.merge_field([r.image for r in records if r.image is not None])
-    merged_roles = field_mergers.merge_roles(records)
-    merged_designations = field_mergers.merge_designations(records)
+    merged_labels = field_mergers.merge_labels(records)
     phones = field_mergers.merge_field_to_list(
         [r.phone for r in records if r.phone is not None]
     )
@@ -213,8 +216,7 @@ def merge_llm_people_to_person(
     person = Person(
         name=canonical_name,
         other_names=other_names,  # Add other names here
-        roles=merged_roles,
-        designations=merged_designations,
+        labels=merged_labels,
         phones=phones,
         emails=emails,
         urls=urls,

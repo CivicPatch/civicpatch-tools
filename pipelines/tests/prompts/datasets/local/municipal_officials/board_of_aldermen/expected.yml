@@ -1,8 +1,6 @@
 people:
 - name: Todd Day
-  roles:
-  - Mayor
-  designations: []
+  label: Mayor
   phone: 956-350-4093
   email: Todd.Day@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
@@ -10,9 +8,7 @@ people:
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
 - name: Javier Vera
-  roles:
-  - Mayor Pro Tem
-  designations: []
+  label: Mayor Pro Tem
   phone: 956-350-4093
   email: Javier.Vera@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
@@ -20,9 +16,7 @@ people:
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
 - name: Christi Burnias
-  roles:
-  - Alderwoman
-  designations: []
+  label: Alderwoman
   phone: 956-350-4093
   email: Christi.Burnias@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
@@ -30,9 +24,7 @@ people:
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
 - name: Peter Harris
-  roles:
-  - Alderman
-  designations: []
+  label: Alderman
   phone: 956-350-4093
   email: Peter.Harris@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
@@ -40,9 +32,7 @@ people:
   end_date: 2026-05
   image: null
 - name: Mark A. Johnson
-  roles:
-  - Alderman
-  designations: []
+  label: Alderman
   phone: 956-350-4093
   email: Mark.Johnson@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
@@ -56,5 +46,5 @@ thought: The content provides a clear, structured listing of the 'Board of Alder
   for 'Abelardo.Gonzalez' because his name was not explicitly stated in the text,
   only inferred from his email address, which violates the guideline against inferring
   names. No specific ward/district designations were provided for any official, so
-  the 'designations' field is left empty. The 'View Board of Aldermen Meeting Agendas'
+  each label is the bare role title. The 'View Board of Aldermen Meeting Agendas'
   link is included in relevant_urls for additional information regarding the board.

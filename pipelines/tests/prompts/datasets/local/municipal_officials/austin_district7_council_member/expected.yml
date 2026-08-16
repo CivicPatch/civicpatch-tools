@@ -5,6 +5,5 @@ people:
     url: https://www.austintexas.gov/district-7
     start_date: "2025-01-06"
     end_date: "2029-01-06"
-    roles: [Council Member]
-    designations: [District 7]
+    label: Council Member - District 7
     image: local://dcf614330879.png

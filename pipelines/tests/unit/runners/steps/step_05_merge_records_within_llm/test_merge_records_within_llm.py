@@ -46,8 +46,7 @@ ROLE_CONFIG = RoleConfig(
 
 def make_llm_person(
     name,
-    roles=None,
-    designations=None,
+    label="",
     phone=None,
     email=None,
     url=None,
@@ -55,8 +54,7 @@ def make_llm_person(
 ):
     return LLMPersonRecord(
         name=name,
-        roles=roles or [],
-        designations=designations or [],
+        label=label,
         phone=phone,
         email=email,
         url=url,
@@ -70,8 +68,7 @@ def make_llm_person(
 def _make_llm_person(**kwargs) -> LLMPersonRecord:
     defaults = {
         "name": "",
-        "roles": [],
-        "designations": [],
+        "label": "",
         "phone": None,
         "email": None,
         "url": None,
@@ -160,7 +157,7 @@ GOOGLE_GEMINI_RECORDS = {
     "Martin Cantu, Jr.": [
         _make_llm_person(
             name="Martin Cantu, Jr.",
-            roles=["Mayor"],
+            label="Mayor",
             phone="(956) 943-2682",
             email="citysecretaryofpi@yahoo.com",
             url="https://myportisabel.com/198/Martin-Cantu-Jr",
@@ -171,8 +168,7 @@ GOOGLE_GEMINI_RECORDS = {
     "Sandra Holland": [
         _make_llm_person(
             name="Sandra Holland",
-            roles=["Commissioner"],
-            designations=["Place 1"],
+            label="Commissioner - Place 1",
             phone="(956) 943-2682",
             email="citysecretaryofpi@yahoo.com",
             image="https://myportisabel.com/ImageRepository/Document?documentID=766",
@@ -182,8 +178,7 @@ GOOGLE_GEMINI_RECORDS = {
     "Michelle Ann Barreiro": [
         _make_llm_person(
             name="Michelle Ann Barreiro",
-            roles=["Commissioner"],
-            designations=["Place 2"],
+            label="Commissioner - Place 2",
             phone="(956) 943-2682",
             email="citysecretaryofpi@yahoo.com",
             url="https://myportisabel.com/directory.aspx?EID=30",
@@ -194,8 +189,7 @@ GOOGLE_GEMINI_RECORDS = {
     "Martin C. Cantu": [
         _make_llm_person(
             name="Martin C. Cantu",
-            roles=["Commissioner"],
-            designations=["Place 3"],
+            label="Commissioner - Place 3",
             phone="(956) 943-2682",
             email="citysecretaryofpi@yahoo.com",
             url="https://myportisabel.com/201/Martin-C-Cantu",
@@ -206,8 +200,7 @@ GOOGLE_GEMINI_RECORDS = {
     "Jeffery David Martinez": [
         _make_llm_person(
             name="Jeffery David Martinez",
-            roles=["Commissioner"],
-            designations=["Place 4"],
+            label="Commissioner - Place 4",
             phone="(956) 943-2682",
             email="citysecretaryofpi@yahoo.com",
             url="https://myportisabel.com/202/Jeffery-David-Martinez",
@@ -223,7 +216,7 @@ TOGETHER_AI_RECORDS = {
     "Martin Cantu Jr.": [
         _make_llm_person(
             name="Martin Cantu Jr.",
-            roles=["Mayor"],
+            label="Mayor",
             phone="(956) 943-2682",
             url="https://myportisabel.com/198/Martin-Cantu-Jr",
             image="https://myportisabel.com/ImageRepository/Document?documentID=203",
@@ -233,8 +226,7 @@ TOGETHER_AI_RECORDS = {
     "Jeffery David Martinez": [
         _make_llm_person(
             name="Jeffery David Martinez",
-            roles=["City Commissioner"],
-            designations=["Place 4"],
+            label="City Commissioner - Place 4",
             phone="(956) 943-2682",
             email="jefferydmartinez@gmail.com",
             url="https://myportisabel.com/202/Jeffery-David-Martinez",
@@ -245,8 +237,7 @@ TOGETHER_AI_RECORDS = {
     "Martin C. Cantu": [
         _make_llm_person(
             name="Martin C. Cantu",
-            roles=["City Commissioner"],
-            designations=["Place 3"],
+            label="City Commissioner - Place 3",
             phone="(956) 943-2682",
             email="commissionercantu@copitx.com",
             url="https://myportisabel.com/201/Martin-C-Cantu",
@@ -263,16 +254,14 @@ TOGETHER_AI_RECORDS = {
 def test_merge_llm_people_to_person():
     p1 = make_llm_person(
         name="Eve",
-        roles=["Council Member", "Treasurer"],
-        designations=["Ward 5", "Ward 6"],
+        label="Council Member - Ward 5",
         phone="(956) 943-2682",
         email="eve@city.org",
         source_url="http://source1.com",
     )
     p2 = make_llm_person(
         name="Eve",
-        roles=["Council Member", "Mayor"],
-        designations=["Ward 5", "Ward 7"],
+        label="Treasurer - Ward 6",
         phone="(956) 943-2682",
         email="eve@city.org",
         source_url="http://source2.com",
@@ -282,8 +271,7 @@ def test_merge_llm_people_to_person():
     )
 
     assert result.name == "Eve"
-    assert set(result.roles) == {"Council Member", "Treasurer", "Mayor"}
-    assert set(result.designations) == {"Ward 5", "Ward 6", "Ward 7"}
+    assert set(result.labels) == {"Council Member - Ward 5", "Treasurer - Ward 6"}
     assert set(result.phones) == {"(956) 943-2682"}
     assert set(result.emails) == {"eve@city.org"}
     assert set(result.source_urls) == {"http://source1.com", "http://source2.com"}
@@ -296,8 +284,7 @@ def test_merge_llm_people_to_person():
 def test_get_source_urls_filters_by_unique_contribution():
     r1 = LLMPersonRecord(
         name="Robert Kubert",
-        roles=["Mayor"],
-        designations=["Ward 1"],
+        label="Mayor - Ward 1",
         phone=None,
         email=None,
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -308,8 +295,7 @@ def test_get_source_urls_filters_by_unique_contribution():
     )
     r2 = LLMPersonRecord(
         name="Robert Kubert",
-        roles=["Mayor", "Council Member"],
-        designations=["Ward 2", "Ward 3"],
+        label="Council Member - Ward 2",
         phone="555-0002",
         email="mayor2@bayonne.org",
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -320,8 +306,7 @@ def test_get_source_urls_filters_by_unique_contribution():
     )
     r3 = LLMPersonRecord(
         name="Robert Kubert",
-        roles=["Mayor"],
-        designations=["Ward 1"],
+        label="Mayor - Ward 1",
         phone=None,
         email=None,
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -333,8 +318,7 @@ def test_get_source_urls_filters_by_unique_contribution():
 
     person = Person(
         name="Robert Kubert",
-        roles=["Mayor", "Council Member"],
-        designations=["Ward 1", "Ward 2", "Ward 3"],
+        labels=["Mayor - Ward 1", "Council Member - Ward 2"],
         phones=["555-0002"],
         emails=["mayor2@bayonne.org"],
         urls=["https://www.bayonnenj.org/officials/bio/mayor-robert-kubert"],
@@ -363,8 +347,8 @@ def test_port_isabel_keeps_both_cantus_separate_google_gemini():
     assert len(cantu_people) == 2, (
         f"Expected 2 Cantu people, got {len(cantu_people)}: {[p.name for p in cantu_people]}"
     )
-    assert len([p for p in cantu_people if "Mayor" in p.roles]) == 1
-    assert len([p for p in cantu_people if "Mayor" not in p.roles]) == 1
+    assert len([p for p in cantu_people if any("Mayor" in label for label in p.labels)]) == 1
+    assert len([p for p in cantu_people if not any("Mayor" in label for label in p.labels)]) == 1
 
 
 def test_port_isabel_keeps_both_cantus_separate_together_ai():
@@ -416,7 +400,7 @@ def test_port_isabel_cantu_sr_gets_correct_canonical_name():
     cantu_people = [
         p for p in result.records if "cantu" in p.name.lower()
     ]
-    commissioner_cantu = [p for p in cantu_people if "Mayor" not in p.roles]
+    commissioner_cantu = [p for p in cantu_people if not any("Mayor" in label for label in p.labels)]
     assert len(commissioner_cantu) == 1
     assert (
         "Sr." in commissioner_cantu[0].name
@@ -430,7 +414,7 @@ def test_port_isabel_cantu_jr_gets_correct_canonical_name():
         _build_context(TOGETHER_AI_RECORDS, PORT_ISABEL_OFFICIALS)
     )
     mayor_people = [
-        p for p in result.records if "Mayor" in p.roles
+        p for p in result.records if any("Mayor" in label for label in p.labels)
     ]
     assert len(mayor_people) == 1
     assert "Jr" in mayor_people[0].name
@@ -504,15 +488,13 @@ def test_duplicate_records_merged_within_same_name():
         "Sandra Holland": [
             _make_llm_person(
                 name="Sandra Holland",
-                roles=["City Commissioner"],
-                designations=["Place 1"],
+                label="City Commissioner - Place 1",
                 phone="(956) 943-2682",
                 source_url="https://myportisabel.com/197/Mayor-Commissioners",
             ),
             _make_llm_person(
                 name="Sandra Holland",
-                roles=["City Commissioner"],
-                designations=["Place 1"],
+                label="City Commissioner - Place 1",
                 email="sholland@example.com",
                 source_url="https://myportisabel.com/some-other-page",
             ),
@@ -532,12 +514,12 @@ class TestMergeWeakTieGroupsWithinLlm:
     def test_merges_by_last_name_and_role(self):
         """Last-name-only canonical merges into full-name canonical with same role."""
         groups = {
-            "Lindamood": [make_llm_person("Lindamood", roles=["mayor"])],
+            "Lindamood": [make_llm_person("Lindamood", label="mayor")],
             "Bobby Lindamood": [
-                make_llm_person("Bobby Lindamood", roles=["mayor"], email="b@city.gov")
+                make_llm_person("Bobby Lindamood", label="mayor", email="b@city.gov")
             ],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Lindamood" not in result
         assert "Bobby Lindamood" in result
         assert len(result["Bobby Lindamood"]) == 2
@@ -547,28 +529,27 @@ class TestMergeWeakTieGroupsWithinLlm:
         groups = {
             "Elder": [
                 make_llm_person(
-                    "Elder", roles=["mayor pro tempore"], designations=["place 1"]
+                    "Elder", label="mayor pro tempore - place 1"
                 )
             ],
             "Brandi Elder": [
                 make_llm_person(
                     "Brandi Elder",
-                    roles=["mayor pro tempore"],
-                    designations=["place 1"],
+                    label="mayor pro tempore - place 1",
                 )
             ],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Elder" not in result
         assert len(result["Brandi Elder"]) == 2
 
     def test_no_merge_when_role_differs(self):
         """Same last name but different roles — must not merge."""
         groups = {
-            "Smith": [make_llm_person("Smith", roles=["mayor"])],
-            "John Smith": [make_llm_person("John Smith", roles=["council member"])],
+            "Smith": [make_llm_person("Smith", label="mayor")],
+            "John Smith": [make_llm_person("John Smith", label="council member")],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" in result
         assert "John Smith" in result
 
@@ -577,44 +558,44 @@ class TestMergeWeakTieGroupsWithinLlm:
         groups = {
             "Smith": [
                 make_llm_person(
-                    "Smith", roles=["council member"], designations=["place 2"]
+                    "Smith", label="council member - place 2"
                 )
             ],
             "John Smith": [
                 make_llm_person(
-                    "John Smith", roles=["council member"], designations=["place 4"]
+                    "John Smith", label="council member - place 4"
                 )
             ],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" in result
 
     def test_no_merge_when_no_roles(self):
         """Last-name-only group with no roles is not merged."""
         groups = {
-            "Smith": [make_llm_person("Smith", roles=[])],
-            "John Smith": [make_llm_person("John Smith", roles=["mayor"])],
+            "Smith": [make_llm_person("Smith")],
+            "John Smith": [make_llm_person("John Smith", label="mayor")],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" in result
 
     def test_full_name_groups_not_treated_as_weak(self):
         """Two full-name groups sharing a last name are not merged."""
         groups = {
-            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", roles=["mayor"])],
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", label="mayor")],
             "Marty D Smith Sr": [
-                make_llm_person("Marty D Smith Sr", roles=["council member"])
+                make_llm_person("Marty D Smith Sr", label="council member")
             ],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert len(result) == 2
 
     def test_suffix_does_not_confuse_last_name_extraction(self):
         """A last-name-only group still resolves correctly against a suffixed full name."""
         groups = {
-            "Smith": [make_llm_person("Smith", roles=["mayor"])],
-            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", roles=["mayor"])],
+            "Smith": [make_llm_person("Smith", label="mayor")],
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", label="mayor")],
         }
-        result = merge_weak_tie_groups_within_llm(groups)
+        result = merge_weak_tie_groups_within_llm(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" not in result
         assert len(result["Marty C Smith Jr"]) == 2

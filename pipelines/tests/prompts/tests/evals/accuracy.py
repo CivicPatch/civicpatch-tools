@@ -2,7 +2,7 @@
 
 Wiring only — the taxonomy and the arithmetic live in `utils.dispositions`. This module
 knows the record shape and which comparator each field needs: phone through
-libphonenumber, roles and designations through the taxonomy, everything else exact.
+libphonenumber, the label through `parse_label`, everything else exact.
 
 Two fields exist here that the averaged dimensions cannot express:
 
@@ -16,18 +16,23 @@ him, without the eval reporting anything.
 Position hides which half is failing; measured 2026-08-15, all of the loss was in the
 non-geographic half.
 
+The three set fields are no longer read off the record. The model now returns one label per
+seat, verbatim, and this module decomposes it — so a difference in wording that decomposes
+the same way ("Councilman Pos. 4" vs "Council Member Position 4") stops counting as an
+error, and the eval measures the components the product actually stores.
+
 Split into its own module because the eval file is already far past the file-size ceiling.
 """
 
 import pathlib
+from collections import defaultdict
 
-import phonenumbers
 import yaml
 from shared.schemas import Role, RoleConfig
-from shared.utils import name_utils
+from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from utils.dispositions import Disposition, Tally, classify_membership, classify_value, tally
-from shared.utils.divisions import designations_without_division, filter_divisions
-from shared.utils.taxonomy import Taxonomy, build_taxonomy, normalize_designations, normalize_roles
+from shared.utils.label_parser import ParsedLabel, parse_label
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, role_sort_key
 
 ROLE_ALIASES_PATH = pathlib.Path("tests/prompts/datasets/local/role_aliases.yml")
 # F1 floors on the disposition scoring — "would a regression here be visible", not "is this
@@ -55,13 +60,22 @@ ROLE_ALIASES_PATH = pathlib.Path("tests/prompts/datasets/local/role_aliases.yml"
 # 4 of 15 cases, and a bigger base is what would shrink these swings.
 GATE_THRESHOLDS = {
     # Tier 1 — what the posts/memberships model is built on.
-    "roles": 0.96,
+    #
+    # `primary_role` carries the gate that `roles` used to, because it is the role the
+    # product publishes. Inherits the 0.96 floor derived for `roles`, which is conservative:
+    # a priority-only comparison has strictly fewer ways to fail, so this should be re-derived
+    # from its own measured spread once the treatment arm has run.
+    "primary_role": 0.96,
     "district": 0.95,
     # Tier 2 — gated with room sized to each metric's measured swing.
     "person": 0.87,
     "url": 0.74,
     "designations_other": 0.67,
-    # Report only — see above.
+    # Report only — see above. `roles` joins them: every role a person holds, so a label
+    # carrying two offices that should have been two records shows up here as a miss. Worth
+    # watching — it caught two prompt regressions on 2026-08-16 — but not worth failing a
+    # run over, since the secondary role is not published.
+    "roles": 0.0,
     "email": 0.0,
     "phone": 0.0,
     "image": 0.0,
@@ -70,7 +84,7 @@ GATE_THRESHOLDS = {
 }
 
 SCALAR_FIELDS = ("email", "phone", "url", "start_date", "end_date", "image")
-SET_FIELDS = ("roles", "district", "designations_other")
+SET_FIELDS = ("primary_role", "roles", "district", "designations_other")
 PERSON_FIELD = "person"
 ALL_FIELDS = (PERSON_FIELD,) + SET_FIELDS + SCALAR_FIELDS
 
@@ -97,29 +111,82 @@ def build_eval_taxonomy() -> Taxonomy:
     return build_taxonomy(RoleConfig(roles=roles))
 
 
-def _same_phone(actual: str, expected: str) -> bool:
-    try:
-        return phonenumbers.parse(actual, "US") == phonenumbers.parse(expected, "US")
-    except phonenumbers.NumberParseException:
-        return actual == expected
+# The app's own normalizers, so the eval cannot fail a value the pipeline would have
+# accepted. `normalize_record` runs exactly these over every scraped record before it is
+# merged, so a scorer comparing raw strings measures formatting the product already
+# discards: "HTTP://WWW.X.ORG/" and "https://x.org" are one URL to everything downstream.
+#
+# Dates and images have no app-side normalizer, so they stay exact — see the note in
+# score_case on why plain equality is fair for them.
+_FIELD_NORMALIZERS = {
+    "phone": lambda value: phone_utils.normalize_first_phone(value) or "",
+    "email": lambda value: email_utils.normalize_email(value) or "",
+    "url": url_utils.canonical_url,
+}
 
 
-def _district(designations, taxonomy) -> list[str]:
-    return filter_divisions(normalize_designations(designations or [], taxonomy))
+def normalize_field(field: str, value) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    normalizer = _FIELD_NORMALIZERS.get(field)
+    return normalizer(text) if normalizer else text
 
 
-def _other_designations(designations, taxonomy) -> list[str]:
-    return designations_without_division(normalize_designations(designations or [], taxonomy))
+def _roles(parsed: list[ParsedLabel]) -> list[str]:
+    return [p.role for p in parsed if p.role]
 
 
-def _by_normalized_name(people) -> dict[str, object]:
-    return {name_utils.normalize_name(person.name or ""): person for person in people}
+def _primary_role(parsed: list[ParsedLabel], taxonomy: Taxonomy) -> list[str]:
+    """The single role this person is published under — the highest-priority one they hold.
+
+    Gated in place of `roles` because it is what the product actually shows: migration 111
+    orders the taxonomy so the highest-priority role usurps the rest. Judging the full set instead
+    charges a miss for a secondary role nobody sees, which is how an extractor that merged
+    "Council Member - Place 2 (West Ward) and Mayor Pro-Tem" into one label lost a point for
+    a seat that `district` and `designations_other` had already scored correctly.
+
+    A list of nought or one, so `classify_membership` handles it like the other set fields.
+    """
+    roles = _roles(parsed)
+    if not roles:
+        return []
+    return [min(roles, key=lambda role: role_sort_key(role, taxonomy))]
+
+
+def _districts(parsed: list[ParsedLabel]) -> list[str]:
+    """`designation:value`, not an ocdid — the ocdid needs a jurisdiction, and the eval runs
+    every provider under a different one so that the cost tracker can key on it."""
+    return [f"{p.division.designation}:{p.division.value}" for p in parsed if p.division]
+
+
+def _seats(parsed: list[ParsedLabel]) -> list[str]:
+    return [seat for p in parsed for seat in p.seats]
+
+
+def group_by_name(people) -> dict[str, list]:
+    """One person, all their labels. A person holding two seats is two records now, so the
+    old `{name: person}` comprehension silently kept the last and dropped a label."""
+    grouped: dict[str, list] = defaultdict(list)
+    for person in people:
+        grouped[name_utils.normalize_name(person.name or "")].append(person)
+    return dict(grouped)
+
+
+def _first_value(records, field: str) -> str:
+    """Contact details belong to the person, not the seat, so any record carrying one
+    answers for all of them."""
+    for record in records:
+        value = getattr(record, field, None)
+        if value:
+            return str(value)
+    return ""
 
 
 def case_dispositions(actual, expected, taxonomy) -> dict[str, list[Disposition]]:
     """Classify one case's people and their fields. Pure."""
-    actual_by_name = _by_normalized_name(actual)
-    expected_by_name = _by_normalized_name(expected)
+    actual_by_name = group_by_name(actual)
+    expected_by_name = group_by_name(expected)
 
     found: dict[str, list[Disposition]] = {field: [] for field in ALL_FIELDS}
     found[PERSON_FIELD] = classify_membership(actual_by_name, expected_by_name)
@@ -128,24 +195,23 @@ def case_dispositions(actual, expected, taxonomy) -> dict[str, list[Disposition]
     # person is already one false negative at the person level; charging it again on every
     # field would double-count the same failure.
     for key in set(actual_by_name) & set(expected_by_name):
-        actual_person, expected_person = actual_by_name[key], expected_by_name[key]
-        found["roles"] += classify_membership(
-            normalize_roles(actual_person.roles or [], taxonomy),
-            normalize_roles(expected_person.roles or [], taxonomy),
+        actual_records, expected_records = actual_by_name[key], expected_by_name[key]
+        actual_parsed = [parse_label(r.label or "", taxonomy) for r in actual_records]
+        expected_parsed = [parse_label(r.label or "", taxonomy) for r in expected_records]
+        found["primary_role"] += classify_membership(
+            _primary_role(actual_parsed, taxonomy), _primary_role(expected_parsed, taxonomy)
         )
+        found["roles"] += classify_membership(_roles(actual_parsed), _roles(expected_parsed))
         found["district"] += classify_membership(
-            _district(actual_person.designations, taxonomy),
-            _district(expected_person.designations, taxonomy),
+            _districts(actual_parsed), _districts(expected_parsed)
         )
         found["designations_other"] += classify_membership(
-            _other_designations(actual_person.designations, taxonomy),
-            _other_designations(expected_person.designations, taxonomy),
+            _seats(actual_parsed), _seats(expected_parsed)
         )
         for field in SCALAR_FIELDS:
             disposition = classify_value(
-                str(getattr(actual_person, field, None) or ""),
-                str(getattr(expected_person, field, None) or ""),
-                equals=_same_phone if field == "phone" else None,
+                normalize_field(field, _first_value(actual_records, field)),
+                normalize_field(field, _first_value(expected_records, field)),
             )
             if disposition is not None:
                 found[field].append(disposition)

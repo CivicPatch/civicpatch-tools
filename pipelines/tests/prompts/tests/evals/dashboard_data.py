@@ -27,7 +27,7 @@ DATASET_DIRS = {
 }
 
 # Metrics the posts/memberships model is built on. Everything else is supporting detail.
-PRIORITY = ("roles", "district")
+PRIORITY = ("primary_role", "district")
 # A swing this wide across runs of the same prompt means the number is not a quality signal.
 WIDE_SWING = 0.15
 

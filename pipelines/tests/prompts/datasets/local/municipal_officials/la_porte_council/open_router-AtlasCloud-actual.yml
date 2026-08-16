@@ -1,99 +1,73 @@
 people:
 - name: Rick Helton
-  roles:
-  - Mayor
-  designations: []
+  label: Mayor
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/691/Mayor
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
+  image: null
 - name: Brandon Lunsford
-  roles:
-  - Council Member
-  designations:
-  - At Large A
+  label: Council Member - At-Large A
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/692/At-Large-A
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
+  image: null
 - name: Brent McCaulley
-  roles:
-  - Council Member
-  designations:
-  - At Large B
+  label: Council Member - At-Large B
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/693/At-Large-B
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
+  image: null
 - name: Mandi Williams
-  roles:
-  - Council Member
-  designations:
-  - District 1
+  label: Council Member - District 1
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/694/District-1
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
+  image: null
 - name: Chuck Engelken
-  roles:
-  - Council Member
-  designations:
-  - District 2
+  label: Council Member - District 2
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/695/District-2
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
+  image: null
 - name: Bill Bentley
-  roles:
-  - Council Member
-  designations:
-  - District 3
+  label: Council Member - District 3
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/696/District-3
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
+  image: null
 - name: Robert Guerra
-  roles:
-  - Council Member
-  designations:
-  - District 4
+  label: Council Member - District 4
   phone: 281-471-5021
   email: null
   url: https://www.laportetx.gov/883/District-4
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
+  image: null
 - name: Jay Martin
-  roles:
-  - Council Member
-  designations:
-  - District 5
+  label: Council Member - District 5
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/698/District-5
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
+  image: null
 - name: Robbie McLarrin
-  roles:
-  - Council Member
-  designations:
-  - District 6
+  label: Council Member - District 6
   phone: 281-471-5021
   email: null
   url: http://laportetx.gov/699/District-6
   start_date: null
   end_date: null
-  image: https://www.laportetx.gov/ImageRepository/Document?documentID=6491
+  image: null

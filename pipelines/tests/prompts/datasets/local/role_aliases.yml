@@ -14,7 +14,25 @@
 # similar body do not: Alderman is kept separate from Council Member because a Board of
 # Aldermen is its own institution, and the board_of_aldermen case exists to check we say so.
 
+# Titles with no variants still need an entry. The old scorer compared normalised strings
+# and passed unresolved labels through verbatim, so "Mayor" matched "Mayor" without being
+# in here. The parser *resolves* instead, so a title absent from this file now yields no
+# role at all — and Mayor is the second most common role in the fixtures.
+# ORDER IS PRIORITY, not grouping. `build_taxonomy` derives `role_priority` from position
+# in this list, so moving an entry changes which role wins when one label names two. It
+# mirrors migration 111: presiding and singular offices first, body membership last —
+# Mayor Pro Tem (50 there) above Council Member (500), which is the commonest real pair.
 roles:
+  Mayor: []
+
+  Mayor Pro Tem:
+    - Mayor Pro-Tem
+    - Mayor Pro Tempore
+    - Mayor Pro-Tempore
+
+  Supervisor: []
+  Clerk: []
+
   Council Member:
     - Councilmember
     - Councilman
@@ -24,11 +42,6 @@ roles:
     # vacant_positions_council. It is not a title, but it is what the fixture says, and
     # dropping it would score those people 0 for a naming defect in the golden data.
     - Council
-
-  Mayor Pro Tem:
-    - Mayor Pro-Tem
-    - Mayor Pro Tempore
-    - Mayor Pro-Tempore
 
   Alderman:
     - Alderwoman

@@ -1,6 +1,5 @@
 from datetime import datetime
 from typing import List
-import shared.utils.config_utils as config_utils
 
 def relevant_page_prompt(page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []):
     jurisdiction_line = f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
@@ -119,8 +118,6 @@ def municipality_officials_prompt(
     same input produced a different prompt every day and evals silently drifted as terms
     expired. Production leaves it None and gets today; evals pin it.
     """
-    designation_names = config_utils.get_designation_names()
-    designations_str = ", ".join(designation_names)
     current_date = current_date or datetime.now().strftime("%Y-%m-%d")
 
     roles_hint_str = ""
@@ -147,7 +144,7 @@ def municipality_officials_prompt(
       the role's duties rather than the person's biography
     - A page section clearly labeled with a governing body name (e.g. "City Council
       Members", "Board of Aldermen") that lists names as headings or line items —
-      even if no contact info, roles, or other details are present; infer the role
+      even if no contact info, titles, or other details are present; take the title
       from the section heading
     Do NOT extract officials mentioned only in news articles, event summaries,
     meeting notes, or scattered references.
@@ -178,25 +175,29 @@ def municipality_officials_prompt(
     - The image src value for a profile photo, exactly as it appears in the content.
     - If none found, use null.
 
-    roles:
-    - Determine the role using this order:
-      1. If the label next to the name is a compound like "Council Member Place 1" or "Council Place 1" —
-         strip the trailing position identifier: role="Council Member", designation="Place 1"
-      2. If the label is entirely a position identifier ("District 6", "At-Large A", "Ward 3") with no
-         role prefix — it is purely a designation. Infer the role from the page title, governing body
-         description, or section heading (e.g. "Councilperson").
-      3. Otherwise, use the role exactly as written in the source. Do not rename or normalize.
-    - Common roles: Mayor, Council Member, Alderman, Commissioner, Select Board Member.
+    label:
+    - Everything the page uses to identify which office this person holds, joined with " - ".
+      Collect both parts:
+        * the title — what the office is called: "Mayor", "Council Member", "Alderman",
+          "Commissioner", "Supervisor", "Clerk"
+        * which one — the district, ward, place or number, when a body has several:
+          "District 6", "Ward 3", "Place 2", "At-Large A", "Posn. 2"
+    - Write each part exactly as the page writes it. Do not rename, expand, abbreviate or
+      normalize: "Posn. 2" stays "Posn. 2", "Council Ward 3" stays "Council Ward 3".
+    - The two parts are often far apart. The district or place sits beside the name; the
+      title is in the section heading, the page title, or the body's description of itself.
+      Collect the title from wherever the page states it:
+        "Place 3 (East Ward)" under a "City Council" section
+            -> "Council Member - Place 3 (East Ward)"
+        "District 1" on a page describing "one councilperson per district"
+            -> "Councilperson - District 1"
+    - If the page states no title anywhere, give the rest alone: "District 6".
+    - " - " joins the parts of ONE office, never two. A person holding two offices gets two
+      records, one label each:
+        "Place 2 (West Ward) and Mayor Pro-Tem: Sharlene Hetzel"
+            -> record 1 label: "Council Member - Place 2 (West Ward)"
+            -> record 2 label: "Mayor Pro-Tem"
     {roles_hint_str}
-
-    designations:
-      Known types: {designations_str}
-      Normalize common variations to the canonical type (e.g. "Council Ward 3" → "Ward 3",
-      "Posn. 2" → "Position 2", "City-Wide" → "At Large").
-      Format as "<canonical type> <value>". If no designation found, use an empty array.
-      Do not include role titles as designations.
-      A person may have more than one designation — extract all of them.
-      Example: "Place 3 (East Ward)" → designations: ["Place 3", "Ward East"]
 
     phone:
     - A phone number explicitly present in the content.
@@ -232,9 +233,10 @@ def municipality_officials_prompt(
 
     STEP 3 - ADDITIONAL RULES
     - Only extract information explicitly present in the content. Do not guess or fabricate.
-      Exception: inferring a role from a governing body section heading, page title, or description
+      Exception: taking a title from a governing body section heading, page title, or description
       is permitted — this is the one case where inference is required rather than direct extraction.
-    - One entry per unique person. If the same person appears multiple times, merge into one record.
+    - One entry per person per label. If the same person appears more than once with the same
+      label, merge those into one record; if their labels differ, emit one record per label.
     - All details must refer to the official's current term.
 
     STEP 4 - RETURN JSON
