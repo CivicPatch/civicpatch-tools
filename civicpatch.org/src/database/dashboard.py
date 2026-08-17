@@ -41,10 +41,10 @@ async def get_dashboard() -> dict:
             LEFT JOIN (
                 SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
                 FROM people
-                WHERE status = 'current'
+                WHERE status = 'active'
                 GROUP BY jurisdiction_ocdid
             ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
-            WHERE j.status = 'current'
+            WHERE j.status = 'active'
               AND j.level = 'local'
         )
         SELECT

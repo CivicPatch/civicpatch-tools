@@ -52,7 +52,7 @@ async def _insert(ocdid, *, level, name, search_text, population, parents=None):
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status,
                  search_text, parent_ocdids)
-            VALUES (%s, 'zz', %s, %s, now(), 'current', %s, %s)
+            VALUES (%s, 'zz', %s, %s, now(), 'active', %s, %s)
             """,
             (ocdid, level, json.dumps(data), search_text, parents or []),
         )

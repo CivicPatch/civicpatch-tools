@@ -20,7 +20,7 @@ erDiagram
 
     jurisdictions {
         text            jurisdiction_ocdid  PK
-        text            status
+        text            status              "check: active|inactive, default: active. inactive = removed from the synced jurisdictions.yml upstream; derived from presence in the file, never read out of it"
         text_null       state               "idx"
         text            level               "idx, default: 'local'"
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
@@ -80,8 +80,8 @@ erDiagram
         uuid            id                  PK
         text            jurisdiction_ocdid  FK  "idx"
         jsonb           data                "canonical Official JSONB blob"
-        text_null       status
-        timestamptz_null updated_at
+        text_null       status              "check: active|inactive, default: active. inactive = no longer named by the latest roster; kept, never deleted, so seat history survives"
+        timestamptz_null updated_at         "from the record's own updated_at — data, not a publish time" 
     }
 
     issues {

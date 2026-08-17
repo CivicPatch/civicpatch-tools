@@ -28,7 +28,7 @@ async def research_municipality(
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
 
-    existing = await civicpatch_api.get_current_people(
+    existing = await civicpatch_api.get_active_people(
         api_client, context.data.jurisdiction_ocdid
     )
 

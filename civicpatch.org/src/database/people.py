@@ -86,7 +86,7 @@ async def get_people_by_jurisdiction_ocdid(
                 SELECT data
                 FROM people
                 WHERE jurisdiction_ocdid = %s
-                  AND status = 'current'
+                  AND status = 'active'
                 """,
                 (jurisdiction_ocdid,),
             )
@@ -113,7 +113,7 @@ async def get_people_data_by_request_ids(
                 SELECT jurisdiction_ocdid, {} AS person
                 FROM people
                 WHERE jurisdiction_ocdid = ANY(%s)
-                  AND status = 'current'
+                  AND status = 'active'
                 """).format(people_projection),
                 (jurisdiction_ocdids,),
             )
@@ -168,7 +168,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> list[dict]:
         await cur.execute(
             """
                 SELECT data FROM people
-                WHERE jurisdiction_ocdid = %s AND status = 'current'
+                WHERE jurisdiction_ocdid = %s AND status = 'active'
             """,
             (jurisdiction_ocdid,),
         )
@@ -187,7 +187,7 @@ async def get_all_people_for_jurisdiction(
             FROM people
             WHERE jurisdiction_ocdid = %s
             ORDER BY
-                CASE WHEN status = 'current' THEN 0 ELSE 1 END,
+                CASE WHEN status = 'active' THEN 0 ELSE 1 END,
                 (data->>'updated_at') DESC NULLS LAST
             LIMIT %s OFFSET %s
             """,
@@ -235,12 +235,12 @@ async def bulk_update_people(people: list[dict]):
     async with pool.connection() as conn, conn.cursor() as cur:
         insert_query = """
             INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
-            VALUES (%s, %s, %s, %s, 'current')
+            VALUES (%s, %s, %s, %s, 'active')
             ON CONFLICT (id)
             DO UPDATE SET
                 data = EXCLUDED.data,
                 updated_at = EXCLUDED.updated_at,
-                status = 'current'
+                status = 'active'
         """
         await cur.executemany(insert_query, records)
 
@@ -248,7 +248,7 @@ async def bulk_update_people(people: list[dict]):
             await cur.execute(
                 """
                 UPDATE people
-                SET status = 'past'
+                SET status = 'inactive'
                 WHERE jurisdiction_ocdid = %s
                   AND id != ALL(%s)
                 """,
@@ -292,7 +292,7 @@ async def get_people_by_state(state: str) -> list[dict]:
             SELECT jurisdiction_ocdid, data
             FROM people
             WHERE jurisdiction_ocdid LIKE %s
-              AND status = 'current'
+              AND status = 'active'
             ORDER BY jurisdiction_ocdid
             """,
             (state_prefix,),

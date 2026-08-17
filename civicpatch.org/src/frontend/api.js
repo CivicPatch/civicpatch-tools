@@ -169,15 +169,6 @@ export const pollMergeStatus = async (pullRequestNumber) => {
   throw new Error("Merge timed out");
 };
 
-export const searchPeople = async (jurisdictionOcdid, name) => {
-  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, name });
-  const res = await fetch(`${API_URL}/api/v1/people/search?${params}`, {
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const batchResolvePeople = async (jurisdictionOcdid, people) => {
   const res = await fetch(`${API_URL}/api/v1/people/batch-resolve`, {
     method: "POST",

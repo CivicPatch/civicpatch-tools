@@ -19,7 +19,7 @@ async def get_maps_coverage() -> dict:
     has_people_subquery = """
         SELECT DISTINCT jurisdiction_ocdid
         FROM people
-        WHERE status = 'current'
+        WHERE status = 'active'
     """
     covered_fresh_filter = f"""
         COUNT(*) FILTER (
@@ -39,7 +39,7 @@ async def get_maps_coverage() -> dict:
             FROM jurisdictions j
             CROSS JOIN LATERAL jsonb_array_elements_text(j.data -> 'parent_ocdids') AS parent_ocdid
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-            WHERE j.status = 'current'
+            WHERE j.status = 'active'
               AND j.data ? 'parent_ocdids'
               AND parent_ocdid LIKE '%/county:%'
             GROUP BY j.state, parent_ocdid
@@ -56,7 +56,7 @@ async def get_maps_coverage() -> dict:
                 {covered_fresh_filter}
             FROM jurisdictions j
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-            WHERE j.status = 'current'
+            WHERE j.status = 'active'
             GROUP BY j.state
             ORDER BY j.state
         """)
@@ -108,10 +108,10 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
         LEFT JOIN (
             SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
             FROM people
-            WHERE status = 'current'
+            WHERE status = 'active'
             GROUP BY jurisdiction_ocdid
         ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
-        WHERE j.status = 'current'
+        WHERE j.status = 'active'
           AND j.level = 'local'
           AND j.state = %s
         ORDER BY j.data->>'name'
@@ -146,13 +146,13 @@ async def get_local_status_for_state(state: str) -> dict[str, str]:
           j.jurisdiction_ocdid,
           EXISTS (
               SELECT 1 FROM people
-              WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
+              WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'active'
           ) AS has_people,
           (j.scraped_at IS NOT NULL AND j.scraped_at >= {FRESH_SINCE_SQL})
               AS is_fresh,
           NULLIF(j.data->>'url', '') IS NOT NULL AS has_url
         FROM jurisdictions j
-        WHERE j.status = 'current'
+        WHERE j.status = 'active'
           AND j.state = %s
     """
     pool = await get_pool()
