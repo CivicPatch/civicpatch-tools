@@ -44,8 +44,24 @@ def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     return found_enough and progress.has_target_role and progress.has_target_divisions
 
 def should_stop_for_max_pages(processed_count: int, job_config: JobConfig, progress: ProgressState) -> bool:
-    print("Processed count:", processed_count)
-    print("Current progress:", progress)
-    max_pages_with_required_data = job_config.max_pages + progress.required_data
-    print("Max pages with required data:", max_pages_with_required_data)
-    return processed_count >= max_pages_with_required_data
+    return processed_count >= max_pages_allowed(job_config, progress)
+
+
+def max_pages_allowed(job_config: JobConfig, progress: ProgressState) -> int:
+    return job_config.max_pages + progress.required_data
+
+
+def describe_progress(
+    processed_count: int, current_cost: Decimal, job_config: JobConfig, progress: ProgressState
+) -> str:
+    """One line per processed page, for the run log. Every stop condition is in it, so a run
+    that keeps going says which requirement is still unmet — the question that took a container
+    shell to answer before."""
+    return (
+        f"Progress: {progress.current_data}/{progress.required_data} people "
+        f"(tolerance {DATA_REQUIREMENT_TOLERANCE}) · "
+        f"role={'y' if progress.has_target_role else 'n'} "
+        f"divisions={'y' if progress.has_target_divisions else 'n'} · "
+        f"pages {processed_count}/{max_pages_allowed(job_config, progress)} · "
+        f"cost ${current_cost:.4f}/${job_config.pipeline_run_cost_limit}"
+    )

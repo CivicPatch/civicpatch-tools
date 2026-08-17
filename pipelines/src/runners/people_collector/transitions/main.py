@@ -40,6 +40,7 @@ from runners.people_collector.steps.step_11_send_success.send_success import (
     send_success,
 )
 from runners.people_collector.transitions.process_page_content_transition import (
+    describe_progress,
     next_process_content_state,
 )
 from runners.people_collector.utils.links import (
@@ -252,6 +253,14 @@ async def process_page_content_transition(
     current_cost = cost_utils.total_cost_by_request(
         context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]
+    logger.info(
+        describe_progress(
+            processed_count=len(links_processed),
+            current_cost=current_cost,
+            job_config=job_config,
+            progress=result.progress,
+        )
+    )
     next_state, stop_warning = next_process_content_state(
         processed_count=len(links_processed),
         current_cost=current_cost,
