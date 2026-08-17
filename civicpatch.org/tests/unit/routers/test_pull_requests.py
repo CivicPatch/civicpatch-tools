@@ -174,6 +174,8 @@ def test_save_and_merge_returns_202(client):
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
+        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
@@ -190,6 +192,8 @@ def test_save_and_merge_returns_202(client):
     assert sent_request.request_id == TEST_REQUEST_ID
     assert sent_request.merge_key == f"merge_status:{TEST_PR_NUMBER}"
     mock_set_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
+    # Publishing is a DB write at the endpoint now, not a consequence of the merge landing.
+    mock_publish.assert_awaited_once_with(TEST_REQUEST_ID, TEST_OCDID, [BASE_PERSON])
 
 
 # An Official-valid person on the PR branch, in on-disk field order. A patch overlays only
@@ -218,6 +222,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
@@ -670,6 +675,8 @@ def test_save_and_merge_allows_default_role():
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",

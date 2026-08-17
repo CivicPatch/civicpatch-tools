@@ -152,3 +152,28 @@ def test_county_without_a_place_is_counties():
 def test_state_only_is_state():
     path = jurisdictions_file_path("ocd-jurisdiction/country:us/state:wa/government")
     assert path == "data_source/wa/state/jurisdictions.yml"
+
+
+# ── unreviewed scrapes are visible in the repo but must never sync ──────────
+
+
+@pytest.mark.unit
+def test_unreviewed_people_file_does_not_sync():
+    """It matches every clause a reviewed people file matches, so the exclusion is the only
+    thing keeping unapproved data out of `people`."""
+    assert classify_path("data/tx/local-unreviewed/place_austin.yml") is None
+
+
+@pytest.mark.unit
+def test_reviewed_sibling_still_syncs():
+    assert classify_path("data/tx/local/place_austin.yml") is SyncFileKind.PEOPLE
+
+
+@pytest.mark.unit
+def test_unreviewed_suffix_only_matches_the_level_segment():
+    """The suffix is meaningful on the level, not anywhere in the path — a place that happens
+    to end in it is still reviewed data."""
+    assert (
+        classify_path("data/tx/local/place_austin-unreviewed.yml")
+        is SyncFileKind.PEOPLE
+    )

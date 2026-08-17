@@ -14,7 +14,7 @@ file is it, which (state, level) does it belong to, and in what order should lev
 from enum import StrEnum
 
 from shared.schemas import JurisdictionLevel
-from shared.utils.id_utils import parse_jurisdiction_ocdid
+from shared.utils.id_utils import UNREVIEWED_SUFFIX, parse_jurisdiction_ocdid
 
 # Dependent levels are built from their state's stored row, so state syncs first.
 # Unknown levels sort last — they can sync, but nothing may depend on them.
@@ -38,6 +38,12 @@ def classify_path(path: str) -> SyncFileKind | None:
     ):
         return SyncFileKind.JURISDICTIONS
     if path.startswith("data/") and path.endswith(".yml") and path.count("/") == 3:
+        # An unreviewed scrape sits beside its reviewed counterpart and matches every clause
+        # above, so it has to be excluded by name — nobody has approved it, and syncing it
+        # would make it live.
+        _state, level, _place = path.split("/")[1:]
+        if level.endswith(UNREVIEWED_SUFFIX):
+            return None
         return SyncFileKind.PEOPLE
     return None
 

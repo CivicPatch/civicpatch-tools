@@ -14,6 +14,7 @@ from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run
 from database.issues import upsert_issue
 from database.roles import get_roles
 from database.source_records import insert_source_records
+from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
@@ -59,6 +60,23 @@ async def _store_source_records(request_id: str, records: list[dict]) -> None:
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
         logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
+
+
+async def _commit_unreviewed_copy(
+    request_id: str, jurisdiction_ocdid: str, records: list[dict]
+) -> None:
+    """Put the scrape in open-data straight away, at its unreviewed path.
+
+    Never fatal, for the same reason as the evidence write above: the roster is already in
+    the database, and the review PR carries it regardless. This copy is a visible artifact,
+    not the source of truth.
+    """
+    try:
+        committed = await commit_unreviewed_scrape(request_id, jurisdiction_ocdid, records)
+        if not committed:
+            logger.error(f"[{request_id}] Unreviewed copy did not land for {jurisdiction_ocdid}")
+    except Exception as e:
+        logger.error(f"[{request_id}] Failed to commit unreviewed copy: {e}", exc_info=True)
 
 
 async def _handle_submit_pipeline_run_artifacts(
@@ -130,6 +148,9 @@ async def _handle_submit_pipeline_run_artifacts(
             f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
         await _store_source_records(request.request_id, updated_data)
+        await _commit_unreviewed_copy(
+            request.request_id, request.jurisdiction_ocdid, updated_data
+        )
 
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)

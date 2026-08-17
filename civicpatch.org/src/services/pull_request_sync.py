@@ -2,14 +2,13 @@ import logging
 
 import database.pipeline_runs as jobs_db
 import database.issues as issues_db
-import database.jurisdictions as jurisdictions_db
 import database.pull_requests as pull_requests_db
 import database.requests as requests_db
 import database.review_sessions as review_sessions_db
 import lib.github.api as github_service
 import lib.lock as lock_service
 import shared.utils.id_utils
-from services.open_data_sync import sync_jurisdictions_by_ocdids, sync_people_by_ocdids
+from services.open_data_sync import sync_jurisdictions_by_ocdids
 from shared.utils.statuses import PullRequestStatus, RequestType
 from lib.github.utils import pull_request_url_to_number
 
@@ -17,13 +16,15 @@ logger = logging.getLogger(__name__)
 
 
 async def publish_side_effects(request_id: str, status: str) -> None:
-    """Sync open data live when a job PR is merged.
+    """Sync open data live when a jurisdiction-edit PR is merged.
+
+    Scrape PRs no longer land here. Publishing a scrape writes `people` and stamps
+    `scraped_at` in one transaction at the review endpoint (`services/publish.py`), rather
+    than reading the merged file back out of GitHub once the merge settles — so what is live
+    no longer depends on the merge worker, and a scrape publishes even if the merge fails.
 
     Review credit (resolving the session entry) is NOT done here — it happens
     synchronously at the publish/close endpoints, the moment the reviewer acts.
-    This keeps data-sync (a consequence of the merge) separate from credit (a
-    consequence of the review), and means external merges sync data without
-    ever crediting a user we can't identify.
     """
     if status != PullRequestStatus.MERGED:
         return
@@ -31,15 +32,11 @@ async def publish_side_effects(request_id: str, status: str) -> None:
     if not jurisdiction_ocdid:
         return
 
-    # A manual jurisdiction edit changed jurisdictions.yml, not the people file, and
-    # nothing was scraped — so it syncs the other side and does not stamp scraped_at.
+    # A manual jurisdiction edit changed jurisdictions.yml, not the people file, so this is
+    # the one lifecycle whose merge still has a data consequence to apply.
     request_type = await requests_db.get_request_type(request_id)
     if request_type == RequestType.JURISDICTION_MANUAL_EDIT:
         await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
-        return
-
-    await sync_people_by_ocdids([jurisdiction_ocdid])
-    await jurisdictions_db.stamp_scraped_at(jurisdiction_ocdid, request_id)
 
 
 async def apply_pull_request_status(

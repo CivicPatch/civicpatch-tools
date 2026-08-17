@@ -240,3 +240,13 @@ def get_presigned_put_url(bucket_name: str, key: str, expiration: int = 3600) ->
 
 def delete_object(bucket_name: str, key: str) -> None:
     get_client().delete_object(Bucket=bucket_name, Key=key)
+
+
+def copy_object(
+    source_bucket: str, source_key: str, dest_bucket: str, dest_key: str
+) -> None:
+    get_client().copy_object(
+        Bucket=dest_bucket,
+        CopySource={"Bucket": source_bucket, "Key": source_key},
+        Key=dest_key,
+    )
