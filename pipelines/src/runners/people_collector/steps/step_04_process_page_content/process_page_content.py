@@ -45,7 +45,7 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 class ProcessingSetup:
     roles: List[str]
     target_role: str
-    target_designations: List[str]
+    target_divisions: List[str]
     known_roles: List[str]
 
 
@@ -94,9 +94,27 @@ async def _process_with_llm_in_chunks(
     return all_found
 
 
-def _names_a_seat(parsed: ParsedLabel) -> bool:
-    """Whether the label points at a particular seat — a division or a seat marker."""
-    return bool(parsed.division or parsed.other_designations)
+# `target_divisions` comes from the division_ocdids on the roster we already hold, so it has
+# the same staleness as required_data: a ward that was renamed, merged or dropped leaves a
+# target no scrape can reach. Floored at one so it stays a real signal — a jurisdiction with
+# divisions must still place somebody in one, it just need not place everybody.
+DIVISION_REQUIREMENT_TOLERANCE = 2
+
+
+def required_division_count(num_target_divisions: int) -> int:
+    if num_target_divisions == 0:
+        return 0
+    return max(1, num_target_divisions - DIVISION_REQUIREMENT_TOLERANCE)
+
+
+def _names_a_division(parsed: ParsedLabel) -> bool:
+    """Whether the label places the person in a division — a ward, district or seat number.
+
+    Divisions only: `target_divisions` is built by `divisions.filter_divisions`, so counting
+    `other_designations` here compared a person against a target they were never measured on,
+    and a jurisdiction with no districts could satisfy the target on a seat marker alone.
+    """
+    return bool(parsed.division)
 
 
 def _resolved_roles(taxonomy: Taxonomy, records: PeopleByName) -> set[str]:
@@ -129,7 +147,7 @@ async def process_page_content(
     setup_data = ProcessingSetup(
         roles=role_names,
         target_role="Mayor",
-        target_designations=research.target_designations,
+        target_divisions=research.target_divisions,
         known_roles=known_roles,
     )
     current_step = get_or_create_step(context)
@@ -190,7 +208,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
             required_data=required_data,
             current_data=0,
             has_target_role=False,
-            has_target_designations=False,
+            has_target_divisions=False,
         ),
     )
 
@@ -348,8 +366,8 @@ def calculate_progress(
     setup_data: ProcessingSetup,
 ) -> ProgressState:
     has_target_role = False
-    has_target_designations = False
-    num_target_designations = len(setup_data.target_designations)
+    has_target_divisions = False
+    num_target_divisions = len(setup_data.target_divisions)
 
     valid_people = [
         p for p in records.values() if has_role_and_contact_info(taxonomy, p)
@@ -359,18 +377,18 @@ def calculate_progress(
     if lookup_key(setup_data.target_role) in _resolved_roles(taxonomy, records):
         has_target_role = True
 
-    if num_target_designations == 0:
-        has_target_designations = True
+    if num_target_divisions == 0:
+        has_target_divisions = True
     else:
-        people_with_designations = [
+        people_with_divisions = [
             p_list
             for p_list in valid_people
             if any(
-                _names_a_seat(parse_label(p.label, taxonomy)) for p in p_list
+                _names_a_division(parse_label(p.label, taxonomy)) for p in p_list
             )
         ]
-        if len(people_with_designations) >= num_target_designations:
-            has_target_designations = True
+        if len(people_with_divisions) >= required_division_count(num_target_divisions):
+            has_target_divisions = True
 
     known_roles_lower = {r.strip().lower() for r in setup_data.known_roles}
     requires_mayor = not known_roles_lower or "mayor" in known_roles_lower
@@ -379,7 +397,7 @@ def calculate_progress(
         required_data=progress.required_data,
         current_data=max_people_count,
         has_target_role=has_target_role if requires_mayor else True,
-        has_target_designations=has_target_designations,
+        has_target_divisions=has_target_divisions,
     )
 
 

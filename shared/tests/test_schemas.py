@@ -72,11 +72,11 @@ class TestIssue:
 
     def test_code_serializes_to_snake_case_string(self):
         # It rides in review_json (jsonb) → the code must serialize as a plain string.
-        dumped = Issue(code=IssueCode.MISSING_OFFICIAL, message="x").model_dump(mode="json")
-        assert dumped["code"] == "missing_official"
+        dumped = Issue(code=IssueCode.ABSENT_OFFICIAL, message="x").model_dump(mode="json")
+        assert dumped["code"] == "absent_official"
 
     def test_round_trips_through_serialization(self):
-        issue = Issue(code=IssueCode.EXTRA_OFFICIAL, message="Extra official: John Doe", person_ids=["xyz"])
+        issue = Issue(code=IssueCode.NEW_OFFICIAL, message="Not previously known: John Doe", person_ids=["xyz"])
         assert Issue(**issue.model_dump()) == issue
         assert Issue(**issue.model_dump(mode="json")) == issue
 

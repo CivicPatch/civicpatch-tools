@@ -198,8 +198,8 @@ def test_request_to_rows_review_issues_structured():
         result_data=[official],
         review_json={
             "issues": [
-                {"code": "missing_official", "message": "Dropped official: John"},
-                {"code": "extra_official", "message": "Extra official: Jane"},
+                {"code": "absent_official", "message": "Dropped official: John"},
+                {"code": "new_official", "message": "Extra official: Jane"},
             ]
         },
     )

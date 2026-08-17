@@ -5,8 +5,8 @@ from shared.utils.review_utils import (
     _build_row,
     _check_division_numbering,
     _check_duplicate_unique_roles,
-    _check_extra_officials,
-    _check_missing_officials,
+    _check_new_officials,
+    _check_absent_officials,
     _check_too_few_people,
     _collect_all_canonicals,
     _parse_division_entries,
@@ -94,28 +94,28 @@ def _official(name, person_id="", office_name=None, division_ocdid=None):
     return {"name": name, "id": person_id, "office": office}
 
 
-def test_check_missing_officials_is_list_level():
-    issues = _check_missing_officials({"alice", "bob"}, {"alice"})
+def test_check_absent_officials_is_list_level():
+    issues = _check_absent_officials({"alice", "bob"}, {"alice"})
     assert len(issues) == 1
-    assert issues[0].code == IssueCode.MISSING_OFFICIAL
+    assert issues[0].code == IssueCode.ABSENT_OFFICIAL
     assert "bob" in issues[0].message.lower()
     assert issues[0].person_ids == []
     assert issues[0].field is None
 
 
-def test_check_extra_officials_anchors_to_person_id():
+def test_check_new_officials_anchors_to_person_id():
     people = [_official("Carol White", person_id="c1")]
     canonical_map = name_utils.build_canonical_map(people, {})
-    issues = _check_extra_officials(people, canonical_map, research_canonicals=set())
+    issues = _check_new_officials(people, canonical_map, research_canonicals=set())
     assert len(issues) == 1
-    assert issues[0].code == IssueCode.EXTRA_OFFICIAL
+    assert issues[0].code == IssueCode.NEW_OFFICIAL
     assert issues[0].person_ids == ["c1"]
 
 
-def test_check_extra_officials_new_person_degrades_to_list_level():
+def test_check_new_officials_new_person_degrades_to_list_level():
     people = [_official("New Person", person_id="")]  # not yet in the DB
     canonical_map = name_utils.build_canonical_map(people, {})
-    issues = _check_extra_officials(people, canonical_map, research_canonicals=set())
+    issues = _check_new_officials(people, canonical_map, research_canonicals=set())
     assert issues[0].person_ids == []
 
 
@@ -161,7 +161,7 @@ def test_build_review_summary_returns_structured_issues():
     issues = result["issues"]
     assert issues and all(isinstance(i, Issue) for i in issues)
     codes = {i.code for i in issues}
-    assert IssueCode.MISSING_OFFICIAL in codes  # Bob Jones
+    assert IssueCode.ABSENT_OFFICIAL in codes  # Bob Jones
     assert IssueCode.TOO_FEW_PEOPLE in codes    # 1 < 3
 
 
@@ -187,5 +187,5 @@ def test_build_review_summary_matches_aliases():
     people = [_official("Michelle D Rass"), _official("Bob Jones"), _official("Carol White")]
     inputs = ReviewInputs(identities={"Michelle Drass": ["Michelle D Rass"]})
     codes = {i.code for i in build_review_summary(research, people, inputs)["issues"]}
-    assert IssueCode.MISSING_OFFICIAL not in codes
-    assert IssueCode.EXTRA_OFFICIAL not in codes
+    assert IssueCode.ABSENT_OFFICIAL not in codes
+    assert IssueCode.NEW_OFFICIAL not in codes

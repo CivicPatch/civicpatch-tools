@@ -211,8 +211,11 @@ class PipelineRunConfig(BaseModel):
 class IssueCode(str, Enum):
     # A reviewer-facing data-quality issue. Each value is emitted by the
     # `_check_*` named after it in review_utils (build_review_summary).
-    MISSING_OFFICIAL = "missing_official"
-    EXTRA_OFFICIAL = "extra_official"
+    # Named for what was observed, not for what it means: the scrape did not find someone we
+    # expected, or found someone we did not. Whether that is a departure or an arrival is the
+    # reviewer's call, so the code must not make it for them.
+    ABSENT_OFFICIAL = "absent_official"
+    NEW_OFFICIAL = "new_official"
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
@@ -221,7 +224,7 @@ class IssueCode(str, Enum):
 class Issue(BaseModel):
     code: IssueCode
     message: str
-    # people this issue lands on; empty for list-level issues (missing_official,
+    # people this issue lands on; empty for list-level issues (absent_official,
     # division_numbering_gap, too_few_people). `field` anchors it to a cell, e.g.
     # "office.name" — absent for whole-row / list-level issues.
     person_ids: List[str] = []

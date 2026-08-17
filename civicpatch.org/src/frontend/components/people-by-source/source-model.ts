@@ -42,7 +42,7 @@ export interface SourceRow {
 // Agreeing on both sides needs no decision, so it gets no tint.
 //
 // `in_research` is the BASELINE, not a fresh discovery. build_review_summary
-// names these same two conditions MISSING_OFFICIAL and EXTRA_OFFICIAL; the
+// names these same two conditions ABSENT_OFFICIAL and NEW_OFFICIAL; the
 // tints follow it, so the table cannot contradict the checklist beside it.
 //
 // Green is direction, not approval: an extra official is still an issue someone

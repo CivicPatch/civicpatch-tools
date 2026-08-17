@@ -508,7 +508,7 @@ export async function seedE2eFixtures() {
           field: "office.name",
         },
         {
-          code: "extra_official",
+          code: "new_official",
           message: "Extra official: Newcomer 05 Scale",
           person_ids: ["scale-n05"],
           field: null,
@@ -645,12 +645,12 @@ export async function seedE2eFixtures() {
         source_urls: ["https://example.gov/roster"],
       },
     ];
-    // extra_official → row-level marker (Carol); duplicate_unique_role → field-level
-    // marker under Office (Alice + Bob); missing_official → list-level (no card marker).
+    // new_official → row-level marker (Carol); duplicate_unique_role → field-level
+    // marker under Office (Alice + Bob); absent_official → list-level (no card marker).
     const markersReview = {
       issues: [
         {
-          code: "extra_official",
+          code: "new_official",
           message: "Extra official: Carol Extra",
           person_ids: ["markers-carol"],
           field: null,
@@ -663,7 +663,7 @@ export async function seedE2eFixtures() {
           field: "office.name",
         },
         {
-          code: "missing_official",
+          code: "absent_official",
           message: "Dropped official: Dave Absent",
           person_ids: [],
           field: null,

@@ -62,7 +62,7 @@ async def _step_from_gemini(
 
     return ResearchMunicipalityStep(
         expected_count=len(target_people),
-        target_designations=divisions.filter_divisions(
+        target_divisions=divisions.filter_divisions(
             [d for p in target_people for d in p.designations + p.roles]
         ),
         known_roles=_known_roles(target_people),
@@ -78,7 +78,7 @@ def _step_from_db(
 
     return ResearchMunicipalityStep(
         expected_count=len(existing),
-        target_designations=list(
+        target_divisions=list(
             {
                 d
                 for p in existing
