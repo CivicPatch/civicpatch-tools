@@ -27,10 +27,6 @@ def _load_config_file(filename: str, key: str = None, default=None):
     return result
 
 
-def get_data_config():
-    return _load_config_file("data.yml", "data", {})
-
-
 def get_role_configs(
     role_config_override: Optional[RoleConfig] = None,
 ) -> List[Role]:

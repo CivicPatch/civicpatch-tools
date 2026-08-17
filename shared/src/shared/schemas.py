@@ -173,7 +173,6 @@ class JurisdictionId(BaseModel):
     # State-level and county-level OCDIDs have no place component.
     place: Optional[str] = None
     jurisdiction_type: str
-    output_type: str
 
     @property
     def level(self) -> JurisdictionLevel:

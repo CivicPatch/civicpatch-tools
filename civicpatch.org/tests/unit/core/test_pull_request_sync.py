@@ -9,11 +9,14 @@ REQUEST_ID = "2025-09-25-1a2b"
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 
 
-# ── publish_side_effects (people-sync only; credit lives at the endpoints) ────
+# ── publish_side_effects (jurisdiction edits only; credit lives at the endpoints) ────
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_merged_syncs_people_and_stamps_scraped_at():
+async def test_merged_scrape_does_not_touch_people():
+    """A merged scrape PR has no data consequence left: publishing wrote `people` and
+    stamped `scraped_at` at the review endpoint, so the merge must not re-read the file
+    back out of GitHub."""
     with (
         patch(
             "services.pull_request_sync.requests_db.get_request_jurisdiction",
@@ -26,24 +29,19 @@ async def test_merged_syncs_people_and_stamps_scraped_at():
             return_value=RequestType.PEOPLE,
         ),
         patch(
-            "services.pull_request_sync.sync_people_by_ocdids",
+            "services.pull_request_sync.sync_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
-        ) as mock_sync,
-        patch(
-            "services.pull_request_sync.jurisdictions_db.stamp_scraped_at",
-            new_callable=AsyncMock,
-        ) as mock_stamp,
+        ) as mock_sync_jurisdictions,
     ):
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED)
-        mock_sync.assert_called_once_with([JURISDICTION_OCDID])
-        mock_stamp.assert_awaited_once_with(JURISDICTION_OCDID, REQUEST_ID)
+        mock_sync_jurisdictions.assert_not_called()
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_merged_jurisdiction_edit_syncs_jurisdictions_not_people():
-    """A manual edit changed jurisdictions.yml and ran no scrape, so syncing people
-    would fetch the wrong file and stamping scraped_at would claim a scrape happened."""
+async def test_merged_jurisdiction_edit_syncs_jurisdictions():
+    """The one lifecycle whose merge still has a data consequence: a manual edit changed
+    jurisdictions.yml, and that file is still synced from the repo."""
     with (
         patch(
             "services.pull_request_sync.requests_db.get_request_jurisdiction",
@@ -59,25 +57,15 @@ async def test_merged_jurisdiction_edit_syncs_jurisdictions_not_people():
             "services.pull_request_sync.sync_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync_jurisdictions,
-        patch(
-            "services.pull_request_sync.sync_people_by_ocdids",
-            new_callable=AsyncMock,
-        ) as mock_sync_people,
-        patch(
-            "services.pull_request_sync.jurisdictions_db.stamp_scraped_at",
-            new_callable=AsyncMock,
-        ) as mock_stamp,
     ):
         await publish_side_effects(REQUEST_ID, PullRequestStatus.MERGED)
         mock_sync_jurisdictions.assert_awaited_once_with([JURISDICTION_OCDID])
-        mock_sync_people.assert_not_called()
-        mock_stamp.assert_not_called()
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_closed_does_not_sync():
-    with patch("services.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+    with patch("services.pull_request_sync.sync_jurisdictions_by_ocdids", new_callable=AsyncMock) as mock_sync:
         await publish_side_effects(REQUEST_ID, PullRequestStatus.CLOSED)
         mock_sync.assert_not_called()
 
@@ -85,7 +73,7 @@ async def test_closed_does_not_sync():
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_open_does_not_sync():
-    with patch("services.pull_request_sync.sync_people_by_ocdids", new_callable=AsyncMock) as mock_sync:
+    with patch("services.pull_request_sync.sync_jurisdictions_by_ocdids", new_callable=AsyncMock) as mock_sync:
         await publish_side_effects(REQUEST_ID, PullRequestStatus.OPEN)
         mock_sync.assert_not_called()
 

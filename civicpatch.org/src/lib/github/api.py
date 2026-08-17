@@ -18,6 +18,9 @@ timeout = httpx.Timeout(60.0)
 
 _RATE_LIMIT_THRESHOLD = 50  # sleep proactively when remaining drops below this
 
+# open-data's default branch. The bare "main" defaults elsewhere in this module predate it.
+DEFAULT_BRANCH = "main"
+
 
 class RateLimitError(Exception):
     pass

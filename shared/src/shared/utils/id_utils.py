@@ -5,6 +5,10 @@ from shared.schemas import JurisdictionId
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
+# The folder segment every per-jurisdiction data file sits under. Not the jurisdiction
+# level: a county-only ocdid is level `counties` but still files under `local`.
+DATA_SEGMENT = "local"
+
 SAFE_CHARACTERS_MAP = {
     "~": "--",
 }
@@ -24,20 +28,6 @@ def _decode_from_slug(value: str) -> str:
 
 def make_request_id():
     return str(uuid.uuid4())
-
-
-def _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid: str) -> str:
-    # avoid circular import: config_utils imports jurisdiction_ocdid_to_folder from this module
-    from shared.utils import config_utils
-    data_config = config_utils.get_data_config()
-    data_output_types = data_config.get("data_output_types", {})
-
-    # See: ./config/data.yml
-    for output_type, pattern in data_output_types.items():
-        if re.search(pattern, jurisdiction_ocdid):
-            return output_type
-
-    return "local"
 
 
 def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
@@ -75,8 +65,6 @@ def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
         if ":" in jurisdiction_type:
             raise ValueError("Invalid jurisdiction type format: contains ':'")
 
-        output_type = _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid)
-
         return JurisdictionId(
             country=result["country"],
             state=result["state"],
@@ -84,7 +72,6 @@ def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
             place_label=result.get("place_label", "place"),
             place=result.get("place"),
             jurisdiction_type=jurisdiction_type,
-            output_type=output_type,
         )
     except Exception as e:
         raise ValueError(
@@ -111,7 +98,7 @@ def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
     if parts.county is None and parts.place is None:
         return parts.state
 
-    folder = f"{parts.state}/{parts.output_type}/"
+    folder = f"{parts.state}/{DATA_SEGMENT}/"
     if parts.county:
         folder += f"county_{parts.county}"
     if parts.place:
@@ -119,6 +106,25 @@ def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
             folder += "__"
         folder += f"{parts.place_label}_{parts.place}"
     return folder
+
+
+UNREVIEWED_SUFFIX = "-unreviewed"
+
+
+def unreviewed_folder(folder: str) -> str:
+    """Where a scrape lands before a human has approved it.
+
+      "wa/local/place_seattle" -> "wa/local-unreviewed/place_seattle"
+
+    A sibling of the reviewed level rather than a separate tree, so the two sit side by side
+    in the repo. Derived here rather than upstream because the same jurisdiction has both a
+    reviewed and an unreviewed path — review status is not a property of the ocdid.
+    """
+    segments = folder.split("/")
+    if len(segments) != 3:
+        raise ValueError(f"Not a per-jurisdiction data folder: {folder!r}")
+    state, segment, place = segments
+    return f"{state}/{segment}{UNREVIEWED_SUFFIX}/{place}"
 
 
 def folder_to_jurisdiction_ocdid(folder: str) -> str:
@@ -136,9 +142,8 @@ def folder_to_jurisdiction_ocdid(folder: str) -> str:
         raise ValueError(f"Invalid jurisdiction folder path: {folder}")
 
     state = segments[0]
-    # segments[1] is output_type — not needed to reconstruct ocdid
+    # segments[1] is DATA_SEGMENT — not needed to reconstruct ocdid
     place_segment = segments[2]
-
     ocdid = f"ocd-jurisdiction/country:us/state:{state}/"
 
     if "__" in place_segment:
@@ -151,7 +156,7 @@ def folder_to_jurisdiction_ocdid(folder: str) -> str:
     place_found = False
     for key in KNOWN_PLACE_KEYS:
         if place_part.startswith(f"{key}_"):
-            place = place_part[len(key) + 1:]
+            place = place_part[len(key) + 1 :]
             ocdid += f"{key}:{place}/government"
             place_found = True
             break
@@ -283,14 +288,18 @@ def git_branch_to_parts(branch: str) -> dict:
     if branch.startswith("job/"):
         request_id = branch.split("/")[-1]
         if not _REQUEST_ID_RE.match(request_id):
-            raise ValueError(f"Branch does not end with a recognised request ID: {branch}")
+            raise ValueError(
+                f"Branch does not end with a recognised request ID: {branch}"
+            )
         return {"request_id": request_id}
     # Legacy format: uuid__slug (no job/ prefix) — kept for in-flight PRs
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
     if not _REQUEST_ID_RE.match(parts[0]):
-        raise ValueError(f"Branch does not begin with a recognised request ID: {branch}")
+        raise ValueError(
+            f"Branch does not begin with a recognised request ID: {branch}"
+        )
     return {
         "request_id": parts[0],
         "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1]),

@@ -21,6 +21,7 @@ from pydantic import BaseModel
 
 import database.issues
 import database.pipeline_runs
+import database.requests as requests_db
 import database.people
 import database.jurisdictions as jurisdictions_db
 import database.pull_requests as pull_requests_db
@@ -34,6 +35,7 @@ from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
 import services.pull_request_merge as merge_service
 import services.pull_request_sync as pr_sync_service
+from services.publish import promote_images, publish_people
 import lib.redis as redis_store
 import lib.storage as storage_service
 import lib.temporal.client as temporal_client
@@ -92,8 +94,10 @@ async def _commit_people_patch(
     data: List[PersonPatch],
     user: Identity,
     background_tasks: BackgroundTasks,
-) -> bool:
-    """Apply the reviewer's edits to the job branch. Returns False if the GitHub write failed."""
+) -> List[dict] | None:
+    """Apply the reviewer's edits to the job branch. Returns the patched roster, or None if
+    the GitHub write failed. The roster is returned rather than re-read at the call site
+    because `update_pipeline_run_data` below runs as a background task."""
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     data_file_path = f"data/{folder}.yml"
     branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
@@ -115,14 +119,26 @@ async def _commit_people_patch(
         commit_message=f"Data update by {user.email}",
     )
     if not success:
-        return False
+        return None
 
     background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request_id, patched)
     if user.user_id:
         await change_logs.record_manual_edits(
             request_id, jurisdiction_ocdid, user.user_id, base, patched
         )
-    return True
+    return patched
+
+
+async def _publish_roster(
+    request_id: str, jurisdiction_ocdid: str, edited: List[dict] | None
+) -> None:
+    """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
+    published without editing, the submitted roster stands."""
+    roster = edited
+    if roster is None:
+        roster = await database.pipeline_runs.get_pipeline_run_data_json(request_id) or []
+    # Photos promote with the data: publishing is what moves them off the artifacts bucket.
+    await publish_people(request_id, jurisdiction_ocdid, promote_images(roster))
 
 
 # ──────────────────────────────────────────────
@@ -380,9 +396,10 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        if not await _commit_people_patch(
+        saved = await _commit_people_patch(
             request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
-        ):
+        )
+        if saved is None:
             return JSONResponse(
                 content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
                 status_code=500,
@@ -404,13 +421,20 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        if request.data and not await _commit_people_patch(
-            request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
-        ):
-            return JSONResponse(
-                content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
-                status_code=500,
+        edited = None
+        if request.data:
+            edited = await _commit_people_patch(
+                request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
             )
+            if edited is None:
+                return JSONResponse(
+                    content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
+                    status_code=500,
+                )
+
+        # Publishing is a database write now, not a consequence of the merge landing. It goes
+        # before the PR is parked so a failed publish leaves the review in the pool to retry.
+        await _publish_roster(request.request_id, request.jurisdiction_ocdid, edited)
 
         merge_key = f"merge_status:{pull_request_number}"
         await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)
@@ -464,6 +488,10 @@ def get_router(api_key_header):
                 content=ErrorResponse(error=merge_error).model_dump(),
                 status_code=status_code,
             )
+        # No reviewer edits on this path, so the submitted roster is what goes live.
+        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+        if jurisdiction_ocdid:
+            await _publish_roster(request_id, jurisdiction_ocdid, None)
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
         await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
