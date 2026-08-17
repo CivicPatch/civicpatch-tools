@@ -1,6 +1,6 @@
 from typing import Any
 from database.database import get_pool
-from database.pull_requests import AVAILABLE_FOR_REVIEW
+from database.requests import AVAILABLE_FOR_REVIEW
 from psycopg.rows import namedtuple_row
 from shared.utils.date_utils import STREAK_TIMEZONE
 
@@ -114,7 +114,6 @@ async def get_review_stats(
                 SELECT COUNT(*) AS available_count
                 FROM pipeline_runs j
                 JOIN requests r ON r.id = j.request_id
-                JOIN pull_requests pr ON pr.request_id = r.id
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
                   AND NOT EXISTS (

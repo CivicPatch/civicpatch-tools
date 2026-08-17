@@ -18,9 +18,10 @@ import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
 from database.database import get_pool
-from database.publications import publish_request
+from database.publications import dismiss_request, publish_request
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
+_SENTINEL_USER = "zz-publish-test-user"
 
 
 async def _cleanup():
@@ -173,3 +174,92 @@ async def test_publish_does_not_stamp_published_at(sentinel_request):
             "SELECT count(*) FROM source_records WHERE published_at IS NOT NULL"
         )
         assert (await cur.fetchone())[0] == 0
+
+
+# ── request publish state (migration 115) ────────────────────────────────────
+
+
+async def _request_state(request_id: str) -> tuple:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT published_at, dismissed_at, resolved_by_user_id FROM requests WHERE id = %s",
+            (request_id,),
+        )
+        return await cur.fetchone()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_stamps_the_request(sentinel_request):
+    """Publish state lives on the request now, not on a GitHub PR's status."""
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    published_at, dismissed_at, _ = await _request_state(sentinel_request)
+    assert published_at is not None
+    assert dismissed_at is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_republishing_keeps_the_first_publish_time(sentinel_request):
+    """`published_at` answers "when did this go live", so a replay must not move it."""
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    first, _, _ = await _request_state(sentinel_request)
+
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    again, _, _ = await _request_state(sentinel_request)
+    assert again == first
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_dismissing_stamps_the_request(sentinel_request):
+    await dismiss_request(sentinel_request)
+
+    published_at, dismissed_at, _ = await _request_state(sentinel_request)
+    assert published_at is None
+    assert dismissed_at is not None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_published_request_cannot_be_dismissed(sentinel_request):
+    """The CHECK forbids both being set, so dismiss refuses rather than raising: publishing
+    already happened, and there is no undoing it by closing a card."""
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    await dismiss_request(sentinel_request)
+
+    published_at, dismissed_at, _ = await _request_state(sentinel_request)
+    assert published_at is not None
+    assert dismissed_at is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
+    """A publish with no user attached must not erase who published it."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO users (provider, provider_user_id, email)
+            VALUES ('system', %s, %s) RETURNING id::text
+            """,
+            (_SENTINEL_USER, f"{_SENTINEL_USER}@example.test"),
+        )
+        user_id = (await cur.fetchone())[0]
+        await conn.commit()
+
+    try:
+        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], user_id)
+        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], None)
+
+        _, _, resolver = await _request_state(sentinel_request)
+        assert str(resolver) == user_id
+    finally:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
+            await conn.commit()

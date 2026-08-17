@@ -48,6 +48,10 @@ erDiagram
         jsonb           arguments_json
         jsonb_null      data_json           "scraped Official objects from pipeline"
         jsonb_null      review_json         "idx: jsonb_array_length(review_json->'issues')"
+        timestamptz_null published_at       "set when a reviewer publishes; replaces pull_requests.status='merged' + merge_enqueued_at"
+        timestamptz_null dismissed_at       "set when a reviewer dismisses; replaces pull_requests.status='closed'. check: not both set"
+        uuid_null       resolved_by_user_id FK  "whoever published or dismissed it"
+        text_null       open_data_url       "where the change landed: a commit URL going forward, a PR URL on backfilled rows"
         timestamptz     created_at
         timestamptz     updated_at
     }
@@ -68,8 +72,8 @@ erDiagram
         uuid_null       resolved_by_user_id FK
         int             pr_number
         text_null       url
-        text            status              "idx"
-        text_null       review_state
+        text            status              "idx. Scrape rows are historical as of 115 — publish state lives on requests now. Jurisdiction-edit requests are the only lifecycle still writing here."
+        text_null       review_state        "no writer, ever — the bot verdict was never persisted"
         timestamptz_null merged_at
         timestamptz_null merge_enqueued_at   "set at merge enqueue; cleared on settle"
         timestamptz     created_at

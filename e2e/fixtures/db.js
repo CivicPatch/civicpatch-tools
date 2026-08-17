@@ -168,12 +168,13 @@ export const MARKERS_REQUEST_ID = "00000000-0000-0000-eeee-000000000012";
 const MARKERS_PR_ID = "00000000-0000-0000-eeee-000000000013";
 const MARKERS_PR_NUMBER = 12;
 
-// Read-only fixture — a already-merged PR, the state a card lands in once it has
-// been published. Every other fixture is status='open' with url=NULL, so this is
-// the only one that renders the terminal-status banner, the "View PR" link and
-// the jurisdiction website link, and that hides the publish/save/close actions.
-// Own state (ri) and deep-linked by request_id: a merged PR is out of the review
-// pool, so it is only reachable by link, which is how reviewers reach it too.
+// Read-only fixture — a published request, the state a card lands in once it has
+// been published. It is the only fixture with published_at set, so the only one that
+// renders the terminal-status banner, the open-data link and the jurisdiction website
+// link, and that hides the publish/save/close actions. Its pull_requests row is still
+// 'merged' because the card's link still reads PR metadata.
+// Own state (ri) and deep-linked by request_id: a published request is out of the
+// review pool, so it is only reachable by link, which is how reviewers reach it too.
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
 export const READ_ONLY_REQUEST_ID = "00000000-0000-0000-eeee-000000000014";
@@ -201,10 +202,39 @@ function makeClient() {
   });
 }
 
+// Every state any fixture uses, seeded as a level='state' jurisdiction.
+//
+// Not decoration: /api/v1/jurisdictions/states is built from these rows, and the state
+// selector treats a stored state that is missing from that list as invalid and *clears* it
+// (select-state.js). With no state rows the fixtures' `app:default-state` was wiped on load,
+// the review page fell back to "Pick a state to begin", and every card-dependent spec timed
+// out waiting for a start button that never rendered.
+const STATE_JURISDICTIONS = [
+  ["ma", "Massachusetts"],
+  ["me", "Maine"],
+  ["nh", "New Hampshire"],
+  ["nj", "New Jersey"],
+  ["nm", "New Mexico"],
+  ["ri", "Rhode Island"],
+  ["tx", "Texas"],
+  ["vt", "Vermont"],
+];
+
+const stateOcdid = (code) => `ocd-jurisdiction/country:us/state:${code}/government`;
+
 export async function seedE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
+    for (const [code, name] of STATE_JURISDICTIONS) {
+      await client.query(
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, status, data)
+         VALUES ($1, $2, 'state', 'active', $3)
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET data = EXCLUDED.data`,
+        [stateOcdid(code), code, JSON.stringify({ name })],
+      );
+    }
+
     // User. Seeded at the `contributors` level so the existing review-session
     // and PR-merge e2e tests still work — those write routes were bumped to
     // a Contributor floor when the trust ladder landed (migration 087).
@@ -225,7 +255,7 @@ export async function seedE2eFixtures() {
     // (old<->new diff panel). The baseline fixture below leaves scraped_at NULL.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nj', 'current', '{"name":"E2E Test City","geoid":"0600001"}', NOW())
+       VALUES ($1, 'nj', 'active', '{"name":"E2E Test City","geoid":"0600001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [TEST_JURISDICTION_OCDID],
@@ -294,7 +324,7 @@ export async function seedE2eFixtures() {
     ]) {
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-         VALUES ($1, $3, 'current', $2, NOW())
+         VALUES ($1, $3, 'active', $2, NOW())
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
         [
           jOcdid,
@@ -325,7 +355,7 @@ export async function seedE2eFixtures() {
     // Baseline card — scraped_at intentionally omitted (NULL) → BASELINE mode.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-       VALUES ($1, 'vt', 'current', '{"name":"E2E Baseline City","geoid":"5000009"}')
+       VALUES ($1, 'vt', 'active', '{"name":"E2E Baseline City","geoid":"5000009"}')
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [BASELINE_JURISDICTION_OCDID],
@@ -355,7 +385,7 @@ export async function seedE2eFixtures() {
     // people so the diff renders changed / added / removed states.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nh', 'current', '{"name":"E2E Reconcile City","geoid":"3300001"}', NOW())
+       VALUES ($1, 'nh', 'active', '{"name":"E2E Reconcile City","geoid":"3300001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [RECONCILE_JURISDICTION_OCDID],
@@ -395,7 +425,7 @@ export async function seedE2eFixtures() {
     for (const person of reconcileExisting) {
       await client.query(
         `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-         VALUES ($1, $2, 'current', NOW())`,
+         VALUES ($1, $2, 'active', NOW())`,
         [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
@@ -451,7 +481,7 @@ export async function seedE2eFixtures() {
     // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'ma', 'current', '{"name":"E2E Scale City","geoid":"2500001"}', NOW())
+       VALUES ($1, 'ma', 'active', '{"name":"E2E Scale City","geoid":"2500001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [SCALE_JURISDICTION_OCDID],
@@ -462,7 +492,7 @@ export async function seedE2eFixtures() {
     for (const person of buildScaleExisting()) {
       await client.query(
         `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-         VALUES ($1, $2, 'current', NOW())`,
+         VALUES ($1, $2, 'active', NOW())`,
         [SCALE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
@@ -512,7 +542,7 @@ export async function seedE2eFixtures() {
     // Duplicate-id card — two proposed people share `dup-shared`.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nm', 'current', '{"name":"E2E Duplicate City","geoid":"3500001"}', NOW())
+       VALUES ($1, 'nm', 'active', '{"name":"E2E Duplicate City","geoid":"3500001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [DUPLICATE_JURISDICTION_OCDID],
@@ -577,7 +607,7 @@ export async function seedE2eFixtures() {
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'me', 'current', '{"name":"E2E Markers City","geoid":"2300001"}', NOW())
+       VALUES ($1, 'me', 'active', '{"name":"E2E Markers City","geoid":"2300001"}', NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [MARKERS_JURISDICTION_OCDID],
@@ -676,7 +706,7 @@ export async function seedE2eFixtures() {
     // `url` on the jurisdiction data is what surfaces as the website link.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'ri', 'current', $2, NOW())
+       VALUES ($1, 'ri', 'active', $2, NOW())
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [
@@ -689,11 +719,11 @@ export async function seedE2eFixtures() {
       ],
     );
     await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
+      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, published_at, created_at, updated_at)
        VALUES ($1, 'people_collection', $2, '{}',
                '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
-               '{}', NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
+               '{}', NOW(), NOW(), NOW())
+       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, published_at = EXCLUDED.published_at`,
       [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     );
     await client.query(
@@ -731,14 +761,14 @@ export async function seedE2eFixtures() {
         : { name };
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-         VALUES ($1, 'nj', 'current', $2)
+         VALUES ($1, 'nj', 'active', $2)
          ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
         [ocdid, JSON.stringify(data)],
       );
       if (peopleAgeDays !== null) {
         await client.query(
           `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-           VALUES ($1, '{"name":"E2E Person"}', 'current', NOW() - ($2 || ' days')::interval)`,
+           VALUES ($1, '{"name":"E2E Person"}', 'active', NOW() - ($2 || ' days')::interval)`,
           [ocdid, peopleAgeDays],
         );
       }
@@ -833,6 +863,12 @@ export async function teardownE2eFixtures() {
       await client.query(
         `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
         [ocdid],
+      );
+    }
+    for (const [code] of STATE_JURISDICTIONS) {
+      await client.query(
+        `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
+        [stateOcdid(code)],
       );
     }
     await client.query(

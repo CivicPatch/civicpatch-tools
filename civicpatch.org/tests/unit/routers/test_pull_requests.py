@@ -141,6 +141,10 @@ def test_close_pull_request_returns_success(client):
             "database.review_session_entries.resolve_entries_for_request",
             new_callable=AsyncMock,
         ) as mock_resolve,
+        patch(
+            "routers.api.pull_requests.dismiss_people",
+            new_callable=AsyncMock,
+        ) as mock_dismiss,
     ):
         response = client.delete(
             f"/pull_requests/{TEST_PR_NUMBER}",
@@ -150,6 +154,9 @@ def test_close_pull_request_returns_success(client):
     assert response.status_code == 200
     assert response.json()["status"] == "success"
     mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
+    # Closing is the reviewer deciding not to publish, and that decision is now recorded
+    # on the request rather than inferred from the PR's GitHub status.
+    mock_dismiss.assert_awaited_once_with(TEST_REQUEST_ID, "user-id-123")
 
 
 @pytest.mark.unit
@@ -193,7 +200,7 @@ def test_save_and_merge_returns_202(client):
     assert sent_request.merge_key == f"merge_status:{TEST_PR_NUMBER}"
     mock_set_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
     # Publishing is a DB write at the endpoint now, not a consequence of the merge landing.
-    mock_publish.assert_awaited_once_with(TEST_REQUEST_ID, TEST_OCDID, [BASE_PERSON])
+    mock_publish.assert_awaited_once_with(TEST_REQUEST_ID, TEST_OCDID, [BASE_PERSON], "user-id-123")
 
 
 # An Official-valid person on the PR branch, in on-disk field order. A patch overlays only
@@ -475,14 +482,15 @@ def test_do_merge_clean_pr_writes_merged():
         patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
         patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
         patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("services.change_logs.record_publish", new_callable=AsyncMock),
         patch("services.pull_request_sync.publish_side_effects", new_callable=AsyncMock) as mock_side_effects,
     ):
         run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
 
     last_call_value = json.loads(redis_set.call_args[0][1])
     assert last_call_value["status"] == "merged"
-    mock_side_effects.assert_awaited_once()
+    # The merge is now only the artifact write: publishing and its audit entry both happened
+    # at the review endpoint, so a merge must trigger no data side effects of its own.
+    mock_side_effects.assert_not_awaited()
 
 
 @pytest.mark.unit

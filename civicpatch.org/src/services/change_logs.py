@@ -9,8 +9,8 @@ from shared.utils.statuses import ChangeLogType
 logger = logging.getLogger(__name__)
 
 
-async def record_publish(request_id: str, user_id: str) -> None:
-    # Best-effort: the merge already succeeded, so a logging failure must not surface as one.
+async def record_publish(request_id: str, user_id: str | None) -> None:
+    # Best-effort: the publish already succeeded, so a logging failure must not surface as one.
     try:
         jurisdiction_ocdid = await get_request_jurisdiction(request_id)
         await create_change_log(ChangeLogType.MERGE_REVIEW, user_id, jurisdiction_ocdid, request_id)

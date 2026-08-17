@@ -9,6 +9,7 @@ from lib.temporal.workflows import (
     TASK_QUEUE,
     OdSyncTargetedWorkflow,
     OdSyncWorkflow,
+    OpenDataCommitWorkflow,
     PipelineRunCleanupWorkflow,
     PRSyncWorkflow,
     RepoMergeQueueWorkflow,
@@ -18,6 +19,7 @@ from lib.temporal.workflows import (
 )
 from routers.temporal.activities import (
     cleanup_stale_review_entries_activity,
+    commit_open_data_activity,
     expire_stale_pipeline_runs_activity,
     merge_pr_activity,
     od_sync_activity,
@@ -138,6 +140,7 @@ async def main() -> None:
             PRSyncWorkflow,
             OdSyncWorkflow,
             OdSyncTargetedWorkflow,
+            OpenDataCommitWorkflow,
             PipelineRunCleanupWorkflow,
             RepoMergeQueueWorkflow,
             ReviewSessionCleanupWorkflow,
@@ -149,6 +152,7 @@ async def main() -> None:
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
             merge_pr_activity,
+            commit_open_data_activity,
         ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")

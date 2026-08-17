@@ -14,10 +14,33 @@ from database.database import get_pool
 from database.people import people_rows
 
 
+async def dismiss_request(request_id: str, resolved_by_user_id: str | None = None) -> None:
+    """The reviewer looked at this scrape and decided it should not go live.
+
+    The counterpart to publishing, and the other way a request leaves the review queue. Not a
+    failure: a dismissed scrape keeps its evidence and its data_json, it just never published.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            UPDATE requests
+               SET dismissed_at = COALESCE(dismissed_at, now()),
+                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
+             WHERE id = %s AND published_at IS NULL
+            """,
+            (resolved_by_user_id, request_id),
+        )
+
+
 async def publish_request(
-    request_id: str, jurisdiction_ocdid: str, people: list[dict]
+    request_id: str,
+    jurisdiction_ocdid: str,
+    people: list[dict],
+    resolved_by_user_id: str | None = None,
 ) -> int:
-    """Project one scrape's roster onto `people` and stamp the jurisdiction as scraped.
+    """Project one scrape's roster onto `people`, stamp the jurisdiction as scraped, and mark
+    the request published.
 
     Returns the number of people written. Raises rather than swallowing: a publish that cannot
     record what it published must fail loudly, unlike the submit-time evidence write, where
@@ -62,6 +85,18 @@ async def publish_request(
             WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s
             """,
             (request_id, jurisdiction_ocdid),
+        )
+
+        # In the same transaction as the roster: "published" and "what was published" must
+        # never disagree. COALESCE keeps the first publish's timestamp if one is replayed.
+        await cur.execute(
+            """
+            UPDATE requests
+               SET published_at = COALESCE(published_at, now()),
+                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
+             WHERE id = %s
+            """,
+            (resolved_by_user_id, request_id),
         )
 
     return len(rows)

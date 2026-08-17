@@ -5,11 +5,41 @@ from psycopg import sql
 
 from database.database import get_pool
 from shared.utils.statuses import (
+    PipelineIssueStatus,
+    PipelineIssueType,
     PipelineRunStatus,
     PullRequestStatus,
     RequestType,
 )
 from lib.github.utils import pull_request_url_to_number
+
+# SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
+# aliased `r`; callers share this one definition instead of re-spelling it.
+#
+# Publish state used to live on GitHub — an open PR that had not been parked for merge — so
+# this was a JOIN against pull_requests. Migration 115 moved it onto the request itself, which
+# is where it belongs now that civicpatch publishes rather than waiting for a merge.
+#
+# Four conditions, unchanged in meaning:
+#   not published            was pr.status='open' + pr.merge_enqueued_at IS NULL
+#   not dismissed            was pr.status='closed'
+#   not a jurisdiction edit  same, but a plain column test now the anchor is `requests`
+#   no live reviewer-reported issue   unchanged; returns to the pool when the issue is
+#                                     resolved by an admin or superseded by a newer run
+#
+# Scope is the caller's: every site joins pipeline_runs, so a request that never ran cannot
+# appear in the queue.
+AVAILABLE_FOR_REVIEW = (
+    "r.published_at IS NULL AND r.dismissed_at IS NULL "
+    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
+    "AND NOT EXISTS ("
+    "SELECT 1 FROM issues i "
+    f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
+    "AND r.id::text = ANY(i.request_ids) "
+    f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
+    ")"
+)
+
 
 
 async def register_request_with_pipeline_run(

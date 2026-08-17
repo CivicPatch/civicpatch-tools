@@ -8,34 +8,9 @@ from shared.utils.statuses import (
     RequestType,
 )
 from database.database import get_pool, to_iso
+from database.requests import AVAILABLE_FOR_REVIEW
 from lib.github.utils import pull_request_url_to_number
 
-# SQL predicate for "a PR available for human review": open on GitHub and not currently
-# mid-merge. The GitHub sync owns `status`; the in-flight exclusion uses merge_enqueued_at
-# (set at enqueue, cleared on settle) so the two never fight. The time window self-heals a
-# stuck/lost merge back into the pool. Callers share this one definition instead of
-# re-spelling it; requires the pull_requests table to be aliased `pr`.
-# "Available for review" = an open PR that has not been published. Publishing parks the PR
-# by setting merge_enqueued_at, which stays set even if the merge later fails — a failed
-# merge raises a merge_failed issue for an admin to dismiss (which clears the park). So a
-# published PR never returns to the review pool on its own, regardless of merge outcome.
-# A reviewer-reported issue (user_reported) also parks its review out of the pool while the
-# issue is live, and it returns once the issue reaches a terminal state — resolved by an
-# admin, or auto-superseded when a newer run for the jurisdiction finishes.
-AVAILABLE_FOR_REVIEW = (
-    "pr.status = 'open' AND pr.merge_enqueued_at IS NULL "
-    "AND NOT EXISTS ("
-    "SELECT 1 FROM requests r_kind "
-    "WHERE r_kind.id = pr.request_id "
-    f"AND r_kind.request_type = '{RequestType.JURISDICTION_MANUAL_EDIT.value}'"
-    ") "
-    "AND NOT EXISTS ("
-    "SELECT 1 FROM issues i "
-    f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
-    "AND pr.request_id::text = ANY(i.request_ids) "
-    f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
-    ")"
-)
 
 
 async def list_open_pull_requests(
