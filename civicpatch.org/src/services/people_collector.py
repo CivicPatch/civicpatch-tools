@@ -12,6 +12,10 @@ import lib.storage as storage_service
 import lib.github.api as github_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
+from database.roles import get_roles
+from database.source_records import insert_source_records
+from shared.schemas import Official, RoleConfig
+from shared.utils.taxonomy import build_taxonomy
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 import logging
 from shared.utils.yaml_utils import yaml_dump, yaml_load
@@ -39,6 +43,22 @@ async def handle_submit_pipeline_run_artifacts(
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
         await upsert_issue(request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}])
         raise
+
+
+async def _store_source_records(request_id: str, records: list[dict]) -> None:
+    """Append the evidence this scrape produced: each Record raw, beside its derivation.
+
+    Never fatal. `source_records` is what 2.5 derives from and what triage reads unresolved
+    labels out of — losing a scrape's evidence is bad, but failing the submit that carries
+    the people is worse, so this logs and lets the rest of intake finish.
+    """
+    try:
+        taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+        officials = [Official(**record) for record in records]
+        stored = await insert_source_records(request_id, officials, taxonomy)
+        logger.info(f"[{request_id}] Stored {stored} source record(s)")
+    except Exception as e:
+        logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
 
 
 async def _handle_submit_pipeline_run_artifacts(
@@ -109,6 +129,7 @@ async def _handle_submit_pipeline_run_artifacts(
         with open(data_file_path, "w") as f:
             f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
+        await _store_source_records(request.request_id, updated_data)
 
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)

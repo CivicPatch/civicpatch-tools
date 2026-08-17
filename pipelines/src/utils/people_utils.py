@@ -4,6 +4,7 @@ from domain.models import Office, Official, Person
 from runners.people_collector.schemas import ResearchedPerson
 from shared.utils.divisions import division_ocdid_to_designation
 from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
+from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import (
     Taxonomy,
     designation_sort_key,
@@ -16,17 +17,6 @@ def filter_people_by_roles(
     people: List[ResearchedPerson], taxonomy: Taxonomy
 ) -> List[ResearchedPerson]:
     return [p for p in people if any(resolve_role(r, taxonomy) for r in p.roles)]
-
-
-def office_name_to_labels(office_name: str) -> List[str]:
-    """Split a rendered office name back into the labels it was joined from.
-
-    Every part is kept, not just the ones resolving to a role: an unrecognised label is
-    exactly what the candidate path needs to see.
-    """
-    if not office_name or office_name == "Unknown Office":
-        return []
-    return [p.strip() for p in office_name.split(" - ") if p.strip()]
 
 
 def _sortable_designations(parsed: ParsedLabel) -> List[str]:

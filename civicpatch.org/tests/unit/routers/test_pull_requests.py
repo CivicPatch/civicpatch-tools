@@ -646,7 +646,6 @@ def test_do_merge_unexpected_exception_writes_error():
 @pytest.mark.parametrize(
     "method,url",
     [
-        ("put", "/pull_requests/data"),
         ("delete", f"/pull_requests/{TEST_PR_NUMBER}?request_id={TEST_REQUEST_ID}"),
         ("post", f"/pull_requests/{TEST_PR_NUMBER}/merge?request_id={TEST_REQUEST_ID}"),
         ("post", f"/pull_requests/{TEST_PR_NUMBER}/update-branch"),

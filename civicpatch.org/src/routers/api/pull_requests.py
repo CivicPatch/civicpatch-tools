@@ -60,12 +60,6 @@ def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[st
 # ──────────────────────────────────────────────
 
 
-class PostJobPullRequestDataRequest(BaseModel):
-    jurisdiction_ocdid: str
-    request_id: str
-    data: List[Official]
-
-
 class SaveAndMergeRequest(BaseModel):
     request_id: str
     jurisdiction_ocdid: str
@@ -212,42 +206,6 @@ def get_router(api_key_header):
             "data": file_content,
             "existing": existing,
         }
-
-    # ── Pull Requests: Update Data ───────────
-
-    @router.put("/data", include_in_schema=False)
-    async def post_job_pull_request_data_endpoint(
-        request: PostJobPullRequestDataRequest,
-        background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)),
-    ):
-        user_name = user.email
-        file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
-            request.jurisdiction_ocdid
-        )
-        branch_name = shared.utils.id_utils.make_job_branch(
-            request.jurisdiction_ocdid, request.request_id
-        )
-        normalized = [official.model_dump() for official in request.data]
-        _github_response = await github_service.update_pull_request_file(
-            branch_name=branch_name,
-            file_path=f"data/{file_path}.yml",
-            new_data=normalized,
-            commit_message=f"Data update by {user_name}",
-        )
-
-        # Update the results_json in the background, too
-        background_tasks.add_task(
-            database.pipeline_runs.update_pipeline_run_data, request.request_id, normalized
-        )
-        if not _github_response:
-            return JSONResponse(
-                content=ErrorResponse(
-                    error="Failed to update pull request data on GitHub"
-                ).model_dump(),
-                status_code=500,
-            )
-        return {"branch_name": branch_name, "status": "success"}
 
     # ── Pull Requests: Batch Data ────────────
     @router.get(
