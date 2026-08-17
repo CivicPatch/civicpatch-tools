@@ -96,8 +96,10 @@ async def research_municipality_transition(
     source_urls = next_context.data.research_municipality_step.source_urls
     if source_urls:
         logger.info(f"Source URLs provided: {source_urls}")
+        # Ahead of the jurisdiction's homepage, which was seeded before research ran. The
+        # homepage stays in the queue behind them, as a fallback for discovering more pages.
         next_context = _next_context(
-            next_context, frontier=next_context.data.frontier.add(source_urls)
+            next_context, frontier=next_context.data.frontier.add_front(source_urls)
         )
 
     return next_context, PipelineStatus.SCRAPE_PAGE

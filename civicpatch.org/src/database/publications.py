@@ -14,6 +14,16 @@ from database.database import get_pool
 from database.people import people_rows
 
 
+async def record_open_data_url(request_id: str, url: str) -> None:
+    """Where this request's data landed in open-data. Written after the commit, not with the
+    publish, because the write is queued and retried — the publish is already a fact by then."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE requests SET open_data_url = %s WHERE id = %s", (url, request_id)
+        )
+
+
 async def dismiss_request(request_id: str, resolved_by_user_id: str | None = None) -> None:
     """The reviewer looked at this scrape and decided it should not go live.
 

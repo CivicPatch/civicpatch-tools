@@ -106,6 +106,28 @@ class LinkFrontier(BaseModel):
                 new_queue.append(key)
         return self.model_copy(update={"links": new_links, "queue": new_queue})
 
+    def add_front(self, urls: List[str]) -> "LinkFrontier":
+        """Add at the head of the queue, so these are scraped before anything already pending.
+
+        For caller-supplied source URLs. Someone naming the page the roster is on is the
+        strongest signal the pipeline gets, and it should not queue behind the jurisdiction's
+        homepage — which is seeded first and otherwise wins by being there earlier.
+        """
+        from shared.utils.url_utils import canonical_url, format_url
+
+        new_links = dict(self.links)
+        added = []
+        for url in urls:
+            key = canonical_url(url)
+            if key not in new_links:
+                new_links[key] = Link(
+                    url=format_url(url), status=LinkStatus.PENDING.value
+                )
+                added.append(key)
+        return self.model_copy(
+            update={"links": new_links, "queue": added + self.queue}
+        )
+
     def dequeue(self, url: str) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url
 

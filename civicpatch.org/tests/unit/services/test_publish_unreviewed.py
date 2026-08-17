@@ -75,17 +75,43 @@ async def test_commit_rendered_file_renders_from_the_database():
             return_value=PEOPLE,
         ),
         patch(
-            "lib.github.api.upsert_github_file", new_callable=AsyncMock, return_value=True
+            "lib.github.api.upsert_github_file",
+            new_callable=AsyncMock,
+            return_value="https://github.com/civicpatch/open-data/commit/abc123",
         ) as mock_upsert,
+        patch("services.publish.record_open_data_url", new_callable=AsyncMock) as mock_record,
     ):
         assert await commit_rendered_file(
             "data/wa/local-unreviewed/place_seattle.yml", REQUEST_ID, OCDID, "msg"
-        ) is True
+        ) == "https://github.com/civicpatch/open-data/commit/abc123"
 
     kwargs = mock_upsert.await_args.kwargs
     assert kwargs["branch_name"] == "main"
     assert kwargs["file_path"] == "data/wa/local-unreviewed/place_seattle.yml"
     assert "Jane Doe" in kwargs["content_str"]
+    # The commit URL is what the UI links to now that there is no pull request.
+    mock_record.assert_awaited_once_with(
+        REQUEST_ID, "https://github.com/civicpatch/open-data/commit/abc123"
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_rejected_write_records_no_url():
+    """A retry will land later; recording a URL for a write that did not happen would make the
+    request look published to open-data when it is not."""
+    with (
+        patch(
+            "services.publish.get_pipeline_run_data_json",
+            new_callable=AsyncMock,
+            return_value=PEOPLE,
+        ),
+        patch("lib.github.api.upsert_github_file", new_callable=AsyncMock, return_value=None),
+        patch("services.publish.record_open_data_url", new_callable=AsyncMock) as mock_record,
+    ):
+        assert await commit_rendered_file("data/x.yml", REQUEST_ID, OCDID, "msg") is None
+
+    mock_record.assert_not_awaited()
 
 
 # ── image promotion: photos move to the CDN when the data does ──────────────

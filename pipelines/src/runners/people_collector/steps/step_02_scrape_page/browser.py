@@ -1,3 +1,5 @@
+import time
+from contextlib import asynccontextmanager
 from typing import Literal, TypedDict
 
 from patchright.async_api import async_playwright
@@ -7,6 +9,21 @@ from runners.people_collector.steps.step_02_scrape_page.scrape_constants import 
 from runners.people_collector.steps.step_02_scrape_page.scrape_wait import auto_detect_and_wait
 from runners.people_collector.steps.step_02_scrape_page.scrape_dom import expand_accordions, flatten_shadow_root, html_relative_to_absolute_urls, inline_iframes
 from runners.people_collector.steps.step_02_scrape_page.scrape_images import download_images
+
+
+@asynccontextmanager
+async def _phase(logger, name: str):
+    """Log how long a scrape phase took.
+
+    These phases are network- and DOM-bound and can take minutes on a large page, and they
+    used to log nothing at all — a slow scrape was indistinguishable from a hung one until
+    the run either finished or did not.
+    """
+    started = time.monotonic()
+    try:
+        yield
+    finally:
+        logger.debug(f"{name} took {time.monotonic() - started:.1f}s")
 
 
 class ScrapeOptions(TypedDict):
@@ -87,17 +104,24 @@ async def scrape(logger, website_url, options=None):
                 raise ValueError("Already scraped this URL after redirect")
 
             accordion_keywords = options.get('accordion_keywords')
-            await auto_detect_and_wait(page, logger, response)
-            await expand_accordions(page, logger, accordion_keywords)
-            await flatten_shadow_root(page)
-            await html_relative_to_absolute_urls(page)
-            await inline_iframes(page, logger)
+            async with _phase(logger, "wait for content"):
+                await auto_detect_and_wait(page, logger, response)
+            async with _phase(logger, "expand accordions"):
+                await expand_accordions(page, logger, accordion_keywords)
+            async with _phase(logger, "flatten shadow roots"):
+                await flatten_shadow_root(page)
+            async with _phase(logger, "absolutise urls"):
+                await html_relative_to_absolute_urls(page)
+            async with _phase(logger, "inline iframes"):
+                await inline_iframes(page, logger)
 
             image_directory = options.get('image_directory')
             if image_directory:
-                await download_images(browser, logger, page, image_directory)
+                async with _phase(logger, "download images"):
+                    await download_images(browser, logger, page, image_directory)
 
-            content = await page.content()
+            async with _phase(logger, "read page content"):
+                content = await page.content()
             return content, page.url
 
         finally:

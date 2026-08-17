@@ -35,7 +35,12 @@ from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
 import services.pull_request_merge as merge_service
 import services.pull_request_sync as pr_sync_service
-from services.publish import dismiss_people, promote_images, publish_people
+from services.publish import (
+    dismiss_people,
+    promote_images,
+    promote_to_reviewed,
+    publish_people,
+)
 import lib.redis as redis_store
 import lib.storage as storage_service
 import lib.temporal.client as temporal_client
@@ -144,6 +149,9 @@ async def _publish_roster(
     await publish_people(
         request_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
     )
+    # The scrape leaves the unreviewed path for the canonical one. Queued, so a slow or failed
+    # GitHub write cannot affect a publish that has already committed.
+    await promote_to_reviewed(request_id, jurisdiction_ocdid)
 
 
 # ──────────────────────────────────────────────

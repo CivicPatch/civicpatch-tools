@@ -182,6 +182,7 @@ def test_save_and_merge_returns_202(client):
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
@@ -230,6 +231,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
+        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
@@ -684,6 +686,7 @@ def test_save_and_merge_allows_default_role():
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
+        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
