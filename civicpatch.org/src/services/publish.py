@@ -11,7 +11,6 @@ import logging
 import environment
 import lib.github.api as github_service
 import lib.storage as storage_service
-import lib.temporal.client as temporal_client
 import shared.utils.id_utils
 from core.image_promotion import (
     ARTIFACTS_BUCKET,
@@ -22,8 +21,9 @@ from core.image_promotion import (
 )
 import services.change_logs as change_logs
 from database.pipeline_runs import get_pipeline_run_data_json
-from database.publications import dismiss_request, publish_request
-from lib.temporal.types import OpenDataCommitRequest
+from database.publications import dismiss_request, publish_request, record_open_data_url
+from database.people import get_jurisdiction_people
+from lib.temporal.types import CommitSource, OpenDataCommitRequest
 from shared.utils.yaml_utils import yaml_dump
 
 logger = logging.getLogger(__name__)
@@ -100,21 +100,64 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
+async def _render(source: CommitSource, request_id: str, jurisdiction_ocdid: str) -> list[dict]:
+    if source is CommitSource.ROSTER:
+        return await get_jurisdiction_people(jurisdiction_ocdid)
+    return await get_pipeline_run_data_json(request_id) or []
+
+
 async def commit_rendered_file(
-    file_path: str, request_id: str, jurisdiction_ocdid: str, commit_message: str
-) -> bool:
-    """Render one request's roster out of the database and write it to open-data.
+    file_path: str,
+    request_id: str,
+    jurisdiction_ocdid: str,
+    commit_message: str,
+    source: CommitSource = CommitSource.SCRAPE,
+) -> str | None:
+    """Render a file out of the database and write it to open-data.
 
     The rendering happens here rather than at the caller so every retry produces current
     content: git holds a projection of the database, and a write that lands late should carry
     what is true when it lands, not what was true when it was queued.
     """
-    roster = await get_pipeline_run_data_json(request_id) or []
-    return await github_service.upsert_github_file(
+    roster = await _render(source, request_id, jurisdiction_ocdid)
+    commit_url = await github_service.upsert_github_file(
         branch_name=github_service.DEFAULT_BRANCH,
         file_path=file_path,
         content_str=yaml_dump(roster),
         commit_message=commit_message,
+    )
+    if commit_url:
+        await record_open_data_url(request_id, commit_url)
+    return commit_url
+
+
+def reviewed_file_path(jurisdiction_ocdid: str) -> str:
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    return f"data/{folder}.yml"
+
+
+async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
+    """Move a published jurisdiction from the unreviewed path to the canonical one.
+
+    Queued rather than immediate, like every other open-data write: publishing is already a
+    fact in the database by the time this runs. The reviewed file renders from `people`, not
+    from this scrape — the canonical file is the jurisdiction's live roster, which can include
+    people an earlier scrape published.
+    """
+    # avoid circular import: lib.temporal.workflows imports the activities module, which
+    # imports this one, so importing the client at module scope closes the loop
+    import lib.temporal.client as temporal_client
+
+    await temporal_client.enqueue_open_data_commit(
+        OpenDataCommitRequest(
+            file_path=reviewed_file_path(jurisdiction_ocdid),
+            request_id=request_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            commit_message=f"Publish {jurisdiction_ocdid} ({request_id})",
+            source=CommitSource.ROSTER,
+            delete_path=unreviewed_file_path(jurisdiction_ocdid),
+            delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({request_id})",
+        )
     )
 
 
@@ -127,6 +170,10 @@ async def commit_unreviewed_scrape(request_id: str, jurisdiction_ocdid: str) -> 
     Durable rather than immediate. The roster is already in the database, so the submit must
     not block on GitHub being slow, nor fail if it is down — Temporal retries until it lands.
     """
+    # avoid circular import: lib.temporal.workflows imports the activities module, which
+    # imports this one, so importing the client at module scope closes the loop
+    import lib.temporal.client as temporal_client
+
     await temporal_client.enqueue_open_data_commit(
         OpenDataCommitRequest(
             file_path=unreviewed_file_path(jurisdiction_ocdid),

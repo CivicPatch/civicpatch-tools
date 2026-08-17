@@ -4,6 +4,7 @@ import services.pull_request_sync as pr_sync
 import services.jurisdiction_edit_reconcile as edit_reconcile
 import services.open_data_sync as data_sync
 import services.pull_request_merge as pull_request_merge
+import lib.github.api as github_service
 import services.publish as publish_service
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
@@ -82,6 +83,18 @@ async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
         request_id=request.request_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
         commit_message=request.commit_message,
+        source=request.source,
     )
     if not written:
         raise RuntimeError(f"open-data write rejected for {request.file_path}")
+
+    # Only after the write landed: a promotion that deleted first would lose the data if the
+    # write then failed. Deleting an already-absent file succeeds, so a retry is harmless.
+    if request.delete_path:
+        removed = await github_service.delete_github_file(
+            branch_name=github_service.DEFAULT_BRANCH,
+            file_path=request.delete_path,
+            commit_message=request.delete_message or f"Remove {request.delete_path}",
+        )
+        if not removed:
+            raise RuntimeError(f"open-data delete rejected for {request.delete_path}")

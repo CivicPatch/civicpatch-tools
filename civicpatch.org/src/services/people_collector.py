@@ -14,6 +14,7 @@ from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run
 from database.issues import upsert_issue
 from database.roles import get_roles
 from database.source_records import insert_source_records
+from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
@@ -60,6 +61,21 @@ async def _store_source_records(request_id: str, records: list[dict]) -> None:
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
         logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
+
+
+async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflow_context: dict) -> None:
+    """Keep the registry pointing at wherever the scrape actually found the jurisdiction.
+
+    Never fatal: a stale URL is a problem for the next scrape, not a reason to reject this
+    one's data.
+    """
+    url = resolved_url(workflow_context)
+    if not url:
+        return
+    try:
+        await record_resolved_url(jurisdiction_ocdid, url)
+    except Exception as e:
+        logger.error(f"[{request_id}] Failed to record resolved URL: {e}", exc_info=True)
 
 
 async def _commit_unreviewed_copy(request_id: str, jurisdiction_ocdid: str) -> None:
@@ -148,6 +164,9 @@ async def _handle_submit_pipeline_run_artifacts(
         await update_pipeline_run_data(request.request_id, updated_data)
         await _store_source_records(request.request_id, updated_data)
         await _commit_unreviewed_copy(request.request_id, request.jurisdiction_ocdid)
+        await _record_resolved_url(
+            request.request_id, request.jurisdiction_ocdid, workflow_context
+        )
 
         review_json = workflow_context.get("data", {}).get("review_output_step", {})
         await update_pipeline_run_review_json(request.request_id, review_json)

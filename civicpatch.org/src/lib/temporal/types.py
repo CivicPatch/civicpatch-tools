@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import StrEnum
 
 
 @dataclass
@@ -8,6 +9,18 @@ class MergeRequest:
     approved_by: str | None
     user_id: str
     merge_key: str
+
+
+class CommitSource(StrEnum):
+    """Which database table the file's content is rendered from.
+
+    The two open-data paths mean different things, so they render from different places:
+    the unreviewed copy is the scrape exactly as submitted, while the reviewed copy is the
+    jurisdiction's live roster — which may include people from earlier scrapes.
+    """
+
+    SCRAPE = "scrape"    # requests.data_json — one scrape's proposal
+    ROSTER = "roster"    # people WHERE status='active' — what is currently live
 
 
 @dataclass
@@ -22,3 +35,8 @@ class OpenDataCommitRequest:
     request_id: str
     jurisdiction_ocdid: str
     commit_message: str
+    source: CommitSource = CommitSource.SCRAPE
+    # Removed once the write above succeeds — promotion is a move, and deleting first would
+    # lose the data if the write then failed.
+    delete_path: str | None = None
+    delete_message: str | None = None

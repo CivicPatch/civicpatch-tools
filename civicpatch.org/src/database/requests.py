@@ -32,6 +32,15 @@ from lib.github.utils import pull_request_url_to_number
 AVAILABLE_FOR_REVIEW = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
+    # TEMPORARY, and the only clause here that still looks at GitHub. Publishing goes through
+    # /{pull_request_number}/save-and-merge, and the card's publish/save/close buttons all
+    # guard on a truthy pr.number — so a card with no open PR is one a reviewer cannot act on.
+    # Measured 2026-08-16: dropping this clause put 9 such requests into the dev queue.
+    # Delete it in the same change that stops publishing from needing a pull request.
+    "AND EXISTS ("
+    "SELECT 1 FROM pull_requests pr_open "
+    "WHERE pr_open.request_id = r.id AND pr_open.status = 'open'"
+    ") "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
