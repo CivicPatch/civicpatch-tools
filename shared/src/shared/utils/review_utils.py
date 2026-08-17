@@ -114,20 +114,20 @@ def _get_person_id(person) -> str:
     return person.get("id", "")
 
 
-def _check_missing_officials(
+def _check_absent_officials(
     research_canonicals: Set[str], people_canonicals: Set[str]
 ) -> List[Issue]:
     return [
         Issue(
-            code=IssueCode.MISSING_OFFICIAL,
-            message=f"Dropped official: {name}",
+            code=IssueCode.ABSENT_OFFICIAL,
+            message=f"Not found in this scrape: {name}",
             person_ids=[],
         )
         for name in sorted(research_canonicals - people_canonicals)
     ]
 
 
-def _check_extra_officials(
+def _check_new_officials(
     people, canonical_map: Dict[str, str], research_canonicals: Set[str]
 ) -> List[Issue]:
     issues = []
@@ -137,8 +137,8 @@ def _check_extra_officials(
         person_id = _get_person_id(person)
         issues.append(
             Issue(
-                code=IssueCode.EXTRA_OFFICIAL,
-                message=f"Extra official: {name_utils.get_person_name(person)}",
+                code=IssueCode.NEW_OFFICIAL,
+                message=f"Not previously known: {name_utils.get_person_name(person)}",
                 person_ids=[person_id] if person_id else [],
             )
         )
@@ -219,8 +219,8 @@ def build_review_summary(
     people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
 
     issues: List[Issue] = [
-        *_check_missing_officials(research_canonicals, people_canonicals),
-        *_check_extra_officials(people, canonical_map, research_canonicals),
+        *_check_absent_officials(research_canonicals, people_canonicals),
+        *_check_new_officials(people, canonical_map, research_canonicals),
         *_check_too_few_people(people),
         *_check_duplicate_unique_roles(people, inputs.unique_roles),
         *_check_division_numbering(people),

@@ -177,7 +177,7 @@ describe("buildPersonCards — surviving fields and issues", () => {
   });
 
   it("does not give one person's issue to another", () => {
-    const issue: Issue = { code: "extra_official", message: "…", person_ids: ["a"] };
+    const issue: Issue = { code: "new_official", message: "…", person_ids: ["a"] };
     const cards = build({
       existing: [person("a"), person("b")],
       currentPeople: [person("a"), person("b")],
@@ -227,7 +227,7 @@ describe("needsReview", () => {
 
   it("is true for a person carrying only a row-level issue", () => {
     // No field moved and nothing is deleted — the issue is the whole reason.
-    const issue: Issue = { code: "extra_official", message: "…", person_ids: ["a"] };
+    const issue: Issue = { code: "new_official", message: "…", person_ids: ["a"] };
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],

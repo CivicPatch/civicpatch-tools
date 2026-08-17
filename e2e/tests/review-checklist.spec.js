@@ -43,8 +43,8 @@ test.describe("Issue checklist", () => {
     await openMarkers(page);
     await openDrawer(page);
 
-    // extra_official (person), duplicate_unique_role (person + field) and
-    // missing_official — the last has no person_ids, so it appears ONLY here.
+    // new_official (person), duplicate_unique_role (person + field) and
+    // absent_official — the last has no person_ids, so it appears ONLY here.
     await expect(items(page)).toHaveCount(3);
     await expect(page.locator(".review-sidebar")).toContainText(
       "Dropped official",

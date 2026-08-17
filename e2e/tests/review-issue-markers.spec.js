@@ -4,10 +4,10 @@
  * Given a proposed set whose review_json carries structured issues
  * When I open its review card
  * Then the editor anchors each person-scoped issue to its card:
- *   - extra_official (no field) → a row-level marker above the card's fields
+ *   - new_official (no field) → a row-level marker above the card's fields
  *   - duplicate_unique_role (field office.name) → a marker under the Office field
  *     of each named holder
- *   - missing_official (no person_ids) → stays list-level, never a card marker
+ *   - absent_official (no person_ids) → stays list-level, never a card marker
  * And editing a marked card clears its marker (clear-on-edit).
  *
  * An anchored issue also keeps its field visible even when nothing about that
@@ -26,7 +26,7 @@ test.describe("Review issue markers", () => {
     await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
     await openDetail(page);
 
-    // Row-level: extra_official (no field) → marker on Carol's card, above the fields.
+    // Row-level: new_official (no field) → marker on Carol's card, above the fields.
     await expect(
       editorFor(page, "Carol Extra")
         .locator(".person-editor__issue--row")
@@ -46,7 +46,7 @@ test.describe("Review issue markers", () => {
       );
     }
 
-    // List-level: missing_official has no person_ids → it never becomes a card marker.
+    // List-level: absent_official has no person_ids → it never becomes a card marker.
     await expect(
       page
         .locator(".person-editor__issue")

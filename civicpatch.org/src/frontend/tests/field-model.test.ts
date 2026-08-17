@@ -595,7 +595,7 @@ describe("valueError — division", () => {
 
 describe("indexIssuesByPersonId", () => {
   const extra: Issue = {
-    code: "extra_official",
+    code: "new_official",
     message: "Extra official: Jane",
     person_ids: ["p2"],
   };
@@ -619,7 +619,7 @@ describe("indexIssuesByPersonId", () => {
 
   it("omits list-level issues (no person_ids)", () => {
     const missing: Issue = {
-      code: "missing_official",
+      code: "absent_official",
       message: "Dropped official: Bob",
       person_ids: [],
     };
@@ -740,7 +740,7 @@ describe("survivingFields", () => {
   });
 
   it("ignores a person-level issue that anchors to no field", () => {
-    const issue: Issue = { code: "extra_official", message: "…" };
+    const issue: Issue = { code: "new_official", message: "…" };
     expect(keys(survivingFields(whole, { ...whole }, [issue]))).toEqual(["source_urls"]);
   });
 

@@ -12,7 +12,7 @@ class ProgressState(BaseModel):
     required_data: int
     current_data: int
     has_target_role: bool = False
-    has_target_designations: bool = False
+    has_target_divisions: bool = False
 
 
 class LinkStatus(Enum):
@@ -211,7 +211,7 @@ class ResearchMunicipalityLLMSchema(BaseModel):
 
 class ResearchMunicipalityStep(BaseModel):
     expected_count: int = 0  # how many officials the pipeline expects to find
-    target_designations: List[str] = []  # geographic designations to look for
+    target_divisions: List[str] = []  # geographic divisions to look for
     known_roles: list[str] = []
     identities: dict[
         str, list[str]
@@ -233,7 +233,7 @@ class ProcessPageContentStep(BaseModel):
         required_data=0,
         current_data=0,
         has_target_role=False,
-        has_target_designations=False,
+        has_target_divisions=False,
     )
 
 
