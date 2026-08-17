@@ -49,7 +49,7 @@ async def _insert(ocdid, *, scraped_at, people):
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status, scraped_at)
-            VALUES (%s, 'zz', 'local', %s, now(), 'current', %s)
+            VALUES (%s, 'zz', 'local', %s, now(), 'active', %s)
             """,
             (ocdid, data, scraped_at),
         )
@@ -57,7 +57,7 @@ async def _insert(ocdid, *, scraped_at, people):
             await cur.execute(
                 """
                 INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
-                VALUES (%s, %s, %s, now(), 'current')
+                VALUES (%s, %s, %s, now(), 'active')
                 """,
                 (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
             )

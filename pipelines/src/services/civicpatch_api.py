@@ -164,10 +164,10 @@ async def submit_job_artifacts(
     return response
 
 
-async def get_current_people(
+async def get_active_people(
     client: httpx.AsyncClient, jurisdiction_ocdid: str
 ) -> List[dict]:
-    return await search_people(client, jurisdiction_ocdid, state="current")
+    return await search_people(client, jurisdiction_ocdid, status="active")
 
 
 async def get_role_config(logger) -> RoleConfig:
@@ -193,15 +193,12 @@ async def get_role_config(logger) -> RoleConfig:
 async def search_people(
     client: httpx.AsyncClient,
     jurisdiction_ocdid: str,
-    state: Optional[str] = None,
-    name: Optional[str] = None,
+    status: Optional[str] = None,
 ) -> List[dict]:
     env = get_env_vars()
     params: dict = {"jurisdiction_ocdid": jurisdiction_ocdid}
-    if state is not None:
-        params["state"] = state
-    if name is not None:
-        params["name"] = name
+    if status is not None:
+        params["status"] = status
     response = await client.get(
         f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search",
         params=params,

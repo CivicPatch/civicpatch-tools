@@ -49,27 +49,15 @@ def get_router() -> APIRouter:
     @router.get("/search")
     async def search_people_endpoint(
         jurisdiction_ocdid: str,
-        state: Optional[str] = Query(None, description="Filter by state"),
-        name: Optional[str] = Query(None, description="Filter by name"),
+        status: Optional[str] = Query(
+            None, description="Filter by people.status — active or inactive"
+        ),
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        people = await database.get_people_for_jurisdiction(jurisdiction_ocdid, status=state)
-
-        if name is None:
-            return {"data": people}
-
-        matches = [
-            p for p in people
-            if shared.utils.name_utils.fuzzy_match(name, p.name)
-            or shared.utils.name_utils.exact_match(name, p.name)
-            or shared.utils.name_utils.last_name_match(name, p.name)
-            or any(
-                shared.utils.name_utils.fuzzy_match(name, alias)
-                or shared.utils.name_utils.last_name_match(name, alias)
-                for alias in (getattr(p, "other_names", None) or [])
-            )
-        ]
-        return {"data": matches}
+        people = await database.get_people_for_jurisdiction(
+            jurisdiction_ocdid, status=status
+        )
+        return {"data": people}
 
     @router.get("/geo")
     async def list_people_by_geo_endpoint(

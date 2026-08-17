@@ -44,7 +44,7 @@ async def clean_sentinel_states():
 
 
 async def _insert_jurisdiction(
-    ocdid, *, state="zz", url=None, scraped_at=None, status="current", people=False
+    ocdid, *, state="zz", url=None, scraped_at=None, status="active", people=False
 ):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
@@ -61,7 +61,7 @@ async def _insert_jurisdiction(
             await cur.execute(
                 """
                 INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
-                VALUES (%s, %s, %s, now(), 'current')
+                VALUES (%s, %s, %s, now(), 'active')
                 """,
                 (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
             )

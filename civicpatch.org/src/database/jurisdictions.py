@@ -52,7 +52,7 @@ def jurisdiction_rows(
 _SEARCH_MATCH_CLAUSE = """
     FROM jurisdictions j
     WHERE to_tsvector('simple', j.search_text) @@ to_tsquery('simple', %s)
-      AND j.status = 'current'
+      AND j.status = 'active'
       AND j.level = ANY(%s)
 """
 
@@ -69,7 +69,7 @@ def _fuzzy_match_clause(token_count: int) -> sql.Composed:
         """
         FROM jurisdictions j
         WHERE {conditions}
-          AND j.status = 'current'
+          AND j.status = 'active'
           AND j.level = ANY(%s)
         """
     ).format(conditions=conditions)
@@ -174,7 +174,7 @@ async def get_states_with_names() -> list[dict[str, str]]:
             """
             SELECT state, data->>'name'
             FROM jurisdictions
-            WHERE level = 'state' AND status = 'current'
+            WHERE level = 'state' AND status = 'active'
             ORDER BY data->>'name';
             """,
         )
@@ -192,7 +192,7 @@ async def get_state_names() -> dict[str, str]:
             """
             SELECT state, data->>'name'
             FROM jurisdictions
-            WHERE level = 'state' AND status = 'current';
+            WHERE level = 'state' AND status = 'active';
             """,
         )
         results = await cur.fetchall()
@@ -229,7 +229,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                         j.scraped_at
                     FROM jurisdictions j
                     LEFT JOIN geo g ON j.data->>'geoid' = g.geoid
-                    WHERE j.jurisdiction_ocdid = %s AND j.status = 'current'
+                    WHERE j.jurisdiction_ocdid = %s AND j.status = 'active'
                     LIMIT 1;
                     """,
                     (jurisdiction_ocdid,),
@@ -252,7 +252,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 await cur.execute(
                     """
                     SELECT data, scraped_at FROM jurisdictions
-                    WHERE jurisdiction_ocdid = %s AND status = 'current'
+                    WHERE jurisdiction_ocdid = %s AND status = 'active'
                     LIMIT 1;
                     """,
                     (jurisdiction_ocdid,),
@@ -443,7 +443,7 @@ async def search_jurisdictions(
 
     where_clauses: list[sql.Composable] = [
         sql.SQL("state = %s"),
-        sql.SQL("status = 'current'"),
+        sql.SQL("status = 'active'"),
         sql.SQL("level = 'local'"),
     ]
     params = [state.lower()]
@@ -613,7 +613,7 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
             updated_at = EXCLUDED.updated_at,
             search_text = EXCLUDED.search_text,
             parent_ocdids = EXCLUDED.parent_ocdids,
-            status = 'current'
+            status = 'active'
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -671,7 +671,7 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
             SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
             FROM jurisdictions j
             WHERE j.state = %s
-              AND j.status = 'current'
+              AND j.status = 'active'
               AND NULLIF(j.data->>'url', '') IS NOT NULL
               AND (j.scraped_at IS NULL OR j.scraped_at < {FRESH_SINCE_SQL})
             ORDER BY j.scraped_at ASC NULLS FIRST
@@ -697,10 +697,10 @@ async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
                     AS is_fresh,
                 EXISTS (
                     SELECT 1 FROM people
-                    WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'current'
+                    WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'active'
                 ) AS has_people
             FROM jurisdictions j
-            WHERE j.state = %s AND j.status = 'current'
+            WHERE j.state = %s AND j.status = 'active'
             """,
             (state,),
         )
