@@ -11,6 +11,7 @@ import logging
 import environment
 import lib.github.api as github_service
 import lib.storage as storage_service
+import lib.temporal.client as temporal_client
 import shared.utils.id_utils
 from core.image_promotion import (
     ARTIFACTS_BUCKET,
@@ -19,7 +20,10 @@ from core.image_promotion import (
     promoted_key,
     promoted_url,
 )
-from database.publications import publish_request
+import services.change_logs as change_logs
+from database.pipeline_runs import get_pipeline_run_data_json
+from database.publications import dismiss_request, publish_request
+from lib.temporal.types import OpenDataCommitRequest
 from shared.utils.yaml_utils import yaml_dump
 
 logger = logging.getLogger(__name__)
@@ -62,14 +66,31 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
 
 
 async def publish_people(
-    request_id: str, jurisdiction_ocdid: str, people: list[dict]
+    request_id: str,
+    jurisdiction_ocdid: str,
+    people: list[dict],
+    resolved_by_user_id: str | None = None,
 ) -> int:
     """Publish one scrape's roster. Returns the number of people written."""
-    written = await publish_request(request_id, jurisdiction_ocdid, people)
+    written = await publish_request(
+        request_id, jurisdiction_ocdid, people, resolved_by_user_id
+    )
     logger.info(
         f"[{request_id}] Published {written} people for {jurisdiction_ocdid}"
     )
+    # Audited here rather than at the caller: publishing is this function, and the previous
+    # home for this was the merge worker, which is going away.
+    await change_logs.record_publish(request_id, resolved_by_user_id)
     return written
+
+
+async def dismiss_people(request_id: str, resolved_by_user_id: str | None = None) -> None:
+    """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
+    await dismiss_request(request_id, resolved_by_user_id)
+    logger.info(f"[{request_id}] Dismissed without publishing")
+    # ChangeLogType.CLOSE_REVIEW keeps its name: change_logs rows FK to change_log_types, so
+    # the stored value cannot be renamed without orphaning history.
+    await change_logs.record_close(request_id, resolved_by_user_id)
 
 
 def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
@@ -79,20 +100,38 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
-async def commit_unreviewed_scrape(
-    request_id: str, jurisdiction_ocdid: str, people: list[dict]
+async def commit_rendered_file(
+    file_path: str, request_id: str, jurisdiction_ocdid: str, commit_message: str
 ) -> bool:
-    """Commit a scrape to its unreviewed path on open-data `main`, before anyone has read it.
+    """Render one request's roster out of the database and write it to open-data.
+
+    The rendering happens here rather than at the caller so every retry produces current
+    content: git holds a projection of the database, and a write that lands late should carry
+    what is true when it lands, not what was true when it was queued.
+    """
+    roster = await get_pipeline_run_data_json(request_id) or []
+    return await github_service.upsert_github_file(
+        branch_name=github_service.DEFAULT_BRANCH,
+        file_path=file_path,
+        content_str=yaml_dump(roster),
+        commit_message=commit_message,
+    )
+
+
+async def commit_unreviewed_scrape(request_id: str, jurisdiction_ocdid: str) -> None:
+    """Queue a scrape's commit to its unreviewed path on open-data `main`.
 
     Visible in the repo but not live: `classify_path` excludes the unreviewed level from the
     sync, so nothing here reaches `people`. Review is what promotes it to the reviewed path.
 
-    Returns False rather than raising — the roster is already stored in the database by the
-    time this runs, so a failed copy must not fail the submit.
+    Durable rather than immediate. The roster is already in the database, so the submit must
+    not block on GitHub being slow, nor fail if it is down — Temporal retries until it lands.
     """
-    return await github_service.upsert_github_file(
-        branch_name=github_service.DEFAULT_BRANCH,
-        file_path=unreviewed_file_path(jurisdiction_ocdid),
-        content_str=yaml_dump(people),
-        commit_message=f"Unreviewed scrape: {jurisdiction_ocdid} ({request_id})",
+    await temporal_client.enqueue_open_data_commit(
+        OpenDataCommitRequest(
+            file_path=unreviewed_file_path(jurisdiction_ocdid),
+            request_id=request_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            commit_message=f"Unreviewed scrape: {jurisdiction_ocdid} ({request_id})",
+        )
     )

@@ -38,9 +38,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
             lookup_key(name)
             for name in config_utils.get_excluded_role_aliases(role_config)
         ),
-        role_priority={
-            entry.label: i for i, entry in enumerate(roles)
-        },
+        role_priority={entry.label: i for i, entry in enumerate(roles)},
         designation_priority={
             lookup_key(name): i for i, name in enumerate(designations)
         },

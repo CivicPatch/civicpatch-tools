@@ -12,6 +12,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 
 from services.publish import (
+    commit_rendered_file,
     commit_unreviewed_scrape,
     promote_images,
     unreviewed_file_path,
@@ -35,27 +36,56 @@ def test_path_is_not_the_reviewed_path():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_commits_the_roster_to_main_at_the_unreviewed_path():
+async def test_queues_a_durable_commit_at_the_unreviewed_path():
+    """Submit must not block on GitHub, nor lose the write if GitHub is down: the roster is
+    already in the database, so the commit is queued and retried rather than attempted once."""
     with patch(
-        "lib.github.api.upsert_github_file", new_callable=AsyncMock, return_value=True
-    ) as mock_upsert:
-        assert await commit_unreviewed_scrape(REQUEST_ID, OCDID, PEOPLE) is True
+        "lib.temporal.client.enqueue_open_data_commit", new_callable=AsyncMock
+    ) as mock_enqueue:
+        await commit_unreviewed_scrape(REQUEST_ID, OCDID)
+
+    queued = mock_enqueue.await_args.args[0]
+    assert queued.file_path == "data/wa/local-unreviewed/place_seattle.yml"
+    assert queued.request_id == REQUEST_ID
+    assert queued.jurisdiction_ocdid == OCDID
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_queued_commit_carries_no_content():
+    """The content is rendered inside the activity, so a retry writes what is true when it
+    lands rather than replaying a render captured when the write was queued."""
+    with patch(
+        "lib.temporal.client.enqueue_open_data_commit", new_callable=AsyncMock
+    ) as mock_enqueue:
+        await commit_unreviewed_scrape(REQUEST_ID, OCDID)
+
+    queued = mock_enqueue.await_args.args[0]
+    assert not hasattr(queued, "content_str")
+    assert not hasattr(queued, "people")
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_commit_rendered_file_renders_from_the_database():
+    with (
+        patch(
+            "services.publish.get_pipeline_run_data_json",
+            new_callable=AsyncMock,
+            return_value=PEOPLE,
+        ),
+        patch(
+            "lib.github.api.upsert_github_file", new_callable=AsyncMock, return_value=True
+        ) as mock_upsert,
+    ):
+        assert await commit_rendered_file(
+            "data/wa/local-unreviewed/place_seattle.yml", REQUEST_ID, OCDID, "msg"
+        ) is True
 
     kwargs = mock_upsert.await_args.kwargs
     assert kwargs["branch_name"] == "main"
     assert kwargs["file_path"] == "data/wa/local-unreviewed/place_seattle.yml"
     assert "Jane Doe" in kwargs["content_str"]
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_reports_a_failed_commit_rather_than_raising():
-    """The roster is already in the database by this point, so a failed copy must not fail
-    the submit that carries it."""
-    with patch(
-        "lib.github.api.upsert_github_file", new_callable=AsyncMock, return_value=False
-    ):
-        assert await commit_unreviewed_scrape(REQUEST_ID, OCDID, PEOPLE) is False
 
 
 # ── image promotion: photos move to the CDN when the data does ──────────────

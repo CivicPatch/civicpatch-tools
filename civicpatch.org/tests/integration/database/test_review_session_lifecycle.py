@@ -14,7 +14,8 @@ from database.database import get_pool
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.review_session_entries import resolve_entries_for_request
-from database.pull_requests import list_open_pull_requests, set_merge_enqueued, clear_merge_enqueued
+from database.publications import publish_request
+from database.pull_requests import list_open_pull_requests
 from database.issues import create_user_reported_issue, resolve_issue
 from database.review_session_navigation import navigate_to_entry
 
@@ -404,29 +405,29 @@ async def test_get_active_session_returns_none_after_end_session(test_user):
     )
 
 
-# ── availability pool: publishing parks a PR until the park is cleared ─────────
+# ── availability pool: publishing removes a card, permanently ─────────────────
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_published_pr_parks_until_park_cleared():
+async def test_publishing_removes_the_card_from_the_pool_for_good():
     """
-    Publishing parks a PR out of the review pool by setting merge_enqueued_at, and it stays
-    parked regardless of merge outcome until the park is cleared (an admin dismissing the
-    merge_failed issue calls clear_merge_enqueued). Regression: a failed merge used to clear
-    the park, re-offering an already-published PR in the next session.
+    Publishing takes a scrape out of the review pool and it never comes back.
+
+    This used to be a *park*: publishing set merge_enqueued_at, which had to survive a failed
+    merge or the PR was re-offered, and an admin dismissing the merge_failed issue un-parked
+    it. Migration 115 made publish state a fact on the request instead of a flag on a PR, so
+    there is nothing to un-park — and the regression the park guarded against (an already
+    published scrape reappearing) is now impossible rather than defended.
     """
     request_id, ocdid = await _seed_open_pr("x")
     try:
         before, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id in [r["request_id"] for r in before], "open PR should start in the pool"
+        assert request_id in [r["request_id"] for r in before], "unpublished scrape starts in the pool"
 
-        await set_merge_enqueued(request_id)  # publishing parks it
-        parked, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id not in [r["request_id"] for r in parked], "parked PR must leave the pool"
+        await publish_request(request_id, ocdid, [])
 
-        await clear_merge_enqueued(request_id)  # dismissing un-parks it
         after, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id in [r["request_id"] for r in after], "PR returns to the pool once unparked"
+        assert request_id not in [r["request_id"] for r in after], "published scrape must leave the pool"
     finally:
         await _cleanup_open_pr(request_id, ocdid)
 

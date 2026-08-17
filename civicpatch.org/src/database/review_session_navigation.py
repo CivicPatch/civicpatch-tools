@@ -2,7 +2,7 @@ from datetime import timedelta
 from typing import Any
 
 from database.database import get_pool
-from database.pull_requests import AVAILABLE_FOR_REVIEW
+from database.requests import AVAILABLE_FOR_REVIEW
 from database.review_sessions import (
     AdvanceDoneReason,
     ReviewSessionEntryStatus,
@@ -73,7 +73,6 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM pipeline_runs j
         JOIN requests r ON r.id = j.request_id
-        JOIN pull_requests pr ON pr.request_id = j.request_id
         WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
           AND j.request_id::text != ALL(%s::text[])
@@ -84,7 +83,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
           )
         ORDER BY
             jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
-            pr.created_at DESC
+            r.created_at DESC
         LIMIT %s
         """,
         (
@@ -227,7 +226,6 @@ async def navigate_to_entry(
                 SELECT COUNT(*) AS available
                 FROM pipeline_runs j
                 JOIN requests r ON r.id = j.request_id
-                JOIN pull_requests pr ON pr.request_id = j.request_id
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
                 """,

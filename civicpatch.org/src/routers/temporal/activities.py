@@ -4,10 +4,11 @@ import services.pull_request_sync as pr_sync
 import services.jurisdiction_edit_reconcile as edit_reconcile
 import services.open_data_sync as data_sync
 import services.pull_request_merge as pull_request_merge
+import services.publish as publish_service
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
 from database.issues import upsert_issue
-from lib.temporal.types import MergeRequest
+from lib.temporal.types import MergeRequest, OpenDataCommitRequest
 from shared.utils.statuses import PipelineIssueType
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 
@@ -66,3 +67,21 @@ async def merge_pr_activity(request: MergeRequest) -> None:
         user_id=request.user_id,
         merge_key=request.merge_key,
     )
+
+
+@activity.defn
+async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
+    """Render this request's file from the database and write it to open-data.
+
+    Raises on failure so Temporal retries. Safe to run repeatedly: the content comes from the
+    database, not from the workflow's arguments, so a second attempt writes whatever is true
+    now rather than replaying a stale render.
+    """
+    written = await publish_service.commit_rendered_file(
+        file_path=request.file_path,
+        request_id=request.request_id,
+        jurisdiction_ocdid=request.jurisdiction_ocdid,
+        commit_message=request.commit_message,
+    )
+    if not written:
+        raise RuntimeError(f"open-data write rejected for {request.file_path}")
