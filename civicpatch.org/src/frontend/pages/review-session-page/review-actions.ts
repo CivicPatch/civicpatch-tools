@@ -26,7 +26,7 @@ export type ReviewApi = {
   fetchReview: (requestId: string) => Promise<any>;
   endReviewSession: (sessionId: string) => Promise<any>;
   fetchPullRequestByRequestId: (requestId: string) => Promise<any>;
-  saveReviewData: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
+  saveReviewData: (requestId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
 };
 
 export type Effects = {
@@ -34,8 +34,8 @@ export type Effects = {
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
   setRequestIdParam: (requestId: string | null) => void;
-  trackMerge: (prNumber: number, requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
-  trackClose: (prNumber: number, requestId: string, jurisdictionName: string) => void;
+  trackMerge: (requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
+  trackClose: (requestId: string, jurisdictionName: string) => void;
 };
 
 // Assemble a CurrentEntry from a navigate/by-request response plus its review json.
@@ -136,12 +136,14 @@ async function advanceOrReturn(
 }
 
 export async function mergeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
-  const { pr, request_id, jurisdiction } = current;
-  if (!pr?.number || !request_id) return;
-  const result = await e.trackMerge(pr.number, request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? `#${pr.number}`);
+  const { request_id, jurisdiction } = current;
+  // No pull request check: publishing is keyed on the request, and a scrape committed
+  // straight to open-data has no pull request to guard on.
+  if (!request_id) return;
+  const result = await e.trackMerge(request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? request_id);
   if (!result.ok) {
-    // Caught synchronously (bad input / save error): flag the entry red and keep
-    // the reviewer here so they can fix it. The merge itself stays a background job.
+    // Publishing is synchronous now, so a rejection is the whole outcome: flag the entry
+    // red and keep the reviewer here to fix it.
     e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: result.error ?? "Publish failed." } });
     return;
   }
@@ -149,14 +151,14 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string | nu
   await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }
 
-// Commit without publishing. Unlike a merge there is no background half to poll:
-// the server has written the branch by the time this resolves, so the outcome is
-// known here. A rejection keeps the reviewer on the entry, same as a failed publish.
+// Commit without publishing: the server has written `data_json` by the time this resolves,
+// so the outcome is known here. A rejection keeps the reviewer on the entry, same as a
+// failed publish.
 export async function saveCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
-  const { pr, request_id, jurisdiction } = current;
-  if (!pr?.number || !request_id) return;
+  const { request_id, jurisdiction } = current;
+  if (!request_id) return;
   try {
-    await e.api.saveReviewData(pr.number, request_id, jurisdiction.ocdid!, people);
+    await e.api.saveReviewData(request_id, jurisdiction.ocdid!, people);
   } catch (err) {
     e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: errMessage(err) } });
     return;
@@ -167,8 +169,8 @@ export async function saveCurrent(current: CurrentEntry, sessionId: string | nul
 }
 
 export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
-  const { pr, request_id, jurisdiction } = current;
-  if (!pr?.number || !request_id) return;
-  e.trackClose(pr.number, request_id, jurisdiction.name ?? `#${pr.number}`);
+  const { request_id, jurisdiction } = current;
+  if (!request_id) return;
+  e.trackClose(request_id, jurisdiction.name ?? request_id);
   await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }

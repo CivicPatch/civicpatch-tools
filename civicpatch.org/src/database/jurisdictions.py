@@ -12,6 +12,7 @@ from core.jurisdiction_search import (
 )
 from database.database import get_pool, to_iso
 from database.freshness import FRESH_SINCE_SQL
+from database.requests import REVIEW_STATUS
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,
@@ -532,14 +533,13 @@ async def get_jurisdiction_history(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT r.id::text,
                    COALESCE(j.created_at, r.created_at),
                    COALESCE(j.updated_at, r.updated_at),
-                   j.status, j.progress, pr.url, pr.status, r.request_type
+                   j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type
             FROM requests r
             LEFT JOIN pipeline_runs j ON j.request_id = r.id
-            LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
             ORDER BY COALESCE(j.created_at, r.created_at) DESC;
             """,
@@ -589,6 +589,41 @@ async def update_jurisdiction(jurisdiction_ocdid, state, data: dict):
                 updated_at = EXCLUDED.updated_at;
             """,
             (jurisdiction_ocdid, state, data_json, updated_at),
+        )
+
+
+async def get_jurisdiction_entry(jurisdiction_ocdid: str) -> dict | None:
+    """The jurisdiction exactly as `jurisdictions.yml` carries it.
+
+    `data` is the file entry, stored verbatim at sync time, so this is the registry's current
+    state without a GitHub read.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT data FROM jurisdictions WHERE jurisdiction_ocdid = %s",
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+    return row[0] if row else None
+
+
+async def patch_jurisdiction_entry(jurisdiction_ocdid: str, patch: dict) -> None:
+    """Merge a patch into the stored entry, leaving every other key alone.
+
+    `||` rather than a whole-row write: the patch carries only what the editor sent, and an
+    explicit null in it is a value to keep, not a key to drop.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE jurisdictions
+               SET data = data || %s::jsonb,
+                   updated_at = now()
+             WHERE jurisdiction_ocdid = %s
+            """,
+            (json.dumps(patch), jurisdiction_ocdid),
         )
 
 

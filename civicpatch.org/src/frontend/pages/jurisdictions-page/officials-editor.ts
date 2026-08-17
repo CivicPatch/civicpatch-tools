@@ -14,8 +14,7 @@ import "../../components/review/review-modal.js";
 import "./jurisdiction-page.css";
 import {
   patchPeopleData,
-  saveAndEnqueueMerge,
-  pollMergeStatus,
+  publishReview,
   generatePersonId,
 } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
@@ -121,11 +120,10 @@ function OfficialsEditor({
     setPublishError(null);
     try {
       const { data } = await patchPeopleData(jurisdictionOcdid, peoplePatch);
-      await saveAndEnqueueMerge(data.pr_number, data.request_id, jurisdictionOcdid, null);
       setPublishStage("merging");
-      // Merging also syncs open-data back into the DB (publish_side_effects), so
-      // by the time this resolves a reload shows the published values.
-      await pollMergeStatus(data.pr_number);
+      // Publishing writes `people` directly, so a reload shows the published values as soon
+      // as this resolves — no merge to wait on.
+      await publishReview(data.request_id, jurisdictionOcdid, null);
       onPublished();
     } catch (err: any) {
       setPublishError(err.message ?? "Failed to publish.");

@@ -5,18 +5,21 @@ what the patch *is* and what it does to the document happens here, where it can 
 tested with no mocks.
 """
 
+import copy
+
 # Everything else in a jurisdictions.yml entry is upstream-owned or derived.
 PATCHABLE_FIELDS = ("url", "population", "geoid")
 
 
 def build_patch(fields: dict) -> dict:
-    """Drop absent fields. None means "leave this alone", never "clear it" — the
-    difference between a patch and an overwrite."""
-    return {
-        key: value
-        for key, value in fields.items()
-        if value is not None and key in PATCHABLE_FIELDS
-    }
+    """Keep only the patchable keys the caller actually sent.
+
+    JSON Merge Patch semantics, matching people_patch: a key that is absent is left alone,
+    and a key sent as None was explicitly set to null by a human and is written as null.
+    That distinction cannot be made after the fact, so `fields` must already carry only what
+    was provided — see the router's model_dump(exclude_unset=True).
+    """
+    return {key: value for key, value in fields.items() if key in PATCHABLE_FIELDS}
 
 
 def find_jurisdiction(doc: dict, jurisdiction_ocdid: str) -> dict | None:
@@ -32,14 +35,11 @@ def current_values(entry: dict, patch: dict) -> dict:
 
 
 def apply_patch(doc: dict, jurisdiction_ocdid: str, patch: dict) -> dict:
-    """A copy of doc with the patch applied. The original is left untouched, so a
-    caller can still read the pre-edit values off it."""
-    entries = doc.get("jurisdictions", [])
-    patched = [
-        {**entry, **patch} if entry.get("id") == jurisdiction_ocdid else entry
-        for entry in entries
-    ]
-    return {**doc, "jurisdictions": patched}
+    patched = copy.deepcopy(doc)
+    for entry in patched.get("jurisdictions", []):
+        if entry.get("id") == jurisdiction_ocdid:
+            entry.update(patch)
+    return patched
 
 
 def patch_is_live(patch: dict, current: dict) -> bool:

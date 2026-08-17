@@ -18,12 +18,12 @@ import "./pr-list/index.js";
 const API_URL = config.apiUrl;
 
 type PrItem = {
-  pr: { number: number };
+  request_id: string;
+  pr?: { number: number };
   jurisdiction?: { name?: string; ocdid?: string };
 };
 
 type PrActionDetail = {
-  pullRequestNumber: number;
   request_id: string;
   jurisdiction_ocdid: string;
 };
@@ -114,15 +114,15 @@ function QueuePage() {
   }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
   const handleMerge = (event: CustomEvent<PrActionDetail>) => {
-    const { pullRequestNumber, request_id, jurisdiction_ocdid } = event.detail;
-    const pr = pullRequests.find((p) => p.pr.number === pullRequestNumber);
-    trackMerge(pullRequestNumber, request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? `#${pullRequestNumber}`);
+    const { request_id, jurisdiction_ocdid } = event.detail;
+    const pr = pullRequests.find((p) => p.request_id === request_id);
+    trackMerge(request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? request_id);
   };
 
   const handleClose = (event: CustomEvent<PrActionDetail>) => {
-    const { pullRequestNumber, request_id } = event.detail;
-    const pr = pullRequests.find((p) => p.pr.number === pullRequestNumber);
-    trackClose(pullRequestNumber, request_id, pr?.jurisdiction?.name ?? `#${pullRequestNumber}`);
+    const { request_id } = event.detail;
+    const pr = pullRequests.find((p) => p.request_id === request_id);
+    trackClose(request_id, pr?.jurisdiction?.name ?? request_id);
   };
 
   const handleViewChange = (newView: string) => {

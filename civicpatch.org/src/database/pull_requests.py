@@ -8,7 +8,7 @@ from shared.utils.statuses import (
     RequestType,
 )
 from database.database import get_pool, to_iso
-from database.requests import AVAILABLE_FOR_REVIEW
+from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS
 from lib.github.utils import pull_request_url_to_number
 
 
@@ -38,8 +38,7 @@ async def list_open_pull_requests(
             sql.SQL("""
             SELECT COUNT(*),
                    COUNT(*) FILTER (WHERE jsonb_array_length(r.review_json->'issues') > 0)
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
+            FROM requests r
             {}
             """).format(where),
             params,
@@ -49,19 +48,17 @@ async def list_open_pull_requests(
 
         await cur.execute(
             sql.SQL("""
-            SELECT pr.request_id::text, pr.url, pr.status,
+            SELECT r.id::text, r.open_data_url, {status},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   pr.created_at, pr.review_state,
-                   COALESCE(jsonb_array_length(r.review_json->'issues'), 0) AS issue_count,
-                   pr.pr_number
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
+                   r.created_at,
+                   COALESCE(jsonb_array_length(r.review_json->'issues'), 0) AS issue_count
+            FROM requests r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             {}
-            ORDER BY jsonb_array_length(r.review_json->'issues') DESC NULLS LAST, pr.created_at DESC
+            ORDER BY jsonb_array_length(r.review_json->'issues') DESC NULLS LAST, r.created_at DESC
             LIMIT %s OFFSET %s
-            """).format(where),
+            """).format(where, status=sql.SQL(REVIEW_STATUS)),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
@@ -70,9 +67,9 @@ async def list_open_pull_requests(
         {
             "request_id": r[0],
             "created_at": to_iso(r[5]),
-            "issue_count": r[7],
+            "issue_count": r[6],
             "jurisdiction": {"ocdid": r[3], "name": r[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[3])},
-            "pr": {"url": r[1], "status": r[2], "review_state": r[6], "number": r[8]},
+            "pr": {"url": r[1], "status": r[2]},
         }
         for r in rows
     ]
@@ -83,16 +80,14 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT pr.url, pr.status, pr.review_state,
+            f"""
+            SELECT r.open_data_url, {REVIEW_STATUS},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   pr.pr_number,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
+            FROM requests r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE pr.request_id = %s AND r.request_type != %s
+            WHERE r.id = %s AND r.request_type != %s
             """,
             (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
         )
@@ -102,16 +97,16 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
         return {
             "request_id": request_id,
             "jurisdiction": {
-                "ocdid": row[3],
-                "name": row[4],
-                "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[3]),
-                "website_url": row[6],
+                "ocdid": row[2],
+                "name": row[3],
+                "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[2]),
+                "website_url": row[4],
             },
+            # `review_state` and `number` are gone: the first never had a writer, and the
+            # second no longer identifies anything — publishing is keyed on the request.
             "pr": {
                 "url": row[0],
                 "status": row[1],
-                "review_state": row[2],
-                "number": row[5],
             },
         }
 
@@ -121,16 +116,15 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT pr.request_id::text, pr.url, pr.status, pr.review_state, pr.pr_number,
+            f"""
+            SELECT r.id::text, r.open_data_url, {REVIEW_STATUS},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    COALESCE(r.data_json, '[]'::jsonb) AS data_json,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
+            FROM requests r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE pr.request_id::text = %s AND r.request_type != %s
+            WHERE r.id::text = %s AND r.request_type != %s
             """,
             (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
         )
@@ -139,11 +133,11 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             return None
         return {
             "request_id": row[0],
-            "jurisdiction_ocdid": row[5],
-            "jurisdiction_name": row[6],
-            "jurisdiction_website_url": row[8],
-            "pr": {"url": row[1], "status": row[2], "review_state": row[3], "number": row[4]},
-            "proposed": row[7] if row[7] is not None else [],
+            "jurisdiction_ocdid": row[3],
+            "jurisdiction_name": row[4],
+            "jurisdiction_website_url": row[6],
+            "pr": {"url": row[1], "status": row[2]},
+            "proposed": row[5] if row[5] is not None else [],
         }
 
 
@@ -292,15 +286,21 @@ async def get_open_pr_request_ids() -> dict[str, str]:
     return {r[0]: r[1] for r in rows}
 
 
+# These two answer "is there already work in flight for this jurisdiction?" — they gate
+# starting a duplicate scrape, choosing the next scrape candidate, and the coverage figure.
+# They asked GitHub because an open pull request used to BE that state. Nothing opens one now,
+# so the question is a plain test on the request: submitted, and neither published nor
+# dismissed. Left on pull_requests they would answer "nothing in flight" for every scrape.
+
+
 async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
-            WHERE pr.status = 'open'
+            FROM requests r
+            WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
               AND r.request_type != %s
               AND r.jurisdiction_ocdid LIKE %s
             """,
@@ -316,9 +316,8 @@ async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
         await cur.execute(
             """
             SELECT 1
-            FROM pull_requests pr
-            JOIN requests r ON r.id = pr.request_id
-            WHERE pr.status = 'open'
+            FROM requests r
+            WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
               AND r.request_type != %s
               AND r.jurisdiction_ocdid = %s
             LIMIT 1

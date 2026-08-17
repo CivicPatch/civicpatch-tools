@@ -1,5 +1,5 @@
 import { useState } from "haunted";
-import { saveAndEnqueueMerge, pollMergeStatus, closePullRequest } from "../api.js";
+import { publishReview, dismissReview } from "../api.js";
 import { PULL_REQUEST_STATUS } from "../components/pull-request-card/pull-request-status.js";
 
 type ActionState = {
@@ -9,7 +9,7 @@ type ActionState = {
 };
 
 export type PublishLogEntry = {
-  pull_request_number: number;
+  request_id: string;
   jurisdiction_name: string;
   status: string;
 };
@@ -21,74 +21,69 @@ const PUBLISH_LOG_STATUSES = [
 ];
 
 export function usePullRequestActions() {
-  const [actionState, setActionState] = useState<Record<number, ActionState>>({});
+  // Keyed on request_id, not a pull request number: a scrape that published straight to
+  // open-data never had one, and those are the majority now.
+  const [actionState, setActionState] = useState<Record<string, ActionState>>({});
 
-  const setStatus = (pullRequestNumber: number, jurisdictionName: string, status: string, error?: string) =>
+  const setStatus = (requestId: string, jurisdictionName: string, status: string, error?: string) =>
     setActionState((prev) => ({
       ...prev,
-      [pullRequestNumber]: { status, jurisdiction_name: jurisdictionName, ...(error ? { error } : {}) },
+      [requestId]: { status, jurisdiction_name: jurisdictionName, ...(error ? { error } : {}) },
     }));
 
-  // Run a PR action, recording its lifecycle (loading -> done, or error) for the publish log.
+  // Run a review action, recording its lifecycle (loading -> done, or error) for the publish log.
   const track = async (opts: {
-    pullRequestNumber: number;
+    requestId: string;
     jurisdictionName: string;
     loading: string;
     done: string;
     run: () => Promise<unknown>;
   }): Promise<void> => {
-    const { pullRequestNumber, jurisdictionName, loading, done, run } = opts;
-    setStatus(pullRequestNumber, jurisdictionName, loading);
+    const { requestId, jurisdictionName, loading, done, run } = opts;
+    setStatus(requestId, jurisdictionName, loading);
     try {
       await run();
-      setStatus(pullRequestNumber, jurisdictionName, done);
+      setStatus(requestId, jurisdictionName, done);
     } catch (err: any) {
-      setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err));
+      setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err));
     }
   };
 
-  // Publishing splits at the 202: await the save (catchable — validation/save
-  // errors), then let the merge settle in the background (the poll updates the log
-  // without blocking the caller). Resolves {ok:false, error} on a catchable reject
-  // so the review session can keep the reviewer on the entry.
+  // Publishing is a single synchronous call now — the server writes the roster and stamps
+  // published_at before responding, so there is no background half to poll. Still resolves
+  // {ok:false, error} rather than throwing, so the review session can keep the reviewer
+  // on a failed entry.
   const trackMerge = async (
-    pullRequestNumber: number,
     requestId: string,
     jurisdictionOcdid: string,
     people: any[] | null,
     jurisdictionName: string,
   ): Promise<{ ok: boolean; error?: string }> => {
-    setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.LOADING_MERGE);
+    setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.LOADING_MERGE);
     try {
-      await saveAndEnqueueMerge(pullRequestNumber, requestId, jurisdictionOcdid, people);
+      await publishReview(requestId, jurisdictionOcdid, people);
     } catch (err: any) {
       const error = err?.message ?? String(err);
-      setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, error);
+      setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.ERROR, error);
       return { ok: false, error };
     }
-    pollMergeStatus(pullRequestNumber)
-      .then(() => setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.MERGED))
-      .catch((err: any) => setStatus(pullRequestNumber, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err)));
+    setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.MERGED);
     return { ok: true };
   };
 
-  const trackClose = (
-    pullRequestNumber: number,
-    requestId: string,
-    jurisdictionName: string,
-  ): Promise<void> =>
+  const trackClose = (requestId: string, jurisdictionName: string): Promise<void> =>
     track({
-      pullRequestNumber,
+      requestId,
       jurisdictionName,
       loading: PULL_REQUEST_STATUS.LOADING_CLOSE,
       done: PULL_REQUEST_STATUS.CLOSED,
-      run: () => closePullRequest(requestId, pullRequestNumber),
+      run: () => dismissReview(requestId),
     });
 
   const entries: PublishLogEntry[] = Object.entries(actionState)
     .filter(([, s]) => PUBLISH_LOG_STATUSES.includes(s.status))
-    .map(([prNumber, s]) => ({
-      pull_request_number: parseInt(prNumber, 10),
+    .map(([requestId, s]) => ({
+      request_id: requestId,
       jurisdiction_name: s.jurisdiction_name,
       status: s.status,
     }));

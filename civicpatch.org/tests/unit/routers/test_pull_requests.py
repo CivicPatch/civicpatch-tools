@@ -147,7 +147,7 @@ def test_close_pull_request_returns_success(client):
         ) as mock_dismiss,
     ):
         response = client.delete(
-            f"/pull_requests/{TEST_PR_NUMBER}",
+            f"/pull_requests/{TEST_REQUEST_ID}",
             params={"request_id": TEST_REQUEST_ID},
         )
 
@@ -160,52 +160,69 @@ def test_close_pull_request_returns_success(client):
 
 
 @pytest.mark.unit
-def test_close_pull_request_returns_500_on_github_failure(client):
-    with patch(
-        "lib.github.api.close_pull_request",
-        new_callable=AsyncMock,
-        return_value=False,
+def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
+    """`data_json` is the only copy of the roster now. Publishing a request that never
+    recorded one would resolve to [] and retire every person in the jurisdiction."""
+    with (
+        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=None),
     ):
-        response = client.delete(
-            f"/pull_requests/{TEST_PR_NUMBER}",
-            params={"request_id": TEST_REQUEST_ID},
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
-    assert response.status_code == 500
+    assert response.status_code == 409
+    mock_publish.assert_not_awaited()
 
 
 @pytest.mark.unit
-def test_save_and_merge_returns_202(client):
+def test_save_refuses_when_the_scrape_recorded_no_roster(client):
+    """Patches are sparse: patching against a missing base silently reduces every person to
+    the fields the reviewer touched, so the save must refuse rather than truncate."""
     with (
-        patch("lib.redis.set", new_callable=AsyncMock),
-        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
-        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=None),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            json={
+                "request_id": TEST_REQUEST_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
+            },
+        )
+
+    assert response.status_code == 409
+    mock_update.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_publish_returns_200_and_queues_no_merge(client):
+    """Publishing settles within the request: the roster is written and the entry resolved
+    before the response, so there is nothing for the caller to poll."""
+    with (
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
-    assert response.status_code == 202
-    assert response.json()["status"] == "pending"
+    assert response.status_code == 200
+    assert response.json()["status"] == "published"
     mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
-    mock_enqueue.assert_awaited_once()
-    assert mock_enqueue.await_args is not None
-    sent_request = mock_enqueue.await_args.args[0]
-    assert sent_request.pull_request_number == TEST_PR_NUMBER
-    assert sent_request.request_id == TEST_REQUEST_ID
-    assert sent_request.merge_key == f"merge_status:{TEST_PR_NUMBER}"
-    mock_set_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
-    # Publishing is a DB write at the endpoint now, not a consequence of the merge landing.
     mock_publish.assert_awaited_once_with(TEST_REQUEST_ID, TEST_OCDID, [BASE_PERSON], "user-id-123")
 
 
-# An Official-valid person on the PR branch, in on-disk field order. A patch overlays only
-# the edited fields onto this base, so untouched fields and key order stay intact.
+# An Official-valid person in the scrape's stored roster, in on-disk field order. A patch
+# overlays only the edited fields onto this base, so untouched fields and key order stay intact.
 BASE_PERSON = {
     "name": "Jane Doe",
     "phones": ["(916) 808-5300"],
@@ -222,19 +239,15 @@ BASE_PERSON = {
 @pytest.mark.unit
 def test_save_and_merge_applies_patch_and_normalizes(client):
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-        patch("lib.redis.set", new_callable=AsyncMock),
-        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
-        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
         patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={
                 "request_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
@@ -242,8 +255,8 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
             },
         )
 
-    assert response.status_code == 202
-    sent = mock_update.await_args.kwargs["new_data"]
+    assert response.status_code == 200
+    sent = mock_update.await_args.args[1]
     assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
     assert sent[0]["name"] == "Jane Doe"                      # untouched
     assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
@@ -252,15 +265,15 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
 @pytest.mark.unit
 def test_save_and_merge_rejects_invalid_field(client):
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock) as mock_update,
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("lib.redis.set", new_callable=AsyncMock),
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={
                 "request_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
@@ -283,11 +296,10 @@ SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9168085300"]}}]
 
 @pytest.mark.unit
 def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
-    """The whole point of /save: it writes the branch but triggers none of the merge machinery."""
+    """The whole point of /save: it persists the edit but triggers none of the merge machinery."""
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
@@ -295,7 +307,7 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
@@ -311,21 +323,20 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
 
 
 @pytest.mark.unit
-def test_save_applies_the_patch_against_the_branch_file(client):
+def test_save_applies_the_patch_against_the_stored_roster(client):
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=True) as mock_update,
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 200
-    sent = mock_update.await_args.kwargs["new_data"]
+    sent = mock_update.await_args.args[1]
     assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
     assert sent[0]["name"] == "Jane Doe"                      # untouched
     assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
@@ -334,12 +345,12 @@ def test_save_applies_the_patch_against_the_branch_file(client):
 @pytest.mark.unit
 def test_save_rejects_invalid_field_without_marking_the_entry(client):
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock) as mock_update,
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save",
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={
                 "request_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
@@ -353,14 +364,23 @@ def test_save_rejects_invalid_field_without_marking_the_entry(client):
 
 
 @pytest.mark.unit
-def test_save_returns_500_and_does_not_mark_the_entry_when_the_commit_fails(client):
+def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
+    """The persist is the only thing standing between the reviewer and a lost edit, so a
+    failure must not be reported as a save."""
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
+    app.include_router(pull_requests_router.get_router(None), prefix="/pull_requests")
+    # The write raises rather than returning falsy now that it is a DB call, so the 500 has to
+    # come from the app rather than from the test client re-raising.
+    failing_client = TestClient(app, raise_server_exceptions=False)
+
     with (
-        patch("lib.github.api.get_pull_request_file_yaml", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("lib.github.api.update_pull_request_file", new_callable=AsyncMock, return_value=False),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock, side_effect=RuntimeError("write failed")),
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
-        response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save",
+        response = failing_client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
@@ -371,7 +391,7 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_commit_fails(clie
 @pytest.mark.unit
 def test_save_requires_data(client):
     response = client.post(
-        f"/pull_requests/{TEST_PR_NUMBER}/save",
+        f"/pull_requests/{TEST_REQUEST_ID}/save",
         json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
     )
     assert response.status_code == 422
@@ -676,25 +696,22 @@ def test_pull_request_writes_reject_default_role(method, url):
 
 
 @pytest.mark.unit
-def test_save_and_merge_allows_default_role():
-    """A default-role reviewer may publish (save & merge) the PR they're
-    reviewing — the route is AUTHENTICATED, not contributor-gated."""
+def test_publish_allows_default_role():
+    """A default-role reviewer may publish the scrape they're reviewing — the route is
+    AUTHENTICATED, not contributor-gated."""
     client = _client_as(_user_at(UserRole.DEFAULT))
     with (
-        patch("lib.redis.set", new_callable=AsyncMock),
-        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
-        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
         patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[]),
+        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_PR_NUMBER}/save-and-merge",
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
-    assert response.status_code == 202
+    assert response.status_code == 200
 
 
 @pytest.mark.unit

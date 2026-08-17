@@ -86,13 +86,16 @@ class PatchJurisdictionDataRequest(BaseModel):
 
     # Mirrors urlError in field-validation.ts, so the reviewer is told the same thing
     # while typing as they would be on Save. Rejects rather than canonicalizing:
-    # url_utils.format_url would silently prepend a scheme to a typo. Clearing the
-    # website is allowed, so only a non-empty value is judged.
+    # url_utils.format_url would silently prepend a scheme to a typo.
+    #
+    # An emptied input arrives as "" and is normalised to None — the user clearing the box is
+    # the same decision as sending null, and null is what the patch writes. The field still
+    # counts as set, so exclude_unset keeps it and the value is cleared rather than skipped.
     @field_validator("url")
     @classmethod
     def validate_url(cls, v):
         if v is None or not v.strip():
-            return v
+            return None
         url = v.strip()
         if not url.startswith(("http://", "https://")):
             raise ValueError(f"Website must start with 'http://' or 'https://', got: '{url}'")
@@ -190,25 +193,20 @@ def get_router() -> APIRouter:
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
-        pull_request_number, pull_request_url_or_error, request_id = await jurisdiction_pr_service.open_jurisdiction_patch_pr(
+        # exclude_unset, not a dict literal: a field the caller omitted must stay omitted, or
+        # its None becomes indistinguishable from an explicit null and every edit would clear
+        # the two fields it did not mention.
+        commit_url, url_or_error, _request_id = await jurisdiction_pr_service.commit_jurisdiction_patch(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
-            fields={"url": request.url, "geoid": request.geoid, "population": request.population},
-            author=PrAuthor(name=user.display_name or user.email, email=user.email, teams=[user.role] if user.role else []),
+            fields=request.model_dump(exclude_unset=True),
             user_id=user.user_id,
         )
-        if pull_request_number is None:
+        if commit_url is None:
             # Nothing to write is the caller's mistake, not a server failure.
-            no_op = pull_request_url_or_error in set(jurisdiction_pr_service.EditRejection)
-            return JSONResponse(
-                {"error": pull_request_url_or_error}, status_code=400 if no_op else 500
-            )
-        background_tasks.add_task(
-            jurisdiction_pr_service.merge_jurisdiction_pr,
-            str(pull_request_number),
-            user.email,
-            request_id,
-        )
-        return {"data": {"pull_request_number": pull_request_number, "pull_request_url": pull_request_url_or_error}}
+            no_op = url_or_error in set(jurisdiction_pr_service.EditRejection)
+            return JSONResponse({"error": url_or_error}, status_code=400 if no_op else 500)
+        # No background merge: the commit already landed, so the response is the outcome.
+        return {"data": {"open_data_url": commit_url}}
 
     @router.get("/search")
     async def search_jurisdictions_endpoint(
