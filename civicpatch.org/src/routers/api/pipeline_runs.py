@@ -83,7 +83,9 @@ def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
     args = r.get("arguments_json") or {}
     url = args.get("url")
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"]) if r.get("jurisdiction_ocdid") else None
-    # TBD remove with the issue type: nothing emits these since 2026-08-16.
+    # TBD remove with the issue type: nothing emits these since 2026-08-16. It also matches
+    # on a *rendered* office.name, so it misses anyone whose label was joined with another —
+    # `source_records` answers the same question per person, off the parse.
     if issue_type == "unrecognized_role":
         matching = [
             p for p in (r.get("data_json") or [])

@@ -14,26 +14,6 @@ function getCsrfCookie() {
   return "";
 }
 
-export const updatePullRequestData = async (
-  request_id,
-  jurisdiction_ocdid,
-  data,
-) => {
-  const response = await fetch(`${API_URL}/api/v1/pull_requests/data`, {
-    credentials: "include",
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ request_id, jurisdiction_ocdid, data }),
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`);
-  }
-  return response.json();
-};
-
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {

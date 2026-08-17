@@ -148,6 +148,17 @@ erDiagram
         timestamptz     created_at          "idx: created_at DESC, default: now()"
     }
 
+    source_records {
+        uuid            id                  PK
+        uuid            request_id          FK  "idx; ON DELETE CASCADE — which scrape"
+        text            person_id           "idx: (person_id, created_at DESC); the Record id, also the membership FK"
+        text            jurisdiction_ocdid  FK  "idx"
+        jsonb           raw                 "the Record as it arrived, labels verbatim — truth for re-derivation"
+        jsonb           parsed              "gin idx (jsonb_path_ops); the published decision — historical, never current"
+        timestamptz_null published_at       "NULL until the triple is materialised"
+        timestamptz     created_at          "default: now(); orders derivations — no unique key, replays add rows"
+    }
+
     roles {
         text            id                  PK "SLUG, not a uuid: council-member. Immune to label renames. check: id <> ''"
         text            label               "unique idx: (lower(label)); display name, renameable"
@@ -166,6 +177,8 @@ erDiagram
     }
 
     roles ||--o{ role_aliases : "role_id"
+    requests ||--o{ source_records : "request_id"
+    jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"

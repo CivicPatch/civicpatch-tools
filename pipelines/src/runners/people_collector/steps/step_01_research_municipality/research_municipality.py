@@ -13,6 +13,7 @@ from runners.people_collector.schemas import (
 )
 from shared.schemas import Person
 from shared.utils.name_utils import person_list_to_identities
+from shared.utils.official_fields import office_name_to_labels
 from shared.utils import divisions
 from utils import log_utils, people_utils
 from utils.request_utils import with_retry
@@ -97,7 +98,7 @@ def _known_roles_from_db(existing: list, taxonomy: Taxonomy) -> List[str]:
     seen = []
     for p in existing:
         office_name = (p.get("office") or {}).get("name") or ""
-        for label in people_utils.office_name_to_labels(office_name):
+        for label in office_name_to_labels(office_name):
             role = resolve_role(label, taxonomy)
             if role and role not in seen:
                 seen.append(role)
