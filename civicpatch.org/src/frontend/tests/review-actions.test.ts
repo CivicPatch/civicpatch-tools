@@ -286,7 +286,7 @@ describe("mergeCurrent", () => {
     const people = [{ id: "p1" }];
     await mergeCurrent(current, "s1", 2, people, STATE, e);
 
-    expect(e.trackMerge).toHaveBeenCalledWith(123, "req-1", "ocd-x", people, "X City");
+    expect(e.trackMerge).toHaveBeenCalledWith("req-1", "ocd-x", people, "X City");
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_RESOLVED);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
   });
@@ -305,9 +305,16 @@ describe("mergeCurrent", () => {
     expect(api.navigateToEntry).not.toHaveBeenCalled();
   });
 
-  it("does nothing without a PR number", async () => {
+  it("publishes a scrape that has no pull request", async () => {
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const e = fakeEffects(api);
+    await mergeCurrent({ ...current, pr: undefined } as any, "s1", 2, null, STATE, e);
+    expect(e.trackMerge).toHaveBeenCalledWith("req-1", "ocd-x", null, "X City");
+  });
+
+  it("does nothing without a request id", async () => {
     const e = fakeEffects(fakeApi());
-    await mergeCurrent({ ...current, pr: { ...current.pr, number: null } }, "s1", 2, null, STATE, e);
+    await mergeCurrent({ ...current, request_id: null } as any, "s1", 2, null, STATE, e);
     expect(e.trackMerge).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -320,7 +327,7 @@ describe("saveCurrent", () => {
     const people = [{ id: "p1" }];
     await saveCurrent(current, "s1", 2, people, STATE, e);
 
-    expect(api.saveReviewData).toHaveBeenCalledWith(123, "req-1", "ocd-x", people);
+    expect(api.saveReviewData).toHaveBeenCalledWith("req-1", "ocd-x", people);
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_SAVED);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
   });
@@ -348,9 +355,16 @@ describe("saveCurrent", () => {
     expect(api.navigateToEntry).not.toHaveBeenCalled();
   });
 
-  it("does nothing without a PR number", async () => {
+  it("saves a scrape that has no pull request", async () => {
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const e = fakeEffects(api);
+    await saveCurrent({ ...current, pr: undefined } as any, "s1", 2, [{ id: "p1" }], STATE, e);
+    expect(e.api.saveReviewData).toHaveBeenCalled();
+  });
+
+  it("does nothing without a request id", async () => {
     const e = fakeEffects(fakeApi());
-    await saveCurrent({ ...current, pr: { ...current.pr, number: null } }, "s1", 2, [], STATE, e);
+    await saveCurrent({ ...current, request_id: null } as any, "s1", 2, [], STATE, e);
     expect(e.api.saveReviewData).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -362,7 +376,7 @@ describe("closeCurrent", () => {
     const e = fakeEffects(api);
     await closeCurrent(current, "s1", 2, STATE, e);
 
-    expect(e.trackClose).toHaveBeenCalledWith(123, "req-1", "X City");
+    expect(e.trackClose).toHaveBeenCalledWith("req-1", "X City");
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
   });
 });

@@ -34,13 +34,14 @@ async def test_returns_none_when_not_found():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_returns_row_for_open_pr():
+async def test_returns_row_for_a_pending_review():
+    """Sourced from `requests` now, so the row is the request's own columns: the commit URL
+    it published to and a status derived from published_at/dismissed_at. There is no pull
+    request number because publishing no longer opens one."""
     row = (
-        "req-abc",          # request_id
-        "https://github.com/org/repo/pull/42",  # url
-        "open",             # status
-        None,               # review_state
-        42,                 # pr_number
+        "req-abc",          # id
+        None,               # open_data_url — nothing published yet
+        "pending",          # derived review status
         "ocd-jurisdiction/country:us/state:tx/place:austin/government",  # jurisdiction_ocdid
         "Austin",           # jurisdiction_name
         [{"name": "Jane Doe"}],  # data_json
@@ -52,8 +53,7 @@ async def test_returns_row_for_open_pr():
 
     assert result is not None
     assert result["request_id"] == "req-abc"
-    assert result["pr"]["status"] == "open"
-    assert result["pr"]["number"] == 42
+    assert result["pr"]["status"] == "pending"
     assert result["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:tx/place:austin/government"
     assert result["jurisdiction_name"] == "Austin"
     assert result["proposed"] == [{"name": "Jane Doe"}]
@@ -61,13 +61,11 @@ async def test_returns_row_for_open_pr():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_returns_row_for_merged_pr():
+async def test_returns_row_for_a_published_review():
     row = (
         "req-xyz",
-        "https://github.com/org/repo/pull/99",
-        "merged",
-        None,
-        99,
+        "https://github.com/org/repo/commit/abc123",
+        "published",
         "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
         "Oakland",
         [],
@@ -78,7 +76,8 @@ async def test_returns_row_for_merged_pr():
         result = await get_pull_request_data_by_request_id("req-xyz")
 
     assert result is not None
-    assert result["pr"]["status"] == "merged"
+    assert result["pr"]["status"] == "published"
+    assert result["pr"]["url"] == "https://github.com/org/repo/commit/abc123"
     assert result["proposed"] == []
 
 

@@ -9,9 +9,23 @@ from shared.utils.statuses import (
     PipelineIssueType,
     PipelineRunStatus,
     PullRequestStatus,
+    RequestReviewStatus,
     RequestType,
 )
 from lib.github.utils import pull_request_url_to_number
+
+# The review lifecycle as one SQL expression, so the sites that render it cannot drift apart.
+# Requires the requests table aliased `r`, like AVAILABLE_FOR_REVIEW below.
+#
+# Derived, not stored: the two timestamps are the state, and a CHECK forbids both being set.
+# It replaces `pull_requests.status`, which had to distinguish open from merged because the
+# publish happened on GitHub. Nothing merges now, so there are three answers, not four.
+REVIEW_STATUS = (
+    "CASE "
+    f"WHEN r.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}' "
+    f"WHEN r.dismissed_at IS NOT NULL THEN '{RequestReviewStatus.DISMISSED.value}' "
+    f"ELSE '{RequestReviewStatus.PENDING.value}' END"
+)
 
 # SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
 # aliased `r`; callers share this one definition instead of re-spelling it.
@@ -20,27 +34,28 @@ from lib.github.utils import pull_request_url_to_number
 # this was a JOIN against pull_requests. Migration 115 moved it onto the request itself, which
 # is where it belongs now that civicpatch publishes rather than waiting for a merge.
 #
-# Four conditions, unchanged in meaning:
+# Five conditions:
+#   the run succeeded        see below — this one is new
 #   not published            was pr.status='open' + pr.merge_enqueued_at IS NULL
 #   not dismissed            was pr.status='closed'
 #   not a jurisdiction edit  same, but a plain column test now the anchor is `requests`
 #   no live reviewer-reported issue   unchanged; returns to the pool when the issue is
 #                                     resolved by an admin or superseded by a newer run
 #
-# Scope is the caller's: every site joins pipeline_runs, so a request that never ran cannot
-# appear in the queue.
+# The success test is new because the PR gate had been standing in for it: a pull request only
+# ever existed if data_intake received a roster, so cancelled and errored runs were filtered out
+# as a side effect of requiring one. Without it they become cards with nothing to review —
+# measured 2026-08-17, 10 CANCELLED + 7 ERROR, every one with a NULL data_json.
+#
+# Written as EXISTS rather than a `j.status` test so the predicate stays anchored on `r` alone:
+# not every caller joins pipeline_runs, and requiring one is a trap for the next site added.
 AVAILABLE_FOR_REVIEW = (
-    "r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
-    # TEMPORARY, and the only clause here that still looks at GitHub. Publishing goes through
-    # /{pull_request_number}/save-and-merge, and the card's publish/save/close buttons all
-    # guard on a truthy pr.number — so a card with no open PR is one a reviewer cannot act on.
-    # Measured 2026-08-16: dropping this clause put 9 such requests into the dev queue.
-    # Delete it in the same change that stops publishing from needing a pull request.
-    "AND EXISTS ("
-    "SELECT 1 FROM pull_requests pr_open "
-    "WHERE pr_open.request_id = r.id AND pr_open.status = 'open'"
+    "EXISTS ("
+    "SELECT 1 FROM pipeline_runs j_ok "
+    f"WHERE j_ok.request_id = r.id AND j_ok.status = '{PipelineRunStatus.SUCCESS.value}'"
     ") "
+    "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
+    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
@@ -158,23 +173,27 @@ async def register_jurisdiction_edit_request(
     request_id: str,
     jurisdiction_ocdid: str,
     arguments_json: dict,
-    pr_number: int,
-    pr_url: str | None,
+    open_data_url: str,
     requested_by_user_id: Optional[str] = None,
 ):
-    """Track a hand-edited jurisdiction field as a request + pull request.
+    """Track a hand-edited jurisdiction field as a request.
+
+    Born published: the edit is committed before this is called, so there is no interval
+    during which it is pending. That is the whole difference from a scrape, which is
+    proposed and then reviewed.
 
     No pipeline_run: nothing ran. That keeps it out of the scrape history, which is
     joined through pipeline_runs, and out of anything that assumes a job produced it.
-    The PR targets the jurisdictions repo; that is derived from the request type
-    (see REQUEST_TYPE_SOURCE_REPO) rather than stored twice.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (
+                id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                open_data_url, published_at, resolved_by_user_id, created_at, updated_at
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
@@ -182,14 +201,9 @@ async def register_jurisdiction_edit_request(
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 requested_by_user_id,
+                open_data_url,
+                requested_by_user_id,
             ),
-        )
-        await conn.execute(
-            """
-            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            """,
-            (request_id, pr_url, PullRequestStatus.OPEN, pr_number),
         )
 
 
@@ -202,27 +216,6 @@ async def get_request_jurisdiction(request_id: str) -> str | None:
         )
         row = await cur.fetchone()
     return row[0] if row else None
-
-
-async def get_open_jurisdiction_edits() -> list[dict]:
-    """Manual edits whose PR is still open, with the patch asked for and the value
-    currently projected — enough to tell whether the edit has landed."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT r.id::text, r.arguments_json, j.data
-            FROM requests r
-            JOIN pull_requests pr ON pr.request_id = r.id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.request_type = %s AND pr.status = %s
-            """,
-            (RequestType.JURISDICTION_MANUAL_EDIT, PullRequestStatus.OPEN),
-        )
-        return [
-            {"request_id": r[0], "patch": r[1] or {}, "current": r[2] or {}}
-            for r in await cur.fetchall()
-        ]
 
 
 async def get_request_type(request_id: str) -> str | None:
@@ -274,10 +267,10 @@ async def get_requests_for_export(
     date_clauses = ""
     if from_date:
         params.append(from_date)
-        date_clauses += f" AND r.created_at >= %s"
+        date_clauses += " AND r.created_at >= %s"
     if to_date:
         params.append(to_date)
-        date_clauses += f" AND r.created_at <= %s"
+        date_clauses += " AND r.created_at <= %s"
 
     pool = await get_pool()
     rows = []
@@ -286,9 +279,8 @@ async def get_requests_for_export(
             sql.SQL(f"""
             SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.data_json, r.review_json
             FROM requests r
-            JOIN pull_requests pr ON pr.request_id = r.id
             WHERE r.jurisdiction_ocdid LIKE %s
-              AND pr.status = 'open'
+              AND r.published_at IS NULL AND r.dismissed_at IS NULL
               {date_clauses}
             ORDER BY r.created_at DESC
             """),

@@ -104,11 +104,10 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
   return res.json();
 };
 
-// The catchable, synchronous half of publishing: validate + write the file +
-// enqueue the merge. Returns once the server accepts the request (202); throws
-// (with a parsed message) on a validation/save rejection.
-export const saveAndEnqueueMerge = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save-and-merge`, {
+// Publishing, start to finish: a 200 means the roster is live and stamped. Throws (with a
+// parsed message) on a validation or publish rejection.
+export const publishReview = async (request_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}/publish`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -126,11 +125,10 @@ export const saveAndEnqueueMerge = async (pullRequestNumber, request_id, jurisdi
   return res.json();
 };
 
-// Commit the reviewer's edits to the job branch without publishing. The PR stays
-// in the review pool; the session entry is held until the session is released.
-// Throws (with a parsed message) on a validation/save rejection, like the above.
-export const saveReviewData = async (pullRequestNumber, request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/save`, {
+// Commit the reviewer's edits to `data_json` without publishing. The request stays in the
+// review pool; the session entry is held until the session is released.
+export const saveReviewData = async (request_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}/save`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -146,27 +144,6 @@ export const saveReviewData = async (pullRequestNumber, request_id, jurisdiction
     throw err;
   }
   return res.json();
-};
-
-// The background half: poll until the async merge settles. Resolves on success,
-// throws on a merge error or timeout.
-export const pollMergeStatus = async (pullRequestNumber) => {
-  const POLL_INTERVAL_MS = 2000;
-  const MAX_ATTEMPTS = 120;
-  for (let i = 0; i < MAX_ATTEMPTS; i++) {
-    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-    const statusRes = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}/merge-status`, {
-      credentials: "include",
-    });
-    if (!statusRes.ok) {
-      const body = await statusRes.json().catch(() => ({}));
-      throw new Error(body.error || `HTTP ${statusRes.status}`);
-    }
-    const { status, error } = await statusRes.json();
-    if (status === "merged") return { status: "success" };
-    if (status === "error") throw new Error(error || "Merge failed");
-  }
-  throw new Error("Merge timed out");
 };
 
 export const batchResolvePeople = async (jurisdictionOcdid, people) => {
@@ -287,8 +264,8 @@ export const reportReviewIssue = async (requestId, description) => {
   return res.json();
 };
 
-export const closePullRequest = async (request_id, pullRequestNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${pullRequestNumber}?request_id=${request_id}`, {
+export const dismissReview = async (request_id) => {
+  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}`, {
     credentials: "include",
     method: "DELETE",
     headers: {
@@ -323,6 +300,25 @@ export const patchPeopleData = async (jurisdictionOcdid, data) => {
   return res.json();
 };
 
+const PATCHABLE_JURISDICTION_FIELDS = ["url", "geoid", "population"];
+
+// Only the keys actually present are sent. Coercing an absent field to null would ask the
+// server to clear it: null means "a human set this to nothing", and an untouched field has
+// to stay out of the payload entirely to mean "leave it alone".
+const jurisdictionPatchBody = (jurisdictionOcdid, data) => {
+  const body = { jurisdiction_ocdid: jurisdictionOcdid };
+  for (const field of PATCHABLE_JURISDICTION_FIELDS) {
+    if (!(field in data)) continue;
+    const value = data[field];
+    if (field === "population") {
+      body.population = value === null || value === "" ? null : Number(value);
+    } else {
+      body[field] = value;
+    }
+  }
+  return body;
+};
+
 export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
   const res = await fetch(`${API_URL}/api/v1/jurisdictions/data`, {
     method: "PATCH",
@@ -331,12 +327,7 @@ export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({
-      jurisdiction_ocdid: jurisdictionOcdid,
-      url: data.url ?? null,
-      geoid: data.geoid ?? null,
-      population: data.population ? Number(data.population) : null,
-    }),
+    body: JSON.stringify(jurisdictionPatchBody(jurisdictionOcdid, data)),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));

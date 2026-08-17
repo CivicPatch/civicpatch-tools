@@ -37,8 +37,8 @@ function ReviewSessionPage() {
   const handleSave = (e: CustomEvent) => save(e.detail.people);
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
-  const prNumber = currentEntry?.pr?.number;
-  const isClosingPr = prNumber != null && actionState[prNumber]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+  const requestId = currentEntry?.request_id;
+  const isClosingPr = requestId != null && actionState[requestId]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
 
   const progress = reviewing
     ? {

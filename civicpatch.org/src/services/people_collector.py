@@ -9,7 +9,6 @@ import lib.files as file_utils
 import shared.utils.id_utils
 import shared.utils.config_utils
 import lib.storage as storage_service
-import lib.github.api as github_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
 from database.roles import get_roles
@@ -193,18 +192,10 @@ async def _handle_submit_pipeline_run_artifacts(
         with_presigned_url=True
     )
 
-    if is_success:
-        try:
-            await github_service.trigger_github_data_intake_workflow(
-                request.server_detail.user_email,
-                request_id=request.request_id,
-                jurisdiction_ocdid=request.jurisdiction_ocdid,
-                zip_file_url=zip_file_url,
-                env=request.env,
-            )
-        except Exception as e:
-            logger.error(f"[{request.request_id}] Failed to trigger data intake workflow: {e}", exc_info=True)
-
+    # No data_intake dispatch. That Action opened the pull request a scrape used to be
+    # reviewed through, and then told us its number so a card could appear. Both jobs moved
+    # here: the roster is committed to the unreviewed path directly, and the request itself
+    # carries the review state. Dispatching as well would open a pull request nothing reads.
     return SubmitPipelineRunArtifactsResponse(
         filename=file_suffix,
         status="uploaded",

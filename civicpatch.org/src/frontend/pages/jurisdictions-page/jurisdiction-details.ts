@@ -99,7 +99,10 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
     setIsSaving(true);
     setError(null);
     try {
-      setPrResult(await onSave({ ...data, url }));
+      // Only the edited field. Spreading `data` would resend geoid and population as their
+      // current values, which is a write the user did not ask for — and once null means
+      // "cleared", resending is how untouched fields get clobbered.
+      setPrResult(await onSave({ url }));
     } catch (e: any) {
       setError(e.message ?? "Failed to save.");
     } finally {

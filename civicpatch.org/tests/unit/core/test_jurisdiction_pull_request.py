@@ -9,7 +9,8 @@ from services.jurisdiction_pull_request import (
     _extract_state,
     merge_jurisdiction_pr,
     open_jurisdiction_edit_pr,
-    open_jurisdiction_patch_pr,
+    commit_jurisdiction_patch,
+    EditRejection,
 )
 from lib.github.pull_requests import PrAuthor
 
@@ -219,14 +220,19 @@ async def test_open_jurisdiction_edit_pr_fetch_fails():
     assert "Internal Server Error" in error
 
 
-# ── open_jurisdiction_patch_pr ──────────────────────────────────────────────────
+# ── commit_jurisdiction_patch ──────────────────────────────────────────────────
+#
+# The FILE is the source here, unlike people: od_sync pulls the registry from open-data, so
+# the edit reads and patches the document rather than rendering one from the database. That
+# is what keeps the YAML comments real files carry (36 in ca/local, 28 in wa/counties).
 
 OPEN_DATA_CONTENT = yaml.dump({"jurisdictions": YAML_ENTRIES}, sort_keys=False, allow_unicode=True)
+COMMIT_URL = "https://github.com/CivicPatch/open-data/commit/abc123"
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_patch_pr_patches_url_and_records_change_log():
+async def test_commit_jurisdiction_patch_commits_and_syncs_the_row():
     with (
         patch(
             "services.jurisdiction_pull_request.github_service.get_github_file_contents",
@@ -234,10 +240,14 @@ async def test_open_jurisdiction_patch_pr_patches_url_and_records_change_log():
             return_value=OPEN_DATA_CONTENT,
         ),
         patch(
-            "services.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.github_service.upsert_github_file",
             new_callable=AsyncMock,
-            return_value=(42, "https://github.com/CivicPatch/open-data/pull/42"),
-        ) as mock_open_pr,
+            return_value=COMMIT_URL,
+        ) as mock_commit,
+        patch(
+            "services.jurisdiction_pull_request.jurisdictions_db.patch_jurisdiction_entry",
+            new_callable=AsyncMock,
+        ) as mock_patch_entry,
         patch(
             "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
@@ -247,23 +257,22 @@ async def test_open_jurisdiction_patch_pr_patches_url_and_records_change_log():
             new_callable=AsyncMock,
         ) as mock_register,
     ):
-        pr_number, pr_url, request_id = await open_jurisdiction_patch_pr(
+        commit_url, _url, request_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
-            author=AUTHOR,
             user_id="user-1",
         )
 
-    assert pr_number == 42
-    # Tracked like any other PR, under the id the branch was named for.
+    assert commit_url == COMMIT_URL
     assert mock_register.await_args.kwargs["request_id"] == request_id
-    call_kwargs = mock_open_pr.call_args.kwargs
+
+    call_kwargs = mock_commit.call_args.kwargs
     assert call_kwargs["file_path"] == "data_source/tx/local/jurisdictions.yml"
-    # open-data is the default repo: no explicit repo_url / fork_repo_url passed
-    assert "repo_url" not in call_kwargs
-    assert "fork_repo_url" not in call_kwargs
-    doc = yaml.safe_load(call_kwargs["content"])
+    doc = yaml.safe_load(call_kwargs["content_str"])
     assert doc["jurisdictions"][0]["url"] == "https://new.example.com"
+
+    # The row is updated too, so the page does not wait for the next od_sync to show it.
+    mock_patch_entry.assert_awaited_once_with(JURISDICTION_OCDID, {"url": "https://new.example.com"})
 
     mock_record.assert_awaited_once()
     record_kwargs = mock_record.call_args.kwargs
@@ -274,7 +283,7 @@ async def test_open_jurisdiction_patch_pr_patches_url_and_records_change_log():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_patch_pr_skips_change_log_when_url_unchanged():
+async def test_commit_jurisdiction_patch_writes_nothing_when_unchanged():
     with (
         patch(
             "services.jurisdiction_pull_request.github_service.get_github_file_contents",
@@ -282,32 +291,34 @@ async def test_open_jurisdiction_patch_pr_skips_change_log_when_url_unchanged():
             return_value=OPEN_DATA_CONTENT,
         ),
         patch(
-            "services.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.github_service.upsert_github_file",
             new_callable=AsyncMock,
-            return_value=(42, "https://github.com/CivicPatch/open-data/pull/42"),
-        ),
+        ) as mock_commit,
+        patch(
+            "services.jurisdiction_pull_request.jurisdictions_db.patch_jurisdiction_entry",
+            new_callable=AsyncMock,
+        ) as mock_patch_entry,
         patch(
             "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
-        patch(
-            "services.jurisdiction_pull_request.requests_db.register_jurisdiction_edit_request",
-            new_callable=AsyncMock,
-        ) as mock_register,
     ):
-        await open_jurisdiction_patch_pr(
+        commit_url, error, _request_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://old.example.com"},
-            author=AUTHOR,
             user_id="user-1",
         )
 
+    assert commit_url is None
+    assert error == EditRejection.NO_CHANGES
+    mock_commit.assert_not_called()
+    mock_patch_entry.assert_not_awaited()
     mock_record.assert_not_awaited()
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_patch_pr_jurisdiction_not_found():
+async def test_commit_jurisdiction_patch_jurisdiction_not_in_the_file():
     content = yaml.dump(
         {"jurisdictions": [{"id": "different-jurisdiction", "name": "Other", "url": "x"}]},
         sort_keys=False,
@@ -319,39 +330,69 @@ async def test_open_jurisdiction_patch_pr_jurisdiction_not_found():
             return_value=content,
         ),
         patch(
-            "services.jurisdiction_pull_request.open_attributed_pr",
+            "services.jurisdiction_pull_request.github_service.upsert_github_file",
             new_callable=AsyncMock,
-        ) as mock_open_pr,
+        ) as mock_commit,
     ):
-        pr_number, error, _request_id = await open_jurisdiction_patch_pr(
+        commit_url, error, _request_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
-            author=AUTHOR,
             user_id="user-1",
         )
 
-    assert pr_number is None
+    assert commit_url is None
     assert JURISDICTION_OCDID in error
-    mock_open_pr.assert_not_called()
+    mock_commit.assert_not_called()
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_open_jurisdiction_patch_pr_fetch_fails():
+async def test_commit_jurisdiction_patch_fetch_fails():
     with patch(
         "services.jurisdiction_pull_request.github_service.get_github_file_contents",
         new_callable=AsyncMock,
         return_value=None,
     ):
-        pr_number, error, _request_id = await open_jurisdiction_patch_pr(
+        commit_url, error, _request_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
-            author=AUTHOR,
             user_id="user-1",
         )
 
-    assert pr_number is None
+    assert commit_url is None
     assert "Failed to fetch" in error
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_commit_jurisdiction_patch_does_not_sync_the_row_when_the_commit_fails():
+    """The file is the source, so a row updated without a landed commit would be a local
+    invention that the next od_sync silently reverts."""
+    with (
+        patch(
+            "services.jurisdiction_pull_request.github_service.get_github_file_contents",
+            new_callable=AsyncMock,
+            return_value=OPEN_DATA_CONTENT,
+        ),
+        patch(
+            "services.jurisdiction_pull_request.github_service.upsert_github_file",
+            new_callable=AsyncMock,
+            return_value=None,
+        ),
+        patch(
+            "services.jurisdiction_pull_request.jurisdictions_db.patch_jurisdiction_entry",
+            new_callable=AsyncMock,
+        ) as mock_patch_entry,
+    ):
+        commit_url, error, _request_id = await commit_jurisdiction_patch(
+            jurisdiction_ocdid=JURISDICTION_OCDID,
+            fields={"url": "https://new.example.com"},
+            user_id="user-1",
+        )
+
+    assert commit_url is None
+    assert "Failed to commit" in error
+    mock_patch_entry.assert_not_awaited()
 
 
 # ── merge_jurisdiction_pr ─────────────────────────────────────────────────────

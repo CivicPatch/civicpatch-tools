@@ -72,6 +72,20 @@ class PipelineIssueType(StrEnum):
     USER_REPORTED = "user_reported"
 
 
+class RequestReviewStatus(StrEnum):
+    """Where a request sits in the review lifecycle, derived from `published_at`/`dismissed_at`.
+
+    Replaces PullRequestStatus for scrape review: publishing is a database write now, so there
+    is no `open`/`merged` distinction to make — a request is awaiting review, published, or
+    dismissed. Derived rather than stored: the two timestamps are the state, and a CHECK
+    already forbids both being set.
+    """
+
+    PENDING = "pending"
+    PUBLISHED = "published"
+    DISMISSED = "dismissed"
+
+
 class PullRequestStatus(StrEnum):
     # No PR has been created for this pipeline run yet
     DEFAULT = "DEFAULT"

@@ -33,7 +33,6 @@ import services.change_logs as change_logs
 import services.review_issue_report as review_issue_report_service
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
-import services.pull_request_merge as merge_service
 import services.pull_request_sync as pr_sync_service
 from services.publish import (
     dismiss_people,
@@ -43,8 +42,6 @@ from services.publish import (
 )
 import lib.redis as redis_store
 import lib.storage as storage_service
-import lib.temporal.client as temporal_client
-from lib.temporal.types import MergeRequest
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, ReportReviewIssueRequest, UserRole, RouteCategory
 from lib.auth import require_route_access
@@ -93,40 +90,33 @@ class ErrorResponse(BaseModel):
     error: str
 
 
+# A scrape whose roster was never recorded cannot be edited or published: `data_json` is the
+# only copy now that the job branch is gone. Rescue such rows via `POST /api/admin/pr_sync`.
+MISSING_ROSTER_DETAIL = "This scrape has no recorded roster. Re-sync it before reviewing."
+
+
 async def _commit_people_patch(
     request_id: str,
     jurisdiction_ocdid: str,
     data: List[PersonPatch],
     user: Identity,
-    background_tasks: BackgroundTasks,
-) -> List[dict] | None:
-    """Apply the reviewer's edits to the job branch. Returns the patched roster, or None if
-    the GitHub write failed. The roster is returned rather than re-read at the call site
-    because `update_pipeline_run_data` below runs as a background task."""
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    data_file_path = f"data/{folder}.yml"
-    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
-    # The branch file is the authoritative base: we diff against it and write back to it,
-    # so untouched entries stay byte-identical and the PR shows only the edited fields.
-    base = await github_service.get_pull_request_file_yaml(
-        request_id, jurisdiction_ocdid, data_file_path
-    )
-    if not isinstance(base, list):
-        base = []
+) -> List[dict]:
+    """Apply the reviewer's edits to the scrape's stored roster."""
+    # `data_json` is the base now that edits no longer go to a PR branch. It carries prior
+    # edits for the same reason the branch used to: every save writes back to it.
+    base = await database.pipeline_runs.get_pipeline_run_data_json(request_id)
+    # Patches are sparse, so patching against a missing base does not fail — it writes each
+    # person reduced to the fields the reviewer happened to touch. Refuse instead.
+    if not base:
+        raise HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
     try:
         patched = patch_people(base, data)
     except PeopleValidationError as exc:
         raise HTTPException(status_code=422, detail=exc.failures)
-    success = await github_service.update_pull_request_file(
-        branch_name=branch_name,
-        file_path=data_file_path,
-        new_data=patched,
-        commit_message=f"Data update by {user.email}",
-    )
-    if not success:
-        return None
 
-    background_tasks.add_task(database.pipeline_runs.update_pipeline_run_data, request_id, patched)
+    # Awaited, not backgrounded: this was a background task while the branch write was the
+    # authoritative one. It is the only store now, so a 200 must mean the edit is persisted.
+    await database.pipeline_runs.update_pipeline_run_data(request_id, patched)
     if user.user_id:
         await change_logs.record_manual_edits(
             request_id, jurisdiction_ocdid, user.user_id, base, patched
@@ -144,7 +134,11 @@ async def _publish_roster(
     published without editing, the submitted roster stands."""
     roster = edited
     if roster is None:
-        roster = await database.pipeline_runs.get_pipeline_run_data_json(request_id) or []
+        roster = await database.pipeline_runs.get_pipeline_run_data_json(request_id)
+    # Publishing an empty roster retires every person in the jurisdiction. That was unreachable
+    # while the review pool required an open PR; the request is the only record now.
+    if not roster:
+        raise HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
     await publish_people(
         request_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
@@ -373,63 +367,47 @@ def get_router(api_key_header):
             raise HTTPException(status_code=502, detail=str(e))
         return {"data": result}
 
-    # -- Pull Requests: Close Pull Request ---
-    @router.delete("/{pull_request_number}", include_in_schema=False)
+    # -- Reviews: Dismiss ---
+    # Keyed on request_id, not a pull request number: a scrape published straight to open-data
+    # has no pull request, and those are the majority now.
+    @router.delete("/{request_id}", include_in_schema=False)
     async def close_pull_request_endpoint(
-        pull_request_number: str,
         request_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
-        success = await github_service.close_pull_request(
-            pull_request_number=pull_request_number,
-        )
-        if not success:
-            return JSONResponse(
-                content=ErrorResponse(
-                    error="Failed to close pull request on GitHub"
-                ).model_dump(),
-                status_code=500,
-            )
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.CLOSED, resolved_by_user_id=user_id)
+        # Dismissal is a database write now. Nothing is closed on GitHub because nothing was
+        # opened there — `dismissed_at` is what takes the request out of the review pool.
         await dismiss_people(request_id, user_id)
         # Credit the review: closing is a completed review action, same as publishing.
         await review_session_entries_db.resolve_entries_for_request(request_id)
         return {"status": "success"}
 
-    # -- Pull Requests: Save without publishing ---
-    @router.post("/{pull_request_number}/save", include_in_schema=False)
+    # -- Reviews: Save without publishing ---
+    @router.post("/{request_id}/save", include_in_schema=False)
     async def save_review_endpoint(
-        pull_request_number: str,
+        request_id: str,
         request: SaveReviewRequest,
-        background_tasks: BackgroundTasks,
         user: Identity = Depends(
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        saved = await _commit_people_patch(
-            request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
+        await _commit_people_patch(
+            request.request_id, request.jurisdiction_ocdid, request.data, user
         )
-        if saved is None:
-            return JSONResponse(
-                content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
-                status_code=500,
-            )
-
-        # No merge, no parking: the PR stays in AVAILABLE_FOR_REVIEW. The entry is
+        # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
         # held by its session (see _allocate_next_review) and returns to the pool
         # when that session is released.
         await review_session_entries_db.save_entries_for_request(request.request_id)
         return {"status": "saved"}
 
-    # -- Pull Requests: Save and Merge ---
-    @router.post("/{pull_request_number}/save-and-merge", include_in_schema=False)
+    # -- Reviews: Publish ---
+    @router.post("/{request_id}/publish", include_in_schema=False)
     async def save_and_merge_endpoint(
-        pull_request_number: str,
+        request_id: str,
         request: SaveAndMergeRequest,
-        background_tasks: BackgroundTasks,
         user: Identity = Depends(
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
@@ -437,39 +415,20 @@ def get_router(api_key_header):
         edited = None
         if request.data:
             edited = await _commit_people_patch(
-                request.request_id, request.jurisdiction_ocdid, request.data, user, background_tasks
+                request.request_id, request.jurisdiction_ocdid, request.data, user
             )
-            if edited is None:
-                return JSONResponse(
-                    content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
-                    status_code=500,
-                )
 
-        merge_key = f"merge_status:{pull_request_number}"
-        await redis_store.set(merge_key, json.dumps({"status": "pending"}), ttl=merge_service.MERGE_STATUS_TTL)
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
 
-        # Publishing is a database write now, not a consequence of the merge landing. It goes
-        # before the PR is parked so a failed publish leaves the review in the pool to retry.
+        # Publishing is a database write, so it is synchronous: a 200 means the roster is live
+        # and `published_at` is stamped. The open-data commit is queued behind it and retries
+        # on its own — git is the projection, not the record.
         await _publish_roster(
             request.request_id, request.jurisdiction_ocdid, edited, user.user_id
         )
-        # Mark the PR in-flight before the async merge so it leaves the available queue
-        # immediately; do_merge clears it once the merge settles.
-        await pull_requests_db.set_merge_enqueued(request.request_id)
-        # Credit the review now: the reviewer completed it by publishing. The merge is
-        # async, so resolving the entry here (instead of waiting for do_merge) keeps it
-        # from being purged as unresolved before the queued merge runs.
         await review_session_entries_db.resolve_entries_for_request(request.request_id)
-        await temporal_client.enqueue_merge(MergeRequest(
-            pull_request_number=pull_request_number,
-            request_id=request.request_id,
-            approved_by=user.email,
-            user_id=user.user_id,
-            merge_key=merge_key,
-        ))
-        return JSONResponse(content={"status": "pending"}, status_code=202)
+        return {"status": "published"}
 
     # -- Pull Requests: Merge Status ---
     @router.get("/{pull_request_number}/merge-status", include_in_schema=False)

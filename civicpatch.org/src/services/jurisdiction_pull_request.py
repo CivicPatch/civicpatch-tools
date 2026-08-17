@@ -10,6 +10,7 @@ from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
+import database.jurisdictions as jurisdictions_db
 import database.requests as requests_db
 import core.jurisdiction_patch as jurisdiction_patch
 import services.change_logs as change_logs
@@ -17,6 +18,10 @@ import services.pull_request_sync as pull_request_sync
 from shared.utils.statuses import PullRequestStatus
 
 logger = logging.getLogger(__name__)
+
+
+# The only level with a hand-editable registry today; states and counties are upstream-owned.
+LOCAL_LEVEL = "local"
 
 
 class EditRejection(StrEnum):
@@ -101,19 +106,34 @@ async def open_jurisdiction_edit_pr(
     )
 
 
-async def open_jurisdiction_patch_pr(
+async def commit_jurisdiction_patch(
     jurisdiction_ocdid: str,
     fields: dict,
-    author: PrAuthor,
     user_id: str | None,
-) -> tuple[int | None, str, str]:
-    """Open a PR patching a jurisdiction's fields, like editing a person: only what
+) -> tuple[str | None, str, str]:
+    """Patch a jurisdiction's fields and commit them, like editing a person: only what
     was sent is written, and an absent field is left alone rather than cleared.
 
-    Returns (pull_request_number, url_or_error, request_id).
+    Committed directly rather than proposed. A maintainer editing a field has already made
+    the decision a pull request exists to carry, and nothing downstream could reject it —
+    the PR was auto-merged on the caller's behalf anyway. Removing it makes the edit
+    synchronous, which is what retired the reconcile pass that used to answer
+    "has it landed yet?".
+
+    The file is read and patched in place, NOT rendered from the database — the opposite of
+    how people are published, and deliberately so. civicpatch owns its people; it does not own
+    the registry, which od_sync pulls from open-data on a schedule. The file is the source, so
+    reading it is reading the truth rather than taking a redundant round trip.
+
+    Measured 2026-08-17, the concrete cost of rendering instead: the real files carry YAML
+    comments a full render would delete — 36 in ca/local, 17 in ma/local, 28 in wa/counties,
+    9 in wa/state. Fields would survive (the DB stores entries verbatim, `generated_comments`
+    and `issues` included); the comments would not.
+
+    Returns (commit_url, url_or_error, request_id).
     """
     state = _extract_state(jurisdiction_ocdid)
-    file_path = f"data_source/{state}/local/jurisdictions.yml"
+    file_path = f"data_source/{state}/{LOCAL_LEVEL}/jurisdictions.yml"
     request_id = id_utils.make_request_id()
 
     patch = jurisdiction_patch.build_patch(fields)
@@ -124,6 +144,8 @@ async def open_jurisdiction_patch_pr(
     if not raw:
         return None, f"Failed to fetch {file_path}", request_id
 
+    # Round-tripped through ruamel so quotes, comments and layout survive: this touches one
+    # value in a file listing every jurisdiction in the state.
     doc = yaml_load(raw)
     entry = jurisdiction_patch.find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
@@ -134,26 +156,27 @@ async def open_jurisdiction_patch_pr(
         return None, EditRejection.NO_CHANGES, request_id
 
     changed = ", ".join(sorted(patch))
-    pull_request_number, url_or_error = await open_attributed_pr(
-        branch_name=f"civicpatch/jurisdiction-edit/{request_id}",
+    commit_url = await github_service.upsert_github_file(
+        branch_name=github_service.DEFAULT_BRANCH,
         file_path=file_path,
-        content=yaml_dump(jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, patch)),
+        content_str=yaml_dump(jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, patch)),
         commit_message=f"Update {changed}: {jurisdiction_ocdid}",
-        pull_request_title=f"Jurisdiction edit: {state}/{jurisdiction_ocdid.split('/')[-2]}",
-        pull_request_body=f"Updating {changed} for `{jurisdiction_ocdid}`.",
-        author=author,
     )
-    if pull_request_number is None:
-        return None, url_or_error, request_id
+    if not commit_url:
+        return None, f"Failed to commit {file_path}", request_id
 
-    # Tracked like any other PR so its state can be synced and surfaced. No
-    # pipeline_run: nothing ran.
+    # Kept in step so the page reflects the edit immediately. od_sync would bring the same
+    # value back from the file on its next run; writing it here removes the wait, and is what
+    # replaced the reconcile pass rather than leaving the UI stale until a sync.
+    await jurisdictions_db.patch_jurisdiction_entry(jurisdiction_ocdid, patch)
+
+    # Published on commit: there is no review step between the edit and the file, so the
+    # request is born resolved rather than waiting for a merge to tell us.
     await requests_db.register_jurisdiction_edit_request(
         request_id=request_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
         arguments_json=patch,
-        pr_number=pull_request_number,
-        pr_url=url_or_error,
+        open_data_url=commit_url,
         requested_by_user_id=user_id,
     )
 
@@ -168,7 +191,7 @@ async def open_jurisdiction_patch_pr(
             after_url=patch["url"],
         )
 
-    return pull_request_number, url_or_error, request_id
+    return commit_url, commit_url, request_id
 
 
 async def merge_jurisdiction_pr(

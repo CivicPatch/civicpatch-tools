@@ -61,27 +61,23 @@ PATCH_BODY = {
 }
 
 
+COMMIT_URL = "https://github.com/x/commit/abc123"
+
+
 @pytest.mark.unit
-def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
+def test_patch_jurisdiction_data_commits_for_maintainer(client):
+    """The edit lands within the request: there is no PR to open and no merge to wait on,
+    so the commit url is the whole outcome."""
     client.app.dependency_overrides[get_optional_user] = _maintainer
-    with (
-        patch(
-            "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
-            new_callable=AsyncMock,
-            return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
-        ),
-        patch(
-            "services.jurisdiction_pull_request.merge_jurisdiction_pr",
-            new_callable=AsyncMock,
-        ) as mock_merge,
+    with patch(
+        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
+        new_callable=AsyncMock,
+        return_value=(COMMIT_URL, COMMIT_URL, REQUEST_ID),
     ):
         response = client.patch("/jurisdictions/data", json=PATCH_BODY)
 
     assert response.status_code == 200
-    assert response.json()["data"]["pull_request_number"] == 42
-    # The opened PR is auto-merged via a background task, which takes the request id
-    # so the merge is recorded against the tracked PR and syncs that jurisdiction.
-    mock_merge.assert_awaited_once_with("42", "m@x.com", REQUEST_ID)
+    assert response.json()["data"]["open_data_url"] == COMMIT_URL
 
 
 # The Website field is patched into the jurisdictions repo, so it never passes through
@@ -94,7 +90,7 @@ def test_patch_jurisdiction_data_opens_pr_for_maintainer(client):
 def test_patch_jurisdiction_data_rejects_a_malformed_url(client, url):
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with patch(
-        "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
+        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
         new_callable=AsyncMock,
     ) as mock_open:
         response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": url})
@@ -109,13 +105,9 @@ def test_patch_jurisdiction_data_allows_clearing_the_url(client):
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
         patch(
-            "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
+            "services.jurisdiction_pull_request.commit_jurisdiction_patch",
             new_callable=AsyncMock,
             return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
-        ),
-        patch(
-            "services.jurisdiction_pull_request.merge_jurisdiction_pr",
-            new_callable=AsyncMock,
         ),
     ):
         response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": ""})
@@ -130,7 +122,7 @@ def test_patch_jurisdiction_data_requires_maintainer(client, identity):
     # so it is gated to maintainers alongside the Current tab's people edits.
     client.app.dependency_overrides[get_optional_user] = identity
     with patch(
-        "services.jurisdiction_pull_request.open_jurisdiction_patch_pr",
+        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
         new_callable=AsyncMock,
     ) as mock_open:
         response = client.patch("/jurisdictions/data", json=PATCH_BODY)

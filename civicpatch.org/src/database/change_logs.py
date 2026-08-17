@@ -2,6 +2,7 @@ import json
 
 from database.change_log_summary import summarize_change_log
 from database.database import get_pool
+from database.requests import REVIEW_STATUS
 from schemas.change_logs import JurisdictionChangePayload, PersonChangePayload
 from shared.utils.statuses import ChangeLogType
 
@@ -27,11 +28,11 @@ async def get_change_logs_for_roles(roles: list[str], limit: int, offset: int) -
                    cl.changes, cl.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name,
-                   pr.url AS pull_request_url
+                   r.open_data_url AS pull_request_url
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
-            LEFT JOIN pull_requests pr ON pr.request_id::text = cl.request_id
+            LEFT JOIN requests r ON r.id::text = cl.request_id
             WHERE u.role = ANY(%s)
             ORDER BY cl.created_at DESC
             LIMIT %s OFFSET %s

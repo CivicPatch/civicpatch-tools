@@ -5,6 +5,7 @@ from typing import Any, List, Optional
 from psycopg import sql
 
 from database.database import get_pool, to_iso
+from database.requests import REVIEW_STATUS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 from lib.github.utils import pull_request_url_to_number
 
@@ -19,7 +20,6 @@ async def get_pipeline_run_for_review(request_id: str) -> dict | None:
                    j.created_at, j.updated_at
             FROM pipeline_runs j
             JOIN requests r ON r.id = j.request_id
-            LEFT JOIN pull_requests pr ON pr.request_id = j.request_id
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE j.request_id = %s
             """,
@@ -70,10 +70,9 @@ async def get_pipeline_run(request_id: str):
         await cur.execute(
             """
             SELECT j.status, j.progress, r.arguments_json, r.data_json,
-                   j.created_at, j.updated_at, pr.url
+                   j.created_at, j.updated_at, r.open_data_url
             FROM pipeline_runs j
             LEFT JOIN requests r ON r.id = j.request_id
-            LEFT JOIN pull_requests pr ON pr.request_id = r.id
             WHERE j.request_id = %s;
             """,
             (request_id,),
@@ -292,11 +291,10 @@ async def get_pipeline_run_data_json(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
+            # `data_json` is a request column; joining pipeline_runs only gated it behind
+            # "a run exists", which hid the roster from anything that never ran.
             """
-            SELECT r.data_json
-            FROM pipeline_runs j
-            LEFT JOIN requests r ON r.id = j.request_id
-            WHERE j.request_id = %s LIMIT 1
+            SELECT data_json FROM requests WHERE id::text = %s
             """,
             (request_id,),
         )

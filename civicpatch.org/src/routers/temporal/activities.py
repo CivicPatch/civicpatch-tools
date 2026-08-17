@@ -1,7 +1,6 @@
 from temporalio import activity
 
 import services.pull_request_sync as pr_sync
-import services.jurisdiction_edit_reconcile as edit_reconcile
 import services.open_data_sync as data_sync
 import services.pull_request_merge as pull_request_merge
 import lib.github.api as github_service
@@ -28,10 +27,6 @@ async def sync_pr_state_activity() -> None:
 @activity.defn
 async def od_sync_activity() -> None:
     await data_sync.sync_all()
-    # After the projection, not inside it: any pending edit whose value is now live
-    # is done, however it got there. Follows the jurisdiction projection if that ever
-    # moves to its own workflow.
-    await edit_reconcile.reconcile_landed_jurisdiction_edits()
 
 
 @activity.defn
