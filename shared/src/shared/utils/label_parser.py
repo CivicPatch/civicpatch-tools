@@ -136,6 +136,21 @@ def _value_index(
     return None
 
 
+def _designation_value(word: str) -> str:
+    """The stored form of a designation's value.
+
+    Leading zeros are dropped because the value composes a published ocdid: "Ward 03"
+    and "Ward 3" are one division, and minting both leaves two ids nothing can tell
+    apart afterwards. `normalize_word` handles ordinals and roman numerals but not
+    this, since it also builds match keys where "03" and "3" are already the same.
+    """
+    value = normalize_word(word)
+    if not value.isdigit():
+        return value
+    stripped = value.lstrip("0")
+    return stripped or "0"
+
+
 def _is_value(key: str) -> bool:
     """A number, a cardinal direction, or a single letter — the three closed sets a real
     designation value comes from ("Ward 3", "District IV", "North Ward", "At-Large A").
@@ -189,14 +204,21 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         span = list(range(first, last + 1))
         if value_index is not None:
             span.append(value_index)
-            value = normalize_word(words[value_index].key)
+            value = _designation_value(words[value_index].key)
             if configs.get(canonical, {}).get("is_division"):
                 found_division = Division(designation=canonical, value=value)
                 if found_division not in divisions:
                     divisions.append(found_division)
             else:
                 other_designations.append(f"{canonical.title()} {value.title()}")
-        elif not configs.get(canonical, {}).get("is_valueless"):
+        elif configs.get(canonical, {}).get("is_valueless"):
+            # Consumed and recorded nowhere, deliberately. A valueless designation says
+            # only that the post covers the whole jurisdiction, which the division
+            # already carries — keeping "At-Large" would put it in the post label and
+            # split one seat into two posts. "At-Large A" takes the branch above, where
+            # the value is the thing that tells two posts apart.
+            pass
+        else:
             # A keyword with no valid value is not a designation. Leaving the tokens
             # unconsumed sends them to `unmatched`, where an unknown office belongs.
             found = _find_alias(words, designation_aliases, start=last + 1)
