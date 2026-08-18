@@ -293,8 +293,8 @@ async def get_me(user: Identity = Depends(get_optional_user)):
 
 
 @app.get("/api/v1/sse/pipeline_runs/status", include_in_schema=False)
-async def sse_job_status(jurisdiction_ocdid: str, request: Request):
-    key = f"job_status:{jurisdiction_ocdid}"
+async def sse_pipeline_run_status(jurisdiction_ocdid: str, request: Request):
+    key = f"pipeline_run_status:{jurisdiction_ocdid}"
 
     async def event_generator():
         try:

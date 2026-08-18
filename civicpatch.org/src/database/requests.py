@@ -27,6 +27,27 @@ REVIEW_STATUS = (
     f"ELSE '{RequestReviewStatus.PENDING.value}' END"
 )
 
+# SQL predicate for "this jurisdiction already has work in flight" — the scrape-candidate gate.
+# Requires the requests table aliased `r`.
+#
+# Two things count: a run that has not finished, and a finished one still waiting to be
+# reviewed. A run that ended without producing anything does NOT — an errored or cancelled
+# scrape is over, and blocking on it would make a jurisdiction un-scrapeable until someone
+# dismissed a request that was never reviewable.
+#
+# That last clause is why this cannot simply be "unpublished and undismissed": cancelling
+# leaves both timestamps NULL, so the plain test never lets go.
+WORK_IN_FLIGHT = (
+    "r.published_at IS NULL AND r.dismissed_at IS NULL "
+    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
+    "AND NOT EXISTS ("
+    "SELECT 1 FROM pipeline_runs j_done "
+    "WHERE j_done.request_id = r.id "
+    f"AND j_done.status IN ('{PipelineRunStatus.ERROR.value}', "
+    f"'{PipelineRunStatus.CANCELLED.value}', '{PipelineRunStatus.RESOLVED.value}')"
+    ")"
+)
+
 # SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
 # aliased `r`; callers share this one definition instead of re-spelling it.
 #

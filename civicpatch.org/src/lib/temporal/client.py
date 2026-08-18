@@ -1,11 +1,13 @@
 import os
 import uuid
+from datetime import datetime, timezone
 from typing import Optional
 
-from temporalio.client import Client
+from temporalio.client import Client, WorkflowExecutionStatus
 from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
+from core.temporal_workflow_state import TemporalWorkflowState, summarize
 from lib.temporal.types import MergeRequest, OpenDataCommitRequest
 from lib.temporal.workflows import (
     OdSyncTargetedWorkflow,
@@ -133,6 +135,40 @@ async def signal_human_approval(jurisdiction_ocdid: str) -> None:
     client = await _get_client()
     handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
     await handle.signal("human_approval")
+
+
+async def describe_workflow(jurisdiction_ocdid: str) -> TemporalWorkflowState | None:
+    """What this jurisdiction's scrape workflow is doing right now.
+
+    None when there is no workflow, it has finished, or it is between activities. All three
+    mean "nothing to say", and the caller renders nothing — the block only exists to explain
+    a run that is in flight.
+
+    Read live rather than stored: this is true for seconds at a time, and a stored copy would
+    be a stale answer to a question only worth asking about the present.
+    """
+    client = await _get_client()
+    handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
+    try:
+        description = await handle.describe()
+    except RPCError as e:
+        if e.status == RPCStatusCode.NOT_FOUND:
+            return None
+        raise
+
+    if description.status != WorkflowExecutionStatus.RUNNING:
+        return None
+
+    pending = [
+        {
+            "activity_type": a.activity_type.name if a.activity_type else None,
+            "attempt": a.attempt,
+            "scheduled_time": a.scheduled_time.ToDatetime() if a.HasField("scheduled_time") else None,
+            "last_failure": a.last_failure if a.HasField("last_failure") else None,
+        }
+        for a in description.raw_description.pending_activities
+    ]
+    return summarize(pending, datetime.now(timezone.utc))
 
 
 async def cancel_workflow(jurisdiction_ocdid: str) -> None:

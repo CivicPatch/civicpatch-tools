@@ -252,3 +252,62 @@ def test_dismiss_non_merge_issue_leaves_park_untouched(client):
 
     assert response.status_code == 200
     clear_enqueued.assert_not_awaited()
+
+
+# ── POST /pipeline_runs/{request_id}/cancel ───────────────────────────────────
+
+TEST_OCDID = "ocd-jurisdiction/country:us/state:wa/place:buckley/government"
+
+
+def _cancel_mocks(pipeline_run={"arguments_json": {"jurisdiction_ocdid": TEST_OCDID}}):
+    return (
+        patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=pipeline_run),
+        patch("routers.api.pipeline_runs.temporal_service.cancel_workflow", new_callable=AsyncMock),
+        patch("routers.api.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock),
+        patch("database.users.get_user_id_by_provider", new_callable=AsyncMock, return_value="user-1"),
+        patch("routers.api.pipeline_runs.dismiss_request", new_callable=AsyncMock),
+    )
+
+
+@pytest.mark.unit
+def test_cancel_settles_the_review_as_well_as_the_run():
+    """Cancelling is a person deciding this scrape will not be published. Without the dismissal
+    the request sits at "pending" forever: nothing reviews a run that never finished, so no
+    later action would ever resolve it."""
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
+    app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
+    client = TestClient(app)
+
+    get_run, cancel_wf, update_status, get_user, dismiss = _cancel_mocks()
+    with get_run, cancel_wf as mock_cancel, update_status as mock_status, get_user, dismiss as mock_dismiss:
+        response = client.post(f"/pipeline_runs/{TEST_REQUEST_ID}/cancel")
+
+    assert response.status_code == 200
+    mock_cancel.assert_awaited_once_with(TEST_OCDID)
+    assert mock_status.await_args.kwargs["status"] == "CANCELLED"
+    mock_dismiss.assert_awaited_once_with(TEST_REQUEST_ID, resolved_by_user_id="user-1")
+
+
+@pytest.mark.unit
+def test_cancel_does_not_dismiss_when_the_workflow_refuses_to_stop():
+    """A failed cancel leaves the run alone; recording it as dismissed would claim a decision
+    that did not take effect."""
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
+    app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
+    client = TestClient(app)
+
+    get_run, _, update_status, get_user, dismiss = _cancel_mocks()
+    with (
+        get_run,
+        patch("routers.api.pipeline_runs.temporal_service.cancel_workflow",
+              new_callable=AsyncMock, side_effect=RuntimeError("temporal down")),
+        update_status,
+        get_user,
+        dismiss as mock_dismiss,
+    ):
+        response = client.post(f"/pipeline_runs/{TEST_REQUEST_ID}/cancel")
+
+    assert response.status_code == 500
+    mock_dismiss.assert_not_awaited()

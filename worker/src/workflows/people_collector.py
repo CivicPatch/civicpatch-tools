@@ -3,10 +3,10 @@ from datetime import timedelta
 from typing import Optional
 
 from temporalio import workflow
-from temporalio.common import WorkflowIDReusePolicy
+from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
-    from activities.github_activity import trigger_github_action, trigger_local
+    from activities.github_activity import cancel_local_run, trigger_github_action, trigger_local
     from activities.pipeline_run_status_activity import update_pipeline_run_status, poll_pipeline_run_status
     from constants import RunConclusion
     from shared.utils.statuses import PipelineRunStatus
@@ -44,7 +44,21 @@ class PeopleCollectorWorkflow:
             args=[request_id, PipelineRunStatus.RUNNING],
             start_to_close_timeout=timedelta(seconds=30),
         )
-        conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        try:
+            conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        except asyncio.CancelledError:
+            # The scrape outlives this workflow unless it is told otherwise: cancelling here
+            # only stops the poller. Shielded because the workflow is already cancelling, so an
+            # unshielded activity would be cancelled before it could be sent.
+            if dispatch_mode == _DISPATCH_MODE_LOCAL:
+                await asyncio.shield(
+                    workflow.execute_activity(
+                        cancel_local_run,
+                        args=[request_id],
+                        start_to_close_timeout=timedelta(seconds=30),
+                    )
+                )
+            raise
         return await self._handle_conclusion(conclusion, dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
 
     async def _dispatch_and_poll(
@@ -56,11 +70,16 @@ class PeopleCollectorWorkflow:
         source_urls: Optional[list[str]] = None,
     ) -> str:
         trigger = trigger_local if dispatch_mode == _DISPATCH_MODE_LOCAL else trigger_github_action
+        # Never retried. Dispatching is not idempotent — each attempt starts a real GitHub
+        # Actions run — and the activity waits for that run to register before returning, so a
+        # slow registration used to time it out and dispatch again. Observed 2026-08-17:
+        # fourteen runs queued for one scrape. A failure here should surface, not multiply.
         await workflow.execute_activity(
             trigger,
             args=[jurisdiction_ocdid, request_id, url, source_urls],
-            start_to_close_timeout=timedelta(minutes=2),
+            start_to_close_timeout=timedelta(minutes=5),
             heartbeat_timeout=timedelta(seconds=30),
+            retry_policy=RetryPolicy(maximum_attempts=1),
         )
         return await workflow.execute_activity(
             poll_pipeline_run_status,

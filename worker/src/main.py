@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from activities.github_activity import trigger_github_action, trigger_local
+from activities.github_activity import cancel_local_run, trigger_github_action, trigger_local
 from activities.pipeline_run_status_activity import (
     poll_pipeline_run_status,
     update_pipeline_run_status,
@@ -43,6 +43,7 @@ async def main() -> None:
         activities=[
             trigger_github_action,
             trigger_local,
+            cancel_local_run,
             poll_pipeline_run_status,
             update_pipeline_run_status,
         ],

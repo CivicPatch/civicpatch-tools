@@ -8,7 +8,7 @@ from shared.utils.statuses import (
     RequestType,
 )
 from database.database import get_pool, to_iso
-from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS
+from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
 from lib.github.utils import pull_request_url_to_number
 
 
@@ -297,14 +297,13 @@ async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM requests r
-            WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
-              AND r.request_type != %s
+            WHERE {WORK_IN_FLIGHT}
               AND r.jurisdiction_ocdid LIKE %s
             """,
-            (RequestType.JURISDICTION_MANUAL_EDIT, f"%state:{state_code}%"),
+            (f"%state:{state_code}%",),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -314,15 +313,14 @@ async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT 1
             FROM requests r
-            WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
-              AND r.request_type != %s
+            WHERE {WORK_IN_FLIGHT}
               AND r.jurisdiction_ocdid = %s
             LIMIT 1
             """,
-            (RequestType.JURISDICTION_MANUAL_EDIT, jurisdiction_ocdid),
+            (jurisdiction_ocdid,),
         )
         return (await cur.fetchone()) is not None
 

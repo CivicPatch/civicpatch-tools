@@ -14,7 +14,7 @@ export interface JurisdictionHeaderProps {
   publishedAt?: string | null;
   canStartScrape: boolean;
   isScrapeBlocked: boolean;
-  isJobRunning: boolean;
+  isRunInProgress: boolean;
   onScrapeClick: () => void;
 }
 
@@ -46,7 +46,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
     publishedAt,
     canStartScrape,
     isScrapeBlocked,
-    isJobRunning,
+    isRunInProgress,
     onScrapeClick,
   } = props;
 
@@ -83,11 +83,11 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
         ${canStartScrape
           ? html`<button
               class="btn-primary"
-              ?disabled=${isJobRunning || isScrapeBlocked}
+              ?disabled=${isRunInProgress || isScrapeBlocked}
               @click=${onScrapeClick}
             >
-              <i class="fa-solid fa-rotate ${isJobRunning ? "fa-spin" : ""}"></i>
-              ${isJobRunning ? "Scraping…" : "Re-scrape"}
+              <i class="fa-solid fa-rotate ${isRunInProgress ? "fa-spin" : ""}"></i>
+              ${isRunInProgress ? "Scraping…" : "Re-scrape"}
             </button>`
           : nothing}
       </div>

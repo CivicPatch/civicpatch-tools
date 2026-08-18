@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 import httpx
 import shared.utils.id_utils
 from pydantic import BaseModel
-from shared.utils.yaml_utils import yaml_dump, yaml_load
+from shared.utils.yaml_utils import yaml_load
 
 import lib.cache as cache_service
 from lib.github.auth import _get_github_config, get_default_headers
@@ -87,54 +87,6 @@ async def trigger_people_job_workflow(
         )
 
     logger.info("Successfully triggered people job workflow.")
-    return True
-
-
-async def trigger_github_data_intake_workflow(
-    user_email: str,
-    request_id: str,
-    jurisdiction_ocdid: str,
-    zip_file_url: str,
-    env: str = "production",
-):
-    logger.info(
-        f"Triggering data intake workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, user_email={user_email}"
-    )
-    data = {
-        "ref": "main",
-        "inputs": {
-            "user_email": user_email,
-            "request_id": request_id,
-            "jurisdiction_ocdid": jurisdiction_ocdid,
-            "zip_file_url": zip_file_url,
-            "env": env,
-        },
-    }
-
-    default_headers = await get_default_headers()
-
-    headers = {
-        **default_headers,
-        "Accept": "application/vnd.github+json",
-    }
-
-    _, _, _, open_data_repo_url = _get_github_config()
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.post(
-            f"{open_data_repo_url}/actions/workflows/data_intake.yml/dispatches",
-            headers=headers,
-            json=data,
-        )
-
-    if response.status_code != 204:
-        logger.error(
-            f"Failed to trigger data intake workflow: {response.status_code} - {response.text}"
-        )
-        raise Exception(
-            f"Failed to trigger workflow: {response.status_code} - {response.text}"
-        )
-
-    logger.info("Successfully triggered data intake workflow.")
     return True
 
 
@@ -225,59 +177,6 @@ async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
             break
         page += 1
     return results
-
-
-async def update_pull_request_file(
-    branch_name: str,
-    file_path: str,
-    new_data: List[Dict[str, Any]],
-    commit_message: str = "Automated update via API",
-) -> bool:
-    logger.info(
-        f"Updating file '{file_path}' on branch '{branch_name}' via pull request."
-    )
-    _, _, _, open_data_repo_url = _get_github_config()
-    default_headers = await get_default_headers()
-    headers = {
-        **default_headers,
-    }
-    contents_url = f"{open_data_repo_url}/contents/{file_path}?ref={branch_name}"
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        contents_response = await client.get(contents_url, headers=headers)
-        if contents_response.status_code != 200:
-            logger.error(
-                f"Failed to fetch file for update: {contents_response.status_code} {contents_response.text}"
-            )
-            return False
-        sha = contents_response.json()["sha"]
-        serialized_data = yaml_dump(new_data)
-        encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode(
-            "utf-8"
-        )
-
-        data = {
-            "message": commit_message,
-            "content": encoded_content,
-            "sha": sha,
-            "branch": branch_name,
-        }
-
-        headers = {
-            **default_headers,
-            "Accept": "application/vnd.github+json",
-        }
-
-        update_response = await client.put(contents_url, json=data, headers=headers)
-        if update_response.status_code in [200, 201]:
-            logger.info(
-                f"Successfully updated file '{file_path}' on branch '{branch_name}'."
-            )
-            return True
-        else:
-            logger.error(
-                f"Error updating file: {update_response.status_code} {update_response.text}"
-            )
-            return False
 
 
 async def upsert_github_file(

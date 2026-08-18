@@ -1,4 +1,4 @@
-from typing import Any, List, Literal, Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel
 
@@ -17,7 +17,6 @@ class ServerDetail(BaseModel):
 
 class CreatePipelineRunRequest(BaseModel):
     jurisdiction_ocdid: str
-    dispatch_mode: Literal["local", "remote"] = "remote"
     name: Optional[str] = None
     url: Optional[str] = None
     source_urls: Optional[list[str]] = None
@@ -86,9 +85,7 @@ class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
 
 
 class SubmitPipelineRunArtifactsResponse(BaseModel):
-    filename: str
     status: str
-    zip_file_url: Optional[str] = None
     request_id: str
     jurisdiction_ocdid: str
 

@@ -40,6 +40,11 @@ export function parseReviewView(value: string | null | undefined): ReviewViewKey
     : ReviewView.OVERVIEW;
 }
 
+// The jurisdiction page is public; the review session is not. A signed-out visitor following
+// a review link is bounced to the front page with no explanation, so the link offers sign-in
+// instead. No return-to param: /login does not support one, and promising a bounce-back it
+// will not honour is worse than landing them on the review list.
+export const LOGIN_PATH = "/login";
 export const REVIEW_PATH = "/review";
 export const REVIEW_SESSION_PATH = "/review/session";
 
@@ -53,3 +58,4 @@ export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE
 // One pull request, no session. What the jurisdiction page's Review button links to.
 export const pullRequestUrl = (stateCode: string, requestId: string) =>
   `${sessionUrl(stateCode)}&${PULL_REQUEST_PARAM}=${encodeURIComponent(requestId)}`;
+

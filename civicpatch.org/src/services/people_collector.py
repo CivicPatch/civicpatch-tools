@@ -6,8 +6,6 @@ import lib.sheets as google_sheets_service
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest
 from schemas.pipeline_runs import SubmitPipelineRunArtifactsResponse
 import lib.files as file_utils
-import shared.utils.id_utils
-import shared.utils.config_utils
 import lib.storage as storage_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
@@ -96,9 +94,9 @@ async def _commit_unreviewed_copy(request_id: str, jurisdiction_ocdid: str) -> N
 async def _handle_submit_pipeline_run_artifacts(
         request: HandleSubmitPipelineRunArtifactsRequest,
 ) -> SubmitPipelineRunArtifactsResponse:
-    file_suffix = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
-
-    pull_request_file_patterns = [
+    # What the scrape produced and we publish: the rendered roster, plus the run context the
+    # review summary and resolved URL are read out of.
+    output_file_patterns = [
         "data/*/local/*.yml",
         "data_source/*/local/*/pipeline_run_context.json",
     ]
@@ -106,8 +104,6 @@ async def _handle_submit_pipeline_run_artifacts(
     image_file_patterns = [
         "data_source/*/local/*/images/*",
     ]
-
-    artifact_file_patterns = pull_request_file_patterns
 
     debug_file_patterns = [
         "data_source/*/local/*/cache/*",
@@ -122,13 +118,14 @@ async def _handle_submit_pipeline_run_artifacts(
     os.makedirs(extracted_dir, exist_ok=True)
     await file_utils.extract_zip(zip_path, extracted_dir)
 
-    # Copy files to artifact_files (for zipping later)
-    # Copy files to debug_files (for uploading individually to storage for debugging)
-    pull_request_file_dir = os.path.join(temp_dir, "pull_request_files")
+    # Three destinations, three fates: output is read and published, images are uploaded and
+    # become each person's cdn_image, debug files are uploaded individually for the run log,
+    # run context and per-source markdown the UI links to.
+    output_file_dir = os.path.join(temp_dir, "output_files")
     debug_file_dir = os.path.join(temp_dir, "debug_files")
     image_file_dir = os.path.join(temp_dir, "image_files")
 
-    file_utils.copy_files_preserving_hierarchy(extracted_dir, pull_request_file_dir, patterns=pull_request_file_patterns)
+    file_utils.copy_files_preserving_hierarchy(extracted_dir, output_file_dir, patterns=output_file_patterns)
     file_utils.copy_files_preserving_hierarchy(extracted_dir, debug_file_dir, patterns=debug_file_patterns)
     file_utils.copy_files_preserving_hierarchy(extracted_dir, image_file_dir, patterns=image_file_patterns)
 
@@ -150,11 +147,11 @@ async def _handle_submit_pipeline_run_artifacts(
         workflow_context = {}
 
     if is_success:
-        is_valid = await file_utils.validate_file_patterns(pull_request_file_dir, artifact_file_patterns)
+        is_valid = await file_utils.validate_file_patterns(output_file_dir, output_file_patterns)
         if not is_valid:
-            raise Exception(f"Uploaded zip file is missing expected files matching patterns: {artifact_file_patterns}")
+            raise Exception(f"Uploaded zip file is missing expected files matching patterns: {output_file_patterns}")
 
-        data_file_path = file_utils.find_file(pull_request_file_dir, "data/*/local/*.yml")
+        data_file_path = file_utils.find_file(output_file_dir, "data/*/local/*.yml")
         with open(data_file_path, "r") as f:
             data = yaml_load(f.read())
         updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
@@ -183,23 +180,18 @@ async def _handle_submit_pipeline_run_artifacts(
         await upsert_issue(request.request_id, error_step, [error_detail])
 
 
-    artifact_zip_path = await file_utils.zip_directory(pull_request_file_dir, f"artifact_{file_suffix}.zip")
-    zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
-    zip_file_url = await storage_service.upload_file_to_storage(
-        PUBLIC_BUCKET,
-        artifact_zip_path,
-        key=zip_file_key,
-        with_presigned_url=True
-    )
-
-    # No data_intake dispatch. That Action opened the pull request a scrape used to be
-    # reviewed through, and then told us its number so a card could appear. Both jobs moved
-    # here: the roster is committed to the unreviewed path directly, and the request itself
-    # carries the review state. Dispatching as well would open a pull request nothing reads.
+    # No data_intake dispatch, and no artifact zip. That Action opened the pull request a
+    # scrape used to be reviewed through and then told us its number so a card could appear;
+    # both jobs moved here, so the roster is committed to the unreviewed path directly and the
+    # request carries its own review state.
+    #
+    # The zip existed only to give that Action a URL to fetch. Its contents — the rendered
+    # roster and the run context — are now in `data_json` and on open-data, so zipping and
+    # uploading them was work for no reader. The image and debug uploads above are separate
+    # and stay: images become `cdn_image`, and the debug files back the run log, run context
+    # and per-source markdown the UI links to.
     return SubmitPipelineRunArtifactsResponse(
-        filename=file_suffix,
         status="uploaded",
-        zip_file_url=zip_file_url,
         request_id=request.request_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
     )

@@ -178,7 +178,7 @@ function QueuePage() {
           .perPage=${activePipelineRunsPerPage}
           .onPageChange=${(p: number) => { setAjParamsInUrl(p, activePipelineRunsPerPage); setActivePipelineRunsPage(p); }}
           .onPerPageChange=${handleActivePipelineRunsPerPageChange}
-          .canCancel=${permissions.can_cancel_job}
+          .canCancel=${permissions.can_cancel_pipeline_run}
           .onCancel=${handleCancel}
         ></queue-active-pipeline-runs>
         <queue-pr-list
