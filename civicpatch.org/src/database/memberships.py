@@ -21,7 +21,7 @@ async def record(
     person_id: str,
     post_id: str,
     organization_id: str,
-    observed_at,
+    seen_at,
     label: str | None = None,
     start_date=None,
     end_date=None,
@@ -31,6 +31,9 @@ async def record(
     Any open membership they hold on a *different* post in the same body is closed first, so
     the insert below can only ever collide with the same-post case. That ordering is what
     makes "one open per body" hold without the insert needing to know which case it is in.
+
+    `seen_at` is when the source said this, not when the row was written — it lands in
+    `first_seen_at` / `last_seen_at`, and on `closed_at` for the membership being replaced.
 
     `label`, `start_date` and `end_date` come from the scrape and are overwritten on every
     pass. That is the surface `field_locks` will guard; until it exists, a manual correction
@@ -42,7 +45,7 @@ async def record(
         WHERE person_id = %s AND organization_id = %s
           AND closed_at IS NULL AND post_id <> %s
         """,
-        (observed_at, person_id, organization_id, post_id),
+        (seen_at, person_id, organization_id, post_id),
     )
 
     await cur.execute(
@@ -66,8 +69,8 @@ async def record(
             label,
             start_date,
             end_date,
-            observed_at,
-            observed_at,
+            seen_at,
+            seen_at,
         ),
     )
     return (await cur.fetchone())[0]
