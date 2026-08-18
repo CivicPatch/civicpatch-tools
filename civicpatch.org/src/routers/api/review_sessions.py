@@ -16,6 +16,7 @@ import database.review_session_navigation as review_session_navigation_db
 import database.review_session_entries as review_session_entries_db
 import database.review_session_stats as review_session_stats_db
 import lib.github.api as github_service
+import lib.buckets as buckets
 import lib.storage as storage_service
 import services.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
@@ -28,7 +29,7 @@ from lib.auth import require_route_access
 def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> Optional[str]:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return storage_service.get_presigned_url_cached("civicpatch-debug", relative_path)
+    return storage_service.get_presigned_url_cached(buckets.DEBUG, relative_path)
 
 
 def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:

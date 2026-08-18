@@ -11,6 +11,8 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
+import lib.buckets as buckets
+
 from services.publish import (
     commit_rendered_file,
     commit_unreviewed_scrape,
@@ -116,8 +118,10 @@ async def test_a_rejected_write_records_no_url():
 
 # ── image promotion: photos move to the CDN when the data does ──────────────
 
+# Built from the configured bucket, not a literal: the artifacts host follows whichever bucket
+# this environment writes to, so a hardcoded one only matches production.
 _ARTIFACTS_URL = (
-    "https://civicpatch-artifacts.civicpatch.org"
+    f"https://{buckets.ARTIFACTS}.civicpatch.org"
     "/2026-02-09-e530/data_source/wa/local/place_seattle/images/jane.jpg"
 )
 
@@ -129,8 +133,10 @@ def test_promote_images_copies_and_rewrites():
 
     mock_copy.assert_called_once()
     args = mock_copy.call_args.args
-    assert args[0] == "civicpatch-artifacts"
-    assert args[2] == "civicpatch"
+    # Whichever buckets this environment is configured for — the names are config now, so
+    # asserting literals here would pin the test to one deployment.
+    assert args[0] == buckets.ARTIFACTS
+    assert args[2] == buckets.CDN
     assert args[3] == "open-data/wa/local/place_seattle/images/jane.jpg"
     assert promoted[0]["cdn_image"].endswith("/open-data/wa/local/place_seattle/images/jane.jpg")
 

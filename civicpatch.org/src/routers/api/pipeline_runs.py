@@ -9,6 +9,7 @@ from typing import Optional
 
 import lib.files as file_utils
 import lib.pubsub as pubsub_service
+import lib.buckets as buckets
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import services.jurisdiction_scrape_candidate as candidate_service
@@ -79,8 +80,8 @@ _DISPATCH_MODE_LOCAL = "local"
 DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
 
-ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
-PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
+ARTIFACTS_BASE_URL = storage_service.get_civicpatch_artifacts_url("").rstrip("/")
+PAUSED_CONTEXT_BUCKET = buckets.ARTIFACTS
 
 
 def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
@@ -713,18 +714,18 @@ def get_router(api_key_header):
                         else {}
                     ),
                     "pipeline_run_log_url": storage_service.get_presigned_url_cached(
-                        "civicpatch-debug", f"{debug_key_base}/pipeline_run.log"
+                        buckets.DEBUG, f"{debug_key_base}/pipeline_run.log"
                     )
                     if (debug_key_base and is_admin)
                     else None,
                     "pipeline_run_context_url": storage_service.get_presigned_url_cached(
-                        "civicpatch-debug",
+                        buckets.DEBUG,
                         f"{debug_key_base}/pipeline_run_context.json",
                     )
                     if debug_key_base
                     else None,
                     "debug_url": storage_service.get_bucket_url(
-                        "civicpatch-debug", req_id
+                        buckets.DEBUG, req_id
                     )
                     if (is_admin and req_id)
                     else None,

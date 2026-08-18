@@ -13,6 +13,11 @@ services:
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8000"
+      # Where the CDN bucket is served. The nonprod buckets have no public domain, so this
+      # host does not resolve — dev image URLs are correctly shaped and will 404 in a browser.
+      # That is deliberate: pointing dev at cdn.civicpatch.org would produce URLs that look
+      # right and serve production's images for objects dev wrote somewhere else entirely.
+      FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://civicpatch-nonprod.civicpatch.org}
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}

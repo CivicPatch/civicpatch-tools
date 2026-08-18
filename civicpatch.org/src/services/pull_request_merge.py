@@ -73,19 +73,3 @@ async def do_merge(pull_request_number: str, request_id: str, approved_by: str |
             await _handle_failure(merge_key, request_id, "An unexpected error occurred during merge")
         except Exception:
             pass
-
-
-async def reconcile_stuck_merges(stuck_after_minutes: int) -> None:
-    # Backstop for merges that the merge worker never settled: do_merge records its own
-    # failures, but only if it ran — a dead worker leaves the PR parked with no issue and
-    # no error reaching the reviewer. This runs in the API process, off the merge worker's
-    # failure domain, so it surfaces the stuck merge into the issues table regardless of why
-    # the merge never happened. If the merge later recovers, an admin dismisses the issue.
-    stuck = await pull_requests_db.get_stuck_merges(stuck_after_minutes)
-    for pr in stuck:
-        logger.warning(f"Stuck merge for PR {pr['pr_number']} (request {pr['request_id']}); raising issue")
-        await issues_db.upsert_issue(
-            pr["request_id"],
-            PipelineIssueType.MERGE_FAILED,
-            [{"error": "Merge never completed — the merge worker may be down", "mergeable_state": None}],
-        )
