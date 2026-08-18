@@ -40,11 +40,18 @@ BEGIN
     END IF;
 END $$;
 
+-- `status = 'closed'` excluded explicitly, not just left to the second UPDATE: a pull request
+-- can be parked for merge AND then closed, which matches both conditions and sets both
+-- timestamps — violating the CHECK added below. Production had one such row (a merge enqueued,
+-- the merge never landed, the PR closed); dev had none, so this passed locally and aborted
+-- there. Closed wins: parking records that a reviewer clicked publish, but under the old flow
+-- the publish only took effect when the merge landed, and for this row it never did.
 UPDATE requests r
    SET published_at = COALESCE(pr.merged_at, pr.merge_enqueued_at, pr.updated_at)
   FROM pull_requests pr
  WHERE pr.request_id = r.id
    AND r.published_at IS NULL
+   AND pr.status != 'closed'
    AND (pr.status = 'merged' OR pr.merge_enqueued_at IS NOT NULL);
 
 UPDATE requests r

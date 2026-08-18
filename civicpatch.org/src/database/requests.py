@@ -56,25 +56,25 @@ WORK_IN_FLIGHT = (
 # is where it belongs now that civicpatch publishes rather than waiting for a merge.
 #
 # Five conditions:
-#   the run succeeded        see below — this one is new
+#   it recorded a roster     see below
 #   not published            was pr.status='open' + pr.merge_enqueued_at IS NULL
 #   not dismissed            was pr.status='closed'
 #   not a jurisdiction edit  same, but a plain column test now the anchor is `requests`
 #   no live reviewer-reported issue   unchanged; returns to the pool when the issue is
 #                                     resolved by an admin or superseded by a newer run
 #
-# The success test is new because the PR gate had been standing in for it: a pull request only
-# ever existed if data_intake received a roster, so cancelled and errored runs were filtered out
-# as a side effect of requiring one. Without it they become cards with nothing to review —
-# measured 2026-08-17, 10 CANCELLED + 7 ERROR, every one with a NULL data_json.
+# The roster test replaced the PR gate, which had been standing in for it: a pull request only
+# ever existed if data_intake received a roster, so runs that produced nothing were filtered out
+# as a side effect of requiring one.
 #
-# Written as EXISTS rather than a `j.status` test so the predicate stays anchored on `r` alone:
-# not every caller joins pipeline_runs, and requiring one is a trap for the next site added.
+# It tests `data_json` rather than the run's status because that is what publishing actually
+# needs — the same condition `_publish_roster` refuses on. A run-success test is a proxy for it
+# and the two disagree: production carries 213 requests whose run succeeded but recorded no
+# roster (measured 2026-08-17), which under a status test become cards a reviewer opens and
+# cannot publish, with nothing to rescue them from — they have no pull request either.
+# Testing the roster directly means the queue and the publish guard can never disagree.
 AVAILABLE_FOR_REVIEW = (
-    "EXISTS ("
-    "SELECT 1 FROM pipeline_runs j_ok "
-    f"WHERE j_ok.request_id = r.id AND j_ok.status = '{PipelineRunStatus.SUCCESS.value}'"
-    ") "
+    "r.data_json IS NOT NULL "
     "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
     "AND NOT EXISTS ("
