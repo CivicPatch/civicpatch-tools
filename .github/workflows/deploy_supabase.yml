@@ -1,10 +1,13 @@
 name: Deploy Supabase config
 
+# Staging is commented out rather than deleted — see the deploy-staging job below. The `push`
+# trigger went with it: it only ever fed staging (prod runs on a release or an explicit
+# dispatch), so leaving it would fire a run on every supabase/** change with nothing to do.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "civicpatch.org/supabase/**"
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "civicpatch.org/supabase/**"
   release:
     types: [published]
   workflow_dispatch:
@@ -14,7 +17,7 @@ on:
         required: true
         type: choice
         options:
-          - staging
+          # - staging
           - prod
 
 permissions:
@@ -36,47 +39,55 @@ env:
   INFISICAL_API_URL: https://infisical.wizards.cafe
 
 jobs:
-  deploy-staging:
-    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.target == 'staging')
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: civicpatch.org
-    steps:
-      - uses: actions/checkout@v7
+  # ── Disabled: staging is being retired ──────────────────────────────────────
+  #
+  # Commented rather than deleted because the shape is still the reference for how a second
+  # environment gets its Supabase config, and reviving it is uncommenting three blocks: this
+  # job, the `push` trigger, and the `staging` choice above. It also needs its Infisical
+  # `staging` env to still hold SUPABASE_ACCESS_TOKEN / SUPABASE_PROJECT_REF / RESEND_API_KEY /
+  # EMAIL_SENDER_NAME, which is not guaranteed once the environment is gone.
+  #
+  # deploy-staging:
+  #   if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.target == 'staging')
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: civicpatch.org
+  #   steps:
+  #     - uses: actions/checkout@v7
 
-      - uses: supabase/setup-cli@v1
-        with:
-          version: latest
+  #     - uses: supabase/setup-cli@v1
+  #       with:
+  #         version: latest
 
-      - name: Install Infisical CLI
-        run: |
-          curl -1sLf 'https://artifacts-cli.infisical.com/setup.deb.sh' | sudo -E bash
-          sudo apt-get install -y infisical
+  #     - name: Install Infisical CLI
+  #       run: |
+  #         curl -1sLf 'https://artifacts-cli.infisical.com/setup.deb.sh' | sudo -E bash
+  #         sudo apt-get install -y infisical
 
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}
-          tags: tag:ci
+  #     - name: Connect to Tailscale
+  #       uses: tailscale/github-action@v4
+  #       with:
+  #         oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
+  #         oauth-secret: ${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}
+  #         tags: tag:ci
 
-      - name: Authenticate with Infisical
-        env:
-          INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
-          INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
-        run: |
-          INFISICAL_TOKEN=$(infisical login --method=universal-auth \
-            --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
-            --client-secret="$INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET" \
-            --domain="$INFISICAL_API_URL" \
-            --silent --plain)
-          echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
+  #     - name: Authenticate with Infisical
+  #       env:
+  #         INFISICAL_UNIVERSAL_AUTH_CLIENT_ID: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_ID }}
+  #         INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET: ${{ secrets.INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET }}
+  #       run: |
+  #         INFISICAL_TOKEN=$(infisical login --method=universal-auth \
+  #           --client-id="$INFISICAL_UNIVERSAL_AUTH_CLIENT_ID" \
+  #           --client-secret="$INFISICAL_UNIVERSAL_AUTH_CLIENT_SECRET" \
+  #           --domain="$INFISICAL_API_URL" \
+  #           --silent --plain)
+  #         echo "INFISICAL_TOKEN=$INFISICAL_TOKEN" >> "$GITHUB_ENV"
 
-      - name: Push to Supabase (staging env)
-        run: |
-          infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
-            sh -c 'supabase config push --yes --project-ref "$SUPABASE_PROJECT_REF"'
+  #     - name: Push to Supabase (staging env)
+  #       run: |
+  #         infisical run --projectId="$INFISICAL_PROJECT_ID" --env=staging -- \
+  #           sh -c 'supabase config push --yes --project-ref "$SUPABASE_PROJECT_REF"'
 
   deploy-prod:
     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'prod')

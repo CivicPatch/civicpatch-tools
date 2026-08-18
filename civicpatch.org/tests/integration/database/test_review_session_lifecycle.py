@@ -111,8 +111,10 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
-            (ocdid,),
+            # data_json, because the review pool requires a roster: a request without one is
+            # a card that cannot be published, which is the state the pool now excludes.
+            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) RETURNING id::text",
+            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
@@ -530,3 +532,29 @@ async def test_available_count_excludes_jurisdiction_claimed_by_another_user(tes
             await conn.execute("DELETE FROM review_sessions WHERE user_id = %s", (other_user,))
             await conn.execute("DELETE FROM users WHERE provider = 'test' AND provider_user_id = %s", (provider_id,))
         await _cleanup_open_pr(request_id, ocdid)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_scrape_with_no_roster_never_reaches_the_pool():
+    """Production carries 213 requests whose run succeeded but recorded no roster. Under a
+    run-status test they become cards a reviewer opens and cannot publish — `_publish_roster`
+    refuses, because publishing an empty roster would retire everyone in the jurisdiction.
+    The pool tests the roster itself so it can never offer a card the publish path will reject."""
+    ocdid = "ocd-jurisdiction/country:us/state:zz/place:pool_rosterless/government"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') ON CONFLICT DO NOTHING",
+            (ocdid,),
+        )
+        await cur.execute(
+            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text", (ocdid,)
+        )
+        request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,)
+        )
+
+    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    assert request_id not in [r["request_id"] for r in rows]

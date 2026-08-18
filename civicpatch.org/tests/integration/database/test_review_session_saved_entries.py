@@ -77,7 +77,10 @@ async def open_pr():
             "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') ON CONFLICT DO NOTHING",
             (ocdid,),
         )
-        await cur.execute("INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text", (ocdid,))
+        await cur.execute(
+            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) RETURNING id::text",
+            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+        )
         request_id = (await cur.fetchone())[0]  # type: ignore[index]
         await cur.execute("INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,))
         await cur.execute(
