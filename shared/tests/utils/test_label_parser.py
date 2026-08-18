@@ -199,10 +199,69 @@ def test_parse_label_leaves_a_keyword_without_a_valid_value_as_unmatched(label):
     assert parsed.unmatched == [label]
 
 
-def test_parse_label_still_accepts_at_large_with_no_value():
-    """The one keyword that means something alone — everything else needs a value."""
-    parsed = parse_label("Council Member At-Large", _TAXONOMY)
+@pytest.mark.parametrize(
+    "label, expected_ocdid",
+    [
+        ("Council Member Ward 3", f"{_BASE}/ward:3"),
+        ("Council Member Ward 03", f"{_BASE}/ward:3"),
+        ("Council Member Ward 003", f"{_BASE}/ward:3"),
+    ],
+)
+def test_parse_label_drops_leading_zeros_from_a_division_value(label, expected_ocdid):
+    """Two spellings of one number would mint two ocdids nothing can reconcile after
+    the fact — the value has to be normalised before it reaches the identifier."""
+    parsed = parse_label(label, _TAXONOMY)
+    assert division_ocdid(parsed, _JURISDICTION) == expected_ocdid
+
+
+def test_parse_label_drops_leading_zeros_from_a_designation_value():
+    parsed = parse_label("Council Member Position 07", _TAXONOMY)
+    assert parsed.other_designations == ["Position 7"]
+
+
+def test_parse_label_keeps_a_lone_zero():
+    """`lstrip("0")` on "0" leaves nothing; a division value must never be empty."""
+    parsed = parse_label("Council Member Ward 0", _TAXONOMY)
+    assert division_ocdid(parsed, _JURISDICTION) == f"{_BASE}/ward:0"
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        "Council Member At-Large",
+        "Council Member At Large",
+        "Council Member Citywide",
+        "Council Member City-Wide",
+    ],
+)
+def test_parse_label_swallows_at_large_when_it_carries_no_value(label):
+    """The one keyword that means something alone — everything else needs a value.
+
+    It is consumed and recorded nowhere: valueless at-large only restates that the post
+    covers the whole jurisdiction, which the division already carries. Recording it
+    would put "At-Large" in the post label and split one seat into two posts. Consumed
+    rather than ignored, so the tokens cannot fall through to `unmatched` either.
+    """
+    parsed = parse_label(label, _TAXONOMY)
     assert parsed.role == "Council Member"
+    assert parsed.other_designations == []
+    assert parsed.unmatched == []
+    assert parsed.division is None
+
+
+@pytest.mark.parametrize(
+    "label, designation",
+    [
+        ("Council Member At-Large A", "At-Large A"),
+        ("Council Member At-Large 2", "At-Large 2"),
+    ],
+)
+def test_parse_label_keeps_at_large_when_it_carries_a_value(label, designation):
+    """With a value it is the only thing telling two otherwise identical posts apart,
+    so it survives as a designation and the division stays the jurisdiction's own."""
+    parsed = parse_label(label, _TAXONOMY)
+    assert parsed.other_designations == [designation]
+    assert parsed.division is None
     assert parsed.unmatched == []
 
 
