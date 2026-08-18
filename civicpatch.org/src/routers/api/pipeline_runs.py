@@ -4,75 +4,79 @@ import logging
 import math
 import os
 import time
+from dataclasses import asdict
 from typing import Optional
-import shared.utils.data_path_utils as data_path_utils
-import shared.utils.id_utils
-from shared.utils.statuses import PipelineIssueType, PipelineRunStatus, PullRequestStatus, TERMINAL_PIPELINE_RUN_STATUSES
-import yaml
-from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
-from fastapi.responses import JSONResponse
 
-import lib.github.api as github_service
-import services.jurisdiction_scrape_candidate as candidate_service
+import lib.files as file_utils
+import lib.pubsub as pubsub_service
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
-import lib.files as file_utils
-import database.pipeline_runs
-from database.pipeline_runs import (
-    get_pipeline_run,
-    get_pipeline_run_result,
-    get_pipeline_run_data_json,
-    get_pipeline_run_status,
-    get_pipeline_run_github_run_id,
-    get_active_pipeline_runs,
-    update_pipeline_run_data,
-    update_pipeline_run_status,
-    set_pipeline_run_github_run_id,
-)
+import services.jurisdiction_scrape_candidate as candidate_service
+import shared.utils.id_utils
 from database.issues import (
-    get_issues_page,
     get_issue_by_id,
     get_issue_counts,
+    get_issues_page,
     resolve_issue,
     set_issue_flagged,
-    upsert_issue,
     supersede_prior_jurisdiction_issues,
 )
+import database.users
+from database.publications import dismiss_request
+from database.pipeline_runs import (
+    get_active_pipeline_runs,
+    get_pipeline_run,
+    get_pipeline_run_github_run_id,
+    get_pipeline_run_status,
+    set_pipeline_run_github_run_id,
+    update_pipeline_run_data,
+    update_pipeline_run_status,
+)
 from database.pull_requests import (
-    update_pipeline_run_pull_request_url,
-    update_pull_request_status,
     clear_merge_enqueued,
     has_open_pr_for_jurisdiction,
+    update_pipeline_run_pull_request_url,
 )
 from database.requests import (
+    get_issue_request_details,
     register_request_with_pipeline_run,
     register_request_with_pipeline_run_if_not_exists,
-    get_request_jurisdiction,
-    get_issue_request_details,
 )
-from services import people_collector
-from schemas.common import Identity, Jurisdiction, UserRole, RouteCategory, has_at_least
+from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
+from fastapi.responses import JSONResponse
+from lib.auth import require_route_access
+from schemas.common import Identity, RouteCategory, UserRole, has_at_least
 from schemas.pipeline_runs import (
-    CreatePipelineRunRequest,
     BatchPipelineRunRequest,
-    RegisterPipelineRunRequest,
+    CreatePipelineRunRequest,
+    CreatePipelineRunResponse,
+    ErrorResponse,
+    FlagPipelineIssueRequest,
+    GetPipelineRunStatusResponse,
+    HandleSubmitPipelineRunArtifactsRequest,
+    PostPipelineRunResultRequest,
     RegisterGithubRunRequest,
+    RegisterPipelineRunRequest,
+    ServerDetail,
     UpdatePipelineRunStatusRequest,
     UpdatePipelineRunStatusResponse,
-    PostPipelineRunResultRequest,
-    FlagPipelineIssueRequest,
-    CreatePipelineRunResponse,
-    GetPipelineRunResponse,
-    GetPipelineRunStatusResponse,
-    ErrorResponse,
 )
-from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
-import lib.pubsub as pubsub_service
-from lib.auth import require_route_access
+from services import people_collector
+from shared.utils.statuses import (
+    TERMINAL_PIPELINE_RUN_STATUSES,
+    PipelineIssueType,
+    PipelineRunStatus,
+)
 
 logger = logging.getLogger(__name__)
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
+
+# The environment decides, not the caller. A remote dispatch outside production starts a real
+# GitHub Actions run that cannot reach this host to register itself, and a local dispatch in
+# production has no pipeline to reach — so neither is a choice worth offering.
+_DISPATCH_MODE_LOCAL = "local"
+DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
 
 ARTIFACTS_BASE_URL = "https://civicpatch-artifacts.civicpatch.org"
@@ -82,14 +86,20 @@ PAUSED_CONTEXT_BUCKET = "civicpatch-artifacts"
 def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
     args = r.get("arguments_json") or {}
     url = args.get("url")
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"]) if r.get("jurisdiction_ocdid") else None
+    folder = (
+        shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"])
+        if r.get("jurisdiction_ocdid")
+        else None
+    )
     # TBD remove with the issue type: nothing emits these since 2026-08-16. It also matches
     # on a *rendered* office.name, so it misses anyone whose label was joined with another —
     # `source_records` answers the same question per person, off the parse.
     if issue_type == "unrecognized_role":
         matching = [
-            p for p in (r.get("data_json") or [])
-            if isinstance(p, dict) and (p.get("office") or {}).get("name", "") == issue_key
+            p
+            for p in (r.get("data_json") or [])
+            if isinstance(p, dict)
+            and (p.get("office") or {}).get("name", "") == issue_key
         ]
         people = [{"name": p["name"]} for p in matching]
         source_urls = list({u for p in matching for u in (p.get("source_urls") or [])})
@@ -107,18 +117,33 @@ def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
     }
 
 
-async def update_pipeline_run_and_publish(request_id: str, status: str, progress: Optional[int], jurisdiction_ocdid: Optional[str], error_type: Optional[str] = None, error_detail: Optional[dict] = None):
-    await update_pipeline_run_status(request_id=request_id, status=status, progress=progress)
-    
+async def update_pipeline_run_and_publish(
+    request_id: str,
+    status: str,
+    progress: Optional[int],
+    jurisdiction_ocdid: Optional[str],
+    error_type: Optional[str] = None,
+    error_detail: Optional[dict] = None,
+):
+    await update_pipeline_run_status(
+        request_id=request_id, status=status, progress=progress
+    )
+
     if not jurisdiction_ocdid:
         pipeline_run = await get_pipeline_run(request_id)
-        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid") if pipeline_run else None
+        jurisdiction_ocdid = (
+            (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid")
+            if pipeline_run
+            else None
+        )
     if jurisdiction_ocdid:
         if status in TERMINAL_PIPELINE_RUN_STATUSES:
             await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, request_id)
         await pubsub_service.publish(
-            f"job_status:{jurisdiction_ocdid}",
-            json.dumps({"request_id": request_id, "status": status, "progress": progress}),
+            f"pipeline_run_status:{jurisdiction_ocdid}",
+            json.dumps(
+                {"request_id": request_id, "status": status, "progress": progress}
+            ),
         )
 
 
@@ -136,7 +161,9 @@ async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None
             jurisdiction_ocdid=request.jurisdiction_ocdid,
         )
     except Exception:
-        logger.exception(f"[{request.request_id}] Failed to register pipeline run in background")
+        logger.exception(
+            f"[{request.request_id}] Failed to register pipeline run in background"
+        )
 
 
 def get_router(api_key_header):
@@ -148,7 +175,10 @@ def get_router(api_key_header):
         description="Trigger a new people collector pipeline run.",
         response_model=CreatePipelineRunResponse,
         responses={
-            409: {"model": ErrorResponse, "description": "An open pull request already exists for this jurisdiction"},
+            409: {
+                "model": ErrorResponse,
+                "description": "A scrape for this jurisdiction is already running or awaiting review",
+            },
             429: {"model": ErrorResponse, "description": "Rate limit exceeded"},
             500: {"model": ErrorResponse, "description": "Internal server error"},
         },
@@ -159,15 +189,11 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if _is_production and request.dispatch_mode == "local":
-            return JSONResponse(
-                content=ErrorResponse(error="Local dispatch is not available in production").model_dump(),
-                status_code=400,
-            )
-
         if await has_open_pr_for_jurisdiction(request.jurisdiction_ocdid):
             return JSONResponse(
-                content=ErrorResponse(error="An open pull request already exists for this jurisdiction").model_dump(),
+                content=ErrorResponse(
+                    error="A scrape for this jurisdiction is already in flight"
+                ).model_dump(),
                 status_code=409,
             )
 
@@ -188,7 +214,7 @@ def get_router(api_key_header):
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 request_id=request_id,
-                dispatch_mode=request.dispatch_mode,
+                dispatch_mode=DISPATCH_MODE,
                 url=request.url,
                 source_urls=request.source_urls,
             )
@@ -201,9 +227,13 @@ def get_router(api_key_header):
                 status_code=500,
             )
 
-        return CreatePipelineRunResponse(request_id=request_id, status=PipelineRunStatus.PENDING)
+        return CreatePipelineRunResponse(
+            request_id=request_id, status=PipelineRunStatus.PENDING
+        )
 
-    @router.post("/batch", summary="Register and start a batch pipeline run for a state")
+    @router.post(
+        "/batch", summary="Register and start a batch pipeline run for a state"
+    )
     async def create_batch_pipeline_runs_endpoint(
         request: BatchPipelineRunRequest,
         user: Identity = Depends(
@@ -211,7 +241,9 @@ def get_router(api_key_header):
         ),
     ):
         try:
-            candidates = await candidate_service.get_scrape_candidates(request.state, request.num_jurisdictions)
+            candidates = await candidate_service.get_scrape_candidates(
+                request.state, request.num_jurisdictions
+            )
         except ValueError as e:
             raise HTTPException(status_code=404, detail=str(e))
 
@@ -230,14 +262,18 @@ def get_router(api_key_header):
                 jurisdiction_ocdid=candidate.id,
                 requested_by_user_id=user.user_id,
             )
-            items.append({
-                "jurisdiction_ocdid": candidate.id,
-                "request_id": request_id,
-                "name": candidate.name,
-                "url": candidate.url,
-            })
+            items.append(
+                {
+                    "jurisdiction_ocdid": candidate.id,
+                    "request_id": request_id,
+                    "name": candidate.name,
+                    "url": candidate.url,
+                }
+            )
 
-        await temporal_service.start_batch_people_collector_workflow(request.state, items)
+        await temporal_service.start_batch_people_collector_workflow(
+            request.state, items
+        )
         return {"jurisdictions": items}
 
     @router.post("/register", include_in_schema=False)
@@ -282,7 +318,11 @@ def get_router(api_key_header):
         if not pipeline_run:
             raise HTTPException(status_code=404, detail="Pipeline run not found")
         args = pipeline_run.get("arguments_json") or {}
-        return {"name": args.get("name"), "url": args.get("url"), "source_urls": args.get("source_urls")}
+        return {
+            "name": args.get("name"),
+            "url": args.get("url"),
+            "source_urls": args.get("source_urls"),
+        }
 
     # ── Pipeline Runs: Status & Progress ──────────────
 
@@ -348,7 +388,9 @@ def get_router(api_key_header):
                 if isinstance(result, Exception):
                     errors.append(f"Failed to update {label}: {result}")
                 elif not result:
-                    errors.append(f"Failed to update {label}, pipeline run may not exist")
+                    errors.append(
+                        f"Failed to update {label}, pipeline run may not exist"
+                    )
 
         return {"request_id": request_id, "errors": errors}
 
@@ -365,7 +407,9 @@ def get_router(api_key_header):
         jurisdiction_ocdid: str = Form(...),
         pipeline_run_status: Optional[str] = Form(None),
         env: str = Form("production"),
-        _user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
+        _user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
     ):
         start_time = time.time()
 
@@ -410,7 +454,9 @@ def get_router(api_key_header):
     )
     async def cancel_pipeline_run_endpoint(
         request_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         pipeline_run = await get_pipeline_run(request_id)
         if not pipeline_run:
@@ -418,10 +464,14 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
                 status_code=404,
             )
-        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid")
+        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
+            "jurisdiction_ocdid"
+        )
         if not jurisdiction_ocdid:
             return JSONResponse(
-                content=ErrorResponse(error="No jurisdiction_ocdid for pipeline run").model_dump(),
+                content=ErrorResponse(
+                    error="No jurisdiction_ocdid for pipeline run"
+                ).model_dump(),
                 status_code=422,
             )
         try:
@@ -432,8 +482,50 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Failed to cancel workflow").model_dump(),
                 status_code=500,
             )
-        await update_pipeline_run_status(request_id=request_id, status=PipelineRunStatus.CANCELLED, progress=None)
+        await update_pipeline_run_status(
+            request_id=request_id, status=PipelineRunStatus.CANCELLED, progress=None
+        )
+        # Cancelling settles the review too. Stopping a scrape is a person deciding it will not
+        # be published, which is what dismissal means — and without this the request sits at
+        # "pending" forever, since nothing will ever review a run that did not finish.
+        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
+        await dismiss_request(request_id, resolved_by_user_id=user_id)
         return {"request_id": request_id, "status": PipelineRunStatus.CANCELLED}
+
+    @router.get(
+        "/{request_id}/temporal-workflow-state",
+        summary="What a running scrape's workflow is doing",
+        description=(
+            "Live Temporal state for a scrape still in flight: the pending activity, its "
+            "attempt, and why the last one failed. Returns null data when nothing is running "
+            "— a finished run has nothing to say that its status does not say better."
+        ),
+    )
+    async def get_temporal_workflow_state_endpoint(
+        request_id: str,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        pipeline_run = await get_pipeline_run(request_id)
+        if not pipeline_run:
+            return JSONResponse(
+                content=ErrorResponse(error="Pipeline run not found").model_dump(),
+                status_code=404,
+            )
+        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
+            "jurisdiction_ocdid"
+        )
+        if not jurisdiction_ocdid:
+            return {"data": None}
+        try:
+            state = await temporal_service.describe_workflow(jurisdiction_ocdid)
+        except Exception as e:
+            # Diagnostics must not take the page down with them: a maintainer looking at a
+            # stuck scrape still needs the history that renders beside this.
+            logger.warning(f"Could not describe workflow for {request_id}: {e}")
+            return {"data": None}
+        return {"data": asdict(state) if state else None}
 
     @router.get(
         "/active",
@@ -443,17 +535,33 @@ def get_router(api_key_header):
         state_code: Optional[str] = None,
         page: int = 1,
         per_page: int = 25,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
+        ),
     ):
-        pipeline_runs, total = await get_active_pipeline_runs(state_code=state_code, page=page, per_page=per_page)
+        pipeline_runs, total = await get_active_pipeline_runs(
+            state_code=state_code, page=page, per_page=per_page
+        )
         for run in pipeline_runs:
-            run["jurisdiction_path"] = shared.utils.id_utils.jurisdiction_ocdid_to_folder(run["jurisdiction_ocdid"])
-        return {"data": pipeline_runs, "total": total, "page": page, "per_page": per_page, "total_pages": math.ceil(total / per_page) if total else 1}
+            run["jurisdiction_path"] = (
+                shared.utils.id_utils.jurisdiction_ocdid_to_folder(
+                    run["jurisdiction_ocdid"]
+                )
+            )
+        return {
+            "data": pipeline_runs,
+            "total": total,
+            "page": page,
+            "per_page": per_page,
+            "total_pages": math.ceil(total / per_page) if total else 1,
+        }
 
     @router.get("/issues/counts", summary="Count pending issues grouped by issue_type")
     async def get_issue_counts_endpoint(
         state_code: Optional[str] = None,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         counts = await get_issue_counts(state_code=state_code)
         return {"data": counts}
@@ -469,11 +577,20 @@ def get_router(api_key_header):
         sort: str = "desc",
         state_code: Optional[str] = None,
         show_archived: bool = False,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
-        rows, total = await get_issues_page(issue_types, page, per_page, sort_desc, state_code=state_code, show_archived=show_archived)
+        rows, total = await get_issues_page(
+            issue_types,
+            page,
+            per_page,
+            sort_desc,
+            state_code=state_code,
+            show_archived=show_archived,
+        )
         return {"data": rows, "total": total}
 
     @router.post(
@@ -482,7 +599,9 @@ def get_router(api_key_header):
     )
     async def resolve_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         issue = await get_issue_by_id(issue_id)
         if issue is None:
@@ -496,13 +615,18 @@ def get_router(api_key_header):
     )
     async def dismiss_review_issue_endpoint(
         issue_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         issue = await get_issue_by_id(issue_id)
         if issue is None:
             raise HTTPException(status_code=404)
         await resolve_issue(issue_id)
-        if issue["issue_type"] == PipelineIssueType.MERGE_FAILED and issue["request_ids"]:
+        if (
+            issue["issue_type"] == PipelineIssueType.MERGE_FAILED
+            and issue["request_ids"]
+        ):
             # Dismissing a failed-merge issue un-parks the PR: clear the merge hold so it
             # returns to the review pool.
             await clear_merge_enqueued(issue["request_ids"][0])
@@ -515,7 +639,9 @@ def get_router(api_key_header):
     async def flag_review_issue_endpoint(
         issue_id: str,
         request: FlagPipelineIssueRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         issue = await get_issue_by_id(issue_id)
         if issue is None:
@@ -529,7 +655,9 @@ def get_router(api_key_header):
     )
     async def get_review_issue_details_endpoint(
         issue_id: str,
-        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
+        identity: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
     ):
         issue = await get_issue_by_id(issue_id)
         if issue is None:
@@ -541,9 +669,18 @@ def get_router(api_key_header):
 
         is_admin = has_at_least(identity.role, UserRole.ADMINS)
 
-        if issue_type in ("pipeline_error", "no_info", "domain_inactive", "domain_navigation_error"):
+        if issue_type in (
+            "pipeline_error",
+            "no_info",
+            "domain_inactive",
+            "domain_navigation_error",
+        ):
             request_id = issue["issue_key"]
-            base_rows = [_build_request_row(raw[0], issue_type, issue_key) if raw else {"request_id": request_id}]
+            base_rows = [
+                _build_request_row(raw[0], issue_type, issue_key)
+                if raw
+                else {"request_id": request_id}
+            ]
             issue_data = issue.get("data") or {}
             error = issue_data.get("error")
             failure_reason = issue_data.get("failure_reason")
@@ -558,16 +695,41 @@ def get_router(api_key_header):
         for row in base_rows:
             req_id = row.get("request_id")
             folder = row.get("jurisdiction_path")
-            debug_key_base = f"{req_id}/data_source/{folder}" if (req_id and folder) else None
-            rows.append({
-                **row,
-                **({"error": error} if error is not None else {}),
-                **({"failure_reason": failure_reason} if failure_reason is not None else {}),
-                **({"failure_source": failure_source} if failure_source is not None else {}),
-                "pipeline_run_log_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run.log") if (debug_key_base and is_admin) else None,
-                "pipeline_run_context_url": storage_service.get_presigned_url_cached("civicpatch-debug", f"{debug_key_base}/pipeline_run_context.json") if debug_key_base else None,
-                "debug_url": storage_service.get_bucket_url("civicpatch-debug", req_id) if (is_admin and req_id) else None,
-            })
+            debug_key_base = (
+                f"{req_id}/data_source/{folder}" if (req_id and folder) else None
+            )
+            rows.append(
+                {
+                    **row,
+                    **({"error": error} if error is not None else {}),
+                    **(
+                        {"failure_reason": failure_reason}
+                        if failure_reason is not None
+                        else {}
+                    ),
+                    **(
+                        {"failure_source": failure_source}
+                        if failure_source is not None
+                        else {}
+                    ),
+                    "pipeline_run_log_url": storage_service.get_presigned_url_cached(
+                        "civicpatch-debug", f"{debug_key_base}/pipeline_run.log"
+                    )
+                    if (debug_key_base and is_admin)
+                    else None,
+                    "pipeline_run_context_url": storage_service.get_presigned_url_cached(
+                        "civicpatch-debug",
+                        f"{debug_key_base}/pipeline_run_context.json",
+                    )
+                    if debug_key_base
+                    else None,
+                    "debug_url": storage_service.get_bucket_url(
+                        "civicpatch-debug", req_id
+                    )
+                    if (is_admin and req_id)
+                    else None,
+                }
+            )
         return {"data": rows}
 
     @router.get(
@@ -575,7 +737,9 @@ def get_router(api_key_header):
         summary="Get pipeline run status and progress",
         description="Retrieve the progress of a specific pipeline run by its request ID.",
         response_model=GetPipelineRunStatusResponse,
-        responses={404: {"model": ErrorResponse, "description": "Pipeline run not found"}},
+        responses={
+            404: {"model": ErrorResponse, "description": "Pipeline run not found"}
+        },
     )
     async def get_pipeline_run_status_endpoint(
         request_id: str,

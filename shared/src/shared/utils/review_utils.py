@@ -138,7 +138,7 @@ def _check_new_officials(
         issues.append(
             Issue(
                 code=IssueCode.NEW_OFFICIAL,
-                message=f"Not previously known: {name_utils.get_person_name(person)}",
+                message=f"New official found: {name_utils.get_person_name(person)}",
                 person_ids=[person_id] if person_id else [],
             )
         )

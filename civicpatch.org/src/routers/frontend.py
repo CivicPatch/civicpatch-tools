@@ -34,8 +34,9 @@ def build_permissions(identity: Optional[Identity]) -> dict:
     return {
         "can_view_queue_page": has_at_least(role, UserRole.CONTRIBUTORS),
         "can_view_queue_page_errors": has_at_least(role, UserRole.ADMINS),
-        "can_scrape_local": not _is_production and has_at_least(role, UserRole.MAINTAINERS),
-        "can_scrape_remote": has_at_least(role, UserRole.MAINTAINERS),
+        # One key, because the caller no longer picks a mode: the environment does, server
+        # side. Whether you may scrape is a role question; how it dispatches is not.
+        "can_scrape": has_at_least(role, UserRole.MAINTAINERS),
         "can_view_reviews_page": has_at_least(role, UserRole.DEFAULT),
         "can_view_issues_page": has_at_least(role, UserRole.ADMINS),
         "can_view_activity_page": has_at_least(role, UserRole.DEFAULT),
@@ -43,7 +44,11 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_edit_jurisdiction_data": has_at_least(role, UserRole.MAINTAINERS),
         "can_delete_directory_person": has_at_least(role, UserRole.CONTRIBUTORS),
         "can_close_pull_request": has_at_least(role, UserRole.CONTRIBUTORS),
-        "can_cancel_job": has_at_least(role, UserRole.ADMINS),
+        "can_cancel_pipeline_run": has_at_least(role, UserRole.ADMINS),
+        # Same boundary as cancelling, but a separate key: reading why a run is stuck and
+        # stopping it are different acts, and the frontend uses this one to decide whether to
+        # poll at all rather than fire a rejected request every few seconds.
+        "can_view_temporal_workflow_state": has_at_least(role, UserRole.ADMINS),
         "can_write_config": has_at_least(role, UserRole.MAINTAINERS),
         "can_write_global_config": has_at_least(role, UserRole.ADMINS),
         "can_manage_roles": has_at_least(role, UserRole.ADMINS),

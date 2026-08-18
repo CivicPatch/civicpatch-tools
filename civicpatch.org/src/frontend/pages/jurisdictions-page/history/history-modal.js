@@ -26,12 +26,12 @@ function HistoryModal({ open, item, onClose }) {
         <div>
           <p><strong>Date / Time:</strong> ${fmtDate(item.created_at)}</p>
           <p><strong>Request ID:</strong> <code>${item.request_id}</code></p>
-          <p><strong>Job status:</strong> ${item.job_status}</p>
-          <p><strong>Progress:</strong> ${item.job_progress ?? "?"}%</p>
+          <p><strong>Job status:</strong> ${item.pipeline_run_status}</p>
+          <p><strong>Progress:</strong> ${item.pipeline_run_progress ?? "?"}%</p>
           <p><strong>Time to scrape:</strong> ${getDurationString(item.created_at, item.updated_at)}</p>
-          ${item.pull_request_url ? html`
-            <p><strong>Pull request:</strong> <a href="${item.pull_request_url}" target="_blank" rel="noopener">${item.pull_request_url}</a></p>
-            <p><strong>PR status:</strong> ${item.pull_request_status}</p>
+          ${item.open_data_url ? html`
+            <p><strong>Published to:</strong> <a href="${item.open_data_url}" target="_blank" rel="noopener">${item.open_data_url}</a></p>
+            <p><strong>Review status:</strong> ${item.review_status}</p>
           ` : null}
           <p><strong>URLs scraped:</strong></p>
           <ul>

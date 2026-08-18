@@ -3,10 +3,8 @@ import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
 
-function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {}, canScrapeRemote = false, canScrapeLocal = false }) {
-  const defaultScrapeMode = canScrapeLocal ? "local" : "remote";
+function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {} }) {
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
-  const [scrapeMode, setScrapeMode] = useState(defaultScrapeMode);
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
 
@@ -73,7 +71,6 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     if (scrapeScope == "top-level-url") {
       data = {
         scrapeScope,
-        scrapeMode,
         data: {
           url: currentUrl,
         },
@@ -81,7 +78,6 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     } else {
       data = {
         scrapeScope,
-        scrapeMode,
         data: {
           sourceUrls: currentSourceUrls,
         },
@@ -90,42 +86,8 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     onStartScrape(data);
   };
 
-  const bothModesAvailable = canScrapeRemote && canScrapeLocal;
-  const onlyOneMode = (canScrapeRemote || canScrapeLocal) && !bothModesAvailable;
-
   const content = html`
     <div class="scrape-modal__body">
-      ${bothModesAvailable ? html`
-        <fieldset class="scrape-modal__radio-group scrape-modal__radio-group--inline">
-          <legend>Mode</legend>
-          <label class="scrape-modal__radio-label">
-            <input
-              type="radio"
-              name="scrape-mode"
-              value="local"
-              ?checked=${scrapeMode === "local"}
-              @change=${handleModeChange}
-            />
-            Local
-          </label>
-          <label class="scrape-modal__radio-label">
-            <input
-              type="radio"
-              name="scrape-mode"
-              value="remote"
-              ?checked=${scrapeMode === "remote"}
-              @change=${handleModeChange}
-            />
-            Remote
-          </label>
-        </fieldset>
-      ` : onlyOneMode ? html`
-        <div class="scrape-modal__mode-row">
-          <span class="scrape-modal__mode-label">Mode</span>
-          <span class="civ-badge civ-badge--primary">${scrapeMode}</span>
-        </div>
-      ` : null}
-
       <fieldset class="scrape-modal__radio-group">
         <legend>Scope</legend>
         <label class="scrape-modal__radio-label">

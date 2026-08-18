@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  openPullRequests,
+  pendingReviews,
   peopleEditBlockers,
   jurisdictionEditBlockers,
   editingBlockedReason,
@@ -12,26 +12,26 @@ import {
 const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
   request_id: "req-1",
   created_at: "2026-07-12T00:00:00Z",
-  pull_request_url: "https://github.com/CivicPatch/open-data/pull/4821",
-  pull_request_status: "open",
+  open_data_url: "https://github.com/CivicPatch/open-data/pull/4821",
+  review_status: "pending",
   request_type: REQUEST_TYPE.PEOPLE,
   ...overrides,
 });
 
-describe("openPullRequests", () => {
-  it("keeps only entries whose PR is open", () => {
+describe("pendingReviews", () => {
+  it("keeps only entries still awaiting a decision", () => {
     const history = [
       entry({ request_id: "a" }),
-      entry({ request_id: "b", pull_request_status: "merged" }),
-      entry({ request_id: "c", pull_request_status: "closed" }),
+      entry({ request_id: "b", review_status: "published" }),
+      entry({ request_id: "c", review_status: "dismissed" }),
       // A run that never produced a PR at all.
-      entry({ request_id: "d", pull_request_status: null, pull_request_url: null }),
+      entry({ request_id: "d", review_status: null, open_data_url: null }),
     ];
-    expect(openPullRequests(history).map((e) => e.request_id)).toEqual(["a"]);
+    expect(pendingReviews(history).map((e) => e.request_id)).toEqual(["a"]);
   });
 
   it("is empty for empty history", () => {
-    expect(openPullRequests([])).toEqual([]);
+    expect(pendingReviews([])).toEqual([]);
   });
 });
 
@@ -49,7 +49,7 @@ describe("editingBlockedReason", () => {
   });
 
   it("falls back to an unnumbered phrasing when history has no PR url", () => {
-    expect(editingBlockedReason([entry({ pull_request_url: null })])).toBe(
+    expect(editingBlockedReason([entry({ open_data_url: null })])).toBe(
       "A pull request is awaiting review. Publish or close it before editing directly.",
     );
   });

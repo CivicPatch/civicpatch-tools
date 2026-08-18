@@ -391,7 +391,7 @@ export const fetchLeaderboard = async () => {
 };
 
 /** Pipeline runs */
-export const triggerPipelineRun = async (mode, jurisdictionOcdid, name, url, sourceUrls) => {
+export const triggerPipelineRun = async (jurisdictionOcdid, name, url, sourceUrls) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs`, {
     method: "POST",
     credentials: "include",
@@ -400,7 +400,6 @@ export const triggerPipelineRun = async (mode, jurisdictionOcdid, name, url, sou
       "X-CSRF-Token": getCsrfCookie(),
     },
     body: JSON.stringify({
-      dispatch_mode: mode,
       jurisdiction_ocdid: jurisdictionOcdid,
       name,
       url,
@@ -420,6 +419,18 @@ export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25)
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/active?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
+};
+
+// Live Temporal state for a run still in flight. Admin-gated, so a 403 is an ordinary
+// outcome for most viewers — resolves to null rather than throwing, and the caller shows
+// nothing. Diagnostics must never be the reason a page fails to render.
+export const fetchTemporalWorkflowState = async (requestId) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${requestId}/temporal-workflow-state`, {
+    credentials: "include",
+  });
+  if (!res.ok) return null;
+  const body = await res.json().catch(() => ({}));
+  return body.data ?? null;
 };
 
 export const cancelPipelineRun = async (requestId) => {

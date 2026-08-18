@@ -45,7 +45,7 @@ function cardData(overrides = {}) {
     total: 5,
     has_next: true,
     jurisdiction: { ocdid: "ocd-x", name: "X City", path: null },
-    pr: { url: "u", status: "open", reviewState: null, number: 123 },
+    pr: { url: "u", status: "pending" },
     existing: [],
     proposed: [],
     sources: [],
@@ -211,7 +211,7 @@ describe("endSessionAndExit", () => {
 const current: CurrentEntry = {
   request_id: "req-1",
   jurisdiction: { ocdid: "ocd-x", name: "X City", path: null },
-  pr: { url: "u", status: "open", reviewState: null, number: 123 },
+  pr: { url: "u", status: "pending" },
   pr_people: { existing: [], proposed: [] },
   review_data: null,
   source_content_urls: [],
@@ -382,13 +382,18 @@ describe("closeCurrent", () => {
 });
 
 describe("buildEntry", () => {
-  it("marks merged/closed PRs read-only and pulls review_data from fetchReview", async () => {
+  it("marks a decided scrape read-only and pulls review_data from fetchReview", async () => {
+    // Previously keyed on the pull request being merged or closed. A decided scrape is now
+    // published or dismissed, and comparing against the old values left it editable.
     const api = fakeApi({ fetchReview: vi.fn(async () => ({ data: { issues: [1] } })) });
-    const merged = await buildEntry(cardData({ pr: { url: "u", status: "merged", reviewState: null, number: 5 } }), api);
-    expect(merged.is_read_only).toBe(true);
-    expect(merged.review_data).toEqual({ issues: [1] });
+    const published = await buildEntry(cardData({ pr: { url: "u", status: "published" } }), api);
+    expect(published.is_read_only).toBe(true);
+    expect(published.review_data).toEqual({ issues: [1] });
 
-    const open = await buildEntry(cardData(), api);
-    expect(open.is_read_only).toBe(false);
+    const dismissed = await buildEntry(cardData({ pr: { url: "u", status: "dismissed" } }), api);
+    expect(dismissed.is_read_only).toBe(true);
+
+    const pending = await buildEntry(cardData(), api);
+    expect(pending.is_read_only).toBe(false);
   });
 });

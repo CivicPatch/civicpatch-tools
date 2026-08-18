@@ -2,17 +2,21 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils.js";
 import { cancelPipelineRun } from "../../../api.js";
-import { TERMINAL_JOB_STATUSES } from "../../../components/job-status.js";
+import { TERMINAL_PIPELINE_RUN_STATUSES } from "../../../components/pipeline-run-status.js";
 import "./history-modal.js";
 import "../../../components/status-badge.js";
+import { REQUEST_TYPE } from "../open-pull-requests.ts";
+import { REVIEW_STATUS } from "../../../components/review-status.js";
+import { LOGIN_PATH, pullRequestUrl as reviewUrl } from "../../review-routes.ts";
+import { jurisdictionOcdidToState } from "../../../components/ocdid-utils.js";
 
-function HistoryList({ history, jobStatus, canCancel, onCancel }) {
+function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSignedIn = false }) {
   let parsedHistory = history?.["data"] ?? [];
 
-  if (jobStatus && jobStatus.request_id) {
+  if (pipelineRunStatus && pipelineRunStatus.request_id) {
     parsedHistory = parsedHistory.map(item =>
-      item.request_id === jobStatus.request_id
-        ? { ...item, job_progress: jobStatus.progress, job_status: jobStatus.status }
+      item.request_id === pipelineRunStatus.request_id
+        ? { ...item, pipeline_run_progress: pipelineRunStatus.progress, pipeline_run_status: pipelineRunStatus.status }
         : item
     );
   }
@@ -93,9 +97,12 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
         font-size: 0.75rem;
         font-family: inherit;
       }
+      /* Roomier than it was: the status cell holds two badges and an arrow, and at the old
+         density a wrapped second badge collided with the first. Costs ~0.4rem per row, which
+         the 300px scroll absorbs. */
       .sh-table td {
         vertical-align: middle;
-        padding: 0.3rem 0.6rem;
+        padding: 0.5rem 0.6rem;
       }
       .sh-table td:first-child {
         white-space: nowrap;
@@ -111,13 +118,19 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 0.25rem;
-        --badge-font-size: 0.68rem;
+        gap: 0.4rem;
+        row-gap: 0.3rem;
+        --badge-font-size: 0.72rem;
         --badge-padding: 0.15rem 0.5rem;
       }
       .status-cell .badge {
         white-space: normal;
         overflow-wrap: anywhere;
+      }
+      /* The scrape is pending until someone decides: the badge says so, this is the way in. */
+      .sh-review-link {
+        font-size: 0.7rem;
+        white-space: nowrap;
       }
       .status-arrow {
         font-size: 0.7rem;
@@ -150,10 +163,10 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
     </style>
 
     <div class="sh-section">
-      <h4 class="sh-title">History</h4>
+      <h4 class="sh-title">Past</h4>
 
       ${!parsedHistory || parsedHistory.length === 0 ? html`
-        <p class="sh-empty">No history available.</p>
+        <p class="sh-empty">No scrapes yet.</p>
       ` : html`
         <div class="sh-scroll">
           <table class="sh-table" role="grid">
@@ -164,8 +177,8 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
                     <button class="date-btn" @click=${() => openFor(item)}>
                       ${dateStringToFriendly(item.created_at)}
                     </button>
-                    ${item.job_progress !== undefined && item.job_progress !== 100 && !item.pull_request_status ? html`
-                      <progress value=${item.job_progress ?? 0} max="100"></progress>
+                    ${item.pipeline_run_progress !== undefined && item.pipeline_run_progress !== 100 && !item.review_status ? html`
+                      <progress value=${item.pipeline_run_progress ?? 0} max="100"></progress>
                     ` : null}
                   </td>
                   <td class="duration-cell">
@@ -174,23 +187,38 @@ function HistoryList({ history, jobStatus, canCancel, onCancel }) {
                   <td>
                     <div class="status-cell">
                       <civ-status-badge
-                        label="${item.job_status}"
-                        bg="${statusBadgeProps(item.job_status).bg}"
-                        color="${statusBadgeProps(item.job_status).color}"
+                        label="${item.pipeline_run_status}"
+                        bg="${statusBadgeProps(item.pipeline_run_status).bg}"
+                        color="${statusBadgeProps(item.pipeline_run_status).color}"
                       ></civ-status-badge>
-                      ${item.pull_request_status ? html`
+                      ${item.review_status ? html`
                         <span class="status-arrow">→</span>
-                        <a href="${item.pull_request_url}" target="_blank" rel="noopener" style="text-decoration: none;">
+                        ${item.open_data_url ? html`
+                          <a href="${item.open_data_url}" target="_blank" rel="noopener" style="text-decoration: none;">
+                            <civ-status-badge
+                              label="${item.review_status}"
+                              bg="${statusBadgeProps(item.review_status).bg}"
+                              color="${statusBadgeProps(item.review_status).color}"
+                            ></civ-status-badge>
+                          </a>
+                        ` : html`
                           <civ-status-badge
-                            label="${item.pull_request_status}"
-                            bg="${statusBadgeProps(item.pull_request_status).bg}"
-                            color="${statusBadgeProps(item.pull_request_status).color}"
+                            label="${item.review_status}"
+                            bg="${statusBadgeProps(item.review_status).bg}"
+                            color="${statusBadgeProps(item.review_status).color}"
                           ></civ-status-badge>
-                        </a>
+                        `}
+                        ${item.review_status === REVIEW_STATUS.PENDING && item.request_type !== REQUEST_TYPE.JURISDICTION_MANUAL_EDIT ? html`
+                          <a class="sh-review-link" href=${isSignedIn
+                            ? reviewUrl(jurisdictionOcdidToState(item.jurisdiction_ocdid), item.request_id)
+                            : LOGIN_PATH}>
+                            ${isSignedIn ? "Needs review →" : "Sign in to review"}
+                          </a>
+                        ` : null}
                       ` : null}
                     </div>
                   </td>
-                  ${canCancel && !TERMINAL_JOB_STATUSES.has(item.job_status) ? html`
+                  ${canCancel && !TERMINAL_PIPELINE_RUN_STATUSES.has(item.pipeline_run_status) ? html`
                     <td>
                       <button
                         class="sh-cancel-btn"

@@ -106,3 +106,26 @@ async def trigger_local(
         resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs", json=payload, timeout=30)
         resp.raise_for_status()
     activity.logger.info(f"Local job triggered: {request_id}")
+
+
+@activity.defn
+async def cancel_local_run(request_id: str) -> None:
+    """Stop a scrape running on the local pipelines server.
+
+    Cancelling the workflow stops the poller watching the scrape, not the scrape: it carries on
+    and keeps reporting progress, so the run reappears as RUNNING moments later. This is run
+    from the workflow's cancellation path so it covers every way a run can be stopped — the UI,
+    the Temporal console, an execution timeout — not only the one endpoint.
+
+    Never raises. The cancel has already been decided, and a pipelines server we cannot reach
+    must not turn a cancelled workflow into a failed one.
+    """
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs/{request_id}/cancel", timeout=15
+            )
+            resp.raise_for_status()
+        activity.logger.info(f"Cancelled local scrape: {request_id}")
+    except Exception as e:
+        activity.logger.warning(f"Could not cancel local scrape {request_id}: {e}")

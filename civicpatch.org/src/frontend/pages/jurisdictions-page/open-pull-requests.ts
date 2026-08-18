@@ -1,4 +1,4 @@
-// Pull requests still awaiting review, listed above the roster.
+// Scrapes still awaiting review, listed above the roster.
 //
 // They are actionable — each one launches the review session for that request —
 // and they are also why in-place editing is off, so they carry that explanation
@@ -7,8 +7,8 @@
 import { html, nothing } from "lit-html";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
-import { pullRequestUrl } from "../review-routes.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { LOGIN_PATH, pullRequestUrl } from "../review-routes.js";
+import { REVIEW_STATUS } from "../../components/review-status.js";
 
 // Mirrors shared/utils/statuses.py RequestType. Only PEOPLE has a scrape behind it.
 export const REQUEST_TYPE = Object.freeze({
@@ -20,12 +20,12 @@ export interface HistoryEntry {
   request_id: string;
   created_at: string;
   request_type?: string | null;
-  pull_request_url?: string | null;
-  pull_request_status?: string | null;
+  open_data_url?: string | null;
+  review_status?: string | null;
 }
 
-export const openPullRequests = (history: HistoryEntry[]): HistoryEntry[] =>
-  history.filter((entry) => entry.pull_request_status === PULL_REQUEST_STATUS.OPEN);
+export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>
+  history.filter((entry) => entry.review_status === REVIEW_STATUS.PENDING);
 
 const isManualEdit = (entry: HistoryEntry) =>
   entry.request_type === REQUEST_TYPE.JURISDICTION_MANUAL_EDIT;
@@ -50,7 +50,7 @@ export function jurisdictionEditBlockedReason(open: HistoryEntry[]): string | nu
   if (open.length > 1) {
     return `${open.length} edits did not auto-merge. Resolve or close them before editing again.`;
   }
-  const number = pullRequestNumber(open[0].pull_request_url);
+  const number = pullRequestNumber(open[0].open_data_url);
   const subject = number ? `Edit #${number}` : "An edit";
   return `${subject} did not auto-merge. Resolve or close it before editing again.`;
 }
@@ -63,15 +63,15 @@ export function editingBlockedReason(open: HistoryEntry[]): string | null {
   if (open.length > 1) {
     return `${open.length} pull requests are awaiting review. Publish or close them before editing directly.`;
   }
-  const number = pullRequestNumber(open[0].pull_request_url);
+  const number = pullRequestNumber(open[0].open_data_url);
   const subject = number ? `Pull request #${number}` : "A pull request";
   return `${subject} is awaiting review. Publish or close it before editing directly.`;
 }
 
-function renderRow(entry: HistoryEntry, ocdid: string) {
+function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
   const state = jurisdictionOcdidToState(ocdid);
   const manualEdit = isManualEdit(entry);
-  const number = pullRequestNumber(entry.pull_request_url);
+  const number = pullRequestNumber(entry.open_data_url);
 
   return html`
     <div class="pr-row">
@@ -87,12 +87,16 @@ function renderRow(entry: HistoryEntry, ocdid: string) {
       <span class="pr-row__actions">
         ${manualEdit
           ? nothing
-          : html`<a class="btn-primary" href=${pullRequestUrl(state, entry.request_id)}>
-              <i class="fa-solid fa-arrow-right-to-bracket"></i> Review
-            </a>`}
-        ${entry.pull_request_url
+          : isSignedIn
+            ? html`<a class="btn-primary" href=${pullRequestUrl(state, entry.request_id)}>
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Review
+              </a>`
+            : html`<a class="btn-primary" href=${LOGIN_PATH}>
+                <i class="fa-solid fa-right-to-bracket"></i> Sign in to review
+              </a>`}
+        ${entry.open_data_url
           ? html`<a
-              href=${entry.pull_request_url}
+              href=${entry.open_data_url}
               target="_blank"
               rel="noopener noreferrer"
               title="View on GitHub"
@@ -107,17 +111,17 @@ function renderRow(entry: HistoryEntry, ocdid: string) {
 
 // No cap: the guards allow at most one open scrape and one stuck jurisdiction edit,
 // so this list is structurally short.
-export function renderOpenPullRequests(entries: HistoryEntry[], ocdid: string) {
+export function renderPendingReviews(entries: HistoryEntry[], ocdid: string, isSignedIn: boolean) {
   if (!entries.length) return nothing;
 
   return html`
     <section class="jurisdiction-section">
       <div class="jurisdiction-section__head">
-        <h2 class="jurisdiction-section__title">Open pull requests</h2>
-        <span class="jurisdiction-section__meta">${entries.length} open</span>
+        <h2 class="jurisdiction-section__title">Awaiting review</h2>
+        <span class="jurisdiction-section__meta">${entries.length} pending</span>
       </div>
       <div class="pr-list">
-        ${entries.map((entry) => renderRow(entry, ocdid))}
+        ${entries.map((entry) => renderRow(entry, ocdid, isSignedIn))}
       </div>
     </section>
   `;

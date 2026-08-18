@@ -263,6 +263,11 @@
 .jurisdiction-panel__body {
   padding: 1rem;
   border-top: 1px solid var(--civ-border);
+  /* Two stacked sections — the run in progress, then the archive. Without a gap the
+     in-progress footer (Cancel, the Temporal line) sits flush against the Past heading. */
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 /* ── Details fields — editor idiom ──────────────────────────────────────────── */

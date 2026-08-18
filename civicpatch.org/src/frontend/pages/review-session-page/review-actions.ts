@@ -3,7 +3,7 @@
 // haunted, no direct DOM — so they're unit-testable with fakes. use-review-session.ts
 // wires the real api/dispatch/navigation into them.
 
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { REVIEW_STATUS } from "../../components/review-status.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { landingUrl } from "../review-routes.js";
 import { ActionType, ReviewMode, type CurrentEntry, type SessionMeta, type ReviewAction } from "./review-state.js";
@@ -12,8 +12,11 @@ const errMessage = (err: any) => err?.message ?? String(err);
 
 const jurisdictionUrl = (ocdid: string) => `/${jurisdictionOcdidToPath(ocdid)}`;
 
+// A server-sent review status, not one of the client-side action states the actions hook
+// tracks. It was comparing against merged/closed, which the server stopped sending when
+// publish state moved onto the request — so a decided scrape rendered as still editable.
 const isTerminalStatus = (status: string | null | undefined) =>
-  status === PULL_REQUEST_STATUS.MERGED || status === PULL_REQUEST_STATUS.CLOSED;
+  status === REVIEW_STATUS.PUBLISHED || status === REVIEW_STATUS.DISMISSED;
 
 const belongsToSession = (active: any, requestId: string | null) =>
   requestId != null && (active?.session_request_ids ?? []).includes(requestId);
