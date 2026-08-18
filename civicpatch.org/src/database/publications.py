@@ -10,6 +10,10 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 *this* transaction, not a second publish path. Nothing here reads open-data.
 """
 
+from datetime import datetime, timezone
+
+from core.post_derivation import DerivedPost
+from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import people_rows
 
@@ -43,11 +47,25 @@ async def dismiss_request(request_id: str, resolved_by_user_id: str | None = Non
         )
 
 
+def _seen_at(people: list[dict]):
+    """When the source said this — the newest `updated_at` the scrape carried.
+
+    Named for the columns it feeds: `first_seen_at`, `last_seen_at`, `closed_at`. Not write
+    time, because publishing is a human act at an arbitrary moment — a scrape sat on for three
+    weeks would otherwise record the council as seen on the day someone pressed the button,
+    and both `GREATEST` refusing to regress `last_seen_at` and replaying an old scrape being
+    harmless depend on this describing the observation.
+    """
+    stamps = [str(person["updated_at"]) for person in people if person.get("updated_at")]
+    return max(stamps) if stamps else datetime.now(timezone.utc)
+
+
 async def publish_request(
     request_id: str,
     jurisdiction_ocdid: str,
     people: list[dict],
     resolved_by_user_id: str | None = None,
+    derived: list[DerivedPost] | None = None,
 ) -> int:
     """Project one scrape's roster onto `people`, stamp the jurisdiction as scraped, and mark
     the request published.
@@ -55,9 +73,16 @@ async def publish_request(
     Returns the number of people written. Raises rather than swallowing: a publish that cannot
     record what it published must fail loudly, unlike the submit-time evidence write, where
     losing evidence is better than losing the submit.
+
+    `derived` carries the posts this roster implies. Memberships are written here rather than
+    at ingest because a membership is a binding: a post can be proposed for review, but who
+    holds it is only true once the scrape is accepted. Posts are re-ensured on the way through
+    because ingest is never fatal, so they may be missing.
     """
     rows = people_rows(people)
     incoming_ids = [row[0] for row in rows]
+    # The Record's own updated_at, not write time.
+    seen_at = _seen_at(people)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -108,5 +133,25 @@ async def publish_request(
             """,
             (resolved_by_user_id, request_id),
         )
+
+        if derived:
+            organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+            for post in derived:
+                await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
+                post_id = await posts.find_or_create(
+                    cur,
+                    jurisdiction_ocdid,
+                    organization_id,
+                    post.role_id,
+                    post.division_ocdid,
+                    headcount=post.headcount,
+                )
+                for person_id, residue in post.members:
+                    await memberships.record(
+                        cur, person_id, post_id, organization_id, seen_at, label=residue
+                    )
+            await memberships.close_absent(
+                cur, jurisdiction_ocdid, incoming_ids, seen_at
+            )
 
     return len(rows)

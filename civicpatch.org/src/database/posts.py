@@ -15,7 +15,7 @@ and that same pass stamps their membership.
 """
 
 
-async def record(
+async def find_or_create(
     cur,
     jurisdiction_ocdid: str,
     organization_id: str,
@@ -23,7 +23,12 @@ async def record(
     division_ocdid: str,
     headcount: int = 1,
 ) -> str:
-    """Match this post or mint it. Returns its id either way.
+    """Make sure this post exists. Returns its id, minted or matched.
+
+    A minted post is `candidate`: a scrape proposing a seat is not the same as somebody
+    asserting one exists, and a reviewer promotes it via NEW_POST. Written out rather than
+    left to the column default so this module states its own behaviour — and so the human
+    "declare a post" path, which must mint `active`, cannot inherit this one by accident.
 
     `headcount` applies only on mint. A later scrape finding a different number of people must
     not overwrite a figure somebody typed — which is why the count cannot simply be recomputed
@@ -35,8 +40,8 @@ async def record(
     await cur.execute(
         """
         INSERT INTO posts
-            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount)
-        VALUES (%s, %s, %s, %s, %s)
+            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount, status)
+        VALUES (%s, %s, %s, %s, %s, 'candidate')
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
         """,

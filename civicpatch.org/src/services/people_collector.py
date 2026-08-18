@@ -12,6 +12,11 @@ from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run
 from database.issues import upsert_issue
 from database.roles import get_roles
 from database.source_records import insert_source_records
+from database import divisions as divisions_db
+from database import organizations as organizations_db
+from database import posts as posts_db
+from database.database import get_pool
+from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig
@@ -59,6 +64,53 @@ async def _store_source_records(request_id: str, records: list[dict]) -> None:
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
         logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
+
+
+async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, records: list[dict]) -> None:
+    """Derive the posts this scrape implies and write them, so review has real seats to
+    point a person at.
+
+    Named for the write it performs, per the persistence verbs: `find_or_create_*` is insert
+    if absent and never update. `derived_posts` in `core` is pure and decides only *what*
+    posts a roster implies.
+
+    One that already exists is a no-op — `posts.find_or_create` is
+    `ON CONFLICT DO NOTHING`, which is what keeps `label`, `headcount` and `status`
+    human-owned with no lock table.
+
+    Posts derive here rather than at publish because the Post picker can only offer posts
+    that exist, and review happens before publish. Memberships stay at publish: a post is
+    structure and can be proposed, a membership is a binding and is only true once accepted.
+
+    Never fatal, like the evidence write above — posts are re-derivable from `source_records`,
+    so losing them is worse than losing the submit that carries the people, but not by much.
+
+    Parses independently rather than sharing `_store_source_records`' pass: the two have to be
+    able to fail separately, and parsing is pure string work over a few dozen people.
+    """
+    try:
+        roles = await get_roles()
+        taxonomy = build_taxonomy(RoleConfig(roles=roles))
+        officials = [Official(**record) for record in records]
+        specs = derived_posts(officials, taxonomy, roles)
+
+        pool = await get_pool()
+        async with pool.connection() as conn, conn.cursor() as cur:
+            organization_id = await organizations_db.find_or_create(cur, jurisdiction_ocdid)
+            for spec in specs:
+                await divisions_db.find_or_create(cur, spec.division_ocdid, jurisdiction_ocdid)
+                await posts_db.find_or_create(
+                    cur,
+                    jurisdiction_ocdid,
+                    organization_id,
+                    spec.role_id,
+                    spec.division_ocdid,
+                    headcount=spec.headcount,
+                )
+            await conn.commit()
+        logger.info(f"[{request_id}] Derived {len(specs)} post(s)")
+    except Exception as e:
+        logger.error(f"[{request_id}] Failed to derive posts: {e}", exc_info=True)
 
 
 async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflow_context: dict) -> None:
@@ -160,6 +212,7 @@ async def _handle_submit_pipeline_run_artifacts(
             f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
         await _store_source_records(request.request_id, updated_data)
+        await _find_or_create_posts(request.request_id, request.jurisdiction_ocdid, updated_data)
         await _commit_unreviewed_copy(request.request_id, request.jurisdiction_ocdid)
         await _record_resolved_url(
             request.request_id, request.jurisdiction_ocdid, workflow_context

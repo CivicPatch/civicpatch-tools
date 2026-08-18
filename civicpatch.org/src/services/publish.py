@@ -18,6 +18,10 @@ import services.change_logs as change_logs
 from database.pipeline_runs import get_pipeline_run_data_json
 from database.publications import dismiss_request, publish_request, record_open_data_url
 from database.people import get_jurisdiction_people
+from database.roles import get_roles
+from core.post_derivation import DerivedPost, derived_posts
+from shared.schemas import Official, RoleConfig
+from shared.utils.taxonomy import build_taxonomy
 from lib.temporal.types import CommitSource, OpenDataCommitRequest
 from shared.utils.yaml_utils import yaml_dump
 
@@ -60,6 +64,24 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
     return {**person, "cdn_image": promoted_url(friendly_host, dest_key)}
 
 
+async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
+    """Fetch the taxonomy, then derive what posts this roster implies.
+
+    `get_` per the read verbs — it fetches and computes, writing nothing. That fetch is also
+    the only reason this is async: `derived_posts` in `core` is pure and synchronous, and the
+    await is `get_roles`. Never fatal: a roster that publishes without
+    its posts is recoverable, since `source_records` still holds the evidence, but a roster
+    that fails to publish because the taxonomy was unreachable is not.
+    """
+    try:
+        roles = await get_roles()
+        taxonomy = build_taxonomy(RoleConfig(roles=roles))
+        return derived_posts([Official(**person) for person in people], taxonomy, roles)
+    except Exception as e:
+        logger.error(f"Failed to derive posts for publish: {e}", exc_info=True)
+        return []
+
+
 async def publish_people(
     request_id: str,
     jurisdiction_ocdid: str,
@@ -68,7 +90,11 @@ async def publish_people(
 ) -> int:
     """Publish one scrape's roster. Returns the number of people written."""
     written = await publish_request(
-        request_id, jurisdiction_ocdid, people, resolved_by_user_id
+        request_id,
+        jurisdiction_ocdid,
+        people,
+        resolved_by_user_id,
+        derived=await _get_derived_posts(people),
     )
     logger.info(
         f"[{request_id}] Published {written} people for {jurisdiction_ocdid}"
