@@ -12,13 +12,8 @@ import environment
 import lib.github.api as github_service
 import lib.storage as storage_service
 import shared.utils.id_utils
-from core.image_promotion import (
-    ARTIFACTS_BUCKET,
-    CDN_BUCKET,
-    artifacts_key,
-    promoted_key,
-    promoted_url,
-)
+import lib.buckets as buckets
+from core.image_promotion import artifacts_key, promoted_key, promoted_url
 import services.change_logs as change_logs
 from database.pipeline_runs import get_pipeline_run_data_json
 from database.publications import dismiss_request, publish_request, record_open_data_url
@@ -50,7 +45,7 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
     cdn_image = person.get("cdn_image")
     if not cdn_image:
         return person
-    source_key = artifacts_key(cdn_image)
+    source_key = artifacts_key(cdn_image, buckets.ARTIFACTS)
     if not source_key:
         return person
     dest_key = promoted_key(source_key)
@@ -58,7 +53,7 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
         logger.warning(f"Unexpected artifacts key, not promoting: {source_key}")
         return person
     try:
-        storage_service.copy_object(ARTIFACTS_BUCKET, source_key, CDN_BUCKET, dest_key)
+        storage_service.copy_object(buckets.ARTIFACTS, source_key, buckets.CDN, dest_key)
     except Exception as e:
         logger.error(f"Failed to promote image {source_key}: {e}", exc_info=True)
         return person

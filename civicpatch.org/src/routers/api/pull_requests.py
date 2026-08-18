@@ -41,6 +41,7 @@ from services.publish import (
     publish_people,
 )
 import lib.redis as redis_store
+import lib.buckets as buckets
 import lib.storage as storage_service
 from database.people import DEFAULT_VIEW, VIEWS
 from schemas.common import Identity, ReportReviewIssueRequest, UserRole, RouteCategory
@@ -52,7 +53,7 @@ logger = logging.getLogger(__name__)
 def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> Optional[str]:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
     relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
-    return storage_service.get_presigned_url_cached("civicpatch-debug", relative_path)
+    return storage_service.get_presigned_url_cached(buckets.DEBUG, relative_path)
 
 
 def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:

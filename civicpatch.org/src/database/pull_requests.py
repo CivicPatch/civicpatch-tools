@@ -3,8 +3,6 @@ from typing import List, Optional
 from psycopg import sql
 import shared.utils.id_utils
 from shared.utils.statuses import (
-    PipelineIssueStatus,
-    PipelineIssueType,
     RequestType,
 )
 from database.database import get_pool, to_iso
@@ -233,26 +231,6 @@ async def clear_merge_enqueued(request_id: str) -> None:
             """,
             (request_id,),
         )
-
-
-async def get_stuck_merges(older_than_minutes: int) -> List[dict]:
-    # Parked (merge_enqueued_at set) but never settled past the grace window: either the
-    # merge worker never ran it or the merge failed without recording an issue. A settled
-    # merge clears merge_enqueued_at; a healthy in-flight one is younger than the window.
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT request_id::text, pr_number, url
-            FROM pull_requests
-            WHERE status = 'open'
-              AND merge_enqueued_at IS NOT NULL
-              AND merge_enqueued_at < now() - make_interval(mins => %s)
-            """,
-            (older_than_minutes,),
-        )
-        rows = await cur.fetchall()
-    return [{"request_id": r[0], "pr_number": r[1], "url": r[2]} for r in rows]
 
 
 async def update_pipeline_run_pull_request_review_state(request_id: str, review_state: str | None):

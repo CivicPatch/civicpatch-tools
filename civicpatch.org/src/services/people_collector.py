@@ -6,6 +6,7 @@ import lib.sheets as google_sheets_service
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest
 from schemas.pipeline_runs import SubmitPipelineRunArtifactsResponse
 import lib.files as file_utils
+import lib.buckets as buckets
 import lib.storage as storage_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
@@ -24,8 +25,8 @@ import environment
 COST_BY_REQUEST_SHEET_NAME = "Cost By Request"
 LLMS_SHEET_NAME = "Cost LLMs"
 
-PUBLIC_BUCKET = "civicpatch-artifacts"
-PRIVATE_BUCKET = "civicpatch-debug"
+PUBLIC_BUCKET = buckets.ARTIFACTS
+PRIVATE_BUCKET = buckets.DEBUG
 
 INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 

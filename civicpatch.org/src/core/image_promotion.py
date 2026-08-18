@@ -2,11 +2,11 @@
 
 A scrape uploads images to the artifacts bucket, keyed by the run that produced them:
 
-    civicpatch-artifacts/{request_id}/data_source/{state}/local/{place}/images/{file}
+    {artifacts}/{request_id}/data_source/{state}/local/{place}/images/{file}
 
 Publishing promotes them to the CDN bucket, keyed by the jurisdiction alone:
 
-    civicpatch/open-data/{state}/local/{place}/images/{file}
+    {cdn}/open-data/{state}/local/{place}/images/{file}
 
 Dropping `request_id` is the point of the rename: the permanent key is stable across
 re-scrapes, so a person's photo URL does not change every time the pipeline runs.
@@ -14,18 +14,21 @@ re-scrapes, so a person's photo URL does not change every time the pipeline runs
 
 import re
 
-ARTIFACTS_BUCKET = "civicpatch-artifacts"
-CDN_BUCKET = "civicpatch"
 CDN_KEY_PREFIX = "open-data"
 
-# The artifacts bucket is addressed as a subdomain, so the key is everything after the host.
-_ARTIFACTS_URL = re.compile(rf"https?://{re.escape(ARTIFACTS_BUCKET)}[^/]*/(.+)")
 
-
-def artifacts_key(cdn_image: str) -> str | None:
+def artifacts_key(cdn_image: str, artifacts_bucket: str) -> str | None:
     """The object key inside the artifacts bucket, or None if this URL is not one of ours —
-    an already-promoted image, or a photo hosted on the jurisdiction's own site."""
-    match = _ARTIFACTS_URL.match(cdn_image)
+    an already-promoted image, or a photo hosted on the jurisdiction's own site.
+
+    The bucket is passed in rather than read here: which bucket an environment uses is
+    configuration, and this module stays pure.
+    """
+    # The bucket is a subdomain, so it is always followed by a dot — without anchoring that,
+    # `civicpatch-artifacts` also matches `civicpatch-artifacts-nonprod.…`, and a production
+    # instance would claim another environment's images as its own.
+    pattern = re.compile(rf"https?://{re.escape(artifacts_bucket)}\.[^/]*/(.+)")
+    match = pattern.match(cdn_image)
     return match.group(1) if match else None
 
 
