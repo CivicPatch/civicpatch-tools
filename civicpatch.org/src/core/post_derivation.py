@@ -36,6 +36,23 @@ class DerivedPost(BaseModel):
     members: list[tuple[str, str | None]]
 
 
+def _division(record: Official, parsed: dict) -> str:
+    """The Record's own division wins over the one re-derived from its label.
+
+    `parse_record` reads the division out of `office.name` because that is the audit fact
+    `source_records` has to hold — what the label alone yields. But the Record also carries
+    `office.division_ocdid`, already resolved by the pipeline and already published, and the
+    two disagree constantly: 2,824 published people carry a ward or district there against 57
+    whose label mentions one.
+
+    Deriving from the label alone therefore collapses every ward seat in a town onto one
+    at-large post — measured over the corpus it produced 39 divided posts where 2,824 people
+    have a division.
+    """
+    stored = (record.office.division_ocdid or "").strip()
+    return stored or parsed["division_ocdid"]
+
+
 def _residue(parsed: dict) -> str | None:
     """Everything the label had left once the role and the division were taken."""
     leftover = [*parsed.get("other_designations", []), *parsed.get("unmatched", [])]
@@ -62,7 +79,7 @@ def derived_posts(
         parsed = parse_record(record, taxonomy)
         label = parsed.get("role")
         role_id = ids_by_label.get(label) if label else None
-        key = (role_id or UNMATCHED_ROLE_ID, parsed["division_ocdid"])
+        key = (role_id or UNMATCHED_ROLE_ID, _division(record, parsed))
         grouped.setdefault(key, []).append((record.id, _residue(parsed)))
         if label in unique_labels:
             unique_keys.add(key)
