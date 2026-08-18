@@ -32,11 +32,11 @@ _ROLES = [
 _TAXONOMY = build_taxonomy(RoleConfig(roles=_ROLES))
 
 
-def _official(person_id, office_name):
+def _official(person_id, office_name, division_ocdid=None):
     return Official(
         id=person_id,
         name=f"Person {person_id}",
-        office=Office(name=office_name),
+        office=Office(name=office_name, division_ocdid=division_ocdid),
         jurisdiction_ocdid=_OCDID,
         source_urls=["https://example.gov/council"],
         updated_at="2026-03-11T00:00:00+00:00",
@@ -115,3 +115,26 @@ def test_at_large_with_no_value_is_swallowed_and_does_not_reach_the_residue():
     specs = derived_posts([_official("a", "Council Member At-Large")], _TAXONOMY, _ROLES)
     assert specs[0].division_ocdid == _BASE
     assert specs[0].members == [("a", None)]
+
+
+@pytest.mark.unit
+def test_the_records_own_division_beats_the_one_parsed_from_its_label():
+    """Measured over the corpus: 2,824 published people carry a ward or district in
+    `office.division_ocdid` against 57 whose label mentions one. Re-deriving from the label
+    alone collapsed every ward seat in a town onto one at-large post."""
+    specs = derived_posts(
+        [
+            _official("a", "Council Member", division_ocdid=f"{_BASE}/ward:1"),
+            _official("b", "Council Member", division_ocdid=f"{_BASE}/ward:2"),
+        ],
+        _TAXONOMY,
+        _ROLES,
+    )
+    assert len(specs) == 2
+    assert {s.division_ocdid for s in specs} == {f"{_BASE}/ward:1", f"{_BASE}/ward:2"}
+
+
+@pytest.mark.unit
+def test_the_label_is_used_when_the_record_carries_no_division():
+    specs = derived_posts([_official("a", "Council Member Ward 3")], _TAXONOMY, _ROLES)
+    assert specs[0].division_ocdid == f"{_BASE}/ward:3"
