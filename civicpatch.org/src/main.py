@@ -12,6 +12,7 @@ import routers.api.data as api_data_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.people as api_people_router
+import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.pull_requests as api_pull_requests_router
 import routers.api.requests as api_requests_router
@@ -159,6 +160,14 @@ app.include_router(
     prefix="/api/v1/pull_requests",
     tags=["pull_requests"],
     # Dependencies set within router
+)
+
+# The roster screen: every body in a jurisdiction with its posts. Internal because it is one
+# screen's shape; a public posts surface would need the verified default.
+app.include_router(
+    api_posts_router.get_router(),
+    prefix="/api/internal/posts",
+    tags=["posts"],
 )
 
 # Allow you to create your api keys

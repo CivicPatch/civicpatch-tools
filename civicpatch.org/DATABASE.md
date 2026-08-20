@@ -213,6 +213,7 @@ erDiagram
         text_null       role_id             FK "idx WHERE NOT NULL; ON UPDATE CASCADE. A title held in a seat this role does not define — mayor for a councilmember serving as mayor"
         text_array      designations        "default: {}; how the source tells one seat from another: Place 2, Position 8"
         text_array      unmatched_text      "gin idx; default: {}; what the parser could not classify — triage material"
+        text_null       label               "human-owned: what a person calls this seat. Absent from record()'s ON CONFLICT SET, which is its whole protection. NULL = derive from role+designations+division"
         date_null       start_date          "from the source; we do not infer it"
         date_null       end_date            "from the source — NOT set when someone stops appearing"
         timestamptz     first_seen_at       "when the SOURCE said it, not when the row was written"

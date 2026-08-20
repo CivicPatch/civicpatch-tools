@@ -63,6 +63,79 @@ async def find_or_create(
     return (await cur.fetchone())[0]
 
 
+async def create_if_absent(
+    cur,
+    jurisdiction_ocdid: str,
+    organization_id: str,
+    role_id: str,
+    division_ocdid: str,
+    label: str | None = None,
+    headcount: int = 1,
+) -> str | None:
+    """Insert a post, or return None if the identity triple is already taken.
+
+    A person asserting a seat exists, where `find_or_create` is a scrape proposing one — same
+    row, and the only mechanical difference is the return: this caller has to tell "created"
+    from "already there" apart to answer 409.
+    """
+    await cur.execute(
+        """
+        INSERT INTO posts
+            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, label, headcount)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
+        RETURNING id::text
+        """,
+        (
+            jurisdiction_ocdid,
+            organization_id,
+            role_id,
+            division_ocdid,
+            label,
+            headcount,
+        ),
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
+
+
+async def update_human_fields(
+    cur, post_id: str, label: str | None, headcount: int
+) -> bool:
+    """Set the two columns a person owns. Returns whether the post existed.
+
+    The only update path that touches a post. Derivation is mint-only precisely so this is the
+    only thing that can reach `label` and `headcount`.
+    """
+    await cur.execute(
+        "UPDATE posts SET label = %s, headcount = %s WHERE id::text = %s",
+        (label, headcount, post_id),
+    )
+    return cur.rowcount > 0
+
+
+async def delete_if_unheld(cur, post_id: str) -> bool:
+    """Remove a post nobody has ever held. Returns whether it went.
+
+    A post with no memberships was proposed by a scrape and endorsed by no one — the same
+    condition that reads as unverified. Deleting it is what "a person clears them" meant in the
+    no-auto-delete decision.
+
+    A post *with* memberships is history, including closed ones, and refusing here is what
+    keeps the roster timeline answerable. The FK would refuse anyway; this makes it a 409
+    rather than a 500.
+    """
+    await cur.execute(
+        """
+        DELETE FROM posts
+        WHERE id::text = %s
+          AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id = posts.id)
+        """,
+        (post_id,),
+    )
+    return cur.rowcount > 0
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     """Every post in a jurisdiction with its current holder count — the roster read."""
     await cur.execute(

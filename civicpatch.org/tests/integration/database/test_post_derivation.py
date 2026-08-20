@@ -314,3 +314,160 @@ async def test_publish_writes_memberships_for_the_roster():
         assert first_seen_at == _T0
         await cur.execute("DELETE FROM requests WHERE id = %s", (request_id,))
         await conn.commit()
+
+
+# --- human writes: create, update, delete ---
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_create_returns_none_when_the_identity_is_taken():
+    """The caller needs to tell "created" from "already there" apart to answer 409."""
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+
+        first = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE)
+        assert first is not None
+        assert await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE) is None
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_human_created_post_is_matched_by_a_later_scrape():
+    """Creating and minting produce the same row — identity is the triple, not the origin."""
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+
+        created = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE, headcount=3)
+        matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+
+        assert created == matched
+        await cur.execute("SELECT headcount FROM posts WHERE id::text = %s", (created,))
+        assert (await cur.fetchone())[0] == 3  # the scrape did not overwrite it
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_delete_refuses_a_post_that_has_ever_been_held():
+    """Held means history, including closed memberships — that is what keeps the timeline
+    answerable. Unheld means a scrape proposed it and nobody endorsed it."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await memberships.record(cur, person_id, held, org, _T0)
+
+        assert await posts.delete_if_unheld(cur, held) is False
+        assert await posts.delete_if_unheld(cur, unheld) is True
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "trustee", _BASE)
+
+        assert await posts.update_human_fields(cur, post_id, "Trustees", 5) is True
+        await cur.execute(
+            "SELECT label, headcount FROM posts WHERE id::text = %s", (post_id,)
+        )
+        assert await cur.fetchone() == ("Trustees", 5)
+
+        assert (
+            await posts.update_human_fields(
+                cur, "00000000-0000-0000-0000-000000000000", None, 1
+            )
+            is False
+        )
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_human_label_survives_a_re_scrape():
+    """The only human-owned field on a membership. Protected by being absent from `record`'s
+    ON CONFLICT SET — the derived parts beside it are overwritten every publish."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+
+        membership_id = await memberships.record(
+            cur, person_id, post_id, org, _T0, designations=["Position 8"]
+        )
+        assert await memberships.set_label(cur, membership_id, "Councilmember Pos. 8") is True
+
+        # A later scrape of the same seat, with the designation parsed differently.
+        await memberships.record(
+            cur, person_id, post_id, org, _T1, designations=["Position 08"]
+        )
+
+        await cur.execute(
+            "SELECT label, designations FROM memberships WHERE id::text = %s",
+            (membership_id,),
+        )
+        label, designations = await cur.fetchone()
+        assert label == "Councilmember Pos. 8"  # untouched
+        assert designations == ["Position 08"]  # re-derived
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_to_another_post_leaves_the_label_behind():
+    """A label names this person in *this* seat, so a different seat starts unnamed."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await divisions.find_or_create(cur, _WARD_3, _OCDID)
+        first = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+        second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
+
+        old = await memberships.record(cur, person_id, first, org, _T0)
+        await memberships.set_label(cur, old, "Councilmember Pos. 8")
+        new = await memberships.record(cur, person_id, second, org, _T1)
+
+        await cur.execute(
+            "SELECT label FROM memberships WHERE id::text = ANY(%s) ORDER BY first_seen_at",
+            ([old, new],),
+        )
+        assert [row[0] for row in await cur.fetchall()] == ["Councilmember Pos. 8", None]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_membership_read_still_selects_every_column_it_names():
+    """122 dropped `label` while this query still selected it, and only the absence of a caller
+    hid that for two migrations. Executing it is the check."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await memberships.record(cur, person_id, post_id, org, _T0)
+
+        rows = await memberships.list_for_jurisdiction(cur, _OCDID)
+        assert len(rows) == 1
+        assert rows[0]["role_id"] == "mayor"
+        assert rows[0]["label"] is None
+        await conn.rollback()
