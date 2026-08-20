@@ -4,18 +4,26 @@ Pure — Officials and taxonomy in, post specs out, no I/O — so it can be repl
 history and diffed against what was stored, the same property `source_record_parse` was
 written for.
 
-A post is `(role, division)` and nothing else. Everything a label leaves over once those two
-are taken is per-person residue and belongs on the membership, so it never appears here.
+A post is `(role, division)` and nothing else. Whatever a label carries beyond those two is
+per-person and belongs on the membership, so it never appears here.
 """
 
 from pydantic import BaseModel
-
-from core.source_record_parse import parse_record
 from shared.schemas import Official, Role
 from shared.utils.taxonomy import Taxonomy
 
+from core.source_record_parse import parse_record
+
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
+
+
+class DerivedMember(BaseModel):
+    """One person a scrape found on a post, and what their label carried besides the role."""
+
+    person_id: str
+    designations: list[str] = []
+    unmatched_text: list[str] = []
 
 
 class DerivedPost(BaseModel):
@@ -32,63 +40,46 @@ class DerivedPost(BaseModel):
     # Only applied when the post is minted. A later scrape finding a different number must
     # not overwrite a figure somebody typed.
     headcount: int
-    # Which people landed here, and the residue each of them carried.
-    members: list[tuple[str, str | None]]
+    members: list[DerivedMember]
 
 
 def _division(record: Official, parsed: dict) -> str:
-    """The Record's own division wins over the one re-derived from its label.
-
-    `parse_record` reads the division out of `office.name` because that is the audit fact
-    `source_records` has to hold — what the label alone yields. But the Record also carries
-    `office.division_ocdid`, already resolved by the pipeline and already published, and the
-    two disagree constantly: 2,824 published people carry a ward or district there against 57
-    whose label mentions one.
-
-    Deriving from the label alone therefore collapses every ward seat in a town onto one
-    at-large post — measured over the corpus it produced 39 divided posts where 2,824 people
-    have a division.
-    """
+    """The Record's own division wins over the one re-derived from its label."""
     stored = (record.office.division_ocdid or "").strip()
     return stored or parsed["division_ocdid"]
 
 
-def _residue(parsed: dict) -> str | None:
-    """Everything the label had left once the role and the division were taken."""
-    leftover = [*parsed.get("other_designations", []), *parsed.get("unmatched", [])]
-    return " ".join(leftover) or None
+def _member(record: Official, parsed: dict) -> "DerivedMember":
+    """One person, with the two halves of what their label carried beyond the role."""
+    return DerivedMember(
+        person_id=record.id,
+        designations=parsed.get("other_designations") or [],
+        unmatched_text=parsed.get("unmatched") or [],
+    )
 
 
 def derived_posts(
     records: list[Official], taxonomy: Taxonomy, roles: list[Role]
 ) -> list[DerivedPost]:
-    """One entry per distinct (role, division) this scrape produced.
-
-    `headcount` is 1 for a role marked unique — a town has one mayor, and two people on that
-    post is a data error worth flagging rather than a nine-seat council. Otherwise it is how
-    many people actually landed there, which is the best floor available: the page cannot say
-    how many seats exist, only how many it listed.
-    """
+    """One entry per distinct (role, division) this scrape produced."""
     ids_by_label = {role.label: role.id for role in roles}
-    unique_labels = {role.label for role in roles if role.is_unique}
 
-    grouped: dict[tuple[str, str], list[tuple[str, str | None]]] = {}
-    unique_keys: set[tuple[str, str]] = set()
+    def role_id_for(parsed: dict) -> str:
+        label = parsed.get("role")
+        return (ids_by_label.get(label) if label else None) or UNMATCHED_ROLE_ID
+
+    grouped: dict[tuple[str, str], list[DerivedMember]] = {}
 
     for record in records:
         parsed = parse_record(record, taxonomy)
-        label = parsed.get("role")
-        role_id = ids_by_label.get(label) if label else None
-        key = (role_id or UNMATCHED_ROLE_ID, _division(record, parsed))
-        grouped.setdefault(key, []).append((record.id, _residue(parsed)))
-        if label in unique_labels:
-            unique_keys.add(key)
+        key = (role_id_for(parsed), _division(record, parsed))
+        grouped.setdefault(key, []).append(_member(record, parsed))
 
     return [
         DerivedPost(
             role_id=role_id,
             division_ocdid=division_ocdid,
-            headcount=1 if (role_id, division_ocdid) in unique_keys else len(members),
+            headcount=len(members),
             members=members,
         )
         for (role_id, division_ocdid), members in grouped.items()

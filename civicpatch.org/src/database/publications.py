@@ -146,9 +146,15 @@ async def publish_request(
                     post.division_ocdid,
                     headcount=post.headcount,
                 )
-                for person_id, residue in post.members:
+                for member in post.members:
                     await memberships.record(
-                        cur, person_id, post_id, organization_id, seen_at, label=residue
+                        cur,
+                        member.person_id,
+                        post_id,
+                        organization_id,
+                        seen_at,
+                        designations=member.designations,
+                        unmatched_text=member.unmatched_text,
                     )
             await memberships.close_absent(
                 cur, jurisdiction_ocdid, incoming_ids, seen_at

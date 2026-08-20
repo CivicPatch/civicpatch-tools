@@ -72,14 +72,6 @@ def test_same_role_and_division_is_one_post_with_a_headcount():
 
 
 @pytest.mark.unit
-def test_a_unique_role_keeps_headcount_one_even_with_two_holders():
-    """Two mayors is a data error to flag, not a two-seat office to invent."""
-    specs = derived_posts([_official("a", "Mayor"), _official("b", "Mayor")], _TAXONOMY, _ROLES)
-    assert _by_role(specs)["mayor"].headcount == 1
-    assert len(_by_role(specs)["mayor"].members) == 2
-
-
-@pytest.mark.unit
 def test_recognised_designations_do_not_split_a_post():
     """Position 1 and Position 2 share a post; the text rides on the memberships."""
     specs = derived_posts(
@@ -88,7 +80,7 @@ def test_recognised_designations_do_not_split_a_post():
         _ROLES,
     )
     assert len(specs) == 1
-    assert sorted(residue for _, residue in specs[0].members) == ["Position 1", "Position 2"]
+    assert sorted(d for m in specs[0].members for d in m.designations) == ["Position 1", "Position 2"]
 
 
 @pytest.mark.unit
@@ -107,14 +99,14 @@ def test_an_unresolvable_label_lands_on_the_unmatched_role():
     """Nobody is postless — the residue carries what we could not place."""
     specs = derived_posts([_official("a", "Town Moderator")], _TAXONOMY, _ROLES)
     assert specs[0].role_id == UNMATCHED_ROLE_ID
-    assert specs[0].members == [("a", "Town Moderator")]
+    assert [(m.person_id, m.unmatched_text) for m in specs[0].members] == [("a", ["Town Moderator"])]
 
 
 @pytest.mark.unit
 def test_at_large_with_no_value_is_swallowed_and_does_not_reach_the_residue():
     specs = derived_posts([_official("a", "Council Member At-Large")], _TAXONOMY, _ROLES)
     assert specs[0].division_ocdid == _BASE
-    assert specs[0].members == [("a", None)]
+    assert [(m.person_id, m.designations, m.unmatched_text) for m in specs[0].members] == [("a", [], [])]
 
 
 @pytest.mark.unit
@@ -138,3 +130,41 @@ def test_the_records_own_division_beats_the_one_parsed_from_its_label():
 def test_the_label_is_used_when_the_record_carries_no_division():
     specs = derived_posts([_official("a", "Council Member Ward 3")], _TAXONOMY, _ROLES)
     assert specs[0].division_ocdid == f"{_BASE}/ward:3"
+
+
+# --- everything a scrape produces becomes a post -------------------------------------------
+#
+# The demotion pass that used to live here is gone: a hardcoded set of "jurisdiction-wide"
+# role ids drifts from `roles`, which is DB-managed. If churn proves painful a maintainer
+# blacklists the role from posts and it renders on the membership instead.
+
+_WARD_3 = f"{_BASE}/council_district:3"
+_WARD_5 = f"{_BASE}/council_district:5"
+
+
+@pytest.mark.unit
+def test_a_jurisdiction_wide_role_at_an_electoral_division_still_mints_its_own_post():
+    specs = derived_posts(
+        [
+            _official("a", "Mayor", _WARD_3),
+            _official("b", "Council Member", _WARD_5),
+        ],
+        _TAXONOMY,
+        _ROLES,
+    )
+    by_role = _by_role(specs)
+
+    assert by_role["mayor"].division_ocdid == _WARD_3
+    assert by_role["council-member"].division_ocdid == _WARD_5
+
+
+@pytest.mark.unit
+def test_headcount_counts_holders_even_for_a_role_marked_unique():
+    """`is_unique` no longer pins headcount to 1 — the count is what the page listed."""
+    specs = derived_posts(
+        [_official("a", "Mayor"), _official("b", "Mayor")], _TAXONOMY, _ROLES
+    )
+
+    assert len(specs) == 1
+    assert specs[0].role_id == "mayor"
+    assert specs[0].headcount == 2

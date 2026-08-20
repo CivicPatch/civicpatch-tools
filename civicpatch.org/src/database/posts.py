@@ -5,9 +5,12 @@ No free text is in the key, so nothing a human types can fork a post: renaming o
 make the next scrape miss it.
 
 MINT-ONLY WRITES, absolutely. `record` sets a post's columns when it creates one and writes
-nothing at all when it matches one — a match is a pure lookup. That is what keeps `label`,
-`headcount` and `status` human-owned with no lock table: there is no update path to lose them
-through.
+nothing at all when it matches one — a match is a pure lookup. That is what keeps `label` and
+`headcount` human-owned with no lock table: there is no update path to lose them through.
+
+Whether a human vouched for a post is not stored either — 121 dropped `status` for it.
+Memberships are written only at publish, and publishing is a named human act, so a post with
+any member was endorsed by a person and one without was only ever proposed by a scrape.
 
 "When did a scrape last produce this post" is not stored, because it is
 `MAX(memberships.last_seen_at)` — a post is produced exactly when somebody parses into it,
@@ -25,10 +28,9 @@ async def find_or_create(
 ) -> str:
     """Make sure this post exists. Returns its id, minted or matched.
 
-    A minted post is `candidate`: a scrape proposing a seat is not the same as somebody
-    asserting one exists, and a reviewer promotes it via NEW_POST. Written out rather than
-    left to the column default so this module states its own behaviour — and so the human
-    "declare a post" path, which must mint `active`, cannot inherit this one by accident.
+    A minted post is unvouched-for, and nothing records that — it follows from having no
+    members, since memberships are written only at publish. 121 dropped the `status` column
+    that used to say it, along with the promotion path that never existed to change it.
 
     `headcount` applies only on mint. A later scrape finding a different number of people must
     not overwrite a figure somebody typed — which is why the count cannot simply be recomputed
@@ -40,8 +42,8 @@ async def find_or_create(
     await cur.execute(
         """
         INSERT INTO posts
-            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount, status)
-        VALUES (%s, %s, %s, %s, %s, 'candidate')
+            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount)
+        VALUES (%s, %s, %s, %s, %s)
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
         """,
@@ -66,7 +68,10 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     await cur.execute(
         """
         SELECT p.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
-               p.label, p.headcount, p.status,
+               p.label, p.headcount,
+               -- Endorsed by a person, not merely proposed by a scrape: memberships are
+               -- written only at publish, and publishing is a named human act.
+               count(m.id) > 0 AS verified,
                count(m.id) FILTER (WHERE m.closed_at IS NULL) AS holders,
                max(m.last_seen_at) AS last_seen_at
         FROM posts p
@@ -82,11 +87,16 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
 
 
 async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
-    """Active posts no scrape has produced since `cutoff` — what raises ABSENT_POST.
+    """Posts a person once endorsed that no scrape has produced since `cutoff`.
 
-    A post with no memberships at all is excluded by the HAVING: nothing has ever been seen
-    in it, which is how a seat somebody declared reads, and that is not absent just because
-    the source never mentioned it.
+    Previously filtered `status = 'active'`, which no post ever held — `find_or_create` minted
+    `candidate` and nothing promoted it, so this could never return a row. 121 dropped the
+    column; the HAVING now carries the whole condition.
+
+    A post with no memberships is excluded by that HAVING, which is the same test as "was it
+    ever endorsed": nothing has been seen in it, so it cannot have stopped being seen. That
+    also excludes every post in a jurisdiction awaiting its first publish — correctly, since
+    a seat nobody has confirmed is not absent, only unconfirmed.
     """
     await cur.execute(
         """
@@ -94,7 +104,7 @@ async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
                max(m.last_seen_at) AS last_seen_at
         FROM posts p
         LEFT JOIN memberships m ON m.post_id = p.id
-        WHERE p.jurisdiction_ocdid = %s AND p.status = 'active'
+        WHERE p.jurisdiction_ocdid = %s
         GROUP BY p.id
         HAVING max(m.last_seen_at) < %s
         ORDER BY max(m.last_seen_at)

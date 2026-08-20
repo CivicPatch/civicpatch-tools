@@ -22,9 +22,11 @@ async def record(
     post_id: str,
     organization_id: str,
     seen_at,
-    label: str | None = None,
+    designations: list[str] | None = None,
+    unmatched_text: list[str] | None = None,
     start_date=None,
     end_date=None,
+    role_id: str | None = None,
 ) -> str:
     """Open this person's membership of this post, or advance it. Returns its id.
 
@@ -35,9 +37,16 @@ async def record(
     `seen_at` is when the source said this, not when the row was written — it lands in
     `first_seen_at` / `last_seen_at`, and on `closed_at` for the membership being replaced.
 
-    `label`, `start_date` and `end_date` come from the scrape and are overwritten on every
-    pass. That is the surface `field_locks` will guard; until it exists, a manual correction
-    to any of the three is lost on the next publish.
+    `role_id` is the title held in a seat some other role defines — `mayor` for a
+    councilmember serving as mayor. NULL whenever the post's own role says everything.
+
+    `designations` is how the source told this seat from others like it — "Place 2".
+    `unmatched_text` is what the parser could not classify, and is what the cross-jurisdiction
+    triage list reads. Both are arrays: one label can carry two of either.
+
+    These, `role_id`, `start_date` and `end_date` come from the scrape and are overwritten on
+    every pass. That is the surface `field_overrides` will guard; until it exists, a manual
+    correction to any of them is lost on the next publish.
     """
     await cur.execute(
         """
@@ -51,13 +60,15 @@ async def record(
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, label, start_date, end_date,
-             first_seen_at, last_seen_at)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            (post_id, organization_id, person_id, designations, unmatched_text, role_id,
+             start_date, end_date, first_seen_at, last_seen_at)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
         DO UPDATE SET
             last_seen_at = GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at),
-            label = EXCLUDED.label,
+            designations = EXCLUDED.designations,
+            unmatched_text = EXCLUDED.unmatched_text,
+            role_id = EXCLUDED.role_id,
             start_date = EXCLUDED.start_date,
             end_date = EXCLUDED.end_date
         RETURNING id::text
@@ -66,7 +77,9 @@ async def record(
             post_id,
             organization_id,
             person_id,
-            label,
+            designations or [],
+            unmatched_text or [],
+            role_id,
             start_date,
             end_date,
             seen_at,
