@@ -1,9 +1,9 @@
 import json
-from typing import List, Optional
-
-from psycopg import sql
+from typing import Optional
 
 from database.database import get_pool
+from lib.github.utils import pull_request_url_to_number
+from psycopg import sql
 from shared.utils.statuses import (
     PipelineIssueStatus,
     PipelineIssueType,
@@ -12,7 +12,6 @@ from shared.utils.statuses import (
     RequestReviewStatus,
     RequestType,
 )
-from lib.github.utils import pull_request_url_to_number
 
 # The review lifecycle as one SQL expression, so the sites that render it cannot drift apart.
 # Requires the requests table aliased `r`, like AVAILABLE_FOR_REVIEW below.
@@ -86,7 +85,6 @@ AVAILABLE_FOR_REVIEW = (
 )
 
 
-
 async def register_request_with_pipeline_run(
     request_id: str,
     job_type: str,
@@ -103,7 +101,13 @@ async def register_request_with_pipeline_run(
             INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at, updated_at)
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
-            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json), requested_by_user_id),
+            (
+                request_id,
+                job_type,
+                jurisdiction_ocdid,
+                json.dumps(arguments_json),
+                requested_by_user_id,
+            ),
         )
 
         await conn.execute(

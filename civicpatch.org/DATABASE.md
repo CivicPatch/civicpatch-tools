@@ -180,7 +180,57 @@ erDiagram
         timestamptz     created_at
     }
 
+    organizations {
+        uuid            id                  PK
+        text            jurisdiction_ocdid  FK  "unique: (jurisdiction_ocdid, name)"
+        text            name                "one body — City Council, Township Board. Derivation currently mints one per jurisdiction"
+        int             sort_order          "default: 0"
+        timestamptz     created_at          "default: now()"
+    }
+
+    divisions {
+        text            ocdid               PK "ocd-division/...; minted lazily when a post needs it"
+        text            jurisdiction_ocdid  FK
+        timestamptz     created_at          "default: now()"
+    }
+
+    posts {
+        uuid            id                  PK "also unique (id, organization_id) so memberships can FK the pair — kept: that column feeds a partial unique index and its failure would be silent"
+        text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
+        uuid            organization_id     FK
+        text            role_id             FK "ON UPDATE CASCADE; the SEAT's role — a title the holder carries lives on the membership"
+        text            division_ocdid      FK "ON UPDATE CASCADE"
+        text_null       label               "human-owned; mint-only writes never overwrite it"
+        int             headcount           "check: > 0, default: 1; human-owned"
+        timestamptz     created_at          "default: now()"
+    }
+
+    memberships {
+        uuid            id                  PK
+        uuid            post_id             FK "composite FK (post_id, organization_id) ON UPDATE CASCADE"
+        uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open seat per body"
+        uuid            person_id           FK
+        text_null       role_id             FK "idx WHERE NOT NULL; ON UPDATE CASCADE. A title held in a seat this role does not define — mayor for a councilmember serving as mayor"
+        text_array      designations        "default: {}; how the source tells one seat from another: Place 2, Position 8"
+        text_array      unmatched_text      "gin idx; default: {}; what the parser could not classify — triage material"
+        date_null       start_date          "from the source; we do not infer it"
+        date_null       end_date            "from the source — NOT set when someone stops appearing"
+        timestamptz     first_seen_at       "when the SOURCE said it, not when the row was written"
+        timestamptz     last_seen_at        "advanced on every scrape that still lists them"
+        timestamptz_null closed_at          "set when a scrape stops listing them; NULL = currently open"
+        timestamptz     created_at          "default: now()"
+    }
+
     roles ||--o{ role_aliases : "role_id"
+    jurisdictions ||--o{ organizations : "jurisdiction_ocdid"
+    jurisdictions ||--o{ divisions : "jurisdiction_ocdid"
+    jurisdictions ||--o{ posts : "jurisdiction_ocdid"
+    organizations ||--o{ posts : "organization_id"
+    roles ||--o{ posts : "role_id"
+    divisions ||--o{ posts : "division_ocdid"
+    posts ||--o{ memberships : "post_id"
+    people ||--o{ memberships : "person_id"
+    roles ||--o{ memberships : "role_id (title, not seat)"
     requests ||--o{ source_records : "request_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
