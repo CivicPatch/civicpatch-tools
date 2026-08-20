@@ -40,6 +40,12 @@ async def _wipe():
         await cur.execute("DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        # Before the jurisdictions themselves: `requests.jurisdiction_ocdid` is a FK, and
+        # test_publish_writes_memberships_for_the_roster leaves a request behind. Without
+        # this the wipe raises at *setup* of every test in the file, so one leftover row
+        # takes the whole module down — and takes new breakage with it, silently.
+        # `source_records` and `pipeline_runs` cascade from the request.
+        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
 
@@ -88,17 +94,18 @@ async def test_record_mints_once_then_matches():
         await cur.execute("SELECT count(*) FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
         assert (await cur.fetchone())[0] == 1
 
-        # A scrape proposes; it does not assert. Promotion is the reviewer's, via NEW_POST.
-        await cur.execute("SELECT status FROM posts WHERE id = %s", (first,))
-        assert (await cur.fetchone())[0] == "candidate"
+        # A scrape proposes; it does not assert. 121 dropped `status` — a post is endorsed
+        # exactly when it has a member, since memberships are only written at publish.
+        await cur.execute("SELECT count(*) FROM memberships WHERE post_id = %s", (first,))
+        assert (await cur.fetchone())[0] == 0
         await conn.rollback()
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_match_never_overwrites_a_human_edit():
-    """The reason `DO NOTHING` is not `DO UPDATE`: label, headcount and status are
-    human-owned, and the derivation has no update path to reach them."""
+    """The reason `DO NOTHING` is not `DO UPDATE`: label and headcount are human-owned, and
+    the derivation has no update path to reach them."""
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -107,15 +114,15 @@ async def test_a_match_never_overwrites_a_human_edit():
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "UPDATE posts SET label = %s, headcount = %s, status = %s WHERE id = %s",
-            ("Councillors", 9, "active", post_id),
+            "UPDATE posts SET label = %s, headcount = %s WHERE id = %s",
+            ("Councillors", 9, post_id),
         )
         await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "SELECT label, headcount, status FROM posts WHERE id = %s", (post_id,)
+            "SELECT label, headcount FROM posts WHERE id = %s", (post_id,)
         )
-        assert await cur.fetchone() == ("Councillors", 9, "active")
+        assert await cur.fetchone() == ("Councillors", 9)
         await conn.rollback()
 
 
@@ -224,15 +231,20 @@ async def test_unmatched_people_share_one_post_per_division():
         again = await posts.find_or_create(cur, _OCDID, org, "unmatched", _BASE)
         assert bucket == again
 
-        await memberships.record(cur, first_person, bucket, org, _T0, label="Town Moderator")
-        await memberships.record(cur, second, bucket, org, _T0, label="Supervisor of the Checklist")
+        await memberships.record(
+            cur, first_person, bucket, org, _T0, unmatched_text=["Town Moderator"]
+        )
+        await memberships.record(
+            cur, second, bucket, org, _T0, unmatched_text=["Supervisor of the Checklist"]
+        )
 
         await cur.execute(
-            "SELECT label FROM memberships WHERE post_id = %s ORDER BY label", (bucket,)
+            "SELECT unmatched_text FROM memberships WHERE post_id = %s ORDER BY unmatched_text",
+            (bucket,),
         )
         assert [row[0] for row in await cur.fetchall()] == [
-            "Supervisor of the Checklist",
-            "Town Moderator",
+            ["Supervisor of the Checklist"],
+            ["Town Moderator"],
         ]
         await conn.rollback()
 
@@ -245,7 +257,7 @@ async def test_publish_writes_memberships_for_the_roster():
     Posts are re-ensured here because ingest is never fatal — a roster must publish even if
     post derivation failed at submit.
     """
-    from core.post_derivation import DerivedPost
+    from core.post_derivation import DerivedMember, DerivedPost
     from database.publications import publish_request
 
     person_id = await _seed_person()
@@ -276,7 +288,7 @@ async def test_publish_writes_memberships_for_the_roster():
             role_id="mayor",
             division_ocdid=_BASE,
             headcount=1,
-            members=[(person_id, None)],
+            members=[DerivedMember(person_id=person_id)],
         )
     ]
 

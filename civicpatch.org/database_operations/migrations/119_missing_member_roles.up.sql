@@ -9,6 +9,19 @@
 -- Deputy Supervisor 4. There is no deputy trustee or deputy alderperson in the data, so
 -- none is invented here.
 --
+-- NOT added: 'City Secretary' -> secretary, and 'City Manager' -> council-manager. Production
+-- carries roles `city-secretary` and `city-manager` whose *labels* are exactly those strings.
+-- An alias may not claim a label another role already claims — `upsert_roles` refuses to save
+-- such a taxonomy, and that is the admin UI's save path, so adding them would have made every
+-- role edit return 409. The unique index would not have caught it: it covers alias labels, not
+-- role labels, so `ON CONFLICT DO NOTHING` sails straight past.
+--
+-- Dev has neither role, which is why this was invisible here and only surfaced against the
+-- integration database. Verified against production 2026-08-20, before 119 had shipped.
+--
+-- 'Town Manager' is left in. Production has it as an alias of `city-manager`, so the alias
+-- unique index does catch that one and `ON CONFLICT DO NOTHING` skips it.
+--
 -- `Alderperson` does not collide: `council-member`'s 33 aliases include councilman,
 -- councilor and councilperson but no alderman, and the taxonomy already carries
 -- `president-board-of-aldermen` with no plain member beneath it.
@@ -80,12 +93,10 @@ FROM (VALUES
     ('deputy-treasurer', 'Deputy City Treasurer'),
     ('deputy-treasurer', 'Deputy Township Treasurer'),
     ('moderator', 'Town Moderator'),
-    ('secretary', 'City Secretary'),
     ('secretary', 'Town Secretary'),
     ('assessor', 'Township Assessor'),
     ('assessor', 'City Assessor'),
     -- `council-manager` had no aliases at all, so the appointed manager never matched.
-    ('council-manager', 'City Manager'),
     ('council-manager', 'Town Manager'),
     ('council-manager', 'Township Manager'),
     ('council-manager', 'Village Manager'),

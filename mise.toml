@@ -431,9 +431,13 @@ docker compose run --rm civicpatch-org \
 """
 
 [tasks.migrate_down]
+description = "Roll back N migrations, newest first (default 1): mise run migrate_down -- 4"
+# The container entrypoint runs `migrate up` before the command, so a bare `down` in a fresh
+# container applies everything and then undoes one. Running it repeatedly therefore rolls back
+# the *same* migration each time instead of walking backwards — pass a count to move.
 run = """
 docker compose run --rm civicpatch-org \
-    python database_operations/migrate.py down
+    python database_operations/migrate.py down {{ arg(name="steps", required=false) }}
 """
 
 [tasks.psql]

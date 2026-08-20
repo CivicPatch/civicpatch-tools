@@ -11,7 +11,15 @@
 -- nothing to do.
 BEGIN;
 
-DELETE FROM role_aliases WHERE lower(label) IN (
+-- Scoped by role_id as well as label: 'town manager' and 'village manager' are production's
+-- own aliases of `city-manager`, which this migration never touched and must not remove.
+DELETE FROM role_aliases
+WHERE role_id IN (
+    'alderperson', 'trustee', 'supervisor', 'deputy-supervisor', 'clerk', 'deputy-clerk',
+    'treasurer', 'deputy-treasurer', 'moderator', 'secretary', 'assessor',
+    'committee-member', 'chair', 'vice-chair', 'select-board-member', 'council-manager'
+)
+AND lower(label) IN (
     'alderman', 'alderwoman', 'aldermen',
     'trustees', 'township trustee', 'village trustee',
     'township supervisor', 'town supervisor',
