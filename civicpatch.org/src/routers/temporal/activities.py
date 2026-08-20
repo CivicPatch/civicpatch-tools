@@ -1,16 +1,16 @@
-from temporalio import activity
-
-import services.pull_request_sync as pr_sync
-import services.open_data_sync as data_sync
-import services.pull_request_merge as pull_request_merge
-import lib.github.api as github_service
-import services.publish as publish_service
 import database.pipeline_runs as pipeline_runs_db
+import database.requests as requests_db
 import database.review_session_entries as review_session_entries_db
+import lib.github.api as github_service
+import services.open_data_sync as data_sync
+import services.publish as publish_service
+import services.pull_request_merge as pull_request_merge
+import services.pull_request_sync as pr_sync
 from database.issues import upsert_issue
 from lib.temporal.types import MergeRequest, OpenDataCommitRequest
 from shared.utils.statuses import PipelineIssueType
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+from temporalio import activity
 
 # A run that dies before send_error uploads is expired to ERROR with no issue of its own.
 # Raise the same generic-failure issue the collector raises (PIPELINE_ERROR), so the
@@ -36,12 +36,18 @@ async def od_sync_targeted_activity(jurisdiction_ocdids: list[str]) -> None:
 
 @activity.defn
 async def expire_stale_pipeline_runs_activity() -> None:
-    expired = await pipeline_runs_db.expire_stale_pipeline_runs(PEOPLE_COLLECTOR_EXECUTION_TIMEOUT)
+    expired = await pipeline_runs_db.expire_stale_pipeline_runs(
+        PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+    )
     if not expired:
         return
-    activity.logger.warning("Expired %d stale pipeline run(s): %s", len(expired), expired)
+    activity.logger.warning(
+        "Expired %d stale pipeline run(s): %s", len(expired), expired
+    )
     for request_id in expired:
-        await upsert_issue(request_id, PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL])
+        await upsert_issue(
+            request_id, PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL]
+        )
 
 
 @activity.defn
@@ -93,3 +99,12 @@ async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
         )
         if not removed:
             raise RuntimeError(f"open-data delete rejected for {request.delete_path}")
+
+
+@activity.defn
+async def supersede_stacked_requests_activity() -> None:
+    dismissed = await requests_db.supersede_stacked_requests()
+    if dismissed:
+        activity.logger.info(
+            "Superseded %d stacked request(s): %s", len(dismissed), dismissed
+        )

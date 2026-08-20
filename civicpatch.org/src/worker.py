@@ -24,6 +24,7 @@ from routers.temporal.activities import (
     merge_pr_activity,
     od_sync_activity,
     od_sync_targeted_activity,
+    supersede_stacked_requests_activity,
     sync_pr_state_activity,
 )
 from temporalio.client import (
@@ -153,6 +154,7 @@ async def main() -> None:
             cleanup_stale_review_entries_activity,
             merge_pr_activity,
             commit_open_data_activity,
+            supersede_stacked_requests_activity,
         ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")

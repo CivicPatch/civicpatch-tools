@@ -1,7 +1,12 @@
 import json
+from datetime import timedelta
 from typing import Optional
 
 from database.database import get_pool
+from database.review_sessions import (
+    SESSION_IDLE_TIMEOUT_MINUTES,
+    ReviewSessionEntryStatus,
+)
 from lib.github.utils import pull_request_url_to_number
 from psycopg import sql
 from shared.utils.statuses import (
@@ -81,6 +86,34 @@ AVAILABLE_FOR_REVIEW = (
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
     "AND r.id::text = ANY(i.request_ids) "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
+    ")"
+)
+
+# When roster was observed (instead of when the run was registered.)
+# r is requests
+ROSTER_SEEN_AT = (
+    "COALESCE("
+    "(SELECT max((p->>'updated_at')::timestamptz) FROM jsonb_array_elements(r.data_json) p),"
+    " r.created_at)"
+)
+
+# Request supercede can dismiss.
+# Sweep should not dismiss a card still in the queue.
+SWEEPABLE = (
+    f"{AVAILABLE_FOR_REVIEW} "
+    "AND EXISTS ("
+    "SELECT 1 FROM jurisdictions j "
+    "WHERE j.jurisdiction_ocdid = r.jurisdiction_ocdid "
+    "AND j.status = 'active'"
+    ")"
+)
+
+HELD_BY_REVIEWER = (
+    "EXISTS ("
+    "SELECT 1 FROM review_session_entries e "
+    "WHERE r.id::text = ANY(e.request_ids) "
+    f"AND (e.status IN ('{ReviewSessionEntryStatus.SAVED}', '{ReviewSessionEntryStatus.RESOLVED}') "
+    f"OR (e.status = '{ReviewSessionEntryStatus.CLAIMED}' AND e.created_at >= NOW() - %s))"
     ")"
 )
 
@@ -326,3 +359,31 @@ async def get_requests_for_export(
         }
         for r in rows
     ]
+
+
+async def supersede_stacked_requests() -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            WITH candidates AS (
+                SELECT r.id, r.jurisdiction_ocdid, {ROSTER_SEEN_AT} AS seen_at
+                FROM requests r
+                WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
+            )
+            UPDATE requests
+               SET dismissed_at = now()
+             WHERE id IN (
+                 SELECT older.id
+                 FROM candidates older
+                 WHERE EXISTS (
+                     SELECT 1 FROM candidates newer
+                     WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
+                       AND newer.seen_at > older.seen_at
+                 )
+             )
+            RETURNING id::text
+            """,
+            (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),),
+        )
+        return [row[0] for row in await cur.fetchall()]
