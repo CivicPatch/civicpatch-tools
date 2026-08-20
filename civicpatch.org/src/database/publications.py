@@ -16,6 +16,7 @@ from core.post_derivation import DerivedPost
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import people_rows
+from database.requests import ROSTER_SEEN_AT
 
 
 async def record_open_data_url(request_id: str, url: str) -> None:
@@ -28,7 +29,9 @@ async def record_open_data_url(request_id: str, url: str) -> None:
         )
 
 
-async def dismiss_request(request_id: str, resolved_by_user_id: str | None = None) -> None:
+async def dismiss_request(
+    request_id: str, resolved_by_user_id: str | None = None
+) -> None:
     """The reviewer looked at this scrape and decided it should not go live.
 
     The counterpart to publishing, and the other way a request leaves the review queue. Not a
@@ -56,7 +59,9 @@ def _seen_at(people: list[dict]):
     and both `GREATEST` refusing to regress `last_seen_at` and replaying an old scrape being
     harmless depend on this describing the observation.
     """
-    stamps = [str(person["updated_at"]) for person in people if person.get("updated_at")]
+    stamps = [
+        str(person["updated_at"]) for person in people if person.get("updated_at")
+    ]
     return max(stamps) if stamps else datetime.now(timezone.utc)
 
 
@@ -86,6 +91,26 @@ async def publish_request(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT r.id::text, {ROSTER_SEEN_AT} AS roster_seen_at
+            FROM requests r
+            WHERE r.jurisdiction_ocdid = %s
+              AND r.published_at IS NOT NULL
+              AND r.id <> %s
+              AND {ROSTER_SEEN_AT} > %s::timestamptz
+            ORDER BY roster_seen_at DESC
+            LIMIT 1
+            """,
+            (jurisdiction_ocdid, request_id, seen_at),
+        )
+        newer = await cur.fetchone()
+        if newer:
+            raise ValueError(
+                f"Refusing to publish {request_id}: request {newer[0]} already published a "
+                f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {seen_at})."
+            )
+
         if rows:
             await cur.executemany(
                 """
@@ -135,9 +160,13 @@ async def publish_request(
         )
 
         if derived:
-            organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+            organization_id = await organizations.find_or_create(
+                cur, jurisdiction_ocdid
+            )
             for post in derived:
-                await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
+                await divisions.find_or_create(
+                    cur, post.division_ocdid, jurisdiction_ocdid
+                )
                 post_id = await posts.find_or_create(
                     cur,
                     jurisdiction_ocdid,
