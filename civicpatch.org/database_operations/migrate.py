@@ -35,6 +35,11 @@ def apply_migration(conn, version, filepath):
 
 
 def rollback_last_migration(conn):
+    """Roll back exactly one migration — the most recently applied.
+
+    Ordered by `applied_at`, not by version: what needs undoing is whatever ran last, which
+    is not always the highest number when branches land out of order.
+    """
     with conn.cursor(row_factory=dict_row) as cur:
         # Fetch the most recent migration
         cur.execute(
@@ -43,7 +48,7 @@ def rollback_last_migration(conn):
         row = cur.fetchone()
         if not row:
             print("No migrations to rollback.")
-            return
+            return False
 
         # Extract the version from the row
         version = row["version"]
@@ -52,7 +57,7 @@ def rollback_last_migration(conn):
         # Check if the rollback file exists
         if not os.path.exists(down_path):
             print(f"No rollback file found for {version}")
-            return
+            return False
 
         # Execute the rollback SQL
         print(f"Rolling back {version}...")
@@ -65,6 +70,20 @@ def rollback_last_migration(conn):
 
     # Commit the transaction
     conn.commit()
+    return True
+
+
+def rollback(conn, steps=1):
+    """Roll back `steps` migrations, newest first.
+
+    Exists because the container entrypoint runs `migrate up` before any command, so a single
+    `down` in a fresh container re-applies everything and then undoes one — running it N times
+    rolls back the same migration N times rather than walking backwards. A count makes the end
+    state deterministic: up to HEAD, then back `steps`.
+    """
+    for _ in range(steps):
+        if not rollback_last_migration(conn):
+            break
 
 
 def migrate_up(conn):
@@ -90,9 +109,10 @@ def main():
         if cmd == "up":
             migrate_up(conn)
         elif cmd == "down":
-            rollback_last_migration(conn)
+            steps = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+            rollback(conn, steps)
         else:
-            print("Usage: python migrate.py [up|down]")
+            print("Usage: python migrate.py [up | down [N]]")
 
 
 if __name__ == "__main__":
