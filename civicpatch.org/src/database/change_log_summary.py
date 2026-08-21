@@ -58,14 +58,22 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
     if type_ == "reorder_roles":
         return _reorder_summary(c)
 
-    # ── Seat events ─────────────────────────────────────────────────────
+    # ── Post events ─────────────────────────────────────────────────────
+    # The label is what a person named the post; the role id is all there is without one.
+    post = c.get("label") or c.get("role_id") or "post"
+
+    if type_ == "assign_membership":
+        who = c.get("person_name") or "someone"
+        # A move is the fact worth reading: it means a closed row was left behind.
+        if c.get("moved_from"):
+            return f"Moved {who} to '{post}'"
+        return f"Assigned {who} to '{post}'"
+
     if type_ in ("add_post", "edit_post", "delete_post"):
         verb = {"add_post": "Added", "edit_post": "Edited", "delete_post": "Removed"}[type_]
-        # The label is what a person named the seat; the role id is all we have without one.
-        seat = c.get("label") or c.get("role_id") or "seat"
         fields = c.get("fields") or []
         field_part = f" ({', '.join(f['field'] for f in fields)})" if fields else ""
-        return f"{verb} seat '{seat}'{field_part}"
+        return f"{verb} post '{post}'{field_part}"
 
     # ── Role taxonomy events ────────────────────────────────────────────
     role = c.get("role", "?")

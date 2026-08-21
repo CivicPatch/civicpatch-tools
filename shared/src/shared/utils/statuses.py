@@ -122,6 +122,8 @@ class ChangeLogType(StrEnum):
     ADD_POST = "add_post"
     EDIT_POST = "edit_post"
     DELETE_POST = "delete_post"
+    # Seat and move are one type; `moved_from` in the payload tells them apart.
+    ASSIGN_MEMBERSHIP = "assign_membership"
     ADD_ROLE = "add_role"
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"

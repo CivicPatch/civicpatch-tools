@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class CreatePostRequest(BaseModel):
-    """A seat a person is asserting exists.
+    """A post a person is asserting exists.
 
     No `organization_id`: a jurisdiction has one body today, and accepting one would let a
     caller file a post under another jurisdiction's organization. It is resolved server-side
@@ -31,12 +31,12 @@ class UpdatePostRequest(BaseModel):
 
 
 class AssignMembershipRequest(BaseModel):
-    """Seat a person, moving them off any other seat in the same body.
+    """Assign a person, moving them off any other post in the same body.
 
     No `organization_id`: it comes from the post, so a request cannot name a mismatched pair.
 
     No "what happened?" flag either — this is always a transition. Correction (they were never
-    in the old seat) needs `field_overrides` first, and offering it before then would let a
+    in the old post) needs `field_overrides` first, and offering it before then would let a
     curator believe they fixed history when the next scrape will undo it.
     """
 

@@ -20,7 +20,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        """Create a seat. 409 if the triple is taken — silently returning the existing id
+        """Create a post. 409 if the triple is taken — silently returning the existing id
         would make "created" and "already there" indistinguishable."""
         post_id = await posts.create(
             jurisdiction_ocdid,

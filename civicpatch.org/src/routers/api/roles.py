@@ -58,7 +58,7 @@ def get_router() -> APIRouter:
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
     ):
         """Remove a role. Soft: `status='inactive'`, so the row survives and
-        seat history with it. Reads are not filtered — see `get_roles`."""
+        membership history with it. Reads are not filtered — see `get_roles`."""
         deactivated = await role_config_service.deactivate_role(role_id, user_id=user.user_id)
         if not deactivated:
             return JSONResponse({"error": "Role not found"}, status_code=404)

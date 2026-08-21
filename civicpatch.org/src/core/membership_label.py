@@ -1,4 +1,4 @@
-"""What to call a person's seat when nobody has said.
+"""What to call a person's post when nobody has said.
 
 Pure. A reconstruction, not the source's own words — the page said "Councilmember Pos. 8" and
 this yields "Council Member Position 8". Close enough to read, never close enough to trust,
@@ -28,9 +28,9 @@ def derive_label(
     designations: list[str],
     unmatched_text: list[str],
 ) -> str:
-    """Assemble a readable seat name from the parts the derivation produced.
+    """Assemble a readable post name from the parts the derivation produced.
 
-    Designations first because they are what the source used to tell two identical seats apart
+    Designations first because they are what the source used to tell two identical posts apart
     — "Position 8" is the distinguishing part, and dropping it would render Seattle's two
     at-large councilmembers identically.
 

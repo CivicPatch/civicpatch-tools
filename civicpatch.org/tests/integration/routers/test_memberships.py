@@ -55,6 +55,9 @@ async def _wipe():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_OCDID,),
         )
+        await cur.execute(
+            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -175,3 +178,44 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     assert row["occurrences"] == 1
     assert row["jurisdictions"] == 1
     assert row["examples"] == [_OCDID]
+
+
+async def _change_logs() -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT type, changes FROM change_logs WHERE jurisdiction_ocdid = %s "
+            "ORDER BY created_at",
+            (_OCDID,),
+        )
+        return [{"type": r[0], **(r[1] or {})} for r in await cur.fetchall()]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(client):
+    """Splitting them into two types would put the distinction in a place the feed has to
+    special-case. `moved_from` carries it, and it is also the fact worth reading — a move left
+    a closed row behind."""
+    person_id, mayor, ward = await _seed()
+
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": ward})
+
+    logs = await _change_logs()
+
+    assert [log["type"] for log in logs] == ["assign_membership"] * 2
+    assert logs[0]["moved_from"] is None
+    assert logs[1]["moved_from"] == mayor
+    assert logs[0]["person_name"] == "Route Test"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_failed_assignment_leaves_no_trace(client):
+    """404 means nobody was assigned."""
+    person_id, _, _ = await _seed()
+
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": str(uuid.uuid4())})
+
+    assert await _change_logs() == []

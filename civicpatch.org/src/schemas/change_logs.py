@@ -26,13 +26,27 @@ class PersonChange(BaseModel):
 
 class PostChangePayload(BaseModel):
     """`change_logs` has no `post_id` column, so the anchor rides in the payload — the same
-    way person events carry `person_name`. `label` is what a reader recognises a seat by."""
+    way person events carry `person_name`. `label` is what a reader recognises a post by."""
 
     post_id: str
     role_id: str
     division_ocdid: str
     label: str | None = None
     fields: list[FieldChange] = []
+
+
+class MembershipChangePayload(BaseModel):
+    """`person_name`, `role_id` and `label` are carried because ids do not render — the same
+    reason person events carry `person_name`. `moved_from` is the post vacated, absent on a
+    first assignment."""
+
+    membership_id: str
+    person_id: str
+    person_name: str
+    post_id: str
+    role_id: str
+    label: str | None = None
+    moved_from: str | None = None
 
 
 class JurisdictionChangePayload(BaseModel):

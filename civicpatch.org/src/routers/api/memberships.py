@@ -17,14 +17,14 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        """Seat a person. Idempotent: re-assigning to the seat they hold only sets the label.
+        """Assign a person. Idempotent: re-assigning to the post they hold only sets the label.
 
         `moved_from` is the post they were closed off, or null — the caller needs it to say
         "moved from X" rather than "assigned", since a move leaves history behind.
         """
         try:
             result = await memberships.assign(
-                body.person_id, body.post_id, body.label
+                body.person_id, body.post_id, body.label, user.user_id
             )
         except memberships.UnknownPost:
             return JSONResponse({"error": "No such post."}, status_code=404)
