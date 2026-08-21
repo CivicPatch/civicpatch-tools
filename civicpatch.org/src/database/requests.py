@@ -10,6 +10,7 @@ from database.review_sessions import (
 from lib.github.utils import pull_request_url_to_number
 from psycopg import sql
 from shared.utils.statuses import (
+    TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineIssueStatus,
     PipelineIssueType,
     PipelineRunStatus,
@@ -87,6 +88,18 @@ AVAILABLE_FOR_REVIEW = (
     "AND r.id::text = ANY(i.request_ids) "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
     ")"
+)
+
+# Is the scrape still going? Derived here for the same reason `REVIEW_STATUS` is: the answer
+# is a fact about the run, and every caller that recomputed it had to know which statuses count
+# as terminal — a set that was defined twice, once in Python and once in the frontend.
+#
+# `j.status IS NULL` is a request with no run row yet, which is not in flight.
+# Requires `pipeline_runs` aliased `j`.
+RUN_IN_FLIGHT = (
+    "j.status IS NOT NULL AND j.status != ALL(ARRAY["
+    + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
+    + "])"
 )
 
 # When roster was observed (instead of when the run was registered.)

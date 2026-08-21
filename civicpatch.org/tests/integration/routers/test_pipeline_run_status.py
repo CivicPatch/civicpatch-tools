@@ -18,6 +18,7 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
+from database.jurisdictions import get_jurisdiction_history
 from routers.api import pipeline_runs as pipeline_runs_router
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
@@ -114,3 +115,21 @@ async def test_a_run_still_going_settles_nothing():
     await _apply(request_id, "RUNNING")
 
     assert await _is_still_pending_work(request_id) is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+@pytest.mark.parametrize("status", sorted(TERMINAL_PIPELINE_RUN_STATUSES))
+async def test_the_history_row_answers_whether_the_run_is_going(status):
+    """The page used to test the raw status against its own copy of the terminal set — one in
+    Python, one in JavaScript, free to drift. `is_running` is derived beside `REVIEW_STATUS`
+    so both sides are told the same answer."""
+    request_id = await _a_run_in_flight()
+
+    before = await get_jurisdiction_history(_OCDID)
+    assert before[0]["is_running"] is True
+
+    await _apply(request_id, status)
+
+    after = await get_jurisdiction_history(_OCDID)
+    assert after[0]["is_running"] is False

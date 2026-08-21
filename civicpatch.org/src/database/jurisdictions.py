@@ -12,7 +12,7 @@ from core.jurisdiction_search import (
 )
 from database.database import get_pool, to_iso
 from database.freshness import FRESH_SINCE_SQL
-from database.requests import REVIEW_STATUS
+from database.requests import RUN_IN_FLIGHT, REVIEW_STATUS
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,
@@ -537,7 +537,8 @@ async def get_jurisdiction_history(
             SELECT r.id::text,
                    COALESCE(j.created_at, r.created_at),
                    COALESCE(j.updated_at, r.updated_at),
-                   j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type
+                   j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type,
+                   {RUN_IN_FLIGHT} AS is_running
             FROM requests r
             LEFT JOIN pipeline_runs j ON j.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
@@ -564,6 +565,9 @@ async def get_jurisdiction_history(
                     "open_data_url": row[5],
                     "review_status": row[6],
                     "request_type": row[7],
+                    # Told, not inferred: the page used to test the raw status against a
+                    # terminal set it kept its own copy of.
+                    "is_running": row[8],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
                 }
