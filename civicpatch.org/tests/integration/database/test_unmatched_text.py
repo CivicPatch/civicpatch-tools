@@ -1,0 +1,175 @@
+"""Integration tests for the cross-jurisdiction unmatched-text triage list.
+
+Real Postgres: the query is `unnest` + `GROUP BY` over a `text[]`, and the ordering is the
+product decision under test.
+
+Isolation: sentinel state 'zz', cleaned before and after each test.
+"""
+
+import json
+import uuid
+from datetime import datetime, timezone
+
+import pytest
+import pytest_asyncio
+
+from database import divisions, memberships, organizations, posts
+from database.database import get_pool
+
+_TOWNS = ("zz_alfa", "zz_bravo", "zz_charlie")
+_OCDIDS = [
+    f"ocd-jurisdiction/country:us/state:zz/place:{town}/government" for town in _TOWNS
+]
+_SEEN_AT = datetime(2026, 8, 1, tzinfo=timezone.utc)
+
+# In three towns once each vs. in one town three times: same occurrence count, different
+# leverage. This is the pair the ordering has to tell apart.
+_WIDESPREAD = "At-Large"
+_LOCAL = "Ward 3 (interim)"
+
+
+async def _wipe():
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for ocdid in _OCDIDS:
+            await cur.execute(
+                "DELETE FROM memberships m USING posts p "
+                "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
+                (ocdid,),
+            )
+            for table in ("posts", "divisions", "organizations", "people"):
+                await cur.execute(
+                    f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (ocdid,)
+                )
+            await cur.execute(
+                "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,)
+            )
+        await conn.commit()
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def clean_sentinels():
+    await _wipe()
+    yield
+    await _wipe()
+
+
+async def _seed_member(cur, ocdid: str, division: str, unmatched: list[str]) -> str:
+    person_id = str(uuid.uuid4())
+    await cur.execute(
+        "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, %s)",
+        (person_id, ocdid, json.dumps({"name": "Triage Test"})),
+    )
+    organization_id = await organizations.find_or_create(cur, ocdid)
+    await divisions.find_or_create(cur, division, ocdid)
+    post_id = await posts.find_or_create(
+        cur, ocdid, organization_id, "council-member", division
+    )
+    return await memberships.record(
+        cur,
+        person_id,
+        post_id,
+        organization_id,
+        _SEEN_AT,
+        unmatched_text=unmatched,
+    )
+
+
+async def _seed_spread():
+    """`_WIDESPREAD` in three towns, `_LOCAL` three times in one."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for index, ocdid in enumerate(_OCDIDS):
+            await cur.execute(
+                "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
+                "VALUES (%s, 'zz', 'local')",
+                (ocdid,),
+            )
+            base = f"ocd-division/country:us/state:zz/place:{_TOWNS[index]}"
+            await _seed_member(cur, ocdid, f"{base}/ward:1", [_WIDESPREAD])
+
+        base = f"ocd-division/country:us/state:zz/place:{_TOWNS[0]}"
+        for ward in (2, 3, 4):
+            await _seed_member(cur, _OCDIDS[0], f"{base}/ward:{ward}", [_LOCAL])
+        await conn.commit()
+
+
+async def _rows() -> list[dict]:
+    rows = await memberships.unmatched_text()
+    return [row for row in rows if row["text"] in (_WIDESPREAD, _LOCAL)]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_breadth_outranks_frequency():
+    """Both terms occur three times. The one spanning three towns is worth one parser rule;
+    the one confined to a single town is that town's phrasing. Sorting on raw frequency would
+    make these a coin toss."""
+    await _seed_spread()
+
+    rows = await _rows()
+
+    assert [row["text"] for row in rows] == [_WIDESPREAD, _LOCAL]
+    assert rows[0]["occurrences"] == rows[1]["occurrences"] == 3
+    assert rows[0]["jurisdictions"] == 3
+    assert rows[1]["jurisdictions"] == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_examples_name_the_towns_to_go_look_at():
+    """A count alone is not actionable — the curator has to open one and see the real label."""
+    await _seed_spread()
+
+    rows = await _rows()
+
+    assert sorted(rows[0]["examples"]) == sorted(_OCDIDS)
+    assert rows[1]["examples"] == [_OCDIDS[0]]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_spelling_variants_are_one_gap_not_three():
+    """`unmatched_text` keeps the source's raw casing and punctuation on purpose. Three towns
+    writing the same phrase three ways is still one taxonomy gap, and grouping on the exact
+    string would show three rows each looking a third as urgent as the real one."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for index, ocdid in enumerate(_OCDIDS):
+            await cur.execute(
+                "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
+                "VALUES (%s, 'zz', 'local')",
+                (ocdid,),
+            )
+            base = f"ocd-division/country:us/state:zz/place:{_TOWNS[index]}"
+            spelling = ("Finance Liaison", "finance liaison", "Finance Liaison,")[index]
+            await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
+        await conn.commit()
+
+    rows = await memberships.unmatched_text()
+
+    assert len(rows) == 1
+    assert rows[0]["jurisdictions"] == 3
+    assert rows[0]["occurrences"] == 3
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_vacated_seat_drops_off_the_list():
+    """Triage is about what is broken now. A term on a closed membership is a problem that
+    resolved itself, and leaving it in inflates the queue with work nobody needs to do."""
+    await _seed_spread()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE memberships m SET closed_at = %s FROM posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = ANY(%s)",
+            (_SEEN_AT, _OCDIDS[1:]),
+        )
+        await conn.commit()
+
+    rows = await _rows()
+
+    assert rows[0]["text"] == _LOCAL
+    assert [row["jurisdictions"] for row in rows if row["text"] == _WIDESPREAD] == [1]

@@ -413,7 +413,7 @@ async def test_a_human_label_survives_a_re_scrape():
         membership_id = await memberships.record(
             cur, person_id, post_id, org, _T0, designations=["Position 8"]
         )
-        assert await memberships.set_label(cur, membership_id, "Councilmember Pos. 8") is True
+        assert await memberships.update_label(cur, membership_id, "Councilmember Pos. 8") is True
 
         # A later scrape of the same seat, with the designation parsed differently.
         await memberships.record(
@@ -443,7 +443,7 @@ async def test_moving_to_another_post_leaves_the_label_behind():
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
         old = await memberships.record(cur, person_id, first, org, _T0)
-        await memberships.set_label(cur, old, "Councilmember Pos. 8")
+        await memberships.update_label(cur, old, "Councilmember Pos. 8")
         new = await memberships.record(cur, person_id, second, org, _T1)
 
         await cur.execute(

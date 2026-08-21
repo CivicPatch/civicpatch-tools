@@ -1,8 +1,27 @@
-"""The shape the roster screen renders: posts nested under the body they sit in.
+"""The response shape for posts: nested under their body, each marked verified or not.
 
 Pure, so the shape is testable without a database. The SQL that feeds it lives in
-`database/posts.py` and `database/organizations.py`; the orchestration in `services/posts.py`.
+`database/posts.py` and `database/organizations.py`, which compose it in `list_by_organization`.
 """
+
+# Ours — no civic standard models verification, so it takes the underscore. A consumer that
+# drops every `_*` key is left with a conforming record.
+VERIFIED_KEY = "_verified"
+
+
+def mark_verified(rows: list[dict]) -> list[dict]:
+    """Rename the `verified` boolean to `_verified`. Present on every row, never inferred.
+
+    Absence is ambiguous — a missing key could mean endorsed, or an older API version — and
+    silence must not read as trustworthy on a provenance flag.
+    """
+    return [
+        {
+            **{key: value for key, value in row.items() if key != "verified"},
+            VERIFIED_KEY: bool(row.get("verified")),
+        }
+        for row in rows
+    ]
 
 
 def group_by_organization(
@@ -10,11 +29,9 @@ def group_by_organization(
 ) -> list[dict]:
     """Posts nested under their body, preserving the order each query returned.
 
-    An organization with no posts is kept: a body that exists with nothing in it is a real
-    state worth showing, and it is the state every jurisdiction is in before its first scrape.
-
-    A post whose organization is missing is dropped rather than raising — a read should not be
-    the thing that discovers a broken FK.
+    An empty organization is kept — that is the state every jurisdiction is in before its
+    first scrape. An orphaned post is dropped rather than raising; a read should not be the
+    thing that discovers a broken FK.
     """
     by_organization: dict[str, list[dict]] = {
         row["id"]: [] for row in organization_rows
