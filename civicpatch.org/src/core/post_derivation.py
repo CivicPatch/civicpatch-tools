@@ -24,9 +24,13 @@ class DerivedMember(BaseModel):
     person_id: str
     designations: list[str] = []
     unmatched_text: list[str] = []
-    # The labels the parser consumed, already split — `office.name` is a rendering of several
-    # joined by " - ". Kept as the parts so triage can show the one a term came out of.
+    # The labels the parser consumed
     source_labels: list[str] = []
+    # `membership_roles` — every role the label named that did not define the post. Plural
+    # because the corpus has labels naming five ("Chair - Chair Pro Tem - Vice Mayor - Council
+    # President - Council Member"). Per member, not per post: five councilmembers share a post
+    # and only one of them is also mayor.
+    role_ids: list[str] = []
 
 
 class DerivedPost(BaseModel):
@@ -52,13 +56,33 @@ def _division(record: Official, parsed: dict) -> str:
     return stored or parsed["division_ocdid"]
 
 
-def _member(record: Official, parsed: dict) -> "DerivedMember":
-    """One person, with the two halves of what their label carried beyond the role."""
+def _demoted_role_ids(parsed: dict, ids_by_label: dict[str, str]) -> list[str]:
+    """Every role the label named except the one defining the post.
+
+    Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
+    nowhere to go and stays in `unmatched_text`, which is where triage can act on it.
+
+    Order follows `parsed["roles"]`, which `parse_record` builds in the order the text gives
+    them, so a reader sees them as the source wrote them.
+    """
+    winner = parsed.get("role")
+    return [
+        ids_by_label[label]
+        for label in parsed.get("roles") or []
+        if label != winner and label in ids_by_label
+    ]
+
+
+def _member(
+    record: Official, parsed: dict, ids_by_label: dict[str, str]
+) -> "DerivedMember":
+    """One person, and everything their label carried beyond the post's own role."""
     return DerivedMember(
         person_id=record.id,
         designations=parsed.get("other_designations") or [],
         unmatched_text=parsed.get("unmatched") or [],
         source_labels=parsed.get("labels") or [],
+        role_ids=_demoted_role_ids(parsed, ids_by_label),
     )
 
 
@@ -77,7 +101,7 @@ def derived_posts(
     for record in records:
         parsed = parse_record(record, taxonomy)
         key = (role_id_for(parsed), _division(record, parsed))
-        grouped.setdefault(key, []).append(_member(record, parsed))
+        grouped.setdefault(key, []).append(_member(record, parsed, ids_by_label))
 
     return [
         DerivedPost(

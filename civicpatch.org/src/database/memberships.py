@@ -39,7 +39,7 @@ async def record(
     source_labels: list[str] | None = None,
     start_date=None,
     end_date=None,
-    role_id: str | None = None,
+    role_ids: list[str] | None = None,
 ) -> str:
     """Open this person's membership of this post, or advance it. Returns its id.
 
@@ -52,9 +52,13 @@ async def record(
     than joined back to `source_records` so it cannot disagree with the `unmatched_text`
     derived from it.
 
-    `role_id` is a title held in a post some other role defines — `mayor` for a councilmember
-    serving as mayor. `designations` tell like posts apart ("Place 2"); `unmatched_text` is
-    what the parser could not classify.
+    `role_ids` are roles the label named that did not define the post — `treasurer` for a clerk
+    who is also treasurer. The post is keyed on the priority winner, and one open membership per
+    person per body means only one role can define it, so the rest land in `membership_roles`
+    rather than being dropped. Empty whenever the post's own role says everything.
+
+    `designations` tell like posts apart ("Place 2"); `unmatched_text` is what the parser could
+    not classify.
 
     **`label` is deliberately absent from the conflict update.** Leaving it out of the SET is
     the whole of its protection.
@@ -72,15 +76,14 @@ async def record(
         """
         INSERT INTO memberships
             (post_id, organization_id, person_id, designations, unmatched_text,
-             source_labels, role_id, start_date, end_date, first_seen_at, last_seen_at)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+             source_labels, start_date, end_date, first_seen_at, last_seen_at)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
         DO UPDATE SET
             last_seen_at = GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at),
             designations = EXCLUDED.designations,
             unmatched_text = EXCLUDED.unmatched_text,
             source_labels = EXCLUDED.source_labels,
-            role_id = EXCLUDED.role_id,
             start_date = EXCLUDED.start_date,
             end_date = EXCLUDED.end_date
         RETURNING id::text
@@ -92,14 +95,26 @@ async def record(
             designations or [],
             unmatched_text or [],
             source_labels or [],
-            role_id,
             start_date,
             end_date,
             seen_at,
             seen_at,
         ),
     )
-    return (await cur.fetchone())[0]
+    membership_id = (await cur.fetchone())[0]
+
+    # Replaced wholesale rather than merged: these are derived from the label, so the current
+    # scrape's answer is the whole answer. A role dropped from the page must not linger.
+    await cur.execute(
+        "DELETE FROM membership_roles WHERE membership_id::text = %s", (membership_id,)
+    )
+    if role_ids:
+        await cur.executemany(
+            "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
+            "ON CONFLICT DO NOTHING",
+            [(membership_id, role_id) for role_id in role_ids],
+        )
+    return membership_id
 
 
 async def close_absent(

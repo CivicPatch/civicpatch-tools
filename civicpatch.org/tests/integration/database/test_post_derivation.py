@@ -471,3 +471,35 @@ async def test_the_membership_read_still_selects_every_column_it_names():
         assert rows[0]["role_id"] == "mayor"
         assert rows[0]["label"] is None
         await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
+    """One open membership per person per body means one role must define the post. Without
+    somewhere for the other to land it was simply dropped — a clerk who is also treasurer
+    published as a clerk, and the treasurership vanished."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        membership_id = await memberships.record(
+            cur, person_id, post_id, org, _T0, role_ids=["treasurer", "assessor"]
+        )
+        await cur.execute(
+            "SELECT role_id FROM membership_roles WHERE membership_id::text = %s "
+            "ORDER BY role_id",
+            (membership_id,),
+        )
+        assert [r[0] for r in await cur.fetchall()] == ["assessor", "treasurer"]
+
+        # Derived from the label, so the newest scrape's answer is the whole answer — a role
+        # the page stopped naming must not linger.
+        await memberships.record(cur, person_id, post_id, org, _T0, role_ids=["treasurer"])
+        await cur.execute(
+            "SELECT role_id FROM membership_roles WHERE membership_id::text = %s",
+            (membership_id,),
+        )
+        assert [r[0] for r in await cur.fetchall()] == ["treasurer"]
