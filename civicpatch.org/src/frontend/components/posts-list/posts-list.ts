@@ -11,8 +11,9 @@ import {
   divisionName,
   divisionKey,
   postTitle,
+  decompose,
 } from "./posts-model.js";
-import type { RoleGroup, PostRow, PersonRow } from "./posts-model.js";
+import type { RoleGroup, PostRow, PersonRow, Membership } from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -101,15 +102,29 @@ const renderRole = (group: RoleGroup, context: RoleContext) => html`
   </section>
 `;
 
+// What the source said, and what the parser made of every piece of it. Shown together
+// because the derived name alone cannot be judged — it says where the person landed, not why.
+const renderMembership = (membership: Membership) => html`
+  <li class="posts-list__post posts-list__post--stacked">
+    <span class="posts-list__holders">${postTitle(membership)}</span>
+    ${membership.source_labels.map(
+      (label) => html`<p class="posts-list__source">“${label}”</p>`,
+    )}
+    <p class="posts-list__parts">
+      ${decompose(membership).map(
+        (part) => html`<span class="posts-list__part posts-list__part--${part.kind}">
+          <span class="posts-list__part-kind">${part.kind}</span>${part.value}
+        </span>`,
+      )}
+    </p>
+  </li>
+`;
+
 const renderPerson = (row: PersonRow) => html`
   <section class="posts-list__role">
     <h3 class="posts-list__role-name">${row.person_name}</h3>
     <ul class="posts-list__posts">
-      ${row.posts.map(
-        (membership) => html`<li class="posts-list__post">
-          <span class="posts-list__holders">${postTitle(membership)}</span>
-        </li>`,
-      )}
+      ${row.posts.map(renderMembership)}
     </ul>
   </section>
 `;

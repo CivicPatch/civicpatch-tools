@@ -267,3 +267,32 @@ async def test_both_axes_answer_the_same_moment(client):
     assert before.status_code == 200, before.text
     assert before.json()["data"]["memberships"] == []
     assert len(after.json()["data"]["memberships"]) == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_person_axis_read_carries_the_whole_parse(client):
+    """The screen shows what the source said beside what the parser made of it. Without every
+    piece on the wire the client would have to re-run the parser to explain its own rows."""
+    person_id, mayor, _ = await _seed()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, _OCDID)
+        await memberships.record(
+            cur,
+            person_id,
+            mayor,
+            organization_id,
+            _SEEN_AT,
+            designations=["Position 8"],
+            unmatched_text=["Zz Route Liaison"],
+            source_labels=["Mayor Position 8 (Zz Route Liaison)"],
+        )
+        await conn.commit()
+
+    row = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["memberships"][0]
+
+    assert row["source_labels"] == ["Mayor Position 8 (Zz Route Liaison)"]
+    assert row["designations"] == ["Position 8"]
+    assert row["unmatched_text"] == ["Zz Route Liaison"]
+    assert row["role_id"] == "mayor"

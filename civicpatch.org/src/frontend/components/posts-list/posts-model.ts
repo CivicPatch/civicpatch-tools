@@ -24,6 +24,28 @@ export interface Membership {
   division_ocdid: string;
   label: string | null;
   post_label: string | null;
+  // The whole parse: what the source said, and what each piece of it became.
+  source_labels: string[];
+  designations: string[];
+  unmatched_text: string[];
+}
+
+// What a piece of a source label was resolved to. Named because the renderer keys styling on
+// them and the tests assert them — a bare string here could drift silently.
+export const PART_ROLE = "role";
+export const PART_DIVISION = "division";
+export const PART_DESIGNATION = "designation";
+export const PART_UNMATCHED = "unmatched";
+
+export type PartKind =
+  | typeof PART_ROLE
+  | typeof PART_DIVISION
+  | typeof PART_DESIGNATION
+  | typeof PART_UNMATCHED;
+
+export interface ParsePart {
+  kind: PartKind;
+  value: string;
 }
 
 export interface PersonRow {
@@ -163,3 +185,23 @@ export const postTitle = (membership: Membership): string =>
   membership.label ??
   membership.post_label ??
   `${membership.role_id} · ${divisionName(membership.division_ocdid)}`;
+
+
+/** Everything the parser made of a person's source label, in the order it decides them.
+ *
+ * Designations run before roles in the parser because they are a closed vocabulary requiring
+ * a value, so they are hardest to be wrong about; this mirrors that order rather than the
+ * order the words appear. `unmatched` comes last because it is the residue — what nothing
+ * else claimed.
+ *
+ * An at-large post still lists its division: "no area" is a decision the parser made, not a
+ * gap, and hiding it would make the row look incompletely parsed.
+ */
+export function decompose(membership: Membership): ParsePart[] {
+  return [
+    { kind: PART_ROLE, value: membership.role_id },
+    { kind: PART_DIVISION, value: divisionName(membership.division_ocdid) },
+    ...membership.designations.map((value) => ({ kind: PART_DESIGNATION, value }) as ParsePart),
+    ...membership.unmatched_text.map((value) => ({ kind: PART_UNMATCHED, value }) as ParsePart),
+  ];
+}
