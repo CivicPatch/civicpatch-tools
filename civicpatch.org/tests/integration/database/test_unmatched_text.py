@@ -132,7 +132,10 @@ async def test_examples_name_the_towns_to_go_look_at():
 async def test_spelling_variants_are_one_gap_not_three():
     """`unmatched_text` keeps the source's raw casing and punctuation on purpose. Three towns
     writing the same phrase three ways is still one taxonomy gap, and grouping on the exact
-    string would show three rows each looking a third as urgent as the real one."""
+    string would show three rows each looking a third as urgent as the real one.
+
+    Case only — punctuation is trimmed upstream by `_unmatched`, covered by
+    `test_parse_label_trims_punctuation_from_the_edges_of_unmatched`."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         for index, ocdid in enumerate(_OCDIDS):
@@ -142,7 +145,7 @@ async def test_spelling_variants_are_one_gap_not_three():
                 (ocdid,),
             )
             base = f"ocd-division/country:us/state:zz/place:{_TOWNS[index]}"
-            spelling = ("Finance Liaison", "finance liaison", "Finance Liaison,")[index]
+            spelling = ("Finance Liaison", "finance liaison", "FINANCE LIAISON")[index]
             await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
         await conn.commit()
 

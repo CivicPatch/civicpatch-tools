@@ -14,7 +14,10 @@ from datetime import date
 
 from core.post_grouping import group_by_organization, mark_verified
 from database import divisions, organizations
+from database.change_logs import record_change
 from database.database import get_pool
+from schemas.change_logs import FieldChange, PostChangePayload
+from shared.utils.statuses import ChangeLogType
 
 
 async def create_if_absent(
@@ -213,6 +216,7 @@ async def create(
     division_ocdid: str,
     label: str | None,
     headcount: int,
+    user_id: str | None = None,
 ) -> str | None:
     """A person asserting a seat exists. Returns its id, or None if it already did.
 
@@ -223,7 +227,7 @@ async def create(
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
-        return await create_if_absent(
+        post_id = await create_if_absent(
             cur,
             jurisdiction_ocdid,
             organization_id,
@@ -232,16 +236,80 @@ async def create(
             label=label,
             headcount=headcount,
         )
+        # Nothing to log when the triple was taken: no seat was created.
+        if post_id:
+            await record_change(
+                cur,
+                ChangeLogType.ADD_POST,
+                user_id,
+                jurisdiction_ocdid,
+                PostChangePayload(
+                    post_id=post_id,
+                    role_id=role_id,
+                    division_ocdid=division_ocdid,
+                    label=label,
+                ),
+            )
+        return post_id
 
 
-async def update(post_id: str, label: str | None, headcount: int) -> bool:
+async def update(
+    post_id: str, label: str | None, headcount: int, user_id: str | None = None
+) -> bool:
+    """Set the two human-owned fields, logging what actually moved.
+
+    Read before write so the log can carry before/after. A no-op edit still logs — somebody
+    looked at this seat and confirmed it, which is worth as much as a change.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await update_human_fields(cur, post_id, label, headcount)
+        before = await get(cur, post_id)
+        if before is None:
+            return False
+
+        await update_human_fields(cur, post_id, label, headcount)
+        await record_change(
+            cur,
+            ChangeLogType.EDIT_POST,
+            user_id,
+            before["jurisdiction_ocdid"],
+            PostChangePayload(
+                post_id=post_id,
+                role_id=before["role_id"],
+                division_ocdid=before["division_ocdid"],
+                label=label,
+                fields=[
+                    FieldChange(field=field, before=before[field], after=after)
+                    for field, after in (("label", label), ("headcount", headcount))
+                    if before[field] != after
+                ],
+            ),
+        )
+        return True
 
 
-async def delete(post_id: str) -> bool:
-    """Remove a post nobody has held. False means it has members, or does not exist."""
+async def delete(post_id: str, user_id: str | None = None) -> bool:
+    """Remove a post nobody has held. False means it has members, or does not exist.
+
+    Read first: once the row is gone there is nothing left to describe it with, and a log
+    saying only "a post was deleted" is not worth writing.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await delete_if_unheld(cur, post_id)
+        before = await get(cur, post_id)
+        if before is None or not await delete_if_unheld(cur, post_id):
+            return False
+
+        await record_change(
+            cur,
+            ChangeLogType.DELETE_POST,
+            user_id,
+            before["jurisdiction_ocdid"],
+            PostChangePayload(
+                post_id=post_id,
+                role_id=before["role_id"],
+                division_ocdid=before["division_ocdid"],
+                label=before["label"],
+            ),
+        )
+        return True

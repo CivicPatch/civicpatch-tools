@@ -54,6 +54,9 @@ async def _wipe():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_OCDID,),
         )
+        await cur.execute(
+            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -84,6 +87,17 @@ def _create(client, role_id: str = "mayor", division: str = _BASE, **body):
         f"{_PREFIX}/{_OCDID}",
         json={"role_id": role_id, "division_ocdid": division, **body},
     )
+
+
+async def _change_logs() -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT type, changes FROM change_logs WHERE jurisdiction_ocdid = %s "
+            "ORDER BY created_at",
+            (_OCDID,),
+        )
+        return [{"type": r[0], **(r[1] or {})} for r in await cur.fetchall()]
 
 
 async def _seat_someone(post_id: str) -> None:
@@ -226,3 +240,31 @@ async def test_the_identity_triple_is_not_patchable(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         assert (await posts.get(cur, post_id))["role_id"] == "mayor"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_every_write_leaves_a_trace(client):
+    """Who created a seat and who removed it. `roles.py`, `people.py` and `pull_requests.py`
+    all log; posts did not, so a curator's edits were unattributable."""
+    post_id = _create(client).json()["data"]["id"]
+    client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "headcount": 2})
+    client.delete(f"{_PREFIX}/{post_id}")
+
+    logs = await _change_logs()
+
+    assert [log["type"] for log in logs] == ["add_post", "edit_post", "delete_post"]
+    assert all(log["post_id"] == post_id for log in logs)
+    assert {f["field"] for f in logs[1]["fields"]} == {"label", "headcount"}
+    assert logs[2]["label"] == "Town Mayor"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_rejected_create_leaves_no_trace(client):
+    """409 means no seat was created. Logging it would put an event in the feed for something
+    that never happened."""
+    _create(client)
+    _create(client)
+
+    assert [log["type"] for log in await _change_logs()] == ["add_post"]

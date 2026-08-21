@@ -74,7 +74,9 @@ _TAXONOMY = build_taxonomy(
             [],
             ["Fire Department"],
         ),
-        ("Ward 3 (North)", None, f"{_BASE}/ward:3", [], ["(North)"]),
+        # Survives rather than being dropped the way `normalize_designations` drops it —
+        # trimmed of its brackets, which are decoration around the signal, not the signal.
+        ("Ward 3 (North)", None, f"{_BASE}/ward:3", [], ["North"]),
         # A word before the key that is neither a number nor a direction is not a value —
         # otherwise "Member" would be read as the value of "At-Large".
         ("Council Member At-Large", "Council Member", _BASE, [], []),
@@ -166,6 +168,22 @@ def test_parse_label_never_fabricates_a_division_from_trailing_text():
 def test_parse_label_keeps_unmatched_in_original_case():
     parsed = parse_label("Ward 3 FIRE Department", _TAXONOMY)
     assert parsed.unmatched == ["FIRE Department"]
+
+
+@pytest.mark.parametrize(
+    "label, unmatched",
+    [
+        ("Council Member (Central Seattle)", ["Central Seattle"]),
+        ("Council Member, Finance Liaison, Place 3", ["Finance Liaison"]),
+        ("Council Member [Interim]", ["Interim"]),
+    ],
+)
+def test_parse_label_trims_punctuation_from_the_edges_of_unmatched(label, unmatched):
+    """Brackets and commas around surviving text are decoration left by what was removed
+    around them. Kept, they split one taxonomy gap into several, each looking proportionally
+    less urgent than the real one — "(Central Seattle)" and "Central Seattle" would never
+    add up. Interior punctuation stays, since it may be part of the term."""
+    assert parse_label(label, _TAXONOMY).unmatched == unmatched
 
 
 def test_parse_label_keeps_an_unknown_office_as_unmatched():

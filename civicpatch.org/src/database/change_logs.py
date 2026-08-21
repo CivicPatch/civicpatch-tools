@@ -3,7 +3,11 @@ import json
 from database.change_log_summary import summarize_change_log
 from database.database import get_pool
 from database.requests import REVIEW_STATUS
-from schemas.change_logs import JurisdictionChangePayload, PersonChangePayload
+from schemas.change_logs import (
+    JurisdictionChangePayload,
+    PersonChangePayload,
+    PostChangePayload,
+)
 from shared.utils.statuses import ChangeLogType
 
 
@@ -75,3 +79,29 @@ async def create_change_log(
             """,
             (change_type, jurisdiction_ocdid, request_id, payload, user_id),
         )
+
+
+async def record_change(
+    cur,
+    change_type: ChangeLogType,
+    user_id: str | None,
+    jurisdiction_ocdid: str | None = None,
+    changes: PostChangePayload | None = None,
+) -> None:
+    """Write a change log on an existing cursor, so it commits with what it describes.
+
+    `create_change_log` above opens its own connection and cannot do that. Callers already
+    inside a transaction use this one.
+    """
+    await cur.execute(
+        """
+        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id)
+        VALUES (%s, %s, %s, %s)
+        """,
+        (
+            change_type,
+            jurisdiction_ocdid,
+            json.dumps(changes.model_dump()) if changes else None,
+            user_id,
+        ),
+    )

@@ -172,7 +172,10 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
     joining them would produce one nonsense term instead of two real ones.
 
     Pure punctuation ends a run without joining it: a separator left behind by removing what
-    it separated ("Council Member - Place 3" -> "-") is not surviving text.
+    it separated ("Council Member - Place 3" -> "-") is not surviving text. The same holds at
+    a run's own edges — "(Central Seattle)" is the text plus its decoration.
+
+    Case is preserved: it is what a curator searches the source page for.
     """
     runs: List[str] = []
     current: List[str] = []
@@ -185,7 +188,7 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
             current = []
     if current:
         runs.append(" ".join(current))
-    return runs
+    return [_EDGE_PUNCTUATION.sub("", run) for run in runs]
 
 
 def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:

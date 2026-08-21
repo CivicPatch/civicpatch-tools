@@ -118,6 +118,10 @@ class ChangeLogType(StrEnum):
     EDIT_JURISDICTION = "edit_jurisdiction"
     # Role taxonomy. Kind (canonical|exclusion) lives in the payload, not the
     # type. Alias deltas fold into edit_role's payload as aliases_added/removed.
+    # Seats. The jurisdiction is a real column here, unlike roles, which are global.
+    ADD_POST = "add_post"
+    EDIT_POST = "edit_post"
+    DELETE_POST = "delete_post"
     ADD_ROLE = "add_role"
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"
