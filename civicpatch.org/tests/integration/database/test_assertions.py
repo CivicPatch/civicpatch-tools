@@ -91,14 +91,13 @@ async def test_confirming_a_post_verifies_it_without_a_publish():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
-        assert rows[0]["verified"] is False
+        assert rows[0]["_is_verified"] is False
 
     await assertions.create(_confirm(post_id), user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
-    assert rows[0]["verified"] is True
-    assert rows[0]["holders"] == 0
+    assert rows[0]["_is_verified"] is True
 
 
 @pytest.mark.asyncio

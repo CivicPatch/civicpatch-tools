@@ -1,4 +1,3 @@
-from datetime import date
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
@@ -45,7 +44,9 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if not await posts.update(post_id, body.label, body.headcount, user.user_id):
+        if not await posts.update(
+            post_id, body.label, body.headcount, body.is_tracked, user.user_id
+        ):
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
 
@@ -68,7 +69,6 @@ def get_router() -> APIRouter:
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_posts_endpoint(
         jurisdiction_ocdid: str,
-        as_of: date | None = None,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
         """Every body in a jurisdiction with its posts, grouped for the roster screen.
@@ -76,15 +76,11 @@ def get_router() -> APIRouter:
         `:path` because an ocdid contains slashes. **Declared last** so `/{post_id}` routes
         match before this swallows them.
 
-        `?as_of=YYYY-MM-DD` gives the holders on that date, defaulting to now. Everything is
-        returned either way; `_verified` on each row says whether a person vouched for it.
+        Undated: a post is not a temporal fact, and who holds one at a given moment is the
+        memberships read. `_is_verified` on each row says whether a person vouched for it.
         """
         return {
-            "data": {
-                "organizations": await posts.list_by_organization(
-                    jurisdiction_ocdid, as_of
-                )
-            }
+            "data": {"organizations": await posts.list_by_organization(jurisdiction_ocdid)}
         }
 
     return router

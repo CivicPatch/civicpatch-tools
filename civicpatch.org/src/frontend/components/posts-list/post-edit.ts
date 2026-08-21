@@ -19,7 +19,8 @@ export const CANCEL_EVENT = "cancel";
 function PostEdit(host: PostEditHost) {
   const post = host.post;
   const [label, setLabel] = useState(post?.label ?? "");
-  const [headcount, setHeadcount] = useState(String(post?.headcount ?? 1));
+  const [headcount, setHeadcount] = useState(String(post?._headcount ?? 1));
+  const [isTracked, setIsTracked] = useState(post?._is_tracked ?? true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,6 +32,8 @@ function PostEdit(host: PostEditHost) {
   const handleLabelInput = (e: Event) => setLabel((e.target as HTMLInputElement).value);
   const handleHeadcountInput = (e: Event) =>
     setHeadcount((e.target as HTMLInputElement).value);
+  const handleTrackedChange = (e: Event) =>
+    setIsTracked((e.target as HTMLInputElement).checked);
 
   const handleSave = async () => {
     if (!post) return;
@@ -41,6 +44,7 @@ function PostEdit(host: PostEditHost) {
       await updatePost(post.id, {
         label: label.trim() || null,
         headcount: Number(headcount),
+        isTracked,
       });
       emit(SAVED_EVENT);
     } catch (cause) {
@@ -68,6 +72,15 @@ function PostEdit(host: PostEditHost) {
         <span class="post-edit__label">Headcount</span>
         <input type="number" min="1" .value=${headcount} @input=${handleHeadcountInput} />
       </label>
+      <label class="post-edit__field post-edit__field--check">
+        <input type="checkbox" .checked=${isTracked} @change=${handleTrackedChange} />
+        <span class="post-edit__label">Tracked</span>
+      </label>
+      <p class="post-edit__hint">
+        A tracked post is one we follow: a roster that stops naming its holder is worth
+        someone's attention. Untrack the offices this jurisdiction does not elect — they stay
+        recorded, they just stop asking for review.
+      </p>
       ${error ? html`<p class="posts-list__error">${error}</p>` : ""}
     </div>
   `;

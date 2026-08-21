@@ -24,26 +24,25 @@ def officials_from_rows(
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> tuple[list[dict], list[dict]]:
-    """The roster a submit implies, as (kept, excluded).
+) -> list[dict]:
+    """The roster a submit implies. Everyone the scrape saw is in it.
 
-    Excluded means no label resolved to a known role. The pipeline dropped these before the
-    wire; they are carried out here so the caller can decide, since a scrape finding somebody
-    it cannot classify is a triage question rather than a non-event.
+    Whether a post is one we diff against is `posts.is_tracked`, decided when the post is
+    minted — not here, and not by dropping the person.
 
     Dicts rather than `Official`, because an already-merged row is handed back exactly as it
     arrived. `order_official_fields` exists for the fields a roster carries that `Official`
     does not model, and validating a passthrough row would drop every one of them.
     """
     if not rows:
-        return [], []
+        return []
 
     if _is_official(rows[0]):
-        return rows, []
+        return rows
 
     records = [PersonRecord(**row) for row in rows]
-    kept, excluded = reconcile(records, identities, taxonomy, jurisdiction_ocdid, log)
-    return _render(kept, taxonomy), _render(excluded, taxonomy)
+    people = reconcile(records, identities, taxonomy, jurisdiction_ocdid, log)
+    return _render(people, taxonomy)
 
 
 def identified(person: dict, resolution: dict) -> dict:

@@ -123,6 +123,10 @@ async def close_absent(
     """Close open memberships for anyone the scrape did not name.
 
     An empty roster closes nobody — that is a failed scrape, not a dissolved council.
+
+    Untracked posts close too. `closed_at` is transaction time: it records that we stopped
+    seeing someone, not a claim that they left. Whether anyone is asked to look at that is
+    `posts.is_tracked`, and that gates the review queue, not the record.
     """
     if not present_person_ids:
         return 0
@@ -150,8 +154,10 @@ async def list_for_jurisdiction(
     way. `person_name` is joined in for the same reason the change-log payloads carry it —
     an id does not render.
 
-    `as_of` is the same window `posts.list_for_jurisdiction` uses, so the two axes answer the
-    same question about the same moment. None is now, which is `closed_at IS NULL`.
+    `as_of` selects on the membership's own interval — open at `first_seen_at`, closed at
+    `closed_at` — which is the honest "did they hold it then". None is now, which is
+    `closed_at IS NULL`. The posts read is undated: a post is stable, and every one of them
+    belongs in the answer whatever date is asked about.
 
     `source_labels` rides along with `designations` and `unmatched_text` because together with
     the post's role and division they are the whole parse: what the source said, and every
@@ -161,7 +167,12 @@ async def list_for_jurisdiction(
     await cur.execute(
         """
         SELECT m.id::text, m.person_id::text, m.post_id::text, m.label,
-               m.start_date, m.end_date, m.first_seen_at, m.last_seen_at,
+               m.start_date, m.end_date,
+               -- The interval, both ends. `closed_at IS NULL` is an open membership, so the
+               -- range is half-open and a reader can draw it without inferring the end from a
+               -- sighting. This is the pair `as_of` filters on below, so a row explains why
+               -- it was included.
+               m.first_seen_at, m.closed_at, m.last_seen_at,
                pe.data->>'name' AS person_name,
                m.source_labels, m.designations, m.unmatched_text,
                p.role_id, p.division_ocdid, p.label AS post_label

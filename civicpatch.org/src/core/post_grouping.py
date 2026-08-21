@@ -1,27 +1,11 @@
-"""The response shape for posts: nested under their body, each marked verified or not.
+"""The response shape for posts: nested under the body that holds them.
 
 Pure, so the shape is testable without a database. The SQL that feeds it lives in
 `database/posts.py` and `database/organizations.py`, which compose it in `list_by_organization`.
+
+The `_`-prefixed keys marking our non-standard fields are aliased in that query, beside the
+values they name, rather than renamed in a second pass here.
 """
-
-# Ours — no civic standard models verification, so it takes the underscore. A consumer that
-# drops every `_*` key is left with a conforming record.
-VERIFIED_KEY = "_verified"
-
-
-def mark_verified(rows: list[dict]) -> list[dict]:
-    """Rename the `verified` boolean to `_verified`. Present on every row, never inferred.
-
-    Absence is ambiguous — a missing key could mean endorsed, or an older API version — and
-    silence must not read as trustworthy on a provenance flag.
-    """
-    return [
-        {
-            **{key: value for key, value in row.items() if key != "verified"},
-            VERIFIED_KEY: bool(row.get("verified")),
-        }
-        for row in rows
-    ]
 
 
 def group_by_organization(

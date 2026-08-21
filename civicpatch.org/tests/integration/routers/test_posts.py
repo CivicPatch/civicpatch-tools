@@ -151,12 +151,12 @@ async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
     wrong route looks exactly like success."""
     post_id = _create(client).json()["data"]["id"]
 
-    patched = client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "headcount": 2})
+    patched = client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "_headcount": 2, "_is_tracked": True})
     assert patched.status_code == 200, patched.text
 
     listed = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
     assert listed["label"] == "Town Mayor"
-    assert listed["headcount"] == 2
+    assert listed["_headcount"] == 2
 
     assert client.delete(f"{_PREFIX}/{post_id}").status_code == 200
     assert client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"] == []
@@ -165,7 +165,7 @@ async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_patching_a_post_that_is_not_there_is_404(client):
-    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"label": "x", "headcount": 1})
+    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"label": "x", "_headcount": 1, "_is_tracked": True})
 
     assert missing.status_code == 404, missing.text
 
@@ -195,27 +195,10 @@ async def test_verified_is_on_the_wire_both_ways(client):
     posts_out = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
 
     by_id = {p["id"]: p for p in posts_out}
-    assert by_id[held]["_verified"] is True
-    assert by_id[unheld]["_verified"] is False
+    assert by_id[held]["_is_verified"] is True
+    assert by_id[unheld]["_is_verified"] is False
     assert "verified" not in by_id[held]
 
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_as_of_is_coerced_from_the_query_string(client):
-    """FastAPI parses `?as_of=YYYY-MM-DD` into a date. The DB tests hand in a Python date and
-    never cross that boundary, so this is the only place the conversion is exercised."""
-    post_id = _create(client).json()["data"]["id"]
-    await _seat_someone(post_id)
-
-    def holders(query: str) -> int:
-        response = client.get(f"{_PREFIX}/{_OCDID}{query}")
-        assert response.status_code == 200, response.text
-        return response.json()["data"]["organizations"][0]["posts"][0]["holders"]
-
-    assert holders("") == 1
-    assert holders("?as_of=2026-07-01") == 1
-    assert holders("?as_of=2026-01-01") == 0
 
 
 @pytest.mark.asyncio
@@ -235,7 +218,7 @@ async def test_the_identity_triple_is_not_patchable(client):
     fork the post — the next scrape would mint a second rather than match this one."""
     post_id = _create(client).json()["data"]["id"]
 
-    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "headcount": 1, "role_id": "clerk"})
+    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "_headcount": 1, "_is_tracked": True, "role_id": "clerk"})
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -248,14 +231,14 @@ async def test_every_write_leaves_a_trace(client):
     """Who created a seat and who removed it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
     post_id = _create(client).json()["data"]["id"]
-    client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "headcount": 2})
+    client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "_headcount": 2, "_is_tracked": True})
     client.delete(f"{_PREFIX}/{post_id}")
 
     logs = await _change_logs()
 
     assert [log["type"] for log in logs] == ["add_post", "edit_post", "delete_post"]
     assert all(log["post_id"] == post_id for log in logs)
-    assert {f["field"] for f in logs[1]["fields"]} == {"label", "headcount"}
+    assert {f["field"] for f in logs[1]["fields"]} == {"label", "_headcount"}
     assert logs[2]["label"] == "Town Mayor"
 
 
@@ -268,3 +251,35 @@ async def test_a_rejected_create_leaves_no_trace(client):
     _create(client)
 
     assert [log["type"] for log in await _change_logs()] == ["add_post"]
+
+
+async def _is_tracked(post_id: str) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT _is_tracked FROM posts WHERE id::text = %s", (post_id,))
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_post_can_be_untracked_and_tracked_again(client):
+    """Mint seeds tracking from whether the role was recognised, which is a guess. This is
+    where somebody corrects it."""
+    post_id = _create(client).json()["data"]["id"]
+    assert await _is_tracked(post_id) is True
+
+    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 1, "_is_tracked": False})
+    assert await _is_tracked(post_id) is False
+
+    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 1, "_is_tracked": True})
+    assert await _is_tracked(post_id) is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_patch_must_state_whether_the_post_is_tracked(client):
+    """No default. This route replaces what it is given, so an omission would silently
+    re-track a post somebody turned off."""
+    post_id = _create(client).json()["data"]["id"]
+    response = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2})
+    assert response.status_code == 422

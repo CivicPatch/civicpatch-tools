@@ -201,7 +201,8 @@ erDiagram
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named live in membership_roles"
         text            division_ocdid      FK "ON UPDATE CASCADE"
         text_null       label               "human-owned; mint-only writes never overwrite it"
-        int             headcount           "check: > 0, default: 1; human-owned"
+        int             _headcount          "check: > 0, default: 1; human-owned. Underscored: Popolo has no headcount — our Post is a group of interchangeable seats"
+        bool            _is_tracked         "default: true; a roster omitting this post is meaningful — gates the review queue, not the record. Orthogonal to lifecycle"
         timestamptz     created_at          "default: now()"
     }
 

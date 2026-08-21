@@ -120,7 +120,7 @@ async def test_confirming_a_post_makes_it_read_verified(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
-    assert rows[0]["verified"] is True
+    assert rows[0]["_is_verified"] is True
 
 
 @pytest.mark.asyncio

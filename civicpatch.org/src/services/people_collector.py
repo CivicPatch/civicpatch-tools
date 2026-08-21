@@ -26,7 +26,7 @@ from core.ingest_people import (
 from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
-from shared.schemas import Official, RoleConfig
+from shared.schemas import Official, RoleConfig, RoleStatus
 from shared.utils.name_utils import person_list_to_identities
 from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.taxonomy import build_taxonomy
@@ -81,7 +81,7 @@ async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
 
 
 async def _reconcile_roster(
-    request_id: str, jurisdiction_ocdid: str, rows: list[dict], workflow_context: dict
+    jurisdiction_ocdid: str, rows: list[dict], workflow_context: dict
 ) -> list[dict]:
     """The roster this submit means, whichever shape it arrived in.
 
@@ -90,13 +90,8 @@ async def _reconcile_roster(
     """
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
     identities = await _identities(jurisdiction_ocdid, workflow_context)
-    kept, excluded = officials_from_rows(
-        rows, identities, taxonomy, jurisdiction_ocdid, logger
-    )
-    if excluded:
-        names = ", ".join(person["name"] for person in excluded)
-        logger.info(f"[{request_id}] Excluded, no known role: {names}")
-    return await _assign_ids(jurisdiction_ocdid, kept)
+    roster = officials_from_rows(rows, identities, taxonomy, jurisdiction_ocdid, logger)
+    return await _assign_ids(jurisdiction_ocdid, roster)
 
 
 async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
@@ -159,6 +154,10 @@ async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, record
     """
     try:
         roles = await get_roles()
+        # A post is tracked when its role is one we recognise. `unmatched` is inactive, so a
+        # label resolving to nothing lands on a post nobody diffs against — we cannot expect a
+        # post filled when we cannot name it.
+        active_role_ids = {role.id for role in roles if role.status == RoleStatus.ACTIVE}
         taxonomy = build_taxonomy(RoleConfig(roles=roles))
         officials = [Official(**record) for record in records]
         specs = derived_posts(officials, taxonomy, roles)
@@ -175,6 +174,7 @@ async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, record
                     spec.role_id,
                     spec.division_ocdid,
                     headcount=spec.headcount,
+                    is_tracked=spec.role_id in active_role_ids,
                 )
             await conn.commit()
         logger.info(f"[{request_id}] Derived {len(specs)} post(s)")
@@ -277,7 +277,7 @@ async def _handle_submit_pipeline_run_artifacts(
         with open(data_file_path, "r") as f:
             data = yaml_load(f.read())
         roster = await _reconcile_roster(
-            request.request_id, request.jurisdiction_ocdid, data, workflow_context
+            request.jurisdiction_ocdid, data, workflow_context
         )
         updated_data = await _process_images(image_file_dir, filenames_to_urls, roster)
         with open(data_file_path, "w") as f:

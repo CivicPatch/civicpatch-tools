@@ -11,10 +11,12 @@ export interface Post {
   role_id: string;
   division_ocdid: string;
   label: string | null;
-  headcount: number;
-  holders: number;
-  role_label: string;
-  _verified: boolean;
+  // Underscored: no civic standard defines these, so a consumer dropping every `_*` key is
+  // left with a conforming Post. Stored ones are named that way in the schema; `_is_verified`
+  // is computed and aliased in the query.
+  _headcount: number;
+  _is_tracked: boolean;
+  _is_verified: boolean;
 }
 
 export interface Membership {
@@ -54,9 +56,9 @@ export interface PersonRow {
 }
 
 export interface PostRow extends Post {
-  // Names rather than the `holders` count, because the screen lists people. The count still
-  // rides along: it is what `?as_of` answers, and it can disagree with this list when the
-  // membership read is undated.
+  // Occupancy, and the only source of it. Every membership yields a name here, real or
+  // `UNNAMED_HOLDER`, so the length is the count — the server used to send one too, dated
+  // separately, which could disagree with this list. One read, one answer.
   holder_names: string[];
   over_headcount: boolean;
 }
@@ -89,7 +91,11 @@ export const holderNames = (memberships: Membership[], postId: string): string[]
     .sort(byName);
 
 /** Every post a jurisdiction has, grouped under its role, with holders attached. */
-export function groupPostsByRole(posts: Post[], memberships: Membership[]): RoleGroup[] {
+export function groupPostsByRole(
+  posts: Post[],
+  memberships: Membership[],
+  roleLabels: Map<string, string>,
+): RoleGroup[] {
   const groups = new Map<string, PostRow[]>();
 
   for (const post of posts) {
@@ -98,20 +104,21 @@ export function groupPostsByRole(posts: Post[], memberships: Membership[]): Role
     rows.push({
       ...post,
       holder_names: names,
-      // Counted from the post's own holders, not the names: a person with no name still
-      // occupies the post, and the anomaly is about capacity, not about rendering.
-      over_headcount: post.holders > post.headcount,
+      over_headcount: names.length > post._headcount,
     });
     groups.set(post.role_id, rows);
   }
 
   return [...groups.entries()].map(([role_id, rows]) => {
     // Every post in the group shares the role, so any row carries its label.
-    const headcount = rows.reduce((total, row) => total + row.headcount, 0);
-    const filled = rows.reduce((total, row) => total + row.holders, 0);
+    const headcount = rows.reduce((total, row) => total + row._headcount, 0);
+    const filled = rows.reduce(
+      (total, row) => total + row.holder_names.length,
+      0,
+    );
     return {
       role_id,
-      role_label: rows[0].role_label,
+      role_label: roleLabels.get(role_id) ?? role_id,
       posts: rows,
       headcount,
       filled,

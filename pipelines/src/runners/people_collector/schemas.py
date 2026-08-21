@@ -226,7 +226,6 @@ class ProcessPageContentStep(BaseModel):
 
 class MergeRecordsWithinLLMStep(BaseModel):
     records: List[Person]  # LLM Names to list of Person records
-    excluded_people: List[Person] = []
 
 
 class FormatOutputStep(BaseModel):
