@@ -20,6 +20,15 @@ export interface Post {
 export interface Membership {
   post_id: string;
   person_name: string | null;
+  role_id: string;
+  division_ocdid: string;
+  label: string | null;
+  post_label: string | null;
+}
+
+export interface PersonRow {
+  person_name: string;
+  posts: Membership[];
 }
 
 export interface PostRow extends Post {
@@ -132,3 +141,25 @@ export function buildDivisionOcdid(
   if (designation === AT_LARGE_DIVISION) return base;
   return `${base}/${designation}:${value.trim()}`;
 }
+
+
+/** The same memberships, gathered under the person instead of the post.
+ *
+ * One person can hold posts in several bodies, so this is a real regrouping rather than a
+ * re-sort — the post axis would show them once per post with no hint the rows are the same
+ * human.
+ */
+export function groupMembershipsByPerson(memberships: Membership[]): PersonRow[] {
+  const groups = new Map<string, Membership[]>();
+  for (const membership of memberships) {
+    const name = membership.person_name ?? UNNAMED_HOLDER;
+    groups.set(name, [...(groups.get(name) ?? []), membership]);
+  }
+  return [...groups.entries()].map(([person_name, posts]) => ({ person_name, posts }));
+}
+
+/** What to call a post in a person's list: what someone named it, else role and division. */
+export const postTitle = (membership: Membership): string =>
+  membership.label ??
+  membership.post_label ??
+  `${membership.role_id} · ${divisionName(membership.division_ocdid)}`;

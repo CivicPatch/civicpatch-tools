@@ -251,3 +251,19 @@ async def test_the_person_axis_read_names_the_person(client):
     assert rows[0]["person_name"] == "Route Test"
     assert rows[0]["role_id"] == "mayor"
     assert rows[0]["label"] == "Mayor"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_both_axes_answer_the_same_moment(client):
+    """The screen toggles between by-post and by-person, so a date meaning one thing on one
+    axis and another on the other would make switching the view silently switch the moment."""
+    person_id, mayor, _ = await _seed()
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+
+    before = client.get(f"{_PREFIX}/{_OCDID}?as_of=2020-01-01")
+    after = client.get(f"{_PREFIX}/{_OCDID}?as_of=2099-01-01")
+
+    assert before.status_code == 200, before.text
+    assert before.json()["data"]["memberships"] == []
+    assert len(after.json()["data"]["memberships"]) == 1

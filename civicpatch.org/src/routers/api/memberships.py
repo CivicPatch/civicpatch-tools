@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
@@ -48,16 +50,16 @@ def get_router() -> APIRouter:
     @router.get("/{jurisdiction_ocdid:path}")
     async def list_memberships_endpoint(
         jurisdiction_ocdid: str,
+        as_of: date | None = None,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
         """The same roster the posts read returns, by person instead of by post.
 
-        Open memberships only: this answers "who sits where now". The dated question is
-        `?as_of` on the posts read, which is the axis a date makes sense on.
+        `?as_of` takes the same window, so switching axis cannot switch the moment.
         """
         return {
             "data": {
-                "memberships": await memberships.list_by_person(jurisdiction_ocdid)
+                "memberships": await memberships.list_by_person(jurisdiction_ocdid, as_of)
             }
         }
 

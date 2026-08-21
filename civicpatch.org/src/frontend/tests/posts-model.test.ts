@@ -8,6 +8,8 @@ import {
   UNNAMED_HOLDER,
   buildDivisionOcdid,
   AT_LARGE_DIVISION,
+  groupMembershipsByPerson,
+  postTitle,
 } from "../components/posts-list/posts-model.js";
 import type { Post, Membership } from "../components/posts-list/posts-model.js";
 
@@ -131,5 +133,56 @@ describe("buildDivisionOcdid", () => {
 
   it("trims the value, so a stray space cannot fork a division", () => {
     expect(buildDivisionOcdid(jurisdiction, "ward", " 3 ")).toBe(`${base}/ward:3`);
+  });
+});
+
+
+describe("groupMembershipsByPerson", () => {
+  const membership = (overrides: Partial<Membership>): Membership => ({
+    post_id: "p",
+    person_name: "Andrew Theriault",
+    role_id: "council-member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2",
+    label: null,
+    post_label: null,
+    ...overrides,
+  });
+
+  it("gathers one person's posts across bodies under a single row", () => {
+    // The point of the axis: the post view shows them twice with no hint it is one human.
+    const rows = groupMembershipsByPerson([
+      membership({ post_id: "a" }),
+      membership({ post_id: "b", person_name: "Diana Pelchat" }),
+      membership({ post_id: "c" }),
+    ]);
+
+    expect(rows.map((r) => r.person_name)).toEqual(["Andrew Theriault", "Diana Pelchat"]);
+    expect(rows[0].posts.map((p) => p.post_id)).toEqual(["a", "c"]);
+  });
+
+  it("keeps a nameless holder rather than dropping them", () => {
+    expect(groupMembershipsByPerson([membership({ person_name: null })])[0].person_name).toBe(
+      UNNAMED_HOLDER,
+    );
+  });
+});
+
+describe("postTitle", () => {
+  const base = {
+    post_id: "p",
+    person_name: "X",
+    role_id: "council-member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2",
+  };
+
+  it("prefers what a person named it, on the membership then the post", () => {
+    expect(postTitle({ ...base, label: "My Seat", post_label: "Post Label" })).toBe("My Seat");
+    expect(postTitle({ ...base, label: null, post_label: "Post Label" })).toBe("Post Label");
+  });
+
+  it("falls back to role and division when nobody has named it", () => {
+    expect(postTitle({ ...base, label: null, post_label: null })).toBe(
+      "council-member · Ward 2",
+    );
   });
 });
