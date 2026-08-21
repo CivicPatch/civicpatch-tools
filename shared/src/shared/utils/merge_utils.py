@@ -3,26 +3,21 @@
 Lives in `shared` because it is moving: the pipeline does this today, cp.org will do it once
 records cross the boundary instead of merged people, and both need it during the transition.
 
-Pure over records and a taxonomy. The only side channel is a debug log, which is a `Protocol`
-here rather than the pipeline's concrete logger — otherwise `shared` would depend on
-`pipelines`, and the dependency only runs the other way.
+Pure over records and a taxonomy, bar the log it writes to.
 """
 
 import copy
 import unicodedata
-from typing import Dict, List, Protocol, TypeAlias
+from typing import Dict, List, TypeAlias
 
 from Levenshtein import distance as levenshtein_distance
 from nameparser import HumanName
 from shared.schemas import Person, PersonRecord
+from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy, normalize_designations, resolve_role
 
 OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]]
 PeopleByName: TypeAlias = Dict[str, List[PersonRecord]]
-
-
-class DebugLog(Protocol):
-    def debug(self, message: str) -> None: ...
 
 
 NAME_SIMILARITY_THRESHOLD = 4
@@ -288,7 +283,7 @@ def is_weakly_tied(
     record1: PersonRecord | Person,
     record2: PersonRecord | Person,
     taxonomy: Taxonomy,
-    logger: DebugLog,
+    logger: Log,
 ) -> bool:
     """
     Determine if two records are weakly tied based on shared attributes or if they are explicitly marked as separate identities.
