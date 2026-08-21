@@ -137,12 +137,18 @@ async def list_for_jurisdiction(
 
     `as_of` is the same window `posts.list_for_jurisdiction` uses, so the two axes answer the
     same question about the same moment. None is now, which is `closed_at IS NULL`.
+
+    `source_labels` rides along with `designations` and `unmatched_text` because together with
+    the post's role and division they are the whole parse: what the source said, and every
+    piece the parser turned it into. That is the answer to "why is this person in this post",
+    and it is not reconstructable client-side without re-running the parser.
     """
     await cur.execute(
         """
         SELECT m.id::text, m.person_id::text, m.post_id::text, m.label,
                m.start_date, m.end_date, m.first_seen_at, m.last_seen_at,
                pe.data->>'name' AS person_name,
+               m.source_labels, m.designations, m.unmatched_text,
                p.role_id, p.division_ocdid, p.label AS post_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id

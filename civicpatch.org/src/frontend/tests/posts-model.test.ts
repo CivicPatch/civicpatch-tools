@@ -10,6 +10,11 @@ import {
   AT_LARGE_DIVISION,
   groupMembershipsByPerson,
   postTitle,
+  decompose,
+  PART_ROLE,
+  PART_DIVISION,
+  PART_DESIGNATION,
+  PART_UNMATCHED,
 } from "../components/posts-list/posts-model.js";
 import type { Post, Membership } from "../components/posts-list/posts-model.js";
 
@@ -184,5 +189,57 @@ describe("postTitle", () => {
     expect(postTitle({ ...base, label: null, post_label: null })).toBe(
       "council-member · Ward 2",
     );
+  });
+});
+
+
+describe("decompose", () => {
+  const membership = (overrides: Partial<Membership> = {}): Membership => ({
+    post_id: "p",
+    person_name: "X",
+    role_id: "council-member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:3",
+    label: null,
+    post_label: null,
+    source_labels: ["Council Member District 3 (Central Seattle)"],
+    designations: [],
+    unmatched_text: ["Central Seattle"],
+    ...overrides,
+  });
+
+  it("accounts for every piece of the label, residue included", () => {
+    // The point of the row: a curator can see what the parser did and judge it, rather than
+    // being shown only where the person landed.
+    expect(decompose(membership())).toEqual([
+      { kind: PART_ROLE, value: "council-member" },
+      { kind: PART_DIVISION, value: "Council District 3" },
+      { kind: PART_UNMATCHED, value: "Central Seattle" },
+    ]);
+  });
+
+  it("lists designations before the residue", () => {
+    const parts = decompose(
+      membership({ designations: ["Position 8"], unmatched_text: ["Citywide"] }),
+    );
+
+    expect(parts.map((p) => p.kind)).toEqual([
+      PART_ROLE,
+      PART_DIVISION,
+      PART_DESIGNATION,
+      PART_UNMATCHED,
+    ]);
+  });
+
+  it("still shows the division for an at-large post", () => {
+    // "No area" is a decision the parser made, not a gap. Omitting it would make a correctly
+    // parsed at-large row look half-parsed.
+    const parts = decompose(
+      membership({
+        division_ocdid: "ocd-division/country:us/state:wa/place:x",
+        unmatched_text: [],
+      }),
+    );
+
+    expect(parts).toContainEqual({ kind: PART_DIVISION, value: "At-Large" });
   });
 });
