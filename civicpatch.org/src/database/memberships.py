@@ -36,6 +36,7 @@ async def record(
     seen_at,
     designations: list[str] | None = None,
     unmatched_text: list[str] | None = None,
+    source_labels: list[str] | None = None,
     start_date=None,
     end_date=None,
     role_id: str | None = None,
@@ -46,6 +47,10 @@ async def record(
     same-post case, so "one open per body" holds without the insert testing for it.
 
     `seen_at` is when the source said this, not when the row was written.
+
+    `source_labels` is what the source called this post, already split. Written here rather
+    than joined back to `source_records` so it cannot disagree with the `unmatched_text`
+    derived from it.
 
     `role_id` is a title held in a post some other role defines — `mayor` for a councilmember
     serving as mayor. `designations` tell like posts apart ("Place 2"); `unmatched_text` is
@@ -66,14 +71,15 @@ async def record(
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, designations, unmatched_text, role_id,
-             start_date, end_date, first_seen_at, last_seen_at)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (post_id, organization_id, person_id, designations, unmatched_text,
+             source_labels, role_id, start_date, end_date, first_seen_at, last_seen_at)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
         DO UPDATE SET
             last_seen_at = GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at),
             designations = EXCLUDED.designations,
             unmatched_text = EXCLUDED.unmatched_text,
+            source_labels = EXCLUDED.source_labels,
             role_id = EXCLUDED.role_id,
             start_date = EXCLUDED.start_date,
             end_date = EXCLUDED.end_date
@@ -85,6 +91,7 @@ async def record(
             person_id,
             designations or [],
             unmatched_text or [],
+            source_labels or [],
             role_id,
             start_date,
             end_date,
@@ -120,21 +127,35 @@ async def close_absent(
 
 
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    """Open memberships with the post they sit on — the person-axis read."""
+    """Open memberships with the post they sit on and who holds it — the person-axis read.
+
+    Ordered by person, because that is the axis: the post-axis read already groups the other
+    way. `person_name` is joined in for the same reason the change-log payloads carry it —
+    an id does not render.
+    """
     await cur.execute(
         """
         SELECT m.id::text, m.person_id::text, m.post_id::text, m.label,
                m.start_date, m.end_date, m.first_seen_at, m.last_seen_at,
-               p.role_id, p.division_ocdid
+               pe.data->>'name' AS person_name,
+               p.role_id, p.division_ocdid, p.label AS post_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
+        JOIN people pe ON pe.id = m.person_id
         WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
-        ORDER BY p.role_id, p.division_ocdid
+        ORDER BY pe.data->>'name', p.role_id
         """,
         (jurisdiction_ocdid,),
     )
     columns = [column.name for column in cur.description or []]
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
+async def list_by_person(jurisdiction_ocdid: str) -> list[dict]:
+    """The roster by person rather than by post. Open memberships only."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await list_for_jurisdiction(cur, jurisdiction_ocdid)
 
 
 async def unmatched_text() -> list[dict]:
@@ -146,7 +167,13 @@ async def unmatched_text() -> list[dict]:
                    count(*) AS occurrences,
                    count(DISTINCT p.jurisdiction_ocdid) AS jurisdictions,
                    (array_agg(DISTINCT p.jurisdiction_ocdid
-                              ORDER BY p.jurisdiction_ocdid))[1:3] AS examples
+                              ORDER BY p.jurisdiction_ocdid))[1:3] AS examples,
+                   -- The one label the term came out of, not the whole concatenation. Storing
+                   -- the parts is what makes this answerable at all.
+                   mode() WITHIN GROUP (ORDER BY (
+                       SELECT l FROM unnest(m.source_labels) AS l
+                       WHERE strpos(lower(l), lower(term)) > 0 LIMIT 1
+                   )) AS example_label
             FROM memberships m
             JOIN posts p ON p.id = m.post_id
             CROSS JOIN LATERAL unnest(m.unmatched_text) AS term

@@ -54,7 +54,9 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _seed_member(cur, ocdid: str, division: str, unmatched: list[str]) -> str:
+async def _seed_member(
+    cur, ocdid: str, division: str, unmatched: list[str], source_labels: list[str] | None = None
+) -> str:
     person_id = str(uuid.uuid4())
     await cur.execute(
         "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, %s)",
@@ -72,6 +74,7 @@ async def _seed_member(cur, ocdid: str, division: str, unmatched: list[str]) -> 
         organization_id,
         _SEEN_AT,
         unmatched_text=unmatched,
+        source_labels=source_labels,
     )
 
 
@@ -176,3 +179,39 @@ async def test_a_vacated_seat_drops_off_the_list():
 
     assert rows[0]["text"] == _LOCAL
     assert [row["jurisdictions"] for row in rows if row["text"] == _WIDESPREAD] == [1]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_example_label_is_what_the_term_came_out_of():
+    """The context a curator judges "is this a role?" on — and the *one* label carrying the
+    term, not every office the person holds. Storing `parsed.labels` as parts rather than the
+    joined `office.name` is what makes that answerable.
+
+    Written beside `unmatched_text` in one statement rather than joined back to
+    `source_records`, which can disagree — source records land at ingest, memberships are
+    written at publish, so a stacked unpublished scrape would show a label that no longer
+    produces this term."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
+            "VALUES (%s, 'zz', 'local')",
+            (_OCDIDS[0],),
+        )
+        base = f"ocd-division/country:us/state:zz/place:{_TOWNS[0]}"
+        await _seed_member(
+            cur,
+            _OCDIDS[0],
+            f"{base}/ward:1",
+            ["Finance Liaison"],
+            source_labels=["Council Member Ward 1, Finance Liaison", "Planning Board Member"],
+        )
+        await conn.commit()
+
+    rows = await memberships.unmatched_text()
+
+    row = next(r for r in rows if r["text"] == "Finance Liaison")
+    assert row["example_label"] == "Council Member Ward 1, Finance Liaison"
+    # The label carrying the term, not the other one the person also holds.
+    assert row["text"] in row["example_label"]

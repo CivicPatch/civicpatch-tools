@@ -24,6 +24,9 @@ class DerivedMember(BaseModel):
     person_id: str
     designations: list[str] = []
     unmatched_text: list[str] = []
+    # The labels the parser consumed, already split — `office.name` is a rendering of several
+    # joined by " - ". Kept as the parts so triage can show the one a term came out of.
+    source_labels: list[str] = []
 
 
 class DerivedPost(BaseModel):
@@ -55,6 +58,7 @@ def _member(record: Official, parsed: dict) -> "DerivedMember":
         person_id=record.id,
         designations=parsed.get("other_designations") or [],
         unmatched_text=parsed.get("unmatched") or [],
+        source_labels=parsed.get("labels") or [],
     )
 
 
