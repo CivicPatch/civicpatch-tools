@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from schemas.common import Identity
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
-from routers.api.pipeline_runs import update_pipeline_run_and_publish
+from routers.api.pipeline_runs import apply_pipeline_run_status
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -117,7 +117,7 @@ def test_get_pipeline_run_status_returns_404_when_not_found(client):
 
 @pytest.mark.unit
 def test_patch_job_status_returns_updated_status(client):
-    with patch("routers.api.pipeline_runs.update_pipeline_run_and_publish", new_callable=AsyncMock):
+    with patch("routers.api.pipeline_runs.apply_pipeline_run_status", new_callable=AsyncMock):
         response = client.patch(
             f"/pipeline_runs/{TEST_REQUEST_ID}/status",
             json={"status": "complete", "progress": 100},
@@ -149,12 +149,12 @@ def test_post_job_result_returns_request_id(client):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_update_pipeline_run_and_publish_publishes_when_jurisdiction_provided():
+async def test_apply_pipeline_run_status_publishes_when_jurisdiction_provided():
     with (
         patch("routers.api.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock) as mock_update,
         patch("routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
     ):
-        await update_pipeline_run_and_publish(TEST_REQUEST_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
+        await apply_pipeline_run_status(TEST_REQUEST_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
 
         mock_update.assert_awaited_once_with(request_id=TEST_REQUEST_ID, status="running", progress=50)
         mock_publish.assert_awaited_once()
@@ -162,14 +162,14 @@ async def test_update_pipeline_run_and_publish_publishes_when_jurisdiction_provi
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_update_pipeline_run_and_publish_skips_publish_when_no_jurisdiction():
+async def test_apply_pipeline_run_status_skips_publish_when_no_jurisdiction():
     with (
         patch("routers.api.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock),
         patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=None),
         patch("database.database.get_pool", new_callable=AsyncMock),
         patch("routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
     ):
-        await update_pipeline_run_and_publish(TEST_REQUEST_ID, "running", 50, None)
+        await apply_pipeline_run_status(TEST_REQUEST_ID, "running", 50, None)
 
         mock_publish.assert_not_awaited()
 
@@ -311,3 +311,41 @@ def test_cancel_does_not_dismiss_when_the_workflow_refuses_to_stop():
 
     assert response.status_code == 500
     mock_dismiss.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status", ["CANCELLED", "ERROR"])
+async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
+    """Both leave nothing to review, so both have to stop counting as pending work — the
+    jurisdiction page lists pending requests and `peopleEditBlockers` disables editing from the
+    same set, so a failure left a permanent blocker behind."""
+    with (
+        patch("routers.api.pipeline_runs.dismiss_request", new_callable=AsyncMock) as dismiss,
+        patch(
+            "routers.api.pipeline_runs.supersede_prior_jurisdiction_issues",
+            new_callable=AsyncMock,
+        ),
+    ):
+        await pipeline_runs_router.finalize_pipeline_run(TEST_REQUEST_ID, status, TEST_OCDID)
+
+    # No user id: a machine giving up, not a person declining.
+    dismiss.assert_awaited_once_with(TEST_REQUEST_ID)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status", ["SUCCESS", "RESOLVED"])
+async def test_a_run_that_produced_something_is_left_for_review(status):
+    """The whole point of the queue. Dismissing a successful run would discard a roster nobody
+    had looked at."""
+    with (
+        patch("routers.api.pipeline_runs.dismiss_request", new_callable=AsyncMock) as dismiss,
+        patch(
+            "routers.api.pipeline_runs.supersede_prior_jurisdiction_issues",
+            new_callable=AsyncMock,
+        ),
+    ):
+        await pipeline_runs_router.finalize_pipeline_run(TEST_REQUEST_ID, status, TEST_OCDID)
+
+    dismiss.assert_not_awaited()

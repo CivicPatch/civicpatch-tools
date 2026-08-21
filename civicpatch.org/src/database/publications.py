@@ -32,10 +32,13 @@ async def record_open_data_url(request_id: str, url: str) -> None:
 async def dismiss_request(
     request_id: str, resolved_by_user_id: str | None = None
 ) -> None:
-    """The reviewer looked at this scrape and decided it should not go live.
+    """This scrape will not go live — a reviewer said so, or the run was cancelled.
 
     The counterpart to publishing, and the other way a request leaves the review queue. Not a
     failure: a dismissed scrape keeps its evidence and its data_json, it just never published.
+
+    `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
+    `COALESCE` means a later human resolution is never overwritten by a machine one.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
