@@ -1,7 +1,7 @@
 from typing import List
 
 from runners.people_collector.schemas import ExtractedPerson
-from utils.merge_utils import same_name
+from shared.utils.merge_utils import same_name
 
 
 def compare_people_by_name(

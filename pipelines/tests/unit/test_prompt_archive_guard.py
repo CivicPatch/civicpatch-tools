@@ -13,7 +13,10 @@ import pytest
 
 pytestmark = pytest.mark.unit
 
-EVALS = pathlib.Path("tests/prompts/tests/evals")
+# Anchored to this file, not the working directory. As a relative path it resolved against
+# cwd, so it only worked when pytest ran from `pipelines/` — CI runs from elsewhere, put a
+# path that does not exist on `sys.path`, and every import here failed.
+EVALS = pathlib.Path(__file__).resolve().parents[1] / "prompts" / "tests" / "evals"
 
 
 @pytest.fixture(scope="module", autouse=True)

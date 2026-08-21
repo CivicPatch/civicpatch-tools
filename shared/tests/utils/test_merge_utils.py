@@ -1,20 +1,18 @@
 import pytest
 from unittest.mock import MagicMock
 
-from runners.people_collector.schemas import PersonRecord
-from shared.schemas import Role, RoleConfig, RoleStatus
-from shared.utils.taxonomy import build_taxonomy
-from utils.merge_utils import (
+from shared.schemas import PersonRecord, Role, RoleConfig, RoleStatus
+from shared.utils.merge_utils import (
     append_to_people_by_name,
     are_names_similar,
     group_people_by_name,
     has_name_overlap,
+    find_indexed_name,
     is_weakly_tied,
     normalize_name,
     to_field_set_from_record,
 )
-
-pytestmark = pytest.mark.unit
+from shared.utils.taxonomy import build_taxonomy
 
 # `is_weakly_tied` resolves labels through the taxonomy rather than comparing raw strings,
 # so the roles these tests use have to exist in it.
@@ -451,7 +449,7 @@ def test_is_weakly_tied_llm_person():
     person2.label = "Mayor"
     person2.email = ["john@example.com"]
 
-    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == True
+    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_person():
@@ -467,7 +465,7 @@ def test_is_weakly_tied_person():
     person2.name = "Janet Smith"
     person2.label = "Council Seat 2"
     person2.emails = ["jane@example.com"]
-    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == True
+    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock())
 
 
 def test_is_not_weakly_tied_different_roles_and_emails():
@@ -483,7 +481,7 @@ def test_is_not_weakly_tied_different_roles_and_emails():
     person2.name = "Bob Johnson"
     person2.label = "Council"
     person2.emails = ["bob@example.com"]
-    assert is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock()) == False
+    assert not is_weakly_tied({}, person1, person2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_same_identity():
@@ -503,7 +501,7 @@ def test_is_weakly_tied_same_identity():
         url=None,
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_different_identity():
@@ -523,7 +521,7 @@ def test_is_weakly_tied_different_identity():
         url=None,
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
+    assert not is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_name_overlap():
@@ -543,7 +541,7 @@ def test_is_weakly_tied_name_overlap():
         url=None,
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
+    assert not is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_matching_designations():
@@ -563,7 +561,7 @@ def test_is_weakly_tied_matching_designations():
         url=None,
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_email_overlap():
@@ -583,12 +581,11 @@ def test_is_weakly_tied_email_overlap():
         url=None,
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == True
+    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_url_overlap():
     """Test is_weakly_tied when URLs overlap."""
-    identity_names = {}
     record1 = PersonRecord(
         name="Abigail Doe",
         label="",
@@ -603,7 +600,7 @@ def test_is_weakly_tied_url_overlap():
         url="http://example.com",
         source_url="test",
     )
-    assert is_weakly_tied({}, record1, record2, _TAXONOMY, MagicMock()) == False
+    assert not is_weakly_tied({}, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_is_weakly_tied_no_overlap():
@@ -623,11 +620,7 @@ def test_is_weakly_tied_no_overlap():
         url="http://example.org",
         source_url="test",
     )
-    assert is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock()) == False
-
-
-import pytest
-from utils.merge_utils import find_indexed_name
+    assert not is_weakly_tied(identity_names, record1, record2, _TAXONOMY, MagicMock())
 
 
 def test_find_indexed_name_with_known_mapping():
@@ -712,9 +705,6 @@ def test_find_indexed_name_with_empty_known_mappings():
     )
 
 
-import pytest
-
-
 @pytest.mark.parametrize(
     "name1, name2, expected",
     [
@@ -735,9 +725,6 @@ import pytest
 )
 def test_are_names_similar_matrix(name1, name2, expected):
     assert are_names_similar(name1, name2) is expected
-
-
-import pytest
 
 
 @pytest.mark.parametrize(

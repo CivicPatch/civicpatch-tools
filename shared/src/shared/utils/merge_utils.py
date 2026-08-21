@@ -1,26 +1,34 @@
+"""Grouping scraped sightings into people — name overlap, shared offices, shared contacts.
+
+Lives in `shared` because it is moving: the pipeline does this today, cp.org will do it once
+records cross the boundary instead of merged people, and both need it during the transition.
+
+Pure over records and a taxonomy. The only side channel is a debug log, which is a `Protocol`
+here rather than the pipeline's concrete logger — otherwise `shared` would depend on
+`pipelines`, and the dependency only runs the other way.
+"""
+
 import copy
 import unicodedata
-from typing import Dict, List
+from typing import Dict, List, Protocol, TypeAlias
 
-from domain.models import Person
 from Levenshtein import distance as levenshtein_distance
 from nameparser import HumanName
-from runners.people_collector.schemas import (
-    PersonRecord,
-    OtherNamesByCanonicalName,
-    PeopleByName,
-)
+from shared.schemas import Person, PersonRecord
 from shared.utils.taxonomy import Taxonomy, normalize_designations, resolve_role
-from utils.log_utils import PipelineRunLogger
+
+OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]]
+PeopleByName: TypeAlias = Dict[str, List[PersonRecord]]
+
+
+class DebugLog(Protocol):
+    def debug(self, message: str) -> None: ...
+
 
 NAME_SIMILARITY_THRESHOLD = 4
 
 
 def normalize_name(name: str) -> str:
-    """
-    Normalize a name using nameparser to ensure consistent formatting.
-    """
-
     def remove_diacritics(text: str) -> str:
         # TODO: May want to do whitelist instead of blacklist
         return "".join(
@@ -280,7 +288,7 @@ def is_weakly_tied(
     record1: PersonRecord | Person,
     record2: PersonRecord | Person,
     taxonomy: Taxonomy,
-    logger: PipelineRunLogger,
+    logger: DebugLog,
 ) -> bool:
     """
     Determine if two records are weakly tied based on shared attributes or if they are explicitly marked as separate identities.
