@@ -4,7 +4,7 @@ from typing import Dict, List
 
 import runners.people_collector.steps.step_05_merge_records_within_llm.field_mergers as field_mergers
 from runners.people_collector.schemas import (
-    LLMPersonRecord,
+    PersonRecord,
     MergeRecordsWithinLLMStep,
     PeopleCollectorContext,
     Person,
@@ -49,7 +49,7 @@ def merge_records_within_llm(
     )
 
     # Group records by canonical name
-    groups: Dict[str, List[LLMPersonRecord]] = defaultdict(list)
+    groups: Dict[str, List[PersonRecord]] = defaultdict(list)
     for record in all_records:
         groups[canonical_map.get(record.name, record.name)].append(record)
 
@@ -80,9 +80,9 @@ def merge_records_within_llm(
 
 
 def merge_weak_tie_groups_within_llm(
-    groups: Dict[str, List[LLMPersonRecord]],
+    groups: Dict[str, List[PersonRecord]],
     taxonomy: Taxonomy,
-) -> Dict[str, List[LLMPersonRecord]]:
+) -> Dict[str, List[PersonRecord]]:
     """
     Merge last-name-only canonical groups into full-name groups when they share
     the same last name and at least one office.
@@ -95,7 +95,7 @@ def merge_weak_tie_groups_within_llm(
         parsed = name_utils.parse_name(name)
         return parsed.last.lower() if parsed.last else name.split()[-1].lower()
 
-    def office_keys(records: List[LLMPersonRecord]) -> set:
+    def office_keys(records: List[PersonRecord]) -> set:
         """(role, area, designations) per record. Parsed, not compared raw, so two
         spellings of one office still match; the parse is discarded after the merge."""
         result = set()
@@ -106,7 +106,7 @@ def merge_weak_tie_groups_within_llm(
         return result
 
     weak_keys = [k for k in groups if is_last_name_only(k)]
-    result: Dict[str, List[LLMPersonRecord]] = dict(groups)
+    result: Dict[str, List[PersonRecord]] = dict(groups)
 
     for wk in weak_keys:
         if wk not in result:
@@ -128,7 +128,7 @@ def merge_weak_tie_groups_within_llm(
     return result
 
 
-def get_source_urls(person_records: list[LLMPersonRecord], person: Person) -> list:
+def get_source_urls(person_records: list[PersonRecord], person: Person) -> list:
     """
     For each unique value in the merged fields, include the source_url of the record that contributed it.
     Only one source_url per unique value, tiebreaking by first record.
@@ -165,11 +165,11 @@ def merge_llm_people_to_person(
     logger: log_utils.PipelineRunLogger,
     taxonomy: Taxonomy,
     canonical_name: str,
-    records: List[LLMPersonRecord],
+    records: List[PersonRecord],
     jurisdiction_ocdid: str,
 ) -> Person:
     """
-    Merge a list of LLMPersonRecord objects into a single Person object.
+    Merge a list of PersonRecord objects into a single Person object.
     """
     # Normalize records
     records = [normalize_record(logger, r) for r in records]

@@ -132,6 +132,43 @@ class Official(BaseModel):
         return v
 
 
+class ExtractedPerson(BaseModel):
+    """One person as a page yielded them, before anyone says where the page was.
+
+    Deliberately holds nothing the extractor could not have read off the page. It is passed
+    to the model as a structured-output schema, so a `source_url` here would be an invitation
+    to invent a plausible one — provenance comes from whoever genuinely has it.
+
+    One record per label, verbatim. Not decomposed into role + designation: cp.org owns that,
+    and splitting here loses which went with which.
+    """
+
+    name: str
+    label: str
+
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    url: Optional[str] = None
+
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    image: Optional[str] = None
+
+
+class PersonRecord(ExtractedPerson):
+    """One sighting, stamped with the page it came from.
+
+    The unit that crosses the pipeline/cp.org boundary. Several may describe one person —
+    reconciling them is cp.org's job, because that is where the taxonomy, the role priorities
+    and the known people live.
+
+    No "LLM" in the name on purpose: the pipeline could swap extraction for a DOM parser and
+    the boundary contract should not change, or become a lie.
+    """
+
+    source_url: str
+
+
 class Person(BaseModel):
     model_config = ConfigDict(extra="allow")
 

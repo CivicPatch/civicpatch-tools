@@ -16,7 +16,7 @@ from eval_utils import (
 )
 from runners.people_collector.schemas import (
     PeopleArrayLLMResponseSchema,
-    RawLLMPersonRecord,
+    ExtractedPerson,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import municipality_officials_prompt
@@ -95,7 +95,7 @@ async def _run_single_case(model_client, case, ocdid):
 
     _PROGRESS[name][0] += 1
     _progress(name, f"done   {case['id']} in {time.time() - started:.1f}s")
-    expected = [RawLLMPersonRecord(**person) for person in case["expected"]["people"]]
+    expected = [ExtractedPerson(**person) for person in case["expected"]["people"]]
     actual = cast(PeopleArrayLLMResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
     with open(

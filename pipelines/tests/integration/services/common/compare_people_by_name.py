@@ -1,12 +1,12 @@
 from typing import List
 
-from runners.people_collector.schemas import RawLLMPersonRecord
+from runners.people_collector.schemas import ExtractedPerson
 from utils.merge_utils import same_name
 
 
 def compare_people_by_name(
-    people_found: List[RawLLMPersonRecord],
-    expected_people: List[RawLLMPersonRecord],
+    people_found: List[ExtractedPerson],
+    expected_people: List[ExtractedPerson],
     ignore_fields: List[str] = None,
 ):
     """Helper to compare two lists of people by name, ignoring order, fields, and case.

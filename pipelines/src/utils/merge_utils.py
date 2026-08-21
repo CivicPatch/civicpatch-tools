@@ -6,7 +6,7 @@ from domain.models import Person
 from Levenshtein import distance as levenshtein_distance
 from nameparser import HumanName
 from runners.people_collector.schemas import (
-    LLMPersonRecord,
+    PersonRecord,
     OtherNamesByCanonicalName,
     PeopleByName,
 )
@@ -185,7 +185,7 @@ def find_indexed_name(
 
 
 def append_to_people_by_name(
-    people_by_name: PeopleByName, indexed_name: str, people_list: List[LLMPersonRecord]
+    people_by_name: PeopleByName, indexed_name: str, people_list: List[PersonRecord]
 ) -> PeopleByName:
     """
     Return an updated people_by_name with the new people appended.
@@ -200,8 +200,8 @@ def append_to_people_by_name(
 def group_people_by_name(
     known_mappings: Dict[str, List[str]],
     people_by_name: PeopleByName,
-    people_to_link: List[LLMPersonRecord],
-) -> Dict[str, List[LLMPersonRecord]]:
+    people_to_link: List[PersonRecord],
+) -> Dict[str, List[PersonRecord]]:
     """
     Group people by name, preserving known mappings and adding new people to the appropriate groups.
     """
@@ -277,8 +277,8 @@ def office_keys(labels: set[str], taxonomy: Taxonomy) -> set[str]:
 
 def is_weakly_tied(
     identity_names: Dict[str, List[str]],
-    record1: LLMPersonRecord | Person,
-    record2: LLMPersonRecord | Person,
+    record1: PersonRecord | Person,
+    record2: PersonRecord | Person,
     taxonomy: Taxonomy,
     logger: PipelineRunLogger,
 ) -> bool:
