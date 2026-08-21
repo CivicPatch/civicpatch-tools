@@ -150,6 +150,9 @@ async def list_for_jurisdiction(
         """
         SELECT p.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
                p.label, p.headcount,
+               -- Joined so a consumer can render a roster without also fetching the taxonomy.
+               -- Inner join is safe: role_id is a non-null FK to roles.
+               r.label AS role_label,
                -- Not as-of filtered: winding the clock back does not un-vouch a post.
                count(m.id) > 0 AS verified,
                count(m.id) FILTER (
@@ -163,9 +166,10 @@ async def list_for_jurisdiction(
                    WHERE m.last_seen_at < COALESCE(%(as_of)s::date + 1, now())
                ) AS last_seen_at
         FROM posts p
+        JOIN roles r ON r.id = p.role_id
         LEFT JOIN memberships m ON m.post_id = p.id
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-        GROUP BY p.id
+        GROUP BY p.id, r.label
         ORDER BY p.role_id, p.division_ocdid
         """,
         {"as_of": as_of, "jurisdiction_ocdid": jurisdiction_ocdid},

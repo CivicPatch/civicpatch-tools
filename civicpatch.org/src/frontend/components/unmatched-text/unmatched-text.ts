@@ -1,6 +1,7 @@
 import "./unmatched-text.css";
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
+import { component } from "haunted";
+import { useAsyncData } from "../../hooks/use-async-data.js";
 import { fetchUnmatchedText } from "../../api.js";
 
 // What the triage endpoint returns per row. `text` is the source's own spelling — the most
@@ -29,14 +30,10 @@ const countLabel = (count: number, noun: string) =>
   `${count} ${noun}${count === 1 ? "" : "s"}`;
 
 function UnmatchedText() {
-  const [terms, setTerms] = useState<UnmatchedTerm[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchUnmatchedText()
-      .then((body) => setTerms(body.data.unmatched_text))
-      .catch((cause) => setError(String(cause)));
-  }, []);
+  const { data: terms, error } = useAsyncData<UnmatchedTerm[]>(
+    () => fetchUnmatchedText().then((body) => body.data.unmatched_text),
+    [],
+  );
 
   if (error) {
     return html`<p class="unmatched-text__error">Could not load unmatched text: ${error}</p>`;
