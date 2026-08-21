@@ -1,0 +1,304 @@
+"""Collapsing one person's records into one `Person`.
+
+Which records land in a group is `test_reconcile.py`; this is what happens once they have.
+"""
+
+from unittest.mock import MagicMock
+
+from shared.schemas import Person, PersonRecord, Role, RoleConfig
+from shared.utils.reconcile import (
+    get_source_urls,
+    merge_field,
+    merge_labels,
+    merge_records_to_person,
+    merge_weak_tie_groups,
+    normalize_record,
+)
+from shared.utils.taxonomy import build_taxonomy
+
+ROLE_CONFIG = RoleConfig(
+    roles=[
+        Role(id="mayor", label="Mayor", is_unique=True),
+        Role(id="mayor-pro-tempore", label="Mayor Pro Tempore", is_unique=True),
+        Role(id="council-member", label="Council Member"),
+        Role(id="commissioner", label="Commissioner"),
+        Role(id="treasurer", label="Treasurer", is_unique=True),
+    ]
+)
+
+
+def make_llm_person(name, label="", phone=None, email=None, url=None, source_url=None):
+    return PersonRecord(
+        name=name,
+        label=label,
+        phone=phone,
+        email=email,
+        url=url,
+        start_date=None,
+        end_date=None,
+        image=None,
+        source_url=source_url or f"http://source-{name.replace(' ', '').lower()}.com",
+    )
+
+
+def _normalize(record: PersonRecord) -> PersonRecord:
+    return normalize_record(MagicMock(), record)
+
+
+# --- field mergers ---
+
+
+def test_merge_field():
+    """Test merging single value fields"""
+    result = merge_field(["555-1234", "555-1234"])
+    assert result == "555-1234"
+
+
+def test_merge_labels():
+    """One label per record, so merging is deduplication across the group."""
+    p1 = make_llm_person("Sam", label="Council Member - Ward 1")
+    p2 = make_llm_person("Sam", label="Mayor")
+    p3 = make_llm_person("Sam", label="Council Member - Ward 1")
+    result = merge_labels([p1, p2, p3])
+    assert set(result) == {"Council Member - Ward 1", "Mayor"}
+
+
+def test_merge_labels_skips_empty():
+    p1 = make_llm_person("Dana", label="")
+    p2 = make_llm_person("Dana", label="Ward 2")
+    assert merge_labels([p1, p2]) == ["Ward 2"]
+
+
+# --- normalize_record ---
+
+
+def test_normalize_record_strips_whitespace_from_email():
+    record = PersonRecord(
+        name="John Doe",
+        label="mayor",
+        phone=None,
+        email="john @example.com",
+        url=None,
+        source_url="test",
+    )
+    assert _normalize(record).email == "john@example.com"
+
+
+def test_normalize_record_strips_internal_whitespace_from_email():
+    record = PersonRecord(
+        name="John Doe",
+        label="mayor",
+        phone=None,
+        email="john@ example .com",
+        url=None,
+        source_url="test",
+    )
+    assert _normalize(record).email == "john@example.com"
+
+
+def test_normalize_record_moves_url_from_email_to_url_when_url_empty():
+    record = PersonRecord(
+        name="John Doe",
+        label="mayor",
+        phone=None,
+        email="https://example.com/contact",
+        url=None,
+        source_url="test",
+    )
+    result = _normalize(record)
+    assert result.email is None
+    assert result.url == "https://example.com/contact"
+
+
+def test_normalize_record_clears_url_from_email_when_url_already_set():
+    record = PersonRecord(
+        name="John Doe",
+        label="mayor",
+        phone=None,
+        email="https://example.com/contact-form",
+        url="https://example.com/bio",
+        source_url="test",
+    )
+    result = _normalize(record)
+    assert result.email is None
+    assert result.url == "https://example.com/bio"
+
+
+def test_normalize_record_with_compound_phone_takes_first():
+    record = PersonRecord(
+        name="Alice Boroughman",
+        label="mayor",
+        phone="856-358-2509 or 856-358-4010 Ext. 112",
+        email=None,
+        url=None,
+        source_url="http://example.com",
+    )
+    assert _normalize(record).phone == "(856) 358-2509"
+
+
+# --- merge_records_to_person ---
+
+
+def test_merge_records_to_person():
+    p1 = make_llm_person(
+        name="Eve",
+        label="Council Member - Ward 5",
+        phone="(956) 943-2682",
+        email="eve@city.org",
+        source_url="http://source1.com",
+    )
+    p2 = make_llm_person(
+        name="Eve",
+        label="Treasurer - Ward 6",
+        phone="(956) 943-2682",
+        email="eve@city.org",
+        source_url="http://source2.com",
+    )
+    result = merge_records_to_person(MagicMock(), "Eve", [p1, p2], "jurisdiction_id")
+
+    assert result.name == "Eve"
+    assert set(result.labels) == {"Council Member - Ward 5", "Treasurer - Ward 6"}
+    assert set(result.phones) == {"(956) 943-2682"}
+    assert set(result.emails) == {"eve@city.org"}
+    assert set(result.source_urls) == {"http://source1.com", "http://source2.com"}
+    assert result.jurisdiction_ocdid == "jurisdiction_id"
+
+
+# --- get_source_urls ---
+
+
+def test_get_source_urls_filters_by_unique_contribution():
+    r1 = PersonRecord(
+        name="Robert Kubert",
+        label="Mayor - Ward 1",
+        phone=None,
+        email=None,
+        url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
+        start_date=None,
+        end_date=None,
+        image=None,
+        source_url="https://www.bayonnenj.org/r1",
+    )
+    r2 = PersonRecord(
+        name="Robert Kubert",
+        label="Council Member - Ward 2",
+        phone="555-0002",
+        email="mayor2@bayonne.org",
+        url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
+        start_date=None,
+        end_date=None,
+        image=None,
+        source_url="https://www.bayonnenj.org/r2",
+    )
+    r3 = PersonRecord(
+        name="Robert Kubert",
+        label="Mayor - Ward 1",
+        phone=None,
+        email=None,
+        url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
+        start_date=None,
+        end_date=None,
+        image=None,
+        source_url="https://www.bayonnenj.org/r3",
+    )
+
+    person = Person(
+        name="Robert Kubert",
+        labels=["Mayor - Ward 1", "Council Member - Ward 2"],
+        phones=["555-0002"],
+        emails=["mayor2@bayonne.org"],
+        urls=["https://www.bayonnenj.org/officials/bio/mayor-robert-kubert"],
+        jurisdiction_ocdid="test_ocdid",
+        source_urls=[],
+        updated_at="",
+    )
+
+    result = get_source_urls([r1, r2, r3], person)
+    assert set(result) == {
+        "https://www.bayonnenj.org/r1",
+        "https://www.bayonnenj.org/r2",
+    }
+
+
+# --- merge_weak_tie_groups ---
+
+
+class TestMergeWeakTieGroups:
+    def test_merges_by_last_name_and_role(self):
+        """Last-name-only canonical merges into full-name canonical with same role."""
+        groups = {
+            "Lindamood": [make_llm_person("Lindamood", label="mayor")],
+            "Bobby Lindamood": [
+                make_llm_person("Bobby Lindamood", label="mayor", email="b@city.gov")
+            ],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Lindamood" not in result
+        assert "Bobby Lindamood" in result
+        assert len(result["Bobby Lindamood"]) == 2
+
+    def test_merges_by_last_name_role_and_designation(self):
+        """Last-name-only canonical merges when role AND designation match."""
+        groups = {
+            "Elder": [make_llm_person("Elder", label="mayor pro tempore - place 1")],
+            "Brandi Elder": [
+                make_llm_person(
+                    "Brandi Elder",
+                    label="mayor pro tempore - place 1",
+                )
+            ],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Elder" not in result
+        assert len(result["Brandi Elder"]) == 2
+
+    def test_no_merge_when_role_differs(self):
+        """Same last name but different roles — must not merge."""
+        groups = {
+            "Smith": [make_llm_person("Smith", label="mayor")],
+            "John Smith": [make_llm_person("John Smith", label="council member")],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Smith" in result
+        assert "John Smith" in result
+
+    def test_no_merge_when_designation_differs(self):
+        """Same last name and role but different designation — must not merge."""
+        groups = {
+            "Smith": [make_llm_person("Smith", label="council member - place 2")],
+            "John Smith": [
+                make_llm_person("John Smith", label="council member - place 4")
+            ],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Smith" in result
+
+    def test_no_merge_when_no_roles(self):
+        """Last-name-only group with no roles is not merged."""
+        groups = {
+            "Smith": [make_llm_person("Smith")],
+            "John Smith": [make_llm_person("John Smith", label="mayor")],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Smith" in result
+
+    def test_full_name_groups_not_treated_as_weak(self):
+        """Two full-name groups sharing a last name are not merged."""
+        groups = {
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", label="mayor")],
+            "Marty D Smith Sr": [
+                make_llm_person("Marty D Smith Sr", label="council member")
+            ],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert len(result) == 2
+
+    def test_suffix_does_not_confuse_last_name_extraction(self):
+        """A last-name-only group still resolves correctly against a suffixed full name."""
+        groups = {
+            "Smith": [make_llm_person("Smith", label="mayor")],
+            "Marty C Smith Jr": [make_llm_person("Marty C Smith Jr", label="mayor")],
+        }
+        result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
+        assert "Smith" not in result
+        assert len(result["Marty C Smith Jr"]) == 2

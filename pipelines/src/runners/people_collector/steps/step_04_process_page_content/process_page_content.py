@@ -36,7 +36,8 @@ from shared.utils import (
     id_utils,
     url_utils,
 )
-from utils import log_utils, merge_utils
+from shared.utils import merge_utils
+from utils import log_utils
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 
