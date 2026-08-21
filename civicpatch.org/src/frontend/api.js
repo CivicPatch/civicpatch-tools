@@ -182,6 +182,46 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
+export const fetchPosts = async (jurisdictionOcdid, asOf = null) => {
+  const query = asOf ? `?as_of=${asOf}` : "";
+  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}${query}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchMemberships = async (jurisdictionOcdid) => {
+  const res = await fetch(`${API_URL}/api/v1/memberships/${jurisdictionOcdid}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const createPost = async (jurisdictionOcdid, body) => {
+  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify(body),
+  });
+  if (res.status === 409) throw new Error("That role and division already has a post.");
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const updatePost = async (postId, { label, headcount }) => {
+  const res = await fetch(`${API_URL}/api/v1/posts/${postId}`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ label, headcount }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchUnmatchedText = async () => {
   const res = await fetch(`${API_URL}/api/v1/memberships/unmatched`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

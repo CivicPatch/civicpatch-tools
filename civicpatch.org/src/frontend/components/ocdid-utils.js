@@ -4,20 +4,23 @@ import {
   PLACE_LABEL,
 } from "./edit-people/person-edit-utils.ts";
 
+/** The last segment of a division ocdid, split into its designation and value.
+ *
+ * "ocd-division/country:us/state:wa/place:x/ward:3" -> { key: "ward", value: "3" }
+ *
+ * One place, because renderers disagree about presentation but not about parsing:
+ * `divisionOcdidToFriendly` wants a compact badge, `divisionName` a row heading.
+ */
+export const parseDivision = (division_ocdid) => {
+  const tail = division_ocdid?.split("/").pop() ?? "";
+  const [key = "", value = ""] = tail.split(":");
+  return { key, value };
+};
+
 export const divisionOcdidToFriendly = (division_ocdid) => {
   if (!division_ocdid) return "";
 
-  const parts = division_ocdid.split("/");
-  const lastPart = parts[parts.length - 1];
-
-  let [label, value] = ["", ""];
-
-  try {
-    [label, value] = lastPart.split(":");
-  } catch (error) {
-    console.error("Error parsing division_ocdid:", error);
-    return "";
-  }
+  const { key: label, value } = parseDivision(division_ocdid);
 
   switch (label) {
     case DIVISION_COUNCIL_DISTRICT:

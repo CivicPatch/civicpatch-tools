@@ -1,4 +1,5 @@
 import { component, useState, useEffect } from "haunted";
+import "../../components/posts-list/posts-list.js";
 import { html, nothing } from "lit-html";
 import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -226,6 +227,14 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         .blockedReason=${editingBlockedReason(peopleBlockers)}
         .onPublished=${() => window.location.reload()}
       ></civ-officials-editor>
+
+      <section class="jurisdiction-section">
+        <h2>Posts</h2>
+        <civ-posts-list
+          .jurisdictionOcdid=${jurisdiction_ocdid}
+          .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
+        ></civ-posts-list>
+      </section>
 
       ${renderDetailsSection(
         jurisdictionData,

@@ -1,0 +1,144 @@
+/* The roster by post: every office a jurisdiction has, grouped under its role. */
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Role groups */
+
+.posts-list__role {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.posts-list__role-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.posts-list__role-name {
+    font-size: var(--text-md);
+    color: var(--civ-text);
+    margin: 0;
+}
+
+.posts-list__capacity {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    white-space: nowrap;
+}
+
+/* Post rows */
+
+.posts-list__posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.posts-list__post {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.posts-list__division {
+    font-size: var(--text-sm);
+    color: var(--civ-text);
+    min-width: 9rem;
+}
+
+.posts-list__key {
+    font-family: var(--pico-font-family-monospace);
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    min-width: 8rem;
+}
+
+.posts-list__holders {
+    font-size: var(--text-sm);
+    color: var(--civ-text);
+    flex: 1;
+}
+
+/* An office nobody holds is a real answer, not missing data — muted, not hidden. */
+.posts-list__vacant {
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+    font-style: italic;
+    flex: 1;
+}
+
+.posts-list__edit {
+    font-size: var(--text-xs);
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--pico-primary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.posts-list__post--editing {
+    display: block;
+}
+
+/* Anomalies */
+
+.posts-list__over {
+    font-size: var(--text-xs);
+    color: var(--pico-del-color);
+    white-space: nowrap;
+}
+
+/* Unverified means a scrape proposed it and no person has confirmed it. */
+.posts-list__unverified {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    white-space: nowrap;
+}
+
+/* States */
+
+.posts-list__empty,
+.posts-list__error {
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+}
+
+.posts-list__error {
+    color: var(--pico-del-color);
+}
+
+/* Editing one post — label and headcount, the two fields a person owns. */
+
+.post-edit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.6rem;
+    padding: 0.5rem 0 0.75rem;
+}
+
+.post-edit__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.post-edit__label {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+}
+
+.post-edit__actions {
+    display: flex;
+    gap: 0.4rem;
+}
