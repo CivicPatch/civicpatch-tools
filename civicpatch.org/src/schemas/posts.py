@@ -28,3 +28,18 @@ class UpdatePostRequest(BaseModel):
 
     label: str | None = None
     headcount: int = Field(default=1, gt=0)
+
+
+class AssignMembershipRequest(BaseModel):
+    """Seat a person, moving them off any other seat in the same body.
+
+    No `organization_id`: it comes from the post, so a request cannot name a mismatched pair.
+
+    No "what happened?" flag either — this is always a transition. Correction (they were never
+    in the old seat) needs `field_overrides` first, and offering it before then would let a
+    curator believe they fixed history when the next scrape will undo it.
+    """
+
+    person_id: str
+    post_id: str
+    label: str | None = None

@@ -1,66 +1,20 @@
 """Database queries for `posts` — a seat-type within a body.
 
-Identity is the parsed triple `(organization_id, role_id, division_ocdid)` and nothing else.
-No free text is in the key, so nothing a human types can fork a post: renaming one cannot
-make the next scrape miss it.
+Identity is the triple `(organization_id, role_id, division_ocdid)`. No free text is in the
+key, so renaming a post cannot make the next scrape miss it.
 
-MINT-ONLY WRITES, absolutely. `record` sets a post's columns when it creates one and writes
-nothing at all when it matches one — a match is a pure lookup. That is what keeps `label` and
-`headcount` human-owned with no lock table: there is no update path to lose them through.
+Derivation writes are mint-only: matching a post writes nothing. That is the whole of what
+keeps `label` and `headcount` human-owned — there is no update path to lose them through.
 
-Whether a human vouched for a post is not stored either — 121 dropped `status` for it.
-Memberships are written only at publish, and publishing is a named human act, so a post with
-any member was endorsed by a person and one without was only ever proposed by a scrape.
-
-"When did a scrape last produce this post" is not stored, because it is
-`MAX(memberships.last_seen_at)` — a post is produced exactly when somebody parses into it,
-and that same pass stamps their membership.
+Cursor-taking functions compose inside the publish transaction; the connection-owning ones at
+the bottom serve the roster screen, and reach `label` and `headcount` where nothing else does.
 """
 
+from datetime import date
 
-async def find_or_create(
-    cur,
-    jurisdiction_ocdid: str,
-    organization_id: str,
-    role_id: str,
-    division_ocdid: str,
-    headcount: int = 1,
-) -> str:
-    """Make sure this post exists. Returns its id, minted or matched.
-
-    A minted post is unvouched-for, and nothing records that — it follows from having no
-    members, since memberships are written only at publish. 121 dropped the `status` column
-    that used to say it, along with the promotion path that never existed to change it.
-
-    `headcount` applies only on mint. A later scrape finding a different number of people must
-    not overwrite a figure somebody typed — which is why the count cannot simply be recomputed
-    on every pass.
-
-    `DO NOTHING` means a match writes nothing, so the SELECT below is not a fallback for a
-    rare case: it is the normal path every time a post already exists.
-    """
-    await cur.execute(
-        """
-        INSERT INTO posts
-            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount)
-        VALUES (%s, %s, %s, %s, %s)
-        ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
-        RETURNING id::text
-        """,
-        (jurisdiction_ocdid, organization_id, role_id, division_ocdid, headcount),
-    )
-    minted = await cur.fetchone()
-    if minted:
-        return minted[0]
-
-    await cur.execute(
-        """
-        SELECT id::text FROM posts
-        WHERE organization_id = %s AND role_id = %s AND division_ocdid = %s
-        """,
-        (organization_id, role_id, division_ocdid),
-    )
-    return (await cur.fetchone())[0]
+from core.post_grouping import group_by_organization, mark_verified
+from database import divisions, organizations
+from database.database import get_pool
 
 
 async def create_if_absent(
@@ -72,11 +26,10 @@ async def create_if_absent(
     label: str | None = None,
     headcount: int = 1,
 ) -> str | None:
-    """Insert a post, or return None if the identity triple is already taken.
+    """Insert a post, or None if the triple is taken. The only INSERT in this module.
 
-    A person asserting a seat exists, where `find_or_create` is a scrape proposing one — same
-    row, and the only mechanical difference is the return: this caller has to tell "created"
-    from "already there" apart to answer 409.
+    `label` and `headcount` land only here, on mint — a later scrape must not overwrite what
+    somebody typed, which is why neither is ever recomputed.
     """
     await cur.execute(
         """
@@ -99,14 +52,45 @@ async def create_if_absent(
     return row[0] if row else None
 
 
+async def find_or_create(
+    cur,
+    jurisdiction_ocdid: str,
+    organization_id: str,
+    role_id: str,
+    division_ocdid: str,
+    headcount: int = 1,
+) -> str:
+    """Make sure this post exists. Returns its id, minted or matched.
+
+    The scrape's way in, where `create_if_absent` is a person's: a match is not an error to
+    report, so the lookup below is the normal path, not a fallback. No `label` — only a person
+    names a seat.
+    """
+    minted = await create_if_absent(
+        cur,
+        jurisdiction_ocdid,
+        organization_id,
+        role_id,
+        division_ocdid,
+        headcount=headcount,
+    )
+    if minted:
+        return minted
+
+    await cur.execute(
+        """
+        SELECT id::text FROM posts
+        WHERE organization_id = %s AND role_id = %s AND division_ocdid = %s
+        """,
+        (organization_id, role_id, division_ocdid),
+    )
+    return (await cur.fetchone())[0]
+
+
 async def update_human_fields(
     cur, post_id: str, label: str | None, headcount: int
 ) -> bool:
-    """Set the two columns a person owns. Returns whether the post existed.
-
-    The only update path that touches a post. Derivation is mint-only precisely so this is the
-    only thing that can reach `label` and `headcount`.
-    """
+    """Set the two columns a person owns. The only update path to a post."""
     await cur.execute(
         "UPDATE posts SET label = %s, headcount = %s WHERE id::text = %s",
         (label, headcount, post_id),
@@ -117,13 +101,8 @@ async def update_human_fields(
 async def delete_if_unheld(cur, post_id: str) -> bool:
     """Remove a post nobody has ever held. Returns whether it went.
 
-    A post with no memberships was proposed by a scrape and endorsed by no one — the same
-    condition that reads as unverified. Deleting it is what "a person clears them" meant in the
-    no-auto-delete decision.
-
-    A post *with* memberships is history, including closed ones, and refusing here is what
-    keeps the roster timeline answerable. The FK would refuse anyway; this makes it a 409
-    rather than a 500.
+    A post with memberships is history, closed ones included, and stays. The FK would refuse
+    anyway; this makes it a 409 rather than a 500.
     """
     await cur.execute(
         """
@@ -136,24 +115,57 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     return cur.rowcount > 0
 
 
-async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    """Every post in a jurisdiction with its current holder count — the roster read."""
+async def get(cur, post_id: str) -> dict | None:
+    """One post by id, or None. `assign` takes the organization from here, never from the
+    caller, so a request cannot name a mismatched pair."""
+    await cur.execute(
+        """
+        SELECT id::text, jurisdiction_ocdid, organization_id::text, role_id, division_ocdid,
+               label, headcount
+        FROM posts WHERE id::text = %s
+        """,
+        (post_id,),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        return None
+    return dict(zip([c.name for c in cur.description or []], row))
+
+
+async def list_for_jurisdiction(
+    cur, jurisdiction_ocdid: str, as_of: date | None = None
+) -> list[dict]:
+    """Every post in a jurisdiction with the people holding it. `as_of` is None for now.
+
+    A date means the *end* of that day, so `as_of=today` agrees with the default; midnight
+    would drop everything observed this morning.
+
+    Transaction time — "who did the source list then", not "who held office". Posts are not
+    dated, so one minted last week still appears in a June query, with no holders.
+    """
     await cur.execute(
         """
         SELECT p.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
                p.label, p.headcount,
-               -- Endorsed by a person, not merely proposed by a scrape: memberships are
-               -- written only at publish, and publishing is a named human act.
+               -- Not as-of filtered: winding the clock back does not un-vouch a seat.
                count(m.id) > 0 AS verified,
-               count(m.id) FILTER (WHERE m.closed_at IS NULL) AS holders,
-               max(m.last_seen_at) AS last_seen_at
+               count(m.id) FILTER (
+                   WHERE m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
+                     AND (m.closed_at IS NULL
+                          OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
+               ) AS holders,
+               -- Gated on its own timestamp: an April read must not report a May sighting.
+               -- Errs toward NULL, since only the newest observation per row is kept.
+               max(m.last_seen_at) FILTER (
+                   WHERE m.last_seen_at < COALESCE(%(as_of)s::date + 1, now())
+               ) AS last_seen_at
         FROM posts p
         LEFT JOIN memberships m ON m.post_id = p.id
-        WHERE p.jurisdiction_ocdid = %s
+        WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
         GROUP BY p.id
         ORDER BY p.role_id, p.division_ocdid
         """,
-        (jurisdiction_ocdid,),
+        {"as_of": as_of, "jurisdiction_ocdid": jurisdiction_ocdid},
     )
     columns = [column.name for column in cur.description or []]
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
@@ -162,14 +174,8 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
 async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
     """Posts a person once endorsed that no scrape has produced since `cutoff`.
 
-    Previously filtered `status = 'active'`, which no post ever held — `find_or_create` minted
-    `candidate` and nothing promoted it, so this could never return a row. 121 dropped the
-    column; the HAVING now carries the whole condition.
-
-    A post with no memberships is excluded by that HAVING, which is the same test as "was it
-    ever endorsed": nothing has been seen in it, so it cannot have stopped being seen. That
-    also excludes every post in a jurisdiction awaiting its first publish — correctly, since
-    a seat nobody has confirmed is not absent, only unconfirmed.
+    The HAVING drops never-endorsed posts: nothing was seen in them, so they cannot have
+    stopped being seen. A seat nobody has confirmed is unconfirmed, not absent.
     """
     await cur.execute(
         """
@@ -186,3 +192,56 @@ async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
     )
     columns = [column.name for column in cur.description or []]
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
+async def list_by_organization(
+    jurisdiction_ocdid: str, as_of: date | None = None
+) -> list[dict]:
+    """Every body in a jurisdiction with its posts. `as_of` selects holders; None is now."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_rows = await organizations.list_for_jurisdiction(
+            cur, jurisdiction_ocdid
+        )
+        post_rows = await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
+    return group_by_organization(organization_rows, mark_verified(post_rows))
+
+
+async def create(
+    jurisdiction_ocdid: str,
+    role_id: str,
+    division_ocdid: str,
+    label: str | None,
+    headcount: int,
+) -> str | None:
+    """A person asserting a seat exists. Returns its id, or None if it already did.
+
+    Organization and division are found-or-created on the way — a division exists because a
+    post needs it, never on its own.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+        await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
+        return await create_if_absent(
+            cur,
+            jurisdiction_ocdid,
+            organization_id,
+            role_id,
+            division_ocdid,
+            label=label,
+            headcount=headcount,
+        )
+
+
+async def update(post_id: str, label: str | None, headcount: int) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await update_human_fields(cur, post_id, label, headcount)
+
+
+async def delete(post_id: str) -> bool:
+    """Remove a post nobody has held. False means it has members, or does not exist."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await delete_if_unheld(cur, post_id)
