@@ -63,16 +63,13 @@ def _reconcile(rows: list[dict], identities=None):
 
 @pytest.mark.unit
 def test_no_rows_is_not_an_error():
-    assert _reconcile([]) == ([], [])
+    assert _reconcile([]) == []
 
 
 @pytest.mark.unit
 def test_officials_pass_through_untouched():
     """The shape the pipeline still sends. Nothing is reconciled — it already was."""
-    kept, excluded = _reconcile(
-        [_official("Ann Lee", "Council Member Place 2", f"{BASE}/ward:east")]
-    )
-    assert excluded == []
+    kept = _reconcile([_official("Ann Lee", "Council Member Place 2", f"{BASE}/ward:east")])
     assert kept[0]["office"]["name"] == "Council Member Place 2"
     assert kept[0]["office"]["division_ocdid"] == f"{BASE}/ward:east"
 
@@ -83,13 +80,13 @@ def test_a_field_official_does_not_model_survives_the_passthrough():
     Validating a row on the way through would drop every one of them."""
     row = _official("Ann Lee", "Mayor")
     row["some_field_we_do_not_model"] = "keep me"
-    kept, _ = _reconcile([row])
+    kept = _reconcile([row])
     assert kept[0]["some_field_we_do_not_model"] == "keep me"
 
 
 @pytest.mark.unit
 def test_two_sightings_of_one_person_become_one_official():
-    kept, _ = _reconcile(
+    kept = _reconcile(
         [
             _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100"),
             _record("Ann Lee", "Mayor Pro-Tem", email="ann@alpha.gov"),
@@ -108,7 +105,7 @@ def test_two_sightings_of_one_person_become_one_official():
 def test_the_rendered_office_name_splits_back_into_its_labels():
     """The join is lossy but reversible by the same delimiter every reader already uses, so
     a consumer still speaking `Official` sees what a record-shaped one would."""
-    kept, _ = _reconcile(
+    kept = _reconcile(
         [
             _record("Ann Lee", "Council Member Place 2"),
             _record("Ann Lee", "Mayor Pro-Tem"),
@@ -123,23 +120,23 @@ def test_the_rendered_office_name_splits_back_into_its_labels():
 def test_the_division_comes_back_out_of_the_verbatim_label():
     """The property that made it safe to stop passing `division_ocdid` separately: a record's
     label is untouched, so it still names the area."""
-    kept, _ = _reconcile([_record("Ann Lee", "Council Member (East Ward)")])
+    kept = _reconcile([_record("Ann Lee", "Council Member (East Ward)")])
     assert kept[0]["office"]["division_ocdid"] == f"{BASE}/ward:east"
 
 
 @pytest.mark.unit
 def test_a_label_naming_no_area_gets_the_jurisdictions_own_division():
-    kept, _ = _reconcile([_record("Ann Lee", "Mayor")])
+    kept = _reconcile([_record("Ann Lee", "Mayor")])
     assert kept[0]["office"]["division_ocdid"] == BASE
 
 
 @pytest.mark.unit
-def test_a_person_whose_labels_resolve_to_no_role_is_excluded_not_dropped():
-    """The pipeline discarded these before the wire. They survive it now so triage can see
-    somebody was found that nothing in the taxonomy classifies."""
-    kept, excluded = _reconcile([_record("Ann Lee", "City Attorney")])
-    assert [p["name"] for p in kept] == []
-    assert [p["name"] for p in excluded] == ["Ann Lee"]
+def test_a_person_no_role_matches_stays_on_the_roster():
+    """This used to drop them. The drop could not tell an out-of-scope title from one the
+    taxonomy is missing, and recorded neither — scope is `posts._is_tracked` now, decided when
+    the post is minted."""
+    kept = _reconcile([_record("Ann Lee", "City Attorney")])
+    assert [p["name"] for p in kept] == ["Ann Lee"]
 
 
 @pytest.mark.unit
@@ -151,7 +148,7 @@ def test_identities_keep_two_people_sharing_a_surname_apart():
         _record("Martin C. Cantu, Sr.", "Council Member Place 3"),
     ]
     identities = {"Martin Cantu, Jr.": [], "Martin C. Cantu, Sr.": []}
-    kept, _ = _reconcile(rows, identities)
+    kept = _reconcile(rows, identities)
     assert len(kept) == 2
 
 

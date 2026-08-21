@@ -13,7 +13,7 @@ gets *shorter* once cp.org reconciles, since it already holds what it would comp
 
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from shared.schemas import Person, PersonRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
@@ -201,11 +201,14 @@ def reconcile(
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> Tuple[List[Person], List[Person]]:
-    """Group a scrape's sightings into people. Returns (kept, excluded).
+) -> List[Person]:
+    """Group a scrape's sightings into people. Everyone seen comes back.
 
-    Excluded means no label resolved to a known role — the person was seen, but nothing in the
-    taxonomy claims what they are. Kept separate rather than dropped so triage can see them.
+    This used to drop anyone whose labels resolved to no known role. That could not tell an
+    out-of-scope title ("Police Chief") from an in-scope one the taxonomy is missing
+    ("Selectman"), and recorded neither — throwing away the one signal that is fixable once
+    for every jurisdiction at a time. Scope now lives on the post, as `posts._is_tracked`, where
+    it can differ per place: a clerk is elected in some towns and appointed in others.
     """
     canonical_map = name_utils.build_canonical_map(
         [{"name": r.name} for r in records], identities
@@ -217,17 +220,7 @@ def reconcile(
 
     groups = merge_weak_tie_groups(groups, taxonomy)
 
-    kept: List[Person] = []
-    excluded: List[Person] = []
-    for canonical_name, group in groups.items():
-        raw_labels = list({record.label for record in group if record.label})
-        person = merge_records_to_person(log, canonical_name, group, jurisdiction_ocdid)
-        if raw_labels and not any(
-            parse_label(label, taxonomy).role for label in person.labels
-        ):
-            log.info(f"Excluded {canonical_name}: no known role in {raw_labels}")
-            excluded.append(person)
-        else:
-            kept.append(person)
-
-    return kept, excluded
+    return [
+        merge_records_to_person(log, canonical_name, group, jurisdiction_ocdid)
+        for canonical_name, group in groups.items()
+    ]

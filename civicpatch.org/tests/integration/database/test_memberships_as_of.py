@@ -1,7 +1,11 @@
-"""Integration tests for `?as_of` on the posts read.
+"""Integration tests for `?as_of` on the memberships read — who held a post at a date.
 
-Real Postgres: the window is a `FILTER` over a partial-index-backed join, and the date
-arithmetic (`::date + 1`) is the thing under test.
+The window is the membership's own interval: open at `first_seen_at`, closed at `closed_at`.
+It lives here and not on the posts read, which is undated — a post is stable, so every one of
+them belongs in the answer whatever date is asked about.
+
+Real Postgres, because the date arithmetic (`::date + 1`, meaning the *end* of that day) and
+the half-open interval are the things under test.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -13,7 +17,7 @@ from datetime import date, datetime, timezone
 import pytest
 import pytest_asyncio
 
-from database import divisions, organizations, posts
+from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_asof/government"
@@ -94,11 +98,16 @@ async def _seed_succession() -> str:
     return post_id
 
 
-async def _holders(as_of: date | None) -> int:
+async def _rows_at(as_of: date | None) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID, as_of)
-    return rows[0]["holders"]
+        return await memberships.list_for_jurisdiction(cur, _OCDID, as_of)
+
+
+async def _holders(as_of: date | None) -> int:
+    """Occupancy is the number of memberships open at that moment — the posts read used to
+    send a count of its own, windowed on sightings rather than on the interval."""
+    return len(await _rows_at(as_of))
 
 
 @pytest.mark.asyncio
@@ -140,29 +149,30 @@ async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID, date(2026, 1, 1))
+        rows = await posts.list_for_jurisdiction(cur, _OCDID)
 
     assert len(rows) == 1
-    assert rows[0]["holders"] == 0
-    assert rows[0]["verified"] is True
+    assert await _holders(date(2026, 1, 1)) == 0
+    assert rows[0]["_is_verified"] is True
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_last_seen_at_does_not_report_from_the_future():
-    """A read that reports a sighting later than the date asked about is describing
-    observations that had not happened yet.
-
-    NULL is the honest answer when every sighting postdates the query: only the newest
-    observation per membership is kept, so the March–May tenure has no April sighting on
-    record even though it certainly was observed then.
-    """
+async def test_a_membership_carries_the_interval_it_was_selected_on():
+    """`as_of` filters on `first_seen_at`/`closed_at`, so a row has to show both — a reader
+    drawing a tenure must not have to infer its end from a sighting."""
     await _seed_succession()
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        during = await posts.list_for_jurisdiction(cur, _OCDID, date(2026, 4, 1))
-        after = await posts.list_for_jurisdiction(cur, _OCDID, date(2026, 6, 1))
+        rows = await memberships.list_for_jurisdiction(cur, _OCDID, date(2026, 4, 1))
 
-    assert during[0]["last_seen_at"] is None
-    assert after[0]["last_seen_at"] == _HANDOVER
+    outgoing = next(row for row in rows if row["person_name"] == "Outgoing")
+    assert outgoing["first_seen_at"] == _TOOK_OFFICE
+    assert outgoing["closed_at"] == _HANDOVER
+
+    open_now = await _rows_at(None)
+    incoming = next(row for row in open_now if row["person_name"] == "Incoming")
+    assert incoming["first_seen_at"] == _HANDOVER
+    assert incoming["closed_at"] is None
+

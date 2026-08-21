@@ -15,7 +15,7 @@ export interface AsyncData<T> {
  * answer is `@lit/task`, a ReactiveController with a `run()`; it is a separate dependency and
  * more than this needs. The stricter alternative is not to reload at all — apply the write's
  * result to local state — but that only works when the response carries everything the view
- * shows, and these reads compute fields (holders, `_verified`) that a write does not return.
+ * shows, and these reads compute fields (`_is_verified`) that a write does not return.
  */
 export function useAsyncData<T>(load: () => Promise<T>, deps: unknown[]): AsyncData<T> {
   const [data, setData] = useState<T | null>(null);

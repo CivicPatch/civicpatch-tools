@@ -20,14 +20,21 @@ class CreatePostRequest(BaseModel):
 
 
 class UpdatePostRequest(BaseModel):
-    """The two fields a person owns.
+    """The fields a person owns.
 
     Not `role_id` or `division_ocdid`: those are the post's identity, and changing either
     would silently make the next scrape mint a second post rather than match this one.
     """
 
     label: str | None = None
-    headcount: int = Field(default=1, gt=0)
+    # Underscored on the wire: no civic standard defines either of these, so a consumer
+    # dropping every `_*` key is left with a conforming record. The columns are plain — the
+    # distinction is about what we emit — so the alias is where it gets applied.
+    #
+    # Required, like the identity fields on create: this route replaces what it is given, and
+    # a default would let an omission silently re-track a post somebody turned off.
+    headcount: int = Field(alias="_headcount", gt=0)
+    is_tracked: bool = Field(alias="_is_tracked")
 
 
 class AssignMembershipRequest(BaseModel):

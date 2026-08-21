@@ -182,9 +182,10 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
-export const fetchPosts = async (jurisdictionOcdid, asOf = null) => {
-  const query = asOf ? `?as_of=${asOf}` : "";
-  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}${query}`, {
+// Undated: a post is not a temporal fact. Who holds one at a given moment is
+// `fetchMemberships`, which windows on when a membership opened and closed.
+export const fetchPosts = async (jurisdictionOcdid) => {
+  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -212,12 +213,19 @@ export const createPost = async (jurisdictionOcdid, body) => {
   return res.json();
 };
 
-export const updatePost = async (postId, { label, headcount }) => {
+export const updatePost = async (postId, { label, headcount, isTracked }) => {
   const res = await fetch(`${API_URL}/api/v1/posts/${postId}`, {
     method: "PATCH",
     credentials: "include",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ label, headcount }),
+    // `_is_tracked` is underscored on the wire: a post is a civic-data object and no
+    // standard models tracking, so a consumer dropping every `_*` key still has a conforming
+    // record. The route requires it — omitting it would silently re-track the post.
+    body: JSON.stringify({
+      label,
+      _headcount: headcount,
+      _is_tracked: isTracked,
+    }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

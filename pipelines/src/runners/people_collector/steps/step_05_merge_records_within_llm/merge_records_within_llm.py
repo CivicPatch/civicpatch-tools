@@ -32,7 +32,7 @@ def merge_records_within_llm(
         for record in group
     ]
 
-    kept, excluded = reconcile(
+    people = reconcile(
         records,
         context.data.research_municipality_step.identities,
         build_taxonomy(context.data.role_config),
@@ -40,4 +40,4 @@ def merge_records_within_llm(
         log_utils.get_pipeline_run_logger(jurisdiction_ocdid),
     )
 
-    return MergeRecordsWithinLLMStep(records=kept, excluded_people=excluded)
+    return MergeRecordsWithinLLMStep(records=people)

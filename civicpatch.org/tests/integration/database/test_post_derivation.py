@@ -114,13 +114,13 @@ async def test_a_match_never_overwrites_a_human_edit():
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "UPDATE posts SET label = %s, headcount = %s WHERE id = %s",
+            "UPDATE posts SET label = %s, _headcount = %s WHERE id = %s",
             ("Councillors", 9, post_id),
         )
         await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "SELECT label, headcount FROM posts WHERE id = %s", (post_id,)
+            "SELECT label, _headcount FROM posts WHERE id = %s", (post_id,)
         )
         assert await cur.fetchone() == ("Councillors", 9)
         await conn.rollback()
@@ -194,6 +194,25 @@ async def test_close_absent_ignores_an_empty_roster():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_close_absent_closes_an_untracked_posts_membership_too():
+    """`closed_at` is transaction time — it records that we stopped seeing someone, not that
+    they left, so it is true of an untracked post as much as a tracked one. `_is_tracked`
+    gates whether anyone is asked to look, which is the review queue, not the record."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await memberships.record(cur, person_id, post_id, org, _T0)
+        await cur.execute("UPDATE posts SET _is_tracked = false WHERE id = %s", (post_id,))
+
+        assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_last_seen_at_is_derived_from_memberships():
     """The column was dropped from `posts`: a post is produced exactly when somebody parses
     into it, so the answer is MAX over its memberships."""
@@ -204,9 +223,6 @@ async def test_last_seen_at_is_derived_from_memberships():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.record(cur, person_id, post_id, org, _T1)
-
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
-        assert {row["id"]: row["last_seen_at"] for row in rows}[post_id] == _T1
 
         assert await posts.unseen_since(cur, _OCDID, _T0) == []
         await conn.rollback()
@@ -349,7 +365,7 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
         matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
         assert created == matched
-        await cur.execute("SELECT headcount FROM posts WHERE id::text = %s", (created,))
+        await cur.execute("SELECT _headcount FROM posts WHERE id::text = %s", (created,))
         assert (await cur.fetchone())[0] == 3  # the scrape did not overwrite it
         await conn.rollback()
 
@@ -383,15 +399,15 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "trustee", _BASE)
 
-        assert await posts.update_human_fields(cur, post_id, "Trustees", 5) is True
+        assert await posts.update_human_fields(cur, post_id, "Trustees", 5, True) is True
         await cur.execute(
-            "SELECT label, headcount FROM posts WHERE id::text = %s", (post_id,)
+            "SELECT label, _headcount FROM posts WHERE id::text = %s", (post_id,)
         )
         assert await cur.fetchone() == ("Trustees", 5)
 
         assert (
             await posts.update_human_fields(
-                cur, "00000000-0000-0000-0000-000000000000", None, 1
+                cur, "00000000-0000-0000-0000-000000000000", None, 1, True
             )
             is False
         )

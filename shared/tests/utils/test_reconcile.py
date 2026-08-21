@@ -76,8 +76,8 @@ PORT_ISABEL = "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government
 
 
 def _reconcile(records: dict, elected_officials: list, identities=None) -> List[Person]:
-    """The people kept. Identities default to one-name-per-official, which is what the
-    research step produces when it has nothing better."""
+    """Everyone the scrape saw. Identities default to one-name-per-official, which is what
+    the research step produces when it has nothing better."""
     return reconcile(
         [record for group in records.values() for record in group],
         identities
@@ -86,7 +86,7 @@ def _reconcile(records: dict, elected_officials: list, identities=None) -> List[
         build_taxonomy(ROLE_CONFIG),
         PORT_ISABEL,
         MagicMock(),
-    )[0]
+    )
 
 
 # --- Test data ---

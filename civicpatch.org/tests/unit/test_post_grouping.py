@@ -21,8 +21,8 @@ def _post(organization_id: str, role_id: str, division: str = "…/place:zz") ->
         "role_id": role_id,
         "division_ocdid": division,
         "label": None,
-        "headcount": 1,
-        "verified": True,
+        "_headcount": 1,
+        "_is_verified": True,
         "holders": 1,
     }
 
@@ -71,36 +71,3 @@ def test_an_orphaned_post_does_not_vanish_or_raise():
     grouped = group_by_organization([_org("a", "City Council")], [_post("gone", "mayor")])
 
     assert grouped == [{"id": "a", "name": "City Council", "sort_order": 0, "posts": []}]
-
-
-@pytest.mark.unit
-def test_every_row_carries_the_flag_either_way():
-    """Absence is ambiguous — it could mean endorsed, or an older API version. Silence must
-    not read as trustworthy on a provenance flag."""
-    from core.post_grouping import mark_verified
-
-    rows = mark_verified(
-        [
-            {**_post("a", "mayor"), "verified": True},
-            {**_post("a", "clerk"), "verified": False},
-        ]
-    )
-
-    assert [row["_verified"] for row in rows] == [True, False]
-    assert all("verified" not in row for row in rows)
-
-
-@pytest.mark.unit
-def test_nothing_is_filtered_out():
-    """Filtering by verification would hide the freshest data — a jurisdiction scraped
-    yesterday and not yet reviewed has nothing but unverified rows."""
-    from core.post_grouping import mark_verified
-
-    rows = mark_verified(
-        [
-            {**_post("a", "mayor"), "verified": False},
-            {**_post("a", "clerk"), "verified": True},
-        ]
-    )
-
-    assert len(rows) == 2

@@ -3,7 +3,7 @@ import "./post-edit.js";
 import "./post-add.js";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { fetchPosts, fetchMemberships } from "../../api.js";
+import { fetchPosts, fetchMemberships, fetchRoles } from "../../api.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
 import {
   groupPostsByRole,
@@ -44,7 +44,10 @@ const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => voi
         </span>`
       : html`<span class="posts-list__vacant">nobody</span>`}
     ${post.over_headcount ? html`<span class="posts-list__over">over headcount</span>` : ""}
-    ${post._verified ? "" : html`<span class="posts-list__unverified">unverified</span>`}
+    ${post._is_verified ? "" : html`<span class="posts-list__unverified">unverified</span>`}
+    ${post._is_tracked
+      ? ""
+      : html`<span class="posts-list__untracked" title="Recorded, but a roster that stops naming its holder will not ask for review">untracked</span>`}
     ${canEdit
       ? html`<button class="posts-list__edit" @click=${() => onEdit(post.id)}>Edit</button>`
       : ""}
@@ -132,16 +135,22 @@ function PostsList(host: PostsListHost) {
   }>(async () => {
     if (!ocdid) return { byRole: [], byPerson: [] };
     const on = asOf || null;
-    const [postsBody, membershipsBody] = await Promise.all([
-      fetchPosts(ocdid, on),
+    const [postsBody, membershipsBody, rolesBody] = await Promise.all([
+      fetchPosts(ocdid),
       fetchMemberships(ocdid, on),
+      // The taxonomy, so a post carries only its `role_id` and the heading is resolved here.
+      // Denormalising the label onto every post row meant a rename left stale copies behind.
+      fetchRoles(),
     ]);
+    const roleLabels = new Map<string, string>(
+      rolesBody.data.map((role: { id: string; label: string }) => [role.id, role.label]),
+    );
     const posts = postsBody.data.organizations.flatMap(
       (organization: { posts: unknown[] }) => organization.posts,
     );
     const memberships = membershipsBody.data.memberships;
     return {
-      byRole: groupPostsByRole(posts, memberships),
+      byRole: groupPostsByRole(posts, memberships, roleLabels),
       byPerson: groupMembershipsByPerson(memberships),
     };
   }, [ocdid, asOf]);
