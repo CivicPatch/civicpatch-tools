@@ -1,9 +1,9 @@
-"""Database queries for `divisions` — the registry of areas a post can point at.
+"""Database queries for `divisions` — the registry of places a post can point at.
 
 A row is the ocdid and nothing else: type, value and display name are all derivable from it,
 and the frontend already renders "Ward 3" that way. What earns the table is authorship — we
 publish hyperlocal division ids, so they need a canonical row — plus a FK stopping a post
-pointing at an area nobody registered.
+pointing at a division nobody registered.
 
 Populated lazily, on first use, for the same reason organizations are.
 """

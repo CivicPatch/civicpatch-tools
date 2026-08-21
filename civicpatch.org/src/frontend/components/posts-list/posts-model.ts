@@ -159,7 +159,7 @@ export const AT_LARGE_DIVISION: AddableDivision = "at-large";
 /** Build the division ocdid a new post sits on.
  *
  * At-large is the jurisdiction's own division — the same rule `division_ocdid` uses on the
- * parser side, where a label naming no area belongs to the whole jurisdiction.
+ * parser side, where a label naming no division belongs to the whole jurisdiction.
  */
 export function buildDivisionOcdid(
   jurisdictionOcdid: string,
@@ -201,7 +201,7 @@ export const postTitle = (membership: Membership): string =>
  * order the words appear. `unmatched` comes last because it is the residue — what nothing
  * else claimed.
  *
- * An at-large post still lists its division: "no area" is a decision the parser made, not a
+ * An at-large post still lists its division: "no division" is a decision the parser made, not a
  * gap, and hiding it would make the row look incompletely parsed.
  */
 export function decompose(membership: Membership): ParsePart[] {

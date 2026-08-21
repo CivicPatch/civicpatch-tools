@@ -19,10 +19,12 @@ from shared.utils.taxonomy import Taxonomy, designation_sort_key, role_sort_key
 
 
 def _sortable_designations(parsed: ParsedLabel) -> List[str]:
-    """The non-area designations plus the division — both order a roster, so both sort."""
+    """The designations naming no division, plus the division — both order a roster."""
     if not parsed.division:
         return parsed.other_designations
-    return parsed.other_designations + [f"{parsed.division.designation} {parsed.division.value}"]
+    return parsed.other_designations + [
+        f"{parsed.division.designation} {parsed.division.value}"
+    ]
 
 
 def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:

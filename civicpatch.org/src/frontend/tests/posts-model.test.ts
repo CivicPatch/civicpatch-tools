@@ -142,7 +142,7 @@ describe("buildDivisionOcdid", () => {
   const base = "ocd-division/country:us/state:wa/place:buckley";
 
   it("puts an at-large post on the jurisdiction's own division", () => {
-    // Same rule the parser uses: a label naming no area belongs to the whole jurisdiction.
+    // Same rule the parser uses: a label naming no division belongs to the whole jurisdiction.
     // Inventing an "at-large" segment would mint an ocdid nothing else can match.
     expect(buildDivisionOcdid(jurisdiction, AT_LARGE_DIVISION, "")).toBe(base);
   });
@@ -249,7 +249,7 @@ describe("decompose", () => {
   });
 
   it("still shows the division for an at-large post", () => {
-    // "No area" is a decision the parser made, not a gap. Omitting it would make a correctly
+    // "No division" is a decision the parser made, not a gap. Omitting it would make a correctly
     // parsed at-large row look half-parsed.
     const parts = decompose(
       membership({

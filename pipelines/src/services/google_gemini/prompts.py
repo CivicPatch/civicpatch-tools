@@ -1,6 +1,5 @@
 from urllib.parse import urlparse
 
-from shared.utils import config_utils
 from shared.utils import id_utils
 
 
@@ -42,13 +41,12 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
     """
 
 
+# Only ever called for a jurisdiction with no posts on record — once there are posts, they
+# are the answer this would be asking for, already parsed and stored.
 def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str):
     jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     state = id_utils.state_name(jurisdiction_ocdid)
     county = jurisdiction_ocdid_parts.county
-    designations = config_utils.get_designation_names()
-    designations_str = ', '.join(designations)
-
     location_parts = [municipality_name, f"{county} County" if county else None, state]
     location_str = ", ".join(p for p in location_parts if p)
 
@@ -62,19 +60,17 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
 
     1. Identify the elected officials in the local government,
        including the Mayor (if applicable).
-       1.1. For each official, extract the following details:
+       1.1. For each official, extract only:
             - name: Full name only (no titles)
-            - roles: List of active municipal roles (e.g., Mayor, Council Member)
-            - designations: List of ({designations_str}), if applicable
-
+            - label: The office they hold, exactly as the municipality writes it
+              ("Council Member, Ward 3"). One string, not split into parts.
     3. Create a JSON object with the following structure:
        ```json
        {{
          "people": [
            {{
              "name": "Name of the official",
-             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
-             "designations": ["Ward 1", "District 2", etc.] or [],
+             "label": "Office as written"
            }}
          ]
        }}
