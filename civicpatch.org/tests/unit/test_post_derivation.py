@@ -168,3 +168,62 @@ def test_headcount_counts_holders_even_for_a_role_marked_unique():
     assert len(specs) == 1
     assert specs[0].role_id == "mayor"
     assert specs[0].headcount == 2
+
+
+@pytest.mark.unit
+def test_the_losing_roles_are_demoted_onto_the_member_not_dropped():
+    """One open membership per person per body means one role has to define the post. The
+    others used to be parsed, ranked and then discarded — a councilmember who is also mayor
+    published as a mayor and forgot the council seat entirely."""
+    specs = derived_posts(
+        [_official("p1", "Mayor - Council Member")], _TAXONOMY, _ROLES
+    )
+
+    by_role = _by_role(specs)
+    # Mayor is priority 10 against Council Member's 500, so it defines the post.
+    assert list(by_role) == ["mayor"]
+    assert by_role["mayor"].members[0].role_ids == ["council-member"]
+
+
+@pytest.mark.unit
+def test_every_losing_role_is_kept_not_just_the_first():
+    """The corpus has labels naming five roles — "Chair - Chair Pro Tem - Vice Mayor - Council
+    President - Council Member". A singular column kept one and dropped the rest."""
+    # Order is the ranking: `build_taxonomy` ranks by position in the list, and `get_roles`
+    # returns them already sorted by `priority`. Appending would make these rank last.
+    roles = [
+        _role("mayor", "Mayor", priority=10, is_unique=True),
+        _role("chair", "Chair", priority=200, is_unique=True),
+        _role("vice-chair", "Vice Chair", priority=300, is_unique=True),
+        _role("council-member", "Council Member", ["Councilmember"], priority=500),
+    ]
+    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+
+    specs = derived_posts(
+        [_official("p1", "Chair - Vice Chair - Council Member")], taxonomy, roles
+    )
+
+    by_role = _by_role(specs)
+    assert list(by_role) == ["chair"]
+    assert by_role["chair"].members[0].role_ids == ["vice-chair", "council-member"]
+
+
+@pytest.mark.unit
+def test_a_single_role_demotes_nothing():
+    """The common case. A demoted role on an ordinary label would be noise on every row."""
+    specs = derived_posts([_official("p1", "Council Member")], _TAXONOMY, _ROLES)
+
+    assert specs[0].members[0].role_ids == []
+
+
+@pytest.mark.unit
+def test_an_unknown_second_role_is_not_demoted():
+    """`memberships.role_id` is a foreign key, so a role with no id has nowhere to go — it
+    stays in `unmatched_text`, where triage can act on it."""
+    specs = derived_posts(
+        [_official("p1", "Council Member - Harbormaster")], _TAXONOMY, _ROLES
+    )
+
+    member = specs[0].members[0]
+    assert member.role_ids == []
+    assert "Harbormaster" in member.unmatched_text

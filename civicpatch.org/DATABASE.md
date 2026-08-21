@@ -198,7 +198,7 @@ erDiagram
         uuid            id                  PK "also unique (id, organization_id) so memberships can FK the pair — kept: that column feeds a partial unique index and its failure would be silent"
         text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
         uuid            organization_id     FK
-        text            role_id             FK "ON UPDATE CASCADE; the SEAT's role — a title the holder carries lives on the membership"
+        text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named live in membership_roles"
         text            division_ocdid      FK "ON UPDATE CASCADE"
         text_null       label               "human-owned; mint-only writes never overwrite it"
         int             headcount           "check: > 0, default: 1; human-owned"
@@ -210,7 +210,6 @@ erDiagram
         uuid            post_id             FK "composite FK (post_id, organization_id) ON UPDATE CASCADE"
         uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open post per body"
         uuid            person_id           FK
-        text_null       role_id             FK "idx WHERE NOT NULL; ON UPDATE CASCADE. A title held in a post this role does not define — mayor for a councilmember serving as mayor"
         text_array      designations        "default: {}; how the source tells one post from another: Place 2, Position 8"
         text_array      unmatched_text      "gin idx; default: {}; what the parser could not classify — triage material"
         text_array      source_labels       "default: {}; what the SOURCE called this post, split — parsed.labels, i.e. office.name broken on ' - '. Parts not the rendering, so triage can show the one label a term came from. No FK to source_records: a membership outlives its evidence, and writing this beside unmatched_text is what stops the two disagreeing"
@@ -223,6 +222,23 @@ erDiagram
         timestamptz     created_at          "default: now()"
     }
 
+    membership_roles {
+        uuid            membership_id       FK "PK (membership_id, role_id); ON DELETE CASCADE"
+        text            role_id             FK "PK; idx; ON UPDATE CASCADE — renaming a role follows into closed history"
+    }
+
+    assertions {
+        uuid            id                  PK
+        text            entity_type         "CHECK post|membership|person; no FK — heterogeneous subjects, the price of an event log"
+        uuid            entity_id           "no FK; deletes are refused rather than cascaded"
+        text_null       field_path          "NULL = the entity itself, not a field. UNIQUE NULLS NOT DISTINCT, so no sentinel"
+        text            kind                "CHECK confirm|correct|retract"
+        jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
+        jsonb_null      sources             "[{note, url}] — note may stand alone: 'phoned the clerk'"
+        uuid            asserted_by         FK "NOT NULL — an assertion nobody made is not an assertion"
+        timestamptz     asserted_at         "idx: (entity_type, entity_id, asserted_at DESC). APPEND-ONLY — history is only trustworthy if rows never change"
+    }
+
     roles ||--o{ role_aliases : "role_id"
     jurisdictions ||--o{ organizations : "jurisdiction_ocdid"
     jurisdictions ||--o{ divisions : "jurisdiction_ocdid"
@@ -232,7 +248,9 @@ erDiagram
     divisions ||--o{ posts : "division_ocdid"
     posts ||--o{ memberships : "post_id"
     people ||--o{ memberships : "person_id"
-    roles ||--o{ memberships : "role_id (title, not seat)"
+    roles ||--o{ membership_roles : "role_id"
+    memberships ||--o{ membership_roles : "membership_id"
+    users ||--o{ assertions : "asserted_by"
     requests ||--o{ source_records : "request_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"

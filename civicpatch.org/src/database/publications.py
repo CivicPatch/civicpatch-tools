@@ -188,6 +188,7 @@ async def publish_request(
                         designations=member.designations,
                         unmatched_text=member.unmatched_text,
                         source_labels=member.source_labels,
+                        role_ids=member.role_ids,
                     )
             await memberships.close_absent(
                 cur, jurisdiction_ocdid, incoming_ids, seen_at
