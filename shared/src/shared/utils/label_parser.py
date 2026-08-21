@@ -114,6 +114,7 @@ def _value_index(
     last: int,
     taxonomy: Taxonomy,
     aliases: Dict[str, str],
+    used_tokens: set,
 ) -> Optional[int]:
     """Index of the single word acting as the designation's value, if there is one.
 
@@ -123,13 +124,19 @@ def _value_index(
     Either side of the key, because "3rd Ward" and "North Ward" are as real as "Ward 3".
     Before wins the tie: "Place 2 (West Ward) and Mayor Pro-Tem" would otherwise read the
     conjunction as the value, which cost `ward:west` on real model output.
+
+    A word an earlier designation already consumed is not available, in either direction. The
+    `before` branch reaches backwards into text the cascade has already passed, so without this
+    "Council Member Position 8 (Citywide, …)" read the 8 twice — once as Position's value and
+    again as Citywide's — and produced both "Position 8" and a phantom "At-Large 8" for one
+    office.
     """
     before = first - 1
-    if before >= 0 and _is_value(words[before].key):
+    if before >= 0 and words[before].token not in used_tokens and _is_value(words[before].key):
         return before
 
     after = last + 1
-    if after < len(words):
+    if after < len(words) and words[after].token not in used_tokens:
         key = words[after].key
         if _is_value(key) and key not in aliases and key not in taxonomy.role_aliases:
             return after
@@ -203,7 +210,9 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
     found = _find_alias(words, designation_aliases)
     while found:
         canonical, first, last = found
-        value_index = _value_index(words, first, last, taxonomy, designation_aliases)
+        value_index = _value_index(
+            words, first, last, taxonomy, designation_aliases, used
+        )
         span = list(range(first, last + 1))
         if value_index is not None:
             span.append(value_index)
