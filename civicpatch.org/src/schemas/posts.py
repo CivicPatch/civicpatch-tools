@@ -36,8 +36,9 @@ class AssignMembershipRequest(BaseModel):
     No `organization_id`: it comes from the post, so a request cannot name a mismatched pair.
 
     No "what happened?" flag either — this is always a transition. Correction (they were never
-    in the old post) needs `field_overrides` first, and offering it before then would let a
-    curator believe they fixed history when the next scrape will undo it.
+    in the old post) needs the publish merge to apply `assertions`, which is not built yet:
+    until it does, the next scrape re-derives the old membership, and offering the option would
+    let a curator believe they fixed history when it will be undone within the week.
     """
 
     person_id: str
