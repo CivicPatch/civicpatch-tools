@@ -102,16 +102,25 @@ async def update_human_fields(
 
 
 async def delete_if_unheld(cur, post_id: str) -> bool:
-    """Remove a post nobody has ever held. Returns whether it went.
+    """Remove a post nobody has ever held or vouched for. Returns whether it went.
 
     A post with memberships is history, closed ones included, and stays. The FK would refuse
     anyway; this makes it a 409 rather than a 500.
+
+    A post with assertions is history too, and nothing refuses that on its behalf — `assertions`
+    has no foreign key, so deleting would orphan the rows silently. It would also discard the
+    only copy of why someone vouched for it: "phoned the clerk, there really are five trustees"
+    exists nowhere else, because it came from outside a publish.
     """
     await cur.execute(
         """
         DELETE FROM posts
         WHERE id::text = %s
           AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id = posts.id)
+          AND NOT EXISTS (
+              SELECT 1 FROM assertions a
+              WHERE a.entity_type = 'post' AND a.entity_id = posts.id
+          )
         """,
         (post_id,),
     )
@@ -153,8 +162,17 @@ async def list_for_jurisdiction(
                -- Joined so a consumer can render a roster without also fetching the taxonomy.
                -- Inner join is safe: role_id is a non-null FK to roles.
                r.label AS role_label,
+               -- Two ways a human vouches for a post. Having members means a publish
+               -- accepted it — true only while memberships are written solely at publish, and
+               -- deriving at ingest breaks that. An assertion also reaches posts no publish
+               -- can: a transient's request was superseded, so the guard refuses to publish it.
+               --
                -- Not as-of filtered: winding the clock back does not un-vouch a post.
-               count(m.id) > 0 AS verified,
+               (count(m.id) > 0 OR EXISTS (
+                   SELECT 1 FROM assertions a
+                   WHERE a.entity_type = 'post' AND a.entity_id = p.id
+                     AND a.field_path IS NULL AND a.kind = 'confirm'
+               )) AS verified,
                count(m.id) FILTER (
                    WHERE m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
                      AND (m.closed_at IS NULL
