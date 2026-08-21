@@ -4,7 +4,13 @@ from typing import Dict, List, Optional, TypeAlias
 from domain.models import Official, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
-from shared.schemas import Issue, PipelineRunConfig, RoleConfig
+from shared.schemas import (
+    ExtractedPerson,
+    Issue,
+    PersonRecord,
+    PipelineRunConfig,
+    RoleConfig,
+)
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -162,23 +168,8 @@ class LinkFrontier(BaseModel):
         return self.model_copy(update={"links": new_links, "queue": new_queue})
 
 
-class RawLLMPersonRecord(BaseModel):
-    name: str
-    # The label beside the name, verbatim — one record per label. Not decomposed into
-    # role + designation: cp.org owns that, and splitting here loses which went with which.
-    label: str
-
-    phone: Optional[str] = None
-    email: Optional[str] = None
-    url: Optional[str] = None
-
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-    image: Optional[str] = None
-
-
 class PeopleArrayLLMResponseSchema(BaseModel):
-    people: List[RawLLMPersonRecord]
+    people: List[ExtractedPerson]
     # thought: str
 
 
@@ -187,14 +178,10 @@ class RelevantPageResponseSchema(BaseModel):
     relevant_urls: List[str] = []
 
 
-class LLMPersonRecord(RawLLMPersonRecord):
-    source_url: str
-
-
 OtherNamesByCanonicalName: TypeAlias = Dict[
     str, List[str]
 ]  # Canonical name to other names found while scraping
-PeopleByName: TypeAlias = Dict[str, List[LLMPersonRecord]]
+PeopleByName: TypeAlias = Dict[str, List[PersonRecord]]
 
 PipelineStatus = PipelineRunStatus
 

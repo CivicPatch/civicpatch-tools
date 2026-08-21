@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from runners.people_collector.schemas import (
     LinkFrontier,
-    LLMPersonRecord,
+    PersonRecord,
     PeopleCollectorContext,
     PeopleCollectorData,
     Person,
@@ -52,7 +52,7 @@ def make_llm_person(
     url=None,
     source_url=None,
 ):
-    return LLMPersonRecord(
+    return PersonRecord(
         name=name,
         label=label,
         phone=phone,
@@ -65,7 +65,7 @@ def make_llm_person(
     )
 
 
-def _make_llm_person(**kwargs) -> LLMPersonRecord:
+def _make_llm_person(**kwargs) -> PersonRecord:
     defaults = {
         "name": "",
         "label": "",
@@ -78,7 +78,7 @@ def _make_llm_person(**kwargs) -> LLMPersonRecord:
         "source_url": None,
     }
     defaults.update(kwargs)
-    return LLMPersonRecord(**defaults)
+    return PersonRecord(**defaults)
 
 
 def _build_context(
@@ -282,7 +282,7 @@ def test_merge_llm_people_to_person():
 
 
 def test_get_source_urls_filters_by_unique_contribution():
-    r1 = LLMPersonRecord(
+    r1 = PersonRecord(
         name="Robert Kubert",
         label="Mayor - Ward 1",
         phone=None,
@@ -293,7 +293,7 @@ def test_get_source_urls_filters_by_unique_contribution():
         image=None,
         source_url="https://www.bayonnenj.org/r1",
     )
-    r2 = LLMPersonRecord(
+    r2 = PersonRecord(
         name="Robert Kubert",
         label="Council Member - Ward 2",
         phone="555-0002",
@@ -304,7 +304,7 @@ def test_get_source_urls_filters_by_unique_contribution():
         image=None,
         source_url="https://www.bayonnenj.org/r2",
     )
-    r3 = LLMPersonRecord(
+    r3 = PersonRecord(
         name="Robert Kubert",
         label="Mayor - Ward 1",
         phone=None,

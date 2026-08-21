@@ -1,5 +1,5 @@
 import pytest
-from runners.people_collector.schemas import LLMPersonRecord
+from runners.people_collector.schemas import PersonRecord
 from runners.people_collector.steps.step_05_merge_records_within_llm.field_mergers import (
     merge_field,
     merge_labels,
@@ -9,8 +9,8 @@ pytestmark = pytest.mark.unit
 
 
 def make_llm_person(name, label="", phone=None, email=None, website=None):
-    """Helper function to create LLMPersonRecord objects for testing"""
-    return LLMPersonRecord(
+    """Helper function to create PersonRecord objects for testing"""
+    return PersonRecord(
         name=name,
         other_names=[],
         label=label,

@@ -1,10 +1,10 @@
 from collections import Counter
 from typing import List
 
-from runners.people_collector.schemas import LLMPersonRecord
+from runners.people_collector.schemas import PersonRecord
 
 
-def merge_labels(records: List[LLMPersonRecord]) -> List[str]:
+def merge_labels(records: List[PersonRecord]) -> List[str]:
     """Unique raw labels across records — one per office the person was seen holding."""
     unique_labels = set()
     for record in records:
@@ -15,7 +15,7 @@ def merge_labels(records: List[LLMPersonRecord]) -> List[str]:
 
 def merge_field(values: List[str]) -> str:
     """
-    Merge a single-value field (start_date, end_date) from a list of LLMPersonRecord records.
+    Merge a single-value field (start_date, end_date) from a list of PersonRecord records.
     Prefer non-empty, most frequent value.
     """
     value_counter = Counter(value for value in values if value)

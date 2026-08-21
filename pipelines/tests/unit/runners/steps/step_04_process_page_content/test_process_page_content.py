@@ -5,9 +5,9 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
-    LLMPersonRecord,
+    PersonRecord,
     PeopleArrayLLMResponseSchema,
-    RawLLMPersonRecord,
+    ExtractedPerson,
     RelevantPageResponseSchema,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
@@ -67,7 +67,7 @@ def dummy_logger():
 def test_has_role_and_contact_info_with_valid_contact_info_and_role():
     """Test when there are at least two different types of contact info and a matching role."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -76,7 +76,7 @@ def test_has_role_and_contact_info_with_valid_contact_info_and_role():
             url=None,
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="council",
@@ -92,7 +92,7 @@ def test_has_role_and_contact_info_with_valid_contact_info_and_role():
 def test_has_role_and_contact_info_with_only_a_phone():
     """A phone or email on any record is enough, even if nothing else is known."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -101,7 +101,7 @@ def test_has_role_and_contact_info_with_only_a_phone():
             url=None,
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="council",
@@ -117,7 +117,7 @@ def test_has_role_and_contact_info_with_only_a_phone():
 def test_has_role_and_contact_info_with_no_matching_role():
     """Test when there is no matching role."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="teacher",
@@ -126,7 +126,7 @@ def test_has_role_and_contact_info_with_no_matching_role():
             url=None,
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="engineer",
@@ -142,7 +142,7 @@ def test_has_role_and_contact_info_with_no_matching_role():
 def test_has_role_and_contact_info_with_distinct_urls_but_no_phone_or_email():
     """Without a phone or email, more than one distinct url still counts."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -151,7 +151,7 @@ def test_has_role_and_contact_info_with_distinct_urls_but_no_phone_or_email():
             url="https://example.com/john",
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="mayor",
@@ -167,7 +167,7 @@ def test_has_role_and_contact_info_with_distinct_urls_but_no_phone_or_email():
 def test_has_role_and_contact_info_with_one_shared_url_and_no_phone_or_email():
     """A single url shared across the group is not enough on its own."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -176,7 +176,7 @@ def test_has_role_and_contact_info_with_one_shared_url_and_no_phone_or_email():
             url="https://example.com/council",
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="mayor",
@@ -192,7 +192,7 @@ def test_has_role_and_contact_info_with_one_shared_url_and_no_phone_or_email():
 def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
     """Test when there are exactly two different types of contact info."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -201,7 +201,7 @@ def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
             url="https://example.com",
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="mayor",
@@ -217,7 +217,7 @@ def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
 def test_has_role_and_contact_info_with_no_contact_info():
     """Test when there is no contact info."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -226,7 +226,7 @@ def test_has_role_and_contact_info_with_no_contact_info():
             url=None,
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="mayor",
@@ -248,7 +248,7 @@ def test_has_role_and_contact_info_with_no_records():
 def test_has_role_and_contact_info_with_three_contact_info_types():
     """Test when there are three different types of contact info."""
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="John Doe",
             other_names=[],
             label="mayor",
@@ -257,7 +257,7 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
             url=None,
             source_url="test",
         ),
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="mayor",
@@ -279,7 +279,7 @@ def test_check_page_heuristics_returns_true_with_empty_records():
 
 def test_check_page_heuristics_returns_true_with_nonempty_records():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Laura Palmer",
             other_names=[],
             label="mayor Ward 8",
@@ -297,7 +297,7 @@ def test_check_page_heuristics_returns_true_with_nonempty_records():
 
 def test_check_page_heuristics_returns_false_if_input_text_empty():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Laura Palmer",
             other_names=[],
             label="mayor Ward 8",
@@ -316,7 +316,7 @@ def test_check_page_heuristics_returns_false_if_input_text_empty():
 
 def test_check_page_heuristics_returns_false_if_phone_not_in_text():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Pat NoPhoneInText",
             other_names=[],
             label="council Ward 2",
@@ -336,7 +336,7 @@ def test_check_page_heuristics_returns_false_if_phone_not_in_text():
 
 def test_check_page_heuristics_returns_false_if_email_not_in_text():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Alex NoEmailInText",
             other_names=[],
             label="mayor Ward 3",
@@ -356,7 +356,7 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
 
 def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Alexandria Inocencio",
             other_names=[],
             label="mayor",
@@ -375,7 +375,7 @@ def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source()
 
 def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Alfredo Macedo",
             other_names=[],
             label="council member",
@@ -396,7 +396,7 @@ def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
     # CMS bug: <a href="mailto:user@domain.tx">user@domain.tx</a> .us
     # LLM reconstructs the full email; heuristic must find it despite the split
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Joseph Smith",
             other_names=[],
             label="council member District 1",
@@ -415,7 +415,7 @@ def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
 def test_check_page_heuristics_does_not_match_email_without_at_sign():
     # Alnum fallback must not match if there is no @ in the normalized email
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Jane Doe",
             other_names=[],
             label="council member",
@@ -435,7 +435,7 @@ def test_check_page_heuristics_does_not_match_email_without_at_sign():
 def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
     # LLM returns straight apostrophe; page has curly right-single-quote (U+2019)
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Mario D'Agostino",
             other_names=[],
             label="council",
@@ -455,7 +455,7 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
 def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_name():
     # LLM returns curly apostrophe; page has straight apostrophe
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Mario D\u2019Agostino",
             other_names=[],
             label="council",
@@ -475,7 +475,7 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_name():
 def test_check_page_heuristics_matches_name_split_across_lines():
     # HTML-to-markdown sometimes breaks a name mid-word at a line boundary
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Martin Mattessich",
             other_names=[],
             label="council",
@@ -494,7 +494,7 @@ def test_check_page_heuristics_matches_name_split_across_lines():
 
 def test_check_page_heuristics_returns_false_if_url_not_in_text():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Jamie NoUrlInText",
             other_names=[],
             label="council Ward 4",
@@ -514,7 +514,7 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
 
 def test_check_page_heuristics_passes_with_compound_phone_in_text():
     records = [
-        LLMPersonRecord(
+        PersonRecord(
             name="Alice Boroughman",
             other_names=[],
             label="mayor",
@@ -824,10 +824,10 @@ async def test_process_with_llm_reorders_inverted_names():
     """Names in 'Last, First' format are reordered at ingest, before grouping."""
     llm_response = PeopleArrayLLMResponseSchema(
         people=[
-            RawLLMPersonRecord(
+            ExtractedPerson(
                 name="Kincannon, Laurie", label="Mayor"
             ),
-            RawLLMPersonRecord(
+            ExtractedPerson(
                 name="Burke, Rory", label="Councilman Position 4"
             ),
         ]

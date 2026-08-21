@@ -19,17 +19,17 @@ from accuracy import (
     group_by_name,
     normalize_field,
 )
-from runners.people_collector.schemas import RawLLMPersonRecord
+from runners.people_collector.schemas import ExtractedPerson
 from shared.utils.label_parser import ParsedLabel, parse_label
 
 EVAL_TAXONOMY = build_eval_taxonomy()
 
 
-def _parse(records: List[RawLLMPersonRecord]) -> List[ParsedLabel]:
+def _parse(records: List[ExtractedPerson]) -> List[ParsedLabel]:
     return [parse_label(record.label or "", EVAL_TAXONOMY) for record in records]
 
 
-def score_cases(actual: List[RawLLMPersonRecord], expected: List[RawLLMPersonRecord]):
+def score_cases(actual: List[ExtractedPerson], expected: List[ExtractedPerson]):
     scores = []
     # Grouped, not indexed: one person holding two offices is two records, and a
     # `{name: person}` lookup would keep only the last of them.
@@ -108,8 +108,8 @@ def _set_precision(score: dict, key: str, actual_values, expected_values) -> Non
 
 
 def score_case(
-    actual_records: List[RawLLMPersonRecord],
-    expected_records: List[RawLLMPersonRecord],
+    actual_records: List[ExtractedPerson],
+    expected_records: List[ExtractedPerson],
 ):
     score = {}
     actual_vals = {}

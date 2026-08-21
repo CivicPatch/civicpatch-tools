@@ -81,10 +81,10 @@ def test_officials_eval_role_aliases_fixture_validates():
 
 
 def test_officials_eval_fixtures_validate():
-    """The eval loads these with `RawLLMPersonRecord(**person)`, so a fixture carrying the
+    """The eval loads these with `ExtractedPerson(**person)`, so a fixture carrying the
     old `roles:`/`designations:` pair fails there and nowhere else — under an API key and a
     bill. The record shape has already changed once."""
-    from runners.people_collector.schemas import RawLLMPersonRecord
+    from runners.people_collector.schemas import ExtractedPerson
 
     cases = sorted(pathlib.Path("tests/prompts/datasets/local/municipal_officials").iterdir())
     fixtures = [case / "expected.yml" for case in cases if (case / "expected.yml").exists()]
@@ -92,4 +92,4 @@ def test_officials_eval_fixtures_validate():
     for fixture in fixtures:
         content = yaml.safe_load(fixture.read_text(encoding="utf-8")) or {}
         for person in content.get("people") or []:
-            RawLLMPersonRecord(**person)
+            ExtractedPerson(**person)
