@@ -182,6 +182,12 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
+export const fetchUnmatchedText = async () => {
+  const res = await fetch(`${API_URL}/api/v1/memberships/unmatched`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const putRoles = async (body) => {
   const res = await fetch(`${API_URL}/api/v1/roles`, {
     method: "PUT",

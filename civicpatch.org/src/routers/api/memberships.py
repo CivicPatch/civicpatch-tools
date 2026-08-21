@@ -43,4 +43,22 @@ def get_router() -> APIRouter:
         """
         return {"data": {"unmatched_text": await memberships.unmatched_text()}}
 
+    # Declared after `/unmatched` — `:path` matches greedily, so the reverse order would make
+    # this swallow it and read "unmatched" as a jurisdiction ocdid.
+    @router.get("/{jurisdiction_ocdid:path}")
+    async def list_memberships_endpoint(
+        jurisdiction_ocdid: str,
+        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
+    ):
+        """The same roster the posts read returns, by person instead of by post.
+
+        Open memberships only: this answers "who sits where now". The dated question is
+        `?as_of` on the posts read, which is the axis a date makes sense on.
+        """
+        return {
+            "data": {
+                "memberships": await memberships.list_by_person(jurisdiction_ocdid)
+            }
+        }
+
     return router

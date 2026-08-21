@@ -219,3 +219,35 @@ async def test_a_failed_assignment_leaves_no_trace(client):
     client.put(_PREFIX, json={"person_id": person_id, "post_id": str(uuid.uuid4())})
 
     assert await _change_logs() == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_unmatched_is_not_swallowed_by_the_jurisdiction_route(client):
+    """Both are GET on this router and `:path` matches greedily, so declaration order is the
+    only thing keeping "unmatched" from being read as a jurisdiction ocdid. Reversed, this
+    returns an empty membership list with a 200 — a silent wrong answer, not an error."""
+    await _seed()
+
+    response = client.get(f"{_PREFIX}/unmatched")
+
+    assert response.status_code == 200, response.text
+    assert "unmatched_text" in response.json()["data"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_person_axis_read_names_the_person(client):
+    """Screen 4 lists by person, so an id is not enough — the join is what makes the row
+    renderable without a second lookup per row."""
+    person_id, mayor, _ = await _seed()
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor, "label": "Mayor"})
+
+    response = client.get(f"{_PREFIX}/{_OCDID}")
+
+    assert response.status_code == 200, response.text
+    rows = response.json()["data"]["memberships"]
+    assert len(rows) == 1
+    assert rows[0]["person_name"] == "Route Test"
+    assert rows[0]["role_id"] == "mayor"
+    assert rows[0]["label"] == "Mayor"
