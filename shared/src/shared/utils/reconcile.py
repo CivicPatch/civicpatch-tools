@@ -89,13 +89,13 @@ def merge_weak_tie_groups(
         return parsed.last.lower() if parsed.last else name.split()[-1].lower()
 
     def office_keys(records: List[PersonRecord]) -> set:
-        """(role, area, designations) per record. Parsed, not compared raw, so two
+        """(role, division, designations) per record. Parsed, not compared raw, so two
         spellings of one office still match; the parse is discarded after the merge."""
         result = set()
         for r in records:
             parsed = parse_label(r.label, taxonomy)
-            area = parsed.division.value if parsed.division else ""
-            result.add((parsed.role or "", area, tuple(parsed.other_designations)))
+            division = parsed.division.value if parsed.division else ""
+            result.add((parsed.role or "", division, tuple(parsed.other_designations)))
         return result
 
     weak_keys = [k for k in groups if is_last_name_only(k)]

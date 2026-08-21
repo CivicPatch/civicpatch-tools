@@ -14,7 +14,6 @@ import re
 from typing import Dict, List, Optional, Tuple
 
 from pydantic import BaseModel
-
 from shared.utils import config_utils
 from shared.utils.divisions import (
     format_division,
@@ -57,16 +56,9 @@ class ParsedLabel(BaseModel):
     # and the loser must survive here rather than be dropped, since whether it becomes a
     # second post is still an open question.
     roles: List[str] = []
-    # The primary of `divisions`. None means the label names no geographic area, which is
-    # what at-large means. Turning that into an ocdid needs the jurisdiction, so it is
-    # `division_ocdid`'s job, not this one's: most callers only ask boolean questions and
-    # have no jurisdiction to hand.
     division: Optional[Division] = None
-    # Every area the label names, in the order the text gives them. A label naming two is
-    # usually one area under two names ("District 1 (East Ward)"), and the loser is kept
-    # because the local name is still evidence for matching records.
     divisions: List[Division] = []
-    # Designations that name no area — "Place 3", "Position 2", "At-Large A". They pick out
+    # Designations that name no division — "Place 3", "Position 2", "At-Large A". They pick out
     # one office within a body, so they belong on `posts.label`, not the division.
     other_designations: List[str] = []
     # Text that matched no alias, in original case — vocabulary we do not have yet. Named
@@ -132,7 +124,11 @@ def _value_index(
     office.
     """
     before = first - 1
-    if before >= 0 and words[before].token not in used_tokens and _is_value(words[before].key):
+    if (
+        before >= 0
+        and words[before].token not in used_tokens
+        and _is_value(words[before].key)
+    ):
         return before
 
     after = last + 1
@@ -258,7 +254,7 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
 
 
 def _primary_division(divisions: List[Division]) -> Optional[Division]:
-    """A numbered area wins over a named one: "District 1 (East Ward)" is one area under an
+    """A numbered division wins over a named one: "District 1 (East Ward)" is one division under an
     official identifier and a local nickname, and the number is the identifier. An ocdid
     needs a single answer, and taking the last one found made it depend on word order.
 
@@ -281,7 +277,7 @@ def _highest_priority(roles: List[str], taxonomy: Taxonomy) -> Optional[str]:
 
 
 def division_ocdid(parsed: ParsedLabel, jurisdiction_ocdid: str) -> str:
-    """Never empty: a label naming no area belongs to the jurisdiction's own division."""
+    """Never empty: a label naming no division belongs to the jurisdiction's own."""
     base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
     if not parsed.division:
         return base

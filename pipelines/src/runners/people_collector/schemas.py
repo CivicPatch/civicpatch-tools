@@ -187,9 +187,20 @@ PipelineStatus = PipelineRunStatus
 
 
 class ResearchedPerson(BaseModel):
+    """A name research turned up, and the office it named them under.
+
+    `label` is verbatim, the same contract `ExtractedPerson.label` holds: one string as the
+    source writes it, undecomposed. It used to be `roles` and `designations`, split by the
+    model and resolved here against a taxonomy the pipeline does not own — the split was the
+    lossy step, and both halves of it belonged elsewhere.
+
+    Nothing parses it here. On a jurisdiction cp.org has already published, posts *are* the
+    parsed answer and this path does not run at all; on a cold start the label is a search
+    term, which needs no structure.
+    """
+
     name: str
-    roles: List[str]
-    designations: List[str]
+    label: str = ""
 
 
 class ResearchMunicipalityLLMSchema(BaseModel):
@@ -198,6 +209,9 @@ class ResearchMunicipalityLLMSchema(BaseModel):
 
 class ResearchMunicipalityStep(BaseModel):
     expected_count: int = 0  # how many officials the pipeline expects to find
+    # Who research thinks holds which office, labels verbatim. Only the cold-start path fills
+    # it: once cp.org has posts, they are the same answer already parsed.
+    researched: List[ResearchedPerson] = []
     target_divisions: List[str] = []  # geographic divisions to look for
     known_roles: list[str] = []
     identities: dict[

@@ -207,6 +207,24 @@ async def search_people(
     return response.json().get("data", [])
 
 
+async def get_posts(
+    client: httpx.AsyncClient, jurisdiction_ocdid: str
+) -> List[dict]:
+    """The posts cp.org already holds for this jurisdiction, flattened out of their bodies.
+
+    What the scrape steers by: which offices to look for and which divisions they sit in. Read
+    rather than researched, because cp.org is where that is already known — asking a model to
+    guess it was only ever a stand-in for having somewhere to ask.
+    """
+    env = get_env_vars()
+    response = await client.get(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/posts/{jurisdiction_ocdid}"
+    )
+    response.raise_for_status()
+    organizations = response.json().get("data", {}).get("organizations", [])
+    return [post for organization in organizations for post in organization["posts"]]
+
+
 async def fetch_pipeline_run_status(
     client: httpx.AsyncClient, request_id: str
 ) -> Optional[str]:
