@@ -1,4 +1,4 @@
-"""Database queries for `posts` — a seat-type within a body.
+"""Database queries for `posts` — one office within a body, not who holds it.
 
 Identity is the triple `(organization_id, role_id, division_ocdid)`. No free text is in the
 key, so renaming a post cannot make the next scrape miss it.
@@ -67,7 +67,7 @@ async def find_or_create(
 
     The scrape's way in, where `create_if_absent` is a person's: a match is not an error to
     report, so the lookup below is the normal path, not a fallback. No `label` — only a person
-    names a seat.
+    names a post.
     """
     minted = await create_if_absent(
         cur,
@@ -150,7 +150,7 @@ async def list_for_jurisdiction(
         """
         SELECT p.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
                p.label, p.headcount,
-               -- Not as-of filtered: winding the clock back does not un-vouch a seat.
+               -- Not as-of filtered: winding the clock back does not un-vouch a post.
                count(m.id) > 0 AS verified,
                count(m.id) FILTER (
                    WHERE m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
@@ -178,7 +178,7 @@ async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
     """Posts a person once endorsed that no scrape has produced since `cutoff`.
 
     The HAVING drops never-endorsed posts: nothing was seen in them, so they cannot have
-    stopped being seen. A seat nobody has confirmed is unconfirmed, not absent.
+    stopped being seen. A post nobody has confirmed is unconfirmed, not absent.
     """
     await cur.execute(
         """
@@ -218,7 +218,7 @@ async def create(
     headcount: int,
     user_id: str | None = None,
 ) -> str | None:
-    """A person asserting a seat exists. Returns its id, or None if it already did.
+    """A person asserting a post exists. Returns its id, or None if it already did.
 
     Organization and division are found-or-created on the way — a division exists because a
     post needs it, never on its own.
@@ -236,7 +236,7 @@ async def create(
             label=label,
             headcount=headcount,
         )
-        # Nothing to log when the triple was taken: no seat was created.
+        # Nothing to log when the triple was taken: no post was created.
         if post_id:
             await record_change(
                 cur,
@@ -259,7 +259,7 @@ async def update(
     """Set the two human-owned fields, logging what actually moved.
 
     Read before write so the log can carry before/after. A no-op edit still logs — somebody
-    looked at this seat and confirmed it, which is worth as much as a change.
+    looked at this post and confirmed it, which is worth as much as a change.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

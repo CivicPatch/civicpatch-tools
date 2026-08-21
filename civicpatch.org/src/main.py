@@ -164,7 +164,7 @@ app.include_router(
 )
 
 # Seating a person. Always a transition — landing on a different post closes the old
-# membership and opens a new one, so seat history survives.
+# membership and opens a new one, so membership history survives.
 app.include_router(
     api_memberships_router.get_router(),
     prefix="/api/v1/memberships",

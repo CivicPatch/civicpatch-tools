@@ -125,7 +125,7 @@ async def publish_request(
             )
 
         # Anyone the roster no longer names has left office. `inactive` rather than deleted,
-        # so seat history survives. An empty roster is not treated as "retire everyone" — that is
+        # so membership history survives. An empty roster is not treated as "retire everyone" — that is
         # a failed scrape, not a dissolved council.
         if incoming_ids:
             await cur.execute(

@@ -67,7 +67,7 @@ async def _store_source_records(request_id: str, records: list[dict]) -> None:
 
 
 async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, records: list[dict]) -> None:
-    """Derive the posts this scrape implies and write them, so review has real seats to
+    """Derive the posts this scrape implies and write them, so review has real posts to
     point a person at.
 
     Named for the write it performs, per the persistence verbs: `find_or_create_*` is insert
