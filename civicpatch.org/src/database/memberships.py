@@ -148,9 +148,9 @@ async def unmatched_text() -> list[dict]:
             JOIN posts p ON p.id = m.post_id
             CROSS JOIN LATERAL unnest(m.unmatched_text) AS term
             WHERE m.closed_at IS NULL
-            GROUP BY btrim(lower(term), ' .,;:-')
+            GROUP BY lower(term)
             ORDER BY count(DISTINCT p.jurisdiction_ocdid) DESC, count(*) DESC,
-                     btrim(lower(term), ' .,;:-')
+                     lower(term)
             LIMIT %s
             """,
             (TRIAGE_LIMIT,),

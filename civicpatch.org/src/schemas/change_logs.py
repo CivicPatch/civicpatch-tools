@@ -24,6 +24,17 @@ class PersonChange(BaseModel):
     payload: PersonChangePayload
 
 
+class PostChangePayload(BaseModel):
+    """`change_logs` has no `post_id` column, so the anchor rides in the payload — the same
+    way person events carry `person_name`. `label` is what a reader recognises a seat by."""
+
+    post_id: str
+    role_id: str
+    division_ocdid: str
+    label: str | None = None
+    fields: list[FieldChange] = []
+
+
 class JurisdictionChangePayload(BaseModel):
     jurisdiction_ocdid: str
     jurisdiction_name: str

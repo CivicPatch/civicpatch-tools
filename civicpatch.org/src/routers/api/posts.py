@@ -28,6 +28,7 @@ def get_router() -> APIRouter:
             body.division_ocdid,
             body.label,
             body.headcount,
+            user.user_id,
         )
         if post_id is None:
             return JSONResponse(
@@ -44,7 +45,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if not await posts.update(post_id, body.label, body.headcount):
+        if not await posts.update(post_id, body.label, body.headcount, user.user_id):
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
 
@@ -57,7 +58,7 @@ def get_router() -> APIRouter:
     ):
         """Remove a post nobody has ever held — what is deletable is exactly what no person
         has endorsed."""
-        if not await posts.delete(post_id):
+        if not await posts.delete(post_id, user.user_id):
             return JSONResponse(
                 {"error": "No such post, or it has members and is history."},
                 status_code=409,
