@@ -287,3 +287,51 @@ def test_parse_label_keeps_unrelated_fragments_apart():
     """Joining them would produce one nonsense term instead of two real ones."""
     parsed = parse_label("Fire Chief Ward 3 Deputy Marshal", _TAXONOMY)
     assert parsed.unmatched == ["Fire Chief", "Deputy Marshal"]
+
+
+@pytest.mark.parametrize(
+    "label, designations",
+    [
+        # Found 2026-08-20 in real Seattle data via the by-person screen. "Citywide" is an
+        # at-large alias sitting after "Position 8"; its value search reaches backwards and
+        # took the 8 that Position had already consumed, so one office produced two
+        # designations describing the same fact.
+        ("Council Member Position 8 (Citywide, Representing All of Seattle)", ["Position 8"]),
+        # Still resolves when the number is genuinely at-large's own.
+        ("Council Member At-Large 8", ["At-Large 8"]),
+    ],
+)
+def test_parse_label_never_spends_one_word_on_two_designations(label, designations):
+    assert parse_label(label, _TAXONOMY).other_designations == designations
+
+
+def test_parse_label_still_reads_a_value_before_its_key():
+    """The backwards search is why "3rd Ward" works, so the fix must not disable it — only
+    stop it reaching into words an earlier designation already took."""
+    parsed = parse_label("Councilman 3rd Ward", _TAXONOMY)
+
+    assert parsed.division is not None
+    assert (parsed.division.designation, parsed.division.value) == ("ward", "3")
+
+
+@pytest.mark.parametrize(
+    "label, division, designations",
+    [
+        # Two numbered designations, in both orders — each keeps its own value.
+        ("Council Member Ward 3 Place 2", ("ward", "3"), ["Place 2"]),
+        ("Council Member Place 2 Ward 3", ("ward", "3"), ["Place 2"]),
+        # Neither is a division, so both ride on the membership.
+        ("Trustee Position 1 Seat 2", None, ["Position 1", "Seat 2"]),
+        # Commas are separators, not values.
+        ("Council Member, Seat 4, At-Large", None, ["Seat 4"]),
+    ],
+)
+def test_parse_label_gives_each_designation_its_own_value(label, division, designations):
+    """Written 2026-08-20 alongside the one-word-two-designations fix: the fix stops a
+    designation reusing a consumed word, so these pin that it did not also stop a designation
+    claiming a word that is genuinely its own."""
+    parsed = parse_label(label, _TAXONOMY)
+
+    actual = parsed.division and (parsed.division.designation, parsed.division.value)
+    assert actual == division
+    assert parsed.other_designations == designations
