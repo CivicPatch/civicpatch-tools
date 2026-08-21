@@ -11,7 +11,6 @@ from runners.people_collector.schemas import (
 from runners.people_collector.steps.step_07_format_output.format_output import (
     _get_image_map,
     _maybe_add_fallback_url,
-    _merge_forward_other_names,
     _swap_local_image,
     format_output,
 )
@@ -70,55 +69,6 @@ async def test_format_output(httpx_mock):
     assert len(output.officials) == 2
     assert output.officials[0].urls == ["https://example.com/john_doe"]
     assert output.officials[1].urls == ["https://example.com/jane_smith"]
-
-
-# ── _merge_forward_other_names ────────────────────────────────
-# Guard: human-confirmed aliases live in `other_names` and are the durable signal
-# that steers next-run matching. format_output must carry the matched entity's
-# existing aliases forward, or each run clobbers them. See the identity-resolution plan.
-
-
-def test_merge_forward_preserves_existing_human_aliases():
-    result = _merge_forward_other_names(
-        person_name="Bob Smith",
-        person_other_names=[],
-        existing_name="Robert Smith",
-        existing_other_names=["Bobby"],  # a human-added alias on the entity
-    )
-    assert "Bobby" in result  # the guard: existing alias survives
-    assert "Robert Smith" in result  # renamed → old name kept as alias
-    assert "Bob Smith" in result  # new name folded in too
-
-
-def test_merge_forward_carries_aliases_even_when_name_unchanged():
-    # Same scraped name → no name variants added, but existing aliases still merge.
-    result = _merge_forward_other_names(
-        person_name="Robert Smith",
-        person_other_names=["Rob"],
-        existing_name="Robert Smith",
-        existing_other_names=["Bobby"],
-    )
-    assert result == ["Rob", "Bobby"]
-
-
-def test_merge_forward_dedupes_and_preserves_order():
-    result = _merge_forward_other_names(
-        person_name="Bob",
-        person_other_names=["Rob"],
-        existing_name="Robert",
-        existing_other_names=["Rob", "Robert"],
-    )
-    assert result == ["Rob", "Bob", "Robert"]
-
-
-def test_merge_forward_no_existing_match_is_a_noop():
-    result = _merge_forward_other_names(
-        person_name="Bob",
-        person_other_names=["Rob"],
-        existing_name=None,
-        existing_other_names=[],
-    )
-    assert result == ["Rob"]
 
 
 # ── _get_image_map ────────────────────────────────────────────

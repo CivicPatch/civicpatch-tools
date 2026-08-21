@@ -1,8 +1,9 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
-from services.people_collector import handle_submit_pipeline_run_artifacts
+from services.people_collector import _identities, handle_submit_pipeline_run_artifacts
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
+from shared.schemas import Person
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -65,3 +66,52 @@ async def test_handle_submit_pipeline_run_artifacts_does_not_update_status_on_su
 
         assert result == mock_response
         mock_update_status.assert_not_awaited()
+
+
+# --- identities: the prior reconciliation groups a scrape's records against ---
+
+
+def _context_with_identities(identities: dict) -> dict:
+    return {"data": {"research_municipality_step": {"identities": identities}}}
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_identities_come_from_cp_orgs_own_people_when_it_has_any():
+    """Its own published people are the better prior — they are confirmed, and the scrape's
+    research is a guess."""
+    with patch(
+        "services.people_collector.get_people_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=[Person(name="Ann Lee", other_names=["A. Lee"], jurisdiction_ocdid="x")],
+    ):
+        assert await _identities("x", _context_with_identities({"Bob": []})) == {
+            "Ann Lee": ["A. Lee"]
+        }
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_identities_fall_back_to_the_scrapes_own_research():
+    """A jurisdiction cp.org has never published has nobody to compare against, which is
+    exactly when the pipeline's research is worth reading."""
+    with patch(
+        "services.people_collector.get_people_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=[],
+    ):
+        assert await _identities("x", _context_with_identities({"Bob": ["Bobby"]})) == {
+            "Bob": ["Bobby"]
+        }
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_no_prior_at_all_is_not_an_error():
+    """Grouping falls back to fuzzy matching on the records alone."""
+    with patch(
+        "services.people_collector.get_people_for_jurisdiction",
+        new_callable=AsyncMock,
+        return_value=[],
+    ):
+        assert await _identities("x", {}) == {}

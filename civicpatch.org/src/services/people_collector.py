@@ -11,15 +11,24 @@ import lib.storage as storage_service
 from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
 from database.issues import upsert_issue
 from database.roles import get_roles
+from database.people import get_people_for_jurisdiction
 from database.source_records import insert_source_records
 from database import divisions as divisions_db
 from database import organizations as organizations_db
 from database import posts as posts_db
 from database.database import get_pool
+from core.ingest_people import (
+    identified,
+    local_image_basename,
+    officials_from_rows,
+    with_images,
+)
 from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig
+from shared.utils.name_utils import person_list_to_identities
+from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 import logging
@@ -35,6 +44,11 @@ PRIVATE_BUCKET = buckets.DEBUG
 
 INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
 
+# The value `people.status` is checked against; the column's CHECK constraint is the guard.
+ACTIVE_PERSON_STATUS = "active"
+
+IMAGE_MAP_PATTERN = "data_source/*/local/*/images/image_map.json"
+
 logger = logging.getLogger(__name__)
 
 
@@ -48,6 +62,61 @@ async def handle_submit_pipeline_run_artifacts(
         await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
         await upsert_issue(request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}])
         raise
+
+
+async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
+    """Who cp.org already believes is one person — the prior reconciliation groups against.
+
+    Its own published people first. A jurisdiction it has never published has none, and that
+    is exactly when the scrape's own research is worth having: the pipeline persists the whole
+    run context, so its `identities` arrive with the submit whether or not anyone reads them.
+    """
+    existing = await get_people_for_jurisdiction(
+        jurisdiction_ocdid, status=ACTIVE_PERSON_STATUS
+    )
+    if existing:
+        return person_list_to_identities(existing)
+    research = workflow_context.get("data", {}).get("research_municipality_step") or {}
+    return research.get("identities") or {}
+
+
+async def _reconcile_roster(
+    request_id: str, jurisdiction_ocdid: str, rows: list[dict], workflow_context: dict
+) -> list[dict]:
+    """The roster this submit means, whichever shape it arrived in.
+
+    Fatal on failure, unlike the writes below it — everything downstream consumes what this
+    returns, so there is no partial success to preserve.
+    """
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    identities = await _identities(jurisdiction_ocdid, workflow_context)
+    kept, excluded = officials_from_rows(
+        rows, identities, taxonomy, jurisdiction_ocdid, logger
+    )
+    if excluded:
+        names = ", ".join(person["name"] for person in excluded)
+        logger.info(f"[{request_id}] Excluded, no known role: {names}")
+    return await _assign_ids(jurisdiction_ocdid, kept)
+
+
+async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
+    """Give every person in the roster the id cp.org already knows them by, or a fresh one.
+
+    Matched against everyone rather than only the active: an official returning after a term
+    away should get their old id back instead of a second identity.
+
+    The whole roster is resolved, not only the entries arriving without an id.
+    `resolve_people_ids` tracks which ids it has handed out so that two entries cannot claim
+    one person, and that guard only holds if it sees the entries already holding them.
+    """
+    everyone = await get_people_for_jurisdiction(jurisdiction_ocdid)
+    resolutions = resolve_people_ids(
+        roster, everyone, person_list_to_identities(everyone)
+    )
+    return [
+        identified(person, resolution)
+        for person, resolution in zip(roster, resolutions)
+    ]
 
 
 async def _store_source_records(request_id: str, records: list[dict]) -> None:
@@ -207,7 +276,10 @@ async def _handle_submit_pipeline_run_artifacts(
         data_file_path = file_utils.find_file(output_file_dir, "data/*/local/*.yml")
         with open(data_file_path, "r") as f:
             data = yaml_load(f.read())
-        updated_data = await _process_images(debug_file_dir, filenames_to_urls, data)
+        roster = await _reconcile_roster(
+            request.request_id, request.jurisdiction_ocdid, data, workflow_context
+        )
+        updated_data = await _process_images(image_file_dir, filenames_to_urls, roster)
         with open(data_file_path, "w") as f:
             f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
@@ -250,21 +322,49 @@ async def _handle_submit_pipeline_run_artifacts(
         jurisdiction_ocdid=request.jurisdiction_ocdid,
     )
 
-async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: List[Dict]) -> List[Dict]:
-    env = environment.get_env_vars()
-    STORAGE_ENDPOINT = env["STORAGE_ENDPOINT"]
+def _read_image_map(image_file_dir: str) -> dict:
+    """Downloaded filename to the url the photo was scraped from.
 
+    Written by the scrape and shipped in the zip beside the images themselves, so cp.org can
+    resolve provenance without the pipeline having done it first. Absent on a run that found
+    no images, which is not an error.
+    """
+    try:
+        path = file_utils.find_file(image_file_dir, IMAGE_MAP_PATTERN)
+    except FileNotFoundError:
+        return {}
+    with open(path, "r") as f:
+        return json.load(f)
+
+
+async def _process_images(image_file_dir: str, filenames_to_urls: dict, data: List[Dict]) -> List[Dict]:
+    """Turn each person's `local://` reference into the two urls a reader needs: where the
+    photo came from, and where we serve it.
+
+    Both halves happen here. The pipeline used to do the first, because `image_map.json` was
+    on its disk — but that file is in the zip too, so a record can carry its `local://`
+    reference verbatim instead of needing a second field to park it in.
+    """
+    env = environment.get_env_vars()
+    storage_endpoint = env["STORAGE_ENDPOINT"]
+    source_urls = _read_image_map(image_file_dir)
+    cdn_urls = {
+        basename: url.replace(
+            f"{storage_endpoint}/{PUBLIC_BUCKET}",
+            f"https://{PUBLIC_BUCKET}.{INSTANCE_DOMAIN}",
+        )
+        for basename, url in filenames_to_urls.items()
+    }
+
+    unserved = []
     for person in data:
-        raw_cdn_image = person.get("cdn_image")
-        if not raw_cdn_image or not raw_cdn_image.startswith("local://"):
-            continue
-        basename = raw_cdn_image.removeprefix("local://")
-        if basename not in filenames_to_urls:
-            logger.warning("_process_images: basename not in filenames_to_urls for person %s: %s", person.get("id"), raw_cdn_image)
-            continue
-        storage_url = filenames_to_urls[basename]
-        person["cdn_image"] = storage_url.replace(f"{STORAGE_ENDPOINT}/{PUBLIC_BUCKET}", f"https://{PUBLIC_BUCKET}.{INSTANCE_DOMAIN}")
-    return data
+        basename = local_image_basename(person)
+        if basename and basename not in cdn_urls:
+            unserved.append(str(person.get("name")))
+    if unserved:
+        logger.warning(f"_process_images: no uploaded image for {', '.join(unserved)}")
+
+    return [with_images(person, source_urls, cdn_urls) for person in data]
 
 async def _upload_files(source_dir: str, request_id: str, bucket: str) -> dict:
     filename_to_url = {}

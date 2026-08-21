@@ -4,8 +4,7 @@ Moved out of the pipeline's step 05 on 2026-08-21. It lives here because it is c
 the pipeline does this today, cp.org does it once records cross the boundary instead of merged
 people, and both need it while that transition runs.
 
-Pure over records, identities and a taxonomy. Logging is a `Protocol` so `shared` need not
-depend on `pipelines` — the dependency only runs the other way.
+Pure over records, identities and a taxonomy, bar the log it writes to.
 
 `identities` decides which names are one person. It comes from the pipeline's research step
 today, built either from an LLM guess or from cp.org's own published people. That circularity
@@ -14,18 +13,13 @@ gets *shorter* once cp.org reconciles, since it already holds what it would comp
 
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
-from typing import Dict, List, Protocol, Tuple
+from typing import Dict, List, Tuple
 
 from shared.schemas import Person, PersonRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from shared.utils.label_parser import parse_label
+from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy
-
-
-class ReconcileLog(Protocol):
-    def debug(self, message: str) -> None: ...
-    def info(self, message: str) -> None: ...
-    def warning(self, message: str) -> None: ...
 
 
 def merge_labels(records: List[PersonRecord]) -> List[str]:
@@ -53,7 +47,7 @@ def merge_field_to_list(values: List[str]) -> List[str]:
     return list(set(value for value in values if value))
 
 
-def normalize_record(log: ReconcileLog, record: PersonRecord) -> PersonRecord:
+def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
     normalized_phone = (
         phone_utils.normalize_first_phone(record.phone) if record.phone else None
     )
@@ -156,7 +150,7 @@ def get_source_urls(person_records: list[PersonRecord], person: Person) -> list:
 
 
 def merge_records_to_person(
-    log: ReconcileLog,
+    log: Log,
     canonical_name: str,
     records: List[PersonRecord],
     jurisdiction_ocdid: str,
@@ -206,7 +200,7 @@ def reconcile(
     identities: Dict[str, List[str]],
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
-    log: ReconcileLog,
+    log: Log,
 ) -> Tuple[List[Person], List[Person]]:
     """Group a scrape's sightings into people. Returns (kept, excluded).
 

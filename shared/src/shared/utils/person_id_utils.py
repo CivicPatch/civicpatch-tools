@@ -1,5 +1,5 @@
 import uuid
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from shared.schemas import Person
 from shared.utils.email_utils import normalize_email
@@ -87,3 +87,26 @@ def resolve_person_id(
         if email_matches:
             return email_matches
     return matches
+
+
+def merge_forward_other_names(
+    person_name: str,
+    person_other_names: List[str],
+    existing_name: str | None,
+    existing_other_names: List[str],
+) -> List[str]:
+    """Carry the matched entity's confirmed aliases forward onto the freshly-scraped
+    person, so human-added `other_names` survive every run — they are the durable
+    signal that steers the next run's name matching. If the entity was renamed, both
+    the old and new names become aliases too. Deduped, order-preserving.
+
+    Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
+    """
+    # A renamed entity keeps both names as aliases; existing aliases always carry forward.
+    renamed_variants = (
+        [person_name, existing_name]
+        if existing_name and existing_name != person_name
+        else []
+    )
+    existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
+    return list(dict.fromkeys(person_other_names + renamed_variants + existing_aliases))

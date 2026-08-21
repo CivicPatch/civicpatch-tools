@@ -6,13 +6,14 @@ import httpx
 import services.civicpatch_api
 import shared.utils.data_path_utils as data_path_utils
 import utils.log_utils as log_utils
-import utils.people_utils as people_utils
+import shared.utils.people_utils as people_utils
 from domain.models import Official
 from runners.people_collector.schemas import (
     FormatOutputStep,
     PeopleCollectorContext,
     PipelineStatus,
 )
+from shared.utils.person_id_utils import merge_forward_other_names
 from shared.utils.taxonomy import build_taxonomy
 
 
@@ -62,34 +63,11 @@ async def format_output(
                 if isinstance(existing, dict)
                 else existing.other_names
             ) or []
-            person.other_names = _merge_forward_other_names(
+            person.other_names = merge_forward_other_names(
                 person.name, person.other_names, existing_name, existing_other_names
             )
 
     return FormatOutputStep(officials=filtered_people)
-
-
-def _merge_forward_other_names(
-    person_name: str,
-    person_other_names: List[str],
-    existing_name: str | None,
-    existing_other_names: List[str],
-) -> List[str]:
-    """Carry the matched entity's confirmed aliases forward onto the freshly-scraped
-    person, so human-added `other_names` survive every run — they are the durable
-    signal that steers the next run's name matching. If the entity was renamed, both
-    the old and new names become aliases too. Deduped, order-preserving.
-
-    Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
-    """
-    # A renamed entity keeps both names as aliases; existing aliases always carry forward.
-    renamed_variants = (
-        [person_name, existing_name]
-        if existing_name and existing_name != person_name
-        else []
-    )
-    existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
-    return list(dict.fromkeys(person_other_names + renamed_variants + existing_aliases))
 
 
 def _maybe_add_fallback_url(person: Official) -> Official:
