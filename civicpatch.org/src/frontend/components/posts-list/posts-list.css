@@ -38,6 +38,17 @@
     border-color: var(--pico-primary);
 }
 
+.posts-list__today {
+    color: var(--civ-text);
+}
+
+/* Editing is disabled on a dated view; saying so beats a silently missing button. */
+.posts-list__dated-note {
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+    margin: 0.4rem 0 0;
+}
+
 .posts-list__as-of {
     display: flex;
     align-items: center;
@@ -126,10 +137,6 @@
     white-space: nowrap;
 }
 
-.posts-list__post--editing {
-    display: block;
-}
-
 /* Anomalies */
 
 .posts-list__over {
@@ -157,14 +164,14 @@
     color: var(--pico-del-color);
 }
 
-/* Editing one post — label and headcount, the two fields a person owns. */
+/* The edit and add forms, both inside `civ-modal` — the modal owns the title and the
+   Save/Cancel footer, so this styles only the fields. */
 
 .post-edit {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 0.6rem;
-    padding: 0.5rem 0 0.75rem;
 }
 
 .post-edit__field {
@@ -176,11 +183,6 @@
 .post-edit__label {
     font-size: var(--text-xs);
     color: var(--pico-muted-color);
-}
-
-.post-edit__actions {
-    display: flex;
-    gap: 0.4rem;
 }
 
 

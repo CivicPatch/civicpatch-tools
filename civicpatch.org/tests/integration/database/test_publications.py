@@ -263,3 +263,29 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
             await conn.commit()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_machine_dismissal_records_no_user(sentinel_request):
+    """A cancelled run dismisses its own request, and `resolved_by_user_id IS NULL` is what
+    tells that apart from a person deciding not to publish."""
+    await dismiss_request(sentinel_request)
+
+    _, dismissed_at, resolved_by = await _request_state(sentinel_request)
+    assert dismissed_at is not None
+    assert resolved_by is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_dismissing_never_touches_a_published_request(sentinel_request):
+    """The cancel path now fires from the shared status update, which any caller can reach.
+    Publishing has to win: a late CANCELLED must not retire a roster that already went live."""
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    await dismiss_request(sentinel_request)
+
+    published_at, dismissed_at, _ = await _request_state(sentinel_request)
+    assert published_at is not None
+    assert dismissed_at is None

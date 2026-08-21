@@ -83,21 +83,8 @@ const renderRole = (group: RoleGroup, context: RoleContext) => html`
           : ""}
       </span>
     </div>
-    ${context.editing?.kind === "role" && context.editing.id === group.role_id
-      ? html`<civ-post-add
-          .jurisdictionOcdid=${context.jurisdictionOcdid}
-          .roleId=${group.role_id}
-          .roleLabel=${group.role_label}
-        ></civ-post-add>`
-      : ""}
     <ul class="posts-list__posts">
-      ${group.posts.map((post) =>
-        context.editing?.kind === "post" && context.editing.id === post.id
-          ? html`<li class="posts-list__post posts-list__post--editing">
-              <civ-post-edit .post=${post}></civ-post-edit>
-            </li>`
-          : renderPost(post, context.canEdit, context.onEditPost),
-      )}
+      ${group.posts.map((post) => renderPost(post, context.canEdit, context.onEditPost))}
     </ul>
   </section>
 `;
@@ -185,11 +172,18 @@ function PostsList(host: PostsListHost) {
         <button class=${tab(BY_PERSON)} @click=${handleAxis(BY_PERSON)}>By person</button>
       </div>
       <label class="posts-list__as-of">
-        <span>As of</span>
+        <span>Showing</span>
         <input type="date" .value=${asOf} @input=${handleAsOf} />
-        ${dated ? html`<button class="posts-list__edit" @click=${handleNow}>now</button>` : ""}
+        ${dated
+          ? html`<button class="posts-list__edit" @click=${handleNow}>back to today</button>`
+          : html`<span class="posts-list__today">today</span>`}
       </label>
     </div>
+    ${dated
+      ? html`<p class="posts-list__dated-note">
+          Editing is off while viewing a past date — the forms write to today.
+        </p>`
+      : ""}
   `;
 
   if (error) {
@@ -219,9 +213,28 @@ function PostsList(host: PostsListHost) {
     onAddToRole: (id) => setEditing({ kind: "role", id }),
   };
 
+  // Found across groups rather than rendered inside one, because a modal floats above the
+  // list — slotting it into the row would replace the row it is describing.
+  const editingPost =
+    editing?.kind === "post"
+      ? groups.flatMap((group) => group.posts).find((post) => post.id === editing.id)
+      : undefined;
+  const addingRole =
+    editing?.kind === "role"
+      ? groups.find((group) => group.role_id === editing.id)
+      : undefined;
+
   return html`
     <div class="posts-list" @saved=${closeAndReload} @added=${closeAndReload} @cancel=${close}>
       ${controls}
+      ${editingPost ? html`<civ-post-edit .post=${editingPost}></civ-post-edit>` : ""}
+      ${addingRole
+        ? html`<civ-post-add
+            .jurisdictionOcdid=${ocdid ?? ""}
+            .roleId=${addingRole.role_id}
+            .roleLabel=${addingRole.role_label}
+          ></civ-post-add>`
+        : ""}
       ${axis === BY_POST
         ? groups.map((group) => renderRole(group, context))
         : data.byPerson.map(renderPerson)}

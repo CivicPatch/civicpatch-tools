@@ -1,7 +1,9 @@
 import "./posts-list.css";
+import "../basic/modal.js";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { updatePost } from "../../api.js";
+import { divisionName, divisionKey } from "./posts-model.js";
 import type { PostRow } from "./posts-model.js";
 
 type PostEditHost = HTMLElement & {
@@ -47,8 +49,12 @@ function PostEdit(host: PostEditHost) {
     }
   };
 
-  return html`
+  const fields = html`
     <div class="post-edit">
+      <p class="post-edit__subject">
+        ${post?.role_id} · ${divisionName(post?.division_ocdid ?? "")}
+        <span class="post-edit__key">${divisionKey(post?.division_ocdid ?? "")}</span>
+      </p>
       <label class="post-edit__field">
         <span class="post-edit__label">Label</span>
         <input
@@ -63,13 +69,23 @@ function PostEdit(host: PostEditHost) {
         <input type="number" min="1" .value=${headcount} @input=${handleHeadcountInput} />
       </label>
       ${error ? html`<p class="posts-list__error">${error}</p>` : ""}
-      <div class="post-edit__actions">
-        <button class="action-btn" ?disabled=${saving} @click=${handleSave}>
-          ${saving ? "Saving…" : "Save"}
-        </button>
-        <button class="action-btn action-btn--muted" @click=${handleCancel}>Cancel</button>
-      </div>
     </div>
+  `;
+
+  const footer = html`
+    <button class="btn btn-sm secondary" @click=${handleCancel}>Cancel</button>
+    <button class="btn btn-sm" ?disabled=${saving} @click=${handleSave}>
+      ${saving ? "Saving…" : "Save"}
+    </button>
+  `;
+
+  return html`
+    <civ-modal
+      .title=${"Edit post"}
+      .content=${fields}
+      .footer=${footer}
+      .modalProps=${{ open: true, onClose: handleCancel }}
+    ></civ-modal>
   `;
 }
 

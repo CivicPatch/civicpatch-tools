@@ -118,7 +118,41 @@ def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
     }
 
 
-async def update_pipeline_run_and_publish(
+# Terminal statuses that produce nothing to review. Their requests are dismissed so they stop
+# counting as pending work.
+ENDED_WITHOUT_A_ROSTER = frozenset(
+    {PipelineRunStatus.CANCELLED, PipelineRunStatus.ERROR}
+)
+
+
+async def finalize_pipeline_run(
+    request_id: str, status: str, jurisdiction_ocdid: Optional[str]
+) -> None:
+    """A run reached a state it will not leave. Settle what was waiting on it.
+
+    Only terminal statuses get here — a run at 40% has nothing to settle.
+
+    A run that ended without a roster has to leave the review queue. Otherwise its request
+    derives as `pending` forever, and pending requests are what populate the jurisdiction
+    page's list *and* disable roster editing — so every failure left a permanent blocker
+    behind. Measured before widening this: 8 pending ERROR runs, none carrying a roster.
+
+    `SUCCESS` and `RESOLVED` are excluded because they produce something to review. Named
+    rather than written as "not SUCCESS", so a status added later has to be considered instead
+    of silently inheriting dismissal.
+
+    No user id: a machine giving up is exactly what `resolved_by_user_id IS NULL` distinguishes
+    from a person declining. A retry is a new run and a new request; this one is over either
+    way.
+    """
+    if status in ENDED_WITHOUT_A_ROSTER:
+        await dismiss_request(request_id)
+
+    if jurisdiction_ocdid:
+        await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, request_id)
+
+
+async def apply_pipeline_run_status(
     request_id: str,
     status: str,
     progress: Optional[int],
@@ -126,10 +160,20 @@ async def update_pipeline_run_and_publish(
     error_type: Optional[str] = None,
     error_detail: Optional[dict] = None,
 ):
+    """A run reported a status — store it, settle it if it is over, tell the page.
+
+    Named for the input because the consequences differ by status: every report is stored and
+    pushed to the `pipeline_run_status` topic the jurisdiction page listens on, but only a
+    terminal one finalizes anything.
+
+    Not "publish", which everywhere else here means a roster going live — the opposite of what
+    a cancelled run does.
+    """
     await update_pipeline_run_status(
         request_id=request_id, status=status, progress=progress
     )
 
+    # The reporter does not always know it; the run's own arguments do.
     if not jurisdiction_ocdid:
         pipeline_run = await get_pipeline_run(request_id)
         jurisdiction_ocdid = (
@@ -137,9 +181,11 @@ async def update_pipeline_run_and_publish(
             if pipeline_run
             else None
         )
+
+    if status in TERMINAL_PIPELINE_RUN_STATUSES:
+        await finalize_pipeline_run(request_id, status, jurisdiction_ocdid)
+
     if jurisdiction_ocdid:
-        if status in TERMINAL_PIPELINE_RUN_STATUSES:
-            await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, request_id)
         await pubsub_service.publish(
             f"pipeline_run_status:{jurisdiction_ocdid}",
             json.dumps(
@@ -342,7 +388,7 @@ def get_router(api_key_header):
         ),
     ):
         background_tasks.add_task(
-            update_pipeline_run_and_publish,
+            apply_pipeline_run_status,
             request_id,
             request.status,
             request.progress,

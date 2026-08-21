@@ -1,4 +1,5 @@
 import "./posts-list.css";
+import "../basic/modal.js";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { createPost } from "../../api.js";
@@ -61,16 +62,15 @@ function PostAdd(host: PostAddHost) {
     }
   };
 
-  return html`
+  const fields = html`
     <div class="post-edit">
-      <span class="post-edit__role">${host.roleLabel}</span>
       <label class="post-edit__field">
         <span class="post-edit__label">Division</span>
         <select .value=${designation} @change=${handleDesignation}>
           ${ADDABLE_DIVISIONS.map(
-            (option) => html`<option value=${option}>${
-              option === AT_LARGE_DIVISION ? divisionName("") : option.replace(/_/g, " ")
-            }</option>`,
+            (option) => html`<option value=${option}>
+              ${option === AT_LARGE_DIVISION ? divisionName("") : option.replace(/_/g, " ")}
+            </option>`,
           )}
         </select>
       </label>
@@ -94,14 +94,27 @@ function PostAdd(host: PostAddHost) {
         <input type="number" min="1" .value=${headcount} @input=${handleHeadcount} />
       </label>
       ${error ? html`<p class="posts-list__error">${error}</p>` : ""}
-      <div class="post-edit__actions">
-        <button class="action-btn" ?disabled=${saving || (needsValue && !value.trim())}
-                @click=${handleSave}>
-          ${saving ? "Adding…" : "Add"}
-        </button>
-        <button class="action-btn action-btn--muted" @click=${handleCancel}>Cancel</button>
-      </div>
     </div>
+  `;
+
+  const footer = html`
+    <button class="btn btn-sm secondary" @click=${handleCancel}>Cancel</button>
+    <button
+      class="btn btn-sm"
+      ?disabled=${saving || (needsValue && !value.trim())}
+      @click=${handleSave}
+    >
+      ${saving ? "Adding…" : "Add"}
+    </button>
+  `;
+
+  return html`
+    <civ-modal
+      .title=${`Add a ${host.roleLabel ?? "post"}`}
+      .content=${fields}
+      .footer=${footer}
+      .modalProps=${{ open: true, onClose: handleCancel }}
+    ></civ-modal>
   `;
 }
 
