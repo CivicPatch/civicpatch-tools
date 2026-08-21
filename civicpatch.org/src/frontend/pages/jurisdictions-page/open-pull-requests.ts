@@ -22,6 +22,9 @@ export interface HistoryEntry {
   request_type?: string | null;
   open_data_url?: string | null;
   review_status?: string | null;
+  // Derived server-side. The page used to answer this itself by testing the raw pipeline
+  // status against a terminal set it kept its own copy of, so the two could drift.
+  is_running?: boolean;
 }
 
 export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>

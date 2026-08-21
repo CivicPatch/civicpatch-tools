@@ -14,7 +14,6 @@ import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
 import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } from "../../api.js";
-import { TERMINAL_PIPELINE_RUN_STATUSES } from "../../components/pipeline-run-status.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./officials-editor.js";
 import {
@@ -125,7 +124,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const entries: HistoryEntry[] = history?.data ?? [];
   // Split rather than decorate: a scrape in flight is a different thing from one that has
   // run, and the archive row for it would carry a meaningless percentage bar.
-  const liveEntry = entries.find((e: any) => !TERMINAL_PIPELINE_RUN_STATUSES.has(e.pipeline_run_status));
+  const liveEntry = entries.find((entry) => entry.is_running);
   const pastEntries = entries.filter((e: any) => e !== liveEntry);
   const openPrs = pendingReviews(entries);
   // Blocked independently: each kind only locks the file it already has in flight.
@@ -183,18 +182,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
     (j: any) => (j.pipeline_run_status || "").toUpperCase() === "SUCCESS",
   )?.created_at;
 
-  const mostRecentRun: any = entries[0];
-  const effectiveStatus =
-    pipelineRunStatus && mostRecentRun && pipelineRunStatus.request_id === mostRecentRun.request_id
-      ? pipelineRunStatus.status
-      : mostRecentRun?.pipeline_run_status;
   // null until the reader touches it, then it is theirs. Binding ?open straight to the run
   // state made cancelling slam the panel shut: the run goes terminal and lit closes it.
   const [userOpenedScrapes, setScrapesPanelOpen] = useState<boolean | null>(null);
 
-  const isRunInProgress =
-    (pipelineRunStatus && !TERMINAL_PIPELINE_RUN_STATUSES.has(pipelineRunStatus.status)) ||
-    (!!effectiveStatus && !TERMINAL_PIPELINE_RUN_STATUSES.has(effectiveStatus));
+  // Both sources answer it themselves now — the socket payload and the history row carry
+  // `is_running`, so this no longer has to know which statuses are terminal.
+  const isRunInProgress = pipelineRunStatus?.is_running ?? !!liveEntry;
 
   const scrapesPanelOpen = userOpenedScrapes ?? !!isRunInProgress;
 

@@ -2,7 +2,6 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils.js";
 import { cancelPipelineRun } from "../../../api.js";
-import { TERMINAL_PIPELINE_RUN_STATUSES } from "../../../components/pipeline-run-status.js";
 import "./history-modal.js";
 import "../../../components/status-badge.js";
 import { REQUEST_TYPE } from "../open-pull-requests.ts";
@@ -218,7 +217,7 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
                       ` : null}
                     </div>
                   </td>
-                  ${canCancel && !TERMINAL_PIPELINE_RUN_STATUSES.has(item.pipeline_run_status) ? html`
+                  ${canCancel && item.is_running ? html`
                     <td>
                       <button
                         class="sh-cancel-btn"

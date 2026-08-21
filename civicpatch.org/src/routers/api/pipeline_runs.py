@@ -189,7 +189,14 @@ async def apply_pipeline_run_status(
         await pubsub_service.publish(
             f"pipeline_run_status:{jurisdiction_ocdid}",
             json.dumps(
-                {"request_id": request_id, "status": status, "progress": progress}
+                {
+                    "request_id": request_id,
+                    "status": status,
+                    "progress": progress,
+                    # Same answer the history rows carry, so a live update and a fetched row
+                    # cannot disagree about whether the scrape is still going.
+                    "is_running": status not in TERMINAL_PIPELINE_RUN_STATUSES,
+                }
             ),
         )
 

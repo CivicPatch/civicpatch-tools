@@ -7,9 +7,6 @@ export const PIPELINE_RUN_STATUS = {
   CANCELLED: "CANCELLED",
 };
 
-export const TERMINAL_PIPELINE_RUN_STATUSES = new Set([
-  PIPELINE_RUN_STATUS.COMPLETED,
-  PIPELINE_RUN_STATUS.ERROR,
-  PIPELINE_RUN_STATUS.RESOLVED,
-  PIPELINE_RUN_STATUS.CANCELLED,
-]);
+// The terminal set used to live here too, duplicating `shared/utils/statuses.py`. Both the
+// history rows and the socket payload now carry `is_running`, so nothing on this side has to
+// know which statuses end a run.
