@@ -13,7 +13,7 @@ which is what the roster timeline reads. One *open* membership per person per bo
 gone, not when they went.
 """
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from database import posts
 from database.change_logs import record_change
@@ -126,12 +126,17 @@ async def close_absent(
     return cur.rowcount
 
 
-async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    """Open memberships with the post they sit on and who holds it — the person-axis read.
+async def list_for_jurisdiction(
+    cur, jurisdiction_ocdid: str, as_of: date | None = None
+) -> list[dict]:
+    """Memberships with the post they sit on and who holds it — the person-axis read.
 
     Ordered by person, because that is the axis: the post-axis read already groups the other
     way. `person_name` is joined in for the same reason the change-log payloads carry it —
     an id does not render.
+
+    `as_of` is the same window `posts.list_for_jurisdiction` uses, so the two axes answer the
+    same question about the same moment. None is now, which is `closed_at IS NULL`.
     """
     await cur.execute(
         """
@@ -142,20 +147,24 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN people pe ON pe.id = m.person_id
-        WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+        WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+          AND m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
+          AND (m.closed_at IS NULL OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
         ORDER BY pe.data->>'name', p.role_id
         """,
-        (jurisdiction_ocdid,),
+        {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of},
     )
     columns = [column.name for column in cur.description or []]
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
-async def list_by_person(jurisdiction_ocdid: str) -> list[dict]:
-    """The roster by person rather than by post. Open memberships only."""
+async def list_by_person(
+    jurisdiction_ocdid: str, as_of: date | None = None
+) -> list[dict]:
+    """The roster by person rather than by post. `as_of` is None for now."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await list_for_jurisdiction(cur, jurisdiction_ocdid)
+        return await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
 
 
 async def unmatched_text() -> list[dict]:

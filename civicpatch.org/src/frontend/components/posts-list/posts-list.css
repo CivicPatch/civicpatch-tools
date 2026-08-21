@@ -6,6 +6,46 @@
     gap: 1.25rem;
 }
 
+/* Axis toggle and as-of */
+
+.posts-list__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.posts-list__axis {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.posts-list__tab {
+    font-size: var(--text-xs);
+    background: none;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
+    padding: 0.15rem 0.5rem;
+    color: var(--pico-muted-color);
+    cursor: pointer;
+}
+
+.posts-list__tab--on {
+    color: var(--civ-text);
+    border-color: var(--pico-primary);
+}
+
+.posts-list__as-of {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--text-xs);
+    color: var(--pico-muted-color);
+}
+
 /* Role groups */
 
 .posts-list__role {

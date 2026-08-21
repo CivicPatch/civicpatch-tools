@@ -191,8 +191,9 @@ export const fetchPosts = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
-export const fetchMemberships = async (jurisdictionOcdid) => {
-  const res = await fetch(`${API_URL}/api/v1/memberships/${jurisdictionOcdid}`, {
+export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
+  const query = asOf ? `?as_of=${asOf}` : "";
+  const res = await fetch(`${API_URL}/api/v1/memberships/${jurisdictionOcdid}${query}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

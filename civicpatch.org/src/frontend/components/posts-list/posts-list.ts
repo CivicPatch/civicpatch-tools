@@ -5,8 +5,14 @@ import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { fetchPosts, fetchMemberships } from "../../api.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
-import { groupPostsByRole, divisionName, divisionKey } from "./posts-model.js";
-import type { RoleGroup, PostRow } from "./posts-model.js";
+import {
+  groupPostsByRole,
+  groupMembershipsByPerson,
+  divisionName,
+  divisionKey,
+  postTitle,
+} from "./posts-model.js";
+import type { RoleGroup, PostRow, PersonRow } from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -16,6 +22,12 @@ type PostsListHost = HTMLElement & {
 };
 
 const HOLDER_SEPARATOR = " · ";
+
+// "The same rows" — one dataset, two axes. A toggle rather than separate screens, because the
+// question ("who holds what") is identical and only the grouping differs.
+const BY_POST = "post";
+const BY_PERSON = "person";
+type Axis = typeof BY_POST | typeof BY_PERSON;
 
 // What the screen is doing to one post. Two booleans would allow editing and adding at once,
 // which the layout has no room for and the user never means.
@@ -89,28 +101,48 @@ const renderRole = (group: RoleGroup, context: RoleContext) => html`
   </section>
 `;
 
+const renderPerson = (row: PersonRow) => html`
+  <section class="posts-list__role">
+    <h3 class="posts-list__role-name">${row.person_name}</h3>
+    <ul class="posts-list__posts">
+      ${row.posts.map(
+        (membership) => html`<li class="posts-list__post">
+          <span class="posts-list__holders">${postTitle(membership)}</span>
+        </li>`,
+      )}
+    </ul>
+  </section>
+`;
+
 function PostsList(host: PostsListHost) {
   const [editing, setEditing] = useState<Editing>(null);
+  const [axis, setAxis] = useState<Axis>(BY_POST);
+  // Empty means now. Held as the raw input value so the field and the query cannot disagree.
+  const [asOf, setAsOf] = useState("");
   const ocdid = host.jurisdictionOcdid;
   const canEdit = !!host.canEdit;
 
   // Two reads because the screen is post-shaped but lists people: posts carry capacity,
   // memberships carry who is in them.
-  const {
-    data: groups,
-    error,
-    reload,
-  } = useAsyncData<RoleGroup[]>(async () => {
-    if (!ocdid) return [];
+  const { data, error, reload } = useAsyncData<{
+    byRole: RoleGroup[];
+    byPerson: PersonRow[];
+  }>(async () => {
+    if (!ocdid) return { byRole: [], byPerson: [] };
+    const on = asOf || null;
     const [postsBody, membershipsBody] = await Promise.all([
-      fetchPosts(ocdid),
-      fetchMemberships(ocdid),
+      fetchPosts(ocdid, on),
+      fetchMemberships(ocdid, on),
     ]);
     const posts = postsBody.data.organizations.flatMap(
       (organization: { posts: unknown[] }) => organization.posts,
     );
-    return groupPostsByRole(posts, membershipsBody.data.memberships);
-  }, [ocdid]);
+    const memberships = membershipsBody.data.memberships;
+    return {
+      byRole: groupPostsByRole(posts, memberships),
+      byPerson: groupMembershipsByPerson(memberships),
+    };
+  }, [ocdid, asOf]);
 
   const closeAndReload = () => {
     setEditing(null);
@@ -118,20 +150,54 @@ function PostsList(host: PostsListHost) {
   };
   const close = () => setEditing(null);
 
+  const handleAxis = (next: Axis) => () => {
+    setEditing(null);
+    setAxis(next);
+  };
+  const handleAsOf = (e: Event) => setAsOf((e.target as HTMLInputElement).value);
+  const handleNow = () => setAsOf("");
+
+  // Editing is off while looking at the past: the forms write to the present, so a Save from
+  // a dated view would silently apply to now.
+  const dated = asOf !== "";
+  const tab = (which: Axis) =>
+    axis === which ? "posts-list__tab posts-list__tab--on" : "posts-list__tab";
+
+  const controls = html`
+    <div class="posts-list__controls">
+      <div class="posts-list__axis">
+        <button class=${tab(BY_POST)} @click=${handleAxis(BY_POST)}>By post</button>
+        <button class=${tab(BY_PERSON)} @click=${handleAxis(BY_PERSON)}>By person</button>
+      </div>
+      <label class="posts-list__as-of">
+        <span>As of</span>
+        <input type="date" .value=${asOf} @input=${handleAsOf} />
+        ${dated ? html`<button class="posts-list__edit" @click=${handleNow}>now</button>` : ""}
+      </label>
+    </div>
+  `;
+
   if (error) {
     return html`<p class="posts-list__error">Could not load posts: ${error}</p>`;
   }
-  if (groups === null) {
+  if (data === null) {
     return html`<p class="posts-list__empty">Loading…</p>`;
   }
+
+  const groups = data.byRole;
   if (groups.length === 0) {
-    return html`<p class="posts-list__empty">
-      No posts yet — they are derived when a scrape is published.
-    </p>`;
+    return html`<div class="posts-list">
+      ${controls}
+      <p class="posts-list__empty">
+        ${dated
+          ? "No posts on that date."
+          : "No posts yet — they are derived when a scrape is published."}
+      </p>
+    </div>`;
   }
 
   const context: RoleContext = {
-    canEdit,
+    canEdit: canEdit && !dated,
     editing,
     jurisdictionOcdid: ocdid ?? "",
     onEditPost: (id) => setEditing({ kind: "post", id }),
@@ -140,7 +206,10 @@ function PostsList(host: PostsListHost) {
 
   return html`
     <div class="posts-list" @saved=${closeAndReload} @added=${closeAndReload} @cancel=${close}>
-      ${groups.map((group) => renderRole(group, context))}
+      ${controls}
+      ${axis === BY_POST
+        ? groups.map((group) => renderRole(group, context))
+        : data.byPerson.map(renderPerson)}
     </div>
   `;
 }
