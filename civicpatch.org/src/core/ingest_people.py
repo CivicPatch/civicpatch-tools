@@ -1,12 +1,10 @@
 """One roster, whichever shape the scrape sent it in.
 
-A submit carries either merged `Official`s — what the pipeline produced while it still did
-its own merging — or `PersonRecord`s, one per sighting. Both converge to `Official` here, so
-nothing downstream has to know which arrived.
+A submit carries `PersonRecord`s, one per sighting, or merged `Official`s from a run that
+predates the change. Both converge to `Official` here, so nothing downstream has to know
+which arrived.
 
-Pure: rows and a taxonomy in, officials out. Both halves are the pipeline's own code, moved
-rather than rewritten — `shared.utils.reconcile` is step 05 and `person_to_official` is what
-step 07 rendered with — so moving the work does not change what it decides.
+Pure: rows and a taxonomy in, officials out.
 """
 
 from shared.schemas import Person, PersonRecord
@@ -24,8 +22,13 @@ def officials_from_rows(
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> list[dict]:
-    """The roster a submit implies. Everyone the scrape saw is in it.
+) -> tuple[list[dict], dict[str, list[dict]]]:
+    """The roster a submit implies, and the records behind each of its people.
+
+    Keyed by name, which is the canonical one `reconcile` grouped on, so the caller can join
+    on the roster entry it just gave an id to.
+
+    Everyone the scrape saw is in it.
 
     Whether a post is one we diff against is `posts.is_tracked`, decided when the post is
     minted — not here, and not by dropping the person.
@@ -35,14 +38,19 @@ def officials_from_rows(
     does not model, and validating a passthrough row would drop every one of them.
     """
     if not rows:
-        return []
+        return [], {}
 
     if _is_official(rows[0]):
-        return rows
+        return rows, {}
 
-    records = [PersonRecord(**row) for row in rows]
-    people = reconcile(records, identities, taxonomy, jurisdiction_ocdid, log)
-    return _render(people, taxonomy)
+    reconciled = reconcile(
+        [PersonRecord(**row) for row in rows], identities, taxonomy, jurisdiction_ocdid, log
+    )
+    records_by_name = {
+        person.name: [record.model_dump() for record in records]
+        for person, records in reconciled
+    }
+    return _render([person for person, _ in reconciled], taxonomy), records_by_name
 
 
 def identified(person: dict, resolution: dict) -> dict:
@@ -105,9 +113,30 @@ def _is_official(row: dict) -> bool:
     return "office" in row
 
 
+# Below this, a "name" is a label the extractor read as a person — "Vacant", "Mayor",
+# a heading. Two words is a thin test and it has never been measured, but a scrape that
+# reports the word "Vacant" as a councillor is worse than one that reports nobody.
+MINIMUM_NAME_WORDS = 2
+
+
+def named_like_a_person(person: Person) -> bool:
+    return len(person.name.split()) >= MINIMUM_NAME_WORDS
+
+
+def with_fallback_url(person: Person) -> Person:
+    """Somewhere to send a reader. Someone with no url of their own gets the page they were
+    found on, which is the next best answer to "where does this come from"."""
+    if person.urls or not person.source_urls:
+        return person
+    return person.model_copy(update={"urls": [person.source_urls[0]]})
+
+
 def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
     """Sorted first, because the roster is rendered to a file a human reads and reviews."""
+    kept = [person for person in people if named_like_a_person(person)]
     return [
-        order_official_fields(person_to_official(person, taxonomy).model_dump())
-        for person in sort_people(people, taxonomy)
+        order_official_fields(
+            person_to_official(with_fallback_url(person), taxonomy).model_dump()
+        )
+        for person in sort_people(kept, taxonomy)
     ]

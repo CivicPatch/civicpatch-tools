@@ -19,7 +19,7 @@ from database.source_records import (
     get_source_records_for_request,
     insert_source_records,
 )
-from shared.schemas import Office, Official, Role, RoleConfig, RoleStatus
+from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
@@ -73,27 +73,28 @@ async def sentinel_request():
     await _cleanup()
 
 
-def _record(name: str, office_name: str) -> Official:
-    return Official(
-        id=f"person-{name.lower()}",
-        name=name,
-        office=Office(name=office_name),
-        jurisdiction_ocdid=_SENTINEL_OCDID,
-        source_urls=[],
-        updated_at="2026-01-01T00:00:00+00:00",
-    )
+def _records(name: str, label: str) -> dict:
+    """One person, one sighting. Keyed by the id reconciliation resolved them to."""
+    return {
+        f"person-{name.lower()}": [
+            {"name": name, "label": label, "source_url": "https://zz.gov/council"}
+        ]
+    }
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_stores_raw_beside_its_derivation(sentinel_request):
     await insert_source_records(
-        sentinel_request, [_record("Ann", "Council Member Place 3 (East Ward)")], TAXONOMY
+        sentinel_request,
+        _SENTINEL_OCDID,
+        _records("Ann", "Council Member Place 3 (East Ward)"),
+        TAXONOMY,
     )
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 1
-    assert rows[0]["raw"]["office"]["name"] == "Council Member Place 3 (East Ward)"
+    assert rows[0]["raw"]["label"] == "Council Member Place 3 (East Ward)"
     assert rows[0]["parsed"]["role"] == "Council Member"
     assert rows[0]["parsed"]["other_designations"] == ["Place 3"]
     assert rows[0]["parsed"]["division_ocdid"].endswith("/ward:east")
@@ -106,9 +107,9 @@ async def test_stores_raw_beside_its_derivation(sentinel_request):
 async def test_a_replay_adds_a_row_rather_than_being_rejected(sentinel_request):
     """The reason there is no unique(request_id, person_id): a parser fix must be able to
     write a fresh derivation for the same person and scrape, leaving the original intact."""
-    record = _record("Ann", "Council Member Place 3")
-    await insert_source_records(sentinel_request, [record], TAXONOMY)
-    await insert_source_records(sentinel_request, [record], TAXONOMY)
+    records = _records("Ann", "Council Member Place 3")
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records, TAXONOMY)
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records, TAXONOMY)
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 2
@@ -122,7 +123,8 @@ async def test_unresolved_labels_are_queryable_out_of_parsed(sentinel_request):
     rather than a separate collection path."""
     await insert_source_records(
         sentinel_request,
-        [_record("Bob", "City Attorney"), _record("Cass", "Mayor")],
+        _SENTINEL_OCDID,
+        {**_records("Bob", "City Attorney"), **_records("Cass", "Mayor")},
         TAXONOMY,
     )
 
@@ -144,12 +146,15 @@ async def test_evidence_for_an_unknown_request_is_rejected():
     """The FK is what stops orphan evidence accumulating against a scrape that never ran."""
     with pytest.raises(ForeignKeyViolation):
         await insert_source_records(
-            "00000000-0000-0000-0000-000000000000", [_record("Ann", "Mayor")], TAXONOMY
+            "00000000-0000-0000-0000-000000000000",
+            _SENTINEL_OCDID,
+            _records("Ann", "Mayor"),
+            TAXONOMY,
         )
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_no_records_writes_nothing(sentinel_request):
-    assert await insert_source_records(sentinel_request, [], TAXONOMY) == 0
+    assert await insert_source_records(sentinel_request, _SENTINEL_OCDID, {}, TAXONOMY) == 0
     assert await get_source_records_for_request(sentinel_request) == []

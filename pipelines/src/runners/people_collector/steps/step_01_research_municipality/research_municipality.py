@@ -3,11 +3,8 @@
 Three things steer the rest of the run: which names are one person (`identities`), which
 offices to look for (`known_roles`), and which divisions they sit in (`target_divisions`).
 
-All three are read from cp.org rather than worked out here. The roles and divisions come off
-its `posts`, which is where they are decided — the pipeline no longer resolves a label against
-the taxonomy, because that answer belongs to whoever owns the taxonomy. Gemini is the
-cold-start path only, and it now supplies names alone: a jurisdiction cp.org has never
-published has nobody to compare against, which is the one case a guess is worth having.
+Roles and divisions come off cp.org's `posts`, which is where they are decided. Research is
+the cold-start path only, for a jurisdiction with no posts to read them from.
 """
 
 from typing import Dict, List
@@ -39,9 +36,8 @@ async def research_municipality(
     """What to look for, and which names are one person.
 
     The split is on posts, not people: a jurisdiction with posts has been scraped before, so
-    the offices are already parsed and stored and there is nothing to ask anyone. Only a first
-    scrape researches, and what comes back is parsed here with the same parser cp.org uses —
-    once, into the parts every later run reads off the database instead.
+    the offices are already parsed and stored. Only a first scrape researches, and what comes
+    back is parsed with the same parser cp.org uses.
     """
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
@@ -92,8 +88,7 @@ def _parts_from_research(
     """The offices research named, split into the parts a scrape steers by.
 
     The same `parse_label` cp.org runs at ingest, so a first scrape and every later one agree
-    about what a label means. This is the only place the pipeline parses anything: from the
-    second scrape on, the answer is already in `posts`.
+    about what a label means. The only place the pipeline parses anything.
     """
     taxonomy = build_taxonomy(role_config)
     parsed = [parse_label(person.label, taxonomy) for person in researched if person.label]

@@ -1,19 +1,14 @@
-"""Grouping a scrape's sightings into people.
-
-Moved out of the pipeline's step 05 on 2026-08-21. It lives here because it is changing hands:
-the pipeline does this today, cp.org does it once records cross the boundary instead of merged
-people, and both need it while that transition runs.
+"""Grouping a scrape's sightings into people. Run by cp.org at ingest.
 
 Pure over records, identities and a taxonomy, bar the log it writes to.
 
-`identities` decides which names are one person. It comes from the pipeline's research step
-today, built either from an LLM guess or from cp.org's own published people. That circularity
-gets *shorter* once cp.org reconciles, since it already holds what it would compare against.
+`identities` decides which names are one person: cp.org's own published people where it has
+them, else what the scrape's research step turned up.
 """
 
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from shared.schemas import Person, PersonRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
@@ -201,14 +196,11 @@ def reconcile(
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> List[Person]:
-    """Group a scrape's sightings into people. Everyone seen comes back.
+) -> List[Tuple[Person, List[PersonRecord]]]:
+    """Group a scrape's sightings into people, each with the records behind it.
 
-    This used to drop anyone whose labels resolved to no known role. That could not tell an
-    out-of-scope title ("Police Chief") from an in-scope one the taxonomy is missing
-    ("Selectman"), and recorded neither — throwing away the one signal that is fixable once
-    for every jurisdiction at a time. Scope now lives on the post, as `posts._is_tracked`, where
-    it can differ per place: a clerk is elected in some towns and appointed in others.
+    Everyone seen comes back: scope lives on the post, as `posts._is_tracked`, not on whether
+    a label resolved.
     """
     canonical_map = name_utils.build_canonical_map(
         [{"name": r.name} for r in records], identities
@@ -221,6 +213,6 @@ def reconcile(
     groups = merge_weak_tie_groups(groups, taxonomy)
 
     return [
-        merge_records_to_person(log, canonical_name, group, jurisdiction_ocdid)
+        (merge_records_to_person(log, canonical_name, group, jurisdiction_ocdid), group)
         for canonical_name, group in groups.items()
     ]

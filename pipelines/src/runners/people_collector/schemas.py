@@ -6,7 +6,6 @@ from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
 from shared.schemas import (
     ExtractedPerson,
-    Issue,
     PersonRecord,
     PipelineRunConfig,
     RoleConfig,
@@ -190,9 +189,7 @@ class ResearchedPerson(BaseModel):
     """A name research turned up, and the office it named them under.
 
     `label` is verbatim, the same contract `ExtractedPerson.label` holds: one string as the
-    source writes it, undecomposed. It used to be `roles` and `designations`, split by the
-    model and resolved here against a taxonomy the pipeline does not own — the split was the
-    lossy step, and both halves of it belonged elsewhere.
+    source writes it, undecomposed.
 
     Nothing parses it here. On a jurisdiction cp.org has already published, posts *are* the
     parsed answer and this path does not run at all; on a cold start the label is a search
@@ -229,27 +226,18 @@ class PreprocessPageContentStep(BaseModel):
 
 
 class ProcessPageContentStep(BaseModel):
+    # Grouped by the name the page gave, because extraction fills it one page at a time.
     records: PeopleByName
+
+    def all_records(self) -> List[PersonRecord]:
+        return [record for group in self.records.values() for record in group]
+
     progress: ProgressState = ProgressState(
         required_data=0,
         current_data=0,
         has_target_role=False,
         has_target_divisions=False,
     )
-
-
-class MergeRecordsWithinLLMStep(BaseModel):
-    records: List[Person]  # LLM Names to list of Person records
-
-
-class FormatOutputStep(BaseModel):
-    officials: List[Official]
-
-
-class ReviewOutputStep(BaseModel):
-    issues: List[Issue]
-    people_by_source: List[dict]
-    origin_source: str = "google_gemini"
 
 
 class FindJurisdictionUrlStep(BaseModel):
@@ -279,9 +267,6 @@ class PeopleCollectorData(BaseModel):
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
     process_page_content_step: Optional[ProcessPageContentStep] = None
-    merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
-    format_output_step: Optional[FormatOutputStep] = None
-    review_output_step: Optional[ReviewOutputStep] = None
     find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None

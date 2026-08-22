@@ -9,25 +9,20 @@ state instead of recording the thing kept nowhere else: which role won, which di
 resolved, and which labels resolved to nothing.
 """
 
-from shared.schemas import Official
 from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
-from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import Taxonomy
 
 
-def parse_record(record: Official, taxonomy: Taxonomy) -> dict:
-    """The derivation for one Record, as stored in `source_records.parsed`.
-
-    Read from `office.name` rather than a structured field because that string is all the
-    Record carries — splitting it back into labels is the first lossy step being recorded.
-    """
-    labels = office_name_to_labels(record.office.name)
+def parse_record(
+    labels: list[str], jurisdiction_ocdid: str, taxonomy: Taxonomy
+) -> dict:
+    """The derivation for one record, as stored in `source_records.parsed`."""
     parsed = [parse_label(label, taxonomy) for label in labels]
     return {
         "labels": labels,
         "role": _winning_role(parsed, taxonomy),
         "roles": _unique([role for p in parsed for role in p.roles]),
-        "division_ocdid": _division_ocdid(parsed, record.jurisdiction_ocdid),
+        "division_ocdid": _division_ocdid(parsed, jurisdiction_ocdid),
         "other_designations": _unique(
             [d for p in parsed for d in p.other_designations]
         ),

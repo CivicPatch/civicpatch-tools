@@ -21,16 +21,7 @@ from runners.people_collector.steps.step_03_preprocess_page_content.preprocess_p
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     process_page_content,
 )
-from runners.people_collector.steps.step_05_merge_records_within_llm.merge_records_within_llm import (
-    merge_records_within_llm,
-)
-from runners.people_collector.steps.step_07_format_output.format_output import (
-    format_output,
-)
 from runners.people_collector.steps.step_08_cleanup.cleanup import cleanup
-from runners.people_collector.steps.step_09_review_output.review_output import (
-    review_output,
-)
 from runners.people_collector.steps.step_09a_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
 )
@@ -155,7 +146,7 @@ async def scrape_page_transition(
             return _next_context(
                 context, error_step=error_type, error_detail=detail
             ), PipelineStatus.SEND_ERROR
-        return context, PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+        return context, PipelineStatus.CLEANUP
 
     frontier, final_url = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
@@ -233,7 +224,7 @@ async def process_page_content_transition(
         context.data.frontier, [LinkStatus.PREPROCESSED]
     )
     if len(preprocessed_links) == 0:
-        return context, PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+        return context, PipelineStatus.CLEANUP
 
     page_to_process = preprocessed_links[0]
     try:
@@ -272,36 +263,6 @@ async def process_page_content_transition(
     return next_context, next_state
 
 
-async def merge_records_within_llm_transition(
-    _: JobConfig,
-    logger: PipelineRunLogger,
-    context: PeopleCollectorContext,
-    _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = merge_records_within_llm(context)
-    progress = calculate_progress_percentage(context.data, 6)
-    return _next_context(
-        context,
-        progress=progress,
-        merge_records_within_llm_step=result,
-    ), PipelineStatus.FORMAT_OUTPUT
-
-
-async def format_output_transition(
-    _: JobConfig,
-    logger: PipelineRunLogger,
-    context: PeopleCollectorContext,
-    api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    result = await format_output(context, api_client)
-    progress = calculate_progress_percentage(context.data, 8)
-    return _next_context(
-        context,
-        progress=progress,
-        format_output_step=result,
-    ), PipelineStatus.CLEANUP
-
-
 async def cleanup_transition(
     _: JobConfig,
     logger: PipelineRunLogger,
@@ -322,13 +283,13 @@ async def review_output_transition(
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
 ) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    assert context.data.format_output_step is not None
-    officials = context.data.format_output_step.officials
+    assert context.data.process_page_content_step is not None
+    records = context.data.process_page_content_step.all_records()
 
-    if not officials and context.data.find_jurisdiction_url_step is None:
+    if not records and context.data.find_jurisdiction_url_step is None:
         return context, PipelineStatus.FIND_JURISDICTION_URL
 
-    error_type, issues = _collect_pipeline_heuristics(officials)
+    error_type, issues = _collect_pipeline_heuristics(records)
 
     if error_type:
         return _next_context(
@@ -336,12 +297,10 @@ async def review_output_transition(
             error_step=error_type,
         ), PipelineStatus.SEND_ERROR
 
-    result = review_output(context)
     progress = calculate_progress_percentage(context.data, 10)
     return _next_context(
         context,
         progress=progress,
-        review_output_step=result,
         issues=issues,
     ), PipelineStatus.SAVE_OUTPUT
 
@@ -448,7 +407,7 @@ async def find_jurisdiction_url_transition(
 
 # TODO: steps can go backwards, so progress may decrease at certain points
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
-    total_steps = 13
+    total_steps = 11
     if context_data.process_page_content_step is None:
         data_progress = 0
     else:
@@ -465,11 +424,10 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     return int(combined_progress * 100)
 
 
-def _collect_pipeline_heuristics(officials) -> tuple[str | None, list[dict]]:
-    """Unrecognized roles used to be raised here. The raw label now crosses the boundary in
-    the Record itself, so `parse_label` recovers `unmatched` wherever it is needed — a
-    separate channel only duplicated it, one row per term, closable."""
-    if not officials:
+def _collect_pipeline_heuristics(records) -> tuple[str | None, list[dict]]:
+    """Only emptiness. An unrecognized role is not an issue here: the raw label crosses the
+    boundary in the record, so `parse_label` recovers `unmatched` wherever it is needed."""
+    if not records:
         return PipelineRunErrorType.NO_INFO, []
     return None, []
 
@@ -480,8 +438,6 @@ TRANSITION_MAP = {
     PipelineStatus.SCRAPE_PAGE: scrape_page_transition,
     PipelineStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
     PipelineStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
-    PipelineStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
-    PipelineStatus.FORMAT_OUTPUT: format_output_transition,
     PipelineStatus.CLEANUP: cleanup_transition,
     PipelineStatus.REVIEW_OUTPUT: review_output_transition,
     PipelineStatus.SAVE_OUTPUT: save_output_transition,

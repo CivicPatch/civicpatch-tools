@@ -27,7 +27,9 @@ from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig, RoleStatus
+from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
+from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
@@ -82,7 +84,7 @@ async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
 
 async def _reconcile_roster(
     jurisdiction_ocdid: str, rows: list[dict], workflow_context: dict
-) -> list[dict]:
+) -> tuple[list[dict], dict[str, list[dict]]]:
     """The roster this submit means, whichever shape it arrived in.
 
     Fatal on failure, unlike the writes below it — everything downstream consumes what this
@@ -90,8 +92,20 @@ async def _reconcile_roster(
     """
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
     identities = await _identities(jurisdiction_ocdid, workflow_context)
-    roster = officials_from_rows(rows, identities, taxonomy, jurisdiction_ocdid, logger)
-    return await _assign_ids(jurisdiction_ocdid, roster)
+    roster, records_by_name = officials_from_rows(
+        rows, identities, taxonomy, jurisdiction_ocdid, logger
+    )
+    identified_roster = await _assign_ids(jurisdiction_ocdid, roster)
+    return identified_roster, _records_by_person(identified_roster, records_by_name)
+
+
+def _records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, list[dict]]:
+    """Rekey the records from the name they grouped on to the id that name resolved to."""
+    return {
+        person["id"]: records_by_name[person["name"]]
+        for person in roster
+        if person["name"] in records_by_name
+    }
 
 
 async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
@@ -114,17 +128,58 @@ async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]
     ]
 
 
-async def _store_source_records(request_id: str, records: list[dict]) -> None:
-    """Append the evidence this scrape produced: each Record raw, beside its derivation.
+async def _review_summary(roster: list[dict], workflow_context: dict) -> dict:
+    """The issues a reviewer sees.
 
-    Never fatal. `source_records` is what 2.5 derives from and what triage reads unresolved
-    labels out of — losing a scrape's evidence is bad, but failing the submit that carries
-    the people is worse, so this logs and lets the rest of intake finish.
+    Never fatal, like the derived writes below it: a scrape whose people are already stored
+    must not be marked errored over the summary describing them. An empty one reads as "no
+    issues found", which is wrong but recoverable — the roster is on the card either way.
+
+    Every check counts people, so this has to run after reconciliation — a record-shaped
+    roster has several rows per person and would report each of them as somebody new.
+
+    Compared against the research step's own identities, not cp.org's: "absent" means the
+    scrape did not find somebody the run set out to look for, which is a question about that
+    run's prior.
+    """
+    try:
+        return await _build_review_summary(roster, workflow_context)
+    except Exception as e:
+        logger.error(f"Failed to build review summary: {e}", exc_info=True)
+        return {}
+
+
+async def _build_review_summary(roster: list[dict], workflow_context: dict) -> dict:
+    research = workflow_context.get("data", {}).get("research_municipality_step") or {}
+    identities = research.get("identities") or {}
+    summary = build_review_summary(
+        [{"name": name} for name in identities],
+        roster,
+        ReviewInputs(
+            identities=identities,
+            unique_roles=get_unique_roles(RoleConfig(roles=await get_roles())),
+        ),
+        research.get("origin_source") or "google_gemini",
+    )
+    # `Issue` is a model and this goes to `json.dumps`.
+    return {**summary, "issues": [issue.model_dump() for issue in summary["issues"]]}
+
+
+async def _store_source_records(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    records_by_person: dict[str, list[dict]],
+) -> None:
+    """Append the evidence this scrape produced: each sighting raw, beside its derivation.
+
+    Never fatal — losing a scrape's evidence is bad, failing the submit that carries the
+    people is worse.
     """
     try:
         taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
-        officials = [Official(**record) for record in records]
-        stored = await insert_source_records(request_id, officials, taxonomy)
+        stored = await insert_source_records(
+            request_id, jurisdiction_ocdid, records_by_person, taxonomy
+        )
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
         logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
@@ -276,21 +331,23 @@ async def _handle_submit_pipeline_run_artifacts(
         data_file_path = file_utils.find_file(output_file_dir, "data/*/local/*.yml")
         with open(data_file_path, "r") as f:
             data = yaml_load(f.read())
-        roster = await _reconcile_roster(
+        roster, records_by_person = await _reconcile_roster(
             request.jurisdiction_ocdid, data, workflow_context
         )
         updated_data = await _process_images(image_file_dir, filenames_to_urls, roster)
         with open(data_file_path, "w") as f:
             f.write(yaml_dump(updated_data))
         await update_pipeline_run_data(request.request_id, updated_data)
-        await _store_source_records(request.request_id, updated_data)
+        await _store_source_records(
+            request.request_id, request.jurisdiction_ocdid, records_by_person
+        )
         await _find_or_create_posts(request.request_id, request.jurisdiction_ocdid, updated_data)
         await _commit_unreviewed_copy(request.request_id, request.jurisdiction_ocdid)
         await _record_resolved_url(
             request.request_id, request.jurisdiction_ocdid, workflow_context
         )
 
-        review_json = workflow_context.get("data", {}).get("review_output_step", {})
+        review_json = await _review_summary(updated_data, workflow_context)
         await update_pipeline_run_review_json(request.request_id, review_json)
 
         for issue in workflow_context.get("data", {}).get("issues", []):
@@ -341,9 +398,7 @@ async def _process_images(image_file_dir: str, filenames_to_urls: dict, data: Li
     """Turn each person's `local://` reference into the two urls a reader needs: where the
     photo came from, and where we serve it.
 
-    Both halves happen here. The pipeline used to do the first, because `image_map.json` was
-    on its disk — but that file is in the zip too, so a record can carry its `local://`
-    reference verbatim instead of needing a second field to park it in.
+    Both halves happen here, off `image_map.json` and the uploaded files, both out of the zip.
     """
     env = environment.get_env_vars()
     storage_endpoint = env["STORAGE_ENDPOINT"]
