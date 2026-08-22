@@ -1,4 +1,6 @@
-"""Database queries for `source_records` — append-only evidence, one row per sighting.
+"""Database queries for `source_records` — append-only evidence, one row per person.
+
+`raw` holds every sighting behind that person; `parsed` holds the reconciliation across them.
 
 Insert only. Both halves are write-once: a replayed parser fix writes posts/memberships and
 may add a new row, but must never rewrite an existing `parsed`, which would destroy the audit
@@ -20,10 +22,11 @@ async def insert_source_records(
     records_by_person: dict[str, list[dict]],
     taxonomy: Taxonomy,
 ) -> int:
-    """Store one row per sighting, raw beside its derivation.
+    """One row per person: every sighting behind them in `raw`, the reconciliation in `parsed`.
 
-    Several rows can share a `person_id`: that is what reconciliation decided, and the rows
-    are the evidence for it.
+    Person-grain, not sighting-grain, because `parsed` *is* the reconciliation — `parse_record`
+    takes every label and picks one winning role and one division across them. Storing a row
+    per sighting would parse each label alone and throw away the decision cp.org exists to make.
 
     `parsed` is written at submit, not publish: review is the gate, so a reviewer has to be
     able to see the derivation it is approving.
@@ -33,17 +36,20 @@ async def insert_source_records(
             request_id,
             person_id,
             jurisdiction_ocdid,
-            json.dumps(record),
+            json.dumps(records),
             json.dumps(
                 parse_record(
-                    [record["label"]] if record.get("label") else [],
+                    list(
+                        dict.fromkeys(
+                            record["label"] for record in records if record.get("label")
+                        )
+                    ),
                     jurisdiction_ocdid,
                     taxonomy,
                 )
             ),
         )
         for person_id, records in records_by_person.items()
-        for record in records
     ]
     if not rows:
         return 0

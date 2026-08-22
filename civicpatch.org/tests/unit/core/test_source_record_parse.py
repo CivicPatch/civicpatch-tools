@@ -29,6 +29,8 @@ TAXONOMY = build_taxonomy(
             _role("mayor", "Mayor", [], 10),
             _role("mayor-pro-tem", "Mayor Pro Tem", ["Mayor Pro-Tem"], 50),
             _role("council-member", "Council Member", ["Councilman"], 500),
+            _role("deputy-mayor", "Deputy Mayor", [], 40),
+            _role("commissioner", "Commissioner", [], 300),
         ]
     )
 )
@@ -86,3 +88,49 @@ def test_an_unknown_office_name_yields_no_labels():
     assert parsed["labels"] == []
     assert parsed["role"] is None
     assert parsed["unmatched"] == []
+
+
+@pytest.mark.unit
+def test_parts_keep_each_label_with_the_role_it_produced():
+    """The flat keys say what the record decided; `parts` says which label decided it.
+
+    Without this the two questions below are unanswerable: whether a leftover part is
+    redundant with the post, and whether stray text is a genuine gap or the residue of a
+    label that resolved perfectly well.
+    """
+    parsed = parse_record(
+        _labels("Commissioner Of Public Safety - Deputy Mayor"), JURISDICTION, TAXONOMY
+    )
+
+    assert [(part["label"], part["role"]) for part in parsed["parts"]] == [
+        ("Commissioner Of Public Safety", "Commissioner"),
+        ("Deputy Mayor", "Deputy Mayor"),
+    ]
+    # Deputy Mayor (40) usurps Commissioner (300), so the demoted part is the one that
+    # carries text the post label will not.
+    assert parsed["role"] == "Deputy Mayor"
+
+
+@pytest.mark.unit
+def test_residue_stays_with_the_part_that_produced_it():
+    """"Of Public Safety" is not unclassifiable — its label resolved to Commissioner. Flat
+    `unmatched` cannot express that; a part carrying both a role and its own residue can."""
+    parsed = parse_record(
+        _labels("Commissioner Of Public Safety - City Attorney"), JURISDICTION, TAXONOMY
+    )
+
+    by_label = {part["label"]: part for part in parsed["parts"]}
+    resolved = by_label["Commissioner Of Public Safety"]
+    gap = by_label["City Attorney"]
+
+    assert resolved["role"] == "Commissioner" and resolved["unmatched"] == ["Of Public Safety"]
+    assert gap["role"] is None and gap["unmatched"] == ["City Attorney"]
+    # Flattened, the two are indistinguishable — which is the bug.
+    assert parsed["unmatched"] == ["Of Public Safety", "City Attorney"]
+
+
+@pytest.mark.unit
+def test_there_is_one_part_per_label():
+    parsed = parse_record(_labels("Mayor - Council Member"), JURISDICTION, TAXONOMY)
+
+    assert [part["label"] for part in parsed["parts"]] == parsed["labels"]

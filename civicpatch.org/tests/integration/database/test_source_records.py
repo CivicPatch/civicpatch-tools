@@ -73,11 +73,12 @@ async def sentinel_request():
     await _cleanup()
 
 
-def _records(name: str, label: str) -> dict:
-    """One person, one sighting. Keyed by the id reconciliation resolved them to."""
+def _records(name: str, *labels: str) -> dict:
+    """One person, one sighting per label. Keyed by the id reconciliation resolved them to."""
     return {
         f"person-{name.lower()}": [
-            {"name": name, "label": label, "source_url": "https://zz.gov/council"}
+            {"name": name, "label": label, "source_url": f"https://zz.gov/{i}"}
+            for i, label in enumerate(labels)
         ]
     }
 
@@ -94,7 +95,7 @@ async def test_stores_raw_beside_its_derivation(sentinel_request):
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 1
-    assert rows[0]["raw"]["label"] == "Council Member Place 3 (East Ward)"
+    assert [r["label"] for r in rows[0]["raw"]] == ["Council Member Place 3 (East Ward)"]
     assert rows[0]["parsed"]["role"] == "Council Member"
     assert rows[0]["parsed"]["other_designations"] == ["Place 3"]
     assert rows[0]["parsed"]["division_ocdid"].endswith("/ward:east")
@@ -158,3 +159,30 @@ async def test_evidence_for_an_unknown_request_is_rejected():
 async def test_no_records_writes_nothing(sentinel_request):
     assert await insert_source_records(sentinel_request, _SENTINEL_OCDID, {}, TAXONOMY) == 0
     assert await get_source_records_for_request(sentinel_request) == []
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_every_sighting_of_one_person_lands_in_a_single_row(sentinel_request):
+    """The grain the table exists at. `parsed` *is* the reconciliation — one winning role
+    across every label — so a row per sighting would parse each alone and throw that away."""
+    await insert_source_records(
+        sentinel_request,
+        _SENTINEL_OCDID,
+        _records("Dee", "Council Member", "Mayor"),
+        TAXONOMY,
+    )
+
+    rows = await get_source_records_for_request(sentinel_request)
+
+    assert len(rows) == 1
+    assert [r["label"] for r in rows[0]["raw"]] == ["Council Member", "Mayor"]
+    # Both pages kept: which sighting came from where is the thing a flat roster loses.
+    assert [r["source_url"] for r in rows[0]["raw"]] == [
+        "https://zz.gov/0",
+        "https://zz.gov/1",
+    ]
+    # Priority decided across the group, not per label.
+    assert rows[0]["parsed"]["role"] == "Mayor"
+    assert sorted(rows[0]["parsed"]["roles"]) == ["Council Member", "Mayor"]
+    assert [p["label"] for p in rows[0]["parsed"]["parts"]] == ["Council Member", "Mayor"]

@@ -179,7 +179,7 @@ async def publish_request(
                     headcount=post.headcount,
                 )
                 for member in post.members:
-                    await memberships.record(
+                    await memberships.upsert(
                         cur,
                         member.person_id,
                         post_id,
@@ -189,6 +189,7 @@ async def publish_request(
                         unmatched_text=member.unmatched_text,
                         source_labels=member.source_labels,
                         role_ids=member.role_ids,
+                        label=member.label,
                     )
             await memberships.close_absent(
                 cur, jurisdiction_ocdid, incoming_ids, seen_at

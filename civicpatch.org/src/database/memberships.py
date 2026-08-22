@@ -21,14 +21,29 @@ from database.database import get_pool
 from schemas.change_logs import MembershipChangePayload
 from shared.utils.statuses import ChangeLogType
 
-TRIAGE_LIMIT = 100
-
-
 class UnknownPost(Exception):
     """The post id does not exist."""
 
 
-async def record(
+async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) -> None:
+    """Replace the roles the label named beyond the one defining the post.
+
+    Wholesale, not merged: these are derived from the label, so the current scrape's answer is
+    the whole answer and a role dropped from the page must not linger.
+    """
+    await cur.execute(
+        "DELETE FROM membership_roles WHERE membership_id::text = %s", (membership_id,)
+    )
+    if not role_ids:
+        return
+    await cur.executemany(
+        "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
+        "ON CONFLICT DO NOTHING",
+        [(membership_id, role_id) for role_id in role_ids],
+    )
+
+
+async def upsert(
     cur,
     person_id: str,
     post_id: str,
@@ -40,29 +55,8 @@ async def record(
     start_date=None,
     end_date=None,
     role_ids: list[str] | None = None,
+    label: str | None = None,
 ) -> str:
-    """Open this person's membership of this post, or advance it. Returns its id.
-
-    Closing their other open membership first is what makes the insert collide only with the
-    same-post case, so "one open per body" holds without the insert testing for it.
-
-    `seen_at` is when the source said this, not when the row was written.
-
-    `source_labels` is what the source called this post, already split. Written here rather
-    than joined back to `source_records` so it cannot disagree with the `unmatched_text`
-    derived from it.
-
-    `role_ids` are roles the label named that did not define the post — `treasurer` for a clerk
-    who is also treasurer. The post is keyed on the priority winner, and one open membership per
-    person per body means only one role can define it, so the rest land in `membership_roles`
-    rather than being dropped. Empty whenever the post's own role says everything.
-
-    `designations` tell like posts apart ("Place 2"); `unmatched_text` is what the parser could
-    not classify.
-
-    **`label` is deliberately absent from the conflict update.** Leaving it out of the SET is
-    the whole of its protection.
-    """
     await cur.execute(
         """
         UPDATE memberships SET closed_at = %s
@@ -76,8 +70,8 @@ async def record(
         """
         INSERT INTO memberships
             (post_id, organization_id, person_id, designations, unmatched_text,
-             source_labels, start_date, end_date, first_seen_at, last_seen_at)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+             source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
         DO UPDATE SET
             last_seen_at = GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at),
@@ -99,21 +93,11 @@ async def record(
             end_date,
             seen_at,
             seen_at,
+            label,
         ),
     )
     membership_id = (await cur.fetchone())[0]
-
-    # Replaced wholesale rather than merged: these are derived from the label, so the current
-    # scrape's answer is the whole answer. A role dropped from the page must not linger.
-    await cur.execute(
-        "DELETE FROM membership_roles WHERE membership_id::text = %s", (membership_id,)
-    )
-    if role_ids:
-        await cur.executemany(
-            "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
-            "ON CONFLICT DO NOTHING",
-            [(membership_id, role_id) for role_id in role_ids],
-        )
+    await _set_membership_roles(cur, membership_id, role_ids or [])
     return membership_id
 
 
@@ -199,41 +183,82 @@ async def list_by_person(
         return await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
 
 
-async def unmatched_text() -> list[dict]:
+# Shared by the count and the page so the two cannot describe different sets.
+_TRIAGE_POPULATION = """
+    FROM memberships m
+    JOIN posts p ON p.id = m.post_id
+    CROSS JOIN LATERAL unnest(m.unmatched_text) AS term
+    WHERE m.closed_at IS NULL
+    GROUP BY lower(term)
+"""
+
+
+async def _count_triage_terms(cur) -> int:
+    await cur.execute(f"SELECT count(*) FROM (SELECT 1 {_TRIAGE_POPULATION}) t")
+    row = await cur.fetchone()
+    return row[0] if row is not None else 0
+
+
+async def _triage_page(cur, limit: int, offset: int) -> list[dict]:
+    await cur.execute(
+        f"""
+        SELECT mode() WITHIN GROUP (ORDER BY term) AS text,
+               count(*) AS occurrences,
+               count(DISTINCT p.jurisdiction_ocdid) AS jurisdictions,
+               (array_agg(DISTINCT p.jurisdiction_ocdid
+                          ORDER BY p.jurisdiction_ocdid))[1:3] AS examples,
+               -- The one label the term came out of, not the whole concatenation. Storing
+               -- the parts is what makes this answerable at all.
+               mode() WITHIN GROUP (ORDER BY (
+                   SELECT l FROM unnest(m.source_labels) AS l
+                   WHERE strpos(lower(l), lower(term)) > 0 LIMIT 1
+               )) AS example_label
+        {_TRIAGE_POPULATION}
+        ORDER BY count(DISTINCT p.jurisdiction_ocdid) DESC, count(*) DESC, lower(term)
+        LIMIT %s OFFSET %s
+        """,
+        (limit, offset),
+    )
+    columns = [column.name for column in cur.description or []]
+    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
+async def unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]:
+    """One page of triage terms, and how many there are in total.
+
+    Counted separately rather than with a window function so the total survives an `offset`
+    past the end — a window has no row to read the count from, and the pager would collapse
+    to zero pages.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT mode() WITHIN GROUP (ORDER BY term) AS text,
-                   count(*) AS occurrences,
-                   count(DISTINCT p.jurisdiction_ocdid) AS jurisdictions,
-                   (array_agg(DISTINCT p.jurisdiction_ocdid
-                              ORDER BY p.jurisdiction_ocdid))[1:3] AS examples,
-                   -- The one label the term came out of, not the whole concatenation. Storing
-                   -- the parts is what makes this answerable at all.
-                   mode() WITHIN GROUP (ORDER BY (
-                       SELECT l FROM unnest(m.source_labels) AS l
-                       WHERE strpos(lower(l), lower(term)) > 0 LIMIT 1
-                   )) AS example_label
-            FROM memberships m
-            JOIN posts p ON p.id = m.post_id
-            CROSS JOIN LATERAL unnest(m.unmatched_text) AS term
-            WHERE m.closed_at IS NULL
-            GROUP BY lower(term)
-            ORDER BY count(DISTINCT p.jurisdiction_ocdid) DESC, count(*) DESC,
-                     lower(term)
-            LIMIT %s
-            """,
-            (TRIAGE_LIMIT,),
-        )
-        columns = [column.name for column in cur.description or []]
-        return [dict(zip(columns, row)) for row in await cur.fetchall()]
+        return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
+
+
+async def open_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
+    """Every open membership with the seat it sits on, shaped for the proposal diff.
+
+    Distinct from `list_for_jurisdiction`, which is the roster read: this needs `_is_tracked`
+    and nothing a person would look at.
+    """
+    await cur.execute(
+        """
+        SELECT m.person_id::text, m.post_id::text,
+               p.role_id, p.division_ocdid, p._is_tracked AS is_tracked
+        FROM memberships m
+        JOIN posts p ON p.id = m.post_id
+        WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+        """,
+        (jurisdiction_ocdid,),
+    )
+    columns = [column.name for column in cur.description or []]
+    return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
 async def update_label(cur, membership_id: str, label: str | None) -> bool:
     """Name this person's post, or clear it back to the derived guess.
 
-    The only human-owned field on a membership, hence the one write outside `record`.
+    The only human-owned field on a membership, hence the one write outside `upsert`.
     """
     await cur.execute(
         "UPDATE memberships SET label = %s WHERE id::text = %s",
@@ -276,7 +301,7 @@ async def assign(
 
     Returns `{"membership_id", "moved_from"}` so the caller can say which happened.
 
-    Re-assigning to the post they already hold only sets the label — going through `record`
+    Re-assigning to the post they already hold only sets the label — going through `upsert`
     would blank `designations` and `unmatched_text` until the next scrape re-derives them.
     """
     seen_at = datetime.now(timezone.utc)
@@ -294,7 +319,7 @@ async def assign(
             await update_label(cur, current["id"], label)
             result = {"membership_id": current["id"], "moved_from": None}
         else:
-            membership_id = await record(
+            membership_id = await upsert(
                 cur, person_id, post_id, organization_id, seen_at
             )
             if label is not None:

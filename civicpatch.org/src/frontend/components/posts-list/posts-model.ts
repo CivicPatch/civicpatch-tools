@@ -194,11 +194,14 @@ export function groupMembershipsByPerson(memberships: Membership[]): PersonRow[]
   return [...groups.entries()].map(([person_name, posts]) => ({ person_name, posts }));
 }
 
-/** What to call a post in a person's list: what someone named it, else role and division. */
+/** The seat itself: what the post is called, else role and division.
+ *
+ * Not `membership.label` — that says what the source called this person *beyond* the post, so
+ * using it here would replace "Deputy Mayor Pro Tempore" with "Council Member, At-Large, Place 6".
+ */
 export const postTitle = (membership: Membership): string =>
-  membership.label ??
   membership.post_label ??
-  `${membership.role_id} · ${divisionName(membership.division_ocdid)}`;
+  `${membership.role_id}, ${divisionName(membership.division_ocdid)}`;
 
 
 /** Everything the parser made of a person's source label, in the order it decides them.

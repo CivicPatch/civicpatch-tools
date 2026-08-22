@@ -1,0 +1,112 @@
+import pytest
+
+from core.membership_proposal import (
+    Disposition,
+    ExistingMembership,
+    propose,
+    surfaces_for_review,
+)
+from core.post_derivation import DerivedMember, DerivedPost
+
+# Pure — a scrape's derivation and what we already hold, in; the difference, out. No taxonomy
+# and no database, because the diff is only about which seat a person is on.
+
+_BASE = "ocd-division/country:us/state:zz/place:testville"
+_WARD_3 = f"{_BASE}/ward:3"
+
+
+def _post(role_id, division_ocdid, *person_ids, label=None):
+    return DerivedPost(
+        role_id=role_id,
+        division_ocdid=division_ocdid,
+        headcount=len(person_ids),
+        members=[
+            DerivedMember(person_id=person_id, label=label) for person_id in person_ids
+        ],
+    )
+
+
+def _held(person_id, role_id, division_ocdid, post_id="post-1", is_tracked=True):
+    return ExistingMembership(
+        person_id=person_id,
+        post_id=post_id,
+        role_id=role_id,
+        division_ocdid=division_ocdid,
+        is_tracked=is_tracked,
+    )
+
+
+@pytest.mark.unit
+def test_the_same_seat_is_not_a_review_item():
+    """The majority case, and the whole reason this is a diff. A roster restating what we
+    already hold asks nobody for anything."""
+    changes = propose([_post("mayor", _BASE, "a")], [_held("a", "mayor", _BASE)])
+
+    assert [c.disposition for c in changes] == [Disposition.UNCHANGED]
+    assert surfaces_for_review(changes[0]) is False
+
+
+@pytest.mark.unit
+def test_somebody_we_hold_nothing_for_is_new():
+    changes = propose([_post("mayor", _BASE, "a")], [])
+
+    assert changes[0].disposition is Disposition.NEW
+    assert changes[0].from_post_id is None
+    assert surfaces_for_review(changes[0]) is True
+
+
+@pytest.mark.unit
+def test_a_different_seat_is_a_move_and_says_where_from():
+    """Both ends matter: a review row reading "now Mayor" without "was Ward 3" cannot be
+    judged."""
+    changes = propose(
+        [_post("mayor", _BASE, "a")],
+        [_held("a", "council-member", _WARD_3, post_id="old-post")],
+    )
+
+    assert changes[0].disposition is Disposition.MOVED
+    assert changes[0].from_post_id == "old-post"
+
+
+@pytest.mark.unit
+def test_a_holder_the_scrape_did_not_name_is_absent():
+    """Sourced from what we hold, not from the scrape — there is no incoming row to hang a
+    disappearance on, so walking the derivation alone can never find one."""
+    changes = propose(
+        [_post("mayor", _BASE, "a")], [_held("b", "council-member", _WARD_3)]
+    )
+
+    absent = [c for c in changes if c.disposition is Disposition.ABSENT]
+    assert [c.person_id for c in absent] == ["b"]
+    assert surfaces_for_review(absent[0]) is True
+
+
+@pytest.mark.unit
+def test_an_untracked_posts_holder_vanishing_asks_nobody():
+    """`posts._is_tracked` decides this and nothing else does. The change is still proposed —
+    the record is kept either way; only the queue consults the flag."""
+    changes = propose(
+        [_post("mayor", _BASE, "a")],
+        [_held("b", "city-attorney", _BASE, is_tracked=False)],
+    )
+
+    absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
+    assert surfaces_for_review(absent) is False
+
+
+@pytest.mark.unit
+def test_an_empty_scrape_proposes_nothing():
+    """The guard `close_absent` already makes: an empty roster is a failed scrape, not a
+    dissolved council, and without this every holder becomes a false departure."""
+    changes = propose([], [_held("a", "mayor", _BASE)])
+
+    assert changes == []
+
+
+@pytest.mark.unit
+def test_the_proposed_label_rides_along():
+    changes = propose(
+        [_post("mayor", _BASE, "a", label="Commissioner Of Public Safety")], []
+    )
+
+    assert changes[0].label == "Commissioner Of Public Safety"

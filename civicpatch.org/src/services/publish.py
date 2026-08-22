@@ -180,26 +180,3 @@ async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
             delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({request_id})",
         )
     )
-
-
-async def commit_unreviewed_scrape(request_id: str, jurisdiction_ocdid: str) -> None:
-    """Queue a scrape's commit to its unreviewed path on open-data `main`.
-
-    Visible in the repo but not live: `classify_path` excludes the unreviewed level from the
-    sync, so nothing here reaches `people`. Review is what promotes it to the reviewed path.
-
-    Durable rather than immediate. The roster is already in the database, so the submit must
-    not block on GitHub being slow, nor fail if it is down — Temporal retries until it lands.
-    """
-    # avoid circular import: lib.temporal.workflows imports the activities module, which
-    # imports this one, so importing the client at module scope closes the loop
-    import lib.temporal.client as temporal_client
-
-    await temporal_client.enqueue_open_data_commit(
-        OpenDataCommitRequest(
-            file_path=unreviewed_file_path(jurisdiction_ocdid),
-            request_id=request_id,
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            commit_message=f"Unreviewed scrape: {jurisdiction_ocdid} ({request_id})",
-        )
-    )

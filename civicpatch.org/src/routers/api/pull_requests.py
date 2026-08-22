@@ -34,6 +34,7 @@ import services.review_issue_report as review_issue_report_service
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
 import services.pull_request_sync as pr_sync_service
+from services.review_proposal import proposals_for_requests
 from services.publish import (
     dismiss_people,
     promote_images,
@@ -258,6 +259,9 @@ def get_router(api_key_header):
         data = await database.people.get_people_data_by_request_ids(
             jurisdiction_ocdids, request_ids, view=view
         )
+        # What each scrape would actually change. `existing` and `proposed` are two rosters a
+        # reader has to diff by eye; this is the diff.
+        proposals = await proposals_for_requests(request_ids)
 
         results = []
         for pr in paged_pull_requests:
@@ -268,6 +272,10 @@ def get_router(api_key_header):
                 **pr,
                 "existing": entry.get("existing", []),
                 "proposed": proposed,
+                "changes": [
+                    change.model_dump()
+                    for change in proposals.get(pr["request_id"], [])
+                ],
                 "sources": build_sources(pr["request_id"], pr["jurisdiction"]["ocdid"], unique_source_urls),
             })
         return {

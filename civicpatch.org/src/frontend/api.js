@@ -231,8 +231,11 @@ export const updatePost = async (postId, { label, headcount, isTracked }) => {
   return res.json();
 };
 
-export const fetchUnmatchedText = async () => {
-  const res = await fetch(`${API_URL}/api/v1/memberships/unmatched`, { credentials: "include" });
+export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
+  const query = new URLSearchParams({ page, per_page: perPage });
+  const res = await fetch(`${API_URL}/api/v1/memberships/unmatched?${query}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

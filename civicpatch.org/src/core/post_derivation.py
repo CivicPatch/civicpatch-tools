@@ -10,10 +10,11 @@ per-person and belongs on the membership, so it never appears here.
 
 from pydantic import BaseModel
 from shared.schemas import Official, Role
+from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import Taxonomy
 
+from core.membership_label import proposed_membership_label
 from core.source_record_parse import parse_record
-from shared.utils.official_fields import office_name_to_labels
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
@@ -27,11 +28,9 @@ class DerivedMember(BaseModel):
     unmatched_text: list[str] = []
     # The labels the parser consumed
     source_labels: list[str] = []
-    # `membership_roles` — every role the label named that did not define the post. Plural
-    # because the corpus has labels naming five ("Chair - Chair Pro Tem - Vice Mayor - Council
-    # President - Council Member"). Per member, not per post: five councilmembers share a post
-    # and only one of them is also mayor.
     role_ids: list[str] = []
+    # The source's words for whatever the post label will not say.
+    label: str | None = None
 
 
 class DerivedPost(BaseModel):
@@ -74,6 +73,16 @@ def _demoted_role_ids(parsed: dict, ids_by_label: dict[str, str]) -> list[str]:
     ]
 
 
+def _unresolved_text(parsed: dict) -> list[str]:
+    terms = [
+        term
+        for part in parsed.get("parts") or []
+        if not part.get("role")
+        for term in part.get("unmatched") or []
+    ]
+    return list(dict.fromkeys(terms))
+
+
 def _member(
     record: Official, parsed: dict, ids_by_label: dict[str, str]
 ) -> "DerivedMember":
@@ -81,9 +90,10 @@ def _member(
     return DerivedMember(
         person_id=record.id,
         designations=parsed.get("other_designations") or [],
-        unmatched_text=parsed.get("unmatched") or [],
+        unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.get("labels") or [],
         role_ids=_demoted_role_ids(parsed, ids_by_label),
+        label=proposed_membership_label(parsed.get("parts") or [], parsed.get("role")),
     )
 
 

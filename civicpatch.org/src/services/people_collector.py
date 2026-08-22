@@ -25,7 +25,6 @@ from core.ingest_people import (
 )
 from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from services.publish import commit_unreviewed_scrape
 from shared.schemas import Official, RoleConfig
 from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
@@ -213,18 +212,6 @@ async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflo
         logger.error(f"[{request_id}] Failed to record resolved URL: {e}", exc_info=True)
 
 
-async def _commit_unreviewed_copy(request_id: str, jurisdiction_ocdid: str) -> None:
-    """Queue the scrape's write to open-data, at its unreviewed path.
-
-    Never fatal: only the queueing happens here, and Temporal retries the write itself.
-    """
-    try:
-        await commit_unreviewed_scrape(request_id, jurisdiction_ocdid)
-    except Exception as e:
-        # The one failure no retry policy covers, since no workflow exists yet to retry.
-        logger.error(f"[{request_id}] Failed to queue unreviewed copy: {e}", exc_info=True)
-
-
 async def _handle_submit_pipeline_run_artifacts(
         request: HandleSubmitPipelineRunArtifactsRequest,
 ) -> SubmitPipelineRunArtifactsResponse:
@@ -301,7 +288,6 @@ async def _handle_submit_pipeline_run_artifacts(
         await _find_or_create_posts(
             request.request_id, request.jurisdiction_ocdid, updated_data
         )
-        await _commit_unreviewed_copy(request.request_id, request.jurisdiction_ocdid)
         await _record_resolved_url(
             request.request_id, request.jurisdiction_ocdid, workflow_context
         )

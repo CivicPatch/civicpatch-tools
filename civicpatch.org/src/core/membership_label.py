@@ -34,3 +34,32 @@ def derive_label(
         parts.append(division)
     parts.extend(unmatched_text)
     return ", ".join(part for part in parts if part)
+
+
+def _is_bare_at_large(part: dict) -> bool:
+    """At-large with no value. It is the only designation the parser consumes and records
+    nowhere, so a part that yielded nothing at all can only be this one."""
+    return not (
+        part.get("role")
+        or part.get("other_designations")
+        or part.get("division")
+        or part.get("unmatched")
+    )
+
+
+def proposed_membership_label(
+    parts: list[dict], winning_role: str | None
+) -> str | None:
+    """The source's own words for whatever the post label does not say.
+
+    Kept when a part's role is not the post's, or when it left residue the reconstructed post
+    label cannot express ("Of Public Safety").
+    """
+    leftover = [
+        part["label"]
+        for part in parts
+        if part.get("label")
+        and not _is_bare_at_large(part)
+        and (part.get("role") != winning_role or part.get("unmatched"))
+    ]
+    return ", ".join(leftover) or None
