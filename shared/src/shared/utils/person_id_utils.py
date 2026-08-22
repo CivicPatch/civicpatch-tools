@@ -51,7 +51,7 @@ def resolve_people_ids(
     claimed_ids: set[str] = set()
     for p in people_to_resolve:
         matches = resolve_person_id(
-            p.get("name"), p.get("email"), people, canonical_map, identities
+            p.get("name"), p.get("emails") or [], people, canonical_map, identities
         )
         result = _resolution(p, matches, claimed_ids)
         claimed_ids.add(result["id"])
@@ -65,7 +65,7 @@ def ensure_person_ids(people: List[dict]) -> List[dict]:
 
 def resolve_person_id(
     name: str | None,
-    email: str | None,
+    emails: List[str],
     people: List[Person],
     canonical_map: Dict[str, str],
     identities: Dict[str, List[str]],
@@ -80,9 +80,12 @@ def resolve_person_id(
     matches = [p for p in people if canonical_map.get(p.name) == canonical_name]
     if len(matches) <= 1:
         return matches
-    if email:
+    wanted = {normalize_email(email) for email in emails if email}
+    if wanted:
         email_matches = [
-            p for p in matches if normalize_email(p.email) == normalize_email(email)
+            p
+            for p in matches
+            if wanted & {normalize_email(email) for email in p.emails if email}
         ]
         if email_matches:
             return email_matches

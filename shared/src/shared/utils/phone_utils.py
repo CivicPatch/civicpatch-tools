@@ -2,7 +2,7 @@ import phonenumbers
 from typing import Optional
 
 
-def normalize_phone_number(phone: str) -> str:
+def normalize_phone_number(phone: str) -> Optional[str]:
     """
     Normalizes a phone number to a standard format.
     """
