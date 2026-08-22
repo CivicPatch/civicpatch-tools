@@ -8,9 +8,8 @@ from shared.schemas import Person
 
 
 class HasName(Protocol):
-    """Protocol for objects with a name field."""
-
     name: str
+    other_names: List[str]
 
 
 def person_list_to_identities(people: List[Person]) -> Dict[str, List[str]]:
@@ -31,7 +30,7 @@ def collect_other_names(group: Sequence[HasName], canonical_name: str) -> List[s
 
 
 def get_person_name(p) -> str:
-    return p.get("name") if isinstance(p, dict) else p.name
+    return (p.get("name") or "") if isinstance(p, dict) else p.name
 
 
 def parse_name(name: str) -> HumanName:

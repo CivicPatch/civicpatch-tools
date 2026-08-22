@@ -15,7 +15,7 @@ def get_config_path():
     return os.path.join(ROOT_DIR, "config")
 
 
-def _load_config_file(filename: str, key: str = None, default=None):
+def _load_config_file(filename: str, key: Optional[str] = None, default=None):
     cache_key = (filename, key)
     if cache_key in _config_cache:
         return _config_cache[cache_key]

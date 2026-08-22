@@ -13,6 +13,7 @@ dependencies = [
     "ruamel-yaml>=0.19.1,<0.20.0",
     "phonenumbers (>=9.0.25,<10.0.0)",
     "rapidfuzz (>=3.14.0,<4.0.0)",
+    "python-levenshtein (>=0.27.1,<0.28.0)",
     "pytest (>=9.0.2,<10.0.0)"
 ]
 
@@ -21,7 +22,8 @@ package = true
 
 [dependency-groups]
 dev = [
-    "deptry (>=0.24.0,<0.25.0) ; python_version >= \"3.12\" and python_version < \"4.0\""
+    "deptry (>=0.24.0,<0.25.0) ; python_version >= \"3.12\" and python_version < \"4.0\"",
+    "pyright (>=1.1.0)"
 ]
 
 [build-system]

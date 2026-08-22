@@ -176,6 +176,7 @@ class PersonRecord(ExtractedPerson):
 class Person(BaseModel):
     model_config = ConfigDict(extra="allow")
 
+    id: str = ""
     name: str
     other_names: List[str] = []
     # Raw labels, one per office, verbatim from the page. Decomposition into role +

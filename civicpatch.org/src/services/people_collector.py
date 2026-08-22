@@ -67,12 +67,8 @@ async def handle_submit_pipeline_run_artifacts(
 
 
 async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
-    """Who cp.org already believes is one person — the prior reconciliation groups against.
-
-    Its own published people first. A jurisdiction it has never published has none, and that
-    is exactly when the scrape's own research is worth having: the pipeline persists the whole
-    run context, so its `identities` arrive with the submit whether or not anyone reads them.
-    """
+    """The prior reconciliation groups against: our own published people, else the scrape's
+    research for a jurisdiction we have never published."""
     existing = await get_people_for_jurisdiction(
         jurisdiction_ocdid, status=ACTIVE_PERSON_STATUS
     )
@@ -87,8 +83,7 @@ async def _reconcile_roster(
 ) -> tuple[list[dict], dict[str, list[dict]]]:
     """The roster this submit means, whichever shape it arrived in.
 
-    Fatal on failure, unlike the writes below it — everything downstream consumes what this
-    returns, so there is no partial success to preserve.
+    Fatal on failure, unlike the writes below: everything downstream consumes it.
     """
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
     identities = await _identities(jurisdiction_ocdid, workflow_context)
@@ -109,14 +104,11 @@ def _records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, l
 
 
 async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
-    """Give every person in the roster the id cp.org already knows them by, or a fresh one.
+    """Give every person the id we already know them by, or a fresh one.
 
-    Matched against everyone rather than only the active: an official returning after a term
-    away should get their old id back instead of a second identity.
-
-    The whole roster is resolved, not only the entries arriving without an id.
-    `resolve_people_ids` tracks which ids it has handed out so that two entries cannot claim
-    one person, and that guard only holds if it sees the entries already holding them.
+    Everyone, not only the entries arriving without one: `resolve_people_ids` guards against
+    two entries claiming one person, and only sees the collision if it sees both. Matched
+    against inactive people too, so someone returning after a term away keeps their id.
     """
     everyone = await get_people_for_jurisdiction(jurisdiction_ocdid)
     resolutions = resolve_people_ids(
@@ -131,16 +123,10 @@ async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]
 async def _review_summary(roster: list[dict], workflow_context: dict) -> dict:
     """The issues a reviewer sees.
 
-    Never fatal, like the derived writes below it: a scrape whose people are already stored
-    must not be marked errored over the summary describing them. An empty one reads as "no
-    issues found", which is wrong but recoverable — the roster is on the card either way.
+    Runs after reconciliation because every check counts people. Compared against the research
+    step's identities, not ours: "absent" means this run did not find who it set out to.
 
-    Every check counts people, so this has to run after reconciliation — a record-shaped
-    roster has several rows per person and would report each of them as somebody new.
-
-    Compared against the research step's own identities, not cp.org's: "absent" means the
-    scrape did not find somebody the run set out to look for, which is a question about that
-    run's prior.
+    Never fatal — the people are already stored by now.
     """
     try:
         return await _build_review_summary(roster, workflow_context)
@@ -170,11 +156,7 @@ async def _store_source_records(
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
 ) -> None:
-    """Append the evidence this scrape produced: each sighting raw, beside its derivation.
-
-    Never fatal — losing a scrape's evidence is bad, failing the submit that carries the
-    people is worse.
-    """
+    """Each sighting raw, beside its derivation. Never fatal."""
     try:
         taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
         stored = await insert_source_records(
@@ -185,33 +167,20 @@ async def _store_source_records(
         logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
 
 
-async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, records: list[dict]) -> None:
+async def _find_or_create_posts(
+    request_id: str, jurisdiction_ocdid: str, records: list[dict]
+) -> None:
     """Derive the posts this scrape implies and write them, so review has real posts to
     point a person at.
 
-    Named for the write it performs, per the persistence verbs: `find_or_create_*` is insert
-    if absent and never update. `derived_posts` in `core` is pure and decides only *what*
-    posts a roster implies.
-
-    One that already exists is a no-op — `posts.find_or_create` is
-    `ON CONFLICT DO NOTHING`, which is what keeps `label`, `headcount` and `status`
-    human-owned with no lock table.
-
-    Posts derive here rather than at publish because the Post picker can only offer posts
-    that exist, and review happens before publish. Memberships stay at publish: a post is
-    structure and can be proposed, a membership is a binding and is only true once accepted.
-
-    Never fatal, like the evidence write above — posts are re-derivable from `source_records`,
-    so losing them is worse than losing the submit that carries the people, but not by much.
-
-    Parses independently rather than sharing `_store_source_records`' pass: the two have to be
-    able to fail separately, and parsing is pure string work over a few dozen people.
+    Here rather than at publish because the Post picker can only offer posts that exist, and
+    review comes first. Memberships stay at publish: a post can be proposed, a membership is
+    only true once accepted. Never fatal — posts are re-derivable from `source_records`.
     """
     try:
         roles = await get_roles()
-        # A post is tracked when its role is one we recognise. `unmatched` is inactive, so a
-        # label resolving to nothing lands on a post nobody diffs against — we cannot expect a
-        # post filled when we cannot name it.
+        # Seeds `_is_tracked`: `unmatched` is inactive, so a label resolving to nothing
+        # lands on a post nobody diffs against.
         active_role_ids = {role.id for role in roles if role.status == RoleStatus.ACTIVE}
         taxonomy = build_taxonomy(RoleConfig(roles=roles))
         officials = [Official(**record) for record in records]
@@ -238,11 +207,7 @@ async def _find_or_create_posts(request_id: str, jurisdiction_ocdid: str, record
 
 
 async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflow_context: dict) -> None:
-    """Keep the registry pointing at wherever the scrape actually found the jurisdiction.
-
-    Never fatal: a stale URL is a problem for the next scrape, not a reason to reject this
-    one's data.
-    """
+    """Point the registry at wherever the scrape found the jurisdiction. Never fatal."""
     url = resolved_url(workflow_context)
     if not url:
         return
@@ -255,16 +220,12 @@ async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflo
 async def _commit_unreviewed_copy(request_id: str, jurisdiction_ocdid: str) -> None:
     """Queue the scrape's write to open-data, at its unreviewed path.
 
-    Never fatal: the roster is already in the database, and only the queueing happens here —
-    the write itself is retried by Temporal until it lands.
+    Never fatal: only the queueing happens here, and Temporal retries the write itself.
     """
     try:
         await commit_unreviewed_scrape(request_id, jurisdiction_ocdid)
     except Exception as e:
-        # Deliberately not fatal: the roster and its evidence are already in the database, so
-        # failing the submit would mark a successful scrape as errored over a missing copy.
-        # This is the one failure the workflow's retry policy cannot cover — no workflow
-        # exists to retry — so it is the log line to alert on.
+        # The one failure no retry policy covers, since no workflow exists yet to retry.
         logger.error(f"[{request_id}] Failed to queue unreviewed copy: {e}", exc_info=True)
 
 
@@ -341,7 +302,9 @@ async def _handle_submit_pipeline_run_artifacts(
         await _store_source_records(
             request.request_id, request.jurisdiction_ocdid, records_by_person
         )
-        await _find_or_create_posts(request.request_id, request.jurisdiction_ocdid, updated_data)
+        await _find_or_create_posts(
+            request.request_id, request.jurisdiction_ocdid, updated_data
+        )
         await _commit_unreviewed_copy(request.request_id, request.jurisdiction_ocdid)
         await _record_resolved_url(
             request.request_id, request.jurisdiction_ocdid, workflow_context

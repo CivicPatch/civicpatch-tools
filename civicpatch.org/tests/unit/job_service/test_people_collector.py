@@ -138,8 +138,9 @@ def _context_with_research(identities: dict) -> dict:
     }
 
 
-def _official(name: str) -> dict:
+def _official(name: str, person_id: str = "") -> dict:
     return {
+        "id": person_id,
         "name": name,
         "office": {"name": "Mayor"},
         "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:zz/place:zz/government",

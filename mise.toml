@@ -362,6 +362,11 @@ run = "uv run pyright"
 dir = "pipelines"
 description = "Run pyright type checker on pipelines"
 
+[tasks.typecheck-shared]
+run = "uv run pyright"
+dir = "shared"
+description = "Run pyright type checker on shared"
+
 [tasks.tfe]
 run = "npm test"
 dir = "civicpatch.org/src/frontend"
