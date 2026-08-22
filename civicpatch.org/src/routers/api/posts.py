@@ -67,11 +67,11 @@ def get_router() -> APIRouter:
         return {"data": {"ok": True}}
 
     @router.get("/{jurisdiction_ocdid:path}")
-    async def get_posts_endpoint(
-        jurisdiction_ocdid: str,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
-    ):
+    async def get_posts_endpoint(jurisdiction_ocdid: str):
         """Every body in a jurisdiction with its posts, grouped for the roster screen.
+
+        Unauthenticated, like the people and role reads: this is the jurisdiction page's own
+        data, and that page is public. Every write below is gated on its own.
 
         `:path` because an ocdid contains slashes. **Declared last** so `/{post_id}` routes
         match before this swallows them.

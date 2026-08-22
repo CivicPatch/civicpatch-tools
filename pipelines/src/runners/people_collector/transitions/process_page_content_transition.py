@@ -17,13 +17,13 @@ def next_process_content_state(
     progress: ProgressState,
 ) -> tuple[PipelineStatus, str | None]:
     if should_stop_for_data_requirement(progress):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, None
+        return PipelineStatus.CLEANUP, None
 
     if should_stop_for_cost_limit(current_cost, job_config):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Cost limit reached before data requirements were met"
+        return PipelineStatus.CLEANUP, "Cost limit reached before data requirements were met"
 
     if should_stop_for_max_pages(processed_count, job_config, progress):
-        return PipelineStatus.MERGE_RECORDS_WITHIN_LLM, "Max pages reached before data requirements were met"
+        return PipelineStatus.CLEANUP, "Max pages reached before data requirements were met"
 
     return PipelineStatus.SCRAPE_PAGE, None
 

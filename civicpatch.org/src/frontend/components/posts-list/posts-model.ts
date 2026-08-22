@@ -19,6 +19,13 @@ export interface Post {
   _is_verified: boolean;
 }
 
+// A role the add form can file a post under. The posts screen already fetches roles to label
+// its groups; this is the same list kept as options rather than reduced to a lookup.
+export interface RoleOption {
+  id: string;
+  label: string;
+}
+
 export interface Membership {
   post_id: string;
   person_name: string | null;

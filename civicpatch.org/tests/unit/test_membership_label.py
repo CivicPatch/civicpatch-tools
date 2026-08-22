@@ -18,7 +18,7 @@ def test_a_plain_seat_is_just_its_role():
 
 @pytest.mark.unit
 def test_a_division_is_named_readably():
-    assert derive_label("Council Member", _D3, [], []) == "Council Member · District 3"
+    assert derive_label("Council Member", _D3, [], []) == "Council Member, District 3"
 
 
 @pytest.mark.unit
@@ -27,7 +27,7 @@ def test_designations_come_before_the_division():
     render Seattle's two at-large councilmembers the same."""
     assert (
         derive_label("Council Member", _WHOLE, ["Position 8"], [])
-        == "Council Member · Position 8"
+        == "Council Member, Position 8"
     )
 
 
@@ -37,7 +37,7 @@ def test_unmatched_text_is_shown_rather_than_hidden():
     nobody could classify."""
     assert (
         derive_label("Trustee", _WHOLE, [], ["Zoning Administrator"])
-        == "Trustee · Zoning Administrator"
+        == "Trustee, Zoning Administrator"
     )
 
 

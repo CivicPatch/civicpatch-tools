@@ -57,6 +57,18 @@
     color: var(--pico-muted-color);
 }
 
+/* The only way into the add form — a role with no posts has no group to hang a button on. */
+.posts-list__add {
+    font-size: var(--text-xs);
+    background: none;
+    border: 1px solid var(--pico-primary);
+    border-radius: var(--pico-border-radius);
+    padding: 0.15rem 0.5rem;
+    color: var(--pico-primary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
 /* Role groups */
 
 .posts-list__role {

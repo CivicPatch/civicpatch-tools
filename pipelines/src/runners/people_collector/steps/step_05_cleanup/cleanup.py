@@ -16,7 +16,7 @@ def cleanup(context: PeopleCollectorContext):
     """Drop cached pages and downloaded images no record points at."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
-    logger.info(f"Step 9: {PipelineStatus.CLEANUP.value}")
+    logger.info(f"Step 5: {PipelineStatus.CLEANUP.value}")
 
     assert context.data.process_page_content_step is not None, (
         "should never happen — process_page_content_step is required before cleanup"

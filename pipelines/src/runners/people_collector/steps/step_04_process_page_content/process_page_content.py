@@ -134,7 +134,7 @@ async def process_page_content(
 ) -> Tuple[LinkFrontier, ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(
-        f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}"
+        f"Step 4: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}"
     )
 
     assert context.data.research_municipality_step is not None, (

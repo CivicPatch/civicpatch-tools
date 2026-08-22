@@ -13,7 +13,13 @@ import {
   postTitle,
   decompose,
 } from "./posts-model.js";
-import type { RoleGroup, PostRow, PersonRow, Membership } from "./posts-model.js";
+import type {
+  RoleGroup,
+  PostRow,
+  PersonRow,
+  Membership,
+  RoleOption,
+} from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -32,7 +38,7 @@ type Axis = typeof BY_POST | typeof BY_PERSON;
 
 // What the screen is doing to one post. Two booleans would allow editing and adding at once,
 // which the layout has no room for and the user never means.
-type Editing = { kind: "post"; id: string } | { kind: "role"; id: string } | null;
+type Editing = { kind: "post"; id: string } | { kind: "new" } | null;
 
 const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => void) => html`
   <li class="posts-list__post">
@@ -67,24 +73,13 @@ interface RoleContext {
   editing: Editing;
   jurisdictionOcdid: string;
   onEditPost: (id: string) => void;
-  onAddToRole: (roleId: string) => void;
 }
 
 const renderRole = (group: RoleGroup, context: RoleContext) => html`
   <section class="posts-list__role">
     <div class="posts-list__role-head">
       <h3 class="posts-list__role-name">${group.role_label}</h3>
-      <span class="posts-list__capacity">
-        ${renderCapacity(group)}
-        ${context.canEdit
-          ? html`<button
-              class="posts-list__edit"
-              @click=${() => context.onAddToRole(group.role_id)}
-            >
-              Add
-            </button>`
-          : ""}
-      </span>
+      <span class="posts-list__capacity">${renderCapacity(group)}</span>
     </div>
     <ul class="posts-list__posts">
       ${group.posts.map((post) => renderPost(post, context.canEdit, context.onEditPost))}
@@ -132,18 +127,20 @@ function PostsList(host: PostsListHost) {
   const { data, error, reload } = useAsyncData<{
     byRole: RoleGroup[];
     byPerson: PersonRow[];
+    roles: RoleOption[];
   }>(async () => {
-    if (!ocdid) return { byRole: [], byPerson: [] };
+    if (!ocdid) return { byRole: [], byPerson: [], roles: [] };
     const on = asOf || null;
     const [postsBody, membershipsBody, rolesBody] = await Promise.all([
       fetchPosts(ocdid),
       fetchMemberships(ocdid, on),
-      // The taxonomy, so a post carries only its `role_id` and the heading is resolved here.
-      // Denormalising the label onto every post row meant a rename left stale copies behind.
       fetchRoles(),
     ]);
+    // Kept whole as well as reduced: the groups need a label lookup, the add form needs every
+    // role as an option — including the ones this jurisdiction has no post for yet.
+    const roles: RoleOption[] = rolesBody.data.roles;
     const roleLabels = new Map<string, string>(
-      rolesBody.data.map((role: { id: string; label: string }) => [role.id, role.label]),
+      roles.map((role) => [role.id, role.label]),
     );
     const posts = postsBody.data.organizations.flatMap(
       (organization: { posts: unknown[] }) => organization.posts,
@@ -152,6 +149,7 @@ function PostsList(host: PostsListHost) {
     return {
       byRole: groupPostsByRole(posts, memberships, roleLabels),
       byPerson: groupMembershipsByPerson(memberships),
+      roles,
     };
   }, [ocdid, asOf]);
 
@@ -167,6 +165,7 @@ function PostsList(host: PostsListHost) {
   };
   const handleAsOf = (e: Event) => setAsOf((e.target as HTMLInputElement).value);
   const handleNow = () => setAsOf("");
+  const handleAddPost = () => setEditing({ kind: "new" });
 
   // Editing is off while looking at the past: the forms write to the present, so a Save from
   // a dated view would silently apply to now.
@@ -187,6 +186,9 @@ function PostsList(host: PostsListHost) {
           ? html`<button class="posts-list__edit" @click=${handleNow}>back to today</button>`
           : html`<span class="posts-list__today">today</span>`}
       </label>
+      ${canEdit && !dated
+        ? html`<button class="posts-list__add" @click=${handleAddPost}>Add post</button>`
+        : ""}
     </div>
     ${dated
       ? html`<p class="posts-list__dated-note">
@@ -203,23 +205,12 @@ function PostsList(host: PostsListHost) {
   }
 
   const groups = data.byRole;
-  if (groups.length === 0) {
-    return html`<div class="posts-list">
-      ${controls}
-      <p class="posts-list__empty">
-        ${dated
-          ? "No posts on that date."
-          : "No posts yet — they are derived when a scrape is published."}
-      </p>
-    </div>`;
-  }
 
   const context: RoleContext = {
     canEdit: canEdit && !dated,
     editing,
     jurisdictionOcdid: ocdid ?? "",
     onEditPost: (id) => setEditing({ kind: "post", id }),
-    onAddToRole: (id) => setEditing({ kind: "role", id }),
   };
 
   // Found across groups rather than rendered inside one, because a modal floats above the
@@ -228,25 +219,32 @@ function PostsList(host: PostsListHost) {
     editing?.kind === "post"
       ? groups.flatMap((group) => group.posts).find((post) => post.id === editing.id)
       : undefined;
-  const addingRole =
-    editing?.kind === "role"
-      ? groups.find((group) => group.role_id === editing.id)
-      : undefined;
+
+  // An empty list is a state the add form has to reach, not an early return: a jurisdiction
+  // with no posts yet is exactly when someone needs to make the first one.
+  const renderRows = () => {
+    if (groups.length === 0) {
+      return html`<p class="posts-list__empty">
+        ${dated
+          ? "No posts on that date."
+          : "No posts yet — they are derived when a scrape is published."}
+      </p>`;
+    }
+    if (axis === BY_POST) return groups.map((group) => renderRole(group, context));
+    return data.byPerson.map(renderPerson);
+  };
 
   return html`
     <div class="posts-list" @saved=${closeAndReload} @added=${closeAndReload} @cancel=${close}>
       ${controls}
       ${editingPost ? html`<civ-post-edit .post=${editingPost}></civ-post-edit>` : ""}
-      ${addingRole
+      ${editing?.kind === "new"
         ? html`<civ-post-add
             .jurisdictionOcdid=${ocdid ?? ""}
-            .roleId=${addingRole.role_id}
-            .roleLabel=${addingRole.role_label}
+            .roles=${data.roles}
           ></civ-post-add>`
         : ""}
-      ${axis === BY_POST
-        ? groups.map((group) => renderRole(group, context))
-        : data.byPerson.map(renderPerson)}
+      ${renderRows()}
     </div>
   `;
 }

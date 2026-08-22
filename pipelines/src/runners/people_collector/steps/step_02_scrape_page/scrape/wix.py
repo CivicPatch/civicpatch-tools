@@ -3,7 +3,7 @@ async def wait_for_wix_content(page, logger, warmup_already_present=False):
     Wait for Wix-specific content to load, including warmup data.
     """
     try:
-        # Step 1: Wait for warmup data script to appear (if not already there)
+        # Step 2: Wait for warmup data script to appear (if not already there)
         if not warmup_already_present:
             logger.debug("Waiting for wix-warmup-data...")
             warmup_loaded = False
@@ -38,7 +38,7 @@ async def wait_for_wix_content(page, logger, warmup_already_present=False):
         except:
             logger.debug("Wix containers not found (continuing anyway)")
         
-        # Step 3: Wait for Wix runtime to initialize
+        # Step 2: Wait for Wix runtime to initialize
         try:
             await page.wait_for_function(
                 """() => {
@@ -52,24 +52,24 @@ async def wait_for_wix_content(page, logger, warmup_already_present=False):
         except:
             logger.debug("Wix runtime check timeout (continuing anyway)")
         
-        # Step 4: Additional wait for dynamic content
+        # Step 2: Additional wait for dynamic content
         await page.wait_for_timeout(2000)
         
-        # Step 5: Scroll to trigger lazy loading
+        # Step 2: Scroll to trigger lazy loading
         logger.debug("Scrolling to trigger lazy content...")
         await scroll_page_smart(page)
         
-        # Step 6: Wait for network to settle after scroll
+        # Step 2: Wait for network to settle after scroll
         try:
             await page.wait_for_load_state('networkidle', timeout=10000)
             logger.debug("✓ Network settled")
         except:
             logger.debug("Network still active (continuing anyway)")
         
-        # Step 7: Final wait
+        # Step 2: Final wait
         await page.wait_for_timeout(1000)
         
-        # Step 8: Final verification
+        # Step 2: Final verification
         final_check = await page.evaluate("""() => {
             const script = document.getElementById('wix-warmup-data');
             return {

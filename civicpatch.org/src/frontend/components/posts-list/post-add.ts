@@ -9,20 +9,24 @@ import {
   buildDivisionOcdid,
   divisionName,
 } from "./posts-model.js";
-import type { AddableDivision } from "./posts-model.js";
+import type { AddableDivision, RoleOption } from "./posts-model.js";
 
 type PostAddHost = HTMLElement & {
   jurisdictionOcdid?: string;
-  // Pre-filled from the role group the Add sits under, so the one field a person cannot
-  // change after saving is the one they never have to pick.
-  roleId?: string;
-  roleLabel?: string;
+  roles?: RoleOption[];
 };
 
 export const ADDED_EVENT = "added";
 export const CANCEL_EVENT = "cancel";
 
+// Unpicked. A role has to be chosen rather than defaulted, because every default is a real
+// role and filing a post under the wrong one is invisible once saved.
+const NO_ROLE = "";
+
+const byLabel = (a: RoleOption, b: RoleOption) => a.label.localeCompare(b.label);
+
 function PostAdd(host: PostAddHost) {
+  const [roleId, setRoleId] = useState(NO_ROLE);
   const [designation, setDesignation] = useState<AddableDivision>(AT_LARGE_DIVISION);
   const [value, setValue] = useState("");
   const [label, setLabel] = useState("");
@@ -34,6 +38,7 @@ function PostAdd(host: PostAddHost) {
     host.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true }));
 
   const handleCancel = () => emit(CANCEL_EVENT);
+  const handleRole = (e: Event) => setRoleId((e.target as HTMLSelectElement).value);
   const handleDesignation = (e: Event) =>
     setDesignation((e.target as HTMLSelectElement).value as AddableDivision);
   const handleValue = (e: Event) => setValue((e.target as HTMLInputElement).value);
@@ -41,17 +46,18 @@ function PostAdd(host: PostAddHost) {
   const handleHeadcount = (e: Event) => setHeadcount((e.target as HTMLInputElement).value);
 
   const needsValue = designation !== AT_LARGE_DIVISION;
+  const roles = [...(host.roles ?? [])].sort(byLabel);
 
   const handleSave = async () => {
-    if (!host.jurisdictionOcdid || !host.roleId) return;
+    if (!host.jurisdictionOcdid || roleId === NO_ROLE) return;
     setSaving(true);
     setError(null);
     try {
       await createPost(host.jurisdictionOcdid, {
-        role_id: host.roleId,
+        role_id: roleId,
         division_ocdid: buildDivisionOcdid(host.jurisdictionOcdid, designation, value),
         label: label.trim() || null,
-        headcount: Number(headcount),
+        _headcount: Number(headcount),
       });
       emit(ADDED_EVENT);
     } catch (cause) {
@@ -64,6 +70,13 @@ function PostAdd(host: PostAddHost) {
 
   const fields = html`
     <div class="post-edit">
+      <label class="post-edit__field">
+        <span class="post-edit__label">Role</span>
+        <select .value=${roleId} @change=${handleRole}>
+          <option value=${NO_ROLE}>Choose a role…</option>
+          ${roles.map((role) => html`<option value=${role.id}>${role.label}</option>`)}
+        </select>
+      </label>
       <label class="post-edit__field">
         <span class="post-edit__label">Division</span>
         <select .value=${designation} @change=${handleDesignation}>
@@ -101,7 +114,7 @@ function PostAdd(host: PostAddHost) {
     <button class="btn btn-sm secondary" @click=${handleCancel}>Cancel</button>
     <button
       class="btn btn-sm"
-      ?disabled=${saving || (needsValue && !value.trim())}
+      ?disabled=${saving || roleId === NO_ROLE || (needsValue && !value.trim())}
       @click=${handleSave}
     >
       ${saving ? "Adding…" : "Add"}
@@ -110,7 +123,7 @@ function PostAdd(host: PostAddHost) {
 
   return html`
     <civ-modal
-      .title=${`Add a ${host.roleLabel ?? "post"}`}
+      .title=${"Add a post"}
       .content=${fields}
       .footer=${footer}
       .modalProps=${{ open: true, onClose: handleCancel }}
