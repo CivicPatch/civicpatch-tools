@@ -56,28 +56,6 @@ WORK_IN_FLIGHT = (
 # SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
 # aliased `r`; callers share this one definition instead of re-spelling it.
 #
-# Publish state used to live on GitHub — an open PR that had not been parked for merge — so
-# this was a JOIN against pull_requests. Migration 115 moved it onto the request itself, which
-# is where it belongs now that civicpatch publishes rather than waiting for a merge.
-#
-# Five conditions:
-#   it recorded a roster     see below
-#   not published            was pr.status='open' + pr.merge_enqueued_at IS NULL
-#   not dismissed            was pr.status='closed'
-#   not a jurisdiction edit  same, but a plain column test now the anchor is `requests`
-#   no live reviewer-reported issue   unchanged; returns to the pool when the issue is
-#                                     resolved by an admin or superseded by a newer run
-#
-# The roster test replaced the PR gate, which had been standing in for it: a pull request only
-# ever existed if data_intake received a roster, so runs that produced nothing were filtered out
-# as a side effect of requiring one.
-#
-# It tests `data_json` rather than the run's status because that is what publishing actually
-# needs — the same condition `_publish_roster` refuses on. A run-success test is a proxy for it
-# and the two disagree: production carries 213 requests whose run succeeded but recorded no
-# roster (measured 2026-08-17), which under a status test become cards a reviewer opens and
-# cannot publish, with nothing to rescue them from — they have no pull request either.
-# Testing the roster directly means the queue and the publish guard can never disagree.
 AVAILABLE_FOR_REVIEW = (
     "r.data_json IS NOT NULL "
     "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
@@ -287,6 +265,28 @@ async def get_request_jurisdiction(request_id: str) -> str | None:
         )
         row = await cur.fetchone()
     return row[0] if row else None
+
+
+async def get_request_rosters(request_ids: list[str]) -> dict[str, dict]:
+    """The jurisdiction and full roster each request proposed, keyed by request id.
+
+    The whole stored person, not the projected one — the derivation builds `Official`s, and
+    the review projection drops fields those require.
+    """
+    if not request_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, jurisdiction_ocdid, COALESCE(data_json, '[]'::jsonb) "
+            "FROM requests WHERE id::text = ANY(%s)",
+            (request_ids,),
+        )
+        rows = await cur.fetchall()
+    return {
+        request_id: {"jurisdiction_ocdid": ocdid, "data_json": data}
+        for request_id, ocdid, data in rows
+    }
 
 
 async def get_request_type(request_id: str) -> str | None:

@@ -120,7 +120,7 @@ async def _seat_someone(post_id: str) -> None:
             (person_id, _OCDID),
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.record(
+        await memberships.upsert(
             cur, person_id, post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()

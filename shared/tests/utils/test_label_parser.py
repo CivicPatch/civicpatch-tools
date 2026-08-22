@@ -46,6 +46,14 @@ _TAXONOMY = build_taxonomy(
         ("Alderman, 3rd Ward", "Council Member", f"{_BASE}/ward:3", [], []),
         ("1st Ward", None, f"{_BASE}/ward:1", [], []),
         ("District IV", None, f"{_BASE}/council_district:4", [], []),
+        # Spelled-out numbers, the same division as their digits: Nashua writes "Ward Eight"
+        # and everyone else writes "Ward 8", and two ocdids for one ward reconcile to nothing.
+        ("Alderman Ward Eight", "Council Member", f"{_BASE}/ward:8", [], []),
+        ("Ward Three", None, f"{_BASE}/ward:3", [], []),
+        ("Councilman, District Twelve", "Council Member", f"{_BASE}/council_district:12", [], []),
+        # Still closed: a word that is not a number is not a value. Accepting any word once
+        # published "District Attorney" as `district:attorney`.
+        ("District Attorney", None, _BASE, [], ["District Attorney"]),
         # A named ward is a real division — the value need not be numeric, and the direction
         # may sit on either side of the key.
         ("Ward East", None, f"{_BASE}/ward:east", [], []),

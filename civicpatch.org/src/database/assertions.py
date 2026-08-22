@@ -19,8 +19,8 @@ from schemas.assertions import Assertion, AssertionKind, EntityType
 async def create(assertion: Assertion, asserted_by: str) -> str:
     """Append one assertion. Returns its id.
 
-    `create`, not `record` — `memberships.record` means open-or-advance, an upsert, while this
-    only ever inserts. Named for the write it performs, per the persistence verbs.
+    `create`, not `upsert` — `memberships.upsert` opens a row or advances one, while this only
+    ever inserts. Named for the write it performs, per the persistence verbs.
 
     `asserted_by` is required, unlike `requests.resolved_by_user_id` where NULL means a machine
     gave up. An assertion nobody made is not an assertion.

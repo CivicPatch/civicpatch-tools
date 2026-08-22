@@ -198,8 +198,12 @@ describe("postTitle", () => {
     division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2",
   };
 
-  it("prefers what a person named it, on the membership then the post", () => {
-    expect(postTitle({ ...base, label: "My Seat", post_label: "Post Label" })).toBe("My Seat");
+  it("names the post, ignoring what the membership adds on top of it", () => {
+    // `membership.label` is the source's words for what the post does not say — a demoted
+    // office or a portfolio. It is not another name for the seat, so it must not be the title.
+    expect(postTitle({ ...base, label: "Council Member, Place 6", post_label: "Post Label" })).toBe(
+      "Post Label",
+    );
     expect(postTitle({ ...base, label: null, post_label: "Post Label" })).toBe("Post Label");
   });
 

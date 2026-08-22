@@ -104,13 +104,13 @@ async def test_moving_closes_the_old_seat_and_reports_where_from():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_reassigning_to_the_same_seat_only_sets_the_label():
-    """Going through `record` would overwrite designations with empty arrays, wiping what the
+    """Going through `upsert` would overwrite designations with empty arrays, wiping what the
     parser found until the next scrape re-derives it."""
     person_id, post_id, _ = await _seed()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
-        first = await memberships.record(
+        first = await memberships.upsert(
             cur, person_id, post_id, org, "2026-03-01T00:00:00+00:00",
             designations=["Position 8"],
         )

@@ -20,6 +20,9 @@ def parse_record(
     parsed = [parse_label(label, taxonomy) for label in labels]
     return {
         "labels": labels,
+        "parts": [
+            {"label": label, **part.model_dump()} for label, part in zip(labels, parsed)
+        ],
         "role": _winning_role(parsed, taxonomy),
         "roles": _unique([role for p in parsed for role in p.roles]),
         "division_ocdid": _division_ocdid(parsed, jurisdiction_ocdid),
@@ -35,7 +38,9 @@ def _winning_role(parsed: list[ParsedLabel], taxonomy: Taxonomy) -> str | None:
     roles = [p.role for p in parsed if p.role]
     if not roles:
         return None
-    return min(roles, key=lambda role: (taxonomy.role_priority.get(role, 1_000_000), role))
+    return min(
+        roles, key=lambda role: (taxonomy.role_priority.get(role, 1_000_000), role)
+    )
 
 
 def _division_ocdid(parsed: list[ParsedLabel], jurisdiction_ocdid: str) -> str:

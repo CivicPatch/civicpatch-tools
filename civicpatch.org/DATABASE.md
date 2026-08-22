@@ -155,10 +155,10 @@ erDiagram
     source_records {
         uuid            id                  PK
         uuid            request_id          FK  "idx; ON DELETE CASCADE — which scrape"
-        text            person_id           "idx: (person_id, created_at DESC); the Record id, also the membership FK"
+        text            person_id           "idx: (person_id, created_at DESC); the Record id, also the membership FK. One row per person per request — sightings are elements of raw, not rows"
         text            jurisdiction_ocdid  FK  "idx"
-        jsonb           raw                 "the Record as it arrived, labels verbatim — truth for re-derivation"
-        jsonb           parsed              "gin idx (jsonb_path_ops); the published decision — historical, never current"
+        jsonb           raw                 "EVERY sighting behind this person, labels verbatim, each with the page it came from — truth for re-derivation. `_reconstructed_from` marks records rebuilt from data_json, whose per-label source_url is a guess"
+        jsonb           parsed              "gin idx (jsonb_path_ops); the RECONCILIATION across every label in raw — one winning role, one division. Historical, never current. `parts` holds each label's own decision"
         timestamptz_null published_at       "NULL until the triple is materialised"
         timestamptz     created_at          "default: now(); orders derivations — no unique key, replays add rows"
     }
@@ -212,9 +212,9 @@ erDiagram
         uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open post per body"
         uuid            person_id           FK
         text_array      designations        "default: {}; how the source tells one post from another: Place 2, Position 8"
-        text_array      unmatched_text      "gin idx; default: {}; what the parser could not classify — triage material"
+        text_array      unmatched_text      "gin idx; default: {}; parts that produced NO role. Residue from a part that DID resolve rides on label instead — it is not unclassifiable and no rule fixes it"
         text_array      source_labels       "default: {}; what the SOURCE called this post, split — parsed.labels, i.e. office.name broken on ' - '. Parts not the rendering, so triage can show the one label a term came from. No FK to source_records: a membership outlives its evidence, and writing this beside unmatched_text is what stops the two disagreeing"
-        text_null       label               "human-owned: what a person calls this post. Absent from record()'s ON CONFLICT SET, which is its whole protection. NULL = derive from role+designations+division"
+        text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
         date_null       start_date          "from the source; we do not infer it"
         date_null       end_date            "from the source — NOT set when someone stops appearing"
         timestamptz     first_seen_at       "when the SOURCE said it, not when the row was written"

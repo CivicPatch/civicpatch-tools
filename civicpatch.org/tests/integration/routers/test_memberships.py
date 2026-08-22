@@ -169,7 +169,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.record(
+        await memberships.upsert(
             cur,
             person_id,
             mayor,
@@ -287,7 +287,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.record(
+        await memberships.upsert(
             cur,
             person_id,
             mayor,

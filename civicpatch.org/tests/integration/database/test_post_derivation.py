@@ -136,8 +136,8 @@ async def test_same_post_advances_the_window_without_a_second_row():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        first = await memberships.record(cur, person_id, post_id, org, _T0)
-        second = await memberships.record(cur, person_id, post_id, org, _T1)
+        first = await memberships.upsert(cur, person_id, post_id, org, _T0)
+        second = await memberships.upsert(cur, person_id, post_id, org, _T1)
         assert first == second
 
         await cur.execute(
@@ -160,8 +160,8 @@ async def test_a_different_post_closes_the_old_membership_and_opens_a_new_one():
         mayor = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         ward = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.record(cur, person_id, mayor, org, _T0)
-        new = await memberships.record(cur, person_id, ward, org, _T1)
+        old = await memberships.upsert(cur, person_id, mayor, org, _T0)
+        new = await memberships.upsert(cur, person_id, ward, org, _T1)
         assert old != new
 
         await cur.execute("SELECT closed_at FROM memberships WHERE id = %s", (old,))
@@ -185,7 +185,7 @@ async def test_close_absent_ignores_an_empty_roster():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.record(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, person_id, post_id, org, _T0)
 
         assert await memberships.close_absent(cur, _OCDID, [], _T1) == 0
         assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
@@ -204,7 +204,7 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.record(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, person_id, post_id, org, _T0)
         await cur.execute("UPDATE posts SET _is_tracked = false WHERE id = %s", (post_id,))
 
         assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
@@ -222,7 +222,7 @@ async def test_last_seen_at_is_derived_from_memberships():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.record(cur, person_id, post_id, org, _T1)
+        await memberships.upsert(cur, person_id, post_id, org, _T1)
 
         assert await posts.unseen_since(cur, _OCDID, _T0) == []
         await conn.rollback()
@@ -247,10 +247,10 @@ async def test_unmatched_people_share_one_post_per_division():
         again = await posts.find_or_create(cur, _OCDID, org, "unmatched", _BASE)
         assert bucket == again
 
-        await memberships.record(
+        await memberships.upsert(
             cur, first_person, bucket, org, _T0, unmatched_text=["Town Moderator"]
         )
-        await memberships.record(
+        await memberships.upsert(
             cur, second, bucket, org, _T0, unmatched_text=["Supervisor of the Checklist"]
         )
 
@@ -382,7 +382,7 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.record(cur, person_id, held, org, _T0)
+        await memberships.upsert(cur, person_id, held, org, _T0)
 
         assert await posts.delete_if_unheld(cur, held) is False
         assert await posts.delete_if_unheld(cur, unheld) is True
@@ -417,7 +417,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_human_label_survives_a_re_scrape():
-    """The only human-owned field on a membership. Protected by being absent from `record`'s
+    """The only human-owned field on a membership. Protected by being absent from `upsert`'s
     ON CONFLICT SET — the derived parts beside it are overwritten every publish."""
     person_id = await _seed_person()
     pool = await get_pool()
@@ -426,13 +426,13 @@ async def test_a_human_label_survives_a_re_scrape():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
 
-        membership_id = await memberships.record(
+        membership_id = await memberships.upsert(
             cur, person_id, post_id, org, _T0, designations=["Position 8"]
         )
         assert await memberships.update_label(cur, membership_id, "Councilmember Pos. 8") is True
 
         # A later scrape of the same seat, with the designation parsed differently.
-        await memberships.record(
+        await memberships.upsert(
             cur, person_id, post_id, org, _T1, designations=["Position 08"]
         )
 
@@ -458,9 +458,9 @@ async def test_moving_to_another_post_leaves_the_label_behind():
         first = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.record(cur, person_id, first, org, _T0)
+        old = await memberships.upsert(cur, person_id, first, org, _T0)
         await memberships.update_label(cur, old, "Councilmember Pos. 8")
-        new = await memberships.record(cur, person_id, second, org, _T1)
+        new = await memberships.upsert(cur, person_id, second, org, _T1)
 
         await cur.execute(
             "SELECT label FROM memberships WHERE id::text = ANY(%s) ORDER BY first_seen_at",
@@ -480,7 +480,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.record(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, person_id, post_id, org, _T0)
 
         rows = await memberships.list_for_jurisdiction(cur, _OCDID)
         assert len(rows) == 1
@@ -501,7 +501,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        membership_id = await memberships.record(
+        membership_id = await memberships.upsert(
             cur, person_id, post_id, org, _T0, role_ids=["treasurer", "assessor"]
         )
         await cur.execute(
@@ -513,9 +513,45 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
 
         # Derived from the label, so the newest scrape's answer is the whole answer — a role
         # the page stopped naming must not linger.
-        await memberships.record(cur, person_id, post_id, org, _T0, role_ids=["treasurer"])
+        await memberships.upsert(cur, person_id, post_id, org, _T0, role_ids=["treasurer"])
         await cur.execute(
             "SELECT role_id FROM membership_roles WHERE membership_id::text = %s",
             (membership_id,),
         )
         assert [r[0] for r in await cur.fetchall()] == ["treasurer"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_seeds_the_membership_label_but_never_overwrites_one():
+    """`label` is in the INSERT and not the DO UPDATE SET. That omission is the only thing
+    protecting a curator's edit, and no unit test can see it — it takes two real upserts."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+
+        first = await memberships.upsert(
+            cur, person_id, post_id, org, _T0, label="Commissioner Of Public Safety"
+        )
+        await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
+        assert (await cur.fetchone())[0] == "Commissioner Of Public Safety"
+
+        await memberships.update_label(cur, first, "Public Safety Commissioner")
+
+        # The next scrape derives the same proposal and must lose to the human.
+        again = await memberships.upsert(
+            cur, person_id, post_id, org, _T1, label="Commissioner Of Public Safety"
+        )
+        assert again == first
+
+        await cur.execute(
+            "SELECT label, last_seen_at FROM memberships WHERE id = %s", (first,)
+        )
+        label, last_seen_at = await cur.fetchone()
+        assert label == "Public Safety Commissioner"
+        # The rest of the row still advances — protection is per-column, not a skipped write.
+        assert last_seen_at == _T1
+        await conn.rollback()

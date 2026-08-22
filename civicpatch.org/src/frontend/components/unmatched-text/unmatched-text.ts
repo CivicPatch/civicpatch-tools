@@ -1,8 +1,9 @@
 import "./unmatched-text.css";
 import { html } from "lit-html";
-import { component } from "haunted";
+import { component, useState } from "haunted";
 import { useAsyncData } from "../../hooks/use-async-data.js";
 import { fetchUnmatchedText } from "../../api.js";
+import { Pagination } from "../pagination/index.js";
 
 // What the triage endpoint returns per row. `text` is the source's own spelling — the most
 // common one where a term appears several ways — because that is what a curator searches the
@@ -17,6 +18,15 @@ interface UnmatchedTerm {
   example_label: string | null;
 }
 
+// One page of terms plus how many there are altogether. Held together rather than as two
+// pieces of state, because they come from one response and must never disagree.
+interface TriagePage {
+  terms: UnmatchedTerm[];
+  totalPages: number;
+}
+
+const DEFAULT_PER_PAGE = 25;
+
 const PLACE_SEGMENT = /place:([^/]+)/;
 
 // Ocdids are too long to read in a list. The place segment is the part that identifies the
@@ -30,18 +40,36 @@ const countLabel = (count: number, noun: string) =>
   `${count} ${noun}${count === 1 ? "" : "s"}`;
 
 function UnmatchedText() {
-  const { data: terms, error } = useAsyncData<UnmatchedTerm[]>(
-    () => fetchUnmatchedText().then((body) => body.data.unmatched_text),
-    [],
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(DEFAULT_PER_PAGE);
+
+  const { data, error } = useAsyncData<TriagePage>(
+    () =>
+      fetchUnmatchedText(page, perPage).then((body) => ({
+        terms: body.data.unmatched_text,
+        totalPages: body.total_pages,
+      })),
+    [page, perPage],
   );
+
+  const handlePrevious = () => setPage((current: number) => Math.max(1, current - 1));
+  const handleNext = () => setPage((current: number) => current + 1);
+  // Back to the first page: the row that was at offset 40 is not at offset 40 of a
+  // differently sized page, so holding the number would land somewhere arbitrary.
+  const handlePerPage = (e: Event) => {
+    setPerPage(Number((e.target as HTMLSelectElement).value));
+    setPage(1);
+  };
 
   if (error) {
     return html`<p class="unmatched-text__error">Could not load unmatched text: ${error}</p>`;
   }
-  if (terms === null) {
+  if (data === null) {
     return html`<p class="unmatched-text__hint">Loading…</p>`;
   }
-  if (terms.length === 0) {
+
+  const terms = data.terms;
+  if (terms.length === 0 && page === 1) {
     return html`<p class="unmatched-text__empty">
       Nothing unmatched — every label the scrapes produced resolved to a role or a designation.
     </p>`;
@@ -74,6 +102,14 @@ function UnmatchedText() {
           `,
         )}
       </ul>
+      ${Pagination({
+        page,
+        totalPages: data.totalPages,
+        onPrevious: handlePrevious,
+        onNext: handleNext,
+        perPage,
+        onPerPageChange: handlePerPage,
+      })}
     </div>
   `;
 }

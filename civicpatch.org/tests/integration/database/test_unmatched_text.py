@@ -67,7 +67,7 @@ async def _seed_member(
     post_id = await posts.find_or_create(
         cur, ocdid, organization_id, "council-member", division
     )
-    return await memberships.record(
+    return await memberships.upsert(
         cur,
         person_id,
         post_id,
@@ -97,8 +97,11 @@ async def _seed_spread():
         await conn.commit()
 
 
+_WHOLE_PAGE = (100, 0)
+
+
 async def _rows() -> list[dict]:
-    rows = await memberships.unmatched_text()
+    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
     return [row for row in rows if row["text"] in (_WIDESPREAD, _LOCAL)]
 
 
@@ -152,7 +155,7 @@ async def test_spelling_variants_are_one_gap_not_three():
             await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
         await conn.commit()
 
-    rows = await memberships.unmatched_text()
+    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
 
     assert len(rows) == 1
     assert rows[0]["jurisdictions"] == 3
@@ -209,9 +212,37 @@ async def test_the_example_label_is_what_the_term_came_out_of():
         )
         await conn.commit()
 
-    rows = await memberships.unmatched_text()
+    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
 
     row = next(r for r in rows if r["text"] == "Finance Liaison")
     assert row["example_label"] == "Council Member Ward 1, Finance Liaison"
     # The label carrying the term, not the other one the person also holds.
     assert row["text"] in row["example_label"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_page_reports_the_whole_total():
+    """`total` counts distinct terms, not rows on the page — otherwise "page 1 of 1" would be
+    the answer at every offset and the control would never advance."""
+    await _seed_spread()
+
+    total, first = await memberships.unmatched_text(1, 0)
+    _total, second = await memberships.unmatched_text(1, 1)
+
+    assert len(first) == 1 and len(second) == 1
+    assert total >= 2
+    assert first[0]["text"] != second[0]["text"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_offset_past_the_end_still_knows_the_total():
+    """The reason `total` is its own query rather than a window function: a window yields no
+    row to read it from once the offset overruns, and the pager would collapse to zero pages."""
+    await _seed_spread()
+
+    total, rows = await memberships.unmatched_text(10, 10_000)
+
+    assert rows == []
+    assert total >= 2

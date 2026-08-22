@@ -1,6 +1,6 @@
 from datetime import date
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 
 from database import memberships
@@ -34,6 +34,8 @@ def get_router() -> APIRouter:
 
     @router.get("/unmatched")
     async def unmatched_text_endpoint(
+        page: int = Query(1, ge=1),
+        per_page: int = Query(20, ge=1, le=100),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
         """Label text that matched neither the role aliases nor the designations, widest first.
@@ -41,9 +43,20 @@ def get_router() -> APIRouter:
         Not "a role we are missing" — the parser could not tell what kind of thing it is.
 
         Widest-spread first is the point: one curator needs the term that one rule change
-        fixes everywhere, not the longest list.
+        fixes everywhere, not the longest list. Paged for the same reason it is sorted: the
+        backfill turned this from a handful of rows into the whole corpus's residue.
+
+        `data` keeps its shape — the paging fields are additive, because this sits under
+        `/api/v1/`.
         """
-        return {"data": {"unmatched_text": await memberships.unmatched_text()}}
+        offset = (page - 1) * per_page
+        total, rows = await memberships.unmatched_text(per_page, offset)
+        return {
+            "data": {"unmatched_text": rows},
+            "total_items": total,
+            "page": page,
+            "total_pages": max(1, (total + per_page - 1) // per_page),
+        }
 
     # Declared after `/unmatched` — `:path` matches greedily, so the reverse order would make
     # this swallow it and read "unmatched" as a jurisdiction ocdid.

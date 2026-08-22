@@ -135,6 +135,17 @@ WORD_TO_NUMBER = {
     "eight": "8",
     "nine": "9",
     "ten": "10",
+    "eleven": "11",
+    "twelve": "12",
+    "thirteen": "13",
+    "fourteen": "14",
+    "fifteen": "15",
+    "sixteen": "16",
+    "seventeen": "17",
+    "eighteen": "18",
+    "nineteen": "19",
+    "twenty": "20",
+    # More ordinals
     "first": "1",
     "second": "2",
     "third": "3",
@@ -226,9 +237,13 @@ def _format_type_content(designation_type: str, text: str) -> str:
 
 
 def normalize_word(word: str) -> str:
-    """Ordinals and roman numerals become digits; everything else passes through."""
+    """Ordinals, spelled-out numbers and roman numerals become digits; the rest passes through.
+
+    Widened here rather than in `_is_value`: that set stays closed because accepting any word
+    once published "District Attorney" as `district:attorney`.
+    """
     w = word.lower()
-    if w.endswith(("st", "nd", "rd", "th")) or w in _ROMAN_MAP:
+    if w.endswith(("st", "nd", "rd", "th")) or w in _ROMAN_MAP or w in WORD_TO_NUMBER:
         normalized = normalize_remaining_text(word)
         if normalized != word:
             return normalized

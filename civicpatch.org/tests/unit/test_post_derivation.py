@@ -28,6 +28,7 @@ def _role(id_, label, aliases=(), priority=500, is_unique=False):
 _ROLES = [
     _role("mayor", "Mayor", priority=10, is_unique=True),
     _role("council-member", "Council Member", ["Councilmember"], priority=500),
+    _role("commissioner", "Commissioner", priority=300),
 ]
 _TAXONOMY = build_taxonomy(RoleConfig(roles=_ROLES))
 
@@ -227,3 +228,46 @@ def test_an_unknown_second_role_is_not_demoted():
     member = specs[0].members[0]
     assert member.role_ids == []
     assert "Harbormaster" in member.unmatched_text
+
+
+@pytest.mark.unit
+def test_the_member_label_says_what_the_post_label_cannot():
+    """Mayor (10) wins the post. "Commissioner" alone would be in `role_ids` already, but the
+    portfolio only survives because the whole source part is kept verbatim."""
+    specs = derived_posts(
+        [_official("a", "Commissioner Of Public Safety - Mayor")], _TAXONOMY, _ROLES
+    )
+
+    member = specs[0].members[0]
+    assert specs[0].role_id == "mayor"
+    assert member.label == "Commissioner Of Public Safety"
+    assert member.role_ids == ["commissioner"]
+
+
+@pytest.mark.unit
+def test_a_member_holding_only_the_post_proposes_no_label():
+    specs = derived_posts([_official("a", "Council Member")], _TAXONOMY, _ROLES)
+
+    assert specs[0].members[0].label is None
+
+
+@pytest.mark.unit
+def test_residue_of_a_resolved_label_is_not_unmatched():
+    """"Of Public Safety" came out of a label that resolved to Commissioner. There is no rule
+    a curator could add for it, so it must not reach triage — the label carries it instead."""
+    specs = derived_posts(
+        [_official("a", "Commissioner Of Public Safety")], _TAXONOMY, _ROLES
+    )
+
+    member = specs[0].members[0]
+    assert member.unmatched_text == []
+    assert member.label == "Commissioner Of Public Safety"
+
+
+@pytest.mark.unit
+def test_a_part_that_resolved_to_nothing_still_reaches_triage():
+    """The other side of the same rule: "Dogcatcher" names no role we know, which is exactly
+    the vocabulary gap `unmatched_text` exists to collect."""
+    specs = derived_posts([_official("a", "Mayor - Dogcatcher")], _TAXONOMY, _ROLES)
+
+    assert specs[0].members[0].unmatched_text == ["Dogcatcher"]
