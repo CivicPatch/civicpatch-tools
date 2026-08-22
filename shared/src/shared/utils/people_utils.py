@@ -1,8 +1,7 @@
 """Converting between the two shapes a roster is stored in.
 
 `Person` carries labels verbatim, one per office; `Official` renders them into a single
-`office.name` with the division lifted out. The pipeline used to own both sides of this,
-which is why it lived there — cp.org needs it now that it reconciles.
+`office.name` with the division lifted out.
 
 `official_to_person` puts the division back into the labels as a designation, so the round
 trip does not lose it. That is what lets a consumer take `Person` without the old shape

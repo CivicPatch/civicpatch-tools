@@ -78,7 +78,7 @@ PORT_ISABEL = "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government
 def _reconcile(records: dict, elected_officials: list, identities=None) -> List[Person]:
     """Everyone the scrape saw. Identities default to one-name-per-official, which is what
     the research step produces when it has nothing better."""
-    return reconcile(
+    reconciled = reconcile(
         [record for group in records.values() for record in group],
         identities
         if identities is not None
@@ -87,6 +87,7 @@ def _reconcile(records: dict, elected_officials: list, identities=None) -> List[
         PORT_ISABEL,
         MagicMock(),
     )
+    return [person for person, _records in reconciled]
 
 
 # --- Test data ---

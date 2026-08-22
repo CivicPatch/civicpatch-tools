@@ -1,6 +1,6 @@
 import os
 from typing import List
-from domain.models import Official
+from shared.schemas import PersonRecord
 from runners.people_collector.schemas import (
   PipelineStatus,
   PeopleCollectorContext
@@ -17,12 +17,17 @@ async def save_output(context: PeopleCollectorContext):
     context.data.jurisdiction_ocdid
   )
 
-  format_output = context.data.format_output_step
-  assert format_output is not None, "should never happen — format_output_step is required before save_output"
-  save_data_to_file(format_output.officials, data_file_path)
+  process_step = context.data.process_page_content_step
+  assert process_step is not None, "should never happen — process_page_content_step is required before save_output"
+  save_data_to_file(process_step.all_records(), data_file_path)
 
-def save_data_to_file(people: List[Official], file_path: str):
-    # Create parent directories if not exists
+
+def save_data_to_file(records: List[PersonRecord], file_path: str):
+    """One row per sighting, labels verbatim, each stamped with the page it came from.
+
+    Not a roster: several rows can describe one person, and which ones do is cp.org's to
+    decide.
+    """
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
-        f.write(yaml_dump([official.model_dump() for official in people]))
+        f.write(yaml_dump([record.model_dump() for record in records]))

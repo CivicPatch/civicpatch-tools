@@ -15,11 +15,8 @@ stateDiagram-v2
     state "step_02: SCRAPE_PAGE" as SCRAPE_PAGE
     state "step_03: PREPROCESS_PAGE_CONTENT" as PREPROCESS_PAGE_CONTENT
     state "step_04: PROCESS_PAGE_CONTENT" as PROCESS_PAGE_CONTENT
-    state "step_05: MERGE_RECORDS_WITHIN_LLM" as MERGE_RECORDS_WITHIN_LLM
-    state "step_06: MERGE_RECORDS_ACROSS_LLMS" as MERGE_RECORDS_ACROSS_LLMS
-    state "step_07: FORMAT_OUTPUT" as FORMAT_OUTPUT
     state "step_08: CLEANUP" as CLEANUP
-    state "step_09: REVIEW_OUTPUT" as REVIEW_OUTPUT
+    state "REVIEW_OUTPUT (gate: heuristics, url fallback)" as REVIEW_OUTPUT
     state "step_09a: FIND_JURISDICTION_URL" as FIND_JURISDICTION_URL
     state "step_10: SAVE_OUTPUT" as SAVE_OUTPUT
     state "step_11: SEND_SUCCESS" as SEND_SUCCESS
@@ -36,7 +33,7 @@ stateDiagram-v2
     SCRAPE_PAGE --> PREPROCESS_PAGE_CONTENT : page scraped
     SCRAPE_PAGE --> SCRAPE_PAGE : scrape failed, more pending links
     SCRAPE_PAGE --> all_scrapes_failed : no pending links, all links unprocessable
-    SCRAPE_PAGE --> MERGE_RECORDS_WITHIN_LLM : no pending links, some pages scraped
+    SCRAPE_PAGE --> CLEANUP : no pending links, some pages scraped
 
     all_scrapes_failed --> FIND_JURISDICTION_URL : url_recovery_attempted = false
     all_scrapes_failed --> ERR_DOMAIN_NAVIGATION_TIMEOUT : url_recovery_attempted = true, all timeouts
@@ -51,11 +48,7 @@ stateDiagram-v2
     no_content_found --> ERR_DOMAIN_INACTIVE : url_recovery_attempted = true, other
 
     PROCESS_PAGE_CONTENT --> SCRAPE_PAGE : more pages needed
-    PROCESS_PAGE_CONTENT --> MERGE_RECORDS_WITHIN_LLM : done processing pages / cost or page limit reached
-
-    MERGE_RECORDS_WITHIN_LLM --> FORMAT_OUTPUT
-
-    FORMAT_OUTPUT --> CLEANUP
+    PROCESS_PAGE_CONTENT --> CLEANUP : done processing pages / cost or page limit reached
 
     CLEANUP --> REVIEW_OUTPUT
 

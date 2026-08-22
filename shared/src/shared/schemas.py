@@ -132,6 +132,10 @@ class Official(BaseModel):
         return v
 
 
+# An `image` still pointing at the file the scrape downloaded, before anyone resolved it.
+LOCAL_IMAGE_PREFIX = "local://"
+
+
 class ExtractedPerson(BaseModel):
     """One person as a page yielded them, before anyone says where the page was.
 

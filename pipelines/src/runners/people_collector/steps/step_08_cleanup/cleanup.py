@@ -1,99 +1,82 @@
+import json
 import os
 import shutil
-import json
 from typing import List
 
-from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
-from runners.people_collector.schemas import (
-    PeopleCollectorContext, PipelineStatus, 
-
-)
-from utils import log_utils
+from runners.people_collector.schemas import PeopleCollectorContext, PipelineStatus
+from shared.schemas import LOCAL_IMAGE_PREFIX, PersonRecord
 from shared.utils import url_utils
-from domain.models import Official
+from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
+from utils import log_utils
 
-# Todo: Should return updated configs
-# TODO: should input things like "Official", etc...
+IMAGE_MAP_FILE = "image_map.json"
+
+
 def cleanup(context: PeopleCollectorContext):
-    # Remove files under data_source/cache and data_source/images
+    """Drop cached pages and downloaded images no record points at."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info(f"Step 9: {PipelineStatus.CLEANUP.value}")
-    request_id = context.request_id
+
+    assert context.data.process_page_content_step is not None, (
+        "should never happen — process_page_content_step is required before cleanup"
+    )
+    records = context.data.process_page_content_step.all_records()
+
     data_source_dir = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    assert context.data.format_output_step is not None, "should never happen — format_output_step is required before cleanup"
-    people = context.data.format_output_step.officials
-
-    #if os.path.exists(cache_dir):
-    #    # Only keep cache folders that are referenced by people
-    #    cleanup_cache(cache_dir, people)
-    #if os.path.exists(images_dir):
-    #    # Only keep images that are referenced by people
-    #    cleanup_images(logger, request_id, jurisdiction_ocdid, images_dir, people)
-
-    return
+    if os.path.exists(cache_dir):
+        cleanup_cache(cache_dir, records)
+    if os.path.exists(images_dir):
+        cleanup_images(logger, images_dir, records)
 
 
-def cleanup_cache(cache_dir: str, people_list: List[Official]):
-    # Clear out any page urls are not under sources or website urls
-    pages_to_keep = set()
-
-    for person in people_list:
-        for source in person.source_urls:
-            pages_to_keep.add(source)
-        if person.urls:
-            pages_to_keep.update(person.urls)
-
-    pages_to_keep = set(url_utils.format_url_to_folder(url) for url in pages_to_keep)
+def cleanup_cache(cache_dir: str, records: List[PersonRecord]):
+    urls = {record.source_url for record in records if record.source_url}
+    urls.update(record.url for record in records if record.url)
+    folders_to_keep = {url_utils.format_url_to_folder(url) for url in urls}
 
     for folder in os.listdir(cache_dir):
         folder_path = os.path.join(cache_dir, folder)
-        if os.path.isdir(folder_path):
-            if folder not in pages_to_keep:
-                shutil.rmtree(folder_path)
+        if os.path.isdir(folder_path) and folder not in folders_to_keep:
+            shutil.rmtree(folder_path)
 
 
-def cleanup_images(
-    logger, request_id, jurisdiction_ocdid, images_dir: str, people_list: List[Official]
-):
-    # Clear out any images that are not under image
-    image_files_to_keep = set()
-    # This is local file names mapped to original source urls
-    image_map_file_path = os.path.join(images_dir, "image_map.json")
-    image_map_data = {}
-    missing_images = set()
+def local_image_name(record: PersonRecord) -> str | None:
+    if not record.image or not record.image.startswith(LOCAL_IMAGE_PREFIX):
+        return None
+    return record.image.removeprefix(LOCAL_IMAGE_PREFIX)
 
-    with open(image_map_file_path, "r") as f:
-        image_map_data = json.load(f)
 
-    for person in people_list:
-        if person.image is None:
-            continue
+def cleanup_images(logger, images_dir: str, records: List[PersonRecord]):
+    """Drop unreferenced files and the map entries that named them."""
+    names = set()
+    for record in records:
+        name = local_image_name(record)
+        if name:
+            names.add(name)
 
-        if person.image in image_map_data:
-            if not os.path.exists(os.path.join(images_dir, person.image)):
-                missing_images.add(person.image)
-            image_files_to_keep.add(person.image)
+    missing = {name for name in names if not os.path.exists(os.path.join(images_dir, name))}
+    if missing:
+        logger.error(f"Missing images that were expected to be found: {missing}")
 
-    logger.debug(f"Image files to keep: {image_files_to_keep}")
-    logger.debug(f"All image map data: {image_map_data}")
     for image_file in os.listdir(images_dir):
-        logger.debug(f"Checking image file: {image_file}")
-        # Skip image_map.json
-        if image_file == "image_map.json":
+        if image_file == IMAGE_MAP_FILE or image_file in names:
             continue
+        path = os.path.join(images_dir, image_file)
+        if os.path.isfile(path):
+            os.remove(path)
 
-        image_file_path = os.path.join(images_dir, image_file)
-        if os.path.isfile(image_file_path):
-            if image_file not in image_files_to_keep:
-                logger.debug(f"Removing unreferenced image file: {image_file_path}")
-                os.remove(image_file_path) 
+    _prune_image_map(images_dir, names)
 
-    if len(missing_images) > 0:
-        logger.error(f"Missing images that were expected to be found: {missing_images}")
 
-    return {}
-
+def _prune_image_map(images_dir: str, names: set):
+    map_path = os.path.join(images_dir, IMAGE_MAP_FILE)
+    if not os.path.exists(map_path):
+        return
+    with open(map_path, "r") as f:
+        image_map = json.load(f)
+    with open(map_path, "w") as f:
+        json.dump({n: src for n, src in image_map.items() if n in names}, f)

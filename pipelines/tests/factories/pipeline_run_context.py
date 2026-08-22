@@ -1,10 +1,8 @@
 from typing import Any, Dict, Union
 
 from runners.people_collector.schemas import (
-    FormatOutputStep,
     LinkFrontier,
     MaybeSendToGitHubStep,
-    MergeRecordsWithinLLMStep,
     PeopleCollectorContext,
     PeopleCollectorData,
     PipelineRunConfig,
@@ -25,9 +23,6 @@ def pipeline_run_context_factory(
             ResearchMunicipalityStep,
             PreprocessPageContentStep,
             ProcessPageContentStep,
-            MergeRecordsWithinLLMStep,
-            MergeRecordsAcrossLLMsStep,
-            FormatOutputStep,
             MaybeSendToGitHubStep,
         ],
     ] = {}
@@ -59,9 +54,5 @@ def pipeline_run_context_factory(
             process_page_content_step=default_steps.get(
                 PipelineStatus.PROCESS_PAGE_CONTENT
             ),
-            merge_records_within_llm_step=default_steps.get(
-                PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-            ),
-            format_output_step=default_steps.get(PipelineStatus.FORMAT_OUTPUT),
         ),
     )

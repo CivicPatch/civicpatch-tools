@@ -1,8 +1,5 @@
 """Grouping scraped sightings into people — name overlap, shared offices, shared contacts.
 
-Lives in `shared` because it is moving: the pipeline does this today, cp.org will do it once
-records cross the boundary instead of merged people, and both need it during the transition.
-
 Pure over records and a taxonomy, bar the log it writes to.
 """
 

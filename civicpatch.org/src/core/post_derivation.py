@@ -13,6 +13,7 @@ from shared.schemas import Official, Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.source_record_parse import parse_record
+from shared.utils.official_fields import office_name_to_labels
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
@@ -99,7 +100,11 @@ def derived_posts(
     grouped: dict[tuple[str, str], list[DerivedMember]] = {}
 
     for record in records:
-        parsed = parse_record(record, taxonomy)
+        parsed = parse_record(
+            office_name_to_labels(record.office.name),
+            record.jurisdiction_ocdid,
+            taxonomy,
+        )
         key = (role_id_for(parsed), _division(record, parsed))
         grouped.setdefault(key, []).append(_member(record, parsed, ids_by_label))
 

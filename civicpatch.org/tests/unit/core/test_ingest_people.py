@@ -5,7 +5,9 @@ import pytest
 from core.ingest_people import (
     identified,
     local_image_basename,
+    named_like_a_person,
     officials_from_rows,
+    with_fallback_url,
     with_images,
 )
 from shared.schemas import Person, Role, RoleConfig, RoleStatus
@@ -56,9 +58,17 @@ def _official(name: str, office_name: str, division_ocdid: str | None = None) ->
 
 
 def _reconcile(rows: list[dict], identities=None):
-    return officials_from_rows(
+    roster, _records = officials_from_rows(
         rows, identities or {}, TAXONOMY, JURISDICTION, MagicMock()
     )
+    return roster
+
+
+def _records_behind(rows: list[dict], identities=None):
+    _roster, records = officials_from_rows(
+        rows, identities or {}, TAXONOMY, JURISDICTION, MagicMock()
+    )
+    return records
 
 
 @pytest.mark.unit
@@ -274,3 +284,59 @@ def test_local_image_basename_reads_either_shape():
     assert local_image_basename({"image": "local://ann.png"}) == "ann.png"
     assert local_image_basename({"cdn_image": "local://ann.png"}) == "ann.png"
     assert local_image_basename({"image": "https://alpha.gov/ann.png"}) is None
+
+
+# --- what a roster entry has to look like to be a person at all ---
+
+
+@pytest.mark.unit
+def test_a_one_word_name_is_not_a_person():
+    """A label the extractor read as a person — "Vacant", a heading, a bare role."""
+    assert named_like_a_person(_person("Vacant")) is False
+    assert named_like_a_person(_person("Ann Lee")) is True
+
+
+@pytest.mark.unit
+def test_someone_with_no_url_of_their_own_gets_the_page_they_were_found_on():
+    person = _person("Ann Lee")
+    person.source_urls = ["https://alpha.gov/council"]
+    assert with_fallback_url(person).urls == ["https://alpha.gov/council"]
+
+
+@pytest.mark.unit
+def test_a_url_of_their_own_is_not_replaced():
+    person = _person("Ann Lee")
+    person.urls = ["https://alpha.gov/ann"]
+    person.source_urls = ["https://alpha.gov/council"]
+    assert with_fallback_url(person).urls == ["https://alpha.gov/ann"]
+
+
+@pytest.mark.unit
+def test_nothing_to_fall_back_to_leaves_the_person_alone():
+    person = _person("Ann Lee")
+    assert with_fallback_url(person) is person
+
+
+# --- the records behind each person, for the evidence table ---
+
+
+@pytest.mark.unit
+def test_every_sighting_is_kept_against_the_person_it_reconciled_into():
+    """`source_records` stores one row per sighting, so the merge has to say which rows it
+    merged — a person alone cannot say which page gave it a phone number."""
+    records = _records_behind(
+        [
+            _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100"),
+            _record("Ann Lee", "Mayor Pro-Tem", email="ann@alpha.gov"),
+        ]
+    )
+    assert [record["label"] for record in records["Ann Lee"]] == [
+        "Council Member Place 2",
+        "Mayor Pro-Tem",
+    ]
+
+
+@pytest.mark.unit
+def test_an_already_merged_roster_has_no_records_behind_it():
+    """Nothing to keep: the sightings were merged before it arrived."""
+    assert _records_behind([_official("Ann Lee", "Mayor")]) == {}

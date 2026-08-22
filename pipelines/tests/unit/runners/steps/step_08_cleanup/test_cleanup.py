@@ -1,84 +1,97 @@
+import json
 import os
+from unittest.mock import MagicMock
+
 import pytest
-from unittest.mock import MagicMock, patch, mock_open
-from runners.people_collector.steps.step_08_cleanup.cleanup import cleanup_images
-from domain.models import Person
+from runners.people_collector.steps.step_08_cleanup.cleanup import (
+    cleanup_cache,
+    cleanup_images,
+)
+from shared.schemas import PersonRecord
+from shared.utils import url_utils
 
 pytestmark = pytest.mark.unit
 
-# Person factory for creating test instances
-def person_factory(image=None, sources=None, website=None):
-    return Person(
-        name="Test Person",
 
-        roles=[],
-        divisions=[],
-
-        emails=[],
-        urls=[website] if website else [],
-
-        jurisdiction_ocdid="",
-        source_urls=sources or [],
-        # Add other attributes as needed with default values
-        updated_at="",
-        image=image,
+def _record(label="Mayor", image=None, source_url="https://zz.gov/council", url=None):
+    return PersonRecord(
+        name="Ann Lee", label=label, image=image, source_url=source_url, url=url
     )
 
-@pytest.fixture
-def mock_logger():
-    return MagicMock()
 
-@pytest.fixture
-def mock_request_id():
-    return "test_request"
+def _images(tmp_path, files: dict, image_map: dict):
+    images_dir = tmp_path / "images"
+    images_dir.mkdir()
+    for name, body in files.items():
+        (images_dir / name).write_text(body)
+    (images_dir / "image_map.json").write_text(json.dumps(image_map))
+    return str(images_dir)
 
-@pytest.fixture
-def mock_jurisdiction_ocdid():
-    return "test_jurisdiction"
 
-@pytest.fixture
-def mock_images_dir():
-    return "/mock/images"
+def test_an_image_no_record_points_at_is_removed(tmp_path):
+    images_dir = _images(
+        tmp_path,
+        {"kept.png": "x", "orphan.png": "x"},
+        {"kept.png": "https://zz.gov/ann.png", "orphan.png": "https://zz.gov/old.png"},
+    )
 
-@patch("os.listdir")
-@patch("os.path.isfile")
-@patch("os.path.getsize")
-@patch("builtins.open", new_callable=mock_open, read_data='''{
-    "mapped_image1.jpg": "https://example.com/image1.jpg",
-    "mapped_image2.jpg": "https://example.com/image2.jpg"
-}''')
-@patch("os.remove")
-def test_cleanup_images_respects_image_map(
-    mock_remove, mock_open_file, mock_getsize, mock_isfile, mock_listdir,
-    mock_logger, mock_request_id, mock_jurisdiction_ocdid, mock_images_dir
-):
-    # Mock inputs
-    people_list = [
-        person_factory(image="mapped_image1.jpg"),
-        person_factory(image="mapped_image2.jpg"),
-    ]
+    cleanup_images(MagicMock(), images_dir, [_record(image="local://kept.png")])
 
-    # Mock directory structure
-    mock_listdir.return_value = [
-        "mapped_image1.jpg",
-        "mapped_image2.jpg",
-        "unmapped_image.jpg",
-        "image_map.json"
-    ]
-    mock_isfile.side_effect = lambda path: not path.endswith("image_map.json")
-    mock_getsize.return_value = 1024
+    assert sorted(os.listdir(images_dir)) == ["image_map.json", "kept.png"]
 
-    # Call the function
-    cleanup_images(mock_logger, mock_request_id, mock_jurisdiction_ocdid, mock_images_dir, people_list)
 
-    # Assertions
-    mock_listdir.assert_called_once_with(mock_images_dir)
-    mock_open_file.assert_called_once_with(os.path.join(mock_images_dir, "image_map.json"), "r")
+def test_the_map_loses_the_entries_whose_files_went(tmp_path):
+    """cp.org reads this map to resolve provenance, so an entry naming a deleted file is a
+    dead lookup."""
+    images_dir = _images(
+        tmp_path,
+        {"kept.png": "x", "orphan.png": "x"},
+        {"kept.png": "https://zz.gov/ann.png", "orphan.png": "https://zz.gov/old.png"},
+    )
 
-    # Ensure unreferenced files are removed
-    mock_remove.assert_called_once_with(os.path.join(mock_images_dir, "unmapped_image.jpg"))
+    cleanup_images(MagicMock(), images_dir, [_record(image="local://kept.png")])
 
-    # Ensure mapped files are not removed
-    removed_files = [call.args[0] for call in mock_remove.call_args_list]
-    assert os.path.join(mock_images_dir, "mapped_image1.jpg") not in removed_files
-    assert os.path.join(mock_images_dir, "mapped_image2.jpg") not in removed_files
+    with open(os.path.join(images_dir, "image_map.json")) as f:
+        assert json.load(f) == {"kept.png": "https://zz.gov/ann.png"}
+
+
+def test_a_record_naming_a_missing_image_is_reported(tmp_path):
+    images_dir = _images(tmp_path, {}, {})
+    logger = MagicMock()
+
+    cleanup_images(logger, images_dir, [_record(image="local://gone.png")])
+
+    assert logger.error.called
+
+
+def test_a_record_with_no_image_keeps_nothing(tmp_path):
+    images_dir = _images(tmp_path, {"orphan.png": "x"}, {"orphan.png": "https://zz.gov/x"})
+
+    cleanup_images(MagicMock(), images_dir, [_record()])
+
+    assert os.listdir(images_dir) == ["image_map.json"]
+
+
+def test_a_cached_page_no_record_came_from_is_removed(tmp_path):
+    """Folder names are the url run through `format_url_to_folder`, which is how a record's
+    `source_url` finds the page it was read from."""
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    kept = url_utils.format_url_to_folder("https://zz.gov/council")
+    (cache_dir / kept).mkdir()
+    (cache_dir / "some-other-page").mkdir()
+
+    cleanup_cache(str(cache_dir), [_record(source_url="https://zz.gov/council")])
+
+    assert os.listdir(str(cache_dir)) == [kept]
+
+
+def test_a_page_only_reached_as_a_persons_url_is_kept(tmp_path):
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    bio = url_utils.format_url_to_folder("https://zz.gov/ann")
+    (cache_dir / bio).mkdir()
+
+    cleanup_cache(str(cache_dir), [_record(url="https://zz.gov/ann")])
+
+    assert os.listdir(str(cache_dir)) == [bio]
