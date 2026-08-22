@@ -37,7 +37,7 @@ def _client(role: UserRole) -> TestClient:
     return TestClient(app)
 
 
-# ── GET /roles (MAINTAINERS) ────────────────────────────────────────────
+# ── GET /roles (open) ───────────────────────────────────────────────────
 
 
 @pytest.mark.unit
@@ -62,8 +62,16 @@ def test_get_roles_happy():
 
 
 @pytest.mark.unit
-def test_get_roles_forbidden_below_maintainer():
-    assert _client(UserRole.CONTRIBUTORS).get(_PREFIX).status_code == 403
+def test_get_roles_is_open_to_everyone():
+    """The taxonomy is a vocabulary, and the jurisdiction page is public — it needs role
+    labels to head a list of posts. Editing stays at maintainer."""
+    roles = [Role(id="mayor", label="Mayor", is_unique=False, aliases=["mayor"])]
+    with patch(
+        "services.role_config.load_roles", new_callable=AsyncMock, return_value=roles
+    ):
+        response = _client(UserRole.CONTRIBUTORS).get(_PREFIX)
+
+    assert response.status_code == 200
 
 
 # ── PUT /roles (MAINTAINERS) ────────────────────────────────────────────

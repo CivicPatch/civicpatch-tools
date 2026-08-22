@@ -34,7 +34,7 @@ Pipeline steps live in `src/jobs/people_collector/steps/`, one directory per ste
 ```
 src/
   jobs/people_collector/
-    steps/          ← pipeline steps (step_00 through step_11)
+    steps/          ← pipeline steps (step_00 through step_07)
     main.py         ← orchestrator
     schemas.py      ← workflow context and step result schemas
   services/         ← external integrations (LLMs, search, civicpatch API)

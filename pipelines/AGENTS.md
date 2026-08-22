@@ -11,7 +11,7 @@ A pipeline that scrapes and processes municipal government officials data, then 
 ```
 src/
   jobs/people_collector/
-    steps/          ← pipeline steps step_00–step_11, plus step_09a (find_jurisdiction_url fallback)
+    steps/          ← pipeline steps step_00–step_07, plus step_04a (find_jurisdiction_url fallback)
     main.py         ← orchestrator
   services/         ← external integrations (LLMs, civicpatch API, search)
   domain/           ← core models

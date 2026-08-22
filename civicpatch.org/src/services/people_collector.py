@@ -26,7 +26,7 @@ from core.ingest_people import (
 from core.post_derivation import derived_posts
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import commit_unreviewed_scrape
-from shared.schemas import Official, RoleConfig, RoleStatus
+from shared.schemas import Official, RoleConfig
 from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
 from shared.utils.review_utils import ReviewInputs, build_review_summary
@@ -179,9 +179,6 @@ async def _find_or_create_posts(
     """
     try:
         roles = await get_roles()
-        # Seeds `_is_tracked`: `unmatched` is inactive, so a label resolving to nothing
-        # lands on a post nobody diffs against.
-        active_role_ids = {role.id for role in roles if role.status == RoleStatus.ACTIVE}
         taxonomy = build_taxonomy(RoleConfig(roles=roles))
         officials = [Official(**record) for record in records]
         specs = derived_posts(officials, taxonomy, roles)
@@ -198,7 +195,6 @@ async def _find_or_create_posts(
                     spec.role_id,
                     spec.division_ocdid,
                     headcount=spec.headcount,
-                    is_tracked=spec.role_id in active_role_ids,
                 )
             await conn.commit()
         logger.info(f"[{request_id}] Derived {len(specs)} post(s)")

@@ -15,7 +15,7 @@ _DIVISION_LABELS = {
 
 
 def _division_phrase(division_ocdid: str) -> str | None:
-    """"District 3" from the division's last segment, or None if it names a whole government."""
+    """ "District 3" from the division's last segment, or None if it names a whole government."""
     tail = division_ocdid.rsplit("/", 1)[-1]
     kind, _, value = tail.partition(":")
     name = _DIVISION_LABELS.get(kind)
@@ -28,18 +28,9 @@ def derive_label(
     designations: list[str],
     unmatched_text: list[str],
 ) -> str:
-    """Assemble a readable post name from the parts the derivation produced.
-
-    Designations first because they are what the source used to tell two identical posts apart
-    — "Position 8" is the distinguishing part, and dropping it would render Seattle's two
-    at-large councilmembers identically.
-
-    Unmatched text is included rather than hidden: it came off the page, and a label that
-    silently omits it would look correct while losing what nobody could classify.
-    """
     parts = [role_label, *designations]
     division = _division_phrase(division_ocdid)
     if division:
         parts.append(division)
     parts.extend(unmatched_text)
-    return " · ".join(part for part in parts if part)
+    return ", ".join(part for part in parts if part)

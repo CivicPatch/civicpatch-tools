@@ -46,6 +46,16 @@ def client():
     return TestClient(app)
 
 
+@pytest.fixture
+def anonymous_client():
+    """No identity at all — a logged-out visitor. Every other client here is a fake admin, so
+    this is the only one that can see an auth gate come back."""
+    app = FastAPI()
+    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app.dependency_overrides[get_optional_user] = lambda: None
+    return TestClient(app)
+
+
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -203,10 +213,28 @@ async def test_verified_is_on_the_wire_both_ways(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_create_reads_headcount_under_its_wire_name(client):
+    """Create takes `_headcount`, the same name the read returns and the patch accepts.
+
+    The alias is the whole contract: a body sending bare `headcount` is not a validation
+    error, it is silently the default — so only asserting the stored value catches a
+    regression here.
+    """
+    created = _create(client, division=_WARD_3, _headcount=4)
+    assert created.status_code == 200, created.text
+
+    listed = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"]
+    posts_by_id = {p["id"]: p for org in listed for p in org["posts"]}
+
+    assert posts_by_id[created.json()["data"]["id"]]["_headcount"] == 4
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_a_seat_for_nobody_is_rejected(client):
     """`headcount` is `gt=0`. Validation lives in the model, so the route never sees a zero —
     but nothing had ever sent one to find out."""
-    rejected = _create(client, division=_WARD_3, headcount=0)
+    rejected = _create(client, division=_WARD_3, _headcount=0)
 
     assert rejected.status_code == 422, rejected.text
 
@@ -283,3 +311,20 @@ async def test_a_patch_must_state_whether_the_post_is_tracked(client):
     post_id = _create(client).json()["data"]["id"]
     response = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2})
     assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_roster_reads_without_signing_in(client, anonymous_client):
+    """The jurisdiction page is public, so the posts on it are too — reads open, writes gated.
+
+    Both halves are asserted together because they are one policy: opening the whole router is
+    the plausible way this breaks, and a read-only assertion would not notice.
+    """
+    _create(client)
+
+    read = anonymous_client.get(f"{_PREFIX}/{_OCDID}")
+    assert read.status_code == 200, read.text
+    assert [p["role_id"] for p in read.json()["data"]["organizations"][0]["posts"]] == ["mayor"]
+
+    assert _create(anonymous_client, division=_WARD_3).status_code == 403

@@ -12,9 +12,7 @@ def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.get("")
-    async def get_roles_endpoint(
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
+    async def get_roles_endpoint():
         roles = await role_config_service.load_roles()
         return {"data": {"roles": [r.model_dump() for r in roles]}}
 

@@ -57,6 +57,22 @@ async def _fetch_roles(cur) -> list[Role]:
     ]
 
 
+async def get_role(cur, role_id: str) -> Role | None:
+    """One role by id, or None. Aliases come back empty — callers wanting those want the
+    whole taxonomy, not a single row."""
+    await cur.execute(
+        "SELECT id, label, status, is_unique, priority FROM roles WHERE id = %s",
+        (role_id,),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        return None
+    id, label, status, is_unique, priority = row
+    return Role(
+        id=id, label=label, status=status, is_unique=is_unique, priority=priority
+    )
+
+
 async def get_roles() -> list[Role]:
     """Every role, ordered.
 

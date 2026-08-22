@@ -21,7 +21,7 @@ async def scrape_page(
 ) -> tuple[LinkFrontier, str]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(
-        f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}"
+        f"Step 2: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}"
     )
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 

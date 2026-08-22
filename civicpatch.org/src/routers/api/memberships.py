@@ -51,11 +51,14 @@ def get_router() -> APIRouter:
     async def list_memberships_endpoint(
         jurisdiction_ocdid: str,
         as_of: date | None = None,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
         """The same roster the posts read returns, by person instead of by post.
 
         `?as_of` takes the same window, so switching axis cannot switch the moment.
+
+        Unauthenticated for the same reason as the posts read — it is the other axis of the
+        public jurisdiction page. `/unmatched` above stays gated: that one is cross-jurisdiction
+        triage, not this page's data.
         """
         return {
             "data": {

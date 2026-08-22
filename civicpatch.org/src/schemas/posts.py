@@ -16,7 +16,9 @@ class CreatePostRequest(BaseModel):
     role_id: str
     division_ocdid: str
     label: str | None = None
-    headcount: int = Field(default=1, gt=0)
+    # Aliased like the update route's, so the field has one name on the wire whichever way it
+    # is crossed. Defaulted, unlike there: a new post is one seat unless someone says otherwise.
+    headcount: int = Field(default=1, alias="_headcount", gt=0)
 
 
 class UpdatePostRequest(BaseModel):

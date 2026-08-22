@@ -47,6 +47,15 @@ def client():
     return TestClient(app)
 
 
+@pytest.fixture
+def anonymous_client():
+    """No identity at all — a logged-out visitor."""
+    app = FastAPI()
+    app.include_router(memberships_router.get_router(), prefix=_PREFIX)
+    app.dependency_overrides[get_optional_user] = lambda: None
+    return TestClient(app)
+
+
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -296,3 +305,15 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
     assert row["designations"] == ["Position 8"]
     assert row["unmatched_text"] == ["Zz Route Liaison"]
     assert row["role_id"] == "mayor"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_person_axis_reads_without_signing_in(anonymous_client):
+    """The other axis of the same public page. `/unmatched` stays gated — it is
+    cross-jurisdiction triage rather than this page's data, and that line is the point."""
+    read = anonymous_client.get(f"{_PREFIX}/{_OCDID}")
+    assert read.status_code == 200, read.text
+    assert read.json()["data"]["memberships"] == []
+
+    assert anonymous_client.get(f"{_PREFIX}/unmatched").status_code == 403

@@ -17,7 +17,8 @@ BEGIN;
 -- This is what replaces excluding a person whose labels resolve to no role. That drop could
 -- not distinguish out-of-scope ("Police Chief") from in-scope-but-unrecognised ("Selectman"),
 -- and recorded neither. Scope belongs on the post, where it can differ per jurisdiction — a
--- clerk is elected in some towns and appointed in others.
+-- clerk is elected in some towns and appointed in others. Tracked until a person says
+-- otherwise: guessing from the role would be a second exclusion rule, quieter than the first.
 --
 -- `is_` because it is a boolean, as `issues.is_flagged` is. Defaults true, so every existing
 -- post keeps behaving exactly as it does today.

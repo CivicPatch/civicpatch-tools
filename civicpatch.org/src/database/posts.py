@@ -10,9 +10,9 @@ Cursor-taking functions compose inside the publish transaction; the connection-o
 the bottom serve the roster screen, and reach `label` and `headcount` where nothing else does.
 """
 
-
+from core.membership_label import derive_label
 from core.post_grouping import group_by_organization
-from database import divisions, organizations
+from database import divisions, organizations, roles
 from database.change_logs import record_change
 from database.database import get_pool
 from schemas.change_logs import FieldChange, PostChangePayload
@@ -31,13 +31,19 @@ async def create_if_absent(
 ) -> str | None:
     """Insert a post, or None if the triple is taken. The only INSERT in this module.
 
-    All three land only here, on mint — a later scrape must not overwrite what somebody typed,
-    which is why none of them is ever recomputed.
+    All of them land only here, on mint — a later scrape must not overwrite what somebody
+    typed, which is why none is ever recomputed. An absent `label` is suggested from the role
+    and division, so a post is never nameless before somebody gets to it.
 
     `_headcount` and `_is_tracked` carry their prefix as column names, because no civic
     standard defines either. The Python arguments drop it: a leading underscore means
     something else here.
     """
+    if label is None:
+        role = await roles.get_role(cur, role_id)
+        if role:
+            label = derive_label(role.label, division_ocdid, [], [])
+
     await cur.execute(
         """
         INSERT INTO posts
@@ -72,8 +78,7 @@ async def find_or_create(
     """Make sure this post exists. Returns its id, minted or matched.
 
     The scrape's way in, where `create_if_absent` is a person's: a match is not an error to
-    report, so the lookup below is the normal path, not a fallback. No `label` — only a person
-    names a post.
+    report, so the lookup below is the normal path, not a fallback.
     """
     minted = await create_if_absent(
         cur,

@@ -35,7 +35,7 @@ def test_data_requirement_met_is_success():
         job_config=_job_config(),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is None
 
 
@@ -46,7 +46,7 @@ def test_data_requirement_met_overrides_cost_limit():
         job_config=_job_config(cost_limit="1.00"),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is None
 
 
@@ -57,7 +57,7 @@ def test_data_requirement_met_overrides_max_pages():
         job_config=_job_config(max_pages=10),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is None
 
 
@@ -70,7 +70,7 @@ def test_cost_limit_without_data_proceeds_to_merge():
         job_config=_job_config(cost_limit="1.00"),
         progress=_progress(),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is not None
     assert "Cost limit" in error
 
@@ -84,7 +84,7 @@ def test_max_pages_without_data_is_failure():
         job_config=_job_config(max_pages=10),
         progress=_progress(required_data=5),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is not None
     assert "Max pages" in error
 
@@ -120,7 +120,7 @@ def test_one_short_of_the_expected_roster_still_stops():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
     assert error is None
 
 
@@ -138,7 +138,7 @@ def test_two_short_still_stops():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    assert state == PipelineStatus.CLEANUP
 
 
 def test_three_short_keeps_scraping():

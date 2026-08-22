@@ -3,7 +3,7 @@ import os
 from unittest.mock import MagicMock
 
 import pytest
-from runners.people_collector.steps.step_08_cleanup.cleanup import (
+from runners.people_collector.steps.step_05_cleanup.cleanup import (
     cleanup_cache,
     cleanup_images,
 )
