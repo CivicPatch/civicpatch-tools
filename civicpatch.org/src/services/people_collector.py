@@ -18,11 +18,12 @@ from core.ingest_people import (
     resolve_images,
 )
 from core.membership_proposal import (
-    Disposition,
     ExistingMembership,
     ProposedChange,
+    nothing_to_review,
     propose,
-    surfaces_for_review,
+    still_held,
+    still_listed,
 )
 from core.post_derivation import derived_posts
 from database import divisions as divisions_db
@@ -211,18 +212,12 @@ async def _get_proposed_changes(
 async def _update_last_seen_at(
     request_id: str, changes: list[ProposedChange], last_seen_at
 ) -> None:
-    """Record that a scrape still found these people where we already hold them.
-
-    Only `unchanged`: someone who moved is not still where their open membership says.
-    """
-    unchanged = [
-        change.person_id
-        for change in changes
-        if change.disposition is Disposition.UNCHANGED
-    ]
+    """Record that a scrape still found these people where we already hold them."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        advanced = await memberships_db.advance_last_seen_at(cur, unchanged, last_seen_at)
+        advanced = await memberships_db.advance_last_seen_at(
+            cur, still_held(changes), last_seen_at
+        )
         await conn.commit()
     logger.info(f"[{request_id}] Advanced last_seen_at on {advanced} membership(s)")
 
@@ -236,19 +231,12 @@ async def _close_absent_holders(
     that we stopped seeing someone, not a claim that they left — that claim is `end_date`, and
     it comes from the source. An observation does not wait for review.
 
-    `_is_tracked` is deliberately not consulted; what it should gate is undecided, and a half
-    wired flag is worse than an unused one. An empty roster closes nobody, which `close_absent`
-    guards.
+    An empty roster closes nobody, which `close_absent` guards.
     """
-    present = [
-        change.person_id
-        for change in changes
-        if change.disposition is not Disposition.ABSENT
-    ]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         closed = await memberships_db.close_absent(
-            cur, jurisdiction_ocdid, present, last_seen_at
+            cur, jurisdiction_ocdid, still_listed(changes), last_seen_at
         )
         await conn.commit()
     if closed:
@@ -260,11 +248,10 @@ async def _dismiss_if_nothing_to_review(
 ) -> None:
     """Retire a scrape nothing needs to be asked about.
 
-    An empty proposal is a failed scrape rather than a quiet one, so `changes` must be
-    non-empty. Guarded in its own statement, so losing a race to a reviewer publishing leaves
-    their decision alone.
+    Guarded in its own statement, so losing a race to a reviewer publishing leaves their
+    decision alone.
     """
-    if not changes or any(surfaces_for_review(change) for change in changes):
+    if not nothing_to_review(changes):
         return
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

@@ -103,3 +103,37 @@ def propose(
 
 def surfaces_for_review(change: ProposedChange) -> bool:
     return change.disposition is not Disposition.UNCHANGED
+
+
+def still_held(changes: list[ProposedChange]) -> list[str]:
+    """Who the scrape found exactly where we already hold them.
+
+    Only `unchanged`: someone who moved is not still where their open membership says.
+    """
+    return [
+        change.person_id
+        for change in changes
+        if change.disposition is Disposition.UNCHANGED
+    ]
+
+
+def still_listed(changes: list[ProposedChange]) -> list[str]:
+    """Who the scrape still names, whatever seat it puts them on.
+
+    `is_tracked` is deliberately not consulted; what it should gate is undecided, and a half
+    wired flag is worse than an unused one.
+    """
+    return [
+        change.person_id
+        for change in changes
+        if change.disposition is not Disposition.ABSENT
+    ]
+
+
+def nothing_to_review(changes: list[ProposedChange]) -> bool:
+    """Whether this proposal asks a human nothing.
+
+    An empty proposal is a failed scrape rather than a quiet one, so `changes` must be
+    non-empty.
+    """
+    return bool(changes) and not any(surfaces_for_review(change) for change in changes)
