@@ -128,6 +128,19 @@ async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
         await conn.commit()
 
 
+async def _published_request(observed_at: str, ocdid: str = _OCDID) -> str:
+    """A request that already went live. No longer a review candidate, but still the newest
+    thing anyone said about this jurisdiction."""
+    request_id = await _request(observed_at, ocdid)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE requests SET published_at = now() WHERE id::text = %s", (request_id,)
+        )
+        await conn.commit()
+    return request_id
+
+
 # --- the sweep -----------------------------------------------------------------------------
 
 
@@ -269,3 +282,33 @@ async def test_the_guard_permits_a_newer_roster():
 
     await publish_request(older, _OCDID, [{**_person(), "updated_at": _OLD}])
     await publish_request(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_draft_older_than_a_published_roster_is_superseded():
+    """What can supersede is not the same set as what can be superseded. Comparing candidates
+    only to each other left every draft older than a publish in the pool forever — manchester
+    TN carried one from May, overtaken ten minutes later, still there in August."""
+    await _jurisdiction()
+    stale = await _request(_OLD)
+    published = await _published_request(_NEW)
+
+    assert await supersede_stacked_requests() == [stale]
+
+    assert (await _dismissed_at(stale))[0] is not None
+    # The publish is untouched: it is a supersedor, never a candidate.
+    assert (await _dismissed_at(published))[0] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_draft_newer_than_a_published_roster_survives():
+    """The publish is older, so it supersedes nothing. A draft carrying fresher observations
+    is the whole reason someone would scrape again after publishing."""
+    await _jurisdiction()
+    await _published_request(_OLD)
+    fresher = await _request(_NEW)
+
+    assert await supersede_stacked_requests() == []
+    assert (await _dismissed_at(fresher))[0] is None

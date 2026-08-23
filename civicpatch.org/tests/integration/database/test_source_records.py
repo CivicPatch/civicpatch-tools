@@ -186,3 +186,38 @@ async def test_every_sighting_of_one_person_lands_in_a_single_row(sentinel_reque
     assert rows[0]["parsed"]["role"] == "Mayor"
     assert sorted(rows[0]["parsed"]["roles"]) == ["Council Member", "Mayor"]
     assert [p["label"] for p in rows[0]["parsed"]["parts"]] == ["Council Member", "Mayor"]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_resolved_photo_urls_ride_on_parsed_not_raw(sentinel_request):
+    """`raw` keeps the pipeline's `local://` placeholder, which resolves only against a zip
+    that is gone by the time anyone reads this. The resolution is a derivation, so it belongs
+    with the others — and it is what lets a roster be rebuilt without `data_json`."""
+    records = {
+        "person-eve": [
+            {
+                "name": "Eve",
+                "label": "Mayor",
+                "source_url": "https://zz.gov/0",
+                "image": "local://abc123.png",
+            }
+        ]
+    }
+
+    await insert_source_records(
+        sentinel_request,
+        _SENTINEL_OCDID,
+        records,
+        TAXONOMY,
+        {"person-eve": {"image": "https://zz.gov/eve.png",
+                        "cdn_image": "https://cdn.example/eve.png"}},
+    )
+
+    rows = await get_source_records_for_request(sentinel_request)
+
+    assert rows[0]["raw"][0]["image"] == "local://abc123.png"
+    assert rows[0]["parsed"]["image"] == "https://zz.gov/eve.png"
+    assert rows[0]["parsed"]["cdn_image"] == "https://cdn.example/eve.png"
+    # The parse is untouched by the images riding alongside it.
+    assert rows[0]["parsed"]["role"] == "Mayor"

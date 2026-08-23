@@ -30,10 +30,7 @@ async def proposals_for_requests(
     ocdids = {roster["jurisdiction_ocdid"] for roster in rosters.values()}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        held = {
-            ocdid: await memberships_db.open_for_jurisdiction(cur, ocdid)
-            for ocdid in ocdids
-        }
+        held = await memberships_db.open_by_jurisdiction(cur, list(ocdids))
 
     proposals: dict[str, list[ProposedChange]] = {}
     for request_id, roster in rosters.items():

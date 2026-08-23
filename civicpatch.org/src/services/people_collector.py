@@ -1,41 +1,58 @@
-import os
 import json
+import logging
+import os
+from datetime import datetime, timezone
+from typing import NamedTuple
 
-from typing import List, Dict
-import lib.sheets as google_sheets_service
-from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest
-from schemas.pipeline_runs import SubmitPipelineRunArtifactsResponse
-import lib.files as file_utils
+import environment
 import lib.buckets as buckets
+import lib.files as file_utils
+import lib.sheets as google_sheets_service
 import lib.storage as storage_service
-from database.pipeline_runs import update_pipeline_run_data, update_pipeline_run_review_json, update_pipeline_run_status
-from database.issues import upsert_issue
-from database.roles import get_roles
-from database.people import get_people_for_jurisdiction
-from database.source_records import insert_source_records
-from database import divisions as divisions_db
-from database import organizations as organizations_db
-from database import posts as posts_db
-from database.database import get_pool
 from core.ingest_people import (
+    cdn_urls,
     identified,
-    local_image_basename,
+    images_by_person,
     officials_from_rows,
-    with_images,
+    records_by_person,
+    resolve_images,
+)
+from core.membership_proposal import (
+    Disposition,
+    ExistingMembership,
+    ProposedChange,
+    propose,
+    surfaces_for_review,
 )
 from core.post_derivation import derived_posts
+from database import divisions as divisions_db
+from database import memberships as memberships_db
+from database import organizations as organizations_db
+from database import posts as posts_db
+from database import requests as requests_db
+from database.database import get_pool
+from database.issues import upsert_issue
+from database.people import get_people_for_jurisdiction
+from database.pipeline_runs import (
+    update_pipeline_run_data,
+    update_pipeline_run_review_json,
+    update_pipeline_run_status,
+)
+from database.roles import get_roles
+from database.source_records import insert_source_records
+from schemas.pipeline_runs import (
+    HandleSubmitPipelineRunArtifactsRequest,
+    SubmitPipelineRunArtifactsResponse,
+)
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from shared.schemas import Official, RoleConfig
 from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
-from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.person_id_utils import resolve_people_ids
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
-import logging
+from shared.utils.taxonomy import build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
-
-import environment
 
 COST_BY_REQUEST_SHEET_NAME = "Cost By Request"
 LLMS_SHEET_NAME = "Cost LLMs"
@@ -43,7 +60,7 @@ LLMS_SHEET_NAME = "Cost LLMs"
 PUBLIC_BUCKET = buckets.ARTIFACTS
 PRIVATE_BUCKET = buckets.DEBUG
 
-INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
+INSTANCE_DOMAIN = "civicpatch.org"  # Just hardcode it for now...
 
 # The value `people.status` is checked against; the column's CHECK constraint is the guard.
 ACTIVE_PERSON_STATUS = "active"
@@ -54,14 +71,20 @@ logger = logging.getLogger(__name__)
 
 
 async def handle_submit_pipeline_run_artifacts(
-        request: HandleSubmitPipelineRunArtifactsRequest,
+    request: HandleSubmitPipelineRunArtifactsRequest,
 ) -> SubmitPipelineRunArtifactsResponse:
     try:
         return await _handle_submit_pipeline_run_artifacts(request)
     except Exception as e:
-        logger.error(f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True)
-        await update_pipeline_run_status(request.request_id, status=PipelineRunStatus.ERROR, progress=None)
-        await upsert_issue(request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}])
+        logger.error(
+            f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True
+        )
+        await update_pipeline_run_status(
+            request.request_id, status=PipelineRunStatus.ERROR, progress=None
+        )
+        await upsert_issue(
+            request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
+        )
         raise
 
 
@@ -90,16 +113,7 @@ async def _reconcile_roster(
         rows, identities, taxonomy, jurisdiction_ocdid, logger
     )
     identified_roster = await _assign_ids(jurisdiction_ocdid, roster)
-    return identified_roster, _records_by_person(identified_roster, records_by_name)
-
-
-def _records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, list[dict]]:
-    """Rekey the records from the name they grouped on to the id that name resolved to."""
-    return {
-        person["id"]: records_by_name[person["name"]]
-        for person in roster
-        if person["name"] in records_by_name
-    }
+    return identified_roster, records_by_person(identified_roster, records_by_name)
 
 
 async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
@@ -150,31 +164,121 @@ async def _build_review_summary(roster: list[dict], workflow_context: dict) -> d
     return {**summary, "issues": [issue.model_dump() for issue in summary["issues"]]}
 
 
+def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict, dict]:
+    """The impure edge of image resolution: an env read and a file read. The mapping itself is
+    `core.ingest_people.cdn_urls`."""
+    env = environment.get_env_vars()
+    return _read_image_map(image_file_dir), cdn_urls(
+        filenames_to_urls, env["STORAGE_ENDPOINT"], PUBLIC_BUCKET, INSTANCE_DOMAIN
+    )
+
+
 async def _store_source_records(
     request_id: str,
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
+    roster: list[dict],
 ) -> None:
     """Each sighting raw, beside its derivation. Never fatal."""
     try:
         taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
         stored = await insert_source_records(
-            request_id, jurisdiction_ocdid, records_by_person, taxonomy
+            request_id,
+            jurisdiction_ocdid,
+            records_by_person,
+            taxonomy,
+            images_by_person(roster),
         )
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
-        logger.error(f"[{request_id}] Failed to store source records: {e}", exc_info=True)
+        logger.error(
+            f"[{request_id}] Failed to store source records: {e}", exc_info=True
+        )
+
+
+async def _get_proposed_changes(
+    jurisdiction_ocdid: str, specs: list
+) -> list[ProposedChange]:
+    """What this scrape would change about who holds what. Read once, used by both steps below."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        held = (
+            await memberships_db.open_by_jurisdiction(cur, [jurisdiction_ocdid])
+        )[jurisdiction_ocdid]
+    return propose(specs, [ExistingMembership(**row) for row in held])
+
+
+async def _update_last_seen_at(
+    request_id: str, changes: list[ProposedChange], last_seen_at
+) -> None:
+    """Record that a scrape still found these people where we already hold them.
+
+    Only `unchanged`: someone who moved is not still where their open membership says.
+    """
+    unchanged = [
+        change.person_id
+        for change in changes
+        if change.disposition is Disposition.UNCHANGED
+    ]
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        advanced = await memberships_db.advance_last_seen_at(cur, unchanged, last_seen_at)
+        await conn.commit()
+    logger.info(f"[{request_id}] Advanced last_seen_at on {advanced} membership(s)")
+
+
+async def _close_absent_holders(
+    request_id: str, jurisdiction_ocdid: str, changes: list[ProposedChange], last_seen_at
+) -> None:
+    """Close anyone this scrape stopped naming.
+
+    Transaction time, like `last_seen_at` above and for the same reason: `closed_at` records
+    that we stopped seeing someone, not a claim that they left — that claim is `end_date`, and
+    it comes from the source. An observation does not wait for review.
+
+    `_is_tracked` is deliberately not consulted; what it should gate is undecided, and a half
+    wired flag is worse than an unused one. An empty roster closes nobody, which `close_absent`
+    guards.
+    """
+    present = [
+        change.person_id
+        for change in changes
+        if change.disposition is not Disposition.ABSENT
+    ]
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        closed = await memberships_db.close_absent(
+            cur, jurisdiction_ocdid, present, last_seen_at
+        )
+        await conn.commit()
+    if closed:
+        logger.info(f"[{request_id}] Closed {closed} membership(s) no longer listed")
+
+
+async def _dismiss_if_nothing_to_review(
+    request_id: str, changes: list[ProposedChange]
+) -> None:
+    """Retire a scrape nothing needs to be asked about.
+
+    An empty proposal is a failed scrape rather than a quiet one, so `changes` must be
+    non-empty. Guarded in its own statement, so losing a race to a reviewer publishing leaves
+    their decision alone.
+    """
+    if not changes or any(surfaces_for_review(change) for change in changes):
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        dismissed = await requests_db.dismiss_as_unchanged(cur, request_id)
+        await conn.commit()
+    if dismissed:
+        logger.info(f"[{request_id}] Dismissed: nothing to review")
 
 
 async def _find_or_create_posts(
     request_id: str, jurisdiction_ocdid: str, records: list[dict]
-) -> None:
+) -> list:
     """Derive the posts this scrape implies and write them, so review has real posts to
     point a person at.
-
-    Here rather than at publish because the Post picker can only offer posts that exist, and
-    review comes first. Memberships stay at publish: a post can be proposed, a membership is
-    only true once accepted. Never fatal — posts are re-derivable from `source_records`.
     """
     try:
         roles = await get_roles()
@@ -184,9 +288,13 @@ async def _find_or_create_posts(
 
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
-            organization_id = await organizations_db.find_or_create(cur, jurisdiction_ocdid)
+            organization_id = await organizations_db.find_or_create(
+                cur, jurisdiction_ocdid
+            )
             for spec in specs:
-                await divisions_db.find_or_create(cur, spec.division_ocdid, jurisdiction_ocdid)
+                await divisions_db.find_or_create(
+                    cur, spec.division_ocdid, jurisdiction_ocdid
+                )
                 await posts_db.find_or_create(
                     cur,
                     jurisdiction_ocdid,
@@ -197,11 +305,15 @@ async def _find_or_create_posts(
                 )
             await conn.commit()
         logger.info(f"[{request_id}] Derived {len(specs)} post(s)")
+        return specs
     except Exception as e:
         logger.error(f"[{request_id}] Failed to derive posts: {e}", exc_info=True)
+        return []
 
 
-async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflow_context: dict) -> None:
+async def _record_resolved_url(
+    request_id: str, jurisdiction_ocdid: str, workflow_context: dict
+) -> None:
     """Point the registry at wherever the scrape found the jurisdiction. Never fatal."""
     url = resolved_url(workflow_context)
     if not url:
@@ -209,120 +321,165 @@ async def _record_resolved_url(request_id: str, jurisdiction_ocdid: str, workflo
     try:
         await record_resolved_url(jurisdiction_ocdid, url)
     except Exception as e:
-        logger.error(f"[{request_id}] Failed to record resolved URL: {e}", exc_info=True)
+        logger.error(
+            f"[{request_id}] Failed to record resolved URL: {e}", exc_info=True
+        )
 
 
-async def _handle_submit_pipeline_run_artifacts(
-        request: HandleSubmitPipelineRunArtifactsRequest,
-) -> SubmitPipelineRunArtifactsResponse:
-    # What the scrape produced and we publish: the rendered roster, plus the run context the
-    # review summary and resolved URL are read out of.
-    output_file_patterns = [
-        "data/*/local/*.yml",
-        "data_source/*/local/*/pipeline_run_context.json",
-    ]
+class ArtifactDirs(NamedTuple):
+    """Three destinations, three fates: `output` is read and published, `images` are uploaded
+    and become each person's `cdn_image`, `debug` backs the run log, run context and
+    per-source markdown the UI links to."""
 
-    image_file_patterns = [
-        "data_source/*/local/*/images/*",
-    ]
+    output: str
+    debug: str
+    images: str
 
-    debug_file_patterns = [
-        "data_source/*/local/*/cache/*",
-        "data_source/*/local/*/costs.json",
-        "data_source/*/local/*/pipeline_run.log",
-        "data_source/*/local/*/pipeline_run_context.json",
-    ]
 
-    zip_path = request.zip_path
-    temp_dir = request.temp_dir
+_OUTPUT_PATTERNS = [
+    "data/*/local/*.yml",
+    "data_source/*/local/*/pipeline_run_context.json",
+]
+_IMAGE_PATTERNS = ["data_source/*/local/*/images/*"]
+_DEBUG_PATTERNS = [
+    "data_source/*/local/*/cache/*",
+    "data_source/*/local/*/costs.json",
+    "data_source/*/local/*/pipeline_run.log",
+    "data_source/*/local/*/pipeline_run_context.json",
+]
+
+
+async def _unpack_artifacts(zip_path: str, temp_dir: str) -> ArtifactDirs:
     extracted_dir = os.path.join(temp_dir, "extracted")
     os.makedirs(extracted_dir, exist_ok=True)
     await file_utils.extract_zip(zip_path, extracted_dir)
 
-    # Three destinations, three fates: output is read and published, images are uploaded and
-    # become each person's cdn_image, debug files are uploaded individually for the run log,
-    # run context and per-source markdown the UI links to.
-    output_file_dir = os.path.join(temp_dir, "output_files")
-    debug_file_dir = os.path.join(temp_dir, "debug_files")
-    image_file_dir = os.path.join(temp_dir, "image_files")
+    dirs = ArtifactDirs(
+        output=os.path.join(temp_dir, "output_files"),
+        debug=os.path.join(temp_dir, "debug_files"),
+        images=os.path.join(temp_dir, "image_files"),
+    )
+    for destination, patterns in (
+        (dirs.output, _OUTPUT_PATTERNS),
+        (dirs.debug, _DEBUG_PATTERNS),
+        (dirs.images, _IMAGE_PATTERNS),
+    ):
+        file_utils.copy_files_preserving_hierarchy(
+            extracted_dir, destination, patterns=patterns
+        )
+    return dirs
 
-    file_utils.copy_files_preserving_hierarchy(extracted_dir, output_file_dir, patterns=output_file_patterns)
-    file_utils.copy_files_preserving_hierarchy(extracted_dir, debug_file_dir, patterns=debug_file_patterns)
-    file_utils.copy_files_preserving_hierarchy(extracted_dir, image_file_dir, patterns=image_file_patterns)
 
-    is_success = request.pipeline_run_status == PipelineRunStatus.SUCCESS
-
-    filenames_to_urls = await _upload_files(image_file_dir, request.request_id, PUBLIC_BUCKET)
-    await _upload_files(debug_file_dir, request.request_id, PRIVATE_BUCKET)
-
+def _read_workflow_context(debug_file_dir: str) -> dict:
+    """Absent on a run that failed before writing one, which is not an error here."""
     try:
-        await _send_costs(debug_file_dir)
-    except Exception as e:
-        logger.error(f"Failed to send costs for {request.request_id}: {e}", exc_info=True)
-
-    try:
-        context_path = file_utils.find_file(debug_file_dir, "data_source/*/local/*/pipeline_run_context.json")
-        with open(context_path, "r") as f:
-            workflow_context = json.load(f)
+        path = file_utils.find_file(
+            debug_file_dir, "data_source/*/local/*/pipeline_run_context.json"
+        )
+        with open(path, "r") as f:
+            return json.load(f)
     except FileNotFoundError:
-        workflow_context = {}
+        return {}
 
-    if is_success:
-        is_valid = await file_utils.validate_file_patterns(output_file_dir, output_file_patterns)
-        if not is_valid:
-            raise Exception(f"Uploaded zip file is missing expected files matching patterns: {output_file_patterns}")
 
-        data_file_path = file_utils.find_file(output_file_dir, "data/*/local/*.yml")
-        with open(data_file_path, "r") as f:
-            data = yaml_load(f.read())
-        roster, records_by_person = await _reconcile_roster(
-            request.jurisdiction_ocdid, data, workflow_context
-        )
-        updated_data = await _process_images(image_file_dir, filenames_to_urls, roster)
-        with open(data_file_path, "w") as f:
-            f.write(yaml_dump(updated_data))
-        await update_pipeline_run_data(request.request_id, updated_data)
-        await _store_source_records(
-            request.request_id, request.jurisdiction_ocdid, records_by_person
-        )
-        await _find_or_create_posts(
-            request.request_id, request.jurisdiction_ocdid, updated_data
-        )
-        await _record_resolved_url(
-            request.request_id, request.jurisdiction_ocdid, workflow_context
+async def _ingest_roster(
+    request: HandleSubmitPipelineRunArtifactsRequest,
+    dirs: ArtifactDirs,
+    filenames_to_urls: dict,
+    workflow_context: dict,
+) -> None:
+    """Reconcile the scrape into people, and derive everything that follows from them."""
+    if not await file_utils.validate_file_patterns(dirs.output, _OUTPUT_PATTERNS):
+        raise Exception(
+            f"Uploaded zip file is missing expected files matching patterns: {_OUTPUT_PATTERNS}"
         )
 
-        review_json = await _review_summary(updated_data, workflow_context)
-        await update_pipeline_run_review_json(request.request_id, review_json)
+    data_file_path = file_utils.find_file(dirs.output, "data/*/local/*.yml")
+    with open(data_file_path, "r") as f:
+        data = yaml_load(f.read())
 
-        for issue in workflow_context.get("data", {}).get("issues", []):
-            await upsert_issue(
-                request.request_id,
-                issue["type"],
-                [issue.get("data") or {}],
-            )
+    roster, records_by_person = await _reconcile_roster(
+        request.jurisdiction_ocdid, data, workflow_context
+    )
+    source_urls, served = _image_url_maps(dirs.images, filenames_to_urls)
+    updated_data, unserved = resolve_images(source_urls, served, roster)
+    if unserved:
+        logger.warning(f"No uploaded image for {', '.join(unserved)}")
+    with open(data_file_path, "w") as f:
+        f.write(yaml_dump(updated_data))
+
+    await update_pipeline_run_data(request.request_id, updated_data)
+    await _store_source_records(
+        request.request_id, request.jurisdiction_ocdid, records_by_person, updated_data
+    )
+    specs = await _find_or_create_posts(
+        request.request_id, request.jurisdiction_ocdid, updated_data
+    )
+    await _apply_scrape_changes(request.request_id, request.jurisdiction_ocdid, specs)
+    await _record_resolved_url(
+        request.request_id, request.jurisdiction_ocdid, workflow_context
+    )
+
+    review_json = await _review_summary(updated_data, workflow_context)
+    await update_pipeline_run_review_json(request.request_id, review_json)
+
+    for issue in workflow_context.get("data", {}).get("issues", []):
+        await upsert_issue(request.request_id, issue["type"], [issue.get("data") or {}])
+
+
+async def _apply_scrape_changes(
+    request_id: str, jurisdiction_ocdid: str, specs: list
+) -> None:
+    """Never fatal, like the other derived writes: a scrape whose people are stored must not
+    error over a timestamp."""
+    last_seen_at = datetime.now(timezone.utc)
+    try:
+        changes = await _get_proposed_changes(jurisdiction_ocdid, specs)
+        await _update_last_seen_at(request_id, changes, last_seen_at)
+        await _close_absent_holders(request_id, jurisdiction_ocdid, changes, last_seen_at)
+        await _dismiss_if_nothing_to_review(request_id, changes)
+    except Exception as e:
+        logger.error(
+            f"[{request_id}] Failed to apply the scrape's changes: {e}", exc_info=True
+        )
+
+
+async def _record_pipeline_error(request_id: str, workflow_context: dict) -> None:
+    context_data = workflow_context.get("data", {})
+    error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
+    await upsert_issue(request_id, error_step, [context_data.get("error_detail") or {}])
+
+
+async def _handle_submit_pipeline_run_artifacts(
+    request: HandleSubmitPipelineRunArtifactsRequest,
+) -> SubmitPipelineRunArtifactsResponse:
+    dirs = await _unpack_artifacts(request.zip_path, request.temp_dir)
+
+    filenames_to_urls = await _upload_files(
+        dirs.images, request.request_id, PUBLIC_BUCKET
+    )
+    await _upload_files(dirs.debug, request.request_id, PRIVATE_BUCKET)
+
+    try:
+        await _send_costs(dirs.debug)
+    except Exception as e:
+        logger.error(
+            f"Failed to send costs for {request.request_id}: {e}", exc_info=True
+        )
+
+    workflow_context = _read_workflow_context(dirs.debug)
+
+    if request.pipeline_run_status == PipelineRunStatus.SUCCESS:
+        await _ingest_roster(request, dirs, filenames_to_urls, workflow_context)
     else:
-        context_data = workflow_context.get("data", {})
-        error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
-        error_detail = context_data.get("error_detail") or {}
-        await upsert_issue(request.request_id, error_step, [error_detail])
+        await _record_pipeline_error(request.request_id, workflow_context)
 
-
-    # No data_intake dispatch, and no artifact zip. That Action opened the pull request a
-    # scrape used to be reviewed through and then told us its number so a card could appear;
-    # both jobs moved here, so the roster is committed to the unreviewed path directly and the
-    # request carries its own review state.
-    #
-    # The zip existed only to give that Action a URL to fetch. Its contents — the rendered
-    # roster and the run context — are now in `data_json` and on open-data, so zipping and
-    # uploading them was work for no reader. The image and debug uploads above are separate
-    # and stay: images become `cdn_image`, and the debug files back the run log, run context
-    # and per-source markdown the UI links to.
     return SubmitPipelineRunArtifactsResponse(
         status="uploaded",
         request_id=request.request_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
     )
+
 
 def _read_image_map(image_file_dir: str) -> dict:
     """Downloaded filename to the url the photo was scraped from.
@@ -339,33 +496,6 @@ def _read_image_map(image_file_dir: str) -> dict:
         return json.load(f)
 
 
-async def _process_images(image_file_dir: str, filenames_to_urls: dict, data: List[Dict]) -> List[Dict]:
-    """Turn each person's `local://` reference into the two urls a reader needs: where the
-    photo came from, and where we serve it.
-
-    Both halves happen here, off `image_map.json` and the uploaded files, both out of the zip.
-    """
-    env = environment.get_env_vars()
-    storage_endpoint = env["STORAGE_ENDPOINT"]
-    source_urls = _read_image_map(image_file_dir)
-    cdn_urls = {
-        basename: url.replace(
-            f"{storage_endpoint}/{PUBLIC_BUCKET}",
-            f"https://{PUBLIC_BUCKET}.{INSTANCE_DOMAIN}",
-        )
-        for basename, url in filenames_to_urls.items()
-    }
-
-    unserved = []
-    for person in data:
-        basename = local_image_basename(person)
-        if basename and basename not in cdn_urls:
-            unserved.append(str(person.get("name")))
-    if unserved:
-        logger.warning(f"_process_images: no uploaded image for {', '.join(unserved)}")
-
-    return [with_images(person, source_urls, cdn_urls) for person in data]
-
 async def _upload_files(source_dir: str, request_id: str, bucket: str) -> dict:
     filename_to_url = {}
     for root, _, files in os.walk(source_dir):
@@ -379,18 +509,28 @@ async def _upload_files(source_dir: str, request_id: str, bucket: str) -> dict:
                 )
                 filename_to_url[os.path.basename(file_path)] = url
             except Exception as e:
-                logger.error(f"Failed to upload {file_path} to {bucket} for request {request_id}: {e}")
+                logger.error(
+                    f"Failed to upload {file_path} to {bucket} for request {request_id}: {e}"
+                )
     return filename_to_url
 
+
 async def _send_costs(debug_file_dir: str):
-    logging.info(f"Sending costs to Google Sheets from debug file directory: {debug_file_dir}")
-    costs_file_path = file_utils.find_file(debug_file_dir, "data_source/*/local/*/costs.json")
+    logging.info(
+        f"Sending costs to Google Sheets from debug file directory: {debug_file_dir}"
+    )
+    costs_file_path = file_utils.find_file(
+        debug_file_dir, "data_source/*/local/*/costs.json"
+    )
     with open(costs_file_path, "r") as f:
         costs_data = json.load(f)
 
     total_cost_by_request = [list(costs_data.get("total_cost_by_request", {}).values())]
-    llm_costs_flattened = [list(item.values()) for item in costs_data.get("llm_costs", [])]
+    llm_costs_flattened = [
+        list(item.values()) for item in costs_data.get("llm_costs", [])
+    ]
 
-    google_sheets_service.update_spreadsheet(COST_BY_REQUEST_SHEET_NAME, total_cost_by_request)
+    google_sheets_service.update_spreadsheet(
+        COST_BY_REQUEST_SHEET_NAME, total_cost_by_request
+    )
     google_sheets_service.update_spreadsheet(LLMS_SHEET_NAME, llm_costs_flattened)
-

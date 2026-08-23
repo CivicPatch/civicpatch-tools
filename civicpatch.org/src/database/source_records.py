@@ -21,6 +21,7 @@ async def insert_source_records(
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
     taxonomy: Taxonomy,
+    images_by_person: dict[str, dict] | None = None,
 ) -> int:
     """One row per person: every sighting behind them in `raw`, the reconciliation in `parsed`.
 
@@ -38,15 +39,20 @@ async def insert_source_records(
             jurisdiction_ocdid,
             json.dumps(records),
             json.dumps(
-                parse_record(
-                    list(
-                        dict.fromkeys(
-                            record["label"] for record in records if record.get("label")
-                        )
+                {
+                    **parse_record(
+                        list(
+                            dict.fromkeys(
+                                record["label"]
+                                for record in records
+                                if record.get("label")
+                            )
+                        ),
+                        jurisdiction_ocdid,
+                        taxonomy,
                     ),
-                    jurisdiction_ocdid,
-                    taxonomy,
-                )
+                    **(images_by_person or {}).get(person_id, {}),
+                }
             ),
         )
         for person_id, records in records_by_person.items()

@@ -48,7 +48,7 @@ async def upsert(
     person_id: str,
     post_id: str,
     organization_id: str,
-    seen_at,
+    last_seen_at,
     designations: list[str] | None = None,
     unmatched_text: list[str] | None = None,
     source_labels: list[str] | None = None,
@@ -63,7 +63,7 @@ async def upsert(
         WHERE person_id = %s AND organization_id = %s
           AND closed_at IS NULL AND post_id <> %s
         """,
-        (seen_at, person_id, organization_id, post_id),
+        (last_seen_at, person_id, organization_id, post_id),
     )
 
     await cur.execute(
@@ -91,14 +91,29 @@ async def upsert(
             source_labels or [],
             start_date,
             end_date,
-            seen_at,
-            seen_at,
+            last_seen_at,
+            last_seen_at,
             label,
         ),
     )
     membership_id = (await cur.fetchone())[0]
     await _set_membership_roles(cur, membership_id, role_ids or [])
     return membership_id
+
+
+async def advance_last_seen_at(cur, person_ids: list[str], last_seen_at) -> int:
+    """Transaction time: we saw them, not a claim about their tenure. `GREATEST` so an
+    out-of-order scrape cannot walk the clock backwards."""
+    if not person_ids:
+        return 0
+    await cur.execute(
+        """
+        UPDATE memberships SET last_seen_at = GREATEST(last_seen_at, %s)
+        WHERE person_id = ANY(%s) AND closed_at IS NULL
+        """,
+        (last_seen_at, person_ids),
+    )
+    return cur.rowcount
 
 
 async def close_absent(
@@ -235,24 +250,32 @@ async def unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]:
         return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
 
 
-async def open_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    """Every open membership with the seat it sits on, shaped for the proposal diff.
+async def open_by_jurisdiction(
+    cur, jurisdiction_ocdids: list[str]
+) -> dict[str, list[dict]]:
+    """Open memberships with the seat they sit on, grouped by jurisdiction.
 
-    Distinct from `list_for_jurisdiction`, which is the roster read: this needs `_is_tracked`
-    and nothing a person would look at.
+    Takes a list because the review queue asks for hundreds at once; one query per jurisdiction
+    was the whole cost of ordering it.
     """
+    if not jurisdiction_ocdids:
+        return {}
     await cur.execute(
         """
-        SELECT m.person_id::text, m.post_id::text,
+        SELECT p.jurisdiction_ocdid, m.person_id::text, m.post_id::text,
                p.role_id, p.division_ocdid, p._is_tracked AS is_tracked
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
-        WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+        WHERE p.jurisdiction_ocdid = ANY(%s) AND m.closed_at IS NULL
         """,
-        (jurisdiction_ocdid,),
+        (jurisdiction_ocdids,),
     )
     columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    grouped: dict[str, list[dict]] = {ocdid: [] for ocdid in jurisdiction_ocdids}
+    for row in await cur.fetchall():
+        held = dict(zip(columns, row))
+        grouped[held.pop("jurisdiction_ocdid")].append(held)
+    return grouped
 
 
 async def update_label(cur, membership_id: str, label: str | None) -> bool:
@@ -304,7 +327,7 @@ async def assign(
     Re-assigning to the post they already hold only sets the label — going through `upsert`
     would blank `designations` and `unmatched_text` until the next scrape re-derives them.
     """
-    seen_at = datetime.now(timezone.utc)
+    last_seen_at = datetime.now(timezone.utc)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -320,7 +343,7 @@ async def assign(
             result = {"membership_id": current["id"], "moved_from": None}
         else:
             membership_id = await upsert(
-                cur, person_id, post_id, organization_id, seen_at
+                cur, person_id, post_id, organization_id, last_seen_at
             )
             if label is not None:
                 await update_label(cur, membership_id, label)

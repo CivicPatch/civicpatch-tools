@@ -75,6 +75,16 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 - All queries live in `database/` — one file per domain; routers and `core/` never write SQL directly
 - Use the async connection pool (`get_pool()`) — never open a raw connection outside of it
 - DB functions are named after what they do: `get_jurisdiction_people`, `create_update_user`, etc.
+- **Shared SQL predicates must not require a table alias.** A constant like `AVAILABLE_FOR_REVIEW`
+  is spliced into many queries; if it says `r.published_at`, every caller has to alias that table
+  `r` and nothing enforces it — a mismatch is a runtime error, never a typecheck one. Write
+  `requests.published_at` and let callers use the table unaliased.
+  The existing fragments in `database/requests.py` (`AVAILABLE_FOR_REVIEW`, `REVIEW_STATUS`,
+  `SWEEPABLE`, `ROSTER_SEEN_AT`, `HELD_BY_REVIEWER`, `WORK_IN_FLIGHT`, `RUN_IN_FLIGHT`) predate
+  this and still require `r`/`j`. Do not add more; they are coupled through shared queries, so
+  unpicking them is one deliberate pass, not an incremental fix. Note `j` already means
+  `jurisdictions` in most of the codebase and `pipeline_runs` in these — which is the ambiguity
+  the rule exists to prevent.
 - **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `request_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
 
 ## Environment

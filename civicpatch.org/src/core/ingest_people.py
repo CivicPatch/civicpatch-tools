@@ -140,3 +140,45 @@ def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
         )
         for person in sort_people(kept, taxonomy)
     ]
+
+
+def cdn_urls(filenames_to_urls: dict, storage_endpoint: str, bucket: str, domain: str) -> dict:
+    """Where each uploaded photo is served from, keyed by downloaded filename."""
+    return {
+        basename: url.replace(f"{storage_endpoint}/{bucket}", f"https://{bucket}.{domain}")
+        for basename, url in filenames_to_urls.items()
+    }
+
+
+def resolve_images(
+    source_urls: dict, cdn_urls: dict, people: list[dict]
+) -> tuple[list[dict], list[str]]:
+    """Every `local://` reference turned into where the photo came from and where we serve it.
+
+    Returns the people and the names of any whose photo was never uploaded — reported rather
+    than logged here, so this stays callable without a logger.
+    """
+    unserved = [
+        str(person.get("name"))
+        for person in people
+        if (basename := local_image_basename(person)) and basename not in cdn_urls
+    ]
+    return [with_images(person, source_urls, cdn_urls) for person in people], unserved
+
+
+def images_by_person(roster: list[dict]) -> dict[str, dict]:
+    """Each person's resolved photo urls, keyed by id."""
+    return {
+        person["id"]: {key: person[key] for key in ("image", "cdn_image") if person.get(key)}
+        for person in roster
+        if person.get("id")
+    }
+
+
+def records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, list[dict]]:
+    """Rekey the records from the name they grouped on to the id that name resolved to."""
+    return {
+        person["id"]: records_by_name[person["name"]]
+        for person in roster
+        if person["name"] in records_by_name
+    }
