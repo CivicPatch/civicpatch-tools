@@ -84,14 +84,6 @@ RUN_IN_FLIGHT = (
     + "])"
 )
 
-# When roster was observed (instead of when the run was registered.)
-# r is requests
-ROSTER_LAST_SEEN_AT = (
-    "COALESCE("
-    "(SELECT max((p->>'updated_at')::timestamptz) FROM jsonb_array_elements(r.data_json) p),"
-    " r.created_at)"
-)
-
 # Request supercede can dismiss.
 # Sweep should not dismiss a card still in the queue.
 SWEEPABLE = (
@@ -400,9 +392,17 @@ async def supersede_stacked_requests() -> list[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
+            -- Ordered by the run's `updated_at`, not the request's: which scrape read the
+            -- source more recently, not which row was touched more recently. A reviewer
+            -- editing an old roster did not go and look again. Work in progress is protected
+            -- by the held-card exclusion instead, which is time-boxed on purpose.
+            --
+            -- An inner join, so a request with no run cannot supersede or be superseded. That
+            -- is only jurisdiction edits, which `SWEEPABLE` already excludes.
             WITH candidates AS (
-                SELECT r.id, r.jurisdiction_ocdid, {ROSTER_LAST_SEEN_AT} AS last_seen_at
+                SELECT r.id, r.jurisdiction_ocdid, run.updated_at AS run_updated_at
                 FROM requests r
+                JOIN pipeline_runs run ON run.request_id = r.id
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
             ),
             -- What can supersede, which is not the same set as what can BE superseded: a
@@ -413,10 +413,11 @@ async def supersede_stacked_requests() -> list[str]:
             -- and it must. A reviewer holding the newest card shields the whole jurisdiction
             -- for the pass — sweep the older ones and their rejecting it strands the lot.
             supersedors AS (
-                SELECT jurisdiction_ocdid, last_seen_at FROM candidates
+                SELECT jurisdiction_ocdid, run_updated_at FROM candidates
                 UNION ALL
-                SELECT r.jurisdiction_ocdid, {ROSTER_LAST_SEEN_AT} AS last_seen_at
+                SELECT r.jurisdiction_ocdid, run.updated_at AS run_updated_at
                 FROM requests r
+                JOIN pipeline_runs run ON run.request_id = r.id
                 WHERE r.published_at IS NOT NULL
             )
             UPDATE requests
@@ -427,7 +428,7 @@ async def supersede_stacked_requests() -> list[str]:
                  WHERE EXISTS (
                      SELECT 1 FROM supersedors newer
                      WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                       AND newer.last_seen_at > older.last_seen_at
+                       AND newer.run_updated_at > older.run_updated_at
                  )
              )
             RETURNING id::text

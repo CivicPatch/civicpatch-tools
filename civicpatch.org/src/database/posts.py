@@ -6,11 +6,10 @@ key, so renaming a post cannot make the next scrape miss it.
 Derivation writes are mint-only: matching a post writes nothing. That is the whole of what
 keeps `label` and `headcount` human-owned — there is no update path to lose them through.
 
-Cursor-taking functions compose inside the publish transaction; the connection-owning ones at
-the bottom serve the roster screen, and reach `label` and `headcount` where nothing else does.
 """
 
 from core.membership_label import derive_label
+from core.post_derivation import DerivedPost
 from core.post_grouping import group_by_organization
 from database import divisions, organizations, roles
 from database.change_logs import record_change
@@ -230,6 +229,29 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
         )
         post_rows = await list_for_jurisdiction(cur, jurisdiction_ocdid)
     return group_by_organization(organization_rows, post_rows)
+
+
+async def find_or_create_all(
+    jurisdiction_ocdid: str, derived: list[DerivedPost]
+) -> None:
+    """A whole scrape's worth of `find_or_create`, in one transaction.
+
+    No change log, unlike `create` below: no person asserted these.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+        for post in derived:
+            await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
+            await find_or_create(
+                cur,
+                jurisdiction_ocdid,
+                organization_id,
+                post.role_id,
+                post.division_ocdid,
+                headcount=post.headcount,
+            )
+        await conn.commit()
 
 
 async def create(

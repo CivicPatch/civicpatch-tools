@@ -10,6 +10,7 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
+from database.pipeline_runs import update_pipeline_run_data
 from database.publications import publish_request
 from database.requests import supersede_stacked_requests
 
@@ -66,22 +67,34 @@ async def _jurisdiction(ocdid: str = _OCDID, status: str = "active") -> None:
         await conn.commit()
 
 
-async def _request(observed_at: str, ocdid: str = _OCDID) -> str:
-    """A pending request whose roster was observed at `observed_at`.
+async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
+    """A pending request whose roster was last touched at `updated_at`.
 
-    `created_at` is left to now() for every row, so only the roster's `updated_at` can order them.
+    `updated_at` is what orders these — whoever last wrote the roster, a scrape or a reviewer.
+    `created_at` is left to now() for every row, so only `updated_at` can order them.
+
+    The `pipeline_runs` row exists because every registration path creates one, and both the
+    sweep and publish read its `updated_at` to order scrapes.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, data_json)
-            VALUES ('people', %s, '{}'::jsonb, %s::jsonb)
+            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, data_json,
+                                  updated_at)
+            VALUES ('people', %s, '{}'::jsonb, %s::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
-            (ocdid, f'[{{"id": "{uuid.uuid4()}", "updated_at": "{observed_at}"}}]'),
+            (ocdid, f'[{{"id": "{uuid.uuid4()}"}}]', updated_at),
         )
         request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            """
+            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+            VALUES (%s, 'SUCCESS', 100, %s::timestamptz, %s::timestamptz)
+            """,
+            (request_id, updated_at, updated_at),
+        )
         await conn.commit()
     return request_id
 
@@ -128,10 +141,10 @@ async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
         await conn.commit()
 
 
-async def _published_request(observed_at: str, ocdid: str = _OCDID) -> str:
+async def _published_request(updated_at: str, ocdid: str = _OCDID) -> str:
     """A request that already went live. No longer a review candidate, but still the newest
     thing anyone said about this jurisdiction."""
-    request_id = await _request(observed_at, ocdid)
+    request_id = await _request(updated_at, ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -168,6 +181,29 @@ async def test_ordering_comes_from_the_roster_not_created_at():
 
     assert await supersede_stacked_requests() == [older_roster]
     assert (await _dismissed_at(newer_roster))[0] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_reviewer_edit_does_not_outrank_a_newer_scrape():
+    """Ordering asks which scrape read the source more recently, not which row was touched
+    more recently. A reviewer correcting the March roster in August did not go and look again;
+    the July scrape did, so the March one still loses.
+
+    Work in progress is protected by the held-card exclusion instead, which is time-boxed —
+    an edit made and abandoned must not shield a stale roster forever.
+
+    Goes through `update_pipeline_run_data` because that is what the reviewer's save calls: it
+    bumps `requests.updated_at`, and the point is that ordering ignores it.
+    """
+    await _jurisdiction()
+    edited = await _request(_OLD)
+    later_scrape = await _request(_NEW)
+
+    await update_pipeline_run_data(edited, [{"id": str(uuid.uuid4())}])
+
+    assert await supersede_stacked_requests() == [edited]
+    assert (await _dismissed_at(later_scrape))[0] is None
 
 
 @pytest.mark.asyncio

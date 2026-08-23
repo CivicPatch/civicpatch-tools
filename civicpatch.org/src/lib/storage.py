@@ -154,6 +154,31 @@ async def upload_file_to_storage(
         print(f"Error during upload: {str(e)}")
         raise IOError(f"Upload failed: {str(e)}")
 
+
+async def upload_directory(bucket_name: str, source_dir: str, key_prefix: str) -> dict:
+    """Every file under `source_dir`, keyed by its path relative to it.
+
+    Returns basename to url. A file that fails to upload is logged and left out rather than
+    failing the rest of the directory.
+    """
+    filename_to_url = {}
+    for root, _, files in os.walk(source_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            relative_path = os.path.relpath(file_path, source_dir)
+            storage_key = f"{key_prefix}/{relative_path}"
+            try:
+                url = await upload_file_to_storage(
+                    bucket_name, file_path, key=storage_key, with_presigned_url=False
+                )
+                filename_to_url[os.path.basename(file_path)] = url
+            except Exception as e:
+                logger.error(
+                    f"Failed to upload {file_path} to {bucket_name} under {key_prefix}: {e}"
+                )
+    return filename_to_url
+
+
 def get_presigned_url_cached(
     bucket_name: str,
     key: str,

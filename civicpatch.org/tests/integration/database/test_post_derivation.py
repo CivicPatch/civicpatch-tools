@@ -287,6 +287,16 @@ async def test_publish_writes_memberships_for_the_roster():
             """,
             (request_id := str(uuid.uuid4()), _OCDID),
         )
+        # Every registration path creates one, and publish reads its `updated_at` as the
+        # observation's clock — so this is where `_T0` has to go.
+        await cur.execute(
+            """
+            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
+            VALUES (%s, 'SUCCESS', 100, %s, %s)
+            ON CONFLICT (request_id) DO NOTHING
+            """,
+            (request_id, _T0, _T0),
+        )
         await conn.commit()
 
     people = [
