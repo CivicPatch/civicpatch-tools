@@ -3,7 +3,10 @@ import pytest
 from core.membership_proposal import (
     Disposition,
     ExistingMembership,
+    nothing_to_review,
     propose,
+    still_held,
+    still_listed,
     surfaces_for_review,
 )
 from core.post_derivation import DerivedMember, DerivedPost
@@ -112,3 +115,54 @@ def test_the_proposed_label_rides_along():
     )
 
     assert changes[0].label == "Commissioner Of Public Safety"
+
+
+@pytest.mark.unit
+def test_only_the_unchanged_are_still_held():
+    """Advancing `last_seen_at` on a mover would assert the seat they left."""
+    changes = propose(
+        [_post("mayor", _BASE, "a"), _post("council-member", _WARD_3, "b")],
+        [_held("a", "mayor", _BASE), _held("b", "city-attorney", _BASE)],
+    )
+
+    assert still_held(changes) == ["a"]
+
+
+@pytest.mark.unit
+def test_a_mover_is_still_listed():
+    """A move is still a sighting. Closing someone because the scrape named them somewhere
+    else would record a departure that did not happen."""
+    changes = propose(
+        [_post("mayor", _BASE, "a"), _post("council-member", _WARD_3, "b")],
+        [
+            _held("a", "mayor", _BASE),
+            _held("b", "city-attorney", _BASE),
+            _held("c", "clerk", _BASE),
+        ],
+    )
+
+    assert sorted(still_listed(changes)) == ["a", "b"]
+
+
+@pytest.mark.unit
+def test_an_all_unchanged_roster_asks_nobody_anything():
+    changes = propose([_post("mayor", _BASE, "a")], [_held("a", "mayor", _BASE)])
+
+    assert nothing_to_review(changes) is True
+
+
+@pytest.mark.unit
+def test_one_review_item_is_enough_to_keep_the_scrape():
+    changes = propose(
+        [_post("mayor", _BASE, "a"), _post("council-member", _WARD_3, "b")],
+        [_held("a", "mayor", _BASE)],
+    )
+
+    assert nothing_to_review(changes) is False
+
+
+@pytest.mark.unit
+def test_an_empty_proposal_is_a_failed_scrape_not_a_quiet_one():
+    """A scrape that agrees with us proposes all-`unchanged`; one that found nothing proposes
+    nothing at all. Dismissing the second would retire a failure as though it were agreement."""
+    assert nothing_to_review([]) is False
