@@ -10,13 +10,11 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 *this* transaction, not a second publish path. Nothing here reads open-data.
 """
 
-from datetime import datetime, timezone
-
 from core.post_derivation import DerivedPost
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import people_rows
-from database.requests import ROSTER_LAST_SEEN_AT
+from database.pipeline_runs import run_updated_at
 
 
 async def record_open_data_url(request_id: str, url: str) -> None:
@@ -53,21 +51,6 @@ async def dismiss_request(
         )
 
 
-def _last_seen_at(people: list[dict]):
-    """When the source said this — the newest `updated_at` the scrape carried.
-
-    Named for the columns it feeds: `first_seen_at`, `last_seen_at`, `closed_at`. Not write
-    time, because publishing is a human act at an arbitrary moment — a scrape sat on for three
-    weeks would otherwise record the council as seen on the day someone pressed the button,
-    and both `GREATEST` refusing to regress `last_seen_at` and replaying an old scrape being
-    harmless depend on this describing the observation.
-    """
-    stamps = [
-        str(person["updated_at"]) for person in people if person.get("updated_at")
-    ]
-    return max(stamps) if stamps else datetime.now(timezone.utc)
-
-
 async def publish_request(
     request_id: str,
     jurisdiction_ocdid: str,
@@ -89,20 +72,25 @@ async def publish_request(
     """
     rows = people_rows(people)
     incoming_ids = [row[0] for row in rows]
-    # The Record's own updated_at, not write time.
-    last_seen_at = _last_seen_at(people)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        # `pipeline_runs.updated_at`, not publish time: a scrape sat on for three weeks still
+        # read the source when it ran. Same value orders the guard below and stamps memberships.
+        last_seen_at = await run_updated_at(cur, request_id)
+
+        # Which scrape read the source more recently — a reviewer editing an old roster did
+        # not go and look again.
         await cur.execute(
-            f"""
-            SELECT r.id::text, {ROSTER_LAST_SEEN_AT} AS roster_last_seen_at
+            """
+            SELECT r.id::text, run.updated_at
             FROM requests r
+            JOIN pipeline_runs run ON run.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s
               AND r.published_at IS NOT NULL
-              AND r.id <> %s
-              AND {ROSTER_LAST_SEEN_AT} > %s::timestamptz
-            ORDER BY roster_last_seen_at DESC
+              AND r.id::text <> %s
+              AND run.updated_at > %s
+            ORDER BY run.updated_at DESC
             LIMIT 1
             """,
             (jurisdiction_ocdid, request_id, last_seen_at),

@@ -1,5 +1,5 @@
 import json
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any, List, Optional
 
 from psycopg import sql
@@ -8,6 +8,22 @@ from database.database import get_pool, to_iso
 from database.requests import REVIEW_STATUS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 from lib.github.utils import pull_request_url_to_number
+
+async def run_updated_at(cur, request_id: str) -> datetime:
+    """`pipeline_runs.updated_at` — when the run last reported its status.
+
+    Stamped by the pipeline's own report, not at ingest, which can be hours later on a retry or
+    a replayed artifact.
+    """
+    await cur.execute(
+        "SELECT updated_at FROM pipeline_runs WHERE request_id::text = %s",
+        (request_id,),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        raise ValueError(f"No pipeline run for request {request_id}")
+    return row[0]
+
 
 async def get_pipeline_run_for_review(request_id: str) -> dict | None:
     pool = await get_pool()
