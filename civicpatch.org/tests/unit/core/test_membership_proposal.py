@@ -82,16 +82,18 @@ def test_a_holder_the_scrape_did_not_name_is_absent():
 
 
 @pytest.mark.unit
-def test_an_untracked_posts_holder_vanishing_asks_nobody():
-    """`posts._is_tracked` decides this and nothing else does. The change is still proposed —
-    the record is kept either way; only the queue consults the flag."""
+def test_every_absence_surfaces_while_tracked_is_undecided():
+    """`is_tracked` rides along on the change and is deliberately not read. Skipping review on
+    a flag whose meaning is unsettled is the expensive way to discover it was wrong; the
+    absence is closed either way, at ingest."""
     changes = propose(
         [_post("mayor", _BASE, "a")],
         [_held("b", "city-attorney", _BASE, is_tracked=False)],
     )
 
     absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
-    assert surfaces_for_review(absent) is False
+    assert absent.is_tracked is False
+    assert surfaces_for_review(absent) is True
 
 
 @pytest.mark.unit

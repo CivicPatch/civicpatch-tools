@@ -555,3 +555,73 @@ async def test_a_scrape_seeds_the_membership_label_but_never_overwrites_one():
         # The rest of the row still advances — protection is per-column, not a skipped write.
         assert last_seen_at == _T1
         await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_advancing_last_seen_leaves_everything_else_alone():
+    """Transaction time only. `close_absent` is the direction that needs review; still being
+    on the same page is not a change and should not wait for a human."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        membership_id = await memberships.upsert(
+            cur, person_id, post_id, org, _T0, label="Mayor, At-Large"
+        )
+
+        assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 1
+
+        await cur.execute(
+            "SELECT first_seen_at, last_seen_at, closed_at, label FROM memberships WHERE id = %s",
+            (membership_id,),
+        )
+        first_seen_at, last_seen_at, closed_at, label = await cur.fetchone()
+        assert last_seen_at == _T1
+        # Nothing else moves: not the interval's start, not the human-owned label.
+        assert first_seen_at == _T0
+        assert closed_at is None
+        assert label == "Mayor, At-Large"
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_last_seen_never_walks_backwards():
+    """Scrapes can land out of order. GREATEST is what stops a late arrival from a stale run
+    making a roster look older than it is."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        membership_id = await memberships.upsert(cur, person_id, post_id, org, _T1)
+
+        await memberships.advance_last_seen_at(cur, [person_id], _T0)
+
+        await cur.execute("SELECT last_seen_at FROM memberships WHERE id = %s", (membership_id,))
+        assert (await cur.fetchone())[0] == _T1
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_closed_membership_is_not_reopened_by_being_seen():
+    """Someone who left is not brought back by a scrape naming them. Reopening is a decision,
+    and this is only a clock."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        membership_id = await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await cur.execute(
+            "UPDATE memberships SET closed_at = %s WHERE id = %s", (_T0, membership_id)
+        )
+
+        assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 0
+        await conn.rollback()

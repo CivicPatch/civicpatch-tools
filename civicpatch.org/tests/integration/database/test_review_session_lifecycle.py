@@ -11,6 +11,7 @@ import uuid
 import pytest
 import pytest_asyncio
 from database.database import get_pool
+from database.requests import DISMISSED_UNCHANGED, dismiss_as_unchanged
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.review_session_entries import resolve_entries_for_request
@@ -558,3 +559,76 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
 
     rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
     assert request_id not in [r["request_id"] for r in rows]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
+    """`dismissed_at` says a request left; it cannot say whether we confirmed the roster or
+    threw it away unread. Weekly scrapes are mostly no-change, so most of this table ends up
+    dismissed — and a history where the word means both answers neither question."""
+    ocdid = "ocd-jurisdiction/country:us/state:zz/place:pool_unchanged/government"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') "
+            "ON CONFLICT DO NOTHING",
+            (ocdid,),
+        )
+        await cur.execute(
+            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) "
+            "RETURNING id::text",
+            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+        )
+        request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
+            (request_id,),
+        )
+        await conn.commit()
+
+    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    assert request_id in [r["request_id"] for r in rows]
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await dismiss_as_unchanged(cur, request_id) is True
+        await conn.commit()
+
+    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    assert request_id not in [r["request_id"] for r in rows]
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT dismissed_reason FROM requests WHERE id::text = %s", (request_id,)
+        )
+        assert (await cur.fetchone())[0] == DISMISSED_UNCHANGED
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
+    """Guarded in the statement, not by checking first. A reviewer may be publishing this very
+    request, and an ingest arriving mid-publish must not overwrite their decision."""
+    ocdid = "ocd-jurisdiction/country:us/state:zz/place:pool_race/government"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') "
+            "ON CONFLICT DO NOTHING",
+            (ocdid,),
+        )
+        await cur.execute(
+            "INSERT INTO requests (jurisdiction_ocdid, data_json, published_at) "
+            "VALUES (%s, %s, now()) RETURNING id::text",
+            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+        )
+        request_id = (await cur.fetchone())[0]
+
+        assert await dismiss_as_unchanged(cur, request_id) is False
+
+        await cur.execute(
+            "SELECT dismissed_at, dismissed_reason FROM requests WHERE id::text = %s",
+            (request_id,),
+        )
+        assert await cur.fetchone() == (None, None)
+        await conn.rollback()

@@ -16,7 +16,7 @@ from core.post_derivation import DerivedPost
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import people_rows
-from database.requests import ROSTER_SEEN_AT
+from database.requests import ROSTER_LAST_SEEN_AT
 
 
 async def record_open_data_url(request_id: str, url: str) -> None:
@@ -53,7 +53,7 @@ async def dismiss_request(
         )
 
 
-def _seen_at(people: list[dict]):
+def _last_seen_at(people: list[dict]):
     """When the source said this — the newest `updated_at` the scrape carried.
 
     Named for the columns it feeds: `first_seen_at`, `last_seen_at`, `closed_at`. Not write
@@ -90,28 +90,28 @@ async def publish_request(
     rows = people_rows(people)
     incoming_ids = [row[0] for row in rows]
     # The Record's own updated_at, not write time.
-    seen_at = _seen_at(people)
+    last_seen_at = _last_seen_at(people)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id::text, {ROSTER_SEEN_AT} AS roster_seen_at
+            SELECT r.id::text, {ROSTER_LAST_SEEN_AT} AS roster_last_seen_at
             FROM requests r
             WHERE r.jurisdiction_ocdid = %s
               AND r.published_at IS NOT NULL
               AND r.id <> %s
-              AND {ROSTER_SEEN_AT} > %s::timestamptz
-            ORDER BY roster_seen_at DESC
+              AND {ROSTER_LAST_SEEN_AT} > %s::timestamptz
+            ORDER BY roster_last_seen_at DESC
             LIMIT 1
             """,
-            (jurisdiction_ocdid, request_id, seen_at),
+            (jurisdiction_ocdid, request_id, last_seen_at),
         )
         newer = await cur.fetchone()
         if newer:
             raise ValueError(
                 f"Refusing to publish {request_id}: request {newer[0]} already published a "
-                f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {seen_at})."
+                f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
             )
 
         if rows:
@@ -184,7 +184,7 @@ async def publish_request(
                         member.person_id,
                         post_id,
                         organization_id,
-                        seen_at,
+                        last_seen_at,
                         designations=member.designations,
                         unmatched_text=member.unmatched_text,
                         source_labels=member.source_labels,
@@ -192,7 +192,7 @@ async def publish_request(
                         label=member.label,
                     )
             await memberships.close_absent(
-                cur, jurisdiction_ocdid, incoming_ids, seen_at
+                cur, jurisdiction_ocdid, incoming_ids, last_seen_at
             )
 
     return len(rows)

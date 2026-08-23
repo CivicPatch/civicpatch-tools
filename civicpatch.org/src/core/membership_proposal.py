@@ -78,7 +78,9 @@ def propose(
                     role_id=post.role_id,
                     division_ocdid=post.division_ocdid,
                     label=member.label,
-                    from_post_id=held.post_id if held and disposition is Disposition.MOVED else None,
+                    from_post_id=held.post_id
+                    if held and disposition is Disposition.MOVED
+                    else None,
                 )
             )
 
@@ -100,10 +102,4 @@ def propose(
 
 
 def surfaces_for_review(change: ProposedChange) -> bool:
-    """`unchanged` is the majority and asks nothing. An untracked post's holder vanishing is
-    recorded but not queued — that is what `posts._is_tracked` decides."""
-    if change.disposition is Disposition.UNCHANGED:
-        return False
-    if change.disposition is Disposition.ABSENT:
-        return change.is_tracked
-    return True
+    return change.disposition is not Disposition.UNCHANGED

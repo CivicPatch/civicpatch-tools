@@ -53,6 +53,10 @@ WORK_IN_FLIGHT = (
     ")"
 )
 
+# Why a request left the pool. `dismissed_at` says only that it did.
+DISMISSED_SUPERSEDED = "superseded"
+DISMISSED_UNCHANGED = "unchanged"
+
 # SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
 # aliased `r`; callers share this one definition instead of re-spelling it.
 #
@@ -82,7 +86,7 @@ RUN_IN_FLIGHT = (
 
 # When roster was observed (instead of when the run was registered.)
 # r is requests
-ROSTER_SEEN_AT = (
+ROSTER_LAST_SEEN_AT = (
     "COALESCE("
     "(SELECT max((p->>'updated_at')::timestamptz) FROM jsonb_array_elements(r.data_json) p),"
     " r.created_at)"
@@ -374,25 +378,56 @@ async def get_requests_for_export(
     ]
 
 
+async def dismiss_as_unchanged(cur, request_id: str) -> bool:
+    """Retire a scrape that asserted nothing new. Returns whether it was still open.
+
+    Guarded in the statement rather than by checking first: a reviewer may be publishing this
+    very request, and losing that race must not overwrite their decision.
+    """
+    await cur.execute(
+        f"""
+        UPDATE requests
+           SET dismissed_at = now(), dismissed_reason = '{DISMISSED_UNCHANGED}'
+         WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NULL
+        """,
+        (request_id,),
+    )
+    return cur.rowcount > 0
+
+
 async def supersede_stacked_requests() -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
             WITH candidates AS (
-                SELECT r.id, r.jurisdiction_ocdid, {ROSTER_SEEN_AT} AS seen_at
+                SELECT r.id, r.jurisdiction_ocdid, {ROSTER_LAST_SEEN_AT} AS last_seen_at
                 FROM requests r
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
+            ),
+            -- What can supersede, which is not the same set as what can BE superseded: a
+            -- published request is no longer a candidate, so comparing candidates only to each
+            -- other left every draft older than a publish in the pool forever.
+            --
+            -- Built from `candidates`, not re-queried: that inherits the held-card exclusion,
+            -- and it must. A reviewer holding the newest card shields the whole jurisdiction
+            -- for the pass — sweep the older ones and their rejecting it strands the lot.
+            supersedors AS (
+                SELECT jurisdiction_ocdid, last_seen_at FROM candidates
+                UNION ALL
+                SELECT r.jurisdiction_ocdid, {ROSTER_LAST_SEEN_AT} AS last_seen_at
+                FROM requests r
+                WHERE r.published_at IS NOT NULL
             )
             UPDATE requests
-               SET dismissed_at = now()
+               SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
              WHERE id IN (
                  SELECT older.id
                  FROM candidates older
                  WHERE EXISTS (
-                     SELECT 1 FROM candidates newer
+                     SELECT 1 FROM supersedors newer
                      WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                       AND newer.seen_at > older.seen_at
+                       AND newer.last_seen_at > older.last_seen_at
                  )
              )
             RETURNING id::text
