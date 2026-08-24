@@ -17,12 +17,13 @@ from datetime import date, datetime, timezone
 import pytest
 import pytest_asyncio
 
-from database import divisions, memberships, organizations, posts
+from database import divisions, memberships, organizations, people, posts
 from database.database import get_pool
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_asof/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_asof"
 
+_LABEL = "Mayor"
 _TOOK_OFFICE = datetime(2026, 3, 1, tzinfo=timezone.utc)
 _HANDOVER = datetime(2026, 5, 1, tzinfo=timezone.utc)
 
@@ -83,8 +84,8 @@ async def _seed_succession() -> str:
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     first_seen_at, last_seen_at, closed_at)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                     first_seen_at, last_seen_at, closed_at, source_labels)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     post_id,
@@ -93,6 +94,7 @@ async def _seed_succession() -> str:
                     first_seen_at,
                     closed_at or first_seen_at,
                     closed_at,
+                    [_LABEL],
                 ),
             )
         await conn.commit()
@@ -177,3 +179,28 @@ async def test_a_membership_carries_the_interval_it_was_selected_on():
     assert incoming["first_seen_at"] == _HANDOVER
     assert incoming["closed_at"] is None
 
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_retired_person_still_reads_as_the_post_they_last_held():
+    """`office` falls back to the last closed membership, so leaving does not blank the card.
+
+    The fallback it replaced read `people.data->'office'`, which was the last reader of that
+    column. Both people are asserted, because the fallback must not outrank an open membership:
+    order it wrong and everyone reads as whatever they held longest ago.
+    """
+    await _seed_succession()
+
+    roster = {
+        person["name"]: person
+        for person in await people.get_jurisdiction_people(_OCDID)
+    }
+
+    assert roster["Outgoing"]["office"]["name"] == _LABEL
+    assert roster["Outgoing"]["office"]["division_ocdid"] == _BASE
+    # Present tense: they hold nothing now, which is exactly why `office` needed the fallback.
+    assert roster["Outgoing"]["memberships"] == []
+
+    assert roster["Incoming"]["office"]["name"] == _LABEL
+    assert len(roster["Incoming"]["memberships"]) == 1

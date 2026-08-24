@@ -432,6 +432,13 @@ def test_get_by_request_200_for_open_pr(client):
             new_callable=AsyncMock,
             return_value=None,
         ),
+        # Crosses to the DB for the roster and the memberships it diffs against. The
+        # proposal itself is unit-tested in core/test_membership_proposal.py.
+        patch(
+            "routers.api.pull_requests.proposals_for_requests",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
 
@@ -462,6 +469,12 @@ def test_get_by_request_200_for_merged_pr(client):
             "database.jurisdictions.get_scraped_at",
             new_callable=AsyncMock,
             return_value=datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
+        ),
+        # Same DB boundary as the open-pr case above.
+        patch(
+            "routers.api.pull_requests.proposals_for_requests",
+            new_callable=AsyncMock,
+            return_value={},
         ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")

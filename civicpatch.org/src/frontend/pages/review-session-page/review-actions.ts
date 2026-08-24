@@ -50,6 +50,10 @@ export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntr
     pr: data.pr,
     mode: data.mode ?? ReviewMode.RECONCILE,
     pr_people: { existing: data.existing, proposed: data.proposed },
+    // What the scrape would change about who holds what. A proposed person has no
+    // membership — the post does not exist yet — so this is the only thing that can name
+    // the post they would land in.
+    changes: data.changes ?? [],
     review_data: review?.data ?? null,
     source_content_urls: data.sources,
     is_read_only: isTerminalStatus(data.pr?.status),

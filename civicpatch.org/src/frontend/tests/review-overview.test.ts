@@ -12,6 +12,7 @@ import {
   type PersonCard,
 } from "../components/people/person-cards.js";
 import { FIELD_SCHEMA, type SurvivingField } from "../components/fields/field-model.js";
+import { cardSubtitle, proposalsByPersonId } from "../components/people/person-cards.js";
 
 const spec = (key: string) => {
   const found = FIELD_SCHEMA.find((field) => field.key === key);
@@ -63,23 +64,21 @@ describe("byRank — what a reviewer sees first", () => {
     const ordered = [
       surviving("name"),
       surviving("emails"),
-      surviving("office.name"),
-    ]
+          ]
       .sort(byRank)
       .map((field) => field.field.key);
 
-    expect(ordered).toEqual(["office.name", "emails", "name"]);
+    expect(ordered).toEqual(["emails", "name"]);
   });
 
   it("an error on a low-ranked field still outranks a clean high-ranked one", () => {
     const ordered = [
-      surviving("office.name"),
-      surviving("image", { error: "missing" }),
+            surviving("image", { error: "missing" }),
     ]
       .sort(byRank)
       .map((field) => field.field.key);
 
-    expect(ordered).toEqual(["image", "office.name"]);
+    expect(ordered).toEqual(["image"]);
   });
 });
 
@@ -212,4 +211,100 @@ describe("visibleFields — what the card shows is what it opens", () => {
     // opening it must focus phones too.
     expect(shown).toEqual(["phones", "end_date"]);
   });
+});
+
+describe("cardSubtitle — where a person serves", () => {
+  const card = (over = {}) => ({
+    personId: "p1",
+    status: "changed",
+    oldRecord: null,
+    newRecord: { id: "p1", name: "A" },
+    surviving: [],
+    issues: [],
+    ...over,
+  }) as never;
+
+  it("names the proposed post, because a proposed person holds no membership yet", () => {
+    const proposals = proposalsByPersonId([
+      {
+        person_id: "p1",
+        disposition: "new",
+        role_id: "council-member",
+        role_label: "Council Member",
+        division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+        label: null,
+      },
+    ]);
+
+    // The role's label, not its slug: an id is storage.
+    expect(cardSubtitle(card(), proposals)).toBe("Council Member, District 5");
+  });
+
+  it("appends the membership label after the post", () => {
+    const proposals = proposalsByPersonId([
+      {
+        person_id: "p1",
+        disposition: "new",
+        role_id: "council-member",
+        role_label: "Council Member",
+        division_ocdid: "ocd-division/country:us/state:wa/place:x",
+        label: "Seat 3",
+      },
+    ]);
+
+    expect(cardSubtitle(card(), proposals)).toBe("Council Member, At-Large, Seat 3");
+  });
+
+  it("falls back to a published person's memberships when nothing is proposed", () =>
+    expect(
+      cardSubtitle(
+        card({
+          newRecord: {
+            id: "p1",
+            name: "A",
+            memberships: [
+              {
+                post_id: "x",
+                role_id: "mayor",
+                division_ocdid: "ocd-division/country:us/state:wa/place:x",
+                label: null,
+                post_label: "Mayor",
+                role_label: "Mayor",
+                source_labels: ["Mayor"],
+              },
+            ],
+          },
+        }),
+        proposalsByPersonId([]),
+      ),
+    ).toBe("Mayor"));
+
+  it("says nothing rather than repeating the joined office string", () =>
+    // `office.name` remains the last resort only until the review surfaces stop being sent it.
+    expect(cardSubtitle(card(), proposalsByPersonId([]))).toBe(""));
+});
+
+describe("proposalsByPersonId", () => {
+  const change = (over = {}) => ({
+    person_id: "p1",
+    disposition: "new",
+    role_id: "council-member",
+    role_label: "Council Member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x",
+    label: null,
+    ...over,
+  });
+
+  it("keeps every proposal for a person, not just the last", () => {
+    // A plain Map keyed on person_id dropped all but one, so anyone proposed onto two posts
+    // showed one of them at random.
+    const byPerson = proposalsByPersonId([
+      change({ role_id: "mayor", role_label: "Mayor" }),
+      change({ role_id: "council-member" }),
+    ]);
+    expect(byPerson.get("p1")).toHaveLength(2);
+  });
+
+  it("has no entry for a person nothing was proposed for", () =>
+    expect(proposalsByPersonId([]).get("p1")).toBeUndefined());
 });

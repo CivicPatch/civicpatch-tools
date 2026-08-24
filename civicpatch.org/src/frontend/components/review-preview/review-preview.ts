@@ -16,7 +16,10 @@ import { renderValues, sourceMapFor, type SourceMap } from "./preview-values.js"
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
   blockingErrors,
-  bySeat,
+  byDivision,
+  cardSubtitle,
+  proposalsByPersonId,
+  type ProposedChange,
   publishSet,
   PersonStatus,
   type PersonCard,
@@ -24,16 +27,21 @@ import {
 
 interface ReviewPreviewProps {
   cards: PersonCard[];
+  // See `cardSubtitle`: the publish set is proposed people, who hold no membership yet.
+  changes?: ProposedChange[];
   jurisdictionOcdid: string | null | undefined;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
 }
 
 // Not clickable: this is the published record, so the values are plain selectable
 // text you can copy field by field. Nothing here opens an editor.
-function renderCard(card: PersonCard, sources: SourceMap) {
+function renderCard(
+  card: PersonCard,
+  sources: SourceMap,
+  proposals: Map<string, ProposedChange[]>,
+) {
   const record = card.newRecord;
-  const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  const office = [record?.office?.name, division].filter(Boolean).join(", ");
+  const office = cardSubtitle(card, proposals);
 
   return renderPersonRow({
     record,
@@ -48,11 +56,12 @@ function renderCard(card: PersonCard, sources: SourceMap) {
 }
 
 function ReviewPreview(props: ReviewPreviewProps) {
-  const { cards, jurisdictionOcdid } = props;
+  const { cards, jurisdictionOcdid, changes } = props;
   const publishing = publishSet(cards ?? []);
-  const ordered = bySeat(publishing, jurisdictionOcdid);
+  const ordered = byDivision(publishing, jurisdictionOcdid);
   const blockers = blockingErrors(cards ?? []);
   const sources = sourceMapFor(publishing.map((card) => card.newRecord));
+  const proposals = proposalsByPersonId(changes ?? []);
 
   const added = publishing.filter((c) => c.status === PersonStatus.ADDED).length;
   // Everyone with a record who is not being published — the scrape lost them or
@@ -87,7 +96,7 @@ function ReviewPreview(props: ReviewPreviewProps) {
 
       ${ordered.length
         ? html`<div class="review-preview__grid">
-            ${ordered.map((card) => renderCard(card, sources))}
+            ${ordered.map((card) => renderCard(card, sources, proposals))}
           </div>`
         : html`<p class="review-preview__empty">
             This card would publish an empty roster.

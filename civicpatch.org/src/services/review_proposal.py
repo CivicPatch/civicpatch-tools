@@ -15,7 +15,8 @@ from database import requests as requests_db
 from database.database import get_pool
 from database.pipeline_runs import get_pipeline_run_result
 from database.roles import get_roles
-from shared.schemas import Issue, Official, RoleConfig
+from services.publish import chosen_posts
+from shared.schemas import Issue, Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 
@@ -59,12 +60,12 @@ async def proposals_for_requests(
     proposals: dict[str, list[ProposedChange]] = {}
     for request_id, roster in rosters.items():
         ocdid = roster["jurisdiction_ocdid"]
-        officials = [
-            Official(**{**person, "jurisdiction_ocdid": ocdid})
+        people = [
+            Person(**{**person, "jurisdiction_ocdid": ocdid})
             for person in roster["data_json"]
         ]
         proposals[request_id] = propose(
-            derived_posts(officials, taxonomy, roles),
+            derived_posts(people, taxonomy, roles, await chosen_posts(people)),
             [ExistingMembership(**row) for row in held[ocdid]],
         )
     return proposals

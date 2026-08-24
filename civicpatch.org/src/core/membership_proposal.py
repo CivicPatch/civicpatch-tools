@@ -36,6 +36,9 @@ class ProposedChange(BaseModel):
     person_id: str
     disposition: Disposition
     role_id: str
+    # Empty for an absence: that change is sourced from a membership we hold, which knows the
+    # post's role id but not the taxonomy's label for it.
+    role_label: str = ""
     division_ocdid: str
     label: str | None = None
     # Where they were, for a move or a disappearance.
@@ -76,6 +79,7 @@ def propose(
                     person_id=member.person_id,
                     disposition=disposition,
                     role_id=post.role_id,
+                    role_label=post.role_label,
                     division_ocdid=post.division_ocdid,
                     label=member.label,
                     from_post_id=held.post_id

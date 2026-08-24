@@ -8,6 +8,7 @@
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
+import { DERIVED_POST } from "../posts-list/posts-model.js";
 import type { OfficeOption } from "../posts-list/posts-model.js";
 import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
@@ -183,12 +184,12 @@ export function renderDateNewSide(
   `;
 }
 
-// Offices are picked, never typed. A typed office is text the publish parser has to re-read,
-// which is where the role/division guessing goes wrong; an option carries the words that
-// produced a real post, so it resolves back to that post by construction.
+// Posts are picked, never typed. A typed office is text the publish parser has to re-read,
+// which is where the role and division guessing goes wrong.
 //
-// Sets `name` and `division_ocdid` together — they are one answer, and `Save` takes an object
-// precisely so a control can write more than one field.
+// The written value is `post_id` — the decision itself. `labels` stay exactly as the source
+// said them, because a pick says where someone serves, not what the page called them, and the
+// membership is derived from the chosen post.
 export function renderOfficeNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
@@ -197,34 +198,19 @@ export function renderOfficeNewSide(
   focusRef: FocusRef | null,
 ) {
   const current = (diffValue(newRecord, field) as string | null) ?? "";
-  // An office the jurisdiction has no post for yet — a scrape proposed it and nobody has
-  // accepted it. Offered as a disabled option rather than dropped, so the field shows what the
-  // record actually says instead of looking empty.
-  const known = options.some((option) => option.name === current);
+  // Nothing picked: the post is still whatever the labels derive to, which is the normal
+  // state for a scrape nobody has corrected.
+  const DERIVED = "";
   return html`
     <select
       ${attachFocus(focusRef)}
       class="field-control__office"
       aria-label=${field.label}
-      @change=${(e: Event) => {
-        const picked = options.find((option) => option.name === inputValue(e));
-        if (!picked) return;
-        save({
-          office: {
-            ...(newRecord?.office ?? {}),
-            name: picked.name,
-            division_ocdid: picked.division_ocdid,
-          },
-        });
-      }}
+      @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
     >
-      ${current && !known
-        ? html`<option value=${current} disabled .selected=${true}>
-            ${current} — no post for this yet
-          </option>`
-        : ""}
+      <option value=${DERIVED} .selected=${!current}>${DERIVED_POST}</option>
       ${options.map(
-        (option) => html`<option value=${option.name} .selected=${option.name === current}>
+        (option) => html`<option value=${option.post_id} .selected=${option.post_id === current}>
           ${option.text}
         </option>`,
       )}

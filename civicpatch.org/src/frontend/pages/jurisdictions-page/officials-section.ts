@@ -13,8 +13,8 @@ import {
   sourceMapFor,
   type SourceMap,
 } from "../../components/review-preview/preview-values.js";
-import { divisionOcdidToFriendly } from "../../components/ocdid-utils.js";
 import { type PersonCard } from "../../components/people/person-cards.js";
+import { postsHeld } from "../../components/posts-list/posts-model.js";
 
 export interface OfficialsCardsProps {
   cards: PersonCard[];
@@ -30,8 +30,10 @@ function renderCard(
   onOpenPerson: ((personId: string) => void) | null,
 ) {
   const record = card.newRecord;
-  const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  const office = [record?.office?.name, division].filter(Boolean).join(", ");
+  // Post label, then membership label. Not `office.name` plus a division badge: that read
+  // "Council Member District 5 - Councilmember District 5, [D5]" — two spellings of one office
+  // joined by us, then the district a third time.
+  const office = postsHeld(record?.memberships ?? []);
   const name = record?.name || "(unnamed)";
 
   return renderPersonRow({

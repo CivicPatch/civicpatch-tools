@@ -5,7 +5,7 @@ import {
   needsReview,
   publishSet,
   blockingErrors,
-  bySeat,
+  byDivision,
   PersonStatus,
 } from "../components/people/person-cards.js";
 import { isContextField, type Issue } from "../components/fields/field-model.js";
@@ -18,8 +18,7 @@ const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 const person = (id: string, over: Record<string, unknown> = {}) => ({
   id,
   name: `Person ${id}`,
-  office: { name: "Council Member", division_ocdid: DIVISION },
-  emails: [],
+    emails: [],
   phones: [],
   urls: [],
   other_names: [],
@@ -46,7 +45,7 @@ describe("buildPersonCards — status", () => {
     const cards = build({
       existing: [person("a"), person("b"), person("d")],
       currentPeople: [
-        person("a", { office: { name: "Mayor", division_ocdid: DIVISION } }),
+        person("a", { start_date: "2030" }),
         person("b"),
         person("c"),
       ],
@@ -162,8 +161,7 @@ describe("buildPersonCards — surviving fields and issues", () => {
       code: "duplicate_unique_role",
       message: "…",
       person_ids: ["a"],
-      field: "office.name",
-    };
+      field: "post_id" };
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
@@ -171,7 +169,7 @@ describe("buildPersonCards — surviving fields and issues", () => {
     });
     expect(cards[0].issues).toEqual([issue]);
     expect(cards[0].surviving.map((s) => [s.field.key, s.reason])).toEqual([
-      ["office.name", "issue"],
+      ["post_id", "issue"],
       ["source_urls", "context"],
     ]);
   });
@@ -295,13 +293,13 @@ describe("publishSet / blockingErrors", () => {
   it("names the person, so the reviewer knows where to go", () => {
     const cards = build({
       existing: [person("a")],
-      currentPeople: [person("a", { name: "", office: { name: "", division_ocdid: DIVISION } })],
+      currentPeople: [person("a", { name: "" })],
     });
-    expect(blockingErrors(cards).map((e) => e.name)).toEqual(["(unnamed)", "(unnamed)"]);
+    expect(blockingErrors(cards).map((e) => e.name)).toEqual(["(unnamed)"]);
   });
 });
 
-describe("bySeat", () => {
+describe("byDivision", () => {
   const AT_LARGE = "ocd-division/country:us/state:nh/place:concord";
   const ward = (n: number) => `${AT_LARGE}/ward:${n}`;
   const JURIS = "ocd-jurisdiction/country:us/state:nh/place:concord/government";
@@ -309,12 +307,12 @@ describe("bySeat", () => {
   it("puts at-large first, then wards in numeric order", () => {
     const cards = build({
       currentPeople: [
-        person("w10", { office: { name: "Council", division_ocdid: ward(10) } }),
-        person("w2", { office: { name: "Council", division_ocdid: ward(2) } }),
-        person("mayor", { office: { name: "Mayor", division_ocdid: AT_LARGE } }),
+        person("w10", { office: { division_ocdid: ward(10) } }),
+        person("w2", { office: { division_ocdid: ward(2) } }),
+        person("mayor", { office: { division_ocdid: AT_LARGE } }),
       ],
     });
     // Numeric, not lexical — ward 2 before ward 10.
-    expect(bySeat(cards, JURIS).map((c) => c.personId)).toEqual(["mayor", "w2", "w10"]);
+    expect(byDivision(cards, JURIS).map((c) => c.personId)).toEqual(["mayor", "w2", "w10"]);
   });
 });

@@ -11,7 +11,7 @@ import {
   groupMembershipsByPerson,
   divisionName,
   divisionKey,
-  postTitle,
+  postName,
   decompose,
   postOptions,
 } from "./posts-model.js";
@@ -109,7 +109,7 @@ const renderMembership = (
   onAssign: (membership: Membership) => void,
 ) => html`
   <li class="posts-list__post posts-list__post--stacked">
-    <span class="posts-list__holders">${postTitle(membership)}</span>
+    <span class="posts-list__holders">${postName(membership)}</span>
     ${canEdit
       ? html`<button class="posts-list__edit" @click=${() => onAssign(membership)}>
           Change post

@@ -1,19 +1,18 @@
-"""Converting between the two shapes a roster is stored in.
+"""Rendering a roster into the shape it is stored in.
 
-`Person` carries labels verbatim, one per office; `Official` renders them into a single
-`office.name` with the division lifted out.
+`Person` carries labels verbatim, one per office. `Official` joins them into a single
+`office.name` with the division lifted out — a lossy render kept only until the review
+surfaces read `labels`, which is what they now also receive.
 
-`official_to_person` puts the division back into the labels as a designation, so the round
-trip does not lose it. That is what lets a consumer take `Person` without the old shape
-having to carry `division_ocdid` separately.
+The reverse (`official_to_person`) is gone: it split `office.name` back apart and put the
+division into the labels as a designation, and nothing called it once records crossed the
+boundary already decomposed.
 """
 
 from typing import List
 
 from shared.schemas import Office, Official, Person
-from shared.utils.divisions import division_ocdid_to_designation
 from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
-from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import Taxonomy, designation_sort_key, role_sort_key
 
 
@@ -77,22 +76,3 @@ def person_to_official(person: Person, taxonomy: Taxonomy) -> Official:
     )
 
 
-def official_to_person(official: Official, taxonomy: Taxonomy) -> Person:
-    return Person(
-        name=official.name,
-        other_names=official.other_names,
-        labels=office_name_to_labels(official.office.name)
-        + division_ocdid_to_designation(
-            official.office.division_ocdid, official.jurisdiction_ocdid
-        ),
-        phones=official.phones,
-        emails=official.emails,
-        urls=official.urls,
-        start_date=official.start_date,
-        end_date=official.end_date,
-        image=official.image,
-        jurisdiction_ocdid=official.jurisdiction_ocdid,
-        cdn_image=official.cdn_image,
-        source_urls=official.source_urls,
-        updated_at=official.updated_at,
-    )

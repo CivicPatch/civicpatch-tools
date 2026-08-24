@@ -38,7 +38,7 @@ describe("editorSummary", () => {
       input({
         surviving: [
           surviving("name", "changed"),
-          surviving("office.name", "same"),
+          surviving("labels", "same"),
           surviving("emails", "added"),
         ],
       }),
@@ -65,7 +65,7 @@ describe("editorSummary", () => {
     const result = editorSummary(
       input({
         status: PersonStatus.ADDED,
-        surviving: [surviving("name", "added"), surviving("office.name", "added")],
+        surviving: [surviving("name", "added"), surviving("labels", "added")],
       }),
     );
     expect(result).toBe("New person");

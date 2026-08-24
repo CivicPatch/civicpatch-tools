@@ -28,7 +28,7 @@ import {
 // number came from is not review-time overhead; it is part of reading the record.
 const DETAIL_FIELDS = FIELD_SCHEMA.filter(
   (field) =>
-    !["image", "name", "office.name"].includes(field.key),
+    !["image", "name", "labels"].includes(field.key),
 );
 
 // An icon per field instead of a label: the value is what a reader is here for, and

@@ -42,10 +42,13 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "other_names", label: "Other names", type: "multi" },
   // `key` is the storage path and stays `office.*` until the proposed roster stops being
   // Official-shaped; the label is what a person reads, and posts are what we call these.
-  // One field, not two: an office *is* a role and a division, so picking one sets both.
-  // `key` stays `office.name` because that is still the storage path — the proposed roster is
-  // Official-shaped until the pipeline contract changes.
-  { key: "office.name", label: "Post", type: "text", required: true },
+  // A post is picked, not typed, and not required: with nothing picked the post is derived
+  // from the labels, which is the normal state for a scrape nobody has corrected.
+  //
+  // NOT `labels`. Those are what the source said — evidence, never edited — and putting them
+  // here showed a person named twice by one page as two entries in the Post field, which reads
+  // as a duplicate because it is two spellings of one answer.
+  { key: "post_id", label: "Post", type: "text" },
   { key: "start_date", label: "Term start", type: "date" },
   { key: "end_date", label: "Term end", type: "date" },
   { key: "emails", label: "Email", type: "multi" },

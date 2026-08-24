@@ -37,6 +37,7 @@ import {
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
 import type { OfficeOption } from "../posts-list/posts-model.js";
+import { postLabelFor } from "../posts-list/posts-model.js";
 
 export const DASH = "—";
 
@@ -45,7 +46,7 @@ export const DASH = "—";
 // back — the field diffs on presence only.
 const PHOTO_KEY = "image";
 
-const OFFICE_KEY = "office.name";
+const OFFICE_KEY = "post_id";
 
 // A field that renders several controls has to hang its label on the set — the
 // label is "Term start", but no one input is that; they are its year and month.
@@ -108,6 +109,12 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
   // but "its value" is not always text. displayScalar on the photo field returns
   // the image URL, which is not what a reader wants to see.
   if (isReadOnly) {
+    // A post is stored by id, so the generic scalar path would print a UUID.
+    if (field.key === OFFICE_KEY) {
+      return html`<span class="person-editor__readonly"
+        >${postLabelFor(diffValue(record, field), officeOptions)}</span
+      >`;
+    }
     if (isImage(field)) {
       return html`<person-image
         .person=${withDisplayImage(record)}
@@ -171,7 +178,12 @@ function renderWas(props: EditorFieldProps) {
   if (isMulti(field)) return nothing;
 
   const oldValue = diffValue(oldRecord, field);
-  const oldText = oldRecord ? displayScalar(field, oldRecord) : "";
+  // Same reason as the read-only branch: "was a3f2c1…" tells a reviewer nothing.
+  const oldText = !oldRecord
+    ? ""
+    : field.key === OFFICE_KEY
+      ? postLabelFor(diffValue(oldRecord, field), props.officeOptions)
+      : displayScalar(field, oldRecord);
   if (!oldText.trim()) return nothing;
 
   const canRestore = !isReadOnly && !!newRecord && field.key !== PHOTO_KEY;

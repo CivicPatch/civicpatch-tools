@@ -357,6 +357,7 @@ async def test_publish_writes_memberships_for_the_roster():
     derived = [
         DerivedPost(
             role_id="mayor",
+            role_label="Mayor",
             division_ocdid=_BASE,
             headcount=1,
             members=[DerivedMember(person_id=person_id, source_labels=["Mayor"])],

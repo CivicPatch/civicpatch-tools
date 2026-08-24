@@ -20,7 +20,7 @@ from core.membership_proposal import (
     still_held,
     still_listed,
 )
-from core.post_derivation import derived_posts
+from core.post_derivation import DerivedPost, derived_posts
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import requests as requests_db
@@ -41,7 +41,8 @@ from schemas.pipeline_runs import (
 )
 from services import pipeline_costs
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from shared.schemas import Official, Role, RoleConfig
+from services.publish import chosen_posts
+from shared.schemas import Person, Role, RoleConfig
 from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
 from shared.utils.person_id_utils import resolve_people_ids
@@ -194,13 +195,13 @@ async def _store_source_records(
 
 
 async def _get_proposed_changes(
-    cur, jurisdiction_ocdid: str, specs: list
+    cur, jurisdiction_ocdid: str, derived: list[DerivedPost]
 ) -> list[ProposedChange]:
     """What this scrape would change about who holds what. Read once, used by both steps below."""
     held = (await memberships_db.open_by_jurisdiction(cur, [jurisdiction_ocdid]))[
         jurisdiction_ocdid
     ]
-    return propose(specs, [ExistingMembership(**row) for row in held])
+    return propose(derived, [ExistingMembership(**row) for row in held])
 
 
 async def _update_last_seen_at(
@@ -260,11 +261,13 @@ async def _find_or_create_posts(
     point a person at.
     """
     try:
-        officials = [Official(**record) for record in records]
-        specs = derived_posts(officials, taxonomy, roles)
-        await posts_db.find_or_create_all(jurisdiction_ocdid, specs)
-        logger.info(f"[{request_id}] Derived {len(specs)} post(s)")
-        return specs
+        roster = [Person(**record) for record in records]
+        # A pick only exists on a roster a reviewer has edited, so this is almost always
+        # empty at ingest — but a re-submit of an edited roster must not undo the pick.
+        derived = derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
+        await posts_db.find_or_create_all(jurisdiction_ocdid, derived)
+        logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
+        return derived
     except Exception as e:
         logger.error(f"[{request_id}] Failed to derive posts: {e}", exc_info=True)
         return []
@@ -324,10 +327,10 @@ async def _ingest_roster(
         updated_data,
         taxonomy,
     )
-    specs = await _find_or_create_posts(
+    derived = await _find_or_create_posts(
         request.request_id, request.jurisdiction_ocdid, updated_data, roles, taxonomy
     )
-    await _apply_scrape_changes(request.request_id, request.jurisdiction_ocdid, specs)
+    await _apply_scrape_changes(request.request_id, request.jurisdiction_ocdid, derived)
     await _record_resolved_url(
         request.request_id, request.jurisdiction_ocdid, workflow_context
     )
@@ -340,7 +343,7 @@ async def _ingest_roster(
 
 
 async def _apply_scrape_changes(
-    request_id: str, jurisdiction_ocdid: str, specs: list
+    request_id: str, jurisdiction_ocdid: str, derived: list[DerivedPost]
 ) -> None:
     """Never fatal, like the other derived writes: a scrape whose people are stored must not
     error over a timestamp.
@@ -356,7 +359,7 @@ async def _apply_scrape_changes(
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             last_seen_at = await run_updated_at(cur, request_id)
-            changes = await _get_proposed_changes(cur, jurisdiction_ocdid, specs)
+            changes = await _get_proposed_changes(cur, jurisdiction_ocdid, derived)
             await _update_last_seen_at(cur, request_id, changes, last_seen_at)
             await _close_absent_holders(
                 cur, request_id, jurisdiction_ocdid, changes, last_seen_at

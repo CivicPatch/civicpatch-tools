@@ -8,6 +8,7 @@ import {
   ADDABLE_DIVISIONS,
   AT_LARGE_DIVISION,
   buildDivisionOcdid,
+  derivedPostLabel,
   divisionName,
   isDivisionValue,
 } from "./posts-model.js";
@@ -32,6 +33,9 @@ function PostAdd(host: PostAddHost) {
   const [designation, setDesignation] = useState<AddableDivision>(AT_LARGE_DIVISION);
   const [value, setValue] = useState("");
   const [label, setLabel] = useState("");
+  // Until someone types, the field tracks role and division rather than sitting empty —
+  // so the name the post will get is visible before saving, not after.
+  const [labelTouched, setLabelTouched] = useState(false);
   const [headcount, setHeadcount] = useState("1");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,10 +52,21 @@ function PostAdd(host: PostAddHost) {
   // never showed.
   const handleValue = (e: Event) =>
     setValue(inputValue(e).replace(/\s+/g, ""));
-  const handleLabel = (e: Event) => setLabel(inputValue(e));
+  const handleLabel = (e: Event) => {
+    setLabelTouched(true);
+    setLabel(inputValue(e));
+  };
   const handleHeadcount = (e: Event) => setHeadcount(inputValue(e));
 
   const needsValue = designation !== AT_LARGE_DIVISION;
+  const jurisdiction = host.jurisdictionOcdid ?? "";
+  const divisionOcdid = jurisdiction
+    ? buildDivisionOcdid(jurisdiction, designation, value)
+    : "";
+  const roleLabel = [...(host.roles ?? [])].find((role) => role.id === roleId)?.label ?? "";
+  // Shown, not stored: the field tracks the pickers until someone overrides it, and an
+  // untouched field saves exactly what the server would have derived anyway.
+  const labelValue = labelTouched ? label : derivedPostLabel(roleLabel, divisionOcdid);
   // The same closed set the parser accepts. A value outside it builds an ocdid no scrape
   // can ever produce, so the post would sit unmatched forever beside the real one.
   const validValue = !needsValue || isDivisionValue(value);
@@ -65,7 +80,7 @@ function PostAdd(host: PostAddHost) {
       await createPost(host.jurisdictionOcdid, {
         role_id: roleId,
         division_ocdid: buildDivisionOcdid(host.jurisdictionOcdid, designation, value),
-        label: label.trim() || null,
+        label: labelValue.trim() || null,
         _headcount: Number(headcount),
       });
       emit(ADDED_EVENT);
@@ -122,7 +137,7 @@ function PostAdd(host: PostAddHost) {
         <span class="post-edit__label">Label (optional)</span>
         <input
           type="text"
-          .value=${label}
+          .value=${labelValue}
           placeholder="Position 8"
           @input=${handleLabel}
         />

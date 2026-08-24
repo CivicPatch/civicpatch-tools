@@ -6,7 +6,10 @@ export const PERSON_FIELDS = {
 
 // `id` is tracked so re-identifying a person (linking to an existing record)
 // marks the row dirty and gets submitted, even with no other edits.
-export const TRACKED_FIELDS = ["id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
+export const TRACKED_FIELDS = [
+  // The post a reviewer picked. Without it the pick never marks the person dirty and never
+  // reaches the patch — the edit looks saved and is discarded.
+  "post_id","id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
 
 // Which fields a person has had edited, as field keys. Derived on read from
 // (current, baseline) rather than stamped onto the record, so it cannot go stale.

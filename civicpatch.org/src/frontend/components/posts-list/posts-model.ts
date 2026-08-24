@@ -33,6 +33,7 @@ export interface Membership {
   post_id: string;
   person_name: string | null;
   role_id: string;
+  role_label: string;
   division_ocdid: string;
   label: string | null;
   post_label: string | null;
@@ -145,10 +146,22 @@ export function groupPostsByRole(
  * place case is the meaningful one — a post with no sub-division covers the whole
  * jurisdiction, which is what at-large means.
  */
+// Mirrors `_DIVISION_LABELS` in `membership_label.py`. Without it the OCD slug leaks into the
+// UI as "Council District 5" while the backend's own post label says "District 5" — the same
+// division named two ways on one screen.
+const DIVISION_LABELS: Record<string, string> = {
+  ward: "Ward",
+  council_district: "District",
+  district: "District",
+  precinct: "Precinct",
+  subdistrict: "Subdistrict",
+};
+
 export const divisionName = (division_ocdid: string): string => {
   const { key, value } = parseDivision(division_ocdid);
   if (!key || key === PLACE_LABEL) return AT_LARGE;
-  const words = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const words =
+    DIVISION_LABELS[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return value ? `${words} ${value}` : words;
 };
 
@@ -233,7 +246,7 @@ export interface PostOption {
   role_label: string;
   division_ocdid: string;
   // What the option reads as. The post's own name when someone gave it one, else role and
-  // division — the same precedence `postTitle` uses, so the picker and the roster agree.
+  // division — the same precedence `postName` uses, so the picker and the roster agree.
   label: string;
   held: number;
   headcount: number;
@@ -280,6 +293,18 @@ export function selectedPostId(
   return found?.post_id ?? null;
 }
 
+/** What a post will be called when nobody names it — the backend's `derive_label` shape.
+ *
+ * At-large adds nothing: a post with no sub-division covers the whole jurisdiction, and
+ * `_division_phrase` returns None for it rather than the words "At-Large". Saying it here
+ * would make the add form promise a label the server would not produce.
+ */
+export function derivedPostLabel(roleLabel: string, division_ocdid: string): string {
+  if (!roleLabel) return "";
+  const division = divisionName(division_ocdid);
+  return division === AT_LARGE ? roleLabel : `${roleLabel}, ${division}`;
+}
+
 /** Post options under their role, in the order the roster shows them.
  *
  * Lives here rather than beside the picker so it stays testable: importing a component pulls
@@ -295,43 +320,73 @@ export function byRole(options: PostOption[]): [string, PostOption[]][] {
 
 
 // An office a reviewer can pick, drawn from what the jurisdiction already has. The editor
-// writes `office.name` as text that publish re-parses, so the value written has to be text
-// that resolves back to this same post — which is exactly what the source said.
+// writes the labels publish re-parses, so what is written has to resolve back to this same
+// post — which is exactly what the source said about it.
 export interface OfficeOption {
-  // What to write. `source_labels` joined the way `office_name_to_labels` splits them, so the
-  // publish parser lands on the post this option came from. NOT the role's canonical label:
-  // measured against prod that reproduces `office.name` for only 78% of people.
-  name: string;
-  division_ocdid: string;
-  // What to show: the post, and the membership label when the source said more than the post
-  // does. "Council Member, Ward 3 — Deputy Mayor Pro Tempore".
+  // What to write. A pick is a *post*, never a rewrite of what the source said: `labels` stay
+  // exactly as scraped, and the membership follows from this post.
+  post_id: string;
+  // What to show, in the same shape every roster uses: the post label, then the membership
+  // label when the source said more than the post does.
   text: string;
 }
 
-const OFFICE_LABEL_SEPARATOR = " — ";
+// Shown when nothing is picked: the post still comes from the labels, which is the normal
+// state for a scrape nobody has corrected.
+export const DERIVED_POST = "Derived from the labels";
 
-/** The distinct offices this jurisdiction's memberships describe.
+/** What to show for a stored `post_id`.
  *
- * Deduplicated on what would be written, not on the post: two holders of one post can have
- * been named differently by the source, and those are genuinely two options.
+ * A post is stored by id and never displayed as one — every path that renders the Post field
+ * goes through here, so a UUID cannot reach a reader by being one path short.
+ */
+export function postLabelFor(post_id: unknown, options: OfficeOption[]): string {
+  if (!post_id) return DERIVED_POST;
+  return options.find((option) => option.post_id === post_id)?.text ?? DERIVED_POST;
+}
+
+/** The distinct posts this jurisdiction's memberships describe.
+ *
+ * One option per post. Two people on one post may have been named differently by the source,
+ * but the post is the same — offering it twice would ask a reviewer to choose between two
+ * spellings of one answer, which is exactly what showing `labels` in the Post field did.
  */
 export function officeOptions(memberships: Membership[]): OfficeOption[] {
   const seen = new Map<string, OfficeOption>();
   for (const membership of memberships) {
-    const name = membership.source_labels.join(" - ");
-    if (!name) continue;
-    const key = `${name}|${membership.division_ocdid}`;
-    if (seen.has(key)) continue;
-    const post = postTitle(membership);
-    seen.set(key, {
-      name,
-      division_ocdid: membership.division_ocdid,
-      text: membership.label ? `${post}${OFFICE_LABEL_SEPARATOR}${membership.label}` : post,
+    if (seen.has(membership.post_id)) continue;
+    seen.set(membership.post_id, {
+      post_id: membership.post_id,
+      // Named by the post alone — not `postsHeld`, which appends the holder's own membership
+      // label. An option is a post someone else happens to hold, not their title.
+      text: postName(membership),
     });
   }
   return [...seen.values()].sort((a, b) => a.text.localeCompare(b.text));
 }
 
+
+/** The posts a person holds, as text: each post's name, then what the source said beyond it.
+ *
+ * "Council Member, District 5" — or "Council Member, At-Large, Seat 3" when the membership
+ * carries a label. Never the division twice: the post already names it.
+ *
+ * Not `…Subtitle`: it is used as a row subtitle, an option label and a card line, and naming a
+ * value after one of its slots is how the same string ends up computed three ways.
+ */
+export function postsHeld(
+  memberships: {
+    post_label: string | null;
+    label: string | null;
+    role_label?: string | null;
+    role_id: string;
+    division_ocdid: string;
+  }[],
+): string {
+  return memberships
+    .map((membership) => [postName(membership), membership.label].filter(Boolean).join(", "))
+    .join("; ");
+}
 
 /** The same memberships, gathered under the person instead of the post.
  *
@@ -353,9 +408,14 @@ export function groupMembershipsByPerson(memberships: Membership[]): PersonRow[]
  * Not `membership.label` — that says what the source called this person *beyond* the post, so
  * using it here would replace "Deputy Mayor Pro Tempore" with "Council Member, At-Large, Place 6".
  */
-export const postTitle = (membership: Membership): string =>
+export const postName = (membership: {
+  post_label: string | null;
+  role_label?: string | null;
+  role_id: string;
+  division_ocdid: string;
+}): string =>
   membership.post_label ??
-  `${membership.role_id}, ${divisionName(membership.division_ocdid)}`;
+  `${membership.role_label ?? membership.role_id}, ${divisionName(membership.division_ocdid)}`;
 
 
 /** Everything the parser made of a person's source label, in the order it decides them.

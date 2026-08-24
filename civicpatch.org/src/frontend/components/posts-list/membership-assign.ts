@@ -20,7 +20,7 @@ type MembershipAssignHost = HTMLElement & {
   personName?: string | null;
   jurisdictionOcdid?: string;
   roles?: RoleOption[];
-  // Every post the jurisdiction already has, so the form can tell "seat them in the existing
+  // Every post the jurisdiction already has, so the form can tell "put them in the existing
   // one" from "mint one" without asking the server first.
   options?: PostOption[];
   currentRoleId?: string | null;

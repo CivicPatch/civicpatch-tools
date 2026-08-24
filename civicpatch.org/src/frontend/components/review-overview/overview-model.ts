@@ -10,7 +10,7 @@ import { isContextField, type SurvivingField } from "../fields/field-model.js";
 // Who they are in the government, then how to reach them, then the rest. Schema
 // order buries both behind Photo and Name.
 const FIELD_ORDER = [
-  "office.name",
+  "labels",
   "emails",
   "phones",
   "urls",

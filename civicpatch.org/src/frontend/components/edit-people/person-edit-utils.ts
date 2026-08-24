@@ -102,9 +102,25 @@ export function buildDivisionOcdid(
 }
 
 export type Office = { name?: string; division_ocdid?: string | null; [k: string]: unknown };
+// One post a person holds, as the API sends it. `post_label` is the post's own name and
+// `label` is what the source said beyond it — the two halves of how a post reads.
+export type PersonMembership = {
+  post_id: string;
+  role_id: string;
+  role_label: string;
+  division_ocdid: string;
+  label: string | null;
+  post_label: string | null;
+  source_labels: string[];
+};
+
 export type Person = {
   id: string;
   name?: string;
+  // Where they serve. `office` is the joined string this replaces, still sent while the
+  // review surfaces move off it.
+  memberships?: PersonMembership[];
+  labels?: string[];
   office?: Office;
   start_date?: string | null;
   end_date?: string | null;
