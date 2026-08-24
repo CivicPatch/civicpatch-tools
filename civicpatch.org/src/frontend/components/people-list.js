@@ -2,8 +2,8 @@ import { component } from "haunted";
 import { html } from "lit-html";
 import "./basic/table/table.js";
 import "./person-image.js";
+import { postsHeld } from "./posts-list/posts-model.ts";
 import {
-import { postsHeld } from "./posts-list/posts-model.js";
   DIVISION_COUNCIL_DISTRICT,
   DIVISION_WARD,
 } from "./edit-people/person-edit-utils.ts";
