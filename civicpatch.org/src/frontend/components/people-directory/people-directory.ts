@@ -7,7 +7,7 @@ import {
     DIVISION_COUNCIL_DISTRICT,
     DIVISION_WARD,
 } from "../edit-people/person-edit-utils.js";
-import { postsHeld } from "../posts-list/posts-model.js";
+import { divisionOf, postsHeld } from "../posts-list/posts-model.js";
 import type { PersonMembership } from "../edit-people/person-edit-utils.js";
 
 interface Office {
@@ -32,7 +32,7 @@ interface PeopleDirectoryProps {
 }
 
 function subdivisionLabel(person: Person): string | null {
-    const ocdid = person.office?.division_ocdid ?? "";
+    const ocdid = divisionOf(person.memberships ?? []);
     for (const part of ocdid.split("/")) {
         if (part.startsWith(`${DIVISION_COUNCIL_DISTRICT}:`)) return `District ${part.split(":")[1]}`;
         if (part.startsWith(`${DIVISION_WARD}:`)) return `Ward ${part.split(":")[1]}`;

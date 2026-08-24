@@ -392,13 +392,13 @@ OPEN_PR_DB_RESULT = {
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",
-    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "review_state": None, "number": 42},
+    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "number": 42},
     "proposed": [{"name": "Jane Doe"}],
 }
 
 MERGED_PR_DB_RESULT = {
     **OPEN_PR_DB_RESULT,
-    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "merged", "review_state": None, "number": 42},
+    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "merged", "number": 42},
 }
 
 

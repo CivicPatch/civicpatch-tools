@@ -290,21 +290,6 @@ async def get_pull_request_file_yaml(
         return None
 
 
-async def get_pull_request_review_state(pr_number: int) -> str | None:
-    """Returns the effective review state ('approved' or 'changes_requested') or None."""
-    _, _, _, open_data_repo_url = _get_github_config()
-    url = f"{open_data_repo_url}/pulls/{pr_number}/reviews"
-    cache_key = f"github:pr_reviews:{pr_number}"
-    reviews = await cached_github_get(url, cache_key)
-    if not reviews:
-        return None
-    for review in reversed(reviews):
-        state = review.get("state", "").lower()
-        if state in ("approved", "changes_requested"):
-            return state
-    return None
-
-
 async def get_pull_request(pull_request_number: str) -> dict | None:
     _, _, _, open_data_repo_url = _get_github_config()
     url = f"{open_data_repo_url}/pulls/{pull_request_number}"

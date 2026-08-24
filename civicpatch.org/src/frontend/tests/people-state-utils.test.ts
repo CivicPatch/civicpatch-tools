@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { buildPeoplePatch, changedFieldKeys, listChanged, pruneIds } from "../components/edit-people/hooks/people-state-utils.js";
+import {
+  buildPeoplePatch,
+  changedFieldKeys,
+  listChanged,
+  mergeFields,
+  pruneIds,
+} from "../components/edit-people/hooks/people-state-utils.js";
 
 const changes = (entries: [string, string[]][]) => new Map(entries);
 const deleted = (...ids: string[]) => new Set(ids);
@@ -12,9 +18,15 @@ describe("changedFieldKeys", () => {
   });
 
   it("compares by value, not identity", () => {
-    const person = { id: "a", office: { name: "Mayor" } };
-    const original = { id: "a", office: { name: "Mayor" } };
+    const person = { id: "a", phones: ["x"] };
+    const original = { id: "a", phones: ["x"] };
     expect(changedFieldKeys(person, original)).toEqual([]);
+  });
+
+  it("names the post a reviewer picked, or the pick never reaches the patch", () => {
+    expect(changedFieldKeys({ id: "a", post_id: "p2" }, { id: "a", post_id: "p1" })).toEqual([
+      "post_id",
+    ]);
   });
 
   it("names the id when a person is re-identified", () => {
@@ -107,4 +119,26 @@ describe("pruneIds", () => {
   it("accepts a plain list of living ids", () => {
     expect([...pruneIds(new Set(["a", "gone"]), ["a"])]).toEqual(["a"]);
   });
+});
+
+describe("mergeFields", () => {
+  const person = (over = {}) => ({ id: "a", name: "Alice", ...over });
+
+  it("keeps the survivor's post", () =>
+    expect(
+      mergeFields(person({ post_id: "survivor-post" }), [person({ id: "b", post_id: "other" })])
+        .post_id,
+    ).toBe("survivor-post"));
+
+  // Two records of one human hold one post between them. The old code concatenated their
+  // `office.name` strings, which is only sane for free text — a post has identity.
+  it("inherits a post when the survivor has none, rather than losing it", () =>
+    expect(
+      mergeFields(person({ post_id: null }), [person({ id: "b", post_id: "found" })]).post_id,
+    ).toBe("found"));
+
+  it("keeps the absorbed name as an other_name", () =>
+    expect(mergeFields(person(), [person({ id: "b", name: "Alice R." })]).other_names).toEqual([
+      "Alice R.",
+    ]));
 });

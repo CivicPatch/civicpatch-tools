@@ -23,7 +23,7 @@ import "./review-modal.css";
 import "../person-editor/person-editor.css";
 import { renderPersonEditor, type PersonEditorProps } from "../person-editor/person-editor.js";
 import {
-  cardSubtitle,
+  postsFor,
   personOf,
   proposalsByPersonId,
   STATUS_LABEL,
@@ -37,7 +37,7 @@ export interface ReviewModalProps {
   // Overview that is the group the person was in. Stepping out of it would land
   // on someone with no visible fields, which is a dead end (§6).
   cards: PersonCard[];
-  // See `cardSubtitle`: a proposed person holds no membership yet.
+  // See `postsFor`: a proposed person holds no membership yet.
   changes?: ProposedChange[];
   openPersonId: string | null;
   focusFieldKey: string | null;
@@ -118,6 +118,7 @@ function ReviewModal(props: ReviewModalProps) {
   if (!open || !card) return nothing;
 
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
+  const proposals = proposalsByPersonId(changes ?? []);
   // Revert is the editor's own Reset, moved into the footer: one baseline — the
   // card as it loaded — so reopening cannot strand edits the roster calls dirty.
   const editorProps = editor(card);
@@ -172,7 +173,7 @@ function ReviewModal(props: ReviewModalProps) {
             <span class="review-modal__person-who">
               <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
               <span class="review-modal__person-sub"
-                >${cardSubtitle(entry, proposalsByPersonId(changes ?? []))}</span
+                >${postsFor(entry, proposals)}</span
               >
             </span>
             <span class="review-modal__person-meta">

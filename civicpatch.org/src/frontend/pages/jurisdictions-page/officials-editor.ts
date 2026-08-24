@@ -142,6 +142,8 @@ function OfficialsEditor({
       isReadOnly: !canEdit,
       jurisdictionOcdid,
       officeOptions,
+      // Published people hold memberships, so nothing on this page is proposed.
+      proposals: new Map(),
       isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {
         const next = new Set(collapsedIds);

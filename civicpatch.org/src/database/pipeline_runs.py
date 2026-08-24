@@ -25,37 +25,6 @@ async def run_updated_at(cur, request_id: str) -> datetime:
     return row[0]
 
 
-async def get_pipeline_run_for_review(request_id: str) -> dict | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT pr.url, pr.status, pr.review_state,
-                   r.jurisdiction_ocdid,
-                   jur.data->>'name' AS jurisdiction_name,
-                   j.created_at, j.updated_at
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
-            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE j.request_id = %s
-            """,
-            (request_id,),
-        )
-        row = await cur.fetchone()
-        if not row:
-            return None
-        return {
-            "request_id": request_id,
-            "pull_request_url": row[0],
-            "pull_request_status": row[1],
-            "pull_request_review_state": row[2],
-            "jurisdiction_ocdid": row[3],
-            "jurisdiction_name": row[4],
-            "created_at": to_iso(row[5]),
-            "updated_at": to_iso(row[6]),
-        }
-
-
 async def list_pipeline_runs():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

@@ -12,7 +12,7 @@ import {
   type PersonCard,
 } from "../components/people/person-cards.js";
 import { FIELD_SCHEMA, type SurvivingField } from "../components/fields/field-model.js";
-import { cardSubtitle, proposalsByPersonId } from "../components/people/person-cards.js";
+import { postsFor, proposalsByPersonId } from "../components/people/person-cards.js";
 
 const spec = (key: string) => {
   const found = FIELD_SCHEMA.find((field) => field.key === key);
@@ -213,7 +213,7 @@ describe("visibleFields — what the card shows is what it opens", () => {
   });
 });
 
-describe("cardSubtitle — where a person serves", () => {
+describe("postsFor", () => {
   const card = (over = {}) => ({
     personId: "p1",
     status: "changed",
@@ -237,7 +237,7 @@ describe("cardSubtitle — where a person serves", () => {
     ]);
 
     // The role's label, not its slug: an id is storage.
-    expect(cardSubtitle(card(), proposals)).toBe("Council Member, District 5");
+    expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
   });
 
   it("appends the membership label after the post", () => {
@@ -252,12 +252,12 @@ describe("cardSubtitle — where a person serves", () => {
       },
     ]);
 
-    expect(cardSubtitle(card(), proposals)).toBe("Council Member, At-Large, Seat 3");
+    expect(postsFor(card(), proposals)).toBe("Council Member, At-Large, Seat 3");
   });
 
   it("falls back to a published person's memberships when nothing is proposed", () =>
     expect(
-      cardSubtitle(
+      postsFor(
         card({
           newRecord: {
             id: "p1",
@@ -281,7 +281,7 @@ describe("cardSubtitle — where a person serves", () => {
 
   it("says nothing rather than repeating the joined office string", () =>
     // `office.name` remains the last resort only until the review surfaces stop being sent it.
-    expect(cardSubtitle(card(), proposalsByPersonId([]))).toBe(""));
+    expect(postsFor(card(), proposalsByPersonId([]))).toBe(""));
 });
 
 describe("proposalsByPersonId", () => {

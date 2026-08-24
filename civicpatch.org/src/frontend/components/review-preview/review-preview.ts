@@ -17,7 +17,7 @@ import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
   blockingErrors,
   byDivision,
-  cardSubtitle,
+  postsFor,
   proposalsByPersonId,
   type ProposedChange,
   publishSet,
@@ -27,7 +27,7 @@ import {
 
 interface ReviewPreviewProps {
   cards: PersonCard[];
-  // See `cardSubtitle`: the publish set is proposed people, who hold no membership yet.
+  // See `postsFor`: the publish set is proposed people, who hold no membership yet.
   changes?: ProposedChange[];
   jurisdictionOcdid: string | null | undefined;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
@@ -41,12 +41,12 @@ function renderCard(
   proposals: Map<string, ProposedChange[]>,
 ) {
   const record = card.newRecord;
-  const office = cardSubtitle(card, proposals);
+  const posts = postsFor(card, proposals);
 
   return renderPersonRow({
     record,
     name: record?.name || "(unnamed)",
-    subtitle: office,
+    subtitle: posts,
     // Status tints the card here too. Preview still carries no other diff
     // vocabulary — no badge, no strikethrough, no attention icon — so the tint is
     // the one cue, and only ever a background.

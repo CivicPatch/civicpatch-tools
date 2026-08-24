@@ -2,7 +2,7 @@
 // collapse rule. Pure — the editor and useFrozenFields read the same answer.
 
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
-import { postsHeld } from "../posts-list/posts-model.js";
+import { divisionOf, postsHeld } from "../posts-list/posts-model.js";
 import {
   FIELD_SCHEMA,
   fieldError,
@@ -46,8 +46,11 @@ export const STATUS_LABEL: Record<PersonStatusKey, string> = {
 // the banner, not the styling.
 export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DELETED]);
 
-// "Council President, Ward 9" — shared by Overview's tiles and the modal's list.
-// Comma, matching the backend's `derive_label`, so a post reads the same everywhere.
+// Where a person serves: "Council President, Ward 9".
+//
+// The chooser beside `postsHeld`, which formats memberships it is handed. This one picks the
+// source first, because the best answer is not always a membership — and it prefers what the
+// review would make true over what is true now.
 //
 // Three sources, in order of how much they know:
 //   1. the proposal — the only thing that knows a *proposed* person's post, since they hold
@@ -56,7 +59,7 @@ export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DEL
 //   3. `office.name` — the labels joined with " - " at ingest, which is what this replaces:
 //      it read "Council Member District 5 - Councilmember District 5, [D5]", two spellings of
 //      one office plus the district a third time
-export function cardSubtitle(
+export function postsFor(
   card: PersonCard,
   proposedByPersonId?: Map<string, ProposedChange[]>,
 ): string {
@@ -266,7 +269,10 @@ export function blockingErrors(cards: PersonCard[]): BlockingError[] {
 // never the thing being sorted.
 export function byDivision(cards: PersonCard[], jurisdictionOcdid: string | null | undefined) {
   const division = (card: PersonCard) => {
-    const division = parseDivision(card.newRecord?.office?.division_ocdid, jurisdictionOcdid);
+    const division = parseDivision(
+      divisionOf(card.newRecord?.memberships ?? []),
+      jurisdictionOcdid,
+    );
     if (division.type === DIVISION_AT_LARGE) return -1;
     const value = Number.parseInt(division.value, 10);
     return Number.isNaN(value) ? Number.MAX_SAFE_INTEGER : value;
