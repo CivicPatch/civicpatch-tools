@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import "./basic/table/table.js";
 import "./person-image.js";
 import {
+import { postsHeld } from "./posts-list/posts-model.js";
   DIVISION_COUNCIL_DISTRICT,
   DIVISION_WARD,
 } from "./edit-people/person-edit-utils.ts";
@@ -34,7 +35,7 @@ function PeopleList({ local = [], jurisdictionSelected = false }) {
       field: "official",
       renderCell: (person) => html`
         <strong>${person.name}</strong>
-        <small style="display: block;">${person.office?.name}</small>
+        <small style="display: block;">${postsHeld(person.memberships ?? [])}</small>
         ${hasSubdivision(person) ? html`<small style="display: block;">${getSubdivisionLabel(person)}</small>` : ""}
       `,
     },

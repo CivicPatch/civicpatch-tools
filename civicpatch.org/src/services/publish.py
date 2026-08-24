@@ -19,8 +19,10 @@ from database.pipeline_runs import get_pipeline_run_data_json
 from database.publications import dismiss_request, publish_request, record_open_data_url
 from database.people import get_jurisdiction_people
 from database.roles import get_roles
-from core.post_derivation import DerivedPost, derived_posts
-from shared.schemas import Official, RoleConfig
+from core.post_derivation import ChosenPost, DerivedPost, derived_posts
+from database import posts as posts_db
+from database.database import get_pool
+from shared.schemas import Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 from lib.temporal.types import CommitSource, OpenDataCommitRequest
 from shared.utils.yaml_utils import yaml_dump
@@ -64,6 +66,26 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
     return {**person, "cdn_image": promoted_url(friendly_host, dest_key)}
 
 
+async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
+    """The posts a reviewer picked, by id.
+
+    A pick that names a post which no longer exists is simply absent here, and the derivation
+    falls back to the labels rather than losing the person.
+    """
+    picked = [person.post_id for person in roster if person.post_id]
+    if not picked:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        rows = await posts_db.identities_by_id(cur, picked)
+    return {
+        post_id: ChosenPost(
+            role_id=row["role_id"], division_ocdid=row["division_ocdid"]
+        )
+        for post_id, row in rows.items()
+    }
+
+
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     """Fetch the taxonomy, then derive what posts this roster implies.
 
@@ -76,7 +98,8 @@ async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     try:
         roles = await get_roles()
         taxonomy = build_taxonomy(RoleConfig(roles=roles))
-        return derived_posts([Official(**person) for person in people], taxonomy, roles)
+        roster = [Person(**person) for person in people]
+        return derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
     except Exception as e:
         logger.error(f"Failed to derive posts for publish: {e}", exc_info=True)
         return []

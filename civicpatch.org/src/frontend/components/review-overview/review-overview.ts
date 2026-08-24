@@ -1,6 +1,6 @@
 // Overview — triage a whole card at a glance (2026-07-30 spec).
 //
-// One list in seat order, not two groups: status is carried by the card itself, so
+// One list in division order, not two groups: status is carried by the card itself, so
 // position is free for the roster order a reviewer checks against a source page.
 // People the scrape left untouched fold to a compact row rather than spending a card.
 
@@ -15,6 +15,8 @@ import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   cardSubtitle,
+  proposalsByPersonId,
+  type ProposedChange,
   DEPARTING,
   personOf,
   PersonStatus,
@@ -36,6 +38,9 @@ import {
 
 interface ReviewOverviewProps {
   cards: PersonCard[];
+  // What the scrape proposes for each person. A proposed person holds no membership, so this
+  // is the only thing that can name the post they would land in.
+  changes?: ProposedChange[];
   isReadOnly: boolean;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
@@ -109,6 +114,7 @@ function renderRow(
   card: PersonCard,
   props: ReviewOverviewProps,
   sources: SourceMap,
+  proposals: Map<string, ProposedChange[]>,
 ) {
   const badge = STATUS_BADGE[card.status];
   // The field the card leads with — not surviving[0], which is schema order and
@@ -117,7 +123,7 @@ function renderRow(
   return renderPersonRow({
     record: personOf(card),
     name: personOf(card)?.name || "(unnamed)",
-    subtitle: cardSubtitle(card, divisionOcdidToFriendly) || "",
+    subtitle: cardSubtitle(card, proposals) || "",
     ariaLabel: rowLabel(card),
     onOpen: () => props.onOpenPerson(card.personId, firstField),
     modifier: card.status,
@@ -134,7 +140,11 @@ function renderRow(
   });
 }
 
-function renderFold(card: PersonCard, props: ReviewOverviewProps) {
+function renderFold(
+  card: PersonCard,
+  props: ReviewOverviewProps,
+  proposals: Map<string, ProposedChange[]>,
+) {
   const record = personOf(card);
   return html`
     <span class="review-fold">
@@ -151,7 +161,7 @@ function renderFold(card: PersonCard, props: ReviewOverviewProps) {
           <span class="review-fold__name">${record?.name || "(unnamed)"}</span>
           <span class="review-fold__meta">
             <span class="review-fold__sub"
-              >${cardSubtitle(card, divisionOcdidToFriendly) || nothing}</span
+              >${cardSubtitle(card, proposals) || nothing}</span
             >
             ${renderAttention(card)}
           </span>
@@ -164,6 +174,9 @@ function renderFold(card: PersonCard, props: ReviewOverviewProps) {
 
 function ReviewOverview(props: ReviewOverviewProps) {
   const { cards, isReadOnly, onAdd } = props;
+  // Indexed once per render, beside `sources`, rather than rebuilt inside each row —
+  // which is the scan the index exists to avoid.
+  const proposals = proposalsByPersonId(props.changes ?? []);
   const list = cards ?? [];
   const sources = sourceMapFor(list);
 
@@ -174,9 +187,9 @@ function ReviewOverview(props: ReviewOverviewProps) {
             ${runsOf(list).map((run) =>
               run.folded
                 ? html`<div class="review-overview__strip">
-                    ${run.cards.map((card) => renderFold(card, props))}
+                    ${run.cards.map((card) => renderFold(card, props, proposals))}
                   </div>`
-                : run.cards.map((card) => renderRow(card, props, sources)),
+                : run.cards.map((card) => renderRow(card, props, sources, proposals)),
             )}
             <!-- The ghost is always last: adding someone puts their card where it
                  stood and pushes it down, so the affordance never moves. -->

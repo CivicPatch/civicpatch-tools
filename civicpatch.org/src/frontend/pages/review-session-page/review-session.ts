@@ -27,6 +27,7 @@ import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsRev
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 import { useOfficeOptions } from "../../hooks/use-office-options.js";
+import type { ProposedChange } from "../../components/people/person-cards.js";
 
 type CurrentEntry = {
   request_id: string;
@@ -34,6 +35,7 @@ type CurrentEntry = {
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
+  changes?: ProposedChange[];
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;
@@ -53,7 +55,7 @@ type ReviewSessionHost = HTMLElement & {
 
 function ReviewSession(host: ReviewSessionHost) {
   const { progress, hasSession, currentEntry, error, canClosePr, isClosingPr } = host;
-  const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
+  const { jurisdiction, pr, mode, pr_people, changes, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
   const officeOptions = useOfficeOptions(jurisdictionOcdid);
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
@@ -307,6 +309,7 @@ function ReviewSession(host: ReviewSessionHost) {
       </div>
       ${view === ReviewView.PREVIEW
         ? html`<review-preview
+            .changes=${changes}
             .cards=${cards}
             .jurisdictionOcdid=${jurisdictionOcdid}
             .onOpenPerson=${handleOpenPerson}
@@ -314,6 +317,7 @@ function ReviewSession(host: ReviewSessionHost) {
         : view !== ReviewView.DETAIL
         ? html`<review-overview
             .cards=${cards}
+            .changes=${changes}
             .isReadOnly=${is_read_only}
             .onOpenPerson=${handleOpenPerson}
             .onAdd=${handleAddPerson}
@@ -345,6 +349,7 @@ function ReviewSession(host: ReviewSessionHost) {
         @toggle-issue=${(e: CustomEvent) => handleToggleIssue(e.detail.issue)}
       ></review-sidebar>
       <review-modal
+        .changes=${changes}
         .cards=${walkSet}
         .openPersonId=${openPerson?.id ?? null}
         .focusFieldKey=${openPerson?.field ?? null}

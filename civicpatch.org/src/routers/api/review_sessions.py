@@ -23,6 +23,7 @@ import shared.utils.id_utils
 import shared.utils.url_utils
 from schemas.common import Identity, RouteCategory
 from core.review_mode import review_mode_for
+from services.review_proposal import proposals_for_requests
 from lib.auth import require_route_access
 
 
@@ -166,6 +167,13 @@ async def _navigate_response(session_id: str, entry_number: int):
             asyncio.create_task(jobs_db.update_pipeline_run_data(request_id, proposed))
 
     proposed = proposed or []
+    # Deliberately after the GitHub fallback above: it can be the first thing to record a
+    # roster, and a proposal derived from an empty one would name no post at all.
+    #
+    # This is the endpoint a review session actually navigates through — `by-request` serves
+    # deep links. Both need it, because a proposed person holds no membership yet and the
+    # derivation is the only thing that knows which post they would land in.
+    proposals = await proposals_for_requests([request_id])
     unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
     sources = build_sources(request_id, jurisdiction_ocdid, unique_source_urls)
 
@@ -184,6 +192,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             "mode": review_mode_for(scraped_at).value,
             "existing": existing,
             "proposed": proposed,
+            "changes": [change.model_dump() for change in proposals.get(request_id, [])],
             "sources": sources,
         }
     }

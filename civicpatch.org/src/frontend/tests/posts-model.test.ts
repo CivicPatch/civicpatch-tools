@@ -9,7 +9,7 @@ import {
   buildDivisionOcdid,
   AT_LARGE_DIVISION,
   groupMembershipsByPerson,
-  postTitle,
+  postName,
   decompose,
   PART_ROLE,
   PART_DIVISION,
@@ -21,6 +21,8 @@ import {
   divisionSelection,
   isDivisionValue,
   officeOptions,
+  postsHeld,
+  derivedPostLabel,
 } from "../components/posts-list/posts-model.js";
 import type { Post, Membership } from "../components/posts-list/posts-model.js";
 
@@ -133,7 +135,7 @@ describe("divisionName", () => {
   it("reads a sub-division as words", () => {
     expect(divisionName("ocd-division/country:us/state:wa/place:x/ward:3")).toBe("Ward 3");
     expect(divisionName("ocd-division/country:us/state:wa/place:x/council_district:3")).toBe(
-      "Council District 3",
+      "District 3",
     );
   });
 
@@ -196,7 +198,7 @@ describe("groupMembershipsByPerson", () => {
   });
 });
 
-describe("postTitle", () => {
+describe("postName", () => {
   const base = {
     post_id: "p",
     person_name: "X",
@@ -207,17 +209,17 @@ describe("postTitle", () => {
   it("names the post, ignoring what the membership adds on top of it", () => {
     // `membership.label` is the source's words for what the post does not say — a demoted
     // office or a portfolio. It is not another name for the seat, so it must not be the title.
-    expect(postTitle({ ...base, label: "Council Member, Place 6", post_label: "Post Label" })).toBe(
+    expect(postName({ ...base, label: "Council Member, Place 6", post_label: "Post Label" })).toBe(
       "Post Label",
     );
-    expect(postTitle({ ...base, label: null, post_label: "Post Label" })).toBe("Post Label");
+    expect(postName({ ...base, label: null, post_label: "Post Label" })).toBe("Post Label");
   });
 
   it("falls back to role and division when nobody has named it", () => {
     // ", " not " · ": this is the fallback for `post_label`, which the backend builds with
     // `derive_label` ("Council Member, District 3"). A fallback that reads differently from a
     // real label would make it obvious which posts nobody has named — which is not the point.
-    expect(postTitle({ ...base, label: null, post_label: null })).toBe(
+    expect(postName({ ...base, label: null, post_label: null })).toBe(
       "council-member, Ward 2",
     );
   });
@@ -243,7 +245,7 @@ describe("decompose", () => {
     // being shown only where the person landed.
     expect(decompose(membership())).toEqual([
       { kind: PART_ROLE, value: "council-member" },
-      { kind: PART_DIVISION, value: "Council District 3" },
+      { kind: PART_DIVISION, value: "District 3" },
       { kind: PART_UNMATCHED, value: "Central Seattle" },
     ]);
   });
@@ -282,7 +284,7 @@ describe("postOptions", () => {
       [],
       ROLE_LABELS,
     );
-    expect(option.label).toBe("Council Member, Council District 1");
+    expect(option.label).toBe("Council Member, District 1");
   });
 
   it("prefers the name a person gave the post", () => {
@@ -419,37 +421,87 @@ describe("officeOptions", () => {
   it("writes what the source said, so publish re-parses back to the same post", () => {
     // NOT the role's canonical label — that reproduces office.name for only 78% of people.
     const [option] = officeOptions([held({})]);
-    expect(option.name).toBe("Councilmember Ward 2");
-    expect(option.division_ocdid).toBe("ocd-division/country:us/state:wa/place:x/ward:2");
+    expect(option.post_id).toBe("a");
   });
 
-  it("joins several source labels the way office_name_to_labels splits them", () => {
-    const [option] = officeOptions([
-      held({ source_labels: ["Councilmember", "Council President"] }),
-    ]);
-    expect(option.name).toBe("Councilmember - Council President");
-  });
-
-  it("shows the post, and the membership label when the source said more", () => {
-    const [plain] = officeOptions([held({ post_label: "Council Member, Ward 2" })]);
-    expect(plain.text).toBe("Council Member, Ward 2");
-
+  it("names an option by the post alone, not by whoever holds it", () => {
+    // `postsHeld` appends the holder's own membership label. An option is a post someone else
+    // happens to sit in, so borrowing their title would offer "Deputy Mayor Pro Tempore" to a
+    // reviewer picking a plain council seat.
     const [titled] = officeOptions([
       held({ post_label: "Council Member, Ward 2", label: "Deputy Mayor Pro Tempore" }),
     ]);
-    expect(titled.text).toBe("Council Member, Ward 2 — Deputy Mayor Pro Tempore");
+    expect(titled.text).toBe("Council Member, Ward 2");
   });
 
-  it("keeps two options when one post was named two different ways", () => {
-    // Deduplicated on what would be written, not on the post: both spellings are real
-    // choices, and collapsing them would silently rewrite one person's provenance.
+  it("offers one option per post, however many ways the source named it", () => {
+    // Two spellings of one post are two annotations, not two choices.
     const options = officeOptions([
       held({ source_labels: ["Councilmember Ward 2"] }),
       held({ person_id: "q", source_labels: ["Council Member District 2"] }),
     ]);
-    expect(options).toHaveLength(2);
+    expect(options).toHaveLength(1);
   });
 
-  it("drops a membership the source never labelled, which would write an empty office", () =>
-    expect(officeOptions([held({ source_labels: [] })])).toEqual([]));
+  it("offers a post even when the source never labelled the membership", () =>
+    // The post exists either way; only the annotation is missing.
+    expect(officeOptions([held({ source_labels: [] })])).toHaveLength(1));
+});
+
+describe("postsHeld", () => {
+  const held = (over = {}) => ({
+    post_label: null as string | null,
+    label: null as string | null,
+    role_id: "council-member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+    ...over,
+  });
+
+  it("names the post once, never the division a second time", () => {
+    // The bug this replaces read "Council Member District 5 - Councilmember District 5, [D5]":
+    // two spellings we joined, plus the district again as a badge.
+    expect(postsHeld([held({ post_label: "Council Member, District 5" })])).toBe(
+      "Council Member, District 5",
+    );
+  });
+
+  it("adds the membership label after the post label", () =>
+    expect(
+      postsHeld([
+        held({ post_label: "Council Member, At-Large", label: "Seat 3" }),
+      ]),
+    ).toBe("Council Member, At-Large, Seat 3"));
+
+  it("falls back to the role's label, never its slug, when the post has no name", () =>
+    // "council-member, District 5" is an id leaking into the UI. Every prod post carries
+    // `post_label` from `derive_label`; this is what a post with none should still read as.
+    expect(postsHeld([held({ role_label: "Council Member" })])).toBe(
+      "Council Member, District 5",
+    ));
+
+  it("says nothing for someone holding no post", () =>
+    expect(postsHeld([])).toBe(""));
+
+  it("separates two posts, because a person can hold more than one", () =>
+    expect(
+      postsHeld([
+        held({ post_label: "Council Member, District 5" }),
+        held({ post_label: "Chair, Parks Board" }),
+      ]),
+    ).toBe("Council Member, District 5; Chair, Parks Board"));
+});
+
+describe("derivedPostLabel", () => {
+  it("names a post by role and division, the way the server would", () =>
+    expect(derivedPostLabel("Council Member", "ocd-division/country:us/state:wa/place:x/council_district:5")).toBe(
+      "Council Member, District 5",
+    ));
+
+  it("adds nothing for at-large, because the server adds nothing either", () =>
+    // `_division_phrase` returns None for a whole-government division. Saying "At-Large" here
+    // would promise a label `derive_label` never produces.
+    expect(derivedPostLabel("Mayor", "ocd-division/country:us/state:wa/place:x")).toBe("Mayor"));
+
+  it("is empty until a role is chosen", () =>
+    expect(derivedPostLabel("", "ocd-division/country:us/state:wa/place:x/ward:2")).toBe(""));
 });

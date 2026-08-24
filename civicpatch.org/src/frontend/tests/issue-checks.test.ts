@@ -71,14 +71,14 @@ describe("toggleCheck", () => {
 
 describe("resolvedFieldKeys", () => {
   it("names the fields a ticked issue anchors to", () => {
-    const anchored = issue({ code: "duplicate_unique_role", field: "office.name" });
+    const anchored = issue({ code: "duplicate_unique_role", field: "post_id" });
     expect([...resolvedFieldKeys([anchored], toggleCheck({}, anchored))]).toEqual([
-      "office.name",
+      "post_id",
     ]);
   });
 
   it("ignores an unticked issue", () => {
-    const anchored = issue({ field: "office.name" });
+    const anchored = issue({ field: "post_id" });
     expect(resolvedFieldKeys([anchored], {}).size).toBe(0);
   });
 

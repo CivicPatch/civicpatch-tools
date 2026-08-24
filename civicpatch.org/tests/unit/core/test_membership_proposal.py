@@ -21,6 +21,9 @@ _WARD_3 = f"{_BASE}/ward:3"
 def _post(role_id, division_ocdid, *person_ids, label=None):
     return DerivedPost(
         role_id=role_id,
+        # Required, not defaulted: a proposal is what the review card renders, and the whole
+        # reason it carries a label is that a missing one printed the slug.
+        role_label=role_id.replace("-", " ").title(),
         division_ocdid=division_ocdid,
         headcount=len(person_ids),
         members=[

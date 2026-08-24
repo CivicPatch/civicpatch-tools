@@ -7,6 +7,8 @@ import {
     DIVISION_COUNCIL_DISTRICT,
     DIVISION_WARD,
 } from "../edit-people/person-edit-utils.js";
+import { postsHeld } from "../posts-list/posts-model.js";
+import type { PersonMembership } from "../edit-people/person-edit-utils.js";
 
 interface Office {
     name: string;
@@ -14,6 +16,7 @@ interface Office {
 }
 
 interface Person {
+  memberships?: PersonMembership[];
     id: string;
     name: string;
     office?: Office;
@@ -74,7 +77,7 @@ function renderRow(person: Person): TemplateResult {
             <person-image .person=${person} .size=${"4.5rem"}></person-image>
             <div class="people-directory__info">
                 <p class="people-directory__name">${person.name}</p>
-                <p class="people-directory__office">${person.office?.name ?? ""}</p>
+                <p class="people-directory__office">${postsHeld(person.memberships ?? [])}</p>
                 ${renderContact(person)}
             </div>
         </div>

@@ -16,14 +16,15 @@ import {
   renderValues,
   sourceMapFor,
 } from "../review-preview/preview-values.js";
-import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import "../jurisdiction-search/jurisdiction-search.ts";
+import { postsHeld } from "../posts-list/posts-model.js";
+import type { PersonMembership } from "../edit-people/person-edit-utils.js";
 
 const CLOSE_EVENT = "close-jurisdiction";
 
 interface Official {
   name?: string;
-  office?: { name?: string; division_ocdid?: string };
+  memberships?: PersonMembership[];
 }
 
 // Mirrors renderOfficialsCards on the jurisdiction page: same row renderer, same
@@ -35,11 +36,9 @@ const renderOfficials = (people: Official[]) => {
   return html`
     <div class="review-preview__grid">
       ${people.map((person) => {
-        const division =
-          divisionOcdidToFriendly(person.office?.division_ocdid ?? "") || "";
-        const office = [person.office?.name, division]
-          .filter(Boolean)
-          .join(", ");
+        // Post label, then membership label. `office.name` joined every source label with
+        // " - " and a division badge repeated the district, so one post read three times.
+        const office = postsHeld(person.memberships ?? []);
         return renderPersonRow({
           record: person as never,
           name: person.name || "(unnamed)",

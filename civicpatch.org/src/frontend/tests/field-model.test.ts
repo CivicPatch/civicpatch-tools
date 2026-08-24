@@ -138,8 +138,7 @@ describe("multiValueDiff", () => {
 describe("recordsDiffer", () => {
   const base = {
     name: "Maria",
-    office: { name: "Mayor", division_ocdid: null },
-    start_date: "2021",
+        start_date: "2021",
     end_date: "2025",
     emails: ["m@x.gov"],
     phones: [],
@@ -154,10 +153,7 @@ describe("recordsDiffer", () => {
 
   it("is true when a scalar field differs", () => {
     expect(
-      recordsDiffer(base, {
-        ...base,
-        office: { name: "Council", division_ocdid: null },
-      }),
+      recordsDiffer(base, { ...base, start_date: "2030" }),
     ).toBe(true);
   });
 
@@ -283,8 +279,7 @@ describe("changedFields", () => {
   const base = {
     id: "1",
     name: "Maria",
-    office: { name: "Mayor", division_ocdid: null },
-    start_date: "2021",
+        start_date: "2021",
     end_date: "2025",
     emails: ["m@x.gov"],
     phones: [],
@@ -326,14 +321,12 @@ describe("changedFields", () => {
     const added = {
       id: "2",
       name: "Ada",
-      office: { name: "Councilor" },
-      emails: [],
+            emails: [],
       phones: [],
     };
     expect(changedFields(null, added).map((c) => c.field.key)).toEqual([
       "name",
-      "office.name",
-    ]);
+          ]);
   });
 
   it("agrees with recordsDiffer by construction", () => {
@@ -568,8 +561,7 @@ describe("indexIssuesByPersonId", () => {
     code: "duplicate_unique_role",
     message: "Role 'mayor' held by multiple officials",
     person_ids: ["p1", "p2"],
-    field: "office.name",
-  };
+    field: "post_id" };
 
   it("anchors an issue to each person it names", () => {
     const byId = indexIssuesByPersonId([dup]);
@@ -661,11 +653,7 @@ describe("survivingFields", () => {
   const whole = {
     id: "1",
     name: "Maria",
-    office: {
-      name: "Mayor",
-      division_ocdid: "ocd-division/country:us/state:nh/place:concord",
-    },
-    start_date: "2021",
+        start_date: "2021",
     end_date: "2025",
     emails: ["m@x.gov"],
     phones: [],
@@ -695,11 +683,10 @@ describe("survivingFields", () => {
     const issue: Issue = {
       code: "duplicate_unique_role",
       message: "…",
-      field: "office.name",
-    };
+      field: "post_id" };
     const surviving = survivingFields(whole, { ...whole }, [issue]);
     expect(surviving.map((s) => [s.field.key, s.state, s.reason])).toEqual([
-      ["office.name", "same", "issue"],
+      ["post_id", "same", "issue"],
       ["source_urls", "same", "context"],
     ]);
   });
@@ -724,15 +711,10 @@ describe("survivingFields", () => {
     const issue: Issue = {
       code: "duplicate_unique_role",
       message: "…",
-      field: "office.name",
-    };
-    const surviving = survivingFields(
-      whole,
-      { ...whole, office: { ...whole.office, name: "" } },
-      [issue],
-    );
+      field: "post_id" };
+    const surviving = survivingFields(whole, { ...whole }, [issue]);
     expect(surviving.map((s) => [s.field.key, s.reason])).toEqual([
-      ["office.name", "error"],
+      ["post_id", "issue"],
       ["source_urls", "context"],
     ]);
   });
@@ -752,16 +734,11 @@ describe("survivingFields", () => {
     const added = {
       id: "2",
       name: "Tom",
-      office: {
-        name: "Treasurer",
-        division_ocdid: "ocd-division/country:us/state:nh/place:concord",
-      },
-      emails: ["t@x.gov"],
+            emails: ["t@x.gov"],
     };
     expect(keys(survivingFields(null, added))).toEqual([
       "name",
-      "office.name",
-      "emails",
+            "emails",
           "source_urls",
     ]);
   });

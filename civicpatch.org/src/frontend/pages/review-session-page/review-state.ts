@@ -9,6 +9,8 @@
 // snake_case keys cross the hook → page → component boundary and match the API
 // contract (see CLAUDE.md).
 
+import type { ProposedChange } from "../../components/people/person-cards.js";
+
 export const StateKind = {
   LOADING: "loading",
   REVIEWING: "reviewing",
@@ -42,6 +44,7 @@ export type CurrentEntry = {
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
+  changes?: ProposedChange[];
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;

@@ -41,8 +41,6 @@ export interface MergePlan {
   fields: MergeFieldPlan[];
 }
 
-const OFFICE_NAME_SEPARATOR = " - ";
-const OFFICE_NAME_KEY = "office.name";
 
 // Two fields are never a choice. Aliases are what make a merge durable —
 // matching consults them, so the absorbed name resolves to the survivor on the
@@ -113,17 +111,6 @@ function readValue(record: DiffRecord, field: FieldSpec): unknown {
   return getFieldValue(record, field.key);
 }
 
-// Two office names combine by splitting on the separator, deduping the parts and
-// rejoining. Without the dedupe two merged Mayors become "Mayor - Mayor", which
-// _check_duplicate_unique_roles reads back as two holders and flags the merged
-// person as duplicating a role with themselves.
-export function joinOfficeNames(survivor: unknown, candidate: unknown): string {
-  const parts = [String(survivor ?? ""), String(candidate ?? "")]
-    .flatMap((name) => name.split(OFFICE_NAME_SEPARATOR))
-    .map((part) => part.trim())
-    .filter(Boolean);
-  return unique(parts).join(OFFICE_NAME_SEPARATOR);
-}
 
 function valuesMatch(field: FieldSpec, survivor: unknown, candidate: unknown): boolean {
   if (isMulti(field)) {
@@ -139,9 +126,6 @@ function valuesMatch(field: FieldSpec, survivor: unknown, candidate: unknown): b
 function choicesFor(field: FieldSpec): MergeChoiceKey[] {
   if (ALWAYS_UNION.has(field.key)) return [MergeChoice.BOTH];
   if (isMulti(field)) return [MergeChoice.KEEP, MergeChoice.BOTH];
-  if (field.key === OFFICE_NAME_KEY) {
-    return [MergeChoice.KEEP, MergeChoice.REPLACE, MergeChoice.BOTH];
-  }
   return [MergeChoice.KEEP, MergeChoice.REPLACE];
 }
 
@@ -222,8 +206,9 @@ function resolve(entry: MergeFieldPlan): unknown {
   const { field, choice, survivorValue, candidateValue } = entry;
   if (choice === MergeChoice.KEEP) return survivorValue;
   if (choice === MergeChoice.REPLACE) return candidateValue;
-  if (isMulti(field)) return unique([...asList(survivorValue), ...asList(candidateValue)]);
-  return joinOfficeNames(survivorValue, candidateValue);
+  // BOTH is a union. `joinOfficeNames` used to emulate one on the joined office string —
+  // splitting on " - ", deduping, re-joining — which labels being a list now does properly.
+  return unique([...asList(survivorValue), ...asList(candidateValue)]);
 }
 
 // A displaced name is never lost — it becomes an alias, which is what

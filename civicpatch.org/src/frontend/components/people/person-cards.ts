@@ -2,6 +2,7 @@
 // collapse rule. Pure — the editor and useFrozenFields read the same answer.
 
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
+import { postsHeld } from "../posts-list/posts-model.js";
 import {
   FIELD_SCHEMA,
   fieldError,
@@ -47,14 +48,50 @@ export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DEL
 
 // "Council President, Ward 9" — shared by Overview's tiles and the modal's list.
 // Comma, matching the backend's `derive_label`, so a post reads the same everywhere.
+//
+// Three sources, in order of how much they know:
+//   1. the proposal — the only thing that knows a *proposed* person's post, since they hold
+//      no membership yet and the post may not exist
+//   2. their memberships — for a published person, where the post is a fact
+//   3. `office.name` — the labels joined with " - " at ingest, which is what this replaces:
+//      it read "Council Member District 5 - Councilmember District 5, [D5]", two spellings of
+//      one office plus the district a third time
 export function cardSubtitle(
   card: PersonCard,
-  toFriendlyDivision: (ocdid: string) => string,
+  proposedByPersonId?: Map<string, ProposedChange[]>,
 ): string {
+  const proposed = proposedByPersonId?.get(card.personId) ?? [];
+  if (proposed.length) {
+    // `postsHeld` shape, from the derivation rather than from memberships: the person holds
+    // none yet. `role_label`, never `role_id` — a slug is storage, not something to read.
+    return postsHeld(
+      proposed.map((change) => ({
+        post_label: null,
+        label: change.label,
+        role_label: change.role_label,
+        role_id: change.role_id,
+        division_ocdid: change.division_ocdid,
+      })),
+    );
+  }
   const record = personOf(card);
-  const office = record?.office?.name ?? "";
-  const division = toFriendlyDivision(record?.office?.division_ocdid ?? "") || "";
-  return [office, division].filter(Boolean).join(", ");
+  if (record?.memberships?.length) return postsHeld(record.memberships);
+  return record?.office?.name ?? "";
+}
+
+/** The proposals for each person, so a card can look up its own without scanning.
+ *
+ * A list per person, not one change: a person can be proposed onto more than one post, and
+ * keying a plain Map on `person_id` kept only the last of them.
+ */
+export function proposalsByPersonId(
+  changes: ProposedChange[],
+): Map<string, ProposedChange[]> {
+  const byPerson = new Map<string, ProposedChange[]>();
+  for (const change of changes) {
+    byPerson.set(change.person_id, [...(byPerson.get(change.person_id) ?? []), change]);
+  }
+  return byPerson;
 }
 
 // The new side is live; someone the scrape didn't find has only the old side.
@@ -63,6 +100,18 @@ export const personOf = (card: PersonCard) => card.newRecord ?? card.oldRecord;
 export interface CardsResult {
   cards: PersonCard[];
   duplicateIds: string[];
+}
+
+// One person's proposed post, as `core.membership_proposal` computed it. The review card's
+// only source for "which post would this person land in" — they hold no membership yet.
+export interface ProposedChange {
+  person_id: string;
+  disposition: string;
+  role_id: string;
+  // Empty on an absence, which is sourced from a membership rather than from a derived post.
+  role_label: string;
+  division_ocdid: string;
+  label: string | null;
 }
 
 export interface PersonCard {
@@ -212,15 +261,17 @@ export function blockingErrors(cards: PersonCard[]): BlockingError[] {
   return errors;
 }
 
-// Seat order, at-large first — how a published roster reads.
-export function bySeat(cards: PersonCard[], jurisdictionOcdid: string | null | undefined) {
-  const seat = (card: PersonCard) => {
+// Division order, at-large first — how a published roster reads. Not `bySeat`: `seat` is
+// a designation keyword ("Council Seat 3" parses to `seat:3`), so it names a value here,
+// never the thing being sorted.
+export function byDivision(cards: PersonCard[], jurisdictionOcdid: string | null | undefined) {
+  const division = (card: PersonCard) => {
     const division = parseDivision(card.newRecord?.office?.division_ocdid, jurisdictionOcdid);
     if (division.type === DIVISION_AT_LARGE) return -1;
     const value = Number.parseInt(division.value, 10);
     return Number.isNaN(value) ? Number.MAX_SAFE_INTEGER : value;
   };
-  return [...cards].sort((a, b) => seat(a) - seat(b));
+  return [...cards].sort((a, b) => division(a) - division(b));
 }
 
 // ── Reviewer removals, folded into the diff ──────────────────────────────────

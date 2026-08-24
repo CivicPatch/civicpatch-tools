@@ -132,11 +132,23 @@ def with_fallback_url(person: Person) -> Person:
 
 
 def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
-    """Sorted first, because the roster is rendered to a file a human reads and reviews."""
+    """Sorted first, because the roster is rendered to a file a human reads and reviews.
+
+    Carries `labels` as well as `office`, which is the expand half of retiring `Official`.
+    `labels` is what a record actually holds; `office.name` is those labels joined with " - "
+    here and split apart again by every reader — a round trip through a string that loses
+    which label produced what, and reads back as one office named twice.
+
+    `order_official_fields` keeps undeclared keys, so this needs no change to `Official`.
+    Readers move to `labels` one at a time; `office` goes when none are left.
+    """
     kept = [person for person in people if named_like_a_person(person)]
     return [
         order_official_fields(
-            person_to_official(with_fallback_url(person), taxonomy).model_dump()
+            {
+                **person_to_official(with_fallback_url(person), taxonomy).model_dump(),
+                "labels": with_fallback_url(person).labels,
+            }
         )
         for person in sort_people(kept, taxonomy)
     ]

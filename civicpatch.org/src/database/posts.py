@@ -176,6 +176,26 @@ POST_IS_VERIFIED = """(
 )"""
 
 
+async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
+    """The `(role_id, division_ocdid)` of each named post — its identity, and all the
+    derivation needs from a post a human picked.
+
+    Batched: a roster is read at once, and one query per picked person would put the number of
+    round trips in the reviewer's hands.
+    """
+    if not post_ids:
+        return {}
+    await cur.execute(
+        """
+        SELECT id::text, role_id, division_ocdid
+        FROM posts WHERE id::text = ANY(%s)
+        """,
+        (post_ids,),
+    )
+    columns = [column.name for column in cur.description or []]
+    return {row[0]: dict(zip(columns, row)) for row in await cur.fetchall()}
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     """Every post in a jurisdiction.
 

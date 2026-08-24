@@ -6,7 +6,6 @@ import {
   planMerge,
   setChoice,
   applyMergePlan,
-  joinOfficeNames,
   mergeCards,
   MergeChoice,
 } from "../components/review/merge-model.js";
@@ -17,8 +16,7 @@ const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
 const person = (id: string, over: Record<string, unknown> = {}) => ({
   id,
   name: `Person ${id}`,
-  office: { name: "Council Member", division_ocdid: DIVISION },
-  other_names: [],
+    other_names: [],
   emails: [],
   phones: [],
   urls: [],
@@ -104,35 +102,6 @@ describe("planMerge defaults", () => {
     expect(name.choice).toBe(MergeChoice.KEEP);
   });
 
-  it("offers a third option on office name only", () => {
-    const plan = planMerge(existing("a"), added("b"));
-    const office = plan.fields.find((f) => f.field.key === "office.name")!;
-    const emails = plan.fields.find((f) => f.field.key === "emails")!;
-    expect(office.choices).toContain(MergeChoice.BOTH);
-    expect(office.choices).toContain(MergeChoice.REPLACE);
-    expect(emails.choices).not.toContain(MergeChoice.REPLACE);
-  });
-});
-
-describe("joinOfficeNames", () => {
-  // Two merged Mayors becoming "Mayor - Mayor" makes
-  // _check_duplicate_unique_roles read one person as two holders of the role.
-  it("dedupes so a role cannot duplicate itself", () => {
-    expect(joinOfficeNames("Mayor", "Mayor")).toBe("Mayor");
-  });
-
-  it("keeps genuinely different roles, split on the separator", () => {
-    expect(joinOfficeNames("Mayor", "Council Member")).toBe("Mayor - Council Member");
-    expect(joinOfficeNames("Mayor - Clerk", "Clerk")).toBe("Mayor - Clerk");
-  });
-
-  it("drops blanks rather than emitting a dangling separator", () => {
-    expect(joinOfficeNames("Mayor", "")).toBe("Mayor");
-    expect(joinOfficeNames("", "")).toBe("");
-  });
-});
-
-describe("applyMergePlan", () => {
   it("keeps the survivor's id", () => {
     const survivor = existing("a");
     const absorbed = added("b");
@@ -163,18 +132,6 @@ describe("applyMergePlan", () => {
     const merged = applyMergePlan(plan, survivor, absorbed);
     expect(merged.name).toBe("Alma Ruiz-Whitfield");
     expect(merged.other_names).toContain("Alma Ruiz Whitfield");
-  });
-
-  it("joins office names through the dedupe when asked to keep both", () => {
-    const survivor = existing("a", {
-      office: { name: "Mayor", division_ocdid: DIVISION },
-    });
-    const absorbed = added("b", {
-      office: { name: "Mayor", division_ocdid: DIVISION },
-    });
-    const plan = setChoice(planMerge(survivor, absorbed), "office.name", MergeChoice.BOTH);
-    const merged = applyMergePlan(plan, survivor, absorbed);
-    expect(merged.office?.name).toBe("Mayor");
   });
 
   it("drops the stale CDN copy when the photo is replaced", () => {

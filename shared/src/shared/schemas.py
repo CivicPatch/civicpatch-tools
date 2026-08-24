@@ -192,6 +192,13 @@ class Person(BaseModel):
     cdn_image: Optional[str] = None
     source_urls: List[str] = []
     updated_at: Optional[str] = None
+    # The post a human picked for this person, when one did. Never set by the pipeline: a
+    # scrape reports labels and nothing else, and which post those mean is a decision.
+    #
+    # `labels` stays exactly as the source said it. A pick overrides which *post* the person
+    # lands on, and the membership follows from that post — it does not rewrite the evidence,
+    # which is what editing `labels` would have done.
+    post_id: Optional[str] = None
 
 
 class JobConfig(BaseModel):

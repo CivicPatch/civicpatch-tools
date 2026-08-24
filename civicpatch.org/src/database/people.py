@@ -15,19 +15,24 @@ logger = logging.getLogger(__name__)
 # and measured against dev either would have silently reworded ~4,500 people. 78% and 67%
 # respectively — close enough to look right in a spot check.
 #
-# The `data` fallback covers the 68 people with no open membership (retired before 118, mostly).
-# It goes when `data` does.
+# A retired person falls back to the last post they held, so the office does not blank out the
+# day their membership closes. `PERSON_MEMBERSHIPS` deliberately does not do this — "where do
+# they serve" is present tense — but `office` is the one line a card prints, and a councilmember
+# who left in March still reads better as their seat than as nothing.
+#
+# Still open first, then most recent. This replaced a `people.data->'office'` fallback and was
+# the last reader of that column.
 #
 # Unaliased, so a caller cannot be required to spell `people` any particular way.
-PERSON_OFFICE = """COALESCE((
+PERSON_OFFICE = """(
     SELECT jsonb_build_object(
         'name', array_to_string(memberships.source_labels, ' - '),
         'division_ocdid', posts.division_ocdid)
     FROM memberships JOIN posts ON posts.id = memberships.post_id
-    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
-    ORDER BY memberships.first_seen_at DESC
+    WHERE memberships.person_id = people.id
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
     LIMIT 1
-), people.data->'office')"""
+)"""
 
 # Where a person serves, inline. Plural because the schema already allows it: the unique index
 # is one *open* membership per organization, and a jurisdiction can have several bodies. Every
@@ -43,12 +48,26 @@ PERSON_MEMBERSHIPS = """COALESCE((
     SELECT jsonb_agg(jsonb_build_object(
         'post_id', posts.id::text,
         'role_id', posts.role_id,
+        'role_label', roles.label,
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
         'post_label', posts.label,
         'source_labels', to_jsonb(memberships.source_labels)
     ) ORDER BY posts.role_id, posts.division_ocdid)
-    FROM memberships JOIN posts ON posts.id = memberships.post_id
+    FROM memberships
+    JOIN posts ON posts.id = memberships.post_id
+    JOIN roles ON roles.id = posts.role_id
+    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
+), '[]'::jsonb)"""
+
+
+# What the source called this person, as a list. The same words `data_json` carries as
+# `labels` on a proposed record — which is what lets the review card diff the two sides on one
+# key instead of on a string we joined.
+# `source_label`, not `label`: `memberships.label` exists, so the bare alias is ambiguous.
+PERSON_LABELS = """COALESCE((
+    SELECT jsonb_agg(DISTINCT source_label)
+    FROM memberships, unnest(memberships.source_labels) AS source_label
     WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
 ), '[]'::jsonb)"""
 
@@ -72,6 +91,7 @@ PERSON_JSON = f"""jsonb_build_object(
     'end_date', people.end_date,
     'jurisdiction_ocdid', people.jurisdiction_ocdid,
     'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
+    'labels', {PERSON_LABELS},
     'office', {PERSON_OFFICE},
     'memberships', {PERSON_MEMBERSHIPS}
 )"""
@@ -83,6 +103,7 @@ PERSON_JSON = f"""jsonb_build_object(
 _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "people.id::text"),
     "name": ("'name'", "people.name"),
+    "labels": ("'labels'", PERSON_LABELS),
     "office": ("'office'", PERSON_OFFICE),
     "source_urls": ("'source_urls'", "to_jsonb(people.source_urls)"),
     "phones": ("'phones'", "to_jsonb(people.phones)"),
@@ -96,6 +117,9 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
 _RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "elem->>'id'"),
     "name": ("'name'", "elem->>'name'"),
+    # The proposed roster carries `labels` directly since the records flip; `office` is the
+    # joined string it is replacing, still projected while readers move.
+    "labels": ("'labels'", "COALESCE(elem->'labels', '[]'::jsonb)"),
     "office": (
         "'office'",
         "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')",
@@ -109,11 +133,12 @@ _RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "image": ("'image'", "elem->>'image'"),
 }
 
-_QUICK_FIELDS = frozenset({"id", "name", "office", "source_urls"})
+_QUICK_FIELDS = frozenset({"id", "name", "labels", "office", "source_urls"})
 _DETAIL_FIELDS = frozenset(
     {
         "id",
         "name",
+        "labels",
         "office",
         "source_urls",
         "phones",
