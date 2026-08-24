@@ -30,16 +30,16 @@ type ScrapeInProgressProps = {
   temporalUrl: string | null;
 };
 
-// "trigger_github_action · attempt 7, next in 42s · 503 from GitHub" — the shape a stuck run
+// "trigger_github_action, attempt 7, next in 42s — 503 from GitHub" — the shape a stuck run
 // takes. A healthy run is just the activity and its attempt, which is why the retry clause
 // and the failure are appended only when they exist.
 const describeTemporalWorkflow = (state: TemporalWorkflowState): string => {
-  const parts = [`${state.activity ?? "starting"} · attempt ${state.attempt}`];
+  const parts = [`${state.activity ?? "starting"}, attempt ${state.attempt}`];
   if (state.retrying && state.next_retry_seconds != null) {
     parts[0] += `, next in ${state.next_retry_seconds}s`;
   }
   if (state.last_failure) parts.push(state.last_failure);
-  return parts.join(" · ");
+  return parts.join(" — ");
 };
 
 function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onCancel, temporalUrl }: ScrapeInProgressProps) {
@@ -150,7 +150,7 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
           color="var(--pico-info-color)"
         ></civ-status-badge>
         <span class="sip-timing">
-          started ${dateStringToFriendly(scrape.created_at)} ·
+          started ${dateStringToFriendly(scrape.created_at)} —
           running ${durationBetween(scrape.created_at, scrape.updated_at)}
         </span>
       </div>

@@ -49,10 +49,9 @@
 
 
 /* Inputs */
-/* Unified input sizing — shared by scalar inputs, division controls, and multi-value inputs */
+/* Unified input sizing — shared by scalar inputs, selects, and multi-value inputs */
 .field-control__input,
-.field-control__division-select,
-.field-control__division-input,
+.field-control__office,
 .field-control__date-year,
 .field-control__date select {
   width: 100%;
@@ -89,7 +88,7 @@
    the arrow but match the input height. */
 /* The unified rule above pins padding at 0.15rem; selects need more vertical
    room (and right room for the chevron) to match the text inputs visually. */
-.field-control__division-select,
+.field-control__office,
 .field-control__date select {
   padding: 0.48rem 1.5rem 0.48rem 0.4rem;
   background-position: center right 0.5rem;
@@ -224,56 +223,12 @@ span.field-control__input s {
   color: var(--civ-text);
 }
 
-/* Division seat-editor */
-.field-control__division {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  align-items: center;
-}
-
-/* Live OCD-ID for the seat being built — the value actually written on save. */
-/* Always its own line under the control, never sharing one with the district
-   number: a full basis *and* a full width, so neither a short id nor a
-   `display` override from another sheet can put it back on the row above. */
-.field-control__division-preview {
-  flex: 1 0 100%;
-  width: 100%;
-  /* elements.css treats any `small` after a control as helper text and gives it
-     a full --pico-spacing below (and a negative margin above). This is not
-     helper text, it is the control's output, and the trailing margin was
-     opening a gap under every division row. It sets its own spacing. */
-  margin: 0;
-  padding-top: 0.5rem;
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
-  word-break: break-all;
-}
-
-.field-control__division-preview-label {
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  opacity: 0.75;
-}
-
 /* Date — a year box plus optional month/day, since partial dates are the norm */
 .field-control__date {
   display: grid;
   grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.25rem;
 }
-/* `width: auto` undoes the 100% the unified input rule sets: at full width the
-   select fills the row on its own and wraps the district number onto a line of
-   its own, which reads as a broken control rather than one field. */
-.field-control__division-select {
-  flex: 1 1 8rem;
-  width: auto;
-  min-width: 0;
-}
-.field-control__division-input {
-  flex: 0 0 4.5rem;
-}
-
 /* Source URLs */
 .field-control__source-urls {
   display: flex;
@@ -325,8 +280,7 @@ span.field-control__input s {
 :is(.person-editor-list, .review-overview)
   :is(
     .field-control__input,
-    .field-control__division-select,
-    .field-control__division-input,
+    .field-control__office,
     .field-control__date-year,
     .field-control__photo-clear
   ),

@@ -80,7 +80,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
     <div class="pr-row">
       <div class="pr-row__main">
         <span class="pr-row__title">
-          ${number ? `#${number} · ` : ""}${manualEdit ? "Website edit" : "Scrape"} of
+          ${number ? `#${number} — ` : ""}${manualEdit ? "Website edit" : "Scrape"} of
           ${dateStringToFriendly(entry.created_at)}
         </span>
         <span class="pr-row__sub">

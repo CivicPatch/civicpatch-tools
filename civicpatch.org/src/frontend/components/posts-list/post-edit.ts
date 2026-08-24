@@ -1,6 +1,7 @@
 import "./posts-list.css";
 import "../basic/modal.js";
 import { html } from "lit-html";
+import { inputValue } from "../fields/field-controls.js";
 import { component, useState } from "haunted";
 import { updatePost } from "../../api.js";
 import { divisionName, divisionKey } from "./posts-model.js";
@@ -29,9 +30,9 @@ function PostEdit(host: PostEditHost) {
 
   const handleCancel = () => emit(CANCEL_EVENT);
 
-  const handleLabelInput = (e: Event) => setLabel((e.target as HTMLInputElement).value);
+  const handleLabelInput = (e: Event) => setLabel(inputValue(e));
   const handleHeadcountInput = (e: Event) =>
-    setHeadcount((e.target as HTMLInputElement).value);
+    setHeadcount(inputValue(e));
   const handleTrackedChange = (e: Event) =>
     setIsTracked((e.target as HTMLInputElement).checked);
 
@@ -56,15 +57,15 @@ function PostEdit(host: PostEditHost) {
   const fields = html`
     <div class="post-edit">
       <p class="post-edit__subject">
-        ${post?.role_id} · ${divisionName(post?.division_ocdid ?? "")}
+        ${post?.role_id}, ${divisionName(post?.division_ocdid ?? "")}
         <span class="post-edit__key">${divisionKey(post?.division_ocdid ?? "")}</span>
       </p>
       <label class="post-edit__field">
-        <span class="post-edit__label">Label</span>
+        <span class="post-edit__label">Label (optional)</span>
         <input
           type="text"
           .value=${label}
-          placeholder="derived from role and division"
+          placeholder="Position 8"
           @input=${handleLabelInput}
         />
       </label>

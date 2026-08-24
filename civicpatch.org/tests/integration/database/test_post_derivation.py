@@ -72,8 +72,9 @@ async def _seed_person():
             (_OCDID, json.dumps({})),
         )
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, %s)",
-            (person_id, _OCDID, json.dumps({"name": "Test Person"})),
+            "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
+            "VALUES (%s, %s, %s, %s)",
+            (person_id, _OCDID, json.dumps({"name": "Test Person"}), "Test Person"),
         )
         await conn.commit()
     return person_id
@@ -280,8 +281,9 @@ async def test_unmatched_people_share_one_post_per_division():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, %s)",
-            (second := str(uuid.uuid4()), _OCDID, json.dumps({"name": "Other"})),
+            "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
+            "VALUES (%s, %s, %s, %s)",
+            (second := str(uuid.uuid4()), _OCDID, json.dumps({"name": "Other"}), "Other"),
         )
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
@@ -357,7 +359,7 @@ async def test_publish_writes_memberships_for_the_roster():
             role_id="mayor",
             division_ocdid=_BASE,
             headcount=1,
-            members=[DerivedMember(person_id=person_id)],
+            members=[DerivedMember(person_id=person_id, source_labels=["Mayor"])],
         )
     ]
 
@@ -381,8 +383,43 @@ async def test_publish_writes_memberships_for_the_roster():
         assert closed_at is None
         # The Record's own updated_at, not the moment publish ran.
         assert first_seen_at == _T0
+
+        # 134 split ten fields out of `data` and both halves are written until `data` goes.
+        # A row where they disagree is a row where whichever reader you pick decides the
+        # answer — so this asserts the columns, not the dict the row builder produced.
+        await cur.execute(
+            "SELECT name, source_urls, emails, data->>'name' FROM people WHERE id = %s",
+            (person_id,),
+        )
+        name, source_urls, emails, data_name = await cur.fetchone()
+        assert name == "Robert Michaud" == data_name
+        assert source_urls == ["https://example.gov"]
+        assert emails == [], "a person with no emails has none, not NULL"
+
         await cur.execute("DELETE FROM requests WHERE id = %s", (request_id,))
         await conn.commit()
+
+    # `office` is no longer stored — it is rebuilt from the membership publish just wrote.
+    # Asserted through the reader the jurisdiction modal actually calls, because the failure
+    # mode is not an exception: it is a subtitle that silently goes blank.
+    from database.people import get_people_for_jurisdiction
+
+    roster = await get_people_for_jurisdiction(_OCDID, status="active")
+    assert len(roster) == 1
+    office = roster[0].model_extra["office"]
+    assert office["name"] == "Mayor"
+    assert office["division_ocdid"] == _BASE
+
+    # `memberships` is what replaces `office`: plural, because the schema allows a person one
+    # open membership *per organization* and a jurisdiction can have several bodies. Carried
+    # inline so a consumer needs one read, not a join against a second endpoint.
+    memberships_inline = roster[0].model_extra["memberships"]
+    assert len(memberships_inline) == 1
+    held = memberships_inline[0]
+    assert held["role_id"] == "mayor"
+    assert held["division_ocdid"] == _BASE
+    # The source's own words, which is what `office.name` always was.
+    assert held["source_labels"] == ["Mayor"]
 
 
 # --- human writes: create, update, delete ---

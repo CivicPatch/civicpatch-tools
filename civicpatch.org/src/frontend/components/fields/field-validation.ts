@@ -6,7 +6,6 @@
 // than as a failed Publish. Where it differs it is deliberately *stricter*: being
 // stricter costs a typo, being looser costs a failed publish.
 
-import { DISTRICT_TYPES } from "../edit-people/person-edit-utils.js";
 import {
   diffValue,
   getFieldValue,
@@ -61,21 +60,13 @@ export const urlError = (text: string) => {
   return host.includes(".") ? null : `${text} needs a domain, like example.gov`;
 };
 
-// Only the district number is typed — the base comes from the jurisdiction. The
-// type select saves the moment it changes, so picking one and typing nothing
-// leaves a dangling "council_district:" that reads back as a valid selection.
-const divisionError = (text: string) => {
-  const lastSegment = text.split("/").pop() ?? "";
-  const colon = lastSegment.indexOf(":");
-  if (colon === -1) return null;
-  const label = lastSegment.slice(0, colon);
-  if (!DISTRICT_TYPES.includes(label)) return null;
-
-  const name = label.replace("_", " ");
-  const value = lastSegment.slice(colon + 1);
-  if (!value) return `Enter a ${name} number`;
-  return /\s/.test(value) ? `${name} number cannot contain spaces` : null;
-};
+// `divisionError` lived here while a division was typed into its own field. The office field
+// is a select now, so a division can only arrive from a post that already exists, and nothing
+// iterates a key that is not in the schema — the check could never have run.
+//
+// The rule itself is not gone, it moved to where typing still happens: `isDivisionValue` in
+// posts-model guards the add-post and assign forms, and is stricter (a value must be a number,
+// a cardinal direction, or a single letter, so empty and whitespace both fail).
 
 // Per-value format checks, by field. Deliberately permissive: the backend
 // canonicalises and is the authority (shared/schemas.py), so this catches only
@@ -92,7 +83,6 @@ const VALUE_ERRORS: Record<string, (text: string) => string | null> = {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? null : `${text} is not a valid email`,
   urls: urlError,
   source_urls: urlError,
-  "office.division_ocdid": divisionError,
 };
 
 // One value of a field, or null if it is fine. Multi fields call it per row (the

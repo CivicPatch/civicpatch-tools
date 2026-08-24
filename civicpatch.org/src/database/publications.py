@@ -13,7 +13,7 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 from core.post_derivation import DerivedPost
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
-from database.people import people_rows
+from database.people import PERSON_UPSERT, people_rows
 from database.pipeline_runs import run_updated_at
 
 
@@ -71,7 +71,7 @@ async def publish_request(
     because ingest is never fatal, so they may be missing.
     """
     rows = people_rows(people)
-    incoming_ids = [row[0] for row in rows]
+    incoming_ids = [row["id"] for row in rows]
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -103,17 +103,7 @@ async def publish_request(
             )
 
         if rows:
-            await cur.executemany(
-                """
-                INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
-                VALUES (%s, %s, %s, %s, 'active')
-                ON CONFLICT (id) DO UPDATE
-                   SET data = EXCLUDED.data,
-                       updated_at = EXCLUDED.updated_at,
-                       status = 'active'
-                """,
-                rows,
-            )
+            await cur.executemany(PERSON_UPSERT, rows)
 
         # Anyone the roster no longer names has left office. `inactive` rather than deleted,
         # so membership history survives. An empty roster is not treated as "retire everyone" — that is

@@ -97,7 +97,7 @@ function JurisdictionSearch(this: JurisdictionSearchHost) {
         <span>
           <span class="jurisdiction-search__name">${friendlyName(result)}</span>
           <span class="jurisdiction-search__where">
-            ${result.name}${parents ? ` · ${parents}` : ""}
+            ${result.name}${parents ? ` — ${parents}` : ""}
           </span>
         </span>
         <span class="jurisdiction-search__meta">

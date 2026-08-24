@@ -15,6 +15,12 @@ import {
   PART_DIVISION,
   PART_DESIGNATION,
   PART_UNMATCHED,
+  postOptions,
+  selectedPostId,
+  byRole,
+  divisionSelection,
+  isDivisionValue,
+  officeOptions,
 } from "../components/posts-list/posts-model.js";
 import type { Post, Membership } from "../components/posts-list/posts-model.js";
 
@@ -208,8 +214,11 @@ describe("postTitle", () => {
   });
 
   it("falls back to role and division when nobody has named it", () => {
+    // ", " not " · ": this is the fallback for `post_label`, which the backend builds with
+    // `derive_label` ("Council Member, District 3"). A fallback that reads differently from a
+    // real label would make it obvious which posts nobody has named — which is not the point.
     expect(postTitle({ ...base, label: null, post_label: null })).toBe(
-      "council-member · Ward 2",
+      "council-member, Ward 2",
     );
   });
 });
@@ -264,4 +273,183 @@ describe("decompose", () => {
 
     expect(parts).toContainEqual({ kind: PART_DIVISION, value: "At-Large" });
   });
+});
+
+describe("postOptions", () => {
+  it("names an unnamed post by role and division", () => {
+    const [option] = postOptions(
+      [post({ id: "a", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" })],
+      [],
+      ROLE_LABELS,
+    );
+    expect(option.label).toBe("Council Member, Council District 1");
+  });
+
+  it("prefers the name a person gave the post", () => {
+    const [option] = postOptions(
+      [post({ id: "a", role_id: "council-member", label: "Position 8" })],
+      [],
+      ROLE_LABELS,
+    );
+    expect(option.label).toBe("Position 8");
+  });
+
+  it("counts holders and flags a post already at headcount", () => {
+    const [full] = postOptions(
+      [post({ id: "a", role_id: "council-member", _headcount: 2 })],
+      held("a", 2) as never,
+      ROLE_LABELS,
+    );
+    expect(full.held).toBe(2);
+    expect(full.full).toBe(true);
+
+    const [room] = postOptions(
+      [post({ id: "a", role_id: "council-member", _headcount: 3 })],
+      held("a", 2) as never,
+      ROLE_LABELS,
+    );
+    expect(room.full).toBe(false);
+  });
+
+  it("falls back to the role id when the role is unknown", () => {
+    const [option] = postOptions([post({ id: "a", role_id: "dogcatcher" })], [], ROLE_LABELS);
+    expect(option.role_label).toBe("dogcatcher");
+  });
+});
+
+describe("selectedPostId", () => {
+  const options = postOptions(
+    [
+      post({ id: "p1", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" }),
+      post({ id: "p2", role_id: "council-president", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:3" }),
+    ],
+    [],
+    ROLE_LABELS,
+  );
+
+  it("matches on the post key, not on the name", () =>
+    expect(selectedPostId(options, "council-president", "ocd-division/country:us/state:wa/place:x/council_district:3")).toBe("p2"));
+
+  it("returns null when the person is in no post we know", () =>
+    expect(selectedPostId(options, "mayor", "ocd-division/country:us/state:wa/place:x")).toBeNull());
+
+  it("does not match a right role in the wrong division", () =>
+    expect(selectedPostId(options, "council-member", "ocd-division/country:us/state:wa/place:x/council_district:9")).toBeNull());
+});
+
+describe("byRole", () => {
+  const options = postOptions(
+    [
+      post({ id: "a", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" }),
+      post({ id: "b", role_id: "mayor" }),
+      post({ id: "c", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:2" }),
+    ],
+    [],
+    ROLE_LABELS,
+  );
+
+  it("gathers a role's posts under one heading even when they are not adjacent", () => {
+    const groups = byRole(options);
+    expect(groups.map(([label]) => label)).toEqual(["Council Member", "Mayor"]);
+    expect(groups[0][1].map((option) => option.post_id)).toEqual(["a", "c"]);
+  });
+
+  it("keeps the roster's order rather than sorting", () =>
+    expect(byRole(options)[0][0]).toBe("Council Member"));
+});
+
+describe("divisionSelection", () => {
+  it("round-trips what buildDivisionOcdid produced", () => {
+    for (const [designation, value] of [["ward", "3"], ["council_district", "7"]] as const) {
+      const ocdid = buildDivisionOcdid("ocd-jurisdiction/country:us/state:wa/place:x/government", designation, value);
+      expect(divisionSelection(ocdid)).toEqual({ designation, value });
+    }
+  });
+
+  it("reads the jurisdiction's own division as at-large", () =>
+    expect(divisionSelection("ocd-division/country:us/state:wa/place:x")).toEqual({
+      designation: AT_LARGE_DIVISION,
+      value: "",
+    }));
+
+  it("falls back to at-large for a designation the form cannot offer", () => {
+    // Otherwise the select renders blank and Save writes something the form never showed.
+    expect(divisionSelection("ocd-division/country:us/state:wa/place:x/precinct:4")).toEqual({
+      designation: AT_LARGE_DIVISION,
+      value: "",
+    });
+  });
+
+  it("treats a missing division as at-large rather than throwing", () =>
+    expect(divisionSelection(null).designation).toBe(AT_LARGE_DIVISION));
+});
+
+describe("isDivisionValue", () => {
+  it("accepts the three closed sets the parser accepts", () => {
+    for (const value of ["3", "12", "3rd", "North", "southeast", "A", "b"]) {
+      expect(isDivisionValue(value), value).toBe(true);
+    }
+  });
+
+  it("rejects a value carrying whitespace, which is never one token", () => {
+    // The inputs strip whitespace as you type; this is the rule that stripping exists for.
+    expect(isDivisionValue("Ward 3")).toBe(false);
+    expect(isDivisionValue("North West")).toBe(false);
+    // A stray trailing space is not a second token, so it is trimmed rather than refused.
+    expect(isDivisionValue("3 ")).toBe(true);
+  });
+
+  it("rejects anything that would build an id no scrape can produce", () => {
+    // "District Attorney" is the case that made the parser's set closed in the first place —
+    // accepting it published `district:attorney` as a division for a county prosecutor.
+    for (const value of ["", "  ", "Attorney", "North Side", "3B", "downtown"]) {
+      expect(isDivisionValue(value), value).toBe(false);
+    }
+  });
+});
+
+describe("officeOptions", () => {
+  const held = (over: Partial<Membership>): Membership => ({
+    person_id: "p", post_id: "a", person_name: "A", role_id: "council-member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2", label: null, post_label: null,
+    source_labels: ["Councilmember Ward 2"], designations: [], unmatched_text: [],
+    ...over,
+  });
+
+  it("writes what the source said, so publish re-parses back to the same post", () => {
+    // NOT the role's canonical label — that reproduces office.name for only 78% of people.
+    const [option] = officeOptions([held({})]);
+    expect(option.name).toBe("Councilmember Ward 2");
+    expect(option.division_ocdid).toBe("ocd-division/country:us/state:wa/place:x/ward:2");
+  });
+
+  it("joins several source labels the way office_name_to_labels splits them", () => {
+    const [option] = officeOptions([
+      held({ source_labels: ["Councilmember", "Council President"] }),
+    ]);
+    expect(option.name).toBe("Councilmember - Council President");
+  });
+
+  it("shows the post, and the membership label when the source said more", () => {
+    const [plain] = officeOptions([held({ post_label: "Council Member, Ward 2" })]);
+    expect(plain.text).toBe("Council Member, Ward 2");
+
+    const [titled] = officeOptions([
+      held({ post_label: "Council Member, Ward 2", label: "Deputy Mayor Pro Tempore" }),
+    ]);
+    expect(titled.text).toBe("Council Member, Ward 2 — Deputy Mayor Pro Tempore");
+  });
+
+  it("keeps two options when one post was named two different ways", () => {
+    // Deduplicated on what would be written, not on the post: both spellings are real
+    // choices, and collapsing them would silently rewrite one person's provenance.
+    const options = officeOptions([
+      held({ source_labels: ["Councilmember Ward 2"] }),
+      held({ person_id: "q", source_labels: ["Council Member District 2"] }),
+    ]);
+    expect(options).toHaveLength(2);
+  });
+
+  it("drops a membership the source never labelled, which would write an empty office", () =>
+    expect(officeOptions([held({ source_labels: [] })])).toEqual([]));
 });

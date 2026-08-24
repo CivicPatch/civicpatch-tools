@@ -201,6 +201,20 @@ export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
+// PUT, not POST: assigning is idempotent — re-assigning to the post someone already holds
+// only sets the label. The response carries `moved_from` so the caller can say "moved from X"
+// rather than "assigned", since a move leaves a closed membership behind.
+export const assignMembership = async (personId, postId, label = null) => {
+  const res = await fetch(`${API_URL}/api/v1/memberships`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ person_id: personId, post_id: postId, label }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const createPost = async (jurisdictionOcdid, body) => {
   const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
     method: "POST",

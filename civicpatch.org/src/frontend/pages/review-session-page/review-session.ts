@@ -26,6 +26,7 @@ import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
+import { useOfficeOptions } from "../../hooks/use-office-options.js";
 
 type CurrentEntry = {
   request_id: string;
@@ -54,6 +55,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const { progress, hasSession, currentEntry, error, canClosePr, isClosingPr } = host;
   const { jurisdiction, pr, mode, pr_people, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
+  const officeOptions = useOfficeOptions(jurisdictionOcdid);
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
 
@@ -161,6 +163,7 @@ function ReviewSession(host: ReviewSessionHost) {
       dirtyIds,
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
+      officeOptions,
       isExpanded: (id: string) => modalExpanded.has(id),
       onToggleExpand: () => {
         const next = new Set(modalExpanded);

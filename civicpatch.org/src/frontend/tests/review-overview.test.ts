@@ -59,22 +59,16 @@ describe("byRank — what a reviewer sees first", () => {
     expect(ordered).toEqual(["urls", "phones", "emails"]);
   });
 
-  it("ranks office and division ahead of contact details, and both ahead of name", () => {
+  it("ranks the office ahead of contact details, and both ahead of name", () => {
     const ordered = [
       surviving("name"),
       surviving("emails"),
-      surviving("office.division_ocdid"),
       surviving("office.name"),
     ]
       .sort(byRank)
       .map((field) => field.field.key);
 
-    expect(ordered).toEqual([
-      "office.name",
-      "office.division_ocdid",
-      "emails",
-      "name",
-    ]);
+    expect(ordered).toEqual(["office.name", "emails", "name"]);
   });
 
   it("an error on a low-ranked field still outranks a clean high-ranked one", () => {

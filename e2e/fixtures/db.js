@@ -424,8 +424,8 @@ export async function seedE2eFixtures() {
     ]);
     for (const person of reconcileExisting) {
       await client.query(
-        `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-         VALUES ($1, $2, 'active', NOW())`,
+        `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
+         VALUES ($1, $2, $2::jsonb->>'name', 'active', NOW())`,
         [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
@@ -491,8 +491,8 @@ export async function seedE2eFixtures() {
     ]);
     for (const person of buildScaleExisting()) {
       await client.query(
-        `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-         VALUES ($1, $2, 'active', NOW())`,
+        `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
+         VALUES ($1, $2, $2::jsonb->>'name', 'active', NOW())`,
         [SCALE_JURISDICTION_OCDID, JSON.stringify(person)],
       );
     }
@@ -767,8 +767,8 @@ export async function seedE2eFixtures() {
       );
       if (peopleAgeDays !== null) {
         await client.query(
-          `INSERT INTO people (jurisdiction_ocdid, data, status, updated_at)
-           VALUES ($1, '{"name":"E2E Person"}', 'active', NOW() - ($2 || ' days')::interval)`,
+          `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
+           VALUES ($1, '{"name":"E2E Person"}', 'E2E Person', 'active', NOW() - ($2 || ' days')::interval)`,
           [ocdid, peopleAgeDays],
         );
       }

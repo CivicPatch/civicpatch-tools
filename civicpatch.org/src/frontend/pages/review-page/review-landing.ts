@@ -50,7 +50,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
           ` : html`
             <span class="review-page__ready-count">${reviewsReady(stats.available_count ?? 0, dailyGoal, stats.today_resolved ?? 0)}</span>
             <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
-            <span class="review-page__ready-sub">to review · ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
+            <span class="review-page__ready-sub">to review, ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
             ${stats.today_resolved >= effectiveGoal ? html`
               <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
             ` : ""}

@@ -8,7 +8,7 @@
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
-import { divisionOcdidToFriendly } from "../ocdid-utils.js";
+import type { OfficeOption } from "../posts-list/posts-model.js";
 import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   diffValue,
@@ -17,21 +17,13 @@ import {
   type ScalarDiffState,
 } from "./field-model.js";
 import {
-  parseDivision,
-  jurisdictionToDivisionBase,
-  buildDivisionFromBase,
   parseDate,
   serializeDate,
   setDatePart,
   MONTHS,
   DAYS,
   padDatePart,
-  DIVISION_AT_LARGE,
-  DIVISION_OTHER,
-  DIVISION_COUNCIL_DISTRICT,
-  DIVISION_WARD,
   type DateParts,
-  type DivisionType,
 } from "../edit-people/person-edit-utils.js";
 
 export type Save = (updates: Record<string, unknown>) => void;
@@ -94,8 +86,6 @@ export const inputValue = (e: Event) =>
 export function displayScalar(field: FieldSpec, person: PresentRecord): string {
   const value = diffValue(person, field);
   if (!value) return "";
-  if (field.key === "office.division_ocdid")
-    return divisionOcdidToFriendly(value as string) || String(value);
   return String(value);
 }
 
@@ -193,86 +183,55 @@ export function renderDateNewSide(
   `;
 }
 
-export function renderDivisionNewSide(
+// Offices are picked, never typed. A typed office is text the publish parser has to re-read,
+// which is where the role/division guessing goes wrong; an option carries the words that
+// produced a real post, so it resolves back to that post by construction.
+//
+// Sets `name` and `division_ocdid` together — they are one answer, and `Save` takes an object
+// precisely so a control can write more than one field.
+export function renderOfficeNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
   save: Save,
-  jurisdictionOcdid: string | null | undefined,
+  options: OfficeOption[],
   focusRef: FocusRef | null,
 ) {
-  const newOcdid = diffValue(newRecord, field) as string | null | undefined;
-  const division = parseDivision(newOcdid, jurisdictionOcdid);
-  const isOther = division.type === DIVISION_OTHER;
-  const atLarge = division.type === DIVISION_AT_LARGE;
-  // Without a jurisdiction there is no base to derive, so the person's existing
-  // division stands in as one — an edit still appends its district segment.
-  const base = jurisdictionOcdid
-    ? jurisdictionToDivisionBase(jurisdictionOcdid)
-    : (newOcdid ?? "");
-  const rebuild = (type: DivisionType, value: string) =>
-    buildDivisionFromBase(base, type, value);
-  const preview = isOther
-    ? (newOcdid ?? "")
-    : rebuild(division.type, division.value);
+  const current = (diffValue(newRecord, field) as string | null) ?? "";
+  // An office the jurisdiction has no post for yet — a scrape proposed it and nobody has
+  // accepted it. Offered as a disabled option rather than dropped, so the field shows what the
+  // record actually says instead of looking empty.
+  const known = options.some((option) => option.name === current);
   return html`
-    <div class="field-control__division">
-      <select
-        ${attachFocus(focusRef)}
-        class="field-control__division-select"
-        aria-label="Division type"
-        @change=${(e: Event) =>
-          save(
-            buildFieldUpdate(
-              newRecord,
-              field.key,
-              rebuild(inputValue(e) as DivisionType, ""),
-            ),
-          )}
-      >
-        ${isOther
-          ? html`<option value=${DIVISION_OTHER} disabled .selected=${true}>
-              Custom: ${newOcdid}
-            </option>`
-          : ""}
-        <option value=${DIVISION_AT_LARGE} .selected=${atLarge}>
-          At-large (no district)
-        </option>
-        <option
-          value=${DIVISION_COUNCIL_DISTRICT}
-          .selected=${division.type === DIVISION_COUNCIL_DISTRICT}
-        >
-          Council District
-        </option>
-        <option value=${DIVISION_WARD} .selected=${division.type === DIVISION_WARD}>
-          Ward
-        </option>
-      </select>
-      ${atLarge || isOther
-        ? ""
-        : html`<input
-            class="field-control__division-input"
-            type="text"
-            placeholder="Number"
-            aria-label="Division number"
-            .value=${division.value}
-            @input=${(e: Event) =>
-              save(
-                buildFieldUpdate(
-                  newRecord,
-                  field.key,
-                  rebuild(division.type, inputValue(e)),
-                ),
-              )}
-          />`}
-      <!-- Labelled, not bare: on its own line under the select, a raw OCD-ID
-           reads as a stray string rather than as this control's output. -->
-      <small class="field-control__division-preview">
-        <span class="field-control__division-preview-label">saves as</span>
-        ${preview}
-      </small>
-    </div>
+    <select
+      ${attachFocus(focusRef)}
+      class="field-control__office"
+      aria-label=${field.label}
+      @change=${(e: Event) => {
+        const picked = options.find((option) => option.name === inputValue(e));
+        if (!picked) return;
+        save({
+          office: {
+            ...(newRecord?.office ?? {}),
+            name: picked.name,
+            division_ocdid: picked.division_ocdid,
+          },
+        });
+      }}
+    >
+      ${current && !known
+        ? html`<option value=${current} disabled .selected=${true}>
+            ${current} — no post for this yet
+          </option>`
+        : ""}
+      ${options.map(
+        (option) => html`<option value=${option.name} .selected=${option.name === current}>
+          ${option.text}
+        </option>`,
+      )}
+    </select>
   `;
 }
+
 
 // Every multi-value list renders one more row than it holds, and that trailing
 // empty row is how a value gets added — so there is no button, and nothing to

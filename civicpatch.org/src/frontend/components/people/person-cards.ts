@@ -45,7 +45,8 @@ export const STATUS_LABEL: Record<PersonStatusKey, string> = {
 // the banner, not the styling.
 export const DEPARTING = new Set<string>([PersonStatus.REMOVED, PersonStatus.DELETED]);
 
-// "Council President · Ward 9" — shared by Overview's tiles and the modal's list.
+// "Council President, Ward 9" — shared by Overview's tiles and the modal's list.
+// Comma, matching the backend's `derive_label`, so a post reads the same everywhere.
 export function cardSubtitle(
   card: PersonCard,
   toFriendlyDivision: (ocdid: string) => string,
@@ -53,7 +54,7 @@ export function cardSubtitle(
   const record = personOf(card);
   const office = record?.office?.name ?? "";
   const division = toFriendlyDivision(record?.office?.division_ocdid ?? "") || "";
-  return [office, division].filter(Boolean).join(" · ");
+  return [office, division].filter(Boolean).join(", ");
 }
 
 // The new side is live; someone the scrape didn't find has only the old side.

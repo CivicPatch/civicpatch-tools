@@ -31,7 +31,7 @@ function renderCard(
 ) {
   const record = card.newRecord;
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  const office = [record?.office?.name, division].filter(Boolean).join(" · ");
+  const office = [record?.office?.name, division].filter(Boolean).join(", ");
   const name = record?.name || "(unnamed)";
 
   return renderPersonRow({

@@ -7,7 +7,7 @@ import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const FIELDS = [
   { key: "name",                  label: "Name" },
-  { key: "office.name",           label: "Office" },
+  { key: "office.name",           label: "Post" },
   { key: "office.division_ocdid", label: "Division" },
   { key: "phones",                label: "Phones" },
   { key: "emails",                label: "Emails" },

@@ -558,41 +558,6 @@ describe("rowError — duplicates and blanks", () => {
   });
 });
 
-describe("valueError — division", () => {
-  const DIVISION_FIELD: FieldSpec = {
-    key: "office.division_ocdid",
-    label: "Division",
-    type: "text",
-    required: true,
-  };
-  const BASE = "ocd-division/country:us/state:co/place:denver";
-
-  // Changing the type select saves before anything is typed, so this is one
-  // click away — and it reads back as a valid-looking Council District.
-  it("flags a district type with no number", () => {
-    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:`)).toBe(
-      "Enter a council district number",
-    );
-    expect(valueError(DIVISION_FIELD, `${BASE}/ward:`)).toBe("Enter a ward number");
-  });
-
-  it("flags a number with whitespace in it", () => {
-    expect(valueError(DIVISION_FIELD, `${BASE}/ward:Ward 3`)).toBe(
-      "ward number cannot contain spaces",
-    );
-  });
-
-  it("accepts a district number, including a lettered one", () => {
-    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:3`)).toBeNull();
-    expect(valueError(DIVISION_FIELD, `${BASE}/council_district:3a`)).toBeNull();
-  });
-
-  // At-large is the bare base — no district segment to have a value.
-  it("has no opinion about an at-large division", () => {
-    expect(valueError(DIVISION_FIELD, BASE)).toBeNull();
-  });
-});
-
 describe("indexIssuesByPersonId", () => {
   const extra: Issue = {
     code: "new_official",
@@ -796,7 +761,6 @@ describe("survivingFields", () => {
     expect(keys(survivingFields(null, added))).toEqual([
       "name",
       "office.name",
-      "office.division_ocdid",
       "emails",
           "source_urls",
     ]);

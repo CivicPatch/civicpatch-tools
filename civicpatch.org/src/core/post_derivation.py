@@ -93,7 +93,7 @@ def _member(
         unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.get("labels") or [],
         role_ids=_demoted_role_ids(parsed, ids_by_label),
-        label=proposed_membership_label(parsed.get("parts") or [], parsed.get("role")),
+        label=proposed_membership_label(parsed.get("parts") or []),
     )
 
 
