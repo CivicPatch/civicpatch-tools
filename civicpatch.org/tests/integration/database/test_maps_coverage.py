@@ -56,10 +56,10 @@ async def _insert(ocdid, *, scraped_at, people):
         if people:
             await cur.execute(
                 """
-                INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
+                INSERT INTO people (id, jurisdiction_ocdid, name, updated_at, status)
                 VALUES (%s, %s, %s, now(), 'active')
                 """,
-                (str(uuid.uuid4()), ocdid, json.dumps({"name": "x"})),
+                (str(uuid.uuid4()), ocdid, "x"),
             )
         await conn.commit()
 

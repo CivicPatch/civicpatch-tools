@@ -98,8 +98,8 @@ async def _seed() -> tuple[str, str, str]:
             # `name` as well as `data`: since 134 the only production writer
             # (`PERSON_UPSERT`) fills both, so a fixture writing the blob alone is a row shape
             # nothing real produces.
-            "INSERT INTO people (id, jurisdiction_ocdid, data, name) VALUES (%s, %s, %s, %s)",
-            (person_id, _OCDID, json.dumps({"name": "Route Test"}), "Route Test"),
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
+            (person_id, _OCDID, "Route Test"),
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)

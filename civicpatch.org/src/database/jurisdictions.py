@@ -11,6 +11,7 @@ from core.jurisdiction_search import (
     state_jurisdiction_ocdid,
 )
 from database.database import get_pool, to_iso
+from database.people import PERSON_JSON
 from database.freshness import FRESH_SINCE_SQL
 from database.requests import RUN_IN_FLIGHT, REVIEW_STATUS
 from psycopg import sql
@@ -297,11 +298,11 @@ async def get_people_by_geo(lat: float, long: float):
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                """
-                SELECT j.jurisdiction_ocdid, j.data, p.data
+                f"""
+                SELECT j.jurisdiction_ocdid, j.data, {PERSON_JSON}
                 FROM geo g
                 JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
-                JOIN people p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+                JOIN people ON people.jurisdiction_ocdid = j.jurisdiction_ocdid
                 WHERE ST_Intersects(g.geom, ST_SetSRID(ST_Point(%s, %s), 4326))
                 """,
                 (long, lat),

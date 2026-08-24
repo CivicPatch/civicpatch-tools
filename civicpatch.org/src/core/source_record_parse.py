@@ -4,7 +4,7 @@ Pure — taxonomy in, structure out, no I/O — so a parser fix can be replayed 
 diffed against what was stored without touching the database.
 
 `parsed` holds the structured *decision*, not its rendering. `office.name` is already the
-rendering and already lives on `people.data`; storing it again here would duplicate current
+rendering and already lives on the `people` columns; storing it again here would duplicate current
 state instead of recording the thing kept nowhere else: which role won, which division was
 resolved, and which labels resolved to nothing.
 """
