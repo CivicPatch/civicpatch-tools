@@ -37,11 +37,27 @@ def test_changed_field_emits_edit_person():
 
 
 @pytest.mark.unit
-def test_office_is_diffed_by_component():
+def test_office_is_not_diffed_since_the_editor_stopped_writing_it():
+    """The reviewer picks a `post_id` now, so `office` is the same on both sides of every edit
+    and diffing it only ever reported nothing."""
     result = diff_people([_person("1", office_name="Mayor")], [_person("1", office_name="Council Member")])
-    fields = result[0].payload.fields
-    assert [f.field for f in fields] == ["office.name"]
-    assert (fields[0].before, fields[0].after) == ("Mayor", "Council Member")
+    assert result == []
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("field, before, after", [
+    ("image", "https://x.gov/old.png", "https://x.gov/new.png"),
+    ("source_urls", ["https://x.gov/a"], ["https://x.gov/b"]),
+    ("other_names", [], ["J. Doe"]),
+])
+def test_fields_a_reviewer_can_edit_are_diffed(field, before, after):
+    """All three were left out — `image` and `source_urls` as noise, `other_names` never added
+    — from before the reviewer could edit any of them. An edit nobody records is one the feed
+    says did not happen."""
+    result = diff_people([_person("1", **{field: before})], [_person("1", **{field: after})])
+    assert [(f.field, f.before, f.after) for f in result[0].payload.fields] == [
+        (field, before, after)
+    ]
 
 
 # ── add_person ──────────────────────────────────────────────────────────────────
