@@ -11,10 +11,12 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 """
 
 from core.post_derivation import DerivedPost
-from database import divisions, memberships, organizations, posts
+from core.people_patch import values_to_accept, with_stated_values
+from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import PERSON_UPSERT, people_rows
 from database.pipeline_runs import run_updated_at
+from schemas.assertions import Assertion, AssertionKind, EntityType
 
 
 async def record_open_data_url(request_id: str, url: str) -> None:
@@ -51,6 +53,143 @@ async def dismiss_request(
         )
 
 
+async def _refuse_if_superseded(
+    cur, request_id: str, jurisdiction_ocdid: str, last_seen_at
+) -> None:
+    """Refuse a roster older than one already published — a reviewer working an old card did not
+    go and look at the source again."""
+    await cur.execute(
+        """
+        SELECT r.id::text, run.updated_at
+        FROM requests r
+        JOIN pipeline_runs run ON run.request_id = r.id
+        WHERE r.jurisdiction_ocdid = %s
+          AND r.published_at IS NOT NULL
+          AND r.id::text <> %s
+          AND run.updated_at > %s
+        ORDER BY run.updated_at DESC
+        LIMIT 1
+        """,
+        (jurisdiction_ocdid, request_id, last_seen_at),
+    )
+    newer = await cur.fetchone()
+    if newer:
+        raise ValueError(
+            f"Refusing to publish {request_id}: request {newer[0]} already published a "
+            f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
+        )
+
+
+async def _retire_absent(cur, jurisdiction_ocdid: str, incoming_ids: list[str]) -> None:
+    """Anyone the roster no longer names has left office.
+
+    `inactive` rather than deleted, so membership history survives. An empty roster retires
+    nobody — that is a failed scrape, not a dissolved council.
+
+    A person with no id would silently retire nobody: a NULL inside `id != ALL(...)` makes the
+    whole comparison NULL.
+    """
+    if not incoming_ids:
+        return
+    await cur.execute(
+        """
+        UPDATE people SET status = 'inactive'
+        WHERE jurisdiction_ocdid = %s AND id != ALL(%s)
+        """,
+        (jurisdiction_ocdid, incoming_ids),
+    )
+
+
+async def _record_publish(
+    cur, request_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
+) -> None:
+    """Stamp the jurisdiction as scraped and the request as published.
+
+    The FROM-join is a no-op when the request has no pipeline run, so `scraped_at` is never
+    blanked; the COALESCE keeps the first publish's timestamp if one is replayed.
+    """
+    await cur.execute(
+        """
+        UPDATE jurisdictions j SET scraped_at = pr.created_at
+        FROM pipeline_runs pr
+        WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s
+        """,
+        (request_id, jurisdiction_ocdid),
+    )
+    await cur.execute(
+        """
+        UPDATE requests
+           SET published_at = COALESCE(published_at, now()),
+               resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
+         WHERE id = %s
+        """,
+        (resolved_by_user_id, request_id),
+    )
+
+
+async def _bind_memberships(
+    cur,
+    jurisdiction_ocdid: str,
+    derived: list[DerivedPost],
+    incoming_ids: list[str],
+    last_seen_at,
+) -> None:
+    """Put this roster's people in their posts, and close anyone no longer in one.
+
+    Here rather than at ingest because a membership is a binding: a post can be proposed, but
+    who holds it is only true once the scrape is accepted.
+    """
+    organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+    for post in derived:
+        await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
+        post_id = await posts.find_or_create(
+            cur,
+            jurisdiction_ocdid,
+            organization_id,
+            post.role_id,
+            post.division_ocdid,
+            headcount=post.headcount,
+        )
+        for member in post.members:
+            await memberships.upsert(
+                cur,
+                member.person_id,
+                post_id,
+                organization_id,
+                last_seen_at,
+                designations=member.designations,
+                unmatched_text=member.unmatched_text,
+                source_labels=member.source_labels,
+                role_ids=member.role_ids,
+                label=member.label,
+            )
+    await memberships.close_absent(cur, jurisdiction_ocdid, incoming_ids, last_seen_at)
+
+
+async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | None) -> None:
+    """Accept every value in the roster on the publisher's behalf.
+
+    Nothing without a user: an unattended publish read nothing and judged nothing.
+    """
+    if not resolved_by_user_id:
+        return
+    await assertions.upsert_many(
+        cur,
+        [
+            Assertion(
+                entity_type=EntityType.PERSON,
+                entity_id=row["id"],
+                field_path=field,
+                kind=AssertionKind.ACCEPT,
+                value=value,
+            )
+            for row in rows
+            for field, value in values_to_accept(row)
+        ],
+        resolved_by_user_id,
+    )
+
+
 async def publish_request(
     request_id: str,
     jurisdiction_ocdid: str,
@@ -58,119 +197,38 @@ async def publish_request(
     resolved_by_user_id: str | None = None,
     derived: list[DerivedPost] | None = None,
 ) -> int:
-    """Project one scrape's roster onto `people`, stamp the jurisdiction as scraped, and mark
-    the request published.
+    """Project one scrape's roster onto `people`, stamp it published, and bind the memberships.
 
-    Returns the number of people written. Raises rather than swallowing: a publish that cannot
-    record what it published must fail loudly, unlike the submit-time evidence write, where
-    losing evidence is better than losing the submit.
+    One transaction, so "published" and "what was published" cannot disagree; raises rather than
+    swallowing. `last_seen_at` comes from the run, not from now — a scrape sat on for three
+    weeks still read the source when it ran.
 
-    `derived` carries the posts this roster implies. Memberships are written here rather than
-    at ingest because a membership is a binding: a post can be proposed for review, but who
-    holds it is only true once the scrape is accepted. Posts are re-ensured on the way through
-    because ingest is never fatal, so they may be missing.
+    Assertions apply here rather than at ingest, so the scrape stays what the source said.
     """
-    rows = people_rows(people)
-    incoming_ids = [row["id"] for row in rows]
+    incoming_ids = [str(person["id"]) for person in people]
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # `pipeline_runs.updated_at`, not publish time: a scrape sat on for three weeks still
-        # read the source when it ran. Same value orders the guard below and stamps memberships.
         last_seen_at = await run_updated_at(cur, request_id)
+        await _refuse_if_superseded(cur, request_id, jurisdiction_ocdid, last_seen_at)
 
-        # Which scrape read the source more recently — a reviewer editing an old roster did
-        # not go and look again.
-        await cur.execute(
-            """
-            SELECT r.id::text, run.updated_at
-            FROM requests r
-            JOIN pipeline_runs run ON run.request_id = r.id
-            WHERE r.jurisdiction_ocdid = %s
-              AND r.published_at IS NOT NULL
-              AND r.id::text <> %s
-              AND run.updated_at > %s
-            ORDER BY run.updated_at DESC
-            LIMIT 1
-            """,
-            (jurisdiction_ocdid, request_id, last_seen_at),
+        stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
+        rows = people_rows(
+            [
+                with_stated_values(person, stated.get(str(person["id"]), {}))
+                for person in people
+            ]
         )
-        newer = await cur.fetchone()
-        if newer:
-            raise ValueError(
-                f"Refusing to publish {request_id}: request {newer[0]} already published a "
-                f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
-            )
-
         if rows:
             await cur.executemany(PERSON_UPSERT, rows)
 
-        # Anyone the roster no longer names has left office. `inactive` rather than deleted,
-        # so membership history survives. An empty roster is not treated as "retire everyone" — that is
-        # a failed scrape, not a dissolved council.
-        if incoming_ids:
-            await cur.execute(
-                """
-                UPDATE people SET status = 'inactive'
-                WHERE jurisdiction_ocdid = %s AND id != ALL(%s)
-                """,
-                (jurisdiction_ocdid, incoming_ids),
-            )
+        await _accept_published(cur, rows, resolved_by_user_id)
 
-        # Moved verbatim from publish_side_effects. The FROM-join makes it a no-op when the
-        # request has no pipeline run, so scraped_at is never blanked.
-        await cur.execute(
-            """
-            UPDATE jurisdictions j SET scraped_at = pr.created_at
-            FROM pipeline_runs pr
-            WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s
-            """,
-            (request_id, jurisdiction_ocdid),
-        )
-
-        # In the same transaction as the roster: "published" and "what was published" must
-        # never disagree. COALESCE keeps the first publish's timestamp if one is replayed.
-        await cur.execute(
-            """
-            UPDATE requests
-               SET published_at = COALESCE(published_at, now()),
-                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
-             WHERE id = %s
-            """,
-            (resolved_by_user_id, request_id),
-        )
-
+        await _retire_absent(cur, jurisdiction_ocdid, incoming_ids)
+        await _record_publish(cur, request_id, jurisdiction_ocdid, resolved_by_user_id)
         if derived:
-            organization_id = await organizations.find_or_create(
-                cur, jurisdiction_ocdid
-            )
-            for post in derived:
-                await divisions.find_or_create(
-                    cur, post.division_ocdid, jurisdiction_ocdid
-                )
-                post_id = await posts.find_or_create(
-                    cur,
-                    jurisdiction_ocdid,
-                    organization_id,
-                    post.role_id,
-                    post.division_ocdid,
-                    headcount=post.headcount,
-                )
-                for member in post.members:
-                    await memberships.upsert(
-                        cur,
-                        member.person_id,
-                        post_id,
-                        organization_id,
-                        last_seen_at,
-                        designations=member.designations,
-                        unmatched_text=member.unmatched_text,
-                        source_labels=member.source_labels,
-                        role_ids=member.role_ids,
-                        label=member.label,
-                    )
-            await memberships.close_absent(
-                cur, jurisdiction_ocdid, incoming_ids, last_seen_at
+            await _bind_memberships(
+                cur, jurisdiction_ocdid, derived, incoming_ids, last_seen_at
             )
 
     return len(rows)

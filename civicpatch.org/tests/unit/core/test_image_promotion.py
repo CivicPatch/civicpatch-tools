@@ -1,4 +1,4 @@
-"""Unit tests for image_promotion — where a person's photo lives before and after review.
+"""Unit tests for image_upload — where a person's photo lives before and after review.
 
 A scrape's photo is keyed by the run that produced it; publishing re-keys it by jurisdiction
 alone. Dropping `request_id` is the whole point: without it a person's photo URL would change
@@ -10,7 +10,7 @@ import pytest
 # Whichever bucket the environment writes to; the pure function is told, not told to guess.
 ARTIFACTS_BUCKET = "civicpatch-artifacts"
 
-from core.image_promotion import artifacts_key, promoted_key, promoted_url
+from core.image_upload import artifacts_key, promoted_key, promoted_url
 
 _ARTIFACTS_URL = (
     "https://civicpatch-artifacts.civicpatch.org"
@@ -33,7 +33,13 @@ def test_ignores_a_photo_hosted_elsewhere():
 @pytest.mark.unit
 def test_ignores_an_already_promoted_url():
     """Publishing twice must not try to re-promote, or the second copy would 404."""
-    assert artifacts_key("https://cdn.civicpatch.org/open-data/wa/local/x/images/j.jpg", ARTIFACTS_BUCKET) is None
+    assert (
+        artifacts_key(
+            "https://cdn.civicpatch.org/open-data/wa/local/x/images/j.jpg",
+            ARTIFACTS_BUCKET,
+        )
+        is None
+    )
 
 
 @pytest.mark.unit
@@ -72,6 +78,9 @@ def test_a_different_environments_bucket_is_recognised():
     """The bucket is configuration: a nonprod deployment writing to its own bucket must still
     have its own URLs recognised as promotable, or nothing would ever be promoted there."""
     url = "https://civicpatch-artifacts-nonprod.civicpatch.org/req-1/data_source/wa/local/x/images/j.png"
-    assert artifacts_key(url, "civicpatch-artifacts-nonprod") == "req-1/data_source/wa/local/x/images/j.png"
+    assert (
+        artifacts_key(url, "civicpatch-artifacts-nonprod")
+        == "req-1/data_source/wa/local/x/images/j.png"
+    )
     # ...and the production bucket's URLs are not its business.
     assert artifacts_key(url, "civicpatch-artifacts") is None

@@ -158,7 +158,7 @@ async def test_looking_again_refreshes_rather_than_accumulating():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await assertions.list_for_entity(cur, EntityType.POST, post_id)
+        rows = (await assertions.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
 
     assert sorted(row["field_path"] for row in rows) == ["_headcount", "_is_tracked", "label"]
 
@@ -173,7 +173,7 @@ async def test_the_evidence_survives():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await assertions.list_for_entity(cur, EntityType.POST, post_id)
+        rows = (await assertions.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
 
     assert len(rows) == 1
     assert rows[0]["sources"][0]["note"].startswith("phoned the clerk")
@@ -202,8 +202,8 @@ async def test_stating_a_scalar_field_twice_replaces_rather_than_accumulates():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = await assertions.stated_values(cur, EntityType.PERSON, person_id)
-        rows = await assertions.list_for_entity(cur, EntityType.PERSON, person_id)
+        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
+        rows = (await assertions.list_for_entities(cur, EntityType.PERSON, [person_id])).get(person_id, [])
 
     assert stated["name"][AssertionKind.ACCEPT] == ["second@town.gov"]
     assert len(rows) == 1
@@ -231,7 +231,7 @@ async def test_a_list_field_accumulates_one_row_per_element():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = await assertions.stated_values(cur, EntityType.PERSON, person_id)
+        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
 
     assert sorted(stated["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
 
@@ -262,7 +262,7 @@ async def test_withdrawing_stops_the_claim():
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await assertions.stated_values(cur, EntityType.PERSON, person_id) == {}
+        assert (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {}) == {}
 
 
 @pytest.mark.asyncio
@@ -328,7 +328,7 @@ async def test_a_vouch_does_not_stop_the_voucher_deleting_the_post():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         assert await posts.delete_if_unheld(cur, post_id) is True
-        rows = await assertions.list_for_entity(cur, EntityType.POST, post_id)
+        rows = (await assertions.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
         assert rows == []
         await conn.commit()
 

@@ -20,41 +20,38 @@ from shared.utils.statuses import ChangeLogType
 
 
 class PostHasMembers(Exception):
-    """Somebody holds, or once held, this post.
-
-    Refused rather than cascaded: a membership is a person's history, and the FK would refuse
-    anyway — this only turns a 500 into something a reviewer can act on. Acting on it means
-    re-pointing the memberships at another post, which has no UI yet.
-    """
+    """Somebody holds, or once held, this post. Refused rather than cascaded — a membership is
+    a person's history, and re-pointing them is the only way past it."""
 
     def __init__(self, holders: int):
         super().__init__(holders)
         self.holders = holders
 
 
-# The fields on a post a human owns. The derivation sets them once at mint and never again,
-# so a value here is somebody's answer — which is what makes standing behind them meaningful.
+# The fields a human owns. The derivation sets them once at mint and never again.
 _HUMAN_FIELDS = ("label", "_headcount", "_is_tracked")
 
 
-async def _stand_behind(cur, post_id: str, values: dict, user_id: str | None) -> None:
-    """Record that a human stands behind this post's own fields.
+def _fields_to_accept(values: dict) -> list[tuple[str, object]]:
+    """Which of a post's human fields have a value to accept. A `None` label says nothing about
+    the post, and `value` is NOT NULL."""
+    return [
+        (field, value)
+        for field, value in values.items()
+        if field in _HUMAN_FIELDS and value is not None
+    ]
 
-    What makes a hand-made post verified: creating or editing one is somebody saying it exists.
-    A no-op edit says it too — "I looked and it stands" — and since `insert` upserts, saying it
-    again refreshes who and when rather than piling up rows.
 
-    Skipped without a user: `find_or_create` runs on the derivation's path, where nobody is
-    claiming anything and the post should stay unverified until somebody does.
+async def _accept_fields(cur, post_id: str, values: dict, user_id: str | None) -> None:
+    """Accept this post's human fields on somebody's behalf — what makes a hand-made post
+    verified, and what a no-op edit refreshes.
 
-    A `None` label is not asserted. `value` is NOT NULL, and an absent name is not a claim.
+    Skipped without a user: the derivation's path claims nothing, so its posts stay unverified.
     """
     if not user_id:
         return
-    for field, value in values.items():
-        if field not in _HUMAN_FIELDS or value is None:
-            continue
-        await assertions.insert(
+    for field, value in _fields_to_accept(values):
+        await assertions.upsert(
             cur,
             Assertion(
                 entity_type=EntityType.POST,
@@ -175,13 +172,8 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     A post with memberships is history, closed ones included, and stays. The FK would refuse
     anyway; this makes it a 409 rather than a 500.
 
-    Nothing else refuses. Having created a post, edited it, or vouched for it is no reason to
-    be unable to delete it — the person doing so is, in all likelihood, the same person, and
-    they are saying the post should not exist.
-
-    Its assertions go with it. `assertions` has no foreign key, so leaving them would orphan
-    rows pointing at nothing; `change_logs` keeps the record that the post was deleted and by
-    whom.
+    Nothing else refuses: whoever vouched for a post and now wants it gone is the same person.
+    Its assertions go with it, since `assertions` has no foreign key to orphan them by.
     """
     await cur.execute(
         """
@@ -240,21 +232,8 @@ async def get(cur, post_id: str) -> dict | None:
     return dict(zip([c.name for c in cur.description or []], row))
 
 
-# Two ways a post is vouched for.
-#
-# Members: a publish accepted it — true only while memberships are written solely at publish,
-# and deriving at ingest breaks that.
-#
-# An assertion: a human stood behind one of its fields. Creating or editing a post writes them,
-# so a hand-made post is verified by having been made; a no-op edit refreshes them, which is how
-# somebody says "I looked and it stands". This reaches posts no publish can — a vacant seat is
-# real, and a transient's request can be superseded before anyone could publish it — and
-# `sources` carries why, which no column could ("phoned the clerk, there really are five
-# trustees" exists nowhere else).
-#
-# No `created_by` column beside these: `change_logs` already records who added a post, and past
-# that nobody asks. Until 137 this clause matched any `confirm` ever and ignored a later
-# `retract`, so an un-vouched post stayed verified forever.
+# Members mean a publish accepted it; an assertion means a human did. The second reaches posts
+# no publish can — a vacant seat is real, and a superseded request can never be published.
 #
 # Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
 # cannot be required to spell `posts` any particular way.
@@ -406,7 +385,7 @@ async def create(
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
-            await _stand_behind(
+            await _accept_fields(
                 cur, post_id, {"label": label, "_headcount": headcount}, user_id
             )
             await record_change(
@@ -443,7 +422,7 @@ async def update(
             return False
 
         await update_human_fields(cur, post_id, label, headcount, is_tracked)
-        await _stand_behind(
+        await _accept_fields(
             cur,
             post_id,
             {"label": label, "_headcount": headcount, "_is_tracked": is_tracked},

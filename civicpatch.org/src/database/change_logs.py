@@ -4,6 +4,7 @@ from database.change_log_summary import summarize_change_log
 from database.database import get_pool
 from database.requests import REVIEW_STATUS
 from schemas.change_logs import (
+    AssertionChangePayload,
     JurisdictionChangePayload,
     MembershipChangePayload,
     PersonChangePayload,
@@ -87,7 +88,7 @@ async def record_change(
     change_type: ChangeLogType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
-    changes: PostChangePayload | MembershipChangePayload | None = None,
+    changes: PostChangePayload | MembershipChangePayload | AssertionChangePayload | None = None,
 ) -> None:
     """Write a change log on an existing cursor, so it commits with what it describes.
 

@@ -1,11 +1,7 @@
 """A reviewer's edits to a scrape's roster, and making that roster live.
 
-Lifted out of `routers/api/pull_requests.py`, where it did not belong twice over: it is
-orchestration, which lives here, and it touches no pull request — every entry point is keyed on
-`request_id`. That router is on its way out, and this had no reason to go with it.
-
-`data_json` is the roster of record: the reviewer's edits land there and nowhere else, which is
-what keeps that column alive. See `.scratch/2026-08-24-assertions-accept-reject.md`.
+`data_json` is the roster of record: a reviewer's edits land there and nowhere else, which is
+what keeps that column alive.
 """
 
 import logging

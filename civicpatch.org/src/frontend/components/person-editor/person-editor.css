@@ -365,6 +365,14 @@
   color: var(--editor-cleared);
 }
 
+/* Provenance, not attention: it shares the row but must not read as something to act on. */
+.person-editor__provenance {
+  grid-column: 2 / -1;
+  padding-top: 0.15rem;
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+}
+
 .person-editor__issue {
   color: var(--editor-issue);
 }

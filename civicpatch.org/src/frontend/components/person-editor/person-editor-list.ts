@@ -13,6 +13,7 @@ import "./person-editor.css";
 import type { OfficeOption } from "../posts-list/posts-model.js";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonEditor } from "./person-editor.js";
+import type { PersonAssertion } from "./field-provenance.js";
 import {
   proposalsByPersonId,
   type PersonCard,
@@ -31,6 +32,7 @@ interface PersonEditorListProps {
   jurisdictionOcdid: string | null | undefined;
   officeOptions: OfficeOption[];
   changes?: ProposedChange[];
+  assertions?: Record<string, PersonAssertion[]>;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onRemovePerson: (id: string) => void;
   onUnremovePerson: (id: string) => void;
@@ -56,6 +58,7 @@ function PersonEditorList({
   jurisdictionOcdid,
   officeOptions,
   changes,
+  assertions,
   onPersonSave,
   onRemovePerson,
   onUnremovePerson,
@@ -100,6 +103,7 @@ function PersonEditorList({
             jurisdictionOcdid,
             officeOptions,
             proposals,
+            assertions: assertions ?? {},
             isExpanded: (id: string) => expandedIds.has(id),
             onToggleExpand: toggleExpand,
             onPersonSave,

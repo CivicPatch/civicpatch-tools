@@ -10,6 +10,10 @@ import "../person-image.js";
 import "./person-editor.css";
 import type { OfficeOption } from "../posts-list/posts-model.js";
 import {
+  provenanceLabel,
+  type PersonAssertion,
+} from "./field-provenance.js";
+import {
   FIELD_SCHEMA,
   isContextField,
   type DiffRecord,
@@ -53,6 +57,8 @@ export interface PersonEditorProps {
   // "Council President, Ward 9". Passed in rather than read off the record: a proposed person
   // holds no membership yet, and only the proposal knows their post.
   subtitle: string;
+  // The accepts on each of this person's fields, for the per-field tags.
+  accepts: Map<string, PersonAssertion[]>;
   officeOptions: OfficeOption[];
   // Clear-on-edit: once the reviewer touches a card its markers are presumed
   // addressed and drop away. §2.2 refines this to per-field (the *anchored* field
@@ -241,6 +247,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
         ? []
         : issues.filter((issue) => issue.field === field.key).map((issue) => issue.message),
       save: onSave,
+      provenance: provenanceLabel(props.accepts.get(field.key)),
       isReadOnly,
       jurisdictionOcdid,
       officeOptions,

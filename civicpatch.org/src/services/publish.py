@@ -13,7 +13,7 @@ import lib.github.api as github_service
 import lib.storage as storage_service
 import shared.utils.id_utils
 import lib.buckets as buckets
-from core.image_promotion import artifacts_key, promoted_key, promoted_url
+from core.image_upload import artifacts_key, promoted_key, promoted_url
 import services.change_logs as change_logs
 from database.pipeline_runs import get_pipeline_run_data_json
 from database.publications import dismiss_request, publish_request, record_open_data_url

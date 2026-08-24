@@ -1,35 +1,21 @@
-"""Database queries for `assertions` — the field values a human currently stands behind.
+"""Database queries for `assertions` — the field values a human has accepted or rejected.
 
-CURRENT STATE, not a log. Setting a value again overwrites; withdrawing one deletes. It was
-append-only until 137, and that could not express *un-rejecting*: accepting a value you had
-rejected forces it to **be** the value, where unblocking merely lets the scraper decide again.
-Saying that needed a third kind and latest-wins ordering in every reader — and readers forget,
-which is how `POST_IS_VERIFIED` came to treat a retracted confirmation as still confirming.
+Current state, not a log: setting a value again overwrites, withdrawing deletes. `change_logs`
+is the history.
 
-Nothing is lost by that. `change_logs` already records every editable field on both edit paths,
-and assertions are written from edits, so the history is there by construction.
-
-  change_logs  — what happened. Append-only, audit.
-  assertions   — what is claimed now. Mutable, small, one row per live claim.
-
-Two entry points: `insert` on a caller's cursor, `create` owning its own connection. The pair
-exists because a membership label and the assertion protecting it must commit together.
+Two entry points: `upsert` on a caller's cursor, `create` owning its own connection — a label
+edit and the assertion protecting it must commit together.
 """
 
 import json
 
+from core.people_patch import LIST_FIELDS
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
-# The editable fields that hold several values. A list field is a set — `(scraped ∪ accepted) −
-# rejected`, both kinds naming one element — so it can carry many accepts. A scalar has one
-# answer and carries one. Mirrors the two partial unique indexes in 137.
-LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
 
 
-# Which uniqueness rule the row lives under, and therefore what re-stating it means. A scalar
-# accept replaces the one answer; anything keyed by value refreshes that value's row. Same
-# spelling as the two partial indexes in 137 — a mismatch here is an unhandled unique violation.
+# Must match the two partial indexes in 137 exactly; a mismatch is an unhandled unique violation.
 _REPLACES_THE_FIELD = """(entity_type, entity_id, field_path)
     WHERE kind = 'accept'
       AND field_path NOT IN ('other_names', 'phones', 'emails', 'urls', 'source_urls')"""
@@ -39,22 +25,21 @@ _REPLACES_THE_VALUE = """(entity_type, entity_id, field_path, value)
        OR field_path IN ('other_names', 'phones', 'emails', 'urls', 'source_urls')"""
 
 
-async def insert(cur, assertion: Assertion, asserted_by: str) -> str:
-    """State one assertion on a caller's cursor. Returns its id.
-
-    Re-stating what is already claimed is not a second row — it refreshes who stood behind it
-    and when. That is what keeps this table bounded by *distinct values* rather than by publish
-    count: republishing an unchanged roster every week adds nothing after the first pass.
-
-    The cursor variant exists because a human's label edit and the assertion protecting it from
-    the next scrape are one act — landing them in separate transactions would leave a window
-    where the label is set and unprotected.
-    """
-    scalar_accept = (
-        assertion.kind is AssertionKind.ACCEPT
-        and assertion.field_path not in LIST_FIELDS
+def _keyed_by_value(assertion: Assertion) -> bool:
+    """Only a scalar accept replaces the field's one answer; list fields and rejects key on the
+    value."""
+    return (
+        assertion.kind is AssertionKind.REJECT or assertion.field_path in LIST_FIELDS
     )
-    conflict = _REPLACES_THE_FIELD if scalar_accept else _REPLACES_THE_VALUE
+
+
+async def upsert(cur, assertion: Assertion, asserted_by: str) -> str:
+    """Set one assertion on a caller's cursor. Returns its id.
+
+    Re-stating an existing claim refreshes who and when rather than adding a row, which bounds
+    this table by distinct values instead of by publish count.
+    """
+    conflict = _REPLACES_THE_VALUE if _keyed_by_value(assertion) else _REPLACES_THE_FIELD
     await cur.execute(
         f"""
         INSERT INTO assertions
@@ -84,11 +69,9 @@ async def insert(cur, assertion: Assertion, asserted_by: str) -> str:
 
 
 async def withdraw(cur, entity_type: EntityType, entity_id: str, field_path: str) -> int:
-    """Stop standing behind a field. Returns how many rows went.
+    """Stop accepting a field. Returns how many rows went.
 
-    A delete, because there is nothing to say instead: `value` is NOT NULL, so "I withdraw" has
-    no value to carry. Under the old append-only model this needed a third kind whose only job
-    was to cancel a row that could not be removed.
+    A delete: `value` is NOT NULL, so a withdrawal has no value to carry.
     """
     await cur.execute(
         """
@@ -101,61 +84,111 @@ async def withdraw(cur, entity_type: EntityType, entity_id: str, field_path: str
 
 
 async def create(assertion: Assertion, asserted_by: str) -> str:
-    """Append one assertion. Returns its id.
+    """Set one assertion, owning the connection. Returns its id.
 
-    `create`, not `upsert` — `memberships.upsert` opens a row or advances one, while this only
-    ever inserts. Named for the write it performs, per the persistence verbs.
-
-    `asserted_by` is required, unlike `requests.resolved_by_user_id` where NULL means a machine
-    gave up. An assertion nobody made is not an assertion.
+    `asserted_by` is required: an assertion nobody made is not an assertion.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assertion_id = await insert(cur, assertion, asserted_by)
+        assertion_id = await upsert(cur, assertion, asserted_by)
         await conn.commit()
     return assertion_id
 
 
-async def list_for_entity(cur, entity_type: EntityType, entity_id: str) -> list[dict]:
-    """Every assertion about one row, newest first. The reason this is a table."""
+async def upsert_many(
+    cur, assertions: list[Assertion], asserted_by: str
+) -> int:
+    """Set many assertions at once. Returns how many.
+
+    Two statements rather than one per value — a nine-person roster is comfortably eighty. They
+    split by arity because the two uniqueness rules need different conflict targets.
+    """
+    if not assertions:
+        return 0
+    for conflict, keyed_by_value in (
+        (_REPLACES_THE_FIELD, False),
+        (_REPLACES_THE_VALUE, True),
+    ):
+        batch = [
+            (
+                assertion.entity_type.value,
+                assertion.entity_id,
+                assertion.field_path,
+                assertion.kind.value,
+                json.dumps(assertion.value),
+                asserted_by,
+            )
+            for assertion in assertions
+            if _keyed_by_value(assertion) is keyed_by_value
+        ]
+        if not batch:
+            continue
+        await cur.executemany(
+            f"""
+            INSERT INTO assertions
+                (entity_type, entity_id, field_path, kind, value, asserted_by)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON CONFLICT {conflict}
+            DO UPDATE SET value = EXCLUDED.value,
+                          asserted_by = EXCLUDED.asserted_by,
+                          asserted_at = now()
+            """,
+            batch,
+        )
+    return len(assertions)
+
+
+async def list_for_entities(
+    cur, entity_type: EntityType, entity_ids: list[str]
+) -> dict[str, list[dict]]:
+    """Every assertion about these rows, newest first, keyed by entity id.
+
+    Carries who and when, which `stated_values` does not — the editor tags each field with the
+    person behind it.
+    """
+    if not entity_ids:
+        return {}
     await cur.execute(
         """
-        SELECT a.id::text, a.field_path, a.kind, a.value, a.sources,
+        SELECT a.entity_id::text, a.id::text, a.field_path, a.kind, a.value, a.sources,
                a.asserted_at, a.asserted_by::text,
                COALESCE(u.display_name, u.email) AS asserted_by_name
         FROM assertions a
         LEFT JOIN users u ON u.id = a.asserted_by
-        WHERE a.entity_type = %s AND a.entity_id = %s
+        WHERE a.entity_type = %s AND a.entity_id::text = ANY(%s)
         ORDER BY a.asserted_at DESC
         """,
-        (entity_type.value, entity_id),
+        (entity_type.value, entity_ids),
     )
-    columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    columns = [column.name for column in cur.description or []][1:]
+    by_entity: dict[str, list[dict]] = {}
+    for row in await cur.fetchall():
+        by_entity.setdefault(row[0], []).append(dict(zip(columns, row[1:])))
+    return by_entity
 
 
-async def stated_values(cur, entity_type: EntityType, entity_id: str) -> dict[str, dict]:
-    """What a human currently stands behind for this row, as `{field: {"accept": [...],
-    "reject": [...]}}`.
+async def stated_values(
+    cur, entity_type: EntityType, entity_ids: list[str]
+) -> dict[str, dict]:
+    """`{entity_id: {field: {"accept": [...], "reject": [...]}}}` for these rows.
 
-    Both sides in one read: publishing a field needs the accepts and the rejects together —
-    `(scraped ∪ accepted) − rejected` — and fetching them separately would let one arrive
-    without the other.
-
-    Lists, not single values, because a list field carries one row per element. A scalar field
-    has exactly one accept, enforced by index rather than by whoever reads this remembering to
-    take the latest.
+    Both kinds together, because applying them is `(scraped ∪ accepted) − rejected`. A row
+    nobody has judged is absent rather than empty.
     """
+    if not entity_ids:
+        return {}
     await cur.execute(
         """
-        SELECT field_path, kind, value
+        SELECT entity_id::text, field_path, kind, value
         FROM assertions
-        WHERE entity_type = %s AND entity_id = %s
+        WHERE entity_type = %s AND entity_id::text = ANY(%s)
         """,
-        (entity_type.value, entity_id),
+        (entity_type.value, entity_ids),
     )
     stated: dict[str, dict] = {}
-    for field_path, kind, value in await cur.fetchall():
-        by_kind = stated.setdefault(field_path, {AssertionKind.ACCEPT: [], AssertionKind.REJECT: []})
+    for entity_id, field_path, kind, value in await cur.fetchall():
+        by_kind = stated.setdefault(entity_id, {}).setdefault(
+            field_path, {AssertionKind.ACCEPT: [], AssertionKind.REJECT: []}
+        )
         by_kind[kind].append(value)
     return stated
