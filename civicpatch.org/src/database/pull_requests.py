@@ -7,6 +7,7 @@ from shared.utils.statuses import (
 )
 from database.database import get_pool, to_iso
 from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
+from database.review_queue import issue_count, issue_priority
 from lib.github.utils import pull_request_url_to_number
 
 
@@ -35,10 +36,13 @@ async def list_open_pull_requests(
         await cur.execute(
             sql.SQL("""
             SELECT COUNT(*),
-                   COUNT(*) FILTER (WHERE jsonb_array_length(r.review_json->'issues') > 0)
+                   COUNT(*) FILTER (WHERE {count} > 0)
             FROM requests r
             {}
-            """).format(where),
+            """).format(
+                where,
+                count=sql.SQL(issue_count("r.review_json", "r.jurisdiction_ocdid")),
+            ),
             params,
         )
         count_row = await cur.fetchone()
@@ -50,13 +54,15 @@ async def list_open_pull_requests(
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    r.created_at,
-                   COALESCE(jsonb_array_length(r.review_json->'issues'), 0) AS issue_count
+                   {count} AS issue_count
             FROM requests r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             {}
-            ORDER BY jsonb_array_length(r.review_json->'issues') DESC NULLS LAST, r.created_at DESC
+            ORDER BY {priority} DESC, r.created_at DESC
             LIMIT %s OFFSET %s
-            """).format(where, status=sql.SQL(REVIEW_STATUS)),
+            """).format(where, status=sql.SQL(REVIEW_STATUS),
+                        count=sql.SQL(issue_count("r.review_json", "r.jurisdiction_ocdid")),
+                        priority=sql.SQL(issue_priority("r.review_json", "r.jurisdiction_ocdid"))),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()

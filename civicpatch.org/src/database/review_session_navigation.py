@@ -3,6 +3,7 @@ from typing import Any
 
 from database.database import get_pool
 from database.requests import AVAILABLE_FOR_REVIEW
+from database.review_queue import issue_priority
 from database.review_sessions import (
     AdvanceDoneReason,
     ReviewSessionEntryStatus,
@@ -82,7 +83,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
                 AND e.status IN ('claimed', 'saved')
           )
         ORDER BY
-            jsonb_array_length(r.review_json->'issues') DESC NULLS LAST,
+            {issue_priority('r.review_json', 'r.jurisdiction_ocdid')} DESC,
             r.created_at DESC
         LIMIT %s
         """,

@@ -91,29 +91,17 @@ def test_get_pull_requests_with_data_returns_paginated(client):
 
 
 @pytest.mark.unit
-def test_get_pull_request_review_returns_review_data(client):
+def test_get_pull_request_review_returns_the_summary(client):
+    """Thin: the composition of stored and computed issues is the service's, tested there."""
     with patch(
-        "database.pipeline_runs.get_pipeline_run_result",
+        "routers.api.pull_requests.review_summary_for_request",
         new_callable=AsyncMock,
-        return_value={"review_json": {"flagged": [], "notes": "ok"}},
+        return_value={"issues": [{"code": "unverified_post"}]},
     ):
         response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/review")
 
     assert response.status_code == 200
-    assert "data" in response.json()
-
-
-@pytest.mark.unit
-def test_get_pull_request_review_returns_empty_when_no_result(client):
-    with patch(
-        "database.pipeline_runs.get_pipeline_run_result",
-        new_callable=AsyncMock,
-        return_value=None,
-    ):
-        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/review")
-
-    assert response.status_code == 200
-    assert response.json()["data"] == {}
+    assert response.json()["data"]["issues"] == [{"code": "unverified_post"}]
 
 
 @pytest.mark.unit

@@ -8,12 +8,36 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import derived_posts
+from core.post_issues import append_post_issues, unverified_post_issues
 from database import memberships as memberships_db
+from database import posts as posts_db
 from database import requests as requests_db
 from database.database import get_pool
+from database.pipeline_runs import get_pipeline_run_result
 from database.roles import get_roles
-from shared.schemas import Official, RoleConfig
+from shared.schemas import Issue, Official, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
+
+
+async def review_summary_for_request(request_id: str) -> dict:
+    """The stored summary, plus the issues computed from posts.
+
+    Appended at read time rather than written beside the rest: a post nobody has vouched for
+    belongs to the jurisdiction, so it outlives the scrape that minted it and cannot live in
+    that scrape's summary. Dismissing a scrape is not an answer to the post it raised.
+    """
+    result = await get_pipeline_run_result(request_id)
+    if not result:
+        return {}
+    posts = await _unverified_post_issues(result["jurisdiction_ocdid"])
+    return append_post_issues(result.get("review_json") or {}, posts)
+
+
+async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        unverified = await posts_db.unverified_by_jurisdiction(cur, [jurisdiction_ocdid])
+    return unverified_post_issues(unverified[jurisdiction_ocdid])
 
 
 async def proposals_for_requests(

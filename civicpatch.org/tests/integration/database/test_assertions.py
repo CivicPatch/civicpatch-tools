@@ -92,11 +92,17 @@ async def test_confirming_a_post_verifies_it_without_a_publish():
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
         assert rows[0]["_is_verified"] is False
+        # The review queue reads the same fact through a different query. Asserted together
+        # because the screen saying "unverified" while the queue stops asking is the failure
+        # neither test catches alone.
+        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
     await assertions.create(_confirm(post_id), user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
+        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
     assert rows[0]["_is_verified"] is True
 
 

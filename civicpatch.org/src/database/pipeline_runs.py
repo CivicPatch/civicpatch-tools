@@ -323,7 +323,7 @@ async def get_pipeline_run_result(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.data_json, r.review_json FROM requests r
+            SELECT r.data_json, r.review_json, r.jurisdiction_ocdid FROM requests r
             JOIN pipeline_runs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
@@ -332,4 +332,4 @@ async def get_pipeline_run_result(request_id: str):
         row = await cur.fetchone()
     if row is None:
         return None
-    return {"data": row[0], "review_json": row[1]}
+    return {"data": row[0], "review_json": row[1], "jurisdiction_ocdid": row[2]}

@@ -334,12 +334,26 @@ env \
 dir = "civicpatch.org"
 
 [tasks.tcp-integration]
-description = "Start test DB, migrate, run integration tests, tear down"
+description = "Start test DB, migrate, run integration tests. The DB is left up."
+# Deliberately no teardown: `tcp-db-down` drops the volume, so the next run replays every
+# migration. Tests own their cleanup instead — see `_wipe()` and `_cleanup_open_pr`.
+#
+# The cost of that bargain: a test which writes to shared tables and does not clean up leaves
+# residue that fails *other* tests on later runs, looking like a spreading breakage. If results
+# stop making sense, run `tcp-integration-fresh`.
 run = """
 set -e
 mise run tcp-db-up
 mise run tcp-db-migrate
 mise run tcp -- -m integration
+"""
+
+[tasks.tcp-integration-fresh]
+description = "Integration tests against a brand-new database. Slower; use when residue is suspected."
+run = """
+set -e
+mise run tcp-db-down
+mise run tcp-integration
 """
 
 [tasks.typecheck-fe]
