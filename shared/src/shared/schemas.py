@@ -261,6 +261,10 @@ class IssueCode(str, Enum):
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
+    # The exception to the comment above: computed from stored posts at read time, not by a
+    # `_check_*` here, because it is about an office rather than about a person and every
+    # check in this module counts people.
+    UNVERIFIED_POST = "unverified_post"
 
 
 class Issue(BaseModel):

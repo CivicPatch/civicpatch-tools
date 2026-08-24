@@ -34,7 +34,10 @@ import services.review_issue_report as review_issue_report_service
 from core.people_patch import PersonPatch, patch_people, PeopleValidationError
 from core.review_mode import review_mode_for
 import services.pull_request_sync as pr_sync_service
-from services.review_proposal import proposals_for_requests
+from services.review_proposal import (
+    proposals_for_requests,
+    review_summary_for_request,
+)
 from services.publish import (
     dismiss_people,
     promote_images,
@@ -340,8 +343,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        result = await database.pipeline_runs.get_pipeline_run_result(request_id)
-        return {"data": (result or {}).get("review_json") or {}}
+        return {"data": await review_summary_for_request(request_id)}
 
     # -- Pull Requests: Reviewer-filed issues for this request ---
     @router.get("/{request_id}/issues")

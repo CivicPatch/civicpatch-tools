@@ -159,6 +159,23 @@ async def get(cur, post_id: str) -> dict | None:
     return dict(zip([c.name for c in cur.description or []], row))
 
 
+# Two ways a human vouches for a post. Having members means a publish accepted it — true only
+# while memberships are written solely at publish, and deriving at ingest breaks that. An
+# assertion also reaches posts no publish can: a transient's request was superseded, so the
+# guard refuses to publish it.
+#
+# Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
+# cannot be required to spell `posts` any particular way.
+POST_IS_VERIFIED = """(
+    EXISTS (SELECT 1 FROM memberships WHERE memberships.post_id = posts.id)
+    OR EXISTS (
+        SELECT 1 FROM assertions
+        WHERE assertions.entity_type = 'post' AND assertions.entity_id = posts.id
+          AND assertions.field_path IS NULL AND assertions.kind = 'confirm'
+    )
+)"""
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     """Every post in a jurisdiction.
 
@@ -168,28 +185,16 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     does not un-vouch a post.
     """
     await cur.execute(
-        """
+        f"""
         -- `_*` are the fields no civic standard defines: a consumer dropping them is left
         -- with a conforming Post. Stored ones carry the prefix as their column name; only a
         -- computed one like `_is_verified` needs an alias to get it.
-        SELECT p.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
-               p.label, p._headcount, p._is_tracked,
-               -- Two ways a human vouches for a post. Having members means a publish
-               -- accepted it — true only while memberships are written solely at publish, and
-               -- deriving at ingest breaks that. An assertion also reaches posts no publish
-               -- can: a transient's request was superseded, so the guard refuses to publish it.
-               --
-               -- Not as-of filtered: winding the clock back does not un-vouch a post.
-               (count(m.id) > 0 OR EXISTS (
-                   SELECT 1 FROM assertions a
-                   WHERE a.entity_type = 'post' AND a.entity_id = p.id
-                     AND a.field_path IS NULL AND a.kind = 'confirm'
-               )) AS _is_verified
-        FROM posts p
-        LEFT JOIN memberships m ON m.post_id = p.id
-        WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-        GROUP BY p.id
-        ORDER BY p.role_id, p.division_ocdid
+        SELECT posts.id::text, posts.organization_id::text, posts.role_id, posts.division_ocdid,
+               posts.label, posts._headcount, posts._is_tracked,
+               {POST_IS_VERIFIED} AS _is_verified
+        FROM posts
+        WHERE posts.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+        ORDER BY posts.role_id, posts.division_ocdid
         """,
         {"jurisdiction_ocdid": jurisdiction_ocdid},
     )
@@ -197,27 +202,35 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
-async def unseen_since(cur, jurisdiction_ocdid: str, cutoff) -> list[dict]:
-    """Posts a person once endorsed that no scrape has produced since `cutoff`.
+async def unverified_by_jurisdiction(
+    cur, jurisdiction_ocdids: list[str]
+) -> dict[str, list[dict]]:
+    """Posts nobody has vouched for, grouped by jurisdiction.
 
-    The HAVING drops never-endorsed posts: nothing was seen in them, so they cannot have
-    stopped being seen. A post nobody has confirmed is unconfirmed, not absent.
+    A scrape mints a post at ingest; a membership only lands at publish. So an unverified post
+    is an office some scrape asserted exists and no human has answered for — and it stays that
+    way after the scrape that minted it is superseded, which is why it hangs off the
+    jurisdiction rather than off a request.
     """
+    if not jurisdiction_ocdids:
+        return {}
     await cur.execute(
-        """
-        SELECT p.id::text, p.role_id, p.division_ocdid, p.label,
-               max(m.last_seen_at) AS last_seen_at
-        FROM posts p
-        LEFT JOIN memberships m ON m.post_id = p.id
-        WHERE p.jurisdiction_ocdid = %s
-        GROUP BY p.id
-        HAVING max(m.last_seen_at) < %s
-        ORDER BY max(m.last_seen_at)
+        f"""
+        SELECT posts.jurisdiction_ocdid, posts.id::text, posts.role_id,
+               posts.division_ocdid, posts.label, roles.label AS role_label
+        FROM posts
+        JOIN roles ON roles.id = posts.role_id
+        WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
+        ORDER BY posts.role_id, posts.division_ocdid
         """,
-        (jurisdiction_ocdid, cutoff),
+        (jurisdiction_ocdids,),
     )
     columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    grouped: dict[str, list[dict]] = {ocdid: [] for ocdid in jurisdiction_ocdids}
+    for row in await cur.fetchall():
+        post = dict(zip(columns, row))
+        grouped[post.pop("jurisdiction_ocdid")].append(post)
+    return grouped
 
 
 async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:

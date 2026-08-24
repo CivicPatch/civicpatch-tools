@@ -17,6 +17,7 @@ import pytest_asyncio
 
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
+from database.review_queue import issue_count, issue_priority
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"
@@ -213,18 +214,60 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_last_seen_at_is_derived_from_memberships():
-    """The column was dropped from `posts`: a post is produced exactly when somebody parses
-    into it, so the answer is MAX over its memberships."""
+async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
+    """Ingest mints the post; only publish writes the membership. The gap between them is
+    exactly the window in which nobody has answered for the office a scrape invented."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, person_id, post_id, org, _T1)
 
-        assert await posts.unseen_since(cur, _OCDID, _T0) == []
+        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
+
+        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
+    """The card shows stored issues plus unverified posts, so the queue must count both — a
+    badge reading `0 issues` over a card that opens with one is the discrepancy this closes.
+
+    Evaluated against a literal roster rather than an inserted request: the review pool is
+    shared, and a spare request for this jurisdiction would reach unrelated tests.
+    """
+    await _seed_person()  # for the jurisdiction row the organization FK needs
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+
+        await cur.execute(
+            f"SELECT {issue_count('t.j', 't.ocdid')}, {issue_priority('t.j', 't.ocdid')} "
+            "FROM (VALUES (NULL::jsonb, %s)) t(j, ocdid)",
+            (_OCDID,),
+        )
+        count, priority = await cur.fetchone()
+        assert count == 1, "a scrape with no stored issues still has an unanswered post"
+        assert priority > 0, "and it must not sort as though it had nothing to review"
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_jurisdiction_with_no_unverified_posts_still_gets_a_key():
+    """The review queue indexes the result by ocdid. A missing key would be a KeyError on the
+    jurisdictions that are fine, which is most of them."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        assert await posts.unverified_by_jurisdiction(cur, []) == {}
         await conn.rollback()
 
 
