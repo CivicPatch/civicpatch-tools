@@ -1,23 +1,17 @@
 from typing import Any
 
+from core.people_patch import EDITABLE_FIELDS
 from schemas.change_logs import FieldChange, PersonChange, PersonChangePayload
 from shared.utils.statuses import ChangeLogType
 
 
-# The human-meaningful leaf fields we diff, flattened. `id` is the match key; office is
-# split into its components; source_urls/image are excluded as noise.
+# `id` is the match key, not a field. Everything else a reviewer can touch is here, because a
+# field left out is an edit the feed silently never mentions — which is what `office.name` and
+# `office.division_ocdid` became when the editor started writing `post_id` instead, and what
+# `image`, `source_urls` and `other_names` were all along, excluded as noise back when the
+# reviewer could not edit them.
 def _comparable(person: dict) -> dict[str, Any]:
-    office = person.get("office") or {}
-    return {
-        "name": person.get("name"),
-        "office.name": office.get("name"),
-        "office.division_ocdid": office.get("division_ocdid"),
-        "emails": person.get("emails"),
-        "phones": person.get("phones"),
-        "urls": person.get("urls"),
-        "start_date": person.get("start_date"),
-        "end_date": person.get("end_date"),
-    }
+    return {field: person.get(field) for field in EDITABLE_FIELDS}
 
 
 def diff_people(before: list[dict], after: list[dict]) -> list[PersonChange]:

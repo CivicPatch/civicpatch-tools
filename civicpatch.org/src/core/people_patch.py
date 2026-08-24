@@ -3,6 +3,24 @@ from shared.schemas import Official
 from shared.utils.official_fields import order_official_fields
 
 
+# Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
+# field missing here is a field whose edit goes unrecorded.
+#
+# Not `post_id`: where somebody serves is a membership, and its id is a uuid the activity feed
+# would print raw. Not `cdn_image`: publish writes it from `image`.
+EDITABLE_FIELDS = (
+    "name",
+    "other_names",
+    "phones",
+    "emails",
+    "urls",
+    "source_urls",
+    "image",
+    "start_date",
+    "end_date",
+)
+
+
 class PersonPatch(BaseModel):
     # Every person carries a backend-assigned id: existing people from the data they were
     # loaded with, new people from the Add action. The id is the lookup key — if it matches a
