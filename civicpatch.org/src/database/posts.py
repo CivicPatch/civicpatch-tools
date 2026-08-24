@@ -11,11 +11,60 @@ keeps `label` and `headcount` human-owned — there is no update path to lose th
 from core.membership_label import derive_label
 from core.post_derivation import DerivedPost
 from core.post_grouping import group_by_organization
-from database import divisions, organizations, roles
+from database import assertions, divisions, organizations, roles
 from database.change_logs import record_change
 from database.database import get_pool
+from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.change_logs import FieldChange, PostChangePayload
 from shared.utils.statuses import ChangeLogType
+
+
+class PostHasMembers(Exception):
+    """Somebody holds, or once held, this post.
+
+    Refused rather than cascaded: a membership is a person's history, and the FK would refuse
+    anyway — this only turns a 500 into something a reviewer can act on. Acting on it means
+    re-pointing the memberships at another post, which has no UI yet.
+    """
+
+    def __init__(self, holders: int):
+        super().__init__(holders)
+        self.holders = holders
+
+
+# The fields on a post a human owns. The derivation sets them once at mint and never again,
+# so a value here is somebody's answer — which is what makes standing behind them meaningful.
+_HUMAN_FIELDS = ("label", "_headcount", "_is_tracked")
+
+
+async def _stand_behind(cur, post_id: str, values: dict, user_id: str | None) -> None:
+    """Record that a human stands behind this post's own fields.
+
+    What makes a hand-made post verified: creating or editing one is somebody saying it exists.
+    A no-op edit says it too — "I looked and it stands" — and since `insert` upserts, saying it
+    again refreshes who and when rather than piling up rows.
+
+    Skipped without a user: `find_or_create` runs on the derivation's path, where nobody is
+    claiming anything and the post should stay unverified until somebody does.
+
+    A `None` label is not asserted. `value` is NOT NULL, and an absent name is not a claim.
+    """
+    if not user_id:
+        return
+    for field, value in values.items():
+        if field not in _HUMAN_FIELDS or value is None:
+            continue
+        await assertions.insert(
+            cur,
+            Assertion(
+                entity_type=EntityType.POST,
+                entity_id=post_id,
+                field_path=field,
+                kind=AssertionKind.ACCEPT,
+                value=value,
+            ),
+            user_id,
+        )
 
 
 async def create_if_absent(
@@ -102,7 +151,11 @@ async def find_or_create(
 
 
 async def update_human_fields(
-    cur, post_id: str, label: str | None, headcount: int, is_tracked: bool
+    cur,
+    post_id: str,
+    label: str | None,
+    headcount: int,
+    is_tracked: bool,
 ) -> bool:
     """Set the columns a person owns. The only update path to a post.
 
@@ -117,29 +170,57 @@ async def update_human_fields(
 
 
 async def delete_if_unheld(cur, post_id: str) -> bool:
-    """Remove a post nobody has ever held or vouched for. Returns whether it went.
+    """Remove a post nobody has ever held. Returns whether it went.
 
     A post with memberships is history, closed ones included, and stays. The FK would refuse
     anyway; this makes it a 409 rather than a 500.
 
-    A post with assertions is history too, and nothing refuses that on its behalf — `assertions`
-    has no foreign key, so deleting would orphan the rows silently. It would also discard the
-    only copy of why someone vouched for it: "phoned the clerk, there really are five trustees"
-    exists nowhere else, because it came from outside a publish.
+    Nothing else refuses. Having created a post, edited it, or vouched for it is no reason to
+    be unable to delete it — the person doing so is, in all likelihood, the same person, and
+    they are saying the post should not exist.
+
+    Its assertions go with it. `assertions` has no foreign key, so leaving them would orphan
+    rows pointing at nothing; `change_logs` keeps the record that the post was deleted and by
+    whom.
     """
+    await cur.execute(
+        """
+        DELETE FROM assertions
+        WHERE entity_type = 'post' AND entity_id::text = %s
+          AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id::text = %s)
+        """,
+        (post_id, post_id),
+    )
     await cur.execute(
         """
         DELETE FROM posts
         WHERE id::text = %s
           AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id = posts.id)
-          AND NOT EXISTS (
-              SELECT 1 FROM assertions a
-              WHERE a.entity_type = 'post' AND a.entity_id = posts.id
-          )
         """,
         (post_id,),
     )
     return cur.rowcount > 0
+
+
+async def _holder_count(cur, post_id: str) -> int:
+    await cur.execute(
+        "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
+    )
+    return (await cur.fetchone())[0]
+
+
+async def _refuse_if_held(cur, post_id: str) -> None:
+    """Say why a post cannot go, before trying to delete it.
+
+    Only holders refuse. A person's *history* blocks a delete; their *opinion* does not —
+    somebody who vouched for a post and has since decided it is wrong is the very person
+    deleting it, and making them withdraw the vouch first is a step with no way to take it.
+    """
+    await cur.execute(
+        "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
+    )
+    if (await cur.fetchone())[0]:
+        raise PostHasMembers((await _holder_count(cur, post_id)))
 
 
 async def get(cur, post_id: str) -> dict | None:
@@ -159,10 +240,21 @@ async def get(cur, post_id: str) -> dict | None:
     return dict(zip([c.name for c in cur.description or []], row))
 
 
-# Two ways a human vouches for a post. Having members means a publish accepted it — true only
-# while memberships are written solely at publish, and deriving at ingest breaks that. An
-# assertion also reaches posts no publish can: a transient's request was superseded, so the
-# guard refuses to publish it.
+# Two ways a post is vouched for.
+#
+# Members: a publish accepted it — true only while memberships are written solely at publish,
+# and deriving at ingest breaks that.
+#
+# An assertion: a human stood behind one of its fields. Creating or editing a post writes them,
+# so a hand-made post is verified by having been made; a no-op edit refreshes them, which is how
+# somebody says "I looked and it stands". This reaches posts no publish can — a vacant seat is
+# real, and a transient's request can be superseded before anyone could publish it — and
+# `sources` carries why, which no column could ("phoned the clerk, there really are five
+# trustees" exists nowhere else).
+#
+# No `created_by` column beside these: `change_logs` already records who added a post, and past
+# that nobody asks. Until 137 this clause matched any `confirm` ever and ignored a later
+# `retract`, so an un-vouched post stayed verified forever.
 #
 # Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
 # cannot be required to spell `posts` any particular way.
@@ -171,7 +263,6 @@ POST_IS_VERIFIED = """(
     OR EXISTS (
         SELECT 1 FROM assertions
         WHERE assertions.entity_type = 'post' AND assertions.entity_id = posts.id
-          AND assertions.field_path IS NULL AND assertions.kind = 'confirm'
     )
 )"""
 
@@ -315,6 +406,9 @@ async def create(
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
+            await _stand_behind(
+                cur, post_id, {"label": label, "_headcount": headcount}, user_id
+            )
             await record_change(
                 cur,
                 ChangeLogType.ADD_POST,
@@ -349,6 +443,12 @@ async def update(
             return False
 
         await update_human_fields(cur, post_id, label, headcount, is_tracked)
+        await _stand_behind(
+            cur,
+            post_id,
+            {"label": label, "_headcount": headcount, "_is_tracked": is_tracked},
+            user_id,
+        )
         await record_change(
             cur,
             ChangeLogType.EDIT_POST,
@@ -374,7 +474,11 @@ async def update(
 
 
 async def delete(post_id: str, user_id: str | None = None) -> bool:
-    """Remove a post nobody has held. False means it has members, or does not exist.
+    """Remove a post nobody has held. False means it does not exist.
+
+    Raises rather than returning False when something holds it, so the caller can say which of
+    the two happened — "no such post" and "five people hold this" want different words, and one
+    of them tells a reviewer what to do next.
 
     Read first: once the row is gone there is nothing left to describe it with, and a log
     saying only "a post was deleted" is not worth writing.
@@ -382,7 +486,10 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         before = await get(cur, post_id)
-        if before is None or not await delete_if_unheld(cur, post_id):
+        if before is None:
+            return False
+        await _refuse_if_held(cur, post_id)
+        if not await delete_if_unheld(cur, post_id):
             return False
 
         await record_change(

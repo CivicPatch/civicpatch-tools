@@ -19,20 +19,18 @@ class EntityType(StrEnum):
 
 
 class AssertionKind(StrEnum):
-    """What the human did.
+    """What the human did. Verbs, to match.
 
-    Not inferable from `value`: NULL there already means "deliberately empty" — a human
-    asserting the clerk has no email — so a correction to nothing and a confirmation are
-    indistinguishable without this.
+    Neither is a button. `accept` is written at publish for each non-null value the reviewer
+    saw, `reject` when they remove one — which is what retired `confirm`, a valueless kind that
+    existed so somebody could say "I looked".
     """
 
-    # "You got it right, I checked." No value.
-    CONFIRM = "confirm"
-    # "You got it wrong, here is the right value."
-    CORRECT = "correct"
-    # "I asserted this earlier and I was wrong." The log is append-only, so a mistake is
-    # retracted by a later row, never by deleting the first.
-    RETRACT = "retract"
+    # "This value stands." One per scalar field; one per element on a list field.
+    ACCEPT = "accept"
+    # "Never this value." Suppresses that value only, so the scraper keeps looking and a
+    # genuinely new answer still reaches review.
+    REJECT = "reject"
 
 
 class Source(BaseModel):
@@ -46,12 +44,13 @@ class Source(BaseModel):
 class Assertion(BaseModel):
     """One thing a human said about one row, at one moment.
 
-    `field_path` NULL means the entity itself rather than one of its fields.
+    Always about one field, and always carrying a value: a claim about the row itself has no
+    field to name, and vouching for a post is now recorded on the post.
     """
 
     entity_type: EntityType
     entity_id: str
-    field_path: str | None = None
+    field_path: str
     kind: AssertionKind
-    value: Any | None = None
+    value: Any
     sources: list[Source] = []

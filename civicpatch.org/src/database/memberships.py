@@ -26,7 +26,7 @@ from shared.utils.statuses import ChangeLogType
 LABEL_FIELD = "label"
 
 LABEL_IS_HUMAN_SET = f"""COALESCE((
-    SELECT assertions.kind = 'correct'
+    SELECT assertions.kind = 'accept'
     FROM assertions
     WHERE assertions.entity_type = 'membership'
       AND assertions.entity_id = memberships.id
@@ -336,17 +336,22 @@ async def _assert_label(
 ) -> None:
     """Record that a human set this label, so the next scrape leaves it alone.
 
-    Clearing retracts rather than correcting to nothing: `value` NULL already means
-    "deliberately empty" on an assertion, so a correction would freeze the blank instead of
-    handing the label back to the derivation, which is what clearing it asks for.
+    Clearing withdraws instead of storing a blank. **This changed with 137**: it used to
+    retract, handing the name back to the derivation. It now means the label is empty, and
+    stays empty, because a withdrawal and an assertion of nothing are the same row once `value`
+    is NOT NULL — and of the two readings, "the human wanted it blank" is the one their action
+    actually expressed.
     """
+    if label is None:
+        await assertions.withdraw(cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD)
+        return
     await assertions.insert(
         cur,
         Assertion(
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
             field_path=LABEL_FIELD,
-            kind=AssertionKind.CORRECT if label is not None else AssertionKind.RETRACT,
+            kind=AssertionKind.ACCEPT,
             value=label,
         ),
         user_id,

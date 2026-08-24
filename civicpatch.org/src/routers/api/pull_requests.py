@@ -31,7 +31,8 @@ import database.users
 import lib.github.api as github_service
 import services.change_logs as change_logs
 import services.review_issue_report as review_issue_report_service
-from core.people_patch import PersonPatch, patch_people, PeopleValidationError
+from core.people_patch import PersonPatch, PeopleValidationError
+import services.roster_edits as roster_edits
 from core.review_mode import review_mode_for
 import services.pull_request_sync as pr_sync_service
 from services.review_proposal import (
@@ -100,57 +101,12 @@ class ErrorResponse(BaseModel):
 MISSING_ROSTER_DETAIL = "This scrape has no recorded roster. Re-sync it before reviewing."
 
 
-async def _commit_people_patch(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    data: List[PersonPatch],
-    user: Identity,
-) -> List[dict]:
-    """Apply the reviewer's edits to the scrape's stored roster."""
-    # `data_json` is the base now that edits no longer go to a PR branch. It carries prior
-    # edits for the same reason the branch used to: every save writes back to it.
-    base = await database.pipeline_runs.get_pipeline_run_data_json(request_id)
-    # Patches are sparse, so patching against a missing base does not fail — it writes each
-    # person reduced to the fields the reviewer happened to touch. Refuse instead.
-    if not base:
-        raise HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
-    try:
-        patched = patch_people(base, data)
-    except PeopleValidationError as exc:
-        raise HTTPException(status_code=422, detail=exc.failures)
-
-    # Awaited, not backgrounded: this was a background task while the branch write was the
-    # authoritative one. It is the only store now, so a 200 must mean the edit is persisted.
-    await database.pipeline_runs.update_pipeline_run_data(request_id, patched)
-    if user.user_id:
-        await change_logs.record_manual_edits(
-            request_id, jurisdiction_ocdid, user.user_id, base, patched
-        )
-    return patched
-
-
-async def _publish_roster(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    edited: List[dict] | None,
-    resolved_by_user_id: str | None,
-) -> None:
-    """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
-    published without editing, the submitted roster stands."""
-    roster = edited
-    if roster is None:
-        roster = await database.pipeline_runs.get_pipeline_run_data_json(request_id)
-    # Publishing an empty roster retires every person in the jurisdiction. That was unreachable
-    # while the review pool required an open PR; the request is the only record now.
-    if not roster:
-        raise HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
-    # Photos promote with the data: publishing is what moves them off the artifacts bucket.
-    await publish_people(
-        request_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
-    )
-    # The scrape leaves the unreviewed path for the canonical one. Queued, so a slow or failed
-    # GitHub write cannot affect a publish that has already committed.
-    await promote_to_reviewed(request_id, jurisdiction_ocdid)
+# The service raises what went wrong; the status code is this layer's business. `patch_people`
+# raises `PeopleValidationError` straight through — a 422 carrying which fields failed.
+def _http_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, PeopleValidationError):
+        return HTTPException(status_code=422, detail=exc.failures)
+    return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
 
 
 # ──────────────────────────────────────────────
@@ -414,9 +370,12 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.AUTHENTICATED)
         ),
     ):
-        await _commit_people_patch(
-            request.request_id, request.jurisdiction_ocdid, request.data, user
-        )
+        try:
+            await roster_edits.save(
+                request.request_id, request.jurisdiction_ocdid, request.data, user
+            )
+        except (roster_edits.MissingRoster, PeopleValidationError) as exc:
+            raise _http_error(exc)
         # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
         # held by its session (see _allocate_next_review) and returns to the pool
         # when that session is released.
@@ -433,20 +392,23 @@ def get_router(api_key_header):
         ),
     ):
         edited = None
-        if request.data:
-            edited = await _commit_people_patch(
-                request.request_id, request.jurisdiction_ocdid, request.data, user
+        try:
+            if request.data:
+                edited = await roster_edits.save(
+                    request.request_id, request.jurisdiction_ocdid, request.data, user
+                )
+
+            if not user.user_id:
+                raise HTTPException(status_code=401, detail="User ID not available")
+
+            # Publishing is a database write, so it is synchronous: a 200 means the roster is
+            # live and `published_at` is stamped. The open-data commit is queued behind it and
+            # retries on its own — git is the projection, not the record.
+            await roster_edits.publish(
+                request.request_id, request.jurisdiction_ocdid, edited, user.user_id
             )
-
-        if not user.user_id:
-            raise HTTPException(status_code=401, detail="User ID not available")
-
-        # Publishing is a database write, so it is synchronous: a 200 means the roster is live
-        # and `published_at` is stamped. The open-data commit is queued behind it and retries
-        # on its own — git is the projection, not the record.
-        await _publish_roster(
-            request.request_id, request.jurisdiction_ocdid, edited, user.user_id
-        )
+        except (roster_edits.MissingRoster, PeopleValidationError) as exc:
+            raise _http_error(exc)
         await review_session_entries_db.resolve_entries_for_request(request.request_id)
         return {"status": "published"}
 
@@ -486,7 +448,10 @@ def get_router(api_key_header):
         jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
         if jurisdiction_ocdid:
-            await _publish_roster(request_id, jurisdiction_ocdid, None, user_id)
+            try:
+                await roster_edits.publish(request_id, jurisdiction_ocdid, None, user_id)
+            except roster_edits.MissingRoster as exc:
+                raise _http_error(exc)
         await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
         return {"status": "success"}
 
