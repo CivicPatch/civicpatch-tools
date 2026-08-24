@@ -83,7 +83,17 @@ erDiagram
     people {
         uuid            id                  PK
         text            jurisdiction_ocdid  FK  "idx"
-        jsonb           data                "canonical Official JSONB blob"
+        jsonb           data                "134: being retired into the columns below; still authoritative until every reader moves"
+        text_null       name                "134: nullable only during the transition; NOT NULL arrives with the contract migration"
+        text_array      other_names         "134"
+        text_array      phones              "134"
+        text_array      emails              "134"
+        text_array      urls                "134"
+        text_array      source_urls         "134"
+        text_null       image               "134"
+        text_null       cdn_image           "134"
+        text_null       start_date          "134: text, not date — sources give partial dates and Popolo allows them"
+        text_null       end_date            "134"
         text_null       status              "check: active|inactive, default: active. inactive = no longer named by the latest roster; kept, never deleted, so seat history survives"
         timestamptz_null updated_at         "from the record's own updated_at — data, not a publish time" 
     }
