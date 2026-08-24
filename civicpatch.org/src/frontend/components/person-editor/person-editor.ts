@@ -19,7 +19,6 @@ import {
 } from "../fields/field-model.js";
 import { focusedKey } from "./editor-focus.js";
 import { withDisplayImage, type FieldFocus, type Save } from "../fields/field-controls.js";
-import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { renderEditorField } from "./editor-field.js";
 import {
   DEPARTING,
@@ -51,6 +50,9 @@ export interface PersonEditorProps {
   issues: Issue[];
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
+  // "Council President, Ward 9". Passed in rather than read off the record: a proposed person
+  // holds no membership yet, and only the proposal knows their post.
+  subtitle: string;
   officeOptions: OfficeOption[];
   // Clear-on-edit: once the reviewer touches a card its markers are presumed
   // addressed and drop away. §2.2 refines this to per-field (the *anchored* field
@@ -90,11 +92,9 @@ export interface PersonEditorProps {
 const PHOTO_SIZE = "7.5rem";
 
 function renderIdentity(props: PersonEditorProps) {
-  const { status, oldRecord, newRecord } = props;
+  const { status, oldRecord, newRecord, subtitle } = props;
   const record = newRecord ?? oldRecord;
   const name = record?.name || "(unnamed)";
-  const office = record?.office?.name ?? "";
-  const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
 
   return html`
     <div class="person-editor__identity">
@@ -103,9 +103,7 @@ function renderIdentity(props: PersonEditorProps) {
         .size=${PHOTO_SIZE}
       ></person-image>
       <div class="person-editor__name">${name}</div>
-      <div class="person-editor__office">
-        ${[office, division].filter(Boolean).join(", ") || nothing}
-      </div>
+      <div class="person-editor__office">${subtitle || nothing}</div>
     </div>
   `;
 }
@@ -261,10 +259,8 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
 // It stays in slot order and stays expandable, so §5's one ungrouped list is
 // intact — it just stops spending a card on people with nothing to say.
 function renderStrip(props: PersonEditorProps) {
-  const { status, oldRecord, newRecord, onToggleExpand } = props;
+  const { status, oldRecord, newRecord, onToggleExpand, subtitle } = props;
   const record = newRecord ?? oldRecord;
-  const office = record?.office?.name ?? "";
-  const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
   return html`
     <div class="person-editor person-editor--strip person-editor--${status}">
       <person-image
@@ -272,9 +268,7 @@ function renderStrip(props: PersonEditorProps) {
         .size=${"2.75rem"}
       ></person-image>
       <span class="person-editor__name">${record?.name || "(unnamed)"}</span>
-      <span class="person-editor__office">
-        ${[office, division].filter(Boolean).join(", ") || nothing}
-      </span>
+      <span class="person-editor__office">${subtitle || nothing}</span>
       <span class="person-editor__status">${STATUS_LABEL[status]}</span>
       <button class="person-editor__expander" @click=${onToggleExpand}>Show fields</button>
     </div>

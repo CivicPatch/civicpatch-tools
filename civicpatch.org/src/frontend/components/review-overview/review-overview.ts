@@ -14,7 +14,7 @@ import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
-  cardSubtitle,
+  postsFor,
   proposalsByPersonId,
   type ProposedChange,
   DEPARTING,
@@ -123,7 +123,7 @@ function renderRow(
   return renderPersonRow({
     record: personOf(card),
     name: personOf(card)?.name || "(unnamed)",
-    subtitle: cardSubtitle(card, proposals) || "",
+    subtitle: postsFor(card, proposals) || "",
     ariaLabel: rowLabel(card),
     onOpen: () => props.onOpenPerson(card.personId, firstField),
     modifier: card.status,
@@ -161,7 +161,7 @@ function renderFold(
           <span class="review-fold__name">${record?.name || "(unnamed)"}</span>
           <span class="review-fold__meta">
             <span class="review-fold__sub"
-              >${cardSubtitle(card, proposals) || nothing}</span
+              >${postsFor(card, proposals) || nothing}</span
             >
             ${renderAttention(card)}
           </span>

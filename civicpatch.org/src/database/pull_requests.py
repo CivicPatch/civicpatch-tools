@@ -106,8 +106,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
                 "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[2]),
                 "website_url": row[4],
             },
-            # `review_state` and `number` are gone: the first never had a writer, and the
-            # second no longer identifies anything — publishing is keyed on the request.
+            # `number` no longer identifies anything — publishing is keyed on the request.
             "pr": {
                 "url": row[0],
                 "status": row[1],
@@ -236,20 +235,6 @@ async def clear_merge_enqueued(request_id: str) -> None:
             WHERE request_id::text = %s;
             """,
             (request_id,),
-        )
-
-
-async def update_pipeline_run_pull_request_review_state(request_id: str, review_state: str | None):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE pull_requests
-            SET review_state = %s,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE request_id = %s;
-            """,
-            (review_state, request_id),
         )
 
 

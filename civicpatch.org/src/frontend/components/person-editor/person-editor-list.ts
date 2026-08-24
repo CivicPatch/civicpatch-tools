@@ -13,7 +13,11 @@ import "./person-editor.css";
 import type { OfficeOption } from "../posts-list/posts-model.js";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonEditor } from "./person-editor.js";
-import { type PersonCard } from "../people/person-cards.js";
+import {
+  proposalsByPersonId,
+  type PersonCard,
+  type ProposedChange,
+} from "../people/person-cards.js";
 import { personEditorPropsFor } from "./editor-props.js";
 
 interface PersonEditorListProps {
@@ -26,6 +30,7 @@ interface PersonEditorListProps {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   officeOptions: OfficeOption[];
+  changes?: ProposedChange[];
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onRemovePerson: (id: string) => void;
   onUnremovePerson: (id: string) => void;
@@ -50,6 +55,7 @@ function PersonEditorList({
   isReadOnly,
   jurisdictionOcdid,
   officeOptions,
+  changes,
   onPersonSave,
   onRemovePerson,
   onUnremovePerson,
@@ -81,6 +87,8 @@ function PersonEditorList({
     </div>`;
   }
 
+  const proposals = proposalsByPersonId(changes ?? []);
+
   return html`
     <div class="person-editor-list">
       ${cards.map((card) =>
@@ -91,6 +99,7 @@ function PersonEditorList({
             isReadOnly,
             jurisdictionOcdid,
             officeOptions,
+            proposals,
             isExpanded: (id: string) => expandedIds.has(id),
             onToggleExpand: toggleExpand,
             onPersonSave,

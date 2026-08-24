@@ -1,15 +1,13 @@
 export const PERSON_FIELDS = {
-  single: ["name", "image", "cdn_image", "start_date", "end_date", "updated_at"],
+  // `post_id` is the post a reviewer picked. A scalar like any other here, so a merge takes
+  // the first non-empty and a survivor with no pick inherits one instead of losing it.
+  single: ["name", "post_id", "image", "cdn_image", "start_date", "end_date", "updated_at"],
   array:  ["other_names", "phones", "emails", "urls", "source_urls"],
-  object: ["office"],
 };
 
 // `id` is tracked so re-identifying a person (linking to an existing record)
 // marks the row dirty and gets submitted, even with no other edits.
-export const TRACKED_FIELDS = [
-  // The post a reviewer picked. Without it the pick never marks the person dirty and never
-  // reaches the patch — the edit looks saved and is discarded.
-  "post_id","id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array, ...PERSON_FIELDS.object];
+export const TRACKED_FIELDS = ["id", ...PERSON_FIELDS.single, ...PERSON_FIELDS.array];
 
 // Which fields a person has had edited, as field keys. Derived on read from
 // (current, baseline) rather than stamped onto the record, so it cannot go stale.
@@ -51,14 +49,6 @@ export function mergeFields(survivor, absorbed) {
   const absorbedNames = absorbed.map(p => p.name).filter(Boolean);
   merged.other_names = Array.from(new Set([...merged.other_names, ...absorbedNames]))
     .filter(n => n !== merged.name);
-
-  const allOfficeNameParts = all
-    .flatMap(p => (p.office?.name || "").split(" - ").map(s => s.trim()))
-    .filter(Boolean);
-  const dedupedOfficeNames = Array.from(new Set(allOfficeNameParts));
-  if (dedupedOfficeNames.length > 0) {
-    merged.office = { ...(merged.office || {}), name: dedupedOfficeNames.join(" - ") };
-  }
 
   return { ...merged, _selected: false };
 }

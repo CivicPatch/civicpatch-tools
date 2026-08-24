@@ -73,7 +73,6 @@ erDiagram
         int             pr_number
         text_null       url
         text            status              "idx. Scrape rows are historical as of 115 — publish state lives on requests now. Jurisdiction-edit requests are the only lifecycle still writing here."
-        text_null       review_state        "no writer, ever — the bot verdict was never persisted"
         timestamptz_null merged_at
         timestamptz_null merge_enqueued_at   "set at merge enqueue; cleared on settle"
         timestamptz     created_at

@@ -10,8 +10,6 @@ import {
 } from "../components/people/person-cards.js";
 import { isContextField, type Issue } from "../components/fields/field-model.js";
 
-const DIVISION = "ocd-division/country:us/state:nh/place:concord/ward:1";
-
 // Division is required, so a record without one surfaces an `error` on every
 // card and drowns out what each test is actually asserting. Real records always
 // carry one — resolve_division is typed `-> str` and always returns a division.
@@ -304,12 +302,17 @@ describe("byDivision", () => {
   const ward = (n: number) => `${AT_LARGE}/ward:${n}`;
   const JURIS = "ocd-jurisdiction/country:us/state:nh/place:concord/government";
 
+  // The division belongs to the post; a membership row carries it because the read joins it in.
+  const serving = (division_ocdid: string) => ({
+    memberships: [{ division_ocdid }],
+  });
+
   it("puts at-large first, then wards in numeric order", () => {
     const cards = build({
       currentPeople: [
-        person("w10", { office: { division_ocdid: ward(10) } }),
-        person("w2", { office: { division_ocdid: ward(2) } }),
-        person("mayor", { office: { division_ocdid: AT_LARGE } }),
+        person("w10", serving(ward(10))),
+        person("w2", serving(ward(2))),
+        person("mayor", serving(AT_LARGE)),
       ],
     });
     // Numeric, not lexical — ward 2 before ward 10.

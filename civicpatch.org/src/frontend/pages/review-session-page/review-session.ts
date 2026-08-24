@@ -23,7 +23,7 @@ import {
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview } from "../../components/people/person-cards.js";
+import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview, proposalsByPersonId } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 import { useOfficeOptions } from "../../hooks/use-office-options.js";
@@ -166,6 +166,7 @@ function ReviewSession(host: ReviewSessionHost) {
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
       officeOptions,
+      proposals: proposalsByPersonId(changes ?? []),
       isExpanded: (id: string) => modalExpanded.has(id),
       onToggleExpand: () => {
         const next = new Set(modalExpanded);
@@ -329,6 +330,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .dirtyIds=${dirtyIds}
             .isReadOnly=${is_read_only}
             .jurisdictionOcdid=${jurisdictionOcdid}
+            .changes=${changes}
             .onPersonSave=${handlePersonSave}
             .onRemovePerson=${handleRemovePerson}
             .onUnremovePerson=${handleUnremove}

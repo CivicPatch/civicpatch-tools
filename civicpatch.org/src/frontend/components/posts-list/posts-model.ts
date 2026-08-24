@@ -388,6 +388,15 @@ export function postsHeld(
     .join("; ");
 }
 
+/** The division of the post a person holds — theirs only through the post.
+ *
+ * Singular where `memberships` is plural: every caller puts a person in exactly one bucket, so
+ * somebody has to pick, and the first post is the pick.
+ */
+export function divisionOf(memberships: { division_ocdid: string }[]): string {
+  return memberships[0]?.division_ocdid ?? "";
+}
+
 /** The same memberships, gathered under the person instead of the post.
  *
  * One person can hold posts in several bodies, so this is a real regrouping rather than a
