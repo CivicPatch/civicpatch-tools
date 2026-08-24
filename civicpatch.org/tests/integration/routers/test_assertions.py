@@ -17,6 +17,7 @@ from fastapi.testclient import TestClient
 from database import assertions, divisions, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
+from schemas.assertions import AssertionKind
 from routers.api import assertions as assertions_router
 from schemas.assertions import EntityType
 from schemas.common import Identity
@@ -101,9 +102,13 @@ async def _seed() -> str:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_confirming_a_post_makes_it_read_verified(client):
+async def test_vouching_for_a_post_makes_it_read_verified(client):
     """The whole point of the endpoint: a curator vouches for an office nobody has published,
-    and the roster says so. Previously only a publish could make this true."""
+    and the roster says so. Previously only a publish could make this true.
+
+    An ordinary field assertion since 137 — "there really are five trustees" is a claim about
+    `_headcount`. Vouching has no shape of its own, which is how it outlived `confirm`.
+    """
     post_id = await _seed()
 
     response = client.post(
@@ -111,7 +116,9 @@ async def test_confirming_a_post_makes_it_read_verified(client):
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "kind": "confirm",
+            "field_path": "_headcount",
+            "value": 5,
+            "kind": "accept",
             "sources": [{"note": "phoned the clerk"}],
         },
     )
@@ -125,9 +132,9 @@ async def test_confirming_a_post_makes_it_read_verified(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_correction_carries_its_value_across_the_wire(client):
-    """`value` is jsonb, so it survives as a typed value rather than a string — the merge that
-    applies it needs the real type, not its rendering."""
+async def test_an_accepted_value_carries_its_type_across_the_wire(client):
+    """`value` is jsonb, so it survives as a typed value rather than a string — the publish
+    merge that applies it needs the real type, not its rendering."""
     await _seed()
     person_id = str(uuid.uuid4())
 
@@ -136,17 +143,17 @@ async def test_a_correction_carries_its_value_across_the_wire(client):
         json={
             "entity_type": "person",
             "entity_id": person_id,
-            "field_path": "email",
-            "kind": "correct",
-            "value": "clerk@town.gov",
+            "field_path": "name",
+            "kind": "accept",
+            "value": "Jane Q. Clerk",
         },
     )
 
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        current = await assertions.current_corrections(cur, EntityType.PERSON, person_id)
-    assert current == {"email": "clerk@town.gov"}
+        stated = await assertions.stated_values(cur, EntityType.PERSON, person_id)
+    assert stated["name"][AssertionKind.ACCEPT] == ["Jane Q. Clerk"]
 
 
 @pytest.mark.asyncio
@@ -157,7 +164,13 @@ async def test_an_unknown_kind_is_rejected_by_the_model(client):
 
     response = client.post(
         _PREFIX,
-        json={"entity_type": "post", "entity_id": post_id, "kind": "vouchsafe"},
+        json={
+            "entity_type": "post",
+            "entity_id": post_id,
+            "field_path": "_headcount",
+            "value": 5,
+            "kind": "vouchsafe",
+        },
     )
 
     assert response.status_code == 422, response.text
@@ -173,7 +186,14 @@ async def test_an_unattributable_assertion_is_refused(client):
     _USER_ID = None
 
     response = client.post(
-        _PREFIX, json={"entity_type": "post", "entity_id": post_id, "kind": "confirm"}
+        _PREFIX,
+        json={
+            "entity_type": "post",
+            "entity_id": post_id,
+            "field_path": "_headcount",
+            "value": 5,
+            "kind": "accept",
+        },
     )
 
     assert response.status_code == 401, response.text

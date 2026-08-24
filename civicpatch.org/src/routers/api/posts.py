@@ -58,12 +58,24 @@ def get_router() -> APIRouter:
         ),
     ):
         """Remove a post nobody has ever held — what is deletable is exactly what no person
-        has endorsed."""
-        if not await posts.delete(post_id, user.user_id):
+        has endorsed.
+
+        Members are never deleted along with it. A membership is somebody's history, and the
+        only way past this is to move them to another post first.
+        """
+        try:
+            deleted = await posts.delete(post_id, user.user_id)
+        except posts.PostHasMembers as exc:
+            people = "person holds" if exc.holders == 1 else "people hold"
             return JSONResponse(
-                {"error": "No such post, or it has members and is history."},
+                {
+                    "error": f"{exc.holders} {people} this post, so deleting it would erase "
+                    f"their history. Move them to another post first."
+                },
                 status_code=409,
             )
+        if not deleted:
+            return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
 
     @router.get("/{jurisdiction_ocdid:path}")

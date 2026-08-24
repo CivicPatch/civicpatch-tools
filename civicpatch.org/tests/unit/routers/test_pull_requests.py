@@ -152,8 +152,8 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     """`data_json` is the only copy of the roster now. Publishing a request that never
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
-        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=None),
     ):
@@ -194,8 +194,8 @@ def test_publish_returns_200_and_queues_no_merge(client):
     before the response, so there is nothing for the caller to poll."""
     with (
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
-        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
@@ -231,8 +231,8 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
-        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
-        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock),
+        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
@@ -703,8 +703,8 @@ def test_publish_allows_default_role():
     client = _client_as(_user_at(UserRole.DEFAULT))
     with (
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
-        patch("routers.api.pull_requests.publish_people", new_callable=AsyncMock),
-        patch("routers.api.pull_requests.promote_to_reviewed", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock),
+        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(

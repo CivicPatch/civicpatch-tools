@@ -538,7 +538,7 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
             field_path=memberships.LABEL_FIELD,
-            kind=AssertionKind.CORRECT,
+            kind=AssertionKind.ACCEPT,
             value=label,
         ),
         curator_id,
