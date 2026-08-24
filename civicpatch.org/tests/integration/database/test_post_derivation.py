@@ -15,12 +15,14 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from database import divisions, memberships, organizations, posts
+from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.review_queue import issue_count, issue_priority
+from schemas.assertions import Assertion, AssertionKind, EntityType
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"
+_CURATOR = "zz-post-derivation-curator@example.com"
 _WARD_3 = f"{_BASE}/ward:3"
 
 _T0 = datetime.datetime(2026, 3, 11, tzinfo=datetime.timezone.utc)
@@ -48,6 +50,15 @@ async def _wipe():
         # `source_records` and `pipeline_runs` cascade from the request.
         await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
+        # The curator, and the assertions pointing at them. `asserted_by` is a FK, so the user
+        # cannot go first — and `assertions` has none to memberships, so its rows outlive the
+        # memberships they describe and would otherwise accumulate across runs.
+        await cur.execute(
+            "DELETE FROM assertions WHERE asserted_by IN "
+            "(SELECT id FROM users WHERE email = %s)",
+            (_CURATOR,),
+        )
+        await cur.execute("DELETE FROM users WHERE email = %s", (_CURATOR,))
         await conn.commit()
 
 
@@ -505,11 +516,39 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
         await conn.rollback()
 
 
+async def _human_sets_label(cur, membership_id: str, label: str) -> None:
+    """What `assign` does: set the label and assert it, in one transaction.
+
+    Called instead of `update_label` alone because a bare update is no longer a human edit —
+    it leaves nothing on the row saying a person chose this, and the next scrape re-derives it.
+    """
+    # A real user: `assertions.asserted_by` is a foreign key, so an assertion cannot exist
+    # without somebody to have made it.
+    await cur.execute(
+        "INSERT INTO users (email, provider, provider_user_id, role) "
+        "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
+        (_CURATOR, _CURATOR),
+    )
+    curator_id = (await cur.fetchone())[0]
+
+    await memberships.update_label(cur, membership_id, label)
+    await assertions.insert(
+        cur,
+        Assertion(
+            entity_type=EntityType.MEMBERSHIP,
+            entity_id=membership_id,
+            field_path=memberships.LABEL_FIELD,
+            kind=AssertionKind.CORRECT,
+            value=label,
+        ),
+        curator_id,
+    )
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_human_label_survives_a_re_scrape():
-    """The only human-owned field on a membership. Protected by being absent from `upsert`'s
-    ON CONFLICT SET — the derived parts beside it are overwritten every publish."""
+async def test_an_asserted_label_survives_a_re_scrape():
+    """The only human-owned field on a membership, and only once a human has claimed it."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -520,7 +559,7 @@ async def test_a_human_label_survives_a_re_scrape():
         membership_id = await memberships.upsert(
             cur, person_id, post_id, org, _T0, designations=["Position 8"]
         )
-        assert await memberships.update_label(cur, membership_id, "Councilmember Pos. 8") is True
+        await _human_sets_label(cur, membership_id, "Councilmember Pos. 8")
 
         # A later scrape of the same seat, with the designation parsed differently.
         await memberships.upsert(
@@ -614,9 +653,12 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_scrape_seeds_the_membership_label_but_never_overwrites_one():
-    """`label` is in the INSERT and not the DO UPDATE SET. That omission is the only thing
-    protecting a curator's edit, and no unit test can see it — it takes two real upserts."""
+async def test_a_scrape_reworded_by_nobody_is_re_derived():
+    """The other half of the rule, and the reason the guard is conditional.
+
+    `label` used to be absent from the DO UPDATE SET entirely, which protected a curator's
+    edit and also froze every label nobody had touched — so no parser improvement could ever
+    reach a membership that already existed. Takes two real upserts to see."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -630,11 +672,10 @@ async def test_a_scrape_seeds_the_membership_label_but_never_overwrites_one():
         await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
         assert (await cur.fetchone())[0] == "Commissioner Of Public Safety"
 
-        await memberships.update_label(cur, first, "Public Safety Commissioner")
-
-        # The next scrape derives the same proposal and must lose to the human.
+        # A later scrape whose parser words it better. Nobody has asserted anything, so the
+        # improvement lands.
         again = await memberships.upsert(
-            cur, person_id, post_id, org, _T1, label="Commissioner Of Public Safety"
+            cur, person_id, post_id, org, _T1, label="Public Safety Commissioner"
         )
         assert again == first
 
@@ -643,7 +684,6 @@ async def test_a_scrape_seeds_the_membership_label_but_never_overwrites_one():
         )
         label, last_seen_at = await cur.fetchone()
         assert label == "Public Safety Commissioner"
-        # The rest of the row still advances — protection is per-column, not a skipped write.
         assert last_seen_at == _T1
         await conn.rollback()
 

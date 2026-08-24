@@ -15,11 +15,26 @@ gone, not when they went.
 
 from datetime import date, datetime, timezone
 
-from database import posts
+from database import assertions, posts
 from database.change_logs import record_change
 from database.database import get_pool
+from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.change_logs import MembershipChangePayload
 from shared.utils.statuses import ChangeLogType
+
+# The field a human can own, named once: it is compared in SQL below and asserted in Python.
+LABEL_FIELD = "label"
+
+LABEL_IS_HUMAN_SET = f"""COALESCE((
+    SELECT assertions.kind = 'correct'
+    FROM assertions
+    WHERE assertions.entity_type = 'membership'
+      AND assertions.entity_id = memberships.id
+      AND assertions.field_path = '{LABEL_FIELD}'
+    ORDER BY assertions.asserted_at DESC
+    LIMIT 1
+), false)"""
+
 
 class UnknownPost(Exception):
     """The post id does not exist."""
@@ -67,7 +82,7 @@ async def upsert(
     )
 
     await cur.execute(
-        """
+        f"""
         INSERT INTO memberships
             (post_id, organization_id, person_id, designations, unmatched_text,
              source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
@@ -79,7 +94,9 @@ async def upsert(
             unmatched_text = EXCLUDED.unmatched_text,
             source_labels = EXCLUDED.source_labels,
             start_date = EXCLUDED.start_date,
-            end_date = EXCLUDED.end_date
+            end_date = EXCLUDED.end_date,
+            label = CASE WHEN {LABEL_IS_HUMAN_SET}
+                         THEN memberships.label ELSE EXCLUDED.label END
         RETURNING id::text
         """,
         (
@@ -314,6 +331,28 @@ async def _person_name(cur, person_id: str) -> str:
     return (row[0] if row else None) or person_id
 
 
+async def _assert_label(
+    cur, membership_id: str, label: str | None, user_id: str
+) -> None:
+    """Record that a human set this label, so the next scrape leaves it alone.
+
+    Clearing retracts rather than correcting to nothing: `value` NULL already means
+    "deliberately empty" on an assertion, so a correction would freeze the blank instead of
+    handing the label back to the derivation, which is what clearing it asks for.
+    """
+    await assertions.insert(
+        cur,
+        Assertion(
+            entity_type=EntityType.MEMBERSHIP,
+            entity_id=membership_id,
+            field_path=LABEL_FIELD,
+            kind=AssertionKind.CORRECT if label is not None else AssertionKind.RETRACT,
+            value=label,
+        ),
+        user_id,
+    )
+
+
 async def assign(
     person_id: str, post_id: str, label: str | None, user_id: str | None = None
 ) -> dict:
@@ -340,6 +379,8 @@ async def assign(
 
         if current and current["post_id"] == post_id:
             await update_label(cur, current["id"], label)
+            if user_id:
+                await _assert_label(cur, current["id"], label, user_id)
             result = {"membership_id": current["id"], "moved_from": None}
         else:
             membership_id = await upsert(
@@ -347,6 +388,8 @@ async def assign(
             )
             if label is not None:
                 await update_label(cur, membership_id, label)
+                if user_id:
+                    await _assert_label(cur, membership_id, label, user_id)
             result = {
                 "membership_id": membership_id,
                 "moved_from": current["post_id"] if current else None,

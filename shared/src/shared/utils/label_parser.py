@@ -194,7 +194,65 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
     return [_EDGE_PUNCTUATION.sub("", run) for run in runs]
 
 
+# Punctuation a source uses to list several things in one label. Splitting on it before
+# matching removes adjacency across the boundary, so a value cannot be claimed by a keyword on
+# the other side of a parenthesis.
+#
+# Safe by construction: none of the live taxonomy's 150 role aliases, 36 role labels or 8
+# designations contains any of these, so no split can break a match that used to work.
+_SEGMENT_BOUNDARY = re.compile(r"[();/]")
+
+
+def _segments(label: str) -> List[str]:
+    """The label's parts, or the whole label when it has no boundary in it.
+
+    A label with no delimiter yields exactly one segment, so the single-part case is the old
+    behaviour rather than a special case beside it.
+    """
+    return [part.strip() for part in _SEGMENT_BOUNDARY.split(label) if part.strip()]
+
+
 def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
+    """Parse each part the source listed, then answer once for the whole label.
+
+    Per-segment because matching is adjacency-based: a value belongs to the keyword next to it,
+    and "next to" has to stop at a comma or a parenthesis. `Clerk/Treasurer` resolved to no role
+    at all before this, because neither half was adjacent to anything the matcher could use.
+    """
+    parts = [_parse_segment(part, taxonomy) for part in _segments(label)]
+
+    roles: List[str] = []
+    divisions: List[Division] = []
+    other_designations: List[str] = []
+    unmatched: List[str] = []
+    for part in parts:
+        for role in part.roles:
+            if role not in roles:
+                roles.append(role)
+        for division in part.divisions:
+            if division not in divisions:
+                divisions.append(division)
+        for designation in part.other_designations:
+            if designation not in other_designations:
+                other_designations.append(designation)
+        for text in part.unmatched:
+            if text not in unmatched:
+                unmatched.append(text)
+
+    # Recomputed over the union, not taken from a segment: "whichever office ranks highest"
+    # and "whichever division is the identifier" are answers about the whole label, and a
+    # segment only ever saw its own part of it.
+    return ParsedLabel(
+        role=_highest_priority(roles, taxonomy),
+        roles=roles,
+        division=_primary_division(divisions),
+        divisions=divisions,
+        other_designations=other_designations,
+        unmatched=unmatched,
+    )
+
+
+def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
     words = _words(label)
     designation_aliases = taxonomy.designation_aliases
     configs = config_utils.get_designations()

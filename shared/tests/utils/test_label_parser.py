@@ -22,6 +22,9 @@ _TAXONOMY = build_taxonomy(
     RoleConfig(
         roles=[
             _role("mayor", "Mayor", [], 10),
+            # Multi-word aliases, which is what the delimiter cases turn on: a boundary
+            # inside one of these breaks a match that a single pass would have made.
+            _role("mayor-pro-tem", "Mayor Pro Tempore", ["Mayor Pro-Tem", "Pro-Tempore"], 50),
             _role("council-president", "Council President", ["President"], 100),
             _role(
                 "council-member",
@@ -89,6 +92,19 @@ _TAXONOMY = build_taxonomy(
         # otherwise "Member" would be read as the value of "At-Large".
         ("Council Member At-Large", "Council Member", _BASE, [], []),
         ("", None, _BASE, [], []),
+        # A slash lists two offices in one label. Neither half was adjacent to anything the
+        # matcher could use before, so the whole string fell through to `unmatched`.
+        ("Mayor Pro-Tem/Alderman", "Mayor Pro Tempore", _BASE, [], []),
+        # A comma is NOT a boundary: this is one office written with one, and splitting it
+        # yields "Mayor" plus "Pro-Tempore" and answers Mayor.
+        ("Mayor, Pro-Tempore", "Mayor Pro Tempore", _BASE, [], []),
+        # Nor is "and", which mostly joins the halves of one office name. Kept whole, triage
+        # sees a phrase it can act on instead of two fragments it cannot.
+        ("Director Of Revenue And Finance", None, _BASE, [], ["Director Of Revenue And Finance"]),
+        # Leftover is per-segment and in source order: the parenthetical is its own phrase and
+        # comes first because the source wrote it first. One blob spanning the ")" would hand
+        # triage a string no source ever printed.
+        ("(this for example) Bachelor", None, _BASE, [], ["this for example", "Bachelor"]),
     ],
 )
 def test_parse_label(label, role, division, other_designations, unmatched):
