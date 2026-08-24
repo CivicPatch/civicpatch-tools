@@ -75,8 +75,9 @@ async def _seed_succession() -> str:
         ):
             person_id = str(uuid.uuid4())
             await cur.execute(
-                "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, %s)",
-                (person_id, _OCDID, json.dumps({"name": name})),
+                "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
+            "VALUES (%s, %s, %s, %s)",
+                (person_id, _OCDID, json.dumps({"name": name}), name),
             )
             await cur.execute(
                 """

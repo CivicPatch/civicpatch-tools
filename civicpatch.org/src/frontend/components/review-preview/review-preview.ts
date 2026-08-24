@@ -33,7 +33,7 @@ interface ReviewPreviewProps {
 function renderCard(card: PersonCard, sources: SourceMap) {
   const record = card.newRecord;
   const division = divisionOcdidToFriendly(record?.office?.division_ocdid ?? "") || "";
-  const office = [record?.office?.name, division].filter(Boolean).join(" · ");
+  const office = [record?.office?.name, division].filter(Boolean).join(", ");
 
   return renderPersonRow({
     record,
@@ -66,7 +66,7 @@ function ReviewPreview(props: ReviewPreviewProps) {
           ${ordered.length} official${ordered.length === 1 ? "" : "s"} will be published
         </span>
         <span class="review-preview__sub">
-          ${added} new · ${dropped} dropped
+          ${added} new, ${dropped} dropped
         </span>
       </div>
 

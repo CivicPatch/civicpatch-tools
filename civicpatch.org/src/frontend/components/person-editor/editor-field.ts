@@ -29,13 +29,14 @@ import {
   withDisplayImage,
   renderScalarNewSide,
   renderDateNewSide,
-  renderDivisionNewSide,
+  renderOfficeNewSide,
   renderPhotoNewSide,
   renderMultiList,
   type FocusRef,
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
+import type { OfficeOption } from "../posts-list/posts-model.js";
 
 export const DASH = "—";
 
@@ -43,12 +44,13 @@ export const DASH = "—";
 // copy and the new side a raw scrape URL, so there is nothing meaningful to put
 // back — the field diffs on presence only.
 const PHOTO_KEY = "image";
-const DIVISION_KEY = "office.division_ocdid";
+
+const OFFICE_KEY = "office.name";
 
 // A field that renders several controls has to hang its label on the set — the
 // label is "Term start", but no one input is that; they are its year and month.
 const groupsControls = (field: FieldSpec) =>
-  isMulti(field) || isDate(field) || field.key === DIVISION_KEY;
+  isMulti(field) || isDate(field);
 
 // Multi-value fields carry provenance on each row (§5.2 — `new` / unmarked /
 // `dropped`), so a field-level "was" would encode the same fact twice, which is
@@ -81,14 +83,26 @@ export interface EditorFieldProps {
   save: Save;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
+  // Offices the jurisdiction already has. Empty until the posts read lands, which is why
+  // the control still shows whatever the record says rather than an empty select.
+  officeOptions: OfficeOption[];
   // Non-null on the one field the view opened on, so the control it belongs to
   // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {
-  const { field, oldRecord, state, error, save, isReadOnly, jurisdictionOcdid, focusRef } =
-    props;
+  const {
+    field,
+    oldRecord,
+    state,
+    error,
+    save,
+    isReadOnly,
+    jurisdictionOcdid,
+    officeOptions,
+    focusRef,
+  } = props;
 
   // Read-only renders every field as its value, never a disabled input (§10) —
   // but "its value" is not always text. displayScalar on the photo field returns
@@ -112,8 +126,8 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       >${displayScalar(field, record) || DASH}</span
     >`;
   }
-  if (field.key === DIVISION_KEY)
-    return renderDivisionNewSide(field, record, save, jurisdictionOcdid, focusRef);
+  if (field.key === OFFICE_KEY)
+    return renderOfficeNewSide(field, record, save, officeOptions, focusRef);
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
     // Derived every render from (current, old) rather than stamped when a row is
@@ -149,7 +163,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
   return renderScalarNewSide(field, record, save, { state, error }, focusRef);
 }
 
-// `was 2025 · Restore`. Absent when there is nothing to say: no old value, an
+// `was 2025, Restore`. Absent when there is nothing to say: no old value, an
 // unchanged field, a field that carries provenance per value, or the photo.
 function renderWas(props: EditorFieldProps) {
   const { field, oldRecord, newRecord, state, save, isReadOnly } = props;

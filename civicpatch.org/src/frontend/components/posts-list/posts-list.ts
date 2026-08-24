@@ -1,6 +1,7 @@
 import "./posts-list.css";
 import "./post-edit.js";
 import "./post-add.js";
+import "./membership-assign.js";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { fetchPosts, fetchMemberships, fetchRoles } from "../../api.js";
@@ -12,6 +13,7 @@ import {
   divisionKey,
   postTitle,
   decompose,
+  postOptions,
 } from "./posts-model.js";
 import type {
   RoleGroup,
@@ -19,6 +21,7 @@ import type {
   PersonRow,
   Membership,
   RoleOption,
+  PostOption,
 } from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
@@ -28,7 +31,7 @@ type PostsListHost = HTMLElement & {
   canEdit?: boolean;
 };
 
-const HOLDER_SEPARATOR = " · ";
+const HOLDER_SEPARATOR = ", ";
 
 // "The same rows" — one dataset, two axes. A toggle rather than separate screens, because the
 // question ("who holds what") is identical and only the grouping differs.
@@ -36,9 +39,20 @@ const BY_POST = "post";
 const BY_PERSON = "person";
 type Axis = typeof BY_POST | typeof BY_PERSON;
 
-// What the screen is doing to one post. Two booleans would allow editing and adding at once,
-// which the layout has no room for and the user never means.
-type Editing = { kind: "post"; id: string } | { kind: "new" } | null;
+// Which entity the screen has open, and only ever one — two booleans would allow editing and
+// adding at once, which the layout has no room for and the user never means.
+//
+// Named for the entity, not the action: adding and editing a post are the same entity with and
+// without an id, so `id: null` is "this post does not exist yet" rather than a third case.
+//
+// There is deliberately no equivalent for membership. Posts are CRUD — POST mints an identity
+// (organization, role, division) that did not exist. A membership is asserted, not created:
+// the route is a single idempotent PUT that says where a person is, and opens or closes rows
+// to make that true. So "a new membership" is not a thing a caller can ask for.
+type Editing =
+  | { entity: "post"; id: string | null }
+  | { entity: "membership"; membership: Membership }
+  | null;
 
 const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => void) => html`
   <li class="posts-list__post">
@@ -60,12 +74,12 @@ const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => voi
   </li>
 `;
 
-// "7 posts · headcount 11 · 3 free" — capacity is only worth saying when a role has more room
+// "7 posts, headcount 11, 3 free" — capacity is only worth saying when a role has more room
 // than posts, which is what an at-large body looks like.
 const renderCapacity = (group: RoleGroup) => {
   const posts = `${group.posts.length} post${group.posts.length === 1 ? "" : "s"}`;
   if (group.headcount === group.posts.length && group.free === 0) return posts;
-  return `${posts} · headcount ${group.headcount} · ${group.free} free`;
+  return `${posts}, headcount ${group.headcount}, ${group.free} free`;
 };
 
 interface RoleContext {
@@ -89,9 +103,18 @@ const renderRole = (group: RoleGroup, context: RoleContext) => html`
 
 // What the source said, and what the parser made of every piece of it. Shown together
 // because the derived name alone cannot be judged — it says where the person landed, not why.
-const renderMembership = (membership: Membership) => html`
+const renderMembership = (
+  membership: Membership,
+  canEdit: boolean,
+  onAssign: (membership: Membership) => void,
+) => html`
   <li class="posts-list__post posts-list__post--stacked">
     <span class="posts-list__holders">${postTitle(membership)}</span>
+    ${canEdit
+      ? html`<button class="posts-list__edit" @click=${() => onAssign(membership)}>
+          Change post
+        </button>`
+      : ""}
     ${membership.source_labels.map(
       (label) => html`<p class="posts-list__source">“${label}”</p>`,
     )}
@@ -105,11 +128,15 @@ const renderMembership = (membership: Membership) => html`
   </li>
 `;
 
-const renderPerson = (row: PersonRow) => html`
+const renderPerson = (
+  row: PersonRow,
+  canEdit: boolean,
+  onAssign: (membership: Membership) => void,
+) => html`
   <section class="posts-list__role">
     <h3 class="posts-list__role-name">${row.person_name}</h3>
     <ul class="posts-list__posts">
-      ${row.posts.map(renderMembership)}
+      ${row.posts.map((membership) => renderMembership(membership, canEdit, onAssign))}
     </ul>
   </section>
 `;
@@ -128,8 +155,9 @@ function PostsList(host: PostsListHost) {
     byRole: RoleGroup[];
     byPerson: PersonRow[];
     roles: RoleOption[];
+    postOptions: PostOption[];
   }>(async () => {
-    if (!ocdid) return { byRole: [], byPerson: [], roles: [] };
+    if (!ocdid) return { byRole: [], byPerson: [], roles: [], postOptions: [] };
     const on = asOf || null;
     const [postsBody, membershipsBody, rolesBody] = await Promise.all([
       fetchPosts(ocdid),
@@ -150,6 +178,7 @@ function PostsList(host: PostsListHost) {
       byRole: groupPostsByRole(posts, memberships, roleLabels),
       byPerson: groupMembershipsByPerson(memberships),
       roles,
+      postOptions: postOptions(posts, memberships, roleLabels),
     };
   }, [ocdid, asOf]);
 
@@ -165,7 +194,7 @@ function PostsList(host: PostsListHost) {
   };
   const handleAsOf = (e: Event) => setAsOf((e.target as HTMLInputElement).value);
   const handleNow = () => setAsOf("");
-  const handleAddPost = () => setEditing({ kind: "new" });
+  const handleAddPost = () => setEditing({ entity: "post", id: null });
 
   // Editing is off while looking at the past: the forms write to the present, so a Save from
   // a dated view would silently apply to now.
@@ -210,13 +239,13 @@ function PostsList(host: PostsListHost) {
     canEdit: canEdit && !dated,
     editing,
     jurisdictionOcdid: ocdid ?? "",
-    onEditPost: (id) => setEditing({ kind: "post", id }),
+    onEditPost: (id) => setEditing({ entity: "post", id }),
   };
 
   // Found across groups rather than rendered inside one, because a modal floats above the
   // list — slotting it into the row would replace the row it is describing.
   const editingPost =
-    editing?.kind === "post"
+    editing?.entity === "post" && editing.id
       ? groups.flatMap((group) => group.posts).find((post) => post.id === editing.id)
       : undefined;
 
@@ -231,18 +260,34 @@ function PostsList(host: PostsListHost) {
       </p>`;
     }
     if (axis === BY_POST) return groups.map((group) => renderRole(group, context));
-    return data.byPerson.map(renderPerson);
+    return data.byPerson.map((row) =>
+      renderPerson(row, context.canEdit, (membership) =>
+        setEditing({ entity: "membership", membership }),
+      ),
+    );
   };
 
   return html`
     <div class="posts-list" @saved=${closeAndReload} @added=${closeAndReload} @cancel=${close}>
       ${controls}
       ${editingPost ? html`<civ-post-edit .post=${editingPost}></civ-post-edit>` : ""}
-      ${editing?.kind === "new"
+      ${editing?.entity === "post" && editing.id === null
         ? html`<civ-post-add
             .jurisdictionOcdid=${ocdid ?? ""}
             .roles=${data.roles}
           ></civ-post-add>`
+        : ""}
+      ${editing?.entity === "membership"
+        ? html`<civ-membership-assign
+            .personId=${editing.membership.person_id}
+            .personName=${editing.membership.person_name}
+            .jurisdictionOcdid=${ocdid ?? ""}
+            .roles=${data.roles}
+            .options=${data.postOptions}
+            .currentRoleId=${editing.membership.role_id}
+            .currentDivisionOcdid=${editing.membership.division_ocdid}
+            .currentLabel=${editing.membership.label}
+          ></civ-membership-assign>`
         : ""}
       ${renderRows()}
     </div>

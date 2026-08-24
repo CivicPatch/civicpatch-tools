@@ -41,12 +41,6 @@ export type DivisionType =
   | typeof DIVISION_WARD
   | typeof DIVISION_OTHER;
 
-// The types that take a value. at-large and other are the base division alone.
-export const DISTRICT_TYPES: readonly string[] = [
-  DIVISION_COUNCIL_DISTRICT,
-  DIVISION_WARD,
-];
-
 export type Division = { type: DivisionType; value: string };
 
 // "2023" | "2023-11" | "2023-11-15" | null -> parts (empty strings for missing)

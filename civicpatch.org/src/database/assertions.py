@@ -8,12 +8,45 @@ Current state is therefore derived, never stored — the latest row per (entity,
 
 Distinct from `change_logs`, which records *what happened*. An audit log says someone edited a
 field; it cannot say someone checked a field and found it already correct.
+
+Two entry points: `insert` on a caller's cursor, `create` owning its own connection. The pair
+exists because a membership label and the assertion protecting it must commit together.
 """
 
 import json
 
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
+
+
+async def insert(cur, assertion: Assertion, asserted_by: str) -> str:
+    """Append one assertion on a caller's cursor. Returns its id.
+
+    The cursor variant exists because a human's label edit and the assertion protecting it from
+    the next scrape are one act — landing them in separate transactions would leave a window
+    where the label is set and unprotected.
+    """
+    await cur.execute(
+        """
+        INSERT INTO assertions
+            (entity_type, entity_id, field_path, kind, value, sources, asserted_by)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING id::text
+        """,
+        (
+            assertion.entity_type.value,
+            assertion.entity_id,
+            assertion.field_path,
+            assertion.kind.value,
+            json.dumps(assertion.value) if assertion.value is not None else None,
+            json.dumps([source.model_dump() for source in assertion.sources])
+            if assertion.sources
+            else None,
+            asserted_by,
+        ),
+    )
+    row = await cur.fetchone()
+    return row[0] if row else ""
 
 
 async def create(assertion: Assertion, asserted_by: str) -> str:
@@ -27,28 +60,8 @@ async def create(assertion: Assertion, asserted_by: str) -> str:
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            INSERT INTO assertions
-                (entity_type, entity_id, field_path, kind, value, sources, asserted_by)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            RETURNING id::text
-            """,
-            (
-                assertion.entity_type.value,
-                assertion.entity_id,
-                assertion.field_path,
-                assertion.kind.value,
-                json.dumps(assertion.value) if assertion.value is not None else None,
-                json.dumps([source.model_dump() for source in assertion.sources])
-                if assertion.sources
-                else None,
-                asserted_by,
-            ),
-        )
-        row = await cur.fetchone()
+        assertion_id = await insert(cur, assertion, asserted_by)
         await conn.commit()
-    assertion_id = row[0] if row else ""
     return assertion_id
 
 

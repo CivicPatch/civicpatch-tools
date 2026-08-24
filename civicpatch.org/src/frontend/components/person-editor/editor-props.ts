@@ -10,12 +10,16 @@ import { type Save } from "../fields/field-controls.js";
 import { PersonStatus, type PersonCard } from "../people/person-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { type PersonEditorProps } from "./person-editor.js";
+import type { OfficeOption } from "../posts-list/posts-model.js";
 
 export interface EditorContext {
   frozen: FrozenFields;
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
+  // Every office the jurisdiction already has, so the office field can be picked from
+  // rather than typed. Shared across the whole roster, hence context and not per-card.
+  officeOptions: OfficeOption[];
   // A predicate, not a set: a page whose default is "expanded" has no set to
   // keep in sync with the roster, so a person it has never seen cannot arrive
   // collapsed.
@@ -46,6 +50,7 @@ export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): Pers
     issues: card.issues,
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
+    officeOptions: ctx.officeOptions,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

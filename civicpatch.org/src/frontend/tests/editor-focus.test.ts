@@ -4,7 +4,7 @@ import { type FieldSpec } from "../components/fields/field-model.js";
 
 const FIELDS: FieldSpec[] = [
   { key: "name", label: "Name", type: "text", required: true },
-  { key: "office.name", label: "Office", type: "text", required: true },
+  { key: "office.name", label: "Post", type: "text", required: true },
   { key: "emails", label: "Email", type: "multi" },
 ];
 

@@ -172,7 +172,7 @@ async def list_for_jurisdiction(
                -- sighting. This is the pair `as_of` filters on below, so a row explains why
                -- it was included.
                m.first_seen_at, m.closed_at, m.last_seen_at,
-               pe.data->>'name' AS person_name,
+               pe.name AS person_name,
                m.source_labels, m.designations, m.unmatched_text,
                p.role_id, p.division_ocdid, p.label AS post_label
         FROM memberships m
@@ -181,7 +181,7 @@ async def list_for_jurisdiction(
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
           AND m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
           AND (m.closed_at IS NULL OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
-        ORDER BY pe.data->>'name', p.role_id
+        ORDER BY pe.name, p.role_id
         """,
         {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of},
     )
@@ -309,7 +309,7 @@ async def open_for_person(cur, person_id: str, organization_id: str) -> dict | N
 
 async def _person_name(cur, person_id: str) -> str:
     """What a reader recognises the person by. Ids do not render in an activity feed."""
-    await cur.execute("SELECT data->>'name' FROM people WHERE id = %s", (person_id,))
+    await cur.execute("SELECT name FROM people WHERE id = %s", (person_id,))
     row = await cur.fetchone()
     return (row[0] if row else None) or person_id
 

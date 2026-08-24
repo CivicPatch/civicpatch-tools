@@ -57,5 +57,5 @@ export function editorSummary(input: EditorSummaryInput): string {
   if (attention) parts.push(`${plural(attention, "thing")} to check`);
 
   if (!parts.length) return "No changes";
-  return parts.join(" · ");
+  return parts.join(", ");
 }

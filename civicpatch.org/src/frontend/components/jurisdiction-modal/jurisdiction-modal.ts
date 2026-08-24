@@ -39,7 +39,7 @@ const renderOfficials = (people: Official[]) => {
           divisionOcdidToFriendly(person.office?.division_ocdid ?? "") || "";
         const office = [person.office?.name, division]
           .filter(Boolean)
-          .join(" · ");
+          .join(", ");
         return renderPersonRow({
           record: person as never,
           name: person.name || "(unnamed)",

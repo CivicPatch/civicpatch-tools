@@ -11,7 +11,6 @@ import { isContextField, type SurvivingField } from "../fields/field-model.js";
 // order buries both behind Photo and Name.
 const FIELD_ORDER = [
   "office.name",
-  "office.division_ocdid",
   "emails",
   "phones",
   "urls",

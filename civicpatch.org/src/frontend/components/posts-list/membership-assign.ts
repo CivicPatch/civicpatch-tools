@@ -3,39 +3,50 @@ import "../basic/modal.js";
 import { html } from "lit-html";
 import { inputValue } from "../fields/field-controls.js";
 import { component, useState } from "haunted";
-import { createPost } from "../../api.js";
+import { assignMembership, createPost } from "../../api.js";
 import {
   ADDABLE_DIVISIONS,
   AT_LARGE_DIVISION,
   buildDivisionOcdid,
   divisionName,
   isDivisionValue,
+  divisionSelection,
+  UNNAMED_HOLDER,
 } from "./posts-model.js";
-import type { AddableDivision, RoleOption } from "./posts-model.js";
+import type { AddableDivision, PostOption, RoleOption } from "./posts-model.js";
 
-type PostAddHost = HTMLElement & {
+type MembershipAssignHost = HTMLElement & {
+  personId?: string;
+  personName?: string | null;
   jurisdictionOcdid?: string;
   roles?: RoleOption[];
+  // Every post the jurisdiction already has, so the form can tell "seat them in the existing
+  // one" from "mint one" without asking the server first.
+  options?: PostOption[];
+  currentRoleId?: string | null;
+  currentDivisionOcdid?: string | null;
+  currentLabel?: string | null;
 };
 
-export const ADDED_EVENT = "added";
+export const SAVED_EVENT = "saved";
 export const CANCEL_EVENT = "cancel";
 
-// Unpicked. A role has to be chosen rather than defaulted, because every default is a real
-// role and filing a post under the wrong one is invisible once saved.
+// Unpicked. A role has to be chosen rather than defaulted — every default is a real role, and
+// filing someone under the wrong one is invisible once saved.
 const NO_ROLE = "";
 
 const byLabel = (a: RoleOption, b: RoleOption) => a.label.localeCompare(b.label);
 
-function PostAdd(host: PostAddHost) {
-  const [roleId, setRoleId] = useState(NO_ROLE);
-  const [designation, setDesignation] = useState<AddableDivision>(AT_LARGE_DIVISION);
-  const [value, setValue] = useState("");
-  const [label, setLabel] = useState("");
-  const [headcount, setHeadcount] = useState("1");
+function MembershipAssign(host: MembershipAssignHost) {
+  const seeded = divisionSelection(host.currentDivisionOcdid);
+  const [roleId, setRoleId] = useState(host.currentRoleId ?? NO_ROLE);
+  const [designation, setDesignation] = useState<AddableDivision>(seeded.designation);
+  const [value, setValue] = useState(seeded.value);
+  const [office, setOffice] = useState(host.currentLabel ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const roles = [...(host.roles ?? [])].sort(byLabel);
   const emit = (name: string) =>
     host.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true }));
 
@@ -48,34 +59,65 @@ function PostAdd(host: PostAddHost) {
   // never showed.
   const handleValue = (e: Event) =>
     setValue(inputValue(e).replace(/\s+/g, ""));
-  const handleLabel = (e: Event) => setLabel(inputValue(e));
-  const handleHeadcount = (e: Event) => setHeadcount(inputValue(e));
+  const handleOffice = (e: Event) => setOffice(inputValue(e));
 
   const needsValue = designation !== AT_LARGE_DIVISION;
   // The same closed set the parser accepts. A value outside it builds an ocdid no scrape
   // can ever produce, so the post would sit unmatched forever beside the real one.
   const validValue = !needsValue || isDivisionValue(value);
-  const roles = [...(host.roles ?? [])].sort(byLabel);
+  const jurisdiction = host.jurisdictionOcdid ?? "";
+  const divisionOcdid = jurisdiction
+    ? buildDivisionOcdid(jurisdiction, designation, value)
+    : "";
+  // Role and division *are* the post's identity, so this is a lookup rather than a search.
+  const existing = (host.options ?? []).find(
+    (option) => option.role_id === roleId && option.division_ocdid === divisionOcdid,
+  );
 
   const handleSave = async () => {
-    if (!host.jurisdictionOcdid || roleId === NO_ROLE || !validValue) return;
+    if (!host.personId || roleId === NO_ROLE || (needsValue && !validValue)) return;
     setSaving(true);
     setError(null);
     try {
-      await createPost(host.jurisdictionOcdid, {
-        role_id: roleId,
-        division_ocdid: buildDivisionOcdid(host.jurisdictionOcdid, designation, value),
-        label: label.trim() || null,
-        _headcount: Number(headcount),
-      });
-      emit(ADDED_EVENT);
+      // Mint the post only when the pair names one that does not exist. `POST /posts` 409s on
+      // a taken triple rather than returning the existing id, which is why this asks `options`
+      // first instead of catching the conflict.
+      const postId =
+        existing?.post_id ??
+        (await createPost(jurisdiction, {
+          role_id: roleId,
+          division_ocdid: divisionOcdid,
+          label: null,
+          _headcount: 1,
+        })).data.id;
+      await assignMembership(host.personId, postId, office.trim() || null);
+      emit(SAVED_EVENT);
     } catch (cause) {
-      // 409 included: the triple is already taken, and the answer is to raise that post's
-      // headcount rather than make a second one.
       setError(String(cause).replace(/^Error:\s*/, ""));
       setSaving(false);
     }
   };
+
+  const unchanged =
+    roleId === host.currentRoleId &&
+    divisionOcdid === host.currentDivisionOcdid &&
+    office.trim() === (host.currentLabel ?? "");
+  // Said before saving, because a move closes the old membership and mints nothing visible.
+  const consequence =
+    roleId === NO_ROLE
+      ? null
+      : unchanged
+        ? html`<p class="post-edit__hint">Nothing has changed yet.</p>`
+        : existing
+          ? html`<p class="post-edit__hint">
+              Seats them in ${existing.label}${existing.full
+                ? ` — already at headcount (${existing.held}/${existing.headcount})`
+                : ""}.
+            </p>`
+          : html`<p class="post-edit__hint">
+              No such post yet — saving creates ${roles.find((role) => role.id === roleId)
+                ?.label ?? roleId}, ${divisionName(divisionOcdid)} and seats them in it.
+            </p>`;
 
   const fields = html`
     <div class="post-edit">
@@ -119,18 +161,15 @@ function PostAdd(host: PostAddHost) {
           </p>`
         : ""}
       <label class="post-edit__field">
-        <span class="post-edit__label">Label (optional)</span>
+        <span class="post-edit__label">Office (optional)</span>
         <input
           type="text"
-          .value=${label}
-          placeholder="Position 8"
-          @input=${handleLabel}
+          .value=${office}
+          placeholder="Deputy Mayor Pro Tempore"
+          @input=${handleOffice}
         />
       </label>
-      <label class="post-edit__field">
-        <span class="post-edit__label">Headcount</span>
-        <input type="number" min="1" .value=${headcount} @input=${handleHeadcount} />
-      </label>
+      ${consequence}
       ${error ? html`<p class="posts-list__error">${error}</p>` : ""}
     </div>
   `;
@@ -139,16 +178,16 @@ function PostAdd(host: PostAddHost) {
     <button class="btn btn-sm secondary" @click=${handleCancel}>Cancel</button>
     <button
       class="btn btn-sm"
-      ?disabled=${saving || roleId === NO_ROLE || (needsValue && !validValue)}
+      ?disabled=${saving || roleId === NO_ROLE || (needsValue && !validValue) || unchanged}
       @click=${handleSave}
     >
-      ${saving ? "Adding…" : "Add"}
+      ${saving ? "Saving…" : "Save"}
     </button>
   `;
 
   return html`
     <civ-modal
-      .title=${"Add a post"}
+      .title=${`Post for ${host.personName || UNNAMED_HOLDER}`}
       .content=${fields}
       .footer=${footer}
       .modalProps=${{ open: true, onClose: handleCancel }}
@@ -156,4 +195,7 @@ function PostAdd(host: PostAddHost) {
   `;
 }
 
-customElements.define("civ-post-add", component(PostAdd, { useShadowDOM: false }));
+customElements.define(
+  "civ-membership-assign",
+  component(MembershipAssign, { useShadowDOM: false }),
+);

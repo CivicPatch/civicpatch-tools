@@ -246,7 +246,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
           Scrapes
           <span class="jurisdiction-panel__meta">
             ${entries.length} ${entries.length === 1 ? "run" : "runs"}
-            ${publishedAt ? `· last ${dateStringToFriendly(publishedAt)}` : ""}
+            ${publishedAt ? `— last ${dateStringToFriendly(publishedAt)}` : ""}
           </span>
         </summary>
         <div class="jurisdiction-panel__body">

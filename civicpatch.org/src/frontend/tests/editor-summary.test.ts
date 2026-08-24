@@ -91,7 +91,7 @@ describe("editorSummary", () => {
         issues: [issue("Possible duplicate")],
       }),
     );
-    expect(result).toBe("2 fields changed · 2 things to check");
+    expect(result).toBe("2 fields changed, 2 things to check");
   });
 
   // Clear-on-edit drops issue markers once the reviewer touches the card, so the
@@ -102,7 +102,7 @@ describe("editorSummary", () => {
       issues: [issue("Possible duplicate")],
       isDirty: true,
     });
-    expect(editorSummary(dirty)).toBe("1 field changed · 1 thing to check");
+    expect(editorSummary(dirty)).toBe("1 field changed, 1 thing to check");
   });
 
   it("says so when there is nothing to review", () => {

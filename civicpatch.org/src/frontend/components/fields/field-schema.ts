@@ -40,13 +40,12 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "image", label: "Photo", type: "image" },
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
-  { key: "office.name", label: "Office", type: "text", required: true },
-  {
-    key: "office.division_ocdid",
-    label: "Division",
-    type: "text",
-    required: true,
-  },
+  // `key` is the storage path and stays `office.*` until the proposed roster stops being
+  // Official-shaped; the label is what a person reads, and posts are what we call these.
+  // One field, not two: an office *is* a role and a division, so picking one sets both.
+  // `key` stays `office.name` because that is still the storage path — the proposed roster is
+  // Official-shaped until the pipeline contract changes.
+  { key: "office.name", label: "Post", type: "text", required: true },
   { key: "start_date", label: "Term start", type: "date" },
   { key: "end_date", label: "Term end", type: "date" },
   { key: "emails", label: "Email", type: "multi" },

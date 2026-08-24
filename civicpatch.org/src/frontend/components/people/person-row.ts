@@ -1,6 +1,6 @@
 // The card shell both Overview and Preview draw.
 //
-// Shared: the grid, the flush photo, name, office · division, and the metadata row
+// Shared: the grid, the flush photo, name, post and division, and the metadata row
 // beneath. Per view: what goes in that row — Overview puts status and field names
 // there, Preview puts published values. If a change to one view's meta forces an
 // edit here, the seam is in the wrong place.

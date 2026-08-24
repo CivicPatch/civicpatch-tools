@@ -95,7 +95,7 @@ function UnmatchedText() {
                 </p>
               </div>
               <span class="unmatched-text__reach">
-                ${countLabel(term.jurisdictions, "jurisdiction")} ·
+                ${countLabel(term.jurisdictions, "jurisdiction")},
                 ${countLabel(term.occurrences, "use")}
               </span>
             </li>

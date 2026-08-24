@@ -23,6 +23,7 @@ import { blockingErrors, buildPersonCards, type PersonCard } from "../../compone
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderOfficialsCards } from "./officials-section.js";
+import { useOfficeOptions } from "../../hooks/use-office-options.js";
 
 interface OfficialsEditorProps {
   people: any[];
@@ -56,6 +57,7 @@ function OfficialsEditor({
   blockedReason,
   onPublished,
 }: OfficialsEditorProps) {
+  const officeOptions = useOfficeOptions(jurisdictionOcdid);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
   const {
@@ -139,6 +141,7 @@ function OfficialsEditor({
       dirtyIds,
       isReadOnly: !canEdit,
       jurisdictionOcdid,
+      officeOptions,
       isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {
         const next = new Set(collapsedIds);

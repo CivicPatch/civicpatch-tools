@@ -8,6 +8,7 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-editor.css";
+import type { OfficeOption } from "../posts-list/posts-model.js";
 import {
   FIELD_SCHEMA,
   isContextField,
@@ -50,6 +51,7 @@ export interface PersonEditorProps {
   issues: Issue[];
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
+  officeOptions: OfficeOption[];
   // Clear-on-edit: once the reviewer touches a card its markers are presumed
   // addressed and drop away. §2.2 refines this to per-field (the *anchored* field
   // being edited); that lands with the checklist in §17 step 8, when ticking
@@ -102,7 +104,7 @@ function renderIdentity(props: PersonEditorProps) {
       ></person-image>
       <div class="person-editor__name">${name}</div>
       <div class="person-editor__office">
-        ${[office, division].filter(Boolean).join(" · ") || nothing}
+        ${[office, division].filter(Boolean).join(", ") || nothing}
       </div>
     </div>
   `;
@@ -211,7 +213,16 @@ function renderRowIssues(props: PersonEditorProps) {
 }
 
 function renderFields(props: PersonEditorProps, keys: Set<string>) {
-  const { oldRecord, newRecord, surviving, issues, isReadOnly, jurisdictionOcdid, onSave } = props;
+  const {
+    oldRecord,
+    newRecord,
+    surviving,
+    issues,
+    isReadOnly,
+    jurisdictionOcdid,
+    officeOptions,
+    onSave,
+  } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
   const fields = FIELD_SCHEMA.filter((field) => keys.has(field.key));
   const focus = props.focusField;
@@ -234,6 +245,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       save: onSave,
       isReadOnly,
       jurisdictionOcdid,
+      officeOptions,
       focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });
@@ -261,7 +273,7 @@ function renderStrip(props: PersonEditorProps) {
       ></person-image>
       <span class="person-editor__name">${record?.name || "(unnamed)"}</span>
       <span class="person-editor__office">
-        ${[office, division].filter(Boolean).join(" · ") || nothing}
+        ${[office, division].filter(Boolean).join(", ") || nothing}
       </span>
       <span class="person-editor__status">${STATUS_LABEL[status]}</span>
       <button class="person-editor__expander" @click=${onToggleExpand}>Show fields</button>

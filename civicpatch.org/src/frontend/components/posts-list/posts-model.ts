@@ -27,6 +27,9 @@ export interface RoleOption {
 }
 
 export interface Membership {
+  // Carried so the by-person view can assign without a second lookup. The read has always
+  // returned it; only this type left it out.
+  person_id: string;
   post_id: string;
   person_name: string | null;
   role_id: string;
@@ -176,6 +179,157 @@ export function buildDivisionOcdid(
   const base = jurisdictionToDivisionBase(jurisdictionOcdid);
   if (designation === AT_LARGE_DIVISION) return base;
   return `${base}/${designation}:${value.trim()}`;
+}
+
+
+
+
+// The cardinal directions a division can be named for, mirroring `_CARDINALS` in
+// `label_parser.py`. Wards and districts are named by direction as often as by number.
+const CARDINALS = [
+  "north", "south", "east", "west",
+  "northeast", "northwest", "southeast", "southwest", "central",
+] as const;
+
+/** Whether a typed division value is one the parser would also produce.
+ *
+ * Mirrors `_is_value` in `label_parser.py`: a number, a cardinal direction, or a single
+ * letter. Deliberately closed on both sides, and it has to stay the *same* closed set — a
+ * hand-made post whose ocdid a scrape can never produce is a post nothing will ever match, so
+ * it sits unverified forever and the roster quietly grows a duplicate beside it.
+ */
+export function isDivisionValue(value: string): boolean {
+  const key = value.trim().toLowerCase();
+  if (!key) return false;
+  // Ordinals too: the parser normalises "3rd" to "3" before this test.
+  if (/^\d+(st|nd|rd|th)?$/.test(key)) return true;
+  if ((CARDINALS as readonly string[]).includes(key)) return true;
+  return key.length === 1 && /[a-z]/.test(key);
+}
+
+
+/** The inverse of `buildDivisionOcdid`: which selector state shows this division.
+ *
+ * Anything outside the addable set reads as at-large, because at-large *is* "no sub-division"
+ * — the jurisdiction's own division. A key we cannot offer would otherwise silently become a
+ * blank select that saves something different from what it shows.
+ */
+export function divisionSelection(
+  division_ocdid: string | null | undefined,
+): { designation: AddableDivision; value: string } {
+  const { key, value } = parseDivision(division_ocdid ?? "");
+  const designation = ADDABLE_DIVISIONS.find((option) => option === key);
+  return designation && designation !== AT_LARGE_DIVISION
+    ? { designation, value }
+    : { designation: AT_LARGE_DIVISION, value: "" };
+}
+
+
+// One choosable post. Flat rather than grouped: a <select> needs a flat option list, and the
+// role is carried on each option so the renderer can group without a second structure.
+export interface PostOption {
+  post_id: string;
+  role_id: string;
+  role_label: string;
+  division_ocdid: string;
+  // What the option reads as. The post's own name when someone gave it one, else role and
+  // division — the same precedence `postTitle` uses, so the picker and the roster agree.
+  label: string;
+  held: number;
+  headcount: number;
+  // Choosing this post would exceed its headcount. Not disabled: a real body can seat an extra
+  // member, and refusing the truth is worse than showing it.
+  full: boolean;
+}
+
+/** Every post a person could be put in, in the order the roster shows them. */
+export function postOptions(
+  posts: Post[],
+  memberships: Membership[],
+  roleLabels: Map<string, string>,
+): PostOption[] {
+  return posts.map((post) => {
+    const roleLabel = roleLabels.get(post.role_id) ?? post.role_id;
+    const held = holderNames(memberships, post.id).length;
+    return {
+      post_id: post.id,
+      role_id: post.role_id,
+      role_label: roleLabel,
+      division_ocdid: post.division_ocdid,
+      label: post.label ?? `${roleLabel}, ${divisionName(post.division_ocdid)}`,
+      held,
+      headcount: post._headcount,
+      full: held >= post._headcount,
+    };
+  });
+}
+
+/** Which option a person is currently in, matched on the post's identity rather than its name.
+ *
+ * `(role_id, division_ocdid)` is the post key — the same pair the derivation matches on. Names
+ * are what the picker replaces, so matching on one would reintroduce the problem.
+ */
+export function selectedPostId(
+  options: PostOption[],
+  roleId: string | null | undefined,
+  divisionOcdid: string | null | undefined,
+): string | null {
+  const found = options.find(
+    (option) => option.role_id === roleId && option.division_ocdid === divisionOcdid,
+  );
+  return found?.post_id ?? null;
+}
+
+/** Post options under their role, in the order the roster shows them.
+ *
+ * Lives here rather than beside the picker so it stays testable: importing a component pulls
+ * in haunted, which the unit tests cannot resolve.
+ */
+export function byRole(options: PostOption[]): [string, PostOption[]][] {
+  const groups = new Map<string, PostOption[]>();
+  for (const option of options) {
+    groups.set(option.role_label, [...(groups.get(option.role_label) ?? []), option]);
+  }
+  return [...groups.entries()];
+}
+
+
+// An office a reviewer can pick, drawn from what the jurisdiction already has. The editor
+// writes `office.name` as text that publish re-parses, so the value written has to be text
+// that resolves back to this same post — which is exactly what the source said.
+export interface OfficeOption {
+  // What to write. `source_labels` joined the way `office_name_to_labels` splits them, so the
+  // publish parser lands on the post this option came from. NOT the role's canonical label:
+  // measured against prod that reproduces `office.name` for only 78% of people.
+  name: string;
+  division_ocdid: string;
+  // What to show: the post, and the membership label when the source said more than the post
+  // does. "Council Member, Ward 3 — Deputy Mayor Pro Tempore".
+  text: string;
+}
+
+const OFFICE_LABEL_SEPARATOR = " — ";
+
+/** The distinct offices this jurisdiction's memberships describe.
+ *
+ * Deduplicated on what would be written, not on the post: two holders of one post can have
+ * been named differently by the source, and those are genuinely two options.
+ */
+export function officeOptions(memberships: Membership[]): OfficeOption[] {
+  const seen = new Map<string, OfficeOption>();
+  for (const membership of memberships) {
+    const name = membership.source_labels.join(" - ");
+    if (!name) continue;
+    const key = `${name}|${membership.division_ocdid}`;
+    if (seen.has(key)) continue;
+    const post = postTitle(membership);
+    seen.set(key, {
+      name,
+      division_ocdid: membership.division_ocdid,
+      text: membership.label ? `${post}${OFFICE_LABEL_SEPARATOR}${membership.label}` : post,
+    });
+  }
+  return [...seen.values()].sort((a, b) => a.text.localeCompare(b.text));
 }
 
 

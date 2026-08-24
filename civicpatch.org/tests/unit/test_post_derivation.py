@@ -240,7 +240,7 @@ def test_the_member_label_says_what_the_post_label_cannot():
 
     member = specs[0].members[0]
     assert specs[0].role_id == "mayor"
-    assert member.label == "Commissioner Of Public Safety"
+    assert member.label == "Of Public Safety"
     assert member.role_ids == ["commissioner"]
 
 
@@ -254,14 +254,17 @@ def test_a_member_holding_only_the_post_proposes_no_label():
 @pytest.mark.unit
 def test_residue_of_a_resolved_label_is_not_unmatched():
     """"Of Public Safety" came out of a label that resolved to Commissioner. There is no rule
-    a curator could add for it, so it must not reach triage — the label carries it instead."""
+    a curator could add for it, so it must not reach triage — the label carries it instead.
+
+    The role itself does not: `commissioner` defines the post here, and a label repeating it
+    would say the same thing twice."""
     specs = derived_posts(
         [_official("a", "Commissioner Of Public Safety")], _TAXONOMY, _ROLES
     )
 
     member = specs[0].members[0]
     assert member.unmatched_text == []
-    assert member.label == "Commissioner Of Public Safety"
+    assert member.label == "Of Public Safety"
 
 
 @pytest.mark.unit

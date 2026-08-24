@@ -8,20 +8,89 @@ from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
 
+# `office` is a view over memberships, never a column — role and division already live there.
+#
+# `source_labels` joined with " - ", which is the join `office_name_to_labels` splits back
+# apart. NOT `roles.label` or `posts.label`: those are the *canonical* role, a different value,
+# and measured against dev either would have silently reworded ~4,500 people. 78% and 67%
+# respectively — close enough to look right in a spot check.
+#
+# The `data` fallback covers the 68 people with no open membership (retired before 118, mostly).
+# It goes when `data` does.
+#
+# Unaliased, so a caller cannot be required to spell `people` any particular way.
+PERSON_OFFICE = """COALESCE((
+    SELECT jsonb_build_object(
+        'name', array_to_string(memberships.source_labels, ' - '),
+        'division_ocdid', posts.division_ocdid)
+    FROM memberships JOIN posts ON posts.id = memberships.post_id
+    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
+    ORDER BY memberships.first_seen_at DESC
+    LIMIT 1
+), people.data->'office')"""
+
+# Where a person serves, inline. Plural because the schema already allows it: the unique index
+# is one *open* membership per organization, and a jurisdiction can have several bodies. Every
+# person holds exactly one post today (20,644 of 20,644 on dev), so `office` was accurate — but
+# it was singular by accident, not by rule.
+#
+# Open memberships only. "Where do they serve" is present tense; the history is the memberships
+# read with `?as_of`, which windows on `first_seen_at`/`closed_at`.
+#
+# `source_labels` rides along because it is what `office.name` always was — the source's own
+# words — and the readers replacing `office` need it to say the same thing they say today.
+PERSON_MEMBERSHIPS = """COALESCE((
+    SELECT jsonb_agg(jsonb_build_object(
+        'post_id', posts.id::text,
+        'role_id', posts.role_id,
+        'division_ocdid', posts.division_ocdid,
+        'label', memberships.label,
+        'post_label', posts.label,
+        'source_labels', to_jsonb(memberships.source_labels)
+    ) ORDER BY posts.role_id, posts.division_ocdid)
+    FROM memberships JOIN posts ON posts.id = memberships.post_id
+    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
+), '[]'::jsonb)"""
+
+
+# One person, in the shape `data` has always had, assembled from columns instead.
+#
+# Verified against all 20,712 dev rows: byte-identical to `data`, `office` and the ISO
+# `updated_at` included. That equality is the point — readers move without their callers
+# noticing, and the flat shape becomes a separate, later decision.
+PERSON_JSON = f"""jsonb_build_object(
+    'id', people.id::text,
+    'name', people.name,
+    'other_names', to_jsonb(people.other_names),
+    'phones', to_jsonb(people.phones),
+    'emails', to_jsonb(people.emails),
+    'urls', to_jsonb(people.urls),
+    'source_urls', to_jsonb(people.source_urls),
+    'image', people.image,
+    'cdn_image', people.cdn_image,
+    'start_date', people.start_date,
+    'end_date', people.end_date,
+    'jurisdiction_ocdid', people.jurisdiction_ocdid,
+    'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
+    'office', {PERSON_OFFICE},
+    'memberships', {PERSON_MEMBERSHIPS}
+)"""
+
+
+# The people side of the review card. Columns since 134; `office` is the memberships view.
+# Its twin below still reads `data_json`, because that is a *proposed* roster from the
+# pipeline, not a row — the two must keep emitting the same KEYS or the card cannot diff them.
 _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
-    "id": ("'id'", "data#>>'{id}'"),
-    "name": ("'name'", "data#>>'{name}'"),
-    "office": (
-        "'office'",
-        "jsonb_build_object('name', data#>>'{office,name}', 'division_ocdid', data#>>'{office,division_ocdid}')",
-    ),
-    "source_urls": ("'source_urls'", "data#>'{source_urls}'"),
-    "phones": ("'phones'", "data#>'{phones}'"),
-    "emails": ("'emails'", "data#>'{emails}'"),
-    "urls": ("'urls'", "data#>'{urls}'"),
-    "start_date": ("'start_date'", "data#>>'{start_date}'"),
-    "end_date": ("'end_date'", "data#>>'{end_date}'"),
-    "image": ("'image'", "data#>>'{image}'"),
+    "id": ("'id'", "people.id::text"),
+    "name": ("'name'", "people.name"),
+    "office": ("'office'", PERSON_OFFICE),
+    "source_urls": ("'source_urls'", "to_jsonb(people.source_urls)"),
+    "phones": ("'phones'", "to_jsonb(people.phones)"),
+    "emails": ("'emails'", "to_jsonb(people.emails)"),
+    "urls": ("'urls'", "to_jsonb(people.urls)"),
+    "start_date": ("'start_date'", "people.start_date"),
+    "end_date": ("'end_date'", "people.end_date"),
+    "image": ("'image'", "people.image"),
 }
 
 _RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
@@ -82,8 +151,8 @@ async def get_people_by_jurisdiction_ocdid(
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
-                """
-                SELECT data
+                f"""
+                SELECT {PERSON_JSON}
                 FROM people
                 WHERE jurisdiction_ocdid = %s
                   AND status = 'active'
@@ -166,8 +235,8 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-                SELECT data FROM people
+            f"""
+                SELECT {PERSON_JSON} FROM people
                 WHERE jurisdiction_ocdid = %s AND status = 'active'
             """,
             (jurisdiction_ocdid,),
@@ -182,13 +251,13 @@ async def get_all_people_for_jurisdiction(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT COUNT(*) OVER(), id::text, data, status
+            f"""
+            SELECT COUNT(*) OVER(), people.id::text, {PERSON_JSON}, people.status
             FROM people
             WHERE jurisdiction_ocdid = %s
             ORDER BY
-                CASE WHEN status = 'active' THEN 0 ELSE 1 END,
-                (data->>'updated_at') DESC NULLS LAST
+                CASE WHEN people.status = 'active' THEN 0 ELSE 1 END,
+                people.updated_at DESC NULLS LAST
             LIMIT %s OFFSET %s
             """,
             (jurisdiction_ocdid, limit, offset),
@@ -209,13 +278,62 @@ async def delete_person(person_id: str) -> None:
         )
 
 
-def people_rows(people: list[dict]) -> list[tuple]:
-    # Shape parsed person dicts into the (id, jurisdiction_ocdid, data, updated_at) rows the
-    # people table stores. Each person carries its own jurisdiction_ocdid; the whole dict is
-    # the jsonb `data` column. Pure — the DB layer owns its row format in one place.
+# The columns 134 split out of `data`. Named here so the row builder and the statement below
+# cannot drift — they are the two halves of one contract.
+_PERSON_COLUMNS = (
+    "name",
+    "other_names",
+    "phones",
+    "emails",
+    "urls",
+    "source_urls",
+    "image",
+    "cdn_image",
+    "start_date",
+    "end_date",
+)
+_LIST_COLUMNS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
+
+# One statement for both writers. It was copied in `publications` before 134, and doubling a
+# ten-column write is how the two quietly stop agreeing.
+#
+# `data` is still written: it remains authoritative until every reader moves off it, so a
+# publish must leave both halves describing the same person.
+PERSON_UPSERT = f"""
+    INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status, {", ".join(_PERSON_COLUMNS)})
+    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(data)s, %(updated_at)s, 'active',
+            {", ".join(f"%({column})s" for column in _PERSON_COLUMNS)})
+    ON CONFLICT (id) DO UPDATE
+       SET data = EXCLUDED.data,
+           updated_at = EXCLUDED.updated_at,
+           status = 'active',
+           {", ".join(f"{column} = EXCLUDED.{column}" for column in _PERSON_COLUMNS)}
+"""
+
+
+def people_rows(people: list[dict]) -> list[dict]:
+    """Shape parsed person dicts into the rows `people` stores.
+
+    Named rather than positional: fourteen values in a tuple is a column/value misalignment
+    waiting to happen, and the columns arrived all at once in 134.
+
+    The whole dict still becomes `data`; the columns are a second copy of the fields 134 split
+    out. `office` is not among them — role and division live on posts/memberships.
+    """
     return [
-        (p.get("id"), p.get("jurisdiction_ocdid"), json.dumps(p), p.get("updated_at"))
-        for p in people
+        {
+            "id": person.get("id"),
+            "jurisdiction_ocdid": person.get("jurisdiction_ocdid"),
+            "data": json.dumps(person),
+            "updated_at": person.get("updated_at"),
+            **{
+                column: (person.get(column) or [])
+                if column in _LIST_COLUMNS
+                else person.get(column)
+                for column in _PERSON_COLUMNS
+            },
+        }
+        for person in people
     ]
 
 
@@ -226,23 +344,11 @@ async def bulk_update_people(people: list[dict]):
     records = people_rows(people)
     jurisdictions: dict = {}
     for record in records:
-        person_id, jurisdiction_ocdid = record[0], record[1]
-        if jurisdiction_ocdid not in jurisdictions:
-            jurisdictions[jurisdiction_ocdid] = []
-        jurisdictions[jurisdiction_ocdid].append(person_id)
+        jurisdictions.setdefault(record["jurisdiction_ocdid"], []).append(record["id"])
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        insert_query = """
-            INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
-            VALUES (%s, %s, %s, %s, 'active')
-            ON CONFLICT (id)
-            DO UPDATE SET
-                data = EXCLUDED.data,
-                updated_at = EXCLUDED.updated_at,
-                status = 'active'
-        """
-        await cur.executemany(insert_query, records)
+        await cur.executemany(PERSON_UPSERT, records)
 
         for jurisdiction_ocdid, incoming_ids in jurisdictions.items():
             await cur.execute(
@@ -263,16 +369,16 @@ async def get_people_for_jurisdiction(
     async with pool.connection() as conn, conn.cursor() as cur:
         if status is not None:
             await cur.execute(
-                """
-                SELECT data FROM people
+                f"""
+                SELECT {PERSON_JSON} FROM people
                 WHERE jurisdiction_ocdid = %s AND status = %s
                 """,
                 (jurisdiction_ocdid, status),
             )
         else:
             await cur.execute(
-                """
-                SELECT data FROM people
+                f"""
+                SELECT {PERSON_JSON} FROM people
                 WHERE jurisdiction_ocdid = %s
                 """,
                 (jurisdiction_ocdid,),
@@ -288,8 +394,8 @@ async def get_people_by_state(state: str) -> list[dict]:
     rows = []
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT jurisdiction_ocdid, data
+            f"""
+            SELECT jurisdiction_ocdid, {PERSON_JSON}
             FROM people
             WHERE jurisdiction_ocdid LIKE %s
               AND status = 'active'
