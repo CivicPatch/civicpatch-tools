@@ -8,12 +8,10 @@ import shared.utils.id_utils
 from core.jurisdiction_search import (
     build_parent_ocdids,
     build_search_text,
-    state_jurisdiction_ocdid,
 )
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
-from database.freshness import FRESH_SINCE_SQL
-from database.requests import RUN_IN_FLIGHT, REVIEW_STATUS
+from database.requests import REVIEW_STATUS, RUN_IN_FLIGHT
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,
@@ -25,6 +23,8 @@ from shared.schemas import Person
 from shared.utils.statuses import RequestType
 
 logger = logging.getLogger(__name__)
+
+FRESH_SINCE_SQL = "now() - interval '90 days'"
 
 
 def jurisdiction_rows(
@@ -58,15 +58,14 @@ _SEARCH_MATCH_CLAUSE = """
       AND j.level = ANY(%s)
 """
 
+
 # Tier 2 — trigram fallback for typos, one indexed condition per token, ANDed.
 # Operand order is load-bearing: `a %> b` is word_similarity(b, a), so the indexed column
 # must be on the LEFT. Reversed, it plans a sequential scan and returns nothing.
 def _fuzzy_match_clause(token_count: int) -> sql.Composed:
     # Composed via psycopg.sql so only the *number* of conditions varies; every token is
     # still bound as a parameter, and nothing user-supplied reaches the SQL text.
-    conditions = sql.SQL(" AND ").join(
-        [sql.SQL("j.search_text %%> %s")] * token_count
-    )
+    conditions = sql.SQL(" AND ").join([sql.SQL("j.search_text %%> %s")] * token_count)
     return sql.SQL(
         """
         FROM jurisdictions j
@@ -75,6 +74,7 @@ def _fuzzy_match_clause(token_count: int) -> sql.Composed:
           AND j.level = ANY(%s)
         """
     ).format(conditions=conditions)
+
 
 _SEARCH_SELECT_LIST = """
     SELECT

@@ -1,5 +1,5 @@
 from database.database import get_pool
-from database.freshness import FRESH_SINCE_SQL
+from database.jurisdictions import FRESH_SINCE_SQL
 
 
 async def get_dashboard() -> dict:
