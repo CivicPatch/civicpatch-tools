@@ -59,9 +59,9 @@ async def _seed_member(
 ) -> str:
     person_id = str(uuid.uuid4())
     await cur.execute(
-        "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
-            "VALUES (%s, %s, %s, %s)",
-        (person_id, ocdid, json.dumps({"name": "Triage Test"}), "Triage Test"),
+        "INSERT INTO people (id, jurisdiction_ocdid, name) "
+            "VALUES (%s, %s, %s)",
+        (person_id, ocdid, "Triage Test"),
     )
     organization_id = await organizations.find_or_create(cur, ocdid)
     await divisions.find_or_create(cur, division, ocdid)

@@ -62,10 +62,10 @@ async def _add_person(ocdid):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status)
+            INSERT INTO people (id, jurisdiction_ocdid, name, updated_at, status)
             VALUES (%s, %s, %s, now(), 'active')
             """,
-            (str(uuid.uuid4()), ocdid, json.dumps({"id": f"{ocdid}-p1"})),
+            (str(uuid.uuid4()), ocdid, f"{ocdid}-p1"),
         )
         await conn.commit()
 

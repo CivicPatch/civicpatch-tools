@@ -75,7 +75,7 @@ async def _people_by_status() -> dict[str, list[str]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, data->>'name' FROM people WHERE jurisdiction_ocdid = %s",
+            "SELECT status, name FROM people WHERE jurisdiction_ocdid = %s",
             (_SENTINEL_OCDID,),
         )
         out: dict[str, list[str]] = {}

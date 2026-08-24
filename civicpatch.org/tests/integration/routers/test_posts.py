@@ -116,8 +116,8 @@ async def _seat_someone(post_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, data) VALUES (%s, %s, '{}')",
-            (person_id, _OCDID),
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
+            (person_id, _OCDID, "Post Test"),
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await memberships.upsert(

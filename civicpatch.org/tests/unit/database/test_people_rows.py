@@ -1,12 +1,9 @@
 """Unit tests for people_rows — shapes a parsed people file (a list of person dicts) into the
 rows bulk_update_people and publish store.
 
-Named rows, not tuples, since 134: the whole person is still `data`, and the ten columns 134
-split out ride alongside. Pure function — the DB layer owns its row format here, so this is a
-plain unit test (no DB).
+Named rows, not tuples, since 134. Pure function — the DB layer owns its row format here, so
+this is a plain unit test (no DB).
 """
-
-import json
 
 import pytest
 
@@ -46,16 +43,15 @@ def test_multiple_people_returns_multiple_rows_each():
 
 
 @pytest.mark.unit
-def test_data_column_holds_full_person():
-    rows = people_rows([_PERSON])
-    # round-trip: the data column is the whole person, serialized losslessly
-    assert json.loads(rows[0]["data"]) == _PERSON
+def test_no_blob_is_written_beside_the_columns():
+    """`data` held the whole person until 134 split it out and the readers moved. A second copy
+    nothing consults is how the two halves start disagreeing unnoticed."""
+    assert "data" not in people_rows([_PERSON])[0]
 
 
 @pytest.mark.unit
 def test_the_split_out_columns_carry_the_same_values():
-    """134 duplicated ten fields out of the blob. Both halves are written, so a row where they
-    disagree is a row where the reader you happen to pick decides the answer."""
+    """The ten fields 134 split out of the blob, which are the record now."""
     row = people_rows([_PERSON])[0]
     assert row["name"] == "Kirk Watson"
     assert row["phones"] == ["(512) 974-2250"]

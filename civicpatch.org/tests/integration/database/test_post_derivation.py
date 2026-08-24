@@ -72,9 +72,9 @@ async def _seed_person():
             (_OCDID, json.dumps({})),
         )
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
-            "VALUES (%s, %s, %s, %s)",
-            (person_id, _OCDID, json.dumps({"name": "Test Person"}), "Test Person"),
+            "INSERT INTO people (id, jurisdiction_ocdid, name) "
+            "VALUES (%s, %s, %s)",
+            (person_id, _OCDID, "Test Person"),
         )
         await conn.commit()
     return person_id
@@ -281,9 +281,9 @@ async def test_unmatched_people_share_one_post_per_division():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, data, name) "
-            "VALUES (%s, %s, %s, %s)",
-            (second := str(uuid.uuid4()), _OCDID, json.dumps({"name": "Other"}), "Other"),
+            "INSERT INTO people (id, jurisdiction_ocdid, name) "
+            "VALUES (%s, %s, %s)",
+            (second := str(uuid.uuid4()), _OCDID, "Other"),
         )
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
@@ -385,15 +385,15 @@ async def test_publish_writes_memberships_for_the_roster():
         # The Record's own updated_at, not the moment publish ran.
         assert first_seen_at == _T0
 
-        # 134 split ten fields out of `data` and both halves are written until `data` goes.
-        # A row where they disagree is a row where whichever reader you pick decides the
-        # answer — so this asserts the columns, not the dict the row builder produced.
+        # Asserted on the stored row rather than on the dict the row builder produced: since
+        # 136 these columns are the record, so a publish that shapes them wrong has nowhere
+        # else to be right.
         await cur.execute(
-            "SELECT name, source_urls, emails, data->>'name' FROM people WHERE id = %s",
+            "SELECT name, source_urls, emails FROM people WHERE id = %s",
             (person_id,),
         )
-        name, source_urls, emails, data_name = await cur.fetchone()
-        assert name == "Robert Michaud" == data_name
+        name, source_urls, emails = await cur.fetchone()
+        assert name == "Robert Michaud"
         assert source_urls == ["https://example.gov"]
         assert emails == [], "a person with no emails has none, not NULL"
 

@@ -1,4 +1,3 @@
-import json
 import logging
 from typing import Any, List, LiteralString
 
@@ -322,15 +321,15 @@ _LIST_COLUMNS = frozenset({"other_names", "phones", "emails", "urls", "source_ur
 # One statement for both writers. It was copied in `publications` before 134, and doubling a
 # ten-column write is how the two quietly stop agreeing.
 #
-# `data` is still written: it remains authoritative until every reader moves off it, so a
-# publish must leave both halves describing the same person.
+# The columns are the record now. `data` was authoritative until 134 split it out and every
+# reader moved; writing it after that would keep a second copy nothing consults, which is how
+# the two halves start disagreeing without anybody noticing.
 PERSON_UPSERT = f"""
-    INSERT INTO people (id, jurisdiction_ocdid, data, updated_at, status, {", ".join(_PERSON_COLUMNS)})
-    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(data)s, %(updated_at)s, 'active',
+    INSERT INTO people (id, jurisdiction_ocdid, updated_at, status, {", ".join(_PERSON_COLUMNS)})
+    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(updated_at)s, 'active',
             {", ".join(f"%({column})s" for column in _PERSON_COLUMNS)})
     ON CONFLICT (id) DO UPDATE
-       SET data = EXCLUDED.data,
-           updated_at = EXCLUDED.updated_at,
+       SET updated_at = EXCLUDED.updated_at,
            status = 'active',
            {", ".join(f"{column} = EXCLUDED.{column}" for column in _PERSON_COLUMNS)}
 """
@@ -339,17 +338,15 @@ PERSON_UPSERT = f"""
 def people_rows(people: list[dict]) -> list[dict]:
     """Shape parsed person dicts into the rows `people` stores.
 
-    Named rather than positional: fourteen values in a tuple is a column/value misalignment
+    Named rather than positional: thirteen values in a tuple is a column/value misalignment
     waiting to happen, and the columns arrived all at once in 134.
 
-    The whole dict still becomes `data`; the columns are a second copy of the fields 134 split
-    out. `office` is not among them — role and division live on posts/memberships.
+    `office` is not among them — role and division live on posts/memberships.
     """
     return [
         {
             "id": person.get("id"),
             "jurisdiction_ocdid": person.get("jurisdiction_ocdid"),
-            "data": json.dumps(person),
             "updated_at": person.get("updated_at"),
             **{
                 column: (person.get(column) or [])
