@@ -24,6 +24,7 @@ const context = (over = {}) =>
     jurisdictionOcdid: "ocd-jurisdiction/country:us/state:wa/place:x/government",
     officeOptions: [],
     proposals: proposalsByPersonId([]),
+    assertions: {},
     isExpanded: () => false,
     onToggleExpand: () => {},
     onPersonSave: () => {},

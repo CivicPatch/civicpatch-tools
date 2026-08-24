@@ -345,7 +345,7 @@ async def _assert_label(
     if label is None:
         await assertions.withdraw(cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD)
         return
-    await assertions.insert(
+    await assertions.upsert(
         cur,
         Assertion(
             entity_type=EntityType.MEMBERSHIP,

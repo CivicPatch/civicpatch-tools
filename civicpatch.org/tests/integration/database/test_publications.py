@@ -17,16 +17,25 @@ import pytest
 import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
+from database import assertions
 from database.database import get_pool
 from database.publications import dismiss_request, publish_request
+from schemas.assertions import Assertion, AssertionKind, EntityType
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
 _SENTINEL_USER = "zz-publish-test-user"
+_CURATOR = "zz-publish-curator@example.com"
 
 
 async def _cleanup():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM assertions WHERE asserted_by IN "
+            "(SELECT id FROM users WHERE email = %s)",
+            (_CURATOR,),
+        )
+        await cur.execute("DELETE FROM users WHERE email = %s", (_CURATOR,))
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute(
@@ -261,6 +270,10 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
         assert str(resolver) == user_id
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
+            # Publishing accepts every value on the roster in this user's name, and
+            # `asserted_by` is NOT NULL — no production path deletes a user, but this one has
+            # to unwind its own.
+            await cur.execute("DELETE FROM assertions WHERE asserted_by = %s", (user_id,))
             await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
             await conn.commit()
 
@@ -289,3 +302,137 @@ async def test_dismissing_never_touches_a_published_request(sentinel_request):
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None
     assert dismissed_at is None
+
+
+async def _seed_publisher() -> str:
+    """Somebody to publish in the name of. Cleaned up with `_CURATOR` in `_cleanup`."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "VALUES (%s, 'email', %s, 'admins') "
+            "ON CONFLICT (provider, provider_user_id) DO UPDATE SET email = EXCLUDED.email "
+            "RETURNING id::text",
+            (_CURATOR, _CURATOR),
+        )
+        user_id = (await cur.fetchone())[0]
+        await conn.commit()
+    return user_id
+
+
+async def _assert_field(person_id: str, field: str, value, kind: AssertionKind) -> None:
+    """One human assertion about one field, recorded the way an edit records it."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "VALUES (%s, 'email', %s, 'admins') "
+            "ON CONFLICT (provider, provider_user_id) DO UPDATE SET email = EXCLUDED.email "
+            "RETURNING id::text",
+            (_CURATOR, _CURATOR),
+        )
+        curator_id = (await cur.fetchone())[0]
+        await assertions.upsert(
+            cur,
+            Assertion(
+                entity_type=EntityType.PERSON,
+                entity_id=person_id,
+                field_path=field,
+                kind=kind,
+                value=value,
+            ),
+            curator_id,
+        )
+        await conn.commit()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publish_applies_what_a_human_accepted(sentinel_request):
+    """The point of the whole model: a reviewer's answer beats the scrape, and beats it at
+    publish rather than at ingest — so the scrape stays what the source said, and the judgement
+    is re-applied every time instead of being baked in once."""
+    person = _person("Ann")
+    await _assert_field(person["id"], "name", "Ann Rodriguez", AssertionKind.ACCEPT)
+
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [person])
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT name FROM people WHERE id::text = %s", (person["id"],))
+        assert (await cur.fetchone())[0] == "Ann Rodriguez"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publish_drops_a_rejected_value_but_keeps_the_rest(sentinel_request):
+    """A rejection suppresses one value, never the field. The wrong number stays gone however
+    often it is scraped; a number nobody has judged still gets through."""
+    person = {**_person("Bob"), "phones": ["(555) 0001", "(555) 9999"]}
+    await _assert_field(person["id"], "phones", "(555) 0001", AssertionKind.REJECT)
+
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [person])
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT phones FROM people WHERE id::text = %s", (person["id"],))
+        assert (await cur.fetchone())[0] == ["(555) 9999"]
+
+
+async def _accepted_for(person_id: str) -> list[tuple[str, object]]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT field_path, value FROM assertions "
+            "WHERE entity_type = 'person' AND entity_id::text = %s AND kind = 'accept' "
+            "ORDER BY field_path, value",
+            (person_id,),
+        )
+        return [(row[0], row[1]) for row in await cur.fetchall()]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_accepts_the_values_the_reviewer_saw(sentinel_request):
+    """What replaced `confirm`. Nobody has to remember to vouch for a field — publishing a
+    roster is somebody saying its values stand, so every field carries who last did.
+
+    One row per *element* on a list field, which is what lets a reviewer reject one phone number
+    later without restating the others.
+    """
+    user_id = await _seed_publisher()
+    person = {**_person("Ann"), "phones": ["(555) 0001", "(555) 0002"]}
+
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [person], user_id)
+
+    assert await _accepted_for(person["id"]) == [
+        ("name", "Ann"),
+        ("phones", "(555) 0001"),
+        ("phones", "(555) 0002"),
+    ]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_republishing_the_same_roster_adds_no_rows(sentinel_request):
+    """Re-stating a value moves its timestamp rather than adding a row, which is what keeps the
+    table bounded by distinct values instead of by how often anyone publishes."""
+    user_id = await _seed_publisher()
+    person = _person("Ann")
+
+    for _ in range(3):
+        await publish_request(sentinel_request, _SENTINEL_OCDID, [person], user_id)
+
+    assert await _accepted_for(person["id"]) == [("name", "Ann")]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_an_unattended_publish_asserts_nothing(sentinel_request):
+    """A GitHub merge or an automated publish read nothing and judged nothing — and
+    `asserted_by` is NOT NULL, because an assertion nobody made is not an assertion."""
+    person = _person("Ann")
+
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [person], None)
+
+    assert await _accepted_for(person["id"]) == []

@@ -36,6 +36,7 @@ import services.roster_edits as roster_edits
 from core.review_mode import review_mode_for
 import services.pull_request_sync as pr_sync_service
 from services.review_proposal import (
+    assertions_for_people,
     proposals_for_requests,
     review_summary_for_request,
 )
@@ -296,6 +297,9 @@ def get_router(api_key_header):
                     change.model_dump()
                     for change in proposals.get(request_id, [])
                 ],
+                "assertions": await assertions_for_people(
+                    [person["id"] for person in existing if person.get("id")]
+                ),
                 "sources": build_sources(request_id, jurisdiction_ocdid, unique_source_urls),
             }
         }

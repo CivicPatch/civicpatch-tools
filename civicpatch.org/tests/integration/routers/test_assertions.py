@@ -152,7 +152,7 @@ async def test_an_accepted_value_carries_its_type_across_the_wire(client):
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = await assertions.stated_values(cur, EntityType.PERSON, person_id)
+        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
     assert stated["name"][AssertionKind.ACCEPT] == ["Jane Q. Clerk"]
 
 
@@ -201,3 +201,41 @@ async def test_an_unattributable_assertion_is_refused(client):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("SELECT count(*) FROM assertions WHERE entity_id::text = %s", (post_id,))
         assert (await cur.fetchone())[0] == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assertion_is_logged_with_its_sources(client):
+    """Assertions are current state — setting a field again overwrites it — so the log is what
+    keeps the superseded value, and the only record of *why* once it has been replaced."""
+    post_id = await _seed()
+
+    for headcount in (5, 7):
+        response = client.post(
+            _PREFIX,
+            json={
+                "entity_type": "post",
+                "entity_id": post_id,
+                "field_path": "_headcount",
+                "value": headcount,
+                "kind": "accept",
+                "sources": [{"note": f"clerk said {headcount}"}],
+            },
+        )
+        assert response.status_code == 200, response.text
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT changes->>'value', changes->'sources'->0->>'note' FROM change_logs "
+            "WHERE type = 'assert_field' AND changes->>'entity_id' = %s "
+            "ORDER BY created_at",
+            (post_id,),
+        )
+        logged = await cur.fetchall()
+
+    # The row itself holds only 7 now; both readings survive here.
+    assert [(value, note) for value, note in logged] == [
+        ("5", "clerk said 5"),
+        ("7", "clerk said 7"),
+    ]

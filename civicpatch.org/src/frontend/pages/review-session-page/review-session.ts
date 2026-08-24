@@ -28,6 +28,7 @@ import { personEditorPropsFor } from "../../components/person-editor/editor-prop
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
 import { useOfficeOptions } from "../../hooks/use-office-options.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
+import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 
 type CurrentEntry = {
   request_id: string;
@@ -36,6 +37,7 @@ type CurrentEntry = {
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
   changes?: ProposedChange[];
+  assertions?: Record<string, PersonAssertion[]>;
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;
@@ -55,7 +57,7 @@ type ReviewSessionHost = HTMLElement & {
 
 function ReviewSession(host: ReviewSessionHost) {
   const { progress, hasSession, currentEntry, error, canClosePr, isClosingPr } = host;
-  const { jurisdiction, pr, mode, pr_people, changes, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
+  const { jurisdiction, pr, mode, pr_people, changes, assertions, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
   const officeOptions = useOfficeOptions(jurisdictionOcdid);
   const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
@@ -167,6 +169,7 @@ function ReviewSession(host: ReviewSessionHost) {
       jurisdictionOcdid,
       officeOptions,
       proposals: proposalsByPersonId(changes ?? []),
+      assertions: assertions ?? {},
       isExpanded: (id: string) => modalExpanded.has(id),
       onToggleExpand: () => {
         const next = new Set(modalExpanded);
@@ -331,6 +334,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .isReadOnly=${is_read_only}
             .jurisdictionOcdid=${jurisdictionOcdid}
             .changes=${changes}
+            .assertions=${assertions}
             .onPersonSave=${handlePersonSave}
             .onRemovePerson=${handleRemovePerson}
             .onUnremovePerson=${handleUnremove}

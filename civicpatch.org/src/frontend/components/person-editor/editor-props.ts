@@ -14,6 +14,10 @@ import {
   type ProposedChange,
 } from "../people/person-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
+import {
+  acceptsByField,
+  type PersonAssertion,
+} from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
 import type { OfficeOption } from "../posts-list/posts-model.js";
 
@@ -27,6 +31,8 @@ export interface EditorContext {
   officeOptions: OfficeOption[];
   // Also roster-wide: a person proposed onto a post holds no membership to read it off.
   proposals: Map<string, ProposedChange[]>;
+  // Every person's assertions, keyed by person id, as the review read returns them.
+  assertions: Record<string, PersonAssertion[]>;
   // A predicate, not a set: a page whose default is "expanded" has no set to
   // keep in sync with the roster, so a person it has never seen cannot arrive
   // collapsed.
@@ -58,6 +64,7 @@ export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): Pers
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     subtitle: postsFor(card, ctx.proposals),
+    accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     officeOptions: ctx.officeOptions,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),

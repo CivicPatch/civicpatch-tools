@@ -122,6 +122,9 @@ class ChangeLogType(StrEnum):
     DELETE_POST = "delete_post"
     # Seat and move are one type; `moved_from` in the payload tells them apart.
     ASSIGN_MEMBERSHIP = "assign_membership"
+    # A human asserting a field value directly, rather than by editing a row. The only path
+    # that carries `sources` — "phoned the clerk" exists nowhere else.
+    ASSERT_FIELD = "assert_field"
     ADD_ROLE = "add_role"
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"

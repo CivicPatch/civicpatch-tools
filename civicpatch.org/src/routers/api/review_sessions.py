@@ -23,7 +23,7 @@ import shared.utils.id_utils
 import shared.utils.url_utils
 from schemas.common import Identity, RouteCategory
 from core.review_mode import review_mode_for
-from services.review_proposal import proposals_for_requests
+from services.review_proposal import assertions_for_people, proposals_for_requests
 from lib.auth import require_route_access
 
 
@@ -193,6 +193,9 @@ async def _navigate_response(session_id: str, entry_number: int):
             "existing": existing,
             "proposed": proposed,
             "changes": [change.model_dump() for change in proposals.get(request_id, [])],
+            "assertions": await assertions_for_people(
+                [person["id"] for person in existing if person.get("id")]
+            ),
             "sources": sources,
         }
     }

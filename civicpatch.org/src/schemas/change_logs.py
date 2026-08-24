@@ -49,6 +49,18 @@ class MembershipChangePayload(BaseModel):
     moved_from: str | None = None
 
 
+class AssertionChangePayload(BaseModel):
+    """Assertions are current state and can be overwritten, so the log is what keeps the
+    superseded value. `sources` rides along because it is the only record of why."""
+
+    entity_type: str
+    entity_id: str
+    field_path: str
+    kind: str
+    value: Any = None
+    sources: list[dict] = []
+
+
 class JurisdictionChangePayload(BaseModel):
     jurisdiction_ocdid: str
     jurisdiction_name: str

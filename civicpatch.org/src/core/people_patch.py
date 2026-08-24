@@ -1,4 +1,5 @@
 from pydantic import BaseModel, ValidationError
+from schemas.assertions import AssertionKind
 from shared.schemas import Official
 from shared.utils.official_fields import order_official_fields
 
@@ -19,6 +20,53 @@ EDITABLE_FIELDS = (
     "start_date",
     "end_date",
 )
+
+# Of those, the ones holding several values: a list field is a set, so `phones` carries many
+# accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
+LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
+
+
+def with_stated_values(person: dict, stated: dict) -> dict:
+    """`published = (scraped ∪ accepted) − rejected`, per field.
+
+    A reject suppresses one *value*, never the field, so the scraper keeps looking and something
+    it has never found still reaches a reviewer. Scraped order first, then accepted.
+
+    A scalar cannot union, so an accept replaces it and a reject empties it.
+    """
+    published = dict(person)
+    for field, by_kind in stated.items():
+        if field not in EDITABLE_FIELDS:
+            continue
+        accepted = by_kind.get(AssertionKind.ACCEPT) or []
+        rejected = by_kind.get(AssertionKind.REJECT) or []
+
+        if field in LIST_FIELDS:
+            kept = [value for value in (person.get(field) or []) if value not in rejected]
+            published[field] = kept + [
+                value for value in accepted if value not in kept and value not in rejected
+            ]
+        elif accepted:
+            published[field] = accepted[0]
+        elif person.get(field) in rejected:
+            published[field] = None
+    return published
+
+
+def values_to_accept(person: dict) -> list[tuple[str, object]]:
+    """Every value on a published person a human could have looked at, one entry per value so a
+    list field yields one per element.
+
+    A field they saw blank stays the scraper's — and `value` is NOT NULL.
+    """
+    accepted: list[tuple[str, object]] = []
+    for field in EDITABLE_FIELDS:
+        value = person.get(field)
+        if field in LIST_FIELDS:
+            accepted.extend((field, item) for item in (value or []) if item)
+        elif value is not None and value != "":
+            accepted.append((field, value))
+    return accepted
 
 
 class PersonPatch(BaseModel):

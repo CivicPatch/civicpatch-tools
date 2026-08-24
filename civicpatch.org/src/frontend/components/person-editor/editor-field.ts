@@ -22,7 +22,10 @@ import {
   type PresentRecord,
   type ScalarDiffState,
 } from "../fields/field-model.js";
-import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
+import {
+  PERSON_LINK_TARGET,
+  SOURCE_LINK_TARGET,
+} from "../../utils/source-links.js";
 import {
   buildFieldUpdate,
   displayScalar,
@@ -50,13 +53,18 @@ const OFFICE_KEY = "post_id";
 
 // A field that renders several controls has to hang its label on the set — the
 // label is "Term start", but no one input is that; they are its year and month.
-const groupsControls = (field: FieldSpec) =>
-  isMulti(field) || isDate(field);
+const groupsControls = (field: FieldSpec) => isMulti(field) || isDate(field);
 
 // Multi-value fields carry provenance on each row (§5.2 — `new` / unmarked /
 // `dropped`), so a field-level "was" would encode the same fact twice, which is
 // audit finding 4.
-const CARRIES_OWN_PROVENANCE = new Set(["emails", "phones", "urls", "other_names", "source_urls"]);
+const CARRIES_OWN_PROVENANCE = new Set([
+  "emails",
+  "phones",
+  "urls",
+  "other_names",
+  "source_urls",
+]);
 
 // Which multi-value fields are followable, and in whose window. A person's links
 // and the sources they were read from deliberately do not share a tab.
@@ -90,6 +98,7 @@ export interface EditorFieldProps {
   // Non-null on the one field the view opened on, so the control it belongs to
   // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
+  provenance: string | null;
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {
@@ -125,7 +134,10 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       const list = (diffValue(record, field) as string[]) ?? [];
       return list.length
         ? html`<span class="person-editor__readonly"
-            >${list.map((value) => html`<span class="field-control__value">${value}</span>`)}</span
+            >${list.map(
+              (value) =>
+                html`<span class="field-control__value">${value}</span>`,
+            )}</span
           >`
         : DASH;
     }
@@ -158,7 +170,9 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       // A context field is never compared, so it has nothing to have dropped.
       dropped: isContextField(field)
         ? []
-        : diff.filter((entry) => entry.status === "removed").map((entry) => entry.value),
+        : diff
+            .filter((entry) => entry.status === "removed")
+            .map((entry) => entry.value),
       setValues: (values) => save({ [field.key]: values }),
       label: field.label.toLowerCase(),
       linkTarget: LINK_TARGETS[field.key] ?? null,
@@ -192,7 +206,10 @@ function renderWas(props: EditorFieldProps) {
     ${canRestore
       ? html`<button
           class="person-editor__restore"
-          @click=${() => save(buildFieldUpdate(newRecord as PresentRecord, field.key, oldValue))}
+          @click=${() =>
+            save(
+              buildFieldUpdate(newRecord as PresentRecord, field.key, oldValue),
+            )}
         >
           Restore
         </button>`
@@ -214,15 +231,22 @@ function renderAttention(props: EditorFieldProps) {
   }
   if (issueMessages.length) {
     return issueMessages.map(
-      (message) => html`<div class="person-editor__issue">
-        <i class="fa-solid fa-circle-exclamation"></i><span>${message}</span>
-      </div>`,
+      (message) =>
+        html`<div class="person-editor__issue">
+          <i class="fa-solid fa-circle-exclamation"></i><span>${message}</span>
+        </div>`,
     );
   }
   // Appeared as a task, and the task is done.
   if (reason === "error" || reason === "issue") {
     return html`<div class="person-editor__issue person-editor__resolved">
       <i class="fa-solid fa-circle-check"></i><span>Resolved</span>
+    </div>`;
+  }
+  // Editor only. Preview carries no diff vocabulary, and this is exactly that.
+  if (props.provenance) {
+    return html`<div class="person-editor__provenance">
+      ${props.provenance}
     </div>`;
   }
   return nothing;

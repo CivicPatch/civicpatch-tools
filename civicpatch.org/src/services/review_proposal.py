@@ -9,11 +9,13 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import derived_posts
 from core.post_issues import append_post_issues, unverified_post_issues
+from database import assertions
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import requests as requests_db
 from database.database import get_pool
 from database.pipeline_runs import get_pipeline_run_result
+from schemas.assertions import EntityType
 from database.roles import get_roles
 from services.publish import chosen_posts
 from shared.schemas import Issue, Person, RoleConfig
@@ -69,3 +71,12 @@ async def proposals_for_requests(
             [ExistingMembership(**row) for row in held[ocdid]],
         )
     return proposals
+
+
+async def assertions_for_people(person_ids: list[str]) -> dict[str, list[dict]]:
+    """Every assertion about these people, for the editor's per-field tags."""
+    if not person_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await assertions.list_for_entities(cur, EntityType.PERSON, person_ids)

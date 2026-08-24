@@ -532,7 +532,7 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     curator_id = (await cur.fetchone())[0]
 
     await memberships.update_label(cur, membership_id, label)
-    await assertions.insert(
+    await assertions.upsert(
         cur,
         Assertion(
             entity_type=EntityType.MEMBERSHIP,
