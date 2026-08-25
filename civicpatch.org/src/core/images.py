@@ -1,14 +1,33 @@
-"""Turning the pipeline's `local://` photo references into the urls we store.
+"""A person's photo: where it came from, where we serve it, and where it moves at publish.
+Pure — no I/O, no storage calls.
 
-A scrape downloads photos into its zip and refers to them by hash. Two things matter once the
-zip is gone: where the photo came from, and where we serve it. Both are resolved here, from
+Ingest — a scrape downloads photos into its zip and refers to them by hash. Two things matter
+once the zip is gone: where the photo came from, and where we serve it. Both are resolved from
 maps the caller supplies — the file read and the env read are the caller's job.
+
+Publish — the photo is promoted out of the run-scoped artifacts bucket:
+
+    {artifacts}/{request_id}/data_source/{state}/local/{place}/images/{file}
+    {cdn}/open-data/{state}/local/{place}/images/{file}
+
+Dropping `request_id` is the point of the rename: the permanent key is stable across
+re-scrapes, so a person's photo URL does not change every time the pipeline runs.
+
+The two halves meet on one string: `cdn_urls` builds `https://{artifacts}.{domain}/{key}` at
+ingest and `artifacts_key` parses it back at publish. They have to change together, which is
+why they live in one file.
 
 Nothing here is specific to a person: a sighting and a roster entry are both dicts with an
 `image` key, which is what lets one pass serve both.
 """
 
+import re
+
 LOCAL_IMAGE_PREFIX = "local://"
+CDN_KEY_PREFIX = "open-data"
+
+
+# ── Ingest: local:// references → the urls we store ──────────────────
 
 
 def local_image_basename(person: dict) -> str | None:
@@ -77,3 +96,35 @@ def records_with_images(
         person_id: [with_images(record, source_urls, cdn_urls) for record in records]
         for person_id, records in records_by_person.items()
     }
+
+
+# ── Publish: artifacts bucket → CDN ──────────────────────────────────
+
+
+def artifacts_key(cdn_image: str, artifacts_bucket: str) -> str | None:
+    """The object key inside the artifacts bucket, or None if this URL is not one of ours —
+    an already-promoted image, or a photo hosted on the jurisdiction's own site.
+
+    The bucket is passed in rather than read here: which bucket an environment uses is
+    configuration, and this module stays pure.
+    """
+    # The bucket is a subdomain, so it is always followed by a dot — without anchoring that,
+    # `civicpatch-artifacts` also matches `civicpatch-artifacts-nonprod.…`, and a production
+    # instance would claim another environment's images as its own.
+    pattern = re.compile(rf"https?://{re.escape(artifacts_bucket)}\.[^/]*/(.+)")
+    match = pattern.match(cdn_image)
+    return match.group(1) if match else None
+
+
+def promoted_key(key: str) -> str | None:
+    """Strip the run-scoped prefix (`{request_id}/data_source/`) and re-root under the CDN
+    prefix. None if the key is too short to carry one, which means it was not written by
+    `_upload_files` and must not be guessed at."""
+    segments = key.split("/")
+    if len(segments) <= 2:
+        return None
+    return "/".join([CDN_KEY_PREFIX, *segments[2:]])
+
+
+def promoted_url(friendly_storage_host: str, key: str) -> str:
+    return f"{friendly_storage_host.rstrip('/')}/{key}"

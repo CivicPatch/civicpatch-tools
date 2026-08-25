@@ -33,8 +33,7 @@ src/
     post_grouping.py, post_issues.py
     membership_proposal.py   ← what a scrape would change about who holds what
     membership_label.py      ← what to call a post when nobody has said
-    image_urls.py            ← `local://` refs → source url + cdn url (ingest)
-    image_upload.py          ← which bucket key a photo moves to (publish)
+    images.py                ← `local://` refs → urls (ingest); artifacts → cdn key (publish)
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py
     change_logs.py, role_taxonomy.py, temporal_workflow_state.py
     open_data/               ← tree_diff.py, paths.py
