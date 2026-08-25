@@ -53,7 +53,7 @@ def test_permissions_unauthenticated():
     assert p["can_view_reviews_page"] is False
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is False
-    assert p["can_close_pull_request"] is False
+    assert p["can_reject_scrape"] is False
 
 
 @pytest.mark.unit
@@ -65,7 +65,7 @@ def test_permissions_default_role():
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is False
-    assert p["can_close_pull_request"] is False  # contributor+ only
+    assert p["can_reject_scrape"] is False  # contributor+ only
 
 
 @pytest.mark.unit
@@ -77,7 +77,7 @@ def test_permissions_contributor_role():
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
     assert p["can_delete_directory_person"] is True
-    assert p["can_close_pull_request"] is True  # introduced at Contributor
+    assert p["can_reject_scrape"] is True  # introduced at Contributor
 
 
 @pytest.mark.unit
@@ -93,7 +93,7 @@ def test_permissions_maintainer_role():
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False  # Admin-only
     assert p["can_delete_directory_person"] is True
-    assert p["can_close_pull_request"] is True
+    assert p["can_reject_scrape"] is True
 
 
 @pytest.mark.unit
@@ -108,7 +108,7 @@ def test_permissions_admin_role():
     assert p["can_scrape"] is True
     assert p["can_view_issues_page"] is True
     assert p["can_delete_directory_person"] is True
-    assert p["can_close_pull_request"] is True
+    assert p["can_reject_scrape"] is True
     assert p["can_manage_roles"] is True
 
 
