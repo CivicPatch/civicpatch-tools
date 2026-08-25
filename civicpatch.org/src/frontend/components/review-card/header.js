@@ -10,10 +10,10 @@ import "../review-panel/review-panel.js";
 const renderStats = ({ added, removed, changed }) => {
   if (!added && !removed && !changed) return "";
   return html`
-    <span class="pr-card__stats">
-      ${added ? html`<span class="pr-card__stat pr-card__stat--added">+${added}</span>` : ""}
-      ${removed ? html`<span class="pr-card__stat pr-card__stat--removed">−${removed}</span>` : ""}
-      ${changed ? html`<span class="pr-card__stat pr-card__stat--changed">~${changed}</span>` : ""}
+    <span class="review-card__stats">
+      ${added ? html`<span class="review-card__stat review-card__stat--added">+${added}</span>` : ""}
+      ${removed ? html`<span class="review-card__stat review-card__stat--removed">−${removed}</span>` : ""}
+      ${changed ? html`<span class="review-card__stat review-card__stat--changed">~${changed}</span>` : ""}
     </span>
   `;
 };
@@ -94,12 +94,12 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
     >${buttonName}</button>`;
   }
 
-  return html` <div class="pr-card__header">
+  return html` <div class="review-card__header">
     <div class="header-item-left">
-      <a class="pr-card__jurisdiction-link" href="/${entry?.jurisdiction?.path}" target="_blank" rel="noopener">
+      <a class="review-card__jurisdiction-link" href="/${entry?.jurisdiction?.path}" target="_blank" rel="noopener">
         ${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
       </a>
-      <a class="pr-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">
+      <a class="review-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">
         #${pullRequestNumber || "—"}
       </a>
     </div>
@@ -123,7 +123,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
       <!-- data-visual-volatile: the visual suite masks this. Seeded PRs are created
            at seed time, so the rendered date is whatever day the run happens on and
            the baseline would go stale overnight for no code reason. -->
-      ${createdAt ? html`<span class="pr-card__meta" data-visual-volatile>${new Date(createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>` : ""}
+      ${createdAt ? html`<span class="review-card__meta" data-visual-volatile>${new Date(createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>` : ""}
       ${renderCloseButton()} ${renderMergeButton()}
     </div>
   </div>`;
@@ -131,6 +131,6 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
 
 customElements.define(
-  "pull-request-card-header",
+  "review-card-header",
   component(PullRequestCardHeader, { useShadowDOM: false }),
 );

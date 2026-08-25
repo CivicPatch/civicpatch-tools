@@ -1,7 +1,7 @@
 import "./publish-log.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { REVIEW_ACTION } from "../pull-request-card/review-action.js";
+import { REVIEW_ACTION } from "../review-card/review-action.js";
 
 function PublishLog({ entries = [] }) {
   const [collapsed, setCollapsed] = useState(false);

@@ -1,4 +1,4 @@
-import "./pr-card.css";
+import "./review-card.css";
 import { html } from "lit-html";
 import { component } from "haunted";
 import { REVIEW_ACTION } from "./review-action.js";
@@ -27,15 +27,15 @@ function diffStats(entry) {
   return { added, removed, changed };
 }
 
-function PrCard({ entry, state, viewMode = "quick" }) {
+function ReviewCard({ entry, state, viewMode = "quick" }) {
   const stats = diffStats(entry);
 
   const renderCardContent = () => {
     if (state?.status === REVIEW_ACTION.REJECTED) {
-      return html`<div class="pr-card__content">Closed</div>`;
+      return html`<div class="review-card__content">Closed</div>`;
     }
     if (state?.status === REVIEW_ACTION.ERROR) {
-      return html`<div class="pr-card__content">Error: ${state?.error}</div>`;
+      return html`<div class="review-card__content">Error: ${state?.error}</div>`;
     }
 
     if (viewMode === "detail") {
@@ -50,18 +50,18 @@ function PrCard({ entry, state, viewMode = "quick" }) {
   const isPublishing = state?.status === REVIEW_ACTION.APPROVING;
 
   return html`
-    <div class="pr-card">
-      <pull-request-card-header
+    <div class="review-card">
+      <review-card-header
         .entry=${entry}
         .state=${state}
         .stats=${stats}
         .createdAt=${entry?.created_at}
-      ></pull-request-card-header>
+      ></review-card-header>
       ${renderCardContent()}
-      ${isPublished ? html`<div class="pr-card__overlay pr-card__overlay--published"><span>Published.</span></div>` : null}
-      ${isPublishing ? html`<div class="pr-card__overlay pr-card__overlay--publishing"><span>Publishing…</span></div>` : null}
+      ${isPublished ? html`<div class="review-card__overlay review-card__overlay--published"><span>Published.</span></div>` : null}
+      ${isPublishing ? html`<div class="review-card__overlay review-card__overlay--publishing"><span>Publishing…</span></div>` : null}
     </div>
   `;
 }
 
-customElements.define("pr-card", component(PrCard, { useShadowDOM: false }));
+customElements.define("review-card", component(ReviewCard, { useShadowDOM: false }));

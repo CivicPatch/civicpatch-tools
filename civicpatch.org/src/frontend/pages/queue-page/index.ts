@@ -13,7 +13,7 @@ import {
 import "../../components/publish-log/index.js";
 import "./queue-summary/index.js";
 import "./active-jobs/index.js";
-import "./pr-list/index.js";
+import "./review-card-list/index.js";
 
 const API_URL = config.apiUrl;
 
@@ -181,9 +181,9 @@ function QueuePage() {
           .canCancel=${permissions.can_cancel_pipeline_run}
           .onCancel=${handleCancel}
         ></queue-active-pipeline-runs>
-        <queue-pr-list
-          .pullRequests=${pullRequests}
-          .pullRequestState=${actionState}
+        <queue-review-card-list
+          .cards=${pullRequests}
+          .actionState=${actionState}
           .loading=${loading}
           .error=${error}
           .page=${page}
@@ -195,7 +195,7 @@ function QueuePage() {
           .onViewChange=${handleViewChange}
           .onPageChange=${handlePageChange}
           .onPerPageChange=${handlePerPageChange}
-        ></queue-pr-list>
+        ></queue-review-card-list>
       ` : null}
     </main>
     <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>

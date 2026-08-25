@@ -48,8 +48,8 @@ erDiagram
         jsonb           arguments_json
         jsonb_null      data_json           "scraped Official objects from pipeline"
         jsonb_null      review_json         "idx: jsonb_array_length(review_json->'issues')"
-        timestamptz_null published_at       "set when a reviewer publishes; replaces pull_requests.status='merged' + merge_enqueued_at"
-        timestamptz_null dismissed_at       "set when a reviewer dismisses; replaces pull_requests.status='closed'. check: not both set"
+        timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
+        timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it"
         text_null       open_data_url       "where the change landed: a commit URL going forward, a PR URL on backfilled rows"
         timestamptz     created_at
@@ -64,19 +64,6 @@ erDiagram
         bigint_null     github_run_id
         timestamptz_null created_at
         timestamptz_null updated_at
-    }
-
-    pull_requests {
-        uuid            id                  PK
-        uuid            request_id          FK  "unique"
-        uuid_null       resolved_by_user_id FK
-        int             pr_number
-        text_null       url
-        text            status              "idx. Scrape rows are historical as of 115 — publish state lives on requests now. Jurisdiction-edit requests are the only lifecycle still writing here."
-        timestamptz_null merged_at
-        timestamptz_null merge_enqueued_at   "set at merge enqueue; cleared on settle"
-        timestamptz     created_at
-        timestamptz     updated_at
     }
 
     people {
@@ -279,11 +266,9 @@ erDiagram
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"
-    requests ||--o| pull_requests : "request_id"
     requests }o--o{ issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
-    users ||--o{ pull_requests : "resolved_by_user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     change_log_types ||--o{ change_logs : "type"
@@ -296,8 +281,8 @@ erDiagram
 **Notes:**
 - `requests.review_json` — pipeline review output (`issues`, `warnings`, etc.)
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
-- `pipeline_runs` and `pull_requests` each have a unique constraint on `request_id` (one-to-one with `requests`)
-- `people` has no FK to `requests` — it is updated independently when a PR is merged
+- `pipeline_runs` has a unique constraint on `request_id` (one-to-one with `requests`). `pull_requests` was dropped in migration 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
+- `people` has no FK to `requests` — it is written by the publish transaction, not by a merge
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
 - `roles` replaced `role_terms` / `role_aliases` in migration 106, and migration 109 **flattened it**: the `scope` column (NULL=global / state ocdid / place ocdid) is gone, along with per-scope resolution, alias unioning, and the `roles_global_complete` check. It carried 24 global rows and 1 scoped test row while costing the promotion trap — promoting a role was DELETE + INSERT, minting a new uuid and breaking any FK pointing at it. One flat list, `unique (lower(label))`. #2470 and #2471 ask for *more* hierarchy and are inverted by this; see `.scratch/2026-08-12-plan-flat-roles.md`.
 - **`roles.id` is a slug, not a uuid** — `council-member`, derived from `label` at creation. Migration 109 swapped the uuid for it. Read that carefully: `id` is a uuid in every other domain table, and this schema's other text-PK tables name the column for its content (`geoid`, `path`, `type`), so `roles.id` matches neither convention. It is named `id` so Phase 2's FK reads `posts.role_id` rather than `posts.role_slug`.

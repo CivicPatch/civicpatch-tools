@@ -4,7 +4,7 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useReviewActions } from "../../hooks/use-review-actions.js";
-import { REVIEW_ACTION } from "../../components/pull-request-card/review-action.js";
+import { REVIEW_ACTION } from "../../components/review-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";

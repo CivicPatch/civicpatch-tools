@@ -1,6 +1,6 @@
 import { useState } from "haunted";
 import { publishReview, dismissReview } from "../api.js";
-import { REVIEW_ACTION } from "../components/pull-request-card/review-action.js";
+import { REVIEW_ACTION } from "../components/review-card/review-action.js";
 
 type ActionState = {
   status: string;
