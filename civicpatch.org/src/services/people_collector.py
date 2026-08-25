@@ -20,7 +20,7 @@ from database import posts as posts_db
 from database import requests as requests_db
 from database.database import get_pool
 from database.issues import upsert_issue
-from database.people import get_people_for_jurisdiction
+from database.people import get_person_models
 from database.pipeline_runs import (
     run_updated_at,
     update_pipeline_run_data,
@@ -77,7 +77,7 @@ async def handle_submit_pipeline_run_artifacts(
 async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
     """The prior reconciliation groups against: our own published people, else the scrape's
     research for a jurisdiction we have never published."""
-    existing = await get_people_for_jurisdiction(
+    existing = await get_person_models(
         jurisdiction_ocdid, status=ACTIVE_PERSON_STATUS
     )
     if existing:
@@ -111,7 +111,7 @@ async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]
     two entries claiming one person, and only sees the collision if it sees both. Matched
     against inactive people too, so someone returning after a term away keeps their id.
     """
-    everyone = await get_people_for_jurisdiction(jurisdiction_ocdid)
+    everyone = await get_person_models(jurisdiction_ocdid)
     resolutions = resolve_people_ids(
         roster, everyone, person_list_to_identities(everyone)
     )

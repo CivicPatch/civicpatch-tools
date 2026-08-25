@@ -1,5 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+import database.people as db_people
 from database.people import get_people_data_by_request_ids
 
 
@@ -113,3 +114,10 @@ async def test_null_result_data_returns_empty_pull_request():
         result = await get_people_data_by_request_ids([jur], ["req-empty"])
 
     assert result["req-empty"]["proposed"] == []
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_get_people_refuses_a_read_with_no_scope():
+    with pytest.raises(db_people.UnscopedRead):
+        await db_people.get_people(status=db_people.ACTIVE_STATUS)

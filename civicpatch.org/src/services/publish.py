@@ -17,7 +17,7 @@ from core.image_upload import artifacts_key, promoted_key, promoted_url
 import services.change_logs as change_logs
 from database.pipeline_runs import get_pipeline_run_data_json
 from database.publications import dismiss_request, publish_request, record_open_data_url
-from database.people import get_jurisdiction_people
+from database.people import ACTIVE_STATUS, get_people
 from database.roles import get_roles
 from core.post_derivation import ChosenPost, DerivedPost, derived_posts
 from database import posts as posts_db
@@ -146,7 +146,9 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
 
 async def _render(source: CommitSource, request_id: str, jurisdiction_ocdid: str) -> list[dict]:
     if source is CommitSource.ROSTER:
-        return await get_jurisdiction_people(jurisdiction_ocdid)
+        return await get_people(
+            jurisdiction_ocdid=jurisdiction_ocdid, status=ACTIVE_STATUS
+        )
     return await get_pipeline_run_data_json(request_id) or []
 
 

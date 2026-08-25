@@ -153,7 +153,10 @@ def get_router(api_key_header):
         )
 
         existing, cached = await asyncio.gather(
-            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
+            database.people.get_people(
+                jurisdiction_ocdid=jurisdiction_ocdid,
+                status=database.people.ACTIVE_STATUS,
+            ),
             database.pipeline_runs.get_pipeline_run_data_json(request_id),
         )
 
@@ -266,7 +269,10 @@ def get_router(api_key_header):
         proposed = result["proposed"] or []
 
         existing, scraped_at, proposals = await asyncio.gather(
-            database.people.get_people_by_jurisdiction_ocdid(jurisdiction_ocdid),
+            database.people.get_people(
+                jurisdiction_ocdid=jurisdiction_ocdid,
+                status=database.people.ACTIVE_STATUS,
+            ),
             jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried
             # it since the proposal landed; the review session reads this endpoint instead, and

@@ -15,6 +15,7 @@ gone, not when they went.
 
 from datetime import date, datetime, timezone
 
+from core.membership_label import rendered_post_label
 from database import assertions, posts
 from database.change_logs import record_change
 from database.database import get_pool
@@ -38,6 +39,10 @@ LABEL_IS_HUMAN_SET = f"""COALESCE((
 
 class UnknownPost(Exception):
     """The post id does not exist."""
+
+
+class NothingToAssign(Exception):
+    """They already hold that post under that label."""
 
 
 async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) -> None:
@@ -164,22 +169,6 @@ async def close_absent(
 async def list_for_jurisdiction(
     cur, jurisdiction_ocdid: str, as_of: date | None = None
 ) -> list[dict]:
-    """Memberships with the post they sit on and who holds it — the person-axis read.
-
-    Ordered by person, because that is the axis: the post-axis read already groups the other
-    way. `person_name` is joined in for the same reason the change-log payloads carry it —
-    an id does not render.
-
-    `as_of` selects on the membership's own interval — open at `first_seen_at`, closed at
-    `closed_at` — which is the honest "did they hold it then". None is now, which is
-    `closed_at IS NULL`. The posts read is undated: a post is stable, and every one of them
-    belongs in the answer whatever date is asked about.
-
-    `source_labels` rides along with `designations` and `unmatched_text` because together with
-    the post's role and division they are the whole parse: what the source said, and every
-    piece the parser turned it into. That is the answer to "why is this person in this post",
-    and it is not reconstructable client-side without re-running the parser.
-    """
     await cur.execute(
         """
         SELECT m.id::text, m.person_id::text, m.post_id::text, m.label,
@@ -191,10 +180,12 @@ async def list_for_jurisdiction(
                m.first_seen_at, m.closed_at, m.last_seen_at,
                pe.name AS person_name,
                m.source_labels, m.designations, m.unmatched_text,
-               p.role_id, p.division_ocdid, p.label AS post_label
+               p.role_id, p.division_ocdid, p.label AS post_label,
+               r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN people pe ON pe.id = m.person_id
+        JOIN roles r ON r.id = p.role_id
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
           AND m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
           AND (m.closed_at IS NULL OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
@@ -203,7 +194,16 @@ async def list_for_jurisdiction(
         {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of},
     )
     columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
+    return [
+        {
+            **row,
+            "post_label": rendered_post_label(
+                row["post_label"], row["role_label"], row["division_ocdid"]
+            ),
+        }
+        for row in rows
+    ]
 
 
 async def list_by_person(
@@ -280,9 +280,11 @@ async def open_by_jurisdiction(
     await cur.execute(
         """
         SELECT p.jurisdiction_ocdid, m.person_id::text, m.post_id::text,
-               p.role_id, p.division_ocdid, p._is_tracked AS is_tracked
+               p.role_id, p.division_ocdid, p._is_tracked AS is_tracked,
+               p.label AS post_label, r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
+        JOIN roles r ON r.id = p.role_id
         WHERE p.jurisdiction_ocdid = ANY(%s) AND m.closed_at IS NULL
         """,
         (jurisdiction_ocdids,),
@@ -295,16 +297,37 @@ async def open_by_jurisdiction(
     return grouped
 
 
-async def update_label(cur, membership_id: str, label: str | None) -> bool:
+async def set_label(
+    cur, membership_id: str, label: str | None, user_id: str | None = None
+) -> None:
     """Name this person's post, or clear it back to the derived guess.
 
-    The only human-owned field on a membership, hence the one write outside `upsert`.
+    `user_id` records that a human owns the value, which is what stops the next scrape
+    overwriting it — writing the column without that is how a reviewer's choice silently
+    reverts. Omitted only where the caller is not a person.
     """
     await cur.execute(
         "UPDATE memberships SET label = %s WHERE id::text = %s",
         (label, membership_id),
     )
-    return cur.rowcount > 0
+    if user_id is None:
+        return
+    if label is None:
+        await assertions.withdraw(
+            cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD
+        )
+        return
+    await assertions.upsert(
+        cur,
+        Assertion(
+            entity_type=EntityType.MEMBERSHIP,
+            entity_id=membership_id,
+            field_path=LABEL_FIELD,
+            kind=AssertionKind.ACCEPT,
+            value=label,
+        ),
+        user_id,
+    )
 
 
 async def open_for_person(cur, person_id: str, organization_id: str) -> dict | None:
@@ -331,46 +354,9 @@ async def _person_name(cur, person_id: str) -> str:
     return (row[0] if row else None) or person_id
 
 
-async def _assert_label(
-    cur, membership_id: str, label: str | None, user_id: str
-) -> None:
-    """Record that a human set this label, so the next scrape leaves it alone.
-
-    Clearing withdraws instead of storing a blank. **This changed with 137**: it used to
-    retract, handing the name back to the derivation. It now means the label is empty, and
-    stays empty, because a withdrawal and an assertion of nothing are the same row once `value`
-    is NOT NULL — and of the two readings, "the human wanted it blank" is the one their action
-    actually expressed.
-    """
-    if label is None:
-        await assertions.withdraw(cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD)
-        return
-    await assertions.upsert(
-        cur,
-        Assertion(
-            entity_type=EntityType.MEMBERSHIP,
-            entity_id=membership_id,
-            field_path=LABEL_FIELD,
-            kind=AssertionKind.ACCEPT,
-            value=label,
-        ),
-        user_id,
-    )
-
-
 async def assign(
     person_id: str, post_id: str, label: str | None, user_id: str | None = None
 ) -> dict:
-    """Assign this person, moving them off any other post in the same body.
-
-    A *transition*, always: a different post closes the old membership and opens a new one, so
-    "who held that post in June" still answers.
-
-    Returns `{"membership_id", "moved_from"}` so the caller can say which happened.
-
-    Re-assigning to the post they already hold only sets the label — going through `upsert`
-    would blank `designations` and `unmatched_text` until the next scrape re-derives them.
-    """
     last_seen_at = datetime.now(timezone.utc)
 
     pool = await get_pool()
@@ -383,22 +369,18 @@ async def assign(
         current = await open_for_person(cur, person_id, organization_id)
 
         if current and current["post_id"] == post_id:
-            await update_label(cur, current["id"], label)
-            if user_id:
-                await _assert_label(cur, current["id"], label, user_id)
+            if (current["label"] or None) == (label or None):
+                raise NothingToAssign(post_id)
             result = {"membership_id": current["id"], "moved_from": None}
         else:
-            membership_id = await upsert(
-                cur, person_id, post_id, organization_id, last_seen_at
-            )
-            if label is not None:
-                await update_label(cur, membership_id, label)
-                if user_id:
-                    await _assert_label(cur, membership_id, label, user_id)
             result = {
-                "membership_id": membership_id,
+                "membership_id": await upsert(
+                    cur, person_id, post_id, organization_id, last_seen_at
+                ),
                 "moved_from": current["post_id"] if current else None,
             }
+
+        await set_label(cur, result["membership_id"], label, user_id)
 
         await record_change(
             cur,

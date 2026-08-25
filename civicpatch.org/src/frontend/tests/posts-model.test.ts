@@ -215,12 +215,12 @@ describe("postName", () => {
     expect(postName({ ...base, label: null, post_label: "Post Label" })).toBe("Post Label");
   });
 
-  it("falls back to role and division when nobody has named it", () => {
-    // ", " not " · ": this is the fallback for `post_label`, which the backend builds with
-    // `derive_label` ("Council Member, District 3"). A fallback that reads differently from a
-    // real label would make it obvious which posts nobody has named — which is not the point.
-    expect(postName({ ...base, label: null, post_label: null })).toBe(
-      "council-member, Ward 2",
+  it("reads the label the server rendered, composing nothing", () => {
+    // A post nobody named is named by `core.membership_label.rendered_post_label` before it
+    // reaches here. Composing a fallback client-side is what leaked "council-member, Ward 2" —
+    // a role slug — into the UI, because this path never had the role's label to use.
+    expect(postName({ ...base, label: null, post_label: "Council Member, Ward 2" })).toBe(
+      "Council Member, Ward 2",
     );
   });
 });
@@ -472,10 +472,10 @@ describe("postsHeld", () => {
       ]),
     ).toBe("Council Member, At-Large, Seat 3"));
 
-  it("falls back to the role's label, never its slug, when the post has no name", () =>
-    // "council-member, District 5" is an id leaking into the UI. Every prod post carries
-    // `post_label` from `derive_label`; this is what a post with none should still read as.
-    expect(postsHeld([held({ role_label: "Council Member" })])).toBe(
+  it("takes the post label as given, never rebuilding it", () =>
+    // Every payload carries `post_label` rendered by `derive_label`, including for a post
+    // nobody named. Rebuilding it here is the duplication this removed.
+    expect(postsHeld([held({ post_label: "Council Member, District 5" })])).toBe(
       "Council Member, District 5",
     ));
 

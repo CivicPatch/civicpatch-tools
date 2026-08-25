@@ -30,7 +30,7 @@ def client():
 @pytest.mark.unit
 def test_list_directory_returns_paginated_data(client):
     with patch(
-        "database.people.get_all_people_for_jurisdiction",
+        "database.people.get_people_page",
         new_callable=AsyncMock,
         return_value=(2, [{"id": "p-1", "name": "Jane Doe"}, {"id": "p-2", "name": "John Smith"}]),
     ):
@@ -47,7 +47,7 @@ def test_list_directory_returns_paginated_data(client):
 @pytest.mark.unit
 def test_list_directory_empty_returns_zero(client):
     with patch(
-        "database.people.get_all_people_for_jurisdiction",
+        "database.people.get_people_page",
         new_callable=AsyncMock,
         return_value=(0, []),
     ):

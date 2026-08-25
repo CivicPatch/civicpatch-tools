@@ -189,7 +189,12 @@ async def fetch_export_data(
     existing_by_ocdid: dict[str, list] = {}
     if unique_ocdids:
         results = await asyncio.gather(
-            *[database.people.get_people_by_jurisdiction_ocdid(ocdid) for ocdid in unique_ocdids]
+            *[
+                database.people.get_people(
+                    jurisdiction_ocdid=ocdid, status=database.people.ACTIVE_STATUS
+                )
+                for ocdid in unique_ocdids
+            ]
         )
         existing_by_ocdid = dict(zip(unique_ocdids, results))
 
@@ -197,7 +202,9 @@ async def fetch_export_data(
 
 
 async def fetch_people_export_rows(state: str) -> list[dict]:
-    people = await database.people.get_people_by_state(state)
+    people = await database.people.get_people(
+        state=state, status=database.people.ACTIVE_STATUS
+    )
     rows = []
     for p in people:
         office = p.get("office") or {}

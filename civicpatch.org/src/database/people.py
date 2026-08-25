@@ -1,28 +1,18 @@
 import logging
 from typing import Any, List, LiteralString
 
+from core.membership_label import rendered_post_label
 from database.database import get_pool
 from psycopg import sql
 from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
 
-# `office` is a view over memberships, never a column — role and division already live there.
+# A view over memberships, never a column. `source_labels`, NOT `roles.label` or `posts.label`:
+# those are the canonical role, and either would have silently reworded ~4,500 dev people.
 #
-# `source_labels` joined with " - ", which is the join `office_name_to_labels` splits back
-# apart. NOT `roles.label` or `posts.label`: those are the *canonical* role, a different value,
-# and measured against dev either would have silently reworded ~4,500 people. 78% and 67%
-# respectively — close enough to look right in a spot check.
-#
-# A retired person falls back to the last post they held, so the office does not blank out the
-# day their membership closes. `PERSON_MEMBERSHIPS` deliberately does not do this — "where do
-# they serve" is present tense — but `office` is the one line a card prints, and a councilmember
-# who left in March still reads better as their seat than as nothing.
-#
-# Still open first, then most recent. This replaced a `people.data->'office'` fallback and was
-# the last reader of that column.
-#
-# Unaliased, so a caller cannot be required to spell `people` any particular way.
+# Open first, then most recent — a retired person keeps their last seat rather than blanking out
+# the day their membership closes. Unaliased, so a caller need not spell `people` any one way.
 PERSON_OFFICE = """(
     SELECT jsonb_build_object(
         'name', array_to_string(memberships.source_labels, ' - '),
@@ -33,16 +23,8 @@ PERSON_OFFICE = """(
     LIMIT 1
 )"""
 
-# Where a person serves, inline. Plural because the schema already allows it: the unique index
-# is one *open* membership per organization, and a jurisdiction can have several bodies. Every
-# person holds exactly one post today (20,644 of 20,644 on dev), so `office` was accurate — but
-# it was singular by accident, not by rule.
-#
-# Open memberships only. "Where do they serve" is present tense; the history is the memberships
-# read with `?as_of`, which windows on `first_seen_at`/`closed_at`.
-#
-# `source_labels` rides along because it is what `office.name` always was — the source's own
-# words — and the readers replacing `office` need it to say the same thing they say today.
+# Plural because the schema allows it: the unique index is one *open* membership per
+# organization. Open only — the history is the memberships read with `?as_of`.
 PERSON_MEMBERSHIPS = """COALESCE((
     SELECT jsonb_agg(jsonb_build_object(
         'post_id', posts.id::text,
@@ -60,9 +42,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
 ), '[]'::jsonb)"""
 
 
-# What the source called this person, as a list. The same words `data_json` carries as
-# `labels` on a proposed record — which is what lets the review card diff the two sides on one
-# key instead of on a string we joined.
+# The same words `data_json` carries as `labels`, so the review card diffs both sides on one key.
 # `source_label`, not `label`: `memberships.label` exists, so the bare alias is ambiguous.
 PERSON_LABELS = """COALESCE((
     SELECT jsonb_agg(DISTINCT source_label)
@@ -71,11 +51,8 @@ PERSON_LABELS = """COALESCE((
 ), '[]'::jsonb)"""
 
 
-# One person, in the shape `data` has always had, assembled from columns instead.
-#
-# Verified against all 20,712 dev rows: byte-identical to `data`, `office` and the ISO
-# `updated_at` included. That equality is the point — readers move without their callers
-# noticing, and the flat shape becomes a separate, later decision.
+# The shape `data` had, assembled from columns. Verified byte-identical across all 20,712 dev
+# rows, so readers moved without their callers noticing.
 PERSON_JSON = f"""jsonb_build_object(
     'id', people.id::text,
     'name', people.name,
@@ -96,9 +73,8 @@ PERSON_JSON = f"""jsonb_build_object(
 )"""
 
 
-# The people side of the review card. Columns since 134; `office` is the memberships view.
-# Its twin below still reads `data_json`, because that is a *proposed* roster from the
-# pipeline, not a row — the two must keep emitting the same KEYS or the card cannot diff them.
+# The people side of the review card. Its twin below reads `data_json` — a *proposed* roster,
+# not a row — and the two must emit the same KEYS or the card cannot diff them.
 _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "people.id::text"),
     "name": ("'name'", "people.name"),
@@ -116,8 +92,7 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
 _RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "elem->>'id'"),
     "name": ("'name'", "elem->>'name'"),
-    # The proposed roster carries `labels` directly since the records flip; `office` is the
-    # joined string it is replacing, still projected while readers move.
+    # `office` is the joined string `labels` replaces, still projected while readers move.
     "labels": ("'labels'", "COALESCE(elem->'labels', '[]'::jsonb)"),
     "office": (
         "'office'",
@@ -168,24 +143,74 @@ def _build_jsonb_obj(
     return sql.SQL("jsonb_build_object({})").format(sql.SQL(", ").join(pairs))
 
 
-async def get_people_by_jurisdiction_ocdid(
-    jurisdiction_ocdid: str,
-) -> list[dict[str, Any]]:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        async with conn.cursor() as cur:
-            await cur.execute(
-                f"""
-                SELECT {PERSON_JSON}
-                FROM people
-                WHERE jurisdiction_ocdid = %s
-                  AND status = 'active'
-                """,
-                (jurisdiction_ocdid,),
-            )
-            rows = await cur.fetchall()
+def labelled(person: dict) -> dict:
+    return {
+        **person,
+        "memberships": [
+            {
+                **membership,
+                "post_label": rendered_post_label(
+                    membership["post_label"],
+                    membership["role_label"],
+                    membership["division_ocdid"],
+                ),
+            }
+            for membership in person.get("memberships") or []
+        ],
+    }
 
-    return [row[0] for row in rows]
+
+ACTIVE_STATUS = "active"
+
+
+class UnscopedRead(Exception):
+    """A read with no jurisdiction and no state would return every person we hold."""
+
+
+async def get_people(
+    jurisdiction_ocdid: str | None = None,
+    state: str | None = None,
+    status: str | None = None,
+) -> list[dict]:
+    if jurisdiction_ocdid is None and state is None:
+        raise UnscopedRead("pass a jurisdiction_ocdid or a state")
+
+    state_prefix = (
+        f"ocd-jurisdiction/country:us/state:{state.lower()}%" if state else None
+    )
+    matches: list[tuple[LiteralString, Any]] = [
+        ("jurisdiction_ocdid = %s", jurisdiction_ocdid),
+        ("jurisdiction_ocdid LIKE %s", state_prefix),
+        ("status = %s", status),
+    ]
+    asked: list[tuple[LiteralString, Any]] = [
+        (clause, value) for clause, value in matches if value is not None
+    ]
+
+    people: list[dict] = []
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT {PERSON_JSON} FROM people
+            WHERE {" AND ".join(clause for clause, _ in asked)}
+            ORDER BY jurisdiction_ocdid
+            """,
+            tuple(value for _, value in asked),
+        )
+        while True:
+            batch = await cur.fetchmany(200)
+            if not batch:
+                break
+            people.extend(labelled(row[0]) for row in batch)
+    return people
+
+
+async def get_person_models(
+    jurisdiction_ocdid: str, status: str | None = None
+) -> List[Person]:
+    people = await get_people(jurisdiction_ocdid=jurisdiction_ocdid, status=status)
+    return [Person(**person) for person in people]
 
 
 async def get_people_data_by_request_ids(
@@ -254,29 +279,14 @@ async def filter_existing_person_ids(ids: list[str]) -> list[str]:
     return [row[0] for row in rows]
 
 
-# `past` = absent from the open-data file, so publishing them fails validation.
-async def get_jurisdiction_people(jurisdiction_ocdid: str) -> list[dict]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-                SELECT {PERSON_JSON} FROM people
-                WHERE jurisdiction_ocdid = %s AND status = 'active'
-            """,
-            (jurisdiction_ocdid,),
-        )
-        rows = await cur.fetchall()
-    return [row[0] for row in rows]
-
-
-async def get_all_people_for_jurisdiction(
+async def get_people_page(
     jurisdiction_ocdid: str, limit: int, offset: int
 ) -> tuple[int, list[dict]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT COUNT(*) OVER(), people.id::text, {PERSON_JSON}, people.status
+            SELECT COUNT(*) OVER(), {PERSON_JSON}, people.status
             FROM people
             WHERE jurisdiction_ocdid = %s
             ORDER BY
@@ -290,7 +300,7 @@ async def get_all_people_for_jurisdiction(
     if not rows:
         return 0, []
     total = rows[0][0]
-    return total, [{**row[2], "_id": row[1], "status": row[3]} for row in rows]
+    return total, [{**labelled(row[1]), "status": row[2]} for row in rows]
 
 
 async def delete_person(person_id: str) -> None:
@@ -302,8 +312,6 @@ async def delete_person(person_id: str) -> None:
         )
 
 
-# The columns 134 split out of `data`. Named here so the row builder and the statement below
-# cannot drift — they are the two halves of one contract.
 _PERSON_COLUMNS = (
     "name",
     "other_names",
@@ -318,12 +326,8 @@ _PERSON_COLUMNS = (
 )
 _LIST_COLUMNS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
 
-# One statement for both writers. It was copied in `publications` before 134, and doubling a
+# One statement for both writers — it was copied in `publications` before 134, and doubling a
 # ten-column write is how the two quietly stop agreeing.
-#
-# The columns are the record now. `data` was authoritative until 134 split it out and every
-# reader moved; writing it after that would keep a second copy nothing consults, which is how
-# the two halves start disagreeing without anybody noticing.
 PERSON_UPSERT = f"""
     INSERT INTO people (id, jurisdiction_ocdid, updated_at, status, {", ".join(_PERSON_COLUMNS)})
     VALUES (%(id)s, %(jurisdiction_ocdid)s, %(updated_at)s, 'active',
@@ -335,14 +339,7 @@ PERSON_UPSERT = f"""
 """
 
 
-def people_rows(people: list[dict]) -> list[dict]:
-    """Shape parsed person dicts into the rows `people` stores.
-
-    Named rather than positional: thirteen values in a tuple is a column/value misalignment
-    waiting to happen, and the columns arrived all at once in 134.
-
-    `office` is not among them — role and division live on posts/memberships.
-    """
+def person_upsert_params(people: list[dict]) -> list[dict]:
     return [
         {
             "id": person.get("id"),
@@ -363,7 +360,7 @@ async def bulk_update_people(people: list[dict]):
     if not people:
         return
 
-    records = people_rows(people)
+    records = person_upsert_params(people)
     jurisdictions: dict = {}
     for record in records:
         jurisdictions.setdefault(record["jurisdiction_ocdid"], []).append(record["id"])
@@ -382,52 +379,3 @@ async def bulk_update_people(people: list[dict]):
                 """,
                 (jurisdiction_ocdid, incoming_ids),
             )
-
-
-async def get_people_for_jurisdiction(
-    jurisdiction_ocdid: str, status: str | None = None
-) -> List[Person]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        if status is not None:
-            await cur.execute(
-                f"""
-                SELECT {PERSON_JSON} FROM people
-                WHERE jurisdiction_ocdid = %s AND status = %s
-                """,
-                (jurisdiction_ocdid, status),
-            )
-        else:
-            await cur.execute(
-                f"""
-                SELECT {PERSON_JSON} FROM people
-                WHERE jurisdiction_ocdid = %s
-                """,
-                (jurisdiction_ocdid,),
-            )
-        rows = await cur.fetchall()
-        people = [Person(**row[0]) for row in rows]
-    return people
-
-
-async def get_people_by_state(state: str) -> list[dict]:
-    state_prefix = f"ocd-jurisdiction/country:us/state:{state.lower()}%"
-    pool = await get_pool()
-    rows = []
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            SELECT jurisdiction_ocdid, {PERSON_JSON}
-            FROM people
-            WHERE jurisdiction_ocdid LIKE %s
-              AND status = 'active'
-            ORDER BY jurisdiction_ocdid
-            """,
-            (state_prefix,),
-        )
-        while True:
-            batch = await cur.fetchmany(200)
-            if not batch:
-                break
-            rows.extend(batch)
-    return [{"jurisdiction_ocdid": r[0], **r[1]} for r in rows]

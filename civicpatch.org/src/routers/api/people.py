@@ -41,7 +41,9 @@ def get_router() -> APIRouter:
     async def list_people_endpoint(
         jurisdiction_ocdid: str,
     ):
-        people = await database.get_jurisdiction_people(jurisdiction_ocdid)
+        people = await database.get_people(
+            jurisdiction_ocdid=jurisdiction_ocdid, status=database.ACTIVE_STATUS
+        )
         return {
             "data": people
         }
@@ -54,7 +56,7 @@ def get_router() -> APIRouter:
         ),
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        people = await database.get_people_for_jurisdiction(
+        people = await database.get_person_models(
             jurisdiction_ocdid, status=status
         )
         return {"data": people}
@@ -85,7 +87,7 @@ def get_router() -> APIRouter:
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         offset = (page - 1) * per_page
-        total, people = await database.get_all_people_for_jurisdiction(jurisdiction_ocdid, per_page, offset)
+        total, people = await database.get_people_page(jurisdiction_ocdid, per_page, offset)
         return {
             "total_items": total,
             "page": page,
@@ -98,7 +100,7 @@ def get_router() -> APIRouter:
         request: PeopleBatchResolveRequest,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
-        people = await database.get_people_for_jurisdiction(request.jurisdiction_ocdid)
+        people = await database.get_person_models(request.jurisdiction_ocdid)
         identities = shared.utils.name_utils.person_list_to_identities(people)
 
         people_to_resolve = [p.model_dump() for p in request.people]

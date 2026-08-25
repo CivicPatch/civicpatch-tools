@@ -12,6 +12,7 @@ from enum import Enum
 
 from pydantic import BaseModel
 
+from core.membership_label import rendered_post_label
 from core.post_derivation import DerivedPost
 
 
@@ -26,7 +27,9 @@ class ExistingMembership(BaseModel):
     person_id: str
     post_id: str
     role_id: str
+    role_label: str = ""
     division_ocdid: str
+    post_label: str | None = None
     # `posts._is_tracked`. A roster omitting an untracked post means nothing, so its holder
     # going missing is recorded but never queued for a human.
     is_tracked: bool = True
@@ -36,10 +39,9 @@ class ProposedChange(BaseModel):
     person_id: str
     disposition: Disposition
     role_id: str
-    # Empty for an absence: that change is sourced from a membership we hold, which knows the
-    # post's role id but not the taxonomy's label for it.
     role_label: str = ""
     division_ocdid: str
+    post_label: str
     label: str | None = None
     # Where they were, for a move or a disappearance.
     from_post_id: str | None = None
@@ -81,6 +83,9 @@ def propose(
                     role_id=post.role_id,
                     role_label=post.role_label,
                     division_ocdid=post.division_ocdid,
+                    post_label=rendered_post_label(
+                        None, post.role_label, post.division_ocdid
+                    ),
                     label=member.label,
                     from_post_id=held.post_id
                     if held and disposition is Disposition.MOVED
@@ -95,7 +100,11 @@ def propose(
             person_id=row.person_id,
             disposition=Disposition.ABSENT,
             role_id=row.role_id,
+            role_label=row.role_label,
             division_ocdid=row.division_ocdid,
+            post_label=rendered_post_label(
+                row.post_label, row.role_label, row.division_ocdid
+            ),
             from_post_id=row.post_id,
             is_tracked=row.is_tracked,
         )
@@ -110,10 +119,7 @@ def surfaces_for_review(change: ProposedChange) -> bool:
 
 
 def still_held(changes: list[ProposedChange]) -> list[str]:
-    """Who the scrape found exactly where we already hold them.
 
-    Only `unchanged`: someone who moved is not still where their open membership says.
-    """
     return [
         change.person_id
         for change in changes
@@ -122,11 +128,6 @@ def still_held(changes: list[ProposedChange]) -> list[str]:
 
 
 def still_listed(changes: list[ProposedChange]) -> list[str]:
-    """Who the scrape still names, whatever seat it puts them on.
-
-    `is_tracked` is deliberately not consulted; what it should gate is undecided, and a half
-    wired flag is worse than an unused one.
-    """
     return [
         change.person_id
         for change in changes
@@ -135,9 +136,4 @@ def still_listed(changes: list[ProposedChange]) -> list[str]:
 
 
 def nothing_to_review(changes: list[ProposedChange]) -> bool:
-    """Whether this proposal asks a human nothing.
-
-    An empty proposal is a failed scrape rather than a quiet one, so `changes` must be
-    non-empty.
-    """
     return bool(changes) and not any(surfaces_for_review(change) for change in changes)

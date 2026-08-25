@@ -14,7 +14,7 @@ from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
-from database.people import PERSON_UPSERT, people_rows
+from database.people import PERSON_UPSERT, person_upsert_params
 from database.pipeline_runs import run_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
@@ -213,7 +213,7 @@ async def publish_request(
         await _refuse_if_superseded(cur, request_id, jurisdiction_ocdid, last_seen_at)
 
         stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
-        rows = people_rows(
+        rows = person_upsert_params(
             [
                 with_stated_values(person, stated.get(str(person["id"]), {}))
                 for person in people

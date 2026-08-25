@@ -57,6 +57,7 @@ describe("personEditorPropsFor — subtitle", () => {
               division_ocdid:
                 "ocd-division/country:us/state:wa/place:x/council_district:5",
               label: null,
+              post_label: "Council Member, District 5",
             },
           ]),
         },
@@ -113,11 +114,12 @@ describe("personEditorPropsFor — subtitle", () => {
               role_label: "Mayor",
               division_ocdid: "ocd-division/country:us/state:wa/place:x",
               label: null,
+              post_label: "Mayor, At-Large",
             },
           ]),
         },
       ),
-      // "At-Large" because a proposal carries no `post_label` to use instead — the post may
-      // not exist yet. The point is that it says Mayor and not Council Member.
+      // The proposal carries its own rendered label, because the post may not exist yet for
+      // anyone to look one up. The point is that it says Mayor and not Council Member.
     ).toBe("Mayor, At-Large"));
 });

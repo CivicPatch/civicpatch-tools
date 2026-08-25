@@ -10,8 +10,10 @@ import {
 } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import {
+  DEFAULT_ROLE,
   ROLES_META,
   getRoleMeta,
+  roleRank,
   type RoleKey,
   type RoleMeta,
 } from "./roles-meta.js";
@@ -24,11 +26,6 @@ import "./admin-page.css";
 
 const SELF_LOCK_TOOLTIP = "To change your own role, use `mise run grant_role`.";
 const TOAST_TIMEOUT_MS = 10_000;
-
-const DEFAULT_ROLE = "default";
-// Ladder order for "what's filled" + "what's the level just below" logic.
-// Mirrors schemas/common.py:_ROLE_RANK.
-const LADDER: readonly RoleKey[] = ROLES_META.map((m) => m.key);
 
 type AdminUser = {
   id: string;
@@ -45,13 +42,6 @@ type PendingInvite = {
   email: string | null;
   invited_at: string | null;
 };
-
-// Rank of a role on the ladder. default=0, contributors=1, ..., admins=3.
-function rolePos(role: string): number {
-  if (role === DEFAULT_ROLE) return 0;
-  const idx = LADDER.indexOf(role as RoleKey);
-  return idx === -1 ? 0 : idx + 1;
-}
 
 // Only the chip matching the user's exact current role is filled.
 // Users at `default` have no chips filled.
@@ -79,7 +69,7 @@ function changedMessage(
   const who = user.email ?? user.display_name ?? "user";
   const fromLabel = getRoleMeta(fromRole)?.label ?? "default";
   const toLabel = getRoleMeta(toRole)?.label ?? "default";
-  if (rolePos(toRole) > rolePos(fromRole)) {
+  if (roleRank(toRole) > roleRank(fromRole)) {
     return `Promoted ${who} to ${toLabel}`;
   }
   return `Demoted ${who} from ${fromLabel} to ${toLabel}`;
