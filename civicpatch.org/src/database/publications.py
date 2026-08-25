@@ -35,7 +35,7 @@ async def dismiss_request(
     """This scrape will not go live — a reviewer said so, or the run was cancelled.
 
     The counterpart to publishing, and the other way a request leaves the review queue. Not a
-    failure: a dismissed scrape keeps its evidence and its data_json, it just never published.
+    failure: a dismissed scrape keeps its evidence, it just never published.
 
     `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
     `COALESCE` means a later human resolution is never overwritten by a machine one.
@@ -173,21 +173,19 @@ async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | No
     """
     if not resolved_by_user_id:
         return
-    await assertions.upsert_many(
-        cur,
-        [
-            Assertion(
-                entity_type=EntityType.PERSON,
-                entity_id=row["id"],
-                field_path=field,
-                kind=AssertionKind.ACCEPT,
-                value=value,
+    for row in rows:
+        for field, value in values_to_accept(row):
+            await assertions.upsert(
+                cur,
+                Assertion(
+                    entity_type=EntityType.PERSON,
+                    entity_id=row["id"],
+                    field_path=field,
+                    kind=AssertionKind.ACCEPT,
+                    value=value,
+                ),
+                resolved_by_user_id,
             )
-            for row in rows
-            for field, value in values_to_accept(row)
-        ],
-        resolved_by_user_id,
-    )
 
 
 async def publish_request(

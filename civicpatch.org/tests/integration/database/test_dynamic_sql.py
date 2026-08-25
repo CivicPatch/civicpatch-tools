@@ -124,33 +124,17 @@ async def test_get_issues_page_with_issue_types():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_people_data_by_request_ids_empty_inputs():
-    result = await db_people.get_people_data_by_request_ids(
-        jurisdiction_ocdids=[],
-        request_ids=[],
-    )
-    assert isinstance(result, dict)
+async def test_get_people_by_jurisdictions_empty_inputs():
+    assert await db_people.get_people_by_jurisdictions([]) == {}
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_people_data_by_request_ids_quick_view():
-    result = await db_people.get_people_data_by_request_ids(
-        jurisdiction_ocdids=["ocd-jurisdiction/country:us/state:ca/place:oakland/government"],
-        request_ids=["00000000-0000-0000-0000-000000000000"],
-        view="quick",
-    )
-    assert isinstance(result, dict)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_people_data_by_request_ids_detail_view():
-    """Exercises the detail field set (larger projection)."""
-    result = await db_people.get_people_data_by_request_ids(
-        jurisdiction_ocdids=["ocd-jurisdiction/country:us/state:ca/place:oakland/government"],
-        request_ids=["00000000-0000-0000-0000-000000000000"],
-        view="detail",
+@pytest.mark.parametrize("view", ["quick", "detail"])
+async def test_get_people_by_jurisdictions_builds_each_projection(view):
+    """Both field sets are spliced into the SELECT, so both need real Postgres to parse."""
+    result = await db_people.get_people_by_jurisdictions(
+        ["ocd-jurisdiction/country:us/state:ca/place:oakland/government"], view=view
     )
     assert isinstance(result, dict)
 
@@ -365,13 +349,6 @@ async def test_get_pipeline_run_status_not_found():
 @pytest.mark.integration
 async def test_get_pipeline_run_github_run_id_not_found():
     result = await db_jobs.get_pipeline_run_github_run_id(_FAKE_UUID)
-    assert result is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_pipeline_run_data_json_not_found():
-    result = await db_jobs.get_pipeline_run_data_json(_FAKE_UUID)
     assert result is None
 
 

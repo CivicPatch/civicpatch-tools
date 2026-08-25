@@ -10,7 +10,6 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
-from database.pipeline_runs import update_pipeline_run_data
 from database.publications import publish_request
 from database.requests import supersede_stacked_requests
 
@@ -80,14 +79,21 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, data_json,
-                                  updated_at)
-            VALUES ('people', %s, '{}'::jsonb, %s::jsonb, %s::timestamptz)
+            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, updated_at)
+            VALUES ('people', %s, '{}'::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
-            (ocdid, f'[{{"id": "{uuid.uuid4()}"}}]', updated_at),
+            (ocdid, updated_at),
         )
         request_id = (await cur.fetchone())[0]
+        # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
+        await cur.execute(
+            """
+            INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url)
+            VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council')
+            """,
+            (request_id, ocdid),
+        )
         await cur.execute(
             """
             INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
@@ -193,14 +199,20 @@ async def test_a_reviewer_edit_does_not_outrank_a_newer_scrape():
     Work in progress is protected by the held-card exclusion instead, which is time-boxed —
     an edit made and abandoned must not shield a stale roster forever.
 
-    Goes through `update_pipeline_run_data` because that is what the reviewer's save calls: it
-    bumps `requests.updated_at`, and the point is that ordering ignores it.
+    `requests.updated_at` is bumped directly rather than through a save: a save writes
+    `assertions` and touches no `requests` column at all now, so what is pinned here is the
+    ordering rule — whatever moves that column, ordering ignores it.
     """
     await _jurisdiction()
     edited = await _request(_OLD)
     later_scrape = await _request(_NEW)
 
-    await update_pipeline_run_data(edited, [{"id": str(uuid.uuid4())}])
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE requests SET updated_at = now() WHERE id::text = %s", (edited,)
+        )
+        await conn.commit()
 
     assert await supersede_stacked_requests() == [edited]
     assert (await _dismissed_at(later_scrape))[0] is None

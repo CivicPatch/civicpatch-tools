@@ -43,7 +43,6 @@ class CreateRegisterRequest(BaseModel):
 
 class PostResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
-    data: Optional[Any] = None
 
 
 # ──────────────────────────────────────────────

@@ -369,11 +369,6 @@
     color: var(--pico-primary);
 }
 
-.issues-page__modal-source-people {
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
-}
-
 .issues-page__modal-source-toggle {
     font-size: var(--text-sm);
     color: var(--pico-primary);

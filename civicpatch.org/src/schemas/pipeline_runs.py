@@ -69,7 +69,6 @@ class UpdatePipelineRunStatusResponse(BaseModel):
 
 class PostPipelineRunResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
-    data: Optional[Any] = None
 
 
 # ── POST /api/v1/pipeline_runs/{request_id}/submit (internal) ────────────────
@@ -128,4 +127,3 @@ class CreateRegisterRequest(BaseModel):
 
 class PostResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
-    data: Optional[Any] = None

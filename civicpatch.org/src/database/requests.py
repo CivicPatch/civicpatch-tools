@@ -61,7 +61,7 @@ DISMISSED_UNCHANGED = "unchanged"
 # aliased `r`; callers share this one definition instead of re-spelling it.
 #
 AVAILABLE_FOR_REVIEW = (
-    "r.data_json IS NOT NULL "
+    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.request_id = r.id) "
     "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
     "AND NOT EXISTS ("
@@ -263,26 +263,18 @@ async def get_request_jurisdiction(request_id: str) -> str | None:
     return row[0] if row else None
 
 
-async def get_request_rosters(request_ids: list[str]) -> dict[str, dict]:
-    """The jurisdiction and full roster each request proposed, keyed by request id.
-
-    The whole stored person, not the projected one — the derivation builds `Official`s, and
-    the review projection drops fields those require.
-    """
+async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
+    """Which jurisdiction each request is about. The roster itself is derived from that
+    request's sightings, so this is all a caller needs to ask for one."""
     if not request_ids:
         return {}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text, jurisdiction_ocdid, COALESCE(data_json, '[]'::jsonb) "
-            "FROM requests WHERE id::text = ANY(%s)",
+            "SELECT id::text, jurisdiction_ocdid FROM requests WHERE id::text = ANY(%s)",
             (request_ids,),
         )
-        rows = await cur.fetchall()
-    return {
-        request_id: {"jurisdiction_ocdid": ocdid, "data_json": data}
-        for request_id, ocdid, data in rows
-    }
+        return {request_id: ocdid for request_id, ocdid in await cur.fetchall()}
 
 
 async def get_request_type(request_id: str) -> str | None:
@@ -302,7 +294,6 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
         await cur.execute(
             """
             SELECT r.id::text, r.jurisdiction_ocdid, r.arguments_json,
-                   COALESCE(r.data_json, '[]'::jsonb) AS data_json,
                    COALESCE(j.data->>'name', r.jurisdiction_ocdid) AS jurisdiction_name
             FROM requests r
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -317,8 +308,7 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
             "request_id": r[0],
             "jurisdiction_ocdid": r[1],
             "arguments_json": r[2] or {},
-            "data_json": r[3] or [],
-            "jurisdiction_name": r[4],
+            "jurisdiction_name": r[3],
         }
         for r in rows
     ]
@@ -344,7 +334,7 @@ async def get_requests_for_export(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
-            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.data_json, r.review_json
+            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.review_json
             FROM requests r
             WHERE r.jurisdiction_ocdid LIKE %s
               AND r.published_at IS NULL AND r.dismissed_at IS NULL
@@ -363,8 +353,7 @@ async def get_requests_for_export(
             "request_id": str(r[0]),
             "jurisdiction_ocdid": r[1],
             "created_at": r[2].isoformat() if r[2] else None,
-            "data_json": r[3] or [],
-            "review_json": r[4] or {},
+            "review_json": r[3] or {},
         }
         for r in rows
     ]

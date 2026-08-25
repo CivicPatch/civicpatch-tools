@@ -1,9 +1,8 @@
 import asyncio
 import database.people
 import database.requests
+from services.roster import proposed_rosters
 import lib.csv as csv_service
-import lib.github.api as github_service
-import shared.utils.id_utils
 
 PEOPLE_CSV_FIELDNAMES = [
     "jurisdiction_ocdid",
@@ -127,7 +126,7 @@ def _flatten_official(
 def _request_to_rows(request: dict, existing_people: list[dict], include_unchanged: bool) -> list[dict]:
     issues = (request["review_json"] or {}).get("issues") or []
     review_issues = " | ".join(issue["message"] for issue in issues)
-    result_data = request["data_json"] or []
+    result_data = request["proposed"] or []
 
     existing_map = {p["id"]: p for p in existing_people if p.get("id")}
     pr_map = {p["id"]: p for p in result_data if p.get("id")}
@@ -181,9 +180,11 @@ async def fetch_export_data(
 ) -> tuple[list[dict], dict[str, list]]:
     requests_data = await database.requests.get_requests_for_export(state, from_date, to_date)
 
-    uncached = [r for r in requests_data if not r["data_json"]]
-    if uncached:
-        await asyncio.gather(*[_fill_data_json(r) for r in uncached])
+    # Derived per request rather than read off the row: the roster is its sightings now, so a
+    # request can no longer be missing one and there is no GitHub branch to fall back to.
+    rosters = await proposed_rosters([r["request_id"] for r in requests_data])
+    for request in requests_data:
+        request["proposed"] = rosters.get(request["request_id"], [])
 
     unique_ocdids = list({r["jurisdiction_ocdid"] for r in requests_data})
     existing_by_ocdid: dict[str, list] = {}
@@ -224,11 +225,3 @@ async def fetch_people_export_rows(state: str) -> list[dict]:
             "updated_at": csv_service.sanitize(p.get("updated_at") or ""),
         })
     return rows
-
-
-async def _fill_data_json(r: dict) -> None:
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"])
-    data = await github_service.get_pull_request_file_yaml(
-        r["request_id"], r["jurisdiction_ocdid"], f"data/{folder}.yml"
-    )
-    r["data_json"] = data or []

@@ -9,13 +9,20 @@ predates the change. Both converge here, so nothing downstream has to know which
 Pure: rows and a taxonomy in, a roster out.
 """
 
-from core.people_derivation import derived_people
+from collections import defaultdict
+
 from shared.schemas import Person, PersonRecord
 from shared.utils.log_protocol import Log
 from shared.utils.official_fields import order_official_fields
 from shared.utils.people_utils import person_to_official, sort_people
 from shared.utils.person_id_utils import merge_forward_other_names
 from shared.utils.taxonomy import Taxonomy
+
+from core.people_derivation import (
+    canonical_name,
+    derived_people,
+    merge_records_to_person,
+)
 
 
 def roster_from_rows(
@@ -46,13 +53,88 @@ def roster_from_rows(
         return rows, {}
 
     derived = derived_people(
-        [PersonRecord(**row) for row in rows], identities, taxonomy, jurisdiction_ocdid, log
+        [PersonRecord(**row) for row in rows],
+        identities,
+        taxonomy,
+        jurisdiction_ocdid,
+        log,
     )
     records_by_name = {
         person.name: [record.model_dump() for record in records]
         for person, records in derived
     }
     return _render([person for person, _ in derived], taxonomy), records_by_name
+
+
+def roster_from_sightings(
+    sightings: list[dict],
+    published: dict[str, Person],
+    taxonomy: Taxonomy,
+    jurisdiction_ocdid: str,
+    log: Log,
+) -> list[dict]:
+    """The roster a scrape's stored sightings imply — the same document `roster_from_rows`
+    produced at ingest, rebuilt from what was kept.
+
+    Grouping is read, not re-derived: `source_record_identities` already answered who is whom,
+    and running the name matcher again could answer differently. `published` is who we already
+    hold under each resolved id, and is what `identities` was at ingest — it decides the name
+    and carries confirmed aliases forward.
+    """
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for sighting in sightings:
+        groups[sighting["person_id"]].append(sighting)
+
+    people = [
+        _person_from_sightings(
+            person_id, rows, published.get(person_id), jurisdiction_ocdid, log
+        )
+        for person_id, rows in groups.items()
+    ]
+    return _render(people, taxonomy)
+
+
+def _person_from_sightings(
+    person_id: str,
+    rows: list[dict],
+    published: Person | None,
+    jurisdiction_ocdid: str,
+    log: Log,
+) -> Person:
+    records = [PersonRecord(**row) for row in rows]
+    person = merge_records_to_person(
+        log,
+        canonical_name(published.name if published else "", records),
+        records,
+        jurisdiction_ocdid,
+    )
+    # The cdn url of the photo the merge chose, not the most frequent one — the two are a pair
+    # and picking them independently can serve a different photo than the one we credited.
+    cdn_image = next(
+        (
+            row["cdn_image"]
+            for row in rows
+            if row["image"] == person.image and row["cdn_image"]
+        ),
+        "",
+    )
+    return person.model_copy(
+        update={
+            "id": person_id,
+            "cdn_image": cdn_image,
+            "other_names": _aliases_carried_forward(person, published),
+        }
+    )
+
+
+def _aliases_carried_forward(person: Person, published: Person | None) -> list[str]:
+    """The read's half of `identified`: the scraped spellings plus the aliases a human has
+    already confirmed. Without this a name we only know from an earlier scrape is lost."""
+    if not published:
+        return person.other_names
+    return merge_forward_other_names(
+        person.name, person.other_names, published.name, published.other_names
+    )
 
 
 def identified(person: dict, resolution: dict) -> dict:
@@ -116,6 +198,7 @@ def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
         order_official_fields(
             {
                 **person_to_official(with_fallback_url(person), taxonomy).model_dump(),
+                "id": person.id,
                 "labels": with_fallback_url(person).labels,
             }
         )
@@ -123,7 +206,9 @@ def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
     ]
 
 
-def records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, list[dict]]:
+def records_by_person(
+    roster: list[dict], records_by_name: dict
+) -> dict[str, list[dict]]:
     """Rekey the records from the name they grouped on to the id that name resolved to."""
     return {
         person["id"]: records_by_name[person["name"]]

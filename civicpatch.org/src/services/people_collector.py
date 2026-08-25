@@ -23,7 +23,6 @@ from database.issues import upsert_issue
 from database.people import get_person_models
 from database.pipeline_runs import (
     run_updated_at,
-    update_pipeline_run_data,
     update_pipeline_run_review_json,
     update_pipeline_run_status,
 )
@@ -307,7 +306,6 @@ async def _ingest_roster(
     with open(data_file_path, "w") as f:
         f.write(yaml_dump(updated_data))
 
-    await update_pipeline_run_data(request.request_id, updated_data)
     await _store_source_records(
         request.request_id,
         request.jurisdiction_ocdid,

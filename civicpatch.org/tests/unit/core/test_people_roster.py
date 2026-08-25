@@ -6,6 +6,7 @@ from core.people_roster import (
     identified,
     named_like_a_person,
     roster_from_rows,
+    roster_from_sightings,
     with_fallback_url,
 )
 from shared.schemas import Person, Role, RoleConfig, RoleStatus
@@ -275,3 +276,124 @@ def test_every_sighting_is_kept_against_the_person_it_reconciled_into():
 def test_an_already_merged_roster_has_no_records_behind_it():
     """Nothing to keep: the sightings were merged before it arrived."""
     assert _records_behind([_official("Ann Lee", "Mayor")]) == {}
+
+
+# --- reading the roster back out of stored sightings ---
+
+
+def _sighting(person_id: str, name: str, label: str, **fields) -> dict:
+    return {
+        "person_id": person_id,
+        "name": name,
+        "label": label,
+        "source_url": "https://alpha.gov/council",
+        "image": None,
+        "cdn_image": None,
+        **fields,
+    }
+
+
+def _roster_back(sightings: list[dict], published=None):
+    return roster_from_sightings(
+        sightings, published or {}, TAXONOMY, JURISDICTION, MagicMock()
+    )
+
+
+@pytest.mark.unit
+def test_stored_sightings_rebuild_the_roster_ingest_produced():
+    rows = [
+        _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100"),
+        _record("Ann Lee", "Mayor Pro-Tem", email="ann@alpha.gov"),
+    ]
+    at_ingest = _reconcile(rows)
+    read_back = _roster_back(
+        [_sighting("p1", row["name"], row["label"], **{k: v for k, v in row.items()
+                                                      if k not in ("name", "label")})
+         for row in rows]
+    )
+
+    assert len(read_back) == 1
+    assert read_back[0]["office"] == at_ingest[0]["office"]
+    assert read_back[0]["phones"] == at_ingest[0]["phones"]
+    assert read_back[0]["emails"] == at_ingest[0]["emails"]
+
+
+@pytest.mark.unit
+def test_grouping_is_read_from_the_identity_not_guessed_again():
+    """Two spellings the name matcher would have to reunite. It does not run here — the
+    scrape already decided they are one person, and that answer is stored."""
+    kept = _roster_back(
+        [
+            _sighting("p1", "Bob Kettle", "Mayor"),
+            _sighting("p1", "Robert Kettle", "Mayor"),
+        ]
+    )
+    assert len(kept) == 1
+    assert kept[0]["id"] == "p1"
+
+
+@pytest.mark.unit
+def test_two_identities_stay_two_people_even_under_one_name():
+    """The mirror of the above: the identity splits as well as joins."""
+    kept = _roster_back(
+        [_sighting("p1", "Ann Lee", "Mayor"), _sighting("p2", "Ann Lee", "Council Member")]
+    )
+    assert sorted(person["id"] for person in kept) == ["p1", "p2"]
+
+
+@pytest.mark.unit
+def test_the_published_name_wins_over_what_the_pages_spelled():
+    """`published` is the read-time half of `identities` — the human's answer, taken from
+    `people` rather than from the run context."""
+    kept = _roster_back(
+        [_sighting("p1", "Katie B. Wilson", "Council Member") for _ in range(3)],
+        published={"p1": _person("Katie Wilson")},
+    )
+    assert kept[0]["name"] == "Katie Wilson"
+    assert kept[0]["other_names"] == ["Katie B. Wilson"]
+
+
+@pytest.mark.unit
+def test_confirmed_aliases_survive_a_scrape_that_never_saw_them():
+    """Every sighting spells him "Bob Kettle"; `["Robert Kettle"]` is a human's answer living
+    on the person. At ingest `identified` carries it forward — the read groups by a stored id
+    and does no matching, so without this it comes back empty."""
+    kept = _roster_back(
+        [_sighting("p1", "Bob Kettle", "Council Member")],
+        published={"p1": _person("Bob Kettle", ["Robert Kettle"])},
+    )
+    assert kept[0]["other_names"] == ["Robert Kettle"]
+
+
+@pytest.mark.unit
+def test_a_person_nobody_has_published_takes_the_most_frequent_spelling():
+    kept = _roster_back(
+        [
+            _sighting("p1", "Bob Kettle", "Mayor"),
+            _sighting("p1", "Robert Kettle", "Mayor"),
+            _sighting("p1", "Bob Kettle", "Mayor"),
+        ]
+    )
+    assert kept[0]["name"] == "Bob Kettle"
+
+
+@pytest.mark.unit
+def test_the_photo_and_its_cdn_url_come_from_the_same_sighting():
+    """Merging them independently can credit one page for a photo served from another."""
+    kept = _roster_back(
+        [
+            _sighting("p1", "Ann Lee", "Mayor",
+                      image="https://alpha.gov/a.png", cdn_image="https://cdn/a.png"),
+            _sighting("p1", "Ann Lee", "Council Member",
+                      image="https://alpha.gov/a.png", cdn_image="https://cdn/a.png"),
+            _sighting("p1", "Ann Lee", "Mayor Pro-Tem",
+                      image="https://alpha.gov/b.png", cdn_image="https://cdn/b.png"),
+        ]
+    )
+    assert kept[0]["image"] == "https://alpha.gov/a.png"
+    assert kept[0]["cdn_image"] == "https://cdn/a.png"
+
+
+@pytest.mark.unit
+def test_no_sightings_is_not_an_error():
+    assert _roster_back([]) == []

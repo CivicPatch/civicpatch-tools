@@ -211,6 +211,47 @@ async def test_stating_a_scalar_field_twice_replaces_rather_than_accumulates():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
+    """A save recomputes a few fields; a person carries claims from every scrape before it,
+    because publishing accepts every value the reviewer saw. So a write must take out the
+    claim it contradicts and nothing else — otherwise correcting a phone in April silently
+    un-rejects the wrong email somebody caught in March.
+    """
+    user_id, _ = await _seed()
+    person_id = str(uuid.uuid4())
+
+    def claim(field, kind, value):
+        return Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path=field,
+            kind=kind,
+            value=value,
+        )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for c in [
+                claim("phones", AssertionKind.REJECT, "(555) 0001"),
+                claim("phones", AssertionKind.ACCEPT, "(555) 0002"),
+                claim("emails", AssertionKind.REJECT, "typo@town.gov"),
+        ]:
+            await assertions.upsert(cur, c, user_id)
+        # A later save puts the rejected number back and says nothing about the email.
+        await assertions.upsert(cur, claim("phones", AssertionKind.ACCEPT, "(555) 0001"), user_id)
+        stated = (
+            await assertions.stated_values(cur, EntityType.PERSON, [person_id])
+        ).get(person_id, {})
+        await conn.commit()
+
+    assert stated["phones"][AssertionKind.REJECT] == []
+    assert sorted(stated["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
+    # Untouched by a save about phones.
+    assert stated["emails"][AssertionKind.REJECT] == ["typo@town.gov"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_a_list_field_accumulates_one_row_per_element():
     """A list field is a set, so each element stands on its own — a reviewer rejecting one phone
     number must not have to restate the others."""

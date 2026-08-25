@@ -78,10 +78,16 @@ async def open_pr():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) RETURNING id::text",
-            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            (ocdid,),
         )
         request_id = (await cur.fetchone())[0]  # type: ignore[index]
+        await cur.execute(
+            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
+            (request_id, ocdid),
+        )
         await cur.execute("INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,))
         await cur.execute(
             "INSERT INTO pull_requests (request_id, pr_number, status) VALUES (%s, %s, 'open')",

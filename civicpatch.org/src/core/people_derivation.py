@@ -19,27 +19,21 @@ from shared.utils.taxonomy import Taxonomy
 
 def merge_labels(records: List[PersonRecord]) -> List[str]:
     """Unique raw labels across records — one per office the person was seen holding."""
-    unique_labels = set()
-    for record in records:
-        if record.label:
-            unique_labels.add(record.label)
-    return list(unique_labels)
+    return sorted({record.label for record in records if record.label})
 
 
 def merge_field(values: List[str]) -> str:
-    """Most frequent non-empty value; a tie breaks on first-seen."""
+    """Most frequent non-empty value; a tie breaks alphabetically."""
     value_counter = Counter(value for value in values if value)
     if not value_counter:
         return ""
-    most_common = value_counter.most_common()
-    max_count = most_common[0][1]
-    tied_values = [value for value, count in most_common if count == max_count]
-    return tied_values[0]
+    max_count = max(value_counter.values())
+    return sorted(value for value, count in value_counter.items() if count == max_count)[0]
 
 
 def merge_field_to_list(values: List[str]) -> List[str]:
     """Unique non-empty values."""
-    return list(set(value for value in values if value))
+    return sorted({value for value in values if value})
 
 
 def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
@@ -116,37 +110,12 @@ def merge_weak_tie_groups(
     return result
 
 
-def get_source_urls(person_records: list[PersonRecord], person: Person) -> list:
-    """The url of the first record contributing each merged value."""
-    field_map = [
-        ("labels", "label"),
-        ("phones", "phone"),
-        ("emails", "email"),
-    ]
-    merged_values = {plural: set(getattr(person, plural)) for plural, _ in field_map}
-    source_urls = set()
-
-    for plural, singular in field_map:
-        for value in merged_values[plural]:
-            for record in person_records:
-                record_values = getattr(record, singular)
-                values = (
-                    set(record_values)
-                    if isinstance(record_values, list)
-                    else {record_values}
-                )
-                if value in values:
-                    url = getattr(record, "source_url", None)
-                    if url:
-                        source_urls.add(url)
-                    break  # Tiebreak: only the first record that contributed this value
-
-    return list(source_urls)
+def get_source_urls(person_records: List[PersonRecord]) -> List[str]:
+    """Every page the person was seen on — a sighting exists because that page named them."""
+    return sorted({record.source_url for record in person_records if record.source_url})
 
 
-def surviving_name(
-    group_name: str, records: List[PersonRecord], identities: Dict[str, List[str]]
-) -> str:
+def canonical_name(published_name: str, records: List[PersonRecord]) -> str:
     """Which of a person's spellings becomes their name.
 
     A name we already know them by wins outright: that is a human's answer, and a scrape must
@@ -155,10 +124,11 @@ def surviving_name(
 
     The name is the only merged field that has to pick a winner — every other one is a union,
     where nothing loses.
+
+    `known_name` is empty when nobody has published this person. At ingest that is decided by
+    `identities`; at read time by whether the resolved id is in `people`.
     """
-    if group_name in identities:
-        return group_name
-    return merge_field([record.name for record in records]) or group_name
+    return published_name or merge_field([record.name for record in records])
 
 
 def merge_records_to_person(
@@ -179,12 +149,12 @@ def merge_records_to_person(
     )
     end_date = merge_field([r.end_date for r in records if r.end_date is not None])
 
-    other_names = list(
-        set(
+    other_names = sorted(
+        {
             person.name
             for person in records
             if person.name and person.name != canonical_name
-        )
+        }
     )
 
     person = Person(
@@ -203,7 +173,7 @@ def merge_records_to_person(
         updated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
     )
 
-    person.source_urls = get_source_urls(records, person)
+    person.source_urls = get_source_urls(records)
     return person
 
 
@@ -233,7 +203,8 @@ def derived_people(
         (
             merge_records_to_person(
                 log,
-                surviving_name(group_name, group, identities),
+                canonical_name(group_name if group_name in identities else "", group)
+                or group_name,
                 group,
                 jurisdiction_ocdid,
             ),

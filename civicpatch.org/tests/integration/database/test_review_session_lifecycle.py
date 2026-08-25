@@ -115,12 +115,16 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         await cur.execute(
-            # data_json, because the review pool requires a roster: a request without one is
-            # a card that cannot be published, which is the state the pool now excludes.
-            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) RETURNING id::text",
-            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
+            (request_id, ocdid),
+        )
         await cur.execute(
             "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
             (request_id,),
@@ -579,11 +583,16 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid, data_json) VALUES (%s, %s) "
-            "RETURNING id::text",
-            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
+            (request_id, ocdid),
+        )
         await cur.execute(
             "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
             (request_id,),
@@ -621,11 +630,17 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid, data_json, published_at) "
-            "VALUES (%s, %s, now()) RETURNING id::text",
-            (ocdid, '[{"id": "p1", "name": "Jane Doe"}]'),
+            "INSERT INTO requests (jurisdiction_ocdid, published_at) "
+            "VALUES (%s, now()) RETURNING id::text",
+            (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
+        await cur.execute(
+            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
+            (request_id, ocdid),
+        )
 
         assert await dismiss_as_unchanged(cur, request_id) is False
 

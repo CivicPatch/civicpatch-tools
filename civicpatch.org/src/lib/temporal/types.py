@@ -19,7 +19,7 @@ class CommitSource(StrEnum):
     jurisdiction's live roster — which may include people from earlier scrapes.
     """
 
-    SCRAPE = "scrape"    # requests.data_json — one scrape's proposal
+    SCRAPE = "scrape"    # one scrape's proposal, derived from its sightings
     ROSTER = "roster"    # people WHERE status='active' — what is currently live
 
 

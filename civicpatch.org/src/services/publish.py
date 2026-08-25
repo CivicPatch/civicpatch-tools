@@ -9,22 +9,22 @@ made the repo the authority for what is live and meant a dead merge worker meant
 import logging
 
 import environment
+import lib.buckets as buckets
 import lib.github.api as github_service
 import lib.storage as storage_service
-import shared.utils.id_utils
-import lib.buckets as buckets
-from core.image_upload import artifacts_key, promoted_key, promoted_url
 import services.change_logs as change_logs
-from database.pipeline_runs import get_pipeline_run_data_json
-from database.publications import dismiss_request, publish_request, record_open_data_url
-from database.people import ACTIVE_STATUS, get_people
-from database.roles import get_roles
+import shared.utils.id_utils
+from core.image_upload import artifacts_key, promoted_key, promoted_url
 from core.post_derivation import ChosenPost, DerivedPost, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
+from database.people import ACTIVE_STATUS, get_people
+from database.publications import dismiss_request, publish_request, record_open_data_url
+from database.roles import get_roles
+from lib.temporal.types import CommitSource, OpenDataCommitRequest
+from services.roster import proposed_roster
 from shared.schemas import Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
-from lib.temporal.types import CommitSource, OpenDataCommitRequest
 from shared.utils.yaml_utils import yaml_dump
 
 logger = logging.getLogger(__name__)
@@ -59,7 +59,9 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
         logger.warning(f"Unexpected artifacts key, not promoting: {source_key}")
         return person
     try:
-        storage_service.copy_object(buckets.ARTIFACTS, source_key, buckets.CDN, dest_key)
+        storage_service.copy_object(
+            buckets.ARTIFACTS, source_key, buckets.CDN, dest_key
+        )
     except Exception as e:
         logger.error(f"Failed to promote image {source_key}: {e}", exc_info=True)
         return person
@@ -119,16 +121,16 @@ async def publish_people(
         resolved_by_user_id,
         derived=await _get_derived_posts(people),
     )
-    logger.info(
-        f"[{request_id}] Published {written} people for {jurisdiction_ocdid}"
-    )
+    logger.info(f"[{request_id}] Published {written} people for {jurisdiction_ocdid}")
     # Audited here rather than at the caller: publishing is this function, and the previous
     # home for this was the merge worker, which is going away.
     await change_logs.record_publish(request_id, resolved_by_user_id)
     return written
 
 
-async def dismiss_people(request_id: str, resolved_by_user_id: str | None = None) -> None:
+async def dismiss_people(
+    request_id: str, resolved_by_user_id: str | None = None
+) -> None:
     """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
     await dismiss_request(request_id, resolved_by_user_id)
     logger.info(f"[{request_id}] Dismissed without publishing")
@@ -144,12 +146,15 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
-async def _render(source: CommitSource, request_id: str, jurisdiction_ocdid: str) -> list[dict]:
+async def _render(
+    source: CommitSource, request_id: str, jurisdiction_ocdid: str
+) -> list[dict]:
     if source is CommitSource.ROSTER:
         return await get_people(
             jurisdiction_ocdid=jurisdiction_ocdid, status=ACTIVE_STATUS
         )
-    return await get_pipeline_run_data_json(request_id) or []
+
+    return await proposed_roster(request_id, jurisdiction_ocdid) or []
 
 
 async def commit_rendered_file(
