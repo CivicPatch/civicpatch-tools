@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import os
 from typing import Optional
 
 import database.jurisdictions as jurisdictions_db
@@ -10,44 +9,14 @@ import database.review_session_entries as review_session_entries_db
 import database.review_session_navigation as review_session_navigation_db
 import database.review_session_stats as review_session_stats_db
 import database.review_sessions as review_sessions_db
-import lib.buckets as buckets
-import lib.storage as storage_service
-import shared.utils.id_utils
-import shared.utils.url_utils
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory
 from services.review_proposal import assertions_for_people, proposals_for_requests
+from services.review_sources import build_sources
 from services.roster import proposed_roster
-
-
-def _source_url_to_markdown_url(
-    request_id: str, jurisdiction_ocdid_folder: str, source_url: str
-) -> Optional[str]:
-    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-    relative_path = os.path.join(
-        request_id,
-        "data_source",
-        jurisdiction_ocdid_folder,
-        "cache",
-        source_url_dir,
-        "preprocessed.md",
-    )
-    return storage_service.get_presigned_url_cached(buckets.DEBUG, relative_path)
-
-
-def build_sources(
-    request_id: str, jurisdiction_ocdid: str, source_urls: list[str]
-) -> list[dict]:
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    return [
-        {"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)}
-        for url in source_urls
-    ]
-
-
 logger = logging.getLogger(__name__)
 
 

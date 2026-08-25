@@ -16,7 +16,7 @@ function getCsrfCookie() {
 
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/with-data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -97,7 +97,7 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
   params.set("page", page);
   params.set("per_page", perPage);
   params.set("view", view);
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/with-data?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/with-data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -107,7 +107,7 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
 // Publishing, start to finish: a 200 means the roster is live and stamped. Throws (with a
 // parsed message) on a validation or publish rejection.
 export const publishReview = async (request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}/publish`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}/publish`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -128,7 +128,7 @@ export const publishReview = async (request_id, jurisdiction_ocdid, people) => {
 // Commit the reviewer's edits to `data_json` without publishing. The request stays in the
 // review pool; the session entry is held until the session is released.
 export const saveReviewData = async (request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}/save`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}/save`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -169,7 +169,7 @@ export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
     jurisdiction_ocdid: jurisdictionOcdid,
     request_id: requestId,
   });
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/data?${params}`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -310,7 +310,7 @@ export const generatePersonId = async () => {
 };
 
 export const fetchReview = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/review`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/review`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -318,7 +318,7 @@ export const fetchReview = async (requestId) => {
 };
 
 export const fetchReportedIssues = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/issues`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -326,7 +326,7 @@ export const fetchReportedIssues = async (requestId) => {
 };
 
 export const reportReviewIssue = async (requestId, description) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${requestId}/issues`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/issues`, {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
@@ -337,7 +337,7 @@ export const reportReviewIssue = async (requestId, description) => {
 };
 
 export const dismissReview = async (request_id) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/${request_id}`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}`, {
     credentials: "include",
     method: "DELETE",
     headers: {
@@ -596,7 +596,7 @@ export const fetchAllJurisdictionsForState = async (stateCode) => {
 };
 
 export const fetchPullRequestByRequestId = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pull_requests/by-request/${requestId}`, {
+  const res = await fetch(`${API_URL}/api/v1/reviews/by-request/${requestId}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

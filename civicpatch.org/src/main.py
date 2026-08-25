@@ -16,7 +16,8 @@ import routers.api.memberships as api_memberships_router
 import routers.api.people as api_people_router
 import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
-import routers.api.pull_requests as api_pull_requests_router
+import routers.api.review_actions as api_review_actions_router
+import routers.api.review_cards as api_review_cards_router
 import routers.api.requests as api_requests_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.roles as api_roles_router
@@ -157,10 +158,20 @@ app.include_router(
     ],
 )
 
+# Two routers, one prefix: reading a card and acting on one are the same surface to the
+# frontend, and are separate files because a read that can only 404 and a write that publishes
+# to open-data fail in very different ways.
 app.include_router(
-    api_pull_requests_router.get_router(api_key_header),
-    prefix="/api/v1/pull_requests",
-    tags=["pull_requests"],
+    api_review_cards_router.get_router(api_key_header),
+    prefix="/api/v1/reviews",
+    tags=["review"],
+    # Dependencies set within router
+)
+
+app.include_router(
+    api_review_actions_router.get_router(api_key_header),
+    prefix="/api/v1/reviews",
+    tags=["review"],
     # Dependencies set within router
 )
 

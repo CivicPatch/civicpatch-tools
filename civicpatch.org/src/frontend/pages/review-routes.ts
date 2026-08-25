@@ -4,16 +4,12 @@
 
 export const STATE_PARAM = "state";
 
-// Where the session is: written back on every navigation so the url is shareable.
+// Which card is open. The only thing the url says: whether a session is running, and where
+// it left off, are the session's own business.
 export const REQUEST_ID_PARAM = "request_id";
 
-// Which single pull request to open, ignoring any session. Distinct from
-// REQUEST_ID_PARAM because one url naming a card is ambiguous — a refresh mid-session
-// and a link in from the jurisdiction page look identical, and mean opposite things.
-export const PULL_REQUEST_PARAM = "pull_request";
-
 // Which of the review card's three views is open. `view`, not `tab` — the
-// jurisdiction page already uses `?tab=` to mean "which pull request", and the
+// jurisdiction page already uses `?tab=` to mean something else, and the
 // two would read as the same thing in a URL or a log line.
 export const VIEW_PARAM = "view";
 
@@ -57,5 +53,5 @@ export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE
 
 // One card, no session. What the jurisdiction page's Review button links to.
 export const reviewSessionUrl = (stateCode: string, requestId: string) =>
-  `${sessionUrl(stateCode)}&${PULL_REQUEST_PARAM}=${encodeURIComponent(requestId)}`;
+  `${sessionUrl(stateCode)}&${REQUEST_ID_PARAM}=${encodeURIComponent(requestId)}`;
 

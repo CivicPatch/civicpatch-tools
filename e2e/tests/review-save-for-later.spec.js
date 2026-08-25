@@ -2,7 +2,7 @@
  * User story: reviewer commits edits without publishing
  *
  * Given I have edited a card but am not ready to publish it
- * When I click "Save for later"
+ * When I click "Save updates"
  * Then my edits are sent to the save endpoint
  * And the card is marked saved and I move on to the next one
  * But if the save is rejected I stay put, with the card flagged and the reason shown
@@ -17,7 +17,7 @@
 import { test, expect } from "../fixtures/index.js";
 import { editField } from "./helpers/review-card.js";
 
-const SAVE_ENDPOINT = "**/api/v1/pull_requests/*/save";
+const SAVE_ENDPOINT = "**/api/v1/reviews/*/save";
 
 // The first NJ card is the only seeded card carrying people, so it is the only
 // one that can be made dirty.
@@ -34,7 +34,7 @@ async function openFirstCardAndEdit(page) {
   await expect(page.locator(".review-page__save-btn")).toBeVisible();
 }
 
-test.describe("Save for later", () => {
+test.describe("Save updates", () => {
   test("sends the reviewer's edits to the save endpoint", async ({
     authenticatedPage: page,
   }) => {

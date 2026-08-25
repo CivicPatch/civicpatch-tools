@@ -21,11 +21,11 @@ import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
 import { openDetail, openOverview, editorFor, rowFor } from "./helpers/review-card.js";
 
-const MERGE_ENDPOINT = "**/api/v1/pull_requests/*/save-and-merge";
-const MERGE_STATUS_ENDPOINT = "**/api/v1/pull_requests/*/merge-status";
+const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
+
 
 async function stubMerge(page) {
-  await page.route(MERGE_STATUS_ENDPOINT, (route) =>
+  await page.route(APPROVE_ENDPOINT, (route) =>
     route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -33,7 +33,7 @@ async function stubMerge(page) {
     }),
   );
   const captured = { body: null };
-  await page.route(MERGE_ENDPOINT, async (route) => {
+  await page.route(APPROVE_ENDPOINT, async (route) => {
     captured.body = route.request().postDataJSON();
     await route.fulfill({
       status: 202,
@@ -75,9 +75,9 @@ test.describe("Delete a person", () => {
     await expect(maria.locator(".person-editor__delete")).toHaveCount(0);
 
     // Deleting is an edit, so the card publishes under the dirty label.
-    const publishBtn = page.locator(".review-page__publish-btn");
-    await expect(publishBtn).toHaveText(/Save and Publish/);
-    await publishBtn.click();
+    const approveBtn = page.locator(".review-page__approve-btn");
+    await expect(approveBtn).toHaveText(/Save and approve/);
+    await approveBtn.click();
 
     await expect.poll(() => merge.body).not.toBeNull();
     // Tom survives; Maria's absence is the deletion.
@@ -102,9 +102,9 @@ test.describe("Delete a person", () => {
     // publishing sends no people at all and the button drops the dirty label.
     // That is a stronger check than Maria reappearing in a payload — it proves
     // the deletion left no residue anywhere in the state.
-    const publishBtn = page.locator(".review-page__publish-btn");
-    await expect(publishBtn).not.toHaveText(/Save and Publish/);
-    await publishBtn.click();
+    const approveBtn = page.locator(".review-page__approve-btn");
+    await expect(approveBtn).not.toHaveText(/Save and approve/);
+    await approveBtn.click();
 
     await expect.poll(() => merge.body).not.toBeNull();
     // saveAndEnqueueMerge omits `data` entirely when there is no patch, rather
@@ -174,7 +174,7 @@ test.describe("Delete a person", () => {
     await expect(tom).toHaveClass(/person-editor--deleted/);
     await expect(tom.locator(".person-editor__restore-person")).toBeVisible();
 
-    await page.locator(".review-page__publish-btn").click();
+    await page.locator(".review-page__approve-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
     expect(publishedIds(merge.body)).not.toContain("recon-tom");
   });

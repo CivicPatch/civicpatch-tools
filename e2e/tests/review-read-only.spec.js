@@ -30,9 +30,9 @@ test.describe("Review card — read only", () => {
     await expect(banner).toContainText("merged");
 
     // Nothing here can be published, saved or closed again.
-    await expect(page.locator(".review-page__publish-btn")).toHaveCount(0);
+    await expect(page.locator(".review-page__approve-btn")).toHaveCount(0);
     await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
-    await expect(page.getByRole("button", { name: "Close PR" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Reject" })).toHaveCount(0);
   });
 
   test("a merged card links out to the pull request and the jurisdiction", async ({

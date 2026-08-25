@@ -68,11 +68,11 @@ test.describe("Publish gating", () => {
     await editor.locator(".person-editor__expander").click();
     await fieldIn(editor, "Name").first().locator("input").fill("");
 
-    const publish = page.locator(".review-page__publish-btn");
+    const publish = page.locator(".review-page__approve-btn");
     await expect(publish).toBeDisabled();
     await expect(publish).toContainText("to fix before publishing");
 
-    // Save for later is never gated — parking incomplete work is what it is for.
+    // Save updates is never gated — parking incomplete work is what it is for.
     await expect(page.locator(".review-page__save-btn")).toBeEnabled();
   });
 
@@ -87,7 +87,7 @@ test.describe("Publish gating", () => {
 
     await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview__blockers")).toContainText("Name: Required");
-    await expect(page.locator(".review-page__publish-btn")).toBeDisabled();
+    await expect(page.locator(".review-page__approve-btn")).toBeDisabled();
   });
 
   test("a blocker on someone being dropped does not gate publishing", async ({
@@ -101,10 +101,10 @@ test.describe("Publish gating", () => {
     const editor = editorFor(page, "Councillor 02 Scale");
     await editor.locator(".person-editor__expander").click();
     await fieldIn(editor, "Office").first().locator("input").fill("");
-    await expect(page.locator(".review-page__publish-btn")).toBeDisabled();
+    await expect(page.locator(".review-page__approve-btn")).toBeDisabled();
 
     // Dropping them makes the error irrelevant — it is not part of the payload.
     await editor.locator(".person-editor__delete").click();
-    await expect(page.locator(".review-page__publish-btn")).toBeEnabled();
+    await expect(page.locator(".review-page__approve-btn")).toBeEnabled();
   });
 });
