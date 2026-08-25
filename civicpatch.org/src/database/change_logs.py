@@ -1,6 +1,6 @@
 import json
 
-from core.change_log_summary import summarize_change_log
+from core.change_logs import summarize_change_log
 from database.database import get_pool
 from schemas.change_logs import (
     AssertionChangePayload,

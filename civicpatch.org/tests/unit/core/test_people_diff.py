@@ -1,6 +1,6 @@
 import pytest
 
-from core.change_log_diff import diff_people
+from core.people_diff import diff_people
 from shared.utils.statuses import ChangeLogType
 
 

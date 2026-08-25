@@ -28,6 +28,7 @@ src/
     people_roster.py         ← those people as the document a reviewer reads
     people_roles.py          ← which office a person's labels imply
     people_edits.py          ← what a reviewer may change: field patches and accept/reject
+    people_diff.py           ← a reviewer's edits as add/edit/delete change payloads
     post_derivation.py       ← the roster turned into posts and memberships
     post_grouping.py, post_issues.py
     membership_proposal.py   ← what a scrape would change about who holds what
@@ -35,7 +36,7 @@ src/
     image_urls.py            ← `local://` refs → source url + cdn url (ingest)
     image_upload.py          ← which bucket key a photo moves to (publish)
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py
-    change_log_diff.py, role_taxonomy.py, temporal_workflow_state.py
+    change_logs.py, role_taxonomy.py, temporal_workflow_state.py
     open_data/               ← tree_diff.py, paths.py
   services/         ← orchestration: coordinates lib/ + database/ + core/ (does the I/O)
     open_data_sync.py        ← open-data sync
