@@ -194,7 +194,9 @@ async def test_a_retired_person_still_reads_as_the_post_they_last_held():
 
     roster = {
         person["name"]: person
-        for person in await people.get_jurisdiction_people(_OCDID)
+        for person in await people.get_people(
+            jurisdiction_ocdid=_OCDID, status=people.ACTIVE_STATUS
+        )
     }
 
     assert roster["Outgoing"]["office"]["name"] == _LABEL
@@ -204,3 +206,18 @@ async def test_a_retired_person_still_reads_as_the_post_they_last_held():
 
     assert roster["Incoming"]["office"]["name"] == _LABEL
     assert len(roster["Incoming"]["memberships"]) == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_state_filter_carries_each_persons_jurisdiction():
+    """`get_people(state=...)` used to SELECT `jurisdiction_ocdid` as its own column and merge
+    it in. It now relies on `PERSON_JSON` already carrying it, so a caller grouping a whole
+    state by jurisdiction still has something to group on."""
+    await _seed_succession()
+
+    by_state = await people.get_people(state="zz", status=people.ACTIVE_STATUS)
+    seeded = [person for person in by_state if person["jurisdiction_ocdid"] == _OCDID]
+
+    assert {person["name"] for person in seeded} == {"Outgoing", "Incoming"}
+

@@ -414,9 +414,9 @@ async def test_publish_writes_memberships_for_the_roster():
     # `office` is no longer stored — it is rebuilt from the membership publish just wrote.
     # Asserted through the reader the jurisdiction modal actually calls, because the failure
     # mode is not an exception: it is a subtitle that silently goes blank.
-    from database.people import get_people_for_jurisdiction
+    from database.people import get_person_models
 
-    roster = await get_people_for_jurisdiction(_OCDID, status="active")
+    roster = await get_person_models(_OCDID, status="active")
     assert len(roster) == 1
     office = roster[0].model_extra["office"]
     assert office["name"] == "Mayor"
@@ -517,13 +517,9 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 
 
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:
-    """What `assign` does: set the label and assert it, in one transaction.
-
-    Called instead of `update_label` alone because a bare update is no longer a human edit —
-    it leaves nothing on the row saying a person chose this, and the next scrape re-derives it.
-    """
-    # A real user: `assertions.asserted_by` is a foreign key, so an assertion cannot exist
-    # without somebody to have made it.
+    """What `assign` does. `set_label` with a user is the whole human edit: the value and the
+    assertion saying somebody chose it, which is what survives the next scrape."""
+    # `assertions.asserted_by` is a foreign key, so an assertion needs somebody to have made it.
     await cur.execute(
         "INSERT INTO users (email, provider, provider_user_id, role) "
         "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
@@ -531,18 +527,7 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     )
     curator_id = (await cur.fetchone())[0]
 
-    await memberships.update_label(cur, membership_id, label)
-    await assertions.upsert(
-        cur,
-        Assertion(
-            entity_type=EntityType.MEMBERSHIP,
-            entity_id=membership_id,
-            field_path=memberships.LABEL_FIELD,
-            kind=AssertionKind.ACCEPT,
-            value=label,
-        ),
-        curator_id,
-    )
+    await memberships.set_label(cur, membership_id, label, curator_id)
 
 
 @pytest.mark.asyncio
@@ -589,7 +574,7 @@ async def test_moving_to_another_post_leaves_the_label_behind():
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
         old = await memberships.upsert(cur, person_id, first, org, _T0)
-        await memberships.update_label(cur, old, "Councilmember Pos. 8")
+        await memberships.set_label(cur, old, "Councilmember Pos. 8")
         new = await memberships.upsert(cur, person_id, second, org, _T1)
 
         await cur.execute(

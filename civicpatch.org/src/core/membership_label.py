@@ -36,6 +36,12 @@ def derive_label(
     return ", ".join(part for part in parts if part)
 
 
+def rendered_post_label(
+    post_label: str | None, role_label: str, division_ocdid: str
+) -> str:
+    return post_label or derive_label(role_label, division_ocdid, [], [])
+
+
 def proposed_membership_label(parts: list[dict]) -> str | None:
 
     label: list[str] = []

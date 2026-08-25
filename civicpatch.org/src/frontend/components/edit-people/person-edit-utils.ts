@@ -110,7 +110,7 @@ export type PersonMembership = {
   role_label: string;
   division_ocdid: string;
   label: string | null;
-  post_label: string | null;
+  post_label: string;
   source_labels: string[];
 };
 

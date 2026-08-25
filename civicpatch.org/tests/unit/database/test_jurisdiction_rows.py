@@ -5,7 +5,7 @@ the `jurisdictions:` key of a jurisdictions.yml) into the rows bulk_update_juris
 
 state and level come from the file's PATH (data_source/<state>/<level>/jurisdictions.yml);
 updated_at is passed in (the sync stamps now()). Both are the same for every row in a call —
-unlike people_rows, where each person carried its own jurisdiction_ocdid. Pure function.
+unlike person_upsert_params, where each person carried its own jurisdiction_ocdid. Pure function.
 
 search_text is delegated to core.jurisdiction_search.build_search_text, which owns the
 format and is tested there; these tests only assert it reaches the row.

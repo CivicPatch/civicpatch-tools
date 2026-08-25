@@ -1,9 +1,8 @@
 from datetime import date
 
+from database import memberships
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
-
-from database import memberships
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.posts import AssignMembershipRequest
@@ -19,17 +18,17 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        """Assign a person. Idempotent: re-assigning to the post they hold only sets the label.
-
-        `moved_from` is the post they were closed off, or null — the caller needs it to say
-        "moved from X" rather than "assigned", since a move leaves history behind.
-        """
         try:
             result = await memberships.assign(
                 body.person_id, body.post_id, body.label, user.user_id
             )
         except memberships.UnknownPost:
             return JSONResponse({"error": "No such post."}, status_code=404)
+        except memberships.NothingToAssign:
+            return JSONResponse(
+                {"error": "They already hold that post under that label."},
+                status_code=409,
+            )
         return {"data": result}
 
     @router.get("/unmatched")
@@ -38,17 +37,6 @@ def get_router() -> APIRouter:
         per_page: int = Query(20, ge=1, le=100),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
-        """Label text that matched neither the role aliases nor the designations, widest first.
-
-        Not "a role we are missing" — the parser could not tell what kind of thing it is.
-
-        Widest-spread first is the point: one curator needs the term that one rule change
-        fixes everywhere, not the longest list. Paged for the same reason it is sorted: the
-        backfill turned this from a handful of rows into the whole corpus's residue.
-
-        `data` keeps its shape — the paging fields are additive, because this sits under
-        `/api/v1/`.
-        """
         offset = (page - 1) * per_page
         total, rows = await memberships.unmatched_text(per_page, offset)
         return {
@@ -65,17 +53,11 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str,
         as_of: date | None = None,
     ):
-        """The same roster the posts read returns, by person instead of by post.
-
-        `?as_of` takes the same window, so switching axis cannot switch the moment.
-
-        Unauthenticated for the same reason as the posts read — it is the other axis of the
-        public jurisdiction page. `/unmatched` above stays gated: that one is cross-jurisdiction
-        triage, not this page's data.
-        """
         return {
             "data": {
-                "memberships": await memberships.list_by_person(jurisdiction_ocdid, as_of)
+                "memberships": await memberships.list_by_person(
+                    jurisdiction_ocdid, as_of
+                )
             }
         }
 

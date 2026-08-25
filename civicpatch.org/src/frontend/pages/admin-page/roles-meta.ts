@@ -54,3 +54,14 @@ export type RoleKey = (typeof ROLES_META)[number]["key"];
 export function getRoleMeta(key: string): RoleMeta | undefined {
   return ROLES_META.find((r) => r.key === key);
 }
+
+export const DEFAULT_ROLE = "default";
+
+/*
+ * see: schemas/common.py
+ */
+export function roleRank(role: string): number {
+  if (role === DEFAULT_ROLE) return 0;
+  const index = ROLES_META.findIndex((meta) => meta.key === role);
+  return index === -1 ? 0 : index + 1;
+}

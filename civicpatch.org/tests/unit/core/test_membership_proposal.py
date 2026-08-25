@@ -32,12 +32,22 @@ def _post(role_id, division_ocdid, *person_ids, label=None):
     )
 
 
-def _held(person_id, role_id, division_ocdid, post_id="post-1", is_tracked=True):
+def _held(
+    person_id,
+    role_id,
+    division_ocdid,
+    post_id="post-1",
+    is_tracked=True,
+    role_label="",
+    post_label=None,
+):
     return ExistingMembership(
         person_id=person_id,
         post_id=post_id,
         role_id=role_id,
+        role_label=role_label,
         division_ocdid=division_ocdid,
+        post_label=post_label,
         is_tracked=is_tracked,
     )
 
@@ -85,6 +95,41 @@ def test_a_holder_the_scrape_did_not_name_is_absent():
     absent = [c for c in changes if c.disposition is Disposition.ABSENT]
     assert [c.person_id for c in absent] == ["b"]
     assert surfaces_for_review(absent[0]) is True
+
+
+@pytest.mark.unit
+def test_an_absence_is_named_by_the_post_it_left():
+    """An absence is the one change whose post exists, so its own name wins — a derived label
+    would overwrite whatever a human chose to call the seat."""
+    changes = propose(
+        [_post("mayor", _BASE, "a")],
+        [
+            _held(
+                "b",
+                "council-member",
+                _WARD_3,
+                role_label="Council Member",
+                post_label="Council Member and Deputy Mayor",
+            )
+        ],
+    )
+
+    absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
+    assert absent.post_label == "Council Member and Deputy Mayor"
+
+
+@pytest.mark.unit
+def test_an_absence_from_an_unnamed_post_still_names_its_role():
+    """Nobody named the post, so the label is derived — but from the role we held them in.
+    Deriving without it produced "Ward 3" for a ward and an empty string at-large, which reads
+    as though they held nothing."""
+    changes = propose(
+        [_post("mayor", _BASE, "a")],
+        [_held("b", "council-member", _WARD_3, role_label="Council Member")],
+    )
+
+    absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
+    assert absent.post_label == "Council Member, Ward 3"
 
 
 @pytest.mark.unit

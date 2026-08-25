@@ -233,10 +233,11 @@ describe("postsFor", () => {
         role_label: "Council Member",
         division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
         label: null,
+        post_label: "Council Member, District 5",
       },
     ]);
 
-    // The role's label, not its slug: an id is storage.
+    // Rendered by the derivation, because a proposed post may not exist yet.
     expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
   });
 
@@ -249,6 +250,7 @@ describe("postsFor", () => {
         role_label: "Council Member",
         division_ocdid: "ocd-division/country:us/state:wa/place:x",
         label: "Seat 3",
+        post_label: "Council Member, At-Large",
       },
     ]);
 
@@ -292,6 +294,7 @@ describe("proposalsByPersonId", () => {
     role_label: "Council Member",
     division_ocdid: "ocd-division/country:us/state:wa/place:x",
     label: null,
+    post_label: "Council Member, At-Large",
     ...over,
   });
 

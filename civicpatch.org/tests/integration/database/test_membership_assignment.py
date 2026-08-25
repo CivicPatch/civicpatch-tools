@@ -127,6 +127,42 @@ async def test_reassigning_to_the_same_seat_only_sets_the_label():
         assert await cur.fetchone() == ("Renamed", ["Position 8"])
 
 
+async def _change_log_count() -> int:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT count(*) FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_same_seat_under_the_same_label_is_refused():
+    """A re-assign that changes nothing still recorded an "assigned" in the activity feed —
+    a change nobody made, against a membership that did not move."""
+    person_id, post_id, _ = await _seed()
+    await memberships.assign(person_id, post_id, "Mayor of Testville")
+    logged = await _change_log_count()
+
+    with pytest.raises(memberships.NothingToAssign):
+        await memberships.assign(person_id, post_id, "Mayor of Testville")
+
+    assert await _change_log_count() == logged
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_clearing_the_label_on_the_same_seat_is_a_real_change():
+    """`None` is not "no edit": it hands the field back to the scraper."""
+    person_id, post_id, _ = await _seed()
+    await memberships.assign(person_id, post_id, "Mayor of Testville")
+
+    result = await memberships.assign(person_id, post_id, None)
+
+    assert result["moved_from"] is None
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_unknown_post_raises_rather_than_seating_nobody():
