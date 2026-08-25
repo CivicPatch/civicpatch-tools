@@ -8,13 +8,11 @@ Run with:
   mise run tcp-integration
 """
 import uuid
-import json
 
 import pytest
 import pytest_asyncio
 from database.database import get_pool
 from database.requests import DISMISSED_UNCHANGED, dismiss_as_unchanged
-from database.review_queue import issue_priority
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.publications import publish_request
@@ -644,35 +642,3 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
         )
         assert await cur.fetchone() == (None, None)
         await conn.rollback()
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_the_queue_ranks_by_what_an_issue_costs_not_how_many():
-    """Ordering on `jsonb_array_length` weighted every issue the same, so three ward-numbering
-    gaps outranked one jurisdiction losing half its council.
-
-    Evaluated against literal jsonb rather than inserted rows: the pool is shared, and two
-    requests for one jurisdiction is a stacked pair the supersede sweep would dismiss. The
-    empty ocdid matches no jurisdiction, so this isolates the stored half of the score — the
-    posts half is pinned in test_post_derivation.
-    """
-    def _issues(*codes: str) -> str:
-        return json.dumps({"issues": [{"code": c} for c in codes]})
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"SELECT {issue_priority('t.j', 't.ocdid')} FROM (VALUES "
-            "(%s::jsonb, ''),(%s::jsonb, ''),(%s::jsonb, ''),(NULL::jsonb, '')) t(j, ocdid)",
-            (
-                _issues("division_numbering_gap", "division_numbering_gap", "division_numbering_gap"),
-                _issues("too_few_people"),
-                _issues("new_official"),
-            ),
-        )
-        three_cheap, one_expensive, one_middling, nothing = [r[0] for r in await cur.fetchall()]
-
-    assert one_expensive > three_cheap, "one serious issue must outrank three cosmetic ones"
-    assert one_expensive > one_middling > 0
-    assert nothing == 0, "no review summary sorts last, it does not sort as unknown"

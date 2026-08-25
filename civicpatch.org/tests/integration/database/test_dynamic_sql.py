@@ -79,25 +79,6 @@ async def test_update_pipeline_run_status_only_progress():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_requests_for_export_no_date_filter():
-    rows = await db_requests.get_requests_for_export(state="ca", from_date=None, to_date=None)
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_requests_for_export_with_date_range():
-    """Exercises both from_date and to_date appended to date_clauses."""
-    rows = await db_requests.get_requests_for_export(
-        state="ca",
-        from_date="2024-01-01",
-        to_date="2099-12-31",
-    )
-    assert isinstance(rows, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_issues_page_no_filter():
     rows, total = await db_issues.get_issues_page(issue_types=[], page=1, per_page=10)
     assert isinstance(rows, list)

@@ -6,35 +6,60 @@ the rosters and the memberships we already hold, and hands both to it.
 Nothing is written. A post can be proposed; a membership is only true once accepted.
 """
 
+import asyncio
+
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import derived_posts
 from core.post_issues import append_post_issues, unverified_post_issues
 from database import assertions
 from database import memberships as memberships_db
 from database import posts as posts_db
+from database import people as people_db
 from database import requests as requests_db
 from database.database import get_pool
-from database.pipeline_runs import get_pipeline_run_result
 from schemas.assertions import EntityType
 from database.roles import get_roles
 from services.publish import chosen_posts
-from services.roster import proposed_rosters
+from services.roster import proposed_roster, proposed_rosters
 from shared.schemas import Issue, Person, RoleConfig
+from shared.utils.config_utils import get_unique_roles
+from shared.utils.name_utils import person_list_to_identities
+from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.taxonomy import build_taxonomy
 
 
 async def review_summary_for_request(request_id: str) -> dict:
-    """The stored summary, plus the issues computed from posts.
+    """What a reviewer needs to look at, computed now rather than read back.
 
-    Appended at read time rather than written beside the rest: a post nobody has vouched for
-    belongs to the jurisdiction, so it outlives the scrape that minted it and cannot live in
-    that scrape's summary. Dismissing a scrape is not an answer to the post it raised.
+    The baseline is the roster we publish, not the scrape's own research step — that lived
+    only in the workflow context, which is why the summary used to be frozen at ingest. Both
+    sides are already read for the card, so this costs nothing the page was not paying.
+
+    Post issues are appended rather than computed with the rest: a post nobody has vouched for
+    belongs to the jurisdiction, so it outlives the scrape that minted it.
     """
-    result = await get_pipeline_run_result(request_id)
-    if not result:
+    jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+    if not jurisdiction_ocdid:
         return {}
-    posts = await _unverified_post_issues(result["jurisdiction_ocdid"])
-    return append_post_issues(result.get("review_json") or {}, posts)
+
+    published, proposed, roles = await asyncio.gather(
+        people_db.get_people(
+            jurisdiction_ocdid=jurisdiction_ocdid, status=people_db.ACTIVE_STATUS
+        ),
+        proposed_roster(request_id, jurisdiction_ocdid),
+        get_roles(),
+    )
+    summary = build_review_summary(
+        published,
+        proposed,
+        ReviewInputs(
+            identities=person_list_to_identities([Person(**p) for p in published]),
+            unique_roles=get_unique_roles(RoleConfig(roles=roles)),
+        ),
+    )
+    summary["issues"] = [issue.model_dump() for issue in summary["issues"]]
+    posts = await _unverified_post_issues(jurisdiction_ocdid)
+    return append_post_issues(summary, posts)
 
 
 async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:

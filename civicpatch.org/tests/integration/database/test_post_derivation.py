@@ -246,11 +246,12 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
-    """The card shows stored issues plus unverified posts, so the queue must count both — a
-    badge reading `0 issues` over a card that opens with one is the discrepancy this closes.
+    """A post nobody has vouched for is the one issue the queue can see for itself — the five
+    roster checks are computed at read from two rosters SQL cannot derive. Without this the
+    badge reads `0 issues` over a card that opens with one.
 
-    Evaluated against a literal roster rather than an inserted request: the review pool is
-    shared, and a spare request for this jurisdiction would reach unrelated tests.
+    Evaluated against a literal jurisdiction rather than an inserted request: the review pool
+    is shared, and a spare request for this jurisdiction would reach unrelated tests.
     """
     await _seed_person()  # for the jurisdiction row the organization FK needs
     pool = await get_pool()
@@ -260,12 +261,12 @@ async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
         await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
         await cur.execute(
-            f"SELECT {issue_count('t.j', 't.ocdid')}, {issue_priority('t.j', 't.ocdid')} "
-            "FROM (VALUES (NULL::jsonb, %s)) t(j, ocdid)",
+            f"SELECT {issue_count('t.ocdid')}, {issue_priority('t.ocdid')} "
+            "FROM (VALUES (%s)) t(ocdid)",
             (_OCDID,),
         )
         count, priority = await cur.fetchone()
-        assert count == 1, "a scrape with no stored issues still has an unanswered post"
+        assert count == 1, "an unanswered post is an issue even with nothing else wrong"
         assert priority > 0, "and it must not sort as though it had nothing to review"
         await conn.rollback()
 

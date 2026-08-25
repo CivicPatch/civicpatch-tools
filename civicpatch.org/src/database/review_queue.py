@@ -1,5 +1,11 @@
 """How the review queue weighs and counts a card.
 
+⚠️ **Only the post issues reach the ordering today.** The five roster checks are computed at
+read from the published and proposed rosters — neither of which SQL can derive — so they show
+on the card but cannot sort the pool. `.scratch/2026-08-25-retire-review-json.md` phase 2 puts
+them in `roster_issues` and restores the full score; until then the queue orders on unverified
+posts, then recency.
+
 Not in `requests.py`: the score reads `posts` too, and importing posts there closes a cycle
 (`requests` → `posts` → `change_logs` → `requests`).
 """
@@ -35,40 +41,24 @@ def _unverified_posts(jurisdiction_ocdid: str) -> str:
     )
 
 
-def _stored_weight(review_json: str) -> str:
-    cases = " ".join(
-        f"WHEN '{code.value}' THEN {weight}" for code, weight in _ISSUE_WEIGHT.items()
-    )
-    return (
-        f"(SELECT COALESCE(sum(CASE issue->>'code' {cases} ELSE {_UNKNOWN_ISSUE} END), 0) "
-        f"FROM jsonb_array_elements(COALESCE({review_json}, '{{}}'::jsonb)->'issues') issue)"
-    )
+def issue_count(jurisdiction_ocdid: str) -> LiteralString:
+    """SQL for how many issues the queue can see from here.
 
-
-def issue_count(review_json: str, jurisdiction_ocdid: str) -> LiteralString:
-    """SQL for how many issues a card holds.
-
-    The same two sources the review endpoint appends together — or the queue's badge disagrees
-    with the card it opens.
+    Undercounts the card, which also shows the five roster checks — see the module note.
     """
-    return cast(
-        LiteralString,
-        f"(COALESCE(jsonb_array_length({review_json}->'issues'), 0)"
-        f" + {_unverified_posts(jurisdiction_ocdid)})",
-    )
+    return cast(LiteralString, _unverified_posts(jurisdiction_ocdid))
 
 
-def issue_priority(review_json: str, jurisdiction_ocdid: str) -> LiteralString:
+def issue_priority(jurisdiction_ocdid: str) -> LiteralString:
     """SQL scoring what a card costs a reviewer, to sort a queue on.
 
-    Takes column expressions rather than assuming table aliases, so a caller that writes
-    `FROM requests r` and one that does not can both use it. Composed from enum values, ints
-    and those expressions — no user input reaches it, which is what `sql.SQL`'s LiteralString
-    guard cannot see for itself.
+    Takes a column expression rather than assuming a table alias, so a caller that writes
+    `FROM requests r` and one that does not can both use it. Composed from ints and that
+    expression — no user input reaches it, which is what `sql.SQL`'s LiteralString guard
+    cannot see for itself.
     """
     posts_weight = _ISSUE_WEIGHT[IssueCode.UNVERIFIED_POST]
     return cast(
         LiteralString,
-        f"({_stored_weight(review_json)}"
-        f" + {_unverified_posts(jurisdiction_ocdid)} * {posts_weight})",
+        f"({_unverified_posts(jurisdiction_ocdid)} * {posts_weight})",
     )

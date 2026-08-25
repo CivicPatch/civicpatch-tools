@@ -1,11 +1,9 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
-import json
 
 from services.people_collector import (
     _identities,
-    _review_summary,
     handle_submit_pipeline_run_artifacts,
 )
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
@@ -146,53 +144,3 @@ def _official(name: str, person_id: str = "") -> dict:
         "source_urls": [],
         "updated_at": "2026-01-01T00:00:00+00:00",
     }
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_the_review_summary_is_json_serialisable():
-    """It goes straight to `json.dumps`. The pipeline never had to think about this — it
-    returned issues inside a step model that serialised on the way out."""
-    summary = await _review_summary(
-        [_official("Ann Lee")], _context_with_research({"Bob Smith": []}), []
-    )
-
-    json.dumps(summary)
-    assert all(isinstance(issue, dict) for issue in summary["issues"])
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_somebody_the_run_looked_for_and_did_not_find_is_an_issue():
-    summary = await _review_summary(
-        [_official("Ann Lee")], _context_with_research({"Bob Smith": []}), []
-    )
-
-    codes = {issue["code"] for issue in summary["issues"]}
-    assert "absent_official" in codes
-    assert "new_official" in codes
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_a_run_with_no_research_prior_raises_nothing_about_absence():
-    """Absence is measured against what the run set out to look for. With no prior there is
-    nothing to be absent from — every person is simply new."""
-    summary = await _review_summary([_official("Ann Lee")], {}, [])
-
-    codes = {issue["code"] for issue in summary["issues"]}
-    assert "absent_official" not in codes
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_a_failed_review_summary_does_not_fail_the_submit():
-    """The people are already stored by this point. A scrape must not be marked errored over
-    the summary describing them — received as JSON this could not fail, computed it can."""
-    with patch(
-        "services.people_collector.build_review_summary",
-        side_effect=Exception("summary unavailable"),
-    ):
-        assert await _review_summary([_official("Ann Lee")], {}, []) == {}
-
-

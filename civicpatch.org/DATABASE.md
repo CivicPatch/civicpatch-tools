@@ -46,7 +46,6 @@ erDiagram
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       requested_by_user_id FK
         jsonb           arguments_json
-        jsonb_null      data_json           "scraped Official objects from pipeline"
         jsonb_null      review_json         "idx: jsonb_array_length(review_json->'issues')"
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"

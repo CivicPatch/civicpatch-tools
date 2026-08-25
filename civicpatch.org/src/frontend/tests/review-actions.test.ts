@@ -74,7 +74,7 @@ describe("boot", () => {
       navigateToEntry: vi.fn(async () => ({ data: cardData() })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, null, null, e);
+    await boot(STATE, null, e);
 
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(e.navigate).not.toHaveBeenCalled();
@@ -92,34 +92,33 @@ describe("boot", () => {
       navigateToEntry: vi.fn(async () => ({ data: cardData() })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-1", null, e);
+    await boot(STATE, "req-1", e);
 
     expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
     expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
   });
 
-  // The jurisdiction page's Review button links with pull_request, which names one
-  // card outright. Answering it with wherever the session was parked would land the
-  // reviewer on a different town — the reason this param is distinct from request_id.
-  it("opens the named pull request standalone, even mid-session", async () => {
+  // The jurisdiction page's Review button names a card. It used to open detached, because
+  // resuming meant landing wherever the session was parked — a different town. The session
+  // can be resumed *at* a named card now, so the link keeps the reviewer's queue and
+  // progress instead of throwing them away.
+  it("opens a card the session holds inside that session, at that card", async () => {
     const api = fakeApi({
       fetchActiveReviewSession: vi.fn(async () => ({
         data: activeSession({ session_request_ids: ["req-1", "req-7"] }),
       })),
-      navigateToEntry: vi.fn(async () => ({ data: cardData({ request_id: "req-1" }) })),
-      fetchPullRequestByRequestId: vi.fn(async () => ({
-        data: cardData({ request_id: "req-7", entry_number: 1, has_next: false }),
+      navigateToEntry: vi.fn(async () => ({
+        data: cardData({ request_id: "req-7", entry_number: 2 }),
       })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-1", "req-7", e);
+    await boot(STATE, "req-7", e);
 
-    expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-7");
+    // Entry 2, because `session_request_ids` is ordered by entry number — parked at 1.
+    expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(lastAction(e).payload.current_entry.request_id).toBe("req-7");
-    expect(lastAction(e).payload.session).toBeNull();
-    // The session is beside the point for a link in from outside — not even looked up.
-    expect(api.fetchActiveReviewSession).not.toHaveBeenCalled();
-    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
+    expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
   });
 
   it("shows a standalone PR when the deeplink is not part of the active session", async () => {
@@ -128,7 +127,7 @@ describe("boot", () => {
       fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-999", null, e);
+    await boot(STATE, "req-999", e);
 
     expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-999");
     expect(lastAction(e).payload.session).toBeNull();
@@ -139,7 +138,7 @@ describe("boot", () => {
       fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
-    await boot(STATE, "req-999", null, e);
+    await boot(STATE, "req-999", e);
 
     expect(lastAction(e).payload.session).toBeNull();
     expect(e.navigate).not.toHaveBeenCalled();
@@ -147,7 +146,7 @@ describe("boot", () => {
 
   it("navigates to the landing when there is no session and no PR", async () => {
     const e = fakeEffects(fakeApi());
-    await boot(STATE, null, null, e);
+    await boot(STATE, null, e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -155,7 +154,7 @@ describe("boot", () => {
   it("falls back to the landing when a standalone deeplink PR is stale (404)", async () => {
     const api = fakeApi({ fetchPullRequestByRequestId: vi.fn(async () => { throw new Error("HTTP 404"); }) });
     const e = fakeEffects(api);
-    await boot(STATE, "req-stale", null, e);
+    await boot(STATE, "req-stale", e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -163,7 +162,7 @@ describe("boot", () => {
   it("reports an error to the reducer when a fetch throws", async () => {
     const api = fakeApi({ fetchActiveReviewSession: vi.fn(async () => { throw new Error("HTTP 500"); }) });
     const e = fakeEffects(api);
-    await boot(STATE, null, null, e);
+    await boot(STATE, null, e);
     const action = lastAction(e);
     expect(action.type).toBe(ActionType.LOAD_FAILED);
     expect(action.payload.message).toBe("HTTP 500");
