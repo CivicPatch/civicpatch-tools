@@ -8,7 +8,7 @@ type ActionState = {
   error?: string;
 };
 
-export type PublishLogEntry = {
+export type ReviewLogEntry = {
   request_id: string;
   jurisdiction_name: string;
   status: string;
@@ -79,7 +79,7 @@ export function useReviewActions() {
       run: () => dismissReview(requestId),
     });
 
-  const entries: PublishLogEntry[] = Object.entries(actionState)
+  const entries: ReviewLogEntry[] = Object.entries(actionState)
     .filter(([, s]) => LOGGED_ACTIONS.includes(s.status))
     .map(([requestId, s]) => ({
       request_id: requestId,

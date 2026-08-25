@@ -60,7 +60,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const { jurisdiction, pr, mode, pr_people, changes, assertions, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
   const officeOptions = useOfficeOptions(jurisdictionOcdid);
-  const { url: pullRequestUrl, status: pullRequestStatus = null } = pr ?? {};
+  const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
 
   const {
@@ -260,7 +260,7 @@ function ReviewSession(host: ReviewSessionHost) {
            what publishing this card will do, so it has to be read before the
            card is. -->
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${pullRequestStatus}">${pullRequestStatus}</div>` : ""}
+      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${reviewStatus}">${reviewStatus}</div>` : ""}
       ${duplicateIds.length
         ? html`<div class="review-page__duplicate-banner">
             <strong>
@@ -290,7 +290,7 @@ function ReviewSession(host: ReviewSessionHost) {
                 ${jurisdictionWebsiteUrl} <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>`
             : ""}
-          ${pullRequestUrl ? html`<a class="btn btn-sm" href=${pullRequestUrl} target="_blank" rel="noopener">View PR <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
+          ${publishedUrl ? html`<a class="btn btn-sm" href=${publishedUrl} target="_blank" rel="noopener">View published data <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
           ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
           <report-issue-button .requestId=${requestId}></report-issue-button>
         </div>

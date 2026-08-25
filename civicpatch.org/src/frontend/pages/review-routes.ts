@@ -55,7 +55,7 @@ export const DEFAULT_DAILY_GOAL = 10;
 export const landingUrl = (stateCode: string) => `${REVIEW_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;
 export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;
 
-// One pull request, no session. What the jurisdiction page's Review button links to.
-export const pullRequestUrl = (stateCode: string, requestId: string) =>
+// One card, no session. What the jurisdiction page's Review button links to.
+export const reviewSessionUrl = (stateCode: string, requestId: string) =>
   `${sessionUrl(stateCode)}&${PULL_REQUEST_PARAM}=${encodeURIComponent(requestId)}`;
 

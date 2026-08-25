@@ -3,7 +3,7 @@ import { component } from "haunted";
 import { Pagination } from "../../../components/pagination/index.js";
 import "../../../components/review-card/index.js";
 
-function ReviewCardList({ cards, actionState, loading, error, page, perPage, totalPages, viewMode, onMerge, onClose, onViewChange, onPageChange, onPerPageChange }) {
+function ReviewCardList({ cards, actionState, loading, error, page, perPage, totalPages, viewMode, onApprove, onReject, onViewChange, onPageChange, onPerPageChange }) {
   if (loading) return html`<div>Loading...</div>`;
   if (error) return html`<div>Error: ${error}</div>`;
 
@@ -31,8 +31,8 @@ function ReviewCardList({ cards, actionState, loading, error, page, perPage, tot
           <div style="display: flex; gap: 2rem; flex-direction: column;">
             ${cards.map(card => html`
               <review-card
-                @onMerge=${onMerge}
-                @onClose=${onClose}
+                @approve=${onApprove}
+                @reject=${onReject}
                 .entry=${card}
                 .state=${actionState[card.request_id]}
                 .viewMode=${viewMode}

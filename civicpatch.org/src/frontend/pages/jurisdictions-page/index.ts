@@ -24,7 +24,7 @@ import {
   editingBlockedReason,
   jurisdictionEditBlockedReason,
   type HistoryEntry,
-} from "./open-pull-requests.js";
+} from "./awaiting-review.js";
 
 interface JurisdictionPageProps {
   jurisdiction_ocdid: string;
@@ -126,10 +126,10 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   // run, and the archive row for it would carry a meaningless percentage bar.
   const liveEntry = entries.find((entry) => entry.is_running);
   const pastEntries = entries.filter((e: any) => e !== liveEntry);
-  const openPrs = pendingReviews(entries);
+  const awaitingReview = pendingReviews(entries);
   // Blocked independently: each kind only locks the file it already has in flight.
-  const peopleBlockers = peopleEditBlockers(openPrs);
-  const jurisdictionBlockers = jurisdictionEditBlockers(openPrs);
+  const peopleBlockers = peopleEditBlockers(awaitingReview);
+  const jurisdictionBlockers = jurisdictionEditBlockers(awaitingReview);
 
   const handleScrapeStartClick = async (details: any) => {
     setScrapeModalOpen(false);
@@ -211,7 +211,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       ${renderDataFlag(jurisdictionData?.data)}
       ${scrapeError ? html`<p style="color: var(--pico-del-color);">${scrapeError}</p>` : nothing}
 
-      ${renderPendingReviews(openPrs, jurisdiction_ocdid, isSignedIn)}
+      ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
 
       <civ-officials-editor
         .people=${people}

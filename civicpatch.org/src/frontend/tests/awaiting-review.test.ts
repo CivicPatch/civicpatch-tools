@@ -7,7 +7,7 @@ import {
   jurisdictionEditBlockedReason,
   REQUEST_TYPE,
   type HistoryEntry,
-} from "../pages/jurisdictions-page/open-pull-requests.ts";
+} from "../pages/jurisdictions-page/awaiting-review.ts";
 
 const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
   request_id: "req-1",
