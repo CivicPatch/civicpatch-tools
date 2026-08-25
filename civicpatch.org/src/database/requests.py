@@ -7,14 +7,12 @@ from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
     ReviewSessionEntryStatus,
 )
-from lib.github.utils import pull_request_url_to_number
 from psycopg import sql
 from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineIssueStatus,
     PipelineIssueType,
     PipelineRunStatus,
-    PullRequestStatus,
     RequestReviewStatus,
     RequestType,
 )
@@ -200,18 +198,6 @@ async def register_foreign_request(
             (request_id, PipelineRunStatus.SUCCESS),
         )
 
-        pr_number = 0
-        if pr_url:
-            num = pull_request_url_to_number(pr_url)
-            pr_number = int(num) if num else 0
-
-        await conn.execute(
-            """
-            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            """,
-            (request_id, pr_url, PullRequestStatus.OPEN, pr_number),
-        )
 
 
 async def register_jurisdiction_edit_request(

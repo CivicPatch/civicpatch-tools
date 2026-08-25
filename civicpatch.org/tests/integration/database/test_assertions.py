@@ -6,7 +6,6 @@ Python: the CHECKs, `UNIQUE NULLS NOT DISTINCT`, and `DISTINCT ON` picking the l
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
-import json
 import uuid
 from datetime import datetime, timezone
 

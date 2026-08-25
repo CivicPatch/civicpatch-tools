@@ -6,7 +6,6 @@ product decision under test.
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
-import json
 import uuid
 from datetime import datetime, timezone
 

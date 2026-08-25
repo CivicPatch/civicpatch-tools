@@ -33,8 +33,8 @@ function fakeEffects(api: ReviewApi): Effects {
     dispatch: vi.fn(),
     navigate: vi.fn(),
     setRequestIdParam: vi.fn(),
-    trackMerge: vi.fn(async () => ({ ok: true })),
-    trackClose: vi.fn(),
+    trackApprove: vi.fn(async () => ({ ok: true })),
+    trackReject: vi.fn(),
   };
 }
 
@@ -238,7 +238,7 @@ describe("standalone deeplink (no session)", () => {
     const e = fakeEffects(api);
     await mergeCurrent(standalone, null, 1, [{ id: "p1" }], STATE, e);
 
-    expect(e.trackMerge).toHaveBeenCalled();
+    expect(e.trackApprove).toHaveBeenCalled();
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_RESOLVED);
     // The bug this replaces: navigateToEntry("") POSTs to /review-sessions//navigate,
     // which 405s, so a publish that already succeeded surfaced as LOAD_FAILED.
@@ -252,7 +252,7 @@ describe("standalone deeplink (no session)", () => {
     const e = fakeEffects(api);
     await closeCurrent(standalone, null, 1, STATE, e);
 
-    expect(e.trackClose).toHaveBeenCalled();
+    expect(e.trackReject).toHaveBeenCalled();
     expect(api.navigateToEntry).not.toHaveBeenCalled();
     expect(e.navigate).toHaveBeenCalledWith(jurisdictionPage);
   });
@@ -271,7 +271,7 @@ describe("standalone deeplink (no session)", () => {
   it("still reports a rejected publish rather than navigating away", async () => {
     const api = fakeApi();
     const e = fakeEffects(api);
-    (e.trackMerge as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
+    (e.trackApprove as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
     await mergeCurrent(standalone, null, 1, [{ id: "p1" }], STATE, e);
 
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_FAILED);
@@ -286,7 +286,7 @@ describe("mergeCurrent", () => {
     const people = [{ id: "p1" }];
     await mergeCurrent(current, "s1", 2, people, STATE, e);
 
-    expect(e.trackMerge).toHaveBeenCalledWith("req-1", "ocd-x", people, "X City");
+    expect(e.trackApprove).toHaveBeenCalledWith("req-1", "ocd-x", people, "X City");
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_RESOLVED);
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
   });
@@ -294,7 +294,7 @@ describe("mergeCurrent", () => {
   it("flags the entry failed and stays put when the publish is rejected", async () => {
     const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
     const e = fakeEffects(api);
-    (e.trackMerge as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
+    (e.trackApprove as any).mockResolvedValue({ ok: false, error: "phones: Invalid phone number" });
     await mergeCurrent(current, "s1", 2, [{ id: "p1" }], STATE, e);
 
     expect(e.dispatch).toHaveBeenCalledWith({
@@ -309,13 +309,13 @@ describe("mergeCurrent", () => {
     const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
     const e = fakeEffects(api);
     await mergeCurrent({ ...current, pr: undefined } as any, "s1", 2, null, STATE, e);
-    expect(e.trackMerge).toHaveBeenCalledWith("req-1", "ocd-x", null, "X City");
+    expect(e.trackApprove).toHaveBeenCalledWith("req-1", "ocd-x", null, "X City");
   });
 
   it("does nothing without a request id", async () => {
     const e = fakeEffects(fakeApi());
     await mergeCurrent({ ...current, request_id: null } as any, "s1", 2, null, STATE, e);
-    expect(e.trackMerge).not.toHaveBeenCalled();
+    expect(e.trackApprove).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });
 });
@@ -376,7 +376,7 @@ describe("closeCurrent", () => {
     const e = fakeEffects(api);
     await closeCurrent(current, "s1", 2, STATE, e);
 
-    expect(e.trackClose).toHaveBeenCalledWith("req-1", "X City");
+    expect(e.trackReject).toHaveBeenCalledWith("req-1", "X City");
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
   });
 });

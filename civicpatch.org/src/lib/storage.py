@@ -1,17 +1,9 @@
 import boto3
 import logging
-from typing import BinaryIO, Optional
+from typing import Optional
 from botocore.client import Config
 from fastapi import UploadFile
-import zipfile
 import os
-import tempfile
-import shutil
-import fnmatch
-import yaml
-import glob
-import json
-import lib.files as file_utils
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 import environment

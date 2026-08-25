@@ -1,7 +1,7 @@
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity
 from lib.auth import get_optional_user
@@ -130,31 +130,6 @@ def test_patch_job_status_returns_updated_status(client):
 
 
 @pytest.mark.unit
-def test_post_job_result_returns_request_id(client):
-    """The endpoint carries only `pull_request_url` now — open-data reporting back where it
-    committed. A roster posted here used to become `data_json`; rosters come from
-    `source_records` at ingest instead, so there is nothing left for a caller to post."""
-    with (
-        patch(
-            "routers.api.pipeline_runs.update_pipeline_run_pull_request_url",
-            new_callable=AsyncMock,
-            return_value=True,
-        ),
-    ):
-        response = client.post(
-            f"/pipeline_runs/{TEST_REQUEST_ID}/result",
-            json={"pull_request_url": "https://github.com/org/open-data/pull/7"},
-        )
-
-    assert response.status_code == 200
-    data = response.json()
-    assert data["request_id"] == TEST_REQUEST_ID
-    assert data["errors"] == []
-
-
-
-
-@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_apply_pipeline_run_status_publishes_when_jurisdiction_provided():
     with (
@@ -227,38 +202,6 @@ def test_get_issues_returns_paginated_list(client):
     data = response.json()
     assert "data" in data
     assert "total" in data
-
-
-@pytest.mark.unit
-def test_dismiss_merge_failed_issue_unparks_pr(client):
-    """Dismissing a merge_failed issue clears the PR's merge park so it returns to the pool."""
-    issue = {"id": "issue-1", "issue_type": "merge_failed", "request_ids": [TEST_REQUEST_ID], "status": "pending"}
-    clear_enqueued = AsyncMock()
-    with (
-        patch("routers.api.pipeline_runs.get_issue_by_id", new_callable=AsyncMock, return_value=issue),
-        patch("routers.api.pipeline_runs.resolve_issue", new_callable=AsyncMock),
-        patch("routers.api.pipeline_runs.clear_merge_enqueued", clear_enqueued),
-    ):
-        response = client.post("/pipeline_runs/issues/issue-1/dismiss")
-
-    assert response.status_code == 200
-    clear_enqueued.assert_awaited_once_with(TEST_REQUEST_ID)
-
-
-@pytest.mark.unit
-def test_dismiss_non_merge_issue_leaves_park_untouched(client):
-    """Dismissing any non-merge issue must not touch merge_enqueued_at."""
-    issue = {"id": "issue-2", "issue_type": "unrecognized_role", "request_ids": [TEST_REQUEST_ID], "status": "pending"}
-    clear_enqueued = AsyncMock()
-    with (
-        patch("routers.api.pipeline_runs.get_issue_by_id", new_callable=AsyncMock, return_value=issue),
-        patch("routers.api.pipeline_runs.resolve_issue", new_callable=AsyncMock),
-        patch("routers.api.pipeline_runs.clear_merge_enqueued", clear_enqueued),
-    ):
-        response = client.post("/pipeline_runs/issues/issue-2/dismiss")
-
-    assert response.status_code == 200
-    clear_enqueued.assert_not_awaited()
 
 
 # ── POST /pipeline_runs/{request_id}/cancel ───────────────────────────────────

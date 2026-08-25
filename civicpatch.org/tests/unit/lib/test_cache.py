@@ -1,7 +1,6 @@
-import json
 
 import pytest
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import lib.cache as cache_service
 

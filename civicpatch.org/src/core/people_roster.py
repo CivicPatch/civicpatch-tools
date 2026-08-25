@@ -137,6 +137,16 @@ def _aliases_carried_forward(person: Person, published: Person | None) -> list[s
     )
 
 
+def reviewer_source_records(person: dict) -> list[PersonRecord]:
+    if not person.get("name"):
+        return []
+    return [
+        PersonRecord(name=person["name"], label="", source_url=source_url)
+        for source_url in dict.fromkeys(person.get("source_urls") or [])
+        if source_url
+    ]
+
+
 def identified(person: dict, resolution: dict) -> dict:
     """One roster entry carrying the identity cp.org resolved for it.
 

@@ -51,12 +51,12 @@ type ReviewSessionHost = HTMLElement & {
   hasSession: boolean;
   currentEntry: CurrentEntry | null;
   error: string | null;
-  canClosePr: boolean;
-  isClosingPr: boolean;
+  canReject: boolean;
+  isRejecting: boolean;
 };
 
 function ReviewSession(host: ReviewSessionHost) {
-  const { progress, hasSession, currentEntry, error, canClosePr, isClosingPr } = host;
+  const { progress, hasSession, currentEntry, error, canReject, isRejecting } = host;
   const { jurisdiction, pr, mode, pr_people, changes, assertions, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
   const officeOptions = useOfficeOptions(jurisdictionOcdid);
@@ -251,8 +251,8 @@ function ReviewSession(host: ReviewSessionHost) {
           .dirty=${dirty}
           .peoplePatch=${peoplePatch}
           .blockers=${blockers}
-          .canClosePr=${canClosePr}
-          .isClosingPr=${isClosingPr}
+          .canReject=${canReject}
+          .isRejecting=${isRejecting}
           .hasSession=${hasSession}
         ></review-session-actions>
       </div>

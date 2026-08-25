@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from supabase import AsyncClient
 
 import database.users as users_db
@@ -8,7 +8,6 @@ import lib.auth_session as auth_session
 import lib.cache as cache_service
 import lib.supabase_auth as supabase_auth_service
 import lib.temporal.client as temporal_client
-import services.pull_request_sync as pr_sync
 from schemas.common import (
     Identity,
     InviteUserRequest,
@@ -35,14 +34,6 @@ def get_router() -> APIRouter:
         else:
             await temporal_client.trigger_full_od_sync()
 
-        return {"status": "running"}
-
-    @router.post("/pr_sync", include_in_schema=False)
-    async def pr_sync_endpoint(
-        background_tasks: BackgroundTasks,
-        _: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
-    ):
-        background_tasks.add_task(pr_sync.sync_open_pr_state)
         return {"status": "running"}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)

@@ -17,7 +17,6 @@ from database.requests import DISMISSED_UNCHANGED, dismiss_as_unchanged
 from database.review_queue import issue_priority
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
-from database.review_session_entries import resolve_entries_for_request
 from database.publications import publish_request
 from database.pull_requests import list_open_pull_requests
 from database.issues import create_user_reported_issue, resolve_issue
@@ -129,17 +128,12 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
             (request_id,),
         )
-        await cur.execute(
-            "INSERT INTO pull_requests (request_id, pr_number, status) VALUES (%s, %s, 'open')",
-            (request_id, 990000),
-        )
     return request_id, ocdid
 
 
 async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
-        await conn.execute("DELETE FROM pull_requests WHERE request_id::text = %s", (request_id,))
         await conn.execute("DELETE FROM pipeline_runs WHERE request_id::text = %s", (request_id,))
         await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))

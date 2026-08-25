@@ -10,7 +10,6 @@ the half-open interval are the things under test.
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
-import json
 import uuid
 from datetime import date, datetime, timezone
 

@@ -1,4 +1,3 @@
-import asyncio
 import json
 import logging
 import math
@@ -33,9 +32,7 @@ from database.pipeline_runs import (
     update_pipeline_run_status,
 )
 from database.pull_requests import (
-    clear_merge_enqueued,
     has_open_pr_for_jurisdiction,
-    update_pipeline_run_pull_request_url,
 )
 from database.requests import (
     get_issue_request_details,
@@ -54,7 +51,6 @@ from schemas.pipeline_runs import (
     FlagPipelineIssueRequest,
     GetPipelineRunStatusResponse,
     HandleSubmitPipelineRunArtifactsRequest,
-    PostPipelineRunResultRequest,
     RegisterGithubRunRequest,
     RegisterPipelineRunRequest,
     ServerDetail,
@@ -64,7 +60,6 @@ from schemas.pipeline_runs import (
 from services import people_collector
 from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
-    PipelineIssueType,
     PipelineRunStatus,
 )
 
@@ -394,42 +389,6 @@ def get_router(api_key_header):
     # ── Pipeline Runs: Submit & Results ───────────────
 
     @router.post(
-        "/{request_id}/result",
-        include_in_schema=False,
-    )
-    async def post_pipeline_run_result_endpoint(
-        request_id: str,
-        request: PostPipelineRunResultRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
-    ):
-        errors = []
-
-        tasks = []
-        if request.pull_request_url:  # Called from open-data repo
-            tasks.append(
-                (
-                    "pull_request",
-                    update_pipeline_run_pull_request_url(
-                        request_id, pull_request_url=request.pull_request_url
-                    ),
-                )
-            )
-
-        if tasks:
-            results = await asyncio.gather(
-                *[t[1] for t in tasks], return_exceptions=True
-            )
-            for (label, _), result in zip(tasks, results):
-                if isinstance(result, Exception):
-                    errors.append(f"Failed to update {label}: {result}")
-                elif not result:
-                    errors.append(
-                        f"Failed to update {label}, pipeline run may not exist"
-                    )
-
-        return {"request_id": request_id, "errors": errors}
-
-    @router.post(
         "/{request_id}/submit",
         summary="Upload zip file containing municipal data",
         description="Accepts a zip file containing municipal data and processes it",
@@ -658,13 +617,6 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
         await resolve_issue(issue_id)
-        if (
-            issue["issue_type"] == PipelineIssueType.MERGE_FAILED
-            and issue["request_ids"]
-        ):
-            # Dismissing a failed-merge issue un-parks the PR: clear the merge hold so it
-            # returns to the review pool.
-            await clear_merge_enqueued(issue["request_ids"][0])
         return {"data": None}
 
     @router.patch(

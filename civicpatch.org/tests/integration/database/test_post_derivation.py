@@ -15,10 +15,9 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from database import assertions, divisions, memberships, organizations, posts
+from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.review_queue import issue_count, issue_priority
-from schemas.assertions import Assertion, AssertionKind, EntityType
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"

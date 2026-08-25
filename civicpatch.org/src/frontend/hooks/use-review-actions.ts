@@ -1,6 +1,6 @@
 import { useState } from "haunted";
 import { publishReview, dismissReview } from "../api.js";
-import { PULL_REQUEST_STATUS } from "../components/pull-request-card/pull-request-status.js";
+import { REVIEW_ACTION } from "../components/pull-request-card/review-action.js";
 
 type ActionState = {
   status: string;
@@ -14,15 +14,14 @@ export type PublishLogEntry = {
   status: string;
 };
 
-const PUBLISH_LOG_STATUSES = [
-  PULL_REQUEST_STATUS.LOADING_MERGE,
-  PULL_REQUEST_STATUS.MERGED,
-  PULL_REQUEST_STATUS.ERROR,
+const LOGGED_ACTIONS = [
+  REVIEW_ACTION.APPROVING,
+  REVIEW_ACTION.APPROVED,
+  REVIEW_ACTION.ERROR,
 ];
 
-export function usePullRequestActions() {
-  // Keyed on request_id, not a pull request number: a scrape that published straight to
-  // open-data never had one, and those are the majority now.
+export function useReviewActions() {
+  // Keyed on request_id: there is no pull request behind a scrape any more.
   const [actionState, setActionState] = useState<Record<string, ActionState>>({});
 
   const setStatus = (requestId: string, jurisdictionName: string, status: string, error?: string) =>
@@ -45,48 +44,48 @@ export function usePullRequestActions() {
       await run();
       setStatus(requestId, jurisdictionName, done);
     } catch (err: any) {
-      setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.ERROR, err?.message ?? String(err));
+      setStatus(requestId, jurisdictionName, REVIEW_ACTION.ERROR, err?.message ?? String(err));
     }
   };
 
-  // Publishing is a single synchronous call now — the server writes the roster and stamps
+  // Approving is a single synchronous call: the server writes the roster and stamps
   // published_at before responding, so there is no background half to poll. Still resolves
   // {ok:false, error} rather than throwing, so the review session can keep the reviewer
   // on a failed entry.
-  const trackMerge = async (
+  const trackApprove = async (
     requestId: string,
     jurisdictionOcdid: string,
     people: any[] | null,
     jurisdictionName: string,
   ): Promise<{ ok: boolean; error?: string }> => {
-    setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.LOADING_MERGE);
+    setStatus(requestId, jurisdictionName, REVIEW_ACTION.APPROVING);
     try {
       await publishReview(requestId, jurisdictionOcdid, people);
     } catch (err: any) {
       const error = err?.message ?? String(err);
-      setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.ERROR, error);
+      setStatus(requestId, jurisdictionName, REVIEW_ACTION.ERROR, error);
       return { ok: false, error };
     }
-    setStatus(requestId, jurisdictionName, PULL_REQUEST_STATUS.MERGED);
+    setStatus(requestId, jurisdictionName, REVIEW_ACTION.APPROVED);
     return { ok: true };
   };
 
-  const trackClose = (requestId: string, jurisdictionName: string): Promise<void> =>
+  const trackReject = (requestId: string, jurisdictionName: string): Promise<void> =>
     track({
       requestId,
       jurisdictionName,
-      loading: PULL_REQUEST_STATUS.LOADING_CLOSE,
-      done: PULL_REQUEST_STATUS.CLOSED,
+      loading: REVIEW_ACTION.REJECTING,
+      done: REVIEW_ACTION.REJECTED,
       run: () => dismissReview(requestId),
     });
 
   const entries: PublishLogEntry[] = Object.entries(actionState)
-    .filter(([, s]) => PUBLISH_LOG_STATUSES.includes(s.status))
+    .filter(([, s]) => LOGGED_ACTIONS.includes(s.status))
     .map(([requestId, s]) => ({
       request_id: requestId,
       jurisdiction_name: s.jurisdiction_name,
       status: s.status,
     }));
 
-  return { actionState, entries, trackMerge, trackClose };
+  return { actionState, entries, trackApprove, trackReject };
 }

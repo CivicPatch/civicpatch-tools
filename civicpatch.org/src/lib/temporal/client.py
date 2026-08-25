@@ -8,14 +8,12 @@ from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
-from lib.temporal.types import MergeRequest, OpenDataCommitRequest
+from lib.temporal.types import OpenDataCommitRequest
 from lib.temporal.workflows import (
     OdSyncTargetedWorkflow,
     OpenDataCommitWorkflow,
-    RepoMergeQueueWorkflow,
     ScheduleId,
     TASK_QUEUE,
-    WorkflowInstanceId,
 )
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 
@@ -95,21 +93,6 @@ async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
     return handle.id
 
 
-async def enqueue_merge(request: MergeRequest) -> None:
-    """Send a PR merge request to the singleton RepoMergeQueueWorkflow.
-
-    Uses signal-with-start: if the queue workflow is already running, the signal
-    is appended to its FIFO; if not, it starts the workflow and delivers the
-    signal as the first item."""
-    client = await _get_client()
-    await client.start_workflow(
-        RepoMergeQueueWorkflow.run,
-        id=WorkflowInstanceId.REPO_MERGE_QUEUE,
-        task_queue=TASK_QUEUE,
-        id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
-        start_signal="enqueue",
-        start_signal_args=[request],
-    )
 
 
 async def enqueue_open_data_commit(request: OpenDataCommitRequest) -> None:

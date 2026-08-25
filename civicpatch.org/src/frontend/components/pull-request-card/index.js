@@ -1,7 +1,7 @@
 import "./pr-card.css";
 import { html } from "lit-html";
 import { component } from "haunted";
-import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
+import { REVIEW_ACTION } from "./review-action.js";
 import "./header.js";
 import "./data-panel.js";
 import "../diff-panel/diff-panel.js";
@@ -31,10 +31,10 @@ function PrCard({ entry, state, viewMode = "quick" }) {
   const stats = diffStats(entry);
 
   const renderCardContent = () => {
-    if (state?.status === PULL_REQUEST_STATUS.CLOSED) {
+    if (state?.status === REVIEW_ACTION.REJECTED) {
       return html`<div class="pr-card__content">Closed</div>`;
     }
-    if (state?.status === PULL_REQUEST_STATUS.ERROR) {
+    if (state?.status === REVIEW_ACTION.ERROR) {
       return html`<div class="pr-card__content">Error: ${state?.error}</div>`;
     }
 
@@ -46,8 +46,8 @@ function PrCard({ entry, state, viewMode = "quick" }) {
     return html`<data-panel .entry=${entry}></data-panel>`;
   };
 
-  const isPublished = state?.status === PULL_REQUEST_STATUS.MERGED;
-  const isPublishing = state?.status === PULL_REQUEST_STATUS.LOADING_MERGE;
+  const isPublished = state?.status === REVIEW_ACTION.APPROVED;
+  const isPublishing = state?.status === REVIEW_ACTION.APPROVING;
 
   return html`
     <div class="pr-card">

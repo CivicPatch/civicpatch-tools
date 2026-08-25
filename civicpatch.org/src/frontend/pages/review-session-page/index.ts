@@ -3,8 +3,8 @@ import { component } from "haunted";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
-import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
-import { PULL_REQUEST_STATUS } from "../../components/pull-request-card/pull-request-status.js";
+import { useReviewActions } from "../../hooks/use-review-actions.js";
+import { REVIEW_ACTION } from "../../components/pull-request-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
@@ -21,10 +21,10 @@ function ReviewSessionPage() {
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const { permissions } = useAuth();
-  const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
-  const { fsm, advance, back, navigateTo, merge, save, closePr, endSession } = useReviewSession(stateCode, {
-    trackMerge,
-    trackClose,
+  const { actionState, entries: publishLogEntries, trackApprove, trackReject } = useReviewActions();
+  const { fsm, advance, back, navigateTo, merge, save, rejectScrape, endSession } = useReviewSession(stateCode, {
+    trackApprove,
+    trackReject,
   });
 
   const reviewing = fsm.kind === StateKind.REVIEWING ? fsm : null;
@@ -38,7 +38,7 @@ function ReviewSessionPage() {
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
   const requestId = currentEntry?.request_id;
-  const isClosingPr = requestId != null && actionState[requestId]?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+  const isRejecting = requestId != null && actionState[requestId]?.status === REVIEW_ACTION.REJECTING;
 
   const progress = reviewing
     ? {
@@ -71,15 +71,15 @@ function ReviewSessionPage() {
       .hasSession=${session != null}
       .progress=${progress}
       .error=${publishError}
-      .canClosePr=${permissions.can_close_pull_request}
-      .isClosingPr=${isClosingPr}
+      .canReject=${permissions.can_reject_scrape}
+      .isRejecting=${isRejecting}
       @back=${back}
       @advance=${advance}
       @navigate-to=${handleNavigateTo}
       @end-session=${endSession}
       @publish=${handlePublish}
       @save=${handleSave}
-      @close-pr=${closePr}
+      @reject=${rejectScrape}
     ></review-session>`;
   };
 

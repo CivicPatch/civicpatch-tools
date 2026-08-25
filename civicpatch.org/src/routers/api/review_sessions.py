@@ -12,7 +12,6 @@ import database.review_session_stats as review_session_stats_db
 import database.review_sessions as review_sessions_db
 import lib.buckets as buckets
 import lib.storage as storage_service
-import services.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
 from fastapi import APIRouter, Depends, HTTPException
@@ -153,8 +152,6 @@ async def _navigate_response(session_id: str, entry_number: int):
 
     request_id = result["request_id"]
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
-
-    await pr_sync_service.sync_single_pr_state(request_id)
 
     pr_meta, existing, proposed, scraped_at = await asyncio.gather(
         pull_requests_db.get_pull_request_for_review(request_id),

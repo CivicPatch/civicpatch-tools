@@ -14,7 +14,7 @@ import lib.github.api as github_service
 import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
-from core.image_upload import artifacts_key, promoted_key, promoted_url
+from core.images import artifacts_key, promoted_key, promoted_url
 from core.post_derivation import ChosenPost, DerivedPost, derived_posts
 from database import posts as posts_db
 from database.database import get_pool

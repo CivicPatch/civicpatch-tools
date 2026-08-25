@@ -7,7 +7,6 @@ shape a consumer actually receives.
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
-import json
 import uuid
 
 import pytest

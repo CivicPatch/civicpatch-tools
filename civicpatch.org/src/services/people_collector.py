@@ -4,7 +4,7 @@ import environment
 import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
-from core.image_urls import cdn_urls, records_with_images, resolve_images
+from core.images import cdn_urls, records_with_images, resolve_images
 from core.membership_proposal import (
     ExistingMembership,
     ProposedChange,
@@ -157,7 +157,7 @@ async def _build_review_summary(
 
 def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict, dict]:
     """The impure edge of image resolution: an env read and a file read. The mapping itself is
-    `core.image_urls.cdn_urls`."""
+    `core.images.cdn_urls`."""
     env = environment.get_env_vars()
     return artifacts.read_image_map(image_file_dir), cdn_urls(
         filenames_to_urls, env["STORAGE_ENDPOINT"], PUBLIC_BUCKET, INSTANCE_DOMAIN

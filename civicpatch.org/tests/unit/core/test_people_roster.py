@@ -7,9 +7,10 @@ from core.people_roster import (
     named_like_a_person,
     roster_from_rows,
     roster_from_sightings,
+    reviewer_source_records,
     with_fallback_url,
 )
-from shared.schemas import Person, Role, RoleConfig, RoleStatus
+from shared.schemas import Person, PersonRecord, Role, RoleConfig, RoleStatus
 from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import build_taxonomy
 
@@ -397,3 +398,52 @@ def test_the_photo_and_its_cdn_url_come_from_the_same_sighting():
 @pytest.mark.unit
 def test_no_sightings_is_not_an_error():
     assert _roster_back([]) == []
+
+
+# --- a person the reviewer added by hand ---
+
+
+@pytest.mark.unit
+def test_an_added_person_becomes_one_record_per_page():
+    """A row is what one page said about one person, so a reviewer listing two sources saw
+    them twice. `label` is empty: they pick a post and never type a label — `labels` are what
+    a source said, and are never edited."""
+    added = {
+        "name": "Ann Lee",
+        "source_urls": ["https://alpha.gov/council", "https://alpha.gov/directory"],
+    }
+
+    assert reviewer_source_records(added) == [
+        PersonRecord(name="Ann Lee", label="", source_url="https://alpha.gov/council"),
+        PersonRecord(name="Ann Lee", label="", source_url="https://alpha.gov/directory"),
+    ]
+
+
+@pytest.mark.unit
+def test_one_page_listed_twice_is_still_one_record():
+    added = {
+        "name": "Ann Lee",
+        "source_urls": ["https://alpha.gov/council", "https://alpha.gov/council"],
+    }
+    assert len(reviewer_source_records(added)) == 1
+
+
+@pytest.mark.unit
+def test_nothing_is_recorded_without_somewhere_it_came_from():
+    """`source_url` is NOT NULL because provenance is what a sighting is for. The editor makes
+    it required, so this is the last guard rather than the only one."""
+    assert reviewer_source_records({"name": "Ann Lee", "source_urls": []}) == []
+    assert reviewer_source_records({"name": "", "source_urls": ["https://alpha.gov"]}) == []
+
+
+@pytest.mark.unit
+def test_only_the_identifying_columns_are_evidence():
+    """Everything else the reviewer typed is a claim, recorded by `stated_from_edit`. Copying
+    it here too would make the sighting a second, competing answer."""
+    record = reviewer_source_records({
+        "name": "Ann Lee",
+        "source_urls": ["https://alpha.gov/council"],
+        "phones": ["(512) 978-2100"],
+        "image": "https://alpha.gov/ann.png",
+    })[0]
+    assert record.phone is None and record.image is None

@@ -8,14 +8,13 @@ import lib.github.api as github_service
 import shared.utils.id_utils as id_utils
 from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
+from services.open_data_sync import sync_jurisdictions_by_ocdids
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import database.jurisdictions as jurisdictions_db
 import database.requests as requests_db
 import core.jurisdiction_patch as jurisdiction_patch
 import services.change_logs as change_logs
-import services.pull_request_sync as pull_request_sync
-from shared.utils.statuses import PullRequestStatus
 
 logger = logging.getLogger(__name__)
 
@@ -222,13 +221,13 @@ async def merge_jurisdiction_pr(
         logger.exception("Failed to auto-merge jurisdiction PR %s", pull_request_number)
         return
 
-    # Record the merge and run its side effects through the same path every other PR
-    # uses, so the row's status is right and the targeted sync fires. A failure here
-    # is not a merge failure: the merge stands and the hourly od_sync is the backstop.
+    # Sync the jurisdiction it just changed. Called directly rather than through a status
+    # write: this path merged the PR, so it already knows. A failure here is not a merge
+    # failure — the merge stands and the hourly od_sync is the backstop.
     try:
-        await pull_request_sync.apply_pull_request_status(
-            request_id, PullRequestStatus.MERGED
-        )
+        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+        if jurisdiction_ocdid:
+            await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
     except Exception:
         logger.exception(
             "Merged jurisdiction PR %s but recording/syncing it failed for request %s; "

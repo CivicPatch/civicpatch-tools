@@ -15,7 +15,6 @@ those rows, wipes role change_logs, and restores the seeded rows' priorities
 """
 import pytest
 import pytest_asyncio
-from psycopg.errors import UniqueViolation
 
 from database.database import get_pool
 from core.role_taxonomy import slugify_label
