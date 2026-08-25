@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from enum import Enum
 from typing import Optional
 
@@ -18,6 +19,10 @@ class RouteCategory(str, Enum):
 class ReviewMode(str, Enum):
     BASELINE = "baseline"      # first capture for a jurisdiction; nothing to diff against
     RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful
+
+    @classmethod
+    def for_scrape(cls, scraped_at: datetime | None) -> "ReviewMode":
+        return cls.BASELINE if scraped_at is None else cls.RECONCILE
 
 
 class UserRole(str, Enum):

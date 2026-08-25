@@ -21,8 +21,7 @@ import lib.storage as storage_service
 import services.pull_request_sync as pr_sync_service
 import shared.utils.id_utils
 import shared.utils.url_utils
-from schemas.common import Identity, RouteCategory
-from core.review_mode import review_mode_for
+from schemas.common import Identity, ReviewMode, RouteCategory
 from services.review_proposal import assertions_for_people, proposals_for_requests
 from lib.auth import require_route_access
 
@@ -189,7 +188,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],
-            "mode": review_mode_for(scraped_at).value,
+            "mode": ReviewMode.for_scrape(scraped_at).value,
             "existing": existing,
             "proposed": proposed,
             "changes": [change.model_dump() for change in proposals.get(request_id, [])],

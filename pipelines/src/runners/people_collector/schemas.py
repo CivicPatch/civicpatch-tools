@@ -4,6 +4,9 @@ from typing import Dict, List, Optional, TypeAlias
 from domain.models import Official, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
+from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
+    NavigationFailureReason,
+)
 from shared.schemas import (
     ExtractedPerson,
     PersonRecord,
@@ -38,11 +41,10 @@ class Link(BaseModel):
     num_references: int = 0
     comment: Optional[str] = None
     text: Optional[str] = None
-    failure_reason: Optional[str] = (
-        None  # NavigationFailureReason value, set when status=ERROR
-    )
+    failure_reason: Optional[NavigationFailureReason] = None  # set when status=ERROR
     failure_source: Optional[str] = None  # raw Playwright/Chromium detail string
     visit_order: Optional[int] = None  # 1 = first page scraped, 2 = second, etc.
+    attempts: int = 0  # scrape attempts spent, including the ones that failed
 
 
 class LinkFrontier(BaseModel):
@@ -138,6 +140,27 @@ class LinkFrontier(BaseModel):
 
         key = canonical_url(url)
         return self.model_copy(update={"queue": [k for k in self.queue if k != key]})
+
+    def requeue(self, url: str, **updates) -> "LinkFrontier":
+        """Send a link back to the tail of the queue, pending again.
+
+        For a transient scrape failure: the pages already queued ahead of it are the delay,
+        so a site that stalls for a few minutes gets retried once the crawl has moved on.
+        """
+        from shared.utils.url_utils import canonical_url
+
+        key = canonical_url(url)
+        if key not in self.links:
+            return self
+        new_link = self.links[key].model_copy(
+            update={"status": LinkStatus.PENDING.value, **updates}
+        )
+        return self.model_copy(
+            update={
+                "links": {**self.links, key: new_link},
+                "queue": [k for k in self.queue if k != key] + [key],
+            }
+        )
 
     def update_link(self, lookup_url: str, **updates) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url

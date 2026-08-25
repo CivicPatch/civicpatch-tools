@@ -2,7 +2,7 @@ import difflib
 
 import pytest
 
-from core.people_patch import (
+from core.people_edits import (
     PeopleValidationError,
     PersonPatch,
     apply_people_patch,

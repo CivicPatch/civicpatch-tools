@@ -1,6 +1,6 @@
 import pytest
 
-from core.people_patch import with_stated_values
+from core.people_edits import with_stated_values
 from schemas.assertions import AssertionKind
 
 

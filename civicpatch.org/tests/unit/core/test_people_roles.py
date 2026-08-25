@@ -1,6 +1,6 @@
 import pytest
 
-from core.source_record_parse import parse_record
+from core.people_roles import derive_roles
 from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import build_taxonomy
@@ -42,7 +42,7 @@ def _labels(office_name: str) -> list[str]:
 
 @pytest.mark.unit
 def test_parses_role_division_and_seat_out_of_one_label():
-    parsed = parse_record(_labels("Council Member Place 3 (East Ward)"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Council Member Place 3 (East Ward)"), JURISDICTION, TAXONOMY)
     assert parsed["role"] == "Council Member"
     assert parsed["division_ocdid"] == f"{BASE}/ward:east"
     assert parsed["other_designations"] == ["Place 3"]
@@ -53,7 +53,7 @@ def test_parses_role_division_and_seat_out_of_one_label():
 def test_the_published_role_is_the_highest_priority_one():
     """Usurp is the lossy step `parsed` exists to record: Mayor Pro Tem (50) over Council
     Member (500), whichever order the label lists them."""
-    parsed = parse_record(_labels("Council Member Place 2 and Mayor Pro-Tem"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Council Member Place 2 and Mayor Pro-Tem"), JURISDICTION, TAXONOMY)
     assert parsed["role"] == "Mayor Pro Tem"
     assert sorted(parsed["roles"]) == ["Council Member", "Mayor Pro Tem"]
 
@@ -62,14 +62,14 @@ def test_the_published_role_is_the_highest_priority_one():
 def test_an_unknown_office_survives_as_unmatched():
     """The candidate feed: triage reads unresolved labels out of `parsed` rather than a
     separate collection path."""
-    parsed = parse_record(_labels("City Attorney"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("City Attorney"), JURISDICTION, TAXONOMY)
     assert parsed["role"] is None
     assert parsed["unmatched"] == ["City Attorney"]
 
 
 @pytest.mark.unit
 def test_a_label_naming_no_area_gets_the_jurisdictions_own_division():
-    parsed = parse_record(_labels("Mayor"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Mayor"), JURISDICTION, TAXONOMY)
     assert parsed["division_ocdid"] == BASE
 
 
@@ -77,14 +77,14 @@ def test_a_label_naming_no_area_gets_the_jurisdictions_own_division():
 def test_a_joined_office_name_splits_back_into_its_labels():
     """Historic records rendered several labels into one string; the split is the first
     lossy step being recorded."""
-    parsed = parse_record(_labels("Council Member Place 2 - Mayor Pro-Tem"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Council Member Place 2 - Mayor Pro-Tem"), JURISDICTION, TAXONOMY)
     assert parsed["labels"] == ["Council Member Place 2", "Mayor Pro-Tem"]
     assert parsed["role"] == "Mayor Pro Tem"
 
 
 @pytest.mark.unit
 def test_an_unknown_office_name_yields_no_labels():
-    parsed = parse_record(_labels("Unknown Office"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Unknown Office"), JURISDICTION, TAXONOMY)
     assert parsed["labels"] == []
     assert parsed["role"] is None
     assert parsed["unmatched"] == []
@@ -98,7 +98,7 @@ def test_parts_keep_each_label_with_the_role_it_produced():
     redundant with the post, and whether stray text is a genuine gap or the residue of a
     label that resolved perfectly well.
     """
-    parsed = parse_record(
+    parsed = derive_roles(
         _labels("Commissioner Of Public Safety - Deputy Mayor"), JURISDICTION, TAXONOMY
     )
 
@@ -115,7 +115,7 @@ def test_parts_keep_each_label_with_the_role_it_produced():
 def test_residue_stays_with_the_part_that_produced_it():
     """"Of Public Safety" is not unclassifiable — its label resolved to Commissioner. Flat
     `unmatched` cannot express that; a part carrying both a role and its own residue can."""
-    parsed = parse_record(
+    parsed = derive_roles(
         _labels("Commissioner Of Public Safety - City Attorney"), JURISDICTION, TAXONOMY
     )
 
@@ -131,6 +131,6 @@ def test_residue_stays_with_the_part_that_produced_it():
 
 @pytest.mark.unit
 def test_there_is_one_part_per_label():
-    parsed = parse_record(_labels("Mayor - Council Member"), JURISDICTION, TAXONOMY)
+    parsed = derive_roles(_labels("Mayor - Council Member"), JURISDICTION, TAXONOMY)
 
     assert [part["label"] for part in parsed["parts"]] == parsed["labels"]

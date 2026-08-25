@@ -7,6 +7,7 @@ import os
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 from runners.people_collector.schemas import LinkFrontier, LinkStatus
+from runners.people_collector.steps.step_02_scrape_page.scrape_constants import MAX_SCRAPE_ATTEMPTS
 from runners.people_collector.steps.step_02_scrape_page.scrape_page import scrape_page
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
@@ -111,7 +112,7 @@ async def test_scrape_page_sets_visit_order(tmp_path):
 async def test_scrape_page_marks_error_on_navigation_failure(tmp_path):
     ctx = _make_context()
     link = ctx.data.frontier.next_pending()
-    err = NavigationError(PAGE_URL, NavigationFailureReason.NET_TIMEOUT, source="TIMEOUT")
+    err = NavigationError(PAGE_URL, NavigationFailureReason.NET_DNS_FAILURE, source="DNS")
     with patch(f"{MODULE}.browser.scrape", new=AsyncMock(side_effect=err)), \
          patch(f"{MODULE}.data_path_utils.get_cache_path", return_value=str(tmp_path)), \
          patch(f"{MODULE}.data_path_utils.get_images_path", return_value=str(tmp_path)), \
@@ -119,9 +120,59 @@ async def test_scrape_page_marks_error_on_navigation_failure(tmp_path):
         frontier, returned_url = await scrape_page(ctx, link)
     scraped = frontier.get(PAGE_URL)
     assert scraped.status == LinkStatus.ERROR.value
-    assert scraped.failure_reason == NavigationFailureReason.NET_TIMEOUT.value
-    assert scraped.failure_source == "TIMEOUT"
+    assert scraped.failure_reason == NavigationFailureReason.NET_DNS_FAILURE.value
+    assert scraped.failure_source == "DNS"
     assert returned_url == PAGE_URL
+
+
+@pytest.mark.asyncio
+async def test_scrape_page_requeues_transient_failure(tmp_path):
+    ctx = _make_context()
+    link = ctx.data.frontier.next_pending()
+    err = NavigationError(PAGE_URL, NavigationFailureReason.NET_TIMEOUT, source="TIMEOUT")
+    with patch(f"{MODULE}.browser.scrape", new=AsyncMock(side_effect=err)), \
+         patch(f"{MODULE}.data_path_utils.get_cache_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.data_path_utils.get_images_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.config_utils.governance_keywords", return_value=[]):
+        frontier, _ = await scrape_page(ctx, link)
+    retried = frontier.get(PAGE_URL)
+    assert retried.status == LinkStatus.PENDING.value
+    assert retried.attempts == 1
+    assert frontier.next_pending().url == PAGE_URL
+
+
+@pytest.mark.asyncio
+async def test_requeued_link_goes_behind_pages_already_pending(tmp_path):
+    other_url = "https://example.gov/mayor"
+    frontier = LinkFrontier.from_urls([PAGE_URL, other_url])
+    ctx = pipeline_run_context_factory(steps={})
+    ctx = ctx.model_copy(update={"data": ctx.data.model_copy(update={"frontier": frontier})})
+    link = frontier.get(PAGE_URL)
+    err = NavigationError(PAGE_URL, NavigationFailureReason.NET_TIMEOUT, source="TIMEOUT")
+    with patch(f"{MODULE}.browser.scrape", new=AsyncMock(side_effect=err)), \
+         patch(f"{MODULE}.data_path_utils.get_cache_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.data_path_utils.get_images_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.config_utils.governance_keywords", return_value=[]):
+        result, _ = await scrape_page(ctx, link)
+    assert result.next_pending().url == other_url
+
+
+@pytest.mark.asyncio
+async def test_scrape_page_gives_up_on_transient_failure_after_final_attempt(tmp_path):
+    ctx = _make_context()
+    spent = ctx.data.frontier.update_link(PAGE_URL, attempts=MAX_SCRAPE_ATTEMPTS - 1)
+    ctx = ctx.model_copy(update={"data": ctx.data.model_copy(update={"frontier": spent})})
+    link = ctx.data.frontier.next_pending()
+    err = NavigationError(PAGE_URL, NavigationFailureReason.NET_TIMEOUT, source="TIMEOUT")
+    with patch(f"{MODULE}.browser.scrape", new=AsyncMock(side_effect=err)), \
+         patch(f"{MODULE}.data_path_utils.get_cache_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.data_path_utils.get_images_path", return_value=str(tmp_path)), \
+         patch(f"{MODULE}.config_utils.governance_keywords", return_value=[]):
+        frontier, _ = await scrape_page(ctx, link)
+    exhausted = frontier.get(PAGE_URL)
+    assert exhausted.status == LinkStatus.ERROR.value
+    assert exhausted.attempts == MAX_SCRAPE_ATTEMPTS
+    assert frontier.queue == []
 
 
 @pytest.mark.asyncio

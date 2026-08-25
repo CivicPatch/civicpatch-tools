@@ -10,7 +10,7 @@ from schemas.common import Identity, UserRole, RouteCategory
 import database.people as database
 import database.jurisdictions as jurisdictions_db
 import services.change_logs as change_logs
-from core.people_patch import PersonPatch, patch_people, PeopleValidationError
+from core.people_edits import PersonPatch, patch_people, PeopleValidationError
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 import lib.github.api as github_service
 import lib.github.pull_requests as github_pr_service

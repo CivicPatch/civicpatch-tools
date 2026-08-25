@@ -1,18 +1,22 @@
-"""`reconcile` end-to-end: which records become which people.
+"""`derived_people` end-to-end: which records become which people.
 
 Port Isabel is the fixture because it has the hard case — Martin Cantu Jr. and Martin C.
 Cantu Sr., a father and son on the same council, whom every name heuristic wants to merge.
 Two scrapes of it are kept because the two models name people differently.
 
-The per-group helpers are covered in `test_reconcile_merging.py`.
+The per-group helpers are covered in `test_people_merging.py`.
 """
 
 from typing import List
 from unittest.mock import MagicMock
 
+import pytest
+
+from core.people_derivation import derived_people
 from shared.schemas import Person, PersonRecord, Role, RoleConfig
-from shared.utils.reconcile import reconcile
 from shared.utils.taxonomy import build_taxonomy
+
+pytestmark = pytest.mark.unit
 
 # An unresolvable label is kept verbatim, so an empty taxonomy is how a test asserts
 # passthrough rather than canonicalisation.
@@ -78,7 +82,7 @@ PORT_ISABEL = "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government
 def _reconcile(records: dict, elected_officials: list, identities=None) -> List[Person]:
     """Everyone the scrape saw. Identities default to one-name-per-official, which is what
     the research step produces when it has nothing better."""
-    reconciled = reconcile(
+    reconciled = derived_people(
         [record for group in records.values() for record in group],
         identities
         if identities is not None

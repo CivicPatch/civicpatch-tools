@@ -1,6 +1,6 @@
 """Patching a jurisdiction entry. Pure — no I/O, no GitHub, no DB.
 
-Mirrors people_patch.py: the service fetches the file and opens the PR; deciding
+Mirrors people_edits.py: the service fetches the file and opens the PR; deciding
 what the patch *is* and what it does to the document happens here, where it can be
 tested with no mocks.
 """
@@ -14,7 +14,7 @@ PATCHABLE_FIELDS = ("url", "population", "geoid")
 def build_patch(fields: dict) -> dict:
     """Keep only the patchable keys the caller actually sent.
 
-    JSON Merge Patch semantics, matching people_patch: a key that is absent is left alone,
+    JSON Merge Patch semantics, matching people_edits: a key that is absent is left alone,
     and a key sent as None was explicitly set to null by a human and is written as null.
     That distinction cannot be made after the fact, so `fields` must already carry only what
     was provided — see the router's model_dump(exclude_unset=True).

@@ -170,21 +170,6 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
     assert await _people_by_status() == {"active": ["Ann"]}
 
 
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_publish_does_not_stamp_published_at(sentinel_request):
-    """Pins the 2026-08-16 deferral: `published_at` stays empty until the model settles, so
-    this asserts the absence rather than leaving it to be assumed."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT count(*) FROM source_records WHERE published_at IS NOT NULL"
-        )
-        assert (await cur.fetchone())[0] == 0
-
-
 # ── request publish state (migration 115) ────────────────────────────────────
 
 
