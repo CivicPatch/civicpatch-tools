@@ -1,87 +1,123 @@
-from unittest.mock import AsyncMock, patch
-
 import pytest
 
-from services import change_logs
-from shared.utils.statuses import ChangeLogType
-
-REQUEST_ID = "2025-09-25-1a2b"
-JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-USER_ID = "user-123"
+from core.change_logs import summarize_change_log
 
 
-# ── record_publish / record_close (event-only) ───────────────────
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_publish_logs_event(mock_jurisdiction, mock_create):
-    mock_jurisdiction.return_value = JURISDICTION_OCDID
-    await change_logs.record_publish(REQUEST_ID, USER_ID)
-    mock_create.assert_awaited_once()
-    assert mock_create.call_args.args == (ChangeLogType.MERGE_REVIEW, USER_ID, JURISDICTION_OCDID, REQUEST_ID)
+pytestmark = pytest.mark.unit
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_publish_swallows_errors(mock_jurisdiction, mock_create):
-    mock_jurisdiction.side_effect = RuntimeError("db down")
-    await change_logs.record_publish(REQUEST_ID, USER_ID)  # best-effort: must not raise
+# ── Person events ───────────────────────────────────────────────────────
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_close_logs_close_event(mock_jurisdiction, mock_create):
-    mock_jurisdiction.return_value = JURISDICTION_OCDID
-    await change_logs.record_close(REQUEST_ID, USER_ID)
-    mock_create.assert_awaited_once()
-    assert mock_create.call_args.args == (ChangeLogType.CLOSE_REVIEW, USER_ID, JURISDICTION_OCDID, REQUEST_ID)
+def test_add_person_uses_person_name():
+    assert (
+        summarize_change_log("add_person", {"person_name": "Jane Doe", "fields": []})
+        == "Added Jane Doe"
+    )
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-@patch("services.change_logs.get_request_jurisdiction", new_callable=AsyncMock)
-async def test_record_close_swallows_errors(mock_jurisdiction, mock_create):
-    mock_jurisdiction.return_value = JURISDICTION_OCDID
-    mock_create.side_effect = RuntimeError("db down")
-    await change_logs.record_close(REQUEST_ID, USER_ID)  # best-effort: must not raise
+def test_edit_person_pluralizes_fields_correctly():
+    assert summarize_change_log("edit_person", {"person_name": "J", "fields": [{}]}) == "Edited J (1 field)"
+    assert summarize_change_log("edit_person", {"person_name": "J", "fields": [{}, {}]}) == "Edited J (2 fields)"
 
 
-# ── record_manual_edits (the publish-time diff) ──────────────────────────────
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-async def test_record_manual_edits_logs_diff_rows(mock_create):
-    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
-    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, before, after)
-    mock_create.assert_awaited_once()
-    args = mock_create.call_args.args
-    assert args[0] == ChangeLogType.EDIT_PERSON
-    assert args[1:4] == (USER_ID, JURISDICTION_OCDID, REQUEST_ID)
+def test_delete_person_omits_field_count_when_none():
+    assert summarize_change_log("delete_person", {"person_name": "J", "fields": []}) == "Deleted J"
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-async def test_record_manual_edits_no_diff_logs_nothing(mock_create):
-    people = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, people, people)
-    mock_create.assert_not_awaited()
+def test_person_missing_name_falls_back():
+    assert summarize_change_log("add_person", {}) == "Added person"
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.change_logs.create_change_log", new_callable=AsyncMock)
-async def test_record_manual_edits_swallows_errors(mock_create):
-    mock_create.side_effect = RuntimeError("db down")
-    before = []
-    after = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    await change_logs.record_manual_edits(REQUEST_ID, JURISDICTION_OCDID, USER_ID, before, after)  # must not raise
+# ── Review events ───────────────────────────────────────────────────────
+
+
+def test_review_events():
+    assert summarize_change_log("merge_review", None) == "Merged review"
+    assert summarize_change_log("close_review", None) == "Closed review"
+
+
+# ── Role taxonomy ───────────────────────────────────────────────────────
+
+
+def test_add_role_canonical():
+    assert (
+        summarize_change_log("add_role", {"role": "Mayor"})
+        == "Added role 'Mayor'"
+    )
+
+
+def test_edit_role_summarizes_alias_deltas():
+    payload = {"role": "Mayor", "aliases_added": ["hizzoner"], "aliases_removed": ["a", "b"]}
+    assert summarize_change_log("edit_role", payload) == "Edited role 'Mayor' (+1 alias, -2 aliases)"
+
+
+def test_edit_role_no_alias_changes():
+    assert (
+        summarize_change_log("edit_role", {"role": "Mayor"})
+        == "Edited role 'Mayor'"
+    )
+
+
+def test_exclude_role():
+    """Retired event type — existing change_log rows must still render."""
+    assert (
+        summarize_change_log("exclude_role", {"role": "Mayor"})
+        == "Excluded role 'Mayor'"
+    )
+
+
+def test_include_role():
+    """Retired event type — existing change_log rows must still render."""
+    assert (
+        summarize_change_log("include_role", {"role": "City Hall"})
+        == "Included 'City Hall' as role"
+    )
+
+
+# ── Fallback / robustness ───────────────────────────────────────────────
+
+
+def test_unknown_type_returns_type_string():
+    assert summarize_change_log("brand_new_event", {"any": "thing"}) == "brand_new_event"
+
+
+def test_none_changes_doesnt_crash():
+    assert summarize_change_log("edit_jurisdiction", None) == "Edited jurisdiction"
+
+
+# ── Reorder events ──────────────────────────────────────────────────────
+
+
+def test_reorder_to_top():
+    payload = {"before": ["a", "b", "c"], "after": ["c", "a", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'c' moved to the top"
+
+
+def test_reorder_below_neighbor():
+    payload = {"before": ["a", "b", "c"], "after": ["a", "c", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'c' moved below 'a'"
+
+
+def test_reorder_no_movers_falls_back():
+    payload = {"before": ["a", "b"], "after": ["a", "b"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles"
+
+
+def test_reorder_picks_furthest_mover():
+    # 'mayor' jumps from the bottom to the top; the others only shift by one.
+    payload = {
+        "before": ["x", "y", "z", "mayor"],
+        "after": ["mayor", "x", "y", "z"],
+    }
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: 'mayor' moved to the top"
+
+
+def test_reorder_lists_moved_roles_when_present():
+    payload = {"before": ["a", "b", "c"], "after": ["c", "a", "b"], "moved": ["c", "a"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: moved c, a"
+
+
+def test_reorder_truncates_many_moved_roles():
+    payload = {"moved": ["a", "b", "c", "d", "e"]}
+    assert summarize_change_log("reorder_roles", payload) == "Reordered roles: moved a, b, c (+2 more)"

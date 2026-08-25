@@ -386,7 +386,7 @@ async def test_upsert_without_priority_keeps_the_stored_order():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_reorder_emits_one_event_with_before_after():
-    """Keyed on id, logged in labels: change_log_summary renders this payload
+    """Keyed on id, logged in labels: core.change_logs renders this payload
     straight into the activity feed, where a slug would not read."""
     await upsert_roles([_entry("Mayor")], None)
     before_ids = await _current_ids()

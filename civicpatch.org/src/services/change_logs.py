@@ -1,6 +1,6 @@
 import logging
 
-from core.change_log_diff import diff_people
+from core.people_diff import diff_people
 from database.change_logs import create_change_log
 from database.requests import get_request_jurisdiction
 from schemas.change_logs import FieldChange, JurisdictionChangePayload

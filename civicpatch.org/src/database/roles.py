@@ -220,7 +220,7 @@ async def reorder_roles(
                     (position, role_id),
                 )
 
-            # The payload is stored in labels, not ids: change_log_summary
+            # The payload is stored in labels, not ids: core.change_logs
             # renders it straight into the activity feed, where "moved Council
             # Member" reads and "moved council-member" does not.
             payload: dict = {
