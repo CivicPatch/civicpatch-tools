@@ -19,15 +19,31 @@ const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
 });
 
 describe("pendingReviews", () => {
-  it("keeps only entries still awaiting a decision", () => {
+  // The server decides, via `AVAILABLE_FOR_REVIEW` — the same predicate the queue and the
+  // review session select on. These pin that the page takes that answer rather than
+  // reconstructing one from `review_status`, which is what drifted.
+  it("keeps what the pool says it holds", () => {
     const history = [
-      entry({ request_id: "a" }),
-      entry({ request_id: "b", review_status: "published" }),
-      entry({ request_id: "c", review_status: "dismissed" }),
-      // A run that never produced a PR at all.
-      entry({ request_id: "d", review_status: null, open_data_url: null }),
+      entry({ request_id: "a", awaiting_review: true }),
+      entry({ request_id: "b", review_status: "published", awaiting_review: false }),
+      entry({ request_id: "c", review_status: "dismissed", awaiting_review: false }),
     ];
     expect(pendingReviews(history).map((e) => e.request_id)).toEqual(["a"]);
+  });
+
+  it("drops a scrape that is still running, though it reads as pending", () => {
+    // `pending` is true from the moment a request exists, so deriving from it offered a Review
+    // button for a roster the scrape had not produced. The pool excludes it: no `data_json`.
+    const history = [
+      entry({ request_id: "done", awaiting_review: true }),
+      entry({
+        request_id: "running",
+        review_status: "pending",
+        is_running: true,
+        awaiting_review: false,
+      }),
+    ];
+    expect(pendingReviews(history).map((e) => e.request_id)).toEqual(["done"]);
   });
 
   it("is empty for empty history", () => {

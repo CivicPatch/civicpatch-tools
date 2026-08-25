@@ -21,10 +21,10 @@ from runners.people_collector.steps.step_03_preprocess_page_content.preprocess_p
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     process_page_content,
 )
-from runners.people_collector.steps.step_05_cleanup.cleanup import cleanup
 from runners.people_collector.steps.step_04a_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
 )
+from runners.people_collector.steps.step_05_cleanup.cleanup import cleanup
 from runners.people_collector.steps.step_06_save_output.save_output import save_output
 from runners.people_collector.steps.step_07_send_error.send_error import send_error
 from runners.people_collector.steps.step_07_send_success.send_success import (

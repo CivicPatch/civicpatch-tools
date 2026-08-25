@@ -1,6 +1,6 @@
 """Derive organizations, posts and memberships for people published before they existed.
 
-    docker exec -i civicpatch-org python - < database_operations/one_offs/03_backfill_posts_memberships.py
+    docker exec -i civicpatch-org python - < database_operations/one_offs/02_backfill_posts_memberships.py
     kubectl exec -i -n civicpatch deploy/civicpatch-org -- python - < <same file>
 
 Dry by default. `--apply` writes, `--limit N` stops after N jurisdictions.

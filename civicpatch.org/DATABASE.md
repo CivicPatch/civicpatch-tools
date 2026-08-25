@@ -166,7 +166,7 @@ erDiagram
         uuid            request_id          FK  "idx; ON DELETE CASCADE — which scrape"
         text            person_id           "idx: (person_id, created_at DESC); the Record id, also the membership FK. One row per person per request — sightings are elements of raw, not rows"
         text            jurisdiction_ocdid  FK  "idx"
-        jsonb           raw                 "EVERY sighting behind this person, labels verbatim, each with the page it came from — truth for re-derivation. `_reconstructed_from` marks records rebuilt from data_json, whose per-label source_url is a guess"
+        jsonb           raw                 "EVERY sighting behind this person, labels verbatim, each with the page it came from — truth for re-derivation. Only ever written by a scrape: rows rebuilt from data_json were deleted 2026-08-24 because their label/url pairing was invented"
         jsonb           parsed              "gin idx (jsonb_path_ops); the RECONCILIATION across every label in raw — one winning role, one division. Historical, never current. `parts` holds each label's own decision"
         timestamptz_null published_at       "NULL until the triple is materialised"
         timestamptz     created_at          "default: now(); orders derivations — no unique key, replays add rows"
