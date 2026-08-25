@@ -10,7 +10,7 @@ import {
   fetchPullRequestsWithData,
   fetchActivePipelineRuns,
 } from "../../api.js";
-import "../../components/publish-log/index.js";
+import "../../components/review-log/index.js";
 import "./queue-summary/index.js";
 import "./active-jobs/index.js";
 import "./review-card-list/index.js";
@@ -66,7 +66,7 @@ function QueuePage() {
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [queueSummary, setQueueSummary] = useState<any>(null);
   const [pullRequests, setPullRequests] = useState<PrItem[]>([]);
-  const { actionState, entries: publishLogEntries, trackApprove, trackReject } = useReviewActions();
+  const { actionState, entries: reviewLogEntries, trackApprove, trackReject } = useReviewActions();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(getIntParam("pr_page", 1));
@@ -113,13 +113,13 @@ function QueuePage() {
       .catch(() => setActivePipelineRuns([]));
   }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
-  const handleMerge = (event: CustomEvent<PrActionDetail>) => {
+  const handleApprove = (event: CustomEvent<PrActionDetail>) => {
     const { request_id, jurisdiction_ocdid } = event.detail;
     const pr = pullRequests.find((p) => p.request_id === request_id);
     trackApprove(request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? request_id);
   };
 
-  const handleClose = (event: CustomEvent<PrActionDetail>) => {
+  const handleReject = (event: CustomEvent<PrActionDetail>) => {
     const { request_id } = event.detail;
     const pr = pullRequests.find((p) => p.request_id === request_id);
     trackReject(request_id, pr?.jurisdiction?.name ?? request_id);
@@ -190,15 +190,15 @@ function QueuePage() {
           .perPage=${perPage}
           .totalPages=${totalPages}
           .viewMode=${viewMode}
-          @onMerge=${handleMerge}
-          @onClose=${handleClose}
+          @approve=${handleApprove}
+          @reject=${handleReject}
           .onViewChange=${handleViewChange}
           .onPageChange=${handlePageChange}
           .onPerPageChange=${handlePerPageChange}
         ></queue-review-card-list>
       ` : null}
     </main>
-    <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
+    <civ-review-log .entries=${reviewLogEntries}></civ-review-log>
   `;
 }
 

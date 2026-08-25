@@ -7,7 +7,7 @@
 import { html, nothing } from "lit-html";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
-import { LOGIN_PATH, pullRequestUrl } from "../review-routes.js";
+import { LOGIN_PATH, reviewSessionUrl } from "../review-routes.js";
 import { REVIEW_STATUS } from "../../components/review-status.js";
 
 // Mirrors shared/utils/statuses.py RequestType. Only PEOPLE has a scrape behind it.
@@ -100,7 +100,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
         ${manualEdit
           ? nothing
           : isSignedIn
-            ? html`<a class="btn-primary" href=${pullRequestUrl(state, entry.request_id)}>
+            ? html`<a class="btn-primary" href=${reviewSessionUrl(state, entry.request_id)}>
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Review
               </a>`
             : html`<a class="btn-primary" href=${LOGIN_PATH}>

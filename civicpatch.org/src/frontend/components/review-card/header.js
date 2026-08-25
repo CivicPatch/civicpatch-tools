@@ -1,8 +1,13 @@
 import { component, useState } from "haunted";
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
 import { REVIEW_ACTION } from "./review-action.js";
+
+// The parent listens with `@approve` / `@reject`, which lit-html parses, so the listener side
+// stays literal.
+const APPROVE_EVENT = "approve";
+const REJECT_EVENT = "reject";
 import { fetchReview, fetchPullRequestData } from "../../api.js";
 import "../badge/badge.js";
 import "../review-panel/review-panel.js";
@@ -22,7 +27,6 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   const [reviewData, setReviewData] = useState(null);
   const [fullData, setFullData] = useState(null);
   const [reviewLoading, setReviewLoading] = useState(false);
-  const pullRequestNumber = entry?.pr?.number;
   const popoverRef = createRef();
 
   async function handleIssuesClick() {
@@ -43,19 +47,19 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
     el?.showPopover();
   }
 
-  const handleMerge = (el) => {
+  const handleApprove = (el) => {
     el.currentTarget.dispatchEvent(
-      new CustomEvent("onMerge", {
-        detail: { request_id: entry.request_id, pullRequestNumber, jurisdiction_ocdid: entry.jurisdiction.ocdid },
+      new CustomEvent(APPROVE_EVENT, {
+        detail: { request_id: entry.request_id, jurisdiction_ocdid: entry.jurisdiction.ocdid },
         bubbles: true,
       }),
     );
   };
 
-  const handleClose = (el) => {
+  const handleReject = (el) => {
     el.currentTarget.dispatchEvent(
-      new CustomEvent("onClose", {
-        detail: { request_id: entry.request_id, pullRequestNumber },
+      new CustomEvent(REJECT_EVENT, {
+        detail: { request_id: entry.request_id },
         bubbles: true,
       }),
     );
@@ -76,7 +80,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
     return html`<button
       class="btn-sm"
-      @click=${handleMerge}
+      @click=${handleApprove}
       ?disabled=${isTerminal || isLoading}
     >${buttonName}</button>`;
   };
@@ -89,7 +93,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
     return html`<button
       class="destructive btn-sm"
-      @click=${handleClose}
+      @click=${handleReject}
       ?disabled=${isTerminal || isLoading}
     >${buttonName}</button>`;
   }
@@ -99,9 +103,9 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
       <a class="review-card__jurisdiction-link" href="/${entry?.jurisdiction?.path}" target="_blank" rel="noopener">
         ${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
       </a>
-      <a class="review-card__link" href=${entry?.pr?.url} target="_blank" rel="noopener">
-        #${pullRequestNumber || "—"}
-      </a>
+      ${entry?.pr?.url ? html`
+      <a class="review-card__link" href=${entry.pr.url} target="_blank" rel="noopener">published data</a>
+      ` : nothing}
     </div>
     <div class="header-item-center">
       <button class="btn-ghost" @click=${handleIssuesClick} ?disabled=${reviewLoading}>

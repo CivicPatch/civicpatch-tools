@@ -9,7 +9,7 @@ import { useReviewSession } from "./use-review-session.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
 import "./review-session.js";
-import "../../components/publish-log/index.js";
+import "../../components/review-log/index.js";
 import "../review-page/review-page.css";
 
 function getStateFromUrl() {
@@ -21,7 +21,7 @@ function ReviewSessionPage() {
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
   const { permissions } = useAuth();
-  const { actionState, entries: publishLogEntries, trackApprove, trackReject } = useReviewActions();
+  const { actionState, entries: reviewLogEntries, trackApprove, trackReject } = useReviewActions();
   const { fsm, advance, back, navigateTo, merge, save, rejectScrape, endSession } = useReviewSession(stateCode, {
     trackApprove,
     trackReject,
@@ -85,7 +85,7 @@ function ReviewSessionPage() {
 
   return html`
     ${renderBody()}
-    <civ-publish-log .entries=${publishLogEntries}></civ-publish-log>
+    <civ-review-log .entries=${reviewLogEntries}></civ-review-log>
   `;
 }
 

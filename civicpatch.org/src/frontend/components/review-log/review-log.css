@@ -1,13 +1,13 @@
 /* ── Publish Log ── */
 
-civ-publish-log {
+civ-review-log {
     position: fixed;
     bottom: 1.5rem;
     left: 1.5rem;
     z-index: 100;
 }
 
-.publish-log {
+.review-log {
     background: var(--pico-card-background-color);
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius);
@@ -16,7 +16,7 @@ civ-publish-log {
     overflow: hidden;
 }
 
-.publish-log__header {
+.review-log__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,7 +25,7 @@ civ-publish-log {
     border-bottom: 1px solid var(--pico-muted-border-color);
 }
 
-.publish-log__title {
+.review-log__title {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-xs);
     font-weight: 600;
@@ -34,7 +34,7 @@ civ-publish-log {
     color: var(--pico-muted-color);
 }
 
-.publish-log__toggle {
+.review-log__toggle {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-xs);
     color: var(--pico-muted-color);
@@ -45,11 +45,11 @@ civ-publish-log {
     line-height: 1;
 }
 
-.publish-log__toggle:hover {
+.review-log__toggle:hover {
     color: var(--pico-color);
 }
 
-.publish-log__list {
+.review-log__list {
     list-style: none;
     margin: 0;
     padding: 0.4rem 0;
@@ -57,7 +57,7 @@ civ-publish-log {
     overflow-y: auto;
 }
 
-.publish-log__item {
+.review-log__item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -66,7 +66,7 @@ civ-publish-log {
     font-size: var(--text-sm);
 }
 
-.publish-log__name {
+.review-log__name {
     flex: 1;
     color: var(--pico-color);
     overflow: hidden;
@@ -74,34 +74,31 @@ civ-publish-log {
     white-space: nowrap;
 }
 
-.publish-log__pr {
-    color: var(--pico-muted-color);
-}
 
-.publish-log__status {
+.review-log__status {
     width: 1.2em;
     text-align: center;
     color: var(--pico-muted-color);
 }
 
-.publish-log__spinner {
+.review-log__spinner {
     display: inline-block;
     width: 0.75em;
     height: 0.75em;
     border: 2px solid var(--pico-muted-border-color);
     border-top-color: var(--pico-primary);
     border-radius: 50%;
-    animation: publish-log-spin 0.7s linear infinite;
+    animation: review-log-spin 0.7s linear infinite;
 }
 
-@keyframes publish-log-spin {
+@keyframes review-log-spin {
     to { transform: rotate(360deg); }
 }
 
-.publish-log__item--done .publish-log__status {
+.review-log__item--done .review-log__status {
     color: var(--pico-ins-color);
 }
 
-.publish-log__item--error .publish-log__status {
+.review-log__item--error .review-log__status {
     color: var(--pico-del-color);
 }
