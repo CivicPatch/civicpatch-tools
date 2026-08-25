@@ -48,7 +48,7 @@ def _request(
         "request_id": request_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "created_at": created_at,
-        "data_json": result_data or [],
+        "proposed": result_data or [],
         "review_json": review_json or {},
     }
 

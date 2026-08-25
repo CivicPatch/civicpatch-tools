@@ -1,8 +1,7 @@
 from pydantic import BaseModel, ValidationError
-from schemas.assertions import AssertionKind
+from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.schemas import Official
 from shared.utils.official_fields import order_official_fields
-
 
 # Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
 # field missing here is a field whose edit goes unrecorded.
@@ -24,6 +23,12 @@ EDITABLE_FIELDS = (
 # Of those, the ones holding several values: a list field is a set, so `phones` carries many
 # accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
 LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
+# Derived from the sightings now, so editing it states nothing about the world.
+NOT_STATED = frozenset({"source_urls"})
+
+# A date left blank means "unknown" or "still serving", never "that date is wrong". Editing one
+# still states something, so this suppresses the reject only — not the field.
+NOT_REJECTABLE = frozenset({"start_date", "end_date"})
 
 
 def with_stated_values(person: dict, stated: dict) -> dict:
@@ -42,9 +47,13 @@ def with_stated_values(person: dict, stated: dict) -> dict:
         rejected = by_kind.get(AssertionKind.REJECT) or []
 
         if field in LIST_FIELDS:
-            kept = [value for value in (person.get(field) or []) if value not in rejected]
+            kept = [
+                value for value in (person.get(field) or []) if value not in rejected
+            ]
             published[field] = kept + [
-                value for value in accepted if value not in kept and value not in rejected
+                value
+                for value in accepted
+                if value not in kept and value not in rejected
             ]
         elif accepted:
             published[field] = accepted[0]
@@ -175,3 +184,44 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     patched = validate_and_normalize(apply_people_patch(base, edits), edits)
     return [order_official_fields(person) for person in patched]
+
+
+def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assertion]:
+    """What a reviewer's save claims about one person.
+
+    Diffed against the **scrape**, not against what was displayed: displayed already folds in
+    the reviewer's earlier answers, so diffing that would re-derive nothing on a second save.
+    Recomputing the whole set each time is what makes the save idempotent.
+    """
+
+    def stated(field: str, kind: AssertionKind, value: object) -> Assertion:
+        return Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path=field,
+            kind=kind,
+            value=value,
+        )
+
+    claims: list[Assertion] = []
+    for field in EDITABLE_FIELDS:
+        if field in NOT_STATED:
+            continue
+        was, now = scraped.get(field), edited.get(field)
+        rejectable = field not in NOT_REJECTABLE
+
+        if field in LIST_FIELDS:
+            was, now = set(was or []), set(now or [])
+            claims.extend(
+                stated(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
+            )
+            if rejectable:
+                claims.extend(
+                    stated(field, AssertionKind.REJECT, v) for v in sorted(was - now)
+                )
+        elif now not in (None, "") and now != was:
+            claims.append(stated(field, AssertionKind.ACCEPT, now))
+        elif was and now in (None, "") and rejectable:
+            claims.append(stated(field, AssertionKind.REJECT, was))
+
+    return claims

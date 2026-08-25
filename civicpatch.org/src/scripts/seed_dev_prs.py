@@ -4,7 +4,6 @@ Seed the dev database with open pull requests from GitHub.
 For each PR, this script:
   - Seeds jurisdiction data from the open-data repo
   - Creates requests / pipeline_runs / pull_requests rows
-  - Backfills data_json from the PR branch
 
 Merging a seeded PR from the dev review UI merges the real GitHub PR.
 Production will pick up the merge via webhook and sync people as normal.

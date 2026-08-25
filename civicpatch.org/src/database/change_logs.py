@@ -1,8 +1,7 @@
 import json
 
-from database.change_log_summary import summarize_change_log
+from core.change_log_summary import summarize_change_log
 from database.database import get_pool
-from database.requests import REVIEW_STATUS
 from schemas.change_logs import (
     AssertionChangePayload,
     JurisdictionChangePayload,
@@ -13,7 +12,9 @@ from schemas.change_logs import (
 from shared.utils.statuses import ChangeLogType
 
 
-async def get_change_logs_for_roles(roles: list[str], limit: int, offset: int) -> tuple[int, list[dict]]:
+async def get_change_logs_for_roles(
+    roles: list[str], limit: int, offset: int
+) -> tuple[int, list[dict]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -88,7 +89,10 @@ async def record_change(
     change_type: ChangeLogType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
-    changes: PostChangePayload | MembershipChangePayload | AssertionChangePayload | None = None,
+    changes: PostChangePayload
+    | MembershipChangePayload
+    | AssertionChangePayload
+    | None = None,
 ) -> None:
     """Write a change log on an existing cursor, so it commits with what it describes.
 

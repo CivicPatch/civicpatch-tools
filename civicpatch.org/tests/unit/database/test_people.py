@@ -1,7 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 import database.people as db_people
-from database.people import get_people_data_by_request_ids
 
 
 def _make_cursor(fetchall_side_effect):
@@ -25,95 +24,50 @@ def _make_pool(cursor):
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_returns_data_for_request_id():
-    people_rows = [("ocd-jurisdiction/country:us/state:tx/place:austin/government", {"id": "p1", "name": "Jane Doe"})]
-    jobs_rows = [
-        ("req-1", [{"id": "p1", "name": "Jane Doe"}], "ocd-jurisdiction/country:us/state:tx/place:austin/government"),
-    ]
-    cur = _make_cursor([people_rows, jobs_rows])
+async def test_the_published_side_groups_by_jurisdiction():
+    """Two requests for one place share its roster, so the read returns it once and the caller
+    looks it up. It used to be keyed by request, which meant carrying the same list twice."""
+    dallas = "ocd-jurisdiction/country:us/state:tx/place:dallas/government"
+    austin = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
+    cur = _make_cursor([[(dallas, {"id": "p1"}), (dallas, {"id": "p2"}), (austin, {"id": "p3"})]])
 
     with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_people_data_by_request_ids(
-            ["ocd-jurisdiction/country:us/state:tx/place:austin/government"],
-            ["req-1"],
-        )
+        result = await db_people.get_people_by_jurisdictions([dallas, austin])
 
-    assert "req-1" in result
-    assert result["req-1"]["proposed"] == [{"id": "p1", "name": "Jane Doe"}]
-    assert result["req-1"]["existing"] == [{"id": "p1", "name": "Jane Doe"}]
+    assert result == {dallas: [{"id": "p1"}, {"id": "p2"}], austin: [{"id": "p3"}]}
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_returns_data_without_job_row():
-    """Regression: PR whose request_id has no corresponding jobs row must still return data."""
-    people_rows = []
-    jobs_rows = [
-        ("req-no-job", [{"id": "p2", "name": "Tom Lee"}], "ocd-jurisdiction/country:us/state:tx/place:oak_leaf/government"),
-    ]
-    cur = _make_cursor([people_rows, jobs_rows])
-
-    with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_people_data_by_request_ids(
-            ["ocd-jurisdiction/country:us/state:tx/place:oak_leaf/government"],
-            ["req-no-job"],
-        )
-
-    assert "req-no-job" in result
-    assert result["req-no-job"]["proposed"] == [{"id": "p2", "name": "Tom Lee"}]
-    assert result["req-no-job"]["existing"] == []
+async def test_no_jurisdictions_asks_nothing():
+    cur = _make_cursor([[]])
+    with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))) as pool:
+        assert await db_people.get_people_by_jurisdictions([]) == {}
+    pool.assert_not_awaited()
 
 
-@pytest.mark.asyncio
 @pytest.mark.unit
-async def test_missing_request_id_not_in_result():
-    """Request IDs not found in requests table produce no entry in the result."""
-    cur = _make_cursor([[], []])
+def test_both_sides_of_the_card_carry_the_same_keys():
+    """The published side is projected in SQL and the proposed side is a derived dict, so
+    nothing but this keeps them in step — and the card diffs them key by key."""
+    derived = {
+        "id": "p1",
+        "name": "Jane Doe",
+        "labels": ["Mayor"],
+        "office": {"name": "Mayor"},
+        "source_urls": ["https://x.gov"],
+        "phones": ["(555) 0001"],
+        "cdn_image": "https://cdn/x.png",
+        "jurisdiction_ocdid": "ocd-jurisdiction/x",
+    }
 
-    with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_people_data_by_request_ids(
-            ["ocd-jurisdiction/x"],
-            ["req-missing"],
-        )
-
-    assert result == {}
-
-
-@pytest.mark.asyncio
-@pytest.mark.unit
-async def test_multiple_prs_same_jurisdiction():
-    """Multiple PRs for the same jurisdiction all receive the same existing people."""
-    jur = "ocd-jurisdiction/country:us/state:tx/place:dallas/government"
-    existing_person = {"id": "p1", "name": "Alice"}
-    people_rows = [(jur, existing_person)]
-    jobs_rows = [
-        ("req-a", [{"id": "p2", "name": "Bob"}], jur),
-        ("req-b", [{"id": "p3", "name": "Carol"}], jur),
-    ]
-    cur = _make_cursor([people_rows, jobs_rows])
-
-    with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_people_data_by_request_ids(["ocd-jurisdiction/x"], ["req-a", "req-b"])
-
-    assert result["req-a"]["existing"] == [existing_person]
-    assert result["req-b"]["existing"] == [existing_person]
-    assert result["req-a"]["proposed"] == [{"id": "p2", "name": "Bob"}]
-    assert result["req-b"]["proposed"] == [{"id": "p3", "name": "Carol"}]
-
-
-@pytest.mark.asyncio
-@pytest.mark.unit
-async def test_null_result_data_returns_empty_pull_request():
-    """jsonb_agg returns None when result_data is empty — must be coerced to []."""
-    jur = "ocd-jurisdiction/x"
-    people_rows = []
-    jobs_rows = [("req-empty", None, jur)]
-    cur = _make_cursor([people_rows, jobs_rows])
-
-    with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_people_data_by_request_ids([jur], ["req-empty"])
-
-    assert result["req-empty"]["proposed"] == []
+    assert set(db_people.projected(derived, "quick")) == {
+        "id", "name", "labels", "office", "source_urls"
+    }
+    # Fields the view does not ask for are dropped, including ones only the derived side has.
+    assert "phones" not in db_people.projected(derived, "quick")
+    assert "cdn_image" not in db_people.projected(derived, "detail")
+    assert set(db_people.projected(derived, "detail")) <= db_people.VIEWS["detail"]
 
 
 @pytest.mark.unit

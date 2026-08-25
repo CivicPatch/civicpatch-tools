@@ -76,7 +76,7 @@ def test_get_pull_requests_with_data_returns_paginated(client):
             return_value=([], 0, 0),
         ),
         patch(
-            "database.people.get_people_data_by_request_ids",
+            "database.people.get_people_by_jurisdictions",
             new_callable=AsyncMock,
             return_value={},
         ),
@@ -155,7 +155,8 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=None),
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
@@ -171,8 +172,9 @@ def test_save_refuses_when_the_scrape_recorded_no_roster(client):
     """Patches are sparse: patching against a missing base silently reduces every person to
     the fields the reviewer touched, so the save must refuse rather than truncate."""
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=None),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -196,7 +198,8 @@ def test_publish_returns_200_and_queues_no_merge(client):
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
@@ -227,11 +230,12 @@ BASE_PERSON = {
 @pytest.mark.unit
 def test_save_and_merge_applies_patch_and_normalizes(client):
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -244,17 +248,20 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         )
 
     assert response.status_code == 200
-    sent = mock_update.await_args.args[1]
-    assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
-    assert sent[0]["name"] == "Jane Doe"                      # untouched
-    assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
+    # The roster handed to publish, which is what goes live — the patched blob it used to be
+    # written to is gone, so this is where the overlay is now observable.
+    published = mock_publish.await_args.args[2]
+    assert published[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
+    assert published[0]["name"] == "Jane Doe"                      # untouched
+    assert list(published[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
 
 
 @pytest.mark.unit
 def test_save_and_merge_rejects_invalid_field(client):
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("lib.redis.set", new_callable=AsyncMock),
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
         patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
@@ -279,15 +286,16 @@ def test_save_and_merge_rejects_invalid_field(client):
 
 # ── save (commit without publishing) tests ────────────────────────────────
 
-SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9168085300"]}}]
+SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9165551234"]}}]
 
 
 @pytest.mark.unit
 def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
     """The whole point of /save: it persists the edit but triggers none of the merge machinery."""
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
         patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
@@ -301,7 +309,8 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
 
     assert response.status_code == 200
     assert response.json()["status"] == "saved"
-    mock_update.assert_awaited_once()
+    # Two claims from one edited field: the new number accepted, the old one rejected.
+    assert len(mock_update.await_args.args[0]) == 2
     mock_change_logs.assert_awaited_once()
     mock_save.assert_awaited_once_with(TEST_REQUEST_ID)
 
@@ -311,10 +320,37 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
 
 
 @pytest.mark.unit
-def test_save_applies_the_patch_against_the_stored_roster(client):
+def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
+    """The reviewer retypes `9168085300`; the scrape already had `(916) 808-5300`. Normalizing
+    makes them the same value, so there is nothing for a human to have claimed — a save must
+    not manufacture an assertion out of a formatting difference."""
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            json={
+                "request_id": TEST_REQUEST_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
+            },
+        )
+
+    assert response.status_code == 200
+    # Called, with nothing to record — a formatting difference is not a human claim.
+    assert mock_update.await_args.args[0] == []
+
+
+@pytest.mark.unit
+def test_save_records_the_edited_field_canonicalized(client):
+    with (
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
@@ -324,17 +360,22 @@ def test_save_applies_the_patch_against_the_stored_roster(client):
         )
 
     assert response.status_code == 200
-    sent = mock_update.await_args.args[1]
-    assert sent[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
-    assert sent[0]["name"] == "Jane Doe"                      # untouched
-    assert list(sent[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
+    # A save writes claims, not a roster, so what it recorded is the observable: the number the
+    # reviewer typed is accepted canonicalized, and the one the scrape found is rejected.
+    stated = mock_update.await_args.args[0]
+    assert sorted((a.kind, a.value) for a in stated) == [
+        ("accept", "(916) 555-1234"),
+        ("reject", "(916) 808-5300"),
+    ]
+    assert {a.field_path for a in stated} == {"phones"}
 
 
 @pytest.mark.unit
 def test_save_rejects_invalid_field_without_marking_the_entry(client):
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock) as mock_update,
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
         response = client.post(
@@ -363,8 +404,9 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
     failing_client = TestClient(app, raise_server_exceptions=False)
 
     with (
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock, side_effect=RuntimeError("write failed")),
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("database.assertions.create_all", new_callable=AsyncMock, side_effect=RuntimeError("write failed")),
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
         response = failing_client.post(
@@ -393,7 +435,6 @@ OPEN_PR_DB_RESULT = {
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",
     "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "number": 42},
-    "proposed": [{"name": "Jane Doe"}],
 }
 
 MERGED_PR_DB_RESULT = {
@@ -426,6 +467,11 @@ def test_get_by_request_200_for_open_pr(client):
             "database.people.get_people",
             new_callable=AsyncMock,
             return_value=[],
+        ),
+        patch(
+            "routers.api.pull_requests.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[{"name": "Jane Doe"}],
         ),
         patch(
             "database.jurisdictions.get_scraped_at",
@@ -464,6 +510,11 @@ def test_get_by_request_200_for_merged_pr(client):
             "database.people.get_people",
             new_callable=AsyncMock,
             return_value=[],
+        ),
+        patch(
+            "routers.api.pull_requests.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[{"name": "Jane Doe"}],
         ),
         patch(
             "database.jurisdictions.get_scraped_at",
@@ -705,7 +756,8 @@ def test_publish_allows_default_role():
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock),
         patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
-        patch("database.pipeline_runs.get_pipeline_run_data_json", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",

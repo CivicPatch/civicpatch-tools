@@ -1,6 +1,6 @@
 import pytest
 
-from database.change_log_summary import summarize_change_log
+from core.change_log_summary import summarize_change_log
 
 
 pytestmark = pytest.mark.unit

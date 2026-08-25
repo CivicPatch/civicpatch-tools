@@ -30,7 +30,6 @@ from database.pipeline_runs import (
     get_pipeline_run_github_run_id,
     get_pipeline_run_status,
     set_pipeline_run_github_run_id,
-    update_pipeline_run_data,
     update_pipeline_run_status,
 )
 from database.pull_requests import (
@@ -84,7 +83,7 @@ ARTIFACTS_BASE_URL = storage_service.get_civicpatch_artifacts_url("").rstrip("/"
 PAUSED_CONTEXT_BUCKET = buckets.ARTIFACTS
 
 
-def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
+def _build_request_row(r: dict) -> dict:
     args = r.get("arguments_json") or {}
     url = args.get("url")
     folder = (
@@ -92,29 +91,13 @@ def _build_request_row(r: dict, issue_type: str, issue_key: str) -> dict:
         if r.get("jurisdiction_ocdid")
         else None
     )
-    # TBD remove with the issue type: nothing emits these since 2026-08-16. It also matches
-    # on a *rendered* office.name, so it misses anyone whose label was joined with another —
-    # `source_records` answers the same question per person, off the parse.
-    if issue_type == "unrecognized_role":
-        matching = [
-            p
-            for p in (r.get("data_json") or [])
-            if isinstance(p, dict)
-            and (p.get("office") or {}).get("name", "") == issue_key
-        ]
-        people = [{"name": p["name"]} for p in matching]
-        source_urls = list({u for p in matching for u in (p.get("source_urls") or [])})
-    else:
-        people = []
-        source_urls = [url] if url else []
     return {
         "request_id": r.get("request_id"),
         "jurisdiction_ocdid": r.get("jurisdiction_ocdid"),
         "jurisdiction_name": r.get("jurisdiction_name"),
         "jurisdiction_path": folder,
         "url": url,
-        "source_urls": source_urls,
-        "people": people,
+        "source_urls": [url] if url else [],
     }
 
 
@@ -422,8 +405,6 @@ def get_router(api_key_header):
         errors = []
 
         tasks = []
-        if request.data:  # Called from within civicpatch project
-            tasks.append(("result", update_pipeline_run_data(request_id, request.data)))
         if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (
@@ -731,7 +712,7 @@ def get_router(api_key_header):
         ):
             request_id = issue["issue_key"]
             base_rows = [
-                _build_request_row(raw[0], issue_type, issue_key)
+                _build_request_row(raw[0])
                 if raw
                 else {"request_id": request_id}
             ]
@@ -740,7 +721,7 @@ def get_router(api_key_header):
             failure_reason = issue_data.get("failure_reason")
             failure_source = issue_data.get("failure_source")
         else:
-            base_rows = [_build_request_row(r, issue_type, issue_key) for r in raw]
+            base_rows = [_build_request_row(r) for r in raw]
             error = None
             failure_reason = None
             failure_source = None

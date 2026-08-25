@@ -37,14 +37,14 @@ async def test_returns_none_when_not_found():
 async def test_returns_row_for_a_pending_review():
     """Sourced from `requests` now, so the row is the request's own columns: the commit URL
     it published to and a status derived from published_at/dismissed_at. There is no pull
-    request number because publishing no longer opens one."""
+    request number because publishing no longer opens one, and no roster because that is derived
+    from the request's sightings rather than stored beside it."""
     row = (
         "req-abc",          # id
         None,               # open_data_url — nothing published yet
         "pending",          # derived review status
         "ocd-jurisdiction/country:us/state:tx/place:austin/government",  # jurisdiction_ocdid
         "Austin",           # jurisdiction_name
-        [{"name": "Jane Doe"}],  # data_json
         "https://austintexas.gov",  # jurisdiction_website_url
     )
     cur = _make_cursor(row)
@@ -56,7 +56,6 @@ async def test_returns_row_for_a_pending_review():
     assert result["pr"]["status"] == "pending"
     assert result["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:tx/place:austin/government"
     assert result["jurisdiction_name"] == "Austin"
-    assert result["proposed"] == [{"name": "Jane Doe"}]
 
 
 @pytest.mark.asyncio
@@ -68,7 +67,6 @@ async def test_returns_row_for_a_published_review():
         "published",
         "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
         "Oakland",
-        [],
         None,
     )
     cur = _make_cursor(row)
@@ -78,7 +76,6 @@ async def test_returns_row_for_a_published_review():
     assert result is not None
     assert result["pr"]["status"] == "published"
     assert result["pr"]["url"] == "https://github.com/org/repo/commit/abc123"
-    assert result["proposed"] == []
 
 
 @pytest.mark.asyncio

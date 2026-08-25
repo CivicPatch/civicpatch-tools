@@ -13,8 +13,6 @@ from core.people_edits import LIST_FIELDS
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
-
-
 # Must match the two partial indexes in 137 exactly; a mismatch is an unhandled unique violation.
 _REPLACES_THE_FIELD = """(entity_type, entity_id, field_path)
     WHERE kind = 'accept'
@@ -28,18 +26,29 @@ _REPLACES_THE_VALUE = """(entity_type, entity_id, field_path, value)
 def _keyed_by_value(assertion: Assertion) -> bool:
     """Only a scalar accept replaces the field's one answer; list fields and rejects key on the
     value."""
-    return (
-        assertion.kind is AssertionKind.REJECT or assertion.field_path in LIST_FIELDS
-    )
+    return assertion.kind is AssertionKind.REJECT or assertion.field_path in LIST_FIELDS
+
+
+_DROP_THE_OPPOSITE = """
+    DELETE FROM assertions
+    WHERE entity_type = %s AND entity_id = %s AND field_path = %s
+      AND kind <> %s AND value = %s
+"""
 
 
 async def upsert(cur, assertion: Assertion, asserted_by: str) -> str:
-    """Set one assertion on a caller's cursor. Returns its id.
+    """Record one claim on a caller's cursor. Returns its id.
 
     Re-stating an existing claim refreshes who and when rather than adding a row, which bounds
     this table by distinct values instead of by publish count.
     """
-    conflict = _REPLACES_THE_VALUE if _keyed_by_value(assertion) else _REPLACES_THE_FIELD
+    entity = (assertion.entity_type.value, assertion.entity_id, assertion.field_path)
+    value = json.dumps(assertion.value)
+    conflict = (
+        _REPLACES_THE_VALUE if _keyed_by_value(assertion) else _REPLACES_THE_FIELD
+    )
+
+    await cur.execute(_DROP_THE_OPPOSITE, (*entity, assertion.kind.value, value))
     await cur.execute(
         f"""
         INSERT INTO assertions
@@ -52,23 +61,21 @@ async def upsert(cur, assertion: Assertion, asserted_by: str) -> str:
                       asserted_at = now()
         RETURNING id::text
         """,
-        (
-            assertion.entity_type.value,
-            assertion.entity_id,
-            assertion.field_path,
-            assertion.kind.value,
-            json.dumps(assertion.value),
-            json.dumps([source.model_dump() for source in assertion.sources])
-            if assertion.sources
-            else None,
-            asserted_by,
-        ),
+        (*entity, assertion.kind.value, value, _sources(assertion), asserted_by),
     )
     row = await cur.fetchone()
     return row[0] if row else ""
 
 
-async def withdraw(cur, entity_type: EntityType, entity_id: str, field_path: str) -> int:
+def _sources(assertion: Assertion) -> str | None:
+    if not assertion.sources:
+        return None
+    return json.dumps([source.model_dump() for source in assertion.sources])
+
+
+async def withdraw(
+    cur, entity_type: EntityType, entity_id: str, field_path: str
+) -> int:
     """Stop accepting a field. Returns how many rows went.
 
     A delete: `value` is NOT NULL, so a withdrawal has no value to carry.
@@ -95,47 +102,19 @@ async def create(assertion: Assertion, asserted_by: str) -> str:
     return assertion_id
 
 
-async def upsert_many(
-    cur, assertions: list[Assertion], asserted_by: str
-) -> int:
-    """Set many assertions at once. Returns how many.
+async def create_all(claims: list[Assertion], asserted_by: str) -> None:
+    """Record a whole save's worth of claims, owning the connection.
 
-    Two statements rather than one per value — a nine-person roster is comfortably eighty. They
-    split by arity because the two uniqueness rules need different conflict targets.
+    One transaction: half a reviewer's answer is worse than none, because the half that landed
+    looks like a decision they made.
     """
-    if not assertions:
-        return 0
-    for conflict, keyed_by_value in (
-        (_REPLACES_THE_FIELD, False),
-        (_REPLACES_THE_VALUE, True),
-    ):
-        batch = [
-            (
-                assertion.entity_type.value,
-                assertion.entity_id,
-                assertion.field_path,
-                assertion.kind.value,
-                json.dumps(assertion.value),
-                asserted_by,
-            )
-            for assertion in assertions
-            if _keyed_by_value(assertion) is keyed_by_value
-        ]
-        if not batch:
-            continue
-        await cur.executemany(
-            f"""
-            INSERT INTO assertions
-                (entity_type, entity_id, field_path, kind, value, asserted_by)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            ON CONFLICT {conflict}
-            DO UPDATE SET value = EXCLUDED.value,
-                          asserted_by = EXCLUDED.asserted_by,
-                          asserted_at = now()
-            """,
-            batch,
-        )
-    return len(assertions)
+    if not claims:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for claim in claims:
+            await upsert(cur, claim, asserted_by)
+        await conn.commit()
 
 
 async def list_for_entities(

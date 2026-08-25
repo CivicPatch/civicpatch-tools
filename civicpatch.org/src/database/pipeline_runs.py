@@ -1,13 +1,11 @@
 import json
 from datetime import datetime, timedelta
-from typing import Any, List, Optional
-
-from psycopg import sql
+from typing import Optional
 
 from database.database import get_pool, to_iso
-from database.requests import REVIEW_STATUS
+from psycopg import sql
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
-from lib.github.utils import pull_request_url_to_number
+
 
 async def run_updated_at(cur, request_id: str) -> datetime:
     """`pipeline_runs.updated_at` — when the run last reported its status.
@@ -54,7 +52,7 @@ async def get_pipeline_run(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.status, j.progress, r.arguments_json, r.data_json,
+            SELECT j.status, j.progress, r.arguments_json,
                    j.created_at, j.updated_at, r.open_data_url
             FROM pipeline_runs j
             LEFT JOIN requests r ON r.id = j.request_id
@@ -69,10 +67,9 @@ async def get_pipeline_run(request_id: str):
                 "status": row[0],
                 "progress": row[1],
                 "arguments_json": row[2],
-                "data_json": row[3],
-                "created_at": to_iso(row[4]),
-                "updated_at": to_iso(row[5]),
-                "pull_request_url": row[6],
+                "created_at": to_iso(row[3]),
+                "updated_at": to_iso(row[4]),
+                "pull_request_url": row[5],
             }
         return None
 
@@ -104,7 +101,9 @@ async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
         return {row[0] for row in rows}
 
 
-async def get_active_pipeline_run_jurisdiction_ocdids_by_state(state_code: str) -> set[str]:
+async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
+    state_code: str,
+) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -121,7 +120,9 @@ async def get_active_pipeline_run_jurisdiction_ocdids_by_state(state_code: str) 
         return {row[0] for row in rows}
 
 
-async def get_active_pipeline_runs(state_code: Optional[str] = None, page: int = 1, per_page: int = 25) -> tuple[list[dict], int]:
+async def get_active_pipeline_runs(
+    state_code: Optional[str] = None, page: int = 1, per_page: int = 25
+) -> tuple[list[dict], int]:
     pool = await get_pool()
     offset = (page - 1) * per_page
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -187,7 +188,9 @@ async def get_pipeline_run_status(request_id: str):
         return None
 
 
-async def update_pipeline_run_status(request_id: str, status: str | None = None, progress: Optional[int] = None):
+async def update_pipeline_run_status(
+    request_id: str, status: str | None = None, progress: Optional[int] = None
+):
     pool = await get_pool()
     set_clauses = []
     params = []
@@ -236,27 +239,6 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
     return [row[0] for row in rows]
 
 
-async def update_pipeline_run_data(request_id: str, data_json: Any):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        result = await conn.execute(
-            """
-            UPDATE requests r
-            SET data_json = %s,
-                updated_at = CURRENT_TIMESTAMP
-            FROM pipeline_runs j
-            WHERE r.id = j.request_id AND j.request_id = %s;
-            """,
-            (
-                json.dumps(data_json),
-                request_id,
-            ),
-        )
-        if result.rowcount == 0:
-            return False
-        return True
-
-
 async def update_pipeline_run_review_json(request_id: str, review_json: dict):
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -272,27 +254,12 @@ async def update_pipeline_run_review_json(request_id: str, review_json: dict):
         )
 
 
-async def get_pipeline_run_data_json(request_id: str):
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            # `data_json` is a request column; joining pipeline_runs only gated it behind
-            # "a run exists", which hid the roster from anything that never ran.
-            """
-            SELECT data_json FROM requests WHERE id::text = %s
-            """,
-            (request_id,),
-        )
-        row = await cur.fetchone()
-    return row[0] if row else None
-
-
 async def get_pipeline_run_result(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.data_json, r.review_json, r.jurisdiction_ocdid FROM requests r
+            SELECT r.review_json, r.jurisdiction_ocdid FROM requests r
             JOIN pipeline_runs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
@@ -301,4 +268,4 @@ async def get_pipeline_run_result(request_id: str):
         row = await cur.fetchone()
     if row is None:
         return None
-    return {"data": row[0], "review_json": row[1], "jurisdiction_ocdid": row[2]}
+    return {"review_json": row[0], "jurisdiction_ocdid": row[1]}

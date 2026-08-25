@@ -3,67 +3,82 @@ import json
 import logging
 import os
 from typing import List, Optional
-from shared.schemas import Official
+
+import database.issues
+import database.jurisdictions as jurisdictions_db
+import database.people
+import database.pipeline_runs
+import database.pull_requests as pull_requests_db
+import database.requests as requests_db
+import database.review_session_entries as review_session_entries_db
+import database.users
+import lib.buckets as buckets
+import lib.github.api as github_service
+import lib.redis as redis_store
+import lib.storage as storage_service
+import services.pull_request_sync as pr_sync_service
+import services.review_issue_report as review_issue_report_service
+import services.roster_edits as roster_edits
 import shared.utils.data_path_utils
 import shared.utils.id_utils
 import shared.utils.url_utils
-from shared.utils.statuses import PullRequestStatus
-import yaml
+from core.people_edits import PeopleValidationError, PersonPatch
+from database.people import DEFAULT_VIEW, VIEWS
 from fastapi import (
     APIRouter,
-    BackgroundTasks,
     Depends,
     HTTPException,
     Query,
 )
 from fastapi.responses import JSONResponse
+from lib.auth import require_route_access
 from pydantic import BaseModel
-
-import database.issues
-import database.pipeline_runs
-import database.requests as requests_db
-import database.people
-import database.jurisdictions as jurisdictions_db
-import database.pull_requests as pull_requests_db
-import database.review_sessions as review_sessions_db
-import database.review_session_entries as review_session_entries_db
-import database.users
-import lib.github.api as github_service
-import services.change_logs as change_logs
-import services.review_issue_report as review_issue_report_service
-from core.people_edits import PersonPatch, PeopleValidationError
-import services.roster_edits as roster_edits
-import services.pull_request_sync as pr_sync_service
+from schemas.common import (
+    Identity,
+    ReportReviewIssueRequest,
+    ReviewMode,
+    RouteCategory,
+    UserRole,
+)
+from services.publish import (
+    dismiss_people,
+)
 from services.review_proposal import (
     assertions_for_people,
     proposals_for_requests,
     review_summary_for_request,
 )
-from services.publish import (
-    dismiss_people,
-    promote_images,
-    promote_to_reviewed,
-    publish_people,
-)
-import lib.redis as redis_store
-import lib.buckets as buckets
-import lib.storage as storage_service
-from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, ReportReviewIssueRequest, ReviewMode, UserRole, RouteCategory
-from lib.auth import require_route_access
+import services.roster as services_roster
+from services.roster import proposed_roster
+from shared.utils.statuses import PullRequestStatus
 
 logger = logging.getLogger(__name__)
 
 
-def _source_url_to_markdown_url(request_id: str, jurisdiction_ocdid_folder: str, source_url: str) -> Optional[str]:
+def _source_url_to_markdown_url(
+    request_id: str, jurisdiction_ocdid_folder: str, source_url: str
+) -> Optional[str]:
     source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-    relative_path = os.path.join(request_id, "data_source", jurisdiction_ocdid_folder, "cache", source_url_dir, "preprocessed.md")
+    relative_path = os.path.join(
+        request_id,
+        "data_source",
+        jurisdiction_ocdid_folder,
+        "cache",
+        source_url_dir,
+        "preprocessed.md",
+    )
     return storage_service.get_presigned_url_cached(buckets.DEBUG, relative_path)
 
 
-def build_sources(request_id: str, jurisdiction_ocdid: str, source_urls: list[str]) -> list[dict]:
+def build_sources(
+    request_id: str, jurisdiction_ocdid: str, source_urls: list[str]
+) -> list[dict]:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    return [{"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)} for url in source_urls]
+    return [
+        {"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)}
+        for url in source_urls
+    ]
+
 
 # ──────────────────────────────────────────────
 # Request models
@@ -96,9 +111,9 @@ class ErrorResponse(BaseModel):
     error: str
 
 
-# A scrape whose roster was never recorded cannot be edited or published: `data_json` is the
-# only copy now that the job branch is gone. Rescue such rows via `POST /api/admin/pr_sync`.
-MISSING_ROSTER_DETAIL = "This scrape has no recorded roster. Re-sync it before reviewing."
+# A scrape that recorded no sightings has nothing to review: the roster is derived from them,
+# so there is no other copy to fall back to.
+MISSING_ROSTER_DETAIL = "This scrape recorded no roster. Re-run it before reviewing."
 
 
 # The service raises what went wrong; the status code is this layer's business. `patch_people`
@@ -106,6 +121,8 @@ MISSING_ROSTER_DETAIL = "This scrape has no recorded roster. Re-sync it before r
 def _http_error(exc: Exception) -> HTTPException:
     if isinstance(exc, PeopleValidationError):
         return HTTPException(status_code=422, detail=exc.failures)
+    if isinstance(exc, roster_edits.AnonymousEdit):
+        return HTTPException(status_code=401, detail="Sign in to record an edit.")
     return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
 
 
@@ -126,9 +143,7 @@ def get_router(api_key_header):
     )
     async def list_pull_requests_endpoint(
         jurisdiction_ocdid: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         pull_requests, _, _ = await pull_requests_db.list_open_pull_requests(
             jurisdiction_ocdid=jurisdiction_ocdid
@@ -138,59 +153,31 @@ def get_router(api_key_header):
     # ── Pull Requests: List & Data ───────────
     @router.get(
         "/data",
-        summary="Get YAML data from a pull request branch",
+        summary="The roster a scrape proposes, beside the one that is published",
     )
     async def get_pull_request_data_endpoint(
         jurisdiction_ocdid: str,
         request_id: str,
-        background_tasks: BackgroundTasks,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        file_path = shared.utils.id_utils.jurisdiction_ocdid_to_folder(
-            jurisdiction_ocdid
-        )
-
-        existing, cached = await asyncio.gather(
+        existing, proposed = await asyncio.gather(
             database.people.get_people(
                 jurisdiction_ocdid=jurisdiction_ocdid,
                 status=database.people.ACTIVE_STATUS,
             ),
-            database.pipeline_runs.get_pipeline_run_data_json(request_id),
+            proposed_roster(request_id, jurisdiction_ocdid),
         )
-
-        # Fast path: serve from DB if already backfilled
-        if cached is not None:
-            return {
-                "request_id": request_id,
-                "file_path": file_path,
-                "data": cached,
-                "existing": existing,
-            }
-
-        file_content = await github_service.get_pull_request_file_yaml(
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            request_id=request_id,
-            file_path=f"data/{file_path}.yml",
-        )
-        if file_content is None:
-            # Branch or file not found — trigger a full PR sync in the background
-            # so the next request succeeds once the sync completes.
-            background_tasks.add_task(pr_sync_service.sync_open_pr_state)
+        if not proposed:
             return JSONResponse(
-                content={"error": "Data file not found on branch"}, status_code=404
+                content={"error": MISSING_ROSTER_DETAIL}, status_code=404
             )
-
-        # Backfill DB so future requests skip the GitHub roundtrip
-        background_tasks.add_task(
-            database.pipeline_runs.update_pipeline_run_data, request_id, file_content
-        )
 
         return {
             "request_id": request_id,
-            "file_path": file_path,
-            "data": file_content,
+            "file_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(
+                jurisdiction_ocdid
+            ),
+            "data": proposed,
             "existing": existing,
         }
 
@@ -205,41 +192,65 @@ def get_router(api_key_header):
         state_code: str | None = None,
         jurisdiction_ocdid: str | None = None,
         view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        paged_pull_requests, total, with_issues = await pull_requests_db.list_open_pull_requests(
-            state_code=state_code, jurisdiction_ocdid=jurisdiction_ocdid, page=page, per_page=per_page
+        (
+            paged_pull_requests,
+            total,
+            with_issues,
+        ) = await pull_requests_db.list_open_pull_requests(
+            state_code=state_code,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            page=page,
+            per_page=per_page,
         )
         total_pages = (total + per_page - 1) // per_page
 
         jurisdiction_ocdids = list(
-            {pr["jurisdiction"]["ocdid"] for pr in paged_pull_requests if pr.get("jurisdiction")}
+            {
+                pr["jurisdiction"]["ocdid"]
+                for pr in paged_pull_requests
+                if pr.get("jurisdiction")
+            }
         )
         request_ids = list({pr["request_id"] for pr in paged_pull_requests})
-        data = await database.people.get_people_data_by_request_ids(
-            jurisdiction_ocdids, request_ids, view=view
+        published, rosters, proposals = await asyncio.gather(
+            database.people.get_people_by_jurisdictions(jurisdiction_ocdids, view=view),
+            services_roster.proposed_rosters(request_ids),
+            # What each scrape would actually change. `existing` and `proposed` are two rosters
+            # a reader has to diff by eye; this is the diff.
+            proposals_for_requests(request_ids),
         )
-        # What each scrape would actually change. `existing` and `proposed` are two rosters a
-        # reader has to diff by eye; this is the diff.
-        proposals = await proposals_for_requests(request_ids)
 
         results = []
         for pr in paged_pull_requests:
-            entry = data.get(pr["request_id"], {})
-            proposed = entry.get("proposed", [])
-            unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
-            results.append({
-                **pr,
-                "existing": entry.get("existing", []),
-                "proposed": proposed,
-                "changes": [
-                    change.model_dump()
-                    for change in proposals.get(pr["request_id"], [])
-                ],
-                "sources": build_sources(pr["request_id"], pr["jurisdiction"]["ocdid"], unique_source_urls),
-            })
+            proposed = [
+                database.people.projected(person, view)
+                for person in rosters.get(pr["request_id"], [])
+            ]
+            unique_source_urls = list(
+                {
+                    url
+                    for person in proposed
+                    for url in (person.get("source_urls") or [])
+                }
+            )
+            results.append(
+                {
+                    **pr,
+                    "existing": published.get(pr["jurisdiction"]["ocdid"], []),
+                    "proposed": proposed,
+                    "changes": [
+                        change.model_dump()
+                        for change in proposals.get(pr["request_id"], [])
+                    ],
+                    "sources": build_sources(
+                        pr["request_id"],
+                        pr["jurisdiction"]["ocdid"],
+                        unique_source_urls,
+                    ),
+                }
+            )
         return {
             "data": results,
             "total": total,
@@ -256,9 +267,7 @@ def get_router(api_key_header):
     @router.get("/by-request/{request_id}")
     async def get_pull_request_by_request_id_endpoint(
         request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         result = await pull_requests_db.get_pull_request_data_by_request_id(request_id)
         if not result:
@@ -266,13 +275,13 @@ def get_router(api_key_header):
 
         request_id = result["request_id"]
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
-        proposed = result["proposed"] or []
 
-        existing, scraped_at, proposals = await asyncio.gather(
+        existing, proposed, scraped_at, proposals = await asyncio.gather(
             database.people.get_people(
                 jurisdiction_ocdid=jurisdiction_ocdid,
                 status=database.people.ACTIVE_STATUS,
             ),
+            proposed_roster(request_id, jurisdiction_ocdid),
             jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried
             # it since the proposal landed; the review session reads this endpoint instead, and
@@ -280,7 +289,9 @@ def get_router(api_key_header):
             # the derivation is the only thing that knows.
             proposals_for_requests([request_id]),
         )
-        unique_source_urls = list({url for person in proposed for url in (person.get("source_urls") or [])})
+        unique_source_urls = list(
+            {url for person in proposed for url in (person.get("source_urls") or [])}
+        )
 
         return {
             "data": {
@@ -291,7 +302,9 @@ def get_router(api_key_header):
                 "jurisdiction": {
                     "ocdid": jurisdiction_ocdid,
                     "name": result["jurisdiction_name"],
-                    "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid),
+                    "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(
+                        jurisdiction_ocdid
+                    ),
                     "website_url": result["jurisdiction_website_url"],
                 },
                 "pr": result["pr"],
@@ -299,13 +312,14 @@ def get_router(api_key_header):
                 "existing": existing,
                 "proposed": proposed,
                 "changes": [
-                    change.model_dump()
-                    for change in proposals.get(request_id, [])
+                    change.model_dump() for change in proposals.get(request_id, [])
                 ],
                 "assertions": await assertions_for_people(
                     [person["id"] for person in existing if person.get("id")]
                 ),
-                "sources": build_sources(request_id, jurisdiction_ocdid, unique_source_urls),
+                "sources": build_sources(
+                    request_id, jurisdiction_ocdid, unique_source_urls
+                ),
             }
         }
 
@@ -313,9 +327,7 @@ def get_router(api_key_header):
     @router.get("/{request_id}/review")
     async def get_pull_request_review_endpoint(
         request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         return {"data": await review_summary_for_request(request_id)}
 
@@ -323,9 +335,7 @@ def get_router(api_key_header):
     @router.get("/{request_id}/issues")
     async def get_reported_issues_endpoint(
         request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         result = await database.issues.get_user_reported_issues_for_request(request_id)
         return {"data": result}
@@ -335,9 +345,7 @@ def get_router(api_key_header):
     async def report_review_issue_endpoint(
         request_id: str,
         body: ReportReviewIssueRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
@@ -362,7 +370,9 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
-        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
+        user_id = await database.users.get_user_id_by_provider(
+            user.provider, user.provider_user_id
+        )
         # Dismissal is a database write now. Nothing is closed on GitHub because nothing was
         # opened there — `dismissed_at` is what takes the request out of the review pool.
         await dismiss_people(request_id, user_id)
@@ -375,15 +385,13 @@ def get_router(api_key_header):
     async def save_review_endpoint(
         request_id: str,
         request: SaveReviewRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         try:
             await roster_edits.save(
                 request.request_id, request.jurisdiction_ocdid, request.data, user
             )
-        except (roster_edits.MissingRoster, PeopleValidationError) as exc:
+        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
             raise _http_error(exc)
         # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
         # held by its session (see _allocate_next_review) and returns to the pool
@@ -396,9 +404,7 @@ def get_router(api_key_header):
     async def save_and_merge_endpoint(
         request_id: str,
         request: SaveAndMergeRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         edited = None
         try:
@@ -416,7 +422,7 @@ def get_router(api_key_header):
             await roster_edits.publish(
                 request.request_id, request.jurisdiction_ocdid, edited, user.user_id
             )
-        except (roster_edits.MissingRoster, PeopleValidationError) as exc:
+        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
             raise _http_error(exc)
         await review_session_entries_db.resolve_entries_for_request(request.request_id)
         return {"status": "published"}
@@ -425,9 +431,7 @@ def get_router(api_key_header):
     @router.get("/{pull_request_number}/merge-status", include_in_schema=False)
     async def merge_status_endpoint(
         pull_request_number: str,
-        _: Identity = Depends(
-            require_route_access(RouteCategory.AUTHENTICATED)
-        ),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         raw = await redis_store.get(f"merge_status:{pull_request_number}")
         if not raw:
@@ -455,13 +459,19 @@ def get_router(api_key_header):
             )
         # No reviewer edits on this path, so the submitted roster is what goes live.
         jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
-        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
+        user_id = await database.users.get_user_id_by_provider(
+            user.provider, user.provider_user_id
+        )
         if jurisdiction_ocdid:
             try:
-                await roster_edits.publish(request_id, jurisdiction_ocdid, None, user_id)
+                await roster_edits.publish(
+                    request_id, jurisdiction_ocdid, None, user_id
+                )
             except roster_edits.MissingRoster as exc:
                 raise _http_error(exc)
-        await pr_sync_service.apply_pull_request_status(request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id)
+        await pr_sync_service.apply_pull_request_status(
+            request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id
+        )
         return {"status": "success"}
 
     # -- Pull Requests: Update Branch ---

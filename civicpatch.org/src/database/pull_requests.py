@@ -123,7 +123,6 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             SELECT r.id::text, r.open_data_url, {REVIEW_STATUS},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   COALESCE(r.data_json, '[]'::jsonb) AS data_json,
                    jur.data->>'url' AS jurisdiction_website_url
             FROM requests r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -138,9 +137,8 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             "request_id": row[0],
             "jurisdiction_ocdid": row[3],
             "jurisdiction_name": row[4],
-            "jurisdiction_website_url": row[6],
+            "jurisdiction_website_url": row[5],
             "pr": {"url": row[1], "status": row[2]},
-            "proposed": row[5] if row[5] is not None else [],
         }
 
 

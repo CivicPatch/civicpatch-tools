@@ -18,6 +18,7 @@ from database.pipeline_runs import get_pipeline_run_result
 from schemas.assertions import EntityType
 from database.roles import get_roles
 from services.publish import chosen_posts
+from services.roster import proposed_rosters
 from shared.schemas import Issue, Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
@@ -47,24 +48,23 @@ async def proposals_for_requests(
     request_ids: list[str],
 ) -> dict[str, list[ProposedChange]]:
     """One taxonomy build and one membership read per jurisdiction, whatever the page size."""
-    rosters = await requests_db.get_request_rosters(request_ids)
-    if not rosters:
+    ocdids = await requests_db.jurisdictions_for_requests(request_ids)
+    if not ocdids:
         return {}
+    rosters = await proposed_rosters(request_ids)
 
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
 
-    ocdids = {roster["jurisdiction_ocdid"] for roster in rosters.values()}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        held = await memberships_db.open_by_jurisdiction(cur, list(ocdids))
+        held = await memberships_db.open_by_jurisdiction(cur, list(set(ocdids.values())))
 
     proposals: dict[str, list[ProposedChange]] = {}
-    for request_id, roster in rosters.items():
-        ocdid = roster["jurisdiction_ocdid"]
+    for request_id, ocdid in ocdids.items():
         people = [
             Person(**{**person, "jurisdiction_ocdid": ocdid})
-            for person in roster["data_json"]
+            for person in rosters.get(request_id, [])
         ]
         proposals[request_id] = propose(
             derived_posts(people, taxonomy, roles, await chosen_posts(people)),

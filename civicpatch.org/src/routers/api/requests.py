@@ -55,8 +55,6 @@ def get_router(api_key_header):
         errors = []
 
         tasks = []
-        if request.data:  # Called from within civicpatch project
-            tasks.append(("result", database.pipeline_runs.update_pipeline_run_data(request_id, request.data)))
         if request.pull_request_url:  # Called from open-data repo
             tasks.append(
                 (

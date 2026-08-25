@@ -19,7 +19,7 @@ PERSON_OFFICE = """(
         'division_ocdid', posts.division_ocdid)
     FROM memberships JOIN posts ON posts.id = memberships.post_id
     WHERE memberships.person_id = people.id
-    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC, posts.id
     LIMIT 1
 )"""
 
@@ -34,7 +34,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'label', memberships.label,
         'post_label', posts.label,
         'source_labels', to_jsonb(memberships.source_labels)
-    ) ORDER BY posts.role_id, posts.division_ocdid)
+    ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
     JOIN posts ON posts.id = memberships.post_id
     JOIN roles ON roles.id = posts.role_id
@@ -42,8 +42,6 @@ PERSON_MEMBERSHIPS = """COALESCE((
 ), '[]'::jsonb)"""
 
 
-# The same words `data_json` carries as `labels`, so the review card diffs both sides on one key.
-# `source_label`, not `label`: `memberships.label` exists, so the bare alias is ambiguous.
 PERSON_LABELS = """COALESCE((
     SELECT jsonb_agg(DISTINCT source_label)
     FROM memberships, unnest(memberships.source_labels) AS source_label
@@ -73,8 +71,8 @@ PERSON_JSON = f"""jsonb_build_object(
 )"""
 
 
-# The people side of the review card. Its twin below reads `data_json` — a *proposed* roster,
-# not a row — and the two must emit the same KEYS or the card cannot diff them.
+# The published side of the review card. The proposed side is derived from sightings in
+# `services/roster.py` and filtered by `projected` below, so both sides carry the same keys.
 _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "people.id::text"),
     "name": ("'name'", "people.name"),
@@ -87,24 +85,6 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "start_date": ("'start_date'", "people.start_date"),
     "end_date": ("'end_date'", "people.end_date"),
     "image": ("'image'", "people.image"),
-}
-
-_RESULT_JSON_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
-    "id": ("'id'", "elem->>'id'"),
-    "name": ("'name'", "elem->>'name'"),
-    # `office` is the joined string `labels` replaces, still projected while readers move.
-    "labels": ("'labels'", "COALESCE(elem->'labels', '[]'::jsonb)"),
-    "office": (
-        "'office'",
-        "jsonb_build_object('name', elem#>>'{office,name}', 'division_ocdid', elem#>>'{office,division_ocdid}')",
-    ),
-    "source_urls": ("'source_urls'", "elem->'source_urls'"),
-    "phones": ("'phones'", "elem->'phones'"),
-    "emails": ("'emails'", "elem->'emails'"),
-    "urls": ("'urls'", "elem->'urls'"),
-    "start_date": ("'start_date'", "elem->>'start_date'"),
-    "end_date": ("'end_date'", "elem->>'end_date'"),
-    "image": ("'image'", "elem->>'image'"),
 }
 
 _QUICK_FIELDS = frozenset({"id", "name", "labels", "office", "source_urls"})
@@ -175,17 +155,20 @@ async def get_people(
     if jurisdiction_ocdid is None and state is None:
         raise UnscopedRead("pass a jurisdiction_ocdid or a state")
 
-    state_prefix = (
-        f"ocd-jurisdiction/country:us/state:{state.lower()}%" if state else None
-    )
-    matches: list[tuple[LiteralString, Any]] = [
-        ("jurisdiction_ocdid = %s", jurisdiction_ocdid),
-        ("jurisdiction_ocdid LIKE %s", state_prefix),
-        ("status = %s", status),
-    ]
-    asked: list[tuple[LiteralString, Any]] = [
-        (clause, value) for clause, value in matches if value is not None
-    ]
+    # Typed LiteralString, so pyright refuses an f-string here — the clauses can only ever be
+    # the literals below, and every value goes through a placeholder.
+    clauses: list[LiteralString] = []
+    values: list[Any] = []
+
+    if jurisdiction_ocdid is not None:
+        clauses.append("jurisdiction_ocdid = %s")
+        values.append(jurisdiction_ocdid)
+    if state is not None:
+        clauses.append("jurisdiction_ocdid LIKE %s")
+        values.append(f"ocd-jurisdiction/country:us/state:{state.lower()}%")
+    if status is not None:
+        clauses.append("status = %s")
+        values.append(status)
 
     people: list[dict] = []
     pool = await get_pool()
@@ -193,10 +176,10 @@ async def get_people(
         await cur.execute(
             f"""
             SELECT {PERSON_JSON} FROM people
-            WHERE {" AND ".join(clause for clause, _ in asked)}
-            ORDER BY jurisdiction_ocdid
+            WHERE {" AND ".join(clauses)}
+            ORDER BY jurisdiction_ocdid, name, id
             """,
-            tuple(value for _, value in asked),
+            tuple(values),
         )
         while True:
             batch = await cur.fetchmany(200)
@@ -213,59 +196,50 @@ async def get_person_models(
     return [Person(**person) for person in people]
 
 
-async def get_people_data_by_request_ids(
-    jurisdiction_ocdids: list[str],
-    request_ids: list[str],
-    view: str = DEFAULT_VIEW,
-) -> dict[str, dict[str, Any]]:
-    fields = VIEWS.get(view, VIEWS[DEFAULT_VIEW])
-
-    people_projection = _build_jsonb_obj(_PEOPLE_TABLE_EXPRS, fields)
-    result_projection = _build_jsonb_obj(_RESULT_JSON_EXPRS, fields)
-
+async def get_people_by_jurisdictions(
+    jurisdiction_ocdids: list[str], view: str = DEFAULT_VIEW
+) -> dict[str, list[dict]]:
+    """The published roster of each jurisdiction, projected to a review card's fields."""
+    if not jurisdiction_ocdids:
+        return {}
+    projection = _build_jsonb_obj(
+        _PEOPLE_TABLE_EXPRS, VIEWS.get(view, VIEWS[DEFAULT_VIEW])
+    )
     pool = await get_pool()
-    async with pool.connection() as conn:
-        async with conn.cursor() as cur:
-            await cur.execute(
-                sql.SQL("""
-                SELECT jurisdiction_ocdid, {} AS person
-                FROM people
-                WHERE jurisdiction_ocdid = ANY(%s)
-                  AND status = 'active'
-                """).format(people_projection),
-                (jurisdiction_ocdids,),
-            )
-            people_rows = await cur.fetchall()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            sql.SQL("""
+            SELECT jurisdiction_ocdid, {} AS person
+            FROM people
+            WHERE jurisdiction_ocdid = ANY(%s) AND status = 'active'
+            """).format(projection),
+            (jurisdiction_ocdids,),
+        )
+        rows = await cur.fetchall()
 
-            await cur.execute(
-                sql.SQL("""
-                SELECT
-                    r.id::text AS request_id,
-                    (
-                        SELECT jsonb_agg({})
-                        FROM jsonb_array_elements(r.data_json) AS elem
-                    ) AS people_data,
-                    r.jurisdiction_ocdid
-                FROM requests r
-                WHERE r.id = ANY(%s)
-                """).format(result_projection),
-                (request_ids,),
-            )
-            jobs_rows = await cur.fetchall()
+    by_jurisdiction: dict[str, list[dict]] = {}
+    for jurisdiction_ocdid, person in rows:
+        by_jurisdiction.setdefault(jurisdiction_ocdid, []).append(person)
+    return by_jurisdiction
 
-    people_map: dict[str, list] = {}
-    for jurisdiction, person in people_rows:
-        people_map.setdefault(jurisdiction, []).append(person)
 
-    results: dict[str, dict[str, Any]] = {}
-    for request_id, people_data, jurisdiction_ocdid in jobs_rows:
-        results[request_id] = {
-            "existing": people_map.get(jurisdiction_ocdid, []),
-            "proposed": people_data
-            or [],  # jsonb_agg returns None for empty/null result_data
+def projected(person: dict, view: str = DEFAULT_VIEW) -> dict:
+    """A derived person cut down to the same fields the published side is projected to."""
+    fields = VIEWS.get(view, VIEWS[DEFAULT_VIEW])
+    return {key: value for key, value in person.items() if key in fields}
+
+
+async def get_people_by_ids(person_ids: list[str]) -> dict[str, Person]:
+    if not person_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"SELECT {PERSON_JSON} FROM people WHERE id = ANY(%s)", (person_ids,)
+        )
+        return {
+            row[0]["id"]: Person(**labelled(row[0])) for row in await cur.fetchall()
         }
-
-    return results
 
 
 async def filter_existing_person_ids(ids: list[str]) -> list[str]:
@@ -291,7 +265,8 @@ async def get_people_page(
             WHERE jurisdiction_ocdid = %s
             ORDER BY
                 CASE WHEN people.status = 'active' THEN 0 ELSE 1 END,
-                people.updated_at DESC NULLS LAST
+                people.updated_at DESC NULLS LAST,
+                people.id
             LIMIT %s OFFSET %s
             """,
             (jurisdiction_ocdid, limit, offset),

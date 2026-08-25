@@ -131,18 +131,25 @@ def test_patch_job_status_returns_updated_status(client):
 
 @pytest.mark.unit
 def test_post_job_result_returns_request_id(client):
+    """The endpoint carries only `pull_request_url` now — open-data reporting back where it
+    committed. A roster posted here used to become `data_json`; rosters come from
+    `source_records` at ingest instead, so there is nothing left for a caller to post."""
     with (
-        patch("routers.api.pipeline_runs.update_pipeline_run_data", new_callable=AsyncMock, return_value=True),
+        patch(
+            "routers.api.pipeline_runs.update_pipeline_run_pull_request_url",
+            new_callable=AsyncMock,
+            return_value=True,
+        ),
     ):
         response = client.post(
             f"/pipeline_runs/{TEST_REQUEST_ID}/result",
-            json={"data": {"people": []}},
+            json={"pull_request_url": "https://github.com/org/open-data/pull/7"},
         )
 
     assert response.status_code == 200
     data = response.json()
     assert data["request_id"] == TEST_REQUEST_ID
-    assert "errors" in data
+    assert data["errors"] == []
 
 
 

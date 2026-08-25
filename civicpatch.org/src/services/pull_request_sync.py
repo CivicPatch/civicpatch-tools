@@ -130,17 +130,6 @@ async def maybe_backfill_job_result(request_id: str):
         logger.warning("maybe_backfill_job_result: no jurisdiction found for %s", request_id)
         return
 
-    if result["data"] is None:
-        folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-        data = await github_service.get_pull_request_file_yaml(
-            request_id, jurisdiction_ocdid, f"data/{folder}.yml"
-        )
-        if data is None:
-            logger.warning("maybe_backfill_job_result: no data file found for %s", request_id)
-        else:
-            await jobs_db.update_pipeline_run_data(request_id, data)
-            logger.info("maybe_backfill_job_result: data_json set for %s", request_id)
-
     if not result["review_json"]:
         workflow_context = await github_service.get_pull_request_context(request_id, jurisdiction_ocdid)
         review_json = _derive_review_step(workflow_context)

@@ -194,9 +194,6 @@ function ResolveModal(host) {
                   ` : null}
                 </div>
                 ${urls.map((u) => html`<a class="issues-page__modal-source-url" href=${u} target="_blank" rel="noopener noreferrer">${u}</a>`)}
-                ${d.people?.length ? html`
-                  <div class="issues-page__modal-source-people">${d.people.map((p) => p.name).join(", ")}</div>
-                ` : null}
               </div>
             `;
           })}

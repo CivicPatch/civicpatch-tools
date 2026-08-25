@@ -7,17 +7,16 @@ they have.
 from unittest.mock import MagicMock
 
 import pytest
-
 from core.people_derivation import (
+    canonical_name,
     get_source_urls,
     merge_field,
     merge_labels,
     merge_records_to_person,
     merge_weak_tie_groups,
     normalize_record,
-    surviving_name,
 )
-from shared.schemas import Person, PersonRecord, Role, RoleConfig
+from shared.schemas import PersonRecord, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -60,19 +59,16 @@ def test_merge_field():
     assert result == "555-1234"
 
 
-def test_surviving_name_prefers_the_name_we_already_know():
+def test_canonical_name_prefers_the_name_we_already_know():
     """Measured on dev 2026-08-25: every sighting of one Seattle councilmember spelled her
     "Katie B. Wilson", but she is published as "Katie Wilson". Frequency alone renames her on
     every scrape — the identity is what stops that."""
     records = [make_llm_person("Katie B. Wilson") for _ in range(3)]
 
-    assert (
-        surviving_name("Katie Wilson", records, {"Katie Wilson": ["Katie B. Wilson"]})
-        == "Katie Wilson"
-    )
+    assert canonical_name("Katie Wilson", records) == "Katie Wilson"
 
 
-def test_surviving_name_takes_the_most_frequent_spelling_of_a_stranger():
+def test_canonical_name_takes_the_most_frequent_spelling_of_a_stranger():
     """Nobody has published them yet, so there is no human answer to defer to."""
     records = [
         make_llm_person("Bob Kettle"),
@@ -80,12 +76,11 @@ def test_surviving_name_takes_the_most_frequent_spelling_of_a_stranger():
         make_llm_person("Bob Kettle"),
     ]
 
-    assert surviving_name("Robert Kettle", records, {}) == "Bob Kettle"
+    assert canonical_name("", records) == "Bob Kettle"
 
 
-def test_surviving_name_keeps_the_group_name_when_nothing_is_spelled():
-    """A group whose records carry no usable name still has to be called something."""
-    assert surviving_name("Ann Lee", [make_llm_person("")], {}) == "Ann Lee"
+def test_canonical_name_reports_nothing_when_nothing_is_spelled():
+    assert canonical_name("", [make_llm_person("")]) == ""
 
 
 def test_merge_labels():
@@ -201,7 +196,10 @@ def test_merge_records_to_person():
 # --- get_source_urls ---
 
 
-def test_get_source_urls_filters_by_unique_contribution():
+def test_get_source_urls_credits_every_page_the_person_was_seen_on():
+    """r3 repeats what r1 already said. It used to be dropped for that — but the drop was
+    "whichever record came first", and read order is not ingest order. Measured on dev, it
+    also cost 19 of 60 people their own bio page, beaten to a label by a listing page."""
     r1 = PersonRecord(
         name="Robert Kubert",
         label="Mayor - Ward 1",
@@ -236,22 +234,39 @@ def test_get_source_urls_filters_by_unique_contribution():
         source_url="https://www.bayonnenj.org/r3",
     )
 
-    person = Person(
-        name="Robert Kubert",
-        labels=["Mayor - Ward 1", "Council Member - Ward 2"],
-        phones=["555-0002"],
-        emails=["mayor2@bayonne.org"],
-        urls=["https://www.bayonnenj.org/officials/bio/mayor-robert-kubert"],
-        jurisdiction_ocdid="test_ocdid",
-        source_urls=[],
-        updated_at="",
-    )
-
-    result = get_source_urls([r1, r2, r3], person)
-    assert set(result) == {
+    assert get_source_urls([r1, r2, r3]) == [
         "https://www.bayonnenj.org/r1",
         "https://www.bayonnenj.org/r2",
-    }
+        "https://www.bayonnenj.org/r3",
+    ]
+
+
+def test_the_merge_does_not_depend_on_the_order_records_arrive_in():
+    """Ingest reads records in page order and the read reads them in row order, so anything
+    order-dependent makes the two disagree — and re-publishing an unchanged roster rewrite the
+    file."""
+    records = [
+        make_llm_person("Eve Adams", label="Mayor", phone="(956) 943-2682",
+                        source_url="http://a.gov/roster"),
+        make_llm_person("Eve Adams", label="Treasurer", email="eve@a.gov",
+                        source_url="http://a.gov/eve"),
+        make_llm_person("Eve A. Adams", label="Mayor", source_url="http://a.gov/about"),
+    ]
+    forwards = merge_records_to_person(MagicMock(), "Eve Adams", records, "ocdid")
+    backwards = merge_records_to_person(
+        MagicMock(), "Eve Adams", list(reversed(records)), "ocdid"
+    )
+
+    assert forwards.model_dump(exclude={"updated_at"}) == backwards.model_dump(
+        exclude={"updated_at"}
+    )
+    assert forwards.labels == ["Mayor", "Treasurer"]
+    assert forwards.other_names == ["Eve A. Adams"]
+    assert forwards.source_urls == [
+        "http://a.gov/about",
+        "http://a.gov/eve",
+        "http://a.gov/roster",
+    ]
 
 
 # --- merge_weak_tie_groups ---

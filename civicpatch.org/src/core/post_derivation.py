@@ -55,16 +55,7 @@ class DerivedPost(BaseModel):
 
 
 def _labels(record: Person) -> list[str]:
-    """What the source called this person.
-
-    `labels` is what a record carries. `office.name` is those labels joined with " - " at
-    ingest, and splitting it back is the round trip being retired.
-
-    The fallback is for rosters written before `labels` rode along. It expires on its own —
-    every ingest since carries them, so it stops firing as the pool drains. Not worth a
-    backfill to hurry: `data_json` is being retired, and writing to it to delete four lines
-    would be work against a table that is going away.
-    """
+    """What the source called this person."""
     if record.labels:
         return record.labels
     office = (record.model_extra or {}).get("office") or {}

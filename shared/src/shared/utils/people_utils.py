@@ -41,6 +41,9 @@ def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
                 ),
                 default=designation_sort_key("", taxonomy),
             ),
+            # Eight council members share a sort key. Without this the roster's order is
+            # whatever order the records arrived in, which the read cannot reproduce.
+            person.name,
         )
 
     return sorted(people, key=person_sort_key)
