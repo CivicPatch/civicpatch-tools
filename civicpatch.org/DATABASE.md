@@ -46,7 +46,6 @@ erDiagram
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       requested_by_user_id FK
         jsonb           arguments_json
-        jsonb_null      review_json         "idx: jsonb_array_length(review_json->'issues')"
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it"
@@ -278,7 +277,6 @@ erDiagram
 ```
 
 **Notes:**
-- `requests.review_json` — pipeline review output (`issues`, `warnings`, etc.)
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` has a unique constraint on `request_id` (one-to-one with `requests`). `pull_requests` was dropped in migration 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
 - `people` has no FK to `requests` — it is written by the publish transaction, not by a merge
