@@ -1,14 +1,14 @@
 import "./publish-log.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { PULL_REQUEST_STATUS } from "../pull-request-card/pull-request-status.js";
+import { REVIEW_ACTION } from "../pull-request-card/review-action.js";
 
 function PublishLog({ entries = [] }) {
   const [collapsed, setCollapsed] = useState(false);
 
   if (!entries.length) return null;
 
-  const inFlight = entries.filter((e) => e.status === PULL_REQUEST_STATUS.LOADING_MERGE).length;
+  const inFlight = entries.filter((e) => e.status === REVIEW_ACTION.APPROVING).length;
 
   return html`
     <div class="publish-log">
@@ -24,10 +24,10 @@ function PublishLog({ entries = [] }) {
           ${entries.map((e) => {
             let statusEl = html`<span class="publish-log__spinner"></span>`;
             let modifierClass = "";
-            if (e.status === PULL_REQUEST_STATUS.MERGED) {
+            if (e.status === REVIEW_ACTION.APPROVED) {
               statusEl = html`<span class="publish-log__status">✓</span>`;
               modifierClass = "publish-log__item--done";
-            } else if (e.status === PULL_REQUEST_STATUS.ERROR) {
+            } else if (e.status === REVIEW_ACTION.ERROR) {
               statusEl = html`<span class="publish-log__status">✕</span>`;
               modifierClass = "publish-log__item--error";
             }

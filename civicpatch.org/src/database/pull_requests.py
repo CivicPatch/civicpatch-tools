@@ -8,7 +8,6 @@ from shared.utils.statuses import (
 from database.database import get_pool, to_iso
 from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
 from database.review_queue import issue_count, issue_priority
-from lib.github.utils import pull_request_url_to_number
 
 
 
@@ -142,117 +141,6 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
         }
 
 
-async def update_pipeline_run_pull_request_url(request_id: str, pull_request_url: str | None = None):
-    pool = await get_pool()
-    pr_number = 0
-    if pull_request_url:
-        num = pull_request_url_to_number(pull_request_url)
-        pr_number = int(num) if num else 0
-
-    async with pool.connection() as conn:
-        result = await conn.execute(
-            """
-            INSERT INTO pull_requests (request_id, url, status, pr_number, created_at, updated_at)
-            VALUES (%s, %s, 'open', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            ON CONFLICT (request_id) DO UPDATE
-                SET url = EXCLUDED.url,
-                    status = CASE
-                        WHEN pull_requests.status IN ('merged', 'closed') THEN pull_requests.status
-                        ELSE 'open'
-                    END,
-                    updated_at = CURRENT_TIMESTAMP
-            """,
-            (request_id, pull_request_url, pr_number),
-        )
-        return result.rowcount > 0
-
-
-async def update_pull_request_status(
-    request_id: str,
-    pull_request_status: str,
-    pull_request_merged_at=None,
-    pull_request_url: Optional[str] = None,
-    resolved_by_user_id: Optional[str] = None,
-) -> bool:
-    pool = await get_pool()
-    pr_number = 0
-    if pull_request_url:
-        num = pull_request_url_to_number(pull_request_url)
-        pr_number = int(num) if num else 0
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT 1 FROM requests WHERE id = %s", (request_id,))
-        if not await cur.fetchone():
-            return False
-        await cur.execute(
-            """
-            INSERT INTO pull_requests (request_id, url, status, merged_at, pr_number, resolved_by_user_id, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            ON CONFLICT (request_id) DO UPDATE
-                SET status = EXCLUDED.status,
-                    merged_at = EXCLUDED.merged_at,
-                    url = COALESCE(EXCLUDED.url, pull_requests.url),
-                    resolved_by_user_id = EXCLUDED.resolved_by_user_id,
-                    updated_at = CURRENT_TIMESTAMP
-            """,
-            (request_id, pull_request_url, pull_request_status, pull_request_merged_at, pr_number, resolved_by_user_id),
-        )
-        return True
-
-
-async def get_pull_request_status(request_id: str) -> Optional[str]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT status FROM pull_requests WHERE request_id = %s", (request_id,))
-        row = await cur.fetchone()
-        return row[0] if row else None
-
-
-async def set_merge_enqueued(request_id: str) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE pull_requests
-            SET merge_enqueued_at = now(),
-                updated_at = CURRENT_TIMESTAMP
-            WHERE request_id::text = %s;
-            """,
-            (request_id,),
-        )
-
-
-async def clear_merge_enqueued(request_id: str) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE pull_requests
-            SET merge_enqueued_at = NULL,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE request_id::text = %s;
-            """,
-            (request_id,),
-        )
-
-
-async def get_open_pr_request_ids() -> dict[str, str]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT j.request_id, pr.url
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
-            JOIN pull_requests pr ON pr.request_id = r.id
-            WHERE pr.status = 'open' AND r.request_type != %s
-            """,
-            (RequestType.JURISDICTION_MANUAL_EDIT,),
-        )
-        rows = await cur.fetchall()
-    return {r[0]: r[1] for r in rows}
-
-
 # These two answer "is there already work in flight for this jurisdiction?" — they gate
 # starting a duplicate scrape, choosing the next scrape candidate, and the coverage figure.
 # They asked GitHub because an open pull request used to BE that state. Nothing opens one now,
@@ -290,19 +178,3 @@ async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
             (jurisdiction_ocdid,),
         )
         return (await cur.fetchone()) is not None
-
-
-async def bulk_close_stale_prs(request_ids: List[str]):
-    if not request_ids:
-        return
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE pull_requests pr
-            SET status = 'closed', updated_at = CURRENT_TIMESTAMP
-            FROM pipeline_runs j
-            WHERE pr.request_id = j.request_id AND j.request_id = ANY(%s)
-            """,
-            (request_ids,),
-        )

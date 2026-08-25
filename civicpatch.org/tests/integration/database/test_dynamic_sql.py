@@ -421,13 +421,6 @@ async def test_get_issue_request_details_empty():
     assert isinstance(result, list)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_open_pr_request_ids():
-    result = await db_pull_requests.get_open_pr_request_ids()
-    assert isinstance(result, dict)
-
-
 # ---------------------------------------------------------------------------
 # database.issues — pipeline issues
 # ---------------------------------------------------------------------------

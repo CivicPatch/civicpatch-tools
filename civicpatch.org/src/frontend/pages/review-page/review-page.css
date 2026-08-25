@@ -308,6 +308,14 @@ review-session-actions {
     gap: 0.5rem;
 }
 
+/* The rule the buttons cannot state: what a save keeps and what waits for approval. */
+.review-page__actions-rule {
+    max-width: 22ch;
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    color: var(--pico-muted-color);
+}
+
 .review-page__jurisdiction {
     font-size: 1.4rem;
     font-weight: 800;

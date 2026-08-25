@@ -9,7 +9,6 @@ import services.jurisdiction_scrape_candidate as candidate_service
 import database.jurisdictions as database
 import lib.cache as cache_service
 from lib.auth import require_route_access
-from lib.github.pull_requests import PrAuthor
 from schemas.common import Identity, UserRole, RouteCategory
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from schemas.jurisdictions import (

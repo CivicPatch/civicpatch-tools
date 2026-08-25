@@ -1,15 +1,13 @@
 import asyncio
 import datetime
-import json
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pull_requests as pull_requests_router
-from services.pull_request_merge import do_merge
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -105,21 +103,12 @@ def test_get_pull_request_review_returns_the_summary(client):
 
 
 @pytest.mark.unit
-def test_close_pull_request_returns_success(client):
+def test_rejecting_a_scrape_dismisses_it(client):
     with (
-        patch(
-            "lib.github.api.close_pull_request",
-            new_callable=AsyncMock,
-            return_value=True,
-        ),
         patch(
             "database.users.get_user_id_by_provider",
             new_callable=AsyncMock,
             return_value="user-id-123",
-        ),
-        patch(
-            "services.pull_request_sync.apply_pull_request_status",
-            new_callable=AsyncMock,
         ),
         patch(
             "services.change_logs.record_close",
@@ -263,8 +252,6 @@ def test_save_and_merge_rejects_invalid_field(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("lib.redis.set", new_callable=AsyncMock),
-        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock),
-        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -298,8 +285,6 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
-        patch("lib.temporal.client.enqueue_merge", new_callable=AsyncMock) as mock_enqueue,
-        patch("database.pull_requests.set_merge_enqueued", new_callable=AsyncMock) as mock_set_enqueued,
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
     ):
         response = client.post(
@@ -314,8 +299,6 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
     mock_change_logs.assert_awaited_once()
     mock_save.assert_awaited_once_with(TEST_REQUEST_ID)
 
-    mock_enqueue.assert_not_awaited()
-    mock_set_enqueued.assert_not_awaited()
     mock_resolve.assert_not_awaited()
 
 
@@ -368,6 +351,53 @@ def test_save_records_the_edited_field_canonicalized(client):
         ("reject", "(916) 808-5300"),
     ]
     assert {a.field_path for a in stated} == {"phones"}
+
+
+@pytest.mark.unit
+def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
+    """Both, and they mean different things. The record is why they are on the roster at all —
+    without one the next read derives the roster from sightings and they are gone. The claims
+    are what the reviewer said about them, diffed against nothing because the scrape never
+    saw them."""
+    added = {
+        "id": "p2",
+        "fields": {
+            "id": "p2",
+            "name": "Carolyn Robertson Harding",
+            "phones": ["9165551234"],
+            "emails": [],
+            "urls": [],
+            "office": {"name": "Mayor", "division_ocdid": None},
+            "jurisdiction_ocdid": TEST_OCDID,
+            "source_urls": ["https://x.gov/directory"],
+            "updated_at": "2026-08-25T00:00:00+00:00",
+        },
+    }
+    with (
+        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.insert_source_records", new_callable=AsyncMock) as mock_records,
+        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
+        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
+        )
+
+    assert response.status_code == 200
+    # One record, for the one page the reviewer cited — and only for the added person.
+    written = mock_records.await_args.args[2]
+    assert list(written) == ["p2"]
+    assert [r["source_url"] for r in written["p2"]] == ["https://x.gov/directory"]
+
+    claims = mock_claims.await_args.args[0]
+    theirs = {(c.field_path, c.kind, c.value) for c in claims if c.entity_id == "p2"}
+    assert ("name", "accept", "Carolyn Robertson Harding") in theirs
+    assert ("phones", "accept", "(916) 555-1234") in theirs
+    # `source_urls` is the evidence, not a claim about the world.
+    assert not any(field == "source_urls" for field, _, _ in theirs)
 
 
 @pytest.mark.unit
@@ -544,182 +574,6 @@ MERGE_KEY = f"merge_status:{TEST_PR_NUMBER}"
 
 def run(coro):
     return asyncio.get_event_loop().run_until_complete(coro)
-
-
-@pytest.mark.unit
-def test_do_merge_clean_pr_writes_merged():
-    redis_set = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
-        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
-        patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("services.pull_request_sync.publish_side_effects", new_callable=AsyncMock) as mock_side_effects,
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "merged"
-    # The merge is now only the artifact write: publishing and its audit entry both happened
-    # at the review endpoint, so a merge must trigger no data side effects of its own.
-    mock_side_effects.assert_not_awaited()
-
-
-@pytest.mark.unit
-def test_do_merge_dirty_pr_keeps_park_and_raises_issue():
-    redis_set = AsyncMock()
-    clear_enqueued = AsyncMock()
-    upsert_issue = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="dirty"),
-        patch("database.pull_requests.clear_merge_enqueued", clear_enqueued),
-        patch("database.issues.upsert_issue", upsert_issue),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert "conflicts" in last_call_value["error"]
-    # A failed merge stays parked (merge_enqueued_at NOT cleared) and surfaces as a
-    # merge_failed issue for an admin to dismiss.
-    clear_enqueued.assert_not_awaited()
-    upsert_issue.assert_awaited_once()
-    _, _, issues = upsert_issue.call_args.args
-    assert issues[0]["mergeable_state"] == "dirty"
-
-
-@pytest.mark.unit
-def test_do_merge_blocked_pr_writes_error():
-    redis_set = AsyncMock()
-    upsert_issue = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="blocked"),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", upsert_issue),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert "blocked" in last_call_value["error"]
-    _, _, issues = upsert_issue.call_args.args
-    assert issues[0]["mergeable_state"] == "blocked"
-
-
-@pytest.mark.unit
-def test_do_merge_null_mergeability_records_state():
-    # GitHub never finished computing mergeability within the poll window: the issue
-    # records mergeable_state=None so the details page shows a timeout, not a bare id.
-    redis_set = AsyncMock()
-    upsert_issue = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value=None),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", upsert_issue),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    _, _, issues = upsert_issue.call_args.args
-    assert issues[0]["mergeable_state"] is None
-
-
-@pytest.mark.unit
-def test_do_merge_behind_pr_updates_branch_and_merges():
-    redis_set = AsyncMock()
-    mergeability = AsyncMock(side_effect=["behind", "clean"])
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", mergeability),
-        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
-        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value=None),
-        patch("lib.github.api.get_pull_request", new_callable=AsyncMock, return_value={"labels": []}),
-        patch("database.pull_requests.update_pull_request_status", new_callable=AsyncMock),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("services.change_logs.record_publish", new_callable=AsyncMock),
-        patch("services.pull_request_sync.publish_side_effects", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "merged"
-
-
-@pytest.mark.unit
-def test_do_merge_behind_pr_dirty_after_update_writes_error():
-    redis_set = AsyncMock()
-    mergeability = AsyncMock(side_effect=["behind", "dirty"])
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", mergeability),
-        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value=None),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert "conflicts" in last_call_value["error"]
-
-
-@pytest.mark.unit
-def test_do_merge_github_error_writes_error():
-    redis_set = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", new_callable=AsyncMock, return_value="clean"),
-        patch("lib.github.api.merge_pull_request", new_callable=AsyncMock, return_value="GitHub API error"),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert last_call_value["error"] == "GitHub API error"
-
-
-@pytest.mark.unit
-def test_do_merge_behind_pr_update_branch_error_writes_error():
-    redis_set = AsyncMock()
-    mergeability = AsyncMock(return_value="behind")
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", mergeability),
-        patch("lib.github.api.update_pull_request_branch", new_callable=AsyncMock, return_value="branch update failed"),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert last_call_value["error"] == "branch update failed"
-
-
-@pytest.mark.unit
-def test_do_merge_unexpected_exception_writes_error():
-    redis_set = AsyncMock()
-    with (
-        patch("lib.redis.set", redis_set),
-        patch("lib.github.api.get_pull_request_mergeability", side_effect=RuntimeError("boom")),
-        patch("database.pull_requests.clear_merge_enqueued", new_callable=AsyncMock),
-        patch("database.issues.upsert_issue", new_callable=AsyncMock),
-    ):
-        run(do_merge(TEST_PR_NUMBER, TEST_REQUEST_ID, "test@civicpatch.org", "user-id-123", MERGE_KEY))
-
-    last_call_value = json.loads(redis_set.call_args[0][1])
-    assert last_call_value["status"] == "error"
-    assert "unexpected" in last_call_value["error"]
-
-
 # ── Auth gates on write routes ──────────────────────────────────────────────
 #
 # These routes require (TEAM_REQUIRED, UserRole.CONTRIBUTORS). The default-level
@@ -734,8 +588,6 @@ def test_do_merge_unexpected_exception_writes_error():
     "method,url",
     [
         ("delete", f"/pull_requests/{TEST_PR_NUMBER}?request_id={TEST_REQUEST_ID}"),
-        ("post", f"/pull_requests/{TEST_PR_NUMBER}/merge?request_id={TEST_REQUEST_ID}"),
-        ("post", f"/pull_requests/{TEST_PR_NUMBER}/update-branch"),
     ],
 )
 def test_pull_request_writes_reject_default_role(method, url):

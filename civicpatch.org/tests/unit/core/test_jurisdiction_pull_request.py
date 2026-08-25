@@ -2,7 +2,6 @@ import base64
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from shared.utils.statuses import PullRequestStatus
 import yaml
 
 from services.jurisdiction_pull_request import (
@@ -412,7 +411,12 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             return_value=None,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.pull_request_sync.apply_pull_request_status",
+            "services.jurisdiction_pull_request.requests_db.get_request_jurisdiction",
+            new_callable=AsyncMock,
+            return_value=JURISDICTION_OCDID,
+        ),
+        patch(
+            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
@@ -420,9 +424,9 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
 
     # open-data: that is where open_jurisdiction_patch_pr opened it.
     mock_merge.assert_awaited_once_with("42", approved_by="approver@example.com")
-    # This path bypasses do_merge/publish_side_effects, so without this the edit
+    # Called directly now: this path merged the PR, so it already knows. Without it the edit
     # would only appear after the hourly od_sync.
-    mock_sync.assert_awaited_once_with(REQUEST_ID, PullRequestStatus.MERGED)
+    mock_sync.assert_awaited_once_with([JURISDICTION_OCDID])
 
 
 @pytest.mark.unit
@@ -439,7 +443,12 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             new_callable=AsyncMock,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.pull_request_sync.apply_pull_request_status",
+            "services.jurisdiction_pull_request.requests_db.get_request_jurisdiction",
+            new_callable=AsyncMock,
+            return_value=JURISDICTION_OCDID,
+        ),
+        patch(
+            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):

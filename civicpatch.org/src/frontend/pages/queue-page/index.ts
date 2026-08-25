@@ -4,7 +4,7 @@ import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
-import { usePullRequestActions } from "../../hooks/use-pull-request-actions.js";
+import { useReviewActions } from "../../hooks/use-review-actions.js";
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
@@ -66,7 +66,7 @@ function QueuePage() {
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
   const [queueSummary, setQueueSummary] = useState<any>(null);
   const [pullRequests, setPullRequests] = useState<PrItem[]>([]);
-  const { actionState, entries: publishLogEntries, trackMerge, trackClose } = usePullRequestActions();
+  const { actionState, entries: publishLogEntries, trackApprove, trackReject } = useReviewActions();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(getIntParam("pr_page", 1));
@@ -116,13 +116,13 @@ function QueuePage() {
   const handleMerge = (event: CustomEvent<PrActionDetail>) => {
     const { request_id, jurisdiction_ocdid } = event.detail;
     const pr = pullRequests.find((p) => p.request_id === request_id);
-    trackMerge(request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? request_id);
+    trackApprove(request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? request_id);
   };
 
   const handleClose = (event: CustomEvent<PrActionDetail>) => {
     const { request_id } = event.detail;
     const pr = pullRequests.find((p) => p.request_id === request_id);
-    trackClose(request_id, pr?.jurisdiction?.name ?? request_id);
+    trackReject(request_id, pr?.jurisdiction?.name ?? request_id);
   };
 
   const handleViewChange = (newView: string) => {

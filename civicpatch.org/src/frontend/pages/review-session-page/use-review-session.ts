@@ -23,7 +23,7 @@ export function updateParams(updates: Record<string, string | null | undefined>)
 
 export function useReviewSession(
   stateCode: string,
-  deps: { trackMerge: Effects["trackMerge"]; trackClose: Effects["trackClose"]; navigate?: (url: string) => void },
+  deps: { trackApprove: Effects["trackApprove"]; trackReject: Effects["trackReject"]; navigate?: (url: string) => void },
 ) {
   const [state, dispatch] = useReducer(reduceReview, initialPageState(stateCode));
 
@@ -32,8 +32,8 @@ export function useReviewSession(
     dispatch,
     navigate: deps.navigate ?? ((url) => { window.location.href = url; }),
     setRequestIdParam: (requestId) => updateParams({ [REQUEST_ID_PARAM]: requestId }),
-    trackMerge: deps.trackMerge,
-    trackClose: deps.trackClose,
+    trackApprove: deps.trackApprove,
+    trackReject: deps.trackReject,
   };
 
   // Load the first card once on mount; stats load in parallel.
@@ -60,7 +60,7 @@ export function useReviewSession(
     navigateTo: (n: number) => { if (ready) goToEntry(sessionId, n, stateCode, effects); },
     merge: (people: any[] | null) => { if (ready && reviewing) mergeCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
     save: (people: any[]) => { if (ready && reviewing) saveCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
-    closePr: () => { if (ready && reviewing) closeCurrent(reviewing.current_entry, sessionId, entryNumber, stateCode, effects); },
+    rejectScrape: () => { if (ready && reviewing) closeCurrent(reviewing.current_entry, sessionId, entryNumber, stateCode, effects); },
     endSession: () => { if (reviewing) endSessionAndExit(reviewing.session?.id ?? null, stateCode, effects); },
   };
 }

@@ -3,8 +3,7 @@ import sys
 import os
 from pathlib import Path
 import pytest
-from fastapi.testclient import TestClient
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 # Add shared package to Python path for local testing
 shared_path = Path(__file__).parent.parent.parent / "shared" / "src"

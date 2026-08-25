@@ -11,8 +11,6 @@ from lib.temporal.workflows import (
     OdSyncWorkflow,
     OpenDataCommitWorkflow,
     PipelineRunCleanupWorkflow,
-    PRSyncWorkflow,
-    RepoMergeQueueWorkflow,
     ReviewSessionCleanupWorkflow,
     ScheduleId,
     WorkflowInstanceId,
@@ -21,11 +19,9 @@ from routers.temporal.activities import (
     cleanup_stale_review_entries_activity,
     commit_open_data_activity,
     expire_stale_pipeline_runs_activity,
-    merge_pr_activity,
     od_sync_activity,
     od_sync_targeted_activity,
     supersede_stacked_requests_activity,
-    sync_pr_state_activity,
 )
 from temporalio.client import (
     Client,
@@ -70,20 +66,6 @@ async def _ensure_schedule(
 
 
 async def _register_schedules(client: Client) -> None:
-    await _ensure_schedule(
-        client,
-        ScheduleId.PR_SYNC,
-        Schedule(
-            action=ScheduleActionStartWorkflow(
-                PRSyncWorkflow.run,
-                id=WorkflowInstanceId.PR_SYNC,
-                task_queue=TASK_QUEUE,
-            ),
-            spec=ScheduleSpec(cron_expressions=["0 * * * *"]),
-            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
-        ),
-    )
-
     created = await _ensure_schedule(
         client,
         ScheduleId.OD_SYNC,
@@ -138,22 +120,18 @@ async def main() -> None:
         client,
         task_queue=TASK_QUEUE,
         workflows=[
-            PRSyncWorkflow,
-            OdSyncWorkflow,
+                    OdSyncWorkflow,
             OdSyncTargetedWorkflow,
             OpenDataCommitWorkflow,
             PipelineRunCleanupWorkflow,
-            RepoMergeQueueWorkflow,
-            ReviewSessionCleanupWorkflow,
+                    ReviewSessionCleanupWorkflow,
         ],
         activities=[
-            sync_pr_state_activity,
-            od_sync_activity,
+                    od_sync_activity,
             od_sync_targeted_activity,
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
-            merge_pr_activity,
-            commit_open_data_activity,
+                    commit_open_data_activity,
             supersede_stacked_requests_activity,
         ],
     ):

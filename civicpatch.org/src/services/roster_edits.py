@@ -2,6 +2,10 @@
 
 An edit is an assertion: the scrape's own answer stays in `source_records`, and what a human
 said sits beside it. Nothing here overwrites what was scraped.
+
+Adding somebody is a sighting, not an assertion — a human is a source. That is what lets a
+manual addition survive: a roster is derived from sightings, so a person without one is gone
+by the next read.
 """
 
 import logging
@@ -9,7 +13,9 @@ from typing import List
 
 import services.change_logs as change_logs
 from core.people_edits import PersonPatch, patch_people, stated_from_edit
+from core.people_roster import reviewer_source_records
 from database import assertions
+from database.source_records import insert_source_records
 from schemas.common import Identity
 from services.publish import promote_images, promote_to_reviewed, publish_people
 from services.roster import proposed_roster, scraped_roster
@@ -42,16 +48,27 @@ async def save(
     patched = patch_people(scraped, data)
     scraped_by_id = {person["id"]: person for person in scraped}
 
-    # Only people the scrape saw. Somebody the reviewer added by hand is a change to who is on
-    # the roster, not a correction to anyone — it takes effect when they approve, and asserting
-    # their fields here would leave claims about a person who may never exist.
+    # Somebody the reviewer added by hand becomes a sighting the same way a scraped person is
+    # one — a human is a source. Written before the claims below, so the next read finds them
+    # and their fields have somebody to sit on.
+    added = {
+        person["id"]: [s.model_dump() for s in reviewer_source_records(person)]
+        for person in patched
+        if person["id"] not in scraped_by_id
+    }
+    await insert_source_records(
+        request_id,
+        jurisdiction_ocdid,
+        {person_id: rows for person_id, rows in added.items() if rows},
+    )
+
     claims = [
         claim
         for person in patched
-        if person["id"] in scraped_by_id
-        for claim in stated_from_edit(person["id"], scraped_by_id[person["id"]], person)
+        for claim in stated_from_edit(
+            person["id"], scraped_by_id.get(person["id"], {}), person
+        )
     ]
-
     await assertions.create_all(claims, user.user_id)
     await change_logs.record_manual_edits(
         request_id, jurisdiction_ocdid, user.user_id, scraped, patched

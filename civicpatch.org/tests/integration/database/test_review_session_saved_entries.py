@@ -89,15 +89,10 @@ async def open_pr():
             (request_id, ocdid),
         )
         await cur.execute("INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,))
-        await cur.execute(
-            "INSERT INTO pull_requests (request_id, pr_number, status) VALUES (%s, %s, 'open')",
-            (request_id, 991000),
-        )
 
     yield request_id, ocdid
 
     async with pool.connection() as conn:
-        await conn.execute("DELETE FROM pull_requests WHERE request_id::text = %s", (request_id,))
         await conn.execute("DELETE FROM pipeline_runs WHERE request_id::text = %s", (request_id,))
         await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))

@@ -39,13 +39,13 @@ interface OpenPerson {
   field: string | null;
 }
 
-type PublishStage = "idle" | "opening" | "merging";
+type PublishStage = "idle" | "committing" | "publishing";
 
-// Blockers outrank the stage copy: a card with errors never reaches "Opening PR…".
+// Blockers outrank the stage copy: a card with errors never reaches "Saving…".
 function publishLabel(blockerCount: number, stage: PublishStage): string {
   if (blockerCount) return `${blockerCount} to fix before publishing`;
-  if (stage === "opening") return "Opening PR…";
-  if (stage === "merging") return "Publishing…";
+  if (stage === "committing") return "Saving…";
+  if (stage === "publishing") return "Publishing…";
   return "Publish changes";
 }
 
@@ -118,11 +118,11 @@ function OfficialsEditor({
   };
 
   const handlePublish = async () => {
-    setPublishStage("opening");
+    setPublishStage("committing");
     setPublishError(null);
     try {
       const { data } = await patchPeopleData(jurisdictionOcdid, peoplePatch);
-      setPublishStage("merging");
+      setPublishStage("publishing");
       // Publishing writes `people` directly, so a reload shows the published values as soon
       // as this resolves — no merge to wait on.
       await publishReview(data.request_id, jurisdictionOcdid, null);

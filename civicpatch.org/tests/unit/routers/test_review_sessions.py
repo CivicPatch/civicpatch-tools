@@ -2,7 +2,6 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
-from psycopg.errors import UniqueViolation
 
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user

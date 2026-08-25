@@ -37,8 +37,8 @@ export type Effects = {
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
   setRequestIdParam: (requestId: string | null) => void;
-  trackMerge: (requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
-  trackClose: (requestId: string, jurisdictionName: string) => void;
+  trackApprove: (requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
+  trackReject: (requestId: string, jurisdictionName: string) => void;
 };
 
 // Assemble a CurrentEntry from a navigate/by-request response plus its review json.
@@ -147,7 +147,7 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string | nu
   // No pull request check: publishing is keyed on the request, and a scrape committed
   // straight to open-data has no pull request to guard on.
   if (!request_id) return;
-  const result = await e.trackMerge(request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? request_id);
+  const result = await e.trackApprove(request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? request_id);
   if (!result.ok) {
     // Publishing is synchronous now, so a rejection is the whole outcome: flag the entry
     // red and keep the reviewer here to fix it.
@@ -178,6 +178,6 @@ export async function saveCurrent(current: CurrentEntry, sessionId: string | nul
 export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
   const { request_id, jurisdiction } = current;
   if (!request_id) return;
-  e.trackClose(request_id, jurisdiction.name ?? request_id);
+  e.trackReject(request_id, jurisdiction.name ?? request_id);
   await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }

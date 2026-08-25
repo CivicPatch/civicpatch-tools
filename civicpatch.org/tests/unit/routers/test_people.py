@@ -117,8 +117,8 @@ def test_patch_people_data_records_change_log(client):
     record = AsyncMock()
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
-        patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock,
-              return_value=(42, "https://github.com/x/pull/42")),
+        patch("lib.github.api.upsert_github_file", new_callable=AsyncMock,
+              return_value="https://github.com/x/commit/abc123"),
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
               return_value=yaml_dump([BASE_PERSON])),
         patch("services.change_logs.record_manual_edits", record),
@@ -141,7 +141,7 @@ def test_patch_people_data_records_change_log(client):
 def test_patch_people_data_rejects_invalid_field(client):
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with (
-        patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr,
+        patch("lib.github.api.upsert_github_file", new_callable=AsyncMock) as mock_commit,
         patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
               return_value=yaml_dump([BASE_PERSON])),
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
@@ -159,17 +159,17 @@ def test_patch_people_data_rejects_invalid_field(client):
     assert detail[0]["id"] == "p-1"
     assert detail[0]["name"] == "Original Person"
     assert detail[0]["field"] == "phones"
-    mock_pr.assert_not_awaited()
+    mock_commit.assert_not_awaited()
 
 
 @pytest.mark.unit
 @pytest.mark.parametrize("identity", [_default, _contributor])
 def test_patch_people_data_requires_maintainer(client, identity):
-    # Editing published people (the jurisdiction page's Current tab) opens a
-    # manual-edit PR against `main`, so it is gated to maintainers. Reviewing an
-    # existing PR is a separate route (save-and-merge) and stays AUTHENTICATED.
+    # Editing published people (the jurisdiction page's Current tab) commits straight to
+    # `main`, so it is gated to maintainers. Reviewing a scrape is a separate route and
+    # stays AUTHENTICATED.
     client.app.dependency_overrides[get_optional_user] = identity
-    with patch("lib.github.pull_requests.open_attributed_pr", new_callable=AsyncMock) as mock_pr:
+    with patch("lib.github.api.upsert_github_file", new_callable=AsyncMock) as mock_commit:
         response = client.patch(
             "/people/data",
             json={"jurisdiction_ocdid": BASE_PERSON["jurisdiction_ocdid"],
@@ -177,4 +177,4 @@ def test_patch_people_data_requires_maintainer(client, identity):
         )
 
     assert response.status_code == 403
-    mock_pr.assert_not_awaited()
+    mock_commit.assert_not_awaited()

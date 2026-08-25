@@ -2,7 +2,7 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
-import { PULL_REQUEST_STATUS } from "./pull-request-status.js";
+import { REVIEW_ACTION } from "./review-action.js";
 import { fetchReview, fetchPullRequestData } from "../../api.js";
 import "../badge/badge.js";
 import "../review-panel/review-panel.js";
@@ -62,17 +62,17 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   };
 
   const isTerminal =
-    state?.status === PULL_REQUEST_STATUS.MERGED ||
-    state?.status === PULL_REQUEST_STATUS.CLOSED ||
-    state?.status === PULL_REQUEST_STATUS.ERROR;
+    state?.status === REVIEW_ACTION.APPROVED ||
+    state?.status === REVIEW_ACTION.REJECTED ||
+    state?.status === REVIEW_ACTION.ERROR;
 
-  const isLoading = state?.status === PULL_REQUEST_STATUS.LOADING_MERGE || state?.status === PULL_REQUEST_STATUS.LOADING_CLOSE;
+  const isLoading = state?.status === REVIEW_ACTION.APPROVING || state?.status === REVIEW_ACTION.REJECTING;
 
   const renderMergeButton = () => {
     let buttonName = "Publish";
-    if (state?.status === PULL_REQUEST_STATUS.LOADING_MERGE) buttonName = "Publishing...";
-    else if (state?.status === PULL_REQUEST_STATUS.MERGED) buttonName = "Published";
-    else if (state?.status === PULL_REQUEST_STATUS.ERROR) buttonName = "Error";
+    if (state?.status === REVIEW_ACTION.APPROVING) buttonName = "Publishing...";
+    else if (state?.status === REVIEW_ACTION.APPROVED) buttonName = "Published";
+    else if (state?.status === REVIEW_ACTION.ERROR) buttonName = "Error";
 
     return html`<button
       class="btn-sm"
@@ -83,9 +83,9 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
   const renderCloseButton = () => {
     let buttonName = "Close";
-    if (state?.status === PULL_REQUEST_STATUS.LOADING_CLOSE) buttonName = "Closing...";
-    else if (state?.status === PULL_REQUEST_STATUS.CLOSED) buttonName = "Closed";
-    else if (state?.status === PULL_REQUEST_STATUS.ERROR) buttonName = "Error";
+    if (state?.status === REVIEW_ACTION.REJECTING) buttonName = "Closing...";
+    else if (state?.status === REVIEW_ACTION.REJECTED) buttonName = "Closed";
+    else if (state?.status === REVIEW_ACTION.ERROR) buttonName = "Error";
 
     return html`<button
       class="destructive btn-sm"

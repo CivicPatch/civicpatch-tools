@@ -3,7 +3,7 @@ import zipfile
 import tempfile
 import asyncio
 import aiofiles
-from typing import Tuple, List
+from typing import List
 from fastapi import UploadFile
 import shutil
 import fnmatch

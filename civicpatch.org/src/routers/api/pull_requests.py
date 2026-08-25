@@ -9,14 +9,11 @@ import database.jurisdictions as jurisdictions_db
 import database.people
 import database.pipeline_runs
 import database.pull_requests as pull_requests_db
-import database.requests as requests_db
 import database.review_session_entries as review_session_entries_db
 import database.users
 import lib.buckets as buckets
-import lib.github.api as github_service
 import lib.redis as redis_store
 import lib.storage as storage_service
-import services.pull_request_sync as pr_sync_service
 import services.review_issue_report as review_issue_report_service
 import services.roster_edits as roster_edits
 import shared.utils.data_path_utils
@@ -50,7 +47,6 @@ from services.review_proposal import (
 )
 import services.roster as services_roster
 from services.roster import proposed_roster
-from shared.utils.statuses import PullRequestStatus
 
 logger = logging.getLogger(__name__)
 
@@ -437,59 +433,5 @@ def get_router(api_key_header):
         if not raw:
             return {"status": "pending"}
         return json.loads(raw)
-
-    # -- Pull Requests: Merge Pull Request ---
-    @router.post("/{pull_request_number}/merge", include_in_schema=False)
-    async def merge_pull_request_endpoint(
-        pull_request_number: str,
-        request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
-        ),
-    ):
-        merge_error = await github_service.merge_pull_request(
-            pull_request_number=pull_request_number,
-            approved_by=user.email,
-        )
-        if merge_error:
-            status_code = 409 if "out of date" in merge_error.lower() else 500
-            return JSONResponse(
-                content=ErrorResponse(error=merge_error).model_dump(),
-                status_code=status_code,
-            )
-        # No reviewer edits on this path, so the submitted roster is what goes live.
-        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
-        user_id = await database.users.get_user_id_by_provider(
-            user.provider, user.provider_user_id
-        )
-        if jurisdiction_ocdid:
-            try:
-                await roster_edits.publish(
-                    request_id, jurisdiction_ocdid, None, user_id
-                )
-            except roster_edits.MissingRoster as exc:
-                raise _http_error(exc)
-        await pr_sync_service.apply_pull_request_status(
-            request_id, PullRequestStatus.MERGED, resolved_by_user_id=user_id
-        )
-        return {"status": "success"}
-
-    # -- Pull Requests: Update Branch ---
-    @router.post("/{pull_request_number}/update-branch", include_in_schema=False)
-    async def update_pull_request_branch_endpoint(
-        pull_request_number: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
-        ),
-    ):
-        error = await github_service.update_pull_request_branch(
-            pull_request_number=pull_request_number,
-        )
-        if error:
-            return JSONResponse(
-                content=ErrorResponse(error=error).model_dump(),
-                status_code=500,
-            )
-        return {"status": "success"}
 
     return router

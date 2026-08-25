@@ -1,4 +1,3 @@
-import os
 import base64
 from google.oauth2 import service_account
 import googleapiclient.discovery

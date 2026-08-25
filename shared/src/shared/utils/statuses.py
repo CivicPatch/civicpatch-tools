@@ -73,26 +73,14 @@ class PipelineIssueType(StrEnum):
 class RequestReviewStatus(StrEnum):
     """Where a request sits in the review lifecycle, derived from `published_at`/`dismissed_at`.
 
-    Replaces PullRequestStatus for scrape review: publishing is a database write now, so there
-    is no `open`/`merged` distinction to make — a request is awaiting review, published, or
-    dismissed. Derived rather than stored: the two timestamps are the state, and a CHECK
-    already forbids both being set.
+    Publishing is a database write, so there is no `open`/`merged` distinction to make — a
+    request is awaiting review, published, or dismissed. Derived rather than stored: the two
+    timestamps are the state, and a CHECK already forbids both being set.
     """
 
     PENDING = "pending"
     PUBLISHED = "published"
     DISMISSED = "dismissed"
-
-
-class PullRequestStatus(StrEnum):
-    # No PR has been created for this pipeline run yet
-    DEFAULT = "DEFAULT"
-    # PR exists on GitHub and is awaiting review or merge
-    OPEN = "open"
-    # PR was closed without merging (via UI action, webhook, or hourly sync)
-    CLOSED = "closed"
-    # PR was merged into the target branch
-    MERGED = "merged"
 
 
 class RequestType(StrEnum):
