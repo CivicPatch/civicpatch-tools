@@ -72,8 +72,23 @@ async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEn
   e.setRequestIdParam(entry.request_id ?? null);
 }
 
-async function resumeSession(active: any, stateCode: string, e: Effects): Promise<void> {
-  const data = (await e.api.navigateToEntry(active.session_id, active.current_entry_number))?.data;
+// `session_request_ids` is ordered by entry number, so position n is entry n + 1.
+const entryNumberOf = (active: any, requestId: string | null): number | null => {
+  const at = (active?.session_request_ids ?? []).indexOf(requestId);
+  return at < 0 ? null : at + 1;
+};
+
+// Resumes at `requestId` when the session holds it, otherwise where it was parked. That is
+// what lets the url name a card and nothing else: whether a session is open, and where it
+// left off, are things the session already knows.
+async function resumeSession(
+  active: any,
+  stateCode: string,
+  e: Effects,
+  requestId: string | null = null,
+): Promise<void> {
+  const entryNumber = entryNumberOf(active, requestId) ?? active.current_entry_number;
+  const data = (await e.api.navigateToEntry(active.session_id, entryNumber))?.data;
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, { id: active.session_id, daily_goal: active.daily_goal }, active.resolved_entry_numbers ?? [], e);
 }
@@ -87,22 +102,22 @@ async function fetchPrOrNull(requestId: string, api: ReviewApi): Promise<any> {
   }
 }
 
-async function showStandalonePr(requestId: string, stateCode: string, e: Effects): Promise<void> {
+async function showStandaloneCard(requestId: string, stateCode: string, e: Effects): Promise<void> {
   const data = await fetchPrOrNull(requestId, e.api);
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, null, [], e);
 }
 
-// `pull_request` names one card and wins over everything: it is a link in from
-// outside, so a session is beside the point. Otherwise `request_id` is where the
-// session left off — one of its own PRs resumes it, any other shows standalone, and
-// with neither we resume the active session or fall back to the landing page.
-export async function boot(stateCode: string, requestId: string | null, pullRequestId: string | null, e: Effects): Promise<void> {
+// The url names a card and nothing else. A card the active session holds opens inside it, at
+// that card; one it does not opens standalone; naming none resumes where the session was
+// parked, or lands. Nothing about the session is in the url, because the session knows.
+export async function boot(stateCode: string, requestId: string | null, e: Effects): Promise<void> {
   try {
-    if (pullRequestId != null) return showStandalonePr(pullRequestId, stateCode, e);
     const active = (await e.api.fetchActiveReviewSession(stateCode))?.data;
-    if (active && (requestId == null || belongsToSession(active, requestId))) return resumeSession(active, stateCode, e);
-    if (requestId != null) return showStandalonePr(requestId, stateCode, e);
+    if (active && (requestId == null || belongsToSession(active, requestId))) {
+      return resumeSession(active, stateCode, e, requestId);
+    }
+    if (requestId != null) return showStandaloneCard(requestId, stateCode, e);
     e.navigate(landingUrl(stateCode));
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });

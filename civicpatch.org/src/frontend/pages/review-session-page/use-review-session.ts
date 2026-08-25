@@ -10,7 +10,7 @@ import {
 } from "../../api.js";
 import { reduceReview, initialPageState, ActionType, StateKind } from "./review-state.js";
 import { boot, goToEntry, endSessionAndExit, mergeCurrent, saveCurrent, closeCurrent, type Effects } from "./review-actions.js";
-import { REQUEST_ID_PARAM, PULL_REQUEST_PARAM } from "../review-routes.js";
+import { REQUEST_ID_PARAM } from "../review-routes.js";
 
 export function updateParams(updates: Record<string, string | null | undefined>) {
   const p = new URLSearchParams(window.location.search);
@@ -39,7 +39,7 @@ export function useReviewSession(
   // Load the first card once on mount; stats load in parallel.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    boot(stateCode, params.get(REQUEST_ID_PARAM), params.get(PULL_REQUEST_PARAM), effects);
+    boot(stateCode, params.get(REQUEST_ID_PARAM), effects);
     fetchReviewStats(stateCode)
       .then((res) => dispatch({ type: ActionType.STATS_LOADED, payload: { stats: res.data } }))
       .catch(() => {});

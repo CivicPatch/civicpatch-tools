@@ -1,20 +1,20 @@
+"""Reading a scrape awaiting review: the queue, and one card in it.
+
+Nothing here writes. What a reviewer *does* with a card is `review_actions.py` — they share a
+prefix because they are one surface to the frontend, and are separate files because a read
+that can only 404 and a write that publishes to open-data fail in very different ways.
+"""
+
 import asyncio
-import json
 import logging
-import os
-from typing import List, Optional
+from typing import List
 
 import database.issues
 import database.jurisdictions as jurisdictions_db
 import database.people
 import database.pipeline_runs
 import database.pull_requests as pull_requests_db
-import database.review_session_entries as review_session_entries_db
 import database.users
-import lib.buckets as buckets
-import lib.redis as redis_store
-import lib.storage as storage_service
-import services.review_issue_report as review_issue_report_service
 import services.roster_edits as roster_edits
 import shared.utils.data_path_utils
 import shared.utils.id_utils
@@ -32,13 +32,8 @@ from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.common import (
     Identity,
-    ReportReviewIssueRequest,
     ReviewMode,
     RouteCategory,
-    UserRole,
-)
-from services.publish import (
-    dismiss_people,
 )
 from services.review_proposal import (
     assertions_for_people,
@@ -46,36 +41,10 @@ from services.review_proposal import (
     review_summary_for_request,
 )
 import services.roster as services_roster
+from services.review_sources import build_sources
 from services.roster import proposed_roster
 
 logger = logging.getLogger(__name__)
-
-
-def _source_url_to_markdown_url(
-    request_id: str, jurisdiction_ocdid_folder: str, source_url: str
-) -> Optional[str]:
-    source_url_dir = shared.utils.url_utils.format_url_to_folder(source_url)
-    relative_path = os.path.join(
-        request_id,
-        "data_source",
-        jurisdiction_ocdid_folder,
-        "cache",
-        source_url_dir,
-        "preprocessed.md",
-    )
-    return storage_service.get_presigned_url_cached(buckets.DEBUG, relative_path)
-
-
-def build_sources(
-    request_id: str, jurisdiction_ocdid: str, source_urls: list[str]
-) -> list[dict]:
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    return [
-        {"url": url, "markdown": _source_url_to_markdown_url(request_id, folder, url)}
-        for url in source_urls
-    ]
-
-
 # ──────────────────────────────────────────────
 # Request models
 # ──────────────────────────────────────────────
@@ -127,12 +96,13 @@ def _http_error(exc: Exception) -> HTTPException:
 # ──────────────────────────────────────────────
 
 
+
 def get_router(api_key_header):
     router = APIRouter()
 
-    # -- Pull Requests: List Open Pull Requests ───────────
-    # Note: Used by jurisdiction detail page
-    # So that's why this isn't paged. Expect max of 1 pull request
+    # -- Cards awaiting review in one jurisdiction ---
+    # Unpaged: the jurisdiction detail page shows these above the roster, and a place has at
+    # most a handful of scrapes stacked up.
     @router.get(
         "",
         summary="List open pull requests",
@@ -146,7 +116,7 @@ def get_router(api_key_header):
         )
         return {"data": pull_requests}
 
-    # ── Pull Requests: List & Data ───────────
+    # -- One card: the proposed roster beside the published one ---
     @router.get(
         "/data",
         summary="The roster a scrape proposes, beside the one that is published",
@@ -177,7 +147,7 @@ def get_router(api_key_header):
             "existing": existing,
         }
 
-    # ── Pull Requests: Batch Data ────────────
+    # -- A page of cards, both rosters and the diff for each ---
     @router.get(
         "/with-data",
         summary="Batch get pull request details and data",
@@ -259,7 +229,7 @@ def get_router(api_key_header):
             },
         }
 
-    # -- Pull Requests: Get by PR number ---
+    # -- One card by deep link, the shape a review session navigates ---
     @router.get("/by-request/{request_id}")
     async def get_pull_request_by_request_id_endpoint(
         request_id: str,
@@ -319,7 +289,7 @@ def get_router(api_key_header):
             }
         }
 
-    # -- Pull Requests: Issues for a job ---
+    # -- The review summary: stored issues plus the ones computed from posts ---
     @router.get("/{request_id}/review")
     async def get_pull_request_review_endpoint(
         request_id: str,
@@ -327,7 +297,7 @@ def get_router(api_key_header):
     ):
         return {"data": await review_summary_for_request(request_id)}
 
-    # -- Pull Requests: Reviewer-filed issues for this request ---
+    # -- Issues a reviewer filed by hand on this scrape ---
     @router.get("/{request_id}/issues")
     async def get_reported_issues_endpoint(
         request_id: str,
@@ -335,103 +305,5 @@ def get_router(api_key_header):
     ):
         result = await database.issues.get_user_reported_issues_for_request(request_id)
         return {"data": result}
-
-    # -- Pull Requests: Report an issue on open-data ---
-    @router.post("/{request_id}/issues")
-    async def report_review_issue_endpoint(
-        request_id: str,
-        body: ReportReviewIssueRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        if not user.user_id:
-            raise HTTPException(status_code=401, detail="User ID not available")
-        reported_by = user.display_name or user.email or user.provider_user_id
-        try:
-            result = await review_issue_report_service.report_review_issue(
-                request_id, body.description, user.user_id, reported_by
-            )
-        except review_issue_report_service.ReviewNotFoundError:
-            raise HTTPException(status_code=404, detail="Pull request not found")
-        except review_issue_report_service.GithubIssueCreationError as e:
-            raise HTTPException(status_code=502, detail=str(e))
-        return {"data": result}
-
-    # -- Reviews: Dismiss ---
-    # Keyed on request_id, not a pull request number: a scrape published straight to open-data
-    # has no pull request, and those are the majority now.
-    @router.delete("/{request_id}", include_in_schema=False)
-    async def close_pull_request_endpoint(
-        request_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
-        ),
-    ):
-        user_id = await database.users.get_user_id_by_provider(
-            user.provider, user.provider_user_id
-        )
-        # Dismissal is a database write now. Nothing is closed on GitHub because nothing was
-        # opened there — `dismissed_at` is what takes the request out of the review pool.
-        await dismiss_people(request_id, user_id)
-        # Credit the review: closing is a completed review action, same as publishing.
-        await review_session_entries_db.resolve_entries_for_request(request_id)
-        return {"status": "success"}
-
-    # -- Reviews: Save without publishing ---
-    @router.post("/{request_id}/save", include_in_schema=False)
-    async def save_review_endpoint(
-        request_id: str,
-        request: SaveReviewRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        try:
-            await roster_edits.save(
-                request.request_id, request.jurisdiction_ocdid, request.data, user
-            )
-        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
-            raise _http_error(exc)
-        # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
-        # held by its session (see _allocate_next_review) and returns to the pool
-        # when that session is released.
-        await review_session_entries_db.save_entries_for_request(request.request_id)
-        return {"status": "saved"}
-
-    # -- Reviews: Publish ---
-    @router.post("/{request_id}/publish", include_in_schema=False)
-    async def save_and_merge_endpoint(
-        request_id: str,
-        request: SaveAndMergeRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        edited = None
-        try:
-            if request.data:
-                edited = await roster_edits.save(
-                    request.request_id, request.jurisdiction_ocdid, request.data, user
-                )
-
-            if not user.user_id:
-                raise HTTPException(status_code=401, detail="User ID not available")
-
-            # Publishing is a database write, so it is synchronous: a 200 means the roster is
-            # live and `published_at` is stamped. The open-data commit is queued behind it and
-            # retries on its own — git is the projection, not the record.
-            await roster_edits.publish(
-                request.request_id, request.jurisdiction_ocdid, edited, user.user_id
-            )
-        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
-            raise _http_error(exc)
-        await review_session_entries_db.resolve_entries_for_request(request.request_id)
-        return {"status": "published"}
-
-    # -- Pull Requests: Merge Status ---
-    @router.get("/{pull_request_number}/merge-status", include_in_schema=False)
-    async def merge_status_endpoint(
-        pull_request_number: str,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        raw = await redis_store.get(f"merge_status:{pull_request_number}")
-        if not raw:
-            return {"status": "pending"}
-        return json.loads(raw)
 
     return router

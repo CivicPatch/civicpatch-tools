@@ -16,7 +16,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 
-const ISSUES_ENDPOINT = "**/api/v1/pull_requests/*/issues";
+const ISSUES_ENDPOINT = "**/api/v1/reviews/*/issues";
 const FIRST_CARD_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 
 function filedIssue(number) {

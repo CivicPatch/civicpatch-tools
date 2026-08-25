@@ -39,10 +39,13 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                        rs.current_entry_number,
                        ARRAY_AGG(rse.entry_number ORDER BY rse.entry_number)
                            FILTER (WHERE rse.status = 'resolved') AS resolved_entry_numbers,
+                       -- Ordered, so position n is entry number n + 1: that is how a caller
+                       -- turns "open this request" into "go to this entry".
                        ARRAY(
                            SELECT rse2.request_ids[1]
                            FROM review_session_entries rse2
                            WHERE rse2.review_session_id = rs.id
+                           ORDER BY rse2.entry_number
                        ) AS session_request_ids
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id

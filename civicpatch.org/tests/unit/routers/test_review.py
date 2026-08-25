@@ -7,7 +7,8 @@ from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
-from routers.api import pull_requests as pull_requests_router
+from routers.api import review_actions as review_actions_router
+from routers.api import review_cards as review_cards_router
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -33,7 +34,8 @@ def _user_at(role: UserRole) -> Identity:
 def _client_as(identity: Identity) -> TestClient:
     app = FastAPI()
     app.dependency_overrides[get_optional_user] = lambda: identity
-    app.include_router(pull_requests_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_cards_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
     return TestClient(app)
 
 TEST_REQUEST_ID = "test-request-id-123"
@@ -45,7 +47,8 @@ TEST_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland/city"
 def client():
     app = FastAPI()
     app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
-    app.include_router(pull_requests_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_cards_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
     return TestClient(app)
 
 
@@ -92,7 +95,7 @@ def test_get_pull_requests_with_data_returns_paginated(client):
 def test_get_pull_request_review_returns_the_summary(client):
     """Thin: the composition of stored and computed issues is the service's, tested there."""
     with patch(
-        "routers.api.pull_requests.review_summary_for_request",
+        "routers.api.review_cards.review_summary_for_request",
         new_callable=AsyncMock,
         return_value={"issues": [{"code": "unverified_post"}]},
     ):
@@ -119,7 +122,7 @@ def test_rejecting_a_scrape_dismisses_it(client):
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
-            "routers.api.pull_requests.dismiss_people",
+            "routers.api.review_actions.dismiss_people",
             new_callable=AsyncMock,
         ) as mock_dismiss,
     ):
@@ -428,7 +431,8 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
     failure must not be reported as a save."""
     app = FastAPI()
     app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
-    app.include_router(pull_requests_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_cards_router.get_router(None), prefix="/pull_requests")
+    app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
     # The write raises rather than returning falsy now that it is a DB call, so the 500 has to
     # come from the app rather than from the test client re-raising.
     failing_client = TestClient(app, raise_server_exceptions=False)
@@ -499,7 +503,7 @@ def test_get_by_request_200_for_open_pr(client):
             return_value=[],
         ),
         patch(
-            "routers.api.pull_requests.proposed_roster",
+            "routers.api.review_cards.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{"name": "Jane Doe"}],
         ),
@@ -511,7 +515,7 @@ def test_get_by_request_200_for_open_pr(client):
         # Crosses to the DB for the roster and the memberships it diffs against. The
         # proposal itself is unit-tested in core/test_membership_proposal.py.
         patch(
-            "routers.api.pull_requests.proposals_for_requests",
+            "routers.api.review_cards.proposals_for_requests",
             new_callable=AsyncMock,
             return_value={},
         ),
@@ -542,7 +546,7 @@ def test_get_by_request_200_for_merged_pr(client):
             return_value=[],
         ),
         patch(
-            "routers.api.pull_requests.proposed_roster",
+            "routers.api.review_cards.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{"name": "Jane Doe"}],
         ),
@@ -553,7 +557,7 @@ def test_get_by_request_200_for_merged_pr(client):
         ),
         # Same DB boundary as the open-pr case above.
         patch(
-            "routers.api.pull_requests.proposals_for_requests",
+            "routers.api.review_cards.proposals_for_requests",
             new_callable=AsyncMock,
             return_value={},
         ),
@@ -644,7 +648,7 @@ def test_report_review_issue_404_when_review_not_found(client):
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
-        side_effect=pull_requests_router.review_issue_report_service.ReviewNotFoundError("no review"),
+        side_effect=review_actions_router.review_issue_report_service.ReviewNotFoundError("no review"),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/issues",
@@ -659,7 +663,7 @@ def test_report_review_issue_502_when_github_fails(client):
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
-        side_effect=pull_requests_router.review_issue_report_service.GithubIssueCreationError("GitHub is down"),
+        side_effect=review_actions_router.review_issue_report_service.GithubIssueCreationError("GitHub is down"),
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/issues",
