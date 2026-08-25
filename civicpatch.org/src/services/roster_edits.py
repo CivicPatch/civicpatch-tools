@@ -9,7 +9,7 @@ from typing import List
 
 import database.pipeline_runs
 import services.change_logs as change_logs
-from core.people_patch import PersonPatch, patch_people
+from core.people_edits import PersonPatch, patch_people
 from schemas.common import Identity
 from services.publish import promote_images, promote_to_reviewed, publish_people
 

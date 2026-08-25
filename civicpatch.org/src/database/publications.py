@@ -11,7 +11,7 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 """
 
 from core.post_derivation import DerivedPost
-from core.people_patch import values_to_accept, with_stated_values
+from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import PERSON_UPSERT, people_rows

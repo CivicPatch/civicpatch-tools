@@ -17,6 +17,18 @@ class NavigationFailureReason(StrEnum):
     UNKNOWN = "navigation_failure_unknown"
 
 
+# Failures that say "not right now" rather than "not ever". A refused connection, a dead DNS
+# record or a 403 will read the same on a second attempt, so those stay terminal.
+RETRYABLE_FAILURE_REASONS = frozenset(
+    {
+        NavigationFailureReason.NET_TIMEOUT,
+        NavigationFailureReason.NET_ABORTED,
+        NavigationFailureReason.HTTP_429,
+        NavigationFailureReason.HTTP_5XX,
+    }
+)
+
+
 class NavigationError(Exception):
     def __init__(self, url: str, reason: NavigationFailureReason, source: str):
         super().__init__(f"Failed to load page: {reason} ({url})")

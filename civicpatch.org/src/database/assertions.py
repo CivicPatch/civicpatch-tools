@@ -9,7 +9,7 @@ edit and the assertion protecting it must commit together.
 
 import json
 
-from core.people_patch import LIST_FIELDS
+from core.people_edits import LIST_FIELDS
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 

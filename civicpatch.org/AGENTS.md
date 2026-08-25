@@ -22,10 +22,21 @@ src/
     auth_session.py ← session cookie management
     redis.py, pubsub.py, storage.py, files.py, hash.py, cache.py, lock.py, csv.py, sheets.py
   core/             ← PURE domain logic, no I/O (unit-testable with zero mocks)
-    tree_diff.py             ← sync tree-diff (pure)
-    sync_paths.py            ← repo-path classification (pure)
-    people_patch.py          ← people field-patch logic (pure)
-    change_log_diff.py       ← change-log diffing (pure)
+                       Named `<subject>_<thing>`; a subject gets a suffix only when it has
+                       more than one module here, so `coverage.py` is bare and `people_*` is not.
+    people_derivation.py     ← a scrape's sightings grouped into people
+    people_roster.py         ← those people as the document a reviewer reads
+    people_roles.py          ← which office a person's labels imply
+    people_edits.py          ← what a reviewer may change: field patches and accept/reject
+    post_derivation.py       ← the roster turned into posts and memberships
+    post_grouping.py, post_issues.py
+    membership_proposal.py   ← what a scrape would change about who holds what
+    membership_label.py      ← what to call a post when nobody has said
+    image_urls.py            ← `local://` refs → source url + cdn url (ingest)
+    image_upload.py          ← which bucket key a photo moves to (publish)
+    jurisdiction_patch.py, jurisdiction_search.py, coverage.py
+    change_log_diff.py, role_taxonomy.py, temporal_workflow_state.py
+    open_data/               ← tree_diff.py, paths.py
   services/         ← orchestration: coordinates lib/ + database/ + core/ (does the I/O)
     open_data_sync.py        ← open-data sync
     pull_request_sync.py     ← PR state sync

@@ -1,6 +1,6 @@
 from typing import Any
 
-from core.people_patch import EDITABLE_FIELDS
+from core.people_edits import EDITABLE_FIELDS
 from schemas.change_logs import FieldChange, PersonChange, PersonChangePayload
 from shared.utils.statuses import ChangeLogType
 

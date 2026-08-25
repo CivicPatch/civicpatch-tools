@@ -1,14 +1,14 @@
 """Integration tests for `source_records` (database.source_records).
 
 Against the real test DB, because the things worth checking are the ones a mock cannot show:
-that both foreign keys hold, that the append-only grain really does allow a replay to add a
-second row for the same person and scrape, and that `parsed` round-trips as jsonb.
+that both foreign keys hold, that a record and its identity are written as a pair, and that a
+label is a column something can actually query.
 
 Run with:
   mise run tcp-integration
 
-Isolation: every test writes under one sentinel request, and clean_source_records removes
-that request and its rows (which cascade) before and after each test.
+Isolation: every test writes under one sentinel request, and the fixture removes that request
+and its rows (which cascade) before and after each test.
 """
 import pytest
 import pytest_asyncio
@@ -19,24 +19,8 @@ from database.source_records import (
     get_source_records_for_request,
     insert_source_records,
 )
-from shared.schemas import Role, RoleConfig, RoleStatus
-from shared.utils.taxonomy import build_taxonomy
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
-
-TAXONOMY = build_taxonomy(
-    RoleConfig(
-        roles=[
-            Role(id="mayor", label="Mayor", status=RoleStatus.ACTIVE, priority=10),
-            Role(
-                id="council-member",
-                label="Council Member",
-                status=RoleStatus.ACTIVE,
-                priority=500,
-            ),
-        ]
-    )
-)
 
 
 async def _cleanup():
@@ -85,32 +69,31 @@ def _records(name: str, *labels: str) -> dict:
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_stores_raw_beside_its_derivation(sentinel_request):
+async def test_stores_each_sighting_verbatim(sentinel_request):
     await insert_source_records(
         sentinel_request,
         _SENTINEL_OCDID,
         _records("Ann", "Council Member Place 3 (East Ward)"),
-        TAXONOMY,
     )
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 1
-    assert [r["label"] for r in rows[0]["raw"]] == ["Council Member Place 3 (East Ward)"]
-    assert rows[0]["parsed"]["role"] == "Council Member"
-    assert rows[0]["parsed"]["other_designations"] == ["Place 3"]
-    assert rows[0]["parsed"]["division_ocdid"].endswith("/ward:east")
-    # Publication is an event, not an inference from a NULL column.
-    assert rows[0]["published_at"] is None
+    # The label is stored as the page gave it — undecomposed. Nothing derived is written, so
+    # a later parser fix changes what this row means without rewriting it.
+    assert rows[0]["label"] == "Council Member Place 3 (East Ward)"
+    assert rows[0]["name"] == "Ann"
+    assert rows[0]["source_url"] == "https://zz.gov/0"
+    assert rows[0]["person_id"] == "person-ann"
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_replay_adds_a_row_rather_than_being_rejected(sentinel_request):
-    """The reason there is no unique(request_id, person_id): a parser fix must be able to
-    write a fresh derivation for the same person and scrape, leaving the original intact."""
+async def test_a_replay_adds_rows_rather_than_being_rejected(sentinel_request):
+    """There is no unique key: a re-submitted scrape writes fresh evidence, leaving the
+    original intact."""
     records = _records("Ann", "Council Member Place 3")
-    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records, TAXONOMY)
-    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records, TAXONOMY)
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 2
@@ -119,22 +102,23 @@ async def test_a_replay_adds_a_row_rather_than_being_rejected(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_unresolved_labels_are_queryable_out_of_parsed(sentinel_request):
-    """`source_records` is the candidate feed — triage reads unmatched terms from `parsed`
-    rather than a separate collection path."""
+async def test_labels_are_queryable_as_a_column(sentinel_request):
+    """The reason the table has this shape. Finding every sighting under one label used to mean
+    unnesting a jsonb array; it is now a WHERE clause against an indexed column."""
     await insert_source_records(
         sentinel_request,
         _SENTINEL_OCDID,
         {**_records("Bob", "City Attorney"), **_records("Cass", "Mayor")},
-        TAXONOMY,
     )
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT person_id FROM source_records
-            WHERE request_id = %s AND parsed -> 'unmatched' @> '["City Attorney"]'::jsonb
+            SELECT i.person_id
+            FROM source_records s
+            JOIN source_record_identities i ON i.source_record_id = s.id
+            WHERE s.request_id = %s AND s.label = 'City Attorney'
             """,
             (sentinel_request,),
         )
@@ -150,74 +134,79 @@ async def test_evidence_for_an_unknown_request_is_rejected():
             "00000000-0000-0000-0000-000000000000",
             _SENTINEL_OCDID,
             _records("Ann", "Mayor"),
-            TAXONOMY,
         )
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_no_records_writes_nothing(sentinel_request):
-    assert await insert_source_records(sentinel_request, _SENTINEL_OCDID, {}, TAXONOMY) == 0
+    assert await insert_source_records(sentinel_request, _SENTINEL_OCDID, {}) == 0
     assert await get_source_records_for_request(sentinel_request) == []
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_every_sighting_of_one_person_lands_in_a_single_row(sentinel_request):
-    """The grain the table exists at. `parsed` *is* the reconciliation — one winning role
-    across every label — so a row per sighting would parse each alone and throw that away."""
+async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
+    """The grain the table exists at. One person seen under two titles is two rows, each still
+    holding the page it came from — which is what a merged row loses."""
     await insert_source_records(
         sentinel_request,
         _SENTINEL_OCDID,
         _records("Dee", "Council Member", "Mayor"),
-        TAXONOMY,
     )
 
     rows = await get_source_records_for_request(sentinel_request)
 
-    assert len(rows) == 1
-    assert [r["label"] for r in rows[0]["raw"]] == ["Council Member", "Mayor"]
-    # Both pages kept: which sighting came from where is the thing a flat roster loses.
-    assert [r["source_url"] for r in rows[0]["raw"]] == [
-        "https://zz.gov/0",
-        "https://zz.gov/1",
-    ]
-    # Priority decided across the group, not per label.
-    assert rows[0]["parsed"]["role"] == "Mayor"
-    assert sorted(rows[0]["parsed"]["roles"]) == ["Council Member", "Mayor"]
-    assert [p["label"] for p in rows[0]["parsed"]["parts"]] == ["Council Member", "Mayor"]
+    assert len(rows) == 2
+    assert [r["label"] for r in rows] == ["Council Member", "Mayor"]
+    assert [r["source_url"] for r in rows] == ["https://zz.gov/0", "https://zz.gov/1"]
+    # Two rows, one human: the link lives in source_record_identities.
+    assert {r["person_id"] for r in rows} == {"person-dee"}
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_resolved_photo_urls_ride_on_parsed_not_raw(sentinel_request):
-    """`raw` keeps the pipeline's `local://` placeholder, which resolves only against a zip
-    that is gone by the time anyone reads this. The resolution is a derivation, so it belongs
-    with the others — and it is what lets a roster be rebuilt without `data_json`."""
+async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
+    """Both urls are columns: where the photo came from, and where we serve it. The pipeline's
+    `local://` ref is resolved before the write, because it means nothing once the zip is gone."""
     records = {
         "person-eve": [
             {
                 "name": "Eve",
                 "label": "Mayor",
                 "source_url": "https://zz.gov/0",
-                "image": "local://abc123.png",
+                "image": "https://zz.gov/eve.png",
+                "cdn_image": "https://cdn.example/eve.png",
             }
         ]
     }
 
-    await insert_source_records(
-        sentinel_request,
-        _SENTINEL_OCDID,
-        records,
-        TAXONOMY,
-        {"person-eve": {"image": "https://zz.gov/eve.png",
-                        "cdn_image": "https://cdn.example/eve.png"}},
-    )
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
 
     rows = await get_source_records_for_request(sentinel_request)
 
-    assert rows[0]["raw"][0]["image"] == "local://abc123.png"
-    assert rows[0]["parsed"]["image"] == "https://zz.gov/eve.png"
-    assert rows[0]["parsed"]["cdn_image"] == "https://cdn.example/eve.png"
-    # The parse is untouched by the images riding alongside it.
-    assert rows[0]["parsed"]["role"] == "Mayor"
+    assert rows[0]["image"] == "https://zz.gov/eve.png"
+    assert rows[0]["cdn_image"] == "https://cdn.example/eve.png"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_record_is_never_written_without_its_identity(sentinel_request):
+    """The two inserts share a transaction. A record nothing can link to a person is evidence
+    no reader would ever find."""
+    await insert_source_records(
+        sentinel_request, _SENTINEL_OCDID, _records("Fay", "Mayor")
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT count(*)
+            FROM source_records s
+            LEFT JOIN source_record_identities i ON i.source_record_id = s.id
+            WHERE s.request_id = %s AND i.source_record_id IS NULL
+            """,
+            (sentinel_request,),
+        )
+        assert (await cur.fetchone())[0] == 0

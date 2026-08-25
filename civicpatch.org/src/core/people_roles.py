@@ -1,22 +1,25 @@
-"""The `parsed` half of a source_record: what one submitted Record decomposes into.
+"""Which office a person's labels imply: the role that won, the division, what matched nothing.
 
-Pure — taxonomy in, structure out, no I/O — so a parser fix can be replayed over history and
-diffed against what was stored without touching the database.
+`shared.utils.label_parser` reads one label; this decides across every label one person was
+seen under, which is the decision a single label cannot make.
 
-`parsed` holds the structured *decision*, not its rendering. `office.name` is already the
-rendering and already lives on the `people` columns; storing it again here would duplicate current
-state instead of recording the thing kept nowhere else: which role won, which division was
-resolved, and which labels resolved to nothing.
+Pure — labels and a taxonomy in, structure out — and never stored. A parser fix therefore
+changes what history means without any row needing to be rewritten, which is why
+`source_records` keeps labels verbatim and nothing derived.
+
+The decision, not its rendering: `post_derivation` turns this into posts, and
+`membership_label` turns it into words.
 """
 
 from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
 from shared.utils.taxonomy import Taxonomy
 
 
-def parse_record(
+def derive_roles(
     labels: list[str], jurisdiction_ocdid: str, taxonomy: Taxonomy
 ) -> dict:
-    """The derivation for one record, as stored in `source_records.parsed`."""
+    """The derivation across every label one person was seen under. Never stored — pure, so
+    the answer is recomputed rather than kept."""
     parsed = [parse_label(label, taxonomy) for label in labels]
     return {
         "labels": labels,

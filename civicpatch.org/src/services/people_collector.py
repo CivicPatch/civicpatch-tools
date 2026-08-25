@@ -4,14 +4,7 @@ import environment
 import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
-from core.ingest_people import (
-    cdn_urls,
-    identified,
-    images_by_person,
-    officials_from_rows,
-    records_by_person,
-    resolve_images,
-)
+from core.image_urls import cdn_urls, records_with_images, resolve_images
 from core.membership_proposal import (
     ExistingMembership,
     ProposedChange,
@@ -21,6 +14,7 @@ from core.membership_proposal import (
     still_listed,
 )
 from core.post_derivation import DerivedPost, derived_posts
+from core.people_roster import identified, records_by_person, roster_from_rows
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import requests as requests_db
@@ -103,7 +97,7 @@ async def _reconcile_roster(
     Fatal on failure, unlike the writes below: everything downstream consumes it.
     """
     identities = await _identities(jurisdiction_ocdid, workflow_context)
-    roster, records_by_name = officials_from_rows(
+    roster, records_by_name = roster_from_rows(
         rows, identities, taxonomy, jurisdiction_ocdid, logger
     )
     identified_roster = await _assign_ids(jurisdiction_ocdid, roster)
@@ -164,7 +158,7 @@ async def _build_review_summary(
 
 def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict, dict]:
     """The impure edge of image resolution: an env read and a file read. The mapping itself is
-    `core.ingest_people.cdn_urls`."""
+    `core.image_urls.cdn_urls`."""
     env = environment.get_env_vars()
     return artifacts.read_image_map(image_file_dir), cdn_urls(
         filenames_to_urls, env["STORAGE_ENDPOINT"], PUBLIC_BUCKET, INSTANCE_DOMAIN
@@ -175,17 +169,11 @@ async def _store_source_records(
     request_id: str,
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
-    roster: list[dict],
-    taxonomy: Taxonomy,
 ) -> None:
-    """Each sighting raw, beside its derivation. Never fatal."""
+    """Every sighting as the page gave it. Never fatal."""
     try:
         stored = await insert_source_records(
-            request_id,
-            jurisdiction_ocdid,
-            records_by_person,
-            taxonomy,
-            images_by_person(roster),
+            request_id, jurisdiction_ocdid, records_by_person
         )
         logger.info(f"[{request_id}] Stored {stored} source record(s)")
     except Exception as e:
@@ -323,9 +311,7 @@ async def _ingest_roster(
     await _store_source_records(
         request.request_id,
         request.jurisdiction_ocdid,
-        records_by_person,
-        updated_data,
-        taxonomy,
+        records_with_images(records_by_person, source_urls, served),
     )
     derived = await _find_or_create_posts(
         request.request_id, request.jurisdiction_ocdid, updated_data, roles, taxonomy

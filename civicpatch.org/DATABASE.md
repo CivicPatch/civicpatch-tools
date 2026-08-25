@@ -164,12 +164,24 @@ erDiagram
     source_records {
         uuid            id                  PK
         uuid            request_id          FK  "idx; ON DELETE CASCADE — which scrape"
-        text            person_id           "idx: (person_id, created_at DESC); the Record id, also the membership FK. One row per person per request — sightings are elements of raw, not rows"
         text            jurisdiction_ocdid  FK  "idx"
-        jsonb           raw                 "EVERY sighting behind this person, labels verbatim, each with the page it came from — truth for re-derivation. Only ever written by a scrape: rows rebuilt from data_json were deleted 2026-08-24 because their label/url pairing was invented"
-        jsonb           parsed              "gin idx (jsonb_path_ops); the RECONCILIATION across every label in raw — one winning role, one division. Historical, never current. `parts` holds each label's own decision"
-        timestamptz_null published_at       "NULL until the triple is materialised"
-        timestamptz     created_at          "default: now(); orders derivations — no unique key, replays add rows"
+        text            name                "verbatim, as the page spelled it"
+        text            label               "idx; verbatim. ONE RECORD PER LABEL is the contract with the pipeline — a person seen under two titles is two rows"
+        text            source_url          "the page this sighting came from"
+        text_null       url                 "the person's own link"
+        text_null       phone
+        text_null       email
+        text_null       image               "where the photo came from; named as on people"
+        text_null       cdn_image           "where we put it (R2). Stored, not composed from a template — where a file lives is a fact"
+        text_null       start_date          "text, not date: sources give partial dates (2024, 2024-01)"
+        text_null       end_date
+        timestamptz     created_at          "default: now()"
+    }
+
+    source_record_identities {
+        uuid            source_record_id    PK, FK "ON DELETE CASCADE"
+        text            person_id           "idx; the cluster id. SEPARATE FROM THE EVIDENCE deliberately — linkage is not a fact about a page and is not stable across runs (#2480), so re-linking rewrites this table and never touches a record"
+        timestamptz     resolved_at         "default: now()"
     }
 
     roles {
@@ -263,6 +275,7 @@ erDiagram
     users ||--o{ assertions : "asserted_by"
     requests ||--o{ source_records : "request_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
+    source_records ||--o| source_record_identities : "source_record_id"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     requests ||--o| pipeline_runs : "request_id"

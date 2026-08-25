@@ -1,89 +1,98 @@
-"""Database queries for `source_records` — append-only evidence, one row per person.
+"""Database queries for `source_records` — one row per sighting, and who each sighting is.
 
-`raw` holds every sighting behind that person; `parsed` holds the reconciliation across them.
+A row is what one page said about one person, once, verbatim. Write-once: there is deliberately
+no update and no delete here.
 
-Insert only. Both halves are write-once: a replayed parser fix writes posts/memberships and
-may add a new row, but must never rewrite an existing `parsed`, which would destroy the audit
-fact the row exists to hold. There is deliberately no update and no delete here.
+Nothing derived is stored. `derive_roles` is pure, so storing its answer only means storing one
+that goes stale — it runs at read time instead.
 
-The derivation lives in `core.source_record_parse`; this module owns the SQL.
+Linkage lives in `source_record_identities` rather than on the record, so re-resolving who is
+whom never rewrites evidence.
 """
 
-import json
+import uuid
 
-from core.source_record_parse import parse_record
 from database.database import get_pool
-from shared.utils.taxonomy import Taxonomy
+
+_INSERT_RECORD = """
+    INSERT INTO source_records
+        (id, request_id, jurisdiction_ocdid, name, label, source_url,
+         url, phone, email, image, cdn_image, start_date, end_date)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
+
+_INSERT_IDENTITY = """
+    INSERT INTO source_record_identities (source_record_id, person_id)
+    VALUES (%s, %s)
+"""
+
+
+def _record_row(
+    record_id: str, request_id: str, jurisdiction_ocdid: str, record: dict
+) -> tuple:
+    return (
+        record_id,
+        request_id,
+        jurisdiction_ocdid,
+        record["name"],
+        record["label"],
+        record["source_url"],
+        record.get("url"),
+        record.get("phone"),
+        record.get("email"),
+        record.get("image"),
+        record.get("cdn_image"),
+        record.get("start_date"),
+        record.get("end_date"),
+    )
 
 
 async def insert_source_records(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    records_by_person: dict[str, list[dict]],
-    taxonomy: Taxonomy,
-    images_by_person: dict[str, dict] | None = None,
+    request_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
 ) -> int:
-    """One row per person: every sighting behind them in `raw`, the reconciliation in `parsed`.
+    """Every sighting the scrape saw, and which person each one was resolved to.
 
-    Person-grain, not sighting-grain, because `parsed` *is* the reconciliation — `parse_record`
-    takes every label and picks one winning role and one division across them. Storing a row
-    per sighting would parse each label alone and throw away the decision cp.org exists to make.
-
-    `parsed` is written at submit, not publish: review is the gate, so a reviewer has to be
-    able to see the derivation it is approving.
+    Ids are minted here so both inserts can name the same row without a round trip between
+    them. The pair is written in one transaction: a record with no identity would be evidence
+    nothing can find.
     """
-    rows = [
-        (
-            request_id,
-            person_id,
-            jurisdiction_ocdid,
-            json.dumps(records),
-            json.dumps(
-                {
-                    **parse_record(
-                        list(
-                            dict.fromkeys(
-                                record["label"]
-                                for record in records
-                                if record.get("label")
-                            )
-                        ),
-                        jurisdiction_ocdid,
-                        taxonomy,
-                    ),
-                    **(images_by_person or {}).get(person_id, {}),
-                }
-            ),
-        )
+    sightings = [
+        (str(uuid.uuid4()), person_id, record)
         for person_id, records in records_by_person.items()
+        for record in records
     ]
-    if not rows:
+    if not sightings:
         return 0
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
-            """
-            INSERT INTO source_records
-                (request_id, person_id, jurisdiction_ocdid, raw, parsed)
-            VALUES (%s, %s, %s, %s, %s)
-            """,
-            rows,
+            _INSERT_RECORD,
+            [
+                _record_row(record_id, request_id, jurisdiction_ocdid, record)
+                for record_id, _, record in sightings
+            ],
         )
-    return len(rows)
+        await cur.executemany(
+            _INSERT_IDENTITY,
+            [(record_id, person_id) for record_id, person_id, _ in sightings],
+        )
+    return len(sightings)
 
 
 async def get_source_records_for_request(request_id: str) -> list[dict]:
-    """What one scrape derived, oldest first."""
+    """Every sighting one scrape saw, each with the person it was resolved to."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, request_id::text, person_id, jurisdiction_ocdid,
-                   raw, parsed, published_at, created_at
-            FROM source_records
-            WHERE request_id = %s
-            ORDER BY created_at
+            SELECT s.id::text, s.request_id::text, i.person_id, s.jurisdiction_ocdid,
+                   s.name, s.label, s.source_url, s.url, s.phone, s.email,
+                   s.image, s.cdn_image, s.start_date, s.end_date, s.created_at
+            FROM source_records s
+            JOIN source_record_identities i ON i.source_record_id = s.id
+            WHERE s.request_id = %s
+            ORDER BY s.created_at, s.label
             """,
             (request_id,),
         )

@@ -1,4 +1,4 @@
-"""Grouping a scrape's sightings into people. Run by cp.org at ingest.
+"""The people a scrape's sightings imply. `post_derivation` is the same step for posts.
 
 Pure over records, identities and a taxonomy, bar the log it writes to.
 
@@ -144,6 +144,23 @@ def get_source_urls(person_records: list[PersonRecord], person: Person) -> list:
     return list(source_urls)
 
 
+def surviving_name(
+    group_name: str, records: List[PersonRecord], identities: Dict[str, List[str]]
+) -> str:
+    """Which of a person's spellings becomes their name.
+
+    A name we already know them by wins outright: that is a human's answer, and a scrape must
+    not rename someone because one page spelled them differently. Otherwise the most frequent
+    spelling, merged like any other field.
+
+    The name is the only merged field that has to pick a winner — every other one is a union,
+    where nothing loses.
+    """
+    if group_name in identities:
+        return group_name
+    return merge_field([record.name for record in records]) or group_name
+
+
 def merge_records_to_person(
     log: Log,
     canonical_name: str,
@@ -190,7 +207,7 @@ def merge_records_to_person(
     return person
 
 
-def reconcile(
+def derived_people(
     records: List[PersonRecord],
     identities: Dict[str, List[str]],
     taxonomy: Taxonomy,
@@ -213,6 +230,14 @@ def reconcile(
     groups = merge_weak_tie_groups(groups, taxonomy)
 
     return [
-        (merge_records_to_person(log, canonical_name, group, jurisdiction_ocdid), group)
-        for canonical_name, group in groups.items()
+        (
+            merge_records_to_person(
+                log,
+                surviving_name(group_name, group, identities),
+                group,
+                jurisdiction_ocdid,
+            ),
+            group,
+        )
+        for group_name, group in groups.items()
     ]

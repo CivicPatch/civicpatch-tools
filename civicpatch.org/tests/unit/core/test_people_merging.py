@@ -1,20 +1,26 @@
 """Collapsing one person's records into one `Person`.
 
-Which records land in a group is `test_reconcile.py`; this is what happens once they have.
+Which records land in a group is `test_people_derivation.py`; this is what happens once
+they have.
 """
 
 from unittest.mock import MagicMock
 
-from shared.schemas import Person, PersonRecord, Role, RoleConfig
-from shared.utils.reconcile import (
+import pytest
+
+from core.people_derivation import (
     get_source_urls,
     merge_field,
     merge_labels,
     merge_records_to_person,
     merge_weak_tie_groups,
     normalize_record,
+    surviving_name,
 )
+from shared.schemas import Person, PersonRecord, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
+
+pytestmark = pytest.mark.unit
 
 ROLE_CONFIG = RoleConfig(
     roles=[
@@ -52,6 +58,34 @@ def test_merge_field():
     """Test merging single value fields"""
     result = merge_field(["555-1234", "555-1234"])
     assert result == "555-1234"
+
+
+def test_surviving_name_prefers_the_name_we_already_know():
+    """Measured on dev 2026-08-25: every sighting of one Seattle councilmember spelled her
+    "Katie B. Wilson", but she is published as "Katie Wilson". Frequency alone renames her on
+    every scrape — the identity is what stops that."""
+    records = [make_llm_person("Katie B. Wilson") for _ in range(3)]
+
+    assert (
+        surviving_name("Katie Wilson", records, {"Katie Wilson": ["Katie B. Wilson"]})
+        == "Katie Wilson"
+    )
+
+
+def test_surviving_name_takes_the_most_frequent_spelling_of_a_stranger():
+    """Nobody has published them yet, so there is no human answer to defer to."""
+    records = [
+        make_llm_person("Bob Kettle"),
+        make_llm_person("Robert Kettle"),
+        make_llm_person("Bob Kettle"),
+    ]
+
+    assert surviving_name("Robert Kettle", records, {}) == "Bob Kettle"
+
+
+def test_surviving_name_keeps_the_group_name_when_nothing_is_spelled():
+    """A group whose records carry no usable name still has to be called something."""
+    assert surviving_name("Ann Lee", [make_llm_person("")], {}) == "Ann Lee"
 
 
 def test_merge_labels():

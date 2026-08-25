@@ -1,7 +1,7 @@
 """What one scrape's roster implies about a jurisdiction's posts.
 
 Pure — people and taxonomy in, derived posts out, no I/O — so it can be replayed over
-history and diffed against what was stored, the same property `source_record_parse` was
+history and diffed against what was stored, the same property `people_roles` was
 written for.
 
 A post is `(role, division)` and nothing else. Whatever a label carries beyond those two is
@@ -14,7 +14,7 @@ from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import proposed_membership_label
-from core.source_record_parse import parse_record
+from core.people_roles import derive_roles
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
@@ -95,7 +95,7 @@ def _demoted_role_ids(
     Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
     nowhere to go and stays in `unmatched_text`, which is where triage can act on it.
 
-    Order follows `parsed["roles"]`, which `parse_record` builds in the order the text gives
+    Order follows `parsed["roles"]`, which `derive_roles` builds in the order the text gives
     them, so a reader sees them as the source wrote them.
     """
     return [
@@ -159,7 +159,7 @@ def derived_posts(
     grouped: dict[tuple[str, str], list[DerivedMember]] = {}
 
     for record in records:
-        parsed = parse_record(
+        parsed = derive_roles(
             _labels(record),
             record.jurisdiction_ocdid,
             taxonomy,

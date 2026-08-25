@@ -31,9 +31,8 @@ import database.users
 import lib.github.api as github_service
 import services.change_logs as change_logs
 import services.review_issue_report as review_issue_report_service
-from core.people_patch import PersonPatch, PeopleValidationError
+from core.people_edits import PersonPatch, PeopleValidationError
 import services.roster_edits as roster_edits
-from core.review_mode import review_mode_for
 import services.pull_request_sync as pr_sync_service
 from services.review_proposal import (
     assertions_for_people,
@@ -50,7 +49,7 @@ import lib.redis as redis_store
 import lib.buckets as buckets
 import lib.storage as storage_service
 from database.people import DEFAULT_VIEW, VIEWS
-from schemas.common import Identity, ReportReviewIssueRequest, UserRole, RouteCategory
+from schemas.common import Identity, ReportReviewIssueRequest, ReviewMode, UserRole, RouteCategory
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -290,7 +289,7 @@ def get_router(api_key_header):
                     "website_url": result["jurisdiction_website_url"],
                 },
                 "pr": result["pr"],
-                "mode": review_mode_for(scraped_at).value,
+                "mode": ReviewMode.for_scrape(scraped_at).value,
                 "existing": existing,
                 "proposed": proposed,
                 "changes": [

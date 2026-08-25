@@ -1,22 +1,24 @@
-"""One roster, whichever shape the scrape sent it in.
+"""The roster a submit implies: the document a reviewer reads, in the order they read it.
 
-A submit carries `PersonRecord`s, one per sighting, or merged `Official`s from a run that
-predates the change. Both converge to `Official` here, so nothing downstream has to know
-which arrived.
+`people_derivation` decides who the people are; this decides how they are presented — sorted,
+identified, and rendered. `post_derivation` reads what comes out.
 
-Pure: rows and a taxonomy in, officials out.
+A submit carries `PersonRecord`s, one per sighting, or an already-merged roster from a run that
+predates the change. Both converge here, so nothing downstream has to know which arrived.
+
+Pure: rows and a taxonomy in, a roster out.
 """
 
+from core.people_derivation import derived_people
 from shared.schemas import Person, PersonRecord
 from shared.utils.log_protocol import Log
 from shared.utils.official_fields import order_official_fields
 from shared.utils.people_utils import person_to_official, sort_people
 from shared.utils.person_id_utils import merge_forward_other_names
-from shared.utils.reconcile import reconcile
 from shared.utils.taxonomy import Taxonomy
 
 
-def officials_from_rows(
+def roster_from_rows(
     rows: list[dict],
     identities: dict[str, list[str]],
     taxonomy: Taxonomy,
@@ -25,7 +27,7 @@ def officials_from_rows(
 ) -> tuple[list[dict], dict[str, list[dict]]]:
     """The roster a submit implies, and the records behind each of its people.
 
-    Keyed by name, which is the canonical one `reconcile` grouped on, so the caller can join
+    Keyed by name, which is the canonical one the derivation grouped on, so the caller can join
     on the roster entry it just gave an id to.
 
     Everyone the scrape saw is in it.
@@ -43,14 +45,14 @@ def officials_from_rows(
     if _is_official(rows[0]):
         return rows, {}
 
-    reconciled = reconcile(
+    derived = derived_people(
         [PersonRecord(**row) for row in rows], identities, taxonomy, jurisdiction_ocdid, log
     )
     records_by_name = {
         person.name: [record.model_dump() for record in records]
-        for person, records in reconciled
+        for person, records in derived
     }
-    return _render([person for person, _ in reconciled], taxonomy), records_by_name
+    return _render([person for person, _ in derived], taxonomy), records_by_name
 
 
 def identified(person: dict, resolution: dict) -> dict:
@@ -72,39 +74,6 @@ def identified(person: dict, resolution: dict) -> dict:
             matched.other_names,
         ),
     }
-
-
-LOCAL_IMAGE_PREFIX = "local://"
-
-
-def local_image_basename(person: dict) -> str | None:
-    """The downloaded file a person's photo refers to, if it still refers to one.
-
-    A record carries the reference on `image`; an `Official` the pipeline already formatted
-    has it moved to `cdn_image`, with the source url on `image`. Reading either is what lets
-    one pass serve both shapes.
-    """
-    for value in (person.get("image"), person.get("cdn_image")):
-        if value and value.startswith(LOCAL_IMAGE_PREFIX):
-            return value.removeprefix(LOCAL_IMAGE_PREFIX)
-    return None
-
-
-def with_images(person: dict, source_urls: dict, cdn_urls: dict) -> dict:
-    """Resolve a `local://` photo reference into where it came from and where we serve it.
-
-    Idempotent, so it can run over a roster the pipeline already half-resolved: a person
-    whose `image` is a source url and whose `cdn_image` is served is left alone.
-    """
-    basename = local_image_basename(person)
-    if not basename:
-        return person
-    resolved = {**person}
-    if basename in source_urls:
-        resolved["image"] = source_urls[basename]
-    if basename in cdn_urls:
-        resolved["cdn_image"] = cdn_urls[basename]
-    return resolved
 
 
 def _is_official(row: dict) -> bool:
@@ -152,39 +121,6 @@ def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
         )
         for person in sort_people(kept, taxonomy)
     ]
-
-
-def cdn_urls(filenames_to_urls: dict, storage_endpoint: str, bucket: str, domain: str) -> dict:
-    """Where each uploaded photo is served from, keyed by downloaded filename."""
-    return {
-        basename: url.replace(f"{storage_endpoint}/{bucket}", f"https://{bucket}.{domain}")
-        for basename, url in filenames_to_urls.items()
-    }
-
-
-def resolve_images(
-    source_urls: dict, cdn_urls: dict, people: list[dict]
-) -> tuple[list[dict], list[str]]:
-    """Every `local://` reference turned into where the photo came from and where we serve it.
-
-    Returns the people and the names of any whose photo was never uploaded — reported rather
-    than logged here, so this stays callable without a logger.
-    """
-    unserved = [
-        str(person.get("name"))
-        for person in people
-        if (basename := local_image_basename(person)) and basename not in cdn_urls
-    ]
-    return [with_images(person, source_urls, cdn_urls) for person in people], unserved
-
-
-def images_by_person(roster: list[dict]) -> dict[str, dict]:
-    """Each person's resolved photo urls, keyed by id."""
-    return {
-        person["id"]: {key: person[key] for key in ("image", "cdn_image") if person.get(key)}
-        for person in roster
-        if person.get("id")
-    }
 
 
 def records_by_person(roster: list[dict], records_by_name: dict) -> dict[str, list[dict]]:
