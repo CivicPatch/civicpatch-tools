@@ -3,12 +3,26 @@ from contextlib import asynccontextmanager
 from typing import Literal, TypedDict
 
 from patchright.async_api import async_playwright
-
-from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
-from runners.people_collector.steps.step_02_scrape_page.scrape_constants import PAGE_DEFAULT_TIMEOUT_MS, PAGE_NAVIGATION_TIMEOUT_MS
-from runners.people_collector.steps.step_02_scrape_page.scrape_wait import auto_detect_and_wait
-from runners.people_collector.steps.step_02_scrape_page.scrape_dom import expand_accordions, flatten_shadow_root, html_relative_to_absolute_urls, inline_iframes
-from runners.people_collector.steps.step_02_scrape_page.scrape_images import download_images
+from runners.people_collector.steps.step_02_scrape_page.scrape_constants import (
+    PAGE_DEFAULT_TIMEOUT_MS,
+    PAGE_NAVIGATION_TIMEOUT_MS,
+)
+from runners.people_collector.steps.step_02_scrape_page.scrape_dom import (
+    expand_accordions,
+    flatten_shadow_root,
+    html_relative_to_absolute_urls,
+    inline_iframes,
+)
+from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
+    NavigationError,
+    NavigationFailureReason,
+)
+from runners.people_collector.steps.step_02_scrape_page.scrape_images import (
+    download_images,
+)
+from runners.people_collector.steps.step_02_scrape_page.scrape_wait import (
+    auto_detect_and_wait,
+)
 
 
 @asynccontextmanager
@@ -34,7 +48,7 @@ class ScrapeOptions(TypedDict):
 
 async def scrape(logger, website_url, options=None):
     options = options or {}
-    timeout = options.get('timeout', PAGE_DEFAULT_TIMEOUT_MS)
+    timeout = options.get("timeout", PAGE_DEFAULT_TIMEOUT_MS)
 
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch_persistent_context(
@@ -49,6 +63,7 @@ async def scrape(logger, website_url, options=None):
             page.set_default_timeout(timeout)
 
             network_failure_reason = None
+
             def handle_request_failed(request):
                 nonlocal network_failure_reason
                 if request.url == website_url or request.url == website_url + "/":
@@ -60,19 +75,27 @@ async def scrape(logger, website_url, options=None):
             response = None
             last_errors: list[str] = []
 
-            wait_until_strategies: list[Literal["networkidle", "load", "domcontentloaded"]] = ["networkidle", "load", "domcontentloaded"]
+            wait_until_strategies: list[
+                Literal["networkidle", "load", "domcontentloaded"]
+            ] = ["networkidle", "load", "domcontentloaded"]
             for wait_until in wait_until_strategies:
                 try:
-                    response = await page.goto(website_url, wait_until=wait_until, timeout=PAGE_NAVIGATION_TIMEOUT_MS)
+                    response = await page.goto(
+                        website_url,
+                        wait_until=wait_until,
+                        timeout=PAGE_NAVIGATION_TIMEOUT_MS,
+                    )
                     if response:
                         break
                 except Exception as e:
                     last_errors.append(str(e))
-                    logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
+                    logger.warning(
+                        f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}"
+                    )
 
             if response is None or not response.ok:
                 http_status = response.status if response else None
-                detailed_reason = (network_failure_reason or last_errors[-1] or "").upper()
+                detailed_reason = _failure_detail(network_failure_reason, last_errors)
 
                 if http_status:
                     if http_status == 403:
@@ -95,15 +118,19 @@ async def scrape(logger, website_url, options=None):
                     else:
                         reason = NavigationFailureReason.UNKNOWN
 
-                logger.error(f"[{reason}] Failure at {website_url}. Detail: {detailed_reason}")
+                logger.error(
+                    f"[{reason}] Failure at {website_url}. Detail: {detailed_reason}"
+                )
                 raise NavigationError(website_url, reason, source=detailed_reason)
 
-            scraped_urls = options.get('scraped_urls')
+            scraped_urls = options.get("scraped_urls")
             if scraped_urls and page.url in scraped_urls:
-                logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
+                logger.info(
+                    f"Already scraped url: {website_url}, redirected to: {page.url}"
+                )
                 raise ValueError("Already scraped this URL after redirect")
 
-            accordion_keywords = options.get('accordion_keywords')
+            accordion_keywords = options.get("accordion_keywords")
             async with _phase(logger, "wait for content"):
                 await auto_detect_and_wait(page, logger, response)
             async with _phase(logger, "expand accordions"):
@@ -115,7 +142,7 @@ async def scrape(logger, website_url, options=None):
             async with _phase(logger, "inline iframes"):
                 await inline_iframes(page, logger)
 
-            image_directory = options.get('image_directory')
+            image_directory = options.get("image_directory")
             if image_directory:
                 async with _phase(logger, "download images"):
                     await download_images(browser, logger, page, image_directory)
@@ -129,3 +156,17 @@ async def scrape(logger, website_url, options=None):
                 await browser.close()
             except Exception:
                 pass
+
+
+# Chromium aborts the pending navigation when the next wait_until strategy issues its goto, so
+# ERR_ABORTED here is usually self-inflicted and hides the real reason: the timeout.
+def _failure_detail(network_failure_reason: str | None, last_errors: list[str]) -> str:
+    if network_failure_reason and "ERR_ABORTED" not in network_failure_reason.upper():
+        detail = network_failure_reason
+    elif last_errors:
+        detail = last_errors[-1]
+    else:
+        detail = network_failure_reason or ""
+
+    # Playwright timeouts carry a multi-line "Call log:" block; only the first line is the reason.
+    return detail.splitlines()[0].upper() if detail else ""

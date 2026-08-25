@@ -25,10 +25,19 @@ export interface HistoryEntry {
   // Derived server-side. The page used to answer this itself by testing the raw pipeline
   // status against a terminal set it kept its own copy of, so the two could drift.
   is_running?: boolean;
+  // `AVAILABLE_FOR_REVIEW`, the review pool's own predicate, answered in the same query.
+  awaiting_review?: boolean;
 }
 
+/** Scrapes the review pool actually holds.
+ *
+ * The server answers this, because it already had to: `AVAILABLE_FOR_REVIEW` is what the queue
+ * and the session both select on. Re-deriving it here from `review_status` was a second
+ * definition, and it drifted — `pending` is true from the moment a request exists, so a scrape
+ * still running read as awaiting review and offered a button for a roster it had not produced.
+ */
 export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>
-  history.filter((entry) => entry.review_status === REVIEW_STATUS.PENDING);
+  history.filter((entry) => entry.awaiting_review);
 
 const isManualEdit = (entry: HistoryEntry) =>
   entry.request_type === REQUEST_TYPE.JURISDICTION_MANUAL_EDIT;

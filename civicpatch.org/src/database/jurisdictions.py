@@ -11,7 +11,7 @@ from core.jurisdiction_search import (
 )
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
-from database.requests import REVIEW_STATUS, RUN_IN_FLIGHT
+from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, RUN_IN_FLIGHT
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,
@@ -539,7 +539,8 @@ async def get_jurisdiction_history(
                    COALESCE(j.created_at, r.created_at),
                    COALESCE(j.updated_at, r.updated_at),
                    j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type,
-                   {RUN_IN_FLIGHT} AS is_running
+                   {RUN_IN_FLIGHT} AS is_running,
+                   {AVAILABLE_FOR_REVIEW} AS awaiting_review
             FROM requests r
             LEFT JOIN pipeline_runs j ON j.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
@@ -569,6 +570,10 @@ async def get_jurisdiction_history(
                     # Told, not inferred: the page used to test the raw status against a
                     # terminal set it kept its own copy of.
                     "is_running": row[8],
+                    # The pool's own definition, not a second one. `review_status` is `pending`
+                    # from the moment a request exists, so a scrape still running read as
+                    # awaiting review and offered a button for a roster it had not produced.
+                    "awaiting_review": row[9],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
                 }
