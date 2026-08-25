@@ -7,7 +7,6 @@ from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
     ReviewSessionEntryStatus,
 )
-from psycopg import sql
 from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineIssueStatus,
@@ -295,51 +294,6 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
             "jurisdiction_ocdid": r[1],
             "arguments_json": r[2] or {},
             "jurisdiction_name": r[3],
-        }
-        for r in rows
-    ]
-
-
-async def get_requests_for_export(
-    state: str,
-    from_date: str | None,
-    to_date: str | None,
-) -> list[dict]:
-    state_prefix = f"ocd-jurisdiction/country:us/state:{state.lower()}%"
-    params: list = [state_prefix]
-    date_clauses = ""
-    if from_date:
-        params.append(from_date)
-        date_clauses += " AND r.created_at >= %s"
-    if to_date:
-        params.append(to_date)
-        date_clauses += " AND r.created_at <= %s"
-
-    pool = await get_pool()
-    rows = []
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            sql.SQL(f"""
-            SELECT r.id, r.jurisdiction_ocdid, r.created_at, r.review_json
-            FROM requests r
-            WHERE r.jurisdiction_ocdid LIKE %s
-              AND r.published_at IS NULL AND r.dismissed_at IS NULL
-              {date_clauses}
-            ORDER BY r.created_at DESC
-            """),
-            params,
-        )
-        while True:
-            batch = await cur.fetchmany(200)
-            if not batch:
-                break
-            rows.extend(batch)
-    return [
-        {
-            "request_id": str(r[0]),
-            "jurisdiction_ocdid": r[1],
-            "created_at": r[2].isoformat() if r[2] else None,
-            "review_json": r[3] or {},
         }
         for r in rows
     ]

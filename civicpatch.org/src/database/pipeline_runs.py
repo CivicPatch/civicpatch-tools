@@ -1,4 +1,3 @@
-import json
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -239,27 +238,12 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
     return [row[0] for row in rows]
 
 
-async def update_pipeline_run_review_json(request_id: str, review_json: dict):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE requests r
-            SET review_json = %s,
-                updated_at = CURRENT_TIMESTAMP
-            FROM pipeline_runs j
-            WHERE r.id = j.request_id AND j.request_id = %s;
-            """,
-            (json.dumps(review_json), request_id),
-        )
-
-
 async def get_pipeline_run_result(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.review_json, r.jurisdiction_ocdid FROM requests r
+            SELECT r.jurisdiction_ocdid FROM requests r
             JOIN pipeline_runs j ON j.request_id = r.id
             WHERE j.request_id = %s LIMIT 1
             """,
@@ -268,4 +252,4 @@ async def get_pipeline_run_result(request_id: str):
         row = await cur.fetchone()
     if row is None:
         return None
-    return {"review_json": row[0], "jurisdiction_ocdid": row[1]}
+    return {"jurisdiction_ocdid": row[0]}

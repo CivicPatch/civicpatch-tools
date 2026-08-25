@@ -162,7 +162,6 @@ function QueuePage() {
         <div class="queue-page__filters">
           <div class="queue-page__filters-right">
             <a class="btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>
-            <a class="btn btn-sm" href="${API_URL}/api/v1/requests/export.csv?state=${stateCode}" download>Export queue</a>
           </div>
         </div>
       ` : null}

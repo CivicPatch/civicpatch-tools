@@ -73,15 +73,19 @@ def resolve_images(
 ) -> tuple[list[dict], list[str]]:
     """Every `local://` reference turned into where the photo came from and where we serve it.
 
-    Returns the people and the names of any whose photo was never uploaded — reported rather
-    than logged here, so this stays callable without a logger.
+    Returns the people and the names of any left with a photo we do not serve — reported
+    rather than logged here, so this stays callable without a logger.
     """
+    resolved = [with_images(person, source_urls, cdn_urls) for person in people]
+    # Asked of the *result*: a photo the pipeline never downloaded arrives as a plain url, so
+    # `local_image_basename` finds nothing and the old check skipped it silently. Buckley's
+    # mayor was the case — one sighting, an `image`, no `cdn_image`, no warning.
     unserved = [
         str(person.get("name"))
-        for person in people
-        if (basename := local_image_basename(person)) and basename not in cdn_urls
+        for person in resolved
+        if person.get("image") and not person.get("cdn_image")
     ]
-    return [with_images(person, source_urls, cdn_urls) for person in people], unserved
+    return resolved, unserved
 
 
 def records_with_images(

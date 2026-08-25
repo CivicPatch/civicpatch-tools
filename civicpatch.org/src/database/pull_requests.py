@@ -40,7 +40,7 @@ async def list_open_pull_requests(
             {}
             """).format(
                 where,
-                count=sql.SQL(issue_count("r.review_json", "r.jurisdiction_ocdid")),
+                count=sql.SQL(issue_count("r.jurisdiction_ocdid")),
             ),
             params,
         )
@@ -60,8 +60,8 @@ async def list_open_pull_requests(
             ORDER BY {priority} DESC, r.created_at DESC
             LIMIT %s OFFSET %s
             """).format(where, status=sql.SQL(REVIEW_STATUS),
-                        count=sql.SQL(issue_count("r.review_json", "r.jurisdiction_ocdid")),
-                        priority=sql.SQL(issue_priority("r.review_json", "r.jurisdiction_ocdid"))),
+                        count=sql.SQL(issue_count("r.jurisdiction_ocdid")),
+                        priority=sql.SQL(issue_priority("r.jurisdiction_ocdid"))),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()

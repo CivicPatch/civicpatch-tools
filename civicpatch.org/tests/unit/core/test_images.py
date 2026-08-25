@@ -106,6 +106,18 @@ def test_a_photo_that_never_uploaded_is_reported_by_name():
 
 
 @pytest.mark.unit
+def test_a_photo_the_pipeline_never_downloaded_is_reported():
+    """Buckley's mayor: seen on one page, `image` a plain url because the download never
+    happened, so there was no `local://` ref to notice her by. The old check keyed on that ref
+    and skipped her — the question is whether we end up serving the photo, not how we heard
+    about it."""
+    people = [{"name": "Carolyn Robertson Harding", "image": "https://buckley.gov/1416"}]
+    resolved, unserved = resolve_images(SOURCE_URLS, CDN_URLS, people)
+    assert unserved == ["Carolyn Robertson Harding"]
+    assert "cdn_image" not in resolved[0]
+
+
+@pytest.mark.unit
 def test_a_person_with_no_photo_is_not_reported():
     """Most people have no photo at all; reporting them would bury the real failures."""
     resolved, unserved = resolve_images(SOURCE_URLS, CDN_URLS, [{"name": "Cy Ito"}])

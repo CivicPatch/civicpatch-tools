@@ -83,7 +83,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
                 AND e.status IN ('claimed', 'saved')
           )
         ORDER BY
-            {issue_priority('r.review_json', 'r.jurisdiction_ocdid')} DESC,
+            {issue_priority('r.jurisdiction_ocdid')} DESC,
             r.created_at DESC
         LIMIT %s
         """,

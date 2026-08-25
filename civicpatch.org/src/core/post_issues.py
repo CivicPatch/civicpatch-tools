@@ -30,10 +30,10 @@ def unverified_post_issues(posts: list[dict]) -> list[Issue]:
 
 
 def append_post_issues(summary: dict, posts: list[Issue]) -> dict:
-    """One issue list for the card, stored first.
+    """One issue list for the card, the roster checks first.
 
-    Stored issues stay dicts — they come back from `review_json` already serialised, and
-    re-parsing them into `Issue` would reject a code written before it was renamed.
+    Both sides arrive as dicts — the roster checks dumped by the caller, a post issue dumped
+    here. The card reads one list and does not care which check produced a row.
     """
     return {
         **summary,

@@ -23,7 +23,6 @@ from database.issues import upsert_issue
 from database.people import get_person_models
 from database.pipeline_runs import (
     run_updated_at,
-    update_pipeline_run_review_json,
     update_pipeline_run_status,
 )
 from database.roles import get_roles
@@ -36,10 +35,8 @@ from services import pipeline_costs
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.publish import chosen_posts
 from shared.schemas import Person, Role, RoleConfig
-from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
 from shared.utils.person_id_utils import resolve_people_ids
-from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
@@ -118,41 +115,6 @@ async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]
         identified(person, resolution)
         for person, resolution in zip(roster, resolutions)
     ]
-
-
-async def _review_summary(
-    roster: list[dict], workflow_context: dict, roles: list[Role]
-) -> dict:
-    """The issues a reviewer sees.
-
-    Runs after reconciliation because every check counts people. Compared against the research
-    step's identities, not ours: "absent" means this run did not find who it set out to.
-
-    Never fatal — the people are already stored by now.
-    """
-    try:
-        return await _build_review_summary(roster, workflow_context, roles)
-    except Exception as e:
-        logger.error(f"Failed to build review summary: {e}", exc_info=True)
-        return {}
-
-
-async def _build_review_summary(
-    roster: list[dict], workflow_context: dict, roles: list[Role]
-) -> dict:
-    research = workflow_context.get("data", {}).get("research_municipality_step") or {}
-    identities = research.get("identities") or {}
-    summary = build_review_summary(
-        [{"name": name} for name in identities],
-        roster,
-        ReviewInputs(
-            identities=identities,
-            unique_roles=get_unique_roles(RoleConfig(roles=roles)),
-        ),
-        research.get("origin_source") or "google_gemini",
-    )
-    # `Issue` is a model and this goes to `json.dumps`.
-    return {**summary, "issues": [issue.model_dump() for issue in summary["issues"]]}
 
 
 def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict, dict]:
@@ -319,8 +281,6 @@ async def _ingest_roster(
         request.request_id, request.jurisdiction_ocdid, workflow_context
     )
 
-    review_json = await _review_summary(updated_data, workflow_context, roles)
-    await update_pipeline_run_review_json(request.request_id, review_json)
 
     for issue in workflow_context.get("data", {}).get("issues", []):
         await upsert_issue(request.request_id, issue["type"], [issue.get("data") or {}])

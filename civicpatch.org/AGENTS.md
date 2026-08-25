@@ -123,6 +123,10 @@ This execs `psql` inside the container, so no host postgres client is required �
 
 - Migration files live in `database_operations/migrations/` and are named `NNN_description.up.sql` / `NNN_description.down.sql`
 - Every migration must be wrapped in `BEGIN` / `COMMIT`
+- **Every DDL statement must be idempotent** — `DROP ... IF EXISTS`, `CREATE ... IF NOT EXISTS`,
+  `ADD/DROP COLUMN IF [NOT] EXISTS`. Re-running a migration has to be a no-op, not an error.
+  Enforced by `tests/unit/database/test_migrations.py`, which holds everything from 141 on;
+  earlier files predate the rule and must not be edited
 - Down migrations must exactly reverse the up migration — test that the round-trip is clean
 - Create a new migration file whenever you add, rename, or drop a column, table, or index — never edit an existing migration
 - **A migration is not complete until the Mermaid schema diagram in `DATABASE.md` is updated** — the diagram must always reflect the current state of the database, including index annotations (`"idx"` or `"idx: expression"`) on any affected fields
