@@ -1,6 +1,6 @@
 /* ── PR Card ── */
 
-pr-card {
+review-card {
     display: block;
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--pico-border-radius);
@@ -9,11 +9,11 @@ pr-card {
     border-left-width: 3px;
 }
 
-pr-card:has(.pr-card__state--open) {
+review-card:has(.review-card__state--open) {
     border-left-color: var(--civ-accent, #ffe066);
 }
 
-.pr-card__overlay {
+.review-card__overlay {
     position: absolute;
     inset: 0;
     display: flex;
@@ -21,29 +21,29 @@ pr-card:has(.pr-card__state--open) {
     justify-content: center;
 }
 
-.pr-card__overlay span {
+.review-card__overlay span {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-md);
     font-weight: 600;
 }
 
-.pr-card__overlay--published {
+.review-card__overlay--published {
     background: color-mix(in srgb, var(--pico-ins-color) 20%, transparent);
 }
 
-.pr-card__overlay--published span {
+.review-card__overlay--published span {
     color: var(--pico-ins-color);
 }
 
-.pr-card__overlay--publishing {
+.review-card__overlay--publishing {
     background: color-mix(in srgb, var(--pico-info-color) 20%, transparent);
 }
 
-.pr-card__overlay--publishing span {
+.review-card__overlay--publishing span {
     color: var(--pico-info-color);
 }
 
-.pr-card__header {
+.review-card__header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -80,13 +80,13 @@ pr-card:has(.pr-card__state--open) {
     }
 }
 
-.pr-card__stats {
+.review-card__stats {
     display: flex;
     gap: 0.3rem;
     align-items: center;
 }
 
-.pr-card__stat {
+.review-card__stat {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
     font-weight: 700;
@@ -94,22 +94,22 @@ pr-card:has(.pr-card__state--open) {
     border-radius: calc(var(--pico-border-radius) * 0.5);
 }
 
-.pr-card__stat--added {
+.review-card__stat--added {
     color: var(--pico-ins-color);
     background: var(--pico-ins-background);
 }
 
-.pr-card__stat--removed {
+.review-card__stat--removed {
     color: var(--pico-del-color);
     background: var(--pico-del-background);
 }
 
-.pr-card__stat--changed {
+.review-card__stat--changed {
     color: var(--pico-info-color);
     background: var(--pico-info-background);
 }
 
-.pr-card__title {
+.review-card__title {
     font-size: var(--text-md);
     font-weight: 500;
     color: var(--pico-color);
@@ -120,7 +120,7 @@ pr-card:has(.pr-card__state--open) {
     white-space: nowrap;
 }
 
-.pr-card__jurisdiction-link {
+.review-card__jurisdiction-link {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
     line-height: 1;
@@ -129,11 +129,11 @@ pr-card:has(.pr-card__state--open) {
     white-space: nowrap;
 }
 
-.pr-card__jurisdiction-link:hover {
+.review-card__jurisdiction-link:hover {
     text-decoration: underline;
 }
 
-.pr-card__link {
+.review-card__link {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
     line-height: 1;
@@ -142,11 +142,11 @@ pr-card:has(.pr-card__state--open) {
     white-space: nowrap;
 }
 
-.pr-card__link:hover {
+.review-card__link:hover {
     text-decoration: underline;
 }
 
-.pr-card__state {
+.review-card__state {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-xs);
     font-weight: 600;
@@ -159,22 +159,22 @@ pr-card:has(.pr-card__state--open) {
     color: var(--pico-muted-color);
 }
 
-.pr-card__state--open {
+.review-card__state--open {
     color: var(--pico-ins-color);
     border-color: var(--pico-ins-color);
 }
 
-.pr-card__state--closed {
+.review-card__state--closed {
     color: var(--pico-del-color);
     border-color: var(--pico-del-color);
 }
 
-.pr-card__state--merged {
+.review-card__state--merged {
     color: var(--pico-primary);
     border-color: var(--pico-primary);
 }
 
-.pr-card__meta {
+.review-card__meta {
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
     color: var(--pico-muted-color);
@@ -182,7 +182,7 @@ pr-card:has(.pr-card__state--open) {
     white-space: nowrap;
 }
 
-.pr-card__content {
+.review-card__content {
     padding: 0.5rem 1rem;
     font-family: var(--pico-font-family-monospace);
     font-size: var(--text-sm);
@@ -190,19 +190,19 @@ pr-card:has(.pr-card__state--open) {
 }
 
 @media (max-width: 640px) {
-    .pr-card__header {
+    .review-card__header {
         grid-template-columns: 1fr auto;
         grid-template-rows: auto auto;
     }
-    .pr-card__header .header-item-left {
+    .review-card__header .header-item-left {
         grid-column: 1;
         grid-row: 1;
     }
-    .pr-card__header .header-item-right {
+    .review-card__header .header-item-right {
         grid-column: 2;
         grid-row: 1;
     }
-    .pr-card__header .header-item-center {
+    .review-card__header .header-item-center {
         grid-column: 1 / -1;
         grid-row: 2;
         justify-content: flex-start;
