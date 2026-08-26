@@ -220,15 +220,21 @@ async def update_pipeline_run_status(
         )
 
 
+RUN_NOT_TERMINAL = (
+    "pipeline_runs.status IS NOT NULL AND pipeline_runs.status != ALL(ARRAY["
+    + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
+    + "])"
+)
+
+
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
-    """Mark RUNNING pipeline runs not updated within `older_than` as ERROR. Returns affected request_ids."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             UPDATE pipeline_runs
             SET status = 'ERROR', updated_at = CURRENT_TIMESTAMP
-            WHERE status = 'RUNNING'
+            WHERE {RUN_NOT_TERMINAL}
             AND updated_at < NOW() - %s::interval
             RETURNING request_id::text
             """,

@@ -17,6 +17,7 @@ import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } f
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./officials-editor.js";
 import {
+  publishedAt,
   pendingReviews,
   peopleEditBlockers,
   jurisdictionEditBlockers,
@@ -176,11 +177,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
     }));
   };
 
-  // The currently-published data: the most recent successful run (merged runs are
-  // SUCCESS too). Same date shown in the history rows.
-  const publishedAt = entries.find(
-    (j: any) => (j.pipeline_run_status || "").toUpperCase() === "SUCCESS",
-  )?.created_at;
+  const publishedAtDate = publishedAt(entries);
 
   // null until the reader touches it, then it is theirs. Binding ?open straight to the run
   // state made cancelling slam the panel shut: the run goes terminal and lit closes it.
@@ -201,7 +198,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         name: jurisdictionData?.data?.name,
         ocdid: jurisdiction_ocdid,
         isScraped: people?.length > 0,
-        publishedAt,
+        publishedAt: publishedAtDate,
         canStartScrape,
         isScrapeBlocked: peopleBlockers.length > 0,
         isRunInProgress: !!isRunInProgress || isTriggering,
@@ -246,7 +243,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
           Scrapes
           <span class="jurisdiction-panel__meta">
             ${entries.length} ${entries.length === 1 ? "run" : "runs"}
-            ${publishedAt ? `— last ${dateStringToFriendly(publishedAt)}` : ""}
+            ${publishedAtDate ? `— last ${dateStringToFriendly(publishedAtDate)}` : ""}
           </span>
         </summary>
         <div class="jurisdiction-panel__body">

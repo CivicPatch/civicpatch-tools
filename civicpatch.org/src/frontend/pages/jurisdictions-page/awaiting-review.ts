@@ -22,6 +22,9 @@ export interface HistoryEntry {
   request_type?: string | null;
   open_data_url?: string | null;
   review_status?: string | null;
+  // When a person published it. `created_at` above is the machine's clock — the two differ by
+  // however long a card sat in the queue.
+  published_at?: string | null;
   // Derived server-side. The page used to answer this itself by testing the raw pipeline
   // status against a terminal set it kept its own copy of, so the two could drift.
   is_running?: boolean;
@@ -36,6 +39,16 @@ export interface HistoryEntry {
  * definition, and it drifted — `pending` is true from the moment a request exists, so a scrape
  * still running read as awaiting review and offered a button for a roster it had not produced.
  */
+/** When this jurisdiction's data was last published, or null if it never was.
+ *
+ * Asked of the review. It used to match the most recent SUCCESS run, so a scrape a reviewer
+ * *dismissed* still read as published — and it returned the run's `created_at`, dating the
+ * scrape rather than the decision.
+ */
+export const publishedAt = (history: HistoryEntry[]): string | null =>
+  history.find((entry) => entry.review_status === "published")?.published_at ?? null;
+
+
 export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>
   history.filter((entry) => entry.awaiting_review);
 

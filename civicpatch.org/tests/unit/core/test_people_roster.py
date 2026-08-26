@@ -186,7 +186,7 @@ def test_an_ambiguous_match_carries_nothing_forward():
     """Two candidates means guessing would put somebody else's aliases on this person."""
     entry = identified(
         {"name": "Ann Lee", "other_names": ["Annie"]},
-        _resolution("a:b", [_person("Ann Lee", ["A. Lee"])], ambiguous=True),
+        _resolution("abc-123", _person("Ann Lee", ["A. Lee"]), ambiguous=True),
     )
     assert entry["other_names"] == ["Annie"]
 

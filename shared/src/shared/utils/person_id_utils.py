@@ -3,7 +3,11 @@ from typing import Dict, List
 
 from shared.schemas import Person
 from shared.utils.email_utils import normalize_email
-from shared.utils.name_utils import best_identity_match, build_canonical_map
+from shared.utils.name_utils import (
+    best_identity_match,
+    build_canonical_map,
+    fuzzy_match_score,
+)
 
 
 def _new_identity(person: dict, duplicate_match: bool = False) -> dict:
@@ -15,6 +19,7 @@ def _new_identity(person: dict, duplicate_match: bool = False) -> dict:
     return {
         "id": person.get("id") or str(uuid.uuid4()),
         "person": None,
+        "matches": [],
         "ambiguous": False,
         "duplicate_match": duplicate_match,
     }
@@ -24,9 +29,12 @@ def _resolution(person: dict, matches: List[Person], claimed_ids: set) -> dict:
     if not matches:
         return _new_identity(person)
     if len(matches) > 1:
+        if matches[0].id in claimed_ids:
+            return _new_identity(person, duplicate_match=True)
         return {
-            "id": ":".join(m.id for m in matches),
-            "person": matches,
+            "id": matches[0].id,
+            "person": matches[0],
+            "matches": matches,
             "ambiguous": True,
             "duplicate_match": False,
         }
@@ -41,6 +49,7 @@ def _resolution(person: dict, matches: List[Person], claimed_ids: set) -> dict:
     return {
         "id": matches[0].id,
         "person": matches[0],
+        "matches": matches,
         "ambiguous": False,
         "duplicate_match": False,
     }
@@ -65,7 +74,9 @@ def resolve_people_ids(
 
 
 def ensure_person_ids(people: List[dict]) -> List[dict]:
-    return [{**person, "id": person.get("id") or str(uuid.uuid4())} for person in people]
+    return [
+        {**person, "id": person.get("id") or str(uuid.uuid4())} for person in people
+    ]
 
 
 def resolve_person_id(
@@ -93,8 +104,16 @@ def resolve_person_id(
             if wanted & {normalize_email(email) for email in p.emails if email}
         ]
         if email_matches:
-            return email_matches
-    return matches
+            matches = email_matches
+    # Likeliest first, so a caller narrowing to one can take the head. Every candidate already
+    # shares a canonical name, so this only separates them on the components the canonical form
+    # threw away — a middle name, a suffix.
+    #
+    # `id` last because the sort must be total on its own: callers pass `people` from wherever,
+    # and leaning on their ordering would make this depend on an `ORDER BY` in another package.
+    return sorted(
+        matches, key=lambda person: (-fuzzy_match_score(name, person.name), person.id)
+    )
 
 
 def merge_forward_other_names(

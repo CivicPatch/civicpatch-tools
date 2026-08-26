@@ -112,7 +112,7 @@ def fuzzy_match(name1: str, name2: str) -> bool:
     return True
 
 
-def _fuzzy_match_score(name1: str, name2: str) -> int:
+def fuzzy_match_score(name1: str, name2: str) -> int:
     p1 = parse_name(name1)
     p2 = parse_name(name2)
     score = 0
@@ -164,7 +164,7 @@ def best_identity_match(name: str, identities: Dict[str, List[str]]) -> str | No
     for canonical, aliases in identities.items():
         for candidate in [canonical] + aliases:
             if fuzzy_match(name, candidate):
-                score = _fuzzy_match_score(name, candidate)
+                score = fuzzy_match_score(name, candidate)
                 if score > best_score:
                     best_score = score
                     best_canonical = canonical
