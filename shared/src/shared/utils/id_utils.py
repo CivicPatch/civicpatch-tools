@@ -4,6 +4,8 @@ import uuid
 from shared.schemas import JurisdictionId
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
+# Not a place key: a county locates a place, or is the jurisdiction itself.
+COUNTY_KEY = "county"
 
 # The folder segment every per-jurisdiction data file sits under. Not the jurisdiction
 # level: a county-only ocdid is level `counties` but still files under `local`.
@@ -136,6 +138,8 @@ def folder_to_jurisdiction_ocdid(folder: str) -> str:
       -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
       "il/local/county_dupage__place_naperville"
       -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+      "tx/local/county_travis"
+      -> "ocd-jurisdiction/country:us/state:tx/county:travis/government"
     """
     segments = folder.strip("/").split("/")
     if len(segments) < 3:
@@ -150,6 +154,9 @@ def folder_to_jurisdiction_ocdid(folder: str) -> str:
         county_part, place_part = place_segment.split("__", 1)
         county = county_part.split("_", 1)[1]
         ocdid += f"county:{county}/"
+    elif place_segment.startswith(f"{COUNTY_KEY}_"):
+        county = place_segment.split("_", 1)[1]
+        return f"{ocdid}{COUNTY_KEY}:{county}/government"
     else:
         place_part = place_segment
 

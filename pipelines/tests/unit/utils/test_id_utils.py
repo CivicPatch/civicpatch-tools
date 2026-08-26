@@ -3,18 +3,23 @@ from pathlib import Path
 
 import pytest
 from shared.utils.id_utils import (  # Replace `your_module` with the actual module name
-    parse_jurisdiction_ocdid,
+    folder_to_jurisdiction_ocdid,
+    git_branch_to_parts,
     jurisdiction_ocdid_to_folder,
     make_git_branch,
     make_job_branch,
-    git_branch_to_parts,
+    parse_jurisdiction_ocdid,
     slug_to_jurisdiction_ocdid,
 )
 
 pytestmark = pytest.mark.unit
 
 _FIXTURE_PATH = (
-    Path(__file__).resolve().parents[4] / "shared" / "tests" / "fixtures" / "ocdid_paths.json"
+    Path(__file__).resolve().parents[4]
+    / "shared"
+    / "tests"
+    / "fixtures"
+    / "ocdid_paths.json"
 )
 
 
@@ -109,7 +114,9 @@ def test_make_git_branch():
 
 
 def test_make_git_branch_encodes_tilde():
-    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    jurisdiction_ocdid = (
+        "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    )
     request_id = "2025-09-25-1a2b"
     branch = make_git_branch(jurisdiction_ocdid, request_id)
     assert "~" not in branch
@@ -118,9 +125,13 @@ def test_make_git_branch_encodes_tilde():
 
 def test_git_branch_roundtrips_tilde():
     # make_git_branch (file naming) encodes tilde; legacy git_branch_to_parts decodes it
-    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    jurisdiction_ocdid = (
+        "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
+    )
     request_id = "2025-09-25-1a2b"
-    branch = make_git_branch(jurisdiction_ocdid, request_id)  # returns uuid__slug, no job/ prefix
+    branch = make_git_branch(
+        jurisdiction_ocdid, request_id
+    )  # returns uuid__slug, no job/ prefix
     parts = git_branch_to_parts(branch)  # legacy path: returns jurisdiction_ocdid
     assert parts["jurisdiction_ocdid"] == jurisdiction_ocdid
 
@@ -147,7 +158,10 @@ def test_git_branch_to_parts_handles_legacy_no_prefix():
     branch = "2025-09-25-1a2b__state_wa__place_seattle__government"
     parts = git_branch_to_parts(branch)
     assert parts["request_id"] == "2025-09-25-1a2b"
-    assert parts["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    assert (
+        parts["jurisdiction_ocdid"]
+        == "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    )
 
 
 # Tests for slug_to_jurisdiction_ocdid
@@ -161,3 +175,15 @@ def test_slug_to_jurisdiction_ocdid_invalid():
     slug = "invalid_slug_format"
     with pytest.raises(ValueError, match="Slug must start with 'state'."):
         slug_to_jurisdiction_ocdid(slug)
+
+
+@pytest.mark.parametrize("case", json.loads(_FIXTURE_PATH.read_text()))
+def test_folder_round_trips_back_to_the_ocdid(case):
+    assert folder_to_jurisdiction_ocdid(case["path"]) == case["ocdid"]
+
+
+def test_a_county_with_no_place_is_the_jurisdiction():
+    assert (
+        folder_to_jurisdiction_ocdid("tx/local/county_travis")
+        == "ocd-jurisdiction/country:us/state:tx/county:travis/government"
+    )
