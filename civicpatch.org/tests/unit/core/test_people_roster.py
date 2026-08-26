@@ -83,10 +83,10 @@ def test_two_sightings_of_one_person_become_one_official():
 
 
 @pytest.mark.unit
-def test_labels_are_carried_verbatim_beside_the_joined_office_name():
+def test_labels_are_carried_verbatim_and_office_is_not_rendered():
     """Was `test_the_rendered_office_name_splits_back_into_its_labels`, which asserted the
-    join could be undone. Nothing undoes it now — every reader takes `labels` — so this
-    asserts the list is there and untouched, which is what made the split removable."""
+    join could be undone; then that the list sat beside it. Now `office` is not rendered at
+    all — the list is the only answer, which is what removing the join means."""
     kept = _reconcile(
         [
             _record("Ann Lee", "Council Member Place 2"),
@@ -94,7 +94,7 @@ def test_labels_are_carried_verbatim_beside_the_joined_office_name():
         ]
     )
     assert sorted(kept[0]["labels"]) == ["Council Member Place 2", "Mayor Pro-Tem"]
-    assert kept[0]["office"]["name"] == "Council Member Place 2 - Mayor Pro-Tem"
+    assert "office" not in kept[0]
 
 
 @pytest.mark.unit
@@ -102,13 +102,13 @@ def test_the_division_comes_back_out_of_the_verbatim_label():
     """The property that made it safe to stop passing `division_ocdid` separately: a record's
     label is untouched, so it still names the area."""
     kept = _reconcile([_record("Ann Lee", "Council Member (East Ward)")])
-    assert kept[0]["office"]["division_ocdid"] == f"{BASE}/ward:east"
+    assert kept[0]["division_ocdid"] == f"{BASE}/ward:east"
 
 
 @pytest.mark.unit
 def test_a_label_naming_no_area_gets_the_jurisdictions_own_division():
     kept = _reconcile([_record("Ann Lee", "Mayor")])
-    assert kept[0]["office"]["division_ocdid"] == BASE
+    assert kept[0]["division_ocdid"] == BASE
 
 
 @pytest.mark.unit
@@ -276,7 +276,8 @@ def test_stored_sightings_rebuild_the_roster_ingest_produced():
     )
 
     assert len(read_back) == 1
-    assert read_back[0]["office"] == at_ingest[0]["office"]
+    assert read_back[0]["labels"] == at_ingest[0]["labels"]
+    assert read_back[0]["division_ocdid"] == at_ingest[0]["division_ocdid"]
     assert read_back[0]["phones"] == at_ingest[0]["phones"]
     assert read_back[0]["emails"] == at_ingest[0]["emails"]
 

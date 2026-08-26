@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ValidationError
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.schemas import Official
+from shared.schemas import RosterPerson
 from shared.utils.person_fields import order_person_fields
 
 # Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
@@ -109,13 +109,13 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     return result
 
 
-# Validate each patched person through `Official` (which also canonicalizes phones and drops
+# Validate each patched person through `RosterPerson` (which also canonicalizes phones and drops
 # blank urls), then write the normalized values back — but only for the fields the user
 # actually edited (`edit.fields`), so untouched fields keep their exact base representation.
 # Raises `PeopleValidationError` (failures keyed by person id) if any person is invalid.
 # `patched[i]` corresponds to `edits[i]`.
 # The one place that touches pydantic's error encoding. `loc` is the path to the bad value
-# — ("phones",), ("phones", 0), ("office", "name") — and its first element is the top-level
+# — ("phones",), ("phones", 0), ("start_date",) — and its first element is the top-level
 # field we surface (loc[-1] would be a list index for list fields).
 def _field_errors(exc: ValidationError) -> list[dict]:
     return [
@@ -128,9 +128,9 @@ def _person_errors(edit: PersonPatch, entry: dict, errors: list[dict]) -> list[d
     return [{"id": edit.id, "name": entry.get("name"), **err} for err in errors]
 
 
-# A submission rule, not a data-model one: `Official` is also built by the pipelines
-# (person_to_official), where a scrape that saw the same email twice has no user to alert
-# and must not fail. Blank keys are falsy, so two empty rows are not a duplicate.
+# A submission rule, not a data-model one: a scrape that saw the same email on two pages has
+# no user to alert and must not fail, so this is checked here rather than on the model.
+# Blank keys are falsy, so two empty rows are not a duplicate.
 def _duplicate_errors(entry: dict) -> list[dict]:
     errors = []
     for field, values in entry.items():
@@ -159,7 +159,7 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
     failures = []
     for entry, edit in zip(patched, edits):
         try:
-            normalized = Official.model_validate(entry).model_dump()
+            normalized = RosterPerson.model_validate(entry).model_dump()
         except ValidationError as exc:
             failures.extend(_person_errors(edit, entry, _field_errors(exc)))
             people.append(entry)

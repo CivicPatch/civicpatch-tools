@@ -1,6 +1,11 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { divisionOcdidToFriendly } from "../ocdid-utils";
+import { postChanged, getFieldValue } from "../diff-panel/diff-fields.ts";
+
+// Labels joined for display only. `office.name` was this same join done in the backend,
+// where nothing downstream could tell one office from three spellings of one.
+const labelsOf = (person) => getFieldValue(person, "labels");
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
@@ -12,21 +17,17 @@ const DataPanel = ({ entry }) => {
   const { diffEntries: diffRows, unchangedEntries: unchangedRows } = computePeopleDiff(
     existingData,
     prData,
-    (e, p) =>
-      (e.office?.name || "") !== (p.office?.name || "") ||
-      (e.office?.division_ocdid || "") !== (p.office?.division_ocdid || ""),
+    postChanged,
   );
 
   // ─── Row renderer ──────────────────────────────────────────────────────────
 
   function renderRow({ row, type }) {
     const name = row.person.name;
-    const beforeRole = row.from?.office?.name || row.person.office?.name || "—";
-    const afterRole = row.person.office?.name || "—";
-    const beforeDiv =
-      divisionOcdidToFriendly(row.from?.office?.division_ocdid) || "—";
-    const afterDiv =
-      divisionOcdidToFriendly(row.person.office?.division_ocdid) || "—";
+    const beforeRole = labelsOf(row.from) || labelsOf(row.person) || "—";
+    const afterRole = labelsOf(row.person) || "—";
+    const beforeDiv = divisionOcdidToFriendly(row.from?.division_ocdid) || "—";
+    const afterDiv = divisionOcdidToFriendly(row.person?.division_ocdid) || "—";
 
     const sourceUrls = Array.from(
       new Set([

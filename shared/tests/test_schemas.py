@@ -1,20 +1,24 @@
 import pytest
 from pydantic import ValidationError
 
-from shared.schemas import Issue, IssueCode, JurisdictionLevel, Official
+from shared.schemas import Issue, IssueCode, JurisdictionLevel, RosterPerson
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
 def make_official(**overrides):
+    """Was `Official`, which required `office` — the labels joined into one string.
+    `RosterPerson` carries `label` and `labels` instead; the validators under test are the
+    same ones, which is the reason the model survived the rename at all."""
     base = dict(
         name="Jane Smith",
-        office={"name": "Council Member"},
+        label="Council Member",
+        labels=["Council Member"],
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:co/place:denver/government",
         source_urls=["https://denvergov.org/council"],
         updated_at="2025-06-27T19:43:55+00:00",
     )
     base.update(overrides)
-    return Official(**base)
+    return RosterPerson(**base)
 
 
 class TestPhoneValidation:

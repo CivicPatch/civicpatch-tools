@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict, List, Optional, TypeAlias
 
-from domain.models import Official, Person
+from shared.schemas import Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (

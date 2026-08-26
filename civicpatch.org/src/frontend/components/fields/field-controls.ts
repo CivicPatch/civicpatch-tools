@@ -10,7 +10,10 @@ import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
 import { DERIVED_POST } from "../posts-list/posts-model.js";
 import type { OfficeOption } from "../posts-list/posts-model.js";
-import { PERSON_LINK_TARGET, SOURCE_LINK_TARGET } from "../../utils/source-links.js";
+import {
+  PERSON_LINK_TARGET,
+  SOURCE_LINK_TARGET,
+} from "../../utils/source-links.js";
 import {
   diffValue,
   type FieldSpec,
@@ -68,10 +71,6 @@ export function buildFieldUpdate(
   key: string,
   value: unknown,
 ): Record<string, unknown> {
-  if (key.startsWith("office.")) {
-    const subKey = key.split(".")[1];
-    return { office: { ...(person?.office ?? {}), [subKey]: value } };
-  }
   return { [key]: value };
 }
 
@@ -210,14 +209,17 @@ export function renderOfficeNewSide(
     >
       <option value=${DERIVED} .selected=${!current}>${DERIVED_POST}</option>
       ${options.map(
-        (option) => html`<option value=${option.post_id} .selected=${option.post_id === current}>
-          ${option.text}
-        </option>`,
+        (option) =>
+          html`<option
+            value=${option.post_id}
+            .selected=${option.post_id === current}
+          >
+            ${option.text}
+          </option>`,
       )}
     </select>
   `;
 }
-
 
 // Every multi-value list renders one more row than it holds, and that trailing
 // empty row is how a value gets added — so there is no button, and nothing to
@@ -322,23 +324,25 @@ export interface MultiListProps {
 // of each, and "Remove" three times over says nothing about which. `title` stays
 // for the pointer tooltip — as an accessible name it is too weak to rely on,
 // since it never surfaces on touch.
-const renderLinkAction = (value: string, target: string) => html`<a
-  class="field-control__action"
-  href=${ensureUrl(value)}
-  target=${target}
-  aria-label=${`Open ${value}`}
-  title="Open link"
-  ><i class="fa-solid fa-arrow-up-right-from-square"></i
-></a>`;
+const renderLinkAction = (value: string, target: string) =>
+  html`<a
+    class="field-control__action"
+    href=${ensureUrl(value)}
+    target=${target}
+    aria-label=${`Open ${value}`}
+    title="Open link"
+    ><i class="fa-solid fa-arrow-up-right-from-square"></i
+  ></a>`;
 
-const renderRemoveAction = (value: string, remove: () => void) => html`<button
-  class="field-control__action field-control__action--remove"
-  aria-label=${`Remove ${value}`}
-  title="Remove"
-  @click=${remove}
->
-  <i class="fa-solid fa-xmark"></i>
-</button>`;
+const renderRemoveAction = (value: string, remove: () => void) =>
+  html`<button
+    class="field-control__action field-control__action--remove"
+    aria-label=${`Remove ${value}`}
+    title="Remove"
+    @click=${remove}
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>`;
 
 // An action a row does not have still holds its place, so every input in a
 // field is one width — otherwise the trailing empty row runs wider than the
@@ -350,55 +354,58 @@ const ACTION_SPACER = html`<span
 
 // Shown, not edited: you are deciding about it, not changing it. `--cleared` is
 // the same language a scalar field uses when the scrape emptied it.
-const renderDroppedRow = (value: string, restore: () => void) => html`<div
-  class="field-control__multi-row"
->
-  <span
-    class="field-control__input field-control__input--cleared"
-    title="Removed by this scrape"
-    ><s>${value}</s></span
-  >
-  <button
-    class="field-control__action field-control__action--restore"
-    aria-label=${`Put back ${value}`}
-    @click=${restore}
-  >
-    <i class="fa-solid fa-rotate-left"></i> Put back
-  </button>
-</div>`;
+const renderDroppedRow = (value: string, restore: () => void) =>
+  html`<div class="field-control__multi-row">
+    <span
+      class="field-control__input field-control__input--cleared"
+      title="Removed by this scrape"
+      ><s>${value}</s></span
+    >
+    <button
+      class="field-control__action field-control__action--restore"
+      aria-label=${`Put back ${value}`}
+      @click=${restore}
+    >
+      <i class="fa-solid fa-rotate-left"></i> Put back
+    </button>
+  </div>`;
 
 export function renderMultiList(props: MultiListProps) {
-  const { rows, dropped, setValues, label, linkTarget, inputType, focusRef } = props;
+  const { rows, dropped, setValues, label, linkTarget, inputType, focusRef } =
+    props;
   const values = rows.map((row) => row.value);
   return html`
     <div class="field-control__multi">
-      ${[...rows, { value: "", isNew: false, isInvalid: false }].map((row, i) => {
-        const isDraft = i === values.length;
-        return html`<div class="field-control__multi-row">
-          <input
-            ${attachFocus(i === 0 ? focusRef : null)}
-            class="field-control__input ${isDraft ? "field-control__input--draft" : ""} ${row.isInvalid
-              ? "field-control__input--error"
-              : ""}"
-            type=${inputType}
-            title=${row.isNew ? "Found by this scrape" : nothing}
-            aria-label=${isDraft ? `Add ${label}` : `${label} ${i + 1}`}
-            placeholder=${isDraft ? `+ add ${label}` : nothing}
-            .value=${row.value}
-            @input=${(e: Event) => setValues(withValueAt(values, i, inputValue(e)))}
-          />
-          ${!linkTarget
-            ? nothing
-            : isDraft || !row.value.trim()
+      ${[...rows, { value: "", isNew: false, isInvalid: false }].map(
+        (row, i) => {
+          const isDraft = i === values.length;
+          return html`<div class="field-control__multi-row">
+            <input
+              ${attachFocus(i === 0 ? focusRef : null)}
+              class="field-control__input ${isDraft
+                ? "field-control__input--draft"
+                : ""} ${row.isInvalid ? "field-control__input--error" : ""}"
+              type=${inputType}
+              title=${row.isNew ? "Found by this scrape" : nothing}
+              aria-label=${isDraft ? `Add ${label}` : `${label} ${i + 1}`}
+              placeholder=${isDraft ? `+ add ${label}` : nothing}
+              .value=${row.value}
+              @input=${(e: Event) =>
+                setValues(withValueAt(values, i, inputValue(e)))}
+            />
+            ${!linkTarget
+              ? nothing
+              : isDraft || !row.value.trim()
+                ? ACTION_SPACER
+                : renderLinkAction(row.value, linkTarget)}
+            ${isDraft
               ? ACTION_SPACER
-              : renderLinkAction(row.value, linkTarget)}
-          ${isDraft
-            ? ACTION_SPACER
-            : renderRemoveAction(row.value, () =>
-                setValues(values.filter((_, j) => j !== i)),
-              )}
-        </div>`;
-      })}
+              : renderRemoveAction(row.value, () =>
+                  setValues(values.filter((_, j) => j !== i)),
+                )}
+          </div>`;
+        },
+      )}
       ${dropped.map((value) =>
         renderDroppedRow(value, () => setValues([...values, value])),
       )}

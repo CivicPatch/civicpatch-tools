@@ -101,7 +101,6 @@ export function buildDivisionOcdid(
   return buildDivisionFromBase(jurisdictionToDivisionBase(jurisdictionOcdid), type, value);
 }
 
-export type Office = { name?: string; division_ocdid?: string | null; [k: string]: unknown };
 // One post a person holds, as the API sends it. `post_label` is the post's own name and
 // `label` is what the source said beyond it — the two halves of how a post reads.
 export type PersonMembership = {
@@ -117,11 +116,12 @@ export type PersonMembership = {
 export type Person = {
   id: string;
   name?: string;
-  // Where they serve. `office` is the joined string this replaces, still sent while the
-  // review surfaces move off it.
+  // Where they serve. `memberships` once published; before that, `labels` verbatim from the
+  // pages that saw them and the division those imply. `office` held the labels joined into
+  // one string and is gone — no reader could tell one office from three spellings of one.
   memberships?: PersonMembership[];
   labels?: string[];
-  office?: Office;
+  division_ocdid?: string | null;
   start_date?: string | null;
   end_date?: string | null;
   other_names?: string[];

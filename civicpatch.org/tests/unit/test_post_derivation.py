@@ -34,18 +34,16 @@ _TAXONOMY = build_taxonomy(RoleConfig(roles=_ROLES))
 
 
 def _person(person_id, office_name, division_ocdid=None):
-    """`derived_posts` reads `Person.labels` now, not a joined `office.name`.
+    """`derived_posts` reads `Person.labels`, not a joined `office.name`.
 
-    The fixtures still pass one " - " string because that is how a roster reads; it is split
-    here, which is the join being retired happening once in a test helper instead of on every
-    record. `office` rides along as an extra only when a division is pinned, since that is the
-    one thing `Person` does not model and a reviewer could have set by hand.
+    The fixtures still pass one " - " string because it is compact to write; it is split here,
+    so the join being retired happens once in a test helper instead of on every record.
+
+    A pinned division rides along as `division_ocdid`, the field the rendered roster carries —
+    `Person` does not model it, and a reviewer could have set it by hand. It was nested under
+    `office` until that shape was retired.
     """
-    extra = (
-        {"office": {"name": office_name, "division_ocdid": division_ocdid}}
-        if division_ocdid
-        else {}
-    )
+    extra = {"division_ocdid": division_ocdid} if division_ocdid else {}
     return Person(
         id=person_id,
         name=f"Person {person_id}",
@@ -126,7 +124,7 @@ def test_at_large_with_no_value_is_swallowed_and_does_not_reach_the_residue():
 @pytest.mark.unit
 def test_the_records_own_division_beats_the_one_parsed_from_its_label():
     """Measured over the corpus: 2,824 published people carry a ward or district in
-    `office.division_ocdid` against 57 whose label mentions one. Re-deriving from the label
+    `division_ocdid` (then nested under `office`) against 57 whose label mentions one. Re-deriving from the label
     alone collapsed every ward seat in a town onto one at-large post."""
     derived = derived_posts(
         [

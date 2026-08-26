@@ -307,3 +307,58 @@ def test_already_ordered_file_only_moves_the_edited_line():
         if line[:1] in "+-" and not line.startswith(("+++", "---"))
     ]
     assert changed == ["-  - (916) 808-5300", "+  - (202) 555-0143"]
+
+
+# --- the edit path against a roster the renderer actually produced ---------------
+
+
+def _rendered_roster() -> list[dict]:
+    """Not a hand-written fixture: the real output of `roster_from_rows`.
+
+    Every existing test here builds its base dict by hand, which is how the roster losing
+    `office` went unnoticed while `validate_and_normalize` still required it — the fixtures
+    kept a key production had stopped sending, and 780 tests stayed green while every
+    reviewer save would have failed with "office: Field required".
+    """
+    from unittest.mock import MagicMock
+
+    from core.people_roster import roster_from_rows
+    from shared.schemas import RoleConfig
+    from shared.utils.taxonomy import build_taxonomy
+
+    jurisdiction = "ocd-jurisdiction/country:us/state:tx/place:alpha/government"
+    roster, _ = roster_from_rows(
+        [
+            {
+                "name": "Ann Lee",
+                "label": "Council Member Place 2",
+                "source_url": "https://alpha.gov/council",
+                "phone": "(512) 978-2100",
+            }
+        ],
+        {},
+        build_taxonomy(RoleConfig(roles=[])),
+        jurisdiction,
+        MagicMock(),
+    )
+    return roster
+
+
+@pytest.mark.unit
+def test_a_rendered_roster_survives_the_edit_path():
+    base = _rendered_roster()
+    assert "office" not in base[0]
+
+    patched = patch_people(base, [PersonPatch(id=base[0]["id"], fields={"emails": ["ann@alpha.gov"]})])
+
+    assert patched[0]["emails"] == ["ann@alpha.gov"]
+    assert patched[0]["labels"] == ["Council Member Place 2"]
+    assert patched[0]["name"] == "Ann Lee"
+
+
+@pytest.mark.unit
+def test_an_edit_to_a_rendered_roster_still_canonicalises_a_phone():
+    """The validators are the only reason the edit path goes through a model at all."""
+    base = _rendered_roster()
+    patched = patch_people(base, [PersonPatch(id=base[0]["id"], fields={"phones": ["512 978 2100"]})])
+    assert patched[0]["phones"] == ["(512) 978-2100"]

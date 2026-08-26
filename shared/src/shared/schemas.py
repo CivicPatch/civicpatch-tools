@@ -9,20 +9,27 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from shared.utils.phone_utils import normalize_phone_number
 
 
-class Office(BaseModel):
-    name: str
-    division_ocdid: Optional[str] = None
+class RosterPerson(BaseModel):
+    """A person as a rendered roster holds them, and as a reviewer may submit them.
 
+    Was `Official`, which carried `office: Office` — the labels joined into one string with
+    the division lifted out. `label` is the derivation's single answer and `labels` the
+    verbatim evidence behind it, so nothing has to un-join anything.
 
-class Official(BaseModel):
+    The validators are the reason this is a model at all: they canonicalise a phone number a
+    reviewer typed by hand and reject a date in a shape the files cannot hold.
+    """
+
     name: str
     other_names: List[str] = []
+    label: str = ""
+    labels: List[str] = []
+    division_ocdid: Optional[str] = None
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []
     start_date: Optional[str] = None
     end_date: Optional[str] = None
-    office: Office
     image: Optional[str] = None
     jurisdiction_ocdid: str
     cdn_image: Optional[str] = None

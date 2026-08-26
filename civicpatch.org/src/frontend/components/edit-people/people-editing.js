@@ -21,10 +21,9 @@ export function emptyPerson(personId, jurisdictionOcdid) {
     urls: [],
     start_date: null,
     end_date: null,
-    office: {
-      name: "",
-      division_ocdid: jurisdictionOcdid ? jurisdictionToDivisionBase(jurisdictionOcdid) : null,
-    },
+    // No `office`: a hand-added person has no labels, and the post comes from `post_id`.
+    labels: [],
+    division_ocdid: jurisdictionOcdid ? jurisdictionToDivisionBase(jurisdictionOcdid) : null,
     image: null,
     cdn_image: null,
     jurisdiction_ocdid: jurisdictionOcdid,

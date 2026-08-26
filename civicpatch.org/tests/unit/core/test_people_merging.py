@@ -25,11 +25,16 @@ ROLE_CONFIG = RoleConfig(
     roles=[
         Role(id="mayor", label="Mayor", is_unique=True),
         Role(id="mayor-pro-tempore", label="Mayor Pro Tempore", is_unique=True),
-        Role(id="council-member", label="Council Member"),
+        # `councilmember` is a real alias in the live taxonomy; without it here the
+        # dedupe test would be asserting against a taxonomy no jurisdiction has.
+        Role(id="council-member", label="Council Member", aliases=["councilmember"]),
         Role(id="commissioner", label="Commissioner"),
         Role(id="treasurer", label="Treasurer", is_unique=True),
     ]
 )
+
+
+TAXONOMY = build_taxonomy(ROLE_CONFIG)
 
 
 def make_llm_person(name, label="", phone=None, email=None, url=None, source_url=None):
@@ -88,14 +93,31 @@ def test_merge_labels():
     p1 = make_llm_person("Sam", label="Council Member - Ward 1")
     p2 = make_llm_person("Sam", label="Mayor")
     p3 = make_llm_person("Sam", label="Council Member - Ward 1")
-    result = merge_labels([p1, p2, p3])
+    result = merge_labels([p1, p2, p3], TAXONOMY)
     assert set(result) == {"Council Member - Ward 1", "Mayor"}
+
+
+def test_merge_labels_collapses_two_spellings_of_one_office():
+    """The reason the dedupe moved onto the parse. Both parse to the same role and division,
+    so keeping both showed one person as holding two offices — which is what `office.name`
+    joining them made unreadable in the first place."""
+    p1 = make_llm_person("Sam", label="Councilmember Ward 1")
+    p2 = make_llm_person("Sam", label="Council Member Ward 1")
+    assert len(merge_labels([p1, p2], TAXONOMY)) == 1
+
+
+def test_merge_labels_keeps_a_label_whose_parse_differs():
+    """Only identical statements collapse. Residue the parser could not place is a difference,
+    so a label carrying it survives rather than being silently dropped for a shorter twin."""
+    p1 = make_llm_person("Sam", label="Council Member Ward 1")
+    p2 = make_llm_person("Sam", label="Council Member Ward 1 (Zoning Administrator)")
+    assert len(merge_labels([p1, p2], TAXONOMY)) == 2
 
 
 def test_merge_labels_skips_empty():
     p1 = make_llm_person("Dana", label="")
     p2 = make_llm_person("Dana", label="Ward 2")
-    assert merge_labels([p1, p2]) == ["Ward 2"]
+    assert merge_labels([p1, p2], TAXONOMY) == ["Ward 2"]
 
 
 # --- normalize_record ---
@@ -188,7 +210,9 @@ def test_merge_records_to_person():
         email="eve@city.org",
         source_url="http://source2.com",
     )
-    result = merge_records_to_person(MagicMock(), "Eve", [p1, p2], "jurisdiction_id")
+    result = merge_records_to_person(
+        MagicMock(), "Eve", [p1, p2], "jurisdiction_id", TAXONOMY
+    )
 
     assert result.name == "Eve"
     assert set(result.labels) == {"Council Member - Ward 5", "Treasurer - Ward 6"}
@@ -257,9 +281,11 @@ def test_the_merge_does_not_depend_on_the_order_records_arrive_in():
                         source_url="http://a.gov/eve"),
         make_llm_person("Eve A. Adams", label="Mayor", source_url="http://a.gov/about"),
     ]
-    forwards = merge_records_to_person(MagicMock(), "Eve Adams", records, "ocdid")
+    forwards = merge_records_to_person(
+        MagicMock(), "Eve Adams", records, "ocdid", TAXONOMY
+    )
     backwards = merge_records_to_person(
-        MagicMock(), "Eve Adams", list(reversed(records)), "ocdid"
+        MagicMock(), "Eve Adams", list(reversed(records)), "ocdid", TAXONOMY
     )
 
     assert forwards.model_dump(exclude={"updated_at"}) == backwards.model_dump(

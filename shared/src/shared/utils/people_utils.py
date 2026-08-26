@@ -1,18 +1,18 @@
-"""Rendering a roster into the shape it is stored in.
+"""Ordering a roster the way a reviewer reads it: by role, then designation, then name.
 
-`Person` carries labels verbatim, one per office. `Official` joins them into a single
-`office.name` with the division lifted out — a lossy render kept only until the review
-surfaces read `labels`, which is what they now also receive.
+`person_to_official` lived here and is gone. It joined a person's labels into one
+`office.name` and lifted the division out — a render that could not be undone, so a person
+sighted on three pages that spelled the office differently read back as three offices.
+`people_roster._rendered` now builds the row straight off the `Person`, with the derivation's
+single `label` beside the verbatim `labels`.
 
-The reverse (`official_to_person`) is gone: it split `office.name` back apart and put the
-division into the labels as a designation, and nothing called it once records crossed the
-boundary already decomposed.
+The reverse (`official_to_person`) went earlier, for the same reason.
 """
 
 from typing import List
 
-from shared.schemas import Office, Official, Person
-from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
+from shared.schemas import Person
+from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, designation_sort_key, role_sort_key
 
 
@@ -47,37 +47,5 @@ def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
         )
 
     return sorted(people, key=person_sort_key)
-
-
-def person_to_official(person: Person, taxonomy: Taxonomy) -> Official:
-    parsed = [parse_label(label, taxonomy) for label in person.labels]
-    office_names = list(dict.fromkeys(label for label in person.labels if label))
-    # The last producer of a joined label string. Nothing splits it back any more — every
-    # reader takes `labels`, so this is a display join on its way out with `Official`.
-    office_name = " - ".join(office_names) if office_names else "Unknown Office"
-    # A person sits in at most one division; the first label naming one decides it.
-    located = next((p for p in parsed if p.division), None)
-    resolved_division = division_ocdid(
-        located or ParsedLabel(), person.jurisdiction_ocdid
-    )
-    return Official(
-        id="",  # to be filled in later after resolving with API
-        name=person.name,
-        other_names=person.other_names,
-        phones=person.phones,
-        emails=person.emails,
-        urls=person.urls,
-        start_date=person.start_date or None,
-        end_date=person.end_date or None,
-        office=Office(
-            name=office_name,
-            division_ocdid=resolved_division,
-        ),
-        image=person.image,
-        jurisdiction_ocdid=person.jurisdiction_ocdid,
-        cdn_image=person.cdn_image,
-        source_urls=person.source_urls,
-        updated_at=person.updated_at or "",
-    )
 
 

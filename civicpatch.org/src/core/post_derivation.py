@@ -13,7 +13,7 @@ from shared.schemas import Person, Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import proposed_membership_label
-from core.people_roles import derive_roles
+from core.people_roles import DerivedRoles, derive_roles
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
@@ -53,20 +53,20 @@ class DerivedPost(BaseModel):
     members: list[DerivedMember]
 
 
-def _division(record: Person, parsed: dict) -> str:
+def _division(record: Person, parsed: DerivedRoles) -> str:
     """The record's own division wins over the one re-derived from its label.
 
-    Out of `model_extra`: `office` is not a `Person` field, it is the shape being retired. A
-    reviewer may have set the division by hand back when the editor offered it as a field, and
-    that answer outranks anything re-derived from text.
+    Out of `model_extra`: the rendered roster carries `division_ocdid` and `Person` does not
+    declare it. A reviewer may have set it by hand back when the editor offered it as a field,
+    and that answer outranks anything re-derived from text. (It read `office.division_ocdid`
+    until `office` was retired — same field, one level of nesting fewer.)
     """
-    office = (record.model_extra or {}).get("office") or {}
-    stored = (office.get("division_ocdid") or "").strip()
-    return stored or parsed["division_ocdid"]
+    stored = ((record.model_extra or {}).get("division_ocdid") or "").strip()
+    return stored or parsed.division_ocdid
 
 
 def _demoted_role_ids(
-    parsed: dict, ids_by_label: dict[str, str], post_role_id: str
+    parsed: DerivedRoles, ids_by_label: dict[str, str], post_role_id: str
 ) -> list[str]:
     """Every role the label named except the one the post is defined by.
 
@@ -77,37 +77,42 @@ def _demoted_role_ids(
     Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
     nowhere to go and stays in `unmatched_text`, which is where triage can act on it.
 
-    Order follows `parsed["roles"]`, which `derive_roles` builds in the order the text gives
+    Order follows `parsed.roles`, which `derive_roles` builds in the order the text gives
     them, so a reader sees them as the source wrote them.
     """
     return [
         ids_by_label[label]
-        for label in parsed.get("roles") or []
+        for label in parsed.roles
         if label in ids_by_label and ids_by_label[label] != post_role_id
     ]
 
 
-def _unresolved_text(parsed: dict) -> list[str]:
+def _unresolved_text(parsed: DerivedRoles) -> list[str]:
+    """Residue from labels that resolved to no role at all.
+
+    A label that found its role has already said what it means; leftovers beside a known role
+    are a designation, not vocabulary we are missing.
+    """
     terms = [
         term
-        for part in parsed.get("parts") or []
-        if not part.get("role")
-        for term in part.get("unmatched") or []
+        for part in parsed.parts
+        if not part.parsed.role
+        for term in part.parsed.unmatched
     ]
     return list(dict.fromkeys(terms))
 
 
 def _member(
-    record: Person, parsed: dict, ids_by_label: dict[str, str], post_role_id: str
+    record: Person, parsed: DerivedRoles, ids_by_label: dict[str, str], post_role_id: str
 ) -> "DerivedMember":
     """One person, and everything their label carried beyond the post's own role."""
     return DerivedMember(
         person_id=record.id,
-        designations=parsed.get("other_designations") or [],
+        designations=parsed.other_designations,
         unmatched_text=_unresolved_text(parsed),
-        source_labels=parsed.get("labels") or [],
+        source_labels=parsed.labels,
         role_ids=_demoted_role_ids(parsed, ids_by_label, post_role_id),
-        label=proposed_membership_label(parsed.get("parts") or []),
+        label=proposed_membership_label(parsed.parts),
     )
 
 
@@ -134,8 +139,8 @@ def derived_posts(
     ids_by_label = {role.label: role.id for role in roles}
     chosen = chosen or {}
 
-    def role_id_for(parsed: dict) -> str:
-        label = parsed.get("role")
+    def role_id_for(parsed: DerivedRoles) -> str:
+        label = parsed.role
         return (ids_by_label.get(label) if label else None) or UNMATCHED_ROLE_ID
 
     grouped: dict[tuple[str, str], list[DerivedMember]] = {}

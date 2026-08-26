@@ -62,7 +62,10 @@ export function postsFor(
   }
   const record = personOf(card);
   if (record?.memberships?.length) return postsHeld(record.memberships);
-  return record?.office?.name ?? "";
+  // A proposed person holds no membership yet, so this is the live path for every scrape
+  // card. `labels` verbatim, joined for display only — `office.name` was the same join done
+  // upstream, where it could not be undone.
+  return record?.labels?.join("; ") ?? "";
 }
 
 /** A list per person, not one change: a person can be proposed onto more than one post, and
