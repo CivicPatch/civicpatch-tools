@@ -88,12 +88,13 @@ async def open_pr():
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (request_id, ocdid),
         )
-        await cur.execute("INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,))
+        await cur.execute("UPDATE requests SET status = 'SUCCESS', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,))
 
     yield request_id, ocdid
 
     async with pool.connection() as conn:
-        await conn.execute("DELETE FROM pipeline_runs WHERE request_id::text = %s", (request_id,))
+        # The run lives on the request now; deleting the request takes it.
         await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 

@@ -121,7 +121,7 @@ async def test_record_mints_once_then_matches():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_match_never_overwrites_a_human_edit():
-    """The reason `DO NOTHING` is not `DO UPDATE`: label and headcount are human-owned, and
+    """The reason `DO NOTHING` is not `DO UPDATE`: headcount and tracking are human-owned, and
     the derivation has no update path to reach them."""
     await _seed_person()
     pool = await get_pool()
@@ -131,15 +131,15 @@ async def test_a_match_never_overwrites_a_human_edit():
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "UPDATE posts SET label = %s, _headcount = %s WHERE id = %s",
-            ("Councillors", 9, post_id),
+            "UPDATE posts SET _headcount = %s, _is_tracked = %s WHERE id = %s",
+            (9, False, post_id),
         )
         await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "SELECT label, _headcount FROM posts WHERE id = %s", (post_id,)
+            "SELECT _headcount, _is_tracked FROM posts WHERE id = %s", (post_id,)
         )
-        assert await cur.fetchone() == ("Councillors", 9)
+        assert await cur.fetchone() == (9, False)
         await conn.rollback()
 
 
@@ -357,15 +357,14 @@ async def test_publish_writes_memberships_for_the_roster():
             """,
             (request_id := str(uuid.uuid4()), _OCDID),
         )
-        # Every registration path creates one, and publish reads its `updated_at` as the
-        # observation's clock — so this is where `_T0` has to go.
+        # Publish reads `sourced_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
             """
-            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-            VALUES (%s, 'SUCCESS', 100, %s, %s)
-            ON CONFLICT (request_id) DO NOTHING
+            UPDATE requests SET status = 'SUCCESS', progress = 100,
+                                created_at = %s, sourced_at = %s
+            WHERE id = %s
             """,
-            (request_id, _T0, _T0),
+            (_T0, _T0, request_id),
         )
         await conn.commit()
 
@@ -385,7 +384,16 @@ async def test_publish_writes_memberships_for_the_roster():
             role_label="Mayor",
             division_ocdid=_BASE,
             headcount=1,
-            members=[DerivedMember(person_id=person_id, source_labels=["Mayor"])],
+            members=[
+                DerivedMember(
+                    person_id=person_id,
+                    source_labels=["Mayor"],
+                    # The source's claim about the tenure. Partial on purpose: `start_date`
+                    # was a `date` column until 144 and could not have held a bare year.
+                    start_date="2025",
+                    end_date="2029-12-31",
+                )
+            ],
         )
     ]
 
@@ -396,7 +404,7 @@ async def test_publish_writes_memberships_for_the_roster():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT p.role_id, m.first_seen_at, m.closed_at
+            SELECT p.role_id, m.first_seen_at, m.closed_at, m.start_date, m.end_date
             FROM memberships m JOIN posts p ON p.id = m.post_id
             WHERE p.jurisdiction_ocdid = %s
             """,
@@ -404,11 +412,15 @@ async def test_publish_writes_memberships_for_the_roster():
         )
         rows = await cur.fetchall()
         assert len(rows) == 1
-        role_id, first_seen_at, closed_at = rows[0]
+        role_id, first_seen_at, closed_at, start_date, end_date = rows[0]
         assert role_id == "mayor"
         assert closed_at is None
         # The Record's own updated_at, not the moment publish ran.
         assert first_seen_at == _T0
+        # Valid time — what the source claims about the term — beside transaction time above.
+        # Untested until 2026-08-26: publish carried dates onto `DerivedMember` but no test
+        # followed them into the row, and the last publish to do it for real dropped them.
+        assert (start_date, end_date) == ("2025", "2029-12-31")
 
         # Asserted on the stored row rather than on the dict the row builder produced: since
         # 136 these columns are the record, so a publish that shapes them wrong has nowhere
@@ -515,15 +527,15 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "trustee", _BASE)
 
-        assert await posts.update_human_fields(cur, post_id, "Trustees", 5, True) is True
+        assert await posts.update_human_fields(cur, post_id, 5, False) is True
         await cur.execute(
-            "SELECT label, _headcount FROM posts WHERE id::text = %s", (post_id,)
+            "SELECT _headcount, _is_tracked FROM posts WHERE id::text = %s", (post_id,)
         )
-        assert await cur.fetchone() == ("Trustees", 5)
+        assert await cur.fetchone() == (5, False)
 
         assert (
             await posts.update_human_fields(
-                cur, "00000000-0000-0000-0000-000000000000", None, 1, True
+                cur, "00000000-0000-0000-0000-000000000000", 1, True
             )
             is False
         )
@@ -941,9 +953,9 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         # old close-at-ingest path would raise on the missing run and this test would pass
         # against the very behaviour it exists to forbid.
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at) "
-            "VALUES (%s, 'SUCCESS', 100, %s, %s)",
-            (request_id, _T1, _T1),
+            "UPDATE requests SET status = 'SUCCESS', progress = 100, "
+            "created_at = %s, sourced_at = %s WHERE id = %s",
+            (_T1, _T1, request_id),
         )
         await conn.commit()
 

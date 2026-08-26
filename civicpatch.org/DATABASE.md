@@ -50,18 +50,10 @@ erDiagram
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it"
         text_null       open_data_url       "where the change landed: a commit URL going forward, a PR URL on backfilled rows"
+        text_null       status              "147: was pipeline_runs.status. null when no pipeline ran"
+        int_null        progress            "147: was pipeline_runs.progress"
+        timestamptz_null sourced_at         "147: when the run last read the source; dates last_seen_at, and orders supersede"
         timestamptz     created_at
-        timestamptz     updated_at
-    }
-
-    pipeline_runs {
-        int             id              PK
-        uuid            request_id      FK  "unique"
-        int_null        progress
-        text            status              "idx"
-        bigint_null     github_run_id
-        timestamptz_null created_at
-        timestamptz_null updated_at
     }
 
     people {
@@ -203,7 +195,6 @@ erDiagram
         uuid            organization_id     FK
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named live in membership_roles"
         text            division_ocdid      FK "ON UPDATE CASCADE"
-        text_null       label               "human-owned; mint-only writes never overwrite it"
         int             _headcount          "check: > 0, default: 1; human-owned. Underscored: Popolo has no headcount — our Post is a group of interchangeable seats"
         bool            _is_tracked         "default: true; a roster omitting this post is meaningful — gates the review queue, not the record. Orthogonal to lifecycle"
         timestamptz     created_at          "default: now()"
@@ -260,7 +251,6 @@ erDiagram
     source_records ||--o| source_record_identities : "source_record_id"
     jurisdictions ||--o{ requests : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
-    requests ||--o| pipeline_runs : "request_id"
     requests }o--o{ issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ requests : "requested_by_user_id"
@@ -275,7 +265,7 @@ erDiagram
 
 **Notes:**
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
-- `pipeline_runs` has a unique constraint on `request_id` (one-to-one with `requests`). `pull_requests` was dropped in migration 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
+- `pipeline_runs` was folded into `requests` in migration 147: `request_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
 - `people` has no FK to `requests` — it is written by the publish transaction, not by a merge
 - `state_configs` has one row per state (seeded per existing state in migration 100; every state always has one). It currently carries **no settings columns** — migration 103 dropped `min_scraped_at` when freshness became a computed rolling window, and the table is deliberately kept as the home for the next per-state setting rather than dropped and recreated. `state` mirrors `jurisdictions.state` but is **not** an enforced FK (`jurisdictions.state` isn't unique).
 - `roles` replaced `role_terms` / `role_aliases` in migration 106, and migration 109 **flattened it**: the `scope` column (NULL=global / state ocdid / place ocdid) is gone, along with per-scope resolution, alias unioning, and the `roles_global_complete` check. It carried 24 global rows and 1 scoped test row while costing the promotion trap — promoting a role was DELETE + INSERT, minting a new uuid and breaking any FK pointing at it. One flat list, `unique (lower(label))`. #2470 and #2471 ask for *more* hierarchy and are inverted by this; see `.scratch/2026-08-12-plan-flat-roles.md`.

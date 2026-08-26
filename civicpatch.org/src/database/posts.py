@@ -1,7 +1,7 @@
 from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
 from core.post_grouping import group_by_organization
-from database import assertions, divisions, organizations, roles
+from database import assertions, divisions, organizations
 from database.change_logs import record_change
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
@@ -19,12 +19,17 @@ class PostHasMembers(Exception):
 
 
 # The fields a human owns. The derivation sets them once at mint and never again.
-_HUMAN_FIELDS = ("label", "_headcount", "_is_tracked")
+_HUMAN_FIELDS = ("_headcount", "_is_tracked")
+
+
+def _with_label(post: dict) -> dict:
+    role_label = post.pop("role_label", None) or post["role_id"]
+    return {**post, "label": derive_post_label(role_label, post["division_ocdid"])}
 
 
 def _fields_to_accept(values: dict) -> list[tuple[str, object]]:
-    """Which of a post's human fields have a value to accept. A `None` label says nothing about
-    the post, and `value` is NOT NULL."""
+    """Which of a post's human fields have a value to accept. `value` is NOT NULL, so a field
+    nobody answered is left out rather than stored as null."""
     return [
         (field, value)
         for field, value in values.items()
@@ -60,30 +65,24 @@ async def create_if_absent(
     organization_id: str,
     role_id: str,
     division_ocdid: str,
-    label: str | None = None,
     headcount: int = 1,
     is_tracked: bool = True,
 ) -> str | None:
     """Insert a post, or None if the triple is taken. The only INSERT in this module.
 
-    All of them land only here, on mint — a later scrape must not overwrite what somebody
-    typed, which is why none is ever recomputed. An absent `label` is suggested from the role
-    and division, so a post is never nameless before somebody gets to it.
+    Both land only here, on mint — a later scrape must not overwrite what somebody typed,
+    which is why neither is ever recomputed. The label is not among them: it is composed on
+    read from the role and the division (148), so there is nothing to seed.
 
     `_headcount` and `_is_tracked` carry their prefix as column names, because no civic
     standard defines either. The Python arguments drop it: a leading underscore means
     something else here.
     """
-    if label is None:
-        role = await roles.get_role(cur, role_id)
-        if role:
-            label = derive_post_label(role.label, division_ocdid)
-
     await cur.execute(
         """
         INSERT INTO posts
-            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, label, _headcount, _is_tracked)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, _headcount, _is_tracked)
+        VALUES (%s, %s, %s, %s, %s, %s)
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
         """,
@@ -92,7 +91,6 @@ async def create_if_absent(
             organization_id,
             role_id,
             division_ocdid,
-            label,
             headcount,
             is_tracked,
         ),
@@ -140,7 +138,6 @@ async def find_or_create(
 async def update_human_fields(
     cur,
     post_id: str,
-    label: str | None,
     headcount: int,
     is_tracked: bool,
 ) -> bool:
@@ -150,8 +147,8 @@ async def update_human_fields(
     This is where a person corrects it — the clerk their town elects, the attorney it does not.
     """
     await cur.execute(
-        "UPDATE posts SET label = %s, _headcount = %s, _is_tracked = %s WHERE id::text = %s",
-        (label, headcount, is_tracked, post_id),
+        "UPDATE posts SET _headcount = %s, _is_tracked = %s WHERE id::text = %s",
+        (headcount, is_tracked, post_id),
     )
     return cur.rowcount > 0
 
@@ -239,16 +236,18 @@ async def get(cur, post_id: str) -> dict | None:
     caller, so a request cannot name a mismatched pair."""
     await cur.execute(
         """
-        SELECT id::text, jurisdiction_ocdid, organization_id::text, role_id, division_ocdid,
-               label, _headcount, _is_tracked
-        FROM posts WHERE id::text = %s
+        SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
+               posts.role_id, posts.division_ocdid, posts._headcount, posts._is_tracked,
+               roles.label AS role_label
+        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
+        WHERE posts.id::text = %s
         """,
         (post_id,),
     )
     row = await cur.fetchone()
     if row is None:
         return None
-    return dict(zip([c.name for c in cur.description or []], row))
+    return _with_label(dict(zip([c.name for c in cur.description or []], row)))
 
 
 # Members mean a publish accepted it; an assertion means a human did. The second reaches posts
@@ -309,16 +308,17 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
         -- with a conforming Post. Stored ones carry the prefix as their column name; only a
         -- computed one like `_is_verified` needs an alias to get it.
         SELECT posts.id::text, posts.organization_id::text, posts.role_id, posts.division_ocdid,
-               posts.label, posts._headcount, posts._is_tracked,
-               {POST_IS_VERIFIED} AS _is_verified
-        FROM posts
+               posts._headcount, posts._is_tracked,
+               {POST_IS_VERIFIED} AS _is_verified,
+               roles.label AS role_label
+        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
         WHERE posts.jurisdiction_ocdid = %(jurisdiction_ocdid)s
         ORDER BY posts.role_id, posts.division_ocdid
         """,
         {"jurisdiction_ocdid": jurisdiction_ocdid},
     )
     columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    return [_with_label(dict(zip(columns, row))) for row in await cur.fetchall()]
 
 
 async def ids_by_identity(
@@ -356,7 +356,7 @@ async def unverified_by_jurisdiction(
     await cur.execute(
         f"""
         SELECT posts.jurisdiction_ocdid, posts.id::text, posts.role_id,
-               posts.division_ocdid, posts.label, roles.label AS role_label
+               posts.division_ocdid, roles.label AS role_label
         FROM posts
         JOIN roles ON roles.id = posts.role_id
         WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
@@ -424,7 +424,6 @@ async def create(
     jurisdiction_ocdid: str,
     role_id: str,
     division_ocdid: str,
-    label: str | None,
     headcount: int,
     user_id: str | None = None,
 ) -> str | None:
@@ -443,14 +442,12 @@ async def create(
             organization_id,
             role_id,
             division_ocdid,
-            label=label,
             headcount=headcount,
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
-            await _accept_fields(
-                cur, post_id, {"label": label, "_headcount": headcount}, user_id
-            )
+            await _accept_fields(cur, post_id, {"_headcount": headcount}, user_id)
+            minted = await get(cur, post_id)
             await record_change(
                 cur,
                 ChangeLogType.ADD_POST,
@@ -460,7 +457,7 @@ async def create(
                     post_id=post_id,
                     role_id=role_id,
                     division_ocdid=division_ocdid,
-                    label=label,
+                    label=minted["label"] if minted else None,
                 ),
             )
         return post_id
@@ -468,7 +465,6 @@ async def create(
 
 async def update(
     post_id: str,
-    label: str | None,
     headcount: int,
     is_tracked: bool,
     user_id: str | None = None,
@@ -484,11 +480,11 @@ async def update(
         if before is None:
             return False
 
-        await update_human_fields(cur, post_id, label, headcount, is_tracked)
+        await update_human_fields(cur, post_id, headcount, is_tracked)
         await _accept_fields(
             cur,
             post_id,
-            {"label": label, "_headcount": headcount, "_is_tracked": is_tracked},
+            {"_headcount": headcount, "_is_tracked": is_tracked},
             user_id,
         )
         await record_change(
@@ -500,11 +496,11 @@ async def update(
                 post_id=post_id,
                 role_id=before["role_id"],
                 division_ocdid=before["division_ocdid"],
-                label=label,
+                # Derived, and unchanged by this edit: it names the seat for a reader.
+                label=before["label"],
                 fields=[
                     FieldChange(field=field, before=before[field], after=after)
                     for field, after in (
-                        ("label", label),
                         ("_headcount", headcount),
                         ("_is_tracked", is_tracked),
                     )

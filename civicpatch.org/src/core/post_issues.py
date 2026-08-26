@@ -13,9 +13,7 @@ from shared.schemas import Issue, IssueCode
 
 
 def _post_name(post: dict) -> str:
-    return post.get("label") or derive_post_label(
-        post["role_label"], post["division_ocdid"]
-    )
+    return derive_post_label(post["role_label"], post["division_ocdid"])
 
 
 def unverified_post_issues(posts: list[dict]) -> list[Issue]:

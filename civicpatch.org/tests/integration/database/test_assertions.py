@@ -164,7 +164,7 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
         )
         await conn.commit()
 
-    by_hand = await posts.create(_OCDID, "treasurer", _BASE, "Treasurer", 1, user_id)
+    by_hand = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         verified = {
@@ -182,16 +182,16 @@ async def test_looking_again_refreshes_rather_than_accumulating():
     it again moves `asserted_at` instead of adding a row — which is what keeps this table
     bounded by distinct values rather than by how often anyone looks."""
     user_id, _ = await _seed()
-    post_id = await posts.create(_OCDID, "treasurer", _BASE, "Treasurer", 1, user_id)
+    post_id = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
 
     for _ in range(3):
-        assert await posts.update(post_id, "Treasurer", 1, True, user_id) is True
+        assert await posts.update(post_id, 1, True, user_id) is True
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = (await assertions.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
 
-    assert sorted(row["field_path"] for row in rows) == ["_headcount", "_is_tracked", "label"]
+    assert sorted(row["field_path"] for row in rows) == ["_headcount", "_is_tracked"]
 
 
 @pytest.mark.asyncio

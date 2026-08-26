@@ -162,11 +162,12 @@ async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
     wrong route looks exactly like success."""
     post_id = _create(client).json()["data"]["id"]
 
-    patched = client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "_headcount": 2, "_is_tracked": True})
+    patched = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
     assert patched.status_code == 200, patched.text
 
     listed = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
-    assert listed["label"] == "Town Mayor"
+    # Composed from the role and the division since 148, not stored — so it survives the patch.
+    assert listed["label"] == "Mayor"
     assert listed["_headcount"] == 2
 
     assert client.delete(f"{_PREFIX}/{post_id}").status_code == 200
@@ -176,7 +177,7 @@ async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_patching_a_post_that_is_not_there_is_404(client):
-    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"label": "x", "_headcount": 1, "_is_tracked": True})
+    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"_headcount": 1, "_is_tracked": True})
 
     assert missing.status_code == 404, missing.text
 
@@ -260,15 +261,16 @@ async def test_every_write_leaves_a_trace(client):
     """Who created a seat and who removed it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
     post_id = _create(client).json()["data"]["id"]
-    client.patch(f"{_PREFIX}/{post_id}", json={"label": "Town Mayor", "_headcount": 2, "_is_tracked": True})
+    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
     client.delete(f"{_PREFIX}/{post_id}")
 
     logs = await _change_logs()
 
     assert [log["type"] for log in logs] == ["add_post", "edit_post", "delete_post"]
     assert all(log["post_id"] == post_id for log in logs)
-    assert {f["field"] for f in logs[1]["fields"]} == {"label", "_headcount"}
-    assert logs[2]["label"] == "Town Mayor"
+    assert {f["field"] for f in logs[1]["fields"]} == {"_headcount"}
+    # The log names the seat with its composed label — nobody can type one since 148.
+    assert logs[2]["label"] == "Mayor"
 
 
 @pytest.mark.asyncio

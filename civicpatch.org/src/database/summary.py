@@ -2,14 +2,12 @@ from database.database import get_pool
 from database.requests import AVAILABLE_FOR_REVIEW
 
 _OPEN_PRS_GLOBAL = f"""
-    (SELECT COUNT(*) FROM pipeline_runs j
-     JOIN requests r ON r.id = j.request_id
+    (SELECT COUNT(*) FROM requests r
      WHERE {AVAILABLE_FOR_REVIEW})
 """
 
 _OPEN_PRS_STATE = f"""
-    (SELECT COUNT(*) FROM pipeline_runs j
-     JOIN requests r ON r.id = j.request_id
+    (SELECT COUNT(*) FROM requests r
      JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
      WHERE {AVAILABLE_FOR_REVIEW} AND jur.state = %s)
 """

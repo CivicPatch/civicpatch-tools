@@ -42,12 +42,9 @@ REVIEW_STATUS = (
 WORK_IN_FLIGHT = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
-    "AND NOT EXISTS ("
-    "SELECT 1 FROM pipeline_runs j_done "
-    "WHERE j_done.request_id = r.id "
-    f"AND j_done.status IN ('{PipelineRunStatus.ERROR.value}', "
-    f"'{PipelineRunStatus.CANCELLED.value}', '{PipelineRunStatus.RESOLVED.value}')"
-    ")"
+    f"AND r.status NOT IN ('{PipelineRunStatus.ERROR.value}', "
+    f"'{PipelineRunStatus.CANCELLED.value}', '{PipelineRunStatus.RESOLVED.value}') "
+    "AND r.status IS NOT NULL"
 )
 
 # Why a request left the pool. `dismissed_at` says only that it did.
@@ -73,10 +70,10 @@ AVAILABLE_FOR_REVIEW = (
 # is a fact about the run, and every caller that recomputed it had to know which statuses count
 # as terminal — a set that was defined twice, once in Python and once in the frontend.
 #
-# `j.status IS NULL` is a request with no run row yet, which is not in flight.
-# Requires `pipeline_runs` aliased `j`.
+# `status IS NULL` is a request no pipeline ever ran — a jurisdiction edit, or a roster
+# typed in rather than scraped — which is not in flight.
 RUN_IN_FLIGHT = (
-    "j.status IS NOT NULL AND j.status != ALL(ARRAY["
+    "r.status IS NOT NULL AND r.status != ALL(ARRAY["
     + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
     + "])"
 )
@@ -115,8 +112,8 @@ async def register_request_with_pipeline_run(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
@@ -129,13 +126,11 @@ async def register_request_with_pipeline_run(
 
         await conn.execute(
             """
-            INSERT INTO pipeline_runs (
-                request_id, status, progress,
-                created_at, updated_at
-            )
-            VALUES (%s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            UPDATE requests SET status = %s, progress = %s,
+                                sourced_at = CURRENT_TIMESTAMP
+            WHERE id = %s
             """,
-            (request_id, status, progress),
+            (status, progress, request_id),
         )
 
 
@@ -149,19 +144,19 @@ async def register_request_with_pipeline_run_if_not_exists(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at)
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
             """,
             (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
         )
         await conn.execute(
             """
-            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-            VALUES (%s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            ON CONFLICT (request_id) DO NOTHING
+            UPDATE requests SET status = %s, progress = %s,
+                                sourced_at = CURRENT_TIMESTAMP
+            WHERE id = %s AND status IS NULL
             """,
-            (request_id, PipelineRunStatus.PENDING, 0),
+            (PipelineRunStatus.PENDING, 0, request_id),
         )
 
 
@@ -180,21 +175,21 @@ async def register_foreign_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, created_at, updated_at)
-            VALUES (%s, 'people', %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            INSERT INTO requests (id, request_type, jurisdiction_ocdid, created_at)
+            VALUES (%s, 'people', %s, CURRENT_TIMESTAMP)
             """,
             (request_id, jurisdiction_ocdid),
         )
 
-        # Minimal pipeline_run row so the request can be looked up by its foreign request_id string
+        # No pipeline ran — the id comes off a git branch. Stamped SUCCESS because the work
+        # is already done elsewhere; before the merge this needed a whole fabricated run row.
         await conn.execute(
             """
-            INSERT INTO pipeline_runs (
-                request_id, status, progress, created_at, updated_at
-            )
-            VALUES (%s, %s, 100, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            UPDATE requests SET status = %s, progress = 100,
+                                sourced_at = CURRENT_TIMESTAMP
+            WHERE id = %s
             """,
-            (request_id, PipelineRunStatus.SUCCESS),
+            (PipelineRunStatus.SUCCESS, request_id),
         )
 
 
@@ -221,9 +216,9 @@ async def register_jurisdiction_edit_request(
             """
             INSERT INTO requests (
                 id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
-                open_data_url, published_at, resolved_by_user_id, created_at, updated_at
+                open_data_url, published_at, resolved_by_user_id, created_at
             )
-            VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
@@ -321,18 +316,19 @@ async def supersede_stacked_requests() -> list[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            -- Ordered by the run's `updated_at`, not the request's: which scrape read the
-            -- source more recently, not which row was touched more recently. A reviewer
-            -- editing an old roster did not go and look again. Work in progress is protected
-            -- by the held-card exclusion instead, which is time-boxed on purpose.
+            -- Ordered by `sourced_at`: which scrape read the source more recently, never
+            -- which row was touched more recently. A reviewer editing an old roster did not go
+            -- and look again. Work in progress is protected by the held-card exclusion
+            -- instead, which is time-boxed on purpose.
             --
-            -- An inner join, so a request with no run cannot supersede or be superseded. That
-            -- is only jurisdiction edits, which `SWEEPABLE` already excludes.
+            -- `sourced_at IS NOT NULL`, so a request with no run cannot supersede or be
+            -- superseded. That is jurisdiction edits (already excluded by `SWEEPABLE`) and,
+            -- once it exists, anything typed in rather than scraped.
             WITH candidates AS (
-                SELECT r.id, r.jurisdiction_ocdid, run.updated_at AS run_updated_at
+                SELECT r.id, r.jurisdiction_ocdid, r.sourced_at
                 FROM requests r
-                JOIN pipeline_runs run ON run.request_id = r.id
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
+                  AND r.sourced_at IS NOT NULL
             ),
             -- What can supersede, which is not the same set as what can BE superseded: a
             -- published request is no longer a candidate, so comparing candidates only to each
@@ -342,12 +338,11 @@ async def supersede_stacked_requests() -> list[str]:
             -- and it must. A reviewer holding the newest card shields the whole jurisdiction
             -- for the pass — sweep the older ones and their rejecting it strands the lot.
             supersedors AS (
-                SELECT jurisdiction_ocdid, run_updated_at FROM candidates
+                SELECT jurisdiction_ocdid, sourced_at FROM candidates
                 UNION ALL
-                SELECT r.jurisdiction_ocdid, run.updated_at AS run_updated_at
+                SELECT r.jurisdiction_ocdid, r.sourced_at
                 FROM requests r
-                JOIN pipeline_runs run ON run.request_id = r.id
-                WHERE r.published_at IS NOT NULL
+                WHERE r.published_at IS NOT NULL AND r.sourced_at IS NOT NULL
             )
             UPDATE requests
                SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
@@ -357,7 +352,7 @@ async def supersede_stacked_requests() -> list[str]:
                  WHERE EXISTS (
                      SELECT 1 FROM supersedors newer
                      WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                       AND newer.run_updated_at > older.run_updated_at
+                       AND newer.sourced_at > older.sourced_at
                  )
              )
             RETURNING id::text

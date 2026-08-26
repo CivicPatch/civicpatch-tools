@@ -15,11 +15,11 @@ export const SAVED_EVENT = "saved";
 export const CANCEL_EVENT = "cancel";
 
 // Only what a person owns. Role and division are the post's identity — changing either would
-// make the next scrape mint a second post rather than match this one — and `status` was
-// dropped in migration 121, since whether a post is vouched for follows from having members.
+// make the next scrape mint a second post rather than match this one; `status` was dropped in
+// migration 121, since whether a post is vouched for follows from having members; and `label`
+// in 148, since it is composed from the role and the division on read.
 function PostEdit(host: PostEditHost) {
   const post = host.post;
-  const [label, setLabel] = useState(post?.label ?? "");
   const [headcount, setHeadcount] = useState(String(post?._headcount ?? 1));
   const [isTracked, setIsTracked] = useState(post?._is_tracked ?? true);
   const [saving, setSaving] = useState(false);
@@ -30,7 +30,6 @@ function PostEdit(host: PostEditHost) {
 
   const handleCancel = () => emit(CANCEL_EVENT);
 
-  const handleLabelInput = (e: Event) => setLabel(inputValue(e));
   const handleHeadcountInput = (e: Event) =>
     setHeadcount(inputValue(e));
   const handleTrackedChange = (e: Event) =>
@@ -41,9 +40,7 @@ function PostEdit(host: PostEditHost) {
     setSaving(true);
     setError(null);
     try {
-      // Blank clears the label back to the derived name rather than storing "".
       await updatePost(post.id, {
-        label: label.trim() || null,
         headcount: Number(headcount),
         isTracked,
       });
@@ -57,18 +54,9 @@ function PostEdit(host: PostEditHost) {
   const fields = html`
     <div class="post-edit">
       <p class="post-edit__subject">
-        ${post?.role_id}, ${divisionName(post?.division_ocdid ?? "")}
+        ${post?.label}, ${divisionName(post?.division_ocdid ?? "")}
         <span class="post-edit__key">${divisionKey(post?.division_ocdid ?? "")}</span>
       </p>
-      <label class="post-edit__field">
-        <span class="post-edit__label">Label (optional)</span>
-        <input
-          type="text"
-          .value=${label}
-          placeholder="Position 8"
-          @input=${handleLabelInput}
-        />
-      </label>
       <label class="post-edit__field">
         <span class="post-edit__label">Headcount</span>
         <input type="number" min="1" .value=${headcount} @input=${handleHeadcountInput} />

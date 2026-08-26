@@ -6,14 +6,14 @@ from psycopg import sql
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
 
-async def run_updated_at(cur, request_id: str) -> datetime:
-    """`pipeline_runs.updated_at` — when the run last reported its status.
+async def get_sourced_at(cur, request_id: str) -> datetime:
+    """When the run last read the source.
 
     Stamped by the pipeline's own report, not at ingest, which can be hours later on a retry or
     a replayed artifact.
     """
     await cur.execute(
-        "SELECT updated_at FROM pipeline_runs WHERE request_id::text = %s",
+        "SELECT sourced_at FROM requests WHERE id::text = %s",
         (request_id,),
     )
     row = await cur.fetchone()
@@ -22,40 +22,15 @@ async def run_updated_at(cur, request_id: str) -> datetime:
     return row[0]
 
 
-async def list_pipeline_runs():
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT request_id, status, progress, created_at, updated_at FROM pipeline_runs
-            ORDER BY created_at DESC;
-            """,
-        )
-        rows = await cur.fetchall()
-        pipeline_runs = []
-        for row in rows:
-            pipeline_runs.append(
-                {
-                    "request_id": row[0],
-                    "status": row[1],
-                    "progress": row[2],
-                    "created_at": row[3],
-                    "updated_at": row[4],
-                }
-            )
-    return pipeline_runs
-
-
 async def get_pipeline_run(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT j.status, j.progress, r.arguments_json,
-                   j.created_at, j.updated_at, r.open_data_url
-            FROM pipeline_runs j
-            LEFT JOIN requests r ON r.id = j.request_id
-            WHERE j.request_id = %s;
+            SELECT r.status, r.progress, r.arguments_json,
+                   r.created_at, r.sourced_at, r.open_data_url
+            FROM requests r
+            WHERE r.id = %s;
             """,
             (request_id,),
         )
@@ -73,25 +48,14 @@ async def get_pipeline_run(request_id: str):
         return None
 
 
-async def set_pipeline_run_github_run_id(request_id: str, github_run_id: int) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        result = await conn.execute(
-            "UPDATE pipeline_runs SET github_run_id = %s WHERE request_id = %s",
-            (github_run_id, request_id),
-        )
-        return result.rowcount > 0
-
-
 async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
-            WHERE j.status != ALL(%s)
+            FROM requests r
+            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
             """,
             (list(TERMINAL_PIPELINE_RUN_STATUSES),),
@@ -108,9 +72,8 @@ async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
-            WHERE j.status != ALL(%s)
+            FROM requests r
+            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid LIKE %s
             """,
             (list(TERMINAL_PIPELINE_RUN_STATUSES), f"%state:{state_code}%"),
@@ -126,13 +89,12 @@ async def get_active_pipeline_runs(
     offset = (page - 1) * per_page
     async with pool.connection() as conn, conn.cursor() as cur:
         query = """
-            SELECT j.request_id, j.status, j.progress, j.created_at, j.updated_at,
+            SELECT r.id::text, r.status, r.progress, r.created_at, r.sourced_at,
                    r.jurisdiction_ocdid, jur.state, jur.data->>'name',
                    COUNT(*) OVER() AS total_count
-            FROM pipeline_runs j
-            JOIN requests r ON r.id = j.request_id
+            FROM requests r
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE j.status != ALL(%s)
+            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
             AND r.request_type = 'people'
         """
@@ -140,7 +102,7 @@ async def get_active_pipeline_runs(
         if state_code:
             query += " AND jur.state = %s"
             params.append(state_code.lower())
-        query += " ORDER BY j.updated_at DESC LIMIT %s OFFSET %s"
+        query += " ORDER BY r.sourced_at DESC LIMIT %s OFFSET %s"
         params.extend([per_page, offset])
         await cur.execute(query, params)
         rows = await cur.fetchall()
@@ -160,24 +122,13 @@ async def get_active_pipeline_runs(
         ], total
 
 
-async def get_pipeline_run_github_run_id(request_id: str) -> int | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT github_run_id FROM pipeline_runs WHERE request_id = %s",
-            (request_id,),
-        )
-        row = await cur.fetchone()
-        return row[0] if row else None
-
-
 async def get_pipeline_run_status(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress FROM pipeline_runs
-            WHERE request_id = %s;
+            SELECT status, progress FROM requests
+            WHERE id = %s;
             """,
             (request_id,),
         )
@@ -201,7 +152,8 @@ async def update_pipeline_run_status(
         set_clauses.append("status = %s")
         params.append(status)
 
-    set_clauses.append("updated_at = CURRENT_TIMESTAMP")
+    # Every report re-stamps it: this is what dates `last_seen_at` on every membership.
+    set_clauses.append("sourced_at = CURRENT_TIMESTAMP")
 
     if not set_clauses:
         return
@@ -212,50 +164,36 @@ async def update_pipeline_run_status(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
-            UPDATE pipeline_runs
+            UPDATE requests
             SET {set_clause_str}
-            WHERE request_id = %s;
+            WHERE id = %s;
             """),
             params,
         )
 
 
 RUN_NOT_TERMINAL = (
-    "pipeline_runs.status IS NOT NULL AND pipeline_runs.status != ALL(ARRAY["
+    "requests.status IS NOT NULL AND requests.status != ALL(ARRAY["
     + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
     + "])"
 )
 
 
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
+    """`sourced_at` is deliberately left alone: giving up on a run is not reading the source,
+    and restamping it would make a stale request outrank a newer scrape in the sweep."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            UPDATE pipeline_runs
-            SET status = 'ERROR', updated_at = CURRENT_TIMESTAMP
+            UPDATE requests
+            SET status = 'ERROR'
             WHERE {RUN_NOT_TERMINAL}
-            AND updated_at < NOW() - %s::interval
-            RETURNING request_id::text
+            AND sourced_at < NOW() - %s::interval
+            RETURNING id::text
             """,
             (older_than,),
         )
         rows = await cur.fetchall()
     return [row[0] for row in rows]
 
-
-async def get_pipeline_run_result(request_id: str):
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT r.jurisdiction_ocdid FROM requests r
-            JOIN pipeline_runs j ON j.request_id = r.id
-            WHERE j.request_id = %s LIMIT 1
-            """,
-            (request_id,),
-        )
-        row = await cur.fetchone()
-    if row is None:
-        return None
-    return {"jurisdiction_ocdid": row[0]}

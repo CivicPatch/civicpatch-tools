@@ -5,11 +5,13 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import uuid
+from datetime import timedelta
 
 import pytest
 import pytest_asyncio
 
 from database.database import get_pool
+from database.pipeline_runs import expire_stale_pipeline_runs
 from database.publications import publish_request
 from database.requests import supersede_stacked_requests
 
@@ -66,24 +68,20 @@ async def _jurisdiction(ocdid: str = _OCDID, status: str = "active") -> None:
         await conn.commit()
 
 
-async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
-    """A pending request whose roster was last touched at `updated_at`.
+async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
+    """A pending request whose scrape read the source at `sourced_at`.
 
-    `updated_at` is what orders these — whoever last wrote the roster, a scrape or a reviewer.
-    `created_at` is left to now() for every row, so only `updated_at` can order them.
-
-    The `pipeline_runs` row exists because every registration path creates one, and both the
-    sweep and publish read its `updated_at` to order scrapes.
+    `created_at` is left to now() for every row, so only `sourced_at` can order them.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, updated_at)
+            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, sourced_at)
             VALUES ('people', %s, '{}'::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
-            (ocdid, updated_at),
+            (ocdid, sourced_at),
         )
         request_id = (await cur.fetchone())[0]
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
@@ -96,10 +94,11 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
         )
         await cur.execute(
             """
-            INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-            VALUES (%s, 'SUCCESS', 100, %s::timestamptz, %s::timestamptz)
+            UPDATE requests SET status = 'SUCCESS', progress = 100,
+                                created_at = %s::timestamptz, sourced_at = %s::timestamptz
+            WHERE id = %s
             """,
-            (request_id, updated_at, updated_at),
+            (sourced_at, sourced_at, request_id),
         )
         await conn.commit()
     return request_id
@@ -147,10 +146,10 @@ async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
         await conn.commit()
 
 
-async def _published_request(updated_at: str, ocdid: str = _OCDID) -> str:
+async def _published_request(sourced_at: str, ocdid: str = _OCDID) -> str:
     """A request that already went live. No longer a review candidate, but still the newest
     thing anyone said about this jurisdiction."""
-    request_id = await _request(updated_at, ocdid)
+    request_id = await _request(sourced_at, ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -191,31 +190,37 @@ async def test_ordering_comes_from_the_roster_not_created_at():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_reviewer_edit_does_not_outrank_a_newer_scrape():
-    """Ordering asks which scrape read the source more recently, not which row was touched
-    more recently. A reviewer correcting the March roster in August did not go and look again;
-    the July scrape did, so the March one still loses.
+async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
+    """Ordering asks which scrape read the source more recently, so only reading the source may
+    move `sourced_at`. Expiring a run is the one writer that touches a request without reading
+    anything — restamp there and a March roster nobody looked at outranks the July scrape.
 
-    Work in progress is protected by the held-card exclusion instead, which is time-boxed —
-    an edit made and abandoned must not shield a stale roster forever.
-
-    `requests.updated_at` is bumped directly rather than through a save: a save writes
-    `assertions` and touches no `requests` column at all now, so what is pinned here is the
-    ordering rule — whatever moves that column, ordering ignores it.
+    This replaces a test that bumped `requests.updated_at` directly. That column went in 147,
+    which removed the generic clock a reviewer edit could move; the hazard it guarded now lives
+    entirely in this one query.
     """
     await _jurisdiction()
-    edited = await _request(_OLD)
-    later_scrape = await _request(_NEW)
+    abandoned = await _request(_OLD)
+    await _request(_NEW)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        # The fixture stamps SUCCESS, which is terminal. A run only expires while in flight.
         await cur.execute(
-            "UPDATE requests SET updated_at = now() WHERE id::text = %s", (edited,)
+            "UPDATE requests SET status = 'PENDING' WHERE id::text = %s", (abandoned,)
         )
         await conn.commit()
 
-    assert await supersede_stacked_requests() == [edited]
-    assert (await _dismissed_at(later_scrape))[0] is None
+    assert await expire_stale_pipeline_runs(timedelta(days=1)) == [abandoned]
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT status, sourced_at::text FROM requests WHERE id::text = %s",
+            (abandoned,),
+        )
+        status, sourced_at = await cur.fetchone()
+    assert status == "ERROR"
+    assert sourced_at.startswith("2026-03-01")
 
 
 @pytest.mark.asyncio

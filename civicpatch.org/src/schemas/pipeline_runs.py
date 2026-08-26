@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -43,12 +43,6 @@ class RegisterPipelineRunRequest(BaseModel):
     url: Optional[str] = None
 
 
-# ── POST /api/v1/pipeline_runs/{request_id}/run (internal) ───────────────────
-
-class RegisterGithubRunRequest(BaseModel):
-    run_id: int
-
-
 # ── PATCH /api/v1/pipeline_runs/{request_id}/status ──────────────────────────
 
 class UpdatePipelineRunStatusRequest(BaseModel):
@@ -63,12 +57,6 @@ class UpdatePipelineRunStatusResponse(BaseModel):
     request_id: str
     status: str
     progress: Optional[int] = None
-
-
-# ── POST /api/v1/pipeline_runs/{request_id}/result (internal) ────────────────
-
-class PostPipelineRunResultRequest(BaseModel):
-    pull_request_url: Optional[str] = None
 
 
 # ── POST /api/v1/pipeline_runs/{request_id}/submit (internal) ────────────────
@@ -96,17 +84,6 @@ class FlagPipelineIssueRequest(BaseModel):
 
 
 # ── GET /api/v1/pipeline_runs/{request_id} ───────────────────────────────────
-
-class GetPipelineRunResponse(BaseModel):
-    request_id: str
-    status: str
-    progress: int
-    arguments: dict
-    result: Optional[Any] = None
-    pull_request_url: Optional[str] = None
-    created_at: float
-    updated_at: float
-
 
 # ── GET /api/v1/pipeline_runs/{request_id}/status ────────────────────────────
 

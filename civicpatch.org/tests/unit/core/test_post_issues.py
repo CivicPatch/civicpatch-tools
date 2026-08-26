@@ -12,7 +12,6 @@ def _post(**overrides) -> dict:
         "role_id": "council_member",
         "role_label": "Council Member",
         "division_ocdid": f"{_BASE}/council_district:3",
-        "label": None,
         **overrides,
     }
 
@@ -22,14 +21,6 @@ def test_the_post_is_named_by_role_and_division():
     issues = unverified_post_issues([_post()])
     assert [issue.code for issue in issues] == [IssueCode.UNVERIFIED_POST]
     assert issues[0].message == "Unverified post: Council Member, District 3"
-
-
-@pytest.mark.unit
-def test_a_named_post_is_called_what_a_person_called_it():
-    """`posts.label` is the one human-owned field on a post, so it wins over the
-    reconstruction — the same precedence the posts screen uses."""
-    issues = unverified_post_issues([_post(label="Council President")])
-    assert issues[0].message == "Unverified post: Council President"
 
 
 @pytest.mark.unit
