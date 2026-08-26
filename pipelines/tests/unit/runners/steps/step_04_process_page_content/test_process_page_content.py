@@ -283,15 +283,37 @@ def test_check_page_heuristics_returns_true_with_nonempty_records():
             name="Laura Palmer",
             other_names=[],
             label="mayor Ward 8",
-            phone="555-9999",
+            # A real number, not `555-9999`: seven digits is not a US number, and this
+            # asserted True only while the retry guard missed everything phonenumbers
+            # parsed-but-rejected.
+            phone="856-358-2509",
             email="laura@palmer.com",
             url="http://palmer.com/laura",
             source_url="http://palmer.com",
         )
     ]
-    input_text = "Laura Palmer the mayor is available at laura@palmer.com or 555-9999. See http://palmer.com/laura for more details."
+    input_text = "Laura Palmer the mayor is available at laura@palmer.com or 856-358-2509. See http://palmer.com/laura for more details."
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+    )
+
+
+@pytest.mark.parametrize("phone", ["555-555-5555", "123-4567", "000-000-0000"])
+def test_check_page_heuristics_forces_a_retry_on_an_invalid_phone(phone):
+    """These parse and are then rejected as not-real numbers — the common failure, not the
+    exotic one. The guard used to wrap only `normalize_phone_number`'s exception, which
+    fires solely on unparseable junk, so every number here was accepted."""
+    records = [
+        PersonRecord(
+            name="Laura Palmer",
+            label="mayor",
+            phone=phone,
+            source_url="http://palmer.com",
+        )
+    ]
+    input_text = f"Laura Palmer the mayor is available at {phone}."
+    assert (
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
     )
 
 
@@ -512,7 +534,14 @@ def test_check_page_heuristics_returns_false_if_url_not_in_text():
     )
 
 
-def test_check_page_heuristics_passes_with_compound_phone_in_text():
+def test_check_page_heuristics_rejects_a_compound_phone_and_forces_a_retry():
+    """Was `..._passes_with_compound_phone_in_text`, asserting the page was accepted.
+
+    It now asserts the opposite. The prompt asks for *a* phone number and states a
+    precedence — personal, then office, then general — so two numbers in one field is the
+    model ignoring that instruction. Accepting it meant a downstream repair silently kept
+    the first and discarded the second; rejecting it re-reads the page, which is what the
+    guard is for."""
     records = [
         PersonRecord(
             name="Alice Boroughman",
@@ -527,7 +556,7 @@ def test_check_page_heuristics_passes_with_compound_phone_in_text():
     input_text = "Alice Boroughman, Mayor. Phone: 856-358-2509 or 856-358-4010 Ext. 112"
     assert (
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        is True
+        is False
     )
 
 

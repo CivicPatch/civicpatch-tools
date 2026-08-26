@@ -10,7 +10,6 @@ per-person and belongs on the membership, so it never appears here.
 
 from pydantic import BaseModel
 from shared.schemas import Person, Role
-from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import proposed_membership_label
@@ -52,14 +51,6 @@ class DerivedPost(BaseModel):
     # not overwrite a figure somebody typed.
     headcount: int
     members: list[DerivedMember]
-
-
-def _labels(record: Person) -> list[str]:
-    """What the source called this person."""
-    if record.labels:
-        return record.labels
-    office = (record.model_extra or {}).get("office") or {}
-    return office_name_to_labels(office.get("name") or "")
 
 
 def _division(record: Person, parsed: dict) -> str:
@@ -151,7 +142,7 @@ def derived_posts(
 
     for record in records:
         parsed = derive_roles(
-            _labels(record),
+            record.labels,
             record.jurisdiction_ocdid,
             taxonomy,
         )

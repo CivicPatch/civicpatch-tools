@@ -119,7 +119,7 @@ def build_eval_taxonomy() -> Taxonomy:
 # Dates and images have no app-side normalizer, so they stay exact — see the note in
 # score_case on why plain equality is fair for them.
 _FIELD_NORMALIZERS = {
-    "phone": lambda value: phone_utils.normalize_first_phone(value) or "",
+    "phone": lambda value: phone_utils.normalize_phone_number(value) or "",
     "email": lambda value: email_utils.normalize_email(value) or "",
     "url": url_utils.canonical_url,
 }

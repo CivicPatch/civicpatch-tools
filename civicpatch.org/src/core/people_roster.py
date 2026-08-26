@@ -13,7 +13,7 @@ from collections import defaultdict
 
 from shared.schemas import Person, PersonRecord
 from shared.utils.log_protocol import Log
-from shared.utils.official_fields import order_official_fields
+from shared.utils.person_fields import order_person_fields
 from shared.utils.people_utils import person_to_official, sort_people
 from shared.utils.person_id_utils import merge_forward_other_names
 from shared.utils.taxonomy import Taxonomy
@@ -42,15 +42,11 @@ def roster_from_rows(
     Whether a post is one we diff against is `posts.is_tracked`, decided when the post is
     minted — not here, and not by dropping the person.
 
-    Dicts rather than `Official`, because an already-merged row is handed back exactly as it
-    arrived. `order_official_fields` exists for the fields a roster carries that `Official`
-    does not model, and validating a passthrough row would drop every one of them.
+    Dicts rather than a model, because the roster carries fields no model declares —
+    `order_person_fields` places them, and validating on the way through would drop them.
     """
     if not rows:
         return [], {}
-
-    if _is_official(rows[0]):
-        return rows, {}
 
     derived = derived_people(
         [PersonRecord(**row) for row in rows],
@@ -168,12 +164,6 @@ def identified(person: dict, resolution: dict) -> dict:
     }
 
 
-def _is_official(row: dict) -> bool:
-    """`office` is required on `Official` and absent from every record, so its presence is
-    the whole discriminator."""
-    return "office" in row
-
-
 # Below this, a "name" is a label the extractor read as a person — "Vacant", "Mayor",
 # a heading. Two words is a thin test and it has never been measured, but a scrape that
 # reports the word "Vacant" as a councillor is worse than one that reports nobody.
@@ -200,12 +190,12 @@ def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
     here and split apart again by every reader — a round trip through a string that loses
     which label produced what, and reads back as one office named twice.
 
-    `order_official_fields` keeps undeclared keys, so this needs no change to `Official`.
+    `order_person_fields` keeps undeclared keys, so adding `labels` needed no schema change.
     Readers move to `labels` one at a time; `office` goes when none are left.
     """
     kept = [person for person in people if named_like_a_person(person)]
     return [
-        order_official_fields(
+        order_person_fields(
             {
                 **person_to_official(with_fallback_url(person), taxonomy).model_dump(),
                 "id": person.id,

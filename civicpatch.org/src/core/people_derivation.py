@@ -38,7 +38,7 @@ def merge_field_to_list(values: List[str]) -> List[str]:
 
 def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
     normalized_phone = (
-        phone_utils.normalize_first_phone(record.phone) if record.phone else None
+        phone_utils.normalize_phone_number(record.phone) if record.phone else None
     )
     if record.phone and normalized_phone is None:
         log.warning(f"Failed to parse phone number: {record.phone}")

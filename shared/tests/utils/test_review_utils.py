@@ -85,13 +85,20 @@ def test_build_row_data_only():
 
 # ── Structured issues: build_review_summary + the _check_* → Issue functions ──
 
-def _official(name, person_id="", office_name=None, division_ocdid=None):
+def _official(name, person_id="", office_name=None, division_ocdid=None, labels=None):
+    """A rendered roster row: `labels` verbatim, `office.name` the display join of them.
+
+    Both, because that is what `_render` produces — the checks read `labels`, and keeping
+    `office` here means a fixture cannot quietly stop resembling the real thing.
+    """
     office = {}
     if office_name is not None:
         office["name"] = office_name
     if division_ocdid is not None:
         office["division_ocdid"] = division_ocdid
-    return {"name": name, "id": person_id, "office": office}
+    if labels is None:
+        labels = [office_name] if office_name else []
+    return {"name": name, "id": person_id, "office": office, "labels": labels}
 
 
 def test_check_absent_officials_is_list_level():

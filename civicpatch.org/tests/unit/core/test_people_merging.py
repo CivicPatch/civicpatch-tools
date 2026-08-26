@@ -153,7 +153,12 @@ def test_normalize_record_clears_url_from_email_when_url_already_set():
     assert result.url == "https://example.com/bio"
 
 
-def test_normalize_record_with_compound_phone_takes_first():
+def test_normalize_record_drops_a_compound_phone_rather_than_picking_one():
+    """Was `..._takes_first`, asserting `(856) 358-2509`.
+
+    It now asserts None. Choosing between two numbers the page gave us is a guess, and the
+    heuristics guard rejects the extraction upstream anyway — so a record reaching here with
+    two numbers is a bug to surface, not one to paper over."""
     record = PersonRecord(
         name="Alice Boroughman",
         label="mayor",
@@ -162,7 +167,7 @@ def test_normalize_record_with_compound_phone_takes_first():
         url=None,
         source_url="http://example.com",
     )
-    assert _normalize(record).phone == "(856) 358-2509"
+    assert _normalize(record).phone is None
 
 
 # --- merge_records_to_person ---
