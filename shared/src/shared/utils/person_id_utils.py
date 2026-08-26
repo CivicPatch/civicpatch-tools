@@ -6,7 +6,12 @@ from shared.utils.email_utils import normalize_email
 from shared.utils.name_utils import best_identity_match, build_canonical_map
 
 
-def _unmatched(person: dict, duplicate_match: bool = False) -> dict:
+def _new_identity(person: dict, duplicate_match: bool = False) -> dict:
+    """Nobody to match, so they get an id of their own.
+
+    Not `_unmatched`: `unmatched` next door means residue *inside a label* that resolved to no
+    role, and the two have nothing to do with each other.
+    """
     return {
         "id": person.get("id") or str(uuid.uuid4()),
         "person": None,
@@ -17,7 +22,7 @@ def _unmatched(person: dict, duplicate_match: bool = False) -> dict:
 
 def _resolution(person: dict, matches: List[Person], claimed_ids: set) -> dict:
     if not matches:
-        return _unmatched(person)
+        return _new_identity(person)
     if len(matches) > 1:
         return {
             "id": ":".join(m.id for m in matches),
@@ -32,7 +37,7 @@ def _resolution(person: dict, matches: List[Person], claimed_ids: set) -> dict:
     # ever being shown. The later entry keeps an identity of its own instead,
     # which surfaces it as a new person for a reviewer to judge.
     if matches[0].id in claimed_ids:
-        return _unmatched(person, duplicate_match=True)
+        return _new_identity(person, duplicate_match=True)
     return {
         "id": matches[0].id,
         "person": matches[0],

@@ -1,12 +1,7 @@
-"""The key order of a person in a rendered data file, and the one string that is not flat.
+"""The key order of a person in a rendered data file.
 
-Nothing here imports a model. `PERSON_FIELD_ORDER` was `tuple(Official.model_fields)` until
-2026-08-25, which made the layout of every file in open-data a side effect of declaration
-order in a class that is on its way out. It is a contract with the files, so it is written
-as one.
-
-A field added to a model and not listed here still renders — `order_person_fields` keeps
-undeclared keys — it just lands at the end until someone places it deliberately.
+Written out rather than derived from a model: it is a contract with the files. An unlisted
+field still renders, at the end.
 """
 
 # Changing this order rewrites the key order of every person in every data file.

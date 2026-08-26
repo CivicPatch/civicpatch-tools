@@ -10,6 +10,8 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 *this* transaction, not a second publish path. Nothing here reads open-data.
 """
 
+import logging
+
 from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
@@ -17,6 +19,8 @@ from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.pipeline_runs import run_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
+
+logger = logging.getLogger(__name__)
 
 
 async def record_open_data_url(request_id: str, url: str) -> None:
@@ -39,6 +43,8 @@ async def dismiss_request(
 
     `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
     `COALESCE` means a later human resolution is never overwritten by a machine one.
+
+    Drops the seats it invented on the way out — evidence stays, unclaimed posts do not.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -51,6 +57,9 @@ async def dismiss_request(
             """,
             (resolved_by_user_id, request_id),
         )
+        dropped = await posts.delete_unclaimed(cur, request_id)
+        if dropped:
+            logger.info(f"[{request_id}] Dropped {dropped} post(s) nobody claimed")
 
 
 async def _refuse_if_superseded(
@@ -115,12 +124,8 @@ async def _bind_memberships(
 ) -> None:
     """Put this roster's people in their posts.
 
-    Here rather than at ingest because a membership is a binding: a post can be proposed, but
-    who holds it is only true once the scrape is accepted.
-
-    Closing absentees is *not* here, though it used to be. It depends on the roster, not on the
-    derivation, and this runs only `if derived` — so a publish whose post derivation failed
-    (`_get_derived_posts` swallows and returns `[]`) would have retired nobody.
+    A membership is a binding: who holds a seat is only true once the scrape is accepted.
+    Closing absentees is outside — it depends on the roster, not on `derived`.
     """
     organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
     for post in derived:
@@ -134,18 +139,7 @@ async def _bind_memberships(
             headcount=post.headcount,
         )
         for member in post.members:
-            await memberships.upsert(
-                cur,
-                member.person_id,
-                post_id,
-                organization_id,
-                last_seen_at,
-                designations=member.designations,
-                unmatched_text=member.unmatched_text,
-                source_labels=member.source_labels,
-                role_ids=member.role_ids,
-                label=member.label,
-            )
+            await memberships.upsert(cur, member, post_id, organization_id, last_seen_at)
 
 
 async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | None) -> None:

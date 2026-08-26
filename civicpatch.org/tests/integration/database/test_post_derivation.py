@@ -15,6 +15,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
+from core.post_derivation import DerivedMember
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.review_queue import issue_count, issue_priority
@@ -152,8 +153,8 @@ async def test_same_post_advances_the_window_without_a_second_row():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        first = await memberships.upsert(cur, person_id, post_id, org, _T0)
-        second = await memberships.upsert(cur, person_id, post_id, org, _T1)
+        first = await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
+        second = await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T1)
         assert first == second
 
         await cur.execute(
@@ -176,8 +177,8 @@ async def test_a_different_post_closes_the_old_membership_and_opens_a_new_one():
         mayor = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         ward = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.upsert(cur, person_id, mayor, org, _T0)
-        new = await memberships.upsert(cur, person_id, ward, org, _T1)
+        old = await memberships.upsert(cur, DerivedMember(person_id=person_id), mayor, org, _T0)
+        new = await memberships.upsert(cur, DerivedMember(person_id=person_id), ward, org, _T1)
         assert old != new
 
         await cur.execute("SELECT closed_at FROM memberships WHERE id = %s", (old,))
@@ -201,7 +202,7 @@ async def test_close_absent_ignores_an_empty_roster():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
 
         assert await memberships.close_absent(cur, _OCDID, [], _T1) == 0
         assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
@@ -220,7 +221,7 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         await cur.execute("UPDATE posts SET _is_tracked = false WHERE id = %s", (post_id,))
 
         assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
@@ -246,7 +247,7 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
         unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
-        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
         await conn.rollback()
 
@@ -317,10 +318,10 @@ async def test_unmatched_people_share_one_post_per_division():
         assert bucket == again
 
         await memberships.upsert(
-            cur, first_person, bucket, org, _T0, unmatched_text=["Town Moderator"]
+            cur, DerivedMember(person_id=first_person, unmatched_text=["Town Moderator"]), bucket, org, _T0
         )
         await memberships.upsert(
-            cur, second, bucket, org, _T0, unmatched_text=["Supervisor of the Checklist"]
+            cur, DerivedMember(person_id=second, unmatched_text=["Supervisor of the Checklist"]), bucket, org, _T0
         )
 
         await cur.execute(
@@ -497,7 +498,7 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(cur, person_id, held, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), held, org, _T0)
 
         assert await posts.delete_if_unheld(cur, held) is False
         assert await posts.delete_if_unheld(cur, unheld) is True
@@ -555,13 +556,13 @@ async def test_an_asserted_label_survives_a_re_scrape():
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
 
         membership_id = await memberships.upsert(
-            cur, person_id, post_id, org, _T0, designations=["Position 8"]
+            cur, DerivedMember(person_id=person_id, designations=["Position 8"]), post_id, org, _T0
         )
         await _human_sets_label(cur, membership_id, "Councilmember Pos. 8")
 
         # A later scrape of the same seat, with the designation parsed differently.
         await memberships.upsert(
-            cur, person_id, post_id, org, _T1, designations=["Position 08"]
+            cur, DerivedMember(person_id=person_id, designations=["Position 08"]), post_id, org, _T1
         )
 
         await cur.execute(
@@ -586,9 +587,9 @@ async def test_moving_to_another_post_leaves_the_label_behind():
         first = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.upsert(cur, person_id, first, org, _T0)
+        old = await memberships.upsert(cur, DerivedMember(person_id=person_id), first, org, _T0)
         await memberships.set_label(cur, old, "Councilmember Pos. 8")
-        new = await memberships.upsert(cur, person_id, second, org, _T1)
+        new = await memberships.upsert(cur, DerivedMember(person_id=person_id), second, org, _T1)
 
         await cur.execute(
             "SELECT label FROM memberships WHERE id::text = ANY(%s) ORDER BY first_seen_at",
@@ -608,7 +609,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
 
         rows = await memberships.list_for_jurisdiction(cur, _OCDID)
         assert len(rows) == 1
@@ -630,7 +631,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
         membership_id = await memberships.upsert(
-            cur, person_id, post_id, org, _T0, role_ids=["treasurer", "assessor"]
+            cur, DerivedMember(person_id=person_id, role_ids=["treasurer", "assessor"]), post_id, org, _T0
         )
         await cur.execute(
             "SELECT role_id FROM membership_roles WHERE membership_id::text = %s "
@@ -641,7 +642,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
 
         # Derived from the label, so the newest scrape's answer is the whole answer — a role
         # the page stopped naming must not linger.
-        await memberships.upsert(cur, person_id, post_id, org, _T0, role_ids=["treasurer"])
+        await memberships.upsert(cur, DerivedMember(person_id=person_id, role_ids=["treasurer"]), post_id, org, _T0)
         await cur.execute(
             "SELECT role_id FROM membership_roles WHERE membership_id::text = %s",
             (membership_id,),
@@ -665,7 +666,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
         first = await memberships.upsert(
-            cur, person_id, post_id, org, _T0, label="Commissioner Of Public Safety"
+            cur, DerivedMember(person_id=person_id, label="Commissioner Of Public Safety"), post_id, org, _T0
         )
         await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
         assert (await cur.fetchone())[0] == "Commissioner Of Public Safety"
@@ -673,7 +674,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
         # A later scrape whose parser words it better. Nobody has asserted anything, so the
         # improvement lands.
         again = await memberships.upsert(
-            cur, person_id, post_id, org, _T1, label="Public Safety Commissioner"
+            cur, DerivedMember(person_id=person_id, label="Public Safety Commissioner"), post_id, org, _T1
         )
         assert again == first
 
@@ -698,7 +699,7 @@ async def test_advancing_last_seen_leaves_everything_else_alone():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         membership_id = await memberships.upsert(
-            cur, person_id, post_id, org, _T0, label="Mayor, At-Large"
+            cur, DerivedMember(person_id=person_id, label="Mayor, At-Large"), post_id, org, _T0
         )
 
         assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 1
@@ -727,7 +728,7 @@ async def test_last_seen_never_walks_backwards():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(cur, person_id, post_id, org, _T1)
+        membership_id = await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T1)
 
         await memberships.advance_last_seen_at(cur, [person_id], _T0)
 
@@ -747,7 +748,7 @@ async def test_a_closed_membership_is_not_reopened_by_being_seen():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(cur, person_id, post_id, org, _T0)
+        membership_id = await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "UPDATE memberships SET closed_at = %s WHERE id = %s", (_T0, membership_id)
         )
@@ -769,7 +770,7 @@ async def _already_published() -> None:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(cur, person_id, other, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), other, org, _T0)
         await conn.commit()
 
 
@@ -930,7 +931,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "INSERT INTO requests (id, jurisdiction_ocdid, request_type) "
             "VALUES (%s, %s, 'pipeline_run')",
@@ -970,3 +971,154 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         closed_at, last_seen_at = await cur.fetchone()
     assert closed_at is None, "an unreviewed scrape closed a published membership"
     assert last_seen_at == _T0, "an unreviewed scrape moved a published last_seen_at"
+
+
+# --- dropping the seats a dismissed scrape invented ------------------------------
+
+
+async def _mint_via(request_id: str, role_id: str) -> str:
+    """Mint the way ingest does, so the `add_post` log `delete_unclaimed` reads exists."""
+    await posts.find_or_create_all(_OCDID, [_derived(role_id, _BASE)], request_id)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM posts WHERE jurisdiction_ocdid = %s AND role_id = %s",
+            (_OCDID, role_id),
+        )
+        return (await cur.fetchone())[0]
+
+
+async def _dismiss(request_id: str) -> None:
+    from database.publications import dismiss_request
+
+    await dismiss_request(request_id)
+
+
+async def _post_exists(post_id: str) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT 1 FROM posts WHERE id::text = %s", (post_id,))
+        return await cur.fetchone() is not None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_dismissing_a_scrape_drops_the_seats_it_invented():
+    """Dismissed, nobody is asked about the seat again — it would sit unverified for good.
+    The `Board` label was the case: 44 occurrences of nothing."""
+    request_id = await _seed_request()
+    post_id = await _mint_via(request_id, "mayor")
+
+    await _dismiss(request_id)
+
+    assert await _post_exists(post_id) is False
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_held_seat_survives_dismissal():
+    """A membership makes the post history, closed ones included."""
+    request_id = await _seed_request()
+    post_id = await _mint_via(request_id, "mayor")
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await memberships.upsert(
+            cur, DerivedMember(person_id=person_id), post_id, org, _T0
+        )
+        await conn.commit()
+
+    await _dismiss(request_id)
+
+    assert await _post_exists(post_id) is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_vouched_seat_survives_dismissal():
+    """An assertion is a person saying the seat is real, and this runs without a person.
+    Where it differs from `delete_if_unheld`, which deletes assertions instead."""
+    request_id = await _seed_request()
+    post_id = await _mint_via(request_id, "mayor")
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
+            (_CURATOR, _CURATOR),
+        )
+        user_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO assertions "
+            "(entity_type, entity_id, field_path, kind, value, asserted_by) "
+            "VALUES ('post', %s, '_headcount', 'accept', %s, %s)",
+            (post_id, json.dumps(5), user_id),
+        )
+        await conn.commit()
+
+    await _dismiss(request_id)
+
+    assert await _post_exists(post_id) is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_seat_a_later_scrape_still_sees_comes_straight_back():
+    """Why this needs no "did anything else see it" check: `find_or_create` re-mints a seat
+    that is still real."""
+    first = await _seed_request()
+    post_id = await _mint_via(first, "mayor")
+    await _dismiss(first)
+    assert await _post_exists(post_id) is False
+
+    later = await _seed_request()
+    remade = await _mint_via(later, "mayor")
+
+    assert await _post_exists(remade) is True
+    assert remade != post_id  # a new row, not a resurrection
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_dropping_leaves_another_scrapes_seats_alone():
+    """Scoped to what *this* request minted. A dismissal must not tidy up a neighbour."""
+    mine = await _seed_request()
+    theirs = await _seed_request()
+    mine_post = await _mint_via(mine, "mayor")
+    theirs_post = await _mint_via(theirs, "clerk")
+
+    await _dismiss(mine)
+
+    assert await _post_exists(mine_post) is False
+    assert await _post_exists(theirs_post) is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
+    """Sources give "2024" and "2024-05" far more often than a full date — 3,513 of 4,547 on
+    dev. `date` cannot hold either, so the column is text, like `people`'s and for the same
+    reason Popolo allows them."""
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+
+        membership_id = await memberships.upsert(
+            cur,
+            DerivedMember(person_id=person_id, start_date="2024", end_date="2028-01"),
+            post_id,
+            org,
+            _T0,
+        )
+
+        await cur.execute(
+            "SELECT start_date, end_date FROM memberships WHERE id::text = %s",
+            (membership_id,),
+        )
+        assert await cur.fetchone() == ("2024", "2028-01")
+        await conn.rollback()

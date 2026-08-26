@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
+from core.post_derivation import DerivedMember
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 
@@ -69,12 +70,14 @@ async def _seed_member(
     )
     return await memberships.upsert(
         cur,
-        person_id,
+        DerivedMember(
+            person_id=person_id,
+            unmatched_text=unmatched,
+            source_labels=source_labels or [],
+        ),
         post_id,
         organization_id,
         _SEEN_AT,
-        unmatched_text=unmatched,
-        source_labels=source_labels,
     )
 
 
@@ -85,9 +88,7 @@ async def _seed_spread():
         for index, ocdid in enumerate(_OCDIDS):
             await cur.execute(
                 "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
-                "VALUES (%s, 'zz', 'local')",
-                (ocdid,),
-            )
+                "VALUES (%s, 'zz', 'local')", (ocdid, ), )
             base = f"ocd-division/country:us/state:zz/place:{_TOWNS[index]}"
             await _seed_member(cur, ocdid, f"{base}/ward:1", [_WIDESPREAD])
 
@@ -147,9 +148,7 @@ async def test_spelling_variants_are_one_gap_not_three():
         for index, ocdid in enumerate(_OCDIDS):
             await cur.execute(
                 "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
-                "VALUES (%s, 'zz', 'local')",
-                (ocdid,),
-            )
+                "VALUES (%s, 'zz', 'local')", (ocdid, ), )
             base = f"ocd-division/country:us/state:zz/place:{_TOWNS[index]}"
             spelling = ("Finance Liaison", "finance liaison", "FINANCE LIAISON")[index]
             await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
@@ -173,8 +172,7 @@ async def test_a_vacated_seat_drops_off_the_list():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "UPDATE memberships m SET closed_at = %s FROM posts p "
-            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = ANY(%s)",
-            (_SEEN_AT, _OCDIDS[1:]),
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = ANY(%s)", (_SEEN_AT, _OCDIDS[1:])
         )
         await conn.commit()
 

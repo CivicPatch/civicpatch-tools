@@ -1,13 +1,3 @@
-"""Database queries for `posts` — one office within a body, not who holds it.
-
-Identity is the triple `(organization_id, role_id, division_ocdid)`. No free text is in the
-key, so renaming a post cannot make the next scrape miss it.
-
-Derivation writes are mint-only: matching a post writes nothing. That is the whole of what
-keeps `label` and `headcount` human-owned — there is no update path to lose them through.
-
-"""
-
 from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
 from core.post_grouping import group_by_organization
@@ -194,6 +184,35 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     return cur.rowcount > 0
 
 
+async def delete_unclaimed(cur, request_id: str) -> int:
+    """Remove the seats one scrape invented that nothing has since claimed. Returns how many.
+
+    Unlike `delete_if_unheld`, an assertion *saves* a post here: nobody asked for this.
+    A seat still real comes back — posts are `find_or_create`.
+    """
+    await cur.execute(
+        """
+        DELETE FROM posts
+        WHERE id IN (
+            SELECT (change_logs.changes ->> 'post_id')::uuid
+            FROM change_logs
+            WHERE change_logs.type = 'add_post'
+              AND change_logs.request_id = %s
+              AND change_logs.changes ? 'post_id'
+        )
+          AND NOT EXISTS (
+              SELECT 1 FROM memberships WHERE memberships.post_id = posts.id
+          )
+          AND NOT EXISTS (
+              SELECT 1 FROM assertions
+              WHERE assertions.entity_type = 'post' AND assertions.entity_id = posts.id
+          )
+        """,
+        (request_id,),
+    )
+    return cur.rowcount
+
+
 async def _holder_count(cur, post_id: str) -> int:
     await cur.execute(
         "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
@@ -237,16 +256,9 @@ async def get(cur, post_id: str) -> dict | None:
 #
 # Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
 # cannot be required to spell `posts` any particular way.
-# The jurisdiction's first scrape — nobody holds a seat here yet, because memberships are
-# only written at publish.
-#
-# Not a fact about any post: on a first scrape every seat really is unverified, and
-# `POST_IS_VERIFIED` says so correctly. This is the *reporting* rule beside it — twelve issues
-# on a card where every seat is new tell a reviewer nothing the roster in front of them does
-# not, and they bury the checks that do carry information.
-#
-# Unaliased `posts`, per the rule in CLAUDE.md: this is spliced into several queries, and one
-# that aliased the table differently would fail at runtime and never at typecheck.
+# Nobody holds a seat here yet. Not a fact about a post — the reporting rule beside
+# `POST_IS_VERIFIED`, since every seat is new on a first scrape.
+# Unaliased `posts`: spliced into several queries, per CLAUDE.md.
 JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
     SELECT 1 FROM memberships
     JOIN posts held ON held.id = memberships.post_id
@@ -312,11 +324,8 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
 async def ids_by_identity(
     cur, jurisdiction_ocdids: list[str]
 ) -> dict[tuple[str, str, str], str]:
-    """`(jurisdiction, role_id, division_ocdid) -> post id`, the reverse of `identities_by_id`.
-
-    The derivation works in identities — a seat is a role in a division — and only the wire
-    needs a uuid. This is where the two meet, so `propose` stays pure and unaware of ids.
-    """
+    """`(jurisdiction, role_id, division_ocdid) -> post id`. Reverse of `identities_by_id`,
+    so `propose` can stay pure and unaware of ids."""
     if not jurisdiction_ocdids:
         return {}
     await cur.execute(

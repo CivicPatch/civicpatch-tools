@@ -1,19 +1,9 @@
 """What to call a person's seat, and what their labels said that the seat's name does not.
 
-Pure. A reconstruction, not the source's own words — the page said "Councilmember Pos. 8" and
-this yields "Council Member, Position 8". Close enough to read, never close enough to trust,
-which is why `memberships.label` exists for a person to overrule it.
+Pure, and a reconstruction — "Councilmember Pos. 8" yields "Council Member, Position 8". Close
+enough to read, never to trust, which is why `memberships.label` can overrule it.
 
-Two things, because they have different owners:
-
-- `derive_post_label` names the **seat**, from role and division alone. Everyone in that seat
-  shares it, so it must not carry anything about one occupant.
-- `MembershipLabel` names **one person in one seat**: the seat's name plus what their labels
-  carried past it. One person can hold two, which is why this is keyed on the membership and
-  not on the person.
-
-`MembershipLabel` is the counterpart of `ParsedLabel`: that one takes a raw string from a page
-apart, this one puts the pieces back together for a reader.
+`derive_post_label` names the seat; `MembershipLabel` names one person in it.
 """
 
 from pydantic import BaseModel
@@ -53,12 +43,7 @@ def rendered_post_label(
 
 
 class MembershipLabel(BaseModel):
-    """One person in one seat, decomposed.
-
-    Every field past `post_label` is about the occupant rather than the seat: the roles that
-    lost the priority contest, the designation picking them out within the body, and text the
-    parser could not place.
-    """
+    """One person in one seat. Everything past `post_label` is about the occupant."""
 
     post_label: str
     demoted_roles: list[str] = []
@@ -67,12 +52,8 @@ class MembershipLabel(BaseModel):
 
 
 def render(label: MembershipLabel) -> str:
-    """The whole thing as one string, seat first.
-
-    The seat stays contiguous — "Council Member, District 5, Place 2", not "Council Member,
-    Place 2, District 5" — so the part every holder shares reads as one unit and the part that
-    is only about this person follows it.
-    """
+    """One string, seat first — "Council Member, District 5, Place 2", so the shared part
+    stays contiguous."""
     parts = [
         label.post_label,
         *label.demoted_roles,

@@ -18,25 +18,18 @@ from shared.utils.taxonomy import Taxonomy
 
 
 class LabelPart(BaseModel):
-    """One raw label beside what the parser made of it.
-
-    Kept paired rather than flattened: which designation came off which label is the thing a
-    person named twice on one page needs, and a flat union cannot say it.
-    """
+    """One raw label beside its parse. Paired, not flattened — which designation came off
+    which label is what a person named twice on one page needs."""
 
     label: str
     parsed: ParsedLabel
 
 
 class DerivedRoles(BaseModel):
-    """What one person's labels imply, split by who owns each part.
+    """What one person's labels imply.
 
-    Was a bare dict, which is why the two callers could quietly read different keys — and why
-    `people_roster` and `post_derivation` both parsing the same labels went unnoticed.
-
-    `role` and `division_ocdid` identify the **post**; `other_designations` and `unmatched`
-    describe the **person in it**; `roles` past the winner become the membership's demoted
-    roles. `post_derivation` reads all of it, `people_roster` reads the first two.
+    `role` + `division_ocdid` identify the post; `other_designations`, `unmatched` and the
+    losing `roles` describe the person in it.
     """
 
     labels: list[str] = []

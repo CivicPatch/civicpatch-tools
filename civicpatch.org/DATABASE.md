@@ -165,7 +165,7 @@ erDiagram
 
     source_record_identities {
         uuid            source_record_id    PK, FK "ON DELETE CASCADE"
-        text            person_id           "idx; the cluster id. SEPARATE FROM THE EVIDENCE deliberately — linkage is not a fact about a page and is not stable across runs (#2480), so re-linking rewrites this table and never touches a record"
+        uuid            person_id           "144: uuid, not text — as text it accepted the ambiguous-match sentinel and the card reached the pool with a broken cluster id. No FK: ids are minted at ingest, the people row arrives at publish. idx; SEPARATE FROM THE EVIDENCE deliberately — linkage is not a fact about a page and is not stable across runs (#2480), so re-linking rewrites this table and never touches a record"
         timestamptz     resolved_at         "default: now()"
     }
 
@@ -221,8 +221,8 @@ erDiagram
         text_array      unmatched_text      "gin idx; default: {}; parts that produced NO role. Residue from a part that DID resolve rides on label instead — it is not unclassifiable and no rule fixes it"
         text_array      source_labels       "default: {}; what the SOURCE called this post, split — parsed.labels, i.e. office.name broken on ' - '. Parts not the rendering, so triage can show the one label a term came from. No FK to source_records: a membership outlives its evidence, and writing this beside unmatched_text is what stops the two disagreeing"
         text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
-        date_null       start_date          "from the source; we do not infer it"
-        date_null       end_date            "from the source — NOT set when someone stops appearing"
+        text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
+        text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
         timestamptz     first_seen_at       "when the SOURCE said it, not when the row was written"
         timestamptz     last_seen_at        "advanced on every scrape that still lists them"
         timestamptz_null closed_at          "set when a scrape stops listing them; NULL = currently open"

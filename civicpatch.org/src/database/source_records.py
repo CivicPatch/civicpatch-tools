@@ -86,7 +86,7 @@ async def get_source_records_for_request(request_id: str) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT s.id::text, s.request_id::text, i.person_id, s.jurisdiction_ocdid,
+            SELECT s.id::text, s.request_id::text, i.person_id::text, s.jurisdiction_ocdid,
                    s.name, s.label, s.source_url, s.url, s.phone, s.email,
                    s.image, s.cdn_image, s.start_date, s.end_date, s.created_at
             FROM source_records s

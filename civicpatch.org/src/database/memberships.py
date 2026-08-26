@@ -16,6 +16,7 @@ gone, not when they went.
 from datetime import date, datetime, timezone
 
 from core.membership_label import rendered_post_label
+from core.post_derivation import DerivedMember
 from database import assertions, posts
 from database.change_logs import record_change
 from database.database import get_pool
@@ -65,18 +66,21 @@ async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) ->
 
 async def upsert(
     cur,
-    person_id: str,
+    member: DerivedMember,
     post_id: str,
     organization_id: str,
     last_seen_at,
-    designations: list[str] | None = None,
-    unmatched_text: list[str] | None = None,
-    source_labels: list[str] | None = None,
-    start_date=None,
-    end_date=None,
-    role_ids: list[str] | None = None,
-    label: str | None = None,
 ) -> str:
+    """Seat one person, closing whatever else they held in this organization.
+
+    Takes the `DerivedMember` whole: five of the old twelve parameters were its fields,
+    unpacked at the only caller and passed back one at a time.
+
+    `start_date` / `end_date` come off the record, via `DerivedMember`. They used to be
+    parameters nobody passed, so the source's term dates reached `people` and never the
+    membership that is the tenure.
+    """
+    person_id = member.person_id
     await cur.execute(
         """
         UPDATE memberships SET closed_at = %s
@@ -108,18 +112,18 @@ async def upsert(
             post_id,
             organization_id,
             person_id,
-            designations or [],
-            unmatched_text or [],
-            source_labels or [],
-            start_date,
-            end_date,
+            member.designations,
+            member.unmatched_text,
+            member.source_labels,
+            member.start_date,
+            member.end_date,
             last_seen_at,
             last_seen_at,
-            label,
+            member.label,
         ),
     )
     membership_id = (await cur.fetchone())[0]
-    await _set_membership_roles(cur, membership_id, role_ids or [])
+    await _set_membership_roles(cur, membership_id, member.role_ids)
     return membership_id
 
 
@@ -375,7 +379,13 @@ async def assign(
         else:
             result = {
                 "membership_id": await upsert(
-                    cur, person_id, post_id, organization_id, last_seen_at
+                    # A human assigning a seat states only who and where — the label follows
+                    # below, and the source's term dates are not theirs to invent.
+                    cur,
+                    DerivedMember(person_id=person_id),
+                    post_id,
+                    organization_id,
+                    last_seen_at,
                 ),
                 "moved_from": current["post_id"] if current else None,
             }

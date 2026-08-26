@@ -15,6 +15,7 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from core.post_derivation import DerivedMember
 from database import memberships, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
@@ -121,7 +122,7 @@ async def _seat_someone(post_id: str) -> None:
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await memberships.upsert(
-            cur, person_id, post_id, organization_id, "2026-06-15T00:00:00Z"
+            cur, DerivedMember(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()
 

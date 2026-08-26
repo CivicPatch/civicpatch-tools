@@ -22,6 +22,13 @@ from database.source_records import (
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
 
+# Real uuids: `source_record_identities.person_id` is a uuid column since 145, because a
+# cluster id that is not one is `_resolution`'s ambiguous-match sentinel.
+_ANN = "00000000-0000-4000-8000-000000000001"
+_BOB = "00000000-0000-4000-8000-000000000002"
+_DEE = "00000000-0000-4000-8000-000000000004"
+_EVE = "00000000-0000-4000-8000-000000000005"
+
 
 async def _cleanup():
     pool = await get_pool()
@@ -57,10 +64,19 @@ async def sentinel_request():
     await _cleanup()
 
 
+_IDS = {
+    "ann": "00000000-0000-4000-8000-000000000001",
+    "bob": "00000000-0000-4000-8000-000000000002",
+    "cass": "00000000-0000-4000-8000-000000000003",
+    "dee": "00000000-0000-4000-8000-000000000004",
+    "fay": "00000000-0000-4000-8000-000000000005",
+}
+
+
 def _records(name: str, *labels: str) -> dict:
     """One person, one sighting per label. Keyed by the id reconciliation resolved them to."""
     return {
-        f"person-{name.lower()}": [
+        _IDS[name.lower()]: [
             {"name": name, "label": label, "source_url": f"https://zz.gov/{i}"}
             for i, label in enumerate(labels)
         ]
@@ -83,7 +99,7 @@ async def test_stores_each_sighting_verbatim(sentinel_request):
     assert rows[0]["label"] == "Council Member Place 3 (East Ward)"
     assert rows[0]["name"] == "Ann"
     assert rows[0]["source_url"] == "https://zz.gov/0"
-    assert rows[0]["person_id"] == "person-ann"
+    assert rows[0]["person_id"] == _ANN
 
 
 @pytest.mark.integration
@@ -97,7 +113,7 @@ async def test_a_replay_adds_rows_rather_than_being_rejected(sentinel_request):
 
     rows = await get_source_records_for_request(sentinel_request)
     assert len(rows) == 2
-    assert {r["person_id"] for r in rows} == {"person-ann"}
+    assert {r["person_id"] for r in rows} == {_ANN}
 
 
 @pytest.mark.integration
@@ -115,14 +131,14 @@ async def test_labels_are_queryable_as_a_column(sentinel_request):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT i.person_id
+            SELECT i.person_id::text
             FROM source_records s
             JOIN source_record_identities i ON i.source_record_id = s.id
             WHERE s.request_id = %s AND s.label = 'City Attorney'
             """,
             (sentinel_request,),
         )
-        assert [row[0] for row in await cur.fetchall()] == ["person-bob"]
+        assert [row[0] for row in await cur.fetchall()] == [_BOB]
 
 
 @pytest.mark.integration
@@ -161,7 +177,7 @@ async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
     assert [r["label"] for r in rows] == ["Council Member", "Mayor"]
     assert [r["source_url"] for r in rows] == ["https://zz.gov/0", "https://zz.gov/1"]
     # Two rows, one human: the link lives in source_record_identities.
-    assert {r["person_id"] for r in rows} == {"person-dee"}
+    assert {r["person_id"] for r in rows} == {_DEE}
 
 
 @pytest.mark.integration
@@ -170,7 +186,7 @@ async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
     """Both urls are columns: where the photo came from, and where we serve it. The pipeline's
     `local://` ref is resolved before the write, because it means nothing once the zip is gone."""
     records = {
-        "person-eve": [
+        _EVE: [
             {
                 "name": "Eve",
                 "label": "Mayor",
