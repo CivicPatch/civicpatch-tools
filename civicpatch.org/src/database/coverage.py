@@ -1,4 +1,5 @@
 from core.coverage import classify_map_status
+from database.people import IS_ON_THE_ROSTER
 from database.database import get_pool
 from database.jurisdictions import FRESH_SINCE_SQL
 
@@ -16,10 +17,10 @@ async def get_maps_coverage() -> dict:
     is pre-aggregated (DISTINCT once) and hash-joined — one pass, not per-row.
     """
     pool = await get_pool()
-    has_people_subquery = """
+    has_people_subquery = f"""
         SELECT DISTINCT jurisdiction_ocdid
         FROM people
-        WHERE status = 'active'
+        WHERE {IS_ON_THE_ROSTER}
     """
     covered_fresh_filter = f"""
         COUNT(*) FILTER (
@@ -108,7 +109,7 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
         LEFT JOIN (
             SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
             FROM people
-            WHERE status = 'active'
+            WHERE {IS_ON_THE_ROSTER}
             GROUP BY jurisdiction_ocdid
         ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
         WHERE j.status = 'active'

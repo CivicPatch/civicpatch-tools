@@ -15,7 +15,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMember
+from core.post_derivation import ChosenPost, DerivedMember
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.review_queue import issue_count, issue_priority
@@ -1122,3 +1122,76 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
         )
         assert await cur.fetchone() == ("2024", "2028-01")
         await conn.rollback()
+
+
+# --- a reviewer's pick ------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_pick_is_keyed_on_the_person_not_the_post():
+    """`chosen_posts` used to key on `post_id`, which meant the pick had to ride on the record
+    the derivation reads. Keyed on the person, the derivation's input can be purely what the
+    source said."""
+    from shared.schemas import Person
+    from services.publish import chosen_posts
+
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await conn.commit()
+
+    roster = [Person(id="p1", name="Ann", jurisdiction_ocdid=_OCDID, post_id=post_id)]
+
+    assert await chosen_posts(roster) == {
+        "p1": ChosenPost(role_id="mayor", division_ocdid=_BASE)
+    }
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_pick_at_a_post_that_is_gone_is_simply_absent():
+    """Not an error and not a lost person: the derivation falls back to the label."""
+    from shared.schemas import Person
+    from services.publish import chosen_posts
+
+    roster = [
+        Person(
+            id="p1",
+            name="Ann",
+            jurisdiction_ocdid=_OCDID,
+            post_id="00000000-0000-4000-8000-00000000dead",
+        )
+    ]
+
+    assert await chosen_posts(roster) == {}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_persons_term_is_read_off_the_seat_they_hold():
+    """`people` has no term columns since 145 — a term belongs to the tenure. The person read
+    still answers, by projecting the open membership, as it already does for `office`."""
+    from database.people import get_roster
+
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await memberships.upsert(
+            cur,
+            DerivedMember(person_id=person_id, start_date="2024", end_date="2028-01"),
+            post_id,
+            org,
+            _T0,
+        )
+        await conn.commit()
+
+    roster = await get_roster(jurisdiction_ocdid=_OCDID)
+    seated = next(p for p in roster if p["id"] == person_id)
+    assert (seated["start_date"], seated["end_date"]) == ("2024", "2028-01")

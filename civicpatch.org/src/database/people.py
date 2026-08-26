@@ -8,11 +8,29 @@ from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
 
-# A view over memberships, never a column. `source_labels`, NOT `roles.label` or `posts.label`:
-# those are the canonical role, and either would have silently reworded ~4,500 dev people.
-#
 # Open first, then most recent — a retired person keeps their last seat rather than blanking out
 # the day their membership closes. Unaliased, so a caller need not spell `people` any one way.
+# A term belongs to the tenure, so both come off the seat they hold — the open membership,
+# else the most recent, ordered as `PERSON_OFFICE` does. Written out rather than built by a
+# function: pyright's `LiteralString` guard is what stops a runtime string reaching `execute`,
+# and a helper returning `str` gives that up for six lines.
+PERSON_START_DATE = """(
+    SELECT memberships.start_date
+    FROM memberships
+    WHERE memberships.person_id = people.id
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
+    LIMIT 1
+)"""
+
+PERSON_END_DATE = """(
+    SELECT memberships.end_date
+    FROM memberships
+    WHERE memberships.person_id = people.id
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
+    LIMIT 1
+)"""
+
+
 PERSON_OFFICE = """(
     SELECT jsonb_build_object(
         'name', array_to_string(memberships.source_labels, ' - '),
@@ -72,8 +90,8 @@ PERSON_JSON = f"""jsonb_build_object(
     'source_urls', to_jsonb(people.source_urls),
     'image', people.image,
     'cdn_image', people.cdn_image,
-    'start_date', people.start_date,
-    'end_date', people.end_date,
+    'start_date', {PERSON_START_DATE},
+    'end_date', {PERSON_END_DATE},
     'jurisdiction_ocdid', people.jurisdiction_ocdid,
     'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
     'labels', {PERSON_LABELS},
@@ -95,8 +113,8 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "phones": ("'phones'", "to_jsonb(people.phones)"),
     "emails": ("'emails'", "to_jsonb(people.emails)"),
     "urls": ("'urls'", "to_jsonb(people.urls)"),
-    "start_date": ("'start_date'", "people.start_date"),
-    "end_date": ("'end_date'", "people.end_date"),
+    "start_date": ("'start_date'", PERSON_START_DATE),
+    "end_date": ("'end_date'", PERSON_END_DATE),
     "image": ("'image'", "people.image"),
 }
 
@@ -246,8 +264,9 @@ async def get_people_by_jurisdictions(
             sql.SQL("""
             SELECT jurisdiction_ocdid, {} AS person
             FROM people
-            WHERE jurisdiction_ocdid = ANY(%s) AND status = 'active'
-            """).format(projection),
+            WHERE jurisdiction_ocdid = ANY(%s) AND """ + IS_ON_THE_ROSTER).format(
+                projection
+            ),
             (jurisdiction_ocdids,),
         )
         rows = await cur.fetchall()
@@ -336,16 +355,14 @@ _PERSON_COLUMNS = (
     "source_urls",
     "image",
     "cdn_image",
-    "start_date",
-    "end_date",
 )
 _LIST_COLUMNS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
 
-# One statement for both writers — it was copied in `publications` before 134, and doubling a
-# ten-column write is how the two quietly stop agreeing.
+# One statement, so the writers cannot quietly stop agreeing. No `status`: whether somebody is
+# on the roster is `IS_ON_THE_ROSTER`, asked of memberships.
 PERSON_UPSERT = f"""
-    INSERT INTO people (id, jurisdiction_ocdid, updated_at, status, {", ".join(_PERSON_COLUMNS)})
-    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(updated_at)s, 'active',
+    INSERT INTO people (id, jurisdiction_ocdid, updated_at, {", ".join(_PERSON_COLUMNS)})
+    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(updated_at)s,
             {", ".join(f"%({column})s" for column in _PERSON_COLUMNS)})
     ON CONFLICT (id) DO UPDATE
        SET updated_at = EXCLUDED.updated_at,
@@ -373,5 +390,3 @@ def person_upsert_params(people: list[dict]) -> list[dict]:
         }
         for person in people
     ]
-
-

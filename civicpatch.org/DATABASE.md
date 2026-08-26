@@ -76,9 +76,6 @@ erDiagram
         text_array      source_urls         "134"
         text_null       image               "134"
         text_null       cdn_image           "134"
-        text_null       start_date          "134: text, not date — sources give partial dates and Popolo allows them"
-        text_null       end_date            "134"
-        text_null       status              "check: active|inactive, default: active. inactive = no longer named by the latest roster; kept, never deleted, so seat history survives"
         timestamptz_null updated_at         "from the record's own updated_at — data, not a publish time" 
     }
 

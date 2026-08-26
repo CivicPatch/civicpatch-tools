@@ -6,7 +6,7 @@ is covered by tests/integration/database/test_post_derivation.py.
 
 import pytest
 
-from core.post_derivation import UNMATCHED_ROLE_ID, ChosenPost, derived_posts
+from core.post_derivation import SourcedPerson, UNMATCHED_ROLE_ID, ChosenPost, derived_posts
 from shared.schemas import Person, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
@@ -34,24 +34,16 @@ _TAXONOMY = build_taxonomy(RoleConfig(roles=_ROLES))
 
 
 def _person(person_id, office_name, division_ocdid=None):
-    """`derived_posts` reads `Person.labels`, not a joined `office.name`.
+    """A `SourcedPerson` — the derivation's input, which is labels and a human's answers.
 
-    The fixtures still pass one " - " string because it is compact to write; it is split here,
-    so the join being retired happens once in a test helper instead of on every record.
-
-    A pinned division rides along as `division_ocdid`, the field the rendered roster carries —
-    `Person` does not model it, and a reviewer could have set it by hand. It was nested under
-    `office` until that shape was retired.
+    The fixtures pass one " - " string because it is compact to write; it is split here, so the
+    join being retired happens once in a helper rather than on every record.
     """
-    extra = {"division_ocdid": division_ocdid} if division_ocdid else {}
-    return Person(
-        id=person_id,
-        name=f"Person {person_id}",
-        labels=[part.strip() for part in office_name.split(" - ") if part.strip()],
+    return SourcedPerson(
+        person_id=person_id,
         jurisdiction_ocdid=_OCDID,
-        source_urls=["https://example.gov/council"],
-        updated_at="2026-03-11T00:00:00+00:00",
-        **extra,
+        labels=[part.strip() for part in office_name.split(" - ") if part.strip()],
+        division_ocdid=division_ocdid,
     )
 
 
@@ -292,8 +284,8 @@ def test_a_chosen_post_decides_where_the_person_lands():
     """A human picked the post. Re-deriving it from the label could only disagree — and the
     label is what they were correcting."""
     person = _person("a", "Councilmember")
-    person.post_id = "post-1"
-    chosen = {"post-1": ChosenPost(role_id="mayor", division_ocdid=_WARD_3)}
+    # Keyed on the person: a pick is a human's answer and no longer rides on the record.
+    chosen = {"a": ChosenPost(role_id="mayor", division_ocdid=_WARD_3)}
 
     derived = derived_posts([person], _TAXONOMY, _ROLES, chosen)
 
@@ -305,9 +297,8 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
     """The pick says where they serve. Designations, demoted roles and residue still come from
     the labels, because a post is not a claim about what the page called them."""
     person = _person("a", "Council Member - Place 6")
-    person.post_id = "post-1"
     # Picked onto the mayor's post, though the label says council member.
-    chosen = {"post-1": ChosenPost(role_id="mayor", division_ocdid=_BASE)}
+    chosen = {"a": ChosenPost(role_id="mayor", division_ocdid=_BASE)}
 
     member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
 
@@ -320,9 +311,11 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
 
 @pytest.mark.unit
 def test_an_unknown_post_id_falls_back_to_the_parse():
-    """A pick pointing at a post that no longer exists is not a reason to lose the person."""
+    """A pick pointing at a post that no longer exists is not a reason to lose the person.
+
+    `chosen_posts` drops it — a post it cannot resolve is simply absent — so the derivation sees
+    no entry for this person and falls back to the label."""
     person = _person("a", "Mayor")
-    person.post_id = "deleted-post"
 
     derived = derived_posts([person], _TAXONOMY, _ROLES, {})
 

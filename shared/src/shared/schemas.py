@@ -187,8 +187,6 @@ class Person(BaseModel):
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
     image: Optional[str] = None
     jurisdiction_ocdid: str
     cdn_image: Optional[str] = None

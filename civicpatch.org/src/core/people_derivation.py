@@ -17,6 +17,15 @@ from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy
 
 
+def term_dates(records: List[PersonRecord]) -> tuple[str, str]:
+    """The term the sources agree on. Not on `Person`: a term belongs to the tenure, so it
+    goes to the membership, and the roster document carries it in transit."""
+    return (
+        merge_field([r.start_date for r in records if r.start_date is not None]),
+        merge_field([r.end_date for r in records if r.end_date is not None]),
+    )
+
+
 def merge_labels(records: List[PersonRecord], taxonomy: Taxonomy) -> List[str]:
     """One label per distinct statement, not per distinct spelling.
 
@@ -159,11 +168,6 @@ def merge_records_to_person(
     phones = merge_field_to_list([r.phone for r in records if r.phone is not None])
     emails = merge_field_to_list([r.email for r in records if r.email is not None])
     urls = merge_field_to_list([r.url for r in records if r.url is not None])
-    start_date = merge_field(
-        [r.start_date for r in records if r.start_date is not None]
-    )
-    end_date = merge_field([r.end_date for r in records if r.end_date is not None])
-
     other_names = sorted(
         {
             person.name
@@ -179,8 +183,6 @@ def merge_records_to_person(
         phones=phones,
         emails=emails,
         urls=urls,
-        start_date=start_date,
-        end_date=end_date,
         image=image,
         cdn_image="",
         jurisdiction_ocdid=jurisdiction_ocdid,

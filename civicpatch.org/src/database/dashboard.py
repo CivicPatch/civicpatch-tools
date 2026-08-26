@@ -1,3 +1,4 @@
+from database.people import IS_ON_THE_ROSTER
 from database.database import get_pool
 from database.jurisdictions import FRESH_SINCE_SQL
 
@@ -41,7 +42,7 @@ async def get_dashboard() -> dict:
             LEFT JOIN (
                 SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
                 FROM people
-                WHERE status = 'active'
+                WHERE {IS_ON_THE_ROSTER}
                 GROUP BY jurisdiction_ocdid
             ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE j.status = 'active'

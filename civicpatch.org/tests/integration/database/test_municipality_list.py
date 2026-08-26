@@ -27,7 +27,14 @@ _FRESH_SCRAPE = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelt
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
+        await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid LIKE 'zz-%'"
+        )
+        for table in ("posts", "divisions", "organizations", "people"):
+            await cur.execute(
+                f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zz-%'"
+            )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
 
@@ -55,15 +62,38 @@ async def _insert_jurisdiction(ocdid, *, name, url=None, scraped_at=None):
 
 
 async def _add_people(ocdid, count):
+    """Seated, not merely present: an officials count is a count of open memberships now."""
+    division = ocdid.replace("ocd-jurisdiction", "ocd-division")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'zz') "
+            "RETURNING id",
+            (ocdid,),
+        )
+        organization_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO divisions (ocdid, jurisdiction_ocdid) VALUES (%s, %s) "
+            "ON CONFLICT DO NOTHING",
+            (division, ocdid),
+        )
+        await cur.execute(
+            "INSERT INTO posts (jurisdiction_ocdid, organization_id, role_id, division_ocdid) "
+            "VALUES (%s, %s, 'mayor', %s) RETURNING id",
+            (ocdid, organization_id, division),
+        )
+        post_id = (await cur.fetchone())[0]
         for _ in range(count):
             await cur.execute(
-                """
-                INSERT INTO people (id, jurisdiction_ocdid, name, updated_at, status)
-                VALUES (%s, %s, %s, now(), 'active')
-                """,
-                (str(uuid.uuid4()), ocdid, "x"),
+                "INSERT INTO people (id, jurisdiction_ocdid, name, updated_at) "
+                "VALUES (%s, %s, %s, now())",
+                (person_id := str(uuid.uuid4()), ocdid, "x"),
+            )
+            await cur.execute(
+                "INSERT INTO memberships "
+                "(post_id, organization_id, person_id, first_seen_at, last_seen_at) "
+                "VALUES (%s, %s, %s, now(), now())",
+                (post_id, organization_id, person_id),
             )
         await conn.commit()
 

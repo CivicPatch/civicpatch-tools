@@ -9,7 +9,7 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 import asyncio
 
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
-from core.post_derivation import derived_posts
+from core.post_derivation import SourcedPerson, derived_posts
 from core.post_issues import append_post_issues, unverified_post_issues
 from database import assertions
 from database import memberships as memberships_db
@@ -100,7 +100,12 @@ async def proposals_for_requests(
                 }
             )
             for change in propose(
-                derived_posts(people, taxonomy, roles, await chosen_posts(people)),
+                derived_posts(
+                    [SourcedPerson.from_person(person) for person in people],
+                    taxonomy,
+                    roles,
+                    await chosen_posts(people),
+                ),
                 [ExistingMembership(**row) for row in held[ocdid]],
             )
         ]
