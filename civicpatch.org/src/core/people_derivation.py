@@ -20,12 +20,8 @@ from shared.utils.taxonomy import Taxonomy
 def merge_labels(records: List[PersonRecord], taxonomy: Taxonomy) -> List[str]:
     """One label per distinct statement, not per distinct spelling.
 
-    Deduped on the parse, not the string. Three Seattle pages call one person "Councilmember
-    Position 8", "Council Member Position 8" and "Council Member Position 8 (Citywide, …)";
-    the first two parse identically, so keeping both is noise that reads as two offices.
-
-    A label whose parse differs at all survives — the third above keeps its residue — so this
-    only ever collapses labels that say the same thing.
+    Deduped on the parse: "Councilmember Position 8" and "Council Member Position 8" are one
+    office. A label whose parse differs at all survives.
     """
     kept: dict[tuple, str] = {}
     for label in sorted({record.label for record in records if record.label}):

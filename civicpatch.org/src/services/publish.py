@@ -89,7 +89,6 @@ async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
 
 
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
-
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
     roster = [Person(**person) for person in people]

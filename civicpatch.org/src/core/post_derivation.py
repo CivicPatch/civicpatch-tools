@@ -30,6 +30,10 @@ class DerivedMember(BaseModel):
     role_ids: list[str] = []
     # The source's words for whatever the post label will not say.
     label: str | None = None
+    # The source's claim about the tenure, carried from the record. Not `closed_at`, which is
+    # ours: when we stopped seeing them, not when they left.
+    start_date: str | None = None
+    end_date: str | None = None
 
 
 class DerivedPost(BaseModel):
@@ -113,6 +117,8 @@ def _member(
         source_labels=parsed.labels,
         role_ids=_demoted_role_ids(parsed, ids_by_label, post_role_id),
         label=proposed_membership_label(parsed.parts),
+        start_date=record.start_date,
+        end_date=record.end_date,
     )
 
 

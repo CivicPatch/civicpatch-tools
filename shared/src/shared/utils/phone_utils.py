@@ -1,15 +1,10 @@
 """Phone numbers as US national format, or nothing.
 
-Pure and total: every input returns a string or `None`, and nothing raises. That is
-deliberate. These are the check the pipeline runs before accepting an extraction, and a
-check that signals failure two ways — `None` for an invalid number, an exception for an
-unparseable one — gets read as one way by its callers. It was: the retry guard in
-`heuristics.py` wrapped only the exception, so `555-555-5555` passed and `not a phone`
-did not.
+Total on purpose: a string or `None`, never an exception. Signalling failure two ways got read
+as one — the retry guard wrapped only the exception, so `555-555-5555` passed.
 
-Normalizing is not storing. The pipeline calls these to decide whether to re-read a page;
-the raw string is what goes into `source_records`, because evidence is what the page said.
-The canonical value belongs to the derivation, and is applied where one is written.
+The pipeline calls these to decide whether to re-read a page; `source_records` keeps the raw
+string either way.
 """
 
 from typing import Optional

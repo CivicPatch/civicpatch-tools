@@ -11,6 +11,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
+from core.post_derivation import DerivedMember
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 
@@ -111,8 +112,11 @@ async def test_reassigning_to_the_same_seat_only_sets_the_label():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         first = await memberships.upsert(
-            cur, person_id, post_id, org, "2026-03-01T00:00:00+00:00",
-            designations=["Position 8"],
+            cur,
+            DerivedMember(person_id=person_id, designations=["Position 8"]),
+            post_id,
+            org,
+            "2026-03-01T00:00:00+00:00",
         )
         await conn.commit()
 
