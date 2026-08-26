@@ -57,16 +57,39 @@ class DerivedPost(BaseModel):
     members: list[DerivedMember]
 
 
-def _division(record: Person, parsed: DerivedRoles) -> str:
-    """The record's own division wins over the one re-derived from its label.
-
-    Out of `model_extra`: the rendered roster carries `division_ocdid` and `Person` does not
-    declare it. A reviewer may have set it by hand back when the editor offered it as a field,
-    and that answer outranks anything re-derived from text. (It read `office.division_ocdid`
-    until `office` was retired — same field, one level of nesting fewer.)
+class SourcedPerson(BaseModel):
+    """One person as the source described them. Only ever the source — a human's answers
+    travel in `chosen`, so this is a projection of the evidence and nothing else.
     """
-    stored = ((record.model_extra or {}).get("division_ocdid") or "").strip()
-    return stored or parsed.division_ocdid
+
+    person_id: str
+    jurisdiction_ocdid: str
+    labels: list[str] = []
+    # The source's claim about the tenure — the membership's, not the person's.
+    start_date: str | None = None
+    end_date: str | None = None
+    # A human's, when they set one; it outranks anything re-derived from the label. The last
+    # non-source field here, and it leaves when the editor stops offering it.
+    division_ocdid: str | None = None
+
+    @classmethod
+    def from_person(cls, record: Person) -> "SourcedPerson":
+        """A bridge, until every caller reads `source_records` directly."""
+        return cls(
+            person_id=record.id,
+            jurisdiction_ocdid=record.jurisdiction_ocdid,
+            labels=record.labels,
+            # Out of `model_extra`: the roster document carries the term, and `Person` does
+            # not declare it — a term belongs to the tenure, not the human.
+            start_date=(record.model_extra or {}).get("start_date"),
+            end_date=(record.model_extra or {}).get("end_date"),
+            division_ocdid=(record.model_extra or {}).get("division_ocdid"),
+        )
+
+
+def _division(record: SourcedPerson, parsed: DerivedRoles) -> str:
+    """A human's division wins over the one re-derived from the label."""
+    return (record.division_ocdid or "").strip() or parsed.division_ocdid
 
 
 def _demoted_role_ids(
@@ -107,11 +130,14 @@ def _unresolved_text(parsed: DerivedRoles) -> list[str]:
 
 
 def _member(
-    record: Person, parsed: DerivedRoles, ids_by_label: dict[str, str], post_role_id: str
+    record: SourcedPerson,
+    parsed: DerivedRoles,
+    ids_by_label: dict[str, str],
+    post_role_id: str,
 ) -> "DerivedMember":
     """One person, and everything their label carried beyond the post's own role."""
     return DerivedMember(
-        person_id=record.id,
+        person_id=record.person_id,
         designations=parsed.other_designations,
         unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.labels,
@@ -130,7 +156,7 @@ class ChosenPost(BaseModel):
 
 
 def derived_posts(
-    records: list[Person],
+    records: list[SourcedPerson],
     taxonomy: Taxonomy,
     roles: list[Role],
     chosen: dict[str, ChosenPost] | None = None,
@@ -157,7 +183,7 @@ def derived_posts(
             record.jurisdiction_ocdid,
             taxonomy,
         )
-        picked = chosen.get(record.post_id or "")
+        picked = chosen.get(record.person_id)
         key = (
             (picked.role_id, picked.division_ocdid)
             if picked

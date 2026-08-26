@@ -19,6 +19,7 @@ from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import MembershipLabel, derive_post_label, render
 from core.people_derivation import (
+    term_dates,
     canonical_name,
     derived_people,
     merge_records_to_person,
@@ -60,7 +61,7 @@ def roster_from_rows(
         person.name: [record.model_dump() for record in records]
         for person, records in derived
     }
-    return _render([person for person, _ in derived], taxonomy), records_by_name
+    return _render(derived, taxonomy), records_by_name
 
 
 def roster_from_sightings(
@@ -98,7 +99,7 @@ def _person_from_sightings(
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
     log: Log,
-) -> Person:
+) -> tuple[Person, list[PersonRecord]]:
     records = [PersonRecord(**row) for row in rows]
     person = merge_records_to_person(
         log,
@@ -117,12 +118,15 @@ def _person_from_sightings(
         ),
         "",
     )
-    return person.model_copy(
-        update={
-            "id": person_id,
-            "cdn_image": cdn_image,
-            "other_names": _aliases_carried_forward(person, published),
-        }
+    return (
+        person.model_copy(
+            update={
+                "id": person_id,
+                "cdn_image": cdn_image,
+                "other_names": _aliases_carried_forward(person, published),
+            }
+        ),
+        records,
     )
 
 
@@ -185,8 +189,12 @@ def with_fallback_url(person: Person) -> Person:
     return person.model_copy(update={"urls": [person.source_urls[0]]})
 
 
-def _rendered(person: Person, taxonomy: Taxonomy) -> dict:
+def _rendered(
+    person: Person, records: list[PersonRecord], taxonomy: Taxonomy
+) -> dict:
+    """The term comes off the records, not the person: it belongs to the tenure."""
     derived = derive_roles(person.labels, person.jurisdiction_ocdid, taxonomy)
+    start_date, end_date = term_dates(records)
     return {
         "name": person.name,
         "other_names": person.other_names,
@@ -204,8 +212,8 @@ def _rendered(person: Person, taxonomy: Taxonomy) -> dict:
         "phones": person.phones,
         "emails": person.emails,
         "urls": person.urls,
-        "start_date": person.start_date or None,
-        "end_date": person.end_date or None,
+        "start_date": start_date or None,
+        "end_date": end_date or None,
         "image": person.image,
         "cdn_image": person.cdn_image,
         "jurisdiction_ocdid": person.jurisdiction_ocdid,
@@ -215,16 +223,23 @@ def _rendered(person: Person, taxonomy: Taxonomy) -> dict:
     }
 
 
-def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
+def _render(
+    people: list[tuple[Person, list[PersonRecord]]], taxonomy: Taxonomy
+) -> list[dict]:
     """Sorted first, because the roster is rendered to a file a human reads and reviews.
 
     Carries `labels` and `division_ocdid`, not `office`. They are what `office` held,
     unjoined and unnested: `office.name` was the labels joined with " - ", which read back as
     one office named twice for anyone sighted on pages that spelled it differently.
     """
-    kept = [person for person in people if named_like_a_person(person)]
+    records_by_person = {id(person): records for person, records in people}
+    kept = [person for person, _ in people if named_like_a_person(person)]
     return [
-        order_person_fields(_rendered(with_fallback_url(person), taxonomy))
+        order_person_fields(
+            _rendered(
+                with_fallback_url(person), records_by_person[id(person)], taxonomy
+            )
+        )
         for person in sort_people(kept, taxonomy)
     ]
 

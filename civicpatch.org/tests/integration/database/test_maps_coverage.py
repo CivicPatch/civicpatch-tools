@@ -29,7 +29,16 @@ _STALE_SCRAPE = _NOW - datetime.timedelta(days=120)
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
+        # The posts chain first: `memberships.person_id` is a FK, and these fixtures seat
+        # their people now.
+        await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid LIKE 'zz-%'"
+        )
+        for table in ("posts", "divisions", "organizations", "people"):
+            await cur.execute(
+                f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zz-%'"
+            )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
 
@@ -54,12 +63,31 @@ async def _insert(ocdid, *, scraped_at, people):
             (ocdid, data, scraped_at),
         )
         if people:
+            # Seated, not merely present: "has people" is an open membership now, so a person
+            # with no seat does not count — which is what the column used to hide.
             await cur.execute(
                 """
-                INSERT INTO people (id, jurisdiction_ocdid, name, updated_at, status)
-                VALUES (%s, %s, %s, now(), 'active')
+                WITH p AS (
+                    INSERT INTO people (id, jurisdiction_ocdid, name, updated_at)
+                    VALUES (gen_random_uuid(), %(ocdid)s, 'x', now())
+                    RETURNING id
+                ), o AS (
+                    INSERT INTO organizations (jurisdiction_ocdid, name)
+                    VALUES (%(ocdid)s, 'zz') RETURNING id
+                ), d AS (
+                    INSERT INTO divisions (ocdid, jurisdiction_ocdid)
+                    VALUES (%(division)s, %(ocdid)s) RETURNING ocdid
+                ), s AS (
+                    INSERT INTO posts
+                        (jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+                    SELECT %(ocdid)s, o.id, 'mayor', d.ocdid FROM o, d
+                    RETURNING id, organization_id
+                )
+                INSERT INTO memberships
+                    (post_id, organization_id, person_id, first_seen_at, last_seen_at)
+                SELECT s.id, s.organization_id, p.id, now(), now() FROM s, p
                 """,
-                (str(uuid.uuid4()), ocdid, "x"),
+                {"ocdid": ocdid, "division": ocdid.replace("ocd-jurisdiction", "ocd-division")},
             )
         await conn.commit()
 

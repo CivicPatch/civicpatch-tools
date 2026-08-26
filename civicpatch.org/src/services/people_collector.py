@@ -11,7 +11,7 @@ from core.membership_proposal import (
     nothing_to_review,
     propose,
 )
-from core.post_derivation import DerivedPost, derived_posts
+from core.post_derivation import DerivedPost, SourcedPerson, derived_posts
 from core.people_roster import identified, records_by_person, roster_from_rows
 from database import memberships as memberships_db
 from database import posts as posts_db
@@ -175,7 +175,8 @@ async def _find_or_create_posts(
         roster = [Person(**record) for record in records]
         # A pick only exists on a roster a reviewer has edited, so this is almost always
         # empty at ingest — but a re-submit of an edited roster must not undo the pick.
-        derived = derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
+        sourced = [SourcedPerson.from_person(person) for person in roster]
+        derived = derived_posts(sourced, taxonomy, roles, await chosen_posts(roster))
         await posts_db.find_or_create_all(jurisdiction_ocdid, derived, request_id)
         logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
         return derived

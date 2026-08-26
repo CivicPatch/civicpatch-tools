@@ -15,7 +15,7 @@ import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
-from core.post_derivation import ChosenPost, DerivedPost, derived_posts
+from core.post_derivation import ChosenPost, DerivedPost, SourcedPerson, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
@@ -69,22 +69,27 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
 
 
 async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
-    """The posts a reviewer picked, by id.
+    """The seat a reviewer picked, **by person id**.
 
-    A pick that names a post which no longer exists is simply absent here, and the derivation
-    falls back to the labels rather than losing the person.
+    Keyed on the person so the derivation's input can be purely what the source said: a pick is
+    a human's answer and travels here instead of riding on the record.
+
+    A pick naming a post that no longer exists is simply absent, and the derivation falls back
+    to the labels rather than losing the person.
     """
-    picked = [person.post_id for person in roster if person.post_id]
-    if not picked:
+    by_person = {p.id: p.post_id for p in roster if p.post_id}
+    if not by_person:
         return {}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts_db.identities_by_id(cur, picked)
+        rows = await posts_db.identities_by_id(cur, list(set(by_person.values())))
     return {
-        post_id: ChosenPost(
-            role_id=row["role_id"], division_ocdid=row["division_ocdid"]
+        person_id: ChosenPost(
+            role_id=rows[post_id]["role_id"],
+            division_ocdid=rows[post_id]["division_ocdid"],
         )
-        for post_id, row in rows.items()
+        for person_id, post_id in by_person.items()
+        if post_id in rows
     }
 
 
@@ -92,7 +97,8 @@ async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
     roster = [Person(**person) for person in people]
-    return derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
+    sourced = [SourcedPerson.from_person(person) for person in roster]
+    return derived_posts(sourced, taxonomy, roles, await chosen_posts(roster))
 
 
 async def publish_people(
