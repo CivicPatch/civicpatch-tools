@@ -539,6 +539,7 @@ async def get_jurisdiction_history(
                    COALESCE(j.created_at, r.created_at),
                    COALESCE(j.updated_at, r.updated_at),
                    j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type,
+                   r.published_at,
                    {RUN_IN_FLIGHT} AS is_running,
                    {AVAILABLE_FOR_REVIEW} AS awaiting_review
             FROM requests r
@@ -567,13 +568,17 @@ async def get_jurisdiction_history(
                     "open_data_url": row[5],
                     "review_status": row[6],
                     "request_type": row[7],
+                    # When a *person* published it, not when the machine finished. The header
+                    # used the run's created_at, so it dated the scrape rather than the
+                    # decision.
+                    "published_at": to_iso(row[8]),
                     # Told, not inferred: the page used to test the raw status against a
                     # terminal set it kept its own copy of.
-                    "is_running": row[8],
+                    "is_running": row[9],
                     # The pool's own definition, not a second one. `review_status` is `pending`
                     # from the moment a request exists, so a scrape still running read as
                     # awaiting review and offered a button for a roster it had not produced.
-                    "awaiting_review": row[9],
+                    "awaiting_review": row[10],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
                 }

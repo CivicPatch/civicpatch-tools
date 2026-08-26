@@ -133,3 +133,78 @@ async def test_the_history_row_answers_whether_the_run_is_going(status):
 
     after = await get_jurisdiction_history(_OCDID)
     assert after[0]["is_running"] is False
+
+
+# --- the stuck-run sweeper ---------------------------------------------------------
+
+
+async def _set_run(request_id: str, status: str, age_hours: int) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE pipeline_runs SET status = %s, "
+            "updated_at = NOW() - make_interval(hours => %s) WHERE request_id = %s",
+            (status, age_hours, request_id),
+        )
+        await conn.commit()
+
+
+async def _status(request_id: str) -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT status FROM pipeline_runs WHERE request_id = %s", (request_id,)
+        )
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_run_stuck_on_a_step_is_expired():
+    """The case the sweeper exists for, and could not reach until 2026-08-25.
+
+    A running row holds a *step* name — the engine PATCHes `ctx.current_state.value` every
+    loop — so matching `status = 'RUNNING'` never found one. A pipeline killed hard sat at
+    `SCRAPE_PAGE` forever and `RUN_IN_FLIGHT` kept calling it live.
+    """
+    from datetime import timedelta
+
+    from database.pipeline_runs import expire_stale_pipeline_runs
+
+    request_id = await _a_run_in_flight()
+    await _set_run(request_id, "SCRAPE_PAGE", age_hours=48)
+
+    expired = await expire_stale_pipeline_runs(timedelta(hours=6))
+
+    assert request_id in expired
+    assert await _status(request_id) == "ERROR"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_terminal_run_is_left_alone():
+    """SUCCESS is an answer, however old. Rewriting it to ERROR would lose a publish."""
+    from datetime import timedelta
+
+    from database.pipeline_runs import expire_stale_pipeline_runs
+
+    request_id = await _a_run_in_flight()
+    await _set_run(request_id, "SUCCESS", age_hours=48)
+
+    assert request_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(request_id) == "SUCCESS"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_run_still_reporting_is_left_alone():
+    """Mid-scrape, not stuck. The age is the whole distinction."""
+    from datetime import timedelta
+
+    from database.pipeline_runs import expire_stale_pipeline_runs
+
+    request_id = await _a_run_in_flight()
+    await _set_run(request_id, "SCRAPE_PAGE", age_hours=1)
+
+    assert request_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(request_id) == "SCRAPE_PAGE"

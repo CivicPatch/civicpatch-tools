@@ -1,9 +1,7 @@
 import uuid
 
-import pytest
-
 from shared.schemas import Person
-from shared.utils.name_utils import best_identity_match, build_canonical_map
+from shared.utils.name_utils import build_canonical_map
 from shared.utils.person_id_utils import resolve_people_ids, resolve_person_id
 
 _OCDID = "ocd-jurisdiction/country:us/state:tx/place:laredo/government"
@@ -168,8 +166,36 @@ def test_resolve_people_ids_ambiguous():
         identities,
     )
     assert results[0]["ambiguous"] is True
-    assert "id-a" in results[0]["id"]
-    assert "id-b" in results[0]["id"]
+    assert results[0]["id"] in {"id-a", "id-b"}
+    assert {match.id for match in results[0]["matches"]} == {"id-a", "id-b"}
+
+
+def test_resolve_people_ids_ambiguous_picks_the_closer_name():
+    """A default, not a guess: the candidate agreeing on more name components wins."""
+    exact = make_person("Ruben Gutierrez, Jr.", id="id-exact")
+    looser = make_person("Ruben Gutierrez", id="id-looser")
+    identities = {"Ruben Gutierrez, Jr.": ["Ruben Gutierrez"]}
+
+    results = resolve_people_ids(
+        [{"id": None, "name": "Ruben Gutierrez, Jr.", "email": None}],
+        [exact, looser],
+        identities,
+    )
+    assert results[0]["ambiguous"] is True
+    assert results[0]["id"] == "id-exact"
+
+
+def test_resolve_people_ids_ambiguous_is_deterministic():
+    person_a = make_person("John Smith", id="id-a")
+    person_b = make_person("John Smith Jr.", id="id-b")
+    identities = {"John Smith": ["John Smith Jr."]}
+    incoming = [{"id": None, "name": "John Smith", "email": None}]
+
+    forwards = resolve_people_ids(incoming, [person_a, person_b], identities)
+    backwards = resolve_people_ids(incoming, [person_b, person_a], identities)
+
+    assert forwards[0]["ambiguous"] is True
+    assert forwards[0]["id"] == backwards[0]["id"]
 
 
 def test_resolve_people_ids_multiple_people():
