@@ -60,12 +60,7 @@ class Official(BaseModel):
         for phone in v:
             if not phone or not phone.strip():
                 continue
-            try:
-                canonical = normalize_phone_number(phone)
-            except ValueError as e:
-                raise ValueError(
-                    f"Invalid phone number: '{phone}' (phonenumbers failed to parse)"
-                ) from e
+            canonical = normalize_phone_number(phone)
             if not canonical:
                 raise ValueError(f"Invalid phone number: '{phone}'")
             normalized.append(canonical)

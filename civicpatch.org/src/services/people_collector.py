@@ -88,7 +88,7 @@ async def _reconcile_roster(
     workflow_context: dict,
     taxonomy: Taxonomy,
 ) -> tuple[list[dict], dict[str, list[dict]]]:
-    """The roster this submit means, whichever shape it arrived in.
+    """The roster this submit means.
 
     Fatal on failure, unlike the writes below: everything downstream consumes it.
     """

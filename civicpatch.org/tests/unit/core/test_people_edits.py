@@ -9,7 +9,7 @@ from core.people_edits import (
     patch_people,
     validate_and_normalize,
 )
-from shared.utils.official_fields import OFFICIAL_FIELD_ORDER
+from shared.utils.person_fields import PERSON_FIELD_ORDER
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 pytestmark = pytest.mark.unit
@@ -256,7 +256,7 @@ def test_only_edited_field_moves_end_to_end():
 
 # ── patch_people: every written person lands in Official field order ──────
 
-OFFICIAL_KEYS = list(OFFICIAL_FIELD_ORDER)
+OFFICIAL_KEYS = list(PERSON_FIELD_ORDER)
 
 
 def _out_of_order(pid):

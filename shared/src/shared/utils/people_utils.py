@@ -52,6 +52,8 @@ def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
 def person_to_official(person: Person, taxonomy: Taxonomy) -> Official:
     parsed = [parse_label(label, taxonomy) for label in person.labels]
     office_names = list(dict.fromkeys(label for label in person.labels if label))
+    # The last producer of a joined label string. Nothing splits it back any more — every
+    # reader takes `labels`, so this is a display join on its way out with `Official`.
     office_name = " - ".join(office_names) if office_names else "Unknown Office"
     # A person sits in at most one division; the first label naming one decides it.
     located = next((p for p in parsed if p.division), None)

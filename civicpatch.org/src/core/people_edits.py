@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ValidationError
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.schemas import Official
-from shared.utils.official_fields import order_official_fields
+from shared.utils.person_fields import order_person_fields
 
 # Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
 # field missing here is a field whose edit goes unrecorded.
@@ -183,7 +183,7 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
 # Raises PeopleValidationError if any edited person is invalid.
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     patched = validate_and_normalize(apply_people_patch(base, edits), edits)
-    return [order_official_fields(person) for person in patched]
+    return [order_person_fields(person) for person in patched]
 
 
 def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assertion]:

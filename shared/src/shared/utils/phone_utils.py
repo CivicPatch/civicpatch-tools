@@ -1,29 +1,30 @@
-import phonenumbers
+"""Phone numbers as US national format, or nothing.
+
+Pure and total: every input returns a string or `None`, and nothing raises. That is
+deliberate. These are the check the pipeline runs before accepting an extraction, and a
+check that signals failure two ways — `None` for an invalid number, an exception for an
+unparseable one — gets read as one way by its callers. It was: the retry guard in
+`heuristics.py` wrapped only the exception, so `555-555-5555` passed and `not a phone`
+did not.
+
+Normalizing is not storing. The pipeline calls these to decide whether to re-read a page;
+the raw string is what goes into `source_records`, because evidence is what the page said.
+The canonical value belongs to the derivation, and is applied where one is written.
+"""
+
 from typing import Optional
 
-
-def normalize_phone_number(phone: str) -> Optional[str]:
-    """
-    Normalizes a phone number to a standard format.
-    """
-    if not phone:
-        return ""
-    try:
-        parsed = phonenumbers.parse(phone, "US")
-        if not phonenumbers.is_valid_number(parsed):
-            return None  # Return None if not valid
-        return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.NATIONAL)
-    except phonenumbers.NumberParseException as e:
-        raise ValueError(f"Could not parse phone number: {phone!r}") from e
+import phonenumbers
 
 
-def normalize_first_phone(phone: str) -> Optional[str]:
+def normalize_phone_number(phone: Optional[str]) -> Optional[str]:
+    """US national format — `(856) 358-2509` — or None if this is not a valid number."""
     if not phone:
         return None
     try:
-        return normalize_phone_number(phone)
-    except ValueError:
-        pass
-    for match in phonenumbers.PhoneNumberMatcher(phone, "US"):
-        return phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.NATIONAL)
-    return None
+        parsed = phonenumbers.parse(phone, "US")
+    except phonenumbers.NumberParseException:
+        return None
+    if not phonenumbers.is_valid_number(parsed):
+        return None
+    return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.NATIONAL)

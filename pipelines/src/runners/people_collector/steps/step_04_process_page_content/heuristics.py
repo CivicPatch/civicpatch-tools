@@ -31,14 +31,11 @@ def check_page_heuristics(
                     f"Phone not found in input text: {person.phone} under source url: {source_url}"
                 )
                 return False
-            try:
-                phone_utils.normalize_phone_number(person.phone)
-            except ValueError:
-                if phone_utils.normalize_first_phone(person.phone) is None:
-                    logger.warning(
-                        f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}"
-                    )
-                    return False
+            if phone_utils.normalize_phone_number(person.phone) is None:
+                logger.warning(
+                    f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}"
+                )
+                return False
         if person.url and not url_utils.url_in_text(person.url, input_text):
             if not url_utils.same_url(person.url, source_url):
                 logger.warning(

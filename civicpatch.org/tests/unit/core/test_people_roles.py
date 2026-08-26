@@ -2,7 +2,6 @@ import pytest
 
 from core.people_roles import derive_roles
 from shared.schemas import Role, RoleConfig, RoleStatus
-from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import build_taxonomy
 
 # Pure — taxonomy in, structure out. The insert that stores this lives in
@@ -36,8 +35,10 @@ TAXONOMY = build_taxonomy(
 )
 
 
-def _labels(office_name: str) -> list[str]:
-    return office_name_to_labels(office_name)
+def _labels(joined: str) -> list[str]:
+    """These cases are written as one " - "-joined string for readability; the code under
+    test takes a list."""
+    return [part.strip() for part in joined.split(" - ") if part.strip()]
 
 
 @pytest.mark.unit
@@ -83,8 +84,11 @@ def test_a_joined_office_name_splits_back_into_its_labels():
 
 
 @pytest.mark.unit
-def test_an_unknown_office_name_yields_no_labels():
-    parsed = derive_roles(_labels("Unknown Office"), JURISDICTION, TAXONOMY)
+def test_no_labels_yields_no_roles():
+    """Was `test_an_unknown_office_name_yields_no_labels`, which fed the "Unknown Office"
+    placeholder in and relied on the splitter stripping it. Nothing splits `office.name`
+    any more, so a person with nothing said about them arrives as an empty list."""
+    parsed = derive_roles([], JURISDICTION, TAXONOMY)
     assert parsed["labels"] == []
     assert parsed["role"] is None
     assert parsed["unmatched"] == []

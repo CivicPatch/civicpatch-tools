@@ -11,7 +11,6 @@ from core.people_roster import (
     with_fallback_url,
 )
 from shared.schemas import Person, PersonRecord, Role, RoleConfig, RoleStatus
-from shared.utils.official_fields import office_name_to_labels
 from shared.utils.taxonomy import build_taxonomy
 
 # Pure — rows and a taxonomy in, a roster out. The ingest that calls this lives in
@@ -50,16 +49,6 @@ def _record(name: str, label: str, **fields) -> dict:
     return {"name": name, "label": label, "source_url": "https://alpha.gov/council", **fields}
 
 
-def _official(name: str, office_name: str, division_ocdid: str | None = None) -> dict:
-    return {
-        "name": name,
-        "office": {"name": office_name, "division_ocdid": division_ocdid},
-        "jurisdiction_ocdid": JURISDICTION,
-        "source_urls": [],
-        "updated_at": "2026-01-01T00:00:00+00:00",
-    }
-
-
 def _reconcile(rows: list[dict], identities=None):
     roster, _records = roster_from_rows(
         rows, identities or {}, TAXONOMY, JURISDICTION, MagicMock()
@@ -80,24 +69,6 @@ def test_no_rows_is_not_an_error():
 
 
 @pytest.mark.unit
-def test_officials_pass_through_untouched():
-    """The shape the pipeline still sends. Nothing is reconciled — it already was."""
-    kept = _reconcile([_official("Ann Lee", "Council Member Place 2", f"{BASE}/ward:east")])
-    assert kept[0]["office"]["name"] == "Council Member Place 2"
-    assert kept[0]["office"]["division_ocdid"] == f"{BASE}/ward:east"
-
-
-@pytest.mark.unit
-def test_a_field_official_does_not_model_survives_the_passthrough():
-    """`order_official_fields` exists because rosters carry fields the model does not declare.
-    Validating a row on the way through would drop every one of them."""
-    row = _official("Ann Lee", "Mayor")
-    row["some_field_we_do_not_model"] = "keep me"
-    kept = _reconcile([row])
-    assert kept[0]["some_field_we_do_not_model"] == "keep me"
-
-
-@pytest.mark.unit
 def test_two_sightings_of_one_person_become_one_official():
     kept = _reconcile(
         [
@@ -108,25 +79,22 @@ def test_two_sightings_of_one_person_become_one_official():
     assert len(kept) == 1
     assert kept[0]["phones"] == ["(512) 978-2100"]
     assert kept[0]["emails"] == ["ann@alpha.gov"]
-    assert sorted(office_name_to_labels(kept[0]["office"]["name"])) == [
-        "Council Member Place 2",
-        "Mayor Pro-Tem",
-    ]
+    assert sorted(kept[0]["labels"]) == ["Council Member Place 2", "Mayor Pro-Tem"]
 
 
 @pytest.mark.unit
-def test_the_rendered_office_name_splits_back_into_its_labels():
-    """The join is lossy but reversible by the same delimiter every reader already uses, so
-    a consumer still speaking `Official` sees what a record-shaped one would."""
+def test_labels_are_carried_verbatim_beside_the_joined_office_name():
+    """Was `test_the_rendered_office_name_splits_back_into_its_labels`, which asserted the
+    join could be undone. Nothing undoes it now — every reader takes `labels` — so this
+    asserts the list is there and untouched, which is what made the split removable."""
     kept = _reconcile(
         [
             _record("Ann Lee", "Council Member Place 2"),
             _record("Ann Lee", "Mayor Pro-Tem"),
         ]
     )
-    labels = office_name_to_labels(kept[0]["office"]["name"])
-    assert len(labels) == 2
-    assert all(" - " not in label for label in labels)
+    assert sorted(kept[0]["labels"]) == ["Council Member Place 2", "Mayor Pro-Tem"]
+    assert kept[0]["office"]["name"] == "Council Member Place 2 - Mayor Pro-Tem"
 
 
 @pytest.mark.unit
@@ -271,12 +239,6 @@ def test_every_sighting_is_kept_against_the_person_it_reconciled_into():
         "Council Member Place 2",
         "Mayor Pro-Tem",
     ]
-
-
-@pytest.mark.unit
-def test_an_already_merged_roster_has_no_records_behind_it():
-    """Nothing to keep: the sightings were merged before it arrived."""
-    assert _records_behind([_official("Ann Lee", "Mayor")]) == {}
 
 
 # --- reading the roster back out of stored sightings ---

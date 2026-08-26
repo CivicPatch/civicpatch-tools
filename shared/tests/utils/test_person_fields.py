@@ -1,7 +1,14 @@
-from shared.utils.official_fields import OFFICIAL_FIELD_ORDER, order_official_fields
+"""The key order of a person in a data file.
 
-# Pinned deliberately, not derived from the model: reordering `Official`'s fields silently
-# rewrites the key order of every person in every data file, so it must fail a test first.
+Every assertion here is about a file humans read and git diffs, so a change in order is a
+change in every file at once.
+"""
+
+from shared.utils.person_fields import PERSON_FIELD_ORDER, order_person_fields
+
+# A second, independent copy of the order — deliberately not imported from the module under
+# test. Two literals that must agree is the whole point: changing the layout of every data
+# file in open-data should take two edits and a failing test, never one edit.
 EXPECTED_ORDER = [
     "name",
     "other_names",
@@ -41,12 +48,18 @@ def _person(**overrides):
 
 
 def test_field_order_matches_the_on_disk_contract():
-    assert list(OFFICIAL_FIELD_ORDER) == EXPECTED_ORDER
+    assert list(PERSON_FIELD_ORDER) == EXPECTED_ORDER
+
+
+def test_office_is_still_in_the_order():
+    """It goes when the proposed roster stops carrying it, and that is a data-file change
+    to make on purpose — not one to notice after the fact."""
+    assert "office" in PERSON_FIELD_ORDER
 
 
 def test_id_first_entry_is_reordered():
     entry = {"id": "a", **{k: v for k, v in _person().items() if k != "id"}}
-    assert list(order_official_fields(entry)) == EXPECTED_ORDER
+    assert list(order_person_fields(entry)) == EXPECTED_ORDER
 
 
 def test_legacy_pipeline_order_is_reordered():
@@ -55,27 +68,27 @@ def test_legacy_pipeline_order_is_reordered():
     entry = {k: person[k] for k in person if k not in trailing}
     for key in trailing:
         entry[key] = person[key]
-    assert list(order_official_fields(entry)) == EXPECTED_ORDER
+    assert list(order_person_fields(entry)) == EXPECTED_ORDER
 
 
 def test_already_ordered_entry_is_unchanged():
     entry = _person()
-    assert order_official_fields(entry) == entry
-    assert list(order_official_fields(entry)) == list(entry)
+    assert order_person_fields(entry) == entry
+    assert list(order_person_fields(entry)) == list(entry)
 
 
 def test_values_are_the_original_objects():
     entry = _person(phones=["(916) 808-5300"])
-    ordered = order_official_fields(entry)
+    ordered = order_person_fields(entry)
     assert ordered["phones"] is entry["phones"]
     assert ordered["office"] is entry["office"]
 
 
 def test_absent_keys_are_not_invented():
-    ordered = order_official_fields({"id": "a", "name": "Alice Adams"})
+    ordered = order_person_fields({"id": "a", "name": "Alice Adams"})
     assert list(ordered) == ["name", "id"]
 
 
 def test_undeclared_keys_are_kept_at_the_end():
     entry = {"id": "a", "legacy_note": "keep me", "name": "Alice Adams"}
-    assert list(order_official_fields(entry)) == ["name", "id", "legacy_note"]
+    assert list(order_person_fields(entry)) == ["name", "id", "legacy_note"]
