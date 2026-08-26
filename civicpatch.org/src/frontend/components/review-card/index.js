@@ -5,6 +5,7 @@ import { REVIEW_ACTION } from "./review-action.js";
 import "./header.js";
 import "./data-panel.js";
 import "../diff-panel/diff-panel.js";
+import { postChanged } from "../diff-panel/diff-fields.ts";
 
 function diffStats(entry) {
   const existingMap = Object.fromEntries(
@@ -19,10 +20,7 @@ function diffStats(entry) {
     const e = existingMap[key], p = proposedMap[key];
     if (!e) added++;
     else if (!p) removed++;
-    else if (
-      (e.office?.name ?? "") !== (p.office?.name ?? "") ||
-      (e.office?.division_ocdid ?? "") !== (p.office?.division_ocdid ?? "")
-    ) changed++;
+    else if (postChanged(e, p)) changed++;
   }
   return { added, removed, changed };
 }

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   buildPersonCards,
+  postsFor,
   cardFields,
   needsReview,
   publishSet,
@@ -317,5 +318,51 @@ describe("byDivision", () => {
     });
     // Numeric, not lexical — ward 2 before ward 10.
     expect(byDivision(cards, JURIS).map((c) => c.personId)).toEqual(["mayor", "w2", "w10"]);
+  });
+});
+
+
+describe("postsFor — what a card calls the person's post", () => {
+  const card = (record: Record<string, unknown>) =>
+    ({ personId: "p1", newRecord: record, oldRecord: null }) as never;
+
+  it("falls back to labels, not a joined office name", () => {
+    // The live path for every scrape card: a proposed person holds no membership yet.
+    // `office.name` was these same labels joined upstream, where the join could not be undone.
+    expect(postsFor(card({ labels: ["Mayor", "Council Member"] }))).toBe(
+      "Mayor; Council Member",
+    );
+  });
+
+  it("keeps every spelling a page gave, rather than collapsing them", () => {
+    // One person sighted on three pages of one site, each naming the office differently.
+    expect(
+      postsFor(
+        card({
+          labels: [
+            "Councilmember Position 8",
+            "Council Member Position 8",
+            "Council Member Position 8 (Citywide)",
+          ],
+        }),
+      ),
+    ).toBe(
+      "Councilmember Position 8; Council Member Position 8; Council Member Position 8 (Citywide)",
+    );
+  });
+
+  it("prefers memberships when the person holds one", () => {
+    expect(
+      postsFor(
+        card({
+          labels: ["Mayor"],
+          memberships: [{ post_label: "Mayor of Alpha", label: null }],
+        }),
+      ),
+    ).toBe("Mayor of Alpha");
+  });
+
+  it("is empty when nothing is known", () => {
+    expect(postsFor(card({}))).toBe("");
   });
 });

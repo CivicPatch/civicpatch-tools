@@ -2,7 +2,6 @@ import os
 from typing import List, Optional
 
 import httpx
-from domain.models import Official
 from fastapi import Request
 from pipelines_environment import get_env_vars
 from shared.utils.config_utils import (
@@ -250,27 +249,3 @@ async def fetch_pipeline_run_config(
         return resp.json()
 
     return await with_retry(logger, _fetch)
-
-
-async def batch_resolve_people(
-    client: httpx.AsyncClient, jurisdiction_ocdid: str, people: List[Official]
-) -> List[dict]:
-    env = get_env_vars()
-    people_dicts = [official.model_dump() for official in people]
-    formatted_people_dicts = [
-        {
-            "id": person.get("id"),
-            "name": person.get("name"),
-            "email": person.get("email"),
-        }
-        for person in people_dicts
-    ]
-
-    data = {"jurisdiction_ocdid": jurisdiction_ocdid, "people": formatted_people_dicts}
-    response = await client.post(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/batch-resolve",
-        json=data,
-    )
-    response.raise_for_status()
-    data = response.json()
-    return data.get("data", [])

@@ -42,6 +42,17 @@ PERSON_MEMBERSHIPS = """COALESCE((
 ), '[]'::jsonb)"""
 
 
+# The division half of `PERSON_OFFICE`, on its own. Same subquery and same ordering, so the
+# two cannot disagree while both exist; `PERSON_OFFICE` goes when its `name` half does.
+PERSON_DIVISION = """(
+    SELECT posts.division_ocdid
+    FROM memberships JOIN posts ON posts.id = memberships.post_id
+    WHERE memberships.person_id = people.id
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC, posts.id
+    LIMIT 1
+)"""
+
+
 PERSON_LABELS = """COALESCE((
     SELECT jsonb_agg(DISTINCT source_label)
     FROM memberships, unnest(memberships.source_labels) AS source_label
@@ -66,6 +77,7 @@ PERSON_JSON = f"""jsonb_build_object(
     'jurisdiction_ocdid', people.jurisdiction_ocdid,
     'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
     'labels', {PERSON_LABELS},
+    'division_ocdid', {PERSON_DIVISION},
     'office', {PERSON_OFFICE},
     'memberships', {PERSON_MEMBERSHIPS}
 )"""
@@ -77,6 +89,7 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "id": ("'id'", "people.id::text"),
     "name": ("'name'", "people.name"),
     "labels": ("'labels'", PERSON_LABELS),
+    "division_ocdid": ("'division_ocdid'", PERSON_DIVISION),
     "office": ("'office'", PERSON_OFFICE),
     "source_urls": ("'source_urls'", "to_jsonb(people.source_urls)"),
     "phones": ("'phones'", "to_jsonb(people.phones)"),

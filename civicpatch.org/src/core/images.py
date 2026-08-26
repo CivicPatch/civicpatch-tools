@@ -33,7 +33,7 @@ CDN_KEY_PREFIX = "open-data"
 def local_image_basename(person: dict) -> str | None:
     """The downloaded file a photo refers to, if it still refers to one.
 
-    A record carries the reference on `image`; an `Official` the pipeline already formatted
+    A record carries the reference on `image`; a roster row already resolved
     has it moved to `cdn_image`, with the source url on `image`. Reading either is what lets
     one pass serve both shapes.
     """

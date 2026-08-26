@@ -66,7 +66,6 @@ run = "EVAL_CASE='{{ arg(name=\"case\") }}' EVAL_PROVIDER='{{ arg(name=\"provide
 run = """
 docker compose -f docker-compose.development.yml run --rm pipelines pytest -vvm unit tests/unit/runners/steps/step_04_preprocess_page_content
 """
-#docker compose -f docker-compose.development.yml run --rm pipelines pytest -vm unit tests/unit/scripts/test_generate_data_comment.py
 
 
 [tasks.dev]

@@ -172,19 +172,27 @@ def test_build_review_summary_returns_structured_issues():
     assert IssueCode.TOO_FEW_PEOPLE in codes    # 1 < 3
 
 
-def test_build_review_summary_normalizes_official_objects():
-    from shared.schemas import Office, Official
+def test_build_review_summary_normalizes_model_objects():
+    """Was `..._normalizes_official_objects`, built on `Official`, which no longer exists.
+    Same claim on `RosterPerson`: a model, not a dict, must not raise.
 
-    official = Official(
+    ⚠️ The shim this pins is arguably dead. Its comment says "the pipeline passes Official
+    objects" — the pipeline has not called `build_review_summary` since the review summary
+    moved to cp.org ingest, and the sole caller passes dicts from `get_people` and
+    `proposed_roster`. Kept for now because removing it is a behaviour decision, not fallout.
+    """
+    from shared.schemas import RosterPerson
+
+    person = RosterPerson(
         name="Jane",
-        office=Office(name="Mayor"),
+        label="Mayor",
+        labels=["Mayor"],
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:co/place:denver/government",
         source_urls=["https://denvergov.org/council"],
         updated_at="2025-06-27T19:43:55+00:00",
         id="j1",
     )
-    # Passing Official objects (not dicts) must not raise — they normalize via model_dump.
-    result = build_review_summary([], [official])
+    result = build_review_summary([], [person])
     assert all(isinstance(i, Issue) for i in result["issues"])
 
 

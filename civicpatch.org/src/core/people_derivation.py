@@ -17,9 +17,27 @@ from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy
 
 
-def merge_labels(records: List[PersonRecord]) -> List[str]:
-    """Unique raw labels across records — one per office the person was seen holding."""
-    return sorted({record.label for record in records if record.label})
+def merge_labels(records: List[PersonRecord], taxonomy: Taxonomy) -> List[str]:
+    """One label per distinct statement, not per distinct spelling.
+
+    Deduped on the parse, not the string. Three Seattle pages call one person "Councilmember
+    Position 8", "Council Member Position 8" and "Council Member Position 8 (Citywide, …)";
+    the first two parse identically, so keeping both is noise that reads as two offices.
+
+    A label whose parse differs at all survives — the third above keeps its residue — so this
+    only ever collapses labels that say the same thing.
+    """
+    kept: dict[tuple, str] = {}
+    for label in sorted({record.label for record in records if record.label}):
+        parsed = parse_label(label, taxonomy)
+        key = (
+            parsed.role,
+            str(parsed.division),
+            tuple(parsed.other_designations),
+            tuple(parsed.unmatched),
+        )
+        kept.setdefault(key, label)
+    return list(kept.values())
 
 
 def merge_field(values: List[str]) -> str:
@@ -136,11 +154,12 @@ def merge_records_to_person(
     canonical_name: str,
     records: List[PersonRecord],
     jurisdiction_ocdid: str,
+    taxonomy: Taxonomy,
 ) -> Person:
     records = [normalize_record(log, r) for r in records]
 
     image = merge_field([r.image for r in records if r.image is not None])
-    merged_labels = merge_labels(records)
+    merged_labels = merge_labels(records, taxonomy)
     phones = merge_field_to_list([r.phone for r in records if r.phone is not None])
     emails = merge_field_to_list([r.email for r in records if r.email is not None])
     urls = merge_field_to_list([r.url for r in records if r.url is not None])
@@ -207,6 +226,7 @@ def derived_people(
                 or group_name,
                 group,
                 jurisdiction_ocdid,
+                taxonomy,
             ),
             group,
         )

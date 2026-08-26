@@ -3,8 +3,7 @@
 `people_derivation` decides who the people are; this decides how they are presented — sorted,
 identified, and rendered. `post_derivation` reads what comes out.
 
-A submit carries `PersonRecord`s, one per sighting, or an already-merged roster from a run that
-predates the change. Both converge here, so nothing downstream has to know which arrived.
+A submit carries `PersonRecord`s, one per sighting.
 
 Pure: rows and a taxonomy in, a roster out.
 """
@@ -13,16 +12,18 @@ from collections import defaultdict
 
 from shared.schemas import Person, PersonRecord
 from shared.utils.log_protocol import Log
+from shared.utils.people_utils import sort_people
 from shared.utils.person_fields import order_person_fields
-from shared.utils.people_utils import person_to_official, sort_people
 from shared.utils.person_id_utils import merge_forward_other_names
 from shared.utils.taxonomy import Taxonomy
 
+from core.membership_label import MembershipLabel, derive_post_label, render
 from core.people_derivation import (
     canonical_name,
     derived_people,
     merge_records_to_person,
 )
+from core.people_roles import derive_roles
 
 
 def roster_from_rows(
@@ -83,7 +84,7 @@ def roster_from_sightings(
 
     people = [
         _person_from_sightings(
-            person_id, rows, published.get(person_id), jurisdiction_ocdid, log
+            person_id, rows, published.get(person_id), jurisdiction_ocdid, taxonomy, log
         )
         for person_id, rows in groups.items()
     ]
@@ -95,6 +96,7 @@ def _person_from_sightings(
     rows: list[dict],
     published: Person | None,
     jurisdiction_ocdid: str,
+    taxonomy: Taxonomy,
     log: Log,
 ) -> Person:
     records = [PersonRecord(**row) for row in rows]
@@ -103,6 +105,7 @@ def _person_from_sightings(
         canonical_name(published.name if published else "", records),
         records,
         jurisdiction_ocdid,
+        taxonomy,
     )
     # The cdn url of the photo the merge chose, not the most frequent one — the two are a pair
     # and picking them independently can serve a different photo than the one we credited.
@@ -182,26 +185,46 @@ def with_fallback_url(person: Person) -> Person:
     return person.model_copy(update={"urls": [person.source_urls[0]]})
 
 
+def _rendered(person: Person, taxonomy: Taxonomy) -> dict:
+    derived = derive_roles(person.labels, person.jurisdiction_ocdid, taxonomy)
+    return {
+        "name": person.name,
+        "other_names": person.other_names,
+        "label": render(
+            MembershipLabel(
+                post_label=derive_post_label(
+                    derived.role or "", derived.division_ocdid
+                ),
+                designations=derived.other_designations,
+                unmatched_text=derived.unmatched,
+            )
+        ),
+        "labels": person.labels,
+        "division_ocdid": derived.division_ocdid,
+        "phones": person.phones,
+        "emails": person.emails,
+        "urls": person.urls,
+        "start_date": person.start_date or None,
+        "end_date": person.end_date or None,
+        "image": person.image,
+        "cdn_image": person.cdn_image,
+        "jurisdiction_ocdid": person.jurisdiction_ocdid,
+        "source_urls": person.source_urls,
+        "updated_at": person.updated_at or "",
+        "id": person.id,
+    }
+
+
 def _render(people: list[Person], taxonomy: Taxonomy) -> list[dict]:
     """Sorted first, because the roster is rendered to a file a human reads and reviews.
 
-    Carries `labels` as well as `office`, which is the expand half of retiring `Official`.
-    `labels` is what a record actually holds; `office.name` is those labels joined with " - "
-    here and split apart again by every reader — a round trip through a string that loses
-    which label produced what, and reads back as one office named twice.
-
-    `order_person_fields` keeps undeclared keys, so adding `labels` needed no schema change.
-    Readers move to `labels` one at a time; `office` goes when none are left.
+    Carries `labels` and `division_ocdid`, not `office`. They are what `office` held,
+    unjoined and unnested: `office.name` was the labels joined with " - ", which read back as
+    one office named twice for anyone sighted on pages that spelled it differently.
     """
     kept = [person for person in people if named_like_a_person(person)]
     return [
-        order_person_fields(
-            {
-                **person_to_official(with_fallback_url(person), taxonomy).model_dump(),
-                "id": person.id,
-                "labels": with_fallback_url(person).labels,
-            }
-        )
+        order_person_fields(_rendered(with_fallback_url(person), taxonomy))
         for person in sort_people(kept, taxonomy)
     ]
 

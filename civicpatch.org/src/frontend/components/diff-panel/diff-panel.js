@@ -1,45 +1,9 @@
 import "./diff-panel.css";
 import { component, useState } from "haunted";
 import { html } from "lit-html";
-import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
-
-const FIELDS = [
-  { key: "name",                  label: "Name" },
-  { key: "office.name",           label: "Post" },
-  { key: "office.division_ocdid", label: "Division" },
-  { key: "phones",                label: "Phones" },
-  { key: "emails",                label: "Emails" },
-  { key: "urls",                  label: "URLs" },
-  { key: "start_date",            label: "Start Date" },
-  { key: "end_date",              label: "End Date" },
-  { key: "image",                 label: "Image" }
-];
-
-function getFieldValue(person, key) {
-  let val;
-  if (key === "office.name")            val = person?.office?.name;
-  else if (key === "office.division_ocdid") val = person?.office?.division_ocdid;
-  else                                   val = person?.[key];
-  if (Array.isArray(val)) return val.join(", ");
-  return val ?? "";
-}
-
-function displayValue(key, raw) {
-  if (key === "office.division_ocdid") return divisionOcdidToFriendly(raw) || raw || "—";
-  return raw || "—";
-}
-
-function normalizeForCompare(val) {
-  return val.toLowerCase().trim();
-}
-
-function changedFields(existing, pr) {
-  return FIELDS.filter(
-    ({ key }) => normalizeForCompare(getFieldValue(existing, key)) !== normalizeForCompare(getFieldValue(pr, key)),
-  );
-}
+import { FIELDS, getFieldValue, displayValue, changedFields } from "./diff-fields.ts";
 
 const DiffPanel = ({ data }) => {
   const [showUnchanged, setShowUnchanged] = useState(false);

@@ -8,7 +8,7 @@ keeps `label` and `headcount` human-owned — there is no update path to lose th
 
 """
 
-from core.membership_label import derive_label
+from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations, roles
@@ -87,7 +87,7 @@ async def create_if_absent(
     if label is None:
         role = await roles.get_role(cur, role_id)
         if role:
-            label = derive_label(role.label, division_ocdid, [], [])
+            label = derive_post_label(role.label, division_ocdid)
 
     await cur.execute(
         """
