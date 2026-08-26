@@ -14,5 +14,9 @@
   {
     "ocdid": "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government",
     "path": "il/local/county_dupage__place_naperville"
+  },
+  {
+    "ocdid": "ocd-jurisdiction/country:us/state:wa/county:ferry/government",
+    "path": "wa/local/county_ferry"
   }
 ]
