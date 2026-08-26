@@ -56,7 +56,5 @@ def person_row(person: dict) -> dict:
 
 
 async def fetch_people_export_rows(state: str) -> list[dict]:
-    people = await database.people.get_people(
-        state=state, status=database.people.ACTIVE_STATUS
-    )
+    people = await database.people.get_roster(state=state)
     return [person_row(person) for person in people]

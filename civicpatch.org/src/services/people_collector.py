@@ -10,8 +10,6 @@ from core.membership_proposal import (
     ProposedChange,
     nothing_to_review,
     propose,
-    still_held,
-    still_listed,
 )
 from core.post_derivation import DerivedPost, derived_posts
 from core.people_roster import identified, records_by_person, roster_from_rows
@@ -22,7 +20,6 @@ from database.database import get_pool
 from database.issues import upsert_issue
 from database.people import get_person_models
 from database.pipeline_runs import (
-    run_updated_at,
     update_pipeline_run_status,
 )
 from database.roles import get_roles
@@ -47,7 +44,6 @@ PRIVATE_BUCKET = buckets.DEBUG
 INSTANCE_DOMAIN = "civicpatch.org"  # Just hardcode it for now...
 
 # The value `people.status` is checked against; the column's CHECK constraint is the guard.
-ACTIVE_PERSON_STATUS = "active"
 
 logger = logging.getLogger(__name__)
 
@@ -73,9 +69,7 @@ async def handle_submit_pipeline_run_artifacts(
 async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
     """The prior reconciliation groups against: our own published people, else the scrape's
     research for a jurisdiction we have never published."""
-    existing = await get_person_models(
-        jurisdiction_ocdid, status=ACTIVE_PERSON_STATUS
-    )
+    existing = await get_person_models(jurisdiction_ocdid)
     if existing:
         return person_list_to_identities(existing)
     research = workflow_context.get("data", {}).get("research_municipality_step") or {}
@@ -153,38 +147,6 @@ async def _get_proposed_changes(
     return propose(derived, [ExistingMembership(**row) for row in held])
 
 
-async def _update_last_seen_at(
-    cur, request_id: str, changes: list[ProposedChange], last_seen_at
-) -> None:
-    """Record that a scrape still found these people where we already hold them."""
-    advanced = await memberships_db.advance_last_seen_at(
-        cur, still_held(changes), last_seen_at
-    )
-    logger.info(f"[{request_id}] Advanced last_seen_at on {advanced} membership(s)")
-
-
-async def _close_absent_holders(
-    cur,
-    request_id: str,
-    jurisdiction_ocdid: str,
-    changes: list[ProposedChange],
-    last_seen_at,
-) -> None:
-    """Close anyone this scrape stopped naming.
-
-    Transaction time, like `last_seen_at` above and for the same reason: `closed_at` records
-    that we stopped seeing someone, not a claim that they left — that claim is `end_date`, and
-    it comes from the source. An observation does not wait for review.
-
-    An empty roster closes nobody, which `close_absent` guards.
-    """
-    closed = await memberships_db.close_absent(
-        cur, jurisdiction_ocdid, still_listed(changes), last_seen_at
-    )
-    if closed:
-        logger.info(f"[{request_id}] Closed {closed} membership(s) no longer listed")
-
-
 async def _dismiss_if_nothing_to_review(
     cur, request_id: str, changes: list[ProposedChange]
 ) -> None:
@@ -214,7 +176,7 @@ async def _find_or_create_posts(
         # A pick only exists on a roster a reviewer has edited, so this is almost always
         # empty at ingest — but a re-submit of an edited roster must not undo the pick.
         derived = derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
-        await posts_db.find_or_create_all(jurisdiction_ocdid, derived)
+        await posts_db.find_or_create_all(jurisdiction_ocdid, derived, request_id)
         logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
         return derived
     except Exception as e:
@@ -289,25 +251,22 @@ async def _ingest_roster(
 async def _apply_scrape_changes(
     request_id: str, jurisdiction_ocdid: str, derived: list[DerivedPost]
 ) -> None:
-    """Never fatal, like the other derived writes: a scrape whose people are stored must not
-    error over a timestamp.
+    """Retire the scrape if it proposes nothing anyone needs to look at.
 
-    One transaction: the writes below share a single `last_seen_at` and describe one reading of
-    who holds what. Applying half of it would leave a roster no scrape ever saw.
+    All that is left of this at ingest. `advance_last_seen_at` and `close_absent` used to run
+    here too, mutating *published* memberships on the strength of an *unreviewed* scrape. They
+    were defended as observations — "the source stopped listing D" is true whether or not D
+    left office — which holds for a good scrape and not for a bad one, and nothing here can
+    tell which. `publish_request` already does both, so this was a duplicate that ran too
+    early.
 
-    Run-level, not per-person: an absence has no page fetch to be dated by, so `closed_at` can
-    only be `pipeline_runs.updated_at` — and it must match `last_seen_at` for the as-of window
-    to compare them.
+    Never fatal, like the other derived writes: a scrape whose people are stored must not error
+    over its own bookkeeping.
     """
     try:
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
-            last_seen_at = await run_updated_at(cur, request_id)
             changes = await _get_proposed_changes(cur, jurisdiction_ocdid, derived)
-            await _update_last_seen_at(cur, request_id, changes, last_seen_at)
-            await _close_absent_holders(
-                cur, request_id, jurisdiction_ocdid, changes, last_seen_at
-            )
             await _dismiss_if_nothing_to_review(cur, request_id, changes)
             await conn.commit()
     except Exception as e:

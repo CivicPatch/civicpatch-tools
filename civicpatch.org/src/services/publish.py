@@ -18,7 +18,7 @@ from core.images import artifacts_key, promoted_key, promoted_url
 from core.post_derivation import ChosenPost, DerivedPost, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
-from database.people import ACTIVE_STATUS, get_people
+from database.people import get_roster
 from database.publications import dismiss_request, publish_request, record_open_data_url
 from database.roles import get_roles
 from lib.temporal.types import CommitSource, OpenDataCommitRequest
@@ -89,22 +89,11 @@ async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
 
 
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
-    """Fetch the taxonomy, then derive what posts this roster implies.
 
-    `get_` per the read verbs — it fetches and computes, writing nothing. That fetch is also
-    the only reason this is async: `derived_posts` in `core` is pure and synchronous, and the
-    await is `get_roles`. Never fatal: a roster that publishes without
-    its posts is recoverable, since `source_records` still holds the evidence, but a roster
-    that fails to publish because the taxonomy was unreachable is not.
-    """
-    try:
-        roles = await get_roles()
-        taxonomy = build_taxonomy(RoleConfig(roles=roles))
-        roster = [Person(**person) for person in people]
-        return derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
-    except Exception as e:
-        logger.error(f"Failed to derive posts for publish: {e}", exc_info=True)
-        return []
+    roles = await get_roles()
+    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    roster = [Person(**person) for person in people]
+    return derived_posts(roster, taxonomy, roles, await chosen_posts(roster))
 
 
 async def publish_people(
@@ -150,9 +139,7 @@ async def _render(
     source: CommitSource, request_id: str, jurisdiction_ocdid: str
 ) -> list[dict]:
     if source is CommitSource.ROSTER:
-        return await get_people(
-            jurisdiction_ocdid=jurisdiction_ocdid, status=ACTIVE_STATUS
-        )
+        return await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
 
     return await proposed_roster(request_id, jurisdiction_ocdid) or []
 

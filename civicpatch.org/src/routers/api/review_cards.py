@@ -127,10 +127,7 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         existing, proposed = await asyncio.gather(
-            database.people.get_people(
-                jurisdiction_ocdid=jurisdiction_ocdid,
-                status=database.people.ACTIVE_STATUS,
-            ),
+            database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
             proposed_roster(request_id, jurisdiction_ocdid),
         )
         if not proposed:
@@ -243,10 +240,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
         existing, proposed, scraped_at, proposals = await asyncio.gather(
-            database.people.get_people(
-                jurisdiction_ocdid=jurisdiction_ocdid,
-                status=database.people.ACTIVE_STATUS,
-            ),
+            database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
             proposed_roster(request_id, jurisdiction_ocdid),
             jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried

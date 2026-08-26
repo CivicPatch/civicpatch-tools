@@ -5,8 +5,6 @@ from core.membership_proposal import (
     ExistingMembership,
     nothing_to_review,
     propose,
-    still_held,
-    still_listed,
     surfaces_for_review,
 )
 from core.post_derivation import DerivedMember, DerivedPost
@@ -165,31 +163,12 @@ def test_the_proposed_label_rides_along():
     assert changes[0].label == "Commissioner Of Public Safety"
 
 
-@pytest.mark.unit
-def test_only_the_unchanged_are_still_held():
-    """Advancing `last_seen_at` on a mover would assert the seat they left."""
-    changes = propose(
-        [_post("mayor", _BASE, "a"), _post("council-member", _WARD_3, "b")],
-        [_held("a", "mayor", _BASE), _held("b", "city-attorney", _BASE)],
-    )
-
-    assert still_held(changes) == ["a"]
+# `still_held` and `still_listed` were deleted with the ingest-time observation writes they
+# fed. Both answered "who should stay open" for `advance_last_seen_at` and `close_absent`,
+# which now run only at publish — where `close_absent` takes `incoming_ids`, everyone in the
+# published roster, a more direct answer than a disposition filter.
 
 
-@pytest.mark.unit
-def test_a_mover_is_still_listed():
-    """A move is still a sighting. Closing someone because the scrape named them somewhere
-    else would record a departure that did not happen."""
-    changes = propose(
-        [_post("mayor", _BASE, "a"), _post("council-member", _WARD_3, "b")],
-        [
-            _held("a", "mayor", _BASE),
-            _held("b", "city-attorney", _BASE),
-            _held("c", "clerk", _BASE),
-        ],
-    )
-
-    assert sorted(still_listed(changes)) == ["a", "b"]
 
 
 @pytest.mark.unit

@@ -80,26 +80,6 @@ async def _refuse_if_superseded(
         )
 
 
-async def _retire_absent(cur, jurisdiction_ocdid: str, incoming_ids: list[str]) -> None:
-    """Anyone the roster no longer names has left office.
-
-    `inactive` rather than deleted, so membership history survives. An empty roster retires
-    nobody — that is a failed scrape, not a dissolved council.
-
-    A person with no id would silently retire nobody: a NULL inside `id != ALL(...)` makes the
-    whole comparison NULL.
-    """
-    if not incoming_ids:
-        return
-    await cur.execute(
-        """
-        UPDATE people SET status = 'inactive'
-        WHERE jurisdiction_ocdid = %s AND id != ALL(%s)
-        """,
-        (jurisdiction_ocdid, incoming_ids),
-    )
-
-
 async def _record_publish(
     cur, request_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
 ) -> None:
@@ -131,13 +111,16 @@ async def _bind_memberships(
     cur,
     jurisdiction_ocdid: str,
     derived: list[DerivedPost],
-    incoming_ids: list[str],
     last_seen_at,
 ) -> None:
-    """Put this roster's people in their posts, and close anyone no longer in one.
+    """Put this roster's people in their posts.
 
     Here rather than at ingest because a membership is a binding: a post can be proposed, but
     who holds it is only true once the scrape is accepted.
+
+    Closing absentees is *not* here, though it used to be. It depends on the roster, not on the
+    derivation, and this runs only `if derived` — so a publish whose post derivation failed
+    (`_get_derived_posts` swallows and returns `[]`) would have retired nobody.
     """
     organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
     for post in derived:
@@ -163,7 +146,6 @@ async def _bind_memberships(
                 role_ids=member.role_ids,
                 label=member.label,
             )
-    await memberships.close_absent(cur, jurisdiction_ocdid, incoming_ids, last_seen_at)
 
 
 async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | None) -> None:
@@ -222,11 +204,12 @@ async def publish_request(
 
         await _accept_published(cur, rows, resolved_by_user_id)
 
-        await _retire_absent(cur, jurisdiction_ocdid, incoming_ids)
         await _record_publish(cur, request_id, jurisdiction_ocdid, resolved_by_user_id)
         if derived:
-            await _bind_memberships(
-                cur, jurisdiction_ocdid, derived, incoming_ids, last_seen_at
-            )
+            await _bind_memberships(cur, jurisdiction_ocdid, derived, last_seen_at)
+        # Outside the guard: who is no longer on the roster is answered by the roster.
+        await memberships.close_absent(
+            cur, jurisdiction_ocdid, incoming_ids, last_seen_at
+        )
 
     return len(rows)

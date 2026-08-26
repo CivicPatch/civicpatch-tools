@@ -12,7 +12,7 @@ Not in `requests.py`: the score reads `posts` too, and importing posts there clo
 
 from typing import LiteralString, cast
 
-from database.posts import POST_IS_VERIFIED
+from database.posts import JURISDICTIONS_FIRST_SCRAPE, POST_IS_VERIFIED
 from shared.schemas import IssueCode
 
 # How much a reviewer should care, per issue. Ordering on `jsonb_array_length` weighted every
@@ -34,10 +34,15 @@ _UNKNOWN_ISSUE = 1
 
 
 def _unverified_posts(jurisdiction_ocdid: str) -> str:
-    """SQL counting posts nobody has vouched for."""
+    """SQL counting posts nobody has vouched for.
+
+    Same two predicates as `unverified_by_jurisdiction`, shared rather than restated: a queue
+    scoring cards on issues the card does not show is worse than not scoring them at all.
+    """
     return (
         f"(SELECT count(*) FROM posts "
-        f"WHERE posts.jurisdiction_ocdid = {jurisdiction_ocdid} AND NOT {POST_IS_VERIFIED})"
+        f"WHERE posts.jurisdiction_ocdid = {jurisdiction_ocdid} "
+        f"AND NOT {POST_IS_VERIFIED} AND NOT {JURISDICTIONS_FIRST_SCRAPE})"
     )
 
 

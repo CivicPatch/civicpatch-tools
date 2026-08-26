@@ -13,62 +13,17 @@ import pytest
 import yaml
 from core.open_data.tree_diff import TreeDiff
 from lib.github.api import RepoTree
-from services.open_data_sync import sync_all, sync_jurisdictions, sync_people
+from services.open_data_sync import sync_all, sync_jurisdictions
 
 
 def _patch(stack, target, **kwargs):
     return stack.enter_context(patch(f"services.open_data_sync.{target}", **kwargs))
 
 
-# ── sync_people ──────────────────────────────────────────────────────────────
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_sync_people_upserts_all_and_returns_synced():
-    contents = {
-        "data/tx/local/a.yml": yaml.dump([{"id": "p1", "jurisdiction_ocdid": "j-a"}]),
-        "data/tx/local/b.yml": yaml.dump([{"id": "p2", "jurisdiction_ocdid": "j-b"}]),
-    }
-    with ExitStack() as stack:
-        _patch(
-            stack,
-            "github_service.get_github_file_contents",
-            new_callable=AsyncMock,
-            side_effect=lambda p: contents[p],
-        )
-        bulk = _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
-        synced = await sync_people(TreeDiff(changed=list(contents), deleted=[]))
-
-    assert set(synced) == set(contents)  # every fetched path is "synced"
-    people = bulk.await_args.args[0]
-    assert {p["id"] for p in people} == {"p1", "p2"}  # all people in one batch
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_sync_people_excludes_transient_miss():
-    contents = {
-        "data/tx/local/ok.yml": yaml.dump([{"id": "p1"}]),
-        "data/tx/local/miss.yml": None,  # transient fetch miss
-    }
-    with ExitStack() as stack:
-        _patch(
-            stack,
-            "github_service.get_github_file_contents",
-            new_callable=AsyncMock,
-            side_effect=lambda p: contents[p],
-        )
-        bulk = _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
-        synced = await sync_people(TreeDiff(changed=list(contents), deleted=[]))
-
-    assert synced == [
-        "data/tx/local/ok.yml"
-    ]  # the miss is not synced → cursor not advanced
-    assert {p["id"] for p in bulk.await_args.args[0]} == {"p1"}  # miss's rows excluded
-
-
-# ── sync_jurisdictions ───────────────────────────────────────────────────────
+# `sync_people` and `bulk_update_people` are gone: open-data is a publish target, and the
+# only sync still reading it back is jurisdictions. The two tests here covered the people
+# read-back — upserting every file, and excluding a file whose fetch missed — neither of
+# which has a subject any more.
 
 
 @pytest.mark.unit
@@ -215,7 +170,6 @@ def _patch_sync_all(stack, tree, stored, contents):
         new_callable=AsyncMock,
         side_effect=lambda path: contents.get(path),
     )
-    _patch(stack, "people_db.bulk_update_people", new_callable=AsyncMock)
     _patch(
         stack,
         "jurisdictions_db.get_state_names",
@@ -237,7 +191,12 @@ def _patch_sync_all(stack, tree, stored, contents):
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_sync_all_writes_cursors_for_changed_files():
+async def test_sync_all_writes_cursors_for_changed_jurisdiction_files():
+    """Was `..._for_changed_files`, expecting a cursor for the people file too.
+
+    The people file is still in the tree — the assertion is that it is *ignored* now, which is
+    the whole change: open-data is a publish target and only jurisdictions are read back.
+    """
     tree = RepoTree(
         entries={
             "data_source/tx/local/jurisdictions.yml": "jsha",
@@ -258,10 +217,7 @@ async def test_sync_all_writes_cursors_for_changed_files():
         await sync_all()
 
     written = {c.args[0]: c.args[1] for c in upsert.await_args_list}
-    assert written == {
-        "data_source/tx/local/jurisdictions.yml": "jsha",
-        "data/tx/local/a.yml": "psha",
-    }
+    assert written == {"data_source/tx/local/jurisdictions.yml": "jsha"}
 
 
 @pytest.mark.unit
@@ -279,19 +235,5 @@ async def test_sync_all_skips_deletion_pass_when_truncated():
     delete.assert_not_awaited()  # truncated tree → deletion pass skipped
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_sync_all_caps_people_per_run():
-    tree = RepoTree(
-        entries={f"data/tx/local/p{i}.yml": f"s{i}" for i in range(3)}, truncated=False
-    )
-    contents = {
-        f"data/tx/local/p{i}.yml": yaml.dump([{"id": f"p{i}"}]) for i in range(3)
-    }
-    with ExitStack() as stack:
-        upsert, _delete = _patch_sync_all(stack, tree, {}, contents)
-        # cap to 1 of the 3 changed people files
-        stack.enter_context(patch("services.open_data_sync._MAX_FILES_PER_RUN", 1))
-        await sync_all()
-
-    assert upsert.await_count == 1  # only one synced this run; the rest defer
+# `test_sync_all_caps_people_per_run` went with `_MAX_FILES_PER_RUN`, which existed to bound
+# the people backlog — "jurisdictions are few, so cap the people backlog", per its comment.

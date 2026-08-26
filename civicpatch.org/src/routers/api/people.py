@@ -39,9 +39,7 @@ def get_router() -> APIRouter:
     async def list_people_endpoint(
         jurisdiction_ocdid: str,
     ):
-        people = await database.get_people(
-            jurisdiction_ocdid=jurisdiction_ocdid, status=database.ACTIVE_STATUS
-        )
+        people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {
             "data": people
         }
@@ -49,14 +47,14 @@ def get_router() -> APIRouter:
     @router.get("/search")
     async def search_people_endpoint(
         jurisdiction_ocdid: str,
-        status: Optional[str] = Query(
-            None, description="Filter by people.status — active or inactive"
-        ),
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        people = await database.get_person_models(
-            jurisdiction_ocdid, status=status
-        )
+        """Everyone we hold here, seated or not.
+
+        The `status` filter is gone with the column it named. Whether somebody currently holds
+        a seat is a memberships question, and this endpoint's job is to find a person.
+        """
+        people = await database.get_person_models(jurisdiction_ocdid)
         return {"data": people}
 
     @router.get("/geo")

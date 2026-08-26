@@ -43,9 +43,7 @@ async def review_summary_for_request(request_id: str) -> dict:
         return {}
 
     published, proposed, roles = await asyncio.gather(
-        people_db.get_people(
-            jurisdiction_ocdid=jurisdiction_ocdid, status=people_db.ACTIVE_STATUS
-        ),
+        people_db.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
         proposed_roster(request_id, jurisdiction_ocdid),
         get_roles(),
     )
@@ -83,7 +81,9 @@ async def proposals_for_requests(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        held = await memberships_db.open_by_jurisdiction(cur, list(set(ocdids.values())))
+        jurisdictions = list(set(ocdids.values()))
+        held = await memberships_db.open_by_jurisdiction(cur, jurisdictions)
+        post_ids = await posts_db.ids_by_identity(cur, jurisdictions)
 
     proposals: dict[str, list[ProposedChange]] = {}
     for request_id, ocdid in ocdids.items():
@@ -91,10 +91,19 @@ async def proposals_for_requests(
             Person(**{**person, "jurisdiction_ocdid": ocdid})
             for person in rosters.get(request_id, [])
         ]
-        proposals[request_id] = propose(
-            derived_posts(people, taxonomy, roles, await chosen_posts(people)),
-            [ExistingMembership(**row) for row in held[ocdid]],
-        )
+        proposals[request_id] = [
+            change.model_copy(
+                update={
+                    "post_id": post_ids.get(
+                        (ocdid, change.role_id, change.division_ocdid)
+                    )
+                }
+            )
+            for change in propose(
+                derived_posts(people, taxonomy, roles, await chosen_posts(people)),
+                [ExistingMembership(**row) for row in held[ocdid]],
+            )
+        ]
     return proposals
 
 

@@ -237,6 +237,23 @@ async def get(cur, post_id: str) -> dict | None:
 #
 # Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
 # cannot be required to spell `posts` any particular way.
+# The jurisdiction's first scrape — nobody holds a seat here yet, because memberships are
+# only written at publish.
+#
+# Not a fact about any post: on a first scrape every seat really is unverified, and
+# `POST_IS_VERIFIED` says so correctly. This is the *reporting* rule beside it — twelve issues
+# on a card where every seat is new tell a reviewer nothing the roster in front of them does
+# not, and they bury the checks that do carry information.
+#
+# Unaliased `posts`, per the rule in CLAUDE.md: this is spliced into several queries, and one
+# that aliased the table differently would fail at runtime and never at typecheck.
+JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
+    SELECT 1 FROM memberships
+    JOIN posts held ON held.id = memberships.post_id
+    WHERE held.jurisdiction_ocdid = posts.jurisdiction_ocdid
+)"""
+
+
 POST_IS_VERIFIED = """(
     EXISTS (SELECT 1 FROM memberships WHERE memberships.post_id = posts.id)
     OR EXISTS (
@@ -292,6 +309,26 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
+async def ids_by_identity(
+    cur, jurisdiction_ocdids: list[str]
+) -> dict[tuple[str, str, str], str]:
+    """`(jurisdiction, role_id, division_ocdid) -> post id`, the reverse of `identities_by_id`.
+
+    The derivation works in identities — a seat is a role in a division — and only the wire
+    needs a uuid. This is where the two meet, so `propose` stays pure and unaware of ids.
+    """
+    if not jurisdiction_ocdids:
+        return {}
+    await cur.execute(
+        """
+        SELECT jurisdiction_ocdid, role_id, division_ocdid, id::text
+        FROM posts WHERE jurisdiction_ocdid = ANY(%s)
+        """,
+        (jurisdiction_ocdids,),
+    )
+    return {(row[0], row[1], row[2]): row[3] for row in await cur.fetchall()}
+
+
 async def unverified_by_jurisdiction(
     cur, jurisdiction_ocdids: list[str]
 ) -> dict[str, list[dict]]:
@@ -300,7 +337,10 @@ async def unverified_by_jurisdiction(
     A scrape mints a post at ingest; a membership only lands at publish. So an unverified post
     is an office some scrape asserted exists and no human has answered for — and it stays that
     way after the scrape that minted it is superseded, which is why it hangs off the
-    jurisdiction rather than off a request.
+    jurisdiction rather than off a request. (Keying it on "created by *this* request" would
+    lose exactly that: a seat minted by a superseded scrape would go unmentioned forever.)
+
+    Nothing is returned for a jurisdiction that has never been published — see the query.
     """
     if not jurisdiction_ocdids:
         return {}
@@ -311,6 +351,8 @@ async def unverified_by_jurisdiction(
         FROM posts
         JOIN roles ON roles.id = posts.role_id
         WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
+          -- Silent on the jurisdiction's first scrape — see the constant.
+          AND NOT {JURISDICTIONS_FIRST_SCRAPE}
         ORDER BY posts.role_id, posts.division_ocdid
         """,
         (jurisdiction_ocdids,),
@@ -335,24 +377,36 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
 
 
 async def find_or_create_all(
-    jurisdiction_ocdid: str, derived: list[DerivedPost]
+    jurisdiction_ocdid: str, derived: list[DerivedPost], request_id: str
 ) -> None:
-    """A whole scrape's worth of `find_or_create`, in one transaction.
-
-    No change log, unlike `create` below: no person asserted these.
-    """
+    """A whole scrape's worth of `find_or_create`, in one transaction."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
         for post in derived:
             await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
-            await find_or_create(
+            minted = await create_if_absent(
                 cur,
                 jurisdiction_ocdid,
                 organization_id,
                 post.role_id,
                 post.division_ocdid,
                 headcount=post.headcount,
+            )
+            if not minted:
+                continue
+            await record_change(
+                cur,
+                ChangeLogType.ADD_POST,
+                None,
+                jurisdiction_ocdid,
+                PostChangePayload(
+                    post_id=minted,
+                    role_id=post.role_id,
+                    division_ocdid=post.division_ocdid,
+                    label=None,
+                ),
+                request_id=request_id,
             )
         await conn.commit()
 

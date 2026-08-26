@@ -1,4 +1,4 @@
-"""Unit tests for person_upsert_params — shapes a parsed people file (a list of person dicts) into the
+"""Unit tests for person_upsert_params — shapes a roster being published (a list of person dicts) into the
 rows bulk_update_people and publish store.
 
 Named rows, not tuples, since 134. Pure function — the DB layer owns its row format here, so

@@ -193,9 +193,10 @@ async def test_a_retired_person_still_reads_as_the_post_they_last_held():
 
     roster = {
         person["name"]: person
-        for person in await people.get_people(
-            jurisdiction_ocdid=_OCDID, status=people.ACTIVE_STATUS
-        )
+        # `get_people`, not `get_roster`: the retired half of a succession holds no open
+        # membership, so the roster read excludes them by definition now — and the claim here
+        # is about the `office` fallback, not about who is seated.
+        for person in await people.get_people(jurisdiction_ocdid=_OCDID)
     }
 
     assert roster["Outgoing"]["office"]["name"] == _LABEL
@@ -215,7 +216,7 @@ async def test_the_state_filter_carries_each_persons_jurisdiction():
     state by jurisdiction still has something to group on."""
     await _seed_succession()
 
-    by_state = await people.get_people(state="zz", status=people.ACTIVE_STATUS)
+    by_state = await people.get_people(state="zz")
     seeded = [person for person in by_state if person["jurisdiction_ocdid"] == _OCDID]
 
     assert {person["name"] for person in seeded} == {"Outgoing", "Incoming"}
