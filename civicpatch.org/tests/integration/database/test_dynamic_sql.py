@@ -354,9 +354,7 @@ async def test_filter_existing_person_ids_empty():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_people_not_found():
-    result = await db_people.get_people(
-        jurisdiction_ocdid=_FAKE_OCDID, status=db_people.ACTIVE_STATUS
-    )
+    result = await db_people.get_roster(jurisdiction_ocdid=_FAKE_OCDID)
     assert isinstance(result, list)
 
 
@@ -378,9 +376,7 @@ async def test_get_person_models_not_found():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_people_by_state_not_found():
-    result = await db_people.get_people(
-        state="zz", status=db_people.ACTIVE_STATUS
-    )
+    result = await db_people.get_roster(state="zz")
     assert isinstance(result, list)
 
 

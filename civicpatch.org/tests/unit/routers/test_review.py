@@ -498,7 +498,7 @@ def test_get_by_request_200_for_open_pr(client):
             return_value=OPEN_PR_DB_RESULT,
         ),
         patch(
-            "database.people.get_people",
+            "database.people.get_roster",
             new_callable=AsyncMock,
             return_value=[],
         ),
@@ -541,7 +541,7 @@ def test_get_by_request_200_for_merged_pr(client):
             return_value=MERGED_PR_DB_RESULT,
         ),
         patch(
-            "database.people.get_people",
+            "database.people.get_roster",
             new_callable=AsyncMock,
             return_value=[],
         ),

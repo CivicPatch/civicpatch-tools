@@ -93,21 +93,27 @@ async def record_change(
     | MembershipChangePayload
     | AssertionChangePayload
     | None = None,
+    request_id: str | None = None,
 ) -> None:
     """Write a change log on an existing cursor, so it commits with what it describes.
 
     `create_change_log` above opens its own connection and cannot do that. Callers already
     inside a transaction use this one.
+
+    `request_id` names the scrape responsible, for the events no person asked for — a post
+    minted because a source listed a seat. With no user and no request a row says only that
+    something happened, which is not enough to act on.
     """
     await cur.execute(
         """
-        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id, request_id)
+        VALUES (%s, %s, %s, %s, %s)
         """,
         (
             change_type,
             jurisdiction_ocdid,
             json.dumps(changes.model_dump()) if changes else None,
             user_id,
+            request_id,
         ),
     )

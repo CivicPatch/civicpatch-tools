@@ -153,17 +153,42 @@ def labelled(person: dict) -> dict:
     }
 
 
-ACTIVE_STATUS = "active"
+# Somebody is on the roster if a publish put them in a seat. `people.status` used to say so
+# as a column, set by `PERSON_UPSERT` and cleared by whoever noticed an absence — a cache of
+# exactly this, and one that could drift from it. Measured before removing: `inactive` matched
+# "no open membership" for 48 of 48, and `active` for 20,644 of 20,664.
+IS_ON_THE_ROSTER = """EXISTS (
+    SELECT 1 FROM memberships
+    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
+)"""
 
 
 class UnscopedRead(Exception):
     """A read with no jurisdiction and no state would return every person we hold."""
 
 
+async def get_roster(
+    jurisdiction_ocdid: str | None = None, state: str | None = None
+) -> list[dict]:
+    """Everyone currently seated — the published roster.
+
+    What `status='active'` used to mean, asked of memberships instead of a column that
+    mirrored them.
+    """
+    return await _people(jurisdiction_ocdid, state, seated_only=True)
+
+
 async def get_people(
-    jurisdiction_ocdid: str | None = None,
-    state: str | None = None,
-    status: str | None = None,
+    jurisdiction_ocdid: str | None = None, state: str | None = None
+) -> list[dict]:
+    """Everyone we hold here, seated or not. The admin and search view."""
+    return await _people(jurisdiction_ocdid, state, seated_only=False)
+
+
+async def _people(
+    jurisdiction_ocdid: str | None,
+    state: str | None,
+    seated_only: bool,
 ) -> list[dict]:
     if jurisdiction_ocdid is None and state is None:
         raise UnscopedRead("pass a jurisdiction_ocdid or a state")
@@ -179,9 +204,8 @@ async def get_people(
     if state is not None:
         clauses.append("jurisdiction_ocdid LIKE %s")
         values.append(f"ocd-jurisdiction/country:us/state:{state.lower()}%")
-    if status is not None:
-        clauses.append("status = %s")
-        values.append(status)
+    if seated_only:
+        clauses.append(IS_ON_THE_ROSTER)
 
     people: list[dict] = []
     pool = await get_pool()
@@ -202,10 +226,8 @@ async def get_people(
     return people
 
 
-async def get_person_models(
-    jurisdiction_ocdid: str, status: str | None = None
-) -> List[Person]:
-    people = await get_people(jurisdiction_ocdid=jurisdiction_ocdid, status=status)
+async def get_person_models(jurisdiction_ocdid: str) -> List[Person]:
+    people = await get_people(jurisdiction_ocdid=jurisdiction_ocdid)
     return [Person(**person) for person in people]
 
 
@@ -273,11 +295,11 @@ async def get_people_page(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT COUNT(*) OVER(), {PERSON_JSON}, people.status
+            SELECT COUNT(*) OVER(), {PERSON_JSON}, {IS_ON_THE_ROSTER}
             FROM people
             WHERE jurisdiction_ocdid = %s
             ORDER BY
-                CASE WHEN people.status = 'active' THEN 0 ELSE 1 END,
+                CASE WHEN {IS_ON_THE_ROSTER} THEN 0 ELSE 1 END,
                 people.updated_at DESC NULLS LAST,
                 people.id
             LIMIT %s OFFSET %s
@@ -288,7 +310,12 @@ async def get_people_page(
     if not rows:
         return 0, []
     total = rows[0][0]
-    return total, [{**labelled(row[1]), "status": row[2]} for row in rows]
+    # `status` on the way out is derived, not read: the seated come first and say so, which is
+    # what the column was for.
+    return total, [
+        {**labelled(row[1]), "status": "active" if row[2] else "inactive"}
+        for row in rows
+    ]
 
 
 async def delete_person(person_id: str) -> None:
@@ -322,12 +349,16 @@ PERSON_UPSERT = f"""
             {", ".join(f"%({column})s" for column in _PERSON_COLUMNS)})
     ON CONFLICT (id) DO UPDATE
        SET updated_at = EXCLUDED.updated_at,
-           status = 'active',
            {", ".join(f"{column} = EXCLUDED.{column}" for column in _PERSON_COLUMNS)}
 """
 
 
 def person_upsert_params(people: list[dict]) -> list[dict]:
+    """A roster's dicts as rows for `PERSON_UPSERT`.
+
+    One caller now — `publish_request`. It also shaped the people files `od_sync` read back,
+    until that read-back was removed.
+    """
     return [
         {
             "id": person.get("id"),
@@ -344,26 +375,3 @@ def person_upsert_params(people: list[dict]) -> list[dict]:
     ]
 
 
-async def bulk_update_people(people: list[dict]):
-    if not people:
-        return
-
-    records = person_upsert_params(people)
-    jurisdictions: dict = {}
-    for record in records:
-        jurisdictions.setdefault(record["jurisdiction_ocdid"], []).append(record["id"])
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.executemany(PERSON_UPSERT, records)
-
-        for jurisdiction_ocdid, incoming_ids in jurisdictions.items():
-            await cur.execute(
-                """
-                UPDATE people
-                SET status = 'inactive'
-                WHERE jurisdiction_ocdid = %s
-                  AND id != ALL(%s)
-                """,
-                (jurisdiction_ocdid, incoming_ids),
-            )

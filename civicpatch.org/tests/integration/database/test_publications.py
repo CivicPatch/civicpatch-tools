@@ -18,11 +18,14 @@ import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
 from database import assertions
+from database import people as people_db
 from database.database import get_pool
+from core.post_derivation import DerivedMember, DerivedPost
 from database.publications import dismiss_request, publish_request
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
+_SENTINEL_DIVISION = "ocd-division/country:us/state:zz/place:zz_publish"
 _SENTINEL_USER = "zz-publish-test-user"
 _CURATOR = "zz-publish-curator@example.com"
 
@@ -36,6 +39,17 @@ async def _cleanup():
             (_CURATOR,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_CURATOR,))
+        # Publishing seats people now, so the whole posts chain has to come out first —
+        # `memberships.person_id` is a FK and this file never created one before.
+        await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
+            (_SENTINEL_OCDID,),
+        )
+        for table in ("posts", "divisions", "organizations"):
+            await cur.execute(
+                f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
+            )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute(
@@ -80,11 +94,41 @@ def _person(name: str) -> dict:
     }
 
 
+def _seats(people: list[dict]) -> list[DerivedPost]:
+    """One seat per person, so a publish actually seats them.
+
+    `publish_request` used to set `people.status = 'active'` and these tests passed no
+    `derived` at all. Being on the roster is holding an open membership now, so a publish with
+    no posts seats nobody — which is the behaviour under test, not an artefact of the fixture.
+    """
+    return [
+        DerivedPost(
+            role_id="council-member",
+            role_label="Council Member",
+            division_ocdid=_SENTINEL_DIVISION,
+            headcount=len(people),
+            members=[
+                DerivedMember(person_id=str(person["id"]), source_labels=["Council Member"])
+                for person in people
+            ],
+        )
+    ]
+
+
 async def _people_by_status() -> dict[str, list[str]]:
+    """Who is on the roster and who is not, asked of memberships.
+
+    Read `people.status` until that column went. Same two buckets, same names — the question
+    is now "does an open membership say so" rather than "does a column".
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, name FROM people WHERE jurisdiction_ocdid = %s",
+            f"""
+            SELECT CASE WHEN {people_db.IS_ON_THE_ROSTER} THEN 'active' ELSE 'inactive' END,
+                   name
+            FROM people WHERE jurisdiction_ocdid = %s
+            """,
             (_SENTINEL_OCDID,),
         )
         out: dict[str, list[str]] = {}
@@ -96,7 +140,10 @@ async def _people_by_status() -> dict[str, list[str]]:
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_publish_writes_the_roster_as_current(sentinel_request):
-    written = await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann"), _person("Bob")])
+    ann, bob = _person("Ann"), _person("Bob")
+    written = await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+    )
 
     assert written == 2
     assert await _people_by_status() == {"active": ["Ann", "Bob"]}
@@ -107,9 +154,13 @@ async def test_publish_writes_the_roster_as_current(sentinel_request):
 async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request):
     """`inactive`, not deleted — seat history has to survive a person leaving office."""
     ann, bob = _person("Ann"), _person("Bob")
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [ann, bob])
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+    )
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [ann])
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+    )
 
     assert await _people_by_status() == {"active": ["Ann"], "inactive": ["Bob"]}
 
@@ -118,10 +169,16 @@ async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request)
 @pytest.mark.asyncio
 async def test_republishing_someone_brings_them_back_to_active(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [ann, bob])
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [ann])
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+    )
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+    )
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [ann, bob])
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+    )
 
     assert await _people_by_status() == {"active": ["Ann", "Bob"]}
 
@@ -129,8 +186,14 @@ async def test_republishing_someone_brings_them_back_to_active(sentinel_request)
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
-    """A scrape that found nobody is a failed scrape, not a dissolved council."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    """A scrape that found nobody is a failed scrape, not a dissolved council.
+
+    Now guards `close_absent` rather than the deleted `_retire_absent` — same claim, and the
+    same guard inside `close_absent` still makes it true."""
+    ann = _person("Ann")
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+    )
 
     assert await publish_request(sentinel_request, _SENTINEL_OCDID, []) == 0
     assert await _people_by_status() == {"active": ["Ann"]}
@@ -159,7 +222,10 @@ async def test_publish_stamps_scraped_at_from_the_pipeline_run(sentinel_request)
 @pytest.mark.asyncio
 async def test_a_failed_publish_writes_nothing(sentinel_request):
     """One transaction: a person the table rejects must not leave the roster half-written."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    ann = _person("Ann")
+    await publish_request(
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+    )
 
     broken = _person("Cass")
     broken["id"] = None  # people.id is NOT NULL

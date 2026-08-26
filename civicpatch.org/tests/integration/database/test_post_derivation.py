@@ -58,6 +58,10 @@ async def _wipe():
             (_CURATOR,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_CURATOR,))
+        # Otherwise `add_post` rows survive the run and the mint counts below climb.
+        await cur.execute(
+            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         await conn.commit()
 
 
@@ -227,8 +231,12 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
 @pytest.mark.integration
 async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
     """Ingest mints the post; only publish writes the membership. The gap between them is
-    exactly the window in which nobody has answered for the office a scrape invented."""
+    exactly the window in which nobody has answered for the office a scrape invented.
+
+    Now needs `_already_published`: the same claim held before, but it is only *reported* once
+    the jurisdiction has been published at least once — see the suppression test below."""
     person_id = await _seed_person()
+    await _already_published()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
@@ -252,8 +260,13 @@ async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
 
     Evaluated against a literal jurisdiction rather than an inserted request: the review pool
     is shared, and a spare request for this jurisdiction would reach unrelated tests.
+
+    Needs `_already_published` for the same reason the card-side test does — the queue counts
+    on the same two predicates, deliberately, so a card and its badge cannot disagree about
+    whether there is anything to look at.
     """
     await _seed_person()  # for the jurisdiction row the organization FK needs
+    await _already_published()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
@@ -416,7 +429,7 @@ async def test_publish_writes_memberships_for_the_roster():
     # mode is not an exception: it is a subtitle that silently goes blank.
     from database.people import get_person_models
 
-    roster = await get_person_models(_OCDID, status="active")
+    roster = await get_person_models(_OCDID)
     assert len(roster) == 1
     office = roster[0].model_extra["office"]
     assert office["name"] == "Mayor"
@@ -741,3 +754,219 @@ async def test_a_closed_membership_is_not_reopened_by_being_seen():
 
         assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 0
         await conn.rollback()
+
+
+async def _already_published() -> None:
+    """Put the jurisdiction past its first publish, by holding a seat that is not under test.
+
+    A membership only exists at publish, so one is the proof — which is why the predicate reads
+    memberships rather than `requests.published_at`. A *different* post on purpose: the tests
+    below assert that the post they created is still unverified.
+    """
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await memberships.upsert(cur, person_id, other, org, _T0)
+        await conn.commit()
+
+
+async def _seed_request() -> str:
+    request_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status)
+            VALUES (%s, 'zz', 'local', %s, 'active')
+            ON CONFLICT (jurisdiction_ocdid) DO NOTHING
+            """,
+            (_OCDID, json.dumps({})),
+        )
+        await cur.execute(
+            "INSERT INTO requests (id, jurisdiction_ocdid, request_type) "
+            "VALUES (%s, %s, 'pipeline_run')",
+            (request_id, _OCDID),
+        )
+        await conn.commit()
+    return request_id
+
+
+async def _add_post_logs(request_id: str) -> list[dict]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT changes, user_id FROM change_logs "
+            "WHERE type = 'add_post' AND request_id = %s",
+            (request_id,),
+        )
+        return [{"changes": row[0], "user_id": row[1]} for row in await cur.fetchall()]
+
+
+def _derived(role_id: str, division_ocdid: str):
+    from core.post_derivation import DerivedPost
+
+    return DerivedPost(
+        role_id=role_id,
+        role_label=role_id.title(),
+        division_ocdid=division_ocdid,
+        headcount=1,
+        members=[],
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
+    """"This scrape invented a seat" is the event a reviewer needs told about, and it is
+    answered from the log rather than a column on `posts` — creation happens once and never
+    changes, so it is an event, not a property of the row."""
+    request_id = await _seed_request()
+
+    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], request_id)
+
+    logs = await _add_post_logs(request_id)
+    assert len(logs) == 1
+    assert logs[0]["changes"]["role_id"] == "mayor"
+    # No user: nobody asserted this. A null user beside a request is what says "a scrape did
+    # it" — the distinction the old code threw away by logging nothing at all.
+    assert logs[0]["user_id"] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_matching_an_existing_post_logs_nothing():
+    """Only a mint is news. A second scrape seeing the same seat has invented nothing, and
+    logging it would make every re-scrape look like a change."""
+    first = await _seed_request()
+    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], first)
+
+    second = await _seed_request()
+    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], second)
+
+    assert len(await _add_post_logs(first)) == 1
+    assert await _add_post_logs(second) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
+    request_id = await _seed_request()
+    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], request_id)
+
+    later = await _seed_request()
+    await posts.find_or_create_all(
+        _OCDID,
+        [_derived("mayor", _BASE), _derived("council-member", _WARD_3)],
+        later,
+    )
+
+    logs = await _add_post_logs(later)
+    assert [log["changes"]["role_id"] for log in logs] == ["council-member"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_jurisdictions_first_scrape_raises_no_post_issues():
+    """Every seat is new on a first scrape, so one issue per seat says nothing a reviewer
+    cannot see by reading the roster in front of them — it only buries the checks that do
+    carry information. Onboarding a state (#2424, #2462) is entirely first scrapes.
+    """
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await conn.commit()
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_same_post_raises_once_the_jurisdiction_has_been_published():
+    """The suppression is about the jurisdiction's first scrape, not about the post. Once
+    anything here has been published, a seat nobody has vouched for is a real signal again —
+    and this is the pair that proves the first test is not passing for some other reason."""
+    await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await conn.commit()
+
+    await _already_published()
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
+    """The point of moving `close_absent` and `advance_last_seen_at` to publish.
+
+    Ingest used to run both, so a scrape that fetched three of seven pages closed four
+    memberships with nobody in the way. They were defended as observations — "the source
+    stopped listing D" is true whether or not D left office — which holds for a good scrape
+    and not for a bad one, and nothing at ingest can tell which.
+
+    Asserted through `_apply_scrape_changes` rather than through `close_absent` directly: the
+    existing tests for those two call the DB functions themselves, so they stayed green when
+    ingest stopped calling them at all.
+    """
+    from core.post_derivation import DerivedMember, DerivedPost
+    from services.people_collector import _apply_scrape_changes
+
+    person_id = await _seed_person()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await memberships.upsert(cur, person_id, post_id, org, _T0)
+        await cur.execute(
+            "INSERT INTO requests (id, jurisdiction_ocdid, request_type) "
+            "VALUES (%s, %s, 'pipeline_run')",
+            (request_id := str(uuid.uuid4()), _OCDID),
+        )
+        # The run too: `_apply_scrape_changes` swallows its own errors, so without this the
+        # old close-at-ingest path would raise on the missing run and this test would pass
+        # against the very behaviour it exists to forbid.
+        await cur.execute(
+            "INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at) "
+            "VALUES (%s, 'SUCCESS', 100, %s, %s)",
+            (request_id, _T1, _T1),
+        )
+        await conn.commit()
+
+    # A scrape naming somebody else entirely: the seated person is absent from it.
+    other_id = await _seed_person()
+    await _apply_scrape_changes(
+        request_id,
+        _OCDID,
+        [
+            DerivedPost(
+                role_id="clerk",
+                role_label="Clerk",
+                division_ocdid=_BASE,
+                headcount=1,
+                members=[DerivedMember(person_id=other_id, source_labels=["Clerk"])],
+            )
+        ],
+    )
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT closed_at, last_seen_at FROM memberships WHERE person_id = %s",
+            (person_id,),
+        )
+        closed_at, last_seen_at = await cur.fetchone()
+    assert closed_at is None, "an unreviewed scrape closed a published membership"
+    assert last_seen_at == _T0, "an unreviewed scrape moved a published last_seen_at"

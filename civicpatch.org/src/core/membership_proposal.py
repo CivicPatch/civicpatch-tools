@@ -43,6 +43,12 @@ class ProposedChange(BaseModel):
     division_ocdid: str
     post_label: str
     label: str | None = None
+    # The seat they would land in, when it already exists as a row. Filled in by the caller,
+    # not here: `propose` works in identities and knows no ids. It is what lets the editor
+    # show the derived seat as the Post field's current value — displayed, never stored,
+    # because storing it would freeze this derivation into the person and a parser fix could
+    # never reach them.
+    post_id: str | None = None
     # Where they were, for a move or a disappearance.
     from_post_id: str | None = None
     is_tracked: bool = True
@@ -116,23 +122,6 @@ def propose(
 
 def surfaces_for_review(change: ProposedChange) -> bool:
     return change.disposition is not Disposition.UNCHANGED
-
-
-def still_held(changes: list[ProposedChange]) -> list[str]:
-
-    return [
-        change.person_id
-        for change in changes
-        if change.disposition is Disposition.UNCHANGED
-    ]
-
-
-def still_listed(changes: list[ProposedChange]) -> list[str]:
-    return [
-        change.person_id
-        for change in changes
-        if change.disposition is not Disposition.ABSENT
-    ]
 
 
 def nothing_to_review(changes: list[ProposedChange]) -> bool:

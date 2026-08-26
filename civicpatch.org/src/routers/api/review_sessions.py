@@ -124,10 +124,7 @@ async def _navigate_response(session_id: str, entry_number: int):
 
     pr_meta, existing, proposed, scraped_at = await asyncio.gather(
         pull_requests_db.get_pull_request_for_review(request_id),
-        database_people.get_people(
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            status=database_people.ACTIVE_STATUS,
-        ),
+        database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
         proposed_roster(request_id, jurisdiction_ocdid),
         jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
     )

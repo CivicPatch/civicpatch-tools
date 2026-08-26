@@ -35,7 +35,7 @@ def _summary_for(published: list[dict], proposed: list[dict]):
         "services.review_proposal",
         requests_db=AsyncMock(get_request_jurisdiction=AsyncMock(return_value=OCDID)),
         people_db=AsyncMock(
-            get_people=AsyncMock(return_value=published), ACTIVE_STATUS="active"
+            get_roster=AsyncMock(return_value=published)
         ),
         proposed_roster=AsyncMock(return_value=proposed),
         get_roles=AsyncMock(return_value=[]),

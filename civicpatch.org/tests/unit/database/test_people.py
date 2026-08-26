@@ -74,4 +74,4 @@ def test_both_sides_of_the_card_carry_the_same_keys():
 @pytest.mark.asyncio
 async def test_get_people_refuses_a_read_with_no_scope():
     with pytest.raises(db_people.UnscopedRead):
-        await db_people.get_people(status=db_people.ACTIVE_STATUS)
+        await db_people.get_people()

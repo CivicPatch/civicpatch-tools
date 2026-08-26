@@ -20,6 +20,7 @@ from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_assert"
 _USER = "zz-assert-user@example.com"
+_SEEN_AT = datetime(2026, 3, 11, tzinfo=timezone.utc)
 
 
 async def _wipe():
@@ -31,7 +32,15 @@ async def _wipe():
             (_USER,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_USER,))
-        for table in ("posts", "divisions", "organizations"):
+        # Before `jurisdictions`: `requests.jurisdiction_ocdid` is a FK, so one left behind
+        # takes the whole module down at setup.
+        # Memberships before posts (FK), and people after them.
+        await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        for table in ("posts", "divisions", "organizations", "requests", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )
@@ -66,8 +75,30 @@ async def _seed() -> tuple[str, str]:
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
+        # A held seat somewhere else in the jurisdiction, so this is not its first scrape:
+        # `unverified_by_jurisdiction` says nothing where nobody holds anything, and without
+        # this the vouching test below would pass for the wrong reason.
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) "
+            "VALUES (gen_random_uuid(), %s, 'Seated Elsewhere') RETURNING id::text",
+            (_OCDID,),
+        )
+        seated = (await cur.fetchone())[0]
+        # `assessor` because the tests below mint `clerk` and `treasurer` themselves and
+        # expect those unverified — a collision here hands them back this held one.
+        other = await posts.find_or_create(
+            cur, _OCDID, organization_id, "assessor", _BASE
+        )
+        await memberships.upsert(cur, seated, other, organization_id, _SEEN_AT)
         await conn.commit()
     return user_id, post_id
+
+
+def _verified(rows: list[dict], post_id: str) -> bool:
+    """By id, not by position. `_seed` now holds a second seat so the jurisdiction is past its
+    first scrape, and `list_for_jurisdiction` orders by role — so `rows[0]` silently became a
+    different post than the one under test."""
+    return next(row for row in rows if row["id"] == post_id)["_is_verified"]
 
 
 def _vouch(post_id: str, **overrides) -> Assertion:
@@ -98,7 +129,7 @@ async def test_vouching_for_a_post_verifies_it_without_a_publish():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
-        assert rows[0]["_is_verified"] is False
+        assert _verified(rows, post_id) is False
         # The review queue reads the same fact through a different query. Asserted together
         # because the screen saying "unverified" while the queue stops asking is the failure
         # neither test catches alone.
@@ -110,7 +141,7 @@ async def test_vouching_for_a_post_verifies_it_without_a_publish():
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
         assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-    assert rows[0]["_is_verified"] is True
+    assert _verified(rows, post_id) is True
 
 
 @pytest.mark.asyncio
