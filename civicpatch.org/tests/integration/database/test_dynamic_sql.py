@@ -277,13 +277,6 @@ async def test_get_people_by_geo():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_list_pipeline_runs():
-    result = await db_jobs.list_pipeline_runs()
-    assert isinstance(result, list)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_pipeline_run_not_found():
     result = await db_jobs.get_pipeline_run(_FAKE_UUID)
     assert result is None
@@ -326,18 +319,8 @@ async def test_get_pipeline_run_status_not_found():
     assert result is None
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_pipeline_run_github_run_id_not_found():
-    result = await db_jobs.get_pipeline_run_github_run_id(_FAKE_UUID)
-    assert result is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_pipeline_run_result_not_found():
-    result = await db_jobs.get_pipeline_run_result(_FAKE_UUID)
-    assert result is None
+# `get_pipeline_run_github_run_id` went with the column: 0 of 94 rows carried one and
+# nothing in `pipelines/` ever called the endpoint that set it.
 
 
 # ---------------------------------------------------------------------------

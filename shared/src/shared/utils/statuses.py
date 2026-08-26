@@ -4,6 +4,10 @@ from enum import StrEnum
 class PipelineRunStatus(StrEnum):
     # Lifecycle states
     PENDING = "PENDING"
+    # ⚠️ Written once, by the worker's first activity, and overwritten by the engine's first
+    # step report seconds later — so it is real but never observed in a stored row, and two
+    # separate sweeps have called it dead. Only `typecheck-worker` catches that; `worker/` has
+    # no tests. Nothing branches on it: every reader asks whether the status is terminal.
     RUNNING = "RUNNING"
     SUCCESS = "SUCCESS"
     ERROR = "ERROR"

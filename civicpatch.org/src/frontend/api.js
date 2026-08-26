@@ -227,7 +227,7 @@ export const createPost = async (jurisdictionOcdid, body) => {
   return res.json();
 };
 
-export const updatePost = async (postId, { label, headcount, isTracked }) => {
+export const updatePost = async (postId, { headcount, isTracked }) => {
   const res = await fetch(`${API_URL}/api/v1/posts/${postId}`, {
     method: "PATCH",
     credentials: "include",
@@ -236,7 +236,6 @@ export const updatePost = async (postId, { label, headcount, isTracked }) => {
     // standard models tracking, so a consumer dropping every `_*` key still has a conforming
     // record. The route requires it — omitting it would silently re-track the post.
     body: JSON.stringify({
-      label,
       _headcount: headcount,
       _is_tracked: isTracked,
     }),

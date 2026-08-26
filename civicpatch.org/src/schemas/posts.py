@@ -15,7 +15,6 @@ class CreatePostRequest(BaseModel):
 
     role_id: str
     division_ocdid: str
-    label: str | None = None
     # Aliased like the update route's, so the field has one name on the wire whichever way it
     # is crossed. Defaulted, unlike there: a new post is one seat unless someone says otherwise.
     headcount: int = Field(default=1, alias="_headcount", gt=0)
@@ -26,9 +25,11 @@ class UpdatePostRequest(BaseModel):
 
     Not `role_id` or `division_ocdid`: those are the post's identity, and changing either
     would silently make the next scrape mint a second post rather than match this one.
+
+    Not `label` either, since 148: it is composed from the role and the division on read, so
+    there is nothing here to set.
     """
 
-    label: str | None = None
     # Underscored on the wire: no civic standard defines either of these, so a consumer
     # dropping every `_*` key is left with a conforming record. The columns are plain — the
     # distinction is about what we emit — so the alias is where it gets applied.

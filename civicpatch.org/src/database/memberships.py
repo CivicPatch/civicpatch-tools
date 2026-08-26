@@ -15,7 +15,7 @@ gone, not when they went.
 
 from datetime import date, datetime, timezone
 
-from core.membership_label import rendered_post_label
+from core.membership_label import derive_post_label
 from core.post_derivation import DerivedMember
 from database import assertions, posts
 from database.change_logs import record_change
@@ -184,7 +184,7 @@ async def list_for_jurisdiction(
                m.first_seen_at, m.closed_at, m.last_seen_at,
                pe.name AS person_name,
                m.source_labels, m.designations, m.unmatched_text,
-               p.role_id, p.division_ocdid, p.label AS post_label,
+               p.role_id, p.division_ocdid,
                r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
@@ -202,8 +202,8 @@ async def list_for_jurisdiction(
     return [
         {
             **row,
-            "post_label": rendered_post_label(
-                row["post_label"], row["role_label"], row["division_ocdid"]
+            "post_label": derive_post_label(
+                row["role_label"], row["division_ocdid"]
             ),
         }
         for row in rows
@@ -285,7 +285,7 @@ async def open_by_jurisdiction(
         """
         SELECT p.jurisdiction_ocdid, m.person_id::text, m.post_id::text,
                p.role_id, p.division_ocdid, p._is_tracked AS is_tracked,
-               p.label AS post_label, r.label AS role_label
+               r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN roles r ON r.id = p.role_id

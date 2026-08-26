@@ -536,16 +536,16 @@ async def get_jurisdiction_history(
         await cur.execute(
             f"""
             SELECT r.id::text,
-                   COALESCE(j.created_at, r.created_at),
-                   COALESCE(j.updated_at, r.updated_at),
-                   j.status, j.progress, r.open_data_url, {REVIEW_STATUS}, r.request_type,
+                   r.created_at,
+                   r.sourced_at,
+                   r.status, r.progress, r.open_data_url, {REVIEW_STATUS},
+                   r.request_type,
                    r.published_at,
                    {RUN_IN_FLIGHT} AS is_running,
                    {AVAILABLE_FOR_REVIEW} AS awaiting_review
             FROM requests r
-            LEFT JOIN pipeline_runs j ON j.request_id = r.id
             WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
-            ORDER BY COALESCE(j.created_at, r.created_at) DESC;
+            ORDER BY r.created_at DESC;
             """,
             (
                 jurisdiction_ocdid,
@@ -686,15 +686,16 @@ async def deactivate_jurisdictions_not_in(
 
 
 async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
-    # "Last scraped" = the run's start time, stamped when a job PR merges. The FROM-join
-    # makes this a no-op when the request has no pipeline run (e.g. an external merge), so
-    # scraped_at is never blanked out.
+    # "Last scraped" = when the request was created, stamped when a job PR merges. Guarded on
+    # `status IS NOT NULL` so a request no pipeline ran cannot blank `scraped_at` — an
+    # external merge, or a roster typed in rather than scraped.
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
-            "UPDATE jurisdictions j SET scraped_at = pr.created_at "
-            "FROM pipeline_runs pr "
-            "WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s",
+            "UPDATE jurisdictions j SET scraped_at = r.created_at "
+            "FROM requests r "
+            "WHERE r.id = %s AND r.status IS NOT NULL "
+            "AND j.jurisdiction_ocdid = %s",
             (request_id, jurisdiction_ocdid),
         )
     return result.rowcount > 0

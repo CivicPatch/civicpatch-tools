@@ -35,13 +35,6 @@ def derive_post_label(role_label: str, division_ocdid: str) -> str:
     return _SEPARATOR.join(part for part in parts if part)
 
 
-def rendered_post_label(
-    post_label: str | None, role_label: str, division_ocdid: str
-) -> str:
-    """The stored name if a human gave one, else the derived one."""
-    return post_label or derive_post_label(role_label, division_ocdid)
-
-
 class MembershipLabel(BaseModel):
     """One person in one seat. Everything past `post_label` is about the occupant."""
 

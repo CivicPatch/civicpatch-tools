@@ -17,7 +17,7 @@ from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
-from database.pipeline_runs import run_updated_at
+from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
 logger = logging.getLogger(__name__)
@@ -69,14 +69,13 @@ async def _refuse_if_superseded(
     go and look at the source again."""
     await cur.execute(
         """
-        SELECT r.id::text, run.updated_at
+        SELECT r.id::text, r.sourced_at
         FROM requests r
-        JOIN pipeline_runs run ON run.request_id = r.id
         WHERE r.jurisdiction_ocdid = %s
           AND r.published_at IS NOT NULL
           AND r.id::text <> %s
-          AND run.updated_at > %s
-        ORDER BY run.updated_at DESC
+          AND r.sourced_at > %s
+        ORDER BY r.sourced_at DESC
         LIMIT 1
         """,
         (jurisdiction_ocdid, request_id, last_seen_at),
@@ -99,9 +98,9 @@ async def _record_publish(
     """
     await cur.execute(
         """
-        UPDATE jurisdictions j SET scraped_at = pr.created_at
-        FROM pipeline_runs pr
-        WHERE pr.request_id = %s AND j.jurisdiction_ocdid = %s
+        UPDATE jurisdictions j SET scraped_at = r.created_at
+        FROM requests r
+        WHERE r.id = %s AND j.jurisdiction_ocdid = %s
         """,
         (request_id, jurisdiction_ocdid),
     )
@@ -183,7 +182,7 @@ async def publish_request(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        last_seen_at = await run_updated_at(cur, request_id)
+        last_seen_at = await get_sourced_at(cur, request_id)
         await _refuse_if_superseded(cur, request_id, jurisdiction_ocdid, last_seen_at)
 
         stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)

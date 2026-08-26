@@ -70,13 +70,12 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
     """
     await cur.execute(
         f"""
-        SELECT j.request_id::text,
+        SELECT r.id::text AS request_id,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
-        FROM pipeline_runs j
-        JOIN requests r ON r.id = j.request_id
+        FROM requests r
         WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
-          AND j.request_id::text != ALL(%s::text[])
+          AND r.id::text != ALL(%s::text[])
           AND NOT EXISTS (
               SELECT 1 FROM review_session_entries e
               WHERE e.jurisdiction_ocdid = r.jurisdiction_ocdid
@@ -225,8 +224,7 @@ async def navigate_to_entry(
             await cur.execute(
                 f"""
                 SELECT COUNT(*) AS available
-                FROM pipeline_runs j
-                JOIN requests r ON r.id = j.request_id
+                FROM requests r
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
                 """,

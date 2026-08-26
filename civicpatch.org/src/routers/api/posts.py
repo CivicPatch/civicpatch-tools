@@ -25,7 +25,6 @@ def get_router() -> APIRouter:
             jurisdiction_ocdid,
             body.role_id,
             body.division_ocdid,
-            body.label,
             body.headcount,
             user.user_id,
         )
@@ -45,7 +44,7 @@ def get_router() -> APIRouter:
         ),
     ):
         if not await posts.update(
-            post_id, body.label, body.headcount, body.is_tracked, user.user_id
+            post_id, body.headcount, body.is_tracked, user.user_id
         ):
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}

@@ -12,7 +12,7 @@ from enum import Enum
 
 from pydantic import BaseModel
 
-from core.membership_label import rendered_post_label
+from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
 
 
@@ -29,7 +29,6 @@ class ExistingMembership(BaseModel):
     role_id: str
     role_label: str = ""
     division_ocdid: str
-    post_label: str | None = None
     # `posts._is_tracked`. A roster omitting an untracked post means nothing, so its holder
     # going missing is recorded but never queued for a human.
     is_tracked: bool = True
@@ -89,8 +88,8 @@ def propose(
                     role_id=post.role_id,
                     role_label=post.role_label,
                     division_ocdid=post.division_ocdid,
-                    post_label=rendered_post_label(
-                        None, post.role_label, post.division_ocdid
+                    post_label=derive_post_label(
+                        post.role_label, post.division_ocdid
                     ),
                     label=member.label,
                     from_post_id=held.post_id
@@ -108,9 +107,7 @@ def propose(
             role_id=row.role_id,
             role_label=row.role_label,
             division_ocdid=row.division_ocdid,
-            post_label=rendered_post_label(
-                row.post_label, row.role_label, row.division_ocdid
-            ),
+            post_label=derive_post_label(row.role_label, row.division_ocdid),
             from_post_id=row.post_id,
             is_tracked=row.is_tracked,
         )

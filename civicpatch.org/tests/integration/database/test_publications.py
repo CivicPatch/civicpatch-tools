@@ -76,7 +76,8 @@ async def sentinel_request():
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'done')", (request_id,)
+            "UPDATE requests SET status = 'done', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
         )
         await conn.commit()
     yield request_id
@@ -210,8 +211,8 @@ async def test_publish_stamps_scraped_at_from_the_pipeline_run(sentinel_request)
         await cur.execute(
             """
             SELECT j.scraped_at = pr.created_at
-            FROM jurisdictions j, pipeline_runs pr
-            WHERE j.jurisdiction_ocdid = %s AND pr.request_id = %s
+            FROM jurisdictions j, requests pr
+            WHERE j.jurisdiction_ocdid = %s AND pr.id = %s
             """,
             (_SENTINEL_OCDID, sentinel_request),
         )

@@ -26,9 +26,7 @@ from database.publications import dismiss_request
 from database.pipeline_runs import (
     get_active_pipeline_runs,
     get_pipeline_run,
-    get_pipeline_run_github_run_id,
     get_pipeline_run_status,
-    set_pipeline_run_github_run_id,
     update_pipeline_run_status,
 )
 from database.pull_requests import (
@@ -51,7 +49,6 @@ from schemas.pipeline_runs import (
     FlagPipelineIssueRequest,
     GetPipelineRunStatusResponse,
     HandleSubmitPipelineRunArtifactsRequest,
-    RegisterGithubRunRequest,
     RegisterPipelineRunRequest,
     ServerDetail,
     UpdatePipelineRunStatusRequest,
@@ -317,29 +314,6 @@ def get_router(api_key_header):
         background_tasks.add_task(_register_pipeline_run_bg, request)
         return {"data": {"request_id": request.request_id}}
 
-    @router.post("/{request_id}/run", include_in_schema=False)
-    async def register_github_run_endpoint(
-        request_id: str,
-        request: RegisterGithubRunRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
-    ):
-        updated = await set_pipeline_run_github_run_id(request_id, request.run_id)
-        if not updated:
-            return JSONResponse(
-                content=ErrorResponse(error="Pipeline run not found").model_dump(),
-                status_code=404,
-            )
-        return {"request_id": request_id, "run_id": request.run_id}
-
-    @router.get("/{request_id}/run", include_in_schema=False)
-    async def get_github_run_endpoint(
-        request_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
-    ):
-        run_id = await get_pipeline_run_github_run_id(request_id)
-        if run_id is None:
-            return JSONResponse(content={"run_id": None}, status_code=404)
-        return {"run_id": run_id}
 
     @router.get("/{request_id}/config", include_in_schema=False)
     async def get_pipeline_run_config_endpoint(

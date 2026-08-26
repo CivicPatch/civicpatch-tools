@@ -60,7 +60,8 @@ async def _a_run_in_flight() -> str:
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'RUNNING')",
+            "UPDATE requests SET status = 'RUNNING', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
         await conn.commit()
@@ -142,8 +143,8 @@ async def _set_run(request_id: str, status: str, age_hours: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE pipeline_runs SET status = %s, "
-            "updated_at = NOW() - make_interval(hours => %s) WHERE request_id = %s",
+            "UPDATE requests SET status = %s, "
+            "sourced_at = NOW() - make_interval(hours => %s) WHERE id = %s",
             (status, age_hours, request_id),
         )
         await conn.commit()
@@ -153,7 +154,7 @@ async def _status(request_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM pipeline_runs WHERE request_id = %s", (request_id,)
+            "SELECT status FROM requests WHERE id = %s", (request_id,)
         )
         return (await cur.fetchone())[0]
 

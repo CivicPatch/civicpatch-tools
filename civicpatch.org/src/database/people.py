@@ -1,7 +1,7 @@
 import logging
 from typing import Any, List, LiteralString
 
-from core.membership_label import rendered_post_label
+from core.membership_label import derive_post_label
 from database.database import get_pool
 from psycopg import sql
 from shared.schemas import Person
@@ -50,7 +50,6 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'role_label', roles.label,
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
-        'post_label', posts.label,
         'source_labels', to_jsonb(memberships.source_labels)
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
@@ -160,8 +159,7 @@ def labelled(person: dict) -> dict:
         "memberships": [
             {
                 **membership,
-                "post_label": rendered_post_label(
-                    membership["post_label"],
+                "post_label": derive_post_label(
                     membership["role_label"],
                     membership["division_ocdid"],
                 ),

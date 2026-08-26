@@ -123,7 +123,8 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (request_id, ocdid),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
+            "UPDATE requests SET status = 'SUCCESS', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
     return request_id, ocdid
@@ -132,7 +133,7 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
 async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
-        await conn.execute("DELETE FROM pipeline_runs WHERE request_id::text = %s", (request_id,))
+        # The run lives on the request now; deleting the request takes it.
         await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
@@ -553,7 +554,8 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')", (request_id,)
+            "UPDATE requests SET status = 'SUCCESS', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
         )
 
     rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
@@ -586,7 +588,8 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             (request_id, ocdid),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (request_id, status) VALUES (%s, 'SUCCESS')",
+            "UPDATE requests SET status = 'SUCCESS', "
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
         await conn.commit()
