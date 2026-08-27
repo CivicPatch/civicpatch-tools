@@ -231,23 +231,29 @@ async def _refuse_if_held(cur, post_id: str) -> None:
         raise PostHasMembers((await _holder_count(cur, post_id)))
 
 
-async def get(cur, post_id: str) -> dict | None:
-    """One post by id, or None. `assign` takes the organization from here, never from the
-    caller, so a request cannot name a mismatched pair."""
+async def get_many(cur, post_ids: list[str]) -> dict[str, dict]:
+    """Posts by id. An id with no post is absent rather than None."""
+    if not post_ids:
+        return {}
     await cur.execute(
         """
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid, posts._headcount, posts._is_tracked,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
-        WHERE posts.id::text = %s
+        WHERE posts.id::text = ANY(%s)
         """,
-        (post_id,),
+        (post_ids,),
     )
-    row = await cur.fetchone()
-    if row is None:
-        return None
-    return _with_label(dict(zip([c.name for c in cur.description or []], row)))
+    columns = [column.name for column in cur.description or []]
+    found = [_with_label(dict(zip(columns, row))) for row in await cur.fetchall()]
+    return {post["id"]: post for post in found}
+
+
+async def get(cur, post_id: str) -> dict | None:
+    """One post by id, or None. `assign` takes the organization from here, never from the
+    caller, so a request cannot name a mismatched pair."""
+    return (await get_many(cur, [post_id])).get(post_id)
 
 
 # Members mean a publish accepted it; an assertion means a human did. The second reaches posts

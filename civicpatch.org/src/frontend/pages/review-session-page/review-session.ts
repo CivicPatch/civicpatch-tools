@@ -26,7 +26,7 @@ import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview, proposalsByPersonId } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
-import { useOfficeOptions } from "../../hooks/use-office-options.js";
+import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 
@@ -59,7 +59,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const { progress, hasSession, currentEntry, error, canReject, isRejecting } = host;
   const { jurisdiction, pr, mode, pr_people, changes, assertions, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
   const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
-  const officeOptions = useOfficeOptions(jurisdictionOcdid);
+  const posts = useJurisdictionPosts(jurisdictionOcdid);
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
 
@@ -167,7 +167,7 @@ function ReviewSession(host: ReviewSessionHost) {
       dirtyIds,
       isReadOnly: !!is_read_only,
       jurisdictionOcdid,
-      officeOptions,
+      posts,
       proposals: proposalsByPersonId(changes ?? []),
       assertions: assertions ?? {},
       isExpanded: (id: string) => modalExpanded.has(id),

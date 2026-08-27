@@ -32,15 +32,14 @@ import {
   withDisplayImage,
   renderScalarNewSide,
   renderDateNewSide,
-  renderOfficeNewSide,
+  renderPostNewSide,
   renderPhotoNewSide,
   renderMultiList,
   type FocusRef,
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
-import type { OfficeOption } from "../posts-list/posts-model.js";
-import { postLabelFor } from "../posts-list/posts-model.js";
+import { postLabelFor, type Post } from "../posts-list/posts-model.js";
 
 export const DASH = "—";
 
@@ -49,7 +48,7 @@ export const DASH = "—";
 // back — the field diffs on presence only.
 const PHOTO_KEY = "image";
 
-const OFFICE_KEY = "post_id";
+const POST_KEY = "post_id";
 
 // A field that renders several controls has to hang its label on the set — the
 // label is "Term start", but no one input is that; they are its year and month.
@@ -92,9 +91,11 @@ export interface EditorFieldProps {
   save: Save;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  // Offices the jurisdiction already has. Empty until the posts read lands, which is why
-  // the control still shows whatever the record says rather than an empty select.
-  officeOptions: OfficeOption[];
+  // Every post in the jurisdiction. Empty until the read lands; the control still shows the
+  // record's own value.
+  posts: Post[];
+  // The derivation's seat, shown as the Post field's value when nobody has picked one.
+  derivedPostId: string | null;
   // Non-null on the one field the view opened on, so the control it belongs to
   // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
@@ -110,7 +111,8 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     save,
     isReadOnly,
     jurisdictionOcdid,
-    officeOptions,
+    posts,
+    derivedPostId,
     focusRef,
   } = props;
 
@@ -119,9 +121,9 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
   // the image URL, which is not what a reader wants to see.
   if (isReadOnly) {
     // A post is stored by id, so the generic scalar path would print a UUID.
-    if (field.key === OFFICE_KEY) {
+    if (field.key === POST_KEY) {
       return html`<span class="person-editor__readonly"
-        >${postLabelFor(diffValue(record, field), officeOptions)}</span
+        >${postLabelFor(diffValue(record, field), posts)}</span
       >`;
     }
     if (isImage(field)) {
@@ -145,8 +147,8 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       >${displayScalar(field, record) || DASH}</span
     >`;
   }
-  if (field.key === OFFICE_KEY)
-    return renderOfficeNewSide(field, record, save, officeOptions, focusRef);
+  if (field.key === POST_KEY)
+    return renderPostNewSide(field, record, save, posts, derivedPostId, focusRef);
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
     // Derived every render from (current, old) rather than stamped when a row is
@@ -195,8 +197,8 @@ function renderWas(props: EditorFieldProps) {
   // Same reason as the read-only branch: "was a3f2c1…" tells a reviewer nothing.
   const oldText = !oldRecord
     ? ""
-    : field.key === OFFICE_KEY
-      ? postLabelFor(diffValue(oldRecord, field), props.officeOptions)
+    : field.key === POST_KEY
+      ? postLabelFor(diffValue(oldRecord, field), props.posts)
       : displayScalar(field, oldRecord);
   if (!oldText.trim()) return nothing;
 

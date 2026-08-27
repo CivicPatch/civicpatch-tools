@@ -22,7 +22,7 @@ const context = (over = {}) =>
     dirtyIds: new Set(),
     isReadOnly: false,
     jurisdictionOcdid: "ocd-jurisdiction/country:us/state:wa/place:x/government",
-    officeOptions: [],
+    posts: [],
     proposals: proposalsByPersonId([]),
     assertions: {},
     isExpanded: () => false,
@@ -122,4 +122,73 @@ describe("personEditorPropsFor — subtitle", () => {
       // The proposal carries its own rendered label, because the post may not exist yet for
       // anyone to look one up. The point is that it says Mayor and not Council Member.
     ).toBe("Mayor, At-Large"));
+});
+
+
+const change = (over = {}) =>
+  ({
+    person_id: "p1",
+    disposition: "new",
+    role_id: "council-member",
+    role_label: "Council Member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+    label: null,
+    post_label: "Council Member, District 5",
+    post_id: "post-5",
+    ...over,
+  }) as never;
+
+const derivedPostIdOf = (changes: unknown[]) =>
+  personEditorPropsFor(card(), context({ proposals: proposalsByPersonId(changes as never) }))
+    .derivedPostId;
+
+describe("personEditorPropsFor — derivedPostId", () => {
+  it("offers the seat the derivation chose, so the Post field is not left saying 'derived'", () =>
+    expect(derivedPostIdOf([change()])).toBe("post-5"));
+
+  it("offers nothing when the scrape would mint the post, since there is no row to select", () =>
+    expect(derivedPostIdOf([change({ post_id: null })])).toBe(null));
+
+  it("offers nothing when nobody is proposed onto a seat", () =>
+    expect(derivedPostIdOf([])).toBe(null));
+
+  // `unmatched` is a vocabulary gap, not an answer.
+  it("offers nothing when the derivation could not name the role", () =>
+    expect(derivedPostIdOf([change({ role_id: "unmatched" })])).toBe(null));
+
+  // Two seats is no single answer; picking either would show a decision nobody made.
+  it("offers nothing when the person is proposed onto two seats", () =>
+    expect(
+      derivedPostIdOf([
+        change(),
+        change({ role_id: "mayor", post_id: "post-mayor" }),
+      ]),
+    ).toBe(null));
+});
+
+describe("personEditorPropsFor — derivedPostId from a held membership", () => {
+  // The jurisdiction page passes no proposals: its people are published, so the seat comes
+  // from the membership they hold. Without this the Post field there could never answer.
+  const withMemberships = (memberships: unknown[]) =>
+    personEditorPropsFor(
+      card({ newRecord: { id: "p1", name: "A", memberships } }),
+      context(),
+    ).derivedPostId;
+
+  it("offers the seat a published person holds", () =>
+    expect(withMemberships([{ post_id: "post-held" }])).toBe("post-held"));
+
+  it("offers nothing when they hold two seats", () =>
+    expect(withMemberships([{ post_id: "a" }, { post_id: "b" }])).toBe(null));
+
+  it("offers nothing when they hold none", () =>
+    expect(withMemberships([])).toBe(null));
+
+  it("prefers the proposal over the membership, since a scrape is the newer claim", () =>
+    expect(
+      personEditorPropsFor(
+        card({ newRecord: { id: "p1", name: "A", memberships: [{ post_id: "old" }] } }),
+        context({ proposals: proposalsByPersonId([change()]) }),
+      ).derivedPostId,
+    ).toBe("post-5"));
 });

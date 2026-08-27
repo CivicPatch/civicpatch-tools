@@ -772,7 +772,51 @@ describe("fieldError — phones", () => {
     expect(fieldError(phones, { phones: ["555-1234"] })).toMatch(/10-digit/);
   });
 
+  // Ten digits once the leading 1 is stripped, so the count alone passed it and the backend
+  // rejected it at Publish. This check exists to move that earlier.
+  it("flags an unassignable area code, which a digit count cannot see", () => {
+    expect(fieldError(phones, { phones: ["11111111111"] })).toMatch(
+      /impossible area code/,
+    );
+    expect(fieldError(phones, { phones: ["0123456789"] })).toMatch(
+      /impossible area code/,
+    );
+  });
+
+  it("flags a service code used as an area code", () =>
+    expect(fieldError(phones, { phones: ["9115551234"] })).toMatch(
+      /service code/,
+    ));
+
+  it("flags an exchange that cannot start 0 or 1", () =>
+    expect(fieldError(phones, { phones: ["6031684432"] })).toMatch(
+      /impossible exchange/,
+    ));
+
+  // Permissive by design: the backend is the authority, so a number that is structurally
+  // legal but unassigned still reaches it. Being stricter here would block valid input.
+  it("passes a structurally legal number it cannot verify", () =>
+    expect(fieldError(phones, { phones: ["5555555555"] })).toBeNull());
+
   it("ignores blanks — an empty row is not an error", () => {
     expect(fieldError(phones, { phones: ["", "  "] })).toBeNull();
   });
+});
+
+
+describe("fieldError — a post for somebody added by hand", () => {
+  const post = { key: "post_id", label: "Post", type: "text" } as const;
+
+  // The reachable half: an addition has no labels, so nothing derives a post for them and
+  // publishing would drop them into the `unmatched` seat.
+  it("asks for a post when there are no labels to derive one from", () =>
+    expect(fieldError(post, { post_id: null, labels: [] })).toBe("Choose a post"));
+
+  it("is satisfied once one is picked", () =>
+    expect(fieldError(post, { post_id: "post-1", labels: [] })).toBeNull());
+
+  // The unreachable half, and why this is not just `required: true`: a scraped person always
+  // derives to a post, so asking them to confirm one would be a field that can never be wrong.
+  it("does not ask when the labels can derive one", () =>
+    expect(fieldError(post, { post_id: null, labels: ["Mayor"] })).toBeNull());
 });

@@ -361,7 +361,10 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
     """Both, and they mean different things. The record is why they are on the roster at all —
     without one the next read derives the roster from sightings and they are gone. The claims
     are what the reviewer said about them, diffed against nothing because the scrape never
-    saw them."""
+    saw them.
+
+    `post_id` is required of an addition since 2026-08-26: the sighting's label is the seat
+    they were given, and without one the derivation drops them on `unmatched`."""
     added = {
         "id": "p2",
         "fields": {
@@ -371,6 +374,7 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
             "emails": [],
             "urls": [],
             "office": {"name": "Mayor", "division_ocdid": None},
+            "post_id": "post-mayor",
             "jurisdiction_ocdid": TEST_OCDID,
             "source_urls": ["https://x.gov/directory"],
             "updated_at": "2026-08-25T00:00:00+00:00",
@@ -380,6 +384,10 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.insert_source_records", new_callable=AsyncMock) as mock_records,
+        # Stubbed: this test is about the pair of writes; label resolution has its own
+        # integration coverage.
+        patch("services.roster_edits._chosen_post_labels", new_callable=AsyncMock,
+              return_value={"p2": "Mayor"}),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),

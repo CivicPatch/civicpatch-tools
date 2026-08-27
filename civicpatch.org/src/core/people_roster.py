@@ -19,10 +19,10 @@ from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import MembershipLabel, derive_post_label, render
 from core.people_derivation import (
-    term_dates,
     canonical_name,
     derived_people,
     merge_records_to_person,
+    term_dates,
 )
 from core.people_roles import derive_roles
 
@@ -140,11 +140,11 @@ def _aliases_carried_forward(person: Person, published: Person | None) -> list[s
     )
 
 
-def reviewer_source_records(person: dict) -> list[PersonRecord]:
+def reviewer_source_records(person: dict, label: str) -> list[PersonRecord]:
     if not person.get("name"):
         return []
     return [
-        PersonRecord(name=person["name"], label="", source_url=source_url)
+        PersonRecord(name=person["name"], label=label, source_url=source_url)
         for source_url in dict.fromkeys(person.get("source_urls") or [])
         if source_url
     ]
@@ -189,9 +189,7 @@ def with_fallback_url(person: Person) -> Person:
     return person.model_copy(update={"urls": [person.source_urls[0]]})
 
 
-def _rendered(
-    person: Person, records: list[PersonRecord], taxonomy: Taxonomy
-) -> dict:
+def _rendered(person: Person, records: list[PersonRecord], taxonomy: Taxonomy) -> dict:
     """The term comes off the records, not the person: it belongs to the tenure."""
     derived = derive_roles(person.labels, person.jurisdiction_ocdid, taxonomy)
     start_date, end_date = term_dates(records)

@@ -1,4 +1,6 @@
 import pytest
+from core.people_edits import PeopleValidationError
+import services.roster_edits as roster_edits
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
@@ -109,42 +111,35 @@ def _maintainer():
 
 
 @pytest.mark.unit
-def test_patch_people_data_records_change_log(client):
-    # This test previously verified before = DB canonical, after = the full submitted data.
-    # It now verifies before = the `main` file we patched, after = the patched result —
-    # because the endpoint moved to the patch model (overlay edits onto the main file).
+def test_patch_people_data_returns_the_request_it_recorded(client):
+    """Thin, on purpose. The endpoint used to read and write the open-data file itself, so its
+    tests mocked GitHub; it now hands the whole edit to `roster_edits.edit_published`, which
+    writes the database and queues the commit. What is left here is the HTTP contract."""
     ocdid = BASE_PERSON["jurisdiction_ocdid"]
-    record = AsyncMock()
     client.app.dependency_overrides[get_optional_user] = _maintainer
-    with (
-        patch("lib.github.api.upsert_github_file", new_callable=AsyncMock,
-              return_value="https://github.com/x/commit/abc123"),
-        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
-              return_value=yaml_dump([BASE_PERSON])),
-        patch("services.change_logs.record_manual_edits", record),
-    ):
+    edit = AsyncMock(return_value=("req-1", [BASE_PERSON]))
+    with patch("services.roster_edits.edit_published", edit):
         response = client.patch(
             "/people/data",
             json={"jurisdiction_ocdid": ocdid, "data": [{"id": "p-1", "fields": {"name": "Renamed Person"}}]},
         )
 
     assert response.status_code == 200
-    record.assert_awaited_once()
-    _, logged_ocdid, user_id, before_arg, after_arg = record.await_args.args
-    assert logged_ocdid == ocdid
-    assert user_id == "user-789"
-    assert [p["name"] for p in before_arg] == ["Original Person"]
-    assert [p["name"] for p in after_arg] == ["Renamed Person"]
+    assert response.json()["data"] == {"request_id": "req-1"}
+    edit.assert_awaited_once()
+    assert edit.await_args.args[0] == ocdid
 
 
 @pytest.mark.unit
 def test_patch_people_data_rejects_invalid_field(client):
+    """422 carrying which field failed, so the editor can mark the row rather than the person."""
     client.app.dependency_overrides[get_optional_user] = _maintainer
-    with (
-        patch("lib.github.api.upsert_github_file", new_callable=AsyncMock) as mock_commit,
-        patch("lib.github.api.get_github_file_contents", new_callable=AsyncMock,
-              return_value=yaml_dump([BASE_PERSON])),
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+    with patch(
+        "services.roster_edits.edit_published",
+        AsyncMock(side_effect=PeopleValidationError(
+            [{"id": "p-1", "name": "Original Person", "field": "phones",
+              "message": "Invalid phone number: 'not-a-phone'"}]
+        )),
     ):
         response = client.patch(
             "/people/data",
@@ -157,9 +152,22 @@ def test_patch_people_data_rejects_invalid_field(client):
     assert response.status_code == 422
     detail = response.json()["detail"]
     assert detail[0]["id"] == "p-1"
-    assert detail[0]["name"] == "Original Person"
     assert detail[0]["field"] == "phones"
-    mock_commit.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_patch_people_data_refuses_to_empty_a_jurisdiction(client):
+    """An edit removing everybody would retire the whole roster. 409, not a silent wipe."""
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with patch(
+        "services.roster_edits.edit_published",
+        AsyncMock(side_effect=roster_edits.EmptyEdit("x")),
+    ):
+        response = client.patch(
+            "/people/data",
+            json={"jurisdiction_ocdid": BASE_PERSON["jurisdiction_ocdid"], "data": []},
+        )
+    assert response.status_code == 409
 
 
 @pytest.mark.unit

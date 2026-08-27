@@ -8,7 +8,7 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-editor.css";
-import type { OfficeOption } from "../posts-list/posts-model.js";
+import type { Post } from "../posts-list/posts-model.js";
 import {
   provenanceLabel,
   type PersonAssertion,
@@ -59,7 +59,9 @@ export interface PersonEditorProps {
   subtitle: string;
   // The accepts on each of this person's fields, for the per-field tags.
   accepts: Map<string, PersonAssertion[]>;
-  officeOptions: OfficeOption[];
+  posts: Post[];
+  // The derivation's seat, shown when nobody has picked one. Never saved.
+  derivedPostId: string | null;
   // Clear-on-edit: once the reviewer touches a card its markers are presumed
   // addressed and drop away. §2.2 refines this to per-field (the *anchored* field
   // being edited); that lands with the checklist in §17 step 8, when ticking
@@ -224,7 +226,8 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
     issues,
     isReadOnly,
     jurisdictionOcdid,
-    officeOptions,
+    posts,
+    derivedPostId,
     onSave,
   } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
@@ -250,7 +253,8 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       provenance: provenanceLabel(props.accepts.get(field.key)),
       isReadOnly,
       jurisdictionOcdid,
-      officeOptions,
+      posts,
+      derivedPostId,
       focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });

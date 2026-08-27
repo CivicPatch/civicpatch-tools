@@ -42,8 +42,8 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "other_names", label: "Other names", type: "multi" },
   // `key` is the storage path and stays `office.*` until the proposed roster stops being
   // Official-shaped; the label is what a person reads, and posts are what we call these.
-  // A post is picked, not typed, and not required: with nothing picked the post is derived
-  // from the labels, which is the normal state for a scrape nobody has corrected.
+  // A post is picked, not typed. Not `required: true` — the pipeline never sets `post_id`;
+  // `fieldError` asks only when nothing can derive one.
   //
   // NOT `labels`. Those are what the source said — evidence, never edited — and putting them
   // here showed a person named twice by one page as two entries in the Post field, which reads

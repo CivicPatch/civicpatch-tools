@@ -102,6 +102,8 @@ export interface ProposedChange {
   label: string | null;
   // Rendered by `core.membership_label`, because a proposed post may not exist yet.
   post_label: string;
+  // The seat's row when it exists; null for a post this scrape would mint.
+  post_id: string | null;
 }
 
 export interface PersonCard {
