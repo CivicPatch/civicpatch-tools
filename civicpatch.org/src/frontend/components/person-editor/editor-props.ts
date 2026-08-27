@@ -11,6 +11,7 @@ import {
   postsFor,
   PersonStatus,
   type PersonCard,
+  personOf,
   type ProposedChange,
 } from "../people/person-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
@@ -19,16 +20,20 @@ import {
   type PersonAssertion,
 } from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
-import type { OfficeOption } from "../posts-list/posts-model.js";
+
+// Mirrors `UNMATCHED_ROLE_ID` in core/post_derivation.py — the seeded role a label
+// resolving to nothing falls back to.
+const UNMATCHED_ROLE_ID = "unmatched";
+import type { Post } from "../posts-list/posts-model.js";
 
 export interface EditorContext {
   frozen: FrozenFields;
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  // Every office the jurisdiction already has, so the office field can be picked from
-  // rather than typed. Shared across the whole roster, hence context and not per-card.
-  officeOptions: OfficeOption[];
+  // Every post in the jurisdiction, for the Post field to pick from. Roster-wide, hence
+  // context rather than per-card.
+  posts: Post[];
   // Also roster-wide: a person proposed onto a post holds no membership to read it off.
   proposals: Map<string, ProposedChange[]>;
   // Every person's assertions, keyed by person id, as the review read returns them.
@@ -52,6 +57,24 @@ export interface EditorContext {
 }
 
 
+/** The seat this person is in — the proposal, else the one held membership (the same two
+ * `postsFor` reads). Only when exactly one: two seats is no single answer. Shown, never saved. */
+function derivedPostIdFor(
+  card: PersonCard,
+  proposals: Map<string, ProposedChange[]>,
+): string | null {
+  const proposed = proposals.get(card.personId) ?? [];
+  if (proposed.length) {
+    if (proposed.length > 1) return null;
+    // `unmatched` is a vocabulary gap, not an answer.
+    if (proposed[0].role_id === UNMATCHED_ROLE_ID) return null;
+    return proposed[0].post_id ?? null;
+  }
+  const held = personOf(card)?.memberships ?? [];
+  return held.length === 1 ? (held[0].post_id ?? null) : null;
+}
+
+
 export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): PersonEditorProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
   return {
@@ -64,8 +87,9 @@ export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): Pers
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     subtitle: postsFor(card, ctx.proposals),
+    derivedPostId: derivedPostIdFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
-    officeOptions: ctx.officeOptions,
+    posts: ctx.posts,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

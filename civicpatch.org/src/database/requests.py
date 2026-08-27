@@ -16,12 +16,8 @@ from shared.utils.statuses import (
     RequestType,
 )
 
-# The review lifecycle as one SQL expression, so the sites that render it cannot drift apart.
-# Requires the requests table aliased `r`, like AVAILABLE_FOR_REVIEW below.
-#
-# Derived, not stored: the two timestamps are the state, and a CHECK forbids both being set.
-# It replaces `pull_requests.status`, which had to distinguish open from merged because the
-# publish happened on GitHub. Nothing merges now, so there are three answers, not four.
+# Derived from the two timestamps, never stored; a CHECK forbids both being set.
+# Requires the requests table aliased `r`.
 REVIEW_STATUS = (
     "CASE "
     f"WHEN r.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}' "
@@ -29,16 +25,8 @@ REVIEW_STATUS = (
     f"ELSE '{RequestReviewStatus.PENDING.value}' END"
 )
 
-# SQL predicate for "this jurisdiction already has work in flight" — the scrape-candidate gate.
-# Requires the requests table aliased `r`.
-#
-# Two things count: a run that has not finished, and a finished one still waiting to be
-# reviewed. A run that ended without producing anything does NOT — an errored or cancelled
-# scrape is over, and blocking on it would make a jurisdiction un-scrapeable until someone
-# dismissed a request that was never reviewable.
-#
-# That last clause is why this cannot simply be "unpublished and undismissed": cancelling
-# leaves both timestamps NULL, so the plain test never lets go.
+# "This jurisdiction already has work in flight" — the scrape-candidate gate. Aliased `r`.
+# Errored and cancelled runs leave both timestamps NULL, so they must not count.
 WORK_IN_FLIGHT = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
@@ -51,8 +39,7 @@ WORK_IN_FLIGHT = (
 DISMISSED_SUPERSEDED = "superseded"
 DISMISSED_UNCHANGED = "unchanged"
 
-# SQL predicate for "a scrape still awaiting human review". Requires the requests table to be
-# aliased `r`; callers share this one definition instead of re-spelling it.
+# "A scrape still awaiting human review". Requires the requests table aliased `r`.
 #
 AVAILABLE_FOR_REVIEW = (
     "EXISTS (SELECT 1 FROM source_records sr WHERE sr.request_id = r.id) "
@@ -66,12 +53,8 @@ AVAILABLE_FOR_REVIEW = (
     ")"
 )
 
-# Is the scrape still going? Derived here for the same reason `REVIEW_STATUS` is: the answer
-# is a fact about the run, and every caller that recomputed it had to know which statuses count
-# as terminal — a set that was defined twice, once in Python and once in the frontend.
-#
-# `status IS NULL` is a request no pipeline ever ran — a jurisdiction edit, or a roster
-# typed in rather than scraped — which is not in flight.
+# Is the scrape still going? Derived here so no caller needs its own copy of the terminal set.
+# `status IS NULL` is a request no pipeline ran — an edit, not something in flight.
 RUN_IN_FLIGHT = (
     "r.status IS NOT NULL AND r.status != ALL(ARRAY["
     + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
@@ -181,8 +164,8 @@ async def register_foreign_request(
             (request_id, jurisdiction_ocdid),
         )
 
-        # No pipeline ran — the id comes off a git branch. Stamped SUCCESS because the work
-        # is already done elsewhere; before the merge this needed a whole fabricated run row.
+        # No pipeline ran — the id comes off a git branch. SUCCESS because the work is done
+        # elsewhere.
         await conn.execute(
             """
             UPDATE requests SET status = %s, progress = 100,
@@ -194,6 +177,39 @@ async def register_foreign_request(
 
 
 
+async def register_people_edit_request(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    requested_by_user_id: str,
+):
+    """A maintainer's hand edit of a live roster. `PEOPLE` with a null `status`: nothing ran.
+
+    Born published, and it has to be — the edit writes sightings for anyone added, and those
+    would put a pending request straight into the review pool.
+
+    `sourced_at` is now(): the edit is the newest word on the roster and supersedes any older
+    pending scrape, which could not be published over it without retiring what the edit added.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO requests (
+                id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                published_at, resolved_by_user_id, created_at, sourced_at
+            )
+            VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            """,
+            (
+                request_id,
+                RequestType.PEOPLE,
+                jurisdiction_ocdid,
+                requested_by_user_id,
+                requested_by_user_id,
+            ),
+        )
+
+
 async def register_jurisdiction_edit_request(
     request_id: str,
     jurisdiction_ocdid: str,
@@ -201,15 +217,7 @@ async def register_jurisdiction_edit_request(
     open_data_url: str,
     requested_by_user_id: Optional[str] = None,
 ):
-    """Track a hand-edited jurisdiction field as a request.
-
-    Born published: the edit is committed before this is called, so there is no interval
-    during which it is pending. That is the whole difference from a scrape, which is
-    proposed and then reviewed.
-
-    No pipeline_run: nothing ran. That keeps it out of the scrape history, which is
-    joined through pipeline_runs, and out of anything that assumes a job produced it.
-    """
+    """A hand-edited jurisdiction field. Born published: the edit is already committed."""
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(

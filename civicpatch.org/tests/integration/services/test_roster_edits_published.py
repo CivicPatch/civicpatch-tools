@@ -1,0 +1,429 @@
+"""A maintainer editing a live roster, outside any scrape.
+
+Real Postgres: what this exists to prove is that the edit lands in the *database* — the whole
+point of the change. Before 2026-08-26 this path patched the open-data YAML and wrote no rows,
+so an edit was invisible here and the next scrape reverted it.
+
+Run with: mise run tcp-integration
+Isolation: sentinel state 'zz', cleaned before/after.
+"""
+
+import datetime
+import uuid
+
+import pytest
+import pytest_asyncio
+from unittest.mock import AsyncMock, patch
+
+import services.roster_edits as roster_edits
+from core.people_edits import PeopleValidationError
+from core.post_derivation import DerivedMember
+from database import divisions, memberships, organizations, posts
+from core.people_edits import PersonPatch
+from database.database import get_pool
+from database.requests import DISMISSED_SUPERSEDED, supersede_stacked_requests
+from schemas.assertions import EntityType
+from schemas.common import Identity, UserRole
+
+_OCDID = "ocd-jurisdiction/country:us/state:zz/place:editville/government"
+_BASE = "ocd-division/country:us/state:zz/place:editville"
+_EMAIL = "zz-editville-maintainer@example.com"
+
+
+async def _wipe():
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute(
+            "DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute(
+            "DELETE FROM assertions WHERE entity_id IN "
+            "(SELECT id FROM people WHERE jurisdiction_ocdid = %s)",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
+        await cur.execute(
+            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await conn.commit()
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def clean():
+    await _wipe()
+    yield
+    await _wipe()
+
+
+@pytest.fixture(autouse=True)
+def no_temporal():
+    """`publish` queues the open-data commit on Temporal, which is not running for tests. The
+    database writes this file asserts all happen before that call."""
+    with patch(
+        "services.roster_edits.promote_to_reviewed", new_callable=AsyncMock
+    ) as queued:
+        yield queued
+
+
+async def _seed() -> tuple[str, Identity]:
+    """One published person, and a maintainer to edit them."""
+    person_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, status) "
+            "VALUES (%s, 'zz', 'local', 'active')",
+            (_OCDID,),
+        )
+        await cur.execute(
+            # `source_urls` and `updated_at` are required by `RosterPerson`, which every
+            # edit is validated against — a person without them fails before any field does.
+            "INSERT INTO people "
+            "  (id, jurisdiction_ocdid, name, phones, source_urls, updated_at, "
+            "   other_names, emails, urls) "
+            "VALUES (%s, %s, 'Ada Chen', ARRAY['(206) 555-0111'], "
+            "        ARRAY['https://editville.gov/council'], now(), "
+            "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
+            (person_id, _OCDID),
+        )
+        # A seat, and an open membership in it: `get_roster` is "has an open membership", so
+        # a person without one is not on the roster and the edit would read as an addition.
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await memberships.upsert(
+            cur,
+            DerivedMember(person_id=person_id, source_labels=["Mayor"]),
+            post_id,
+            org,
+            datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
+        )
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "VALUES (%s, 'github', 'zz-maint', %s) RETURNING id::text",
+            (_EMAIL, UserRole.MAINTAINERS.value),
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        user_id = row[0]
+        await conn.commit()
+    return person_id, Identity(
+        type="session",
+        provider="github",
+        provider_user_id="zz-maint",
+        email=_EMAIL,
+        role=UserRole.MAINTAINERS,
+        user_id=user_id,
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_edit_is_recorded_as_an_assertion_so_a_scrape_cannot_revert_it():
+    """The reason this path changed. It used to write only the open-data file, so nothing said
+    a human had chosen the value and the next publish overwrote it from the sightings."""
+    person_id, user = await _seed()
+
+    await roster_edits.edit_published(
+        _OCDID,
+        [PersonPatch(id=person_id, fields={"phones": ["(206) 555-0999"]})],
+        user,
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Every row, because `phones` is a list field: assertions on those key on the value,
+        # so an edit leaves one per number rather than one per field.
+        await cur.execute(
+            "SELECT value::text FROM assertions "
+            "WHERE entity_type = %s AND entity_id::text = %s AND field_path = 'phones'",
+            (EntityType.PERSON.value, person_id),
+        )
+        values = [row[0] for row in await cur.fetchall()]
+    assert values, "the edit left no assertion behind"
+    assert any("555-0999" in value for value in values), values
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_edit_reaches_the_people_row_not_only_the_file():
+    person_id, user = await _seed()
+
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT name FROM people WHERE id::text = %s", (person_id,))
+        row = await cur.fetchone()
+    assert row is not None and row[0] == "Ada M. Chen"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_request_is_born_published_and_never_enters_the_review_pool():
+    """It carries `source_records` for anyone added, so a pending one would satisfy
+    AVAILABLE_FOR_REVIEW and flash into the queue between the two writes."""
+    person_id, user = await _seed()
+
+    request_id, _ = await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
+            "FROM requests WHERE id::text = %s",
+            (request_id,),
+        )
+        row = await cur.fetchone()
+    assert row == (True, True, True)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_added_person_lands_in_the_seat_they_were_given():
+    """The sighting carries the chosen post's label, so the ordinary derivation resolves the
+    role from it. Recording only `post_id` left the label empty, no role matched, and they
+    were published into the `unmatched` seat — which exists for labels we cannot parse, not
+    for a question nobody asked the human who was right there."""
+    _, user = await _seed()
+    added_id = str(uuid.uuid4())
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await conn.commit()
+
+    await roster_edits.edit_published(
+        _OCDID,
+        [
+            PersonPatch(
+                id=added_id,
+                fields={
+                    "name": "Bo Nguyen",
+                    "jurisdiction_ocdid": _OCDID,
+                    "source_urls": ["https://editville.gov/clerk"],
+                    "updated_at": "2026-08-26T00:00:00+00:00",
+                    "post_id": seat,
+                },
+            )
+        ],
+        user,
+    )
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT sr.label FROM source_records sr "
+            "JOIN source_record_identities i ON i.source_record_id = sr.id "
+            "WHERE i.person_id::text = %s",
+            (added_id,),
+        )
+        labels = [row[0] for row in await cur.fetchall()]
+        await cur.execute(
+            "SELECT p.role_id FROM memberships m JOIN posts p ON p.id = m.post_id "
+            "WHERE m.person_id::text = %s",
+            (added_id,),
+        )
+        roles = [row[0] for row in await cur.fetchall()]
+
+    assert labels == ["Clerk"], labels
+    assert roles == ["clerk"], roles
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_addition_with_no_seat_is_refused():
+    """The editor asks for a post; this is what makes it a rule. The route is reachable
+    without the editor, and a sighting with nothing to say would publish somebody into the
+    `unmatched` seat."""
+    _, user = await _seed()
+
+    with pytest.raises(PeopleValidationError) as caught:
+        await roster_edits.edit_published(
+            _OCDID,
+            [
+                PersonPatch(
+                    id=str(uuid.uuid4()),
+                    fields={
+                        "name": "Bo Nguyen",
+                        "jurisdiction_ocdid": _OCDID,
+                        "source_urls": ["https://editville.gov/clerk"],
+                        "updated_at": "2026-08-26T00:00:00+00:00",
+                    },
+                )
+            ],
+            user,
+        )
+
+    assert caught.value.failures[0]["field"] == "post_id"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_addition_naming_a_post_that_is_gone_is_refused():
+    """Same rule, reached differently: an id resolving to no post yields no label."""
+    _, user = await _seed()
+
+    with pytest.raises(PeopleValidationError):
+        await roster_edits.edit_published(
+            _OCDID,
+            [
+                PersonPatch(
+                    id=str(uuid.uuid4()),
+                    fields={
+                        "name": "Bo Nguyen",
+                        "jurisdiction_ocdid": _OCDID,
+                        "source_urls": ["https://editville.gov/clerk"],
+                        "updated_at": "2026-08-26T00:00:00+00:00",
+                        "post_id": str(uuid.uuid4()),
+                    },
+                )
+            ],
+            user,
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_leaving_somebody_out_retires_them():
+    """⚠️ `data` is the whole roster, not a list of changes. Publishing closes the membership
+    of anyone absent from it — that is how removal works, and it is why a caller sending only
+    the people it edited would retire everybody else.
+
+    `buildPeoplePatch` maps over every current person for this reason. Pinned here because
+    nothing in the signature says so and the failure is silent.
+    """
+    kept_id, user = await _seed()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        other_id = str(uuid.uuid4())
+        await cur.execute(
+            "INSERT INTO people "
+            "  (id, jurisdiction_ocdid, name, source_urls, updated_at, "
+            "   other_names, emails, urls, phones) "
+            "VALUES (%s, %s, 'Cy Okonkwo', ARRAY['https://editville.gov/council'], now(), "
+            "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
+            (other_id, _OCDID),
+        )
+        org = await organizations.find_or_create(cur, _OCDID)
+        seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await memberships.upsert(
+            cur,
+            DerivedMember(person_id=other_id, source_labels=["Clerk"]),
+            seat,
+            org,
+            datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
+        )
+        await conn.commit()
+
+    # Only the mayor is sent. The clerk is absent, so their membership closes.
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=kept_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT closed_at IS NOT NULL FROM memberships WHERE person_id::text = %s",
+            (other_id,),
+        )
+        row = await cur.fetchone()
+    assert row is not None and row[0] is True
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_refused_edit_leaves_no_request_behind():
+    """A born-published request that published nothing is worse than none: the sweep counts
+    published requests as supersedors, so a phantom would dismiss every pending card."""
+    _, user = await _seed()
+
+    with pytest.raises(PeopleValidationError):
+        await roster_edits.edit_published(
+            _OCDID,
+            [
+                PersonPatch(
+                    id=str(uuid.uuid4()),
+                    fields={
+                        "name": "Bo Nguyen",
+                        "jurisdiction_ocdid": _OCDID,
+                        "source_urls": ["https://editville.gov/clerk"],
+                        "updated_at": "2026-08-26T00:00:00+00:00",
+                    },
+                )
+            ],
+            user,
+        )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT count(*) FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        row = await cur.fetchone()
+    assert row is not None and row[0] == 0, "a refused edit registered a request"
+
+
+async def _pending_scrape(sourced_at: datetime.datetime) -> str:
+    """A scrape awaiting review: a request with a run behind it and one sighting."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, status, "
+            "                      progress, created_at, sourced_at) "
+            "VALUES ('people', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
+            (_OCDID, sourced_at, sourced_at),
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        request_id = row[0]
+        await cur.execute(
+            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk')",
+            (request_id, _OCDID),
+        )
+        await conn.commit()
+    return request_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_edit_supersedes_a_pending_scrape():
+    """Deliberate: the edit is the newest word on the roster. Publishing the older scrape over
+    it would retire anyone the edit added, and `_refuse_if_superseded` would refuse it anyway —
+    so the sweep dismisses it rather than leaving a card nobody can publish."""
+    person_id, user = await _seed()
+    scrape = await _pending_scrape(
+        datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
+    )
+
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    assert scrape in await supersede_stacked_requests()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT dismissed_reason FROM requests WHERE id::text = %s", (scrape,)
+        )
+        row = await cur.fetchone()
+    assert row is not None and row[0] == DISMISSED_SUPERSEDED

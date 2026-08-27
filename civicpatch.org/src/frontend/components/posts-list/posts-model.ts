@@ -6,7 +6,7 @@ export interface Post {
   id: string;
   role_id: string;
   division_ocdid: string;
-  label: string | null;
+  label: string;
 
   // Underscored: no civic standard defines these, so dropping every `_*` key leaves a
   // conforming Post.
@@ -233,24 +233,12 @@ export function postOptions(
       role_id: post.role_id,
       role_label: roleLabel,
       division_ocdid: post.division_ocdid,
-      label: post.label ?? `${roleLabel}, ${divisionName(post.division_ocdid)}`,
+      label: post.label,
       held,
       headcount: post._headcount,
       full: held >= post._headcount,
     };
   });
-}
-
-export function selectedPostId(
-  options: PostOption[],
-  roleId: string | null | undefined,
-  divisionOcdid: string | null | undefined,
-): string | null {
-  const found = options.find(
-    (option) =>
-      option.role_id === roleId && option.division_ocdid === divisionOcdid,
-  );
-  return found?.post_id ?? null;
 }
 
 /** The backend's `derive_label` shape. At-large adds nothing — `_division_phrase` returns None
@@ -277,39 +265,10 @@ export function byRole(options: PostOption[]): [string, PostOption[]][] {
   return [...groups.entries()];
 }
 
-export interface OfficeOption {
-  // A pick is a *post*, never a rewrite of what the source said: `labels` stay as scraped.
-  post_id: string;
-  text: string;
-}
-
-export const DERIVED_POST = "Derived from the labels";
-
 /** A post is stored by id and never displayed as one — every path rendering the Post field
  * goes through here, so a UUID cannot reach a reader by being one path short. */
-export function postLabelFor(
-  post_id: unknown,
-  options: OfficeOption[],
-): string {
-  if (!post_id) return DERIVED_POST;
-  return (
-    options.find((option) => option.post_id === post_id)?.text ?? DERIVED_POST
-  );
-}
-
-/** One option per post. Two people on one post may have been named differently by the source,
- * but the post is the same — offering it twice asks a reviewer to choose between spellings. */
-export function officeOptions(memberships: Membership[]): OfficeOption[] {
-  const seen = new Map<string, OfficeOption>();
-  for (const membership of memberships) {
-    if (seen.has(membership.post_id)) continue;
-    seen.set(membership.post_id, {
-      post_id: membership.post_id,
-      // The post alone, not the holder's own membership label.
-      text: postName(membership),
-    });
-  }
-  return [...seen.values()].sort((a, b) => a.text.localeCompare(b.text));
+export function postLabelFor(post_id: unknown, posts: Post[]): string {
+  return posts.find((post) => post.id === post_id)?.label ?? "";
 }
 
 /** Each post's name, then what the source said beyond it: "Council Member, At-Large, Seat 3".
@@ -349,12 +308,8 @@ export function groupMembershipsByPerson(
   }));
 }
 
-/** The seat itself, as the server rendered it — `core.membership_label.rendered_post_label`
- * names a post nobody named, so nothing here composes one.
- *
- * Not `membership.label`: that says what the source called this *person* beyond the post, so
- * using it here would replace "Deputy Mayor Pro Tempore" with the seat.
- */
+/** The seat itself, as the server composed it. Not `membership.label`: that is what the source
+ * called this *person* beyond the post. */
 export const postName = (membership: { post_label: string }): string =>
   membership.post_label;
 

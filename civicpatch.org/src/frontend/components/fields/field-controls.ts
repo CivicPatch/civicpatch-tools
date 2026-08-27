@@ -8,8 +8,7 @@
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
-import { DERIVED_POST } from "../posts-list/posts-model.js";
-import type { OfficeOption } from "../posts-list/posts-model.js";
+import type { Post } from "../posts-list/posts-model.js";
 import {
   PERSON_LINK_TARGET,
   SOURCE_LINK_TARGET,
@@ -183,23 +182,20 @@ export function renderDateNewSide(
   `;
 }
 
-// Posts are picked, never typed. A typed office is text the publish parser has to re-read,
-// which is where the role and division guessing goes wrong.
-//
-// The written value is `post_id` — the decision itself. `labels` stay exactly as the source
-// said them, because a pick says where someone serves, not what the page called them, and the
-// membership is derived from the chosen post.
-export function renderOfficeNewSide(
+// Picked, never typed: the written value is `post_id`, the decision itself. `labels` stay as
+// the source said them — a pick says where someone serves, not what the page called them.
+export function renderPostNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
   save: Save,
-  options: OfficeOption[],
+  posts: Post[],
+  derivedPostId: string | null,
   focusRef: FocusRef | null,
 ) {
-  const current = (diffValue(newRecord, field) as string | null) ?? "";
-  // Nothing picked: the post is still whatever the labels derive to, which is the normal
-  // state for a scrape nobody has corrected.
-  const DERIVED = "";
+  const picked = (diffValue(newRecord, field) as string | null) ?? "";
+  // The derivation's seat when nobody has picked — shown, never saved, so a parser fix can
+  // still move them. Empty only for a hand-added person, who has no labels to derive from.
+  const current = picked || (derivedPostId ?? "");
   return html`
     <select
       ${attachFocus(focusRef)}
@@ -207,14 +203,13 @@ export function renderOfficeNewSide(
       aria-label=${field.label}
       @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
     >
-      <option value=${DERIVED} .selected=${!current}>${DERIVED_POST}</option>
-      ${options.map(
-        (option) =>
-          html`<option
-            value=${option.post_id}
-            .selected=${option.post_id === current}
-          >
-            ${option.text}
+      ${current
+        ? nothing
+        : html`<option value="" selected disabled>Choose a post</option>`}
+      ${posts.map(
+        (post) =>
+          html`<option value=${post.id} .selected=${post.id === current}>
+            ${post.label}
           </option>`,
       )}
     </select>

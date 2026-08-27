@@ -10,7 +10,7 @@
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
 import "./person-editor.css";
-import type { OfficeOption } from "../posts-list/posts-model.js";
+import type { Post } from "../posts-list/posts-model.js";
 import { type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
 import { renderPersonEditor } from "./person-editor.js";
 import type { PersonAssertion } from "./field-provenance.js";
@@ -30,7 +30,7 @@ interface PersonEditorListProps {
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  officeOptions: OfficeOption[];
+  posts: Post[];
   changes?: ProposedChange[];
   assertions?: Record<string, PersonAssertion[]>;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
@@ -56,7 +56,7 @@ function PersonEditorList({
   dirtyIds,
   isReadOnly,
   jurisdictionOcdid,
-  officeOptions,
+  posts,
   changes,
   assertions,
   onPersonSave,
@@ -101,7 +101,7 @@ function PersonEditorList({
             dirtyIds,
             isReadOnly,
             jurisdictionOcdid,
-            officeOptions,
+            posts,
             proposals,
             assertions: assertions ?? {},
             isExpanded: (id: string) => expandedIds.has(id),

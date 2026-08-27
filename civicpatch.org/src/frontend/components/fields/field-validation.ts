@@ -77,7 +77,19 @@ const VALUE_ERRORS: Record<string, (text: string) => string | null> = {
     // An extension is not part of the number.
     const digits = text.split(/\bext\.?\b|\bx\b/i)[0].replace(/\D/g, "");
     const national = digits.startsWith("1") ? digits.slice(1) : digits;
-    return national.length === 10 ? null : `${text} is not a 10-digit US number`;
+    if (national.length !== 10) return `${text} is not a 10-digit US number`;
+    // NANP structure only: area code and exchange cannot start 0 or 1, N11 is a service
+    // code. A digit count alone let "11111111111" through to fail at publish.
+    const area = national.slice(0, 3);
+    const exchange = national.slice(3, 6);
+    if (Number(area[0]) < 2) return `${text} has an impossible area code (${area})`;
+    if (area[1] === "1" && area[2] === "1") {
+      return `${area} is a service code, not an area code`;
+    }
+    if (Number(exchange[0]) < 2) {
+      return `${text} has an impossible exchange (${exchange})`;
+    }
+    return null;
   },
   emails: (text) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text) ? null : `${text} is not a valid email`,
@@ -133,9 +145,19 @@ export function rowError(
 
 // The single client-side error for a field's value on `record`, or null. Order:
 // required → date format → term ordering (end_date only) → value format.
+// A post derives from the labels, so it is only asked for when there are none — an addition.
+// Unanswered, they would publish into the `unmatched` seat.
+function isPostlessAddition(record: DiffRecord, field: FieldSpec): boolean {
+  if (field.key !== "post_id") return false;
+  if (normalizeScalar(diffValue(record, field)) !== "") return false;
+  const labels = getFieldValue(record, "labels");
+  return Array.isArray(labels) && labels.length === 0;
+}
+
 export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
   if (!record) return null;
   if (isRequiredFieldEmpty(record, field)) return "Required";
+  if (isPostlessAddition(record, field)) return "Choose a post";
   if (isMulti(field)) {
     const values = (diffValue(record, field) as string[]) ?? [];
     for (let index = 0; index < values.length; index++) {

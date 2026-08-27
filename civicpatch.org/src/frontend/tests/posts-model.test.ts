@@ -16,11 +16,9 @@ import {
   PART_DESIGNATION,
   PART_UNMATCHED,
   postOptions,
-  selectedPostId,
   byRole,
   divisionSelection,
   isDivisionValue,
-  officeOptions,
   postsHeld,
   derivedPostLabel,
 } from "../components/posts-list/posts-model.js";
@@ -278,15 +276,6 @@ describe("decompose", () => {
 });
 
 describe("postOptions", () => {
-  it("names an unnamed post by role and division", () => {
-    const [option] = postOptions(
-      [post({ id: "a", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" })],
-      [],
-      ROLE_LABELS,
-    );
-    expect(option.label).toBe("Council Member, District 1");
-  });
-
   it("prefers the name a person gave the post", () => {
     const [option] = postOptions(
       [post({ id: "a", role_id: "council-member", label: "Position 8" })],
@@ -317,26 +306,6 @@ describe("postOptions", () => {
     const [option] = postOptions([post({ id: "a", role_id: "dogcatcher" })], [], ROLE_LABELS);
     expect(option.role_label).toBe("dogcatcher");
   });
-});
-
-describe("selectedPostId", () => {
-  const options = postOptions(
-    [
-      post({ id: "p1", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" }),
-      post({ id: "p2", role_id: "council-president", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:3" }),
-    ],
-    [],
-    ROLE_LABELS,
-  );
-
-  it("matches on the post key, not on the name", () =>
-    expect(selectedPostId(options, "council-president", "ocd-division/country:us/state:wa/place:x/council_district:3")).toBe("p2"));
-
-  it("returns null when the person is in no post we know", () =>
-    expect(selectedPostId(options, "mayor", "ocd-division/country:us/state:wa/place:x")).toBeNull());
-
-  it("does not match a right role in the wrong division", () =>
-    expect(selectedPostId(options, "council-member", "ocd-division/country:us/state:wa/place:x/council_district:9")).toBeNull());
 });
 
 describe("byRole", () => {
@@ -408,44 +377,6 @@ describe("isDivisionValue", () => {
       expect(isDivisionValue(value), value).toBe(false);
     }
   });
-});
-
-describe("officeOptions", () => {
-  const held = (over: Partial<Membership>): Membership => ({
-    person_id: "p", post_id: "a", person_name: "A", role_id: "council-member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2", label: null, post_label: null,
-    source_labels: ["Councilmember Ward 2"], designations: [], unmatched_text: [],
-    ...over,
-  });
-
-  it("writes what the source said, so publish re-parses back to the same post", () => {
-    // NOT the role's canonical label — that reproduces office.name for only 78% of people.
-    const [option] = officeOptions([held({})]);
-    expect(option.post_id).toBe("a");
-  });
-
-  it("names an option by the post alone, not by whoever holds it", () => {
-    // `postsHeld` appends the holder's own membership label. An option is a post someone else
-    // happens to sit in, so borrowing their title would offer "Deputy Mayor Pro Tempore" to a
-    // reviewer picking a plain council seat.
-    const [titled] = officeOptions([
-      held({ post_label: "Council Member, Ward 2", label: "Deputy Mayor Pro Tempore" }),
-    ]);
-    expect(titled.text).toBe("Council Member, Ward 2");
-  });
-
-  it("offers one option per post, however many ways the source named it", () => {
-    // Two spellings of one post are two annotations, not two choices.
-    const options = officeOptions([
-      held({ source_labels: ["Councilmember Ward 2"] }),
-      held({ person_id: "q", source_labels: ["Council Member District 2"] }),
-    ]);
-    expect(options).toHaveLength(1);
-  });
-
-  it("offers a post even when the source never labelled the membership", () =>
-    // The post exists either way; only the annotation is missing.
-    expect(officeOptions([held({ source_labels: [] })])).toHaveLength(1));
 });
 
 describe("postsHeld", () => {

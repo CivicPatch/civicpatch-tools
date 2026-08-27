@@ -14,7 +14,6 @@ import "../../components/review/review-modal.js";
 import "./jurisdiction-page.css";
 import {
   patchPeopleData,
-  publishReview,
   generatePersonId,
 } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
@@ -23,7 +22,7 @@ import { blockingErrors, buildPersonCards, type PersonCard } from "../../compone
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderOfficialsCards } from "./officials-section.js";
-import { useOfficeOptions } from "../../hooks/use-office-options.js";
+import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 
 interface OfficialsEditorProps {
   people: any[];
@@ -39,12 +38,11 @@ interface OpenPerson {
   field: string | null;
 }
 
-type PublishStage = "idle" | "committing" | "publishing";
+type PublishStage = "idle" | "publishing";
 
-// Blockers outrank the stage copy: a card with errors never reaches "Saving…".
+// Blockers outrank the stage copy: a card with errors never reaches "Publishing…".
 function publishLabel(blockerCount: number, stage: PublishStage): string {
   if (blockerCount) return `${blockerCount} to fix before publishing`;
-  if (stage === "committing") return "Saving…";
   if (stage === "publishing") return "Publishing…";
   return "Publish changes";
 }
@@ -57,7 +55,7 @@ function OfficialsEditor({
   blockedReason,
   onPublished,
 }: OfficialsEditorProps) {
-  const officeOptions = useOfficeOptions(jurisdictionOcdid);
+  const posts = useJurisdictionPosts(jurisdictionOcdid);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
   const {
@@ -118,14 +116,12 @@ function OfficialsEditor({
   };
 
   const handlePublish = async () => {
-    setPublishStage("committing");
+    setPublishStage("publishing");
     setPublishError(null);
     try {
-      const { data } = await patchPeopleData(jurisdictionOcdid, peoplePatch);
-      setPublishStage("publishing");
-      // Publishing writes `people` directly, so a reload shows the published values as soon
-      // as this resolves — no merge to wait on.
-      await publishReview(data.request_id, jurisdictionOcdid, null);
+      // The endpoint writes `people` and queues the open-data commit, so a reload after this
+      // resolves shows the published values.
+      await patchPeopleData(jurisdictionOcdid, peoplePatch);
       onPublished();
     } catch (err: any) {
       setPublishError(err.message ?? "Failed to publish.");
@@ -141,7 +137,7 @@ function OfficialsEditor({
       dirtyIds,
       isReadOnly: !canEdit,
       jurisdictionOcdid,
-      officeOptions,
+      posts,
       // Published people hold memberships, so nothing on this page is proposed.
       proposals: new Map(),
       // This page publishes nothing, so no field carries a publisher yet.

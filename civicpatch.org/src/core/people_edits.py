@@ -103,7 +103,8 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     for edit in edits:
         base_entry = base_by_id.get(edit.id)
         if base_entry is None:
-            result.append(edit.fields)
+            # `id` first: `fields` may re-id, but an addition need not carry one.
+            result.append({"id": edit.id, **edit.fields})
         else:
             result.append({**base_entry, **edit.fields})
     return result
