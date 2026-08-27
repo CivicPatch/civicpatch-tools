@@ -11,14 +11,11 @@ from core.membership_proposal import (
     nothing_to_review,
     propose,
 )
-from core.post_derivation import DerivedPost, SourcedPerson, derived_posts
-from core.people_roster import identified, records_by_person, roster_from_rows
+from core.post_derivation import DerivedPost
 from database import memberships as memberships_db
-from database import posts as posts_db
 from database import requests as requests_db
 from database.database import get_pool
 from database.issues import upsert_issue
-from database.people import get_person_models
 from database.pipeline_runs import (
     update_pipeline_run_status,
 )
@@ -28,12 +25,9 @@ from schemas.pipeline_runs import (
     HandleSubmitPipelineRunArtifactsRequest,
     SubmitPipelineRunArtifactsResponse,
 )
-from services import pipeline_costs
+from services import pipeline_costs, roster_ingest
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from services.publish import chosen_posts
 from shared.schemas import Person, Role, RoleConfig
-from shared.utils.name_utils import person_list_to_identities
-from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
@@ -68,10 +62,12 @@ async def handle_submit_pipeline_run_artifacts(
 
 async def _identities(jurisdiction_ocdid: str, workflow_context: dict) -> dict:
     """The prior reconciliation groups against: our own published people, else the scrape's
-    research for a jurisdiction we have never published."""
-    existing = await get_person_models(jurisdiction_ocdid)
-    if existing:
-        return person_list_to_identities(existing)
+    research for a jurisdiction we have never published. That fallback is the pipeline's own —
+    a curated sheet has no research step, which is why `reconcile_roster` takes this as an
+    argument rather than deriving it."""
+    published = await roster_ingest.published_identities(jurisdiction_ocdid)
+    if published:
+        return published
     research = workflow_context.get("data", {}).get("research_municipality_step") or {}
     return research.get("identities") or {}
 
@@ -87,28 +83,9 @@ async def _reconcile_roster(
     Fatal on failure, unlike the writes below: everything downstream consumes it.
     """
     identities = await _identities(jurisdiction_ocdid, workflow_context)
-    roster, records_by_name = roster_from_rows(
-        rows, identities, taxonomy, jurisdiction_ocdid, logger
+    return await roster_ingest.reconcile_roster(
+        jurisdiction_ocdid, rows, identities, taxonomy
     )
-    identified_roster = await _assign_ids(jurisdiction_ocdid, roster)
-    return identified_roster, records_by_person(identified_roster, records_by_name)
-
-
-async def _assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
-    """Give every person the id we already know them by, or a fresh one.
-
-    Everyone, not only the entries arriving without one: `resolve_people_ids` guards against
-    two entries claiming one person, and only sees the collision if it sees both. Matched
-    against inactive people too, so someone returning after a term away keeps their id.
-    """
-    everyone = await get_person_models(jurisdiction_ocdid)
-    resolutions = resolve_people_ids(
-        roster, everyone, person_list_to_identities(everyone)
-    )
-    return [
-        identified(person, resolution)
-        for person, resolution in zip(roster, resolutions)
-    ]
 
 
 def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict, dict]:
@@ -170,14 +147,14 @@ async def _find_or_create_posts(
 ) -> list:
     """Derive the posts this scrape implies and write them, so review has real posts to
     point a person at.
+
+    Never fatal: a scrape whose people are stored must not error over its own bookkeeping, and
+    posts are re-derivable from the sightings.
     """
     try:
-        roster = [Person(**record) for record in records]
-        # A pick only exists on a roster a reviewer has edited, so this is almost always
-        # empty at ingest — but a re-submit of an edited roster must not undo the pick.
-        sourced = [SourcedPerson.from_person(person) for person in roster]
-        derived = derived_posts(sourced, taxonomy, roles, await chosen_posts(roster))
-        await posts_db.find_or_create_all(jurisdiction_ocdid, derived, request_id)
+        derived = await roster_ingest.derive_and_store_posts(
+            request_id, jurisdiction_ocdid, records, roles, taxonomy
+        )
         logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
         return derived
     except Exception as e:

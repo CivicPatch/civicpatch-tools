@@ -54,6 +54,20 @@ erDiagram
         int_null        progress            "147: was pipeline_runs.progress"
         timestamptz_null sourced_at         "147: when the run last read the source; dates last_seen_at, and orders supersede"
         timestamptz     created_at
+        uuid_null       batch_id            FK  "idx. NULL for every request made outside a batch, which is most"
+    }
+
+    request_batches {
+        uuid            id                  PK
+        text            kind                "CHECK sheet_import|state_scrape"
+        text            lock_key            "idx: (lock_key, started_at DESC). 'sheet:<id>' | 'state:wa' — what this run must not race"
+        jsonb           arguments_json      "producer-specific inputs: the spreadsheet, or the state and how many"
+        text            status              "CHECK running|succeeded|failed|abandoned. lifecycle only, never progress"
+        int_null        items_total         "how many the run will attempt. progress is count(requests WHERE batch_id) out of this — the requests are the items, so no counter and no result blob"
+        text_null       error
+        uuid            started_by_user_id  FK
+        timestamptz     started_at
+        timestamptz_null finished_at        "UNIQUE (lock_key) WHERE finished_at IS NULL — the lock, one running batch per target"
     }
 
     people {
@@ -246,6 +260,8 @@ erDiagram
     roles ||--o{ membership_roles : "role_id"
     memberships ||--o{ membership_roles : "membership_id"
     users ||--o{ assertions : "asserted_by"
+    users ||--o{ request_batches : "started_by_user_id"
+    request_batches ||--o{ requests : "batch_id"
     requests ||--o{ source_records : "request_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     source_records ||--o| source_record_identities : "source_record_id"

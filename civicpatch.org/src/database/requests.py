@@ -210,6 +210,47 @@ async def register_people_edit_request(
         )
 
 
+async def register_sheet_import_request(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    requested_by_user_id: str,
+    batch_id: str,
+) -> None:
+    """One jurisdiction's worth of a curated-sheet import. `PEOPLE` with a null `status`:
+    nothing ran, the same as a hand edit.
+
+    **Unpublished, unlike `register_people_edit_request`.** A hand edit is one person acting on
+    a roster they are already looking at, so it is born published; an import proposes a whole
+    roster a curator typed elsewhere, and that belongs in the review queue like any other
+    proposal. Writing its sightings is what puts it there — `AVAILABLE_FOR_REVIEW` is
+    `EXISTS (source_records for this request)`.
+
+    `sourced_at` is now(): a curated sheet is the newest word on the roster, and it is when the
+    curator read the source rather than when any machine did.
+
+    `batch_id` says which run made it — so a card can name the import, and the bulk review
+    screen can ask `requests` for that batch's current state rather than reading a snapshot.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO requests (
+                id, request_type, jurisdiction_ocdid, requested_by_user_id, batch_id,
+                created_at, sourced_at
+            )
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            """,
+            (
+                request_id,
+                RequestType.PEOPLE,
+                jurisdiction_ocdid,
+                requested_by_user_id,
+                batch_id,
+            ),
+        )
+
+
 async def register_jurisdiction_edit_request(
     request_id: str,
     jurisdiction_ocdid: str,
