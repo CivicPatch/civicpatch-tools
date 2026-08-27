@@ -1,10 +1,95 @@
 import base64
-from google.oauth2 import service_account
+
 import googleapiclient.discovery
+from google.oauth2 import service_account
 import environment
+from lib.csv import rows_from_table
 
 # https://developers.google.com/workspace/sheets/api/guides/values#append_values
 # https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets.values#resource-valuerange
+def read_tab(spreadsheet_id: str, tab: str) -> list[dict]:
+    """One tab's rows, keyed by its header.
+
+    Authenticated rather than the public `/export?format=csv` trick: the sheet must be shared for
+    the write-back anyway, so it never has to be readable by anyone holding the url.
+
+    `UNFORMATTED_VALUE` so a phone number stays what the cell holds rather than what Sheets
+    decided to render.
+    """
+    service = get_service()
+    response = (
+        service.spreadsheets()
+        .values()
+        .get(
+            spreadsheetId=spreadsheet_id,
+            range=tab,
+            valueRenderOption="UNFORMATTED_VALUE",
+        )
+        .execute()
+    )
+    return rows_from_table(response.get("values", []))
+
+
+def read_header(spreadsheet_id: str, tab: str) -> list[str]:
+    """The tab's first row, lowercased — column positions, which `read_tab` throws away."""
+    response = (
+        get_service()
+        .spreadsheets()
+        .values()
+        .get(spreadsheetId=spreadsheet_id, range=f"{tab}!1:1")
+        .execute()
+    )
+    values = response.get("values", [[]])
+    return [str(name or "").strip().lower() for name in (values[0] if values else [])]
+
+
+def _column_letter(index: int) -> str:
+    letters = ""
+    while True:
+        index, remainder = divmod(index, 26)
+        letters = chr(ord("A") + remainder) + letters
+        if index == 0:
+            return letters
+        index -= 1
+
+
+def write_columns(spreadsheet_id: str, tab: str, columns: dict[str, list]) -> int:
+    """Overwrite whole columns below the header. Returns how many cells were written.
+
+    Whole columns rather than the cells that changed: a row that errored last run and is fine
+    now needs its `error` cleared, and a sparse update would leave the stale text sitting there.
+
+    `RAW`, never `USER_ENTERED` — the latter reinterprets what it is given, so a phone number
+    becomes an integer and `03/04` becomes a date.
+    """
+    header = read_header(spreadsheet_id, tab)
+    data = []
+    for name, values in columns.items():
+        if name not in header:
+            raise ValueError(f"{tab} has no column {name!r}")
+        letter = _column_letter(header.index(name))
+        data.append(
+            {
+                "range": f"{tab}!{letter}2:{letter}{len(values) + 1}",
+                "values": [[value] for value in values],
+            }
+        )
+
+    if not data:
+        return 0
+    response = (
+        get_service()
+        .spreadsheets()
+        .values()
+        .batchUpdate(
+            spreadsheetId=spreadsheet_id,
+            body={"valueInputOption": "RAW", "data": data},
+        )
+        .execute()
+    )
+    return response.get("totalUpdatedCells", 0)
+
+
 def update_spreadsheet(sheet_name, values):
     env = environment.get_env_vars()
     spreadsheet_id = env["GOOGLE_SHEETS_SPREADSHEET_ID"]

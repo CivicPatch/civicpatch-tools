@@ -14,6 +14,7 @@ import routers.api.leaderboard as api_leaderboard_router
 import routers.api.assertions as api_assertions_router
 import routers.api.memberships as api_memberships_router
 import routers.api.people as api_people_router
+import routers.api.imports as api_imports_router
 import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.review_actions as api_review_actions_router
@@ -194,6 +195,13 @@ app.include_router(
     api_posts_router.get_router(),
     prefix="/api/v1/posts",
     tags=["posts"],
+)
+
+# Curated-sheet imports: start one, watch it, release a stuck lock.
+app.include_router(
+    api_imports_router.get_router(),
+    prefix="/api/internal/imports",
+    tags=["imports"],
 )
 
 # Allow you to create your api keys

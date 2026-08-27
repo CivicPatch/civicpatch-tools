@@ -32,6 +32,8 @@ OPTIONAL_ENV_VARS = [
     "BLOG_SYNC_WEBHOOK_SECRET",
     # Optional - needed for scraping
     "GOOGLE_SHEETS_SPREADSHEET_ID",
+    # Optional - the one data-entry sheet, read and written back
+    "ENTRY_SPREADSHEET_ID",
     "GOOGLE_SHEETS_PRIVATE_KEY_BASE64",
     "GOOGLE_SHEETS_CLIENT_EMAIL",
     "GOOGLE_SHEETS_TOKEN_URI",
