@@ -1,4 +1,5 @@
 import math
+import re
 import uuid
 from typing import Optional
 
@@ -39,8 +40,42 @@ def get_router() -> APIRouter:
     async def list_people_endpoint(
         jurisdiction_ocdid: str,
     ):
+        """One jurisdiction's seated roster. Public, because it is the public page's own data.
+
+        Unpaged on purpose: a roster is bounded by how many seats a government has, and the
+        largest in the database is eighteen. Bulk reads belong on `/bulk`, which is paged.
+        """
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {"data": people}
+
+    @router.get("/bulk")
+    async def bulk_people_endpoint(
+        state: str,
+        page: int = Query(1, ge=1),
+        # Higher than /directory's 20: this is the bulk read, and a state is thousands.
+        per_page: int = Query(200, ge=1, le=500),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        """A whole state's seated roster, paged.
+
+        One request per page instead of one per jurisdiction — Washington is 281 jurisdictions
+        and 1,416 seated people. Signed-in rather than public: the same rows are readable a
+        jurisdiction at a time, but handing out a state in one call is a different thing to
+        offer anonymously.
+        """
+        if not re.fullmatch(r"[A-Za-z]{2}", state):
+            raise HTTPException(
+                status_code=400, detail="state must be a two-letter code, e.g. 'wa'"
+            )
+        total, people = await database.get_roster_page(
+            None, state.lower(), per_page, (page - 1) * per_page
+        )
+        return {
+            "total_items": total,
+            "page": page,
+            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
+            "data": people,
+        }
 
     @router.get("/search")
     async def search_people_endpoint(

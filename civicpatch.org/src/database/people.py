@@ -201,16 +201,19 @@ async def get_people(
     return await _people(jurisdiction_ocdid, state, seated_only=False)
 
 
-async def _people(
+def _scope(
     jurisdiction_ocdid: str | None,
     state: str | None,
     seated_only: bool,
-) -> list[dict]:
+) -> tuple[list[LiteralString], list[Any]]:
+    """The WHERE clauses and their values, shared by the whole read and the paged one.
+
+    Typed LiteralString, so pyright refuses an f-string here — the clauses can only ever be the
+    literals below, and every value goes through a placeholder.
+    """
     if jurisdiction_ocdid is None and state is None:
         raise UnscopedRead("pass a jurisdiction_ocdid or a state")
 
-    # Typed LiteralString, so pyright refuses an f-string here — the clauses can only ever be
-    # the literals below, and every value goes through a placeholder.
     clauses: list[LiteralString] = []
     values: list[Any] = []
 
@@ -222,6 +225,40 @@ async def _people(
         values.append(f"ocd-jurisdiction/country:us/state:{state.lower()}%")
     if seated_only:
         clauses.append(IS_ON_THE_ROSTER)
+    return clauses, values
+
+
+async def get_roster_page(
+    jurisdiction_ocdid: str | None, state: str | None, limit: int, offset: int
+) -> tuple[int, list[dict]]:
+    """One page of the seated roster, and the total behind it.
+
+    Same filters and ordering as `get_roster`, so paging through it walks the same list.
+    """
+    clauses, values = _scope(jurisdiction_ocdid, state, seated_only=True)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT COUNT(*) OVER(), {PERSON_JSON} FROM people
+            WHERE {" AND ".join(clauses)}
+            ORDER BY jurisdiction_ocdid, name, id
+            LIMIT %s OFFSET %s
+            """,
+            tuple(values) + (limit, offset),
+        )
+        rows = await cur.fetchall()
+    if not rows:
+        return 0, []
+    return rows[0][0], [labelled(row[1]) for row in rows]
+
+
+async def _people(
+    jurisdiction_ocdid: str | None,
+    state: str | None,
+    seated_only: bool,
+) -> list[dict]:
+    clauses, values = _scope(jurisdiction_ocdid, state, seated_only)
 
     people: list[dict] = []
     pool = await get_pool()

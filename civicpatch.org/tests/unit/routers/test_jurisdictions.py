@@ -268,6 +268,7 @@ def test_search_returns_total_and_results(client):
         "name",
         "display_name",
         "population",
+        "url",
         "parent_names",
     }
     assert body["data"][0]["parent_names"] == ["King County", "Washington"]

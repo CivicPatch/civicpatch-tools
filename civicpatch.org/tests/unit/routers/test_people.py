@@ -186,3 +186,49 @@ def test_patch_people_data_requires_maintainer(client, identity):
 
     assert response.status_code == 403
     mock_commit.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_the_public_read_stays_one_jurisdiction_and_unpaged(client):
+    """It backs the public jurisdiction page, where a roster is eighteen people at most."""
+    with patch(
+        "routers.api.people.database.get_roster",
+        new_callable=AsyncMock,
+        return_value=[{"id": "1", "name": "Ada Whitfield"}],
+    ) as get_roster:
+        response = client.get(f"/people?jurisdiction_ocdid={TEST_OCDID}")
+
+    assert response.status_code == 200
+    assert response.json() == {"data": [{"id": "1", "name": "Ada Whitfield"}]}
+    get_roster.assert_awaited_once_with(jurisdiction_ocdid=TEST_OCDID)
+
+
+@pytest.mark.unit
+def test_bulk_pages_a_whole_state(client):
+    """One request per page instead of one per jurisdiction."""
+    with patch(
+        "routers.api.people.database.get_roster_page",
+        new_callable=AsyncMock,
+        return_value=(1416, [{"id": "1", "name": "Ada Whitfield"}]),
+    ) as get_roster_page:
+        response = client.get("/people/bulk?state=WA&page=2&per_page=200")
+
+    body = response.json()
+    assert response.status_code == 200
+    assert body["total_items"] == 1416
+    assert body["total_pages"] == 8
+    # Lowercased for the ocdid LIKE, and the offset follows the page.
+    get_roster_page.assert_awaited_once_with(None, "wa", 200, 200)
+
+
+@pytest.mark.unit
+def test_bulk_refuses_a_state_that_is_not_a_code(client):
+    """It reaches a LIKE against the ocdid, so it is worth rejecting before the query."""
+    response = client.get("/people/bulk?state=washington")
+    assert response.status_code == 400
+
+
+@pytest.mark.unit
+def test_bulk_requires_a_state(client):
+    """Without one this would be every person in the database."""
+    assert client.get("/people/bulk").status_code == 422
